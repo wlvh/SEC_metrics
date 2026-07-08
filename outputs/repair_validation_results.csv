@@ -3,7 +3,7 @@ validation_package_mode,P0,PASS,mode=FULL_VALIDATION
 no_company_identity_branch_in_production,P0,PASS,no identity literals in production branches
 registry_profile_matches_sic_rules_or_has_override_reason,P0,PASS,registry profiles match SIC rules
 rpo_crpo_prefers_instance_fact,P0,PASS,B12 instance preference verified
-basel_ratio_extractor_not_single_issuer_specific,P0,PASS,Basel ratios verified
+basel_ratio_extractor_not_single_issuer_specific,P0,PASS,Basel ratios and iXBRL scale route verified
 basel_concept_resolver_handles_tierone_spelling,P0,PASS,TierOne spelling resolves to CET1/A02
 basel_concept_resolver_handles_banking_regulation_ratio_family,P0,PASS,banking regulation ratio family matched
 basel_cet1_never_classified_as_a01,P0,PASS,CET1 concepts excluded from A01
@@ -18,7 +18,7 @@ captive_finance_debt_not_ford_specific,P0,PASS,B06 captive finance verified
 captive_finance_signal_requires_segment_dimension,P0,PASS,dimension required
 captive_finance_excludes_normal_finance_lease_terms,P0,PASS,normal finance terms excluded
 enphase_b06_not_captive_finance_false_positive,P0,PASS,no non-signal company is marked captive review
-gm_like_captive_finance_fixture_triggers_review,P0,PASS,GM-like captive segment matched
+gm_like_captive_finance_fixture_triggers_review,P0,PASS,captive member variants matched
 entity_continuity_yoy_not_paramount_specific,P0,PASS,B02 continuity rule verified
 no_c03_ecd_fact_count,P0,PASS,bad_rows=0
 c03_def14a_ok_requires_peototalcompamt,P0,PASS,all DEF14A_OK C03 rows backed

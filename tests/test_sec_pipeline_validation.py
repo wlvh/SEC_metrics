@@ -17,6 +17,7 @@ import sys
 import tempfile
 import unittest
 from contextlib import contextmanager
+from datetime import date
 from pathlib import Path
 from unittest import mock
 
@@ -246,6 +247,117 @@ class BaselThresholdValidationTest(unittest.TestCase):
         """Actual CET1 must win over same-dimension lower threshold."""
         result = sec_pipeline.check_basel_primary_selection_prefers_actual_ratio_over_threshold()
         self.assertEqual(result["status"], "PASS")
+
+
+class CaptiveFinanceValidationTest(unittest.TestCase):
+    """Validate captive-finance member recall and exclusion guards."""
+
+    def test_captive_member_variants_trigger_review(self) -> None:
+        """Captive/credit/legal-entity members must be recognized."""
+        result = sec_pipeline.check_gm_like_captive_finance_fixture_triggers_review()
+        self.assertEqual(result["status"], "PASS")
+
+    def test_normal_credit_and_finance_terms_do_not_trigger(self) -> None:
+        """Credit-loss/facility/lease/deferred-cost terms are exclusions."""
+        result = sec_pipeline.check_captive_finance_excludes_normal_finance_lease_terms()
+        self.assertEqual(result["status"], "PASS")
+
+
+class EleventhCompanyBehaviorTest(unittest.TestCase):
+    """Validate eleventh-company fixtures assert selected value identity."""
+
+    def test_financial_institution_fixture_checks_value_context_and_dimensions(self) -> None:
+        """FI fixture must select expected concept, context, dimensions, and value."""
+        result = sec_pipeline.check_eleventh_company_behavior_financial_institution()
+        self.assertEqual(result["status"], "PASS")
+
+
+class InlineScaleValidationTest(unittest.TestCase):
+    """Validate iXBRL scale and parser-route regressions."""
+
+    def test_scaled_inline_value_cases_pass(self) -> None:
+        """Scale, sign, parentheses, and passthrough cases must pass."""
+        self.assertEqual(sec_pipeline.scaled_inline_value_validation_failures(), [])
+
+    def test_inline_parser_route_applies_scale(self) -> None:
+        """XML-parseable iXBRL fixture must still apply ix scale."""
+        self.assertEqual(sec_pipeline.inline_scale_route_fixture_failures(), [])
+
+    def test_full_evidence_jpm_cet1_amount_crosscheck(self) -> None:
+        """Complete local evidence should retain the scaled CET1 amount."""
+        self.assertEqual(sec_pipeline.jpm_cet1_capital_scale_crosscheck_failures(), [])
+
+
+class FullInstanceFallbackTest(unittest.TestCase):
+    """Validate 10-K/A targets map to original full-instance candidates."""
+
+    def setUp(self) -> None:
+        """Skip fallback evidence tests when submissions evidence is absent."""
+        if not (REPO_ROOT / "evidence" / "submissions").exists():
+            self.skipTest("full submissions evidence unavailable")
+
+    def test_ten_k_a_targets_resolve_original_full_instance(self) -> None:
+        """Southwest/Paramount-like amended targets must find original 10-K rows."""
+        matches = 0
+        for role_row in sec_pipeline.all_role_rows():
+            rows = sec_pipeline.recent_filing_rows(
+                company=role_row["company"],
+                cik=int(role_row["cik"]),
+                entity_role=role_row["entity_role"],
+            )
+            target = sec_pipeline.select_latest_10k(rows=rows)
+            if target["form"] != "10-K/A":
+                continue
+            fallback = sec_pipeline.original_full_instance_fallback_row(
+                rows=rows,
+                target=target,
+                company_config=sec_pipeline.company_by_name(
+                    company_name=role_row["company"],
+                ),
+                parsed_rows=None,
+            )
+            self.assertIsNotNone(fallback)
+            self.assertEqual(fallback["source_role"], "target_original_full_instance")
+            self.assertEqual(fallback["form"], "10-K")
+            self.assertEqual(fallback["reportDate"], target["reportDate"])
+            matches += 1
+        self.assertGreaterEqual(matches, 2)
+
+    def test_sparse_instance_rows_trigger_fallback_reason(self) -> None:
+        """Tiny parsed target instance must be marked fallback-worthy."""
+        company_config = sec_pipeline.load_company_registry()[0]
+        target = {
+            "form": "10-K",
+            "reportDate": date(year=2025, month=12, day=31).isoformat(),
+            "accessionNumber": "mock-accession",
+        }
+        reasons = sec_pipeline.full_instance_fallback_reasons(
+            target=target,
+            company_config=company_config,
+            parsed_rows=[],
+        )
+        self.assertIn("target_instance_fact_count_lt_500", reasons)
+
+
+class ScannerConstantFoldingTest(unittest.TestCase):
+    """Validate AST scanner catches string-addition identity tampering."""
+
+    def test_string_addition_tamper_is_detected(self) -> None:
+        """String constant folding must catch split company names."""
+        self.assertTrue(sec_pipeline.scanner_constant_folding_tamper_detected())
+
+
+class ImplementationMapTest(unittest.TestCase):
+    """Validate repair instructions are mapped to implementation evidence."""
+
+    def test_implementation_map_covers_all_instruction_ids(self) -> None:
+        """I1-I8 must each have at least one map row."""
+        rows = sec_pipeline.implementation_map_rows()
+        instruction_ids = {row["instruction_id"] for row in rows}
+        self.assertEqual(
+            instruction_ids,
+            {"I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8"},
+        )
 
 
 if __name__ == "__main__":

@@ -8,6 +8,12 @@ Generated UTC: 2026-07-07T08:02:47.609576+00:00
 - Subscription/contract B12: rejected small context/date noise when it is not an RPO/cRPO fact.
 - C03: rejected previous `ecd_fact_count`; C03 now uses ecd:PeoTotalCompAmt or is degraded.
 
+## Full-instance fallback notes
+
+- Southwest Airlines 2025-12-31 original 10-K is marked `target_original_full_instance` for full-instance fallback from an amended or partial target.
+- Paramount Skydance / Paramount Global 2025-12-31 original 10-K is marked `target_original_full_instance` for full-instance fallback from an amended or partial target.
+- Paramount Skydance / Paramount Global 2024-12-31 original 10-K is marked `target_original_full_instance` for full-instance fallback from an amended or partial target.
+
 ## 仍需复核或未抽取项目
 
 | Company | Metric | Status | Reason |

@@ -1,0 +1,9 @@
+instruction_id,file,function_or_line,validation_id,status,notes
+I1,outputs/review_package_manifest.md,Round 3 metadata and verdict vocabulary,manual_manifest_review,implemented,Manifest distinguishes pipeline self-verdict from external audit verdict.
+I2,scripts/sec_pipeline.py,concept_is_basel_threshold_or_requirement,basel_threshold_concepts_never_match_primary_metric,implemented,Bare wellcapitalized concepts remain regulatory_threshold candidates only.
+I3,scripts/sec_pipeline.py,captive_dimension_member_allowed,gm_like_captive_finance_fixture_triggers_review,implemented,Contains matching is guarded by ordinary credit and lease exclusions.
+I4,tests/fixtures/eleventh_company_smoke/mock_concept_inventory.csv,check_eleventh_company_behavior_financial_institution,eleventh_company_behavior_financial_institution,implemented,"Fixture asserts selected concept, context, dimensions, and value."
+I5,scripts/sec_pipeline.py,original_full_instance_fallback_row,FullInstanceFallbackTest,implemented,10-K/A targets map to same-period original 10-K full-instance role.
+I6,scripts/sec_pipeline.py,parse_instance_with_fallback,basel_ratio_extractor_not_single_issuer_specific,implemented,"Inline route, scale/sign cases, and amount crosscheck protect derived inputs."
+I7,scripts/sec_pipeline.py,python_literal_values_from_source,no_company_identity_branch_in_production,implemented,AST scanner folds string addition before identity matching.
+I8,outputs/implementation_map.csv,implementation_map_rows,python3 scripts/12_validate_repair.py,implemented,Map is regenerated with validation output.

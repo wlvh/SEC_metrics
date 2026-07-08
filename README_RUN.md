@@ -83,6 +83,7 @@ python3 tools/check_no_company_literals.py
 - `outputs/stratified_audit.csv`
 - `outputs/events.csv`
 - `outputs/golden_results.csv`
+- `outputs/implementation_map.csv`
 - `REPORT_十公司财务指标.md`
 
 ## 轻量审核包
@@ -90,5 +91,7 @@ python3 tools/check_no_company_literals.py
 - 审核包只纳入代码、配置、fixture、关键 outputs 和报告；不纳入 `evidence/`、大体量 `outputs/concept_inventory/`、`__pycache__/` 或 `.DS_Store`。
 - 轻量包中 `python3 scripts/12_validate_repair.py` 运行 `LIGHT_REVIEW_MODE`：可重跑代码级、矩阵级和随包 audit gate；缺 raw evidence 的检查必须显示为 `SKIPPED_LIGHT_PACKAGE`。
 - 轻量包中 `python3 scripts/10_run_golden_assertions.py` 重算随包 `outputs/golden_results.csv` snapshot integrity，通过时输出 `PASS_LIGHT_GOLDEN_INTEGRITY`；完整数值 golden rerun 需要本地完整 `evidence/`。
+- `outputs/implementation_map.csv` 映射 I1-I8 的实现位置、validation id 和当前状态，供审计方逐项复核。
+- `GO WITH CAVEATS` 是 pipeline self-verdict；`ACCEPT WITH CAVEATS` 仅保留给外部审计验收结论。
 - 包清单写入 `outputs/review_package_manifest.md`；压缩包写入 `outputs/review_package/`。
 - 若审核官需要追溯 raw SEC source，回到本地完整工作区读取 `evidence/` 和 `outputs/concept_inventory/`。

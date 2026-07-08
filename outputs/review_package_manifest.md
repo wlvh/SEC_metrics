@@ -1,10 +1,10 @@
-# SEC_metrics Round 2 Review Package Manifest
+# SEC_metrics Round 3 Review Package Manifest
 
-Generated UTC: 2026-07-07T08:01:36Z
+Generated UTC: 2026-07-08T12:35:07Z
 
 ## Purpose
 
-This package is the lightweight reviewer handoff for the second round of
+This package is the lightweight reviewer handoff for the third round of
 de-company-specialization repair. It includes only files needed to review code,
 configuration, fixtures, validation outputs, and human-readable reports.
 
@@ -26,6 +26,7 @@ configuration, fixtures, validation outputs, and human-readable reports.
 - `outputs/coverage_matrix.csv`
 - `outputs/golden_results.csv`
 - `outputs/repair_validation_results.csv`
+- `outputs/implementation_map.csv`
 - `outputs/scalability_audit.csv`
 - `outputs/exceptions_and_review_items.md`
 - `outputs/stratified_audit.csv`
@@ -49,9 +50,16 @@ configuration, fixtures, validation outputs, and human-readable reports.
 ## Full Workspace Validation Snapshot
 
 - `python3 scripts/10_run_golden_assertions.py`: PASS, 57 golden rows.
-- `python3 scripts/12_validate_repair.py`: PASS, 39 repair validations, `validation_package_mode=FULL_VALIDATION`.
+- `python3 scripts/12_validate_repair.py`: PASS, 38 data rows in `outputs/repair_validation_results.csv`; 39 file lines including header; `validation_package_mode=FULL_VALIDATION`.
 - `python3 tools/check_no_company_literals.py`: PASS, 0 scalability violations.
 - `outputs/stratified_audit.csv`: PASS, 19 audit rows.
+- `outputs/implementation_map.csv`: 8 data rows mapping I1-I8 to implementation and validation.
+
+## Verdict Vocabulary
+
+- `GO WITH CAVEATS` is the pipeline self-verdict from generated validation and metric status.
+- `ACCEPT WITH CAVEATS` is reserved for an external audit verdict after reviewer evidence acceptance.
+- This light package does not claim full SEC evidence acceptance.
 
 ## Light Package Self-Contained Rerun
 
@@ -59,8 +67,9 @@ configuration, fixtures, validation outputs, and human-readable reports.
 - `python3 scripts/12_validate_repair.py`: PASS_LIGHT_REVIEW only for an explicitly marked light package.
 - Full-evidence checks are explicitly marked `SKIPPED_LIGHT_PACKAGE`, including request log and instance-inventory dependent probes.
 - `python3 scripts/10_run_golden_assertions.py`: recomputes included `outputs/golden_results.csv` snapshot integrity and reports `PASS_LIGHT_GOLDEN_INTEGRITY`; raw companyfacts rerun requires full `evidence/`.
-- This light package is suitable for code/config/fixture review and stratified audit gate replay. It is not a substitute for complete SEC evidence acceptance.
+- This light package is suitable for code/config/fixture review, implementation-map review, and stratified audit gate replay. It is not a substitute for complete SEC evidence acceptance.
 
 ## Package File
 
-- `outputs/review_package/SEC_metrics_repair_round3_review_20260707T080136Z.zip`
+- `outputs/review_package/SEC_metrics_repair_round3_light_20260708T123507Z.zip`
+- `outputs/review_package/SEC_metrics_repair_round3_full_evidence_20260708T123507Z.zip`

@@ -214,6 +214,15 @@ REPAIR_VALIDATION_FIELDNAMES = [
     "details",
 ]
 
+IMPLEMENTATION_MAP_FIELDNAMES = [
+    "instruction_id",
+    "file",
+    "function_or_line",
+    "validation_id",
+    "status",
+    "notes",
+]
+
 STRATIFIED_AUDIT_FIELDNAMES = [
     "audit_id",
     "source_bucket",
@@ -268,6 +277,7 @@ BASEL_THRESHOLD_CONCEPT_FRAGMENTS = [
     "capitaladequacyminimum",
     "requiredforcapitaladequacy",
     "requiredtobewellcapitalized",
+    "wellcapitalized",
     "wellcapitalizedminimum",
     "tobewellcapitalized",
 ]
@@ -1340,6 +1350,185 @@ def select_prior_10k(*, rows: list[dict], target_report_date: str) -> dict:
     return sorted_filings(rows=same_period)[0]
 
 
+def same_period_original_10k(*, rows: list[dict], target: dict) -> dict | None:
+    """Return the same-fiscal-year original 10-K for an amended target.
+
+    Args:
+        rows: Flattened submissions rows for one configured role.
+        target: Selected target 10-K or 10-K/A row.
+
+    Returns:
+        Latest original 10-K for the same reportDate, or None when the SEC
+        filing history does not provide one.
+    """
+    originals = [
+        row
+        for row in rows
+        if row["form"] == "10-K"
+        and row["reportDate"] == target["reportDate"]
+        and row["accessionNumber"] != target["accessionNumber"]
+    ]
+    if not originals:
+        return None
+    return sorted_filings(rows=originals)[0]
+
+
+def instance_rows_have_dei_key_facts(*, rows: list[dict]) -> bool:
+    """Return whether parsed rows contain core DEI identity/date facts."""
+    concepts = {row["concept"] for row in rows}
+    required = {
+        "DocumentType",
+        "DocumentPeriodEndDate",
+        "EntityRegistrantName",
+    }
+    return bool(required.intersection(concepts))
+
+
+def instance_rows_have_basel_key_facts(*, rows: list[dict]) -> bool:
+    """Return whether parsed rows contain Basel ratio facts on methodology axes."""
+    return any(
+        dimensions_have_basel_methodology(dimensions=row["dimensions"])
+        and concept_has_rwa_ratio_semantics(
+            normalized=normalized_concept_name(concept=row["concept"]),
+        )
+        for row in rows
+    )
+
+
+def instance_rows_have_rpo_key_facts(*, rows: list[dict]) -> bool:
+    """Return whether parsed rows contain explicit RPO/cRPO facts."""
+    return any(rpo_crpo_concept(concept=row["concept"]) for row in rows)
+
+
+def instance_rows_have_debt_dimension_key_facts(*, rows: list[dict]) -> bool:
+    """Return whether parsed rows contain debt facts with segment dimensions."""
+    return any(row_has_captive_finance_signal(row=row) for row in rows)
+
+
+def required_instance_fact_groups(*, company_config: dict) -> list[str]:
+    """Return key instance fact groups expected for one registry profile.
+
+    Args:
+        company_config: Loaded company registry row.
+
+    Returns:
+        Group names used to decide whether an amended or tiny target instance
+        should fall back to a same-period original 10-K full instance.
+    """
+    extractors = company_extractors(company_config=company_config)
+    groups = ["dei"]
+    if has_extractor(
+        extractors=extractors,
+        extractor_name="BaselCapitalRatioExtractor",
+    ):
+        groups.append("basel")
+    if has_extractor(extractors=extractors, extractor_name="RpoCrpoExtractor"):
+        groups.append("rpo")
+    if has_extractor(
+        extractors=extractors,
+        extractor_name="CaptiveFinanceDebtExtractor",
+    ):
+        groups.append("debt_dimension")
+    return groups
+
+
+def missing_instance_fact_groups(
+    *,
+    rows: list[dict],
+    company_config: dict,
+) -> list[str]:
+    """Return required instance fact groups absent from parsed rows.
+
+    Args:
+        rows: Parsed target instance rows.
+        company_config: Loaded company registry row.
+
+    Returns:
+        Missing group names. A non-empty result is a reason to inspect the
+        same-period original 10-K full instance instead of trusting an amended
+        or partial target instance.
+    """
+    checks = {
+        "dei": instance_rows_have_dei_key_facts,
+        "basel": instance_rows_have_basel_key_facts,
+        "rpo": instance_rows_have_rpo_key_facts,
+        "debt_dimension": instance_rows_have_debt_dimension_key_facts,
+    }
+    missing = []
+    for group in required_instance_fact_groups(company_config=company_config):
+        if not checks[group](rows=rows):
+            missing.append(group)
+    return missing
+
+
+def full_instance_fallback_reasons(
+    *,
+    target: dict,
+    company_config: dict,
+    parsed_rows: list[dict] | None,
+) -> list[str]:
+    """Return reasons to use a same-period original 10-K full instance.
+
+    Args:
+        target: Selected target filing row.
+        company_config: Loaded company registry row.
+        parsed_rows: Parsed target instance rows, or None before parsing.
+
+    Returns:
+        Reason codes. Empty means the target instance is sufficient.
+    """
+    reasons = []
+    if target["form"] == "10-K/A":
+        reasons.append("target_form_10_k_a")
+    if parsed_rows is None:
+        return reasons
+    if len(parsed_rows) < 500:
+        reasons.append("target_instance_fact_count_lt_500")
+    missing_groups = missing_instance_fact_groups(
+        rows=parsed_rows,
+        company_config=company_config,
+    )
+    if missing_groups:
+        reasons.append("missing_instance_fact_groups:" + ",".join(missing_groups))
+    return reasons
+
+
+def original_full_instance_fallback_row(
+    *,
+    rows: list[dict],
+    target: dict,
+    company_config: dict,
+    parsed_rows: list[dict] | None,
+) -> dict | None:
+    """Return a fallback inventory row when original full instance is needed.
+
+    Args:
+        rows: Flattened submissions rows for one configured role.
+        target: Selected target 10-K or 10-K/A row.
+        company_config: Loaded company registry row.
+        parsed_rows: Parsed target instance rows, or None before parsing.
+
+    Returns:
+        latest_filings_inventory row with source_role
+        target_original_full_instance, or None when no fallback is required or
+        no same-period original 10-K exists.
+    """
+    reasons = full_instance_fallback_reasons(
+        target=target,
+        company_config=company_config,
+        parsed_rows=parsed_rows,
+    )
+    if not reasons:
+        return None
+    original = same_period_original_10k(rows=rows, target=target)
+    if original is None:
+        return None
+    return filing_output_row(
+        row=original,
+        source_role="target_original_full_instance",
+    )
+
+
 def select_latest_def14a(*, rows: list[dict]) -> dict | None:
     """Select the latest DEF 14A from submissions rows when available."""
     candidates = [row for row in rows if str(row["form"]) == "DEF 14A"]
@@ -1418,6 +1607,10 @@ def stage_inventory_filings() -> None:
     ensure_output_dirs()
     http = client()
     inventory_rows = []
+    companies_by_id = {
+        company["company_id"]: company
+        for company in load_company_registry()
+    }
     for role_row in all_role_rows():
         cik = int(role_row["cik"])
         ensure_submission_supplementals(http=http, cik=cik, max_files=12)
@@ -1447,6 +1640,14 @@ def stage_inventory_filings() -> None:
         inventory_rows.append(
             filing_output_row(row=target, source_role="target_10k")
         )
+        fallback = original_full_instance_fallback_row(
+            rows=rows,
+            target=target,
+            company_config=companies_by_id[str(role_row["company_id"])],
+            parsed_rows=None,
+        )
+        if fallback is not None:
+            inventory_rows.append(fallback)
         if prior is not None:
             inventory_rows.append(
                 filing_output_row(row=prior, source_role="prior_10k")
@@ -3107,7 +3308,7 @@ def stage_fetch_accession_materials() -> None:
     target_rows = [
         row
         for row in inventory
-        if row["source_role"] == "target_10k"
+        if row["source_role"] in {"target_10k", "target_original_full_instance"}
     ]
     for row in target_rows:
         cik = int(row["cik"])
@@ -3596,9 +3797,32 @@ def parse_inline_instance(*, file_path: Path, material_row: dict) -> list[dict]:
     return parser.rows
 
 
+def file_contains_inline_xbrl(*, file_path: Path) -> bool:
+    """Return whether a saved instance contains inline XBRL fact tags.
+
+    Args:
+        file_path: Local accession material path.
+
+    Returns:
+        True when iXBRL tags are present. This check protects scale handling:
+        well-formed inline files can be XML-parseable, but XML streaming does
+        not apply ix:nonFraction scale/sign semantics.
+    """
+    with file_path.open(mode="r", encoding="utf-8", errors="replace") as file_obj:
+        while True:
+            chunk = file_obj.read(1024 * 1024)
+            if not chunk:
+                return False
+            lowered = chunk.lower()
+            if "<ix:" in lowered or "xmlns:ix=" in lowered:
+                return True
+
+
 def parse_instance_with_fallback(*, material_row: dict) -> list[dict]:
-    """Parse one instance using XML streaming, then inline fallback on parse errors."""
+    """Parse one instance using the route that preserves fact value semantics."""
     file_path = Path(material_row["local_path"])
+    if file_contains_inline_xbrl(file_path=file_path):
+        return parse_inline_instance(file_path=file_path, material_row=material_row)
     try:
         return parse_xbrl_xml_instance(file_path=file_path, material_row=material_row)
     except ElementTree.ParseError as error:
@@ -7450,22 +7674,25 @@ def captive_dimension_member_allowed(*, member: str) -> bool:
     """
     member_local = member.split(":")[-1]
     normalized = normalized_concept_name(concept=member_local)
-    if normalized.endswith("creditmember"):
-        return True
-    if normalized.endswith("financialservicesmember"):
-        return True
-    if normalized.endswith("captivefinancemember"):
-        return True
-    if normalized.endswith("financingsubsidiarymember"):
-        return True
-    if normalized.startswith("companyexcluding") and normalized.endswith("creditmember"):
-        return True
-    if (
-        normalized.startswith("companyexcluding")
-        and normalized.endswith("financialservicesmember")
-    ):
-        return True
-    return False
+    excluded_fragments = [
+        "creditloss",
+        "creditfacility",
+        "lineofcredit",
+        "letterofcredit",
+        "financelease",
+        "deferredfinancecosts",
+        "supplierfinance",
+    ]
+    if any(fragment in normalized for fragment in excluded_fragments):
+        return False
+    captive_fragments = [
+        "credit",
+        "financial",
+        "financing",
+        "captivefinance",
+        "capitalcorporation",
+    ]
+    return any(fragment in normalized for fragment in captive_fragments)
 
 
 def dimension_pairs(*, dimensions: str) -> list[tuple[str, str]]:
@@ -8343,6 +8570,52 @@ def audit_python_literal(
     return rows
 
 
+def folded_ast_literal_value(*, node: ast.AST) -> object | None:
+    """Return a statically folded literal value for scanner-relevant nodes.
+
+    Args:
+        node: AST node from Python source.
+
+    Returns:
+        String/int constant value, folded string concatenation result, or None
+        when runtime evaluation would be required.
+    """
+    if isinstance(node, ast.Constant) and isinstance(node.value, (str, int)):
+        return node.value
+    if not isinstance(node, ast.BinOp) or not isinstance(node.op, ast.Add):
+        return None
+    left = folded_ast_literal_value(node=node.left)
+    right = folded_ast_literal_value(node=node.right)
+    if isinstance(left, str) and isinstance(right, str):
+        return left + right
+    return None
+
+
+def python_literal_values_from_source(
+    *,
+    source: str,
+    filename: str,
+) -> list[tuple[int, object]]:
+    """Return scanner-relevant literal values from Python source text.
+
+    Args:
+        source: Python source code.
+        filename: Filename used in parser diagnostics.
+
+    Returns:
+        Tuples of one-based line number and literal value. String addition is
+        folded so company identity cannot be hidden through adjacent literals.
+    """
+    tree = ast.parse(source=source, filename=filename)
+    literals = []
+    for node in ast.walk(tree):
+        value = folded_ast_literal_value(node=node)
+        if value is None:
+            continue
+        literals.append((node.lineno, value))
+    return literals
+
+
 def python_literal_values(*, path: Path) -> list[tuple[int, object]]:
     """Return AST constant literals from one Python source file.
 
@@ -8350,19 +8623,13 @@ def python_literal_values(*, path: Path) -> list[tuple[int, object]]:
         path: Python source path.
 
     Returns:
-        Tuples of one-based line number and literal value for string and integer
-        constants, including assignment values, arguments, dict keys, and
-        conditional expressions.
+        Tuples of one-based line number and literal value for scanner-relevant
+        constants, including folded string additions.
     """
-    source = path.read_text(encoding="utf-8")
-    tree = ast.parse(source=source, filename=str(path))
-    literals = []
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.Constant):
-            continue
-        if isinstance(node.value, (str, int)):
-            literals.append((node.lineno, node.value))
-    return literals
+    return python_literal_values_from_source(
+        source=path.read_text(encoding="utf-8"),
+        filename=str(path),
+    )
 
 
 def production_python_paths() -> list[Path]:
@@ -8404,10 +8671,30 @@ def write_scalability_audit() -> list[dict]:
     return rows
 
 
+def scanner_constant_folding_tamper_detected() -> bool:
+    """Return whether string-addition company identity tampering is caught."""
+    source = "\"Ford Motor \" + \"Company\"\n"
+    fixture_path = WORKDIR / "scripts" / "constant_folding_tamper.py"
+    for line_number, literal_value in python_literal_values_from_source(
+        source=source,
+        filename=str(fixture_path),
+    ):
+        audit_rows = audit_python_literal(
+            file_path=fixture_path,
+            line_number=line_number,
+            literal_value=literal_value,
+        )
+        if any(row["type"] == "company_name" for row in audit_rows):
+            return True
+    return False
+
+
 def check_no_company_identity_branch_in_production() -> dict:
     """Validate production branches do not use company identity literals."""
     rows = write_scalability_audit()
     failures = [row for row in rows if row["allowed"] != "1"]
+    if not scanner_constant_folding_tamper_detected():
+        failures.append({"literal": "string_addition_tamper"})
     return validation_row(
         check_id="no_company_identity_branch_in_production",
         status="PASS" if not failures else "FAIL",
@@ -8707,6 +8994,96 @@ def check_rpo_crpo_prefers_instance_fact(
     )
 
 
+def scaled_inline_value_validation_failures() -> list[str]:
+    """Return failures for focused iXBRL scale/sign value cases.
+
+    Returns:
+        Empty list when positive scale, negative scale, sign, parentheses,
+        double-negative protection, and nonnumeric passthrough all behave.
+    """
+    cases = [
+        ("positive_scale", "294804", "6", "", "294804000000"),
+        ("negative_scale", "123456", "-3", "", "123.456"),
+        ("sign_negative", "100", "6", "-", "-100000000"),
+        ("parentheses_negative", "(100)", "6", "", "-100000000"),
+        ("sign_parentheses_double_negative", "(100)", "6", "-", "-100000000"),
+        ("nonnumeric_passthrough", "not available", "6", "", "not available"),
+    ]
+    failures = []
+    for case_id, value, scale, sign, expected in cases:
+        actual = scaled_inline_value(value=value, scale=scale, sign=sign)
+        if actual != expected:
+            failures.append(f"{case_id}:{actual}!={expected}")
+    return failures
+
+
+def inline_scale_route_fixture_failures() -> list[str]:
+    """Return failures for the parser route that must preserve ix scale.
+
+    Returns:
+        Empty list when an XML-parseable iXBRL fixture still takes the inline
+        parser route and emits a scaled USD amount.
+    """
+    fixture_path = (
+        WORKDIR
+        / "tests"
+        / "fixtures"
+        / "inline_scale_route"
+        / "mock_inline_scale.xml"
+    )
+    if not fixture_path.exists():
+        return ["inline_scale_route_fixture_missing"]
+    material_row = {
+        "company": "inline scale fixture",
+        "cik": "0",
+        "accession": "mock-inline-scale",
+        "document_name": fixture_path.name,
+        "local_path": str(fixture_path),
+    }
+    rows = parse_instance_with_fallback(material_row=material_row)
+    matches = [
+        row
+        for row in rows
+        if row["concept"] == "CommonEquityTier1Capital"
+        and row["value"] == "294804000000"
+        and "LegalEntityAxis" in row["dimensions"]
+    ]
+    return [] if matches else ["inline_scale_route_did_not_apply_scale"]
+
+
+def jpm_cet1_capital_scale_crosscheck_failures() -> list[str]:
+    """Return failures for the full-evidence JPM CET1 capital scale check.
+
+    Returns:
+        Empty list when the complete local evidence is absent or when the known
+        dimensional CET1 capital amount is present with scaled dollars. Absence
+        of full evidence is intentionally not a light-package proof.
+    """
+    path = WORKDIR / "outputs" / "concept_inventory" / "jpmorgan_chase_instance.csv"
+    if not path.exists():
+        return []
+    period_end = date(year=2025, month=12, day=31).isoformat()
+    matches = [
+        row
+        for row in read_csv_file(path=path)
+        if row["concept"] == "CommonEquityTier1Capital"
+        and row["value"] == "294804000000"
+        and row["period_end"] == period_end
+        and "BaselIIIStandardizedMember" in row["dimensions"]
+        and "JpmorganChaseBankNAMember" in row["dimensions"]
+    ]
+    return [] if matches else ["jpm_cet1_capital_scaled_value_missing"]
+
+
+def ixbrl_scale_validation_failures() -> list[str]:
+    """Return all iXBRL scale validation failures."""
+    return (
+        scaled_inline_value_validation_failures()
+        + inline_scale_route_fixture_failures()
+        + jpm_cet1_capital_scale_crosscheck_failures()
+    )
+
+
 def check_basel_ratio_extractor(
     *,
     metrics: list[dict],
@@ -8745,10 +9122,15 @@ def check_basel_ratio_extractor(
                 or not matching
             ):
                 failures.append(f"{company}:{metric_id}")
+    failures.extend(ixbrl_scale_validation_failures())
     return validation_row(
         check_id="basel_ratio_extractor_not_single_issuer_specific",
         status="PASS" if not failures else "FAIL",
-        details=";".join(failures) if failures else "Basel ratios verified",
+        details=(
+            ";".join(failures)
+            if failures
+            else "Basel ratios and iXBRL scale route verified"
+        ),
     )
 
 
@@ -8810,6 +9192,7 @@ def check_basel_threshold_concepts_never_match_primary_metric() -> dict:
         "TierOneRiskBasedCapitalRequiredForCapitalAdequacyToRiskWeightedAssets",
         "TierOneRiskBasedCapitalRequiredToBeWellCapitalizedToRiskWeightedAssets",
         "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatioWellCapitalizedMinimum",
+        "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatioWellCapitalized",
         "CommonEquityTierOneCapitalToBeWellCapitalizedToRiskWeightedAssets",
     ]
     failures = []
@@ -8851,7 +9234,7 @@ def check_basel_primary_selection_prefers_actual_ratio_over_threshold() -> dict:
         {
             "concept": (
                 "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatio"
-                "CapitalAdequacyMinimum"
+                "WellCapitalized"
             ),
             "unit": "pure",
             "period_end": period_end,
@@ -8965,6 +9348,30 @@ def check_captive_finance_excludes_normal_finance_lease_terms() -> dict:
             "concept": "SupplierFinanceProgramObligation",
             "dimensions": "srt:ConsolidatedEntitiesAxis=example:CreditMember",
         },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": "us-gaap:LegalEntityAxis=example:CreditLossMember",
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": "us-gaap:LegalEntityAxis=example:CreditFacilityMember",
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": "us-gaap:LegalEntityAxis=example:LineOfCreditMember",
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": "us-gaap:LegalEntityAxis=example:LetterOfCreditMember",
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": "us-gaap:LegalEntityAxis=example:FinanceLeaseLiabilityMember",
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": "us-gaap:LegalEntityAxis=example:DeferredFinanceCostsMember",
+        },
     ]
     has_signal = captive_finance_signal_from_rows(rows=rows)
     return validation_row(
@@ -8997,18 +9404,44 @@ def check_enphase_b06_not_captive_finance_false_positive(*, metrics: list[dict])
 
 
 def check_gm_like_captive_finance_fixture_triggers_review() -> dict:
-    """Validate GM-like segment member triggers captive review."""
+    """Validate captive-finance segment member variants trigger review."""
     rows = [
         {
             "concept": "LongTermDebtAndCapitalLeaseObligations",
             "dimensions": "us-gaap:StatementBusinessSegmentsAxis=example:CaptiveFinanceMember",
-        }
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": (
+                "us-gaap:LegalEntityAxis=example:"
+                "GeneralMotorsFinancialCompanyIncMember"
+            ),
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": (
+                "us-gaap:LegalEntityAxis=example:"
+                "JohnDeereCapitalCorporationMember"
+            ),
+        },
+        {
+            "concept": "LongTermDebtAndCapitalLeaseObligations",
+            "dimensions": "us-gaap:LegalEntityAxis=example:FordCreditMember",
+        },
     ]
-    has_signal = captive_finance_signal_from_rows(rows=rows)
+    misses = [
+        row["dimensions"]
+        for row in rows
+        if not row_has_captive_finance_signal(row=row)
+    ]
     return validation_row(
         check_id="gm_like_captive_finance_fixture_triggers_review",
-        status="PASS" if has_signal else "FAIL",
-        details="GM-like captive segment matched" if has_signal else "fixture missed",
+        status="PASS" if not misses else "FAIL",
+        details=(
+            "captive member variants matched"
+            if not misses
+            else ";".join(misses)
+        ),
     )
 
 
@@ -9172,23 +9605,32 @@ def check_eleventh_company_behavior_financial_institution() -> dict:
     """Validate FI behavior fixture extracts A01/A02 Basel ratios."""
     rows = eleventh_rows_for_profile(profile="financial_institution")
     failures = []
-    period_end = rows[0]["period_end"] if rows else ""
-    expected_concepts = {
-        "A01": "TierOneRiskBasedCapitalToRiskWeightedAssets",
-        "A02": "CommonEquityTierOneCapitalToRiskWeightedAssets",
-    }
     for metric_id in ["A01", "A02"]:
+        expected_rows = [
+            row
+            for row in rows
+            if row["expected_value"]
+            and concept_matches_basel_metric(
+                concept=row["concept"],
+                metric_id=metric_id,
+            )
+        ]
+        if len(expected_rows) != 1:
+            failures.append(f"{metric_id}:expected_fixture")
+            continue
+        expected = expected_rows[0]
         candidates = basel_ratio_candidates_from_rows(
             rows=rows,
             metric_id=metric_id,
-            period_end=period_end,
+            period_end=expected["period_end"],
         )
         if not candidates:
             failures.append(metric_id)
             continue
         selected = selected_basel_ratio_fact(rows=candidates)
-        if selected["concept"] != expected_concepts[metric_id]:
-            failures.append(f"{metric_id}:{selected['concept']}")
+        for field in ["concept", "context", "dimensions", "value"]:
+            if selected[field] != expected[field]:
+                failures.append(f"{metric_id}:{field}:{selected[field]}")
     return validation_row(
         check_id="eleventh_company_behavior_financial_institution",
         status="PASS" if not failures else "FAIL",
@@ -9674,6 +10116,92 @@ def write_stratified_audit() -> list[dict]:
     return rows
 
 
+def implementation_map_rows() -> list[dict]:
+    """Return instruction-to-implementation rows for the repair register.
+
+    Returns:
+        Rows for I1-I8 that an external reviewer can verify without guessing
+        which function, artifact, or validation owns a requested fix.
+    """
+    return [
+        {
+            "instruction_id": "I1",
+            "file": "outputs/review_package_manifest.md",
+            "function_or_line": "Round 3 metadata and verdict vocabulary",
+            "validation_id": "manual_manifest_review",
+            "status": "implemented",
+            "notes": "Manifest distinguishes pipeline self-verdict from external audit verdict.",
+        },
+        {
+            "instruction_id": "I2",
+            "file": "scripts/sec_pipeline.py",
+            "function_or_line": "concept_is_basel_threshold_or_requirement",
+            "validation_id": "basel_threshold_concepts_never_match_primary_metric",
+            "status": "implemented",
+            "notes": "Bare wellcapitalized concepts remain regulatory_threshold candidates only.",
+        },
+        {
+            "instruction_id": "I3",
+            "file": "scripts/sec_pipeline.py",
+            "function_or_line": "captive_dimension_member_allowed",
+            "validation_id": "gm_like_captive_finance_fixture_triggers_review",
+            "status": "implemented",
+            "notes": "Contains matching is guarded by ordinary credit and lease exclusions.",
+        },
+        {
+            "instruction_id": "I4",
+            "file": "tests/fixtures/eleventh_company_smoke/mock_concept_inventory.csv",
+            "function_or_line": "check_eleventh_company_behavior_financial_institution",
+            "validation_id": "eleventh_company_behavior_financial_institution",
+            "status": "implemented",
+            "notes": "Fixture asserts selected concept, context, dimensions, and value.",
+        },
+        {
+            "instruction_id": "I5",
+            "file": "scripts/sec_pipeline.py",
+            "function_or_line": "original_full_instance_fallback_row",
+            "validation_id": "FullInstanceFallbackTest",
+            "status": "implemented",
+            "notes": "10-K/A targets map to same-period original 10-K full-instance role.",
+        },
+        {
+            "instruction_id": "I6",
+            "file": "scripts/sec_pipeline.py",
+            "function_or_line": "parse_instance_with_fallback",
+            "validation_id": "basel_ratio_extractor_not_single_issuer_specific",
+            "status": "implemented",
+            "notes": "Inline route, scale/sign cases, and amount crosscheck protect derived inputs.",
+        },
+        {
+            "instruction_id": "I7",
+            "file": "scripts/sec_pipeline.py",
+            "function_or_line": "python_literal_values_from_source",
+            "validation_id": "no_company_identity_branch_in_production",
+            "status": "implemented",
+            "notes": "AST scanner folds string addition before identity matching.",
+        },
+        {
+            "instruction_id": "I8",
+            "file": "outputs/implementation_map.csv",
+            "function_or_line": "implementation_map_rows",
+            "validation_id": "python3 scripts/12_validate_repair.py",
+            "status": "implemented",
+            "notes": "Map is regenerated with validation output.",
+        },
+    ]
+
+
+def write_implementation_map() -> list[dict]:
+    """Write outputs/implementation_map.csv and return its rows."""
+    rows = implementation_map_rows()
+    write_csv_file(
+        path=WORKDIR / "outputs" / "implementation_map.csv",
+        fieldnames=IMPLEMENTATION_MAP_FIELDNAMES,
+        rows=rows,
+    )
+    return rows
+
+
 def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
     """Run P0 repair validation and optionally exit nonzero on failure.
 
@@ -9686,6 +10214,7 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
     metrics = load_metrics()
     evidence_rows = read_csv_file(path=WORKDIR / "outputs" / "metric_evidence.csv")
     coverage = read_csv_file(path=WORKDIR / "outputs" / "coverage_matrix.csv")
+    write_implementation_map()
     mode, light_reasons = validation_package_mode()
     if mode == "WORKSPACE_INCOMPLETE":
         rows = [workspace_incomplete_row(reasons=light_reasons)]
@@ -9902,11 +10431,32 @@ def build_exceptions_markdown() -> str:
             "ecd:PeoTotalCompAmt or is degraded."
         ),
         "",
-        "## 仍需复核或未抽取项目",
+        "## Full-instance fallback notes",
         "",
-        "| Company | Metric | Status | Reason |",
-        "|---|---|---|---|",
     ]
+    fallback_rows = [
+        row
+        for row in read_csv_file(path=WORKDIR / "outputs" / "latest_filings_inventory.csv")
+        if row["source_role"] == "target_original_full_instance"
+    ]
+    if fallback_rows:
+        for row in fallback_rows:
+            lines.append(
+                f"- {row['company']} {row['reportDate']} original 10-K "
+                "is marked `target_original_full_instance` for full-instance "
+                "fallback from an amended or partial target."
+            )
+    else:
+        lines.append("- No target original full-instance fallback rows are marked.")
+    lines.extend(
+        [
+            "",
+            "## 仍需复核或未抽取项目",
+            "",
+            "| Company | Metric | Status | Reason |",
+            "|---|---|---|---|",
+        ]
+    )
     for row in rows:
         next_step = "improve the relevant industry extractor or source registry"
         if row["status"] == "NOT_EXTRACTED":
@@ -10363,6 +10913,7 @@ def build_readme() -> str:
             "- `outputs/stratified_audit.csv`",
             "- `outputs/events.csv`",
             "- `outputs/golden_results.csv`",
+            "- `outputs/implementation_map.csv`",
             "- `REPORT_十公司财务指标.md`",
             "",
             "## 轻量审核包",
@@ -10382,6 +10933,14 @@ def build_readme() -> str:
                 "重算随包 `outputs/golden_results.csv` snapshot integrity，"
                 "通过时输出 `PASS_LIGHT_GOLDEN_INTEGRITY`；完整数值 golden "
                 "rerun 需要本地完整 `evidence/`。"
+            ),
+            (
+                "- `outputs/implementation_map.csv` 映射 I1-I8 的实现位置、"
+                "validation id 和当前状态，供审计方逐项复核。"
+            ),
+            (
+                "- `GO WITH CAVEATS` 是 pipeline self-verdict；"
+                "`ACCEPT WITH CAVEATS` 仅保留给外部审计验收结论。"
             ),
             (
                 "- 包清单写入 `outputs/review_package_manifest.md`；"
