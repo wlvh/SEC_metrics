@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbrl
+  xmlns="http://www.xbrl.org/2003/instance"
+  xmlns:dei="http://xbrl.sec.gov/dei/2024"
+  xmlns:ecd="http://xbrl.sec.gov/ecd/2024"
+  xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+  xmlns:link="http://www.xbrl.org/2003/linkbase"
+  xmlns:us-gaap="http://fasb.org/us-gaap/2024"
+  xmlns:xbrldi="http://xbrl.org/2006/xbrldi"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+    <link:schemaRef xlink:href="para-20241231.xsd" xlink:type="simple"/>
+    <context id="P01_01_2024To12_31_2024">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000813828</identifier>
+        </entity>
+        <period>
+            <startDate>2024-01-01</startDate>
+            <endDate>2024-12-31</endDate>
+        </period>
+    </context>
+    <context id="PAsOn06_28_2024">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000813828</identifier>
+        </entity>
+        <period>
+            <instant>2024-06-28</instant>
+        </period>
+    </context>
+    <context id="P01_01_2024To12_31_2024_CommonClassAMemberusgaapStatementClassOfStockAxis">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000813828</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassAMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <startDate>2024-01-01</startDate>
+            <endDate>2024-12-31</endDate>
+        </period>
+    </context>
+    <context id="P01_01_2024To12_31_2024_CommonClassBMemberusgaapStatementClassOfStockAxis">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000813828</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassBMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <startDate>2024-01-01</startDate>
+            <endDate>2024-12-31</endDate>
+        </period>
+    </context>
+    <context id="PAsOn02_21_2025_CommonClassBMemberusgaapStatementClassOfStockAxis">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000813828</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassBMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-02-21</instant>
+        </period>
+    </context>
+    <context id="PAsOn02_21_2025_CommonClassAMemberusgaapStatementClassOfStockAxis">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000813828</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassAMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-02-21</instant>
+        </period>
+    </context>
+    <unit id="Unit_USD">
+        <measure>iso4217:USD</measure>
+    </unit>
+    <unit id="Unit_shares">
+        <measure>shares</measure>
+    </unit>
+    <dei:EntityCentralIndexKey contextRef="P01_01_2024To12_31_2024" id="hidden139784805">0000813828</dei:EntityCentralIndexKey>
+    <dei:AmendmentFlag contextRef="P01_01_2024To12_31_2024" id="hidden139784806">true</dei:AmendmentFlag>
+    <dei:DocumentFiscalPeriodFocus contextRef="P01_01_2024To12_31_2024" id="hidden139784804">FY</dei:DocumentFiscalPeriodFocus>
+    <dei:DocumentType contextRef="P01_01_2024To12_31_2024" id="ixv-12068">10-K/A</dei:DocumentType>
+    <dei:DocumentAnnualReport contextRef="P01_01_2024To12_31_2024" id="ixv-12069">true</dei:DocumentAnnualReport>
+    <dei:DocumentPeriodEndDate contextRef="P01_01_2024To12_31_2024" id="ixv-12070">2024-12-31</dei:DocumentPeriodEndDate>
+    <dei:CurrentFiscalYearEndDate contextRef="P01_01_2024To12_31_2024" id="ixv-12071">--12-31</dei:CurrentFiscalYearEndDate>
+    <dei:DocumentFiscalYearFocus contextRef="P01_01_2024To12_31_2024" id="ixv-12072">2024</dei:DocumentFiscalYearFocus>
+    <dei:DocumentTransitionReport contextRef="P01_01_2024To12_31_2024" id="ixv-12073">false</dei:DocumentTransitionReport>
+    <dei:EntityFileNumber contextRef="P01_01_2024To12_31_2024" id="ixv-12074">001-09553</dei:EntityFileNumber>
+    <dei:EntityRegistrantName contextRef="P01_01_2024To12_31_2024" id="ixv-12075">Paramount Global</dei:EntityRegistrantName>
+    <dei:EntityIncorporationStateCountryCode contextRef="P01_01_2024To12_31_2024" id="ixv-12076">DE</dei:EntityIncorporationStateCountryCode>
+    <dei:EntityTaxIdentificationNumber contextRef="P01_01_2024To12_31_2024" id="ixv-12077">04-2949533</dei:EntityTaxIdentificationNumber>
+    <dei:EntityAddressAddressLine1 contextRef="P01_01_2024To12_31_2024" id="ixv-12078">1515 Broadway</dei:EntityAddressAddressLine1>
+    <dei:EntityAddressCityOrTown contextRef="P01_01_2024To12_31_2024" id="ixv-12079">New York</dei:EntityAddressCityOrTown>
+    <dei:EntityAddressStateOrProvince contextRef="P01_01_2024To12_31_2024" id="ixv-12080">NY</dei:EntityAddressStateOrProvince>
+    <dei:EntityAddressPostalZipCode contextRef="P01_01_2024To12_31_2024" id="ixv-12081">10036</dei:EntityAddressPostalZipCode>
+    <dei:CityAreaCode contextRef="P01_01_2024To12_31_2024" id="ixv-12082">212</dei:CityAreaCode>
+    <dei:LocalPhoneNumber contextRef="P01_01_2024To12_31_2024" id="ixv-12083">258-6000</dei:LocalPhoneNumber>
+    <dei:Security12bTitle
+      contextRef="P01_01_2024To12_31_2024_CommonClassAMemberusgaapStatementClassOfStockAxis"
+      id="ixv-12084">Class A Common Stock, $0.001 par value</dei:Security12bTitle>
+    <dei:TradingSymbol
+      contextRef="P01_01_2024To12_31_2024_CommonClassAMemberusgaapStatementClassOfStockAxis"
+      id="ixv-12085">PARAA</dei:TradingSymbol>
+    <dei:SecurityExchangeName
+      contextRef="P01_01_2024To12_31_2024_CommonClassAMemberusgaapStatementClassOfStockAxis"
+      id="ixv-12086">NASDAQ</dei:SecurityExchangeName>
+    <dei:Security12bTitle
+      contextRef="P01_01_2024To12_31_2024_CommonClassBMemberusgaapStatementClassOfStockAxis"
+      id="ixv-12087">Class B Common Stock, $0.001 par value</dei:Security12bTitle>
+    <dei:TradingSymbol
+      contextRef="P01_01_2024To12_31_2024_CommonClassBMemberusgaapStatementClassOfStockAxis"
+      id="ixv-12088">PARA</dei:TradingSymbol>
+    <dei:SecurityExchangeName
+      contextRef="P01_01_2024To12_31_2024_CommonClassBMemberusgaapStatementClassOfStockAxis"
+      id="ixv-12089">NASDAQ</dei:SecurityExchangeName>
+    <dei:EntityWellKnownSeasonedIssuer contextRef="P01_01_2024To12_31_2024" id="ixv-12090">Yes</dei:EntityWellKnownSeasonedIssuer>
+    <dei:EntityVoluntaryFilers contextRef="P01_01_2024To12_31_2024" id="ixv-12091">No</dei:EntityVoluntaryFilers>
+    <dei:EntityCurrentReportingStatus contextRef="P01_01_2024To12_31_2024" id="ixv-12092">Yes</dei:EntityCurrentReportingStatus>
+    <dei:EntityInteractiveDataCurrent contextRef="P01_01_2024To12_31_2024" id="ixv-12093">Yes</dei:EntityInteractiveDataCurrent>
+    <dei:EntityFilerCategory contextRef="P01_01_2024To12_31_2024" id="ixv-12094">Large Accelerated Filer</dei:EntityFilerCategory>
+    <dei:EntitySmallBusiness contextRef="P01_01_2024To12_31_2024" id="ixv-12095">false</dei:EntitySmallBusiness>
+    <dei:EntityEmergingGrowthCompany contextRef="P01_01_2024To12_31_2024" id="ixv-12096">false</dei:EntityEmergingGrowthCompany>
+    <dei:IcfrAuditorAttestationFlag contextRef="P01_01_2024To12_31_2024" id="ixv-12097">true</dei:IcfrAuditorAttestationFlag>
+    <dei:DocumentFinStmtErrorCorrectionFlag contextRef="P01_01_2024To12_31_2024" id="ixv-12098">false</dei:DocumentFinStmtErrorCorrectionFlag>
+    <dei:EntityShellCompany contextRef="P01_01_2024To12_31_2024" id="ixv-12099">false</dei:EntityShellCompany>
+    <dei:EntityPublicFloat
+      contextRef="PAsOn06_28_2024"
+      decimals="0"
+      id="ixv-12100"
+      unitRef="Unit_USD">6329109788</dei:EntityPublicFloat>
+    <dei:EntityCommonStockSharesOutstanding
+      contextRef="PAsOn02_21_2025_CommonClassAMemberusgaapStatementClassOfStockAxis"
+      decimals="INF"
+      id="ixv-12101"
+      unitRef="Unit_shares">40702683</dei:EntityCommonStockSharesOutstanding>
+    <dei:EntityCommonStockSharesOutstanding
+      contextRef="PAsOn02_21_2025_CommonClassBMemberusgaapStatementClassOfStockAxis"
+      decimals="INF"
+      id="ixv-12102"
+      unitRef="Unit_shares">630007633</dei:EntityCommonStockSharesOutstanding>
+    <dei:AmendmentDescription contextRef="P01_01_2024To12_31_2024" id="ixv-333">Paramount Global (the &#x201c;Company&#x201d;), a Delaware corporation, is filing this Amendment No.&#160;1 on Form 10-K/A (this &#x201c;Amendment&#x201d;) to its Annual Report on Form 10-K for the year ended December&#160;31, 2024, originally filed with the Securities and Exchange Commission (the &#x201c;SEC&#x201d;) on February&#160;26, 2025 (the &#x201c;Initial Form 10-K&#x201d;), solely to amend Part III, Items 10, 11, 12, 13 and 14 of the Initial Form 10-K to include the information required by such Items, rather than incorporate such information into Part III by reference to a proxy statement. Except as explicitly set forth herein, this Amendment does not otherwise change, modify or update the disclosures in, or exhibits to, the Initial Form 10-K. References in this document to &#x201c;Paramount,&#x201d; the &#x201c;Company,&#x201d; &#x201c;we,&#x201d; &#x201c;us&#x201d; and &#x201c;our&#x201d; refer to Paramount Global and its consolidated subsidiaries, unless the context otherwise requires. </dei:AmendmentDescription>
+    <ecd:InsiderTrdPoliciesProcAdoptedFlag contextRef="P01_01_2024To12_31_2024" id="ixv-12109">true</ecd:InsiderTrdPoliciesProcAdoptedFlag>
+    <ecd:AwardTmgMnpiDiscTextBlock contextRef="P01_01_2024To12_31_2024" id="ixv-2451"> &lt;div style="margin-top:12pt; margin-bottom:0pt; font-size:10pt; font-family:ARIAL;text-indent: 0px;"&gt;&lt;div style="font-style: normal; letter-spacing: 0px; top: 0px;display:inline;"&gt;&lt;div style="font-style:italic;display:inline;"&gt;Equity Award Grant Date Procedures &lt;/div&gt;&lt;/div&gt;&lt;/div&gt; &lt;div style="margin-top:6pt; margin-bottom:0pt; font-size:10pt; font-family:ARIAL;text-indent: 0px;"&gt;The grant date for equity awards is the date on which the Committee approves awards under the LTIP or, if so determined by the Committee, a future grant date, or a date specified in an employment agreement. The Committee may approve an award that will have a future grant date, with the exercise price of any stock option not to be less than the closing price of a share of our Class&#160;B Common Stock on the date of grant. We do not grant equity awards in anticipation of the release of material, &lt;div style="white-space: nowrap; letter-spacing: 0px; top: 0px;display:inline;"&gt;non-public&lt;/div&gt; information. Similarly, we do not time the release of material, &lt;div style="white-space: nowrap; letter-spacing: 0px; top: 0px;display:inline;"&gt;non-public&lt;/div&gt; information based on equity grant dates. We provide communications regarding individual grant awards, including the terms and conditions, to recipients as soon as administratively feasible. &lt;/div&gt; </ecd:AwardTmgMnpiDiscTextBlock>
+    <ecd:AwardTmgPredtrmndFlag contextRef="P01_01_2024To12_31_2024" id="ixv-12113">true</ecd:AwardTmgPredtrmndFlag>
+    <ecd:MnpiDiscTimedForCompValFlag contextRef="P01_01_2024To12_31_2024" id="ixv-12114">false</ecd:MnpiDiscTimedForCompValFlag>
+</xbrl>

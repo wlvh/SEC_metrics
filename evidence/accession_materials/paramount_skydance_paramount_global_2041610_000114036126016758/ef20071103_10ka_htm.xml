@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbrl
+  xmlns="http://www.xbrl.org/2003/instance"
+  xmlns:dei="http://xbrl.sec.gov/dei/2025"
+  xmlns:ecd="http://xbrl.sec.gov/ecd/2025"
+  xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+  xmlns:link="http://www.xbrl.org/2003/linkbase"
+  xmlns:us-gaap="http://fasb.org/us-gaap/2025"
+  xmlns:xbrldi="http://xbrl.org/2006/xbrldi"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+    <link:schemaRef xlink:href="psky-20251231.xsd" xlink:type="simple"/>
+    <context id="c20250101to20251231">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0002041610</identifier>
+        </entity>
+        <period>
+            <startDate>2025-01-01</startDate>
+            <endDate>2025-12-31</endDate>
+        </period>
+    </context>
+    <context id="c20250630_StatementClassOfStockAxis_CommonClassBMember">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0002041610</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassBMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-06-30</instant>
+        </period>
+    </context>
+    <context id="c20250630_StatementClassOfStockAxis_CommonClassAMember">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0002041610</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassAMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-06-30</instant>
+        </period>
+    </context>
+    <context id="c20260220_StatementClassOfStockAxis_CommonClassBMember">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0002041610</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassBMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-02-20</instant>
+        </period>
+    </context>
+    <context id="c20260220_StatementClassOfStockAxis_CommonClassAMember">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0002041610</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="us-gaap:StatementClassOfStockAxis">us-gaap:CommonClassAMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-02-20</instant>
+        </period>
+    </context>
+    <unit id="U001">
+        <measure>iso4217:USD</measure>
+    </unit>
+    <unit id="U002">
+        <measure>shares</measure>
+    </unit>
+    <dei:AmendmentFlag
+      contextRef="c20250101to20251231"
+      id="Fact_46ac51b649404c58a14f520b7b0671f1">false</dei:AmendmentFlag>
+    <dei:CurrentFiscalYearEndDate
+      contextRef="c20250101to20251231"
+      id="Fact_117440f4cd3b4b4093e50325d73b29a7">--12-31</dei:CurrentFiscalYearEndDate>
+    <dei:DocumentFiscalYearFocus
+      contextRef="c20250101to20251231"
+      id="Fact_c847e195b8d44a19be1dafe547042874">2025</dei:DocumentFiscalYearFocus>
+    <dei:DocumentFiscalPeriodFocus
+      contextRef="c20250101to20251231"
+      id="Fact_9f4a0995f36b4058ae6b3342ff7769f3">FY</dei:DocumentFiscalPeriodFocus>
+    <dei:EntityCentralIndexKey
+      contextRef="c20250101to20251231"
+      id="Fact_663ae093410a4bfba307db9204bc8204">0002041610</dei:EntityCentralIndexKey>
+    <dei:DocumentType
+      contextRef="c20250101to20251231"
+      id="Fact_157544423e50489cabef1b5aa0ceb3d1">10-K/A</dei:DocumentType>
+    <dei:DocumentAnnualReport
+      contextRef="c20250101to20251231"
+      id="Fact_fe72a726a4a0457e83a9c2a061cdcaca">true</dei:DocumentAnnualReport>
+    <dei:DocumentPeriodEndDate
+      contextRef="c20250101to20251231"
+      id="Fact_03296a56fcb74c4c8dffc59cc9bd249d">2025-12-31</dei:DocumentPeriodEndDate>
+    <dei:DocumentTransitionReport
+      contextRef="c20250101to20251231"
+      id="Fact_13e13749c81544559741711a29f2a993">false</dei:DocumentTransitionReport>
+    <dei:EntityFileNumber
+      contextRef="c20250101to20251231"
+      id="Fact_02d12757cf2f4104b5c59a543edee269">001-42791</dei:EntityFileNumber>
+    <dei:EntityRegistrantName
+      contextRef="c20250101to20251231"
+      id="Fact_5cc5c0a7009f4de298619f9921788af2">Paramount Skydance Corporation</dei:EntityRegistrantName>
+    <dei:EntityIncorporationStateCountryCode
+      contextRef="c20250101to20251231"
+      id="Fact_dcb2c668edd9468e90f8e098ce10d90b">DE</dei:EntityIncorporationStateCountryCode>
+    <dei:EntityTaxIdentificationNumber
+      contextRef="c20250101to20251231"
+      id="Fact_e96e098cea00477eb40f4ad6fac14f89">99-3917985</dei:EntityTaxIdentificationNumber>
+    <dei:EntityAddressAddressLine1
+      contextRef="c20250101to20251231"
+      id="Fact_49792bd958744729a94a6f9d9e68da73">1515 Broadway</dei:EntityAddressAddressLine1>
+    <dei:EntityAddressCityOrTown
+      contextRef="c20250101to20251231"
+      id="Fact_4d8dc7ee350749f9afcd1997b454ce8c">New York</dei:EntityAddressCityOrTown>
+    <dei:EntityAddressStateOrProvince
+      contextRef="c20250101to20251231"
+      id="Fact_e3d63ccb362c4084abbd9cdcbe44af7c">NY</dei:EntityAddressStateOrProvince>
+    <dei:EntityAddressPostalZipCode
+      contextRef="c20250101to20251231"
+      id="Fact_da09a0af5ea24654ba17c4159a794013">10036</dei:EntityAddressPostalZipCode>
+    <dei:CityAreaCode
+      contextRef="c20250101to20251231"
+      id="Fact_b825f40fd6cb48c599cdd70e120cc764">212</dei:CityAreaCode>
+    <dei:LocalPhoneNumber
+      contextRef="c20250101to20251231"
+      id="Fact_d9dd3db243fe49b9ad6d6bc1ab90c3a0">258-6000</dei:LocalPhoneNumber>
+    <dei:Security12bTitle
+      contextRef="c20250101to20251231"
+      id="Fact_de5e9e8ed80f4fe6a62860746e768d63">Class B Common Stock, $0.001 par value</dei:Security12bTitle>
+    <dei:TradingSymbol
+      contextRef="c20250101to20251231"
+      id="Fact_718c3fdfa32144c68a9f94bce03954c3">PSKY</dei:TradingSymbol>
+    <dei:SecurityExchangeName
+      contextRef="c20250101to20251231"
+      id="Fact_1087263d937e4032a14d06a9ad607f87">NASDAQ</dei:SecurityExchangeName>
+    <dei:EntityWellKnownSeasonedIssuer
+      contextRef="c20250101to20251231"
+      id="Fact_b0fcd68083a949e18bfab490caccf7f0">Yes</dei:EntityWellKnownSeasonedIssuer>
+    <dei:EntityVoluntaryFilers
+      contextRef="c20250101to20251231"
+      id="Fact_76249497fa8e462ca19b9056f690ed5c">No</dei:EntityVoluntaryFilers>
+    <dei:EntityCurrentReportingStatus
+      contextRef="c20250101to20251231"
+      id="Fact_9447cccc53bc435a92ebe969ee8ce321">Yes</dei:EntityCurrentReportingStatus>
+    <dei:EntityInteractiveDataCurrent
+      contextRef="c20250101to20251231"
+      id="Fact_f02cf53a5e6643f8b42b802d07f497c5">Yes</dei:EntityInteractiveDataCurrent>
+    <dei:EntityFilerCategory
+      contextRef="c20250101to20251231"
+      id="Fact_7eee88976f424e1bb5d4caf2061a1d0c">Large Accelerated Filer</dei:EntityFilerCategory>
+    <dei:EntitySmallBusiness
+      contextRef="c20250101to20251231"
+      id="Fact_6f2b06c8dd754fe1b7155ec972a8cb54">false</dei:EntitySmallBusiness>
+    <dei:EntityEmergingGrowthCompany
+      contextRef="c20250101to20251231"
+      id="Fact_9593507b98d748eb8785dbd154a7d774">false</dei:EntityEmergingGrowthCompany>
+    <dei:IcfrAuditorAttestationFlag
+      contextRef="c20250101to20251231"
+      id="Fact_764e552e24b4471aa91540992e622d11">true</dei:IcfrAuditorAttestationFlag>
+    <dei:DocumentFinStmtErrorCorrectionFlag
+      contextRef="c20250101to20251231"
+      id="Fact_0405796f60dd485eb4076c0cbc7cfd9f">false</dei:DocumentFinStmtErrorCorrectionFlag>
+    <dei:EntityShellCompany
+      contextRef="c20250101to20251231"
+      id="Fact_a3c67a1636f9434dadd1d3bbd1fd6ea6">false</dei:EntityShellCompany>
+    <dei:EntityPublicFloat
+      contextRef="c20250630_StatementClassOfStockAxis_CommonClassAMember"
+      decimals="0"
+      id="Fact_4bb642d83b5d424283bb2fbc67fff48a"
+      unitRef="U001">211199578</dei:EntityPublicFloat>
+    <dei:EntityPublicFloat
+      contextRef="c20250630_StatementClassOfStockAxis_CommonClassBMember"
+      decimals="0"
+      id="Fact_a89fa3a6244d43559aab47484d6fdce2"
+      unitRef="U001">7730877301</dei:EntityPublicFloat>
+    <dei:EntityCommonStockSharesOutstanding
+      contextRef="c20260220_StatementClassOfStockAxis_CommonClassAMember"
+      decimals="INF"
+      id="Fact_7b87b5b906054f07a82e09ea43f1ca7f"
+      unitRef="U002">31500087</dei:EntityCommonStockSharesOutstanding>
+    <dei:EntityCommonStockSharesOutstanding
+      contextRef="c20260220_StatementClassOfStockAxis_CommonClassBMember"
+      decimals="INF"
+      id="Fact_28e951419e1c406d8fede47f42af0250"
+      unitRef="U002">1080241022</dei:EntityCommonStockSharesOutstanding>
+    <ecd:InsiderTrdPoliciesProcAdoptedFlag
+      contextRef="c20250101to20251231"
+      id="Fact_f676aa87a4314e099c6cf5bf2c3b7870">true</ecd:InsiderTrdPoliciesProcAdoptedFlag>
+    <ecd:AwardTmgMnpiDiscTextBlock
+      contextRef="c20250101to20251231"
+      id="Text_20da4f4fb82c426ebb599f22ce7bf048">
+&lt;div&gt;&lt;span style="font-family: Arial;"&gt; &lt;/span&gt;
+       &lt;/div&gt;
+
+&lt;div style="text-align: left; font-family: Arial; font-size: 10pt; font-style: italic;"&gt;Equity Award Grant Date Procedures&lt;/div&gt;
+
+&lt;div&gt;&lt;span style="font-family: Arial;"&gt; &lt;/span&gt;&lt;/div&gt;
+
+&lt;div style="font-size: 10pt; font-family: Arial;"&gt;&#160;&lt;/div&gt;
+
+&lt;div&gt;&lt;span style="font-family: Arial;"&gt; &lt;/span&gt;
+       &lt;/div&gt;
+
+&lt;div style="text-align: left; font-family: Arial; font-size: 10pt;"&gt;The grant date for equity awards is the date on which the Board or Committee approves awards under the 2025 Plan or, if so determined by the Board or Committee, a future grant date.&#160; As discussed above, we granted equity awards to our Current NEOs, Mr. Shell and certain other executives in connection with their
+        entry into employment agreements on or following the Closing Date. We did not grant awards of stock options, stock appreciation rights or similar option-like awards during 2025.&lt;/div&gt;
+
+&lt;div&gt;
+       &lt;span style="font-family: Arial;"&gt; &lt;/span&gt;&lt;/div&gt;
+
+&lt;div style="font-size: 10pt; font-family: Arial;"&gt;&#160;&lt;/div&gt;
+
+&lt;div&gt;&lt;span style="font-family: Arial;"&gt; &lt;/span&gt;
+       &lt;/div&gt;
+
+&lt;div style="text-align: left; font-family: Arial; font-size: 10pt;"&gt;&lt;span style="font-family: Arial; font-size: 10pt; color: rgb(0, 0, 0);"&gt;We do not grant equity awards, including those made to newly hired or newly promoted executive officers, in anticipation of the release of material, non-public information or take into account material non-public information when determining the terms of equity awards. Similarly, we do not time the release of material, non-public information based on equity grant dates for the purpose of affecting the value of executive compensation.&lt;/span&gt; We provide communications regarding
+        individual grant awards, including the terms and conditions, to recipients as soon as administratively feasible.&lt;/div&gt;
+</ecd:AwardTmgMnpiDiscTextBlock>
+    <ecd:AwardTmgMethodTextBlock
+      contextRef="c20250101to20251231"
+      id="Text_f91f1a9a25b844fc9810bb68ed87bfa9">
+&lt;div&gt;&lt;span style="font-family: Arial;"&gt; &lt;/span&gt;
+       &lt;/div&gt;
+
+&lt;div style="text-align: left; font-family: Arial; font-size: 10pt;"&gt;The grant date for equity awards is the date on which the Board or Committee approves awards under the 2025 Plan or, if so determined by the Board or Committee, a future grant date.&#160; As discussed above, we granted equity awards to our Current NEOs, Mr. Shell and certain other executives in connection with their
+        entry into employment agreements on or following the Closing Date. We did not grant awards of stock options, stock appreciation rights or similar option-like awards during 2025.&lt;/div&gt;
+</ecd:AwardTmgMethodTextBlock>
+    <ecd:AwardTmgPredtrmndFlag
+      contextRef="c20250101to20251231"
+      id="Fact_8ad79d7b05b24a998a8ce3bbb2dfab1c">false</ecd:AwardTmgPredtrmndFlag>
+    <ecd:AwardTmgHowMnpiCnsdrdTextBlock
+      contextRef="c20250101to20251231"
+      id="Text_20e74e1dd7b847b3a9facbe4508a1921">
+&lt;div&gt;&lt;span style="font-family: Arial;"&gt; &lt;/span&gt;
+       &lt;/div&gt;
+&lt;span style="font-family: Arial; font-size: 10pt; color: rgb(0, 0, 0);"&gt;We do not grant equity awards, including those made to newly hired or newly promoted executive officers, in anticipation of the release of material, non-public information or take into account material non-public information when determining the terms of equity awards. Similarly, we do not time the release of material, non-public information based on equity grant dates for the purpose of affecting the value of executive compensation.&lt;/span&gt;</ecd:AwardTmgHowMnpiCnsdrdTextBlock>
+    <ecd:AwardTmgMnpiCnsdrdFlag
+      contextRef="c20250101to20251231"
+      id="Fact_821c8965bec54e149e6fef794f76daa3">true</ecd:AwardTmgMnpiCnsdrdFlag>
+    <ecd:MnpiDiscTimedForCompValFlag
+      contextRef="c20250101to20251231"
+      id="Fact_2e44024deeba4fe5b2465ba9d468b8d5">false</ecd:MnpiDiscTimedForCompValFlag>
+</xbrl>

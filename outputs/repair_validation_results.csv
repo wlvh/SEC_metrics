@@ -1,0 +1,39 @@
+check_id,severity,status,details
+validation_package_mode,P0,PASS,mode=FULL_VALIDATION
+no_company_identity_branch_in_production,P0,PASS,no identity literals in production branches
+registry_profile_matches_sic_rules_or_has_override_reason,P0,PASS,registry profiles match SIC rules
+rpo_crpo_prefers_instance_fact,P0,PASS,B12 instance preference verified
+basel_ratio_extractor_not_single_issuer_specific,P0,PASS,Basel ratios verified
+basel_concept_resolver_handles_tierone_spelling,P0,PASS,TierOne spelling resolves to CET1/A02
+basel_concept_resolver_handles_banking_regulation_ratio_family,P0,PASS,banking regulation ratio family matched
+basel_cet1_never_classified_as_a01,P0,PASS,CET1 concepts excluded from A01
+basel_threshold_concepts_never_match_primary_metric,P0,PASS,Basel threshold concepts excluded from primary metrics
+basel_primary_selection_prefers_actual_ratio_over_threshold,P0,PASS,actual CET1 selected over same-dimension threshold
+a01_a02_metric_evidence_excludes_threshold_concepts,P0,PASS,A01/A02 metric_evidence contains actual ratio concepts only
+lodging_kpi_extractor_not_marriott_specific,P0,PASS,lodging KPI checks passed
+lodging_header_mapping_not_position_regex,P0,PASS,header order swap parsed by name
+lodging_revpar_adr_occupancy_identity,P0,PASS,RevPAR identity within 5%
+lodging_ok_recall_not_regressed_without_reason,P0,PASS,lodging B10/B11 recall preserved
+captive_finance_debt_not_ford_specific,P0,PASS,B06 captive finance verified
+captive_finance_signal_requires_segment_dimension,P0,PASS,dimension required
+captive_finance_excludes_normal_finance_lease_terms,P0,PASS,normal finance terms excluded
+enphase_b06_not_captive_finance_false_positive,P0,PASS,no non-signal company is marked captive review
+gm_like_captive_finance_fixture_triggers_review,P0,PASS,GM-like captive segment matched
+entity_continuity_yoy_not_paramount_specific,P0,PASS,B02 continuity rule verified
+no_c03_ecd_fact_count,P0,PASS,bad_rows=0
+c03_def14a_ok_requires_peototalcompamt,P0,PASS,all DEF14A_OK C03 rows backed
+c03_uses_ecd_peototalcompamt_for_all_companies,P0,PASS,C03 PeoTotalCompAmt generic gate mirrors DEF14A evidence check
+c04_uses_auditorname_for_all_companies,P0,PASS,C04 AuditorName verified
+eleventh_company_smoke_extractors_mount,P0,PASS,fixture extractors mounted and behavior gates pass
+eleventh_company_behavior_lodging,P0,PASS,lodging fixture extracted B10/B11
+eleventh_company_behavior_financial_institution,P0,PASS,FI fixture selects actual A01/A02 ratios over thresholds
+eleventh_company_behavior_captive_finance,P0,PASS,manufacturing fixture triggers B06 NEEDS_REVIEW
+eleventh_company_behavior_rpo_crpo,P0,PASS,value=5000000000;note=RPO != ARR; cRPO != ARR
+ok_status_recall_not_regressed_without_reason,P0,PASS,snapshot_rows=120
+coverage_has_evidence_matches_metric_evidence_join,P0,PASS,coverage join matches
+numeric_ok_status_requires_evidence_row,P0,PASS,all numeric OK rows evidenced
+d04_missing_going_concern_has_explicit_text,P0,PASS,D04 text explicit
+existing_golden_results_still_pass,P0,PASS,rows=57
+requests_log_sec_only,P0,PASS,rows=635
+stratified_audit_all_pass_or_explicitly_caveated,P0,PASS,rows=19
+existing_repair_validation_still_pass,P0,PASS,all gates pass

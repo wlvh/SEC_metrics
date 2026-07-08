@@ -1,0 +1,58 @@
+assertion_id,description,expected,actual,status,evidence_path,notes
+G1_marriott_international_cik,Marriott International CIK,1048286,1048286,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_marriott_international_fye,Marriott International fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_southwest_airlines_cik,Southwest Airlines CIK,92380,92380,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_southwest_airlines_fye,Southwest Airlines fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_ford_motor_company_cik,Ford Motor Company CIK,37996,37996,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_ford_motor_company_fye,Ford Motor Company fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_pfizer_cik,Pfizer CIK,78003,78003,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_pfizer_fye,Pfizer fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_jpmorgan_chase_cik,JPMorgan Chase CIK,19617,19617,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_jpmorgan_chase_fye,JPMorgan Chase fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_salesforce_cik,Salesforce CIK,1108524,1108524,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_salesforce_fye,Salesforce fiscalYearEnd,0131,0131,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_lumen_technologies_cik,Lumen Technologies CIK,18926,18926,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_lumen_technologies_fye,Lumen Technologies fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_macy_s_cik,Macy's CIK,794367,794367,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_macy_s_fye,Macy's fiscalYearEnd,0201,0201,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_paramount_skydance_paramount_global_cik,Paramount Skydance / Paramount Global CIK,2041610,2041610,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_paramount_skydance_paramount_global_fye,Paramount Skydance / Paramount Global fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G1_paramount_skydance_paramount_global_role_chain,Paramount Skydance / Paramount Global role CIK chain,2041610;813828,2041610;813828,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company_resolution must preserve configured roles.
+G1_enphase_energy_cik,Enphase Energy CIK,1463101,1463101,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Company structure assertion.
+G1_enphase_energy_fye,Enphase Energy fiscalYearEnd,1231,1231,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/company_resolution.csv,Fiscal year-end assertion.
+G2_financial_assetscurrent_b08,Financial-institution AssetsCurrent companyconcept and B08 structural status,B08=N_A_STRUCTURAL,companyconcept_status=404; B08_status=N_A_STRUCTURAL,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/jpmorgan_chase_assetscurrent_companyconcept.json,"If companyconcept is 404, B08 must remain structural N/A."
+G2_financial_a01_not_std,Financial-institution A01 not hard-calculated from STD_XBRL,source_class != STD_XBRL,DIM_XBRL,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/metrics_matrix.csv,Capital ratios require regulatory table or dimensions.
+G2_financial_a02_not_std,Financial-institution A02 not hard-calculated from STD_XBRL,source_class != STD_XBRL,DIM_XBRL,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/metrics_matrix.csv,Capital ratios require regulatory table or dimensions.
+G2_captive_finance_b06_dimension_review,Captive-finance B06 requires review when entity-level debt is insufficient,NEEDS_REVIEW or DIM_XBRL_OK or OK,NEEDS_REVIEW,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/metrics_matrix.csv,DebtSecurities concepts are excluded.
+G2_auditorname_material_source,AuditorName comes from accession instance or filing material,at least one AuditorName fact,19,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/concept_inventory,No companyfacts assumption is used for auditor name.
+G3_clean_xbrl_revenue,Revenue,1472985000,1472985000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_prior_revenue,Prior-year revenue,1330383000,1330383000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_net_income,Net income,172133000,172133000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_operating_income,Operating income,157526000,157526000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_da,D&A,80645000,80645000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_ocf,Operating cash flow,136540000,136540000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_capex,Capex,40639000,40639000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_current_assets,Current assets,2606860000,2606860000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_current_liabilities,Current liabilities,1262150000,1262150000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_cash,Cash,474318000,474318000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_equity,Equity,1087023000,1087023000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_total_assets,Total assets,3509792000,3509792000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_long_term_debt,Long-term debt,1204377000,1204377000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_ebitda,EBITDA,238171000,238171000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_fcf,FCF,95901000,95901000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0 tolerance=0
+G3_clean_xbrl_current_ratio,Current ratio,2.07,2.065412193479380422295289783,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0.004587806520619577704710217 tolerance=0.01
+G3_clean_xbrl_debt_to_equity,Debt-to-equity,1.11,1.107959077222837051285943352,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,diff=0.002040922777162948714056648 tolerance=0.01
+G3_clean_xbrl_revenue_tag,Revenue tag,RevenueFromContractWithCustomerExcludingAssessedTax,RevenueFromContractWithCustomerExcludingAssessedTax,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0001463101.json,Actual selected concept for Enphase Energy.
+G4_captive_finance_revenue,Revenue,187267000000,187267000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_prior_revenue,Prior-year revenue,184992000000,184992000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_operating_income,Operating income,-9169000000,-9169000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_da,D&A,15974000000,15974000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_ocf,Operating cash flow,21282000000,21282000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_capex,Capex,8815000000,8815000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_current_assets,Current assets,123487000000,123487000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_current_liabilities,Current liabilities,114890000000,114890000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_cash,Cash,23356000000,23356000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_equity,Equity,35952000000,35952000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_interest_expense,Interest expense,1254000000,1254000000,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,diff=0 tolerance=0
+G4_captive_finance_capex_tag,Capex tag,PaymentsToAcquireProductiveAssets,PaymentsToAcquireProductiveAssets,PASS,/Users/lyuhongwang/Documents/SEC_metrics/evidence/companyfacts/CIK0000037996.json,Actual selected concept for Ford Motor Company.
+G4_captive_finance_b07_status,B07 status,NOT_MEANINGFUL,NOT_MEANINGFUL,PASS,/Users/lyuhongwang/Documents/SEC_metrics/outputs/metrics_matrix.csv,Metric status assertion from golden fixture.

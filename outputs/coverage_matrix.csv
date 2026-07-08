@@ -1,0 +1,231 @@
+company,metric_id,status,source_class,has_numeric_value,has_evidence,needs_text_extraction,needs_review,reason
+Marriott International,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Marriott International,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Marriott International,B03,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,1,0,0,"SEC 未披露: Required revenue, operating income, or D&A missing."
+Marriott International,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Marriott International,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Marriott International,B06,OK,DERIVED,1,1,0,0,Entity-level debt/equity; DebtSecurities concepts excluded.
+Marriott International,B07,OK,DERIVED,1,1,0,0,Operating income divided by interest expense.
+Marriott International,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Marriott International,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Marriott International,B10,MDA_OK,MDA,1,1,0,0,Selected absolute occupancy from lodging KPI table; scope=comparable systemwide worldwide.
+Marriott International,B11,MDA_OK,MDA,1,1,0,0,Selected absolute RevPAR from lodging KPI table; scope=comparable systemwide worldwide; percentage change columns are not used as USD values.
+Marriott International,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Marriott International,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Marriott International,C03,NOT_EXTRACTED,DEF14A,0,0,1,0,本轮没抽到: No numeric ecd:PeoTotalCompAmt fact matched target fiscal year; C03 degraded from previous ecd_fact_count.
+Marriott International,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0001048286-26-000007; prior_accession=0001628280-25-004818; manual confirmation required when changed.
+Marriott International,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Marriott International,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Marriott International,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Marriott International,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Marriott International,E01,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no M&A item rule matched.
+Marriott International,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Marriott International,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Marriott International,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Marriott International,E05,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 1.01 found.
+Southwest Airlines,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Southwest Airlines,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Southwest Airlines,B03,OK,DERIVED,1,1,0,0,GAAP EBITDA proxy; impairment is not added back.
+Southwest Airlines,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Southwest Airlines,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Southwest Airlines,B06,OK,DERIVED,1,1,0,0,Entity-level debt/equity; DebtSecurities concepts excluded.
+Southwest Airlines,B07,OK,DERIVED,1,1,0,0,Operating income divided by interest expense.
+Southwest Airlines,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Southwest Airlines,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Southwest Airlines,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Southwest Airlines,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Southwest Airlines,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+Southwest Airlines,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0000092380-26-000004; prior_accession=0000092380-25-000024; manual confirmation required when changed.
+Southwest Airlines,D01,NOT_EXTRACTED,TEXT,0,1,1,0,本轮没抽到: Risk factor heading or theme evidence.
+Southwest Airlines,D02,NOT_AVAILABLE_SEC,TEXT,0,1,0,0,SEC 未披露: Legal proceedings or litigation text evidence.
+Southwest Airlines,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Southwest Airlines,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Southwest Airlines,E01,8K_ITEM_OK,8K_ITEM,1,1,0,0,M&A candidate from item mapping and keyword rule.
+Southwest Airlines,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Southwest Airlines,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Southwest Airlines,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Southwest Airlines,E05,8K_ITEM_OK,8K_ITEM,1,1,0,0,Material agreement event.
+Ford Motor Company,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Ford Motor Company,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Ford Motor Company,B03,OK,DERIVED,1,1,0,0,GAAP EBITDA proxy; impairment is not added back.
+Ford Motor Company,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Ford Motor Company,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Ford Motor Company,B06,NEEDS_REVIEW,DERIVED,0,1,1,1,多事实需复核/需复核: Captive finance segment/dimension detected; industrial-only debt-to-equity unavailable.
+Ford Motor Company,B07,NOT_MEANINGFUL,NOT_AVAILABLE,0,1,0,0,Operating income is non-positive.
+Ford Motor Company,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Ford Motor Company,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Ford Motor Company,B13,TEXT_QUAL,TEXT,0,1,0,0,Only qualitative capacity evidence is used unless a ratio appears.
+Ford Motor Company,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Ford Motor Company,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Ford Motor Company,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+Ford Motor Company,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0000037996-26-000015; prior_accession=0000037996-25-000013; manual confirmation required when changed.
+Ford Motor Company,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Ford Motor Company,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Ford Motor Company,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Ford Motor Company,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Ford Motor Company,E01,8K_ITEM_OK,8K_ITEM,1,1,0,0,M&A candidate from item mapping and keyword rule.
+Ford Motor Company,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Ford Motor Company,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Ford Motor Company,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Ford Motor Company,E05,8K_ITEM_OK,8K_ITEM,1,1,0,0,Material agreement event.
+Pfizer,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Pfizer,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Pfizer,B03,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,1,0,0,"SEC 未披露: Required revenue, operating income, or D&A missing."
+Pfizer,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Pfizer,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Pfizer,B06,OK,DERIVED,1,1,0,0,Entity-level debt/equity; DebtSecurities concepts excluded.
+Pfizer,B07,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,1,0,0,SEC 未披露: Operating income or interest expense missing.
+Pfizer,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Pfizer,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Pfizer,C01,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 5.02 found.
+Pfizer,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Pfizer,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+Pfizer,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0000078003-26-000026; prior_accession=0000078003-25-000054; manual confirmation required when changed.
+Pfizer,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Pfizer,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Pfizer,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Pfizer,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Pfizer,E01,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no M&A item rule matched.
+Pfizer,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Pfizer,E03,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 5.02 found.
+Pfizer,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Pfizer,E05,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 1.01 found.
+JPMorgan Chase,A01,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,Selected parent/consolidated standardized Basel ratio fact; candidate facts and regulatory thresholds are retained in outputs/basel_ratio_candidates.csv. c-2054 us-gaap:RiskWeightedAssetsCalculationMethodologyAxis=jpm:BaselIIIStandardizedMember;dei:LegalEntityAxis=jpm:JpmorganChaseBankNAMember=0.153 | c-2055 srt:ConsolidatedEntitiesAxis=srt:ParentCompanyMember;us-gaap:RiskWeightedAssetsCalculationMethodologyAxis=jpm:BaselIIIAdvancedMember=0.150 | c-2056 us-gaap:RiskWeightedAssetsCalculationMethodologyAxis=jpm:BaselIIIAdvancedMember;dei:LegalEntityAxis=jpm:JpmorganChaseBankNAMember=0.158
+JPMorgan Chase,A02,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,Selected parent/consolidated standardized Basel ratio fact; candidate facts and regulatory thresholds are retained in outputs/basel_ratio_candidates.csv. c-2054 us-gaap:RiskWeightedAssetsCalculationMethodologyAxis=jpm:BaselIIIStandardizedMember;dei:LegalEntityAxis=jpm:JpmorganChaseBankNAMember=0.153 | c-2055 srt:ConsolidatedEntitiesAxis=srt:ParentCompanyMember;us-gaap:RiskWeightedAssetsCalculationMethodologyAxis=jpm:BaselIIIAdvancedMember=0.141 | c-2056 us-gaap:RiskWeightedAssetsCalculationMethodologyAxis=jpm:BaselIIIAdvancedMember;dei:LegalEntityAxis=jpm:JpmorganChaseBankNAMember=0.158
+JPMorgan Chase,A03,TEXT_QUAL,MDA,0,1,0,0,JPM FI metric requires table-level follow-up for numeric value.
+JPMorgan Chase,A04,TEXT_QUAL,MDA,0,1,0,0,JPM FI metric requires table-level follow-up for numeric value.
+JPMorgan Chase,A08,NOT_EXTRACTED,NOT_AVAILABLE,0,0,1,0,本轮没抽到: Requires bank-specific revenue composition review.
+JPMorgan Chase,A09,NOT_EXTRACTED,NOT_AVAILABLE,0,0,1,0,本轮没抽到: Requires credit risk table or reviewed dimensions.
+JPMorgan Chase,A10,NOT_EXTRACTED,NOT_AVAILABLE,0,0,1,0,本轮没抽到: Requires allowance and loans denominator review.
+JPMorgan Chase,A11,TEXT_QUAL,MDA,0,1,0,0,JPM FI metric requires table-level follow-up for numeric value.
+JPMorgan Chase,A12,TEXT_QUAL,MDA,0,1,0,0,JPM FI metric requires table-level follow-up for numeric value.
+JPMorgan Chase,A13,NOT_EXTRACTED,NOT_AVAILABLE,0,0,1,0,本轮没抽到: Requires geographic dimensions or segment table.
+JPMorgan Chase,A05,OK,DERIVED,1,1,0,0,Average assets uses current and prior 10-K Assets.
+JPMorgan Chase,A06,OK,DERIVED,1,1,0,0,Uses total equity when common-shareholder denominator is absent.
+JPMorgan Chase,A07,OK,DERIVED,1,1,0,0,Single-year task trend is YoY pair.
+JPMorgan Chase,B08,N_A_STRUCTURAL,NOT_AVAILABLE,0,0,0,0,结构不适用: Bank current ratio is structurally not applicable.
+JPMorgan Chase,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+JPMorgan Chase,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+JPMorgan Chase,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+JPMorgan Chase,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0001628280-26-008131; prior_accession=0000019617-25-000270; manual confirmation required when changed.
+JPMorgan Chase,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+JPMorgan Chase,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+JPMorgan Chase,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+JPMorgan Chase,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+JPMorgan Chase,E01,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no M&A item rule matched.
+JPMorgan Chase,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+JPMorgan Chase,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+JPMorgan Chase,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+JPMorgan Chase,E05,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 1.01 found.
+Salesforce,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Salesforce,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Salesforce,B03,OK,DERIVED,1,1,0,0,GAAP EBITDA proxy; impairment is not added back.
+Salesforce,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Salesforce,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Salesforce,B06,OK,DERIVED,1,1,0,0,Entity-level debt/equity; DebtSecurities concepts excluded.
+Salesforce,B07,OK,DERIVED,1,1,0,0,Operating income divided by interest expense.
+Salesforce,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Salesforce,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Salesforce,B12,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,RPO != ARR; cRPO != ARR. Selected accession instance fact.
+Salesforce,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Salesforce,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Salesforce,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+Salesforce,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0001108524-26-000060; prior_accession=0001108524-25-000006; manual confirmation required when changed.
+Salesforce,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Salesforce,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Salesforce,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Salesforce,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Salesforce,E01,8K_ITEM_OK,8K_ITEM,1,1,0,0,M&A candidate from item mapping and keyword rule.
+Salesforce,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Salesforce,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Salesforce,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Salesforce,E05,8K_ITEM_OK,8K_ITEM,1,1,0,0,Material agreement event.
+Lumen Technologies,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Lumen Technologies,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Lumen Technologies,B03,OK,DERIVED,1,1,0,0,GAAP EBITDA proxy; impairment is not added back.
+Lumen Technologies,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Lumen Technologies,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Lumen Technologies,B06,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,1,0,0,SEC 未披露: Debt or equity missing.
+Lumen Technologies,B07,NOT_MEANINGFUL,NOT_AVAILABLE,0,1,0,0,Operating income is non-positive.
+Lumen Technologies,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Lumen Technologies,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Lumen Technologies,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Lumen Technologies,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Lumen Technologies,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+Lumen Technologies,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0000018926-26-000014; prior_accession=0000018926-25-000010; manual confirmation required when changed.
+Lumen Technologies,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Lumen Technologies,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Lumen Technologies,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Lumen Technologies,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Lumen Technologies,E01,8K_ITEM_OK,8K_ITEM,1,1,0,0,M&A candidate from item mapping and keyword rule.
+Lumen Technologies,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Lumen Technologies,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Lumen Technologies,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Lumen Technologies,E05,8K_ITEM_OK,8K_ITEM,1,1,0,0,Material agreement event.
+Macy's,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Macy's,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Macy's,B03,OK,DERIVED,1,1,0,0,GAAP EBITDA proxy; impairment is not added back.
+Macy's,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Macy's,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Macy's,B06,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,1,0,0,SEC 未披露: Debt or equity missing.
+Macy's,B07,OK,DERIVED,1,1,0,0,Operating income divided by interest expense.
+Macy's,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Macy's,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Macy's,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Macy's,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Macy's,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+Macy's,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0001628280-26-021721; prior_accession=0001628280-25-014315; manual confirmation required when changed.
+Macy's,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Macy's,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Macy's,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Macy's,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Macy's,E01,8K_ITEM_OK,8K_ITEM,1,1,0,0,M&A candidate from item mapping and keyword rule.
+Macy's,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Macy's,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Macy's,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Macy's,E05,8K_ITEM_OK,8K_ITEM,1,1,0,0,Material agreement event.
+Paramount Skydance / Paramount Global,B01,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,0,0,0,SEC 未披露: Revenue candidate chain from metric definition.
+Paramount Skydance / Paramount Global,B02,NOT_MEANINGFUL,NOT_AVAILABLE,0,0,0,0,Successor/predecessor structure makes YoY not meaningful.
+Paramount Skydance / Paramount Global,B03,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,0,0,0,"SEC 未披露: Required revenue, operating income, or D&A missing."
+Paramount Skydance / Paramount Global,B04,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,0,0,0,SEC 未披露: Net income candidate chain from metric definition.
+Paramount Skydance / Paramount Global,B05,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,0,0,0,SEC 未披露: Capex chain allows PaymentsToAcquireProductiveAssets.
+Paramount Skydance / Paramount Global,B06,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,1,0,0,SEC 未披露: Debt or equity missing.
+Paramount Skydance / Paramount Global,B07,NOT_AVAILABLE_SEC,NOT_AVAILABLE,0,0,0,0,SEC 未披露: Operating income or interest expense missing.
+Paramount Skydance / Paramount Global,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Paramount Skydance / Paramount Global,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Paramount Skydance / Paramount Global,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Paramount Skydance / Paramount Global,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Paramount Skydance / Paramount Global,C03,NOT_EXTRACTED,DEF14A,0,0,1,0,本轮没抽到: No numeric ecd:PeoTotalCompAmt fact matched target fiscal year; C03 degraded from previous ecd_fact_count.
+Paramount Skydance / Paramount Global,C04,NEEDS_REVIEW,DIM_XBRL,0,1,1,1,"需复核: current auditor read from dei:AuditorName, but prior 10-K instance is missing or lacks AuditorName (prior_10k inventory row)."
+Paramount Skydance / Paramount Global,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Paramount Skydance / Paramount Global,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Paramount Skydance / Paramount Global,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Paramount Skydance / Paramount Global,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Paramount Skydance / Paramount Global,E01,8K_ITEM_OK,8K_ITEM,1,1,0,0,M&A candidate from item mapping and keyword rule.
+Paramount Skydance / Paramount Global,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Paramount Skydance / Paramount Global,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Paramount Skydance / Paramount Global,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Paramount Skydance / Paramount Global,E05,8K_ITEM_OK,8K_ITEM,1,1,0,0,Material agreement event.
+Enphase Energy,B01,OK,STD_XBRL,1,1,0,0,Revenue candidate chain from metric definition.
+Enphase Energy,B02,OK,DERIVED,1,1,0,0,Same revenue candidate chain YoY pair.
+Enphase Energy,B03,OK,DERIVED,1,1,0,0,GAAP EBITDA proxy; impairment is not added back.
+Enphase Energy,B04,OK,STD_XBRL,1,1,0,0,Net income candidate chain from metric definition.
+Enphase Energy,B05,OK,DERIVED,1,1,0,0,Capex chain allows PaymentsToAcquireProductiveAssets.
+Enphase Energy,B06,OK,DERIVED,1,1,0,0,Entity-level debt/equity; no captive finance segment dimension detected.
+Enphase Energy,B07,OK,DERIVED,1,1,0,0,Operating income divided by interest expense.
+Enphase Energy,B08,OK,DERIVED,1,1,0,0,JPM is handled separately as N_A_STRUCTURAL.
+Enphase Energy,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equivalents only; short-term investments not merged.
+Enphase Energy,B13,TEXT_QUAL,TEXT,0,1,0,0,Only qualitative capacity evidence is used unless a ratio appears.
+Enphase Energy,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
+Enphase Energy,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
+Enphase Energy,C03,DEF14A_OK,DEF14A,1,1,0,0,Selected ecd:PeoTotalCompAmt; duplicate contexts retained in evidence.
+Enphase Energy,C04,DIM_XBRL_OK,DIM_XBRL,1,1,0,0,auditor unchanged; current_accession=0001463101-26-000013; prior_accession=0001463101-25-000024; manual confirmation required when changed.
+Enphase Energy,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
+Enphase Energy,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
+Enphase Energy,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
+Enphase Energy,D04,TEXT_QUAL,TEXT,0,1,0,0,No going-concern doubt phrase found in 10-K text.
+Enphase Energy,E01,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no M&A item rule matched.
+Enphase Energy,E02,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: No Item 1.03 in FY-window 8-K; zero is normal.
+Enphase Energy,E03,8K_ITEM_OK,8K_ITEM,1,1,0,0,Leadership event.
+Enphase Energy,E04,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 4.02 found.
+Enphase Energy,E05,NOT_AVAILABLE_SEC,8K_ITEM,1,1,0,0,SEC 未披露: FY-window 8-K scanned; no item 1.01 found.
