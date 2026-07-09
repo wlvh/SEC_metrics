@@ -1,0 +1,7 @@
+metric_id,spec_rule,implementation_location,implemented,validation_check,notes
+B03,D&A composition and reconstructed operating income OK_APPROX,resolve_da_component; resolve_operating_income_component,1,marriott_b03_da_composition_positive;pfizer_b03_operating_income_reconstruction_ok_approx,Impairment is not added back; bridge assumption is noted.
+B06,three-tier total debt resolver and negative equity gate,resolve_total_debt_component; non_fi_metric_rows,1,b06_total_debt_prefers_total_debt_concepts;b06_negative_equity_not_ok,Tier 1 debt totals block adder double-counting.
+A08,noninterest income / net interest income,fi_metric_rows,1,a08_uses_noninterest_income_not_fee_label_guess,Notes disclose that this is not pure fee income.
+A10,ACL allowance / retained loans before allowance,fi_metric_rows,1,jpm_a10_allowance_ratio_std_xbrl_primary,Securities allowance concepts are excluded from primary value.
+A03/A04/A11/A12,JPM MD&A table raw_header/raw_row anchors,apply_fi_mda_table_metrics,1,jpm_a03_lcr_raw_row_anchor;jpm_a04_nim_raw_row_anchor_or_proxy_caveat;jpm_a11_aum_raw_row_anchor;jpm_a12_var_raw_row_anchor,Table values are intentionally not added to golden.
+Paramount stub,stub period values move to sidecar; annual rows not OK,write_stub_period_sidecar; apply_stub_period_metric_semantics,1,paramount_stub_period_values_not_main_annual_ok;paramount_stub_period_sidecar_exists,B06 remains a successor balance-sheet point-in-time ratio.

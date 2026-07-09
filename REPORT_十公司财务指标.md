@@ -3,8 +3,9 @@
 ## Executive Summary
 
 - Verdict: **GO WITH CAVEATS**。
-- SEC 请求总数：634；状态分布：`{"403":5,"200":604,"404":25}`。
-- 指标格子：230；OK/TEXT 类：175；待复核/不可得类：55。
+- SEC 请求总数：858；状态分布：`{"403":5,"200":817,"404":34,"0":2}`。
+- 指标格子：230；有值：161；空值：69；validation rows：75。
+- OK/TEXT 类：181；待复核/不可得类：49。
 - 本次只使用 SEC 官方响应和本地 evidence 文件；未使用第三方数据或模型记忆补数。
 - Repair validation 若有 P0 FAIL，verdict 强制为 NO-GO。
 - Stratified audit 任一 FAIL 会进入 repair validation gate，不能被报告静默吞掉。
@@ -35,14 +36,15 @@
 - 8K_ITEM_OK: 30
 - DEF14A_OK: 8
 - DIM_XBRL_OK: 12
-- MDA_OK: 2
+- MDA_OK: 6
 - NEEDS_REVIEW: 2
-- NOT_AVAILABLE_SEC: 42
-- NOT_EXTRACTED: 7
-- NOT_MEANINGFUL: 3
+- NOT_AVAILABLE_SEC: 31
+- NOT_EXTRACTED: 5
+- NOT_MEANINGFUL: 10
 - N_A_STRUCTURAL: 1
-- OK: 69
-- TEXT_QUAL: 54
+- OK: 73
+- OK_APPROX: 2
+- TEXT_QUAL: 50
 
 ## 十公司指标矩阵摘要
 
@@ -87,9 +89,9 @@
 | Macy's | B05 | Free cash flow | 1057000000 | USD | OK | NetCashProvidedByUsedInOperatingActivities+PaymentsToAcquirePropertyPlantAndEquipment |
 | Macy's | B08 | Current ratio | 1.485199198753616737146672602 | ratio | OK | AssetsCurrent+LiabilitiesCurrent |
 | Macy's | B09 | Cash reserves | 1246000000 | USD | OK | CashAndCashEquivalentsAtCarryingValue |
-| Paramount Skydance / Paramount Global | B01 | Revenue |  |  | NOT_AVAILABLE_SEC |  |
-| Paramount Skydance / Paramount Global | B04 | Net income |  |  | NOT_AVAILABLE_SEC |  |
-| Paramount Skydance / Paramount Global | B05 | Free cash flow |  | USD | NOT_AVAILABLE_SEC |  |
+| Paramount Skydance / Paramount Global | B01 | Revenue |  |  | NOT_MEANINGFUL |  |
+| Paramount Skydance / Paramount Global | B04 | Net income |  |  | NOT_MEANINGFUL |  |
+| Paramount Skydance / Paramount Global | B05 | Free cash flow |  |  | NOT_MEANINGFUL |  |
 | Paramount Skydance / Paramount Global | B08 | Current ratio | 1.256722332295499575431644495 | ratio | OK | AssetsCurrent+LiabilitiesCurrent |
 | Paramount Skydance / Paramount Global | B09 | Cash reserves | 3274000000 | USD | OK | CashAndCashEquivalentsAtCarryingValue |
 | Enphase Energy | B01 | Revenue | 1472985000 | USD | OK | RevenueFromContractWithCustomerExcludingAssessedTax |
@@ -182,6 +184,12 @@
 | G4_captive_finance_interest_expense | 1254000000 | 1254000000 | PASS |
 | G4_captive_finance_capex_tag | PaymentsToAcquireProductiveAssets | PaymentsToAcquireProductiveAssets | PASS |
 | G4_captive_finance_b07_status | NOT_MEANINGFUL | NOT_MEANINGFUL | PASS |
+| G6_marriott_b03_value | 0.17562819827388682 | 0.1756281982738868097456656229 | PASS |
+| G6_pfizer_b03_value | 0.33295514469710286 | 0.3329551446971028619824541779 | PASS |
+| G6_pfizer_b03_status | OK_APPROX | OK_APPROX | PASS |
+| G6_pfizer_b07_value | 5.332834144515163 | 5.332834144515162860351928117 | PASS |
+| G6_pfizer_b07_status | OK_APPROX | OK_APPROX | PASS |
+| G6_jpm_a10_value | 0.018287251447045755 | 0.01828725144704575539159843992 | PASS |
 
 ## Repair validation
 
@@ -190,6 +198,12 @@
 | validation_package_mode | P0 | PASS | mode=FULL_VALIDATION |
 | no_company_identity_branch_in_production | P0 | PASS | no identity literals in production branches |
 | registry_profile_matches_sic_rules_or_has_override_reason | P0 | PASS | registry profiles match SIC rules |
+| metrics_matrix_applicability_matches_02_04_spec | P0 | PASS | main matrix optional B scope matches spec |
+| no_unexpected_optional_b_metrics_in_main_matrix | P0 | PASS | optional B metric counts match target scope |
+| c02_matrix_matches_governance_signals | P0 | PASS | C02 matrix rows match governance signals |
+| c02_text_qual_requires_evidence_quote | P0 | PASS | C02 TEXT_QUAL rows have evidence quotes |
+| no_placeholder_notes_in_final_metrics | P0 | PASS | no placeholder initialization notes remain |
+| b06_needs_review_captive_finance_has_blank_main_value_or_candidate_role | P0 | PASS | captive-finance B06 main value blank with evidence and sidecar candidate role |
 | rpo_crpo_prefers_instance_fact | P0 | PASS | B12 instance preference verified |
 | basel_ratio_extractor_not_single_issuer_specific | P0 | PASS | Basel ratios and iXBRL scale route verified |
 | basel_concept_resolver_handles_tierone_spelling | P0 | PASS | TierOne spelling resolves to CET1/A02 |
@@ -198,6 +212,18 @@
 | basel_threshold_concepts_never_match_primary_metric | P0 | PASS | Basel threshold concepts excluded from primary metrics |
 | basel_primary_selection_prefers_actual_ratio_over_threshold | P0 | PASS | actual CET1 selected over same-dimension threshold |
 | a01_a02_metric_evidence_excludes_threshold_concepts | P0 | PASS | A01/A02 metric_evidence contains actual ratio concepts only |
+| jpm_a10_allowance_ratio_std_xbrl_primary | P0 | PASS | OK:STD_XBRL:0.01828725144704575539159843992 |
+| jpm_a10_excludes_debt_securities_allowance | P0 | PASS | securities allowance absent |
+| jpm_a10_primary_denominator_before_allowance_for_credit_loss | P0 | PASS | before-allowance denominator present |
+| jpm_a10_evidence_lists_numerator_and_denominator | P0 | PASS | A10 numerator and denominator evidenced |
+| a08_uses_noninterest_income_not_fee_label_guess | P0 | PASS | A08 uses NoninterestIncome |
+| a08_notes_definition_name_tension | P0 | PASS | Per 02 §A08 definition, this uses noninterest income, not pure fee income; noninterest income may include trading, investment banking, asset-management and other noninterest revenue. |
+| a08_evidence_has_source_components | P0 | PASS | A08 source components evidenced |
+| jpm_a03_lcr_raw_row_anchor | P0 | PASS | A03 raw row anchored |
+| jpm_a04_nim_raw_row_anchor_or_proxy_caveat | P0 | PASS | MDA_OK:Managed basis / non-GAAP table row selected. companyfacts proxy NII / average total assets=0.02264979566226381198982310031; table NIM should normally exceed this proxy because average interest-earning assets are usually smaller than average total assets.:Net interest margin parsed=A04 raw_value=2.50 value=0.025; raw_header=est income – reported (a) $ 95,443 $ 92,583 $ 89,267 Fully taxable-equivalent adjustments 425 477 480 Net interest income – managed basis $ 95,868 $ 93,060 $ 89,747 Less: Markets net interest income (b) 3,277 641 (294) Net interes |
+| jpm_a11_aum_raw_row_anchor | P0 | PASS | A11 raw row anchored |
+| jpm_a12_var_raw_row_anchor | P0 | PASS | A12 raw row anchored |
+| jpm_table_values_not_added_to_golden_until_manual_confirmation | P0 | PASS | JPM table values absent from golden |
 | lodging_kpi_extractor_not_marriott_specific | P0 | PASS | lodging KPI checks passed |
 | lodging_header_mapping_not_position_regex | P0 | PASS | header order swap parsed by name |
 | lodging_revpar_adr_occupancy_identity | P0 | PASS | RevPAR identity within 5% |
@@ -206,25 +232,9 @@
 | captive_finance_signal_requires_segment_dimension | P0 | PASS | dimension required |
 | captive_finance_excludes_normal_finance_lease_terms | P0 | PASS | normal finance terms excluded |
 | enphase_b06_not_captive_finance_false_positive | P0 | PASS | no non-signal company is marked captive review |
-| gm_like_captive_finance_fixture_triggers_review | P0 | PASS | captive member variants matched |
-| entity_continuity_yoy_not_paramount_specific | P0 | PASS | B02 continuity rule verified |
-| no_c03_ecd_fact_count | P0 | PASS | bad_rows=0 |
-| c03_def14a_ok_requires_peototalcompamt | P0 | PASS | all DEF14A_OK C03 rows backed |
-| c03_uses_ecd_peototalcompamt_for_all_companies | P0 | PASS | C03 PeoTotalCompAmt generic gate mirrors DEF14A evidence check |
-| c04_uses_auditorname_for_all_companies | P0 | PASS | C04 AuditorName verified |
-| eleventh_company_smoke_extractors_mount | P0 | PASS | fixture extractors mounted and behavior gates pass |
-| eleventh_company_behavior_lodging | P0 | PASS | lodging fixture extracted B10/B11 |
-| eleventh_company_behavior_financial_institution | P0 | PASS | FI fixture selects actual A01/A02 ratios over thresholds |
-| eleventh_company_behavior_captive_finance | P0 | PASS | manufacturing fixture triggers B06 NEEDS_REVIEW |
-| eleventh_company_behavior_rpo_crpo | P0 | PASS | value=5000000000;note=RPO != ARR; cRPO != ARR |
-| ok_status_recall_not_regressed_without_reason | P0 | PASS | snapshot_rows=120 |
-| coverage_has_evidence_matches_metric_evidence_join | P0 | PASS | coverage join matches |
-| numeric_ok_status_requires_evidence_row | P0 | PASS | all numeric OK rows evidenced |
-| d04_missing_going_concern_has_explicit_text | P0 | PASS | D04 text explicit |
-| existing_golden_results_still_pass | P0 | PASS | rows=57 |
-| requests_log_sec_only | P0 | PASS | rows=634 |
-| stratified_audit_all_pass_or_explicitly_caveated | P0 | PASS | rows=19 |
-| existing_repair_validation_still_pass | P0 | PASS | all gates pass |
+| b06_total_debt_prefers_total_debt_concepts | P0 | PASS | direct total debt selected |
+| b06_no_adder_double_count | P0 | PASS | Tier 1 B06 has no adders |
+| b06_tier_pairing_uses_current_sibling | P0 | PASS | Enphase current/noncurrent siblings selected |
 
 ## Scalability gate
 
@@ -237,9 +247,9 @@
 |---|---|---|---|---|---|---|---|---|
 | AUDIT_01 | STD_XBRL_DERIVED | Marriott International | B01 | 26186000000 | USD | OK | PASS | value, period, accession, concept/section, and quote/concept align |
 | AUDIT_02 | STD_XBRL_DERIVED | Marriott International | B02 | 0.04326693227091633466135458167 | ratio | OK | PASS | value, period, accession, concept/section, and quote/concept align |
-| AUDIT_03 | STD_XBRL_DERIVED | Marriott International | B04 | 2601000000 | USD | OK | PASS | value, period, accession, concept/section, and quote/concept align |
-| AUDIT_04 | STD_XBRL_DERIVED | Marriott International | B05 | 2608000000 | USD | OK | PASS | value, period, accession, concept/section, and quote/concept align |
-| AUDIT_05 | STD_XBRL_DERIVED | Marriott International | B06 | -0.006099177936886767435693450013 | ratio | OK | PASS | value, period, accession, concept/section, and quote/concept align |
+| AUDIT_03 | STD_XBRL_DERIVED | Marriott International | B03 | 0.1756281982738868097456656229 | ratio | OK | PASS | value, period, accession, concept/section, and quote/concept align |
+| AUDIT_04 | STD_XBRL_DERIVED | Marriott International | B04 | 2601000000 | USD | OK | PASS | value, period, accession, concept/section, and quote/concept align |
+| AUDIT_05 | STD_XBRL_DERIVED | Marriott International | B05 | 2608000000 | USD | OK | PASS | value, period, accession, concept/section, and quote/concept align |
 | AUDIT_06 | STD_XBRL_DERIVED | Marriott International | B07 | 5.118665018541409147095179234 | ratio | OK | PASS | value, period, accession, concept/section, and quote/concept align |
 | AUDIT_07 | STD_XBRL_DERIVED | Marriott International | B08 | 0.4267682781614670159561800429 | ratio | OK | PASS | value, period, accession, concept/section, and quote/concept align |
 | AUDIT_08 | STD_XBRL_DERIVED | Marriott International | B09 | 358000000 | USD | OK | PASS | value, period, accession, concept/section, and quote/concept align |
@@ -252,14 +262,14 @@
 | AUDIT_15 | DEF14A | Pfizer | C03 | 27585301 | USD | DEF14A_OK | PASS | value, period, accession, concept/section, and quote/concept align |
 | AUDIT_16 | MDA_TEXT | Marriott International | B10 | 69.3 | percent | MDA_OK | PASS | value, period, accession, concept/section, and quote/concept align |
 | AUDIT_17 | MDA_TEXT | Marriott International | B11 | 128.8 | USD | MDA_OK | PASS | value, period, accession, concept/section, and quote/concept align |
-| AUDIT_18 | 8K_ITEM | Marriott International | C01 | 3 | count | 8K_ITEM_OK | PASS | value, period, accession, concept/section, and quote/concept align |
-| AUDIT_19 | 8K_ITEM | Marriott International | E03 | 3 | count | 8K_ITEM_OK | PASS | value, period, accession, concept/section, and quote/concept align |
+| AUDIT_18 | MDA_TEXT | JPMorgan Chase | A03 | 1.11 | ratio | MDA_OK | PASS | value, period, accession, concept/section, and quote/concept align |
+| AUDIT_19 | 8K_ITEM | Marriott International | C01 | 3 | count | 8K_ITEM_OK | PASS | value, period, accession, concept/section, and quote/concept align |
+| AUDIT_20 | 8K_ITEM | Marriott International | E03 | 3 | count | 8K_ITEM_OK | PASS | value, period, accession, concept/section, and quote/concept align |
 
 ## NOT_AVAILABLE_SEC / NOT_EXTRACTED / NEEDS_REVIEW 清单
 
 | company | metric_id | metric_name | status | notes |
 |---|---|---|---|---|
-| Marriott International | B03 | EBITDA margin | NOT_AVAILABLE_SEC | Required revenue, operating income, or D&A missing. |
 | Marriott International | C03 | Executive compensation signals | NOT_EXTRACTED | No numeric ecd:PeoTotalCompAmt fact matched target fiscal year; C03 degraded from previous ecd_fact_count. |
 | Marriott International | E01 | M&A announcements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no M&A item rule matched. |
 | Marriott International | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
@@ -269,20 +279,16 @@
 | Southwest Airlines | D02 | Litigation disclosures | NOT_AVAILABLE_SEC | Legal proceedings or litigation text evidence. |
 | Southwest Airlines | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Southwest Airlines | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
-| Ford Motor Company | B06 | Debt-to-equity | NEEDS_REVIEW | Captive finance segment/dimension detected; industrial-only debt-to-equity unavailable. |
+| Ford Motor Company | B06 | Debt-to-equity | NEEDS_REVIEW | Main debt/equity value is blank because captive finance segment/dimension was detected; consolidated candidate is retained only in evidence and sidecar with candidate_role. |
 | Ford Motor Company | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Ford Motor Company | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
-| Pfizer | B03 | EBITDA margin | NOT_AVAILABLE_SEC | Required revenue, operating income, or D&A missing. |
-| Pfizer | B07 | Interest coverage ratio | NOT_AVAILABLE_SEC | Operating income or interest expense missing. |
 | Pfizer | C01 | CEO / CFO changes | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 5.02 found. |
 | Pfizer | E01 | M&A announcements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no M&A item rule matched. |
 | Pfizer | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Pfizer | E03 | Leadership departures | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 5.02 found. |
 | Pfizer | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
 | Pfizer | E05 | Material agreements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 1.01 found. |
-| JPMorgan Chase | A08 | Fee income vs interest income | NOT_EXTRACTED | Requires bank-specific revenue composition review. |
 | JPMorgan Chase | A09 | Non-performing loans / NPL ratio | NOT_EXTRACTED | Requires credit risk table or reviewed dimensions. |
-| JPMorgan Chase | A10 | Loan loss reserves | NOT_EXTRACTED | Requires allowance and loans denominator review. |
 | JPMorgan Chase | A13 | Geographic exposure | NOT_EXTRACTED | Requires geographic dimensions or segment table. |
 | JPMorgan Chase | E01 | M&A announcements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no M&A item rule matched. |
 | JPMorgan Chase | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
@@ -290,18 +296,10 @@
 | JPMorgan Chase | E05 | Material agreements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 1.01 found. |
 | Salesforce | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Salesforce | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
-| Lumen Technologies | B06 | Debt-to-equity | NOT_AVAILABLE_SEC | Debt or equity missing. |
 | Lumen Technologies | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Lumen Technologies | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
-| Macy's | B06 | Debt-to-equity | NOT_AVAILABLE_SEC | Debt or equity missing. |
 | Macy's | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Macy's | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
-| Paramount Skydance / Paramount Global | B01 | Revenue | NOT_AVAILABLE_SEC | Revenue candidate chain from metric definition. |
-| Paramount Skydance / Paramount Global | B03 | EBITDA margin | NOT_AVAILABLE_SEC | Required revenue, operating income, or D&A missing. |
-| Paramount Skydance / Paramount Global | B04 | Net income | NOT_AVAILABLE_SEC | Net income candidate chain from metric definition. |
-| Paramount Skydance / Paramount Global | B05 | Free cash flow | NOT_AVAILABLE_SEC | Capex chain allows PaymentsToAcquireProductiveAssets. |
-| Paramount Skydance / Paramount Global | B06 | Debt-to-equity | NOT_AVAILABLE_SEC | Debt or equity missing. |
-| Paramount Skydance / Paramount Global | B07 | Interest coverage ratio | NOT_AVAILABLE_SEC | Operating income or interest expense missing. |
 | Paramount Skydance / Paramount Global | C03 | Executive compensation signals | NOT_EXTRACTED | No numeric ecd:PeoTotalCompAmt fact matched target fiscal year; C03 degraded from previous ecd_fact_count. |
 | Paramount Skydance / Paramount Global | C04 | Auditor changes | NEEDS_REVIEW | 需复核: current auditor read from dei:AuditorName, but prior 10-K instance is missing or lacks AuditorName (prior_10k inventory row). |
 | Paramount Skydance / Paramount Global | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |

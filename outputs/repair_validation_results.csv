@@ -2,6 +2,12 @@ check_id,severity,status,details
 validation_package_mode,P0,PASS,mode=FULL_VALIDATION
 no_company_identity_branch_in_production,P0,PASS,no identity literals in production branches
 registry_profile_matches_sic_rules_or_has_override_reason,P0,PASS,registry profiles match SIC rules
+metrics_matrix_applicability_matches_02_04_spec,P0,PASS,main matrix optional B scope matches spec
+no_unexpected_optional_b_metrics_in_main_matrix,P0,PASS,optional B metric counts match target scope
+c02_matrix_matches_governance_signals,P0,PASS,C02 matrix rows match governance signals
+c02_text_qual_requires_evidence_quote,P0,PASS,C02 TEXT_QUAL rows have evidence quotes
+no_placeholder_notes_in_final_metrics,P0,PASS,no placeholder initialization notes remain
+b06_needs_review_captive_finance_has_blank_main_value_or_candidate_role,P0,PASS,captive-finance B06 main value blank with evidence and sidecar candidate role
 rpo_crpo_prefers_instance_fact,P0,PASS,B12 instance preference verified
 basel_ratio_extractor_not_single_issuer_specific,P0,PASS,Basel ratios and iXBRL scale route verified
 basel_concept_resolver_handles_tierone_spelling,P0,PASS,TierOne spelling resolves to CET1/A02
@@ -10,6 +16,18 @@ basel_cet1_never_classified_as_a01,P0,PASS,CET1 concepts excluded from A01
 basel_threshold_concepts_never_match_primary_metric,P0,PASS,Basel threshold concepts excluded from primary metrics
 basel_primary_selection_prefers_actual_ratio_over_threshold,P0,PASS,actual CET1 selected over same-dimension threshold
 a01_a02_metric_evidence_excludes_threshold_concepts,P0,PASS,A01/A02 metric_evidence contains actual ratio concepts only
+jpm_a10_allowance_ratio_std_xbrl_primary,P0,PASS,OK:STD_XBRL:0.01828725144704575539159843992
+jpm_a10_excludes_debt_securities_allowance,P0,PASS,securities allowance absent
+jpm_a10_primary_denominator_before_allowance_for_credit_loss,P0,PASS,before-allowance denominator present
+jpm_a10_evidence_lists_numerator_and_denominator,P0,PASS,A10 numerator and denominator evidenced
+a08_uses_noninterest_income_not_fee_label_guess,P0,PASS,A08 uses NoninterestIncome
+a08_notes_definition_name_tension,P0,PASS,"Per 02 §A08 definition, this uses noninterest income, not pure fee income; noninterest income may include trading, investment banking, asset-management and other noninterest revenue."
+a08_evidence_has_source_components,P0,PASS,A08 source components evidenced
+jpm_a03_lcr_raw_row_anchor,P0,PASS,A03 raw row anchored
+jpm_a04_nim_raw_row_anchor_or_proxy_caveat,P0,PASS,"MDA_OK:Managed basis / non-GAAP table row selected. companyfacts proxy NII / average total assets=0.02264979566226381198982310031; table NIM should normally exceed this proxy because average interest-earning assets are usually smaller than average total assets.:Net interest margin parsed=A04 raw_value=2.50 value=0.025; raw_header=est income – reported (a) $ 95,443 $ 92,583 $ 89,267 Fully taxable-equivalent adjustments 425 477 480 Net interest income – managed basis $ 95,868 $ 93,060 $ 89,747 Less: Markets net interest income (b) 3,277 641 (294) Net interes"
+jpm_a11_aum_raw_row_anchor,P0,PASS,A11 raw row anchored
+jpm_a12_var_raw_row_anchor,P0,PASS,A12 raw row anchored
+jpm_table_values_not_added_to_golden_until_manual_confirmation,P0,PASS,JPM table values absent from golden
 lodging_kpi_extractor_not_marriott_specific,P0,PASS,lodging KPI checks passed
 lodging_header_mapping_not_position_regex,P0,PASS,header order swap parsed by name
 lodging_revpar_adr_occupancy_identity,P0,PASS,RevPAR identity within 5%
@@ -18,8 +36,27 @@ captive_finance_debt_not_ford_specific,P0,PASS,B06 captive finance verified
 captive_finance_signal_requires_segment_dimension,P0,PASS,dimension required
 captive_finance_excludes_normal_finance_lease_terms,P0,PASS,normal finance terms excluded
 enphase_b06_not_captive_finance_false_positive,P0,PASS,no non-signal company is marked captive review
+b06_total_debt_prefers_total_debt_concepts,P0,PASS,direct total debt selected
+b06_no_adder_double_count,P0,PASS,Tier 1 B06 has no adders
+b06_tier_pairing_uses_current_sibling,P0,PASS,Enphase current/noncurrent siblings selected
+b06_excludes_debt_securities_and_debt_fair_value,P0,PASS,forbidden B06 concepts absent
+b06_negative_equity_not_ok,P0,PASS,negative-equity B06 rows are blank
+enphase_b06_golden_unchanged_after_debt_resolver,P0,PASS,OK:1.107959077222837051285943352
+ford_b06_captive_finance_still_needs_review,P0,PASS,NEEDS_REVIEW::Main debt/equity value is blank because captive finance segment/dimension was detected; consolidated candidate is retained only in evidence and sidecar with candidate_role.
 gm_like_captive_finance_fixture_triggers_review,P0,PASS,captive member variants matched
 entity_continuity_yoy_not_paramount_specific,P0,PASS,B02 continuity rule verified
+marriott_b03_da_composition_positive,P0,PASS,OK:0.1756281982738868097456656229:OperatingIncomeLoss+Depreciation+AmortizationOfIntangibleAssets+Revenues (Operating income + D&A) / revenue; components=OperatingIncomeLoss=4141000000;Depreciation=145000000;AmortizationOfIntangibleAssets=313000000;Revenues=26186000000
+da_composition_rejects_accumulated_expected_future_schedule,P0,PASS,D&A composition allowlist is clean
+da_composition_completeness_scan_clean_or_noted,P0,PASS,"Direct OperatingIncomeLoss selected. D&A composed from standard Depreciation + AmortizationOfIntangibleAssets. custom DepreciationAmortizationAndOther observed (DepreciationAmortizationAndOtherExcludingCapitalizedContractCostAmortization=213000000;DepreciationAmortizationAndOther=599000000) but not added because ""and other"" is not cleanly attributable to D&A expense. GAAP EBITDA proxy; impairment is not added back."
+da_custom_line_reconciliation_noted,P0,PASS,"Direct OperatingIncomeLoss selected. D&A composed from standard Depreciation + AmortizationOfIntangibleAssets. custom DepreciationAmortizationAndOther observed (DepreciationAmortizationAndOtherExcludingCapitalizedContractCostAmortization=213000000;DepreciationAmortizationAndOther=599000000) but not added because ""and other"" is not cleanly attributable to D&A expense. GAAP EBITDA proxy; impairment is not added back."
+pfizer_b03_operating_income_reconstruction_ok_approx,P0,PASS,OK_APPROX:0.3329551446971028619824541779:Operating income reconstructed from pretax continuing income less aggregate nonoperating income/expense; assumes the nonoperating aggregate is the complete operating-to-pretax bridge. CostsAndExpenses cross-check unavailable; assumes the nonoperating aggregate is the complete operating-to-pretax bridge. Direct D&A concept selected. GAAP EBITDA proxy; impairment is not added back.
+pfizer_b07_reuses_approx_operating_income,P0,PASS,OK_APPROX:5.332834144515162860351928117:Interest coverage uses reconstructed operating income.
+direct_operating_income_priority_over_reconstruction,P0,PASS,Direct OperatingIncomeLoss selected. Direct D&A concept selected. GAAP EBITDA proxy; impairment is not added back.
+b03_rejects_mixed_accession_period_unit,P0,PASS,mixed fixture rejected
+b03_bridge_fragment_negative_fixture_rejected_or_needs_review,P0,PASS,bridge chain contains aggregate concepts only
+paramount_stub_period_values_not_main_annual_ok,P0,PASS,Paramount annual period metrics are blank
+paramount_stub_period_sidecar_exists,P0,PASS,rows=11
+paramount_b06_point_in_time_successor_balance_sheet_note,P0,PASS,"OK:1.168049260241169930727785855:Consolidated entity-level debt/equity; Tier 1 direct total debt selected; no adders applied. Captive-finance dimensions are reviewed after accession instance parsing. successor balance sheet point-in-time, not annualized period metric."
 no_c03_ecd_fact_count,P0,PASS,bad_rows=0
 c03_def14a_ok_requires_peototalcompamt,P0,PASS,all DEF14A_OK C03 rows backed
 c03_uses_ecd_peototalcompamt_for_all_companies,P0,PASS,C03 PeoTotalCompAmt generic gate mirrors DEF14A evidence check
@@ -29,11 +66,11 @@ eleventh_company_behavior_lodging,P0,PASS,lodging fixture extracted B10/B11
 eleventh_company_behavior_financial_institution,P0,PASS,FI fixture selects actual A01/A02 ratios over thresholds
 eleventh_company_behavior_captive_finance,P0,PASS,manufacturing fixture triggers B06 NEEDS_REVIEW
 eleventh_company_behavior_rpo_crpo,P0,PASS,value=5000000000;note=RPO != ARR; cRPO != ARR
-ok_status_recall_not_regressed_without_reason,P0,PASS,snapshot_rows=120
+ok_status_recall_not_regressed_without_reason,P0,PASS,snapshot_rows=130
 coverage_has_evidence_matches_metric_evidence_join,P0,PASS,coverage join matches
 numeric_ok_status_requires_evidence_row,P0,PASS,all numeric OK rows evidenced
 d04_missing_going_concern_has_explicit_text,P0,PASS,D04 text explicit
-existing_golden_results_still_pass,P0,PASS,rows=57
-requests_log_sec_only,P0,PASS,rows=635
-stratified_audit_all_pass_or_explicitly_caveated,P0,PASS,rows=19
+existing_golden_results_still_pass,P0,PASS,rows=63
+requests_log_sec_only,P0,PASS,rows=859
+stratified_audit_all_pass_or_explicitly_caveated,P0,PASS,rows=20
 existing_repair_validation_still_pass,P0,PASS,all gates pass

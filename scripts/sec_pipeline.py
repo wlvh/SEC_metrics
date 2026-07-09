@@ -272,6 +272,65 @@ BASEL_RATIO_CANDIDATE_FIELDNAMES = [
     "parser_version",
 ]
 
+STUB_PERIOD_FIELDNAMES = [
+    "company",
+    "metric_id",
+    "stub_period_start",
+    "stub_period_end",
+    "value",
+    "unit",
+    "concept_or_section",
+    "accession",
+    "notes",
+]
+
+SPEC_IMPLEMENTATION_AUDIT_FIELDNAMES = [
+    "metric_id",
+    "spec_rule",
+    "implementation_location",
+    "implemented",
+    "validation_check",
+    "notes",
+]
+
+OPTIONAL_B_OBSERVATION_FIELDNAMES = [
+    "company",
+    "cik",
+    "metric_id",
+    "metric_name",
+    "value",
+    "unit",
+    "status",
+    "source_class",
+    "period_end",
+    "accession",
+    "concept_or_section",
+    "context_or_dimension",
+    "candidate_role",
+    "source_url",
+    "local_path",
+    "evidence_quote",
+    "notes",
+]
+
+B06_CANDIDATE_FIELDNAMES = [
+    "company",
+    "cik",
+    "metric_id",
+    "value",
+    "unit",
+    "status",
+    "period_end",
+    "accession",
+    "concept_or_section",
+    "context_or_dimension",
+    "candidate_role",
+    "source_url",
+    "local_path",
+    "evidence_quote",
+    "notes",
+]
+
 BASEL_THRESHOLD_CONCEPT_FRAGMENTS = [
     "minimum",
     "capitaladequacyminimum",
@@ -293,6 +352,7 @@ LIGHT_GOLDEN_COMPONENT_METRICS = {
 
 NUMERIC_EVIDENCE_STATUSES = {
     "OK",
+    "OK_APPROX",
     "MDA_OK",
     "DEF14A_OK",
     "DIM_XBRL_OK",
@@ -305,6 +365,7 @@ OK_RECALL_STATUSES = {
     "DIM_XBRL_OK",
     "DEF14A_OK",
     "8K_ITEM_OK",
+    "TEXT_QUAL",
 }
 
 RECALL_REGRESSION_STATUSES = {
@@ -313,6 +374,20 @@ RECALL_REGRESSION_STATUSES = {
     "NOT_AVAILABLE_SEC",
 }
 
+'''
+B01 revenue is the metrics_matrix B01 metric: the registrant's annual,
+company-level total revenue for the target fiscal year. It is not segment
+revenue, product-line revenue, revenue growth, or cash received from customers.
+It uses one global concept chain rather than switching labels by industry
+because companyfacts exposes standard company-level facts and this metric asks
+the shared question: total company revenue for the fiscal year.
+The chain moves from the most explicit ASC 606 revenue concept to broader
+fallback labels that remain acceptable for company total revenue.
+Runtime probing follows this order and stops at the first concept with a
+matching annual 10-K duration fact. Within that concept, the target accession
+wins; otherwise the latest filed/accession/unit tuple wins. It does not sort
+by value, industry category, or raw tag order.
+'''
 REVENUE_CHAIN = [
     "RevenueFromContractWithCustomerExcludingAssessedTax",
     "Revenues",
@@ -329,6 +404,19 @@ DA_CHAIN = [
     "DepreciationAmortizationAndAccretionNet",
     "DepreciationAndAmortization",
 ]
+DA_COMPOSITION_CHAIN = [
+    "Depreciation",
+    "AmortizationOfIntangibleAssets",
+]
+OPERATING_INCOME_CHAIN = ["OperatingIncomeLoss"]
+PRETAX_CONTINUING_INCOME_CHAIN = [
+    "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+    "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+]
+NONOPERATING_BRIDGE_CHAIN = [
+    "NonoperatingIncomeExpense",
+    "OtherNonoperatingIncomeExpense",
+]
 CAPEX_CHAIN = [
     "PaymentsToAcquirePropertyPlantAndEquipment",
     "PaymentsToAcquireProductiveAssets",
@@ -342,10 +430,50 @@ EQUITY_CHAIN = [
     "StockholdersEquity",
     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
 ]
-LONG_TERM_DEBT_CHAIN = [
+TOTAL_DEBT_DIRECT_CHAIN = [
+    "DebtAndCapitalLeaseObligations",
+    "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+]
+TOTAL_DEBT_PAIR_CHAINS = [
+    (
+        "LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "LongTermDebtAndCapitalLeaseObligationsNoncurrent",
+    ),
+    ("LongTermDebtCurrent", "LongTermDebtNoncurrent"),
+]
+TOTAL_DEBT_LEASE_PAIR_CHAINS = [
+    ("FinanceLeaseLiabilityCurrent", "FinanceLeaseLiabilityNoncurrent"),
+]
+TOTAL_DEBT_STANDALONE_FALLBACK_CHAIN = [
+    "LongTermDebtAndCapitalLeaseObligations",
+]
+TOTAL_DEBT_SHORT_ADDER_CHAIN = [
+    "ShortTermBorrowings",
+    "CommercialPaper",
+]
+LEGACY_GOLDEN_LONG_TERM_DEBT_CHAIN = [
     "LongTermDebt",
     "LongTermDebtNoncurrent",
 ]
+JPM_A08_COMPONENTS = [
+    "NoninterestIncome",
+    "InterestIncomeExpenseNet",
+]
+JPM_A10_COMPONENTS = [
+    "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+    "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+]
+STUB_PERIOD_COMPONENT_CHAINS = [
+    ("B01", REVENUE_CHAIN),
+    ("B03", OPERATING_INCOME_CHAIN + DA_CHAIN + DA_COMPOSITION_CHAIN),
+    ("B04", NET_INCOME_CHAIN),
+    (
+        "B05",
+        ["NetCashProvidedByUsedInOperatingActivities"] + CAPEX_CHAIN,
+    ),
+    ("B07", OPERATING_INCOME_CHAIN + INTEREST_CHAIN),
+]
+STUB_PERIOD_MAIN_METRICS = {"B01", "B02", "B03", "B04", "B05", "B07"}
 
 
 @dataclass(frozen=True)
@@ -388,6 +516,28 @@ class FactHit:
     frame: str
     source_path: str
     source_url: str
+
+
+@dataclass(frozen=True)
+class ComponentResolution:
+    """Represent one resolved formula component and its audit boundary.
+
+    Args:
+        value: Numeric component value, or None when the component is unsafe.
+        hits: Companyfacts facts that prove the value or the reviewed candidate.
+        status: Metric status implied by this component, such as OK or OK_APPROX.
+        formula: Human-readable component formula.
+        notes: Evidence and assumption notes for the downstream metric row.
+
+    Expected output:
+        Derived metrics can combine the value while preserving component facts.
+    """
+
+    value: Decimal | None
+    hits: list[FactHit]
+    status: str
+    formula: str
+    notes: str
 
 
 def utc_now_iso() -> str:
@@ -1836,17 +1986,25 @@ def target_10k_for_company(*, company: str) -> dict:
     """Return the selected target 10-K row used for metrics.
 
     The rule prefers primary/successor rows, then predecessor rows. This keeps
-    role choice explicit while still allowing a fallback when a successor CIK
-    lacks a target 10-K.
+    role choice explicit while using a same-period original full-instance row
+    when a 10-K/A or sparse target requires fallback.
     """
     rows = inventory_rows_for_company(company=company, source_role="target_10k")
+    rows.extend(
+        inventory_rows_for_company(
+            company=company,
+            source_role="target_original_full_instance",
+        )
+    )
     if not rows:
         raise RuntimeError(f"No target_10k inventory row for {company}")
     role_rank = {"primary": 0, "successor": 0, "predecessor": 1}
+    source_rank = {"target_original_full_instance": 0, "target_10k": 1}
     ranked_rows = sorted(
         rows,
         key=lambda row: (
             role_rank[str(row["entity_role"])] if str(row["entity_role"]) in role_rank else 5,
+            source_rank[str(row["source_role"])],
             str(row["filingDate"]),
         ),
         reverse=False,
@@ -2369,6 +2527,767 @@ def select_component(
     )
 
 
+def select_target_component(
+    *,
+    cik: int,
+    concept_chain: list[str],
+    period_end: str,
+    period_kind: str,
+    accession: str,
+) -> FactHit | None:
+    """Select a component only when it belongs to the target accession.
+
+    Args:
+        cik: Target CIK.
+        concept_chain: Candidate concepts in priority order.
+        period_end: Target report date.
+        period_kind: "duration" or "instant".
+        accession: Required accession.
+
+    Returns:
+        FactHit from the target accession or None.
+    """
+    hit = select_component(
+        cik=cik,
+        concept_chain=concept_chain,
+        period_end=period_end,
+        period_kind=period_kind,
+        accession=accession,
+    )
+    if hit is None:
+        return None
+    if hit.accession != accession:
+        print(
+            "Component skipped because latest fact is outside target accession: "
+            f"{hit.concept} {hit.accession} expected={accession}"
+        )
+        return None
+    return hit
+
+
+def compatible_component_hits(
+    *,
+    hits: list[FactHit],
+    period_start: str,
+    period_end: str,
+    accession: str,
+    unit: str,
+) -> bool:
+    """Return whether duration facts can be safely combined.
+
+    Args:
+        hits: Facts that would be added or subtracted together.
+        period_start: Required start date.
+        period_end: Required end date.
+        accession: Required accession.
+        unit: Required unit.
+
+    Returns:
+        True when all facts share the annual target context.
+    """
+    for hit in hits:
+        if hit.accession != accession:
+            return False
+        if hit.unit != unit:
+            return False
+        if hit.start != period_start or hit.end != period_end:
+            return False
+        if not hit.form.startswith("10-K"):
+            return False
+        if hit.fiscal_period != "FY":
+            return False
+        if not annual_duration_ok(hit=hit):
+            return False
+    return True
+
+
+def instant_component_hits_compatible(
+    *,
+    hits: list[FactHit],
+    period_end: str,
+    accession: str,
+    unit: str,
+) -> bool:
+    """Return whether instant facts can be safely combined.
+
+    Args:
+        hits: Instant facts that would be added together.
+        period_end: Required balance-sheet date.
+        accession: Required accession.
+        unit: Required unit.
+
+    Returns:
+        True when all facts are from the target filing and unit.
+    """
+    for hit in hits:
+        if hit.accession != accession:
+            return False
+        if hit.unit != unit:
+            return False
+        if hit.end != period_end:
+            return False
+        if not hit.form.startswith("10-K"):
+            return False
+    return True
+
+
+def resolve_da_component(
+    *,
+    cik: int,
+    period_end: str,
+    accession: str,
+) -> ComponentResolution:
+    """Resolve depreciation and amortization for B03.
+
+    Args:
+        cik: Target CIK.
+        period_end: Target fiscal year end.
+        accession: Required target 10-K accession.
+
+    Returns:
+        Direct D&A when available, otherwise a strictly compatible
+        Depreciation + AmortizationOfIntangibleAssets composition.
+    """
+    direct = select_target_component(
+        cik=cik,
+        concept_chain=DA_CHAIN,
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    if direct is not None:
+        return ComponentResolution(
+            value=direct.value,
+            hits=[direct],
+            status="OK",
+            formula=direct.concept,
+            notes="Direct D&A concept selected.",
+        )
+    depreciation = select_target_component(
+        cik=cik,
+        concept_chain=["Depreciation"],
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    amortization = select_target_component(
+        cik=cik,
+        concept_chain=["AmortizationOfIntangibleAssets"],
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    if depreciation is None or amortization is None:
+        return ComponentResolution(
+            value=None,
+            hits=[hit for hit in [depreciation, amortization] if hit is not None],
+            status="NOT_AVAILABLE_SEC",
+            formula="Depreciation + AmortizationOfIntangibleAssets",
+            notes="Direct D&A and compatible D&A composition are missing.",
+        )
+    hits = [depreciation, amortization]
+    if not compatible_component_hits(
+        hits=hits,
+        period_start=depreciation.start,
+        period_end=period_end,
+        accession=accession,
+        unit="USD",
+    ):
+        return ComponentResolution(
+            value=None,
+            hits=hits,
+            status="NEEDS_REVIEW",
+            formula="Depreciation + AmortizationOfIntangibleAssets",
+            notes="D&A composition rejected because period, accession, or unit differs.",
+        )
+    return ComponentResolution(
+        value=depreciation.value + amortization.value,
+        hits=hits,
+        status="OK",
+        formula="Depreciation + AmortizationOfIntangibleAssets",
+        notes=(
+            "D&A composed from standard Depreciation + "
+            "AmortizationOfIntangibleAssets."
+        ),
+    )
+
+
+def custom_da_observation_note(
+    *,
+    company: str,
+    period_start: str,
+    period_end: str,
+    accession: str,
+) -> str:
+    """Return a note when a custom D&A-and-other line is observed.
+
+    Args:
+        company: Display company name.
+        period_start: Target duration start.
+        period_end: Target duration end.
+        accession: Target accession.
+
+    Returns:
+        Disclosure note, or empty string when no matching custom line exists.
+    """
+    rows = read_csv_file(path=instance_inventory_path(company=company))
+    matches = [
+        row
+        for row in rows
+        if row["accession"] == accession
+        and row["period_start"] == period_start
+        and row["period_end"] == period_end
+        and row["unit"] == "iso4217:USD"
+        and row["dimensions"] == ""
+        and re.search(
+            pattern=r"DepreciationAmortizationAndOther",
+            string=row["concept"],
+            flags=re.IGNORECASE,
+        )
+    ]
+    if not matches:
+        return ""
+    values = ";".join(
+        f"{row['concept']}={row['value']}" for row in matches[:3]
+    )
+    return (
+        " custom DepreciationAmortizationAndOther observed "
+        f"({values}) but not added because \"and other\" is not cleanly "
+        "attributable to D&A expense."
+    )
+
+
+def resolve_operating_income_component(
+    *,
+    cik: int,
+    period_end: str,
+    accession: str,
+    revenue: FactHit | None,
+) -> ComponentResolution:
+    """Resolve operating income for B03 and B07.
+
+    Args:
+        cik: Target CIK.
+        period_end: Target fiscal year end.
+        accession: Required target accession.
+        revenue: Revenue fact used for optional cross-validation.
+
+    Returns:
+        Direct operating income, or an OK_APPROX reconstruction from pretax
+        continuing income less aggregate nonoperating income/expense.
+    """
+    direct = select_target_component(
+        cik=cik,
+        concept_chain=OPERATING_INCOME_CHAIN,
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    if direct is not None:
+        return ComponentResolution(
+            value=direct.value,
+            hits=[direct],
+            status="OK",
+            formula="OperatingIncomeLoss",
+            notes="Direct OperatingIncomeLoss selected.",
+        )
+    pretax = select_target_component(
+        cik=cik,
+        concept_chain=PRETAX_CONTINUING_INCOME_CHAIN,
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    bridge = select_target_component(
+        cik=cik,
+        concept_chain=NONOPERATING_BRIDGE_CHAIN,
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    if pretax is None or bridge is None:
+        return ComponentResolution(
+            value=None,
+            hits=[hit for hit in [pretax, bridge] if hit is not None],
+            status="NOT_AVAILABLE_SEC",
+            formula="pretax continuing income - aggregate nonoperating bridge",
+            notes="Operating income and aggregate nonoperating bridge are missing.",
+        )
+    hits = [pretax, bridge]
+    if not compatible_component_hits(
+        hits=hits,
+        period_start=pretax.start,
+        period_end=period_end,
+        accession=accession,
+        unit="USD",
+    ):
+        return ComponentResolution(
+            value=None,
+            hits=hits,
+            status="NEEDS_REVIEW",
+            formula="pretax continuing income - aggregate nonoperating bridge",
+            notes="Operating income reconstruction rejected for mixed context.",
+        )
+    reconstructed = pretax.value - bridge.value
+    costs = select_target_component(
+        cik=cik,
+        concept_chain=["CostsAndExpenses"],
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    if costs is not None and revenue is not None:
+        expected = revenue.value - costs.value
+        denominator = abs(reconstructed) if reconstructed != 0 else Decimal("1")
+        error = abs(expected - reconstructed) / denominator
+        if error > Decimal("0.01"):
+            return ComponentResolution(
+                value=None,
+                hits=[pretax, bridge, revenue, costs],
+                status="NEEDS_REVIEW",
+                formula="pretax continuing income - aggregate nonoperating bridge",
+                notes=(
+                    "Operating income reconstruction failed Revenues - "
+                    f"CostsAndExpenses cross-check; relative_error={error}."
+                ),
+            )
+        cross_note = " Cross-checked against Revenues - CostsAndExpenses."
+        hits = [pretax, bridge, revenue, costs]
+    else:
+        cross_note = (
+            " CostsAndExpenses cross-check unavailable; assumes the "
+            "nonoperating aggregate is the complete operating-to-pretax bridge."
+        )
+    return ComponentResolution(
+        value=reconstructed,
+        hits=hits,
+        status="OK_APPROX",
+        formula="pretax continuing income - aggregate nonoperating bridge",
+        notes=(
+            "Operating income reconstructed from pretax continuing income less "
+            "aggregate nonoperating income/expense; assumes the nonoperating "
+            "aggregate is the complete operating-to-pretax bridge."
+            + cross_note
+        ),
+    )
+
+
+def concept_excluded_from_total_debt(*, concept: str) -> bool:
+    """Return whether a concept is forbidden in total debt resolution.
+
+    Args:
+        concept: XBRL concept local name.
+
+    Returns:
+        True for securities, fair-value, face-value, maturity, proceeds, and
+        repayment concepts that do not represent current debt outstanding.
+    """
+    normalized = normalized_concept_name(concept=concept)
+    excluded_patterns = [
+        r"^debtsecurities",
+        r"^availableforsalesecuritiesdebt",
+        r"^debtinstrumentfairvalue$",
+        r"^debtinstrumentfaceamount$",
+        r"^debtinstrumentunamortized",
+        r"maturitiesrepayments",
+        r"paymentsdue",
+        r"^proceedsfromdebt",
+        r"^proceedsfromissuanceofdebt",
+        r"^repaymentsofdebt",
+        r"^repaymentsoflongtermdebt",
+    ]
+    return any(
+        re.search(pattern=pattern, string=normalized)
+        for pattern in excluded_patterns
+    )
+
+
+def target_instant_component_exists(
+    *,
+    cik: int,
+    concept: str,
+    period_end: str,
+    accession: str,
+) -> bool:
+    """Return whether a target instant fact exists for a concept.
+
+    Args:
+        cik: Target CIK.
+        concept: Exact concept name.
+        period_end: Target balance-sheet date.
+        accession: Required accession.
+
+    Returns:
+        True when the exact concept is available in the target filing.
+    """
+    hit = select_target_component(
+        cik=cik,
+        concept_chain=[concept],
+        period_end=period_end,
+        period_kind="instant",
+        accession=accession,
+    )
+    return hit is not None
+
+
+def resolve_total_debt_component(
+    *,
+    cik: int,
+    period_end: str,
+    accession: str,
+) -> ComponentResolution:
+    """Resolve B06 total debt without double-counting adders.
+
+    Args:
+        cik: Target CIK.
+        period_end: Target balance-sheet date.
+        accession: Required target accession.
+
+    Returns:
+        Total debt component using direct totals first, then same-family pairs,
+        then restricted standalone/additional short-debt fallback.
+    """
+    for concept in TOTAL_DEBT_DIRECT_CHAIN:
+        hit = select_target_component(
+            cik=cik,
+            concept_chain=[concept],
+            period_end=period_end,
+            period_kind="instant",
+            accession=accession,
+        )
+        if hit is None:
+            continue
+        if concept_excluded_from_total_debt(concept=hit.concept):
+            continue
+        return ComponentResolution(
+            value=hit.value,
+            hits=[hit],
+            status="OK",
+            formula=concept,
+            notes="Tier 1 direct total debt selected; no adders applied.",
+        )
+    for current_concept, noncurrent_concept in TOTAL_DEBT_PAIR_CHAINS:
+        current = select_target_component(
+            cik=cik,
+            concept_chain=[current_concept],
+            period_end=period_end,
+            period_kind="instant",
+            accession=accession,
+        )
+        noncurrent = select_target_component(
+            cik=cik,
+            concept_chain=[noncurrent_concept],
+            period_end=period_end,
+            period_kind="instant",
+            accession=accession,
+        )
+        if current is None or noncurrent is None:
+            continue
+        hits = [current, noncurrent]
+        if not instant_component_hits_compatible(
+            hits=hits,
+            period_end=period_end,
+            accession=accession,
+            unit="USD",
+        ):
+            continue
+        return ComponentResolution(
+            value=current.value + noncurrent.value,
+            hits=hits,
+            status="OK",
+            formula=f"{current_concept} + {noncurrent_concept}",
+            notes="Tier 2 same-family current/noncurrent debt pair selected.",
+        )
+    standalone = select_target_component(
+        cik=cik,
+        concept_chain=TOTAL_DEBT_STANDALONE_FALLBACK_CHAIN,
+        period_end=period_end,
+        period_kind="instant",
+        accession=accession,
+    )
+    sibling_current_exists = target_instant_component_exists(
+        cik=cik,
+        concept="LongTermDebtAndCapitalLeaseObligationsCurrent",
+        period_end=period_end,
+        accession=accession,
+    )
+    base_hits = []
+    total = Decimal("0")
+    note = "Tier 3 restricted fallback."
+    if standalone is not None and not sibling_current_exists:
+        base_hits.append(standalone)
+        total += standalone.value
+        note = (
+            "Standalone LongTermDebtAndCapitalLeaseObligations used only after "
+            "Tier 1 and complete same-family pairs were unavailable."
+        )
+    if not base_hits:
+        for current_concept, noncurrent_concept in TOTAL_DEBT_LEASE_PAIR_CHAINS:
+            current = select_target_component(
+                cik=cik,
+                concept_chain=[current_concept],
+                period_end=period_end,
+                period_kind="instant",
+                accession=accession,
+            )
+            noncurrent = select_target_component(
+                cik=cik,
+                concept_chain=[noncurrent_concept],
+                period_end=period_end,
+                period_kind="instant",
+                accession=accession,
+            )
+            if current is None or noncurrent is None:
+                continue
+            hits = [current, noncurrent]
+            if not instant_component_hits_compatible(
+                hits=hits,
+                period_end=period_end,
+                accession=accession,
+                unit="USD",
+            ):
+                continue
+            return ComponentResolution(
+                value=current.value + noncurrent.value,
+                hits=hits,
+                status="OK",
+                formula=f"{current_concept} + {noncurrent_concept}",
+                notes="Tier 2 same-family finance lease liability pair selected.",
+            )
+    short_hits = []
+    for concept in TOTAL_DEBT_SHORT_ADDER_CHAIN:
+        hit = select_target_component(
+            cik=cik,
+            concept_chain=[concept],
+            period_end=period_end,
+            period_kind="instant",
+            accession=accession,
+        )
+        if hit is not None:
+            short_hits.append(hit)
+    if base_hits and short_hits:
+        if instant_component_hits_compatible(
+            hits=base_hits + short_hits,
+            period_end=period_end,
+            accession=accession,
+            unit="USD",
+        ):
+            for hit in short_hits:
+                total += hit.value
+            base_hits.extend(short_hits)
+            note += " ShortTermBorrowings/CommercialPaper adders included."
+    if base_hits:
+        return ComponentResolution(
+            value=total,
+            hits=base_hits,
+            status="OK",
+            formula=" + ".join([hit.concept for hit in base_hits]),
+            notes=note,
+        )
+    if short_hits:
+        return ComponentResolution(
+            value=None,
+            hits=short_hits,
+            status="NEEDS_REVIEW",
+            formula=" + ".join([hit.concept for hit in short_hits]),
+            notes="Only short debt adders were found; total debt base is missing.",
+        )
+    return ComponentResolution(
+        value=None,
+        hits=[],
+        status="NOT_AVAILABLE_SEC",
+        formula="total debt tier resolver",
+        notes="No acceptable total debt concept, same-family pair, or fallback found.",
+    )
+
+
+def stub_period_fact_hits(
+    *,
+    cik: int,
+    concept_chain: list[str],
+    period_end: str,
+    accession: str,
+) -> list[FactHit]:
+    """Return target facts whose duration is not annual-comparable.
+
+    Args:
+        cik: Target CIK.
+        concept_chain: Concepts to scan for stub period values.
+        period_end: Target report date.
+        accession: Required target accession.
+
+    Returns:
+        FactHit rows with duration outside the 300-400 day annual window.
+    """
+    payload = read_json_file(path=companyfacts_path(cik=cik))
+    facts_root = require_key(mapping=payload, key="facts")
+    hits = []
+    for concept in concept_chain:
+        for taxonomy, concepts in facts_root.items():
+            if concept not in concepts:
+                continue
+            concept_payload = concepts[concept]
+            units = optional_key(mapping=concept_payload, key="units", default={})
+            if not isinstance(units, dict):
+                print(f"Malformed stub units skipped for {cik} {concept}")
+                continue
+            for unit, fact_list in units.items():
+                for fact in fact_list:
+                    form = str(optional_key(mapping=fact, key="form", default=""))
+                    start = str(optional_key(mapping=fact, key="start", default=""))
+                    end = str(optional_key(mapping=fact, key="end", default=""))
+                    accn = str(optional_key(mapping=fact, key="accn", default=""))
+                    if not form.startswith("10-K"):
+                        continue
+                    if accn != accession or end != period_end or not start:
+                        continue
+                    duration = fact_duration_days(fact=fact)
+                    if duration is None or 300 <= duration <= 400:
+                        continue
+                    hits.append(
+                        fact_from_json(
+                            cik=cik,
+                            taxonomy=taxonomy,
+                            concept=concept,
+                            unit=str(unit),
+                            fact=fact,
+                        )
+                    )
+    return hits
+
+
+def stub_period_bounds(
+    *,
+    cik: int,
+    period_end: str,
+    accession: str,
+) -> tuple[str, str]:
+    """Return the dominant target stub period bounds.
+
+    Args:
+        cik: Target CIK.
+        period_end: Target report date.
+        accession: Required target accession.
+
+    Returns:
+        Tuple of start/end dates, or two blanks when no stub facts exist.
+    """
+    bounds: dict[tuple[str, str], int] = {}
+    for _metric_id, concept_chain in STUB_PERIOD_COMPONENT_CHAINS:
+        for hit in stub_period_fact_hits(
+            cik=cik,
+            concept_chain=concept_chain,
+            period_end=period_end,
+            accession=accession,
+        ):
+            key = (hit.start, hit.end)
+            if key not in bounds:
+                bounds[key] = 0
+            bounds[key] += 1
+    if not bounds:
+        return "", ""
+    return sorted(bounds.items(), key=lambda item: item[1], reverse=True)[0][0]
+
+
+def stub_period_note(*, stub_start: str, stub_end: str) -> str:
+    """Return the standard annual-metric stub caveat."""
+    return (
+        f"successor stub period {stub_start} to {stub_end}; annual metric "
+        "not comparable."
+    )
+
+
+def apply_stub_period_metric_semantics(
+    *,
+    rows: list[dict],
+    company: str,
+    accession: str,
+    stub_start: str,
+    stub_end: str,
+) -> list[dict]:
+    """Blank annual period metrics when only successor stub facts exist.
+
+    Args:
+        rows: Metric rows for one company.
+        company: Display company name.
+        accession: Target accession used as evidence anchor.
+        stub_start: Stub period start date.
+        stub_end: Stub period end date.
+
+    Returns:
+        Rows with period metrics marked NOT_MEANINGFUL and B06 untouched.
+    """
+    note = stub_period_note(stub_start=stub_start, stub_end=stub_end)
+    output = []
+    for row in rows:
+        if row["company"] == company and row["metric_id"] in STUB_PERIOD_MAIN_METRICS:
+            updated = dict(row)
+            updated["value"] = ""
+            updated["unit"] = ""
+            updated["status"] = "NOT_MEANINGFUL"
+            updated["source_class"] = "NOT_AVAILABLE"
+            updated["period_start"] = stub_start
+            updated["period_end"] = stub_end
+            updated["accession"] = accession
+            updated["notes"] = note
+            output.append(updated)
+        else:
+            output.append(row)
+    return output
+
+
+def stub_period_sidecar_rows() -> list[dict]:
+    """Build outputs/stub_period_metrics.csv rows from local companyfacts.
+
+    Returns:
+        Stub-period component facts for companies whose continuity status makes
+        annual period metrics non-comparable.
+    """
+    rows = []
+    for company_config in load_company_registry():
+        company = str(company_config["company"])
+        continuity = str(company_config["entity_continuity_status"])
+        if continuity not in {"successor_predecessor", "stub_period", "major_reorg"}:
+            continue
+        target = target_10k_for_company(company=company)
+        cik = int(target["cik"])
+        period_end = str(target["reportDate"])
+        accession = str(target["accession"])
+        for metric_id, concept_chain in STUB_PERIOD_COMPONENT_CHAINS:
+            for hit in stub_period_fact_hits(
+                cik=cik,
+                concept_chain=concept_chain,
+                period_end=period_end,
+                accession=accession,
+            ):
+                rows.append(
+                    {
+                        "company": company,
+                        "metric_id": metric_id,
+                        "stub_period_start": hit.start,
+                        "stub_period_end": hit.end,
+                        "value": hit.raw_value,
+                        "unit": hit.unit,
+                        "concept_or_section": hit.concept,
+                        "accession": hit.accession,
+                        "notes": stub_period_note(
+                            stub_start=hit.start,
+                            stub_end=hit.end,
+                        ),
+                    }
+                )
+    return rows
+
+
+def write_stub_period_sidecar() -> None:
+    """Write the stub-period sidecar for annual-metric review."""
+    write_csv_file(
+        path=WORKDIR / "outputs" / "stub_period_metrics.csv",
+        fieldnames=STUB_PERIOD_FIELDNAMES,
+        rows=stub_period_sidecar_rows(),
+    )
+
+
 def company_continuity_status(*, company: str) -> str:
     """Return entity continuity status from the company registry.
 
@@ -2514,28 +3433,50 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
     rows.append(row)
     evidence_rows.extend(evidence)
 
-    operating_income = select_component(
+    operating_income = resolve_operating_income_component(
         cik=cik,
-        concept_chain=["OperatingIncomeLoss"],
         period_end=period_end,
-        period_kind="duration",
+        accession=accession,
+        revenue=revenue,
+    )
+    da = resolve_da_component(
+        cik=cik,
+        period_end=period_end,
         accession=accession,
     )
-    da = select_component(
-        cik=cik,
-        concept_chain=DA_CHAIN,
-        period_end=period_end,
-        period_kind="duration",
-        accession=accession,
-    )
-    if revenue is not None and operating_income is not None and da is not None:
+    da_custom_note = ""
+    if da.hits:
+        da_custom_note = custom_da_observation_note(
+            company=company,
+            period_start=da.hits[0].start,
+            period_end=period_end,
+            accession=accession,
+        )
+    if (
+        revenue is not None
+        and operating_income.value is not None
+        and da.value is not None
+        and revenue.value != 0
+    ):
         ebitda_margin = (operating_income.value + da.value) / revenue.value
-        ebitda_status = "OK"
-        ebitda_notes = "GAAP EBITDA proxy; impairment is not added back."
+        ebitda_status = (
+            "OK_APPROX" if operating_income.status == "OK_APPROX" else "OK"
+        )
+        ebitda_notes = (
+            f"{operating_income.notes} {da.notes}{da_custom_note} "
+            "GAAP EBITDA proxy; impairment is not added back."
+        )
     else:
         ebitda_margin = None
-        ebitda_status = "NOT_AVAILABLE_SEC"
-        ebitda_notes = "Required revenue, operating income, or D&A missing."
+        ebitda_status = (
+            "NEEDS_REVIEW"
+            if "NEEDS_REVIEW" in {operating_income.status, da.status}
+            else "NOT_AVAILABLE_SEC"
+        )
+        ebitda_notes = (
+            f"Required revenue, operating income, or D&A missing. "
+            f"Operating income: {operating_income.notes} D&A: {da.notes}"
+        )
     row, evidence = derived_metric(
         company=company,
         cik=cik,
@@ -2549,11 +3490,7 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         period_end=period_end,
         fiscal_year=revenue.fiscal_year if revenue is not None else "",
         fiscal_period=revenue.fiscal_period if revenue is not None else "",
-        hits=[
-            hit
-            for hit in [operating_income, da, revenue]
-            if hit is not None
-        ],
+        hits=operating_income.hits + da.hits + ([revenue] if revenue is not None else []),
         notes=ebitda_notes,
     )
     rows.append(row)
@@ -2624,24 +3561,42 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         period_kind="instant",
         accession=accession,
     )
-    debt = select_component(
+    debt = resolve_total_debt_component(
         cik=cik,
-        concept_chain=LONG_TERM_DEBT_CHAIN,
         period_end=period_end,
-        period_kind="instant",
         accession=accession,
     )
-    if debt is not None and equity is not None and equity.value != 0:
-        debt_to_equity = debt.value / equity.value
-        debt_status = "OK"
+    if debt.value is not None and equity is not None and equity.value <= 0:
+        debt_to_equity = None
+        debt_status = "NOT_MEANINGFUL"
         debt_notes = (
-            "Consolidated entity-level debt/equity; captive-finance dimensions "
-            "are reviewed after accession instance parsing."
+            "Equity is negative; debt/equity ratio is not economically "
+            "meaningful. "
+            f"Total debt candidate={decimal_text(value=debt.value)}. {debt.notes}"
         )
+    elif debt.value is not None and equity is not None and equity.value != 0:
+        debt_to_equity = debt.value / equity.value
+        debt_status = debt.status
+        debt_notes = (
+            "Consolidated entity-level debt/equity; "
+            f"{debt.notes} Captive-finance dimensions are reviewed after "
+            "accession instance parsing."
+        )
+        if company_continuity_status(company=company) in {
+            "successor_predecessor",
+            "stub_period",
+            "major_reorg",
+        }:
+            debt_notes += (
+                " successor balance sheet point-in-time, not annualized "
+                "period metric."
+            )
     else:
         debt_to_equity = None
-        debt_status = "NOT_AVAILABLE_SEC"
-        debt_notes = "Debt or equity missing."
+        debt_status = (
+            "NEEDS_REVIEW" if debt.status == "NEEDS_REVIEW" else "NOT_AVAILABLE_SEC"
+        )
+        debt_notes = f"Debt or equity missing. {debt.notes}"
     row, evidence = derived_metric(
         company=company,
         cik=cik,
@@ -2655,7 +3610,7 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         period_end=period_end,
         fiscal_year=equity.fiscal_year if equity is not None else "",
         fiscal_period=equity.fiscal_period if equity is not None else "",
-        hits=[hit for hit in [debt, equity] if hit is not None],
+        hits=debt.hits + ([equity] if equity is not None else []),
         notes=debt_notes,
     )
     rows.append(row)
@@ -2668,18 +3623,28 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         period_kind="duration",
         accession=accession,
     )
-    if operating_income is not None and operating_income.value <= 0:
+    if operating_income.value is not None and operating_income.value <= 0:
         interest_coverage = None
         interest_status = "NOT_MEANINGFUL"
         interest_notes = "Operating income is non-positive."
-    elif operating_income is not None and interest is not None and interest.value != 0:
+    elif (
+        operating_income.value is not None
+        and interest is not None
+        and interest.value != 0
+    ):
         interest_coverage = operating_income.value / interest.value
-        interest_status = "OK"
-        interest_notes = "Operating income divided by interest expense."
+        interest_status = (
+            "OK_APPROX" if operating_income.status == "OK_APPROX" else "OK"
+        )
+        interest_notes = (
+            "Interest coverage uses reconstructed operating income."
+            if operating_income.status == "OK_APPROX"
+            else "Operating income divided by interest expense."
+        )
     else:
         interest_coverage = None
         interest_status = "NOT_AVAILABLE_SEC"
-        interest_notes = "Operating income or interest expense missing."
+        interest_notes = f"Operating income or interest expense missing. {operating_income.notes}"
     row, evidence = derived_metric(
         company=company,
         cik=cik,
@@ -2689,13 +3654,15 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         unit="ratio",
         status=interest_status,
         formula="operating income / interest expense",
-        period_start=operating_income.start if operating_income is not None else "",
+        period_start=operating_income.hits[0].start if operating_income.hits else "",
         period_end=period_end,
-        fiscal_year=operating_income.fiscal_year if operating_income is not None else "",
-        fiscal_period=(
-            operating_income.fiscal_period if operating_income is not None else ""
+        fiscal_year=(
+            operating_income.hits[0].fiscal_year if operating_income.hits else ""
         ),
-        hits=[hit for hit in [operating_income, interest] if hit is not None],
+        fiscal_period=(
+            operating_income.hits[0].fiscal_period if operating_income.hits else ""
+        ),
+        hits=operating_income.hits + ([interest] if interest is not None else []),
         notes=interest_notes,
     )
     rows.append(row)
@@ -2764,6 +3731,20 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
     )
     rows.append(row)
     evidence_rows.extend(evidence)
+
+    stub_start, stub_end = stub_period_bounds(
+        cik=cik,
+        period_end=period_end,
+        accession=accession,
+    )
+    if stub_start and stub_end:
+        rows = apply_stub_period_metric_semantics(
+            rows=rows,
+            company=company,
+            accession=accession,
+            stub_start=stub_start,
+            stub_end=stub_end,
+        )
 
     return rows, evidence_rows
 
@@ -2839,6 +3820,124 @@ def fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[dict
                 notes=notes,
             )
         )
+
+    noninterest_income = select_target_component(
+        cik=cik,
+        concept_chain=["NoninterestIncome"],
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    net_interest_income = select_target_component(
+        cik=cik,
+        concept_chain=["InterestIncomeExpenseNet"],
+        period_end=period_end,
+        period_kind="duration",
+        accession=accession,
+    )
+    if (
+        noninterest_income is not None
+        and net_interest_income is not None
+        and net_interest_income.value != 0
+    ):
+        a08_value = noninterest_income.value / net_interest_income.value
+        a08_status = "OK"
+    else:
+        a08_value = None
+        a08_status = "NOT_EXTRACTED"
+    row, evidence = derived_metric(
+        company=company,
+        cik=cik,
+        metric_id="A08",
+        metric_name="Fee income vs interest income",
+        value=a08_value,
+        unit="ratio",
+        status=a08_status,
+        formula="NoninterestIncome / InterestIncomeExpenseNet",
+        period_start=(
+            noninterest_income.start if noninterest_income is not None else ""
+        ),
+        period_end=period_end,
+        fiscal_year=(
+            noninterest_income.fiscal_year if noninterest_income is not None else ""
+        ),
+        fiscal_period=(
+            noninterest_income.fiscal_period if noninterest_income is not None else ""
+        ),
+        hits=[
+            hit
+            for hit in [noninterest_income, net_interest_income]
+            if hit is not None
+        ],
+        notes=(
+            "Per 02 §A08 definition, this uses noninterest income, not pure "
+            "fee income; noninterest income may include trading, investment "
+            "banking, asset-management and other noninterest revenue."
+        ),
+    )
+    if a08_value is not None:
+        row["source_class"] = "STD_XBRL"
+    rows = upsert_metric(rows=rows, new_row=row)
+    evidence_rows.extend(evidence)
+
+    allowance = select_target_component(
+        cik=cik,
+        concept_chain=[
+            "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest"
+        ],
+        period_end=period_end,
+        period_kind="instant",
+        accession=accession,
+    )
+    loans_before_allowance = select_target_component(
+        cik=cik,
+        concept_chain=[
+            "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss"
+        ],
+        period_end=period_end,
+        period_kind="instant",
+        accession=accession,
+    )
+    if (
+        allowance is not None
+        and loans_before_allowance is not None
+        and loans_before_allowance.value != 0
+    ):
+        a10_value = allowance.value / loans_before_allowance.value
+        a10_status = "OK"
+    else:
+        a10_value = None
+        a10_status = "NOT_EXTRACTED"
+    row, evidence = derived_metric(
+        company=company,
+        cik=cik,
+        metric_id="A10",
+        metric_name="Loan loss reserves",
+        value=a10_value,
+        unit="ratio",
+        status=a10_status,
+        formula=(
+            "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest / "
+            "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss"
+        ),
+        period_start="",
+        period_end=period_end,
+        fiscal_year=allowance.fiscal_year if allowance is not None else "",
+        fiscal_period=allowance.fiscal_period if allowance is not None else "",
+        hits=[
+            hit
+            for hit in [allowance, loans_before_allowance]
+            if hit is not None
+        ],
+        notes=(
+            "Primary allowance ratio uses retained loans before allowance for "
+            "credit loss; securities credit-loss allowance is excluded."
+        ),
+    )
+    if a10_value is not None:
+        row["source_class"] = "STD_XBRL"
+    rows = upsert_metric(rows=rows, new_row=row)
+    evidence_rows.extend(evidence)
 
     net_income = select_component(
         cik=cik,
@@ -3027,6 +4126,46 @@ def has_extractor(*, extractors: list[str], extractor_name: str) -> bool:
     return extractor_name in extractors
 
 
+def optional_b_metric_is_main_applicable(*, company: str, metric_id: str) -> bool:
+    """Return whether an optional B metric belongs in metrics_matrix.
+
+    Args:
+        company: Display company name.
+        metric_id: Optional metric id: B10, B11, B12, or B13.
+
+    Expected output:
+        Main-matrix scope follows the configured profile extractors. Out-of-
+        scope probes are preserved in sidecars rather than as placeholder rows.
+
+    Returns:
+        True only for metrics allowed by the company's configured extractor.
+    """
+    extractors = company_extractors(
+        company_config=company_by_name(company_name=company),
+    )
+    if metric_id in {"B10", "B11"}:
+        return has_extractor(
+            extractors=extractors,
+            extractor_name="LodgingKpiExtractor",
+        )
+    if metric_id == "B12":
+        return has_extractor(
+            extractors=extractors,
+            extractor_name="RpoCrpoExtractor",
+        )
+    if metric_id == "B13":
+        return has_extractor(
+            extractors=extractors,
+            extractor_name="CapacityUtilizationExtractor",
+        )
+    raise ValueError(f"Unsupported optional B metric: {metric_id}")
+
+
+def optional_b_metric_ids() -> set[str]:
+    """Return optional B metrics governed by profile applicability."""
+    return {"B10", "B11", "B12", "B13"}
+
+
 def special_metric_placeholders(
     *,
     company: str,
@@ -3149,6 +4288,7 @@ def stage_compute_standard_metrics() -> None:
         fieldnames=EVIDENCE_FIELDNAMES,
         rows=evidence_rows,
     )
+    write_stub_period_sidecar()
     print(f"M2 standard metrics complete; metrics={len(metric_rows)}")
 
 
@@ -4067,6 +5207,313 @@ def fetch_primary_for_inventory_row(
     )
 
 
+def eight_k_event_update_specs() -> list[tuple[str, str, str, str, str]]:
+    """Return 8-K item mappings used to update event-backed metrics.
+
+    Expected output:
+        Tuples of metric id, metric name, item code, success status, and notes.
+        E01 is handled separately because it accepts a small item-code set plus
+        a keyword gate for broad item 8.01 announcements.
+
+    Returns:
+        Stable data-only mapping shared by live and cached 8-K application.
+    """
+    return [
+        (
+            "C01",
+            "CEO / CFO changes",
+            "5.02",
+            "8K_ITEM_OK",
+            "CEO/CFO or director/officer event.",
+        ),
+        (
+            "C04",
+            "Auditor changes",
+            "4.01",
+            "8K_ITEM_OK",
+            "Auditor change event.",
+        ),
+        (
+            "E02",
+            "Bankruptcy filings",
+            "1.03",
+            "8K_ITEM_OK",
+            "Bankruptcy event.",
+        ),
+        (
+            "E03",
+            "Leadership departures",
+            "5.02",
+            "8K_ITEM_OK",
+            "Leadership event.",
+        ),
+        (
+            "E04",
+            "Financial restatements",
+            "4.02",
+            "8K_ITEM_OK",
+            "Restatement event.",
+        ),
+        (
+            "E05",
+            "Material agreements",
+            "1.01",
+            "8K_ITEM_OK",
+            "Material agreement event.",
+        ),
+    ]
+
+
+def cached_8k_evidence_removed(*, row: dict, event_metric_ids: set[str]) -> bool:
+    """Return whether an old 8-K evidence row should be replaced.
+
+    Args:
+        row: metric_evidence row.
+        event_metric_ids: Metric ids maintained by 8-K item extraction.
+
+    Returns:
+        True when the row belongs to an 8-K extraction result that will be
+        rebuilt from the local event table.
+    """
+    return (
+        row["metric_id"] in event_metric_ids
+        and str(row["extraction_method"]).startswith("eightk_")
+    )
+
+
+def apply_8k_event_metrics_from_events(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+    events: list[dict],
+) -> tuple[list[dict], list[dict]]:
+    """Apply event-backed metric rows from already extracted 8-K events.
+
+    Args:
+        metrics: Current metrics_matrix rows to update.
+        evidence_rows: Current metric_evidence rows to replace for 8-K metrics.
+        events: Local `outputs/events.csv` rows with company, accession, item
+            code, filing date, source URL, local path, confidence, and brief.
+
+    Expected output:
+        C01/C04/E01/E02/E03/E04/E05 rows and evidence are rebuilt without new
+        network requests, preserving previous 8-K facts after M2 resets.
+
+    Returns:
+        Updated metrics and evidence rows.
+    """
+    event_metric_ids = {
+        metric_id
+        for metric_id, _metric_name, _code, _status, _notes
+        in eight_k_event_update_specs()
+    } | {"E01"}
+    next_evidence_rows = [
+        row
+        for row in evidence_rows
+        if not cached_8k_evidence_removed(
+            row=row,
+            event_metric_ids=event_metric_ids,
+        )
+    ]
+    new_evidence_rows: list[dict] = []
+    period_end_by_company = {
+        row["company"]: row["reportDate"]
+        for row in read_csv_file(
+            path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
+        )
+        if row["source_role"] == "target_10k"
+    }
+
+    for company_config in load_company_registry():
+        company = str(company_config["company"])
+        target = target_10k_for_company(company=company)
+        cik = int(target["cik"])
+        company_events = [row for row in events if row["company"] == company]
+        scanned_accessions = ";".join(
+            sorted({event["accession"] for event in company_events})
+        )
+        scanned_dates = ";".join(
+            sorted({event["filing_date"] for event in company_events})
+        )
+        scanned_context = (
+            "FY-window 8-K accessions scanned"
+            if scanned_accessions
+            else "No FY-window 8-K accession in inventory"
+        )
+        # Use inventory metadata here so cached repair cannot smuggle a
+        # hard-coded fiscal year into event rows.
+        period_end = ({company: str(target["reportDate"])} | period_end_by_company)[
+            company
+        ]
+
+        for metric_id, metric_name, code, ok_status, notes in eight_k_event_update_specs():
+            matching = [event for event in company_events if event["item_code"] == code]
+            if matching:
+                first = matching[0]
+                new_row = text_metric_row(
+                    company=company,
+                    cik=cik,
+                    metric_id=metric_id,
+                    metric_name=metric_name,
+                    value=str(len(matching)),
+                    unit="count",
+                    status=ok_status,
+                    source_class="8K_ITEM",
+                    period_end=period_end,
+                    accession=";".join([event["accession"] for event in matching]),
+                    filed_date=";".join([event["filing_date"] for event in matching]),
+                    concept_or_section=f"8-K Item {code}",
+                    context_or_dimension="FY window",
+                    confidence=first["confidence"],
+                    notes=notes,
+                )
+                new_evidence_rows.append(
+                    text_evidence_row(
+                        company=company,
+                        cik=cik,
+                        metric_id=metric_id,
+                        source_url=first["source_url"],
+                        local_path=first["local_path"],
+                        accession=first["accession"],
+                        document_name=Path(first["local_path"]).name,
+                        concept_or_section=f"8-K Item {code}",
+                        context_or_dimension="FY window",
+                        unit="count",
+                        period_end=period_end,
+                        value=str(len(matching)),
+                        quote=first["brief"],
+                        extraction_method="eightk_item",
+                    )
+                )
+            else:
+                note = f"FY-window 8-K scanned; no item {code} found."
+                if metric_id == "E02":
+                    # A bankruptcy non-hit is a normal zero, not an extraction
+                    # failure, but the status remains non-OK because no event
+                    # exists in the SEC window.
+                    note = "No Item 1.03 in FY-window 8-K; zero is normal."
+                new_row = text_metric_row(
+                    company=company,
+                    cik=cik,
+                    metric_id=metric_id,
+                    metric_name=metric_name,
+                    value="0",
+                    unit="count",
+                    status="NOT_AVAILABLE_SEC",
+                    source_class="8K_ITEM",
+                    period_end=period_end,
+                    accession=scanned_accessions,
+                    filed_date=scanned_dates,
+                    concept_or_section=f"8-K Item {code}",
+                    context_or_dimension=scanned_context,
+                    confidence="0.80",
+                    notes=note,
+                )
+                new_evidence_rows.append(
+                    text_evidence_row(
+                        company=company,
+                        cik=cik,
+                        metric_id=metric_id,
+                        source_url="",
+                        local_path=str(WORKDIR / "outputs" / "events.csv"),
+                        accession=scanned_accessions,
+                        document_name="events.csv",
+                        concept_or_section=f"8-K Item {code}",
+                        context_or_dimension=scanned_context,
+                        unit="count",
+                        period_end=period_end,
+                        value="0",
+                        quote=note,
+                        extraction_method="eightk_zero_item_scan",
+                    )
+                )
+            metrics = upsert_metric(rows=metrics, new_row=new_row)
+
+        ma_events = [
+            event
+            for event in company_events
+            if event["item_code"] in {"1.01", "2.01"}
+            or (
+                event["item_code"] == "8.01"
+                and re.search(
+                    pattern=r"merger|acquisition|combine|transaction",
+                    string=event["brief"],
+                    flags=re.IGNORECASE,
+                )
+            )
+        ]
+        if ma_events:
+            first = ma_events[0]
+            value = str(len(ma_events))
+            note = "M&A candidate from item mapping and keyword rule."
+            accession_text = ";".join([event["accession"] for event in ma_events])
+            filed_date = ""
+            new_evidence_rows.append(
+                text_evidence_row(
+                    company=company,
+                    cik=cik,
+                    metric_id="E01",
+                    source_url=first["source_url"],
+                    local_path=first["local_path"],
+                    accession=first["accession"],
+                    document_name=Path(first["local_path"]).name,
+                    concept_or_section="8-K Item 1.01/2.01/8.01",
+                    context_or_dimension="FY window",
+                    unit="count",
+                    period_end=period_end,
+                    value=value,
+                    quote=first["brief"],
+                    extraction_method="eightk_item_keyword",
+                )
+            )
+            status = "8K_ITEM_OK"
+        else:
+            value = "0"
+            note = "FY-window 8-K scanned; no M&A item rule matched."
+            accession_text = scanned_accessions
+            filed_date = scanned_dates
+            status = "NOT_AVAILABLE_SEC"
+            new_evidence_rows.append(
+                text_evidence_row(
+                    company=company,
+                    cik=cik,
+                    metric_id="E01",
+                    source_url="",
+                    local_path=str(WORKDIR / "outputs" / "events.csv"),
+                    accession=scanned_accessions,
+                    document_name="events.csv",
+                    concept_or_section="8-K Item 1.01/2.01/8.01",
+                    context_or_dimension=scanned_context,
+                    unit="count",
+                    period_end=period_end,
+                    value="0",
+                    quote=note,
+                    extraction_method="eightk_zero_item_scan",
+                )
+            )
+        metrics = upsert_metric(
+            rows=metrics,
+            new_row=text_metric_row(
+                company=company,
+                cik=cik,
+                metric_id="E01",
+                metric_name="M&A announcements",
+                value=value,
+                unit="count",
+                status=status,
+                source_class="8K_ITEM",
+                period_end=period_end,
+                accession=accession_text,
+                filed_date=filed_date,
+                concept_or_section="8-K Item 1.01/2.01/8.01",
+                context_or_dimension=scanned_context,
+                confidence="0.75",
+                notes=note,
+            ),
+        )
+    return metrics, next_evidence_rows + new_evidence_rows
+
+
 def stage_extract_8k_events() -> None:
     """M4: fetch 8-K hdr.sgml files and extract multi-item event rows."""
     ensure_output_dirs()
@@ -4169,50 +5616,7 @@ def stage_extract_8k_events() -> None:
         period_end = ({company: str(target["reportDate"])} | period_end_by_company)[
             company
         ]
-        event_updates = [
-            (
-                "C01",
-                "CEO / CFO changes",
-                "5.02",
-                "8K_ITEM_OK",
-                "CEO/CFO or director/officer event.",
-            ),
-            (
-                "C04",
-                "Auditor changes",
-                "4.01",
-                "8K_ITEM_OK",
-                "Auditor change event.",
-            ),
-            (
-                "E02",
-                "Bankruptcy filings",
-                "1.03",
-                "8K_ITEM_OK",
-                "Bankruptcy event.",
-            ),
-            (
-                "E03",
-                "Leadership departures",
-                "5.02",
-                "8K_ITEM_OK",
-                "Leadership event.",
-            ),
-            (
-                "E04",
-                "Financial restatements",
-                "4.02",
-                "8K_ITEM_OK",
-                "Restatement event.",
-            ),
-            (
-                "E05",
-                "Material agreements",
-                "1.01",
-                "8K_ITEM_OK",
-                "Material agreement event.",
-            ),
-        ]
+        event_updates = eight_k_event_update_specs()
         for metric_id, metric_name, code, ok_status, notes in event_updates:
             matching = [event for event in company_events if event["item_code"] == code]
             if matching:
@@ -4613,6 +6017,248 @@ def numeric_after_pattern(*, text: str, pattern: str) -> str:
     return raw
 
 
+def mda_anchor_quote(
+    *,
+    text: str,
+    match: re.Match,
+    parsed: str,
+) -> str:
+    """Return raw table header and row snippets around an MD&A match.
+
+    Args:
+        text: Normalized filing text.
+        match: Regex match anchored on the row label/value.
+        parsed: Parsed value detail to include in evidence.
+
+    Returns:
+        Evidence quote with raw_header and raw_row substrings.
+    """
+    header_start = max(0, match.start() - 520)
+    row_end = min(len(text), match.end() + 520)
+    raw_header = " ".join(text[header_start: match.start()].split())
+    raw_row = " ".join(text[match.start(): row_end].split())
+    return (
+        f"parsed={parsed}; raw_header={raw_header[:520]}; "
+        f"raw_row={raw_row[:520]}"
+    )
+
+
+def scaled_mda_value(
+    *,
+    raw_value: str,
+    scale: str,
+) -> str:
+    """Scale a table token into the matrix unit.
+
+    Args:
+        raw_value: Numeric token captured from MD&A text.
+        scale: percent_to_ratio, billions_to_usd, or millions_to_usd.
+
+    Returns:
+        Decimal text after applying the declared scale.
+    """
+    value = Decimal(raw_value.replace(",", ""))
+    if scale == "percent_to_ratio":
+        return decimal_text(value=value / Decimal("100"))
+    if scale == "billions_to_usd":
+        return decimal_text(value=value * Decimal("1000000000"))
+    if scale == "millions_to_usd":
+        return decimal_text(value=value * Decimal("1000000"))
+    raise ValueError(f"Unsupported MD&A scale: {scale}")
+
+
+def a04_companyfacts_proxy_note(*, company: str) -> str:
+    """Return the A04 proxy cross-check note from companyfacts.
+
+    Args:
+        company: Financial institution display name.
+
+    Returns:
+        Note with NII / average total assets proxy, or an explicit absence note.
+    """
+    target = target_10k_for_company(company=company)
+    cik = int(target["cik"])
+    accession = str(target["accession"])
+    net_interest = select_target_component(
+        cik=cik,
+        concept_chain=["InterestIncomeExpenseNet"],
+        period_end=str(target["reportDate"]),
+        period_kind="duration",
+        accession=accession,
+    )
+    assets = select_target_component(
+        cik=cik,
+        concept_chain=["Assets"],
+        period_end=str(target["reportDate"]),
+        period_kind="instant",
+        accession=accession,
+    )
+    prior = prior_10k_for_company(company=company, cik=cik)
+    if prior is None:
+        return " companyfacts proxy unavailable: prior Assets missing."
+    prior_assets = select_target_component(
+        cik=cik,
+        concept_chain=["Assets"],
+        period_end=str(prior["reportDate"]),
+        period_kind="instant",
+        accession=str(prior["accession"]),
+    )
+    if net_interest is None or assets is None or prior_assets is None:
+        return " companyfacts proxy unavailable: component missing."
+    average_assets = (assets.value + prior_assets.value) / Decimal("2")
+    proxy = net_interest.value / average_assets
+    return (
+        " companyfacts proxy NII / average total assets="
+        f"{decimal_text(value=proxy)}; table NIM should normally exceed this "
+        "proxy because average interest-earning assets are usually smaller "
+        "than average total assets."
+    )
+
+
+def fi_mda_table_specs() -> list[dict]:
+    """Return MD&A table row specs for FI text extraction.
+
+    Returns:
+        Metric specs with regex, unit scaling, and notes.
+    """
+    return [
+        {
+            "metric_id": "A03",
+            "metric_name": "Liquidity coverage ratio",
+            "pattern": (
+                r"Firm Liquidity coverage ratio .{0,80}? "
+                r"(?P<value>[0-9]+(?:\.[0-9]+)?)\s+"
+                r"[0-9]+(?:\.[0-9]+)?\s+[0-9]+(?:\.[0-9]+)?"
+            ),
+            "unit": "ratio",
+            "scale": "percent_to_ratio",
+            "notes": (
+                "Firm average LCR table row selected; raw table reports percent "
+                "and matrix stores ratio."
+            ),
+        },
+        {
+            "metric_id": "A04",
+            "metric_name": "Net interest margin",
+            "pattern": (
+                r"Net yield on average interest-earning assets .{0,80}? "
+                r"(?P<value>[0-9]+(?:\.[0-9]+)?)\s*%"
+            ),
+            "unit": "ratio",
+            "scale": "percent_to_ratio",
+            "notes": "Managed basis / non-GAAP table row selected.",
+        },
+        {
+            "metric_id": "A11",
+            "metric_name": "AUM",
+            "pattern": (
+                r"Total assets under management\s+"
+                r"(?P<value>[0-9,]+(?:\.[0-9]+)?)\s+"
+                r"[0-9,]+(?:\.[0-9]+)?\s+[0-9,]+(?:\.[0-9]+)?"
+            ),
+            "unit": "USD",
+            "scale": "billions_to_usd",
+            "notes": "Assets under management table row selected; source unit is billions.",
+        },
+        {
+            "metric_id": "A12",
+            "metric_name": "Trading exposure",
+            "pattern": (
+                r"Total VaR\s+\$?\s*(?P<value>[0-9,]+(?:\.[0-9]+)?)"
+                r"\s+\$?\s*[0-9,]+(?:\.[0-9]+)?"
+            ),
+            "unit": "USD",
+            "scale": "millions_to_usd",
+            "notes": (
+                "Total VaR average table row selected; source unit is millions "
+                "and table states 95% confidence level."
+            ),
+        },
+    ]
+
+
+def apply_fi_mda_table_metrics(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+    company: str,
+    text: str,
+    source_url: str,
+    local_path: str,
+) -> tuple[list[dict], list[dict]]:
+    """Apply FI MD&A row-label anchored table extraction.
+
+    Args:
+        metrics: Current metrics_matrix rows.
+        evidence_rows: Evidence rows to append.
+        company: Display company name.
+        text: Normalized 10-K text.
+        source_url: Source SEC URL.
+        local_path: Local primary document path.
+
+    Returns:
+        Updated metrics and evidence rows for A03/A04/A11/A12.
+    """
+    target = target_10k_for_company(company=company)
+    for spec in fi_mda_table_specs():
+        match = re.search(
+            pattern=str(spec["pattern"]),
+            string=text,
+            flags=re.IGNORECASE,
+        )
+        if not match:
+            continue
+        raw_value = match.group("value")
+        value = scaled_mda_value(raw_value=raw_value, scale=str(spec["scale"]))
+        notes = str(spec["notes"])
+        if spec["metric_id"] == "A04":
+            notes += a04_companyfacts_proxy_note(company=company)
+        quote = mda_anchor_quote(
+            text=text,
+            match=match,
+            parsed=f"{spec['metric_id']} raw_value={raw_value} value={value}",
+        )
+        metrics = upsert_metric(
+            rows=metrics,
+            new_row=text_metric_row(
+                company=company,
+                cik=int(target["cik"]),
+                metric_id=str(spec["metric_id"]),
+                metric_name=str(spec["metric_name"]),
+                value=value,
+                unit=str(spec["unit"]),
+                status="MDA_OK",
+                source_class="MDA",
+                period_end=str(target["reportDate"]),
+                accession=str(target["accession"]),
+                filed_date=str(target["filingDate"]),
+                concept_or_section=str(spec["metric_name"]),
+                context_or_dimension="MD&A table row label",
+                confidence="0.80",
+                notes=notes,
+            ),
+        )
+        evidence_rows.append(
+            text_evidence_row(
+                company=company,
+                cik=int(target["cik"]),
+                metric_id=str(spec["metric_id"]),
+                source_url=source_url,
+                local_path=local_path,
+                accession=str(target["accession"]),
+                document_name=Path(local_path).name,
+                concept_or_section=str(spec["metric_name"]),
+                context_or_dimension="MD&A table row label",
+                unit=str(spec["unit"]),
+                period_end=str(target["reportDate"]),
+                value=value,
+                quote=quote,
+                extraction_method="fi_mda_table_row_anchor",
+            )
+        )
+    return metrics, evidence_rows
+
+
 def update_text_metric(
     *,
     metrics: list[dict],
@@ -4674,6 +6320,186 @@ def update_text_metric(
         )
     )
     return updated
+
+
+def evidence_quote_for_metric(
+    *,
+    evidence_rows: list[dict],
+    company: str,
+    metric_id: str,
+) -> tuple[str, str, str]:
+    """Return source URL, local path, and quote for one metric evidence set.
+
+    Args:
+        evidence_rows: metric_evidence rows.
+        company: Display company name.
+        metric_id: Metric id.
+
+    Returns:
+        Source URL, local path, and compact quote. Empty strings mean no
+        evidence row exists for the metric.
+    """
+    rows = evidence_for_metric(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id=metric_id,
+    )
+    if not rows:
+        return "", "", ""
+    first = rows[0]
+    quote = " | ".join(
+        row["evidence_quote"] for row in rows if row["evidence_quote"]
+    )
+    return first["source_url"], first["local_path"], quote[:1000]
+
+
+def optional_b_observation_from_metric(
+    *,
+    metric: dict,
+    evidence_rows: list[dict],
+    candidate_role: str,
+) -> dict:
+    """Build one optional-B sidecar row from a pruned matrix row.
+
+    Args:
+        metric: metrics_matrix row that is out of main-matrix scope.
+        evidence_rows: metric_evidence rows.
+        candidate_role: Role explaining why the observation is sidecar-only.
+
+    Returns:
+        Sidecar row preserving value, source, evidence quote, and notes.
+    """
+    source_url, local_path, quote = evidence_quote_for_metric(
+        evidence_rows=evidence_rows,
+        company=metric["company"],
+        metric_id=metric["metric_id"],
+    )
+    return {
+        "company": metric["company"],
+        "cik": metric["cik"],
+        "metric_id": metric["metric_id"],
+        "metric_name": metric["metric_name"],
+        "value": metric["value"],
+        "unit": metric["unit"],
+        "status": metric["status"],
+        "source_class": metric["source_class"],
+        "period_end": metric["period_end"],
+        "accession": metric["accession"],
+        "concept_or_section": metric["concept_or_section"],
+        "context_or_dimension": metric["context_or_dimension"],
+        "candidate_role": candidate_role,
+        "source_url": source_url,
+        "local_path": local_path,
+        "evidence_quote": quote,
+        "notes": metric["notes"],
+    }
+
+
+def write_optional_b_sidecars(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+) -> None:
+    """Write sidecars for optional-B probes outside main applicability.
+
+    Args:
+        metrics: Current metrics_matrix rows before pruning.
+        evidence_rows: Current metric_evidence rows.
+
+    Expected output:
+        RPO/cRPO, capacity, and lodging out-of-scope probes remain auditable
+        outside the main annual matrix.
+    """
+    rpo_rows = []
+    capacity_rows = []
+    lodging_rows = []
+    for row in metrics:
+        metric_id = row["metric_id"]
+        if metric_id not in optional_b_metric_ids():
+            continue
+        if optional_b_metric_is_main_applicable(
+            company=row["company"],
+            metric_id=metric_id,
+        ):
+            continue
+        if metric_id == "B12":
+            rpo_rows.append(
+                optional_b_observation_from_metric(
+                    metric=row,
+                    evidence_rows=evidence_rows,
+                    candidate_role="out_of_scope_rpo_crpo_observation",
+                )
+            )
+        elif metric_id == "B13":
+            capacity_rows.append(
+                optional_b_observation_from_metric(
+                    metric=row,
+                    evidence_rows=evidence_rows,
+                    candidate_role="out_of_scope_capacity_text_signal",
+                )
+            )
+        else:
+            lodging_rows.append(
+                optional_b_observation_from_metric(
+                    metric=row,
+                    evidence_rows=evidence_rows,
+                    candidate_role="out_of_scope_lodging_kpi_probe",
+                )
+            )
+    write_csv_file(
+        path=WORKDIR / "outputs" / "rpo_crpo_observations.csv",
+        fieldnames=OPTIONAL_B_OBSERVATION_FIELDNAMES,
+        rows=rpo_rows,
+    )
+    write_csv_file(
+        path=WORKDIR / "outputs" / "capacity_text_signals.csv",
+        fieldnames=OPTIONAL_B_OBSERVATION_FIELDNAMES,
+        rows=capacity_rows,
+    )
+    write_csv_file(
+        path=WORKDIR / "outputs" / "lodging_kpi_probe_failures.csv",
+        fieldnames=OPTIONAL_B_OBSERVATION_FIELDNAMES,
+        rows=lodging_rows,
+    )
+
+
+def prune_non_applicable_optional_b_metrics(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+) -> tuple[list[dict], list[dict]]:
+    """Remove out-of-scope optional B rows from main matrix/evidence.
+
+    Args:
+        metrics: Current metrics_matrix rows.
+        evidence_rows: Current metric_evidence rows.
+
+    Expected output:
+        Main matrix only includes B10/B11/B12/B13 rows when the configured
+        profile extractor makes the metric applicable.
+
+    Returns:
+        Pruned metrics and evidence rows.
+    """
+    removed_keys = {
+        (row["company"], row["metric_id"])
+        for row in metrics
+        if row["metric_id"] in optional_b_metric_ids()
+        and not optional_b_metric_is_main_applicable(
+            company=row["company"],
+            metric_id=row["metric_id"],
+        )
+    }
+    if not removed_keys:
+        return metrics, evidence_rows
+    return (
+        [
+            row
+            for row in metrics
+            if (row["company"], row["metric_id"]) not in removed_keys
+        ],
+        remove_evidence_for_keys(evidence_rows=evidence_rows, keys=removed_keys),
+    )
 
 
 def stage_extract_mda_and_risk_text() -> None:
@@ -4826,41 +6652,14 @@ def stage_extract_mda_and_risk_text() -> None:
             extractors=extractors,
             extractor_name="BaselCapitalRatioExtractor",
         ):
-            special_patterns = [
-                ("A03", "Liquidity coverage ratio", r"liquidity coverage ratio|LCR"),
-                (
-                    "A04",
-                    "Net interest margin",
-                    (
-                        r"net interest margin|average interest-earning assets|"
-                        r"net yield on interest-earning assets"
-                    ),
-                ),
-                ("A11", "AUM", r"assets under management|AUM"),
-                ("A12", "Trading exposure", r"value-at-risk|VaR|trading exposure"),
-            ]
-            for metric_id, metric_name, pattern in special_patterns:
-                quote = snippet_for_pattern(text=text, pattern=pattern, width=650)
-                metrics = update_text_metric(
-                    metrics=metrics,
-                    evidence_rows=evidence_rows,
-                    company=company,
-                    cik=cik,
-                    metric_id=metric_id,
-                    metric_name=metric_name,
-                    value="",
-                    unit="",
-                    status="TEXT_QUAL" if quote else "NOT_EXTRACTED",
-                    source_class="MDA",
-                    period_end=period_end,
-                    accession=accession,
-                    filed_date=filed_date,
-                    source_url=source_url,
-                    local_path=local_path,
-                    section=metric_name,
-                    quote=quote,
-                    notes="FI metric requires table-level follow-up for numeric value.",
-                )
+            metrics, evidence_rows = apply_fi_mda_table_metrics(
+                metrics=metrics,
+                evidence_rows=evidence_rows,
+                company=company,
+                text=text,
+                source_url=source_url,
+                local_path=local_path,
+            )
 
         if has_extractor(
             extractors=extractors,
@@ -4897,6 +6696,11 @@ def stage_extract_mda_and_risk_text() -> None:
         path=WORKDIR / "outputs" / "risk_legal_signals.csv",
         fieldnames=RISK_FIELDNAMES,
         rows=risk_rows,
+    )
+    write_optional_b_sidecars(metrics=metrics, evidence_rows=evidence_rows)
+    metrics, evidence_rows = prune_non_applicable_optional_b_metrics(
+        metrics=metrics,
+        evidence_rows=evidence_rows,
     )
     save_metrics(rows=metrics)
     append_evidence(rows=evidence_rows)
@@ -5079,7 +6883,7 @@ def golden_components(*, company: str) -> dict[str, FactHit | None]:
         ),
         "long_term_debt": component_for_golden(
             company=company,
-            concept_chain=LONG_TERM_DEBT_CHAIN,
+            concept_chain=LEGACY_GOLDEN_LONG_TERM_DEBT_CHAIN,
             period_kind="instant",
             prior=False,
         ),
@@ -5392,6 +7196,37 @@ def metric_status_golden_result(*, row: dict, company: str) -> dict:
     )
 
 
+def metric_value_golden_result(*, row: dict, company: str) -> dict:
+    """Build a metrics_matrix numeric golden assertion.
+
+    Args:
+        row: Fixture row whose component_key is metric_value_<metric_id>.
+        company: Display company name.
+
+    Returns:
+        Golden result comparing fixture expected against metrics_matrix value.
+    """
+    metric_id = str(row["component_key"]).replace("metric_value_", "")
+    metric_rows = [
+        item
+        for item in load_metrics()
+        if item["company"] == company and item["metric_id"] == metric_id
+    ]
+    actual = (
+        Decimal(metric_rows[0]["value"])
+        if metric_rows and metric_rows[0]["value"]
+        else None
+    )
+    return compare_decimal(
+        assertion_id=row["assertion_id"],
+        description=row["description"],
+        target=Decimal(row["expected"]),
+        actual=actual,
+        evidence_path=str(WORKDIR / "outputs" / "metrics_matrix.csv"),
+        tolerance=Decimal(row["tolerance"]),
+    )
+
+
 def fixture_numeric_golden_results() -> list[dict]:
     """Run numeric and concept assertions from golden fixture rows."""
     path = (
@@ -5425,6 +7260,9 @@ def fixture_numeric_golden_results() -> list[dict]:
             continue
         if component_key.startswith("metric_status_"):
             results.append(metric_status_golden_result(row=row, company=company))
+            continue
+        if component_key.startswith("metric_value_"):
+            results.append(metric_value_golden_result(row=row, company=company))
             continue
         actual = (
             derived_by_company[company][component_key]
@@ -6322,6 +8160,92 @@ def repair_c03_compensation(
         evidence_rows.extend(new_evidence)
         governance_rows.extend(new_governance)
     return metrics, evidence_rows, governance_rows
+
+
+def repair_c02_board_text_from_governance(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+    governance_rows: list[dict],
+) -> tuple[list[dict], list[dict]]:
+    """Restore qualitative C02 board evidence from local governance signals.
+
+    Args:
+        metrics: Current metrics_matrix rows.
+        evidence_rows: Current metric_evidence rows.
+        governance_rows: Local governance_signals rows created by DEF 14A
+            extraction.
+
+    Expected output:
+        C02 remains non-numeric but keeps the reviewed DEF 14A text anchor
+        after an M2 standard-metric rebuild resets placeholders.
+
+    Returns:
+        Updated metrics and evidence rows.
+    """
+    c02_signals = [row for row in governance_rows if row["signal_id"] == "C02"]
+    if not c02_signals:
+        return metrics, evidence_rows
+
+    filing_date_by_accession = {
+        row["accession"]: row["filingDate"]
+        for row in read_csv_file(
+            path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
+        )
+    }
+    next_evidence_rows = [
+        row for row in evidence_rows if row["metric_id"] != "C02"
+    ]
+    for signal in c02_signals:
+        company = signal["company"]
+        accession = signal["accession"]
+        if accession not in filing_date_by_accession:
+            raise KeyError(f"C02 accession missing from inventory: {accession}")
+        period_end = str(target_10k_for_company(company=company)["reportDate"])
+        status = signal["status"]
+        if status not in {"TEXT_QUAL", "NEEDS_REVIEW", "NOT_EXTRACTED"}:
+            raise ValueError(f"Unsupported C02 status: {status}")
+        # Keep C02 qualitative. This restores the evidence anchor without
+        # inventing board-composition counts.
+        metrics = upsert_metric(
+            rows=metrics,
+            new_row=text_metric_row(
+                company=company,
+                cik=int(signal["cik"]),
+                metric_id="C02",
+                metric_name="Board composition",
+                value="",
+                unit="",
+                status=status,
+                source_class="DEF14A",
+                period_end=period_end,
+                accession=accession,
+                filed_date=filing_date_by_accession[accession],
+                concept_or_section="DEF 14A board section",
+                context_or_dimension="proxy statement",
+                confidence="0.65" if signal["evidence_quote"] else "0.30",
+                notes="Textual board evidence captured; structured counts need review.",
+            ),
+        )
+        next_evidence_rows.append(
+            text_evidence_row(
+                company=company,
+                cik=int(signal["cik"]),
+                metric_id="C02",
+                source_url=signal["source_url"],
+                local_path=signal["local_path"],
+                accession=accession,
+                document_name=Path(signal["local_path"]).name,
+                concept_or_section="DEF 14A board/compensation section",
+                context_or_dimension="proxy statement",
+                unit="",
+                period_end=period_end,
+                value="",
+                quote=signal["evidence_quote"],
+                extraction_method=f"def14a_{status.lower()}",
+            )
+        )
+    return metrics, next_evidence_rows
 
 
 def normalized_concept_name(*, concept: str) -> str:
@@ -7754,6 +9678,181 @@ def company_has_captive_finance_signal(*, company: str) -> bool:
     )
 
 
+def b06_candidate_row_from_metric(
+    *,
+    metric: dict,
+    evidence_rows: list[dict],
+    candidate_role: str,
+) -> dict:
+    """Build a B06 candidate sidecar row from a reviewed metric row.
+
+    Args:
+        metric: B06 metrics_matrix row before blanking the main value.
+        evidence_rows: metric_evidence rows for the candidate components.
+        candidate_role: Role explaining why the value is sidecar-only.
+
+    Returns:
+        Candidate row with value, formula context, source, and evidence quote.
+    """
+    source_url, local_path, quote = evidence_quote_for_metric(
+        evidence_rows=evidence_rows,
+        company=metric["company"],
+        metric_id="B06",
+    )
+    return {
+        "company": metric["company"],
+        "cik": metric["cik"],
+        "metric_id": metric["metric_id"],
+        "value": metric["value"],
+        "unit": metric["unit"],
+        "status": metric["status"],
+        "period_end": metric["period_end"],
+        "accession": metric["accession"],
+        "concept_or_section": metric["concept_or_section"],
+        "context_or_dimension": metric["context_or_dimension"],
+        "candidate_role": candidate_role,
+        "source_url": source_url,
+        "local_path": local_path,
+        "evidence_quote": quote,
+        "notes": metric["notes"],
+    }
+
+
+def b06_candidate_evidence_row(
+    *,
+    evidence_rows: list[dict],
+    company: str,
+) -> dict | None:
+    """Return the best existing B06 candidate evidence row for a company.
+
+    Args:
+        evidence_rows: Current metric_evidence rows.
+        company: Company name to match.
+
+    Returns:
+        Explicit candidate marker evidence when present, otherwise the latest
+        numeric B06 evidence row that can rebuild the sidecar after reruns.
+    """
+    marker_rows = [
+        row
+        for row in evidence_rows
+        if row["company"] == company
+        and row["metric_id"] == "B06"
+        and (
+            row["extraction_method"] == "b06_captive_finance_candidate"
+            or "candidate_role=consolidated_captive_finance_candidate"
+            in row["evidence_quote"]
+        )
+    ]
+    if marker_rows:
+        return marker_rows[-1]
+    numeric_rows = [
+        row
+        for row in evidence_rows
+        if row["company"] == company
+        and row["metric_id"] == "B06"
+        and row["value_normalized"] != ""
+    ]
+    if not numeric_rows:
+        return None
+    return numeric_rows[-1]
+
+
+def b06_candidate_row_from_evidence(
+    *,
+    metric: dict,
+    evidence: dict,
+    candidate_role: str,
+) -> dict:
+    """Build a B06 candidate sidecar row from existing evidence.
+
+    Args:
+        metric: Current B06 metrics_matrix row.
+        evidence: Existing metric_evidence row carrying the candidate value.
+        candidate_role: Role explaining why the value is sidecar-only.
+
+    Returns:
+        Candidate sidecar row rebuilt without requiring a nonblank main value.
+    """
+    return {
+        "company": metric["company"],
+        "cik": metric["cik"],
+        "metric_id": "B06",
+        "value": evidence["value_normalized"],
+        "unit": evidence["unit"],
+        "status": "NEEDS_REVIEW",
+        "period_end": evidence["period_end"],
+        "accession": evidence["accession"],
+        "concept_or_section": evidence["concept_or_section"],
+        "context_or_dimension": evidence["context_or_dimension"],
+        "candidate_role": candidate_role,
+        "source_url": evidence["source_url"],
+        "local_path": evidence["local_path"],
+        "evidence_quote": evidence["evidence_quote"],
+        "notes": (
+            "Consolidated candidate retained only in evidence and sidecar; "
+            "main value is blank because captive finance segment/dimension "
+            "was detected."
+        ),
+    }
+
+
+def append_b06_candidate_evidence(
+    *,
+    evidence_rows: list[dict],
+    metric: dict,
+    candidate_role: str,
+) -> list[dict]:
+    """Append explicit candidate-role evidence for a B06 review value.
+
+    Args:
+        evidence_rows: Existing metric_evidence rows.
+        metric: B06 metric row before blanking the main value.
+        candidate_role: Candidate role persisted in the evidence quote.
+
+    Returns:
+        Evidence rows with one candidate marker row appended.
+    """
+    source_url, local_path, quote = evidence_quote_for_metric(
+        evidence_rows=evidence_rows,
+        company=metric["company"],
+        metric_id="B06",
+    )
+    for row in evidence_rows:
+        if (
+            row["company"] == metric["company"]
+            and row["metric_id"] == "B06"
+            and row["extraction_method"] == "b06_captive_finance_candidate"
+            and f"candidate_role={candidate_role}" in row["evidence_quote"]
+        ):
+            return evidence_rows
+    evidence_rows.append(
+        {
+            "company": metric["company"],
+            "cik": metric["cik"],
+            "metric_id": "B06",
+            "source_url": source_url,
+            "local_path": local_path,
+            "accession": metric["accession"],
+            "document_name": Path(local_path).name if local_path else "",
+            "concept_or_section": metric["concept_or_section"],
+            "context_or_dimension": metric["context_or_dimension"],
+            "unit": metric["unit"],
+            "period_start": metric["period_start"],
+            "period_end": metric["period_end"],
+            "value_raw": metric["value"],
+            "value_normalized": metric["value"],
+            "evidence_quote": (
+                f"candidate_role={candidate_role}; "
+                f"main_value_blank=true; {quote}"
+            )[:1000],
+            "extraction_method": "b06_captive_finance_candidate",
+            "parser_version": "sec_pipeline_v1",
+        }
+    )
+    return evidence_rows
+
+
 def repair_captive_finance_debt(
     *,
     metrics: list[dict],
@@ -7769,6 +9868,7 @@ def repair_captive_finance_debt(
         Metrics and evidence with consolidated B06 values retained but marked
         for review when no industrial-only ratio has been extracted.
     """
+    candidate_rows = []
     for company_config in load_company_registry():
         extractors = company_extractors(company_config=company_config)
         if not has_extractor(
@@ -7791,31 +9891,88 @@ def repair_captive_finance_debt(
             continue
         row = metric_lookup(metrics=metrics, company=company, metric_id="B06")
         if row["value"]:
+            candidate_role = "consolidated_captive_finance_candidate"
+            candidate_rows.append(
+                b06_candidate_row_from_metric(
+                    metric=row,
+                    evidence_rows=evidence_rows,
+                    candidate_role=candidate_role,
+                )
+            )
+            evidence_rows = append_b06_candidate_evidence(
+                evidence_rows=evidence_rows,
+                metric=row,
+                candidate_role=candidate_role,
+            )
+            row["value"] = ""
             row["status"] = "NEEDS_REVIEW"
+            row["source_class"] = "DERIVED"
             row["notes"] = (
-                "Consolidated debt-to-equity retained from structured facts; "
-                "captive finance segment/dimension detected, and industrial-only "
-                "ratio was not extracted."
+                "Main debt/equity value is blank because captive finance "
+                "segment/dimension was detected; consolidated candidate is "
+                "retained only in evidence and sidecar with candidate_role."
             )
             metrics = upsert_metric(rows=metrics, new_row=row)
         else:
-            target = target_10k_for_company(company=company)
-            metrics = upsert_metric(
-                rows=metrics,
-                new_row=placeholder_metric(
-                    company=company,
-                    cik=int(target["cik"]),
-                    metric_id="B06",
-                    metric_name="Debt-to-equity",
-                    status="NEEDS_REVIEW",
-                    source_class="DERIVED",
-                    period_end=str(target["reportDate"]),
-                    notes=(
-                        "Captive finance segment/dimension detected; "
-                        "industrial-only debt-to-equity unavailable."
-                    ),
-                ),
+            candidate_role = "consolidated_captive_finance_candidate"
+            evidence = b06_candidate_evidence_row(
+                evidence_rows=evidence_rows,
+                company=company,
             )
+            if evidence is not None:
+                candidate_rows.append(
+                    b06_candidate_row_from_evidence(
+                        metric=row,
+                        evidence=evidence,
+                        candidate_role=candidate_role,
+                    )
+                )
+                target = target_10k_for_company(company=company)
+                row["value"] = ""
+                row["unit"] = evidence["unit"]
+                row["status"] = "NEEDS_REVIEW"
+                row["source_class"] = "DERIVED"
+                row["formula"] = "total debt / shareholders' equity"
+                row["period_start"] = evidence["period_start"]
+                row["period_end"] = evidence["period_end"]
+                row["fiscal_year"] = evidence["period_end"][:4]
+                row["fiscal_period"] = "FY"
+                row["accession"] = evidence["accession"]
+                row["form"] = str(target["form"])
+                row["filed_date"] = str(target["filingDate"])
+                row["concept_or_section"] = evidence["concept_or_section"]
+                row["context_or_dimension"] = evidence["context_or_dimension"]
+                row["confidence"] = "0.90"
+                row["notes"] = (
+                    "Main debt/equity value is blank because captive finance "
+                    "segment/dimension was detected; consolidated candidate "
+                    "is retained only in evidence and sidecar with "
+                    "candidate_role."
+                )
+                metrics = upsert_metric(rows=metrics, new_row=row)
+            else:
+                target = target_10k_for_company(company=company)
+                metrics = upsert_metric(
+                    rows=metrics,
+                    new_row=placeholder_metric(
+                        company=company,
+                        cik=int(target["cik"]),
+                        metric_id="B06",
+                        metric_name="Debt-to-equity",
+                        status="NEEDS_REVIEW",
+                        source_class="DERIVED",
+                        period_end=str(target["reportDate"]),
+                        notes=(
+                            "Captive finance segment/dimension detected; "
+                            "industrial-only debt-to-equity unavailable."
+                        ),
+                    ),
+                )
+    write_csv_file(
+        path=WORKDIR / "outputs" / "b06_debt_to_equity_candidates.csv",
+        fieldnames=B06_CANDIDATE_FIELDNAMES,
+        rows=candidate_rows,
+    )
     return metrics, evidence_rows
 
 
@@ -8238,6 +10395,11 @@ def apply_p0_repairs() -> None:
         evidence_rows=evidence_rows,
         governance_rows=governance_rows,
     )
+    metrics, evidence_rows = repair_c02_board_text_from_governance(
+        metrics=metrics,
+        evidence_rows=evidence_rows,
+        governance_rows=governance_rows,
+    )
     metrics, evidence_rows = repair_basel_capital_ratios(
         metrics=metrics,
         evidence_rows=evidence_rows,
@@ -8254,7 +10416,17 @@ def apply_p0_repairs() -> None:
         metrics=metrics,
         evidence_rows=evidence_rows,
     )
+    metrics, evidence_rows = apply_8k_event_metrics_from_events(
+        metrics=metrics,
+        evidence_rows=evidence_rows,
+        events=read_csv_file(path=WORKDIR / "outputs" / "events.csv"),
+    )
     metrics, evidence_rows = repair_c04_auditor_changes(
+        metrics=metrics,
+        evidence_rows=evidence_rows,
+    )
+    write_optional_b_sidecars(metrics=metrics, evidence_rows=evidence_rows)
+    metrics, evidence_rows = prune_non_applicable_optional_b_metrics(
         metrics=metrics,
         evidence_rows=evidence_rows,
     )
@@ -9881,6 +12053,901 @@ def check_d04_going_concern_text(
     )
 
 
+def metric_value_decimal(*, row: dict) -> Decimal | None:
+    """Return a metric row value as Decimal, or None for blank values."""
+    if row["value"] == "":
+        return None
+    return Decimal(row["value"])
+
+
+def decimal_close(*, actual: Decimal | None, expected: str, tolerance: str) -> bool:
+    """Return whether a Decimal value is within tolerance."""
+    if actual is None:
+        return False
+    return abs(actual - Decimal(expected)) <= Decimal(tolerance)
+
+
+def metric_row_by_value(
+    *,
+    metrics: list[dict],
+    metric_id: str,
+    expected: str,
+    tolerance: str,
+    status: str,
+) -> dict:
+    """Return one metric row identified by value/status instead of company.
+
+    Args:
+        metrics: metrics_matrix rows.
+        metric_id: Metric id to search.
+        expected: Decimal value encoded as text.
+        tolerance: Allowed absolute Decimal difference.
+        status: Required metric status.
+
+    Returns:
+        First matching metric row.
+    """
+    for row in metrics:
+        if row["metric_id"] != metric_id or row["status"] != status:
+            continue
+        if decimal_close(
+            actual=metric_value_decimal(row=row),
+            expected=expected,
+            tolerance=tolerance,
+        ):
+            return row
+    raise KeyError(f"Metric value missing: {metric_id} {expected} {status}")
+
+
+def metric_evidence_text(
+    *,
+    evidence_rows: list[dict],
+    company: str,
+    metric_id: str,
+) -> str:
+    """Return concatenated concept and quote evidence for one metric."""
+    parts = []
+    for row in evidence_for_metric(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id=metric_id,
+    ):
+        parts.append(row["concept_or_section"])
+        parts.append(row["evidence_quote"])
+    return " ".join(parts)
+
+
+def check_b06_total_debt_prefers_total_debt_concepts(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate B06 uses direct total debt when available."""
+    company = str(company_by_id(company_id="marriott_international")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="B06",
+    )
+    passes = "DebtAndCapitalLeaseObligations" in text and "LongTermDebt=23000000" not in text
+    return validation_row(
+        check_id="b06_total_debt_prefers_total_debt_concepts",
+        status="PASS" if passes else "FAIL",
+        details="direct total debt selected" if passes else text[:500],
+    )
+
+
+def check_b06_no_adder_double_count(*, evidence_rows: list[dict]) -> dict:
+    """Validate Tier 1 B06 evidence does not include short-debt adders."""
+    company = str(company_by_id(company_id="marriott_international")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="B06",
+    )
+    failures = [
+        concept
+        for concept in TOTAL_DEBT_SHORT_ADDER_CHAIN
+        if concept in text and "DebtAndCapitalLeaseObligations" in text
+    ]
+    return validation_row(
+        check_id="b06_no_adder_double_count",
+        status="PASS" if not failures else "FAIL",
+        details="Tier 1 B06 has no adders" if not failures else ";".join(failures),
+    )
+
+
+def check_b06_tier_pairing_uses_current_sibling(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate B06 pair logic uses same-family siblings."""
+    company = str(company_by_id(company_id="enphase_energy")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="B06",
+    )
+    passes = "LongTermDebtCurrent" in text and "LongTermDebtNoncurrent" in text
+    return validation_row(
+        check_id="b06_tier_pairing_uses_current_sibling",
+        status="PASS" if passes else "FAIL",
+        details="Enphase current/noncurrent siblings selected" if passes else text[:500],
+    )
+
+
+def check_b06_excludes_debt_securities_and_debt_fair_value(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate forbidden debt concepts are absent from B06 evidence."""
+    failures = []
+    for row in evidence_rows:
+        if row["metric_id"] != "B06":
+            continue
+        concepts = row["concept_or_section"].split("+")
+        for concept in concepts:
+            if concept_excluded_from_total_debt(concept=concept):
+                failures.append(f"{row['company']}:{concept}")
+    return validation_row(
+        check_id="b06_excludes_debt_securities_and_debt_fair_value",
+        status="PASS" if not failures else "FAIL",
+        details="forbidden B06 concepts absent" if not failures else ";".join(failures),
+    )
+
+
+def check_b06_negative_equity_not_ok(*, metrics: list[dict]) -> dict:
+    """Validate negative equity never produces an OK B06 ratio."""
+    failures = []
+    for row in metrics:
+        if row["metric_id"] != "B06":
+            continue
+        if "Equity is negative" in row["notes"]:
+            if row["status"] == "OK" or row["value"] != "":
+                failures.append(row["company"])
+    return validation_row(
+        check_id="b06_negative_equity_not_ok",
+        status="PASS" if not failures else "FAIL",
+        details="negative-equity B06 rows are blank" if not failures else ";".join(failures),
+    )
+
+
+def check_enphase_b06_golden_unchanged_after_debt_resolver(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate Enphase B06 remains within the locked golden range."""
+    company = str(company_by_id(company_id="enphase_energy")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="B06")
+    passes = row["status"] == "OK" and decimal_close(
+        actual=metric_value_decimal(row=row),
+        expected="1.11",
+        tolerance="0.01",
+    )
+    return validation_row(
+        check_id="enphase_b06_golden_unchanged_after_debt_resolver",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['value']}",
+    )
+
+
+def check_ford_b06_captive_finance_still_needs_review(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate captive-finance B06 remains review-gated."""
+    company = str(company_by_id(company_id="ford_motor_company")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="B06")
+    passes = row["status"] == "NEEDS_REVIEW" and row["value"] == ""
+    return validation_row(
+        check_id="ford_b06_captive_finance_still_needs_review",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['value']}:{row['notes']}",
+    )
+
+
+def check_metrics_matrix_applicability_matches_02_04_spec(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate optional B metric applicability matches the spec boundary."""
+    failures = []
+    if len(metrics) != 230:
+        failures.append(f"row_count={len(metrics)}")
+    for row in metrics:
+        metric_id = row["metric_id"]
+        if metric_id not in optional_b_metric_ids():
+            continue
+        if not optional_b_metric_is_main_applicable(
+            company=row["company"],
+            metric_id=metric_id,
+        ):
+            failures.append(f"{row['company']}:{metric_id}")
+    return validation_row(
+        check_id="metrics_matrix_applicability_matches_02_04_spec",
+        status="PASS" if not failures else "FAIL",
+        details="main matrix optional B scope matches spec" if not failures else ";".join(failures),
+    )
+
+
+def check_no_unexpected_optional_b_metrics_in_main_matrix(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate B10-B13 main rows only exist for mounted extractors."""
+    expected_counts = {
+        "B10": 1,
+        "B11": 1,
+        "B12": 1,
+        "B13": 2,
+    }
+    failures = []
+    for metric_id, expected_count in expected_counts.items():
+        actual_count = len([row for row in metrics if row["metric_id"] == metric_id])
+        if actual_count != expected_count:
+            failures.append(f"{metric_id}:{actual_count}!={expected_count}")
+    return validation_row(
+        check_id="no_unexpected_optional_b_metrics_in_main_matrix",
+        status="PASS" if not failures else "FAIL",
+        details="optional B metric counts match target scope" if not failures else ";".join(failures),
+    )
+
+
+def check_c02_matrix_matches_governance_signals(*, metrics: list[dict]) -> dict:
+    """Validate C02 matrix rows mirror governance_signals rows."""
+    signals = [
+        row
+        for row in read_csv_file(path=WORKDIR / "outputs" / "governance_signals.csv")
+        if row["signal_id"] == "C02"
+    ]
+    failures = []
+    for signal in signals:
+        row = metric_lookup(
+            metrics=metrics,
+            company=signal["company"],
+            metric_id="C02",
+        )
+        if row["status"] != signal["status"]:
+            failures.append(f"{signal['company']}:status")
+        if row["accession"] != signal["accession"]:
+            failures.append(f"{signal['company']}:accession")
+    return validation_row(
+        check_id="c02_matrix_matches_governance_signals",
+        status="PASS" if not failures else "FAIL",
+        details="C02 matrix rows match governance signals" if not failures else ";".join(failures),
+    )
+
+
+def check_c02_text_qual_requires_evidence_quote(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate each TEXT_QUAL C02 row has quoted DEF 14A evidence."""
+    failures = []
+    for row in metrics:
+        if row["metric_id"] != "C02" or row["status"] != "TEXT_QUAL":
+            continue
+        evidence = evidence_for_metric(
+            evidence_rows=evidence_rows,
+            company=row["company"],
+            metric_id="C02",
+        )
+        if not any(item["evidence_quote"] for item in evidence):
+            failures.append(row["company"])
+    return validation_row(
+        check_id="c02_text_qual_requires_evidence_quote",
+        status="PASS" if not failures else "FAIL",
+        details="C02 TEXT_QUAL rows have evidence quotes" if not failures else ";".join(failures),
+    )
+
+
+def check_no_placeholder_notes_in_final_metrics(*, metrics: list[dict]) -> dict:
+    """Validate final matrix does not retain initialization notes."""
+    failures = [
+        f"{row['company']}:{row['metric_id']}"
+        for row in metrics
+        if "Initialized before event/text extraction." in row["notes"]
+    ]
+    return validation_row(
+        check_id="no_placeholder_notes_in_final_metrics",
+        status="PASS" if not failures else "FAIL",
+        details="no placeholder initialization notes remain" if not failures else ";".join(failures),
+    )
+
+
+def check_b06_needs_review_captive_finance_has_blank_main_value_or_candidate_role(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate captive-finance B06 review rows blank main values."""
+    candidate_rows = read_csv_file(
+        path=WORKDIR / "outputs" / "b06_debt_to_equity_candidates.csv"
+    )
+    candidate_keys = {
+        (row["company"], row["metric_id"], row["candidate_role"])
+        for row in candidate_rows
+    }
+    failures = []
+    for row in metrics:
+        if row["metric_id"] != "B06" or row["status"] != "NEEDS_REVIEW":
+            continue
+        if "captive finance" not in row["notes"].lower():
+            continue
+        evidence_text = metric_evidence_text(
+            evidence_rows=evidence_rows,
+            company=row["company"],
+            metric_id="B06",
+        )
+        has_sidecar_candidate = (
+            row["company"],
+            "B06",
+            "consolidated_captive_finance_candidate",
+        ) in candidate_keys
+        has_evidence_candidate = (
+            "candidate_role=consolidated_captive_finance_candidate" in evidence_text
+        )
+        if (
+            row["value"] != ""
+            or not has_sidecar_candidate
+            or not has_evidence_candidate
+        ):
+            failures.append(
+                (
+                    f"{row['company']}:{row['value']}:"
+                    f"sidecar={has_sidecar_candidate}:"
+                    f"evidence={has_evidence_candidate}"
+                )
+            )
+    return validation_row(
+        check_id="b06_needs_review_captive_finance_has_blank_main_value_or_candidate_role",
+        status="PASS" if not failures else "FAIL",
+        details=(
+            "captive-finance B06 main value blank with evidence and sidecar "
+            "candidate role"
+            if not failures
+            else ";".join(failures)
+        ),
+    )
+
+
+def check_marriott_b03_da_composition_positive(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate Marriott B03 uses positive D&A composition."""
+    company = str(company_by_id(company_id="marriott_international")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="B03")
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="B03",
+    )
+    passes = (
+        row["status"] == "OK"
+        and decimal_close(
+            actual=metric_value_decimal(row=row),
+            expected="0.17562819827388682",
+            tolerance="0.0000000001",
+        )
+        and "Depreciation=145000000" in text
+        and "AmortizationOfIntangibleAssets=313000000" in text
+    )
+    return validation_row(
+        check_id="marriott_b03_da_composition_positive",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['value']}:{text[:300]}",
+    )
+
+
+def check_da_composition_rejects_accumulated_expected_future_schedule() -> dict:
+    """Validate D&A composition allowlist excludes schedule/balance concepts."""
+    bad_concepts = [
+        "AccumulatedDepreciationDepletionAndAmortizationPropertyPlantAndEquipment",
+        "ExpectedAmortizationExpense",
+        "FiniteLivedIntangibleAssetsAmortizationExpenseNextTwelveMonths",
+        "FiniteLivedIntangibleAssetsAmortizationExpenseYearThree",
+        "FiniteLivedIntangibleAssetsAccumulatedAmortization",
+    ]
+    failures = [concept for concept in bad_concepts if concept in DA_COMPOSITION_CHAIN]
+    return validation_row(
+        check_id="da_composition_rejects_accumulated_expected_future_schedule",
+        status="PASS" if not failures else "FAIL",
+        details="D&A composition allowlist is clean" if not failures else ";".join(failures),
+    )
+
+
+def check_da_composition_completeness_scan_clean_or_noted(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate custom D&A-and-other observation is disclosed when present."""
+    company = str(company_by_id(company_id="marriott_international")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="B03")
+    passes = "DepreciationAmortizationAndOther observed" in row["notes"]
+    return validation_row(
+        check_id="da_composition_completeness_scan_clean_or_noted",
+        status="PASS" if passes else "FAIL",
+        details=row["notes"],
+    )
+
+
+def check_da_custom_line_reconciliation_noted(*, metrics: list[dict]) -> dict:
+    """Validate the custom D&A line is not silently added."""
+    company = str(company_by_id(company_id="marriott_international")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="B03")
+    passes = (
+        "not added because" in row["notes"]
+        and "and other" in row["notes"]
+    )
+    return validation_row(
+        check_id="da_custom_line_reconciliation_noted",
+        status="PASS" if passes else "FAIL",
+        details=row["notes"],
+    )
+
+
+def check_pfizer_b03_operating_income_reconstruction_ok_approx(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate reconstructed operating income B03 uses OK_APPROX."""
+    row = metric_row_by_value(
+        metrics=metrics,
+        metric_id="B03",
+        expected="0.33295514469710286",
+        tolerance="0.0000000001",
+        status="OK_APPROX",
+    )
+    passes = row["status"] == "OK_APPROX" and decimal_close(
+        actual=metric_value_decimal(row=row),
+        expected="0.33295514469710286",
+        tolerance="0.0000000001",
+    )
+    return validation_row(
+        check_id="pfizer_b03_operating_income_reconstruction_ok_approx",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['value']}:{row['notes']}",
+    )
+
+
+def check_pfizer_b07_reuses_approx_operating_income(*, metrics: list[dict]) -> dict:
+    """Validate B07 reuses the reconstructed operating income component."""
+    row = metric_row_by_value(
+        metrics=metrics,
+        metric_id="B07",
+        expected="5.332834144515163",
+        tolerance="0.0000000001",
+        status="OK_APPROX",
+    )
+    passes = (
+        row["status"] == "OK_APPROX"
+        and "reconstructed operating income" in row["notes"]
+        and decimal_close(
+            actual=metric_value_decimal(row=row),
+            expected="5.332834144515163",
+            tolerance="0.0000000001",
+        )
+    )
+    return validation_row(
+        check_id="pfizer_b07_reuses_approx_operating_income",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['value']}:{row['notes']}",
+    )
+
+
+def check_direct_operating_income_priority_over_reconstruction(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate direct OperatingIncomeLoss keeps B03 exact status."""
+    company = str(company_by_id(company_id="enphase_energy")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="B03")
+    passes = row["status"] == "OK" and "Direct OperatingIncomeLoss" in row["notes"]
+    return validation_row(
+        check_id="direct_operating_income_priority_over_reconstruction",
+        status="PASS" if passes else "FAIL",
+        details=row["notes"],
+    )
+
+
+def check_b03_rejects_mixed_accession_period_unit() -> dict:
+    """Validate B03 component compatibility rejects mixed contexts."""
+    period_start = date(year=2025, month=1, day=1).isoformat()
+    period_end = date(year=2025, month=12, day=31).isoformat()
+    mixed_period_start = date(year=2025, month=4, day=1).isoformat()
+    filed_date = date(year=2026, month=1, day=1).isoformat()
+    hit_a = FactHit(
+        concept="Depreciation",
+        taxonomy="us-gaap",
+        unit="USD",
+        value=Decimal("1"),
+        raw_value="1",
+        start=period_start,
+        end=period_end,
+        filed=filed_date,
+        form="10-K",
+        fiscal_year="2025",
+        fiscal_period="FY",
+        accession="a",
+        frame="",
+        source_path="fixture",
+        source_url="fixture",
+    )
+    hit_b = FactHit(
+        concept="AmortizationOfIntangibleAssets",
+        taxonomy="us-gaap",
+        unit="USD",
+        value=Decimal("1"),
+        raw_value="1",
+        start=mixed_period_start,
+        end=period_end,
+        filed=filed_date,
+        form="10-K",
+        fiscal_year="2025",
+        fiscal_period="FY",
+        accession="b",
+        frame="",
+        source_path="fixture",
+        source_url="fixture",
+    )
+    passes = not compatible_component_hits(
+        hits=[hit_a, hit_b],
+        period_start=period_start,
+        period_end=period_end,
+        accession="a",
+        unit="USD",
+    )
+    return validation_row(
+        check_id="b03_rejects_mixed_accession_period_unit",
+        status="PASS" if passes else "FAIL",
+        details="mixed fixture rejected" if passes else "mixed fixture accepted",
+    )
+
+
+def check_b03_bridge_fragment_negative_fixture_rejected_or_needs_review() -> dict:
+    """Validate operating-income bridge does not include fragments."""
+    fragments = {"InterestExpense", "InvestmentIncome", "IncomeTaxExpenseBenefit"}
+    failures = [concept for concept in fragments if concept in NONOPERATING_BRIDGE_CHAIN]
+    return validation_row(
+        check_id="b03_bridge_fragment_negative_fixture_rejected_or_needs_review",
+        status="PASS" if not failures else "FAIL",
+        details="bridge chain contains aggregate concepts only" if not failures else ";".join(failures),
+    )
+
+
+def check_jpm_a10_allowance_ratio_std_xbrl_primary(*, metrics: list[dict]) -> dict:
+    """Validate JPM A10 primary structured allowance ratio."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="A10")
+    passes = (
+        row["status"] == "OK"
+        and row["source_class"] == "STD_XBRL"
+        and decimal_close(
+            actual=metric_value_decimal(row=row),
+            expected="0.018287251447045755",
+            tolerance="0.0000000001",
+        )
+    )
+    return validation_row(
+        check_id="jpm_a10_allowance_ratio_std_xbrl_primary",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['source_class']}:{row['value']}",
+    )
+
+
+def check_jpm_a10_excludes_debt_securities_allowance(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate JPM A10 evidence excludes securities allowance concepts."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="A10",
+    )
+    passes = "DebtSecurities" not in text
+    return validation_row(
+        check_id="jpm_a10_excludes_debt_securities_allowance",
+        status="PASS" if passes else "FAIL",
+        details="securities allowance absent" if passes else text[:500],
+    )
+
+
+def check_jpm_a10_primary_denominator_before_allowance_for_credit_loss(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate JPM A10 denominator uses before-allowance loans."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="A10",
+    )
+    passes = "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss" in text
+    return validation_row(
+        check_id="jpm_a10_primary_denominator_before_allowance_for_credit_loss",
+        status="PASS" if passes else "FAIL",
+        details="before-allowance denominator present" if passes else text[:500],
+    )
+
+
+def check_jpm_a10_evidence_lists_numerator_and_denominator(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate JPM A10 evidence lists both components."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="A10",
+    )
+    passes = all(component in text for component in JPM_A10_COMPONENTS)
+    return validation_row(
+        check_id="jpm_a10_evidence_lists_numerator_and_denominator",
+        status="PASS" if passes else "FAIL",
+        details="A10 numerator and denominator evidenced" if passes else text[:500],
+    )
+
+
+def check_a08_uses_noninterest_income_not_fee_label_guess(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate A08 uses noninterest income rather than fee label guessing."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="A08",
+    )
+    passes = "NoninterestIncome" in text and "FeeIncome" not in text
+    return validation_row(
+        check_id="a08_uses_noninterest_income_not_fee_label_guess",
+        status="PASS" if passes else "FAIL",
+        details="A08 uses NoninterestIncome" if passes else text[:500],
+    )
+
+
+def check_a08_notes_definition_name_tension(*, metrics: list[dict]) -> dict:
+    """Validate A08 notes explain metric-name tension."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="A08")
+    passes = "not pure fee income" in row["notes"]
+    return validation_row(
+        check_id="a08_notes_definition_name_tension",
+        status="PASS" if passes else "FAIL",
+        details=row["notes"],
+    )
+
+
+def check_a08_evidence_has_source_components(
+    *,
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate A08 evidence includes numerator and denominator."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="A08",
+    )
+    passes = all(component in text for component in JPM_A08_COMPONENTS)
+    return validation_row(
+        check_id="a08_evidence_has_source_components",
+        status="PASS" if passes else "FAIL",
+        details="A08 source components evidenced" if passes else text[:500],
+    )
+
+
+def check_jpm_mda_raw_row_anchor(
+    *,
+    evidence_rows: list[dict],
+    metric_id: str,
+    check_id: str,
+) -> dict:
+    """Validate JPM MD&A metric evidence contains raw row anchors."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id=metric_id,
+    )
+    passes = "raw_header=" in text and "raw_row=" in text
+    return validation_row(
+        check_id=check_id,
+        status="PASS" if passes else "FAIL",
+        details=f"{metric_id} raw row anchored" if passes else text[:500],
+    )
+
+
+def check_jpm_a04_nim_raw_row_anchor_or_proxy_caveat(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+) -> dict:
+    """Validate JPM A04 has a table row or explicit proxy caveat."""
+    company = str(company_by_id(company_id="jpmorgan_chase")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="A04")
+    text = metric_evidence_text(
+        evidence_rows=evidence_rows,
+        company=company,
+        metric_id="A04",
+    )
+    passes = (
+        ("raw_header=" in text and "raw_row=" in text and "managed basis" in row["notes"].lower())
+        or ("proxy" in row["notes"].lower() and row["status"] == "OK_APPROX")
+    )
+    return validation_row(
+        check_id="jpm_a04_nim_raw_row_anchor_or_proxy_caveat",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['notes']}:{text[:300]}",
+    )
+
+
+def check_jpm_table_values_not_added_to_golden_until_manual_confirmation() -> dict:
+    """Validate JPM MD&A table values are not locked into golden."""
+    rows = read_csv_file(
+        path=(
+            WORKDIR
+            / "tests"
+            / "fixtures"
+            / "sec_10_company_spike"
+            / "golden_expected_values.csv"
+        )
+    )
+    forbidden = {"metric_value_A03", "metric_value_A04", "metric_value_A11", "metric_value_A12"}
+    failures = [
+        row["assertion_id"]
+        for row in rows
+        if row["company_id"] == "jpmorgan_chase" and row["component_key"] in forbidden
+    ]
+    return validation_row(
+        check_id="jpm_table_values_not_added_to_golden_until_manual_confirmation",
+        status="PASS" if not failures else "FAIL",
+        details="JPM table values absent from golden" if not failures else ";".join(failures),
+    )
+
+
+def check_paramount_stub_period_values_not_main_annual_ok(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate successor stub period values are not main annual OK rows."""
+    company = str(company_by_id(company_id="paramount_skydance_paramount_global")["company"])
+    failures = []
+    for metric_id in sorted(STUB_PERIOD_MAIN_METRICS):
+        row = metric_lookup(metrics=metrics, company=company, metric_id=metric_id)
+        if row["status"] in NUMERIC_EVIDENCE_STATUSES or row["value"] != "":
+            failures.append(f"{metric_id}:{row['status']}:{row['value']}")
+    return validation_row(
+        check_id="paramount_stub_period_values_not_main_annual_ok",
+        status="PASS" if not failures else "FAIL",
+        details="Paramount annual period metrics are blank" if not failures else ";".join(failures),
+    )
+
+
+def check_paramount_stub_period_sidecar_exists() -> dict:
+    """Validate stub period sidecar exists and contains rows."""
+    path = WORKDIR / "outputs" / "stub_period_metrics.csv"
+    rows = read_csv_file(path=path)
+    passes = path.exists() and bool(rows)
+    return validation_row(
+        check_id="paramount_stub_period_sidecar_exists",
+        status="PASS" if passes else "FAIL",
+        details=f"rows={len(rows)}",
+    )
+
+
+def check_paramount_b06_point_in_time_successor_balance_sheet_note(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate Paramount B06 is documented as point-in-time."""
+    company = str(company_by_id(company_id="paramount_skydance_paramount_global")["company"])
+    row = metric_lookup(metrics=metrics, company=company, metric_id="B06")
+    passes = (
+        row["status"] == "OK"
+        and row["value"] != ""
+        and "successor balance sheet point-in-time" in row["notes"]
+    )
+    return validation_row(
+        check_id="paramount_b06_point_in_time_successor_balance_sheet_note",
+        status="PASS" if passes else "FAIL",
+        details=f"{row['status']}:{row['value']}:{row['notes']}",
+    )
+
+
+def spec_implementation_audit_rows() -> list[dict]:
+    """Return the spec-to-code audit rows for this repair round.
+
+    Returns:
+        Rows mapping expanded metric definitions to implementation locations
+        and validation checks.
+    """
+    return [
+        {
+            "metric_id": "B03",
+            "spec_rule": "D&A composition and reconstructed operating income OK_APPROX",
+            "implementation_location": "resolve_da_component; resolve_operating_income_component",
+            "implemented": "1",
+            "validation_check": (
+                "marriott_b03_da_composition_positive;"
+                "pfizer_b03_operating_income_reconstruction_ok_approx"
+            ),
+            "notes": "Impairment is not added back; bridge assumption is noted.",
+        },
+        {
+            "metric_id": "B06",
+            "spec_rule": "three-tier total debt resolver and negative equity gate",
+            "implementation_location": "resolve_total_debt_component; non_fi_metric_rows",
+            "implemented": "1",
+            "validation_check": (
+                "b06_total_debt_prefers_total_debt_concepts;"
+                "b06_negative_equity_not_ok"
+            ),
+            "notes": "Tier 1 debt totals block adder double-counting.",
+        },
+        {
+            "metric_id": "A08",
+            "spec_rule": "noninterest income / net interest income",
+            "implementation_location": "fi_metric_rows",
+            "implemented": "1",
+            "validation_check": "a08_uses_noninterest_income_not_fee_label_guess",
+            "notes": "Notes disclose that this is not pure fee income.",
+        },
+        {
+            "metric_id": "A10",
+            "spec_rule": "ACL allowance / retained loans before allowance",
+            "implementation_location": "fi_metric_rows",
+            "implemented": "1",
+            "validation_check": "jpm_a10_allowance_ratio_std_xbrl_primary",
+            "notes": "Securities allowance concepts are excluded from primary value.",
+        },
+        {
+            "metric_id": "A03/A04/A11/A12",
+            "spec_rule": "JPM MD&A table raw_header/raw_row anchors",
+            "implementation_location": "apply_fi_mda_table_metrics",
+            "implemented": "1",
+            "validation_check": (
+                "jpm_a03_lcr_raw_row_anchor;"
+                "jpm_a04_nim_raw_row_anchor_or_proxy_caveat;"
+                "jpm_a11_aum_raw_row_anchor;"
+                "jpm_a12_var_raw_row_anchor"
+            ),
+            "notes": "Table values are intentionally not added to golden.",
+        },
+        {
+            "metric_id": "Paramount stub",
+            "spec_rule": "stub period values move to sidecar; annual rows not OK",
+            "implementation_location": (
+                "write_stub_period_sidecar; apply_stub_period_metric_semantics"
+            ),
+            "implemented": "1",
+            "validation_check": (
+                "paramount_stub_period_values_not_main_annual_ok;"
+                "paramount_stub_period_sidecar_exists"
+            ),
+            "notes": "B06 remains a successor balance-sheet point-in-time ratio.",
+        },
+    ]
+
+
+def write_spec_implementation_audit() -> list[dict]:
+    """Write outputs/spec_implementation_audit.csv."""
+    rows = spec_implementation_audit_rows()
+    write_csv_file(
+        path=WORKDIR / "outputs" / "spec_implementation_audit.csv",
+        fieldnames=SPEC_IMPLEMENTATION_AUDIT_FIELDNAMES,
+        rows=rows,
+    )
+    return rows
+
+
 def check_golden_results_all_pass() -> dict:
     """Validate existing original golden assertion results all pass."""
     rows = read_csv_file(path=WORKDIR / "outputs" / "golden_results.csv")
@@ -10021,12 +13088,20 @@ def audit_verdict_for_metric(*, metric: dict, evidence: list[dict]) -> tuple[str
         flags=re.IGNORECASE,
     ):
         failures.append("B11 quote lacks RevPAR")
-    if metric["metric_id"] == "B12" and not re.search(
-        pattern=r"RPO|cRPO|remaining performance obligation",
-        string=f"{quote_text} {concept_text}",
-        flags=re.IGNORECASE,
-    ):
-        failures.append("B12 evidence lacks RPO/cRPO")
+    if metric["metric_id"] == "B12":
+        has_rpo_text = bool(
+            re.search(
+                pattern=r"RPO|cRPO|remaining performance obligation",
+                string=f"{quote_text} {concept_text}",
+                flags=re.IGNORECASE,
+            )
+        )
+        has_rpo_concept = any(
+            concept_matches_rpo(concept=item["concept_or_section"])
+            for item in evidence
+        )
+        if not has_rpo_text and not has_rpo_concept:
+            failures.append("B12 evidence lacks RPO/cRPO")
     if metric["metric_id"] == "C03" and "PeoTotalCompAmt" not in concept_text:
         failures.append("C03 evidence lacks PeoTotalCompAmt")
     if failures:
@@ -10214,8 +13289,11 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
     metrics = load_metrics()
     evidence_rows = read_csv_file(path=WORKDIR / "outputs" / "metric_evidence.csv")
     coverage = read_csv_file(path=WORKDIR / "outputs" / "coverage_matrix.csv")
-    write_implementation_map()
     mode, light_reasons = validation_package_mode()
+    write_implementation_map()
+    write_spec_implementation_audit()
+    if mode == "FULL_VALIDATION":
+        write_stub_period_sidecar()
     if mode == "WORKSPACE_INCOMPLETE":
         rows = [workspace_incomplete_row(reasons=light_reasons)]
         write_csv_file(
@@ -10246,6 +13324,18 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
         ),
         check_no_company_identity_branch_in_production(),
         check_registry_profile_matches_sic_rules_or_has_override_reason(),
+        check_metrics_matrix_applicability_matches_02_04_spec(metrics=metrics),
+        check_no_unexpected_optional_b_metrics_in_main_matrix(metrics=metrics),
+        check_c02_matrix_matches_governance_signals(metrics=metrics),
+        check_c02_text_qual_requires_evidence_quote(
+            metrics=metrics,
+            evidence_rows=evidence_rows,
+        ),
+        check_no_placeholder_notes_in_final_metrics(metrics=metrics),
+        check_b06_needs_review_captive_finance_has_blank_main_value_or_candidate_role(
+            metrics=metrics,
+            evidence_rows=evidence_rows,
+        ),
         (
             skipped_light_validation_row(
                 check_id="rpo_crpo_prefers_instance_fact",
@@ -10272,6 +13362,41 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
         check_a01_a02_metric_evidence_excludes_threshold_concepts(
             evidence_rows=evidence_rows,
         ),
+        check_jpm_a10_allowance_ratio_std_xbrl_primary(metrics=metrics),
+        check_jpm_a10_excludes_debt_securities_allowance(
+            evidence_rows=evidence_rows,
+        ),
+        check_jpm_a10_primary_denominator_before_allowance_for_credit_loss(
+            evidence_rows=evidence_rows,
+        ),
+        check_jpm_a10_evidence_lists_numerator_and_denominator(
+            evidence_rows=evidence_rows,
+        ),
+        check_a08_uses_noninterest_income_not_fee_label_guess(
+            evidence_rows=evidence_rows,
+        ),
+        check_a08_notes_definition_name_tension(metrics=metrics),
+        check_a08_evidence_has_source_components(evidence_rows=evidence_rows),
+        check_jpm_mda_raw_row_anchor(
+            evidence_rows=evidence_rows,
+            metric_id="A03",
+            check_id="jpm_a03_lcr_raw_row_anchor",
+        ),
+        check_jpm_a04_nim_raw_row_anchor_or_proxy_caveat(
+            metrics=metrics,
+            evidence_rows=evidence_rows,
+        ),
+        check_jpm_mda_raw_row_anchor(
+            evidence_rows=evidence_rows,
+            metric_id="A11",
+            check_id="jpm_a11_aum_raw_row_anchor",
+        ),
+        check_jpm_mda_raw_row_anchor(
+            evidence_rows=evidence_rows,
+            metric_id="A12",
+            check_id="jpm_a12_var_raw_row_anchor",
+        ),
+        check_jpm_table_values_not_added_to_golden_until_manual_confirmation(),
         check_lodging_kpi_extractor(
             metrics=metrics,
             evidence_rows=evidence_rows,
@@ -10308,8 +13433,42 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
                 metrics=metrics,
             )
         ),
+        check_b06_total_debt_prefers_total_debt_concepts(
+            evidence_rows=evidence_rows,
+        ),
+        check_b06_no_adder_double_count(evidence_rows=evidence_rows),
+        check_b06_tier_pairing_uses_current_sibling(
+            evidence_rows=evidence_rows,
+        ),
+        check_b06_excludes_debt_securities_and_debt_fair_value(
+            evidence_rows=evidence_rows,
+        ),
+        check_b06_negative_equity_not_ok(metrics=metrics),
+        check_enphase_b06_golden_unchanged_after_debt_resolver(metrics=metrics),
+        check_ford_b06_captive_finance_still_needs_review(metrics=metrics),
         check_gm_like_captive_finance_fixture_triggers_review(),
         check_entity_continuity_yoy(metrics=metrics),
+        check_marriott_b03_da_composition_positive(
+            metrics=metrics,
+            evidence_rows=evidence_rows,
+        ),
+        check_da_composition_rejects_accumulated_expected_future_schedule(),
+        check_da_composition_completeness_scan_clean_or_noted(metrics=metrics),
+        check_da_custom_line_reconciliation_noted(metrics=metrics),
+        check_pfizer_b03_operating_income_reconstruction_ok_approx(
+            metrics=metrics,
+        ),
+        check_pfizer_b07_reuses_approx_operating_income(metrics=metrics),
+        check_direct_operating_income_priority_over_reconstruction(
+            metrics=metrics,
+        ),
+        check_b03_rejects_mixed_accession_period_unit(),
+        check_b03_bridge_fragment_negative_fixture_rejected_or_needs_review(),
+        check_paramount_stub_period_values_not_main_annual_ok(metrics=metrics),
+        check_paramount_stub_period_sidecar_exists(),
+        check_paramount_b06_point_in_time_successor_balance_sheet_note(
+            metrics=metrics,
+        ),
         check_no_c03_ecd_fact_count(metrics=metrics, evidence_rows=evidence_rows),
         c03_peo_check,
         validation_row(
@@ -10558,6 +13717,7 @@ def build_report_markdown() -> str:
     )
     ok_statuses = {
         "OK",
+        "OK_APPROX",
         "MDA_OK",
         "DEF14A_OK",
         "DIM_XBRL_OK",
@@ -10566,6 +13726,9 @@ def build_report_markdown() -> str:
     }
     ok_count = len([row for row in metrics if row["status"] in ok_statuses])
     caveat_count = len(metrics) - ok_count
+    valued_count = len([row for row in metrics if row["value"]])
+    blank_count = len(metrics) - valued_count
+    validation_count = len(validation)
     lines = [
         "# REPORT_十公司财务指标",
         "",
@@ -10573,7 +13736,11 @@ def build_report_markdown() -> str:
         "",
         f"- Verdict: **{verdict}**。",
         f"- SEC 请求总数：{stats['total']}；状态分布：`{stats['statuses']}`。",
-        f"- 指标格子：{len(metrics)}；OK/TEXT 类：{ok_count}；待复核/不可得类：{caveat_count}。",
+        (
+            f"- 指标格子：{len(metrics)}；有值：{valued_count}；"
+            f"空值：{blank_count}；validation rows：{validation_count}。"
+        ),
+        f"- OK/TEXT 类：{ok_count}；待复核/不可得类：{caveat_count}。",
         "- 本次只使用 SEC 官方响应和本地 evidence 文件；未使用第三方数据或模型记忆补数。",
         "- Repair validation 若有 P0 FAIL，verdict 强制为 NO-GO。",
         "- Stratified audit 任一 FAIL 会进入 repair validation gate，不能被报告静默吞掉。",
