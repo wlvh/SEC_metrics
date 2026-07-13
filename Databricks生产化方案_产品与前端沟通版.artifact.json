@@ -1,0 +1,913 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "SEC 指标系统 Databricks 生产化方案",
+    "description": "供产品经理、数据工程与前端共同评审的每日更新、版本管理、数据存储和 API 输出方案。",
+    "generatedAt": "2026-07-13T09:08:56Z",
+    "charts": [
+      {
+        "id": "architecture_scope",
+        "title": "第一版与后续组件数量",
+        "subtitle": "按职责域统计；第一版只保留八个必要组件，Lakebase 与 AI 注释层后置。",
+        "showDescription": true,
+        "intent": "comparison",
+        "question": "第一版是否需要建设复杂的数据或 AI harness？",
+        "rationale": "分组横向条形图适合比较四个职责域中第一版必要组件与后续可选组件的数量，长中文标签也能保持可读。",
+        "comparisonContext": {
+          "grain": "架构职责域",
+          "unit": "组件数",
+          "semanticFamily": "implementation scope"
+        },
+        "type": "horizontalBar",
+        "dataset": "architecture_scope",
+        "sourceId": "architecture_decision",
+        "encodings": {
+          "x": {
+            "field": "area",
+            "type": "nominal",
+            "label": "职责域"
+          },
+          "y": {
+            "field": "component_count",
+            "type": "quantitative",
+            "label": "组件数",
+            "format": "number",
+            "unit": "个"
+          },
+          "color": {
+            "field": "horizon",
+            "type": "nominal",
+            "label": "实施阶段"
+          },
+          "tooltip": [
+            {
+              "field": "components",
+              "type": "text",
+              "label": "组件"
+            },
+            {
+              "field": "decision_basis",
+              "type": "text",
+              "label": "决策依据"
+            }
+          ]
+        },
+        "xAxisTitle": "组件数",
+        "yAxisTitle": "职责域",
+        "valueFormat": "number",
+        "unit": "个",
+        "layout": "full",
+        "labels": {
+          "values": "all"
+        },
+        "legend": {
+          "position": "bottom",
+          "sort": "spec"
+        },
+        "palette": {
+          "kind": "categorical",
+          "name": "blue-neutral"
+        },
+        "settings": {
+          "orientation": "horizontal",
+          "groupMode": "grouped",
+          "showValues": true,
+          "sort": "custom"
+        },
+        "surface": {
+          "surface": "export",
+          "interactiveLegend": true,
+          "showControls": false,
+          "viewMode": "visualization"
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "component_roles",
+        "title": "Databricks 组件职责",
+        "subtitle": "第一版只采用稳定、必要的组件；预览能力不进入关键链路。",
+        "showDescription": true,
+        "dataset": "component_roles",
+        "sourceId": "component_roles_source",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "order",
+            "label": "序号",
+            "type": "number"
+          },
+          {
+            "field": "component",
+            "label": "组件",
+            "type": "text"
+          },
+          {
+            "field": "responsibility",
+            "label": "唯一职责",
+            "type": "text"
+          },
+          {
+            "field": "v1_decision",
+            "label": "第一版决策",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "daily_tasks",
+        "title": "每日 Lakeflow Job 任务",
+        "subtitle": "每天执行一条有条件分支的批处理流程；没有源数据变化时不产生新发布版本。",
+        "showDescription": true,
+        "dataset": "daily_tasks",
+        "sourceId": "daily_tasks_source",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "order",
+            "label": "顺序",
+            "type": "number"
+          },
+          {
+            "field": "task",
+            "label": "任务",
+            "type": "text"
+          },
+          {
+            "field": "input",
+            "label": "输入",
+            "type": "text"
+          },
+          {
+            "field": "output",
+            "label": "输出",
+            "type": "text"
+          },
+          {
+            "field": "failure_policy",
+            "label": "失败策略",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "data_model",
+        "title": "最小数据模型",
+        "subtitle": "原始证据、过程状态和对外发布数据分层，但不重复建设第二套语义系统。",
+        "showDescription": true,
+        "dataset": "data_model",
+        "sourceId": "data_model_source",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "order",
+            "label": "序号",
+            "type": "number"
+          },
+          {
+            "field": "object",
+            "label": "对象",
+            "type": "text"
+          },
+          {
+            "field": "grain",
+            "label": "一行代表什么事实",
+            "type": "text"
+          },
+          {
+            "field": "purpose",
+            "label": "用途",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "version_example",
+        "title": "同一业务期间的多次发布",
+        "subtitle": "示例说明 2026 年第一季度同一指标在两个发布日期的值如何同时保留。",
+        "showDescription": true,
+        "dataset": "version_example",
+        "sourceId": "version_example_source",
+        "defaultSort": {
+          "field": "published_at_utc",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "dataset_version_id",
+            "label": "数据集版本",
+            "type": "text"
+          },
+          {
+            "field": "period",
+            "label": "业务期间",
+            "type": "text"
+          },
+          {
+            "field": "value",
+            "label": "值",
+            "type": "text"
+          },
+          {
+            "field": "published_at_utc",
+            "label": "发布时间 UTC",
+            "type": "date"
+          },
+          {
+            "field": "change_type",
+            "label": "变更类型",
+            "type": "text"
+          },
+          {
+            "field": "reason",
+            "label": "原因",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "id": "api_contract",
+        "title": "前端只读 API 契约",
+        "subtitle": "前端先固定数据集版本，再读取指标、证据和历史，避免同一页面混入两个版本。",
+        "showDescription": true,
+        "dataset": "api_contract",
+        "sourceId": "api_contract_source",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "density": "spacious",
+        "layout": "full",
+        "columns": [
+          {
+            "field": "order",
+            "label": "顺序",
+            "type": "number"
+          },
+          {
+            "field": "endpoint",
+            "label": "接口",
+            "type": "text"
+          },
+          {
+            "field": "purpose",
+            "label": "用途",
+            "type": "text"
+          },
+          {
+            "field": "cache_key",
+            "label": "缓存键",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "architecture_decision",
+        "label": "本方案的第一版组件边界",
+        "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+        "query": {
+          "engine": "databricks_sql",
+          "description": "根据本报告组件职责表汇总第一版必要组件与后续可选组件。",
+          "language": "sql",
+          "sql": "SELECT area, horizon, component_count, components, decision_basis FROM VALUES ('工作流与计算', '第一版必须', 2, 'Lakeflow Jobs；Python wheel task', '托管编排加现有确定性计算即可'), ('工作流与计算', '后续可选', 0, '无', '不再叠加第二套编排系统'), ('存储与治理', '第一版必须', 4, 'Unity Catalog Volume；Bronze；Silver；Gold', '证据、过程和发布事实需要职责隔离'), ('存储与治理', '后续可选', 0, '无', '不引入第二套语义或流式系统'), ('查询与服务', '第一版必须', 2, 'SQL Warehouse；只读后端 API', '内网中等并发先用 Warehouse'), ('查询与服务', '后续可选', 1, 'Lakebase', '只有严格低延迟或高 QPS 才引入'), ('AI 辅助', '第一版必须', 0, '无', 'AI 不参与指标事实计算和发布'), ('AI 辅助', '后续可选', 1, 'Claude API 注释层', '仅在确有用户解释需求时引入') AS architecture_scope(area, horizon, component_count, components, decision_basis)",
+          "metric_definitions": [
+            "第一版必须：进入首个生产版本关键路径的独立平台组件数量。",
+            "后续可选：只有业务 SLA 或产品功能触发后才引入的独立组件数量。"
+          ],
+          "filters": [
+            "不计 Git、CI 和 SEC 外部来源",
+            "Bronze、Silver、Gold 作为三个独立数据职责层计数"
+          ]
+        }
+      },
+      {
+        "id": "component_roles_source",
+        "label": "Databricks 组件职责设计清单",
+        "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+        "query": {
+          "engine": "databricks_sql",
+          "description": "复现报告中的第一版 Databricks 组件职责清单。",
+          "language": "sql",
+          "sql": "SELECT * FROM VALUES (1, 'Lakeflow Jobs', '每日调度、依赖、条件分支、重试、通知', '使用；一条 Job 即可'), (2, 'Python wheel task', '运行现有确定性 SEC 提取和计算逻辑', '使用；代码仍在 Git 中管理'), (3, 'Unity Catalog Volume', '保存原始 JSON、HTML、XBRL 和响应头', '使用；按 SHA-256 内容寻址'), (4, 'Bronze Delta', '记录来源观察和原始文件清单', '使用；只追加'), (5, 'Silver Delta', '管理公司、filing、任务运行、指标定义和校验结果', '使用；标准化过程层'), (6, 'Gold Delta', '保存已发布版本、完整指标快照和证据', '使用；唯一权威输出'), (7, 'SQL Warehouse', '执行 Gold 查询', '使用；它是计算资源，不是存储'), (8, '只读后端 API', '认证、版本固定、响应契约和缓存', '使用；Databricks App 或现有内网服务'), (9, 'Lakebase', '高并发、低延迟 serving copy', '暂不使用；达到 SLA 门槛后再加') AS component_roles(`order`, component, responsibility, v1_decision)"
+        }
+      },
+      {
+        "id": "daily_tasks_source",
+        "label": "每日 Pipeline 任务设计清单",
+        "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+        "query": {
+          "engine": "databricks_sql",
+          "description": "复现报告中的每日 Lakeflow Job 任务、输入输出和失败策略。",
+          "language": "sql",
+          "sql": "SELECT * FROM VALUES (1, 'start_run', 'UTC 调度时间、集中配置、代码版本', 'run_id 与 RUNNING 记录', '参数缺失立即失败'), (2, 'discover', '配置中的 CIK、上次来源状态', '新 accession / amendment 清单与 has_change', 'SEC 暂时错误按任务级策略重试'), (3, 'if_changed', 'has_change、force_full', 'NO_CHANGE 或进入后续任务', '条件值缺失立即失败'), (4, 'ingest', '变化清单', 'Volume 原始文件与 Bronze manifest', '哈希或来源元数据不完整则失败'), (5, 'compute', '缓存证据、指标定义、公司配置', '候选完整指标快照与证据', '未知异常不吞掉，任务失败'), (6, 'validate_and_diff', '候选快照、当前 PUBLISHED 版本', '校验结果、差异分类、dataset_hash', 'P0 或既有验收失败则阻断发布'), (7, 'publish', '通过校验且 hash 变化的候选版本', 'Gold 快照、证据、最后写入的 PUBLISHED 记录', '任何部分失败都不暴露新版本'), (8, 'notify', '运行与发布结果', '成功摘要或失败告警', '告警失败单独记录，不伪造成功') AS daily_tasks(`order`, task, input, output, failure_policy)"
+        }
+      },
+      {
+        "id": "data_model_source",
+        "label": "最小数据模型设计清单",
+        "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+        "query": {
+          "engine": "databricks_sql",
+          "description": "复现报告中每个数据对象的事实粒度与职责。",
+          "language": "sql",
+          "sql": "SELECT * FROM VALUES (1, 'bronze.raw_document_manifest', '一次被观察到的原始 SEC 文档内容', 'URL、SHA-256、Volume 路径、HTTP 元数据和观察时间'), (2, 'bronze.source_observation', '某 run 对某来源对象的一次观察', '区分来源事实与系统观察，支持无变化判断'), (3, 'silver.company', '一个稳定公司实体', 'company_id、CIK、名称及生效区间'), (4, 'silver.filing', '一个 accession', 'form、filed/accepted 时间、期间和 amendment 关系'), (5, 'silver.pipeline_run', '一次计划或人工运行', '运行状态、代码版本、配置哈希和错误摘要'), (6, 'silver.metric_definition', '一个指标定义版本', '名称、公式、单位、期间语义和生效范围'), (7, 'silver.validation_result', '某 run 的一个校验断言结果', '复用现有 Golden/Validation，作为发布门禁'), (8, 'gold.dataset_version', '一次可对外引用的完整数据集发布', 'PUBLISHED 标记、前序版本、数据/代码/配置哈希'), (9, 'gold.metric_snapshot', '某发布版本下，公司×指标×业务期间的一次值', '永久保存值、状态、来源和变化原因'), (10, 'gold.metric_evidence', '一条指标快照对应的一项来源证据', 'accession、文档哈希、concept/context、引用和 URL'), (11, 'gold.v_current_metric', '最新 PUBLISHED 版本中的一条指标', '面向 API 的稳定读取视图') AS data_model(`order`, object, grain, purpose)"
+        }
+      },
+      {
+        "id": "version_example_source",
+        "label": "指标多版本示例数据",
+        "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+        "query": {
+          "engine": "databricks_sql",
+          "description": "复现同一 2026Q1 指标在两个发布日期的业务版本示例。",
+          "language": "sql",
+          "sql": "SELECT * FROM VALUES ('V_20260710_01', '2026Q1', '100.00', TIMESTAMP '2026-07-10 09:00:00Z', 'INITIAL', '首次发布'), ('V_20260713_01', '2026Q1', '103.00', TIMESTAMP '2026-07-13 09:00:00Z', 'VALUE_CHANGE', '新 10-Q/A 来源或确定性规则修正') AS version_example(dataset_version_id, period, value, published_at_utc, change_type, reason)"
+        }
+      },
+      {
+        "id": "api_contract_source",
+        "label": "前端只读 API 契约清单",
+        "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+        "query": {
+          "engine": "databricks_sql",
+          "description": "复现报告建议的第一版前端只读 API 和缓存键。",
+          "language": "sql",
+          "sql": "SELECT * FROM VALUES (1, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'datasets', char(47), 'current'), '取得最新 PUBLISHED 数据集版本', 'current，短 TTL'), (2, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'datasets', char(47), '{version}'), '取得版本元数据、发布时间和变化摘要', 'dataset_version_id，永久缓存'), (3, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'datasets', char(47), '{version}', char(47), 'companies', char(47), '{company}', char(47), 'metrics'), '取得某公司在固定版本下的指标列表', 'version + company + filters'), (4, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'metric-snapshots', char(47), '{id}', char(47), 'evidence'), '取得某条指标快照的来源证据', 'metric_snapshot_id'), (5, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'companies', char(47), '{company}', char(47), 'metrics', char(47), '{metric}', char(47), 'history'), '按业务期间查看所有发布版本', 'company + metric + period') AS api_contract(`order`, endpoint, purpose, cache_key)"
+        }
+      },
+      {
+        "id": "lakeflow_jobs",
+        "label": "Databricks Lakeflow Jobs",
+        "href": "https://docs.databricks.com/aws/en/jobs/"
+      },
+      {
+        "id": "unity_catalog_volumes",
+        "label": "Databricks Unity Catalog Volumes",
+        "href": "https://docs.databricks.com/aws/en/volumes/"
+      },
+      {
+        "id": "delta_history",
+        "label": "Databricks table history and time travel",
+        "href": "https://docs.databricks.com/gcp/en/tables/history"
+      },
+      {
+        "id": "databricks_apps_sql",
+        "label": "Databricks Apps SQL warehouse resource",
+        "href": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/sql-warehouse"
+      },
+      {
+        "id": "lakebase",
+        "label": "Databricks Lakebase",
+        "href": "https://docs.databricks.com/aws/en/oltp/"
+      },
+      {
+        "id": "delta_transactions",
+        "label": "Databricks ACID guarantees and transactions",
+        "href": "https://docs.databricks.com/aws/en/lakehouse/acid"
+      },
+      {
+        "id": "project_output",
+        "label": "当前项目指标输出",
+        "path": "outputs/metrics_matrix.csv"
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# SEC 指标系统 Databricks 生产化方案"
+      },
+      {
+        "id": "executive_summary",
+        "type": "markdown",
+        "body": "## Executive Summary\n\n- **Databricks 可以承载完整数据链路，但要区分存储、计算与应用服务。** Delta 表是权威数据存储，SQL Warehouse 是查询计算资源；Lakebase 是可选的低延迟应用数据库，不应被三者混称为“数据库”。\n- **第一版保持很小。** 使用一条每日 Lakeflow Job、一个 Unity Catalog、Bronze/Silver/Gold 三层 Delta 表、一个只读后端 API；不引入 Airflow、Kafka、复杂 agent harness、Lakeflow Declarative Pipelines 或预览能力作为关键依赖。\n- **版本历史必须显式保存。** 每次通过验证且内容发生变化时生成一个 `dataset_version`，并保存该版本的完整 `metric_snapshot`。Delta Time Travel 只用于运维排错和短期恢复，不承担产品级历史查询。\n- **AI 不进入指标主链路。** 当前指标值、状态、证据和 `notes` 均由确定性规则生成。若未来使用 Claude API，只能写入隔离的辅助注释表，不能改变指标值、状态或发布结果。"
+      },
+      {
+        "id": "scope_visual_takeaway",
+        "type": "markdown",
+        "sourceId": "architecture_decision",
+        "body": "## 第一版没有复杂 harness\n\n第一版共有 **8 个必要组件**，但它们不是八套自建系统：调度、权限、存储和查询都使用 Databricks 托管能力；需要维护的业务代码仍然只有确定性 SEC 计算与一个很薄的只读 API。Lakebase 和 AI 注释层各只有一个明确的未来触发条件，因此先不进入生产关键链路。"
+      },
+      {
+        "id": "scope_chart",
+        "type": "chart",
+        "chartId": "architecture_scope",
+        "layout": "full"
+      },
+      {
+        "id": "architecture_takeaway",
+        "type": "markdown",
+        "body": "## 权威数据留在 Delta，网站通过 API 读取\n\n推荐链路是：**SEC 官方接口 → Unity Catalog Volume 原始证据 → Bronze 元数据 → 现有确定性计算 → Silver 校验 → Gold 版本快照 → SQL Warehouse → 只读 API → 前端**。\n\n[Lakeflow Jobs](https://docs.databricks.com/aws/en/jobs/) 已提供调度、任务依赖、条件分支、重试和通知，因此没有必要再建设一套编排 harness。[Unity Catalog Volumes](https://docs.databricks.com/aws/en/volumes/) 用来保存原始 JSON、HTML、inline XBRL 文件和响应元数据；Delta 表只保存可查询的清单、标准化事实和发布数据。\n\n**关键边界：浏览器绝不能直接连接 SQL Warehouse。** 前端不持有 Databricks token，不提交任意 SQL，也不感知 warehouse id。后端 API 使用独立 service principal，只拥有 Gold 视图的 `SELECT` 权限。"
+      },
+      {
+        "id": "component_table",
+        "type": "table",
+        "tableId": "component_roles",
+        "layout": "full"
+      },
+      {
+        "id": "daily_takeaway",
+        "type": "markdown",
+        "body": "## 每日运行先发现变化，再计算、验证和发布\n\n系统仍然是 **company fact / accession evidence 驱动**，不是 Daily Index 驱动。每天先读取配置中的 CIK，再通过 SEC Submissions API 发现与任务相关的新 accession 或 amendment；需要数字事实时更新 Company Facts，需要特殊指标时抓取对应 10-K、10-K/A、DEF 14A、8-K 或附件。\n\n外部下载只获取有变化的证据，但计算阶段可以从缓存证据重算全部十家公司。当前数据量很小，这比增量拼接更容易证明正确，也更符合已有全量交叉检查。没有相关变化时，任务记录 `NO_CHANGE` 后结束，不创建空版本。"
+      },
+      {
+        "id": "daily_table",
+        "type": "table",
+        "tableId": "daily_tasks",
+        "layout": "full"
+      },
+      {
+        "id": "data_model_takeaway",
+        "type": "markdown",
+        "body": "## 一行先代表一个明确事实，再决定放在哪张表\n\n推荐建立一个生产 catalog，例如 `sec_metrics_prod`，其中包含 `bronze`、`silver`、`gold` 三个 schema，以及 `bronze.sec_raw` Volume。原始文件以 SHA-256 内容寻址保存，重复下载不会产生重复文件。\n\n最重要的 Gold 对象是 `dataset_version`、`metric_snapshot` 和 `metric_evidence`。`metric_snapshot` 保存**每个已发布版本的完整快照**，而不是只保存变化行；以当前规模，这种设计的存储成本很低，却显著降低前端查询、回滚和审计复杂度。"
+      },
+      {
+        "id": "data_model_table",
+        "type": "table",
+        "tableId": "data_model",
+        "layout": "full"
+      },
+      {
+        "id": "version_takeaway",
+        "type": "markdown",
+        "body": "## 业务版本是永久数据，不是 Delta 的临时历史\n\n是的，必须保存“2026 年第一季度的某指标在 7 月 10 日是 100、在 7 月 13 日变成 103”这两个观察版本。每条记录同时具有三类时间：\n\n- `period_start` / `period_end`：指标代表的业务期间；\n- `source_filed_at` / `source_accepted_at`：SEC 来源何时提交；\n- `observed_at_utc` / `published_at_utc`：本系统何时看到并对外发布。\n\nDatabricks 明确说明，表历史和 Time Travel 会受保留期及 `VACUUM` 影响，也不建议作为长期归档。因此产品历史必须保存在显式版本表中；Time Travel 只作为短期运维工具。[官方说明](https://docs.databricks.com/gcp/en/tables/history)"
+      },
+      {
+        "id": "version_table",
+        "type": "table",
+        "tableId": "version_example",
+        "layout": "full"
+      },
+      {
+        "id": "publication_takeaway",
+        "type": "markdown",
+        "body": "## 发布标记最后写入，避免前端看到半成品\n\n一次发布按以下顺序执行：先生成新的 `dataset_version_id`；写入该版本的完整 `metric_snapshot` 和 `metric_evidence`；执行唯一性、证据、状态、差异和既有 Golden/Validation 检查；最后才把 `dataset_version` 写为 `PUBLISHED`。所有 Gold 查询只读取 `PUBLISHED` 版本。\n\nDatabricks 已提供跨表事务能力，但当前仍属于 Public Preview。第一版不把关键发布一致性建立在预览功能上，而采用“**发布标记最后写入**”的稳定协议。[Databricks ACID 与事务说明](https://docs.databricks.com/aws/en/lakehouse/acid)\n\n发布后的数据不更新、不删除。修正或回滚都创建新版本，并记录 `previous_version_id`、`change_type`、`change_reason`、`code_version`、`config_hash` 和 `dataset_hash`。"
+      },
+      {
+        "id": "api_takeaway",
+        "type": "markdown",
+        "body": "## 前端先固定版本，页面内所有请求都使用同一版本\n\n页面加载时先调用 `GET /api/v1/datasets/current`，获得当前 `dataset_version_id`。随后该页面的指标、证据和历史请求都显式携带这个版本。即使后台在用户浏览期间发布了新版本，页面也不会出现一半旧值、一半新值。\n\nAPI 返回值必须包含：`dataset_version_id`、公司、指标、期间、`value_numeric` 或 `value_text`、单位、业务状态、质量状态、来源 accession/form/filing date、证据数量、发布时间和变化原因。数值建议以十进制定点字符串输出，前端负责格式化，避免 JavaScript 浮点误差。"
+      },
+      {
+        "id": "api_table",
+        "type": "table",
+        "tableId": "api_contract",
+        "layout": "full"
+      },
+      {
+        "id": "serving_takeaway",
+        "type": "markdown",
+        "body": "## 第一版用 SQL Warehouse；只有严格低延迟场景才加 Lakebase\n\n对于内网、十家公司和中等并发，推荐 **Databricks App 或现有内网后端 + Serverless SQL Warehouse + 按版本缓存**。Gold 层提供已经扁平化的查询表或普通视图，API 不在请求时进行复杂联表。Databricks App 可通过专用 service principal 访问 SQL Warehouse，避免硬编码个人 token。[官方说明](https://docs.databricks.com/aws/en/dev-tools/databricks-apps/sql-warehouse)\n\n如果将来变成公开网站、持续高 QPS 或要求稳定亚秒级响应，再把“当前已发布快照”同步到 [Lakebase](https://docs.databricks.com/aws/en/oltp/) 作为 serving copy。Delta Gold 仍是唯一事实来源，Lakebase 只是可重建缓存。第一版不需要同时维护两套数据库。"
+      },
+      {
+        "id": "ai_boundary",
+        "type": "markdown",
+        "body": "## AI 只做可选解释，不参与事实计算\n\n当前系统运行时不需要 AI。`outputs/metrics_matrix.csv` 的 `notes` 是代码按分支生成的技术说明，不是 AI 生成内容。\n\n如果未来确实需要 Claude API，唯一推荐场景是生成面向用户的摘要、证据导读或异常初步归类，并写入单独的 `silver.ai_annotation`：记录 `model_id`、`prompt_version`、`input_hash`、`output_text`、`review_status` 和 UTC 时间。AI 失败只能导致“没有注释”，不得阻塞确定性指标发布，更不能修改 `metric_snapshot`。"
+      },
+      {
+        "id": "recommended_steps",
+        "type": "markdown",
+        "body": "## 推荐落地顺序\n\n1. **先搭骨架。** 建立 Unity Catalog、三个 schema、原始证据 Volume、权限组和一条 Lakeflow Job。\n2. **最小迁移现有程序。** 将当前脚本打包为 Python wheel task；第一阶段仍可在 run-specific Volume 目录生成 CSV，再由 publish task 转成 Delta，不重写提取逻辑。\n3. **先完成版本发布。** 实现 `pipeline_run`、`dataset_version`、`metric_snapshot`、`metric_evidence` 和 `PUBLISHED` 协议，导入当前结果作为首个版本。\n4. **再提供只读 API。** 先实现 current、version、company metrics、evidence、history 五类接口，前端按版本缓存。\n5. **最后补季度能力。** 当前主链路是 latest 10-K 年度口径；只有产品确认季度定义后，再加入 10-Q/10-Q/A、单季与 YTD 区分以及季度 Golden cases。"
+      },
+      {
+        "id": "further_questions",
+        "type": "markdown",
+        "body": "## 评审会上需要定下的四个问题\n\n- 网站是纯内网低并发，还是未来需要外网与严格亚秒 SLA？这决定是否需要 Lakebase，但不影响 Delta 主模型。\n- 产品默认展示“最新发布值”还是允许用户切换“截至某日”？建议两者都支持，首页默认最新。\n- 指标定义变更时，历史是否按旧定义保留？建议保留，并通过 `definition_version` 区分，绝不静默重算覆盖。\n- 第一阶段是否只上线当前年度指标？建议是；季度指标另开清晰的口径验收，不与平台迁移混在一次上线。"
+      },
+      {
+        "id": "caveats",
+        "type": "markdown",
+        "body": "## 假设与边界\n\n- 本方案假设 Databricks 工作区已启用 Unity Catalog，并允许访问 SEC 官方域名；具体网络策略名称会因 AWS、Azure 或 GCP 而异。\n- 当前仓库的生产基线仍是年度 latest 10-K/10-K/A 口径；文中的 2026Q1 仅是版本模型示例，不代表季度提取已经实现。\n- Delta 的主键、外键和唯一约束不应被当作全部强制校验；发布任务仍需对业务键重复、缺失证据、非法状态和数值格式 Fail Fast。\n- 每个时间字段统一使用 UTC；前端仅在展示层转换用户时区。"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-07-13T09:08:56Z",
+    "status": "ready",
+    "datasets": {
+      "architecture_scope": [
+        {
+          "area": "工作流与计算",
+          "horizon": "第一版必须",
+          "component_count": 2,
+          "components": "Lakeflow Jobs；Python wheel task",
+          "decision_basis": "托管编排加现有确定性计算即可"
+        },
+        {
+          "area": "工作流与计算",
+          "horizon": "后续可选",
+          "component_count": 0,
+          "components": "无",
+          "decision_basis": "不再叠加第二套编排系统"
+        },
+        {
+          "area": "存储与治理",
+          "horizon": "第一版必须",
+          "component_count": 4,
+          "components": "Unity Catalog Volume；Bronze；Silver；Gold",
+          "decision_basis": "证据、过程和发布事实需要职责隔离"
+        },
+        {
+          "area": "存储与治理",
+          "horizon": "后续可选",
+          "component_count": 0,
+          "components": "无",
+          "decision_basis": "不引入第二套语义或流式系统"
+        },
+        {
+          "area": "查询与服务",
+          "horizon": "第一版必须",
+          "component_count": 2,
+          "components": "SQL Warehouse；只读后端 API",
+          "decision_basis": "内网中等并发先用 Warehouse，严格低延迟再加 Lakebase"
+        },
+        {
+          "area": "查询与服务",
+          "horizon": "后续可选",
+          "component_count": 1,
+          "components": "Lakebase",
+          "decision_basis": "只有严格低延迟或高 QPS 才引入"
+        },
+        {
+          "area": "AI 辅助",
+          "horizon": "第一版必须",
+          "component_count": 0,
+          "components": "无",
+          "decision_basis": "AI 不参与指标事实计算和发布"
+        },
+        {
+          "area": "AI 辅助",
+          "horizon": "后续可选",
+          "component_count": 1,
+          "components": "Claude API 注释层",
+          "decision_basis": "仅在确有用户解释需求时引入"
+        }
+      ],
+      "component_roles": [
+        {
+          "order": 1,
+          "component": "Lakeflow Jobs",
+          "responsibility": "每日调度、依赖、条件分支、重试、通知",
+          "v1_decision": "使用；一条 Job 即可"
+        },
+        {
+          "order": 2,
+          "component": "Python wheel task",
+          "responsibility": "运行现有确定性 SEC 提取和计算逻辑",
+          "v1_decision": "使用；代码仍在 Git 中管理"
+        },
+        {
+          "order": 3,
+          "component": "Unity Catalog Volume",
+          "responsibility": "保存原始 JSON、HTML、XBRL 和响应头",
+          "v1_decision": "使用；按 SHA-256 内容寻址"
+        },
+        {
+          "order": 4,
+          "component": "Bronze Delta",
+          "responsibility": "记录来源观察和原始文件清单",
+          "v1_decision": "使用；只追加"
+        },
+        {
+          "order": 5,
+          "component": "Silver Delta",
+          "responsibility": "管理公司、filing、任务运行、指标定义和校验结果",
+          "v1_decision": "使用；标准化过程层"
+        },
+        {
+          "order": 6,
+          "component": "Gold Delta",
+          "responsibility": "保存已发布版本、完整指标快照和证据",
+          "v1_decision": "使用；唯一权威输出"
+        },
+        {
+          "order": 7,
+          "component": "SQL Warehouse",
+          "responsibility": "执行 Gold 查询",
+          "v1_decision": "使用；它是计算资源，不是存储"
+        },
+        {
+          "order": 8,
+          "component": "只读后端 API",
+          "responsibility": "认证、版本固定、响应契约和缓存",
+          "v1_decision": "使用；Databricks App 或现有内网服务"
+        },
+        {
+          "order": 9,
+          "component": "Lakebase",
+          "responsibility": "高并发、低延迟 serving copy",
+          "v1_decision": "暂不使用；达到 SLA 门槛后再加"
+        }
+      ],
+      "daily_tasks": [
+        {
+          "order": 1,
+          "task": "start_run",
+          "input": "UTC 调度时间、集中配置、代码版本",
+          "output": "run_id 与 RUNNING 记录",
+          "failure_policy": "参数缺失立即失败"
+        },
+        {
+          "order": 2,
+          "task": "discover",
+          "input": "配置中的 CIK、上次来源状态",
+          "output": "新 accession / amendment 清单与 has_change",
+          "failure_policy": "SEC 暂时错误按任务级策略重试"
+        },
+        {
+          "order": 3,
+          "task": "if_changed",
+          "input": "has_change、force_full",
+          "output": "NO_CHANGE 或进入后续任务",
+          "failure_policy": "条件值缺失立即失败"
+        },
+        {
+          "order": 4,
+          "task": "ingest",
+          "input": "变化清单",
+          "output": "Volume 原始文件与 Bronze manifest",
+          "failure_policy": "哈希或来源元数据不完整则失败"
+        },
+        {
+          "order": 5,
+          "task": "compute",
+          "input": "缓存证据、指标定义、公司配置",
+          "output": "候选完整指标快照与证据",
+          "failure_policy": "未知异常不吞掉，任务失败"
+        },
+        {
+          "order": 6,
+          "task": "validate_and_diff",
+          "input": "候选快照、当前 PUBLISHED 版本",
+          "output": "校验结果、差异分类、dataset_hash",
+          "failure_policy": "P0 或既有验收失败则阻断发布"
+        },
+        {
+          "order": 7,
+          "task": "publish",
+          "input": "通过校验且 hash 变化的候选版本",
+          "output": "Gold 快照、证据、最后写入的 PUBLISHED 记录",
+          "failure_policy": "任何部分失败都不暴露新版本"
+        },
+        {
+          "order": 8,
+          "task": "notify",
+          "input": "运行与发布结果",
+          "output": "成功摘要或失败告警",
+          "failure_policy": "告警失败单独记录，不伪造成功"
+        }
+      ],
+      "data_model": [
+        {
+          "order": 1,
+          "object": "bronze.raw_document_manifest",
+          "grain": "一次被观察到的原始 SEC 文档内容",
+          "purpose": "URL、SHA-256、Volume 路径、HTTP 元数据和观察时间"
+        },
+        {
+          "order": 2,
+          "object": "bronze.source_observation",
+          "grain": "某 run 对某来源对象的一次观察",
+          "purpose": "区分来源事实与系统观察，支持无变化判断"
+        },
+        {
+          "order": 3,
+          "object": "silver.company",
+          "grain": "一个稳定公司实体",
+          "purpose": "company_id、CIK、名称及生效区间"
+        },
+        {
+          "order": 4,
+          "object": "silver.filing",
+          "grain": "一个 accession",
+          "purpose": "form、filed/accepted 时间、期间和 amendment 关系"
+        },
+        {
+          "order": 5,
+          "object": "silver.pipeline_run",
+          "grain": "一次计划或人工运行",
+          "purpose": "运行状态、代码版本、配置哈希和错误摘要"
+        },
+        {
+          "order": 6,
+          "object": "silver.metric_definition",
+          "grain": "一个指标定义版本",
+          "purpose": "名称、公式、单位、期间语义和生效范围"
+        },
+        {
+          "order": 7,
+          "object": "silver.validation_result",
+          "grain": "某 run 的一个校验断言结果",
+          "purpose": "复用现有 Golden/Validation，作为发布门禁"
+        },
+        {
+          "order": 8,
+          "object": "gold.dataset_version",
+          "grain": "一次可对外引用的完整数据集发布",
+          "purpose": "PUBLISHED 标记、前序版本、数据/代码/配置哈希"
+        },
+        {
+          "order": 9,
+          "object": "gold.metric_snapshot",
+          "grain": "某发布版本下，公司×指标×业务期间的一次值",
+          "purpose": "永久保存值、状态、来源和变化原因"
+        },
+        {
+          "order": 10,
+          "object": "gold.metric_evidence",
+          "grain": "一条指标快照对应的一项来源证据",
+          "purpose": "accession、文档哈希、concept/context、引用和 URL"
+        },
+        {
+          "order": 11,
+          "object": "gold.v_current_metric",
+          "grain": "最新 PUBLISHED 版本中的一条指标",
+          "purpose": "面向 API 的稳定读取视图"
+        }
+      ],
+      "version_example": [
+        {
+          "dataset_version_id": "V_20260710_01",
+          "period": "2026Q1",
+          "value": "100.00",
+          "published_at_utc": "2026-07-10T09:00:00Z",
+          "change_type": "INITIAL",
+          "reason": "首次发布"
+        },
+        {
+          "dataset_version_id": "V_20260713_01",
+          "period": "2026Q1",
+          "value": "103.00",
+          "published_at_utc": "2026-07-13T09:00:00Z",
+          "change_type": "VALUE_CHANGE",
+          "reason": "新 10-Q/A 来源或确定性规则修正"
+        }
+      ],
+      "api_contract": [
+        {
+          "order": 1,
+          "endpoint": "GET /\u200bapi/\u200bv1/\u200bdatasets/\u200bcurrent",
+          "purpose": "取得最新 PUBLISHED 数据集版本",
+          "cache_key": "current，短 TTL"
+        },
+        {
+          "order": 2,
+          "endpoint": "GET /\u200bapi/\u200bv1/\u200bdatasets/\u200b{version}",
+          "purpose": "取得版本元数据、发布时间和变化摘要",
+          "cache_key": "dataset_version_id，永久缓存"
+        },
+        {
+          "order": 3,
+          "endpoint": "GET /\u200bapi/\u200bv1/\u200bdatasets/\u200b{version}/\u200bcompanies/\u200b{company}/\u200bmetrics",
+          "purpose": "取得某公司在固定版本下的指标列表",
+          "cache_key": "version + company + filters"
+        },
+        {
+          "order": 4,
+          "endpoint": "GET /\u200bapi/\u200bv1/\u200bmetric-snapshots/\u200b{id}/\u200bevidence",
+          "purpose": "取得某条指标快照的来源证据",
+          "cache_key": "metric_snapshot_id"
+        },
+        {
+          "order": 5,
+          "endpoint": "GET /\u200bapi/\u200bv1/\u200bcompanies/\u200b{company}/\u200bmetrics/\u200b{metric}/\u200bhistory",
+          "purpose": "按业务期间查看所有发布版本",
+          "cache_key": "company + metric + period"
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "architecture_decision",
+      "label": "本方案的第一版组件边界",
+      "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+      "query": {
+        "engine": "databricks_sql",
+        "description": "根据本报告组件职责表汇总第一版必要组件与后续可选组件。",
+        "language": "sql",
+        "sql": "SELECT area, horizon, component_count, components, decision_basis FROM VALUES ('工作流与计算', '第一版必须', 2, 'Lakeflow Jobs；Python wheel task', '托管编排加现有确定性计算即可'), ('工作流与计算', '后续可选', 0, '无', '不再叠加第二套编排系统'), ('存储与治理', '第一版必须', 4, 'Unity Catalog Volume；Bronze；Silver；Gold', '证据、过程和发布事实需要职责隔离'), ('存储与治理', '后续可选', 0, '无', '不引入第二套语义或流式系统'), ('查询与服务', '第一版必须', 2, 'SQL Warehouse；只读后端 API', '内网中等并发先用 Warehouse'), ('查询与服务', '后续可选', 1, 'Lakebase', '只有严格低延迟或高 QPS 才引入'), ('AI 辅助', '第一版必须', 0, '无', 'AI 不参与指标事实计算和发布'), ('AI 辅助', '后续可选', 1, 'Claude API 注释层', '仅在确有用户解释需求时引入') AS architecture_scope(area, horizon, component_count, components, decision_basis)",
+        "metric_definitions": [
+          "第一版必须：进入首个生产版本关键路径的独立平台组件数量。",
+          "后续可选：只有业务 SLA 或产品功能触发后才引入的独立组件数量。"
+        ],
+        "filters": [
+          "不计 Git、CI 和 SEC 外部来源",
+          "Bronze、Silver、Gold 作为三个独立数据职责层计数"
+        ]
+      }
+    },
+    {
+      "id": "component_roles_source",
+      "label": "Databricks 组件职责设计清单",
+      "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+      "query": {
+        "engine": "databricks_sql",
+        "description": "复现报告中的第一版 Databricks 组件职责清单。",
+        "language": "sql",
+        "sql": "SELECT * FROM VALUES (1, 'Lakeflow Jobs', '每日调度、依赖、条件分支、重试、通知', '使用；一条 Job 即可'), (2, 'Python wheel task', '运行现有确定性 SEC 提取和计算逻辑', '使用；代码仍在 Git 中管理'), (3, 'Unity Catalog Volume', '保存原始 JSON、HTML、XBRL 和响应头', '使用；按 SHA-256 内容寻址'), (4, 'Bronze Delta', '记录来源观察和原始文件清单', '使用；只追加'), (5, 'Silver Delta', '管理公司、filing、任务运行、指标定义和校验结果', '使用；标准化过程层'), (6, 'Gold Delta', '保存已发布版本、完整指标快照和证据', '使用；唯一权威输出'), (7, 'SQL Warehouse', '执行 Gold 查询', '使用；它是计算资源，不是存储'), (8, '只读后端 API', '认证、版本固定、响应契约和缓存', '使用；Databricks App 或现有内网服务'), (9, 'Lakebase', '高并发、低延迟 serving copy', '暂不使用；达到 SLA 门槛后再加') AS component_roles(`order`, component, responsibility, v1_decision)"
+      }
+    },
+    {
+      "id": "daily_tasks_source",
+      "label": "每日 Pipeline 任务设计清单",
+      "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+      "query": {
+        "engine": "databricks_sql",
+        "description": "复现报告中的每日 Lakeflow Job 任务、输入输出和失败策略。",
+        "language": "sql",
+        "sql": "SELECT * FROM VALUES (1, 'start_run', 'UTC 调度时间、集中配置、代码版本', 'run_id 与 RUNNING 记录', '参数缺失立即失败'), (2, 'discover', '配置中的 CIK、上次来源状态', '新 accession / amendment 清单与 has_change', 'SEC 暂时错误按任务级策略重试'), (3, 'if_changed', 'has_change、force_full', 'NO_CHANGE 或进入后续任务', '条件值缺失立即失败'), (4, 'ingest', '变化清单', 'Volume 原始文件与 Bronze manifest', '哈希或来源元数据不完整则失败'), (5, 'compute', '缓存证据、指标定义、公司配置', '候选完整指标快照与证据', '未知异常不吞掉，任务失败'), (6, 'validate_and_diff', '候选快照、当前 PUBLISHED 版本', '校验结果、差异分类、dataset_hash', 'P0 或既有验收失败则阻断发布'), (7, 'publish', '通过校验且 hash 变化的候选版本', 'Gold 快照、证据、最后写入的 PUBLISHED 记录', '任何部分失败都不暴露新版本'), (8, 'notify', '运行与发布结果', '成功摘要或失败告警', '告警失败单独记录，不伪造成功') AS daily_tasks(`order`, task, input, output, failure_policy)"
+      }
+    },
+    {
+      "id": "data_model_source",
+      "label": "最小数据模型设计清单",
+      "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+      "query": {
+        "engine": "databricks_sql",
+        "description": "复现报告中每个数据对象的事实粒度与职责。",
+        "language": "sql",
+        "sql": "SELECT * FROM VALUES (1, 'bronze.raw_document_manifest', '一次被观察到的原始 SEC 文档内容', 'URL、SHA-256、Volume 路径、HTTP 元数据和观察时间'), (2, 'bronze.source_observation', '某 run 对某来源对象的一次观察', '区分来源事实与系统观察，支持无变化判断'), (3, 'silver.company', '一个稳定公司实体', 'company_id、CIK、名称及生效区间'), (4, 'silver.filing', '一个 accession', 'form、filed/accepted 时间、期间和 amendment 关系'), (5, 'silver.pipeline_run', '一次计划或人工运行', '运行状态、代码版本、配置哈希和错误摘要'), (6, 'silver.metric_definition', '一个指标定义版本', '名称、公式、单位、期间语义和生效范围'), (7, 'silver.validation_result', '某 run 的一个校验断言结果', '复用现有 Golden/Validation，作为发布门禁'), (8, 'gold.dataset_version', '一次可对外引用的完整数据集发布', 'PUBLISHED 标记、前序版本、数据/代码/配置哈希'), (9, 'gold.metric_snapshot', '某发布版本下，公司×指标×业务期间的一次值', '永久保存值、状态、来源和变化原因'), (10, 'gold.metric_evidence', '一条指标快照对应的一项来源证据', 'accession、文档哈希、concept/context、引用和 URL'), (11, 'gold.v_current_metric', '最新 PUBLISHED 版本中的一条指标', '面向 API 的稳定读取视图') AS data_model(`order`, object, grain, purpose)"
+      }
+    },
+    {
+      "id": "version_example_source",
+      "label": "指标多版本示例数据",
+      "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+      "query": {
+        "engine": "databricks_sql",
+        "description": "复现同一 2026Q1 指标在两个发布日期的业务版本示例。",
+        "language": "sql",
+        "sql": "SELECT * FROM VALUES ('V_20260710_01', '2026Q1', '100.00', TIMESTAMP '2026-07-10 09:00:00Z', 'INITIAL', '首次发布'), ('V_20260713_01', '2026Q1', '103.00', TIMESTAMP '2026-07-13 09:00:00Z', 'VALUE_CHANGE', '新 10-Q/A 来源或确定性规则修正') AS version_example(dataset_version_id, period, value, published_at_utc, change_type, reason)"
+      }
+    },
+    {
+      "id": "api_contract_source",
+      "label": "前端只读 API 契约清单",
+      "path": "Databricks生产化方案_产品与前端沟通版.artifact.json",
+      "query": {
+        "engine": "databricks_sql",
+        "description": "复现报告建议的第一版前端只读 API 和缓存键。",
+        "language": "sql",
+        "sql": "SELECT * FROM VALUES (1, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'datasets', char(47), 'current'), '取得最新 PUBLISHED 数据集版本', 'current，短 TTL'), (2, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'datasets', char(47), '{version}'), '取得版本元数据、发布时间和变化摘要', 'dataset_version_id，永久缓存'), (3, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'datasets', char(47), '{version}', char(47), 'companies', char(47), '{company}', char(47), 'metrics'), '取得某公司在固定版本下的指标列表', 'version + company + filters'), (4, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'metric-snapshots', char(47), '{id}', char(47), 'evidence'), '取得某条指标快照的来源证据', 'metric_snapshot_id'), (5, concat('GET ', char(47), 'api', char(47), 'v1', char(47), 'companies', char(47), '{company}', char(47), 'metrics', char(47), '{metric}', char(47), 'history'), '按业务期间查看所有发布版本', 'company + metric + period') AS api_contract(`order`, endpoint, purpose, cache_key)"
+      }
+    },
+    {
+      "id": "lakeflow_jobs",
+      "label": "Databricks Lakeflow Jobs",
+      "href": "https://docs.databricks.com/aws/en/jobs/"
+    },
+    {
+      "id": "unity_catalog_volumes",
+      "label": "Databricks Unity Catalog Volumes",
+      "href": "https://docs.databricks.com/aws/en/volumes/"
+    },
+    {
+      "id": "delta_history",
+      "label": "Databricks table history and time travel",
+      "href": "https://docs.databricks.com/gcp/en/tables/history"
+    },
+    {
+      "id": "databricks_apps_sql",
+      "label": "Databricks Apps SQL warehouse resource",
+      "href": "https://docs.databricks.com/aws/en/dev-tools/databricks-apps/sql-warehouse"
+    },
+    {
+      "id": "lakebase",
+      "label": "Databricks Lakebase",
+      "href": "https://docs.databricks.com/aws/en/oltp/"
+    },
+    {
+      "id": "delta_transactions",
+      "label": "Databricks ACID guarantees and transactions",
+      "href": "https://docs.databricks.com/aws/en/lakehouse/acid"
+    },
+    {
+      "id": "project_output",
+      "label": "当前项目指标输出",
+      "path": "outputs/metrics_matrix.csv"
+    }
+  ]
+}
