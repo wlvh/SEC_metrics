@@ -1,6 +1,6 @@
 # SEC_metrics Expert Review Package Manifest
 
-Generated UTC: 2026-07-09T14:25:16Z
+Generated UTC: 2026-07-13T06:45:19Z
 
 ## Purpose
 
@@ -24,7 +24,6 @@ concept inventories stay in the local workspace.
 - `README_RUN.md`
 - `REPORT_十公司财务指标.md`
 - `SEC_metrics_项目全景与专家指南.md`
-- `SEC_metrics_项目全景与指南.md`
 - `01_SOP_SEC_10公司单年指标计算_直接SEC.md`
 - `02_指标定义_SEC_10公司单年指标.md`
 - `outputs/metrics_matrix.csv`
