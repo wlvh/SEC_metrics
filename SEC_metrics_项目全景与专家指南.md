@@ -1,972 +1,1902 @@
-# 05｜SEC_metrics 项目全景与专家指南
+# SEC_metrics 项目全景与专家指南（vNext）
 
-**用途**：让项目负责人、审计者、开发者完整掌握 SEC_metrics spike 的目标、架构、计算逻辑、证据链、准确性防线、验收方法、扩展路径和专家复核边界。  
+> **适用条件**：本指南在《SEC Metrics vNext：可审计财务指标契约与抗格式演化系统》FSD v1.1 的 Definition of Done 全部满足、Gate G0–G5 通过并完成主系统切换后启用。AI 章节只有在 Gate G6 通过后才描述已启用能力；否则按 `DISABLED` 或 `SHADOW` 阅读。
+>
+> **文档角色**：本指南解释系统为什么这样设计、专家如何阅读和操作系统、出现异常时怎样判断；它不复制或替代 FSD、Catalog Release、Dataset Version 和自动生成审核产物中的规范性定义。
+
+| 文档属性 | 值 |
+|---|---|
+| 指南版本 | 2.0 |
+| 基线 FSD | `SEC_metrics_vNext_FSD_v1.1.md` |
+| 目标读者 | 项目负责人、财务方法论审核者、数据审核者、工程师、QA、发布负责人、审计者、AI 工程代理 |
+| 当前状态数据来源 | Catalog/Dataset/Validation/Parser/Taxonomy manifest 自动生成 |
+| 手工维护边界 | 领域叙事、设计理由、审计方法、操作心智模型、事故复盘 |
 
 ---
 
 ## 目录
 
-1. 可信度声明与当前状态
-2. 项目边界与交付物实况
-3. SEC 数据平面与 XBRL 基础
-4. 架构总览：流水线、配置、抽取器
-5. 指标计算通路：STD_XBRL、DIM_XBRL、MDA、DEF14A、8-K
-6. 准确性防线：证据链、golden、validation、unittest
-7. 风险登记簿：已关闭项与仍开放项
-8. 从第 11 家到第 1000 家公司的扩展方法
-9. 输出文件怎么读
-10. 如何人工审计一个指标
-11. 常见错误模式与定位方式
-12. 轻量包与完整包的验收方法
-13. 生产化路线图
-14. 专家训练清单与快速命令
-15. 术语表与五轮演化史
+0. [如何使用本指南：权威层级与可信度标记](#0-如何使用本指南权威层级与可信度标记)
+1. [系统是什么：使命、边界与可信结果的定义](#1-系统是什么使命边界与可信结果的定义)
+2. [vNext 心智模型：从 RawAsset 到 Dataset Version](#2-vnext-心智模型从-rawasset-到-dataset-version)
+3. [SEC 数据平面、XBRL 与 taxonomy 基础](#3-sec-数据平面xbrl-与-taxonomy-基础)
+4. [Source Shell：RawAsset、Adapter、格式漂移与隔离](#4-source-shellrawassetadapter格式漂移与隔离)
+5. [SEC 官方测试套件与 Arelle：如何成为可替换的外部质量资产](#5-sec-官方测试套件与-arelle如何成为可替换的外部质量资产)
+6. [Catalog Release：指标定义、结构化公式、traits 与审批](#6-catalog-release指标定义结构化公式traits-与审批)
+7. [Candidate Resolution：候选生成、排序、拒绝账本](#7-candidate-resolution候选生成排序拒绝账本)
+8. [ComputationIR、单位代数、Lineage 与 Evidence](#8-computationir单位代数lineage-与-evidence)
+9. [四维状态、Coverage Receipt 与 Publication Policy](#9-四维状态coverage-receipt-与-publication-policy)
+10. [Dataset Version、原子发布、公开视图与只读报告](#10-dataset-version原子发布公开视图与只读报告)
+11. [Strategy 目录与领域案例](#11-strategy-目录与领域案例)
+12. [验证拓扑：Golden、Mutation、Backtest、SEC Suite 与 G0–G6](#12-验证拓扑goldenmutationbacktestsec-suite-与-g0g6)
+13. [专家审计手册](#13-专家审计手册)
+14. [扩展手册：新公司、新行业、新指标、新格式、新 parser](#14-扩展手册新公司新行业新指标新格式新-parser)
+15. [运行监控、质量北极星与事故响应](#15-运行监控质量北极星与事故响应)
+16. [AI Proposal：允许做什么、如何审核、何时关闭](#16-ai-proposal允许做什么如何审核何时关闭)
+17. [常见错误模式与反模式](#17-常见错误模式与反模式)
+18. [当前实现地图、交付物与命令索引](#18-当前实现地图交付物与命令索引)
+19. [Legacy Round 3、规则考古与制度记忆](#19-legacy-round-3规则考古与制度记忆)
+20. [专家训练清单与术语表](#20-专家训练清单与术语表)
+21. [外部规范与参考资料](#21-外部规范与参考资料)
 
 ---
 
-## 0. 这份文档的可信度声明（先读这一节）
+## 0. 如何使用本指南：权威层级与可信度标记
 
-当前 verdict 必须分成两层：
+### 0.1 文档权威层级
 
-| 验收对象 | 当前结论 | 原因 |
+发生冲突时，按以下顺序裁决：
+
+1. **FSD**：外部可观察行为、状态机、错误行为、数据语义和发布门禁的规范性来源。
+2. **APPROVED Catalog Release**：某一时点全部指标方法论、适用性、resolver、strategy、FormulaIR shape、publication options 与审批的权威来源。
+3. **PUBLISHED Dataset Version**：已发布公司 × 指标 × 期间 × scope × 定义版本 × result role 的权威事实快照。
+4. **自动生成审核产物**：Applicability Matrix、Metric Card、Semantic Diff、Backtest、Candidate Review、Parser Agreement、Taxonomy Impact、Gate Summary。
+5. **本专家指南**：解释设计理由、操作方法、审计路径和事故经验；不得反向修改以上权威对象。
+6. **Legacy 文档与 CSV**：用于迁移、兼容和历史研究，不定义当前系统行为。
+
+因此，本指南不会手工复述每个指标的完整候选链、公式版本和适用矩阵。专家需要查看某一指标的当前定义时，必须打开该 Catalog Release 自动生成的 Metric Card，而不是从本文复制一段旧说明。
+
+### 0.2 四级可信度标记
+
+```text
+[生成]  直接从 Catalog/Dataset/Validation/Parser/Taxonomy 权威对象渲染，带来源 hash；禁止手改。
+[实测]  通过独立执行、重放、对抗测试或人工复核得到，并记录 run/audit ID。
+[考证]  已阅读源代码、规范或原始材料并确认，但不是本次运行的自动产物。
+[声明]  历史文档、报告或人员陈述；尚未在当前版本独立复核。
+```
+
+`[生成]` 表示**抗文档漂移能力最高**，不代表数据天然不会错；数据正确性仍由 validation、审计和 Published-Wrong Rate 共同约束。`[实测]` 可以独立发现生成系统自身的错误，因此两者不是简单的真值等级排序。
+
+### 0.3 当前版本绑定区块
+
+真实仓库中的以下区块必须由 CI 生成。本文稿保留占位符，不声称当前 legacy 仓库已经拥有这些 vNext 版本 ID。
+
+<!-- GENERATED:CURRENT_RELEASE:START -->
+
+| [生成] 当前绑定 | 值 |
+|---|---|
+| `implementation_commit` | `{{IMPLEMENTATION_COMMIT}}` |
+| `fsd_version` | `1.1` |
+| `catalog_release_id` | `{{CATALOG_RELEASE_ID}}` |
+| `catalog_semantic_hash` | `{{CATALOG_SEMANTIC_HASH}}` |
+| `dataset_version_id` | `{{DATASET_VERSION_ID}}` |
+| `publication_policy_version` | `{{PUBLICATION_POLICY_VERSION}}` |
+| `taxonomy_registry_hash` | `{{TAXONOMY_REGISTRY_HASH}}` |
+| `adapter_manifest_hash` | `{{ADAPTER_MANIFEST_HASH}}` |
+| `parser_manifest_hash` | `{{PARSER_MANIFEST_HASH}}` |
+| `sec_efm_version` | `{{SEC_EFM_VERSION}}` |
+| `sec_public_test_suite_version` | `{{SEC_TEST_SUITE_VERSION}}` |
+| `gate_summary` | `{{G0_G6_SUMMARY}}` |
+| `generated_at_utc` | `{{GENERATED_AT_UTC}}` |
+
+<!-- GENERATED:CURRENT_RELEASE:END -->
+
+### 0.4 指南自身的漂移防线
+
+- 所有统计数字、状态分布、文件清单、parser 版本、taxonomy 版本、命令入口和门禁结果必须位于 `[生成]` 区块。
+- 生成区块必须绑定来源对象 hash；手工修改后 CI 必须失败。
+- 手工章节不得把示例值写成无版本的“当前值”。任何实例都必须标注 `dataset_version_id`，或明确写为“Legacy Round 3 历史案例”。
+- 指南中的规范性语句如果与 FSD 不一致，必须修改指南，不得以指南解释覆盖 FSD。
+
+---
+
+## 1. 系统是什么：使命、边界与可信结果的定义
+
+### 1.1 一句话
+
+SEC_metrics 是一个**版本化、可审计、可回放、能够抵抗 SEC 来源格式与 taxonomy 演化的财务指标契约和发布系统**：它从 SEC 官方来源取得不可变原始资产，经可替换 adapter 生成标准化观察事实，再由已批准的指标契约确定性地产生、验证并发布财务、治理、风险和事件结果。
+
+### 1.2 系统追求什么
+
+系统追求的不是“所有格子都有数字”，而是：
+
+```text
+正确的事实能够发布；
+不能证明正确的事实被明确暂缓；
+不适用、无经济意义、未披露、没找到、解析失败和格式不支持彼此可区分；
+任何 Published 结果都可以从固定版本原始材料独立重放。
+```
+
+最危险的失败不是空值，而是：
+
+> **一个错误值携带正常状态、正常证据外观和正常报告位置，被下游当成事实消费。**
+
+因此系统遵循失败等级：
+
+```text
+正确发布 > 明确弃权/暂缓 > 显式失败 > 静默错值
+```
+
+### 1.3 系统不做什么
+
+- 不用第三方财务数据库补齐 SEC 未披露值。
+- 不让 AI 直接决定或发布指标事实。
+- 不把任意公式字符串、SQL 或 Python `eval` 当指标语言。
+- 不把某个 parser、某个 taxonomy 年份、某种 HTML 布局或某家公司名称写成指标内核不可替换的假设。
+- 不允许 reviewer 直接覆盖 `publication_status` 或原地改写已发布 Dataset Version。
+- 不把 `metrics_matrix.csv`、报告 Markdown 或 Metric Card 当运行输入。
+
+### 1.4 可信结果公式
+
+```text
+一个 Published 结果可信 =
+  原始资产可重放
+  + 来源格式被支持或已审计
+  + filing/taxonomy 解释正确
+  + 指标契约已批准
+  + 候选裁决可解释
+  + FormulaIR 可重算
+  + long-form lineage 完整
+  + Coverage Receipt 足以支撑观察结论
+  + Validation/Mutation/Backtest 通过
+  + Publication Policy 允许
+  + Dataset Version 原子且不可变
+```
+
+少任何一项，它最多是“一个看起来像结果的候选”。
+
+---
+
+## 2. vNext 心智模型：从 RawAsset 到 Dataset Version
+
+### 2.1 核心对象链
+
+```text
+SEC Source
+  ↓ fetch
+SourceObservation ──→ RawAsset（不可变字节 + SHA-256）
+                         ↓ adapter/parser
+                 CanonicalObservation
+                         ↓ resolver
+                    MetricCandidate
+                  ↙ selected   ↘ rejected/suppressed
+             ComputationGraph   Rejection Ledger
+                         ↓
+                    MetricResult
+                         ↓ validation + coverage + policy
+          PUBLISHED / WITHHELD / NEEDS_REVIEW
+                         ↓ atomic publish
+                   DatasetVersion
+                         ↓
+              Public View / Review View / Report
+```
+
+### 2.2 三个逻辑边界
+
+#### Source Shell：易变外壳
+
+负责 SEC API、accession package、XBRL/iXBRL、HTML 表格、文本、taxonomy package 和 parser。它知道文件格式，但不知道 B03、B06 或 A02 的经济定义。
+
+#### Metric Kernel：稳定内核
+
+负责 Catalog Release、适用性、候选裁决、ComputationIR、单位代数、validation 和 publication policy。它只读取 Canonical Observations，不读取 SEC 文件。
+
+#### Proposal Plane：不可信提案层
+
+AI 可以在这里寻找 concept、定位表格、草拟契约和测试，但不能写入 APPROVED Catalog、Metric Result、Golden expected 或 Published Dataset。
+
+### 2.3 为什么这条边界能抵抗 SEC 格式变化
+
+当 SEC 文件外观发生变化时，系统应当修改或新增 adapter，而不是修改指标公式。例如：
+
+```text
+旧 iXBRL transform 失效
+→ Adapter 报 NEW_TRANSFORMATION / FORMAT_UNSUPPORTED
+→ 只有依赖该 capability 的结果被 WITHHELD
+→ 修 Adapter
+→ 从原 RawAsset 离线重放
+→ 与旧/影子 parser、Golden 和历史结果比较
+→ 发布新 Dataset Version
+```
+
+B03 的公式和 B06 的经济定义在此过程中不应发生变化。
+
+---
+
+## 3. SEC 数据平面、XBRL 与 taxonomy 基础
+
+### 3.1 SEC 来源平面
+
+#### Submissions：申报索引
+
+回答“公司提交过什么”：form、accession、filing date、report date、primary document、CIK、名称、SIC、fiscal year end 等。它用于 filing discovery 和实体登记，不直接证明某个财务值。
+
+#### Company Facts：公司级标准事实聚合
+
+适合标准、公司整体层面的 XBRL 事实。它便于跨期间选择，但不能完整表达所有自定义概念、维度事实和表格/文本披露。
+
+#### Accession Materials：原始申报包
+
+包含 filing 目录、主文档、XBRL/iXBRL、FilingSummary、header、附件等，是维度、自定义事实、8-K item、DEF 14A 和表格/文本证据的主要来源。
+
+#### Taxonomy Packages：解释层依赖
+
+不是公司的 filing 内容，却决定 concept、type、periodType、balance、labels、references 和 relationships 如何被解释。历史 filing 必须使用其实际引用的 taxonomy package，不得用“当前最新 taxonomy”追溯改写。
+
+### 3.2 “Company Facts 优先”不再是全局规则
+
+vNext 不采用全系统统一的“Company Facts 优先、accession 补足”。每个 APPROVED Metric Contract 声明自己的 source priority 和 required capabilities：
+
+- B01 可以以标准公司级事实为优先。
+- A01/A02 必须依赖带 Basel methodology dimensions 的 accession facts。
+- B10/B11 可能依赖 HTML table structure。
+- C03 优先消费 ECD XBRL。
+- E02 依赖完整 8-K 搜索窗口和 coverage receipt。
+
+来源优先级属于指标语义的一部分，必须经过 Catalog 审批。
+
+### 3.3 XBRL 核心词汇
+
+- **concept**：事实的语义标签，分标准 taxonomy 概念和公司扩展概念。
+- **context**：实体、期间和维度组合。
+- **dimension**：axis + member，为事实增加口径限定。
+- **unit**：USD、shares、pure 等。
+- **scale/sign**：iXBRL 对展示值的缩放和符号解释。
+- **schemaRef**：filing 指向的 taxonomy 入口。
+- **taxonomy release/package hash**：解释 filing 时实际使用的版本和不可变包指纹。
+- **locator**：回到原始事实、表格单元或文本 span 的结构化位置。
+
+### 3.4 HTTP 与来源纪律
+
+- 生产来源初始仅允许 SEC 与已登记 taxonomy package 来源。
+- 请求必须遵守 SEC User-Agent 和速率政策。
+- 网络调用只允许在 discovery/ingest 或显式 taxonomy acquisition 流程。
+- Resolver、validator、publication、report 和离线 replay 不得临时联网补数据。
+- 每次请求必须产生 SourceObservation；成功内容按 bytes hash 进入 RawAsset vault。
+- 相同内容重复取得不得产生第二个逻辑 RawAsset。
+
+---
+
+## 4. Source Shell：RawAsset、Adapter、格式漂移与隔离
+
+### 4.1 RawAsset 与 SourceObservation 的区别
+
+`SourceObservation` 表达“某次 run 请求了什么、何时请求、HTTP 结果和重试是什么”。`RawAsset` 表达“成功获得的不可变字节是什么”。
+
+这种分离解决三个问题：
+
+1. 同一内容可以被多次观察，但只存一个资产。
+2. 网络故障不被误认为 filing 不存在。
+3. parser 升级可以对历史资产离线重放，不依赖 SEC 当时仍返回完全相同的网络响应。
+
+### 4.2 Source Adapter 的职责
+
+Adapter 必须完成：
+
+```text
+detect capability
+parse supported source
+preserve raw semantics
+emit CanonicalObservations
+emit parser diagnostics
+emit CoverageReceipt inputs
+emit source dialect fingerprint
+```
+
+Adapter 不得：
+
+- 决定某观察是不是 B03 或 A02 主值；
+- 为了凑数改变期间、单位或 scope；
+- 在未知 transform 时改用附近文本猜值；
+- 直接产生 `PUBLISHED` 状态。
+
+### 4.3 Canonical Observation
+
+每个观察独立一行/对象。Numeric XBRL 观察至少保留：
+
+```text
+raw_asset_id
+accession / form / filed date
+entity identifier
+schemaRef / taxonomy release / package hash
+namespace URI + local concept name
+period start/end
+canonical unit
+dimensions（稳定排序）
+raw lexical value
+scale / sign / decimals / precision
+normalized decimal
+source locator
+adapter/parser version
+validation messages
+```
+
+HTML 表格观察应保留 table/header/row/column locator；文本观察应保留 section、character/byte range 和 quote hash。`evidence_quote` 是人类视图，不是唯一证据锚点。
+
+### 4.4 Source Dialect Fingerprint
+
+每个 filing/source package 都要记录：
+
+```text
+media/document types
+package structure
+schemaRef URLs
+taxonomy namespaces
+Inline XBRL namespace/version
+ix element set
+transform registry
+unit registry
+dimension axes
+extension domains
+HTML/table structure
+parser warning/error signature
+```
+
+它用于区分：
+
+```text
+KNOWN_DIALECT
+NEW_TAXONOMY_RELEASE
+NEW_NAMESPACE
+NEW_IX_FEATURE
+NEW_TRANSFORMATION
+NEW_DOCUMENT_PACKAGING
+HTML_STRUCTURE_DRIFT
+UNKNOWN_SOURCE_DIALECT
+```
+
+### 4.5 局部隔离，而不是整家公司全停或全放
+
+格式风险按 capability/metric dependency 隔离：
+
+| 情形 | 正确行为 |
+|---|---|
+| Company Facts 正常，酒店表格布局未知 | B01 可发布；B10/B11 `FORMAT_UNSUPPORTED + WITHHELD` |
+| iXBRL dimensional parser 分歧 | 依赖该维度事实的 A01/A02 暂缓；不依赖它的 8-K 事件可以继续 |
+| 8-K inventory 完整、未发现 Item 1.03 | E02 作为明确零值发布 |
+| taxonomy package 无法取得 | 依赖该 taxonomy 的 XBRL 结果暂缓；不得改用“最接近版本” |
+
+### 4.6 Format Quarantine
+
+新 dialect、未知 transform 或 material parser disagreement 必须进入隔离：
+
+```text
+DETECTED
+→ QUARANTINED
+→ ROOT_CAUSE_IDENTIFIED
+→ ADAPTER/PARSER_FIXED
+→ OFFLINE_REPLAYED
+→ VALIDATED
+→ NEW_DATASET_PUBLISHED
+→ CLOSED
+```
+
+旧 Published Dataset 仍可查询，但不得伪装成新 filing 的当前结果。
+
+---
+
+## 5. SEC 官方测试套件与 Arelle：如何成为可替换的外部质量资产
+
+### 5.1 两项已经进入 FSD 的位置
+
+FSD v1.1 已明确要求（主要见 `FMT-004/005/006/009`、`VAL-007`、`AC-VAL-06`、`WP-C2`、Gate G4 与外部规范基线）：
+
+- parser/taxonomy 升级必须运行 SEC Interactive Data Public Test Suite 的受支持部分，并记录 EFM/test-suite 版本、通过/失败数量和跳过理由；
+- 关键 XBRL/iXBRL 路径必须支持独立 primary/shadow parser；Arelle 或其他 standards-compliant processor 可以作为实现候选，但具体产品不是权威来源；
+- 新 parser major、新 taxonomy、新 dialect 必须对受影响 corpus 100% shadow；material disagreement 不得发布。
+
+因此不需要再给 FSD 增补规范条款。指南的任务是说明这些要求如何运营。
+
+### 5.2 SEC Interactive Data Public Test Suite 的定位
+
+[考证] SEC 的公开测试套件由许多小型 Interactive Data instances、schemas 和 linkbases 组成，并标明案例是否违反某项 validation、属于 warning 还是会造成 EDGAR rejection。它主要帮助开发者验证 Interactive Data 软件对 EDGAR 规则的处理。
+
+对 SEC_metrics 而言，它是**外部标准符合性语料库**，不是业务指标真值库。
+
+它能证明的主要是：
+
+- parser 对 XBRL/iXBRL、schema/linkbase、部分 EFM validation 边界的行为是否符合预期；
+- 某个 parser/plugin 升级有没有破坏标准案例；
+- 新 EFM/test suite 到来时，支持面和失败面发生了什么变化。
+
+它不能单独证明：
+
+- B03 的 EBITDA proxy 方法论正确；
+- A02 选中的是 actual ratio 而不是 regulatory threshold；
+- B10 选择了正确的酒店 scope；
+- E02 的搜索窗口完整；
+- 公司扩展 concept 与指标语义等价。
+
+这些仍由 Catalog、项目 fixtures、Golden、mutation、backtest 和人工方法论审核负责。
+
+### 5.3 测试套件如何进入 CI
+
+#### Suite Registry
+
+每个被使用的 SEC suite 版本必须登记：
+
+```text
+efm_version
+test_suite_release_date
+summary_asset_sha256
+testcase_archive_sha256
+downloaded_at_utc
+supported_case_manifest_hash
+runner_version
+expected_outcome_mapping_version
+```
+
+不得在 CI 中永远下载“latest”并覆盖旧版本。新版本先登记为 candidate，旧 release 仍可重放。
+
+#### 三层执行策略
+
+| 层 | 触发 | 执行范围 | 作用 |
+|---|---|---|---|
+| PR 快速层 | 修改 adapter/parser canonicalization | 与项目实际 capability 相关的 curated subset | 快速发现基本标准回归 |
+| Parser Release 层 | parser/plugin major/minor、taxonomy/EFM 变化 | 全部“受支持”官方案例 + 项目 fixtures | 决定 parser candidate 能否晋级 |
+| Upstream Watch 层 | SEC 发布新 suite/EFM | 新旧 suite 并行、差异报告 | 识别新规则，不自动升级生产 |
+
+“受支持”不等于可以随意跳过。每个 skipped case 必须有：
+
+```text
+reason_code
+unsupported_capability
+owner
+首次记录版本
+复查条件或到期时间
+```
+
+跳过数量突然增加必须视为 regression。
+
+#### 结果产物
+
+CI 必须输出版本化 Conformance Report：
+
+```text
+suite/EFM version
+parser + plugin manifest
+supported/pass/fail/skipped counts
+每个失败案例的官方 expected outcome 与实际 outcome
+新增失败、已修复失败、范围变化
+release gate verdict
+```
+
+### 5.4 Arelle 的正确角色
+
+[考证] Arelle 是开源 XBRL processor，支持 XBRL 2.1、Dimensions、Taxonomy Packages、Inline XBRL 1.1，并提供 SEC EFM validation 能力。Arelle 项目同时说明 SEC 维护其 EDGAR validation plugins。
+
+项目可以让 Arelle 担任：
+
+- `primary parser`：主要生成 Canonical Observations；或
+- `shadow parser`：与现有/另一独立实现比较；或
+- `conformance runner`：执行官方套件和 EFM diagnostics。
+
+但 Arelle **不是系统权威来源**。权威来源仍是 RawAsset、固定 taxonomy package、APPROVED Catalog 和 Dataset Version。Arelle 是软件依赖而不是财务数据源；引入它不改变项目的 SEC-only 数据边界。
+
+### 5.5 Arelle Adapter 的隔离边界
+
+```text
+RawAsset + locked taxonomy packages
+        ↓
+ArelleAdapter（固定版本、固定插件、固定参数）
+        ↓
+Canonical Observations + diagnostics
+```
+
+不得让以下对象泄漏进 Metric Kernel：
+
+- Arelle 内部 model object；
+- Arelle context/object ID；
+- namespace prefix 作为事实身份；
+- Arelle 专属错误字符串作为 publication policy；
+- 隐式在线下载的未锁定 taxonomy。
+
+Metric Kernel 只能看到来源无关的 Canonical Observation。
+
+### 5.6 Parser Manifest 与供应链要求
+
+每次 Arelle 运行至少记录：
+
+```text
+Arelle release/commit 或 container digest
+Python/runtime/OS/architecture
+启用插件列表与 hash
+SEC EDGAR/EFM plugin 版本与 hash
+command/config hash
+taxonomy package cache manifest
+network policy
+SBOM/dependency lock
+parser diagnostics signature
+```
+
+历史 replay 应优先使用本地、hash 锁定 taxonomy packages，并关闭不受控网络获取。否则“相同 parser 版本”仍可能因为远端 taxonomy 内容变化而得到不同结果。
+
+### 5.7 Primary/Shadow 比较不是全量噪声比赛
+
+强制比较域为：
+
+```text
+该 filing 上 APPROVED resolver 的 observation 消费闭包
++ Golden fixtures 明确引用的 observations
++ versioned parser-canary 集合
+```
+
+域内比较 canonical fact key、normalized value、scale/sign、period、unit、entity、dimensions 和 required fact 存在性。域外 footnote、内部 ID、排序和未消费 hidden facts 的差异只记 `PARSER_NON_MATERIAL_DIFF`。
+
+以下为 material：
+
+- 同一 canonical fact key 值不同；
+- scale/sign 解释不同；
+- period/unit/entity/dimensions 不同；
+- 一方缺失 contract-required fact；
+- 一方 fatal、另一方产生了被消费候选；
+- 表格 header/row mapping 产生不同主值。
+
+Material disagreement 的结果必须 `WITHHELD` 或 `NEEDS_REVIEW`，不得“挑看起来合理的一边”。
+
+### 5.8 Arelle 升级工作流
+
+```text
+1. 登记 candidate parser manifest。
+2. 固定官方 SEC suite/EFM 版本和 taxonomy registry。
+3. 运行官方受支持 suite。
+4. 运行项目 Golden、fixtures、mutations。
+5. 对历史 RawAssets 离线重放。
+6. 在强制比较域与当前 parser 100% shadow。
+7. 生成 Parser Agreement 与影响报告。
+8. 所有 material diff 归因并审批。
+9. Gate G4 通过后提升 primary/shadow role。
+10. 发布新 Dataset Version；不得改写旧版本。
+```
+
+### 5.9 三种质量资产必须同时存在
+
+| 质量资产 | 主要发现什么 | 不能替代什么 |
 |---|---|---|
-| 去公司特例化 + 轻量审核硬化 | ACCEPT WITH CAVEATS | 公司名业务派发已清零，profile / extractor / concept probe 架构已建立；Basel threshold 和 light golden 循环自证已修。 |
-| scale-ready 生产化 | 部分完成，仍需 live 试点 | scale route、10-K/A fallback、Basel threshold、captive finance 等旧风险已关闭；仍需处理 FI SIC 覆盖、住宿表格召回、新金额类维度事实断言，并用 Hilton / Citi / GM / ServiceNow 这类真实第 11 家试点跑全流程。 |
+| SEC 官方测试套件 | 标准与 EFM conformance 回归 | 指标经济语义和真实公司披露变体 |
+| 独立 primary/shadow parser | 实现级解释分歧和 silent parser bug | 两个 parser 共同犯错、方法论错误 |
+| 项目 Golden/fixtures/mutation/backtest | B03/B06/Basel/RevPAR/RPO/E02 等业务语义 | 全部 XBRL 标准边界 |
 
-本文档合并后采用三级可信度标记：
-
-```text
-[实测]   已执行代码或对抗测试，有运行结果为证
-[考证]   已读实现原文，逐行确认过逻辑
-[声明]   来自报告或历史文档的声明，未在本轮独立复验
-```
-
-全文未显式标注处默认为 [考证] 级；涉及当前输出统计、门禁结果、包内文件列表的断言优先按当前工作区实测结果更新。
-
-
-## 1. 项目是什么：一句话、边界与交付物实况
-
-**一句话**：直接连接 SEC（美国证券交易委员会）官方数据端点，对 10 家不同行业的美国上市公司，计算最近一个已申报财年的财务、治理、风险与事件指标，输出每个数值都可追溯到 SEC 原始响应的指标矩阵。
-
-**任务性质**是一次 spike——工程术语，指为验证可行性而做的一次性探索开发，不是生产系统。它的成功标准写在 01 号 SOP 里且值得背下来：**不是"所有指标都有数值"，而是每家公司 × 每个指标都有 value / status / formula / source / evidence / confidence 六件套**。找不到数据时诚实标状态是合法结果；为填满矩阵而猜数是失败。这条价值观贯穿了后面所有的机制设计。
-
-**终版交付物实况**（[实测]，直接统计自 round3 包）：
-
-```text
-指标矩阵      230 行 = 10 家公司 × 22~27 个指标
-有数值的格    161 个，空值 69 个；有值格全部带证据链
-状态分布      OK 73 | TEXT_QUAL 50 | NOT_AVAILABLE_SEC 31 | 8K_ITEM_OK 30
-              DIM_XBRL_OK 12 | DEF14A_OK 8 | NOT_EXTRACTED 5
-              NOT_MEANINGFUL 10 | MDA_OK 6 | NEEDS_REVIEW 2
-              OK_APPROX 2 | N_A_STRUCTURAL 1
-来源分布      8K事件 60 | 派生计算 48 | 标准XBRL 27 | 维度XBRL 12 | 委托书 8 | MD&A 6
-验证体系      63 条 golden 断言 + 75 项 repair validation + 17 个 unittest 回归测试
-              + 泛化扫描器 + 分层抽样复审 + 第 11 家公司行为夹具
-代码规模      sec_pipeline.py 单体约 14,000 行 + 13 个编号阶段脚本（各约 20 行薄封装）
-              + sec_http.py / sec_urls.py + tools/ + tests/
-```
-
-10 家公司的挑选本身是实验设计：Enphase（干净标准 XBRL，当数值基准种子）、Ford（负营业利润 + 专属金融子公司 + 非常规 capex 标签，专门踩坑）、JPMorgan（银行，整套指标体系都不同）、Salesforce（1月底财年 + SaaS 指标）、Marriott（KPI 藏在 MD&A 表格里）、Paramount（财年中途换报告主体）、Macy's（2月初财年）等——每家都代表一类扩展到千家公司时必然遇到的结构性难题。
+最强的系统不是“相信最权威的一个 parser”，而是让这三类证据彼此正交，缺陷难以同时穿透。
 
 ---
 
-## 2. 数据从哪来：SEC 的三个数据平面与 XBRL 速成课
+## 6. Catalog Release：指标定义、结构化公式、traits 与审批
 
-要看懂本项目，必须先建立 SEC 数据的心智模型。SEC 对外提供的机器可读数据分三个平面，本项目按"companyfacts 优先、accession 补足"的策略组合使用：
+### 6.1 Catalog Release 是原子权威对象
 
-### 2.1 三个数据平面
+Catalog Release 同时锁定：
 
-**平面一：submissions（申报索引）**。`https://data.sec.gov/submissions/CIK##########.json`。回答"这家公司交过什么文件"：每份申报的表单类型（10-K 年报、10-Q 季报、8-K 重大事项、DEF 14A 委托书……）、accession 号（申报的唯一编号，格式如 `0001463101-26-000013`）、申报日、报告期末日。同时携带公司元数据：正式名称、曾用名、SIC 行业码、财年末（fiscalYearEnd，如 `1231`、`0131`）、实体类型。本项目的 M0/M1 阶段全靠它。
+```text
+metric definitions and versions
+metric kinds and result grain
+applicability/typed traits
+entity exceptions
+resolver/strategy versions
+source priorities and hard constraints
+ComputationIR shape
+quality/publication options
+required capabilities and coverage scopes
+taxonomy compatibility decisions
+finance/data approvals
+code/build/schema versions
+canonical semantic hash
+```
 
-**平面二：companyfacts（公司级标准事实聚合）**。`https://data.sec.gov/api/xbrl/companyfacts/CIK##########.json`。SEC 把一家公司历年申报中所有**标准分类账、公司整体层面**的 XBRL 事实聚合成一个 JSON：营收、净利、总资产、现金……每条事实带概念名、单位、期间、来源 accession、申报日。它的致命局限：**不含维度事实**（比如"按 Basel 标准法口径的 CET1 比率"这种带轴/成员标注的数据）和公司自定义概念。这就是本项目必须有平面三的原因。
+一份 YAML 或 Markdown 不是完整权威对象。人类编辑格式必须经 compiler 规范化并产生 lock。
 
-**平面三：accession materials（原始申报材料）**。`https://www.sec.gov/Archives/edgar/data/{cik}/{accession}/...`。每份申报的原始文件目录，本项目消费其中四类：`index.json`（目录清单）、`{accession}.hdr.sgml`（申报头文件，含 8-K 的 `<ITEMS>` 项目编号列表——这是事件信号的数据源）、`FilingSummary.xml`（文件角色说明）、以及 **iXBRL instance**（内联 XBRL 的主文档，见下）。
+### 6.2 Metric Contract 的阅读顺序
 
-### 2.2 XBRL 五分钟速成（本项目的核心词汇全在这里）
+专家审核一个指标时先回答：
 
-XBRL（eXtensible Business Reporting Language）是把财务数字变成机器可读标签的标准。iXBRL（inline XBRL）是它的现代形态：标签直接嵌在人类阅读的 HTML 年报正文里，同一份文件人机两用。
+1. 它代表什么经济事实，明确不代表什么？
+2. `metric_kind` 是 numeric、dimensional、event 还是 qualitative？
+3. 结果粒度是什么：实体、期间、scope、role？
+4. 对哪些 traits REQUIRED/OPTIONAL/N_A/PROHIBITED？
+5. 输入 components 如何解析，source priority 是什么？
+6. 哪些 hard constraints 必须满足？
+7. normal/fallback/rejection path 是什么？
+8. 什么情况下是 EXACT、APPROX、UNVERIFIED 或 NOT_MEANINGFUL？
+9. Publication Policy 是否允许该质量发布？
+10. 要求哪些 evidence、coverage、正例、反例和正确弃权例？
 
-- **concept（概念/标签）**：一个数字的语义名字，如 `RevenueFromContractWithCustomerExcludingAssessedTax`。分两类：**标准概念**属于 us-gaap 分类账（namespace 是 `fasb.org/us-gaap/...`，全市场通用）；**公司扩展**是公司自造的标签（namespace 是公司域名，如 JPM 自造的 `CommonEquityTier1CapitaltoRiskWeightedAssets`——注意那个不合规范的小写 to）。**同一个经济事实，不同公司可能用不同标签**，这是候选链机制存在的根本原因。
-- **context（上下文）**：数字属于哪个期间、哪个报告主体、带什么维度。
-- **dimension（维度）= axis（轴）+ member（成员）**：给事实加限定。例如 `us-gaap:RiskWeightedAssetsCalculationMethodologyAxis = jpm:BaselIIIStandardizedMember` 表示"这个资本比率是按 Basel III 标准法算的"。轴通常是标准的，成员经常是公司自造的——这个不对称是泛化设计的关键约束。
-- **unit（单位）**：`iso4217:USD` 是美元金额，`pure` 是纯数（比率）。
-- **scale（缩放属性）**：iXBRL 数字标签可声明 10 的幂缩放（正文显示 294,804 百万，标签值 294804 + scale=6）。
+### 6.3 FormulaIR：人读公式与机器计算同源
 
-### 2.3 HTTP 访问纪律
+自由文本公式只能作为生成展示，不能作为计算真相。示例：
 
-[考证+实测] `sec_http.py` 实现：所有请求带 `User-Agent: <组织> <邮箱>`（SEC 硬性要求，缺失会 403）；全局限速 ≤5 请求/秒（sleep 节流）；403/429/5xx 指数退避重试；每次请求写入 `evidence/requests_log.csv`；原始响应落盘。当前工作区 `evidence/requests_log.csv` 有 859 条请求记录，域名仍只有 **www.sec.gov 和 data.sec.gov** 两个域名，零第三方数据源。
+```yaml
+nodes:
+  revenue:
+    op: OBS_REF
+    observation_id: obs_revenue
+  operating_income:
+    op: OBS_REF
+    observation_id: obs_operating_income
+  depreciation:
+    op: OBS_REF
+    observation_id: obs_depreciation
+  amortization:
+    op: OBS_REF
+    observation_id: obs_amortization
+  da:
+    op: ADD
+    args: [depreciation, amortization]
+  numerator:
+    op: ADD
+    args: [operating_income, da]
+  result:
+    op: DIVIDE
+    args: [numerator, revenue]
+root: result
+```
+
+非 `OBS_REF` 节点只能引用 graph node ID。系统从同一图：
+
+- 计算 Decimal 值；
+- 渲染公式；
+- 生成 lineage；
+- 执行单位代数；
+- 做 Golden graph recomputation。
+
+### 6.4 Typed Traits
+
+公司能力和适用性用正交 traits 表达：
+
+```text
+archetype: non_financial / financial_institution
+industry: lodging / airline / manufacturing / pharma / software / ...
+business traits: captive_finance / subscription_revenue / franchise_heavy / ...
+entity traits: continuous / successor_predecessor / stub_period / major_reorg
+```
+
+SIC 可以提供默认建议，但最终 assignment 必须有有效期、来源和理由。Trait 冲突必须在 Catalog compile 时失败，不能靠运行时隐式优先级。
+
+### 6.5 Entity Exception
+
+公司真实特殊性可以存在，但必须显式：
+
+```text
+company_id / metric_id / scope
+reason and SEC evidence
+approved_by / reviewed_hash
+valid_from / valid_to
+review or expiry condition
+```
+
+禁的是藏在生产控制流里的 `if company == ...`，不是现实中确有的 successor/predecessor、captive finance 或特殊报告主体。
+
+### 6.6 SemVer 与审批
+
+- **Major**：经济定义、公式、结果粒度、适用范围或可比性改变。
+- **Minor**：增加不改变既有 Published 结果的 exact-equivalent 来源、安全 fallback 或新支持范围。
+- **Patch**：纯文案、元数据或展示修复；backtest 必须证明零语义变化。
+
+方法论变化必须 Finance Review；来源/resolver/adapter 变化必须 Data Review；两者都有则双审。审批绑定 semantic hash，hash 变化后旧审批失效。
 
 ---
 
-## 3. 架构总览：单体、流水线与知识安置三原则
+## 7. Candidate Resolution：候选生成、排序、拒绝账本
 
-### 3.1 物理形态：一个单体 + 十三个薄封装
+### 7.1 为什么必须保留被拒绝候选
 
-全部逻辑住在 `scripts/sec_pipeline.py`（约 14,000 行）这一个单体模块里；`00_smoke_test_sec_access.py` 到 `12_validate_repair.py` 十三个编号脚本各约 20 行，只做一件事：`run_stage(stage_name="...")`。调度表在单体尾部的 `STAGES` 字典。这个形态是 spike 阶段的务实选择，产品化时应拆分——但拆分时**必须保留的**是下面的逻辑架构。
+最后命中了什么，只能解释“系统选了谁”；被拒绝候选解释“为什么不是另一个看似合理的事实”。对 Basel threshold、RevPAR percentage change、混合期间 D&A、captive finance consolidated debt，这往往是审计的核心。
 
-### 3.2 流水线：M0–M7 的数据流
-
-```text
-M0 身份解析     company_tickers + submissions ──> company_resolution.csv
-M1 定位申报     submissions ──> latest_filings_inventory.csv
-                （target 10-K / prior 10-K / DEF 14A / 财年窗口内全部 8-K）
-M2 标准指标     companyfacts JSON ──> concept_inventory + 选择算法 ──> 标准/派生指标
-M3 维度事实     accession 的 iXBRL instance 流式解析 ──> {company}_instance.csv
-                ──> Basel/RPO/AuditorName 等解析器消费
-M4 事件信号     每份 8-K 的 hdr.sgml ──> <ITEMS> 解析 ──> events.csv
-M5 治理薪酬     DEF 14A 的 ecd 分类账事实 ──> C03 薪酬 / C02 董事会
-M6 文本 KPI     MD&A 文本 ──> 表格机（住宿业 KPI）+ 风险法律文本信号
-M7 组装验收     metrics_matrix + coverage + golden 断言 + 报告 + verdict
-```
-
-每阶段的输出既是下一阶段的输入，也是独立可审计的中间产物——这个"每层落盘"的设计让Agent能在任意断面重算验证。
-
-### 3.3 知识安置三原则（本项目最重要的架构思想）
-
-千家公司扩展性的核心不是某个函数，而是一条纪律：**公司身份（名字、CIK）只允许住在三个地方——输入配置、测试夹具、异常台账；业务逻辑的每个分支必须以可观测属性为键**。这条纪律有机器门禁保障（`tools/check_no_company_literals.py`，AST 级扫描全部代码常量，[实测] 注入探针 6 种违规形态抓获 5 种）。属性分三级，构成派发阶梯：
+### 7.2 Candidate 状态
 
 ```text
-第一级 登记属性   来自 submissions：SIC 行业码、财年末、实体类型、曾用名
-                  用途：决定"哪些指标适用于谁"
-第二级 能力探针   来自申报文件本身："instance 里存在概念 X / 轴 Y / 成员模式 Z 吗？"
-                  用途：决定"用哪条抽取策略"。问数据而不是认名字。
-第三级 词法配置   人工行业知识的数据化居所：KPI 词表、量纲区间、口径优先序
-                  用途：让人工判断以数据形态存在，而非控制流形态
+SELECTED
+REJECTED
+SUPPRESSED
 ```
 
-具体落地：`config/company_registry.csv` 承载全部个体信息（逐列语义见第 7 节）；`config/metric_applicability.yaml` 以**行业 profile** 为键定义每个 profile 挂载哪些抽取器（`lodging → LodgingKpiExtractor`，`financial_institution → BaselCapitalRatioExtractor`……），并含 `profile_rules`（SIC 区间到 profile 的自动推导规则）与 `settings`（量纲区间、scope 优先序等词法配置）；业务代码通过 `has_extractor(extractors, "XxxExtractor")` 这样的**能力查询**派发，抽取器类本身是空的标记类（capability tag）。[实测] 折叠字符串拼接后的全库扫描，业务代码中公司身份引用为**零**。
+`SUPPRESSED` 是因 applicability、scope 或 policy 明确不参与竞争，不等于 publication 的 `WITHHELD`。
+
+### 7.3 常见拒绝原因
+
+```text
+WRONG_PERIOD
+WRONG_UNIT
+WRONG_ACCESSION
+ENTITY_SCOPE_MISMATCH
+DIMENSION_SCOPE_MISMATCH
+FORBIDDEN_CONCEPT
+THRESHOLD_NOT_ACTUAL_RATIO
+SEMANTIC_NEIGHBOR_UNAPPROVED
+FAILED_INVARIANT
+FAILED_CROSS_CHECK
+LOWER_PRIORITY
+DUPLICATE_EQUIVALENT
+AMBIGUOUS_SAME_RANK
+UNSUPPORTED_SOURCE_CAPABILITY
+```
+
+### 7.4 确定性要求
+
+- 候选顺序变化不得改变 selected candidate。
+- 插入重复事实不得改变结果。
+- 加入低优先级候选不得改变已选结果。
+- 同 rank 且无法确定性区分时必须 `AMBIGUOUS`，不得按文件顺序选第一个。
+- Candidate selection 不能读取公司名、ticker 或 CIK 比较业务分支。
+- 每次裁决必须记录 resolver version、rank components、selected/rejected reasons 和 candidate snapshot hash。
+
+### 7.5 Source Priority 与语义近邻
+
+概念名称相似不等于经济事实相同。Taxonomy compatibility 只有 `EXACT_EQUIVALENT` 或明确批准的 replacement 才能自动进入候选链；`NARROWER/BROADER/RELATED_BUT_DIFFERENT/UNKNOWN` 默认进入方法论审核。
 
 ---
 
-### 3.4 通用性不是目标：正确性与工程量的适配治理
+## 8. ComputationIR、单位代数、Lineage 与 Evidence
 
-本项目把“公司特例”赶出生产控制流，这是必要的，但不能误解成“越通用越好”。真正目标是**足够正确**和**工程量可控**；通用性只是同时服务这两个目标的手段。当通用性开始牺牲正确性，或者为了覆盖所有可能命名而写出更复杂、更脆弱的解析器，它就从资产变成负债。
+### 8.1 ComputationIR 的职责
 
-合理适配分五层：
+Resolver 选择正确输入；ComputationIR 负责可重算的算术。允许的封闭操作包括：
 
 ```text
-第 0 层：不可妥协的通用骨架
-  SEC-only、证据链、period 选择、status 语义、golden/validation、请求日志。
-
-第 1 层：指标级通用逻辑
-  companyfacts 选择算法、RPO 标准概念、AuditorName、ecd:PeoTotalCompAmt。
-  SEC/XBRL 已给结构化事实时，优先使用，不写文本正则。
-
-第 2 层：行业/业务模式级适配
-  金融机构 Basel、住宿业 RevPAR、SaaS/合同履约 RPO、制造业 captive finance。
-  合法，因为同一行业共享披露习惯、单位和不变量。
-
-第 3 层：配置级公司事实
-  CIK、fiscalYearEnd、successor/predecessor、related_ciks、roles、人工 override。
-  这些可以按公司写入 registry，因为它们是输入事实，不是计算逻辑。
-
-第 4 层：受控公司补丁（默认禁止，但不是永远禁止）
-  只有在高价值公司、公开披露形态确实独特、行业抽象代价过高时才允许。
-  条件是：隔离成 data/config 或 adapter；有 evidence；有 regression；
-  exceptions/docs 写明理由；有迁移或过期条件；不得污染主路径。
+OBS_REF / IDENTITY / ADD / SUBTRACT / MULTIPLY / DIVIDE
+AVERAGE / PERCENT_CHANGE / COUNT / NEGATE / ABS
 ```
 
-Basel 资本比率解析器是反面教材：从 JPM 私有概念出发追求“泛化”，一度写出过宽的概念匹配器，导致监管最低要求可能赢过实际资本比率。正确做法不是回到 `if company == "JPM"`，也不是写无限宽的语义正则，而是**正负词表 + 标准轴锚定 + 候选角色分离 + 行为级 fixture**。好的泛化不是“能匹配更多字符串”，而是“知道哪些字符串绝不能成为主值”。
+不得嵌入任意 Python、SQL 或表达式解释器。
 
-扩展到上千家公司时，应按行业簇推进：每一簇先选 3–5 家真实公司做 live pilot，抽取器以**高精度优先**；抽不到时宁可 `NOT_EXTRACTED` / `NEEDS_REVIEW`，不要让泛化器产生伪 OK 数值。等同一失败模式重复出现，再提升为行业规则或标准 extractor。
+### 8.2 单位代数
+
+- ADD/SUBTRACT/AVERAGE：输入单位必须兼容，输出保持该单位。
+- DIVIDE：相同金额单位相除得到 ratio；其他组合必须由契约声明。
+- PERCENT_CHANGE：分子分母同单位，输出 ratio。
+- COUNT：输出 count。
+- OBS_REF/IDENTITY/NEGATE/ABS：保持输入单位。
+- 单位冲突必须阻止计算，不得只写 warning。
+
+### 8.3 Long-form Lineage
+
+每条关系一行/edge：
+
+```text
+result → computation graph
+computation node → observation
+candidate → observation
+observation → raw asset
+coverage receipt → source operation/asset
+validation → result/catalog/dataset target
+```
+
+Canonical 层不得用分号拼接 accession、context、path 或 value。Legacy projection 可以为了兼容使用旧表示，但不得反向作为运行输入。
+
+### 8.4 Evidence Locator 类型
+
+#### XBRL Fact
+
+```text
+raw_asset_id + accession + concept QName + canonical context key + unit + tuple path（如适用）
+```
+
+#### HTML Table Cell
+
+```text
+raw_asset_id + table locator + header path + row path + column path + raw cell text hash
+```
+
+#### Text Span
+
+```text
+raw_asset_id + section + start/end offset + quote hash
+```
+
+#### Filing Item/Search Window
+
+```text
+CIK/role + form set + date/period window + accession list + item code/section coverage
+```
+
+### 8.5 Published 可重放性
+
+每个 Published numeric result 必须可以：
+
+```text
+读取固定 Dataset Version
+→ 找到 Catalog Release 和 graph
+→ 取得全部 OBS_REF observations
+→ 回到 RawAssets/locators
+→ 用固定 Decimal policy 重算
+→ 与 Published value 精确或按 contract tolerance 一致
+```
+
+不能完成这一流程的结果属于 `Published-Unverifiable`，目标必须为 0。
 
 ---
 
-## 4. 数字是怎么算出来的：五条数据通路逐一拆解
+## 9. 四维状态、Coverage Receipt 与 Publication Policy
 
-矩阵里 161 个有值格来自五条通路，每条的机制、防错设计和已知边界如下。
-
-### 4.1 通路一：STD_XBRL 标准指标 + DERIVED 派生（69 格，营收/净利/资产/现金流等）
-
-**选择算法**（02 号定义文档锁定，[实测]   用完全独立的实现重算过 Enphase/Ford 全部数值并与 live SEC 对账吻合）：
+### 9.1 Applicability
 
 ```text
-期间型（营收、净利、现金流）:
-  form 以 10-K 开头
-  AND end == 目标财年末
-  AND 有 start 且 duration ∈ [300, 400] 天
-  多条命中时取 filed 最新者
-时点型（资产、负债、现金）:
-  同上，但要求无 start（instant 型）
-上年值: 同一算法，end 换上一财年末
+REQUIRED
+OPTIONAL
+N_A_STRUCTURAL
+PROHIBITED
 ```
 
-300–400 天这个 duration 窗是防错核心之一：它自动拒绝季度事实、也自动拒绝**存续残段**（stub period，指公司财年中途成立/重组导致的不足一年的报告期——Paramount 的 successor 实体只有 2025-08-08 起的 5 个月事实，这个过滤器正确地拒绝了"把 5 个月当全年"的错误）。
-
-**候选链机制**：因为不同公司给同一经济事实贴不同标签，每个指标定义一条按优先级排列的概念链，逐个探测取首个命中，且**实际命中的标签必须记录进证据**。例如营收链：
+### 9.2 Observation
 
 ```text
-RevenueFromContractWithCustomerExcludingAssessedTax → Revenues
-  → SalesRevenueNet → RevenueFromContractWithCustomerIncludingAssessedTax
+OBSERVED
+PARTIAL
+NOT_FOUND
+NOT_DISCLOSED_CONFIRMED
+SOURCE_UNAVAILABLE
+PARSE_FAILED
+FORMAT_UNSUPPORTED
+AMBIGUOUS
+NOT_RUN
 ```
 
-真实世界的必要性证据（[实测]）：Marriott/Pfizer 回退命中 `Revenues`；Ford 的 capex 命中链尾的 `PaymentsToAcquireProductiveAssets`——live SEC 确认 Ford 的 companyfacts 里**根本不存在**链首的常规概念；Ford 净利命中 `ProfitLoss`（含少数股东权益口径，已在 notes 透明标注）。
-
-**派生公式与口径纪律**（44 格）：
+### 9.3 Result Quality
 
 ```text
-EBITDA proxy      = 营业利润 + 折旧摊销（明确不加回减值，命名为 GAAP proxy）
-自由现金流 FCF     = 经营现金流 − capex
-负债权益比 D/E     = 总债务 / 股东权益
-                    总债务 = LongTermDebt（或 Current+Noncurrent 二选一防重复）
-                            + 短期借款 + 商业票据 + 融资租赁负债
-                    硬性排除 DebtSecurities*（那是投资资产不是借款）
-利息覆盖倍数       营业利润 ≤ 0 时强制 NOT_MEANINGFUL（Ford/Lumen 亏损年，
-                    输出一个负倍数只会误导）
-流动比率           银行结构性不适用 → JPM 标 N_A_STRUCTURAL
-                    （[实测] G2 断言故意请求 JPM 的 AssetsCurrent 端点确认 404，
-                    把"银行没有流动资产科目"这个事实固化为机器证据）
+EXACT
+APPROX
+QUALITATIVE
+NOT_MEANINGFUL
+UNVERIFIED
+NO_RESULT
 ```
 
-### 4.2 通路二：DIM_XBRL 维度指标（12 格：JPM 资本比率 ×2 + 全体 AuditorName ×10）
-
-这条通路消费 M3 流式解析出的 instance inventory（每公司数千条事实，含完整维度）。三个解析器：
-
-**Basel 资本比率解析器**（A01 Tier 1 比率 / A02 CET1 比率）。这是全项目迭代次数最多的组件，终版决策树（[实测] 六向对抗测试）：
+### 9.4 Publication
 
 ```text
-候选资格 = unit 为 pure
-         AND period_end 匹配
-         AND 维度含标准轴 RiskWeightedAssetsCalculationMethodologyAxis
-         AND NOT 阈值概念（规范化名含 minimum / requiredforcapitaladequacy /
-             requiredtobewellcapitalized / wellcapitalizedminimum /
-             tobewellcapitalized / capitaladequacyminimum 之一即拒绝）
-         AND 语义匹配：
-             规范化 = 小写去符号，且 tierone 统一替换为 tier1
-             含 riskweightedassets 或 riskbasedcapitalratio 之一
-             A02 要求含 commonequitytier1 或 cet1
-             A01 要求含 tier1 且非 CET1（防 CET1 被错归 Tier 1）
-选择排序 = ParentCompanyMember/合并口径优先 > Standardized 优先
-         > 无 LegalEntityAxis 优先 > context 字典序
+PUBLISHED
+WITHHELD
+NEEDS_REVIEW
 ```
 
-三条设计原理值得记住：**(a)** 锚定在标准轴而非成员——各银行的成员名各不相同（`jpm:BaselIIIStandardizedMember` vs 其他行的自造名）但轴是 us-gaap 标准的；**(b)** tierone→tier1 统一——us-gaap 官方命名用拼写式 TierOne，JPM 扩展用数字式 Tier1，不统一就会漏配标准命名（这是第三轮修掉的真 bug，[实测] 拼写式 CET1 曾被错分类为 A01）；**(c)** 阈值排除——银行 10-K 同时标注实际比率和**监管最低要求**（及格线 7.0%、well-capitalized 线 6.5%），两者单位维度期间全同，不做词法排除的话监管及格线可能被选为银行的实际比率（[实测] 第四轮曾用同维度对决打穿过，终版候选池阶段即剔除）。被排除的阈值事实**不丢弃**，移入 `basel_ratio_candidates.csv` 带 `candidate_role=regulatory_threshold` 标注——它们是有价值的上下文（实际比率距及格线的距离就是资本缓冲）。终版 JPM 输出：A01=0.155、A02=0.146（母公司合并口径，Basel 口径在 notes 注明）。
-
-**RPO 解析器**（B12，Salesforce 的合同剩余履约义务）。RPO 是 ASC 606（现行收入确认准则）强制披露项，`us-gaap:RevenueRemainingPerformanceObligation` 是标准概念——这意味着该指标对**全市场任何公司**零个体代码可得。解析器：概念精确/后缀匹配（兼容公司前缀扩展）+ 排除 timing 轴概念 + USD 单位 + 优先总额型事实、退而求其次将 current+noncurrent 分量加总。[实测] Salesforce 总 RPO=724 亿 = 流动 351 亿 + 非流动 373 亿，内部自洽。历史教训：第一代实现是烧死了 "as of January 31, 2026" 日期字符串的文本正则，费力重造了结构化数据里现成的数字——**结构化 inventory 有的概念，禁止文本正则**，这条已固化为验证门禁。
-
-**AuditorName 对照器**（C04，审计师轮换信号）。`dei:AuditorName` 是每份 10-K 强制标注的标准事实。双路径：8-K item 4.01（审计师变更专用事项）扫描 + 本年/上年 10-K instance 的 AuditorName 对照。10 家全部走通 DIM_XBRL_OK。
-
-### 4.3 通路三：MDA 文本 KPI（2 格：Marriott 入住率与 RevPAR）
-
-这是全项目技术上最精巧的组件，因为它要在**没有结构化标签的自由文本表格**里可靠取数。RevPAR（每间可售房收入）、ADR（平均房价）、occupancy（入住率）是酒店业三大 KPI，只出现在 MD&A 的运营统计表里。终版流水线（[实测] 四组合成表格对抗）：
+Publication 是计算字段，不是 reviewer 按钮：
 
 ```text
-1 分段     按 KPI 关键词把正文切成 5000 字符的表格候选段
-2 表头映射  在段内找 RevPAR / Occupancy / ADR 表头的首次出现位置，
-           按位置排序推导列序（真·表头驱动，非位置假设）
-           + 全排列作为兜底候选
-3 行锚定   按配置的口径优先序找行标签：
-           comparable systemwide worldwide > systemwide worldwide
-           > companywide > worldwide（脚注号 (2) 作为被容忍的可选模式，
-           不再是锚点——第一代实现把正则锚在脚注编号上，是反面教材）
-4 装配     行内数字按"绝对值/变化值"交替节奏取偶数位，按候选列序指派
-5 恒等式   RevPAR = ADR × Occupancy / 100 必须成立（误差 ≤5%）
-           ——既是硬门（不满足即弃该候选）又是排序键（多候选取误差最小者）
-6 量纲区间  RevPAR ∈ [30,600] USD、occupancy ∈ [0,100]%（配置化）
+publication_status = policy(
+  metric_kind,
+  applicability_status,
+  observation_status,
+  result_quality,
+  coverage_completeness,
+  validation_results,
+  approval_state,
+  contract_publication_options,
+  publication_policy_version
+)
 ```
 
-第 5 步是点睛之笔：三个数字的哪种指派满足行业恒等式，哪种就是真列序——**用行业代数不变量做列序自识别**，比任何排版假设都稳。[实测]：Marriott 列序（RevPAR 前置）与 Hilton 惯用列序（Occupancy 前置）都被正确解出且恒等式误差 0.02%；三年度对比表（节奏不符）和"RevPAR increased 2.0%"这类增长率句子（第一轮事故的原型）都诚实空手而归——错误节奏的失败模式被恒等式压制成**召回损失而非错值**，这个失败等级排序是对的。证据 quote 同时携带 `raw_header= / raw_row= / parsed= / identity_error=` 四段，原文性与可复核性兼备。
+决策表外的任何组合必须 fail closed：`WITHHELD + STS_UNMAPPED_STATE_COMBINATION`。
 
-### 4.4 通路四：DEF14A 治理（8 格：CEO 薪酬）
+### 9.5 Coverage Receipt：怎样证明“没有”
 
-ecd 是 SEC pay-versus-performance 规则强制所有申报人在委托书（DEF 14A）中使用的高管薪酬 XBRL 分类账。C03 直接消费 `ecd:PeoTotalCompAmt`（PEO=principal executive officer，即 CEO）：遍历全部公司、统一概念过滤、USD 单位、目标财年期末——**零身份键，天然泛化**。8 家命中（JPM $40.6M、Salesforce $49.4M……）；Marriott/Paramount 的委托书 ecd 无此概念，诚实标 NOT_EXTRACTED。多 PEO（联席 CEO / 年中换任）场景：明细全部进 governance_signals，主矩阵不做求和（多个人的薪酬加成一个"CEO 薪酬"是语义错误）。历史教训：第一代实现抓的是文本正则误配的无意义小数（66、196……），而正确答案就躺在自己 dump 的 ecd inventory 里没被消费——"最后一公里消费失败"这个模式由此得名，并催生了"inventory 优先"门禁。
-
-### 4.5 通路五：8-K 事件信号（60 格）
-
-8-K 是重大事项即时申报，每份的 hdr.sgml 头文件里有 `<ITEMS>` 标签列出事项编号（5.02=高管变动、4.01=审计师变更、4.02=财报重述、1.03=破产、1.01=重大合同、2.01/8.01=并购相关）。M4 对财年窗口内全部 8-K（终版约 326 条事件、125 份多事项申报正确拆行）解析编号并映射到 C01/E01–E05。设计要点：E01 并购不能只靠 8.01（那是"其他事项"杂项），需正文关键词确认；E02 破产计数为零时报告明写"零是正常结果"——**零值的语义必须显式声明**，否则读者分不清"没发生"和"没查"。
-
-### 4.6 状态枚举：这套系统的合同语言
-
-13 个状态不是装饰，是下游消费的语义合同。最易混淆的四个，用血泪案例区分：
+“没找到”只是搜索结果；“确认未披露”是一条需要证明覆盖范围的结论。Coverage Receipt 至少回答：
 
 ```text
-NOT_AVAILABLE_SEC   SEC 申报中确实不存在该数据。
-                    例：Pfizer 利润表不呈报营业利润小计，OperatingIncomeLoss
-                    概念在其 companyfacts 中根本不存在（[实测] 验证过）。
-NOT_EXTRACTED       数据可能在文本/表格里，但本轮未能可靠抽取。
-                    诚实的能力边界声明，不是数据不存在。
-NOT_MEANINGFUL      结构上无意义。例：亏损年的利息覆盖倍数；
-                    Paramount 换主体年的同比增速（残段期 vs 全年不可比）。
-N_A_STRUCTURAL      行业结构性不适用。例：银行没有流动资产/流动负债科目。
+要求搜索哪些 filings/forms/accessions？
+要求解析哪些 documents/sections/capabilities？
+这些对象是否成功取得和解析？
+搜索窗口和 entity roles 是否完整？
+是否存在 parser/format/taxonomy 缺口？
+结果是 COMPLETE / PARTIAL / FAILED / NOT_APPLICABLE？
 ```
 
-历史教训：第一代曾把"successor 只有残段事实"标成 NOT_AVAILABLE_SEC（数据明明披露了，只是口径不匹配）、把"AuditorName 躺在 inventory 里没消费"标成 NOT_AVAILABLE_SEC——**状态语义污染会让下游把"没做完"当成"世界上不存在"**，这是比错数值更隐蔽的毒。
+只有 COMPLETE coverage 才能支持 `NOT_DISCLOSED_CONFIRMED`。
+
+### 9.6 三个关键语义示例
+
+#### E02：全年 8-K 扫描后没有破产事件
+
+```text
+value = 0
+observation_status = OBSERVED
+result_quality = EXACT
+publication_status = PUBLISHED
+```
+
+它不是“SEC 没有数据”，而是“搜索完成，事件计数为零”。
+
+#### B06：负权益
+
+```text
+value = null
+observation_status = OBSERVED
+result_quality = NOT_MEANINGFUL
+publication_status = PUBLISHED
+```
+
+债务和权益都有证据，只是比率不具有经济意义。
+
+#### 新 iXBRL transform 无法解析
+
+```text
+value = null
+observation_status = FORMAT_UNSUPPORTED
+result_quality = NO_RESULT 或 UNVERIFIED
+publication_status = WITHHELD
+```
+
+不得映射为 `NOT_DISCLOSED_CONFIRMED`。
+
+### 9.7 Reviewer 可以做什么
+
+Reviewer 可以批准或拒绝：
+
+- Metric Contract；
+- Candidate selection；
+- Entity Exception；
+- Taxonomy compatibility mapping；
+- Publication Policy 版本变更；
+- Expected Change Manifest。
+
+Reviewer 不得直接把某行从 UNVERIFIED 改成 PUBLISHED。人工决定形成新的版本化输入，系统重新 resolve/validate/publish。
 
 ---
 
-## 5. 准确性靠什么保证：五层防线 + 一条守恒律
+## 10. Dataset Version、原子发布、公开视图与只读报告
 
-### 5.1 防线一：证据链强制
+### 10.1 Run 生命周期
 
-每个数值必须具备三件套：accession（哪份申报）+ concept_or_section（哪个概念/章节）+ context_or_dimension（哪个上下文/维度），文本类另加原文 quote。**quote 必须支撑 value**——这句话看似废话，却是第一轮最大事故的墓志铭：当时 Marriott RevPAR=2.0 挂着 MDA_OK 状态，证据 quote 是一段讲分时度假的无关文字（2.0 是正则从 "RevPAR increased 2.0%" 里误抓的增长率）。由此确立的元规则：**错值戴 OK 状态比取不到危险一个量级**——取不到是显性缺口，错值是隐性毒药。
+```text
+CREATED
+→ DISCOVERING
+→ INGESTING
+→ NORMALIZING
+→ RESOLVING
+→ VALIDATING
+→ READY_TO_PUBLISH
+→ PUBLISHED
+```
 
-### 5.2 防线二：Golden 断言体系（63 条）
+终止/旁路状态包括：
 
-Golden 断言是"代码跑通但数字错"的专用解毒剂：对两家基准公司（Enphase=干净标准 XBRL、Ford=专门踩坑）的全部核心数值，由人工事先从原始年报核出**锁定期望值**（存于 `tests/fixtures/sec_10_company_spike/golden_expected_values.csv`），管道必须独立复现出完全相同的数字。分四组：G1 结构断言（10 家 CIK/财年末）、G2 防误用断言（故意确认 JPM 无流动资产端点、Ford 无常规 capex 概念——**把"预期中的缺失"也固化为断言**，防止未来有人"好心修复"）、G3/G4 数值断言（Enphase 13 值 + Ford 11 值，含派生量和命中标签断言）、G5 候选值（其余 8 家 × 3 值供人工核对）。铁律：**断言失败即停机报告实际值，不得修改期望值，不得硬编码绕过**。独立性论证：断言与计算共享选择函数（同一单体），但期望值是外部人工锁定的——选择逻辑若有系统性 bug，产出值会撞常量而暴露。[实测] 用完全独立的第三方实现重算全部 golden 值并直连 live SEC 对账，三方吻合。
+```text
+NO_CHANGE
+WITHHELD
+FAILED
+```
 
-### 5.3 防线三：Validation 门禁（75 项）
+报告渲染不属于写状态机。
 
-按防御目标分组：**泛化门禁**（AST 扫描器保证业务代码零公司字面量；SIC 规则与注册表 profile 一致性）；**行为夹具**（第 11 家公司测试：Hilton/Citi/GM/ServiceNow 四家种子外真实公司的模拟数据流经真实抽取器，断言输出——Citi 夹具特意包含与实际比率**同维度**的监管阈值行，断言实际值被选中）；**语义门禁**（C03 禁用 fact 计数、恒等式检查、去 Ford 特例检查）；**召回棘轮**（OK 类状态格集合不得比上轮快照缩水，快照是只读夹具文件——防"修 A 坏 B"的静默能力退化）；**分层复审门**（stratified audit 对有值格分层抽样重审 quote 支撑性，任一 FAIL 直通 validation 红灯——且它是 correct-by-construction 的：门禁咬的是**现场重算**结果而非落盘文件，篡改 CSV 无效，[实测] 验证过）。
+### 10.2 Candidate Snapshot
 
-### 5.4 防线四：回归测试（17 个 unittest + 完整性重算）
+Resolve 结束产生不可变候选快照；Validate 只判断，不修改候选；Publish 只发布已通过的完整 snapshot。任何“validation 期间顺手修值”的逻辑都是架构违规。
 
-验证体系自身也要能被证伪。轻量审核包（剔除大体积原始证据的包）曾有过"循环自证"缺陷：golden 校验只数 CSV 里的 PASS 字符串——包里自带一张写着全过的纸，然后验证纸上写着全过。终版的快照完整性校验做五类重算交叉：expected↔actual 逐行重比、G3/G4 对锁定夹具文件、golden 对 metrics_matrix 值漂移、G1 对 company_resolution、G2 对矩阵语义。[实测] 四向篡改全部拦截且诊断精确到行（`stored_status=PASS:recomputed=FAIL`、`fixture_expected_mismatch`、`metrics_value_drift:B01`）。模式判定为显式三态：证据齐全→FULL_VALIDATION（**优先于 marker**，误留 marker 无法降级完整工作区）；证据缺失+`LIGHT_REVIEW_PACKAGE.marker`→轻量模式；证据缺失无 marker→WORKSPACE_INCOMPLETE 硬失败（区分"审核者沙箱"与"工作区损坏"）。当前 17 个 unittest 还覆盖 Basel 阈值同维度对决、captive finance 召回/排除、FI value-level 夹具、iXBRL scale route、JPM CET1 金额 crosscheck、10-K/A full-instance 回退、AST 字符串拼接折叠和 I1-I8 实现映射。
+### 10.3 原子发布
+
+- Dataset Version 必须包含完整 snapshot 和版本 metadata。
+- 任一 DATASET P0 失败，current pointer 不变。
+- 同 snapshot hash 重复发布返回 NO_CHANGE。
+- 并发相同 snapshot 最多产生一个版本。
+- 已发布版本不可原地修改；修正必须产生新版本。
+
+### 10.4 固定版本读取
+
+页面或下游先取得 `current dataset version`，随后所有 metrics、evidence、history 请求固定该版本。页面加载期间 current 改变，不得混入新版本数据。
+
+### 10.5 Public View 与 Review View
+
+#### Public View
+
+仅返回：
+
+- Published PRIMARY；
+- 已批准且政策允许的 ALTERNATE；
+- 明确 N_A/absence/NOT_MEANINGFUL 状态；
+- 不返回 candidate 或 withheld 数值。
+
+#### Review View
+
+授权用户可查看：
+
+- selected/rejected/suppressed candidates；
+- withheld reasons；
+- parser/taxonomy diagnostics；
+- Coverage Receipts；
+- ComputationGraph 与 lineage；
+- backtest 和审批。
+
+二者必须引用同一 result IDs，不能建立互相对不上的第二套审核数据。
+
+### 10.6 报告只读
+
+Report/HTML/Markdown/Legacy CSV：
+
+- 网络调用为 0；
+- 不修改 canonical 数据；
+- 不刷新 Golden expected；
+- 不执行 repair；
+- 只从指定 Dataset Version 确定性生成。
+
+### 10.7 Legacy Projection
+
+FSD 保留：
+
+```text
+outputs/metrics_matrix.csv
+outputs/metric_evidence.csv
+REPORT_十公司财务指标.md
+```
+
+它们是 compatibility projection，不是权威存储。必须能反查 Dataset Version、result_id 和 definition version；删除后可从 v2 对象重建。
 
 ---
 
-## 6. 风险登记簿：已关闭项与仍开放项（截至 2026-07-09）
+## 11. Strategy 目录与领域案例
 
-当前工作区 `python3 scripts/12_validate_repair.py` 返回全 P0 PASS，`python3 -m unittest tests/test_sec_pipeline_validation.py` 跑通 17 个测试。下面不再把旧审计项混作当前风险，而是分成**已关闭风险**与**仍开放风险**。
+本节保留历史领域知识和事故理由；当前实现细节、候选链和测试位置请查看对应 Metric Card。
 
-### 6.1 已关闭风险（代码已有实现 + validation/test 覆盖）
+### 11.1 B01 Revenue：直接标准事实
 
-**C1 10-K/A full-instance 回退已实现。** 旧版只有 C04 的局部 AuditorName 回退；当前已有通用 `original_full_instance_fallback_row`：当 target 为 10-K/A、target instance 事实数少于 500、或缺关键 fact group 时，定位同报告期原始 10-K，并以 `source_role=target_original_full_instance` 写入 inventory。对应测试断言 amended target 能找到原始 10-K，sparse target 会触发 fallback reason。
+**稳定语义**：目标财年、公司整体、合并口径的 revenue。
 
-**C2 Basel 裸 `wellcapitalized` 字缝已关闭。** `BASEL_THRESHOLD_CONCEPT_FRAGMENTS` 已包含裸 `wellcapitalized`，`BankingRegulation...RatioWellCapitalized` 这类无 minimum/required 修饰的阈值概念会被标成 regulatory threshold，不能成为 A01/A02 主值。同维度 actual-vs-threshold 对决测试确认实际比率胜出。
+**可变外壳**：不同公司 concept、taxonomy 年份、Company Facts/accession route。
 
-**C3 Captive finance 成员召回缺口已关闭。** 探针不再只做后缀锚定，而是对 debt fact 的 segment/legal-entity dimension member 做包含匹配，并带 `creditloss`、`creditfacility`、`financelease`、`supplierfinance` 等排除守卫。`GeneralMotorsFinancialCompanyIncMember` 和 `JohnDeereCapitalCorporationMember` 型成员已进入 fixture gate。
+**关键防线**：annual period、target accession、concept priority、entity/scope、完整 evidence。
 
-**C4 iXBRL scale route 已硬化。** `scaled_inline_value` 负责 scale/sign/括号负数归一化；`parse_instance_with_fallback()` 会先检测 `<ix:` 或 `xmlns:ix=`，inline 文件直接走 `InlineFactParser`，避免 XML streaming parser 把 `ix:nonFraction` 当普通 XML 节点而丢掉 `name/contextRef/unitRef/scale/sign`。当前验证包含 synthetic inline scale fixture 和 JPM CET1 capital = 294,804,000,000 的完整 evidence crosscheck。
+**专家问题**：
 
-**C5 FI 第 11 家行为夹具已升级到值级。** `mock_concept_inventory.csv` 已有 `expected_value` 列；`check_eleventh_company_behavior_financial_institution()` 断言 selected concept、context、dimensions、value 四项一致，能抓同概念错期间、错维度、错值。
+- 当前命中的 concept 是什么，为什么优先于其他候选？
+- duration 是否为目标年而非季度/stub？
+- 是否错误选择 segment/product revenue？
 
-**C6 AST 字符串拼接盲区已关闭。** 扫描器通过 `folded_ast_literal_value()` 折叠字符串 `BinOp(Add)`，`"Ford Motor " + "Company"` 不能再绕过公司身份字面量门禁。
+**历史经验**：同一经济事实存在多种标准标签；候选链必须记录实际命中，不能按数值大小猜。
 
-### 6.2 仍开放风险（真实存在，扩展前应处理或接受）
+### 11.2 B03 EBITDA Margin：复杂 fallback 与 proxy
 
-**R1 FI 的 SIC 规则区间仍偏窄。** `profile_rules` 当前覆盖 6020–6029（国民商业银行），储蓄机构（6035/6036）、投行（6211）仍会默认进入非 FI profile，除非 registry override。修法是配置级扩区间，不需要改抽取器。
+**稳定语义**：已批准的 GAAP EBITDA proxy / revenue；是否加回 impairment 由 contract 锁定。
 
-**R2 住宿表格机仍有单元格节奏召回风险。** 装配步假设“绝对值/变化值交替”节奏；三年度对比表（每 KPI 三个绝对值）等异构节奏会失配。但恒等式硬门会把它压成诚实空手，而不是错值。扩展到 Hilton/Hyatt 真实年报时，这仍可能是主要召回瓶颈。
+**Resolver 工作**：选择 revenue、operating income、D&A；允许的重建路径和 cross-check 由 contract 决定。
 
-**R3 召回棘轮仍需要下一轮真实变更检验。** 快照基线是只读夹具，形态正确；当前通过只能证明没有相对基线退化。它第一次真正咬合要等下一次指标产出发生真实变化。
+**ComputationIR 工作**：对已选 observations 执行可重算公式。
 
-**R4 B11 quote 的 raw_header 仍有可读性问题。** Marriott RevPAR 的证据 quote 已包含 parsed tokens、raw row 和恒等式误差，审计可复核；但 `raw_header` 截取窗口仍从句中开始，读起来不够干净。这是证据展示质量问题，不是数值或 gate 问题。
+**关键防线**：同 entity/period/accession/unit、annual duration、denominator nonzero、重建 cross-check、EXACT/APPROX 映射。
 
-**R5 新金额类维度事实进入派生公式时必须新增金额级断言。** 当前 scale route 和 JPM CET1 capital crosscheck 已覆盖既有风险；但如果未来把其他维度金额用于公式，不能只依赖 parser 通用性，必须同步增加 metric-level golden 或 companyfacts/表格 crosscheck。
+**专家问题**：
 
----
+- direct operating income 还是 approved reconstruction？
+- D&A 是直接值还是 depreciation + amortization？
+- 是否混合 accession 或 period？
+- APPROX 是否被 publication policy 明确允许？
 
-## 7. 如何扩展：从第 11 家到第 1000 家的操作手册
+### 11.3 B06 Debt-to-Equity：层级 resolver、多 scope 与正确弃权
 
-### 7.1 加一家公司（标准路径，预期零代码改动）
+**稳定语义**：总债务 / shareholders' equity；总债务的层级和禁止项由 contract 锁定。
 
-`config/company_registry.csv` 追加一行，十二列语义：
+**复杂性**：direct total、同族 current/noncurrent pair、restricted fallback、captive finance scope、负权益。
 
-```text
-company_id                机器标识（小写下划线）
-display_name              显示名
-primary_cik               SEC 主 CIK（在 submissions 页可查）
-ticker                    股票代码
-sic / sic_description     行业码及描述（submissions 返回，照抄）
-industry_profile          行业档案（决定挂哪些抽取器）。可留待 SIC 规则
-                          自动推导；与规则推导不一致时必须走 override 并留注记
-                          （有一致性 validation 把关）
-fiscal_year_end           财年末 MMDD（submissions 返回，照抄；管道所有期间
-                          逻辑数据驱动于此，Macy's 的 0201 无任何特判代码）
-target_period_policy      通常 latest_10k
-entity_continuity_status  continuous；财年内换报告主体（并购继承）填 successor
-                          类值——但即使填错，300–400 天 duration 前置条件和
-                          CIK 链检查也会兜住 YoY 不可比判定（双保险，[实测]）
-related_ciks / roles      Paramount 型双 CIK 场景：predecessor CIK 与角色标注，
-                          事件扫描会自动跨 CIK
-```
+**关键防线**：防双计、禁止 DebtSecurities/fair-value/maturity/proceeds、scope 不混合、主值与候选分离。
 
-然后跑 M0→M7，读三样东西：`company_resolution.csv`（身份解析对不对）、`coverage_matrix.csv`（每个指标走了哪条通路、不可得的原因）、`exceptions_and_review_items.md`（全部待人工事项）。**期望心态**：新公司首跑出现 NOT_EXTRACTED/NEEDS_REVIEW 是正常且诚实的结果，出现"可疑的全绿"反而要警惕。
+**专家问题**：
 
-### 7.2 加一个行业
+- 选的是 consolidated、industrial 还是其他 scope？
+- 为什么拒绝短债-only 或 captive-finance candidate？
+- 负权益时是否保留输入 lineage 且返回 NOT_MEANINGFUL？
 
-`metric_applicability.yaml` 三步：`profiles` 下新建 profile 并列出抽取器组合（标准五件套 + 行业特化件）；`profile_rules` 加 SIC 区间→profile 映射；`settings` 加该行业的词法配置（KPI 词表、量纲区间、口径优先序）。**判断新行业 KPI 用哪条通路的决策次序**：先查 us-gaap/行业分类账有没有标准概念（有→DIM_XBRL 通路，写概念解析器，零文本处理）；再查是否有公司普遍自定义扩展（→后缀/语义匹配）；最后才是 MD&A 文本表格（→复用 lodging 表格机骨架，换词表和不变量）。航空业示例：RASM/CASM/load factor 走文本通路，且存在恒等式 `RASM = PRASM口径修正 × load factor` 类关系可仿照 RevPAR 恒等式做列序自识别。
+### 11.4 A01/A02 Basel Ratios：actual 与 threshold 的语义隔离
 
-### 7.3 加一个抽取器（需要动代码的唯一场景）
+**稳定语义**：实际 Tier 1/CET1 ratio，带 methodology/entity scope。
 
-模板即 lodging 表格机的五段结构：分段 → 锚定（配置化口径优先序）→ 装配 → **行业不变量硬门**（这是灵魂：找出该行业指标间的代数关系做既滤又排的双重角色）→ 量纲区间。同时**必须**配套：标记类注册进 EXTRACTOR_REGISTRY、第 11 家夹具加该行业一家真实公司的模拟数据 + 行为断言、validation 加对应门禁。没有夹具和门禁的抽取器等于没有防线的前线——守恒律会立刻找上它。
+**可变外壳**：公司扩展 concept、成员名和 taxonomy 版本。
 
-### 7.4 什么时候允许“公司适配”
+**关键防线**：标准 methodology axis、unit=pure、actual-role、CET1 与 Tier1 区分、threshold 词法/role 排除、parent/subsidiary scope。
 
-为了避免从“过度公司特例化”摆到“过度泛化”，需要给公司适配一个合规通道。允许的公司适配必须满足六条：
+**历史事故**：实际比率和监管最低线可以拥有相同单位、期间和维度；只靠“看起来像 ratio”会把及格线选成公司实际值。
 
-```text
-1. 适配对象是披露事实或实体关系，而不是为了凑数改公式。
-2. 适配位置在 config / fixture / isolated adapter，不进入主控制流。
-3. 有 SEC evidence 证明该公司披露形态确实不同。
-4. 有 regression：至少一个 positive case 和一个 negative case。
-5. exceptions 或 docs 写明为什么不能用行业规则解决。
-6. 有复查条件：当第二家公司出现同类形态时，应提升为行业规则。
-```
+**专家问题**：
 
-例子：Paramount 的 successor/predecessor CIK、Macy's 的实际 reportDate、Salesforce 的 fiscalYearEnd 都是合法配置级事实；`if company == "Salesforce" then parse sentence "as of January 31, 2026"` 是非法公司专属解析器；如果未来某家银行只有自定义 Basel 概念可用，可以先在配置中登记 concept alias，但必须同时把 alias 加入 Basel resolver 的 positive/negative fixture，而不是写公司分支。
+- rejected ledger 是否可见 threshold？
+- actual 与 well-capitalized/minimum 是否分离？
+- standardized/advanced、parent/bank subsidiary 是否明确？
 
-### 7.5 Live 试点（毕业验收，强烈建议在批量扩展前执行）
+### 11.5 B10/B11 Lodging KPI：表格、布局漂移与行业恒等式
 
-静态防线只能防住“想得到的失败”；剩余风险按定义住在“想不到”里，只有真实世界能勘探。方案：Hilton（SIC 7011）、Citigroup（6021）、GM（3711）各填一行注册表，全管道真拉 SEC（成本约数百请求）。三个定向看点：Citi 的真实 Basel 标注检验 FI profile 规则是否需要扩到更宽 SIC 区间；Hilton 的真实表格排版检验恒等式列序自识别与 R2 节奏假设；GM 的真实 captive-finance member 检验 C3 的召回/排除守卫在野外是否足够。试点产出的 exceptions 清单，就是千家公司产品的第一份真实需求文档。
+**稳定语义**：approved scope 下的 occupancy/RevPAR absolute value。
 
----
+**可变外壳**：HTML 排版、表头层级、列顺序、年度列节奏。
 
-## 8. 文件地图与代码阅读路径
+**关键防线**：header-by-name、scope priority、absolute-vs-change 区分、范围检查、`RevPAR ≈ ADR × Occupancy` invariant、table locator。
 
-```text
-scripts/
-  sec_pipeline.py        全部逻辑单体（~14,000 行）。阅读入口见下。
-  sec_http.py            UA/限速/退避/日志的 HTTP 客户端
-  sec_urls.py            端点 URL 构造（CIK 补零等）
-  00..12_*.py            十三个阶段薄封装，只调 run_stage
-config/
-  company_registry.csv   公司注册表（个体信息唯一合法居所）
-  metric_applicability.yaml  行业 profile→抽取器 + SIC 规则 + 词法配置
-tools/check_no_company_literals.py   AST 泛化门禁入口
-tests/
-  fixtures/sec_10_company_spike/golden_expected_values.csv   锁定期望值
-  fixtures/eleventh_company_smoke/   第 11 家行为夹具（4 行业真实公司模拟数据）
-  fixtures/regression/previous_ok_status_snapshot.csv        召回棘轮基线
-  test_sec_pipeline_validation.py    17 个 unittest 回归测试
-outputs/   （每个 CSV 的 schema 在 03 号指令文档第 6 节）
-  metrics_matrix.csv     主交付物：230 行、20 列；整行才是最小可审计单元
-  metric_evidence.csv    证据明细（quote/原文/解析方法）
-  coverage_matrix.csv    每格的通路与可得性归因
-  golden_results.csv     63 条断言结果
-  repair_validation_results.csv   75 项门禁结果
-  basel_ratio_candidates.csv      比率候选全集（含 role 标注的阈值上下文）
-  stratified_audit.csv / scalability_audit.csv / events.csv
-  governance_signals.csv / risk_legal_signals.csv
-  company_resolution.csv / latest_filings_inventory.csv
-  exceptions_and_review_items.md  全部待人工事项
-evidence/（完整包才有）  requests_log.csv + 全部原始 SEC 响应落盘
-LIGHT_REVIEW_PACKAGE.marker   轻量审核包的显式声明标记
-```
+**历史事故**：把 “RevPAR increased 2.0%” 抽成 2.0 USD。vNext 必须保留该百分比候选和 `WRONG_UNIT/SEMANTIC_NEIGHBOR_UNAPPROVED` 拒绝理由。
 
-**代码阅读路径**（按依赖序，约半天可通读骨架）：`run_stage` 调度表（尾部）→ `validation_package_mode` 三态判定 → `select_component` 选择算法（全项目的取数心脏）→ `load_company_registry` + `extractor_names_for_profile` 派发链 → 一个完整抽取器（推荐 lodging 五段式）→ `stage_run_golden_assertions` + `light_golden_snapshot_integrity_failures` 验证双通路 → `check_*` 系列门禁。
+### 11.6 B12 RPO/cRPO：instance-first 与替代指标诚实性
+
+**稳定语义**：RPO/cRPO 是合同剩余履约义务，不等于 ARR 或 churn。
+
+**关键防线**：structured instance 优先、total vs current/noncurrent reconciliation、USD/period、文本 fallback coverage、名称与经济含义一致。
+
+**历史经验**：结构化事实已经存在时，不应为某家公司写日期句式正则。
+
+### 11.7 C03 Executive Compensation：标准 ECD 与多人语义
+
+**稳定语义**：approved PEO compensation observation；多 PEO 不得随意求和成一个“CEO 薪酬”。
+
+**关键防线**：ECD concept、USD、目标年度、person/context scope、明细与主结果区分。
+
+**历史事故**：系统曾 dump 出正确 ECD inventory 却没有消费，转而抓取无意义文本数字。此事故奠定“inventory/observation 到结果的最后一公里也必须有断言”。
+
+### 11.8 E02 Bankruptcy Events：零是成功观察
+
+**稳定语义**：目标财年窗口内符合 Item 1.03 规则的事件计数。
+
+**关键防线**：完整 filing inventory、所有 roles/CIKs、accession 列表、item parsing 和 COMPLETE coverage receipt。
+
+**专家问题**：
+
+- 0 是否来自完整扫描，而不是缺少 8-K 文件？
+- Coverage Receipt 是否包含全部 accession？
+- value=0 与 value=null 是否严格区分？
+
+### 11.9 定性风险/法律信号
+
+Qualitative Signal 可以发布，但必须明确：
+
+- 它是观察到的文本主题、存在性或结构化结论；
+- 不等于律师意见或风险评分；
+- source span、section 和 coverage 必须可审；
+- AI 生成摘要若启用，属于独立 `ai_annotation`，不能替代事实观察。
 
 ---
 
+## 12. 验证拓扑：Golden、Mutation、Backtest、SEC Suite 与 G0–G6
 
+### 12.1 九层验证
 
-## 9. 输出文件怎么读：从矩阵到证据的导航方法
+1. Catalog compiler tests；
+2. Adapter/parser conformance tests；
+3. Strategy unit tests；
+4. Property/metamorphic tests；
+5. Mutation tests；
+6. Filing fixture Golden tests；
+7. Historical Catalog Release backtest；
+8. Dataset release acceptance；
+9. AI-off replay。
 
-这一节是实操入口。前面的章节解释了系统为什么这么设计；这里解释拿到一个交付包以后，应该按什么顺序打开文件、看什么字段、如何判断一个数字是否可信。
+### 12.2 Golden 的角色
 
-### 9.1 `metrics_matrix.csv`：主交付物，不是唯一证据
-
-`metrics_matrix.csv` 是所有指标的主矩阵。每一行代表一个 `company × metric_id`，但它不是单纯的 value，而是一个带状态、来源、期间和证据锚点的指标判断。
-
-一行回答的是这个问题：
-
-```text
-在某家公司、某个目标报告期内，某个指标是否有可消费结果？
-如果有，值是什么、单位是什么、从哪份 SEC 申报来的、用什么概念/章节取到；
-如果没有，缺口的语义是什么、下一步应该怎么处理。
-```
-
-正确读法是按这个顺序：
+Golden expected 是版本控制输入，不是运行输出。实际结果不一致时：
 
 ```text
-1 看 status：这一行能不能直接消费。
-2 看 source_class：它来自标准 XBRL、维度 XBRL、MD&A、DEF14A、8-K 还是文本。
-3 看 value/unit：有数值时才解释量纲；空值不自动等于失败。
-4 看 concept_or_section/context_or_dimension：确认取数口径是不是要的口径。
-5 看 accession/filed_date/period_start/period_end：确认是哪份申报、哪个期间。
-6 看 notes/confidence：确认是否有 proxy、替代值、边界或人工复核要求。
+validation FAIL
+→ 调查来源/实现/方法论
+→ 如确需改变，提交 expected_change manifest 和审批
 ```
 
-最先看这些字段：
+不得让 report/repair 自动刷新 expected 或 actual 来维持 PASS。
+
+### 12.3 Property/Metamorphic 不变量
+
+- 相同输入幂等；
+- candidate 顺序独立；
+- 重复事实不变；
+- 加入低优先级候选不变；
+- namespace prefix、context ID 和等价表示变化不改变事实身份；
+- 公开排序稳定；
+- no-change 不产生新 Dataset Version。
+
+### 12.4 Mutation 必须覆盖的危险面
 
 ```text
-company / cik                  公司身份
-metric_id / metric_name         指标编号与名称
-value / unit                    数值与单位；无数值时 value 可为空
-status                          语义状态，是下游判断的合同语言
-source_class                    STD_XBRL / DIM_XBRL / DERIVED / MDA / DEF14A / 8K_ITEM / TEXT 等
-formula                         派生公式或选择规则摘要
-period_start / period_end        期间，判断是否目标财年
-accession / form / filed_date    来源申报
-concept_or_section               XBRL concept 或文本章节
-context_or_dimension             XBRL context / dimension 口径
-confidence / notes               置信度和关键 caveat
+unit/period/accession/scope substitution
+semantic-neighbor concept substitution
+Basel actual → threshold
+scale/sign equivalent and non-equivalent changes
+dimension/member substitution
+HTML header/column reordering
+hidden fact vs visible text conflict
+parser fact omission
+new taxonomy namespace
+unsupported transform
 ```
 
-使用矩阵时要遵守一个习惯：**只在矩阵里看到 value 不够，必须去 `metric_evidence.csv` 追证据。** 第一轮最大事故正是矩阵里有 value、有 status、有 quote，但 quote 根本不支撑 value。
+每种 mutation 不仅要断言“不发布”，还要固定正确分支：WITHHELD、NEEDS_REVIEW、NOT_MEANINGFUL、N_A 或其他。
 
-### 9.2 `metric_evidence.csv`：数值的证据链
+### 12.5 Historical Backtest
 
-每个 OK 类数值都应该能在这里找到对应证据。人工审计时按 `company + metric_id` join：
+Catalog、strategy、parser、taxonomy 或 policy 变化时逐字段比较：
 
 ```text
-company,cik,metric_id
-source_url,local_path,accession,document_name
-concept_or_section,context_or_dimension,unit
-period_start,period_end
-value_raw,value_normalized
-evidence_quote,extraction_method,parser_version
+value / unit
+四维状态
+scope / result_role
+selected evidence
+FormulaIR graph
+publication
 ```
 
-判断证据是否合格，不是看列是否填了，而是看三件事：
+每条变化必须有 expected_change_id，否则为 UNEXPECTED 并阻止 release。
 
-1. **对象一致**：quote / concept 是否真的说的是这个指标。RevPAR 的 quote 必须有 RevPAR 或 revenue per available room，C03 必须是 PeoTotalCompAmt 或薪酬表，不是 ecd fact 数量。
-2. **期间一致**：period_end 是否等于目标财年末，期间型是否是 300–400 天，而不是季度或 stub period。
-3. **口径一致**：JPM A01/A02 必须说明 Basel standardized / advanced、parent / bank subsidiary；Salesforce B12 必须说 RPO/cRPO 不是 ARR。
+### 12.6 Gate G0–G6
 
-### 9.3 `coverage_matrix.csv`：每个格子的可得性解释
+#### G0 Baseline Reproducibility
 
-它回答的问题不是“有没有数值”，而是“这个指标为什么是这个状态”。特别看：
+Legacy/current baseline、raw evidence、Golden、Validation、unittest 可重放，expected 不被运行时改写。
 
-```text
-has_numeric_value
-has_evidence
-needs_text_extraction
-needs_review
-reason
-```
+#### G1 Architecture Purity
 
-专家级审计要警惕两类污染：
+Metric Kernel/report 不联网；report 只读；无 last-writer-wins；无隐藏 identity branch；strategy 只消费 observations。
 
-```text
-has_evidence 全部置 1，但 evidence 表实际缺行。
-NOT_AVAILABLE_SEC 被滥用来掩盖“代码没消费已有 inventory”。
-```
+#### G2 Data Semantics
 
-### 9.4 `golden_results.csv`：锁定值断言
+四维状态闭包；publication 派生；E02=0、B06 NOT_MEANINGFUL、N_A/PROHIBITED、多 scope 行为正确。
 
-Golden 是防止“代码跑通但数字错”的核心。关键字段：
+#### G3 Auditability
 
-```text
-assertion_id,description,expected,actual,status,evidence_path,notes
-```
+100% Published numeric 有 graph、lineage、raw asset；selected/rejected 可审；历史版本不可变。
 
-完整包模式下，golden 应该从原始 evidence / companyfacts 重算；轻量包模式下，至少要做 snapshot integrity：expected/actual/status 重新比较、对 fixture、对 metrics_matrix、对 company_resolution。只数 `status=PASS` 是循环自证，已经被修掉。
+#### G4 Format/Taxonomy Resilience
 
-### 9.5 `repair_validation_results.csv`：门禁结果，不等于业务结果
+未知 dialect、material parser disagreement、semantic neighbor 均 fail closed；taxonomy 可追溯；SEC 官方 suite 通过受支持部分；Silent Format Regression Rate=0。
 
-这个文件记录的是验证门禁，包括去公司特例化、Basel threshold、light golden integrity、stratified audit、11 家行为测试等。读它时要看三种状态：
+#### G5 Release Mechanics
 
-```text
-PASS                       检查执行且通过
-SKIPPED_LIGHT_PACKAGE       轻量包缺重型 evidence，检查被诚实跳过
-PASS_LIGHT_REVIEW           轻量包自洽通过，但不是完整 evidence 验收
-```
+no-change、原子发布、并发、固定版本 API、legacy rebuild 均通过。
 
-不要把 `PASS_LIGHT_REVIEW` 当成完整项目 ACCEPT。轻量包只能说明代码/快照/配置自洽，不能说明所有 SEC 原始证据齐全。
+#### G6 AI
 
-### 9.6 `basel_ratio_candidates.csv`：Actual ratio 与 threshold 的分离层
-
-这是 round3 hardening 后的重要输出。银行资本比率表里会同时披露：
-
-```text
-actual_ratio              公司实际资本比率，例如 CET1 = 14.6%
-regulatory_threshold      监管最低要求、well-capitalized 要求，例如 7.0%
-```
-
-A01/A02 的主值只能来自 `actual_ratio`。threshold 可以保留用于上下文，但不能进入 `metric_evidence.csv` 支撑主值。专家审计银行指标时必须打开这个文件看候选角色分离是否正确。
+AI-off replay；AI 无权威写权限；proposal benchmark 达标；mutation 零泄漏。未达标可关闭 AI，而 G0–G5 系统独立成立。
 
 ---
 
-## 10. 如何人工审计一个指标：从 value 追到 SEC 事实
+## 13. 专家审计手册
 
-下面是一套可重复的人工审计流程。任何一个有数值的格子，都可以按这 7 步查。
-
-### 10.1 七步审计法
+### 13.1 审计 Published Numeric Result
 
 ```text
-1. 在 metrics_matrix.csv 找 company + metric_id。
-2. 检查 status/source_class/value/unit/period/accession。
-3. 在 metric_evidence.csv join 同一个 company + metric_id。
-4. 打开 local_path 或 evidence_quote，确认 quote/concept 支撑 value。
-5. 检查 formula 是否符合 02 指标定义。
-6. 检查 status 是否诚实：抽不到就 NOT_EXTRACTED，不适用就 N_A_STRUCTURAL，不可比就 NOT_MEANINGFUL。
-7. 若该值属于 golden / validation 保护范围，查看 golden_results 或 repair_validation 是否覆盖它。
+1. 固定 Dataset Version，不审浮动 current。
+2. 确认 Catalog Release、definition version、policy version。
+3. 确认完整 grain：company/metric/period/scope/role。
+4. 阅读四维状态和 publication reason codes。
+5. 检查 selected candidate 和关键 rejected candidates。
+6. 检查 FormulaIR，并独立 graph recomputation。
+7. 沿 lineage 到每个 Canonical Observation。
+8. 从 observation 回到 RawAsset 和精确 locator。
+9. 检查 taxonomy package、adapter/parser manifest 和 agreement。
+10. 检查 Coverage Receipts、Validation、Backtest 和 audit verdict。
 ```
 
-### 10.2 示例：Marriott B11 RevPAR
+### 13.2 审计零事件
 
-专家应该能回答：
+以 E02 为例：
+
+- value 必须是 `0` 而不是 null；
+- observation 必须是 OBSERVED；
+- receipt 必须覆盖整个财年窗口、所有目标 CIK/roles 和 8-K accessions；
+- parser/source 失败不得存在；
+- 搜索规则版本必须固定；
+- absence/zero 证据是“完整扫描清单”，不是一条空 quote。
+
+### 13.3 审计“未披露”
+
+`NOT_DISCLOSED_CONFIRMED` 的检查重点不是结果行，而是 Coverage Receipt：
 
 ```text
-value = 128.8 USD
-status = MDA_OK
-source_class = MDA
-证据是否有 raw_header / raw_row / parsed？
-raw_header 是否包含 RevPAR / Occupancy / ADR？
-RevPAR ≈ ADR × Occupancy / 100 是否成立？
-是否误把 RevPAR increased 2.0% 当成 2.0 USD？
+required source set 是否完整？
+所有文档是否成功取得？
+required sections/capabilities 是否执行？
+是否有 FORMAT_UNSUPPORTED/PARSE_FAILED/TAXONOMY_UNREGISTERED？
+search terms/semantic scope 是否属于 approved contract？
+receipt completeness 是否 COMPLETE？
 ```
 
-只要 evidence_quote 没有原文表头或选中行，即使 value 看起来合理，也不能算完整证据。
+任何缺口都只能是 NOT_FOUND/PARTIAL/WITHHELD，不能宣称“未披露”。
 
-### 10.3 示例：Salesforce B12 RPO/cRPO
+### 13.4 审计 WITHHELD
 
-专家应该能回答：
+WITHHELD 不等于低质量垃圾。它可能表示：
+
+- 当前来源格式尚未支持；
+- parser material disagreement；
+- 语义近邻尚未批准；
+- approximate proxy 不被 policy 允许；
+- validation P0 失败；
+- catalog/approval 未完成。
+
+审核时应确认系统是否**正确地拒绝了不安全发布**，而不是只问“为什么没有值”。
+
+### 13.5 调查 Parser Disagreement
 
 ```text
-value = 72.4B USD
-status = DIM_XBRL_OK
-concept = RevenueRemainingPerformanceObligation
-RPO != ARR，cRPO != ARR 是否写入 notes？
-是否优先消费 accession instance，而不是文本正则？
-current + noncurrent 是否可加总回 total RPO？
+1. 固定同一 RawAsset/taxonomy packages。
+2. 对比 parser manifests 和插件参数。
+3. 确认 canonical fact key 是否相同。
+4. 对比 raw lexical、scale/sign、normalized decimal。
+5. 对比 entity/period/unit/dimensions/tuple path。
+6. 判断差异是否在强制比较域。
+7. 检查官方 SEC suite 是否有相关案例。
+8. 添加最小复现 fixture 和 mutation。
+9. 修复后离线 replay，不能直接改 Published 结果。
 ```
 
-Salesforce 的历史事故说明：如果 instance 里已经有结构化 concept，再用公司专属文本正则，是错误方向。
+### 13.6 审核 Taxonomy Migration
 
-### 10.4 示例：JPM A02 CET1 ratio
+- 查看 package hash 和官方 release diff；
+- 查看 concept/type/periodType/balance/relationship/reference 变化；
+- 确认 compatibility 分类；
+- 名称相似但 BROADER/NARROWER 不得自动替换；
+- 查看受影响 Metric Cards 和历史 backtest；
+- 查看 parser shadow 和 semantic-neighbor mutation；
+- 确认 Finance/Data 审批与新 Catalog Release。
 
-专家应该能回答：
+### 13.7 审核 Catalog Change
+
+不只看 Git 文本 diff，要看：
 
 ```text
-主值是不是 actual ratio，而不是 regulatory threshold？
-unit 是否 pure？
-dimensions 是否含 RiskWeightedAssetsCalculationMethodologyAxis？
-口径是否说明 standardized / advanced、parent / bank subsidiary？
-metric_evidence 是否排除了 Minimum / Required / WellCapitalized 这类阈值概念？
+Semantic Diff
+Historical Impact Backtest
+Selected/Rejected Candidate changes
+FormulaIR shape changes
+Applicability/trait changes
+Coverage/publication changes
+Expected Change Manifest
+reviewed semantic hash
 ```
 
-这类指标的陷阱是：actual ratio 与 regulatory threshold 长得几乎一模一样，都是 pure、同期间、同 Basel 维度。只能靠 concept role 和词法排除来防错。
+### 13.8 审核 AI Proposal
 
-### 10.5 示例：C03 CEO compensation
-
-专家应该能回答：
-
-```text
-concept 是否是 PeoTotalCompAmt？
-unit 是否 USD？
-period 是否目标财年？
-多 PEO 情况是否没有乱求和？
-是否还残留 ecd_fact_count 这种伪指标？
-```
-
-C03 是本项目的正例：遍历所有公司、统一按标准 ecd concept 过滤，是天然可扩展的属性范式。
+- source locator 是否能解析到固定 RawAsset；
+- quote/cell/fact 是否真实存在；
+- proposed concept 是否语义近邻；
+- period/unit/entity/dimension 是否正确；
+- proposal 是否修改了不允许的字段；
+- deterministic replay、mutations、backtest 是否通过；
+- AI 模型一致不算事实证明；
+- 最终批准必须由相应人类角色完成。
 
 ---
 
-## 11. 常见错误模式与定位方式
+## 14. 扩展手册：新公司、新行业、新指标、新格式、新 parser
 
-### 11.1 有 value，但 evidence 不支持
+### 14.1 新增公司
 
-症状：矩阵中 status 是 `MDA_OK` 或 `DEF14A_OK`，但 quote 是目录、iXBRL context 噪声、无关段落或关键词附近的随机句子。
-
-定位：
-
-```bash
-# 手工 join company + metric_id
-# 看 evidence_quote 是否包含指标关键词和原始数值
+```text
+1. 登记稳定 company_id、CIKs、roles、名称历史、fiscal year end。
+2. 分配 typed traits，记录来源、理由、有效期。
+3. Catalog compile，确保无 applicability conflict。
+4. Discovery/ingest 并生成 dialect/capability manifest。
+5. Normalize observations；必要时 primary/shadow。
+6. Resolve/validate shadow run。
+7. 阅读 coverage、withheld 和 candidate review。
+8. 对代表指标做人工 audit。
+9. 发布新 Dataset Version。
 ```
 
-处理：降级为 `NOT_EXTRACTED` 或修 extractor，不能保留 OK。
+“新增公司不改代码”只在其 source dialect、traits 和 strategies 已支持时成立。新格式需要 adapter 是正常扩展，不应通过公司名分支规避。
 
-### 11.2 concept 命中了 threshold，不是 actual value
+### 14.2 新增行业或商业模式
 
-症状：银行资本比率值等于监管最低要求，例如 7.0%、6.5%，而不是公司实际比率。
+- 定义/复用 typed traits，而不是复制一个大 profile；
+- 更新 applicability rules 并执行 conflict compile；
+- 选择 3–5 家真实公司建立 corpus；
+- 先寻找 structured taxonomy facts，再考虑 table/text；
+- 对行业 KPI 定义代数/业务 invariant；
+- 添加 positive、negative、correct-abstention fixtures；
+- 新 Catalog Release + backtest。
 
-定位：打开 `basel_ratio_candidates.csv`，看 `candidate_role`。
+### 14.3 新增指标
 
-处理：threshold 保留为上下文，不进入 `metric_evidence.csv` 主证据。
-
-### 11.3 文本 KPI 把 percentage change 当 absolute value
-
-症状：RevPAR = 2.0 USD、occupancy = 1.5% 这类明显不合理结果。
-
-定位：quote 中出现 increased / decreased / percentage / bps，但没有绝对值表格。
-
-处理：加量纲区间 + quote 关键词 + 行业恒等式，例如 RevPAR = ADR × occupancy。
-
-### 11.4 公司名特例回潮
-
-症状：生产代码里出现：
-
-```python
-if company == "Salesforce":
-if cik == 1108524:
-pattern = "January 31, 2026"
+```text
+经济定义与非目标
+→ metric kind / grain / scope
+→ applicability traits
+→ source priority / required capabilities
+→ resolver / rejection reasons
+→ FormulaIR shape / unit algebra
+→ evidence and Coverage Receipt contract
+→ quality/publication options
+→ positive/negative/abstention examples
+→ mutation and historical backtest
+→ Finance/Data approval
+→ Catalog Release
 ```
 
-处理：公司名只能在 config / fixtures / docs；业务逻辑必须由 profile、SIC、concept、dimension、text probe 触发。
+### 14.4 新增 SEC 文件格式或 capability
 
-### 11.5 轻量包伪装完整验证
+```text
+捕获并 hash RawAsset
+→ dialect fingerprint 标记 unknown/new
+→ 受影响结果 WITHHELD
+→ 编写/升级 adapter
+→ Canonical schema validation
+→ 官方 SEC suite（如适用）
+→ project fixtures/mutations
+→ primary/shadow compare
+→ offline historical replay
+→ parser/adapter manifest release
+```
 
-症状：缺 evidence / concept_inventory，却报告 full PASS。
+### 14.5 新 taxonomy 年份
 
-处理：必须有 `LIGHT_REVIEW_PACKAGE.marker`；轻量模式输出 `PASS_LIGHT_REVIEW` 或 `PASS_LIGHT_GOLDEN_INTEGRITY`，不能冒充 full validation。
+```text
+登记 package + hash
+→ 生成 taxonomy diff
+→ 反向索引受影响 contracts
+→ compatibility 分类
+→ parser shadow
+→ semantic-neighbor mutation
+→ historical backtest
+→ Finance/Data review
+→ 新 Catalog Release（仅有语义影响时）
+```
 
-### 11.6 coverage 与 evidence 不一致
+### 14.6 引入或更换外部 parser
 
-症状：coverage 写 `has_evidence=1`，但 metric_evidence 没对应行。
+任何外部 parser，包括 Arelle，都走同一流程：
 
-处理：coverage 必须由 metrics_matrix 与 metric_evidence 实际 join 生成，而不是全量置 1。
+```text
+固定依赖与插件 manifest
+→ adapter 输出 CanonicalObservation
+→ SEC suite conformance
+→ project fixture parity
+→ historical corpus shadow
+→ material diff 归因
+→ G4 release gate
+→ 角色提升或拒绝
+```
+
+不得因“行业广泛使用”跳过项目验证。
 
 ---
 
-## 12. 验收模式：轻量审核包 vs 完整 evidence 包
+## 15. 运行监控、质量北极星与事故响应
 
-### 12.1 轻量审核包可以验什么
+### 15.1 核心监控
 
-轻量包适合验：
+| 指标 | 定义/目标 |
+|---|---|
+| Published-Wrong Rate | 随机审计层中，经审核确认错误的 Published 结果 / 已审核 Published 结果；release qualification 目标 0 |
+| Targeted Audit Wrong Rate | 定向高风险样本独立报告，不与随机层混算 |
+| Published-Unverifiable Rate | 无法从 raw asset + graph + lineage 重放的 Published 比例；目标 0 |
+| Silent Format Regression Rate | 格式变化后未告警却改变 Published 结果的比例；目标 0 |
+| Parser Disagreement Published Count | material disagreement 仍被发布的数量；目标 0 |
+| Coverage Completeness Rate | required receipts 中 COMPLETE 比例，按 capability/metric 分层 |
+| Catalog Drift Count | runtime/config 与 APPROVED lock 不一致次数；目标 0 |
+| Reproducibility Failure Count | 同版本相同输入重放 hash 不一致次数；目标 0 |
+| AI Unauthorized Action Count | AI 越权写入或绕过门禁次数；目标 0 |
 
-```text
-代码结构是否去公司特例化；
-config/profile/extractor registry 是否存在；
-validation snapshot 是否自洽；
-golden snapshot integrity 是否能防篡改；
-scalability_audit 是否 0 violation；
-第 11 家行为夹具是否能跑；
-stratified audit 是否全 PASS。
-```
+### 15.2 随机层与定向层审计
 
-轻量包不适合验：
+- **随机层**用于估计总体 Published-Wrong Rate，抽样政策必须版本化并保持跨期可比。
+- **定向层**覆盖新/变化指标、APPROX、事件零值、N_A、WITHHELD、新 parser/taxonomy、高风险 source class。
+- 两层分别报告样本量、错误数和结论，不得把定向高风险样本当总体错误率。
 
-```text
-SEC 原始响应是否真实存在；
-requests_log 是否覆盖所有请求；
-companyfacts / submissions / accession materials 是否完整；
-完整 concept_inventory 是否可重算；
-所有 evidence local_path 是否能打开。
-```
+### 15.3 P0 事故触发
 
-### 12.2 完整包正式验收顺序
-
-拿到完整包后，按这个顺序做：
-
-```bash
-python3 scripts/00_smoke_test_sec_access.py
-python3 scripts/01_resolve_companies.py
-python3 scripts/02_inventory_filings.py
-python3 scripts/03_companyfacts_inventory.py
-python3 scripts/04_compute_standard_metrics.py
-python3 scripts/05_fetch_accession_materials.py
-python3 scripts/06_parse_xbrl_instances.py
-python3 scripts/07_extract_8k_events.py
-python3 scripts/08_extract_def14a.py
-python3 scripts/09_extract_mda_and_risk_text.py
-python3 scripts/10_run_golden_assertions.py
-python3 scripts/11_build_report.py
-python3 scripts/12_validate_repair.py
-python3 tools/check_no_company_literals.py
-```
-
-然后检查：
+以下任一事件必须创建 P0 incident 并冻结受影响发布：
 
 ```text
-evidence/requests_log.csv 是否 SEC-only；
-evidence/submissions/、companyfacts/、accession_materials/ 是否齐全；
-golden_results.csv 是否全 PASS；
-repair_validation_results.csv 是否无 FAIL；
-stratified_audit.csv 是否全 PASS；
-REPORT verdict 是否与门禁一致；
-exceptions 是否列出剩余 NOT_EXTRACTED / NEEDS_REVIEW。
+确认 Published value/status 错误
+material parser disagreement 被发布
+Published lineage/raw asset 缺失
+silent format regression
+current pointer 原子性失败
+已发布 Dataset Version 被改写
+Golden expected 被 runtime 修改
+AI 获得权威写权限或伪造 locator 进入发布
 ```
 
-### 12.3 分层抽查策略
+### 15.4 事故处理原则
 
-不要随机抽 20 个值，因为 STD_XBRL 干净指标太多，会稀释问题。建议分层抽：
+- 不原地修 Published Dataset；发布新版本。
+- 保留失败 run、validation 和事故时间线。
+- 根因必须归到 source/adapter/parser/taxonomy/catalog/strategy/policy/release/AI 权限之一。
+- 修复必须增加 regression fixture 或 mutation。
+- 事故关闭前必须离线 replay、backtest 和 audit。
 
-| 来源层 | 抽查数量 | 关注点 |
-|---|---:|---|
-| STD_XBRL / DERIVED | 8 | concept、period、formula、candidate chain |
-| DIM_XBRL | 4 | dimensions、actual vs threshold、unit=pure/USD |
-| MDA / TEXT | 3 | quote 原文性、表头、段落定位 |
-| DEF14A | 3 | ecd concept、薪酬口径、多 PEO |
-| 8K_ITEM | 2 | hdr.sgml `<ITEMS>`、item mapping |
+### 15.5 FSD 落地后的开放风险
 
-### 12.4 Verdict 规则
+- parser comparison canary 与噪声校准；
+- 官方 SEC suite 覆盖的是提交验证，不等于所有消费解析场景；
+- taxonomy diff/relationship 影响分析的长期成本；
+- HTML/text 表格的召回与 layout diversity；
+- migration parity 的人工审核峰值；
+- Published-Wrong Rate 小样本不确定性；
+- 外部 parser/plugin 的供应链、升级和安全响应；
+- AI proposal 的低有效率或审阅成本反超收益。
+
+---
+
+## 16. AI Proposal：允许做什么、如何审核、何时关闭
+
+### 16.1 状态
 
 ```text
-ACCEPT：完整包、证据链、golden、coverage、报告、无第三方补数全部通过。
-ACCEPT WITH CAVEATS：少量文本/MD&A/DEF14A 抽取失败，但诚实标 NOT_EXTRACTED，并有 exceptions。
-REJECT：缺核心文件、无证据数值、第三方补数、golden fail 仍报成功、关键口径错用、无法复现。
+DISABLED
+SHADOW
+APPROVED_FOR_PROPOSALS
+```
+
+AI 状态必须位于 `[生成]` release manifest。未通过 Gate G6 时不得描述为生产启用。
+
+### 16.2 允许任务
+
+- custom/standard concept scouting；
+- table/section locator proposal；
+- taxonomy mapping proposal；
+- Metric Contract patch 草稿；
+- positive/negative/mutation fixture 草稿；
+- exception triage 和审核摘要。
+
+### 16.3 禁止任务
+
+- 写 Metric Result；
+- 修改 APPROVED Catalog；
+- 修改 Golden expected；
+- 赋予 EXACT/PUBLISHED；
+- 直接覆盖 selected candidate；
+- 绕过 source pointer、lineage、validation 或审批；
+- 因两个模型意见一致自动放行。
+
+### 16.4 Filing 内容是不可信数据
+
+SEC filing 中的文本可能包含任意自然语言。AI 系统必须把它当数据，不当工具指令：
+
+- 无任意工具/网络/写权限；
+- source spans 与 prompt 指令隔离；
+- schema constrained output；
+- 所有 locator 确定性解析；
+- 模型、prompt、input/output hash 全记录。
+
+### 16.5 Proposal 晋级流程
+
+```text
+AI proposal
+→ locator resolve
+→ period/unit/entity/dimension validation
+→ contract/strategy execution
+→ mutation + project fixtures
+→ historical backtest
+→ Finance/Data review
+→ new Catalog Release
+```
+
+### 16.6 启用门
+
+AI 层只有在以下条件达到 FSD 指标时才可从 SHADOW 晋级：
+
+- source pointer 可解析率；
+- proposal 确定性验证后有效率；
+- matched-task benchmark 的中位工程时间下降；
+- mutation 泄漏为 Published=0；
+- AI-off replay 完整成功。
+
+不达标直接关闭 AI；G0–G5 核心系统不受影响。
+
+---
+
+## 17. 常见错误模式与反模式
+
+### 17.1 把本指南当指标定义源
+
+**症状**：开发者从历史案例复制 concept chain，而不看当前 Metric Card。
+
+**处理**：Catalog Release 是权威；指南只解释 why。
+
+### 17.2 把 SEC 官方套件全绿当业务正确
+
+**症状**：Arelle/adapter 通过 EFM test suite，就认为 A02/B10 正确。
+
+**处理**：官方 suite 只覆盖标准 conformance；必须同时通过 project semantics、Golden、mutation 和 backtest。
+
+### 17.3 把 Arelle 当神谕
+
+**症状**：Arelle 与另一 parser 不同，直接相信 Arelle；或 Arelle validation warning 直接映射业务 status。
+
+**处理**：Arelle 是可替换实现；material disagreement 必须隔离调查。
+
+### 17.4 Parser 在线偷偷取得 taxonomy
+
+**症状**：历史 replay 因远端 package 更新而改变。
+
+**处理**：使用 hash-pinned local taxonomy registry，记录 network policy。
+
+### 17.5 Parser 失败被写成“SEC 未披露”
+
+**处理**：PARSE_FAILED/FORMAT_UNSUPPORTED → WITHHELD；只有 COMPLETE receipt 支撑 NOT_DISCLOSED_CONFIRMED。
+
+### 17.6 有 value，但 evidence/lineage 不支持
+
+**处理**：RESULT P0；不得保留 Published；补 locator/lineage 或修 strategy。
+
+### 17.7 Semantic neighbor 偷渡
+
+**症状**：名称很像的 profit/revenue/debt concept 被自动替换。
+
+**处理**：`SEMANTIC_NEIGHBOR_UNAPPROVED`；taxonomy compatibility + Finance Review。
+
+### 17.8 Actual 与 regulatory threshold 混淆
+
+**处理**：threshold 保留为 rejected candidate，原因 `THRESHOLD_NOT_ACTUAL_RATIO`。
+
+### 17.9 百分比变化当绝对 KPI
+
+**处理**：单位、header、row locator、行业 invariant 和 negative fixture。
+
+### 17.10 Candidate 顺序依赖
+
+**症状**：输入行重排后结果改变。
+
+**处理**：G1/G2 失败；修确定性 rank 和 tie handling。
+
+### 17.11 Reviewer 直接 override publication
+
+**处理**：禁止；形成版本化 candidate/contract/policy 决定后重新运行。
+
+### 17.12 用 Expected Change Manifest 偷渡大面积变化
+
+**处理**：每条变化必须可解释、按 semver 审核；manifest 不是免检白名单。
+
+### 17.13 Legacy CSV 反向成为输入
+
+**处理**：Legacy 只由 Dataset Version 投影；resolver 不得读取。
+
+### 17.14 Report 中修数据或联网
+
+**处理**：G1/G5 失败；报告前后 canonical/Golden hash 必须不变。
+
+### 17.15 隐藏公司身份分支
+
+**症状**：strategy/policy 中比较 company_id/ticker/CIK。
+
+**处理**：`ARCH_HIDDEN_IDENTITY_BRANCH` lint 失败；使用 traits、capabilities 或显式 entity exception。
+
+### 17.16 零与 null 混淆
+
+- `0`：成功观察到零。
+- `null`：没有数值，由状态解释。
+
+API、报告和 Legacy projection 必须保持区别。
+
+---
+
+## 18. 当前实现地图、交付物与命令索引
+
+### 18.1 不手工猜物理架构
+
+FSD 允许工程团队选择内部模块和存储。因而本指南只固定逻辑对象；实际代码路径、表名、CLI 和 job ID 必须由 implementation manifest 自动生成。
+
+<!-- GENERATED:IMPLEMENTATION_MAP:START -->
+
+```text
+{{IMPLEMENTATION_MODULE_MAP}}
+```
+
+<!-- GENERATED:IMPLEMENTATION_MAP:END -->
+
+### 18.2 v2 最小权威输出
+
+FSD 迁移期要求存在以下 canonical outputs（扩展名由实现决定）：
+
+```text
+outputs/v2/canonical_observations.*
+outputs/v2/coverage_receipts.*
+outputs/v2/metric_candidates.*
+outputs/v2/metric_results.*
+outputs/v2/lineage_edges.*
+outputs/v2/validation_results.*
+```
+
+另有：
+
+```text
+Dataset Version manifest
+Catalog Release lock and review artifacts
+Computation graphs
+RawAsset/SourceObservation manifests
+Taxonomy registry
+Adapter/parser manifests
+Parser agreement / format drift reports
+Historical backtest / expected change manifest
+```
+
+### 18.3 人类审核产物
+
+必须自动生成：
+
+1. Metric × Trait Applicability Matrix；
+2. 单指标审核卡；
+3. Catalog Semantic Diff；
+4. Historical Impact Backtest；
+5. Selected/Rejected Candidate Review；
+6. Taxonomy Impact Report；
+7. Format Drift/Parser Agreement Report；
+8. Release Gate Summary。
+
+### 18.4 Legacy 输出
+
+```text
+outputs/metrics_matrix.csv
+outputs/metric_evidence.csv
+REPORT_十公司财务指标.md
+```
+
+这些文件必须标注 deprecated/compatibility，并可反查 Dataset Version。
+
+### 18.5 命令索引
+
+实际命令由 CI 生成，不得在本指南长期手工复制：
+
+<!-- GENERATED:COMMAND_INDEX:START -->
+
+| 逻辑操作 | 当前命令/Job |
+|---|---|
+| Compile Catalog | `{{CMD_COMPILE_CATALOG}}` |
+| Ingest/Discover | `{{CMD_INGEST}}` |
+| Normalize Observations | `{{CMD_NORMALIZE}}` |
+| Run Primary/Shadow Compare | `{{CMD_PARSER_COMPARE}}` |
+| Run SEC Conformance Suite | `{{CMD_SEC_CONFORMANCE}}` |
+| Offline Replay | `{{CMD_OFFLINE_REPLAY}}` |
+| Resolve Candidate Snapshot | `{{CMD_RESOLVE}}` |
+| Validate/Backtest | `{{CMD_VALIDATE}}` |
+| Publish Dataset Version | `{{CMD_PUBLISH}}` |
+| Render Fixed-Version Report | `{{CMD_RENDER_REPORT}}` |
+| Run Hidden Identity Lint | `{{CMD_IDENTITY_LINT}}` |
+| Verify Guide Generated Blocks | `{{CMD_DOC_DRIFT_CHECK}}` |
+
+<!-- GENERATED:COMMAND_INDEX:END -->
+
+---
+
+## 19. Legacy Round 3、规则考古与制度记忆
+
+### 19.1 Legacy 基线的正确位置
+
+旧《SEC_metrics 项目全景与专家指南》准确描述 Round 3 spike：10 家公司、单体流水线、M0–M7、legacy status、CSV 主矩阵和 63 Golden/75 Validation/17 unittest。vNext 启用后，应将其冻结为：
+
+```text
+docs/legacy/SEC_metrics_spike_round3_项目全景与专家指南.md
+```
+
+它的作用是：
+
+- baseline_manifest 和 migration parity；
+- 历史事故与设计动机；
+- 旧消费者兼容；
+- 回归语料和制度记忆。
+
+它不再定义当前系统。
+
+### 19.2 Legacy Round 3 历史实况
+
+[实测/历史] Round 3 曾包含约：
+
+```text
+230 条指标结果
+226 条证据
+63 条 Golden
+75 项 repair validation
+17 个 unittest
+约 14,000 行 sec_pipeline.py
+13 个阶段薄封装
+```
+
+这些数字应保留在 legacy appendix，不应继续作为 vNext 当前规模。vNext 支持多 scope、alternate/candidate 和 long-form observation 后，行数天然不同。
+
+### 19.3 架构族谱
+
+| Legacy 概念 | vNext 归宿 |
+|---|---|
+| 公司登记属性 | Entity Registry + versioned typed traits |
+| 能力探针 | Adapter Capability Manifest + required source capabilities |
+| 词法配置 | Metric Contract parameters / controlled vocabulary |
+| industry profile | 可组合 typed traits + applicability compiler |
+| marker extractor | Versioned resolver/strategy 或 adapter capability |
+| 候选链 | Contract source priority + Candidate Ledger |
+| 300–400 天窗 | Approved hard constraint |
+| RevPAR 恒等式 | Invariant/cross-check + Formula/validation artifact |
+| Basel threshold sidecar | 全指标通用 Rejected Candidate Ledger |
+| no-company-literals 工具 | `ARCH_HIDDEN_IDENTITY_BRANCH` CI gate |
+| 公司补丁六条件 | Entity Exception schema + approval + expiry |
+| Golden 不改期望值 | expected/results 分离 + immutable input |
+| 召回棘轮 | Historical backtest + semver + expected change manifest |
+| coverage matrix | Coverage Receipts + four-dimensional states |
+| metrics_matrix | Dataset Version 的 Legacy projection |
+| M7 repair/report | resolve/validate/publish + read-only report |
+
+### 19.4 规则考古表
+
+| 奠基事故/经验 | vNext 机制 |
+|---|---|
+| RevPAR=2.0，quote 不支持 value | Structured locator、candidate rejection、industry invariant、lineage P0 |
+| Basel threshold 赢过 actual ratio | `THRESHOLD_NOT_ACTUAL_RATIO`、candidate ledger、semantic mutation |
+| ECD facts 已 dump 却未消费 | Observation→candidate→result coverage 与 Golden |
+| RPO 文本正则重造结构化事实 | required capabilities、instance-first resolver |
+| Successor stub 被当全年/未披露 | period hard constraint、entity traits、Coverage Receipt |
+| E02 零值写成 NOT_AVAILABLE | EVENT metric kind、OBSERVED+EXACT、0/null 分离 |
+| B06 负权益写成来源缺失 | OBSERVED + NOT_MEANINGFUL + preserved lineage |
+| 报告阶段 repair 和联网 | G1 只读报告、explicit resolve/validate/publish |
+| Golden CSV 循环自证 | immutable expected、live recomputation、G0 |
+| 公司名分支回潮 | traits/entity exception + identity lint |
+| parser scale/sign 风险 | Canonical raw semantics、primary/shadow、SEC suite、mutation |
+| 缺陷迁移到未断言维度 | Coverage Receipt、四维状态、mutation 和质量北极星 |
+
+### 19.5 守恒律
+
+项目的核心制度经验仍然成立：
+
+> **门禁边界就是质量边界；被度量的缺陷会减少，未被度量的缺陷会成为新的藏身处。**
+
+vNext 的改进不是宣称“没有缺陷”，而是扩大断言拓扑：给缺席、格式、taxonomy、parser 分歧、候选拒绝、publication、版本不可变和 AI 权限都增加可验证约束。
+
+---
+
+## 20. 专家训练清单与术语表
+
+### 20.1 读完后应能完成
+
+1. 固定 Dataset Version，追踪一个 Published 数值到 RawAsset。
+2. 通过 Metric Card 审核经济定义、FormulaIR、fallback 和 publication options。
+3. 区分 0、null、NOT_FOUND、NOT_DISCLOSED_CONFIRMED、FORMAT_UNSUPPORTED 和 NOT_MEANINGFUL。
+4. 阅读 selected/rejected candidate ledger，解释 actual/threshold/semantic neighbor。
+5. 独立重算 ComputationGraph 和检查单位代数。
+6. 审核 Coverage Receipt，证明一次“未披露”或零事件结论。
+7. 调查 primary/shadow parser disagreement。
+8. 解释 SEC 官方 test suite、parser diversity 和 project Golden 各自覆盖什么。
+9. 审核 taxonomy migration 和历史 backtest。
+10. 新增公司、trait、metric、adapter 或 parser，不引入隐藏身份分支。
+11. 识别报告写路径、legacy 反向输入和 publication override 等架构违规。
+12. 审核 AI proposal，验证 locator、语义和权限边界。
+
+### 20.2 术语表
+
+```text
+RawAsset                 按字节 SHA-256 寻址的不可变原始来源资产
+SourceObservation        一次网络/来源观察的请求与结果记录
+Source Adapter           把某类来源转成 Canonical Observation 的可替换外壳
+Canonical Observation    来源无关、长格式、保留原始语义和 locator 的观察事实
+Dialect Fingerprint      filing/package 的格式、namespace、transform、布局等指纹
+Primary/Shadow Parser    两个实现独立的解析路径，用于发现 material disagreement
+Parser Manifest          parser、插件、runtime、配置和 taxonomy cache 的版本记录
+Taxonomy Registry        多年度 taxonomy packages、hash、entry points 和审批状态
+Catalog Release          一组原子化、已审批、可运行的指标契约发布
+Metric Contract          指标语义、粒度、适用性、resolver、公式、证据和政策契约
+Typed Trait              正交的行业、业务模式、实体连续性等属性
+Entity Exception         显式审批、带有效期和证据的公司级现实例外
+Metric Candidate         某指标/粒度下一个可选择或应拒绝的观察解释
+Rejection Ledger         所有决策相关 rejected candidates 与原因
+ComputationIR/Graph      受限、可重算、同时生成公式和 lineage 的计算结构
+Lineage Edge             result、graph、observation、raw asset 之间的单条关系
+Coverage Receipt         证明 required source/search scope 是否完整执行的回执
+Applicability Status     REQUIRED/OPTIONAL/N_A_STRUCTURAL/PROHIBITED
+Observation Status       OBSERVED/PARTIAL/NOT_FOUND/NOT_DISCLOSED_CONFIRMED 等
+Result Quality           EXACT/APPROX/QUALITATIVE/NOT_MEANINGFUL/UNVERIFIED/NO_RESULT
+Publication Status       PUBLISHED/WITHHELD/NEEDS_REVIEW；由 policy 计算
+Dataset Version          原子、不可变、可固定读取的完整发布快照
+Public View              只暴露允许公开消费的结果
+Review View              暴露候选、withheld、诊断和审核材料的受限视图
+Golden Expected          人工/外部锁定的预期输入，不得被 runtime 修改
+Mutation Test            故意改变期间、单位、概念、维度、布局等以验证拒绝能力
+Historical Backtest      新旧 Catalog/strategy/parser/taxonomy 的逐字段影响比较
+SEC Public Test Suite    SEC 官方 Interactive Data validation 案例库
+Arelle                   可作为 primary/shadow/conformance runner 的外部 XBRL processor
+Published-Wrong Rate     随机审计层已确认错误 / 已审核 Published 结果
+Silent Format Regression 格式变化未告警却改变 Published 结果
+AI Proposal              无权威写权限的候选规则、locator、契约或测试草案
+Legacy Projection        从固定 Dataset Version 生成的旧 CSV/报告兼容视图
 ```
 
 ---
 
-## 13. 生产化路线图：从 spike 到可运营系统
+## 21. 外部规范与参考资料
 
-### 13.1 近期：真实第 11 家试点
+以下版本必须由 registry/manifest 记录，本文链接只是导航，不是运行时“latest”依赖：
 
-在批量扩展前，不要继续只打磨静态 validation。应该新增 3–4 家真实公司，跑 live SEC：
+1. [SEC Interactive Data Public Test Suite](https://www.sec.gov/data-research/interactive-data-public-test-suite)
+2. [SEC EDGAR Filer Manual](https://www.sec.gov/submit-filings/edgar-filer-manual)
+3. [SEC Operating Company Taxonomies](https://www.sec.gov/data-research/structured-data/taxonomies-schemas/standard-taxonomies/operating-companies)
+4. [Arelle Open Source XBRL Platform](https://github.com/Arelle/Arelle)
+5. `SEC_metrics_vNext_FSD_v1.1.md`
+6. 当前 Catalog Release 自动生成的 Metric Cards、Semantic Diff 与 Gate Summary
+7. 冻结的 Legacy Round 3 指南和 baseline manifest
 
-```text
-Hilton / Hyatt：检验 lodging 表格机。
-Citigroup / Bank of America：检验 Basel concept resolver、threshold 排除、FI profile。
-GM / John Deere / Caterpillar：检验 captive finance debt 口径。
-ServiceNow / Adobe：检验 RPO/cRPO instance-first。
-```
-
-试点不是为了拿漂亮结果，而是为了暴露真实 filing 的排版、namespace、dimension、period edge case。
-
-### 13.2 中期：模块化拆分
-
-当前 `sec_pipeline.py` 是 spike 单体。产品化建议拆成：
-
-```text
-sec_client/              HTTP、限速、retry、requests_log
-filing_inventory/        submissions、target/prior/DEF14A/8-K 定位
-xbrl_parser/             companyfacts + accession instance parser
-extractors/              Standard, Basel, RPO, Lodging, DEF14A, AuditorName, 8K, RiskText
-validators/              golden, repair, scalability, stratified audit, tamper regression
-reporting/               matrix、coverage、exceptions、report
-config/                  company registry、metric applicability、concept maps
-```
-
-拆分时不要先追求“漂亮类结构”，要先保留现有门禁。没有 validation 的重构只是代码搬家。
-
-### 13.3 中期：存储层升级
-
-CSV 足够 spike，但千家公司会遇到 join、版本、审计查询的问题。建议升级到：
-
-```text
-raw evidence object store       原始 SEC 响应
-SQLite/DuckDB/Postgres          facts、metrics、evidence、coverage
-versioned run_id                每次运行可复现
-immutable expected fixtures      golden / recall baseline 只读
-```
-
-核心数据模型：
-
-```text
-company
-filing
-fact
-metric_result
-metric_evidence
-validation_result
-exception_item
-```
-
-### 13.4 长期：CI/CD 与回归套件
-
-每个 PR 必须跑：
-
-```text
-unit tests：concept resolver、period selector、text parser
-fixture tests：第 11 家公司行为测试
-golden tests：Enphase/Ford 等基准
-scalability gate：公司字面量扫描
-light integrity：snapshot tamper regression
-full integration：定期 live SEC 小样本
-```
-
-### 13.5 长期：人工复核界面
-
-`NEEDS_REVIEW` 不应永远停在 CSV。产品化后应有复核工作台：
-
-```text
-显示矩阵值 + evidence quote + 原文链接；
-允许 reviewer 选择 approve / reject / override status；
-所有人工决定写 audit trail；
-下一轮 extractor 从人工复核中学习失败模式，但不得直接硬编码公司名。
-```
-
----
-
-## 14. 训练清单
-
-读完本文档后，应该能做这些事：
-
-1. **手工追一个值**：从 `metrics_matrix.csv` 找到 value，再到 `metric_evidence.csv`，再到 raw evidence 或 quote。
-2. **判断 status 是否诚实**：知道 `NOT_AVAILABLE_SEC`、`NOT_EXTRACTED`、`NOT_MEANINGFUL`、`N_A_STRUCTURAL` 的边界。
-3. **识别 actual value 与 context/threshold/noise**：尤其是银行资本比率、RevPAR、RPO、C03 薪酬。
-4. **区分行业特化和公司特例**：SIC/profile/extractor 是合法行业抽象；`if company == ...` 是危险信号。
-5. **新增公司不改代码**：只改 registry，跑 validation，读 exceptions。
-6. **设计一个新 extractor**：先定义口径、数据源、证据、状态，再写抽取逻辑，最后写 validation 和 fixture。
-7. **给 Codex 下正确指令**：不要说“修 Salesforce”，要说“RpoCrpoExtractor 优先消费 instance fact；禁止公司名分支；新增行为夹具”。
-
-最终形成一个简单判断：
-
-```text
-一个数字可信 = 来源可信 + 口径正确 + 期间正确 + 证据支撑 + 门禁覆盖。
-少任何一项，都只是“看起来像数字”。
-```
-
----
-
-## 15. 快速命令手册
-
-### 15.1 轻量包审核
-
-```bash
-python3 -m py_compile scripts/sec_pipeline.py tools/check_no_company_literals.py
-python3 scripts/10_run_golden_assertions.py
-python3 scripts/12_validate_repair.py
-python3 tools/check_no_company_literals.py
-```
-
-预期：
-
-```text
-PASS_LIGHT_GOLDEN_INTEGRITY
-PASS_LIGHT_REVIEW
-scalability_audit.csv = 0 violations
-```
-
-### 15.2 完整包复跑
-
-```bash
-python3 scripts/00_smoke_test_sec_access.py
-python3 scripts/01_resolve_companies.py
-python3 scripts/02_inventory_filings.py
-python3 scripts/03_companyfacts_inventory.py
-python3 scripts/04_compute_standard_metrics.py
-python3 scripts/05_fetch_accession_materials.py
-python3 scripts/06_parse_xbrl_instances.py
-python3 scripts/07_extract_8k_events.py
-python3 scripts/08_extract_def14a.py
-python3 scripts/09_extract_mda_and_risk_text.py
-python3 scripts/10_run_golden_assertions.py
-python3 scripts/11_build_report.py
-python3 scripts/12_validate_repair.py
-```
-
-### 15.3 常用 grep / 审计命令
-
-```bash
-# 查公司名特例回潮
-grep -RIn "JPMorgan Chase\|Marriott International\|Salesforce\|Ford Motor Company\|Paramount\|Enphase" scripts/ tools/
-
-# 查第三方数据源
-grep -RIn "yfinance\|bloomberg\|refinitiv\|macrotrends\|stockanalysis\|wikipedia" scripts/ .
-
-# 查可能绕过 golden 的硬编码
-grep -RIn "expected_value\|golden\|hardcode" scripts/ tests/
-
-# 快速看失败门禁
-python3 - <<'PYCODE'
-import csv
-for r in csv.DictReader(open('outputs/repair_validation_results.csv')):
-    if r.get('status') not in {'PASS','SKIPPED_LIGHT_PACKAGE','PASS_LIGHT_REVIEW','PASS_LIGHT_GOLDEN_INTEGRITY'}:
-        print(r)
-PYCODE
-```
-
-
-
-## 16. 术语表
-
-```text
-spike              为验证可行性的一次性探索开发
-accession          SEC 申报唯一编号（如 0001463101-26-000013）
-10-K / 10-K/A      年报 / 年报修正案
-8-K / DEF 14A      重大事项即时报告 / 股东大会委托书
-XBRL / iXBRL       财务事实标签化标准 / 其嵌入 HTML 的内联形态
-concept            事实的语义标签名；us-gaap=标准分类账，公司域名=自定义扩展
-dimension          轴(axis)+成员(member)构成的事实限定
-unit: pure / USD   纯数（比率）/ 美元金额
-scale              iXBRL 数字的 10 幂缩放声明；helper 与 parse route 已有
-                   回归覆盖；新增金额类消费仍需金额级断言，见 R5
-companyfacts       SEC 的公司级标准事实聚合 API（无维度事实）
-hdr.sgml           申报头文件，含 8-K 的 <ITEMS> 事项列表
-ecd                委托书高管薪酬 XBRL 分类账（pay-versus-performance 规则）
-SIC                SEC 四位行业分类码
-ASC 606/842/326    收入确认 / 租赁 / 信用损失会计准则（分别解释 RPO 普适、
-                   FinanceLease 概念普遍存在、CreditLoss 概念普遍存在）
-CET1 / Tier 1      普通股一级资本 / 一级资本（银行监管资本层级）
-RWA                风险加权资产；资本比率的分母
-Basel 标准法/高级法  两种 RWA 计算方法学（standardized / advanced）
-监管阈值            资本充足及格线(7.0%)、well-capitalized 线(6.5%)等最低要求，
-                   与实际比率同格式共存于年报，须词法隔离
-RPO / cRPO         合同剩余履约义务 / 其未来 12 个月内部分（≠ARR）
-RevPAR/ADR/occupancy  每间可售房收入/平均房价/入住率；RevPAR=ADR×occupancy
-captive finance    企业专属金融子公司（Ford Credit 型）
-stub period        存续残段：主体年中成立导致的不足一年报告期
-候选链              同一指标按优先级排列的概念探测序列
-golden 断言        对基准公司的人工锁定期望值，管道必须独立复现
-守恒律              本项目对 Goodhart 定律的工程表述：门禁边界即质量边界，
-                   缺陷向未度量维度迁移
-correct-by-construction  构造即正确：门禁咬现场重算而非落盘文件，篡改无效
-tamper test        篡改测试：故意破坏输入验证防线是否真有牙
-LIGHT_REVIEW_MODE  剔除大体积证据的审核包模式，须显式 marker 声明
-```
+[考证] 截至 2026-07-15，SEC 当前公开测试套件页面列出的版本日期为 2026-03-16，EDGAR Filer Manual Volume II 为 Version 77；这些是 registry 输入，不得硬编码成永久常量。Arelle 当前公开说明支持 XBRL 2.1、Dimensions、Taxonomy Packages、Inline XBRL 1.1 和 SEC EFM validation；项目仍必须固定具体版本、插件和运行 manifest，并保留独立 shadow 与项目级业务验证。
