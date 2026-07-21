@@ -1,0 +1,259 @@
+{
+  "schema_version": "0.1.0",
+  "status": "active",
+  "purpose": "SEC_metrics 当前 SEC-only 单财年批处理能力、限制、责任和用户可见行为的机器可读真相源。",
+  "rules": [
+    "Markdown 文档只能引用稳定 anchor_id，不得引用 JSON path、数组下标或 schema 内部路径。",
+    "废弃 anchor_id 必须保留登记，且不得复用于不同含义。",
+    "没有自动测试的契约必须使用 test_anchor: null，并明确 untested_reason 与 pending_since。",
+    "契约只描述当前代码、配置、测试和可复核产物，不把规划中的 vNext、前端、API、调度或数据库写成已实现能力。"
+  ],
+  "contracts": {
+    "capabilities": [
+      {
+        "anchor_id": "CAPABILITY.sec_latest_fiscal_batch",
+        "type": "capability",
+        "status": "active",
+        "statement": "对 company registry 中配置的逻辑公司定位最新年度 SEC filing，建立身份与 filing inventory，并生成按行业适用性约束的指标矩阵。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": "scripts/sec_pipeline.py::check_metrics_matrix_applicability_matches_02_04_spec",
+        "test_status": "validation_gate_partial",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "CAPABILITY.sec_governance_risk_event_signals",
+        "type": "capability",
+        "status": "active",
+        "statement": "从 DEF 14A、10-K 文本和财年窗口内 8-K 生成治理、风险、法律与事件信号，并保留来源证据或明确降级状态。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "现有 repair gate 只覆盖部分组件与证据约束，没有一条独立测试证明全部 C、D、E 信号的端到端行为。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "CAPABILITY.audit_ready_outputs",
+        "type": "capability",
+        "status": "active",
+        "statement": "生成指标、证据、coverage、异常清单、Golden、repair validation、分层审计和中文报告，供人工复核当前批次。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": "scripts/sec_pipeline.py::check_coverage_join",
+        "test_status": "validation_gate_partial",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "CAPABILITY.validation_verdict",
+        "type": "capability",
+        "status": "active",
+        "statement": "根据 Golden、P0 repair validation 与审计结果生成 GO、GO WITH CAVEATS 或 NO-GO 的流水线自判。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": "scripts/sec_pipeline.py::check_golden_results_all_pass",
+        "test_status": "validation_gate_partial",
+        "since": "2026-07-21"
+      }
+    ],
+    "capability_boundaries": [
+      {
+        "anchor_id": "BOUNDARY.configured_batch_not_interactive",
+        "type": "capability_boundary",
+        "status": "active",
+        "statement": "当前入口是配置驱动的固定阶段 CLI，不支持自然语言问答、交互式追问，或运行时任意选择公司、日期和指标的查询。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "入口形态由 wrapper 与 run_stage 代码审查证明，尚无专门的负能力测试。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BOUNDARY.sec_only_point_in_time",
+        "type": "capability_boundary",
+        "status": "active",
+        "statement": "只消费 SEC 官方 filing 数据；结果是执行时可见的最近年度申报快照，不是实时行情、新闻或第三方数据。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": "scripts/sec_pipeline.py::check_requests_log_sec_only",
+        "test_status": "validation_gate",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BOUNDARY.complex_extraction_can_degrade",
+        "type": "capability_boundary",
+        "status": "active",
+        "statement": "复杂表格、维度债务及部分治理和风险指标可能降级为 NOT_EXTRACTED、NEEDS_REVIEW 或其他明确状态，系统不保证每个格子都有数值。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": "scripts/sec_pipeline.py::check_ford_b06_captive_finance_still_needs_review",
+        "test_status": "validation_gate_partial",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BOUNDARY.not_production_service",
+        "type": "capability_boundary",
+        "status": "active",
+        "statement": "当前项目不是前端、API、daily scheduler、报价模型、生产数据库服务或已完成切换的 vNext 发布系统。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "这是仓库形态与部署负能力边界，没有当前自动化测试。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BOUNDARY.light_package_not_full_validation",
+        "type": "capability_boundary",
+        "status": "active",
+        "statement": "light review 只验证随包可复核范围，不得被描述为 full validation；被跳过的检查必须显式可见。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": "tests/test_sec_pipeline_validation.py::LightGoldenIntegrityTest.test_light_marker_allows_declared_light_mode",
+        "test_status": "automated",
+        "since": "2026-07-21"
+      }
+    ],
+    "responsibility_boundaries": [
+      {
+        "anchor_id": "RESPONSIBILITY.human_reviews_caveats_and_decides",
+        "type": "responsibility_boundary",
+        "status": "active",
+        "statement": "人类负责复核近似、定性、缺失、PARSE_FAILED 与 NEEDS_REVIEW 结果，并承担投资、信用、报价、监管或其他最终业务决定。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "最终业务责任属于组织治理，不能由当前代码自动验证。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "RESPONSIBILITY.operator_owns_sec_identity_and_run",
+        "type": "responsibility_boundary",
+        "status": "active",
+        "statement": "运行负责人提供有效 SEC organization 和 contact email，维护 company registry，并从干净工作区按规定顺序运行完整阶段。",
+        "audience": ["operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "联系人真实性与运行纪律是人工运维前提，当前代码只验证配置键存在。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "RESPONSIBILITY.external_auditor_owns_acceptance",
+        "type": "responsibility_boundary",
+        "status": "active",
+        "statement": "流水线的 GO 类自判不替代外部审计、方法负责人或项目负责人的正式接受结论。",
+        "audience": ["business_user", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "外部接受结论不属于当前流水线自动化范围。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      }
+    ],
+    "agent_behaviors": [
+      {
+        "anchor_id": "BEHAVIOR.explicit_status_no_guess",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "不能可靠发布数值时必须保留明确 status、notes 与限制，不得猜数填满矩阵。",
+        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "test_anchor": "scripts/sec_pipeline.py::check_no_placeholder_notes_in_final_metrics",
+        "test_status": "validation_gate_partial",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BEHAVIOR.numeric_results_require_evidence",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "可采信的非空数值状态必须存在 matching metric evidence，并暴露期间、unit、accession、来源与口径信息。",
+        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "test_anchor": "scripts/sec_pipeline.py::check_numeric_ok_requires_evidence",
+        "test_status": "validation_gate",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BEHAVIOR.event_absence_is_evidenced_zero",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "完整财年窗口 8-K 扫描未命中某事件时，输出零值、NOT_AVAILABLE_SEC 与扫描证据，而不是把零伪装成 OK 数值。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "当前没有针对 8-K 未命中零值语义的独立回归测试。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BEHAVIOR.fail_fast_on_invalid_or_incomplete",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "非法配置、未知阶段、关键 SEC 请求失败、未声明的不完整 workspace 或失败 gate 必须明确失败并非零退出。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/test_sec_pipeline_validation.py::LightGoldenIntegrityTest.test_missing_evidence_without_marker_is_workspace_incomplete",
+        "test_status": "automated_partial",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BEHAVIOR.light_validation_is_explicitly_limited",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "light 结果必须显示 SKIPPED_LIGHT_PACKAGE 项和受限通过状态，不能静默省略缺少 raw evidence 的检查。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": "tests/test_sec_pipeline_validation.py::LightGoldenIntegrityTest.test_light_marker_allows_declared_light_mode",
+        "test_status": "automated",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BEHAVIOR.final_state_requires_full_sequence",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "只有完整执行阶段 00 至 11，并通过独立阶段 12 后的矩阵、报告和 gate 才能作为完整批次验收对象。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "仓库尚无离线端到端场景测试证明完整阶段顺序与 artifact handoff。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "BEHAVIOR.gate_failure_propagates_to_verdict",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Golden、P0 repair validation、stratified audit 或 workspace 完整性失败必须阻止正常通过，并形成失败状态或 NO-GO。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "report_verdict 与完整 gate 传播尚无独立单元测试。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      }
+    ],
+    "documents": [
+      {
+        "anchor_id": "DOC.business_user_guide",
+        "type": "document",
+        "status": "active",
+        "statement": "docs/business_user_guide.md 是从能力契约与用户可观察行为派生的业务教学文档，不独立声明新能力。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "document_path": "docs/business_user_guide.md",
+        "language": "zh-CN",
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "仓库当前没有 capability contract alignment 自动测试。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "DOC.interact",
+        "type": "document",
+        "status": "active",
+        "statement": "interact.md 是当前 CLI 与文件交付中用户可观察行为和验收不变量的真相源。",
+        "audience": ["business_user", "operator", "reviewer"],
+        "document_path": "interact.md",
+        "language": "zh-CN",
+        "test_anchor": null,
+        "test_status": "not_automated",
+        "untested_reason": "仓库当前没有 capability contract alignment 自动测试。",
+        "pending_since": "2026-07-21",
+        "since": "2026-07-21"
+      }
+    ]
+  }
+}
