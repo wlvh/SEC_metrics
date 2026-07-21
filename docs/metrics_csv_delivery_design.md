@@ -278,7 +278,36 @@ parser_version
 
 暂不增加更多角色。无法归入这四类的场景应先复核数据粒度，而不是立即扩展枚举。
 
-## 7. 当前 `metrics_matrix.csv` 20 列迁移映射
+## 7. 当前 `metrics_matrix.csv` 完整字段字典与迁移映射
+
+### 7.1 全量字段字典
+
+下表逐列解释当前 `outputs/metrics_matrix.csv` 的全部 20 个字段。这里说明的是字段本身的业务含义、当前内容格式、典型值和空值语义，不是数据库类型，也不是后续拆分后的新字段。当前值和数量基于本方案编写时的 230 行快照，重跑批次后可能变化。
+
+| 序号 | 列名 | 中文含义 | 内容与格式 | 当前值或例子 | 空值与使用注意事项 |
+|---:|---|---|---|---|---|
+| 1 | `company` | 逻辑公司展示名称 | UTF-8 文本；当前有 10 个逻辑公司 | `Marriott International`、`JPMorgan Chase`、`Paramount Skydance / Paramount Global` | 当前无空值。它是展示名称，不是稳定技术 ID；Paramount 名称还表达 successor/predecessor 逻辑连续性 |
+| 2 | `cik` | 本条结果实际使用的 SEC registrant CIK | 当前 CSV 保存未补零的数字字符串；当前有 11 个不同 CIK | `1048286`、`92380`、`2041610`、`813828` | 当前无空值。不能把它直接当作逻辑公司唯一键；同一逻辑公司可能因实体连续性使用不同 CIK |
+| 3 | `metric_id` | 指标稳定代码 | 形如 `A01` 至 `E05`；首字母表示指标类别；当前有 39 个代码 | `A01`、`B03`、`C04`、`D02`、`E05` | 当前无空值。A=金融机构，B=一般财务/行业，C=治理，D=风险法律，E=事件 |
+| 4 | `metric_name` | 指标英文展示名称 | UTF-8 文本；与 `metric_id` 一一对应；当前有 39 个名称 | `Revenue`、`EBITDA margin`、`Auditor changes` | 当前无空值。用于阅读，不应脱离 `metric_id` 单独作为稳定关联字段；具体口径以指标定义文档为准 |
+| 5 | `value` | 指标输出值 | CSV 中为文本表达的整数或高精度小数，可为负数 | `26186000000`、`0.04326693227091633466135458167`、`0` | 当前 69 行为空。空值不等于 0，必须结合 `status`；事件行的 0 还要区分命中为零与完整扫描未命中 |
+| 6 | `unit` | `value` 的业务单位 | 枚举：`USD`、`ratio`、`pure`、`percent`、`count`、`flag` 或空值 | `USD`、`ratio`、`percent` | 当前 64 行为空，通常对应定性、缺失或不适用结果。`ratio/pure` 使用小数表达，`percent` 使用百分数值，详细语义见 8.3 |
+| 7 | `status` | 结果状态和可用性语义 | 代码允许 13 个枚举；当前快照出现 12 个 | `OK`、`TEXT_QUAL`、`NOT_AVAILABLE_SEC`、`NEEDS_REVIEW` | 当前无空值。不能折叠为简单成功/失败，也不能只根据 `value` 是否为空推断状态；完整定义见 8.1 |
+| 8 | `source_class` | 结果的主要来源类别或形成方式 | 定义 9 个枚举；当前快照出现 8 个，未出现 `CUSTOM_XBRL` | `STD_XBRL`、`DERIVED`、`MDA`、`8K_ITEM`、`TEXT` | 当前无空值。它回答“主要从哪里来或怎样形成”，不回答结果是否可采信；必须与 `status` 一起阅读，完整定义见 8.2 |
+| 9 | `formula` | 本条结果实际使用的计算公式或抽取方法 | 自由文本；当前有 15 种表达 | `direct`、`(Revenue_t - Revenue_t-1) / Revenue_t-1`、`text/event extraction` | 当前无空值，但可能是 `not numeric in companyfacts stage` 等占位方法说明。它不是指标标准定义的唯一真相源 |
+| 10 | `period_start` | 结果覆盖期间或扫描窗口的开始日期 | ISO `YYYY-MM-DD`；时点型结构化事实通常将开始日写成与结束日相同 | `2025-01-01`、`2025-12-31`、`2025-02-01` | 当前 2 行为空。为空表示当前结果没有可靠开始日，不能自行用自然年初补齐 |
+| 11 | `period_end` | 结果覆盖期间、时点或扫描窗口的结束日期 | ISO `YYYY-MM-DD`；当前有 3 个不同日期 | `2025-12-31`、`2026-01-31`、`2024-12-31` | 当前无空值。它是当前文件最稳定的时间切片字段，但不同公司财年末和特殊连续性期间不可混为同一自然年 |
+| 12 | `fiscal_year` | 命中结构化 companyfacts 时保留的 SEC `fy` 标签 | 年份文本；当前非空值只有 `2025` | `2025` | 当前 150 行为空，主要是文本、治理、事件和特殊抽取。不能用它替代 `period_start/period_end`，也不能把空值理解为无报告期间 |
+| 13 | `fiscal_period` | SEC `fp` 财务期间标签 | 短文本；当前非空值为 `FY` | `FY` | 当前 9 行为空。为空表示该抽取路径没有可靠 `fp`，并不自动表示非年度结果 |
+| 14 | `accession` | 支撑本条结果的 SEC accession number | 单个 accession，或当前旧结构中的分号拼接列表 | `0001048286-26-000007`、`0001048286-26-000007;0001628280-25-004818` | 当前 3 行为空，111 行含分号。多个 accession 不保证能与其他复合字段按位置一一对应；拆分后应进入逐条 evidence |
+| 15 | `form` | 主要来源 filing 的表单类型 | 当前矩阵中为 `10-K` 或空值 | `10-K` | 当前 146 行为空。空值不代表没有 SEC 来源；很多 DEF 14A、8-K、MDA、TEXT 或修复路径没有在该汇总列重复 form |
+| 16 | `filed_date` | 支撑来源的 SEC filing 提交日期 | 单个 ISO 日期，或当前旧结构中的分号拼接列表 | `2026-02-10`、`2026-02-10;2025-02-11` | 当前 15 行为空，105 行含分号。它不是单值日期字段，拆分时应与具体 evidence/accession 绑定，不能只取第一项或最后一项 |
+| 17 | `concept_or_section` | 结构化 concept、多个计算组件，或文本章节/8-K item | 自由文本；多个 XBRL 组件当前常用 `+` 连接 | `Revenues`、`AssetsCurrent+LiabilitiesCurrent`、`Item 1A Risk Factors` | 当前 6 行为空。同一单元格可能表示 concept 列表，也可能表示章节名称，解释时必须结合 `source_class` 和 `formula` |
+| 18 | `context_or_dimension` | XBRL frame/context/dimension，或文本/扫描范围 | 自由文本；当前可能使用分号连接多个 context | `companyfacts:USD:CY2025`、`proxy statement`、`FY-window 8-K accessions scanned` | 当前 15 行为空，57 行含分号。不同来源类型的内容结构不同，不能将它当成统一维度代码直接解析 |
+| 19 | `confidence` | 流水线对本次抽取、选择或判断赋予的置信度 | 0 至 1 的小数字符串；当前范围为 `0.00` 至 `0.95` | `0.95`、`0.90`、`0.65`、`0.00` | 当前无空值。它是方法级提示，不是统计概率、审计接受或投资置信度；`status` 的限制优先于高 confidence |
+| 20 | `notes` | 结果级口径、假设、限制、候选事实及复核说明 | UTF-8 自由文本，可能较长 | `Revenue candidate chain from metric definition.` | 当前无空值。分号可能只是自然语言标点或组件说明，不能按分号机械拆列；采信结果前应阅读相关限制 |
+
+### 7.2 迁移映射
 
 | 当前字段 | 新位置 | 迁移规则 |
 |---|---|---|
