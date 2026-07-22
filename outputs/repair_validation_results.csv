@@ -1,8 +1,12 @@
 check_id,severity,status,details
 validation_package_mode,P0,PASS,mode=FULL_VALIDATION
+required_validation_inputs_available,P0,PASS,all structural and full domain inputs available
+portable_artifact_locators,P0,PASS,portable schemas and artifacts verified; rows=55521
+eightk_event_chain_exact_set,P0,PASS,inventory_rows=151;events=326
+eightk_event_outputs_match_events,P0,PASS,event_metric_keys=60
 no_company_identity_branch_in_production,P0,PASS,no identity literals in production branches
 registry_profile_matches_sic_rules_or_has_override_reason,P0,PASS,registry profiles match SIC rules
-metrics_matrix_applicability_matches_02_04_spec,P0,PASS,main matrix optional B scope matches spec
+metrics_matrix_applicability_matches_02_04_spec,P0,PASS,metrics matrix exact key set matches config contract
 no_unexpected_optional_b_metrics_in_main_matrix,P0,PASS,optional B metric counts match target scope
 c02_matrix_matches_governance_signals,P0,PASS,C02 matrix rows match governance signals
 c02_text_qual_requires_evidence_quote,P0,PASS,C02 TEXT_QUAL rows have evidence quotes
@@ -10,6 +14,7 @@ no_placeholder_notes_in_final_metrics,P0,PASS,no placeholder initialization note
 b06_needs_review_captive_finance_has_blank_main_value_or_candidate_role,P0,PASS,captive-finance B06 main value blank with evidence and sidecar candidate role
 rpo_crpo_prefers_instance_fact,P0,PASS,B12 instance preference verified
 basel_ratio_extractor_not_single_issuer_specific,P0,PASS,Basel ratios and iXBRL scale route verified
+jpm_cet1_capital_scale_crosscheck,P0,PASS,scaled CET1 amount verified
 basel_concept_resolver_handles_tierone_spelling,P0,PASS,TierOne spelling resolves to CET1/A02
 basel_concept_resolver_handles_banking_regulation_ratio_family,P0,PASS,banking regulation ratio family matched
 basel_cet1_never_classified_as_a01,P0,PASS,CET1 concepts excluded from A01
@@ -68,9 +73,9 @@ eleventh_company_behavior_captive_finance,P0,PASS,manufacturing fixture triggers
 eleventh_company_behavior_rpo_crpo,P0,PASS,value=5000000000;note=RPO != ARR; cRPO != ARR
 ok_status_recall_not_regressed_without_reason,P0,PASS,snapshot_rows=130
 coverage_has_evidence_matches_metric_evidence_join,P0,PASS,coverage join matches
-numeric_ok_status_requires_evidence_row,P0,PASS,all numeric OK rows evidenced
+numeric_ok_status_requires_evidence_row,P0,PASS,all numeric OK rows have complete matching evidence
 d04_missing_going_concern_has_explicit_text,P0,PASS,D04 text explicit
 existing_golden_results_still_pass,P0,PASS,rows=63
-requests_log_sec_only,P0,PASS,rows=859
-stratified_audit_all_pass_or_explicitly_caveated,P0,PASS,rows=20
-existing_repair_validation_still_pass,P0,PASS,all gates pass
+requests_log_sec_only,P0,NOT_EVALUATED_MISSING_EVIDENCE,0:response_body_hash_mismatch;1:response_body_hash_mismatch;2:response_body_hash_mismatch;3:response_body_hash_mismatch;4:response_body_hash_mismatch;426:response_body_hash_mismatch;427:response_body_hash_mismatch;428:response_body_hash_mismatch;429:response_body_hash_mismatch;591:response_body_hash_mismatch;592:response_body_hash_mismatch;615:response_body_hash_mismatch;616:response_body_hash_mismatch;617:response_body_hash_mismatch;619:response_body_hash_mismatch;620:response_body_hash_mismatch;621:response_body_hash_mismatch;622:response_body_hash_mismatch;623:response_body_hash_mismatch;624:response_body_hash_mismatch
+stratified_audit_all_pass_or_explicitly_caveated,P0,PASS,rows=20 exact_sample=true
+validation_gate_result,P0,FAIL,requests_log_sec_only

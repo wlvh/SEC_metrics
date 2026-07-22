@@ -7,7 +7,7 @@ Purpose:
     text signals, golden assertions, and the final Chinese report.
 
 Call relationships:
-    scripts/00_*.py through scripts/11_*.py call run_stage(stage_name=...).
+    scripts/00_*.py through scripts/12_*.py call run_stage(stage_name=...).
     run_stage dispatches to stage_* functions in this file.
     Every SEC request goes through sec_http.SecHttpClient.
 """
@@ -16,20 +16,41 @@ from __future__ import annotations
 
 import ast
 import csv
+import hashlib
 import json
-import math
 import re
+import subprocess
 import sys
+import uuid
+from collections import Counter
 from dataclasses import dataclass
 from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
+from functools import lru_cache
 from html.parser import HTMLParser
 from itertools import permutations
 from pathlib import Path
-from typing import Iterable
+from urllib.parse import urlparse
 from xml.etree import ElementTree
 
-from sec_http import SecHttpClient
+from sec_http import (
+    REDIRECT_DISABLED_ERROR_PREFIX,
+    REQUEST_LOG_FIELDNAMES,
+    SecHttpClient,
+    legacy_repository_path_candidates,
+    migrate_request_log,
+    parse_request_log_rows,
+    request_accession,
+    request_artifact_candidate,
+    request_log_source_url,
+    validate_official_sec_url,
+    validate_request_log_manifest,
+    write_repository_bytes_atomically,
+)
+from git_workspace import (
+    git_checkout_metadata_error,
+    sanitized_git_environment,
+)
 from sec_urls import (
     accession_directory_url,
     accession_document_url,
@@ -52,6 +73,35 @@ COMPANY_REGISTRY_PATH = WORKDIR / "config" / "company_registry.csv"
 METRIC_APPLICABILITY_PATH = WORKDIR / "config" / "metric_applicability.yaml"
 REQUEST_LOG_PATH = WORKDIR / "evidence" / "requests_log.csv"
 LIGHT_REVIEW_MARKER_PATH = WORKDIR / "LIGHT_REVIEW_PACKAGE.marker"
+SUBMISSION_SUPPLEMENTAL_LIMIT = 12
+
+VALIDATION_STATUSES = {
+    "PASS",
+    "FAIL",
+    "SKIPPED_LIGHT_PACKAGE",
+    "NOT_EVALUATED_MISSING_EVIDENCE",
+    "WORKSPACE_INCOMPLETE",
+}
+
+VALIDATION_TRACKED_ARTIFACTS = [
+    "implementation_map.csv",
+    "spec_implementation_audit.csv",
+    "stub_period_metrics.csv",
+    "stratified_audit.csv",
+    "scalability_audit.csv",
+    "repair_validation_results.csv",
+]
+VALIDATION_MANIFEST_MODES = {
+    "FULL_VALIDATION",
+    "LIGHT_REVIEW_MODE",
+    "WORKSPACE_INCOMPLETE",
+}
+VALIDATION_MANIFEST_RESULTS = {
+    "IN_PROGRESS",
+    "PASSED",
+    "PASSED_WITH_CAVEATS",
+    "FAILED",
+}
 
 ALLOWED_STATUSES = {
     "OK",
@@ -97,7 +147,8 @@ EVIDENCE_FIELDNAMES = [
     "cik",
     "metric_id",
     "source_url",
-    "local_path",
+    "repo_relative_path",
+    "content_sha256",
     "accession",
     "document_name",
     "concept_or_section",
@@ -154,10 +205,10 @@ MATERIAL_FIELDNAMES = [
     "document_name",
     "document_type",
     "source_url",
-    "local_path",
+    "repo_relative_path",
+    "content_sha256",
     "status_code",
     "content_length",
-    "sha256",
 ]
 
 INSTANCE_FIELDNAMES = [
@@ -165,6 +216,9 @@ INSTANCE_FIELDNAMES = [
     "cik",
     "accession",
     "document_name",
+    "source_url",
+    "repo_relative_path",
+    "content_sha256",
     "namespace",
     "concept",
     "unit",
@@ -173,21 +227,69 @@ INSTANCE_FIELDNAMES = [
     "period_start",
     "period_end",
     "value",
-    "source_path",
+]
+
+REVIEW_EXTRACT_FIELDNAMES = [
+    "source_file",
+    "company",
+    "cik",
+    "accession",
+    "document_name",
+    "source_url",
+    "repo_relative_path",
+    "content_sha256",
+    "concept",
+    "namespace",
+    "unit",
+    "context",
+    "dimensions",
+    "period_start",
+    "period_end",
+    "value",
+]
+
+GOLDEN_RESULT_FIELDNAMES = [
+    "assertion_id",
+    "description",
+    "expected",
+    "actual",
+    "status",
+    "evidence_path",
+    "notes",
+]
+
+G2_FINANCIAL_ASSETSCURRENT_ASSERTION_ID = "G2_financial_assetscurrent_b08"
+G2_FINANCIAL_NON_STD_METRIC_IDS = ("A01", "A02")
+G2_CAPTIVE_FINANCE_ASSERTION_ID = "G2_captive_finance_b06_dimension_review"
+G2_AUDITORNAME_ASSERTION_ID = "G2_auditorname_material_source"
+
+GOLDEN_CANDIDATE_FIELDNAMES = [
+    "company",
+    "metric_name",
+    "value",
+    "unit",
+    "status",
+    "accession",
+    "concept",
+    "period",
+    "filed_date",
+    "evidence_path",
 ]
 
 EVENT_FIELDNAMES = [
     "company",
     "cik",
     "accession",
+    "document_name",
+    "source_url",
+    "repo_relative_path",
+    "content_sha256",
     "filing_date",
     "item_code",
     "item_source",
     "mapping_method",
     "confidence",
     "brief",
-    "source_url",
-    "local_path",
 ]
 
 GOVERNANCE_FIELDNAMES = [
@@ -198,8 +300,10 @@ GOVERNANCE_FIELDNAMES = [
     "value",
     "status",
     "source_url",
-    "local_path",
+    "repo_relative_path",
+    "content_sha256",
     "accession",
+    "document_name",
     "concept_or_section",
     "evidence_quote",
     "notes",
@@ -245,6 +349,14 @@ STRATIFIED_AUDIT_FIELDNAMES = [
     "audit_notes",
 ]
 
+STRATIFIED_AUDIT_SPECS = [
+    ("STD_XBRL_DERIVED", {"STD_XBRL", "DERIVED"}, 8),
+    ("DIM_XBRL", {"DIM_XBRL"}, 4),
+    ("DEF14A", {"DEF14A"}, 3),
+    ("MDA_TEXT", {"MDA", "TEXT"}, 3),
+    ("8K_ITEM", {"8K_ITEM"}, 2),
+]
+
 SCALABILITY_AUDIT_FIELDNAMES = [
     "file",
     "line",
@@ -261,7 +373,8 @@ BASEL_RATIO_CANDIDATE_FIELDNAMES = [
     "metric_id",
     "candidate_role",
     "source_url",
-    "local_path",
+    "repo_relative_path",
+    "content_sha256",
     "accession",
     "document_name",
     "concept",
@@ -308,7 +421,9 @@ OPTIONAL_B_OBSERVATION_FIELDNAMES = [
     "context_or_dimension",
     "candidate_role",
     "source_url",
-    "local_path",
+    "repo_relative_path",
+    "content_sha256",
+    "document_name",
     "evidence_quote",
     "notes",
 ]
@@ -326,7 +441,9 @@ B06_CANDIDATE_FIELDNAMES = [
     "context_or_dimension",
     "candidate_role",
     "source_url",
-    "local_path",
+    "repo_relative_path",
+    "content_sha256",
+    "document_name",
     "evidence_quote",
     "notes",
 ]
@@ -411,7 +528,10 @@ DA_COMPOSITION_CHAIN = [
 OPERATING_INCOME_CHAIN = ["OperatingIncomeLoss"]
 PRETAX_CONTINUING_INCOME_CHAIN = [
     "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
-    "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments",
+    (
+        "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterest"
+        "AndIncomeLossFromEquityMethodInvestments"
+    ),
 ]
 NONOPERATING_BRIDGE_CHAIN = [
     "NonoperatingIncomeExpense",
@@ -545,6 +665,24 @@ def utc_now_iso() -> str:
     return datetime.now(tz=timezone.utc).isoformat()
 
 
+def is_utc_iso_timestamp(*, value: str) -> bool:
+    """Return whether a string is an ISO-8601 timestamp in UTC."""
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError:
+        return False
+    return parsed.tzinfo is not None and parsed.utcoffset() == timedelta(0)
+
+
+def is_official_sec_url(*, source_url: str) -> bool:
+    """Return whether a URL uses one of the two allowed SEC origins."""
+    try:
+        validate_official_sec_url(url=source_url)
+    except ValueError:
+        return False
+    return True
+
+
 def client() -> SecHttpClient:
     """Create the configured SEC HTTP client used by every stage."""
     return SecHttpClient(
@@ -600,6 +738,1026 @@ def optional_key(*, mapping: dict, key: str, default: object) -> object:
     return default
 
 
+def artifact_path_parts(*, path_text: str) -> list[str]:
+    """Split a semicolon-delimited artifact path field.
+
+    Args:
+        path_text: One path or aligned component paths used by derived metrics.
+
+    Returns:
+        Non-empty path strings in their original order.
+    """
+    return [part for part in path_text.split(";") if part]
+
+
+def repository_artifact_candidate(*, relative_path: str) -> Path:
+    """Return one repository-contained artifact candidate.
+
+    Args:
+        relative_path: Repository-relative artifact locator.
+
+    Returns:
+        Candidate path under the current WORKDIR without resolving away its
+        repository spelling.
+    """
+    path = Path(relative_path)
+    if path.is_absolute() or ".." in path.parts:
+        raise ValueError(f"Artifact path escapes repository: {relative_path}")
+    candidate = WORKDIR / path
+    # Lexical checks do not detect a repository symlink targeting external
+    # bytes; the resolved target must remain inside the current clone.
+    if not candidate.resolve(strict=False).is_relative_to(WORKDIR.resolve()):
+        raise ValueError(f"Artifact path escapes repository: {relative_path}")
+    return candidate
+
+
+def artifact_relocation_identity_matches(
+    *,
+    path: Path,
+    relative_path: Path,
+    accession: str,
+    document_name: str,
+    source_url: str,
+    cik: str,
+    content_sha256: str,
+) -> bool:
+    """Return whether one legacy suffix matches its declared SEC identity.
+
+    Args:
+        path: Existing current-clone candidate.
+        relative_path: Candidate repository-relative spelling.
+        accession: Declared filing accession, when applicable.
+        document_name: Declared response document name.
+        source_url: Declared official SEC URL.
+        cik: Declared filing CIK, when applicable.
+        content_sha256: Declared artifact digest, when available.
+
+    Returns:
+        True when structural path, document, URL, accession, and CIK agree.
+    """
+    if not path.is_file() or (document_name and path.name != document_name):
+        return False
+    if content_sha256 and file_sha256(path_text=str(path)) != content_sha256:
+        return False
+    archive_cik, derived_accession = archive_url_identity(
+        source_url=source_url,
+    )
+    if derived_accession:
+        if accession and accession != derived_accession:
+            return False
+        if (
+            document_name
+            and Path(urlparse(source_url).path).name != document_name
+        ):
+            return False
+        if "accession_materials" in relative_path.parts and (
+            not accession_material_path_matches(
+                path=relative_path,
+                accession=derived_accession,
+                cik=cik if cik else archive_cik,
+            )
+        ):
+            return False
+    companyfacts_cik = companyfacts_url_cik(source_url=source_url)
+    if companyfacts_cik:
+        expected_name = f"CIK{int(companyfacts_cik):010d}.json"
+        expected_path = f"evidence/companyfacts/{expected_name}"
+        if relative_path.as_posix() != expected_path:
+            return False
+        if cik:
+            try:
+                if str(int(cik)) != companyfacts_cik:
+                    return False
+            except ValueError:
+                return False
+    return True
+
+
+def repo_relative_artifact_path(
+    *,
+    path_text: str,
+    row: dict,
+) -> str:
+    """Convert one current or legacy artifact path to repository-relative form.
+
+    Args:
+        path_text: Relative path, current absolute path, or an absolute legacy
+            path from another clone.
+        row: Locator row carrying optional hash and SEC identity fields.
+
+    Returns:
+        POSIX repository-relative path. An unrelated external absolute path
+        yields an empty string because it cannot be authoritative evidence.
+    """
+    path = Path(path_text)
+    content_sha256 = (
+        str(row["content_sha256"])
+        if "content_sha256" in row and row["content_sha256"]
+        else str(row["sha256"])
+        if "sha256" in row and row["sha256"]
+        else ""
+    )
+    accession = str(row["accession"]) if "accession" in row else ""
+    document_name = (
+        str(row["document_name"])
+        if "document_name" in row and row["document_name"]
+        else path.name
+    )
+    source_url = str(row["source_url"]) if "source_url" in row else ""
+    cik = str(row["cik"]) if "cik" in row else ""
+    relative_path = path
+    if not path.is_absolute():
+        repository_artifact_candidate(relative_path=path.as_posix())
+        return path.as_posix()
+    try:
+        relative_path = path.relative_to(WORKDIR)
+    except ValueError:
+        candidates = legacy_repository_path_candidates(path=path)
+        if not candidates:
+            return ""
+        candidate_pairs = [
+            (
+                candidate,
+                repository_artifact_candidate(
+                    relative_path=candidate.as_posix(),
+                ),
+            )
+            for candidate in candidates
+        ]
+        if len(candidate_pairs) == 1:
+            # Preserve existing single-anchor migration; validation remains
+            # responsible for reporting missing or hash-mismatched evidence.
+            relative_path = candidate_pairs[0][0]
+        else:
+            matched = [
+                pair
+                for pair in candidate_pairs
+                if artifact_relocation_identity_matches(
+                    path=pair[1],
+                    relative_path=pair[0],
+                    accession=accession,
+                    document_name=document_name,
+                    source_url=source_url,
+                    cik=cik,
+                    content_sha256=content_sha256,
+                )
+            ]
+            if len(matched) == 1:
+                relative_path = matched[0][0]
+            elif not matched:
+                raise FileNotFoundError(
+                    "Legacy artifact has no current-clone identity match: "
+                    f"{path_text}"
+                )
+            else:
+                raise ValueError(
+                    f"Legacy artifact relocation is ambiguous: {path_text}"
+                )
+    repository_artifact_candidate(relative_path=relative_path.as_posix())
+    return relative_path.as_posix()
+
+
+def aligned_locator_component(
+    *,
+    text: str,
+    index: int,
+    component_count: int,
+) -> str:
+    """Return one aligned identity component or blank when not one-to-one.
+
+    Args:
+        text: Empty, scalar, or semicolon-delimited locator identity text.
+        index: Zero-based path component index.
+        component_count: Total number of path components.
+
+    Returns:
+        The aligned field value, or blank for aggregate/non-aligned fields.
+    """
+    parts = artifact_path_parts(path_text=text)
+    return parts[index] if len(parts) == component_count else ""
+
+
+def repo_relative_artifact_paths(
+    *,
+    path_text: str,
+    row: dict,
+) -> str:
+    """Normalize aligned artifact locators using one row's joint identity."""
+    paths = artifact_path_parts(path_text=path_text)
+    content_sha256 = (
+        str(row["content_sha256"])
+        if "content_sha256" in row and row["content_sha256"]
+        else str(row["sha256"])
+        if "sha256" in row and row["sha256"]
+        else ""
+    )
+    accession = str(row["accession"]) if "accession" in row else ""
+    document_name = (
+        str(row["document_name"])
+        if "document_name" in row
+        else ""
+    )
+    source_url = str(row["source_url"]) if "source_url" in row else ""
+    cik = str(row["cik"]) if "cik" in row else ""
+    relative_paths = [
+        repo_relative_artifact_path(
+            path_text=part,
+            row={
+                "content_sha256": aligned_locator_component(
+                    text=content_sha256,
+                    index=index,
+                    component_count=len(paths),
+                ),
+                "accession": aligned_locator_component(
+                    text=accession,
+                    index=index,
+                    component_count=len(paths),
+                ),
+                "document_name": aligned_locator_component(
+                    text=document_name,
+                    index=index,
+                    component_count=len(paths),
+                ),
+                "source_url": aligned_locator_component(
+                    text=source_url,
+                    index=index,
+                    component_count=len(paths),
+                ),
+                "cik": cik,
+            },
+        )
+        for index, part in enumerate(paths)
+    ]
+    return ";".join([path for path in relative_paths if path])
+
+
+@lru_cache(maxsize=None)
+def cached_file_sha256(
+    *,
+    path_text: str,
+    modified_ns: int,
+    changed_ns: int,
+    size_bytes: int,
+) -> str:
+    """Return a cached digest keyed by path and current file identity.
+
+    Args:
+        path_text: Absolute file path.
+        modified_ns: File modification time in nanoseconds.
+        changed_ns: File metadata-change time in nanoseconds. This prevents a
+            same-size rewrite with a restored mtime from reusing a stale hash.
+        size_bytes: Current file size.
+
+    Returns:
+        SHA-256 hex digest for the current bytes.
+    """
+    path = Path(path_text)
+    digest = hashlib.sha256()
+    with path.open(mode="rb") as file_obj:
+        while True:
+            chunk = file_obj.read(1024 * 1024)
+            if not chunk:
+                break
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def file_sha256(*, path_text: str) -> str:
+    """Return the SHA-256 digest for one existing local file.
+
+    Args:
+        path_text: Absolute file path.
+
+    Returns:
+        Hex digest, or an empty string when the candidate does not exist.
+    """
+    path = Path(path_text)
+    if not path.is_file():
+        return ""
+    stat = path.stat()
+    return cached_file_sha256(
+        path_text=str(path),
+        modified_ns=stat.st_mtime_ns,
+        changed_ns=stat.st_ctime_ns,
+        size_bytes=stat.st_size,
+    )
+
+
+def artifact_reference_text(*, row: dict) -> str:
+    """Return the preferred repository-relative locator text for a row.
+
+    Args:
+        row: Artifact or evidence row using the current locator fields or a
+            legacy local_path/source_path field.
+
+    Returns:
+        Repository-relative path text, possibly semicolon-delimited.
+    """
+    if "repo_relative_path" in row and row["repo_relative_path"]:
+        return repo_relative_artifact_paths(
+            path_text=str(row["repo_relative_path"]),
+            row=row,
+        )
+    for legacy_field in ["local_path", "source_path"]:
+        if legacy_field not in row or not row[legacy_field]:
+            continue
+        return repo_relative_artifact_paths(
+            path_text=str(row[legacy_field]),
+            row=row,
+        )
+    return ""
+
+
+def artifact_document_name(*, row: dict) -> str:
+    """Return an explicit document name or derive one from the locator."""
+    path_text = artifact_reference_text(row=row)
+    paths = artifact_path_parts(path_text=path_text)
+    declared_names = artifact_path_parts(
+        path_text=(
+            str(row["document_name"])
+            if "document_name" in row and row["document_name"]
+            else ""
+        ),
+    )
+    if declared_names and (
+        not paths or len(declared_names) == len(paths)
+    ):
+        return ";".join(declared_names)
+    if paths:
+        # document_name is part of the locator identity, not a free-form label;
+        # deriving it keeps multi-component fields aligned for other clones.
+        return ";".join([Path(path).name for path in paths])
+    return ""
+
+
+def artifact_source_url(*, row: dict) -> str:
+    """Return an existing or identity-derived official SEC source URL.
+
+    Args:
+        row: Artifact row containing source_url or a single CIK, accession, and
+            document name.
+
+    Returns:
+        Existing URL, derived SEC archive URL, or an empty string when the row
+        does not identify one SEC document.
+    """
+    if "source_url" in row and row["source_url"]:
+        return str(row["source_url"])
+    accession = str(row["accession"]) if "accession" in row else ""
+    document_name = artifact_document_name(row=row)
+    cik = str(row["cik"]) if "cik" in row else ""
+    if not accession or not document_name or not cik:
+        return ""
+    if ";" in accession or ";" in document_name or ";" in cik:
+        return ""
+    return accession_document_url(
+        cik=int(cik),
+        accession=accession,
+        document_name=document_name,
+    )
+
+
+def artifact_content_hash_text(*, row: dict, relative_paths: str) -> str:
+    """Return aligned content hashes for one or more repository artifacts.
+
+    Args:
+        row: Source row that may already contain current or legacy hash fields.
+        relative_paths: Normalized repository-relative path text.
+
+    Returns:
+        Existing trusted hash text or hashes computed from current local bytes.
+    """
+    # An acquisition hash is the recorded content identity. Recomputing first
+    # would silently bless replacement bytes at the same relative path.
+    if "content_sha256" in row and row["content_sha256"]:
+        return str(row["content_sha256"])
+    if "sha256" in row and row["sha256"]:
+        return str(row["sha256"])
+    computed_hashes = [
+        file_sha256(
+            path_text=str(repository_artifact_candidate(relative_path=path))
+        )
+        for path in artifact_path_parts(path_text=relative_paths)
+    ]
+    if computed_hashes and all(computed_hashes):
+        return ";".join(computed_hashes)
+    return ";".join([digest for digest in computed_hashes if digest])
+
+
+def normalize_csv_row(*, row: dict, fieldnames: list[str]) -> dict:
+    """Normalize one output row to its declared CSV and locator schema.
+
+    Args:
+        row: Source row, including legacy locator fields when migrating.
+        fieldnames: Exact output header.
+
+    Returns:
+        Row containing only declared fields. Portable schemas always write
+        repository-relative paths and content hashes.
+    """
+    source = dict(row)
+    if (
+        "evidence_path" in fieldnames
+        and "evidence_path" in source
+        and source["evidence_path"]
+    ):
+        source["evidence_path"] = repo_relative_artifact_paths(
+            path_text=str(source["evidence_path"]),
+            row={},
+        )
+    if "repo_relative_path" in fieldnames:
+        relative_paths = artifact_reference_text(row=source)
+        source["repo_relative_path"] = relative_paths
+        source["content_sha256"] = artifact_content_hash_text(
+            row=source,
+            relative_paths=relative_paths,
+        )
+        if "document_name" in fieldnames:
+            source["document_name"] = artifact_document_name(row=source)
+        if (
+            "source_url" in fieldnames
+            and (
+                "source_url" not in source
+                or not source["source_url"]
+            )
+        ):
+            source["source_url"] = artifact_source_url(row=source)
+    return {
+        fieldname: source[fieldname] if fieldname in source else ""
+        for fieldname in fieldnames
+    }
+
+
+def rehydrate_artifact_row(*, row: dict) -> dict:
+    """Add current-clone path aliases to a CSV row in memory.
+
+    Args:
+        row: CSV row using current portable fields or legacy absolute paths.
+
+    Returns:
+        The same logical row with local_path/source_path aliases resolved under
+        the current WORKDIR. These aliases are never written by current schemas.
+    """
+    relative_paths = artifact_reference_text(row=row)
+    if not relative_paths:
+        return row
+    absolute_paths = ";".join(
+        [
+            str(repository_artifact_candidate(relative_path=path))
+            for path in artifact_path_parts(path_text=relative_paths)
+        ]
+    )
+    row["repo_relative_path"] = relative_paths
+    row["local_path"] = absolute_paths
+    row["source_path"] = absolute_paths
+    return row
+
+
+def artifact_candidate_matches_hash(*, path: Path, content_sha256: str) -> bool:
+    """Return whether an existing candidate matches the optional content hash."""
+    if not path.is_file():
+        return False
+    if not path.resolve().is_relative_to(WORKDIR.resolve()):
+        return False
+    if not content_sha256:
+        return True
+    return file_sha256(path_text=str(path)) == content_sha256
+
+
+def archive_url_identity(*, source_url: str) -> tuple[str, str]:
+    """Return normalized CIK and accession from one Archives URL."""
+    if not is_official_sec_url(source_url=source_url):
+        return "", ""
+    match = re.fullmatch(
+        pattern=r"/Archives/edgar/data/(\d+)/(\d{18})/[^/]+",
+        string=urlparse(source_url).path,
+    )
+    if match is None:
+        return "", ""
+    compact = match.group(2)
+    return (
+        str(int(match.group(1))),
+        f"{compact[:10]}-{compact[10:12]}-{compact[12:]}",
+    )
+
+
+def companyfacts_url_cik(*, source_url: str) -> str:
+    """Return normalized CIK from one official companyfacts URL."""
+    if not is_official_sec_url(source_url=source_url):
+        return ""
+    match = re.fullmatch(
+        pattern=r"/api/xbrl/companyfacts/CIK(\d{10})\.json",
+        string=urlparse(source_url).path,
+    )
+    if match is None:
+        return ""
+    return str(int(match.group(1)))
+
+
+def accession_material_path_matches(
+    *,
+    path: Path,
+    accession: str,
+    cik: str,
+) -> bool:
+    """Return whether a raw filing path belongs to its CIK and accession.
+
+    Args:
+        path: Repository-relative or absolute artifact path.
+        accession: Hyphenated SEC accession number.
+        cik: Source filing CIK.
+
+    Returns:
+        True only for an evidence/accession_materials directory whose suffix
+        contains the compact declared accession.
+    """
+    candidate = path if path.is_absolute() else WORKDIR / path
+    try:
+        relative_path = candidate.resolve().relative_to(WORKDIR.resolve())
+    except ValueError:
+        return False
+    folder_match = re.search(
+        pattern=r"_(\d+)_(\d{18})$",
+        string=relative_path.parent.name,
+    )
+    if folder_match is None:
+        return False
+    try:
+        normalized_cik = str(int(cik))
+    except (TypeError, ValueError):
+        return False
+    return (
+        relative_path.parts[:2] == ("evidence", "accession_materials")
+        and str(int(folder_match.group(1))) == normalized_cik
+        and folder_match.group(2) == accession.replace("-", "")
+    )
+
+
+@lru_cache(maxsize=2)
+def cached_companyfacts_payload(
+    *,
+    path_text: str,
+    modified_ns: int,
+    changed_ns: int,
+    size_bytes: int,
+) -> dict:
+    """Return cached companyfacts JSON keyed by current file identity."""
+    return read_json_file(path=Path(path_text))
+
+
+def companyfacts_payload(*, path: Path) -> dict:
+    """Return one companyfacts payload without caching stale file bytes."""
+    stat = path.stat()
+    return cached_companyfacts_payload(
+        path_text=str(path),
+        modified_ns=stat.st_mtime_ns,
+        changed_ns=stat.st_ctime_ns,
+        size_bytes=stat.st_size,
+    )
+
+
+def companyfacts_component_matches(
+    *,
+    path: Path,
+    row: dict,
+    verify_provenance: bool,
+) -> bool:
+    """Return whether one component has valid companyfacts identity."""
+    source_urls = artifact_path_parts(
+        path_text=str(row["source_url"]) if "source_url" in row else "",
+    )
+    accessions = artifact_path_parts(
+        path_text=str(row["accession"]) if "accession" in row else "",
+    )
+    document_names = artifact_path_parts(
+        path_text=artifact_document_name(row=row),
+    )
+    if len(source_urls) != 1 or len(accessions) != 1:
+        return False
+    url_cik = companyfacts_url_cik(source_url=source_urls[0])
+    if not url_cik or len(document_names) != 1:
+        return False
+    expected_name = f"CIK{int(url_cik):010d}.json"
+    try:
+        row_cik = str(int(row["cik"]))
+        relative_path = path.resolve(strict=False).relative_to(
+            WORKDIR.resolve()
+        )
+    except (
+        KeyError,
+        OSError,
+        TypeError,
+        ValueError,
+    ):
+        return False
+    if (
+        row_cik != url_cik
+        or document_names[0] != expected_name
+        or relative_path.as_posix() != f"evidence/companyfacts/{expected_name}"
+    ):
+        return False
+    if not verify_provenance:
+        return True
+    try:
+        payload = companyfacts_payload(path=path)
+        payload_cik = str(int(payload["cik"]))
+    except (
+        KeyError,
+        OSError,
+        TypeError,
+        ValueError,
+        json.JSONDecodeError,
+    ):
+        return False
+    if payload_cik != url_cik:
+        return False
+    concept = (
+        str(row["concept_or_section"])
+        if "concept_or_section" in row
+        else ""
+    )
+    context = (
+        str(row["context_or_dimension"])
+        if "context_or_dimension" in row
+        else ""
+    )
+    context_parts = context.split(":")
+    component_unit = (
+        context_parts[1]
+        if len(context_parts) > 1 and context_parts[0] == "companyfacts"
+        else ""
+    )
+    component_frame = (
+        context_parts[2]
+        if len(context_parts) > 2 and context_parts[0] == "companyfacts"
+        else ""
+    )
+    expected_value = str(row["value_raw"]) if "value_raw" in row else ""
+    expected_start = str(row["period_start"]) if "period_start" in row else ""
+    expected_end = str(row["period_end"]) if "period_end" in row else ""
+    facts_root = payload["facts"] if "facts" in payload else {}
+    if not concept or not isinstance(facts_root, dict):
+        return False
+    for concepts in facts_root.values():
+        if not isinstance(concepts, dict) or concept not in concepts:
+            continue
+        concept_payload = concepts[concept]
+        units = concept_payload["units"] if "units" in concept_payload else {}
+        if not isinstance(units, dict):
+            continue
+        for unit, facts in units.items():
+            if component_unit and str(unit) != component_unit:
+                continue
+            for fact in facts:
+                if "accn" not in fact or str(fact["accn"]) != accessions[0]:
+                    continue
+                fact_frame = str(fact["frame"]) if "frame" in fact else ""
+                fact_end = str(fact["end"]) if "end" in fact else ""
+                fact_start = (
+                    str(fact["start"])
+                    if "start" in fact
+                    else fact_end
+                )
+                if component_frame and fact_frame != component_frame:
+                    continue
+                if expected_start and fact_start != expected_start:
+                    continue
+                if expected_end and fact_end != expected_end:
+                    continue
+                if expected_value:
+                    try:
+                        value_matches = Decimal(str(fact["val"])) == Decimal(
+                            expected_value
+                        )
+                    except (InvalidOperation, KeyError, ValueError):
+                        value_matches = False
+                    if not value_matches:
+                        continue
+                return True
+    return False
+
+
+def event_aggregate_pairs_match(*, row: dict) -> bool:
+    """Return whether an event aggregate declares the exact scan pair set."""
+    if "company" not in row or not row["company"]:
+        return False
+    source_urls = artifact_path_parts(path_text=str(row["source_url"]))
+    accessions = artifact_path_parts(path_text=str(row["accession"]))
+    if len(source_urls) != len(accessions):
+        return False
+    declared_pairs = list(zip(source_urls, accessions))
+    try:
+        events = read_csv_file(path=WORKDIR / "outputs" / "events.csv")
+        inventory = read_csv_file(
+            path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
+        )
+    except (OSError, UnicodeDecodeError, csv.Error):
+        return False
+    if event_inventory_coverage_errors(inventory=inventory, events=events):
+        return False
+    expected_pairs = {
+        (event["source_url"], event["accession"])
+        for event in events
+        if event["company"] == row["company"]
+    }
+    return (
+        len(declared_pairs) == len(set(declared_pairs))
+        and set(declared_pairs) == expected_pairs
+    )
+
+
+def is_derived_locator_aggregate(*, row: dict) -> bool:
+    """Return whether a row declares the supported event-scan aggregate.
+
+    Args:
+        row: Portable locator row that may carry metric-evidence semantics.
+
+    Returns:
+        True only for the explicit zero-item scan over outputs/events.csv.
+    """
+    extraction_method = (
+        str(row["extraction_method"])
+        if "extraction_method" in row
+        else ""
+    )
+    return (
+        extraction_method == "eightk_zero_item_scan"
+        and artifact_reference_text(row=row) == "outputs/events.csv"
+        and artifact_document_name(row=row) == "events.csv"
+    )
+
+
+def artifact_candidate_matches_identity(*, path: Path, row: dict) -> bool:
+    """Return whether one candidate matches the row's joint SEC identity.
+
+    Args:
+        path: Existing candidate artifact.
+        row: Scalar portable locator row.
+
+    Returns:
+        True when document, URL, accession, and resolved filing directory all
+        identify the same artifact. Aggregate derived rows remain path/hash
+        bound and are checked by their aligned source/accession pairs.
+    """
+    document_names = artifact_path_parts(
+        path_text=artifact_document_name(row=row),
+    )
+    source_urls = artifact_path_parts(
+        path_text=str(row["source_url"]) if "source_url" in row else "",
+    )
+    accessions = artifact_path_parts(
+        path_text=str(row["accession"]) if "accession" in row else "",
+    )
+    if len(document_names) == 1 and path.name != document_names[0]:
+        return False
+    if is_derived_locator_aggregate(row=row):
+        if len(source_urls) != len(accessions):
+            return False
+        for source_url, accession in zip(source_urls, accessions):
+            if not is_official_sec_url(source_url=source_url):
+                return False
+            _archive_cik, derived_accession = archive_url_identity(
+                source_url=source_url,
+            )
+            if not derived_accession or accession != derived_accession:
+                return False
+        return event_aggregate_pairs_match(row=row)
+    if not source_urls:
+        # Legacy parser rows may predate source_url; portable schema validation
+        # rejects that omission before the full locator gate resolves bytes.
+        return True
+    if len(source_urls) != 1 or len(accessions) != 1:
+        return False
+    source_url = source_urls[0]
+    accession = accessions[0]
+    if companyfacts_url_cik(source_url=source_url):
+        return companyfacts_component_matches(
+            path=path,
+            row=row,
+            verify_provenance=True,
+        )
+    archive_cik, derived_accession = archive_url_identity(
+        source_url=source_url,
+    )
+    if not derived_accession:
+        return False
+    try:
+        row_cik = str(int(row["cik"]))
+    except (KeyError, TypeError, ValueError):
+        return False
+    return (
+        accession == derived_accession
+        and archive_cik == row_cik
+        and len(document_names) == 1
+        and Path(urlparse(source_url).path).name == document_names[0]
+        and accession_material_path_matches(
+            path=path,
+            accession=accession,
+            cik=row_cik,
+        )
+    )
+
+
+def artifact_relocation_candidates(*, row: dict) -> list[Path]:
+    """Return fallback candidates from filing identity and document name.
+
+    Args:
+        row: Artifact row with repository-relative or legacy fields plus
+            accession/document metadata when available.
+
+    Returns:
+        Ordered fallback candidates. Direct repository paths are checked before
+        this function; the original external absolute path is never used.
+    """
+    candidates = []
+    document_name = artifact_document_name(row=row)
+    accession = str(row["accession"]) if "accession" in row else ""
+    if document_name and ";" not in document_name:
+        compact_accession = accession.replace("-", "")
+        if compact_accession:
+            exact_candidates = sorted(
+                (WORKDIR / "evidence" / "accession_materials").glob(
+                    f"*_{compact_accession}/{document_name}",
+                )
+            )
+            if exact_candidates:
+                # Accession plus document name is already the strongest
+                # relocation key; avoid three recursive scans for every fact.
+                return exact_candidates
+        for root in ["evidence", "outputs", "tests"]:
+            root_path = WORKDIR / root
+            if root_path.exists():
+                candidates.extend(sorted(root_path.rglob(document_name)))
+    unique = []
+    seen = set()
+    for candidate in candidates:
+        candidate_text = str(candidate)
+        if candidate_text in seen:
+            continue
+        seen.add(candidate_text)
+        unique.append(candidate)
+    return unique
+
+
+def resolve_artifact_path(*, row: dict) -> Path:
+    """Resolve one artifact under the current clone and verify its hash.
+
+    Args:
+        row: Artifact row with portable locators or legacy path hints.
+
+    Returns:
+        Existing current-clone path. Repository-relative path has priority;
+        accession/document/hash relocation is the fallback.
+    """
+    relative_paths = artifact_path_parts(
+        path_text=artifact_reference_text(row=row),
+    )
+    if len(relative_paths) > 1:
+        raise ValueError("A single artifact path is required for file access")
+    hashes = artifact_path_parts(
+        path_text=(
+            str(row["content_sha256"])
+            if "content_sha256" in row and row["content_sha256"]
+            else str(row["sha256"])
+            if "sha256" in row and row["sha256"]
+            else ""
+        ),
+    )
+    expected_hash = hashes[0] if hashes else ""
+    for relative_path in relative_paths:
+        candidate = repository_artifact_candidate(
+            relative_path=relative_path,
+        )
+        if artifact_candidate_matches_hash(
+            path=candidate,
+            content_sha256=expected_hash,
+        ) and artifact_candidate_matches_identity(path=candidate, row=row):
+            return candidate
+    for candidate in artifact_relocation_candidates(row=row):
+        if artifact_candidate_matches_hash(
+            path=candidate,
+            content_sha256=expected_hash,
+        ) and artifact_candidate_matches_identity(path=candidate, row=row):
+            return candidate
+    raise FileNotFoundError(
+        "Artifact unavailable in current clone; "
+        f"repo_relative_path={artifact_reference_text(row=row)}; "
+        f"accession={row['accession'] if 'accession' in row else ''}; "
+        f"document_name={artifact_document_name(row=row)}"
+    )
+
+
+def artifact_component_row(
+    *,
+    row: dict,
+    index: int,
+    component_count: int,
+) -> dict:
+    """Return one row with aligned evidence semantics for one component."""
+    component = dict(row)
+    semantic_parts = {
+        "concept_or_section": [
+            part
+            for part in str(row["concept_or_section"]).split("+")
+            if part
+        ]
+        if "concept_or_section" in row
+        else [],
+        "context_or_dimension": artifact_path_parts(
+            path_text=str(row["context_or_dimension"]),
+        )
+        if "context_or_dimension" in row
+        else [],
+        "value_raw": artifact_path_parts(
+            path_text=str(row["value_raw"]),
+        )
+        if "value_raw" in row
+        else [],
+    }
+    for field, values in semantic_parts.items():
+        if len(values) == component_count:
+            component[field] = values[index]
+        elif field == "value_raw" and component_count > 1:
+            # Some derived rows store only the final normalized value; it is
+            # not evidence for any individual companyfacts component.
+            component[field] = ""
+    if component_count > 1:
+        component["period_start"] = ""
+        component["period_end"] = ""
+    return component
+
+
+def resolve_artifact_paths(*, row: dict) -> list[Path]:
+    """Resolve every aligned path/hash component in one artifact row.
+
+    Args:
+        row: Artifact row whose locators may be semicolon-delimited.
+
+    Returns:
+        Existing current-clone paths in declared order.
+    """
+    relative_paths = artifact_path_parts(
+        path_text=artifact_reference_text(row=row),
+    )
+    hashes = artifact_path_parts(
+        path_text=(
+            str(row["content_sha256"])
+            if "content_sha256" in row and row["content_sha256"]
+            else ""
+        ),
+    )
+    document_names = artifact_path_parts(
+        path_text=artifact_document_name(row=row),
+    )
+    source_urls = artifact_path_parts(
+        path_text=str(row["source_url"]) if "source_url" in row else "",
+    )
+    accessions = artifact_path_parts(
+        path_text=str(row["accession"]) if "accession" in row else "",
+    )
+    if not relative_paths:
+        raise FileNotFoundError("Artifact row has no repository-relative path")
+    if hashes and len(hashes) != len(relative_paths):
+        raise ValueError("Artifact paths and content hashes are not aligned")
+    resolved = []
+    for index, relative_path in enumerate(relative_paths):
+        component = artifact_component_row(
+            row=row,
+            index=index,
+            component_count=len(relative_paths),
+        )
+        component["repo_relative_path"] = relative_path
+        component["content_sha256"] = hashes[index] if hashes else ""
+        component["document_name"] = (
+            document_names[index]
+            if len(document_names) == len(relative_paths)
+            else Path(relative_path).name
+        )
+        if len(source_urls) == len(relative_paths):
+            component["source_url"] = source_urls[index]
+        if len(accessions) == len(relative_paths):
+            component["accession"] = accessions[index]
+        resolved.append(resolve_artifact_path(row=component))
+    return resolved
+
+
+def csv_line_terminator(*, path: Path) -> str:
+    """Return an existing CSV's newline convention or LF for a new file.
+
+    Args:
+        path: CSV output path before it is opened for writing.
+
+    Returns:
+        CRLF for an existing CRLF file; otherwise LF. Preserving unchanged
+        files avoids repository-wide formatting churn during regeneration.
+    """
+    if not path.is_file():
+        return "\n"
+    with path.open(mode="rb") as file_obj:
+        sample = file_obj.read(8192)
+    return "\r\n" if b"\r\n" in sample else "\n"
+
+
 def write_csv_file(*, path: Path, fieldnames: list[str], rows: list[dict]) -> None:
     """Write CSV rows with a stable header and UTF-8 encoding.
 
@@ -611,18 +1769,23 @@ def write_csv_file(*, path: Path, fieldnames: list[str], rows: list[dict]) -> No
     Expected output:
         A CSV file with exactly the requested header order.
     """
+    # Normalize before opening because a row may cite the output file itself;
+    # hashing after truncation would record the wrong bytes.
+    normalized_rows = [
+        normalize_csv_row(row=row, fieldnames=fieldnames)
+        for row in rows
+    ]
+    line_terminator = csv_line_terminator(path=path)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open(mode="w", encoding="utf-8", newline="") as file_obj:
-        writer = csv.DictWriter(file_obj, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(
+            file_obj,
+            fieldnames=fieldnames,
+            extrasaction="ignore",
+            lineterminator=line_terminator,
+        )
         writer.writeheader()
-        for row in rows:
-            normalized = {}
-            for fieldname in fieldnames:
-                if fieldname in row:
-                    normalized[fieldname] = row[fieldname]
-                else:
-                    normalized[fieldname] = ""
-            writer.writerow(normalized)
+        writer.writerows(normalized_rows)
 
 
 def append_csv_file(*, path: Path, fieldnames: list[str], rows: list[dict]) -> None:
@@ -638,18 +1801,32 @@ def append_csv_file(*, path: Path, fieldnames: list[str], rows: list[dict]) -> N
     """
     path.parent.mkdir(parents=True, exist_ok=True)
     file_exists = path.exists()
+    if file_exists:
+        with path.open(mode="r", encoding="utf-8", newline="") as file_obj:
+            existing_header = next(csv.reader(file_obj), [])
+        if existing_header != fieldnames:
+            existing_rows = read_csv_file(path=path)
+            write_csv_file(
+                path=path,
+                fieldnames=fieldnames,
+                rows=existing_rows + rows,
+            )
+            return
+    normalized_rows = [
+        normalize_csv_row(row=row, fieldnames=fieldnames)
+        for row in rows
+    ]
+    line_terminator = csv_line_terminator(path=path)
     with path.open(mode="a", encoding="utf-8", newline="") as file_obj:
-        writer = csv.DictWriter(file_obj, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(
+            file_obj,
+            fieldnames=fieldnames,
+            extrasaction="ignore",
+            lineterminator=line_terminator,
+        )
         if not file_exists:
             writer.writeheader()
-        for row in rows:
-            normalized = {}
-            for fieldname in fieldnames:
-                if fieldname in row:
-                    normalized[fieldname] = row[fieldname]
-                else:
-                    normalized[fieldname] = ""
-            writer.writerow(normalized)
+        writer.writerows(normalized_rows)
 
 
 def read_csv_file(*, path: Path) -> list[dict]:
@@ -666,7 +1843,10 @@ def read_csv_file(*, path: Path) -> list[dict]:
         print(f"CSV not found; returning empty rows: {path}")
         return []
     with path.open(mode="r", encoding="utf-8", newline="") as file_obj:
-        return list(csv.DictReader(file_obj))
+        return [
+            rehydrate_artifact_row(row=row)
+            for row in csv.DictReader(file_obj)
+        ]
 
 
 def path_has_matching_files(*, path: Path, pattern: str) -> bool:
@@ -732,6 +1912,292 @@ def validation_package_mode() -> tuple[str, list[str]]:
     if LIGHT_REVIEW_MARKER_PATH.exists():
         return "LIGHT_REVIEW_MODE", reasons
     return "WORKSPACE_INCOMPLETE", reasons
+
+
+def validation_run_manifest_path() -> Path:
+    """Return the current workspace validation run manifest path."""
+    return WORKDIR / "outputs" / "validation_run_manifest.json"
+
+
+def current_source_commit() -> str:
+    """Return the current Git commit with an explicit dirty-tree marker.
+
+    Returns:
+        Full Git commit hash, suffixed with +dirty when tracked or untracked
+        files differ, or UNAVAILABLE_NON_GIT_WORKSPACE for extracted packages.
+    """
+    metadata_error = git_checkout_metadata_error(repo_root=WORKDIR)
+    if metadata_error:
+        print(f"Git source commit unavailable: {metadata_error}")
+        return "UNAVAILABLE_NON_GIT_WORKSPACE"
+    try:
+        result = subprocess.run(
+            args=["git", "rev-parse", "HEAD"],
+            cwd=WORKDIR,
+            check=False,
+            capture_output=True,
+            text=True,
+            env=sanitized_git_environment(),
+        )
+    except OSError as error:
+        print(f"Git source commit unavailable: {error}")
+        return "UNAVAILABLE_NON_GIT_WORKSPACE"
+    if result.returncode != 0:
+        print(f"Git source commit unavailable: {result.stderr.strip()}")
+        return "UNAVAILABLE_NON_GIT_WORKSPACE"
+    commit = result.stdout.strip()
+    if not commit:
+        return "UNAVAILABLE_NON_GIT_WORKSPACE"
+    try:
+        status_result = subprocess.run(
+            args=["git", "status", "--porcelain", "--untracked-files=normal"],
+            cwd=WORKDIR,
+            check=False,
+            capture_output=True,
+            text=True,
+            env=sanitized_git_environment(),
+        )
+    except OSError as error:
+        print(f"Git worktree status unavailable: {error}")
+        return f"{commit}+status-unknown"
+    if status_result.returncode != 0:
+        print(f"Git worktree status unavailable: {status_result.stderr.strip()}")
+        return f"{commit}+status-unknown"
+    return f"{commit}+dirty" if status_result.stdout.strip() else commit
+
+
+def validation_manifest_errors(*, manifest: dict) -> list[str]:
+    """Return deterministic structural and state errors for one run manifest.
+
+    Args:
+        manifest: Candidate validation run evidence.
+
+    Returns:
+        Empty list only when fields, enums, and artifact partition are valid.
+    """
+    required_keys = {
+        "run_id",
+        "source_commit",
+        "started_at_utc",
+        "mode",
+        "refreshed_artifacts",
+        "not_refreshed_artifacts",
+        "result",
+    }
+    errors = []
+    missing_keys = sorted(required_keys - set(manifest))
+    unexpected_keys = sorted(set(manifest) - required_keys)
+    if missing_keys:
+        errors.append("missing keys: " + ",".join(missing_keys))
+    if unexpected_keys:
+        errors.append("unexpected keys: " + ",".join(unexpected_keys))
+    if missing_keys:
+        return errors
+    for key in ["run_id", "source_commit", "started_at_utc"]:
+        if not isinstance(manifest[key], str) or not manifest[key].strip():
+            errors.append(f"{key} must be a non-empty string")
+    started_at_utc = manifest["started_at_utc"]
+    if (
+        isinstance(started_at_utc, str)
+        and started_at_utc.strip()
+        and not is_utc_iso_timestamp(value=started_at_utc)
+    ):
+        errors.append("started_at_utc must be an ISO 8601 UTC timestamp")
+    mode = manifest["mode"]
+    result = manifest["result"]
+    if not isinstance(mode, str) or mode not in VALIDATION_MANIFEST_MODES:
+        errors.append(f"unknown mode: {mode}")
+    if (
+        not isinstance(result, str)
+        or result not in VALIDATION_MANIFEST_RESULTS
+    ):
+        errors.append(f"unknown result: {result}")
+    refreshed = manifest["refreshed_artifacts"]
+    not_refreshed = manifest["not_refreshed_artifacts"]
+    if not isinstance(refreshed, list) or not isinstance(not_refreshed, list):
+        errors.append("artifact lists must be arrays")
+        return errors
+    if any(not isinstance(name, str) for name in refreshed + not_refreshed):
+        errors.append("artifact names must be strings")
+        return errors
+    if len(refreshed) != len(set(refreshed)):
+        errors.append("refreshed_artifacts contains duplicates")
+    if len(not_refreshed) != len(set(not_refreshed)):
+        errors.append("not_refreshed_artifacts contains duplicates")
+    refreshed_set = set(refreshed)
+    not_refreshed_set = set(not_refreshed)
+    tracked_set = set(VALIDATION_TRACKED_ARTIFACTS)
+    if refreshed_set & not_refreshed_set:
+        errors.append("artifact lists overlap")
+    if refreshed_set | not_refreshed_set != tracked_set:
+        errors.append("artifact lists must partition tracked artifacts")
+    if (
+        isinstance(mode, str)
+        and mode in VALIDATION_MANIFEST_MODES
+        and isinstance(result, str)
+        and result in VALIDATION_MANIFEST_RESULTS
+    ):
+        terminal_results = {
+            "FULL_VALIDATION": {"PASSED", "FAILED"},
+            "LIGHT_REVIEW_MODE": {"PASSED_WITH_CAVEATS", "FAILED"},
+            "WORKSPACE_INCOMPLETE": {"FAILED"},
+        }
+        if result != "IN_PROGRESS" and result not in terminal_results[mode]:
+            errors.append(f"result {result} is invalid for mode {mode}")
+        required_success_artifacts = {
+            ("FULL_VALIDATION", "PASSED"): tracked_set,
+            ("LIGHT_REVIEW_MODE", "PASSED_WITH_CAVEATS"): tracked_set
+            - {"stub_period_metrics.csv"},
+        }
+        mode_result = (mode, result)
+        required_refreshed = (
+            required_success_artifacts[mode_result]
+            if mode_result in required_success_artifacts
+            else set()
+        )
+        missing_success_artifacts = sorted(
+            required_refreshed - refreshed_set
+        )
+        if missing_success_artifacts:
+            errors.append(
+                "successful run did not refresh required artifacts: "
+                + ",".join(missing_success_artifacts)
+            )
+    return errors
+
+
+def new_validation_run_manifest(*, mode: str, started_at_utc: str) -> dict:
+    """Build the initial manifest before validation artifacts are refreshed.
+
+    Args:
+        mode: FULL_VALIDATION, LIGHT_REVIEW_MODE, or WORKSPACE_INCOMPLETE.
+        started_at_utc: UTC timestamp captured before the first validation write.
+
+    Returns:
+        Minimal run evidence with every tracked artifact initially not refreshed.
+    """
+    if mode not in VALIDATION_MANIFEST_MODES:
+        raise ValueError(f"Unknown validation manifest mode: {mode}")
+    manifest = {
+        "run_id": str(uuid.uuid4()),
+        "source_commit": current_source_commit(),
+        "started_at_utc": started_at_utc,
+        "mode": mode,
+        "refreshed_artifacts": [],
+        "not_refreshed_artifacts": list(VALIDATION_TRACKED_ARTIFACTS),
+        "result": "IN_PROGRESS",
+    }
+    if validation_manifest_errors(manifest=manifest):
+        raise ValueError("New validation manifest is invalid")
+    return manifest
+
+
+def write_utf8_text_atomically(*, path: Path, text: str) -> None:
+    """Atomically replace one repository text artifact without aliases.
+
+    Args:
+        path: Final repository-owned regular-file path.
+        text: Exact UTF-8 content to persist.
+
+    Expected output:
+        The lexical target is a regular file containing exactly ``text``;
+        symlink, directory, and repository-escape targets fail before write.
+    """
+    write_repository_bytes_atomically(
+        workdir=WORKDIR,
+        path=path,
+        content=text.encode("utf-8"),
+    )
+
+
+def write_validation_run_manifest(*, manifest: dict) -> None:
+    """Persist the minimal validation run manifest as UTF-8 JSON.
+
+    Args:
+        manifest: Run evidence with the seven required top-level fields.
+
+    Expected output:
+        outputs/validation_run_manifest.json reflects the latest completed or
+        interrupted validation attempt, never merely the existence of old CSVs.
+    """
+    errors = validation_manifest_errors(manifest=manifest)
+    if errors:
+        raise ValueError("Invalid validation manifest: " + "; ".join(errors))
+    path = validation_run_manifest_path()
+    write_utf8_text_atomically(
+        path=path,
+        text=json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
+    )
+
+
+def mark_validation_artifact_refreshed(*, manifest: dict, artifact: str) -> None:
+    """Move one tracked artifact from not-refreshed to refreshed.
+
+    Args:
+        manifest: Mutable current run manifest.
+        artifact: Basename from VALIDATION_TRACKED_ARTIFACTS.
+
+    Expected output:
+        The manifest is persisted after the transition so a later interruption
+        still exposes the last completed write.
+    """
+    if artifact not in VALIDATION_TRACKED_ARTIFACTS:
+        raise ValueError(f"Untracked validation artifact: {artifact}")
+    refreshed = list(require_key(mapping=manifest, key="refreshed_artifacts"))
+    if artifact not in refreshed:
+        refreshed.append(artifact)
+    manifest["refreshed_artifacts"] = refreshed
+    manifest["not_refreshed_artifacts"] = [
+        name for name in VALIDATION_TRACKED_ARTIFACTS if name not in refreshed
+    ]
+    write_validation_run_manifest(manifest=manifest)
+
+
+def finish_validation_run_manifest(*, manifest: dict, result: str) -> None:
+    """Persist the terminal validation result.
+
+    Args:
+        manifest: Mutable current run manifest.
+        result: PASSED, PASSED_WITH_CAVEATS, or FAILED.
+    """
+    allowed_results = {"PASSED", "PASSED_WITH_CAVEATS", "FAILED"}
+    if result not in allowed_results:
+        raise ValueError(f"Unknown validation manifest result: {result}")
+    manifest["result"] = result
+    write_validation_run_manifest(manifest=manifest)
+
+
+def read_validation_run_manifest() -> dict:
+    """Read and structurally validate the current validation run manifest."""
+    path = validation_run_manifest_path()
+    if not path.exists():
+        return {
+            "run_id": "MISSING",
+            "source_commit": "UNKNOWN",
+            "started_at_utc": "UNKNOWN",
+            "mode": "WORKSPACE_INCOMPLETE",
+            "refreshed_artifacts": [],
+            "not_refreshed_artifacts": list(VALIDATION_TRACKED_ARTIFACTS),
+            "result": "FAILED",
+        }
+    manifest = read_json_file(path=path)
+    errors = validation_manifest_errors(manifest=manifest)
+    if errors:
+        raise ValueError("Invalid validation manifest: " + "; ".join(errors))
+    return manifest
+
+
+def manifest_artifact_was_refreshed(*, manifest: dict, artifact: str) -> bool:
+    """Return whether the current manifest marks an artifact as refreshed."""
+    if artifact not in VALIDATION_TRACKED_ARTIFACTS:
+        raise ValueError(f"Untracked validation artifact: {artifact}")
+    if validation_manifest_errors(manifest=manifest):
+        return False
+    refreshed = require_key(mapping=manifest, key="refreshed_artifacts")
+    not_refreshed = require_key(mapping=manifest, key="not_refreshed_artifacts")
+    if not isinstance(refreshed, list) or not isinstance(not_refreshed, list):
+        raise TypeError("Validation manifest artifact lists must be arrays")
+    return artifact in refreshed and artifact not in not_refreshed
 
 
 def light_review_mode_reasons() -> list[str]:
@@ -1064,7 +2530,10 @@ def extractor_names_for_profile(*, profile: str) -> list[str]:
         raise TypeError(f"extractors must be a list for profile: {profile}")
     for extractor_name in extractors:
         if extractor_name not in EXTRACTOR_REGISTRY:
-            raise KeyError(f"Unknown extractor in applicability registry: {extractor_name}")
+            raise KeyError(
+                "Unknown extractor in applicability registry: "
+                f"{extractor_name}"
+            )
     return [str(extractor_name) for extractor_name in extractors]
 
 
@@ -1312,7 +2781,8 @@ def validate_structure_assertions(*, rows: list[dict]) -> None:
         primary_rows = [
             row
             for row in rows
-            if row["company"] == company and row["entity_role"] in {"primary", "successor"}
+            if row["company"] == company
+            and row["entity_role"] in {"primary", "successor"}
         ]
         for row in primary_rows:
             if row["fiscalYearEnd"] != company_config["fiscal_year_end"]:
@@ -1324,33 +2794,77 @@ def validate_structure_assertions(*, rows: list[dict]) -> None:
 
 
 def supplemental_submission_path(*, file_name: str) -> Path:
-    """Return local evidence path for one supplemental submissions file."""
+    """Return the contained local path for one supplemental submissions file."""
+    if (
+        not file_name
+        or file_name != file_name.strip()
+        or file_name in {".", ".."}
+        or Path(file_name).name != file_name
+    ):
+        raise ValueError(
+            f"Invalid supplemental submissions file name: {file_name}"
+        )
     return WORKDIR / "evidence" / "submissions" / file_name
+
+
+def submission_supplemental_names(*, submission: dict, cik: int) -> list[str]:
+    """Return the bounded supplemental file names declared by one base file.
+
+    Args:
+        submission: Parsed base SEC submissions response.
+        cik: Filing CIK used only for a precise schema diagnostic.
+
+    Returns:
+        At most the configured collection boundary of safe base names.
+    """
+    filings = require_key(mapping=submission, key="filings")
+    files = optional_key(mapping=filings, key="files", default=[])
+    if not isinstance(files, list):
+        raise TypeError(f"submissions.filings.files must be list for {cik}")
+    names = []
+    for file_info in files[:SUBMISSION_SUPPLEMENTAL_LIMIT]:
+        if not isinstance(file_info, dict):
+            raise TypeError(
+                f"submissions.filings.files entry must be object for {cik}"
+            )
+        file_name_value = require_key(mapping=file_info, key="name")
+        if not isinstance(file_name_value, str):
+            raise TypeError(
+                f"submissions file name must be text for {cik}"
+            )
+        file_name = file_name_value
+        if re.fullmatch(
+            pattern=rf"CIK{cik:010d}-submissions-\d+\.json",
+            string=file_name,
+        ) is None:
+            raise ValueError(
+                f"Supplemental submissions identity mismatch: {file_name}"
+            )
+        supplemental_submission_path(file_name=file_name)
+        names.append(file_name)
+    return names
 
 
 def ensure_submission_supplementals(
     *,
     http: SecHttpClient,
     cik: int,
-    max_files: int,
 ) -> None:
     """Fetch recent supplemental submissions files for high-volume filers.
 
     Args:
         http: Configured SEC HTTP client.
         cik: CIK whose base submissions JSON is already saved.
-        max_files: Maximum number of files to fetch from submissions.filings.files.
 
     Expected output:
-        Supplemental JSON files are written under evidence/submissions/.
+        The shared bounded set is written under evidence/submissions/.
     """
     submission = load_submissions(cik=cik)
-    filings = require_key(mapping=submission, key="filings")
-    files = optional_key(mapping=filings, key="files", default=[])
-    if not isinstance(files, list):
-        raise TypeError(f"submissions.filings.files must be list for {cik}")
-    for file_info in files[:max_files]:
-        file_name = str(require_key(mapping=file_info, key="name"))
+    file_names = submission_supplemental_names(
+        submission=submission,
+        cik=cik,
+    )
+    for file_name in file_names:
         path = supplemental_submission_path(file_name=file_name)
         if path.exists():
             continue
@@ -1418,18 +2932,27 @@ def flatten_filing_block(
     return output_rows
 
 
-def recent_filing_rows(*, company: str, cik: int, entity_role: str) -> list[dict]:
-    """Flatten base and supplemental submissions filings into one row list.
+def filing_rows_from_submission_payloads(
+    *,
+    company: str,
+    cik: int,
+    entity_role: str,
+    payloads: list[dict],
+) -> list[dict]:
+    """Flatten explicit base and supplemental payloads into filing rows.
 
     Args:
-        company: Display company name.
-        cik: Integer CIK for the submissions file.
+        company: Display company name owning the filing rows.
+        cik: Integer filing CIK.
         entity_role: primary/successor/predecessor role.
+        payloads: Base submissions payload followed by bounded supplements.
 
     Returns:
-        Filing rows from base submissions.recent plus fetched supplemental files.
+        Filing rows without any hidden filesystem reads.
     """
-    submission = load_submissions(cik=cik)
+    if not payloads:
+        raise ValueError(f"No submissions payload supplied for {cik}")
+    submission = payloads[0]
     filings = require_key(mapping=submission, key="filings")
     recent = require_key(mapping=filings, key="recent")
     rows = flatten_filing_block(
@@ -1438,15 +2961,7 @@ def recent_filing_rows(*, company: str, cik: int, entity_role: str) -> list[dict
         entity_role=entity_role,
         recent=recent,
     )
-    files = optional_key(mapping=filings, key="files", default=[])
-    if not isinstance(files, list):
-        raise TypeError(f"submissions.filings.files must be list for {cik}")
-    for file_info in files:
-        file_name = str(require_key(mapping=file_info, key="name"))
-        path = supplemental_submission_path(file_name=file_name)
-        if not path.exists():
-            continue
-        supplemental = read_json_file(path=path)
+    for supplemental in payloads[1:]:
         rows.extend(
             flatten_filing_block(
                 company=company,
@@ -1456,6 +2971,37 @@ def recent_filing_rows(*, company: str, cik: int, entity_role: str) -> list[dict
             )
         )
     return rows
+
+
+def recent_filing_rows(*, company: str, cik: int, entity_role: str) -> list[dict]:
+    """Load and flatten the bounded submissions evidence for one CIK.
+
+    Args:
+        company: Display company name.
+        cik: Integer CIK for the submissions file.
+        entity_role: primary/successor/predecessor role.
+
+    Returns:
+        Filing rows from the base response and every required supplement.
+    """
+    submission = load_submissions(cik=cik)
+    payloads = [submission]
+    for file_name in submission_supplemental_names(
+        submission=submission,
+        cik=cik,
+    ):
+        path = supplemental_submission_path(file_name=file_name)
+        if not path.is_file():
+            raise FileNotFoundError(
+                f"Required supplemental submissions file missing: {path}"
+            )
+        payloads.append(read_json_file(path=path))
+    return filing_rows_from_submission_payloads(
+        company=company,
+        cik=cik,
+        entity_role=entity_role,
+        payloads=payloads,
+    )
 
 
 def sorted_filings(*, rows: list[dict]) -> list[dict]:
@@ -1547,7 +3093,7 @@ def instance_rows_have_basel_key_facts(*, rows: list[dict]) -> bool:
 
 def instance_rows_have_rpo_key_facts(*, rows: list[dict]) -> bool:
     """Return whether parsed rows contain explicit RPO/cRPO facts."""
-    return any(rpo_crpo_concept(concept=row["concept"]) for row in rows)
+    return any(concept_matches_rpo(concept=row["concept"]) for row in rows)
 
 
 def instance_rows_have_debt_dimension_key_facts(*, rows: list[dict]) -> bool:
@@ -1763,7 +3309,7 @@ def stage_inventory_filings() -> None:
     }
     for role_row in all_role_rows():
         cik = int(role_row["cik"])
-        ensure_submission_supplementals(http=http, cik=cik, max_files=12)
+        ensure_submission_supplementals(http=http, cik=cik)
         rows = recent_filing_rows(
             company=role_row["company"],
             cik=cik,
@@ -2003,13 +3549,59 @@ def target_10k_for_company(*, company: str) -> dict:
     ranked_rows = sorted(
         rows,
         key=lambda row: (
-            role_rank[str(row["entity_role"])] if str(row["entity_role"]) in role_rank else 5,
+            role_rank[str(row["entity_role"])]
+            if str(row["entity_role"]) in role_rank
+            else 5,
             source_rank[str(row["source_role"])],
             str(row["filingDate"]),
         ),
         reverse=False,
     )
     return ranked_rows[0]
+
+
+def c04_target_filing(*, company: str) -> dict:
+    """Return the filed target used before C04 AuditorName fallback.
+
+    Args:
+        company: Display company name.
+
+    Returns:
+        The preferred primary/successor `target_10k` row. An amended target
+        remains authoritative until its AuditorName is proven unavailable.
+    """
+    rows = inventory_rows_for_company(
+        company=company,
+        source_role="target_10k",
+    )
+    if not rows:
+        raise RuntimeError(f"No target_10k inventory row for {company}")
+    role_rank = {"primary": 0, "successor": 0, "predecessor": 1}
+    best_rank = min(
+        role_rank[str(row["entity_role"])]
+        if str(row["entity_role"]) in role_rank
+        else 5
+        for row in rows
+    )
+    preferred = [
+        row
+        for row in rows
+        if (
+            role_rank[str(row["entity_role"])]
+            if str(row["entity_role"]) in role_rank
+            else 5
+        )
+        == best_rank
+    ]
+    return sorted(
+        preferred,
+        key=lambda row: (
+            str(row["reportDate"]),
+            str(row["filingDate"]),
+            str(row["accession"]),
+        ),
+        reverse=True,
+    )[0]
 
 
 def prior_10k_for_company(*, company: str, cik: int) -> dict | None:
@@ -2023,6 +3615,33 @@ def prior_10k_for_company(*, company: str, cik: int) -> dict | None:
         print(f"No prior 10-K inventory row for {company} CIK {cik}")
         return None
     return sorted(rows, key=lambda row: str(row["reportDate"]), reverse=True)[0]
+
+
+def c04_period_start(
+    *,
+    prior: dict | None,
+    target_cik: int,
+    period_end: str,
+) -> str:
+    """Return the comparison start without crossing a CIK boundary.
+
+    Args:
+        prior: Selected same-CIK prior 10-K, or None when unavailable.
+        target_cik: Current C04 filing CIK.
+        period_end: Current target report date in ISO format.
+
+    Returns:
+        Day after a same-CIK prior report date, otherwise calendar-year start.
+    """
+    if prior is not None:
+        if str(prior["cik"]) != str(target_cik):
+            raise ValueError("C04 prior filing must use the target CIK")
+        return (
+            parse_date_text(value=str(prior["reportDate"]))
+            + timedelta(days=1)
+        ).isoformat()
+    end_date = parse_date_text(value=period_end)
+    return date(year=end_date.year, month=1, day=1).isoformat()
 
 
 def fact_duration_days(*, fact: dict) -> int | None:
@@ -2698,7 +4317,10 @@ def resolve_da_component(
             hits=hits,
             status="NEEDS_REVIEW",
             formula="Depreciation + AmortizationOfIntangibleAssets",
-            notes="D&A composition rejected because period, accession, or unit differs.",
+            notes=(
+                "D&A composition rejected because period, accession, or "
+                "unit differs."
+            ),
         )
     return ComponentResolution(
         value=depreciation.value + amortization.value,
@@ -3490,7 +5112,11 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         period_end=period_end,
         fiscal_year=revenue.fiscal_year if revenue is not None else "",
         fiscal_period=revenue.fiscal_period if revenue is not None else "",
-        hits=operating_income.hits + da.hits + ([revenue] if revenue is not None else []),
+        hits=(
+            operating_income.hits
+            + da.hits
+            + ([revenue] if revenue is not None else [])
+        ),
         notes=ebitda_notes,
     )
     rows.append(row)
@@ -3644,7 +5270,10 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
     else:
         interest_coverage = None
         interest_status = "NOT_AVAILABLE_SEC"
-        interest_notes = f"Operating income or interest expense missing. {operating_income.notes}"
+        interest_notes = (
+            "Operating income or interest expense missing. "
+            f"{operating_income.notes}"
+        )
     row, evidence = derived_metric(
         company=company,
         cik=cik,
@@ -4079,7 +5708,12 @@ def fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[dict
     return rows, evidence_rows
 
 
-def governance_risk_event_placeholders(*, company: str, cik: int, period_end: str) -> list[dict]:
+def governance_risk_event_placeholders(
+    *,
+    company: str,
+    cik: int,
+    period_end: str,
+) -> list[dict]:
     """Create C, D, and E placeholder rows before text/event extraction."""
     definitions = [
         ("C01", "CEO / CFO changes", "NOT_AVAILABLE_SEC", "8K_ITEM"),
@@ -4126,6 +5760,58 @@ def has_extractor(*, extractors: list[str], extractor_name: str) -> bool:
     return extractor_name in extractors
 
 
+BASE_METRIC_IDS_BY_TRACK = {
+    "financial_institution": {
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A09",
+        "A10",
+        "A11",
+        "A12",
+        "A13",
+        "B08",
+    },
+    "non_financial": {
+        "B01",
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09",
+    },
+}
+COMMON_METRIC_IDS = {
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05",
+}
+OPTIONAL_B_EXTRACTOR_BY_METRIC_ID = {
+    "B10": "LodgingKpiExtractor",
+    "B11": "LodgingKpiExtractor",
+    "B12": "RpoCrpoExtractor",
+    "B13": "CapacityUtilizationExtractor",
+}
+
+
 def optional_b_metric_is_main_applicable(*, company: str, metric_id: str) -> bool:
     """Return whether an optional B metric belongs in metrics_matrix.
 
@@ -4143,27 +5829,50 @@ def optional_b_metric_is_main_applicable(*, company: str, metric_id: str) -> boo
     extractors = company_extractors(
         company_config=company_by_name(company_name=company),
     )
-    if metric_id in {"B10", "B11"}:
-        return has_extractor(
-            extractors=extractors,
-            extractor_name="LodgingKpiExtractor",
-        )
-    if metric_id == "B12":
-        return has_extractor(
-            extractors=extractors,
-            extractor_name="RpoCrpoExtractor",
-        )
-    if metric_id == "B13":
-        return has_extractor(
-            extractors=extractors,
-            extractor_name="CapacityUtilizationExtractor",
-        )
-    raise ValueError(f"Unsupported optional B metric: {metric_id}")
+    if metric_id not in OPTIONAL_B_EXTRACTOR_BY_METRIC_ID:
+        raise ValueError(f"Unsupported optional B metric: {metric_id}")
+    return has_extractor(
+        extractors=extractors,
+        extractor_name=OPTIONAL_B_EXTRACTOR_BY_METRIC_ID[metric_id],
+    )
 
 
 def optional_b_metric_ids() -> set[str]:
     """Return optional B metrics governed by profile applicability."""
-    return {"B10", "B11", "B12", "B13"}
+    return set(OPTIONAL_B_EXTRACTOR_BY_METRIC_ID)
+
+
+def expected_metrics_matrix_keys() -> set[tuple[str, str]]:
+    """Derive the exact matrix key set from registry and profile contracts.
+
+    Returns:
+        One ``(company, metric_id)`` key for every required matrix row. The
+        result is independent of the currently persisted matrix rows.
+    """
+    expected = set()
+    # The acceptance set comes from configuration, never from rows under test.
+    for company_config in load_company_registry():
+        company = str(require_key(mapping=company_config, key="company"))
+        extractors = company_extractors(company_config=company_config)
+        track = (
+            "financial_institution"
+            if has_extractor(
+                extractors=extractors,
+                extractor_name="BaselCapitalRatioExtractor",
+            )
+            else "non_financial"
+        )
+        metric_ids = BASE_METRIC_IDS_BY_TRACK[track] | COMMON_METRIC_IDS
+        for metric_id, extractor_name in (
+            OPTIONAL_B_EXTRACTOR_BY_METRIC_ID.items()
+        ):
+            if has_extractor(
+                extractors=extractors,
+                extractor_name=extractor_name,
+            ):
+                metric_ids.add(metric_id)
+        expected.update((company, metric_id) for metric_id in metric_ids)
+    return expected
 
 
 def special_metric_placeholders(
@@ -4311,7 +6020,10 @@ def upsert_metric(*, rows: list[dict], new_row: dict) -> list[dict]:
     output = []
     replaced = False
     for row in rows:
-        if row["company"] == new_row["company"] and row["metric_id"] == new_row["metric_id"]:
+        if (
+            row["company"] == new_row["company"]
+            and row["metric_id"] == new_row["metric_id"]
+        ):
             output.append(new_row)
             replaced = True
         else:
@@ -4402,14 +6114,33 @@ def fetch_accession_document(
     )
 
 
-def accession_index_items(*, index_path: Path) -> list[dict]:
-    """Read SEC archive index.json and return directory item rows."""
-    payload = read_json_file(path=index_path)
+def accession_index_items_from_payload(
+    *,
+    payload: dict,
+    source: str,
+) -> list[dict]:
+    """Return SEC archive directory items from an explicit payload.
+
+    Args:
+        payload: Parsed SEC accession index JSON object.
+        source: Diagnostic label for malformed input.
+
+    Returns:
+        The exact directory item list declared by SEC.
+    """
     directory = require_key(mapping=payload, key="directory")
     items = require_key(mapping=directory, key="item")
     if not isinstance(items, list):
-        raise TypeError(f"SEC archive index item must be list: {index_path}")
+        raise TypeError(f"SEC archive index item must be list: {source}")
     return items
+
+
+def accession_index_items(*, index_path: Path) -> list[dict]:
+    """Read SEC archive index.json and return directory item rows."""
+    return accession_index_items_from_payload(
+        payload=read_json_file(path=index_path),
+        source=str(index_path),
+    )
 
 
 def xml_instance_candidates(*, items: list[dict]) -> list[str]:
@@ -4689,6 +6420,11 @@ def parse_xbrl_xml_instance(
                 "cik": material_row["cik"],
                 "accession": material_row["accession"],
                 "document_name": material_row["document_name"],
+                "source_url": (
+                    material_row["source_url"]
+                    if "source_url" in material_row
+                    else ""
+                ),
                 "namespace": namespace_name(tag=str(elem.tag)),
                 "concept": name,
                 "unit": unit_measure,
@@ -4760,6 +6496,8 @@ class InlineFactParser(HTMLParser):
         self.current_context_dimension = ""
         self.current_unit: dict | None = None
         self.current_unit_buffer: list[str] = []
+        self.namespaces: dict[str, str] = {}
+        self.conflicting_namespaces: set[str] = set()
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         """Start capturing ix facts when a fact tag opens."""
@@ -4767,7 +6505,20 @@ class InlineFactParser(HTMLParser):
         local_lower = local.lower()
         attr_map = {}
         for key, value in attrs:
-            attr_map[key] = value if value is not None else ""
+            normalized_value = value if value is not None else ""
+            attr_map[key] = normalized_value
+            if not key.lower().startswith("xmlns:"):
+                continue
+            prefix = key.split(":", maxsplit=1)[1].lower()
+            # Inline fact names carry prefixes, while the evidence contract
+            # needs the declared URI to distinguish official from custom DEI.
+            if (
+                prefix in self.namespaces
+                and self.namespaces[prefix] != normalized_value
+            ):
+                self.conflicting_namespaces.add(prefix)
+            elif prefix not in self.conflicting_namespaces:
+                self.namespaces[prefix] = normalized_value
         if local_lower == "context":
             context_id = attr_value(attrs=attr_map, wanted_local_name="id")
             self.current_context = {
@@ -4877,7 +6628,14 @@ class InlineFactParser(HTMLParser):
             return
         name = self.current["name"]
         if ":" in name:
-            namespace, concept = name.split(":", maxsplit=1)
+            namespace_prefix, concept = name.split(":", maxsplit=1)
+            normalized_prefix = namespace_prefix.lower()
+            if normalized_prefix in self.conflicting_namespaces:
+                namespace = ""
+            elif normalized_prefix in self.namespaces:
+                namespace = self.namespaces[normalized_prefix]
+            else:
+                namespace = namespace_prefix
         else:
             namespace = ""
             concept = name
@@ -4909,6 +6667,11 @@ class InlineFactParser(HTMLParser):
                 "cik": self.material_row["cik"],
                 "accession": self.material_row["accession"],
                 "document_name": self.material_row["document_name"],
+                "source_url": (
+                    self.material_row["source_url"]
+                    if "source_url" in self.material_row
+                    else ""
+                ),
                 "namespace": namespace,
                 "concept": concept,
                 "unit": unit,
@@ -4934,6 +6697,11 @@ def parse_inline_instance(*, file_path: Path, material_row: dict) -> list[dict]:
                 break
             parser.feed(chunk)
     parser.close()
+    if parser.conflicting_namespaces:
+        raise ValueError(
+            "Inline XBRL namespace prefix has conflicting declarations: "
+            + ",".join(sorted(parser.conflicting_namespaces))
+        )
     return parser.rows
 
 
@@ -4960,7 +6728,7 @@ def file_contains_inline_xbrl(*, file_path: Path) -> bool:
 
 def parse_instance_with_fallback(*, material_row: dict) -> list[dict]:
     """Parse one instance using the route that preserves fact value semantics."""
-    file_path = Path(material_row["local_path"])
+    file_path = resolve_artifact_path(row=material_row)
     if file_contains_inline_xbrl(file_path=file_path):
         return parse_inline_instance(file_path=file_path, material_row=material_row)
     try:
@@ -5158,6 +6926,65 @@ def parse_items_from_primary_text(*, text: str) -> list[tuple[str, str]]:
     return rows
 
 
+def event_rows_from_document(
+    *,
+    filing_row: dict,
+    document_path: Path,
+    source_url: str,
+    item_source: str,
+) -> list[dict]:
+    """Parse one saved 8-K document into deterministic event component rows.
+
+    Args:
+        filing_row: FY-window filing inventory row.
+        document_path: Saved hdr.sgml or primary filing document.
+        source_url: Official SEC URL for the saved document.
+        item_source: `hdr.sgml` or `primary_document` parsing route.
+
+    Returns:
+        One event row per unique item code, or an empty list when the selected
+        document exposes no item headings.
+    """
+    if item_source == "hdr.sgml":
+        text = document_path.read_text(encoding="utf-8", errors="replace")
+        parsed_items = [
+            (code, f"8-K item {code} parsed from hdr.sgml")
+            for code in parse_items_from_hdr(text=text)
+        ]
+        method = "hdr_items"
+        confidence = "0.90"
+    elif item_source == "primary_document":
+        text = html_file_to_text(path=document_path)
+        parsed_items = parse_items_from_primary_text(text=text)
+        method = "primary_heading_fallback"
+        confidence = "0.70"
+    else:
+        raise ValueError(f"Unknown 8-K item source: {item_source}")
+
+    rows = [
+        {
+            "company": filing_row["company"],
+            "cik": str(filing_row["cik"]),
+            "accession": str(filing_row["accession"]),
+            "filing_date": filing_row["filingDate"],
+            "item_code": code,
+            "item_source": item_source,
+            "mapping_method": method,
+            "confidence": confidence,
+            "brief": brief,
+            "source_url": source_url,
+            "local_path": str(document_path),
+        }
+        for code, brief in parsed_items
+    ]
+    # The in-memory handoff must match the persisted CSV contract so stage 07
+    # and stage 11 repair cannot observe different locator field names.
+    return [
+        normalize_csv_row(row=row, fieldnames=EVENT_FIELDNAMES)
+        for row in rows
+    ]
+
+
 class HtmlTextParser(HTMLParser):
     """Streaming HTML-to-text parser for SEC filing documents."""
 
@@ -5281,11 +7108,202 @@ def cached_8k_evidence_removed(*, row: dict, event_metric_ids: set[str]) -> bool
     )
 
 
+def event_inventory_coverage_errors(
+    *,
+    inventory: list[dict],
+    events: list[dict],
+) -> list[str]:
+    """Return exact FY-window filing coverage and event uniqueness errors.
+
+    Args:
+        inventory: Filing inventory rows containing `source_role=fy_8k`.
+        events: Parsed event component rows.
+
+    Returns:
+        Empty only when every expected filing has event rows, no unexpected
+        filing appears, and `(filing, item_code)` components are unique.
+    """
+    expected_counts = Counter(
+        (
+            str(row["company"]),
+            str(row["cik"]),
+            str(row["accession"]),
+        )
+        for row in inventory
+        if row["source_role"] == "fy_8k"
+    )
+    event_counts = Counter(
+        (
+            str(row["company"]),
+            str(row["cik"]),
+            str(row["accession"]),
+        )
+        for row in events
+    )
+    component_counts = Counter(
+        (
+            str(row["company"]),
+            str(row["cik"]),
+            str(row["accession"]),
+            str(row["item_code"]),
+        )
+        for row in events
+    )
+    expected = set(expected_counts)
+    actual = set(event_counts)
+    errors = []
+    error_groups = [
+        ("missing", sorted(expected - actual)),
+        ("unexpected", sorted(actual - expected)),
+        (
+            "duplicate_inventory",
+            sorted(
+                key
+                for key, count in expected_counts.items()
+                if count != 1
+            ),
+        ),
+    ]
+    for label, identities in error_groups:
+        for company, cik, accession in identities[:20]:
+            errors.append(f"{label}={company}:{cik}:{accession}")
+    for company, cik, accession, item_code in sorted(component_counts):
+        count = component_counts[(company, cik, accession, item_code)]
+        if not item_code:
+            errors.append(f"blank_item={company}:{cik}:{accession}")
+        elif count != 1:
+            errors.append(
+                f"duplicate_item={company}:{cik}:{accession}:{item_code}"
+            )
+    return errors
+
+
+def event_rows_for_metric(*, events: list[dict], metric_id: str) -> list[dict]:
+    """Return stable event components contributing to one event metric.
+
+    Args:
+        events: One company's parsed FY-window event rows.
+        metric_id: C01, C04, or E01-E05 event metric identifier.
+
+    Returns:
+        Matching rows sorted by source identity and item code.
+    """
+    if metric_id == "E01":
+        matching = [
+            event
+            for event in events
+            if event["item_code"] in {"1.01", "2.01"}
+            or (
+                event["item_code"] == "8.01"
+                and re.search(
+                    pattern=r"merger|acquisition|combine|transaction",
+                    string=event["brief"],
+                    flags=re.IGNORECASE,
+                )
+            )
+        ]
+    else:
+        codes = {
+            spec_metric_id: code
+            for spec_metric_id, _name, code, _status, _notes
+            in eight_k_event_update_specs()
+        }
+        if metric_id not in codes:
+            raise ValueError(f"Unknown 8-K metric id: {metric_id}")
+        matching = [
+            event for event in events if event["item_code"] == codes[metric_id]
+        ]
+    return sorted(
+        matching,
+        key=lambda event: (
+            str(event["source_url"]),
+            str(event["accession"]),
+            str(event["item_code"]),
+        ),
+    )
+
+
+def event_component_evidence_rows(
+    *,
+    company: str,
+    metric_id: str,
+    matching_events: list[dict],
+    period_end: str,
+    extraction_method: str,
+) -> list[dict]:
+    """Return one scalar evidence row for each counted 8-K event component.
+
+    Args:
+        company: Logical company name.
+        metric_id: Event metric identifier.
+        matching_events: Stable event components contributing to the count.
+        period_end: Metric fiscal period end date.
+        extraction_method: `eightk_item` or `eightk_item_keyword`.
+
+    Returns:
+        Evidence rows whose individual source identity and contribution are
+        explicit while `value_normalized` retains the final aggregate count.
+    """
+    normalized_value = str(len(matching_events))
+    rows = []
+    for event in matching_events:
+        row = text_evidence_row(
+            company=company,
+            cik=int(event["cik"]),
+            metric_id=metric_id,
+            source_url=event["source_url"],
+            local_path=str(
+                repository_artifact_candidate(
+                    relative_path=event["repo_relative_path"],
+                )
+            ),
+            accession=event["accession"],
+            document_name=event["document_name"],
+            concept_or_section=f"8-K Item {event['item_code']}",
+            context_or_dimension="FY window",
+            unit="count",
+            period_end=period_end,
+            value=normalized_value,
+            quote=event["brief"],
+            extraction_method=extraction_method,
+        )
+        # Each row proves one contribution; the normalized value binds that
+        # component to the aggregate metric checked as an exact group later.
+        row["value_raw"] = "1"
+        rows.append(row)
+    return rows
+
+
+def event_scan_locators(*, events: list[dict]) -> tuple[str, str]:
+    """Return aligned SEC source URLs and accessions for one event scan.
+
+    Args:
+        events: Fiscal-window event rows with source_url and accession.
+
+    Returns:
+        Semicolon-delimited source URLs and accessions sorted as stable pairs.
+    """
+    pairs = set()
+    for event in events:
+        source_url = str(event["source_url"])
+        accession = str(event["accession"])
+        if bool(source_url) != bool(accession):
+            raise ValueError("Event scan locator requires URL and accession")
+        if source_url:
+            pairs.add((source_url, accession))
+    ordered_pairs = sorted(pairs)
+    return (
+        ";".join([source_url for source_url, _accession in ordered_pairs]),
+        ";".join([accession for _source_url, accession in ordered_pairs]),
+    )
+
+
 def apply_8k_event_metrics_from_events(
     *,
     metrics: list[dict],
     evidence_rows: list[dict],
     events: list[dict],
+    inventory: list[dict],
 ) -> tuple[list[dict], list[dict]]:
     """Apply event-backed metric rows from already extracted 8-K events.
 
@@ -5294,6 +7312,7 @@ def apply_8k_event_metrics_from_events(
         evidence_rows: Current metric_evidence rows to replace for 8-K metrics.
         events: Local `outputs/events.csv` rows with company, accession, item
             code, filing date, source URL, local path, confidence, and brief.
+        inventory: Filing inventory that independently defines FY-window 8-Ks.
 
     Expected output:
         C01/C04/E01/E02/E03/E04/E05 rows and evidence are rebuilt without new
@@ -5302,6 +7321,15 @@ def apply_8k_event_metrics_from_events(
     Returns:
         Updated metrics and evidence rows.
     """
+    coverage_errors = event_inventory_coverage_errors(
+        inventory=inventory,
+        events=events,
+    )
+    if coverage_errors:
+        raise ValueError(
+            "8-K event inventory coverage failed: "
+            + ";".join(coverage_errors[:20])
+        )
     event_metric_ids = {
         metric_id
         for metric_id, _metric_name, _code, _status, _notes
@@ -5316,24 +7344,24 @@ def apply_8k_event_metrics_from_events(
         )
     ]
     new_evidence_rows: list[dict] = []
-    period_end_by_company = {
-        row["company"]: row["reportDate"]
-        for row in read_csv_file(
-            path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
-        )
-        if row["source_role"] == "target_10k"
-    }
-
     for company_config in load_company_registry():
         company = str(company_config["company"])
         target = target_10k_for_company(company=company)
         cik = int(target["cik"])
         company_events = [row for row in events if row["company"] == company]
+        company_inventory = [
+            row
+            for row in inventory
+            if row["company"] == company and row["source_role"] == "fy_8k"
+        ]
+        scanned_source_urls, scanned_locator_accessions = event_scan_locators(
+            events=company_events,
+        )
         scanned_accessions = ";".join(
-            sorted({event["accession"] for event in company_events})
+            sorted({row["accession"] for row in company_inventory})
         )
         scanned_dates = ";".join(
-            sorted({event["filing_date"] for event in company_events})
+            sorted({row["filingDate"] for row in company_inventory})
         )
         scanned_context = (
             "FY-window 8-K accessions scanned"
@@ -5342,12 +7370,19 @@ def apply_8k_event_metrics_from_events(
         )
         # Use inventory metadata here so cached repair cannot smuggle a
         # hard-coded fiscal year into event rows.
-        period_end = ({company: str(target["reportDate"])} | period_end_by_company)[
-            company
-        ]
+        period_end = str(target["reportDate"])
 
-        for metric_id, metric_name, code, ok_status, notes in eight_k_event_update_specs():
-            matching = [event for event in company_events if event["item_code"] == code]
+        for (
+            metric_id,
+            metric_name,
+            code,
+            ok_status,
+            notes,
+        ) in eight_k_event_update_specs():
+            matching = event_rows_for_metric(
+                events=company_events,
+                metric_id=metric_id,
+            )
             if matching:
                 first = matching[0]
                 new_row = text_metric_row(
@@ -5367,21 +7402,12 @@ def apply_8k_event_metrics_from_events(
                     confidence=first["confidence"],
                     notes=notes,
                 )
-                new_evidence_rows.append(
-                    text_evidence_row(
+                new_evidence_rows.extend(
+                    event_component_evidence_rows(
                         company=company,
-                        cik=cik,
                         metric_id=metric_id,
-                        source_url=first["source_url"],
-                        local_path=first["local_path"],
-                        accession=first["accession"],
-                        document_name=Path(first["local_path"]).name,
-                        concept_or_section=f"8-K Item {code}",
-                        context_or_dimension="FY window",
-                        unit="count",
+                        matching_events=matching,
                         period_end=period_end,
-                        value=str(len(matching)),
-                        quote=first["brief"],
                         extraction_method="eightk_item",
                     )
                 )
@@ -5414,9 +7440,9 @@ def apply_8k_event_metrics_from_events(
                         company=company,
                         cik=cik,
                         metric_id=metric_id,
-                        source_url="",
+                        source_url=scanned_source_urls,
                         local_path=str(WORKDIR / "outputs" / "events.csv"),
-                        accession=scanned_accessions,
+                        accession=scanned_locator_accessions,
                         document_name="events.csv",
                         concept_or_section=f"8-K Item {code}",
                         context_or_dimension=scanned_context,
@@ -5429,40 +7455,21 @@ def apply_8k_event_metrics_from_events(
                 )
             metrics = upsert_metric(rows=metrics, new_row=new_row)
 
-        ma_events = [
-            event
-            for event in company_events
-            if event["item_code"] in {"1.01", "2.01"}
-            or (
-                event["item_code"] == "8.01"
-                and re.search(
-                    pattern=r"merger|acquisition|combine|transaction",
-                    string=event["brief"],
-                    flags=re.IGNORECASE,
-                )
-            )
-        ]
+        ma_events = event_rows_for_metric(
+            events=company_events,
+            metric_id="E01",
+        )
         if ma_events:
-            first = ma_events[0]
             value = str(len(ma_events))
             note = "M&A candidate from item mapping and keyword rule."
             accession_text = ";".join([event["accession"] for event in ma_events])
             filed_date = ""
-            new_evidence_rows.append(
-                text_evidence_row(
+            new_evidence_rows.extend(
+                event_component_evidence_rows(
                     company=company,
-                    cik=cik,
                     metric_id="E01",
-                    source_url=first["source_url"],
-                    local_path=first["local_path"],
-                    accession=first["accession"],
-                    document_name=Path(first["local_path"]).name,
-                    concept_or_section="8-K Item 1.01/2.01/8.01",
-                    context_or_dimension="FY window",
-                    unit="count",
+                    matching_events=ma_events,
                     period_end=period_end,
-                    value=value,
-                    quote=first["brief"],
                     extraction_method="eightk_item_keyword",
                 )
             )
@@ -5478,9 +7485,9 @@ def apply_8k_event_metrics_from_events(
                     company=company,
                     cik=cik,
                     metric_id="E01",
-                    source_url="",
+                    source_url=scanned_source_urls,
                     local_path=str(WORKDIR / "outputs" / "events.csv"),
-                    accession=scanned_accessions,
+                    accession=scanned_locator_accessions,
                     document_name="events.csv",
                     concept_or_section="8-K Item 1.01/2.01/8.01",
                     context_or_dimension=scanned_context,
@@ -5523,13 +7530,6 @@ def stage_extract_8k_events() -> None:
     )
     eight_k_rows = [row for row in inventory if row["source_role"] == "fy_8k"]
     events: list[dict] = []
-    evidence_to_append: list[dict] = []
-    metrics = load_metrics()
-    period_end_by_company = {
-        row["company"]: row["reportDate"]
-        for row in inventory
-        if row["source_role"] == "target_10k"
-    }
 
     for row in eight_k_rows:
         cik = int(row["cik"])
@@ -5545,253 +7545,75 @@ def stage_extract_8k_events() -> None:
             purpose=f"eightk_hdr_{accession}",
             local_path=hdr_path,
         )
-        item_codes: list[str] = []
-        item_source = "hdr.sgml"
-        method = "hdr_items"
-        brief_by_code: dict[str, str] = {}
-        local_path = hdr_path
-        source_url = hdr_url
-        if hdr_result.status_code == 200:
-            hdr_text = hdr_path.read_text(encoding="utf-8", errors="replace")
-            item_codes = parse_items_from_hdr(text=hdr_text)
-            for code in item_codes:
-                brief_by_code[code] = f"8-K item {code} parsed from hdr.sgml"
-        if not item_codes:
+        filing_events = (
+            event_rows_from_document(
+                filing_row=row,
+                document_path=hdr_path,
+                source_url=hdr_url,
+                item_source="hdr.sgml",
+            )
+            if hdr_result.status_code == 200
+            else []
+        )
+        if not filing_events:
             primary_material = fetch_primary_for_inventory_row(
                 http=http,
                 row=row,
                 document_type="eightk_primary_document",
                 purpose=f"eightk_primary_{accession}",
             )
-            local_path = Path(primary_material["local_path"])
-            source_url = primary_material["source_url"]
-            primary_text = html_file_to_text(path=local_path)
-            fallback_items = parse_items_from_primary_text(text=primary_text)
-            item_codes = [item[0] for item in fallback_items]
-            for code, brief in fallback_items:
-                brief_by_code[code] = brief
-            item_source = "primary_document"
-            method = "primary_heading_fallback"
-
-        for code in item_codes:
-            event = {
-                "company": row["company"],
-                "cik": row["cik"],
-                "accession": accession,
-                "filing_date": row["filingDate"],
-                "item_code": code,
-                "item_source": item_source,
-                "mapping_method": method,
-                "confidence": "0.90" if item_source == "hdr.sgml" else "0.70",
-                "brief": brief_by_code[code] if code in brief_by_code else "",
-                "source_url": source_url,
-                "local_path": str(local_path),
-            }
-            events.append(event)
+            if primary_material["status_code"] != "200":
+                raise RuntimeError(
+                    "8-K primary fallback request failed; "
+                    f"accession={accession}; "
+                    f"status={primary_material['status_code']}"
+                )
+            filing_events = event_rows_from_document(
+                filing_row=row,
+                document_path=Path(primary_material["local_path"]),
+                source_url=primary_material["source_url"],
+                item_source="primary_document",
+            )
+        events.extend(filing_events)
 
     write_csv_file(
         path=WORKDIR / "outputs" / "events.csv",
         fieldnames=EVENT_FIELDNAMES,
         rows=events,
     )
-
-    for company_config in load_company_registry():
-        company = str(company_config["company"])
-        target = target_10k_for_company(company=company)
-        cik = int(target["cik"])
-        company_events = [row for row in events if row["company"] == company]
-        scanned_accessions = ";".join(
-            sorted({event["accession"] for event in company_events})
+    coverage_errors = event_inventory_coverage_errors(
+        inventory=inventory,
+        events=events,
+    )
+    if coverage_errors:
+        raise RuntimeError(
+            "8-K extraction did not cover the filing inventory: "
+            + ";".join(coverage_errors[:20])
         )
-        scanned_dates = ";".join(
-            sorted({event["filing_date"] for event in company_events})
-        )
-        scanned_context = (
-            "FY-window 8-K accessions scanned"
-            if scanned_accessions
-            else "No FY-window 8-K accession in inventory"
-        )
-        # Keep event period selection data-driven so manual company-branch
-        # audits only surface real identity-specific logic.
-        period_end = ({company: str(target["reportDate"])} | period_end_by_company)[
-            company
-        ]
-        event_updates = eight_k_event_update_specs()
-        for metric_id, metric_name, code, ok_status, notes in event_updates:
-            matching = [event for event in company_events if event["item_code"] == code]
-            if matching:
-                first = matching[0]
-                new_row = text_metric_row(
-                    company=company,
-                    cik=cik,
-                    metric_id=metric_id,
-                    metric_name=metric_name,
-                    value=str(len(matching)),
-                    unit="count",
-                    status=ok_status,
-                    source_class="8K_ITEM",
-                    period_end=period_end,
-                    accession=";".join([event["accession"] for event in matching]),
-                    filed_date=";".join([event["filing_date"] for event in matching]),
-                    concept_or_section=f"8-K Item {code}",
-                    context_or_dimension="FY window",
-                    confidence=first["confidence"],
-                    notes=notes,
-                )
-                evidence_to_append.append(
-                    text_evidence_row(
-                        company=company,
-                        cik=cik,
-                        metric_id=metric_id,
-                        source_url=first["source_url"],
-                        local_path=first["local_path"],
-                        accession=first["accession"],
-                        document_name=Path(first["local_path"]).name,
-                        concept_or_section=f"8-K Item {code}",
-                        context_or_dimension="FY window",
-                        unit="count",
-                        period_end=period_end,
-                        value=str(len(matching)),
-                        quote=first["brief"],
-                        extraction_method="eightk_item",
-                    )
-                )
-            else:
-                status = "NOT_AVAILABLE_SEC"
-                note = f"FY-window 8-K scanned; no item {code} found."
-                if metric_id == "E02":
-                    note = "No Item 1.03 in FY-window 8-K; zero is normal."
-                new_row = text_metric_row(
-                    company=company,
-                    cik=cik,
-                    metric_id=metric_id,
-                    metric_name=metric_name,
-                    value="0",
-                    unit="count",
-                    status=status,
-                    source_class="8K_ITEM",
-                    period_end=period_end,
-                    accession=scanned_accessions,
-                    filed_date=scanned_dates,
-                    concept_or_section=f"8-K Item {code}",
-                    context_or_dimension=scanned_context,
-                    confidence="0.80",
-                    notes=note,
-                )
-                evidence_to_append.append(
-                    text_evidence_row(
-                        company=company,
-                        cik=cik,
-                        metric_id=metric_id,
-                        source_url="",
-                        local_path=str(WORKDIR / "outputs" / "events.csv"),
-                        accession=scanned_accessions,
-                        document_name="events.csv",
-                        concept_or_section=f"8-K Item {code}",
-                        context_or_dimension=scanned_context,
-                        unit="count",
-                        period_end=period_end,
-                        value="0",
-                        quote=note,
-                        extraction_method="eightk_zero_item_scan",
-                    )
-                )
-            metrics = upsert_metric(rows=metrics, new_row=new_row)
-
-        ma_events = [
-            event
-            for event in company_events
-            if event["item_code"] in {"1.01", "2.01"}
-            or (
-                event["item_code"] == "8.01"
-                and re.search(
-                    pattern=r"merger|acquisition|combine|transaction",
-                    string=event["brief"],
-                    flags=re.IGNORECASE,
-                )
-            )
-        ]
-        if ma_events:
-            first = ma_events[0]
-            status = "8K_ITEM_OK"
-            value = str(len(ma_events))
-            note = "M&A candidate from item mapping and keyword rule."
-            evidence_to_append.append(
-                text_evidence_row(
-                    company=company,
-                    cik=cik,
-                    metric_id="E01",
-                    source_url=first["source_url"],
-                    local_path=first["local_path"],
-                    accession=first["accession"],
-                    document_name=Path(first["local_path"]).name,
-                    concept_or_section="8-K Item 1.01/2.01/8.01",
-                    context_or_dimension="FY window",
-                    unit="count",
-                    period_end=period_end,
-                    value=value,
-                    quote=first["brief"],
-                    extraction_method="eightk_item_keyword",
-                )
-            )
-            accession_text = ";".join([event["accession"] for event in ma_events])
-        else:
-            status = "NOT_AVAILABLE_SEC"
-            value = "0"
-            note = "FY-window 8-K scanned; no M&A item rule matched."
-            accession_text = scanned_accessions
-        metrics = upsert_metric(
-            rows=metrics,
-            new_row=text_metric_row(
-                company=company,
-                cik=cik,
-                metric_id="E01",
-                metric_name="M&A announcements",
-                value=value,
-                unit="count",
-                status=status,
-                source_class="8K_ITEM",
-                period_end=period_end,
-                accession=accession_text,
-                filed_date=scanned_dates if not ma_events else "",
-                concept_or_section="8-K Item 1.01/2.01/8.01",
-                context_or_dimension=scanned_context,
-                confidence="0.75",
-                notes=note,
-            ),
-        )
-        if not ma_events:
-            evidence_to_append.append(
-                text_evidence_row(
-                    company=company,
-                    cik=cik,
-                    metric_id="E01",
-                    source_url="",
-                    local_path=str(WORKDIR / "outputs" / "events.csv"),
-                    accession=scanned_accessions,
-                    document_name="events.csv",
-                    concept_or_section="8-K Item 1.01/2.01/8.01",
-                    context_or_dimension=scanned_context,
-                    unit="count",
-                    period_end=period_end,
-                    value="0",
-                    quote=note,
-                    extraction_method="eightk_zero_item_scan",
-                )
-            )
+    metrics, evidence_rows = apply_8k_event_metrics_from_events(
+        metrics=load_metrics(),
+        evidence_rows=read_csv_file(
+            path=WORKDIR / "outputs" / "metric_evidence.csv"
+        ),
+        events=events,
+        inventory=inventory,
+    )
     save_metrics(rows=metrics)
-    append_evidence(rows=evidence_to_append)
+    save_evidence(rows=evidence_rows)
     print(f"M4 8-K event extraction complete; events={len(events)}")
 
 
 def dump_ecd_facts(*, material_row: dict) -> list[dict]:
     """Extract ecd inline facts from a DEF 14A primary document."""
-    file_path = Path(material_row["local_path"])
-    parsed = parse_inline_instance(file_path=file_path, material_row=material_row)
+    file_path = resolve_artifact_path(row=material_row)
+    parsed = parse_inline_instance(
+        file_path=file_path,
+        material_row=material_row,
+    )
     return [
         row
         for row in parsed
-        if str(row["namespace"]).lower() == "ecd"
+        if is_ecd_namespace(namespace=str(row["namespace"]))
         or str(row["concept"]).lower().startswith("ecd")
     ]
 
@@ -5807,32 +7629,19 @@ def def14a_quote(*, text: str, pattern: str) -> str:
 
 
 def stage_extract_def14a() -> None:
-    """M5: fetch DEF 14A materials and extract governance/compensation signals."""
+    """M5: fetch DEF 14A and extract governance/compensation signals."""
     ensure_output_dirs()
     http = client()
     inventory = read_csv_file(
         path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
     )
-    def_rows = [row for row in inventory if row["source_role"] == "latest_def14a"]
+    def_rows = [
+        row for row in inventory if row["source_role"] == "latest_def14a"
+    ]
     governance_rows: list[dict] = []
     evidence_to_append: list[dict] = []
     metrics = load_metrics()
 
-    ecd_fieldnames = [
-        "company",
-        "cik",
-        "accession",
-        "document_name",
-        "namespace",
-        "concept",
-        "unit",
-        "context",
-        "dimensions",
-        "period_start",
-        "period_end",
-        "value",
-        "source_path",
-    ]
     ecd_by_company: dict[str, list[dict]] = {}
 
     for row in def_rows:
@@ -5842,17 +7651,23 @@ def stage_extract_def14a() -> None:
             document_type="def14a_primary_document",
             purpose=f"def14a_primary_{row['accession']}",
         )
-        path = Path(material["local_path"])
+        path = resolve_artifact_path(row=material)
         text = html_file_to_text(path=path)
         ecd_rows = dump_ecd_facts(material_row=material)
         ecd_by_company[row["company"]] = ecd_rows
         board_quote = def14a_quote(
             text=text,
-            pattern=r"board of directors|director nominees|independent directors",
+            pattern=(
+                r"board of directors|director nominees|"
+                r"independent directors"
+            ),
         )
         comp_quote = def14a_quote(
             text=text,
-            pattern=r"summary compensation table|total compensation|principal executive officer",
+            pattern=(
+                r"summary compensation table|total compensation|"
+                r"principal executive officer"
+            ),
         )
         company = row["company"]
         cik = int(row["cik"])
@@ -5878,7 +7693,10 @@ def stage_extract_def14a() -> None:
                 "accession": row["accession"],
                 "concept_or_section": "DEF 14A board section",
                 "evidence_quote": board_quote,
-                "notes": "Board composition is qualitative unless structured counts are reviewed.",
+                "notes": (
+                    "Board composition is qualitative unless structured "
+                    "counts are reviewed."
+                ),
             }
         )
         governance_rows.append(
@@ -5971,7 +7789,7 @@ def stage_extract_def14a() -> None:
                 / "concept_inventory"
                 / f"{slugify(text=company)}_ecd.csv"
             ),
-            fieldnames=ecd_fieldnames,
+            fieldnames=INSTANCE_FIELDNAMES,
             rows=rows,
         )
     write_csv_file(
@@ -6158,7 +7976,10 @@ def fi_mda_table_specs() -> list[dict]:
             ),
             "unit": "USD",
             "scale": "billions_to_usd",
-            "notes": "Assets under management table row selected; source unit is billions.",
+            "notes": (
+                "Assets under management table row selected; source unit is "
+                "billions."
+            ),
         },
         {
             "metric_id": "A12",
@@ -6521,8 +8342,8 @@ def stage_extract_mda_and_risk_text() -> None:
         period_end = filing["reportDate"]
         filed_date = filing["filingDate"]
         source_url = material["source_url"]
-        local_path = material["local_path"]
-        text = html_file_to_text(path=Path(local_path))
+        local_path = artifact_reference_text(row=material)
+        text = html_file_to_text(path=resolve_artifact_path(row=material))
 
         risk_quote = snippet_for_pattern(
             text=text,
@@ -6667,7 +8488,10 @@ def stage_extract_mda_and_risk_text() -> None:
         ) or text_has_capacity_keywords(text=text):
             capacity_quote = snippet_for_pattern(
                 text=text,
-                pattern=r"capacity utilization|production capacity|manufacturing capacity",
+                pattern=(
+                    r"capacity utilization|production capacity|"
+                    r"manufacturing capacity"
+                ),
                 width=650,
             )
             status = "TEXT_QUAL" if capacity_quote else "NOT_AVAILABLE_SEC"
@@ -6689,7 +8513,10 @@ def stage_extract_mda_and_risk_text() -> None:
                 local_path=local_path,
                 section="Capacity utilization",
                 quote=capacity_quote,
-                notes="Only qualitative capacity evidence is used unless a ratio appears.",
+                notes=(
+                    "Only qualitative capacity evidence is used unless a "
+                    "ratio appears."
+                ),
             )
 
     write_csv_file(
@@ -7017,7 +8844,7 @@ def run_g2_structural_golden(*, http: SecHttpClient) -> list[dict]:
     )
     results.append(
         golden_result_row(
-            assertion_id="G2_financial_assetscurrent_b08",
+            assertion_id=G2_FINANCIAL_ASSETSCURRENT_ASSERTION_ID,
             description=(
                 "Financial-institution AssetsCurrent companyconcept and B08 "
                 "structural status"
@@ -7034,7 +8861,7 @@ def run_g2_structural_golden(*, http: SecHttpClient) -> list[dict]:
         )
     )
 
-    for metric_id in ["A01", "A02"]:
+    for metric_id in G2_FINANCIAL_NON_STD_METRIC_IDS:
         row = [
             item
             for item in metrics
@@ -7073,7 +8900,7 @@ def run_g2_structural_golden(*, http: SecHttpClient) -> list[dict]:
         b06_status = b06_rows[0]["status"] if b06_rows else "MISSING"
         results.append(
             golden_result_row(
-                assertion_id="G2_captive_finance_b06_dimension_review",
+                assertion_id=G2_CAPTIVE_FINANCE_ASSERTION_ID,
                 description=(
                     "Captive-finance B06 requires review when entity-level "
                     "debt is insufficient"
@@ -7092,7 +8919,7 @@ def run_g2_structural_golden(*, http: SecHttpClient) -> list[dict]:
     auditor_rows = find_instance_facts(concept_pattern=r"AuditorName")
     results.append(
         golden_result_row(
-            assertion_id="G2_auditorname_material_source",
+            assertion_id=G2_AUDITORNAME_ASSERTION_ID,
             description="AuditorName comes from accession instance or filing material",
             target="at least one AuditorName fact",
             actual=str(len(auditor_rows)),
@@ -7500,7 +9327,7 @@ def light_golden_g2_failures(
     )
     if financial_configs:
         company = str(financial_configs[0]["company"])
-        for metric_id in ["A01", "A02"]:
+        for metric_id in G2_FINANCIAL_NON_STD_METRIC_IDS:
             assertion_id = f"G2_financial_{metric_id.lower()}_not_std"
             if assertion_id not in golden_by_id:
                 failures.append(f"{assertion_id}:missing_snapshot_row")
@@ -7522,7 +9349,7 @@ def light_golden_g2_failures(
             company=company,
             metric_id="B08",
         )
-        assertion_id = "G2_financial_assetscurrent_b08"
+        assertion_id = G2_FINANCIAL_ASSETSCURRENT_ASSERTION_ID
         if assertion_id in golden_by_id and b08_rows:
             b08_status = b08_rows[0]["status"]
             golden_row = golden_by_id[assertion_id]
@@ -7534,7 +9361,7 @@ def light_golden_g2_failures(
     captive_configs = company_configs_with_extractor(
         extractor_name="CaptiveFinanceDebtExtractor",
     )
-    assertion_id = "G2_captive_finance_b06_dimension_review"
+    assertion_id = G2_CAPTIVE_FINANCE_ASSERTION_ID
     if captive_configs and assertion_id in golden_by_id:
         company = str(captive_configs[0]["company"])
         b06_rows = metric_rows_for_company_metric(
@@ -7597,7 +9424,7 @@ def check_light_golden_snapshot_integrity() -> dict:
     failures = light_golden_snapshot_integrity_failures()
     return validation_row(
         check_id="light_golden_snapshot_integrity",
-        status="FAIL" if failures else "PASS_LIGHT_GOLDEN_INTEGRITY",
+        status="FAIL" if failures else "PASS",
         details=(
             ";".join(failures[:30])
             if failures
@@ -7682,15 +9509,15 @@ def build_golden_candidates() -> list[dict]:
 
 
 def stage_run_golden_assertions() -> None:
-    """M7: run structure, source-class, numeric, and candidate assertions."""
+    """Stage 10: run structure, source-class, numeric, and candidate assertions."""
     mode, reasons = validation_package_mode()
     if mode == "WORKSPACE_INCOMPLETE":
         print("WORKSPACE_INCOMPLETE; " + "; ".join(reasons))
         raise SystemExit(1)
     if mode == "LIGHT_REVIEW_MODE":
         result = check_light_golden_snapshot_integrity()
-        if result["status"] == "PASS_LIGHT_GOLDEN_INTEGRITY":
-            print("PASS_LIGHT_GOLDEN_INTEGRITY: " + result["details"])
+        if result["status"] == "PASS":
+            print("PASS: LIGHT_REVIEW_MODE; " + result["details"])
             return
         print("Light golden snapshot integrity failed:")
         print(result["details"])
@@ -7702,32 +9529,13 @@ def stage_run_golden_assertions() -> None:
     results.extend(fixture_numeric_golden_results())
     write_csv_file(
         path=WORKDIR / "outputs" / "golden_results.csv",
-        fieldnames=[
-            "assertion_id",
-            "description",
-            "expected",
-            "actual",
-            "status",
-            "evidence_path",
-            "notes",
-        ],
+        fieldnames=GOLDEN_RESULT_FIELDNAMES,
         rows=results,
     )
     candidate_rows = build_golden_candidates()
     write_csv_file(
         path=WORKDIR / "outputs" / "golden_candidates.csv",
-        fieldnames=[
-            "company",
-            "metric_name",
-            "value",
-            "unit",
-            "status",
-            "accession",
-            "concept",
-            "period",
-            "filed_date",
-            "evidence_path",
-        ],
+        fieldnames=GOLDEN_CANDIDATE_FIELDNAMES,
         rows=candidate_rows,
     )
     failed = [row for row in results if row["status"] != "PASS"]
@@ -7739,7 +9547,7 @@ def stage_run_golden_assertions() -> None:
                 f"actual={row['actual']} notes={row['notes']}"
             )
         raise SystemExit(1)
-    print("M7 golden assertions complete; all pass")
+    print("Stage 10 golden assertions complete; all pass")
 
 
 def save_evidence(*, rows: list[dict]) -> None:
@@ -7799,6 +9607,23 @@ def canonical_auditor_name(*, value: str) -> str:
     return re.sub(pattern=r"[^a-z0-9]+", repl="", string=normalized)
 
 
+def is_dei_namespace(*, namespace: str) -> bool:
+    """Return whether a namespace is an official annual SEC DEI taxonomy."""
+    return re.fullmatch(
+        pattern=r"https?://xbrl\.sec\.gov/dei/\d{4}",
+        string=namespace,
+    ) is not None
+
+
+def is_ecd_namespace(*, namespace: str) -> bool:
+    """Return whether a namespace is an SEC ECD taxonomy or legacy prefix."""
+    normalized = namespace.lower()
+    return normalized == "ecd" or re.fullmatch(
+        pattern=r"https?://xbrl\.sec\.gov/ecd/\d{4}",
+        string=normalized,
+    ) is not None
+
+
 def decimal_or_none(*, value: str) -> Decimal | None:
     """Return Decimal for numeric text, or None for dash/blank markers.
 
@@ -7848,21 +9673,32 @@ def material_url_for_path(*, local_path: str) -> str:
     """Return the SEC source URL for a saved accession material path.
 
     Args:
-        local_path: Absolute local evidence path stored in concept inventory.
+        local_path: Current or legacy evidence locator stored in an inventory.
 
     Returns:
         Matching SEC URL or blank when the path is not in material inventory.
     """
-    rows = read_csv_file(path=WORKDIR / "outputs" / "accession_materials_inventory.csv")
+    target_relative_path = repo_relative_artifact_paths(
+        path_text=local_path,
+        row={},
+    )
+    rows = read_csv_file(
+        path=WORKDIR / "outputs" / "accession_materials_inventory.csv"
+    )
     for row in rows:
-        if row["local_path"] == local_path:
+        if artifact_reference_text(row=row) == target_relative_path:
             return row["source_url"]
     return ""
 
 
 def ecd_inventory_path(*, company: str) -> Path:
     """Return the local ECD concept inventory path for a company."""
-    return WORKDIR / "outputs" / "concept_inventory" / f"{slugify(text=company)}_ecd.csv"
+    return (
+        WORKDIR
+        / "outputs"
+        / "concept_inventory"
+        / f"{slugify(text=company)}_ecd.csv"
+    )
 
 
 def instance_inventory_path(*, company: str) -> Path:
@@ -8134,9 +9970,17 @@ def repair_c03_compensation(
         for row in governance_rows
         if row["signal_id"] not in {"C03", "C03_PEO_FACT"}
     ]
-    inventory = read_csv_file(path=WORKDIR / "outputs" / "latest_filings_inventory.csv")
-    materials = read_csv_file(path=WORKDIR / "outputs" / "accession_materials_inventory.csv")
-    for row in [item for item in inventory if item["source_role"] == "latest_def14a"]:
+    inventory = read_csv_file(
+        path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
+    )
+    materials = read_csv_file(
+        path=WORKDIR / "outputs" / "accession_materials_inventory.csv"
+    )
+    for row in [
+        item
+        for item in inventory
+        if item["source_role"] == "latest_def14a"
+    ]:
         company = row["company"]
         target = target_10k_for_company(company=company)
         material_rows = [
@@ -8145,8 +9989,18 @@ def repair_c03_compensation(
             if material["accession"] == row["accession"]
             and material["document_type"] == "def14a_primary_document"
         ]
-        local_path = material_rows[0]["local_path"] if material_rows else ""
-        source_url = material_rows[0]["source_url"] if material_rows else row["source_url"]
+        ecd_rows = [
+            fact
+            for fact in read_csv_file(path=ecd_inventory_path(company=company))
+            if fact["accession"] == row["accession"]
+        ]
+        locator_rows = material_rows if material_rows else ecd_rows
+        local_path = locator_rows[0]["local_path"] if locator_rows else ""
+        source_url = (
+            locator_rows[0]["source_url"]
+            if locator_rows and locator_rows[0]["source_url"]
+            else row["source_url"]
+        )
         metric, new_evidence, new_governance = build_c03_repair_rows(
             company=company,
             cik=int(row["cik"]),
@@ -8670,7 +10524,10 @@ def text_has_lodging_kpi_keywords(*, text: str) -> bool:
     """Return whether filing text contains lodging KPI headers."""
     return bool(
         re.search(
-            pattern=r"RevPAR|Revenue per available room|Occupancy|Average Daily Rate|ADR",
+            pattern=(
+                r"RevPAR|Revenue per available room|Occupancy|"
+                r"Average Daily Rate|ADR"
+            ),
             string=text,
             flags=re.IGNORECASE,
         )
@@ -8862,7 +10719,12 @@ def lodging_numeric_cells(*, text: str) -> list[Decimal | None]:
     return cells
 
 
-def lodging_quote_text(*, segment: str, row_start: int, row_text: str) -> tuple[str, str]:
+def lodging_quote_text(
+    *,
+    segment: str,
+    row_start: int,
+    row_text: str,
+) -> tuple[str, str]:
     """Return normalized raw header and raw row snippets for KPI evidence.
 
     Args:
@@ -8988,7 +10850,13 @@ def lodging_kpi_fact_from_text(*, text: str) -> dict:
         pattern=r"RevPAR|Revenue per available room|Occupancy|Average Daily Rate|ADR",
         width=1400,
     )
-    empty = {"revpar": "", "occupancy": "", "adr": "", "scope": "", "quote": empty_quote}
+    empty = {
+        "revpar": "",
+        "occupancy": "",
+        "adr": "",
+        "scope": "",
+        "quote": empty_quote,
+    }
     candidates = []
     row_labels = lodging_scope_row_labels(scopes=scopes)
     labels_pattern = "|".join(re.escape(label) for label in row_labels)
@@ -9486,14 +11354,14 @@ def repair_lodging_kpis(
             continue
         company = str(company_config["company"])
         material = primary_material_for_company(company=company)
-        text = html_file_to_text(path=Path(material["local_path"]))
+        text = html_file_to_text(path=resolve_artifact_path(row=material))
         metrics, evidence_rows = apply_lodging_kpi_metrics(
             metrics=metrics,
             evidence_rows=evidence_rows,
             company=company,
             text=text,
             source_url=material["source_url"],
-            local_path=material["local_path"],
+            local_path=artifact_reference_text(row=material),
         )
     return metrics, evidence_rows
 
@@ -9513,14 +11381,14 @@ def repair_rpo_crpo_metrics(
             continue
         company = str(company_config["company"])
         material = primary_material_for_company(company=company)
-        text = html_file_to_text(path=Path(material["local_path"]))
+        text = html_file_to_text(path=resolve_artifact_path(row=material))
         metrics, evidence_rows = apply_rpo_crpo_metric(
             metrics=metrics,
             evidence_rows=evidence_rows,
             company=company,
             text=text,
             source_url=material["source_url"],
-            local_path=material["local_path"],
+            local_path=artifact_reference_text(row=material),
         )
     return metrics, evidence_rows
 
@@ -9651,8 +11519,9 @@ def row_has_captive_finance_signal(*, row: dict) -> bool:
     if not concept_is_captive_debt_probe(concept=row["concept"]):
         return False
     for axis, member in dimension_pairs(dimensions=row["dimensions"]):
-        if captive_dimension_axis_allowed(axis=axis) and captive_dimension_member_allowed(
-            member=member,
+        if (
+            captive_dimension_axis_allowed(axis=axis)
+            and captive_dimension_member_allowed(member=member)
         ):
             return True
     return False
@@ -9989,7 +11858,161 @@ def auditor_facts_for_company(*, company: str) -> list[dict]:
         row
         for row in read_csv_file(path=instance_inventory_path(company=company))
         if row["concept"] == "AuditorName"
+        and is_dei_namespace(namespace=str(row["namespace"]))
     ]
+
+
+def request_rows_for_document(
+    *,
+    observation_rows: list[dict],
+    source_url: str,
+    document_name: str,
+) -> list[dict]:
+    """Return observations for one exact SEC document identity.
+
+    Args:
+        observation_rows: Manifest-attested request observations.
+        source_url: Canonical SEC document URL.
+        document_name: Expected response document basename.
+
+    Returns:
+        Every attempt for the URL/document pair, in ledger order.
+    """
+    return [
+        row
+        for row in observation_rows
+        if request_log_source_url(row=row) == source_url
+        and row["document_name"] == document_name
+    ]
+
+
+def request_bound_xbrl_material_rows(
+    *,
+    candidate: dict,
+    observation_rows: list[dict],
+) -> list[dict]:
+    """Rebuild successful XBRL materials from index and request evidence.
+
+    Args:
+        candidate: Current or prior filing identity.
+        observation_rows: Manifest-attested request observations.
+
+    Returns:
+        Successful local instance materials discovered from the verified
+        accession index, independent of the derived material inventory CSV.
+    """
+    cik = int(candidate["cik"])
+    accession = str(candidate["accession"])
+    base_dir = accession_dir_path(
+        company=str(candidate["company"]),
+        cik=cik,
+        accession=accession,
+    )
+    observation_identities = response_identities_from_request_rows(
+        rows=observation_rows,
+    )
+    index_path = base_dir / "index.json"
+    index_url = accession_directory_url(cik=cik, accession=accession)
+    index_body = verified_immutable_response_bytes(
+        path=index_path,
+        source_url=index_url,
+        observation_identities=observation_identities,
+    )
+    try:
+        index_payload = json.loads(index_body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ValueError(
+            f"Saved accession index JSON is invalid: {index_path}"
+        ) from error
+    if not isinstance(index_payload, dict):
+        raise TypeError(
+            f"Saved accession index root must be object: {index_path}"
+        )
+    instance_names = xml_instance_candidates(
+        items=accession_index_items_from_payload(
+            payload=index_payload,
+            source=str(index_path),
+        )
+    )
+    materials = []
+    for document_name in instance_names:
+        source_url = accession_document_url(
+            cik=cik,
+            accession=accession,
+            document_name=document_name,
+        )
+        matching_rows = request_rows_for_document(
+            observation_rows=observation_rows,
+            source_url=source_url,
+            document_name=document_name,
+        )
+        if not matching_rows:
+            raise ValueError(
+                "Accession index document lacks a request observation: "
+                f"{accession}:{document_name}"
+            )
+        if not any(row["status_code"] == "200" for row in matching_rows):
+            continue
+        local_path = base_dir / document_name
+        body = verified_immutable_response_bytes(
+            path=local_path,
+            source_url=source_url,
+            observation_identities=observation_identities,
+        )
+        materials.append(
+            material_row_from_fetch(
+                inventory_row=candidate,
+                document_name=document_name,
+                document_type="xbrl_instance",
+                source_url=source_url,
+                local_path=local_path,
+                status_code=200,
+                content_length=len(body),
+                sha256=hashlib.sha256(body).hexdigest(),
+            )
+        )
+    return materials
+
+
+def raw_auditor_facts_for_candidates(
+    *,
+    candidates: list[dict],
+    observation_rows: list[dict],
+) -> list[dict]:
+    """Replay official DEI AuditorName facts from candidate instance bytes.
+
+    Args:
+        candidates: Current or prior filing rows whose raw XBRL materials are
+            independently selected from request-bound submissions/inventory.
+        observation_rows: Manifest-attested request observations used to
+            discover the complete accession instance set.
+
+    Returns:
+        Official-DEI AuditorName facts parsed directly from the saved raw
+        instances, without trusting the derived concept inventory CSV.
+    """
+    facts = []
+    seen_accessions = set()
+    for candidate in candidates:
+        accession = str(candidate["accession"])
+        if accession in seen_accessions:
+            continue
+        seen_accessions.add(accession)
+        for material in request_bound_xbrl_material_rows(
+            candidate=candidate,
+            observation_rows=observation_rows,
+        ):
+            parsed_rows = parse_instance_with_fallback(
+                material_row=material,
+            )
+            facts.extend(
+                row
+                for row in parsed_rows
+                if row["accession"] == accession
+                and row["concept"] == "AuditorName"
+                and is_dei_namespace(namespace=str(row["namespace"]))
+            )
+    return facts
 
 
 def auditor_fact_for_accession(
@@ -9997,8 +12020,8 @@ def auditor_fact_for_accession(
     facts: list[dict],
     accession: str,
     period_end: str,
-) -> dict | None:
-    """Return one AuditorName fact for accession and period when available.
+) -> tuple[dict | None, str]:
+    """Select one nonblank, unambiguous AuditorName fact and reason.
 
     Args:
         facts: Local AuditorName fact rows.
@@ -10006,19 +12029,28 @@ def auditor_fact_for_accession(
         period_end: Report date expected for the fact context.
 
     Returns:
-        Deduplicated fact row or None when local material is missing.
+        Deduplicated fact row with an empty reason, or None with
+        `missing_or_blank` / `conflicting_values`.
     """
     matches = [
         row
         for row in facts
         if row["accession"] == accession and row["period_end"] == period_end
+        and is_dei_namespace(namespace=str(row["namespace"]))
+        and canonical_auditor_name(value=str(row["value"]))
     ]
     if not matches:
-        return None
-    return unique_rows(
+        return None, "missing_or_blank"
+    canonical_names = {
+        canonical_auditor_name(value=str(row["value"])) for row in matches
+    }
+    if len(canonical_names) != 1:
+        return None, "conflicting_values"
+    selected = unique_rows(
         rows=matches,
         fields=["accession", "concept", "period_end", "value", "source_path"],
-    )[0]
+    )
+    return selected[0], ""
 
 
 def xbrl_material_rows_for_accession(*, accession: str) -> list[dict]:
@@ -10031,14 +12063,71 @@ def xbrl_material_rows_for_accession(*, accession: str) -> list[dict]:
         XBRL instance material rows whose local files exist.
     """
     rows = read_csv_file(path=WORKDIR / "outputs" / "accession_materials_inventory.csv")
-    return [
-        row
-        for row in rows
-        if row["accession"] == accession
-        and row["document_type"] == "xbrl_instance"
-        and row["status_code"] == "200"
-        and Path(row["local_path"]).exists()
-    ]
+    selected = []
+    for row in rows:
+        if row["accession"] != accession:
+            continue
+        if row["document_type"] != "xbrl_instance" or row["status_code"] != "200":
+            continue
+        try:
+            resolve_artifact_path(row=row)
+        except FileNotFoundError as error:
+            print(f"XBRL material locator unresolved: {error}")
+            continue
+        selected.append(row)
+    return selected
+
+
+def auditor_fact_locator_component(*, fact: dict) -> dict:
+    """Return one raw-document locator for a selected AuditorName fact.
+
+    Args:
+        fact: Parsed AuditorName row containing source_path and accession.
+
+    Returns:
+        The four source fields consumed by the C04 evidence builder.
+    """
+    source_path = str(fact["source_path"])
+    return {
+        "source_url": material_url_for_path(local_path=source_path),
+        "local_path": source_path,
+        "accession": str(fact["accession"]),
+        "document_name": Path(source_path).name,
+    }
+
+
+def auditor_material_locator_components(*, candidates: list[dict]) -> list[dict]:
+    """Return every available raw XBRL locator for filing candidates.
+
+    Args:
+        candidates: Ordered filing identities whose instance scan proves a
+            missing or conflicting AuditorName result.
+
+    Returns:
+        Deduplicated raw-document locator components in candidate/index order.
+    """
+    components = []
+    for candidate in candidates:
+        for material in xbrl_material_rows_for_accession(
+            accession=str(candidate["accession"]),
+        ):
+            components.append(
+                {
+                    "source_url": str(material["source_url"]),
+                    "local_path": str(resolve_artifact_path(row=material)),
+                    "accession": str(material["accession"]),
+                    "document_name": str(material["document_name"]),
+                }
+            )
+    return unique_rows(
+        rows=components,
+        fields=[
+            "source_url",
+            "local_path",
+            "accession",
+            "document_name",
+        ],
+    )
 
 
 def append_material_rows(*, rows: list[dict]) -> None:
@@ -10048,16 +12137,16 @@ def append_material_rows(*, rows: list[dict]) -> None:
         rows: New accession material rows.
 
     Expected output:
-        Existing material rows are preserved and duplicates are removed by
-        accession, document, type, and local path.
+        New observations supersede an older row with the same filing/document
+        identity; unrelated existing material rows remain available.
     """
     if not rows:
         return
     path = WORKDIR / "outputs" / "accession_materials_inventory.csv"
     existing = read_csv_file(path=path)
     merged = unique_rows(
-        rows=existing + rows,
-        fields=["accession", "document_name", "document_type", "local_path"],
+        rows=rows + existing,
+        fields=["accession", "document_name", "document_type"],
     )
     write_csv_file(path=path, fieldnames=MATERIAL_FIELDNAMES, rows=merged)
 
@@ -10124,13 +12213,17 @@ def fetch_xbrl_materials_for_filing(
             )
         )
     append_material_rows(rows=new_rows)
-    return [
-        row
-        for row in new_rows
-        if row["document_type"] == "xbrl_instance"
-        and row["status_code"] == "200"
-        and Path(row["local_path"]).exists()
-    ]
+    selected = []
+    for row in new_rows:
+        if row["document_type"] != "xbrl_instance" or row["status_code"] != "200":
+            continue
+        try:
+            resolve_artifact_path(row=row)
+        except FileNotFoundError as error:
+            print(f"Fetched XBRL material locator unresolved: {error}")
+            continue
+        selected.append(row)
+    return selected
 
 
 def append_instance_inventory_rows(*, company: str, rows: list[dict]) -> None:
@@ -10147,7 +12240,23 @@ def append_instance_inventory_rows(*, company: str, rows: list[dict]) -> None:
         return
     path = instance_inventory_path(company=company)
     existing = read_csv_file(path=path)
-    merged = unique_rows(rows=existing + rows, fields=INSTANCE_FIELDNAMES)
+    merged = unique_rows(
+        rows=existing + rows,
+        fields=[
+            "company",
+            "cik",
+            "accession",
+            "document_name",
+            "namespace",
+            "concept",
+            "unit",
+            "context",
+            "dimensions",
+            "period_start",
+            "period_end",
+            "value",
+        ],
+    )
     write_csv_file(path=path, fieldnames=INSTANCE_FIELDNAMES, rows=merged)
 
 
@@ -10169,12 +12278,12 @@ def ensure_auditor_facts_for_filing(
         concept inventory; existing facts remain unchanged.
     """
     facts = auditor_facts_for_company(company=company)
-    existing = auditor_fact_for_accession(
+    existing, reason = auditor_fact_for_accession(
         facts=facts,
         accession=str(filing_row["accession"]),
         period_end=str(filing_row["reportDate"]),
     )
-    if existing is not None:
+    if existing is not None or reason == "conflicting_values":
         return
     material_rows = fetch_xbrl_materials_for_filing(
         http=http,
@@ -10200,24 +12309,26 @@ def auditor_current_filing_candidates(*, company: str, target: dict) -> list[dic
     candidates = [target]
     if target["form"] != "10-K/A":
         return candidates
-    recent_rows = recent_filing_rows(
+    originals = inventory_rows_for_company(
         company=company,
-        cik=int(target["cik"]),
-        entity_role=str(target["entity_role"]),
+        source_role="target_original_full_instance",
     )
     originals = [
         row
-        for row in recent_rows
-        if row["form"] == "10-K"
+        for row in originals
+        if str(row["cik"]) == str(target["cik"])
+        and row["form"] == "10-K"
         and row["reportDate"] == target["reportDate"]
-        and row["accessionNumber"] != target["accession"]
+        and row["accession"] != target["accession"]
     ]
     if not originals:
         return candidates
-    selected = sorted_filings(rows=originals)[0]
-    candidates.append(
-        filing_output_row(row=selected, source_role="auditor_current_10k")
-    )
+    selected = sorted(
+        originals,
+        key=lambda row: (str(row["filingDate"]), str(row["accession"])),
+        reverse=True,
+    )[0]
+    candidates.append(selected)
     return candidates
 
 
@@ -10225,25 +12336,73 @@ def select_auditor_fact_from_candidates(
     *,
     facts: list[dict],
     candidates: list[dict],
-) -> tuple[dict | None, dict]:
-    """Return the first AuditorName fact found across ordered candidates.
+) -> tuple[dict | None, dict, str]:
+    """Return the first usable AuditorName fact, source, and reason.
 
     Args:
         facts: Local AuditorName facts.
         candidates: Ordered filing rows.
 
     Returns:
-        Fact row or None, plus the candidate used for provenance.
+        Fact row or None, candidate provenance, and missing/conflict reason.
     """
     for candidate in candidates:
-        fact = auditor_fact_for_accession(
+        fact, reason = auditor_fact_for_accession(
             facts=facts,
             accession=str(candidate["accession"]),
             period_end=str(candidate["reportDate"]),
         )
         if fact is not None:
-            return fact, candidate
-    return None, candidates[0]
+            return fact, candidate, ""
+        if reason == "conflicting_values":
+            return None, candidate, reason
+    return None, candidates[0], "missing_or_blank"
+
+
+def ensure_auditor_fact_from_candidates(
+    *,
+    http: SecHttpClient,
+    company: str,
+    candidates: list[dict],
+) -> tuple[dict | None, dict, str]:
+    """Return the first local AuditorName, fetching only while still absent.
+
+    Args:
+        http: Configured SEC client used only for a required missing candidate.
+        company: Display company name owning the concept inventory.
+        candidates: Ordered target and fallback filing rows.
+
+    Returns:
+        Selected fact or None, provenance filing, and missing/conflict reason.
+    """
+    if not candidates:
+        raise ValueError("AuditorName candidates must not be empty")
+    facts = auditor_facts_for_company(company=company)
+    selected, source, reason = select_auditor_fact_from_candidates(
+        facts=facts,
+        candidates=candidates,
+    )
+    if selected is not None or reason == "conflicting_values":
+        return selected, source, reason
+    for candidate in candidates:
+        # The next network boundary is justified only while no ordered local
+        # candidate can support the C04 comparison.
+        ensure_auditor_facts_for_filing(
+            http=http,
+            company=company,
+            filing_row=candidate,
+        )
+        facts = auditor_facts_for_company(company=company)
+        selected, reason = auditor_fact_for_accession(
+            facts=facts,
+            accession=str(candidate["accession"]),
+            period_end=str(candidate["reportDate"]),
+        )
+        if selected is not None:
+            return selected, candidate, ""
+        if reason == "conflicting_values":
+            return None, candidate, reason
+    return None, candidates[0], "missing_or_blank"
 
 
 def repair_c04_auditor_changes(
@@ -10265,62 +12424,88 @@ def repair_c04_auditor_changes(
     http = client()
     for company_config in load_company_registry():
         company = str(company_config["company"])
-        target = target_10k_for_company(company=company)
+        target = c04_target_filing(company=company)
         cik = int(target["cik"])
         prior = prior_10k_for_company(company=company, cik=cik)
+        period_start = c04_period_start(
+            prior=prior,
+            target_cik=cik,
+            period_end=str(target["reportDate"]),
+        )
         current_candidates = auditor_current_filing_candidates(
             company=company,
             target=target,
         )
-        for candidate in current_candidates:
-            ensure_auditor_facts_for_filing(
+        current, current_source, current_reason = (
+            ensure_auditor_fact_from_candidates(
                 http=http,
                 company=company,
-                filing_row=candidate,
+                candidates=current_candidates,
             )
-        if prior is not None:
-            ensure_auditor_facts_for_filing(
-                http=http,
-                company=company,
-                filing_row=prior,
-            )
-        facts = auditor_facts_for_company(company=company)
-        current, current_source = select_auditor_fact_from_candidates(
-            facts=facts,
-            candidates=current_candidates,
         )
         prior_fact = None
+        prior_reason = "missing_or_blank"
         if prior is not None:
-            prior_fact, _prior_source = select_auditor_fact_from_candidates(
-                facts=facts,
-                candidates=[prior],
+            prior_fact, _prior_source, prior_reason = (
+                ensure_auditor_fact_from_candidates(
+                    http=http,
+                    company=company,
+                    candidates=[prior],
+                )
             )
+        evidence_components = []
         if current is None:
             status = "NEEDS_REVIEW"
             value = ""
+            current_issue = (
+                "conflicting dei:AuditorName values"
+                if current_reason == "conflicting_values"
+                else "missing or blank dei:AuditorName"
+            )
             note = (
-                "需复核: current 10-K instance does not contain dei:AuditorName; "
-                f"missing current accession/material {target['accession']}."
+                f"需复核: current 10-K has {current_issue}; "
+                f"current accession/material {target['accession']}."
             )
             quote = note
-            local_path = str(instance_inventory_path(company=company))
-            source_url = current_source["source_url"]
-            accession = current_source["accession"]
+            metric_accession = str(current_source["accession"])
+            scan_candidates = (
+                [current_source]
+                if current_reason == "conflicting_values"
+                else current_candidates
+            )
+            evidence_components.extend(
+                auditor_material_locator_components(
+                    candidates=scan_candidates,
+                )
+            )
         elif prior is None or prior_fact is None:
             status = "NEEDS_REVIEW"
             value = ""
             missing = "prior_10k inventory row" if prior is None else prior["accession"]
+            prior_issue = (
+                "conflicting AuditorName values"
+                if prior_reason == "conflicting_values"
+                else "missing or blank AuditorName"
+            )
             note = (
                 "需复核: current auditor read from dei:AuditorName, but prior "
-                f"10-K instance is missing or lacks AuditorName ({missing})."
+                f"10-K has {prior_issue} ({missing})."
             )
             quote = (
-                f"current dei:AuditorName={normalize_fact_text(value=current['value'])}; "
-                f"prior_missing={missing}"
+                "current dei:AuditorName="
+                f"{normalize_fact_text(value=current['value'])}; "
+                f"prior_issue={prior_issue};prior_accession={missing}"
             )
-            local_path = current["source_path"]
-            source_url = material_url_for_path(local_path=current["source_path"])
-            accession = current["accession"]
+            metric_accession = str(current["accession"])
+            evidence_components.append(
+                auditor_fact_locator_component(fact=current)
+            )
+            if prior is not None:
+                evidence_components.extend(
+                    auditor_material_locator_components(
+                        candidates=[prior],
+                    )
+                )
         else:
             current_name = normalize_fact_text(value=current["value"])
             prior_name = normalize_fact_text(value=prior_fact["value"])
@@ -10336,56 +12521,82 @@ def repair_c04_auditor_changes(
                 "manual confirmation required when changed."
             )
             quote = f"current={current_name}; prior={prior_name}"
-            local_path = current["source_path"]
-            source_url = material_url_for_path(local_path=current["source_path"])
-            accession = current["accession"]
-        metrics = upsert_metric(
-            rows=metrics,
-            new_row=text_metric_row(
-                company=company,
-                cik=cik,
-                metric_id="C04",
-                metric_name="Auditor changes",
-                value=value,
-                unit="flag" if value else "",
-                status=status,
-                source_class="DIM_XBRL",
-                period_end=str(target["reportDate"]),
-                accession=accession,
-                filed_date=target["filingDate"],
-                concept_or_section="AuditorName",
-                context_or_dimension="current/prior 10-K instance",
-                confidence="0.80" if value else "0.45",
-                notes=note,
-            ),
-        )
-        evidence_rows.append(
-            text_evidence_row(
-                company=company,
-                cik=cik,
-                metric_id="C04",
-                source_url=source_url,
-                local_path=local_path,
-                accession=accession,
-                document_name=Path(local_path).name,
-                concept_or_section="AuditorName",
-                context_or_dimension="current/prior 10-K instance",
-                unit="flag" if value else "",
-                period_end=str(target["reportDate"]),
-                value=value,
-                quote=quote,
-                extraction_method="auditorname_repair",
+            metric_accession = ";".join(
+                [current["accession"], prior_fact["accession"]]
             )
+            evidence_components = [
+                auditor_fact_locator_component(fact=fact)
+                for fact in [current, prior_fact]
+            ]
+        evidence_components = unique_rows(
+            rows=evidence_components,
+            fields=[
+                "source_url",
+                "local_path",
+                "accession",
+                "document_name",
+            ],
         )
+        metric = text_metric_row(
+            company=company,
+            cik=cik,
+            metric_id="C04",
+            metric_name="Auditor changes",
+            value=value,
+            unit="flag" if value else "",
+            status=status,
+            source_class="DIM_XBRL",
+            period_end=str(target["reportDate"]),
+            accession=metric_accession,
+            filed_date=target["filingDate"],
+            concept_or_section="AuditorName",
+            context_or_dimension="current/prior 10-K instance",
+            confidence="0.80" if value else "0.45",
+            notes=note,
+        )
+        # C04 comparison cannot inherit a predecessor CIK's fiscal boundary;
+        # generic text/event metrics retain their logical-company period.
+        metric["period_start"] = period_start
+        metrics = upsert_metric(rows=metrics, new_row=metric)
+        if not evidence_components:
+            continue
+        evidence = text_evidence_row(
+            company=company,
+            cik=cik,
+            metric_id="C04",
+            source_url=";".join(
+                row["source_url"] for row in evidence_components
+            ),
+            local_path=";".join(
+                row["local_path"] for row in evidence_components
+            ),
+            accession=";".join(
+                row["accession"] for row in evidence_components
+            ),
+            document_name=";".join(
+                row["document_name"] for row in evidence_components
+            ),
+            concept_or_section="AuditorName",
+            context_or_dimension="current/prior 10-K instance",
+            unit="flag" if value else "",
+            period_end=str(target["reportDate"]),
+            value=value,
+            quote=quote,
+            extraction_method="auditorname_repair",
+        )
+        evidence["period_start"] = period_start
+        evidence_rows.append(evidence)
     return metrics, evidence_rows
 
 
 def apply_p0_repairs() -> None:
-    """Apply bounded local-only P0 repairs before report and validation.
+    """Apply bounded, primarily local P0 repairs before report and validation.
 
     Expected output:
         metrics_matrix, metric_evidence, and governance_signals are updated
-        using only local evidence and concept inventory files.
+        primarily from local evidence and concept inventory files. C04
+        AuditorName may conditionally fetch official SEC material when required
+        local facts are unavailable.
     """
     metrics = load_metrics()
     evidence_rows = read_csv_file(path=WORKDIR / "outputs" / "metric_evidence.csv")
@@ -10420,6 +12631,9 @@ def apply_p0_repairs() -> None:
         metrics=metrics,
         evidence_rows=evidence_rows,
         events=read_csv_file(path=WORKDIR / "outputs" / "events.csv"),
+        inventory=read_csv_file(
+            path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
+        ),
     )
     metrics, evidence_rows = repair_c04_auditor_changes(
         metrics=metrics,
@@ -10434,15 +12648,164 @@ def apply_p0_repairs() -> None:
     save_evidence(rows=evidence_rows)
     save_governance(rows=governance_rows)
     refresh_repair_sensitive_golden_results()
-    print("P0 local repair applied")
+    print(
+        "Bounded P0 repair applied; local artifacts used primarily, with "
+        "conditional official SEC fetch allowed only for missing C04 "
+        "AuditorName material"
+    )
+
+
+def portable_locator_artifact_specs(
+    *,
+    existing_optional_only: bool,
+) -> list[tuple[Path, list[str]]]:
+    """Return the shared migration and validation locator-file inventory.
+
+    Args:
+        existing_optional_only: When True, omit absent optional sidecars while
+            retaining the five required validation inputs.
+
+    Returns:
+        Paths and exact schemas for every artifact using the five-field locator.
+    """
+    required_specs = [
+        (WORKDIR / "outputs" / "metric_evidence.csv", EVIDENCE_FIELDNAMES),
+        (
+            WORKDIR / "outputs" / "accession_materials_inventory.csv",
+            MATERIAL_FIELDNAMES,
+        ),
+        (WORKDIR / "outputs" / "events.csv", EVENT_FIELDNAMES),
+        (
+            WORKDIR / "outputs" / "governance_signals.csv",
+            GOVERNANCE_FIELDNAMES,
+        ),
+        (
+            WORKDIR / "outputs" / "risk_legal_signals.csv",
+            RISK_FIELDNAMES,
+        ),
+    ]
+    optional_specs = [
+        (
+            WORKDIR / "outputs" / "basel_ratio_candidates.csv",
+            BASEL_RATIO_CANDIDATE_FIELDNAMES,
+        ),
+        (
+            WORKDIR / "outputs" / "b06_debt_to_equity_candidates.csv",
+            B06_CANDIDATE_FIELDNAMES,
+        ),
+        (
+            WORKDIR / "outputs" / "rpo_crpo_observations.csv",
+            OPTIONAL_B_OBSERVATION_FIELDNAMES,
+        ),
+        (
+            WORKDIR / "outputs" / "capacity_text_signals.csv",
+            OPTIONAL_B_OBSERVATION_FIELDNAMES,
+        ),
+        (
+            WORKDIR / "outputs" / "lodging_kpi_probe_failures.csv",
+            OPTIONAL_B_OBSERVATION_FIELDNAMES,
+        ),
+        (
+            WORKDIR / "outputs" / "review_extracts" / "key_instance_facts.csv",
+            REVIEW_EXTRACT_FIELDNAMES,
+        ),
+    ]
+    if existing_optional_only:
+        optional_specs = [
+            spec for spec in optional_specs if spec[0].exists()
+        ]
+    return required_specs + optional_specs
+
+
+def concept_inventory_artifact_specs() -> list[tuple[Path, list[str]]]:
+    """Return every current instance/ECD locator file and its schema."""
+    directory = WORKDIR / "outputs" / "concept_inventory"
+    return [
+        (path, INSTANCE_FIELDNAMES)
+        for pattern in ["*_instance.csv", "*_ecd.csv"]
+        for path in sorted(directory.glob(pattern))
+    ]
+
+
+def migrate_portable_artifact_inventories() -> None:
+    """Rewrite locator-bearing CSV artifacts with the portable schema.
+
+    Expected output:
+        Current rows use source_url, repo_relative_path, content_sha256,
+        accession, and document_name. Legacy absolute paths are consumed only
+        as relocation hints and are not written back.
+    """
+    migrate_request_log(
+        log_path=REQUEST_LOG_PATH,
+        workdir=WORKDIR,
+        allow_legacy_bootstrap=False,
+    )
+    artifact_files = portable_locator_artifact_specs(
+        existing_optional_only=False,
+    )
+    material_spec = (
+        WORKDIR / "outputs" / "accession_materials_inventory.csv",
+        MATERIAL_FIELDNAMES,
+    )
+    artifact_files.remove(material_spec)
+    artifact_files.insert(0, material_spec)
+    artifact_files[1:1] = concept_inventory_artifact_specs()
+    artifact_files.extend(
+        [
+            (
+                WORKDIR / "outputs" / "golden_results.csv",
+                GOLDEN_RESULT_FIELDNAMES,
+            ),
+            (
+                WORKDIR / "outputs" / "golden_candidates.csv",
+                GOLDEN_CANDIDATE_FIELDNAMES,
+            ),
+        ]
+    )
+    material_url_by_path = {}
+    for path, fieldnames in artifact_files:
+        if not path.exists():
+            continue
+        rows = read_csv_file(path=path)
+        if fieldnames == MATERIAL_FIELDNAMES:
+            material_url_by_path = {
+                artifact_reference_text(row=row): row["source_url"]
+                for row in rows
+            }
+        if fieldnames == INSTANCE_FIELDNAMES:
+            for row in rows:
+                if "source_url" in row and row["source_url"]:
+                    continue
+                reference = artifact_reference_text(row=row)
+                row["source_url"] = (
+                    material_url_by_path[reference]
+                    if reference in material_url_by_path
+                    else artifact_source_url(row=row)
+                )
+        normalized_rows = [
+            normalize_csv_row(row=row, fieldnames=fieldnames)
+            for row in rows
+        ]
+        if csv_header(path=path) == fieldnames:
+            persisted_rows = [
+                {field: row[field] for field in fieldnames}
+                for row in rows
+            ]
+            if persisted_rows == normalized_rows:
+                continue
+        write_csv_file(
+            path=path,
+            fieldnames=fieldnames,
+            rows=normalized_rows,
+        )
 
 
 def refresh_repair_sensitive_golden_results() -> None:
-    """Refresh golden rows whose actual values changed through local repair.
+    """Refresh golden rows whose actual values changed through bounded repair.
 
     Expected output:
-        Golden pass/fail results remain local-only and consistent with repaired
-        metrics_matrix source classes.
+        Golden pass/fail results are recomputed from already repaired local
+        metrics and remain consistent with metrics_matrix source classes.
     """
     path = WORKDIR / "outputs" / "golden_results.csv"
     rows = read_csv_file(path=path)
@@ -10460,30 +12823,24 @@ def refresh_repair_sensitive_golden_results() -> None:
     ]
     source_class_by_metric = {}
     for row in metrics:
-        if row["company"] in financial_companies and row["metric_id"] in {"A01", "A02"}:
+        if (
+            row["company"] in financial_companies
+            and row["metric_id"] in G2_FINANCIAL_NON_STD_METRIC_IDS
+        ):
             source_class_by_metric[row["metric_id"]] = row["source_class"]
     refreshed = []
     for row in rows:
-        if row["assertion_id"] == "G2_financial_a01_not_std":
-            actual = source_class_by_metric["A01"]
-            row["actual"] = actual
-            row["status"] = "PASS" if actual != "STD_XBRL" else "FAIL"
-        if row["assertion_id"] == "G2_financial_a02_not_std":
-            actual = source_class_by_metric["A02"]
+        for metric_id in G2_FINANCIAL_NON_STD_METRIC_IDS:
+            assertion_id = f"G2_financial_{metric_id.lower()}_not_std"
+            if row["assertion_id"] != assertion_id:
+                continue
+            actual = source_class_by_metric[metric_id]
             row["actual"] = actual
             row["status"] = "PASS" if actual != "STD_XBRL" else "FAIL"
         refreshed.append(row)
     write_csv_file(
         path=path,
-        fieldnames=[
-            "assertion_id",
-            "description",
-            "expected",
-            "actual",
-            "status",
-            "evidence_path",
-            "notes",
-        ],
+        fieldnames=GOLDEN_RESULT_FIELDNAMES,
         rows=refreshed,
     )
 
@@ -10724,10 +13081,15 @@ def audit_python_literal(
                 "type": "accession",
                 "allowed": "0",
                 "reason": "fixed accession appears in production Python",
-                "replacement_plan": "Select filings from SEC submissions metadata.",
+                "replacement_plan": (
+                    "Select filings from SEC submissions metadata."
+                ),
             }
         )
-    for date_text in re.findall(pattern=r"\b20\d{2}-\d{2}-\d{2}\b", string=literal_value):
+    for date_text in re.findall(
+        pattern=r"\b20\d{2}-\d{2}-\d{2}\b",
+        string=literal_value,
+    ):
         rows.append(
             {
                 "file": str(file_path.relative_to(WORKDIR)),
@@ -10736,7 +13098,9 @@ def audit_python_literal(
                 "type": "fixed_fiscal_date",
                 "allowed": "0",
                 "reason": "fixed fiscal date appears in production Python",
-                "replacement_plan": "Use selected target/prior reportDate metadata.",
+                "replacement_plan": (
+                    "Use selected target/prior reportDate metadata."
+                ),
             }
         )
     return rows
@@ -10883,13 +13247,14 @@ def validation_row(*, check_id: str, status: str, details: str) -> dict:
 
     Args:
         check_id: Stable validation identifier.
-        status: PASS, FAIL, WORKSPACE_INCOMPLETE, SKIPPED_LIGHT_PACKAGE,
-            PASS_LIGHT_REVIEW, or PASS_LIGHT_GOLDEN_INTEGRITY.
+        status: One value from VALIDATION_STATUSES.
         details: Human-readable failure or pass detail.
 
     Returns:
         CSV row with P0 severity.
     """
+    if status not in VALIDATION_STATUSES:
+        raise ValueError(f"Unknown validation status: {status}")
     return {
         "check_id": check_id,
         "severity": "P0",
@@ -10911,6 +13276,23 @@ def skipped_light_validation_row(*, check_id: str, details: str) -> dict:
     return validation_row(
         check_id=check_id,
         status="SKIPPED_LIGHT_PACKAGE",
+        details=details,
+    )
+
+
+def not_evaluated_validation_row(*, check_id: str, details: str) -> dict:
+    """Build an explicit missing-evidence non-evaluation row.
+
+    Args:
+        check_id: Check whose required domain evidence is unavailable.
+        details: Missing evidence and why the claim cannot be evaluated.
+
+    Returns:
+        A row that cannot be interpreted as PASS.
+    """
+    return validation_row(
+        check_id=check_id,
+        status="NOT_EVALUATED_MISSING_EVIDENCE",
         details=details,
     )
 
@@ -11043,8 +13425,11 @@ def check_lodging_kpi_extractor(
         )
         quote_text = " ".join(item["evidence_quote"] for item in evidence).lower()
         has_quote = "revpar" in quote_text or "revenue per available room" in quote_text
-        in_range = value is not None and Decimal(str(revpar_range[0])) <= value <= Decimal(
-            str(revpar_range[1]),
+        in_range = (
+            value is not None
+            and Decimal(str(revpar_range[0]))
+            <= value
+            <= Decimal(str(revpar_range[1]))
         )
         if row["unit"] != "USD" or not has_quote or not in_range:
             failures.append(company)
@@ -11157,6 +13542,8 @@ def check_rpo_crpo_prefers_instance_fact(
                 or not has_note
             ):
                 failures.append(company)
+        elif row["status"] == "DIM_XBRL_OK":
+            failures.append(f"{company}:claimed_dim_xbrl_without_instance_fact")
         elif row["status"] == "MDA_OK" and not has_note:
             failures.append(f"{company}:missing_boundary_note")
     return validation_row(
@@ -11227,13 +13614,13 @@ def jpm_cet1_capital_scale_crosscheck_failures() -> list[str]:
     """Return failures for the full-evidence JPM CET1 capital scale check.
 
     Returns:
-        Empty list when the complete local evidence is absent or when the known
-        dimensional CET1 capital amount is present with scaled dollars. Absence
-        of full evidence is intentionally not a light-package proof.
+        Empty list only when the known dimensional CET1 capital amount is
+        present with scaled dollars. Missing evidence is an explicit failure
+        signal for the caller to classify as NOT_EVALUATED or a light skip.
     """
     path = WORKDIR / "outputs" / "concept_inventory" / "jpmorgan_chase_instance.csv"
     if not path.exists():
-        return []
+        return ["jpm_cet1_capital_evidence_missing"]
     period_end = date(year=2025, month=12, day=31).isoformat()
     matches = [
         row
@@ -11248,11 +13635,33 @@ def jpm_cet1_capital_scale_crosscheck_failures() -> list[str]:
 
 
 def ixbrl_scale_validation_failures() -> list[str]:
-    """Return all iXBRL scale validation failures."""
+    """Return deterministic parser and fixture scale failures."""
     return (
         scaled_inline_value_validation_failures()
         + inline_scale_route_fixture_failures()
-        + jpm_cet1_capital_scale_crosscheck_failures()
+    )
+
+
+def check_jpm_cet1_capital_scale_crosscheck() -> dict:
+    """Validate the full-evidence JPM CET1 scaled amount.
+
+    Returns:
+        PASS or FAIL when evidence exists; NOT_EVALUATED_MISSING_EVIDENCE when
+        the required instance inventory is unavailable.
+    """
+    failures = jpm_cet1_capital_scale_crosscheck_failures()
+    if failures == ["jpm_cet1_capital_evidence_missing"]:
+        return not_evaluated_validation_row(
+            check_id="jpm_cet1_capital_scale_crosscheck",
+            details=(
+                "missing outputs/concept_inventory/"
+                "jpmorgan_chase_instance.csv"
+            ),
+        )
+    return validation_row(
+        check_id="jpm_cet1_capital_scale_crosscheck",
+        status="FAIL" if failures else "PASS",
+        details=";".join(failures) if failures else "scaled CET1 amount verified",
     )
 
 
@@ -11332,7 +13741,11 @@ def check_basel_concept_resolver_handles_banking_regulation_ratio_family() -> di
     return validation_row(
         check_id="basel_concept_resolver_handles_banking_regulation_ratio_family",
         status="PASS" if passes else "FAIL",
-        details="banking regulation ratio family matched" if passes else f"{tier1};{cet1}",
+        details=(
+            "banking regulation ratio family matched"
+            if passes
+            else f"{tier1};{cet1}"
+        ),
     )
 
 
@@ -11360,10 +13773,16 @@ def check_basel_threshold_concepts_never_match_primary_metric() -> dict:
     """Validate Basel thresholds cannot match A01/A02 primary metrics."""
     concepts = [
         "TierOneRiskBasedCapitalMinimum",
-        "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatioCapitalAdequacyMinimum",
+        (
+            "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatio"
+            "CapitalAdequacyMinimum"
+        ),
         "TierOneRiskBasedCapitalRequiredForCapitalAdequacyToRiskWeightedAssets",
         "TierOneRiskBasedCapitalRequiredToBeWellCapitalizedToRiskWeightedAssets",
-        "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatioWellCapitalizedMinimum",
+        (
+            "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatio"
+            "WellCapitalizedMinimum"
+        ),
         "BankingRegulationCommonEquityTierOneRiskBasedCapitalRatioWellCapitalized",
         "CommonEquityTierOneCapitalToBeWellCapitalizedToRiskWeightedAssets",
     ]
@@ -11549,11 +13968,18 @@ def check_captive_finance_excludes_normal_finance_lease_terms() -> dict:
     return validation_row(
         check_id="captive_finance_excludes_normal_finance_lease_terms",
         status="FAIL" if has_signal else "PASS",
-        details="excluded concepts triggered" if has_signal else "normal finance terms excluded",
+        details=(
+            "excluded concepts triggered"
+            if has_signal
+            else "normal finance terms excluded"
+        ),
     )
 
 
-def check_enphase_b06_not_captive_finance_false_positive(*, metrics: list[dict]) -> dict:
+def check_enphase_b06_not_captive_finance_false_positive(
+    *,
+    metrics: list[dict],
+) -> dict:
     """Validate B06 is not marked review by normal finance terms."""
     failures = []
     for company_config in company_configs_with_extractor(
@@ -11580,7 +14006,10 @@ def check_gm_like_captive_finance_fixture_triggers_review() -> dict:
     rows = [
         {
             "concept": "LongTermDebtAndCapitalLeaseObligations",
-            "dimensions": "us-gaap:StatementBusinessSegmentsAxis=example:CaptiveFinanceMember",
+            "dimensions": (
+                "us-gaap:StatementBusinessSegmentsAxis="
+                "example:CaptiveFinanceMember"
+            ),
         },
         {
             "concept": "LongTermDebtAndCapitalLeaseObligations",
@@ -11643,28 +14072,570 @@ def check_entity_continuity_yoy(*, metrics: list[dict]) -> dict:
     )
 
 
+def required_row_field_errors(
+    *,
+    rows: list[dict],
+    fields: list[str],
+    artifact_name: str,
+) -> list[str]:
+    """Return deterministic schema errors for in-memory artifact rows.
+
+    Args:
+        rows: Parsed artifact rows presented to a validation helper.
+        fields: Required field names for every row.
+        artifact_name: Human-readable artifact label used in diagnostics.
+
+    Returns:
+        Missing-field or non-mapping errors, preserving input row order.
+    """
+    errors = []
+    for row_number, row in enumerate(rows, start=1):
+        if not isinstance(row, dict):
+            errors.append(f"{artifact_name} row {row_number} is not a mapping")
+            continue
+        missing = [field for field in fields if field not in row]
+        if missing:
+            errors.append(
+                f"{artifact_name} row {row_number} missing fields: "
+                + ",".join(missing)
+            )
+    return errors
+
+
+def validation_auditor_fact_component(
+    *,
+    fact: dict,
+    material_rows: list[dict],
+) -> dict:
+    """Bind one replayed AuditorName fact to its request-bound material.
+
+    Args:
+        fact: Fact parsed directly from a request-bound raw instance.
+        material_rows: Complete raw materials replayed for the C04 candidates.
+
+    Returns:
+        One locator component independent of the production evidence builder.
+    """
+    fact_path = repo_relative_artifact_path(
+        path_text=str(fact["source_path"]),
+        row=fact,
+    )
+    matches = [
+        row
+        for row in material_rows
+        if repo_relative_artifact_path(
+            path_text=str(row["local_path"]),
+            row=row,
+        ) == fact_path
+        and str(row["accession"]) == str(fact["accession"])
+    ]
+    if len(matches) != 1:
+        raise ValueError(
+            "Replayed AuditorName fact lacks one raw material identity: "
+            f"{fact['accession']}:{fact_path}"
+        )
+    material = matches[0]
+    return {
+        "source_url": str(material["source_url"]),
+        "local_path": str(material["local_path"]),
+        "accession": str(material["accession"]),
+        "document_name": str(material["document_name"]),
+    }
+
+
+def validation_auditor_material_components(
+    *,
+    candidates: list[dict],
+    material_rows: list[dict],
+) -> list[dict]:
+    """Return request-bound scan locators for selected filing candidates.
+
+    Args:
+        candidates: Filing identities whose raw scan supports a missing result.
+        material_rows: Complete request-bound C04 materials.
+
+    Returns:
+        Deduplicated locator components in candidate and SEC-index order.
+    """
+    accessions = [str(row["accession"]) for row in candidates]
+    components = []
+    seen = set()
+    for accession in accessions:
+        for material in material_rows:
+            if str(material["accession"]) != accession:
+                continue
+            component = {
+                "source_url": str(material["source_url"]),
+                "local_path": str(material["local_path"]),
+                "accession": accession,
+                "document_name": str(material["document_name"]),
+            }
+            identity = tuple(component.values())
+            if identity in seen:
+                continue
+            seen.add(identity)
+            components.append(component)
+    return components
+
+
+def validation_c04_period_start(
+    *,
+    inventory: list[dict],
+    company: str,
+    cik: str,
+    period_end: str,
+) -> str:
+    """Independently derive the C04 period start from exact inventory rows.
+
+    Args:
+        inventory: Request-bound and exact-checked filing inventory.
+        company: Logical company under validation.
+        cik: Selected target filing CIK.
+        period_end: Current target report date.
+
+    Returns:
+        Day after the latest same-CIK prior 10-K, or calendar year start.
+    """
+    prior_dates = [
+        str(row["reportDate"])
+        for row in inventory
+        if row["company"] == company
+        and row["source_role"] == "prior_10k"
+        and str(row["cik"]) == str(cik)
+        and str(row["reportDate"])
+        and str(row["reportDate"]) < period_end
+    ]
+    if prior_dates:
+        return (
+            parse_date_text(value=max(prior_dates)) + timedelta(days=1)
+        ).isoformat()
+    end_date = parse_date_text(value=period_end)
+    return date(year=end_date.year, month=1, day=1).isoformat()
+
+
+def validation_c04_evidence_row(
+    *,
+    company: str,
+    cik: str,
+    components: list[dict],
+    period_start: str,
+    period_end: str,
+    value: str,
+    quote: str,
+) -> dict:
+    """Build the complete independent C04 evidence-row expectation.
+
+    Args:
+        company: Logical company under validation.
+        cik: Current target filing CIK.
+        components: Request-bound raw fact or scan locator components.
+        period_start: Independently derived comparison period start.
+        period_end: Current target report date.
+        value: Recomputed auditor-change flag or blank review result.
+        quote: Deterministic comparison or missing/conflict explanation.
+
+    Returns:
+        One full EVIDENCE_FIELDNAMES row without production row builders.
+    """
+    relative_paths = [
+        repo_relative_artifact_path(
+            path_text=row["local_path"],
+            row={**row, "cik": cik},
+        )
+        for row in components
+    ]
+    content_hashes = [
+        file_sha256(
+            path_text=str(
+                repository_artifact_candidate(relative_path=relative_path)
+            )
+        )
+        for relative_path in relative_paths
+    ]
+    row = {field: "" for field in EVIDENCE_FIELDNAMES}
+    row.update(
+        {
+            "company": company,
+            "cik": str(cik),
+            "metric_id": "C04",
+            "source_url": ";".join(
+                component["source_url"] for component in components
+            ),
+            "repo_relative_path": ";".join(relative_paths),
+            "content_sha256": ";".join(content_hashes),
+            "accession": ";".join(
+                component["accession"] for component in components
+            ),
+            "document_name": ";".join(
+                component["document_name"] for component in components
+            ),
+            "concept_or_section": "AuditorName",
+            "context_or_dimension": "current/prior 10-K instance",
+            "unit": "flag" if value else "",
+            "period_start": period_start,
+            "period_end": period_end,
+            "value_raw": value,
+            "value_normalized": value,
+            "evidence_quote": quote[:1000],
+            "extraction_method": "auditorname_repair",
+            "parser_version": "sec_pipeline_v1",
+        }
+    )
+    return row
+
+
 def check_c04_auditorname_all_companies(
     *,
     metrics: list[dict],
     evidence_rows: list[dict],
+    inventory: list[dict],
 ) -> dict:
-    """Validate C04 uses AuditorName evidence or explicit review state."""
+    """Recompute every C04 result from current and prior local DEI facts.
+
+    Args:
+        metrics: Complete metrics matrix after C04 repair.
+        evidence_rows: Complete portable evidence rows after C04 repair.
+        inventory: Request-bound and exact-checked filing identities.
+
+    Returns:
+        PASS only when local official-DEI facts independently reproduce the
+        metric and both comparison components remain addressable.
+    """
+    try:
+        observation_rows = request_observation_rows()
+    except FileNotFoundError as error:
+        return not_evaluated_validation_row(
+            check_id="c04_uses_auditorname_for_all_companies",
+            details=f"request evidence missing: {error}",
+        )
+    except (KeyError, OSError, TypeError, ValueError) as error:
+        return validation_row(
+            check_id="c04_uses_auditorname_for_all_companies",
+            status="FAIL",
+            details=f"request evidence invalid: {error}",
+        )
+    schema_errors = []
+    for artifact_name, rows, fields in [
+        ("metrics", metrics, METRICS_FIELDNAMES),
+        ("evidence", evidence_rows, EVIDENCE_FIELDNAMES),
+        ("inventory", inventory, FILING_FIELDNAMES),
+    ]:
+        schema_errors.extend(
+            required_row_field_errors(
+                rows=rows,
+                fields=fields,
+                artifact_name=artifact_name,
+            )
+        )
+    if schema_errors:
+        return validation_row(
+            check_id="c04_uses_auditorname_for_all_companies",
+            status="FAIL",
+            details=";".join(schema_errors[:20]),
+        )
     failures = []
+    role_rank = {"primary": 0, "successor": 0, "predecessor": 1}
     for company_config in load_company_registry():
         company = str(company_config["company"])
-        row = metric_lookup(metrics=metrics, company=company, metric_id="C04")
+        metric_rows = [
+            row
+            for row in metrics
+            if row["company"] == company and row["metric_id"] == "C04"
+        ]
+        if len(metric_rows) != 1:
+            failures.append(f"{company}:metric_rows={len(metric_rows)}")
+            continue
+        metric = metric_rows[0]
         evidence = evidence_for_metric(
             evidence_rows=evidence_rows,
             company=company,
             metric_id="C04",
         )
-        if row["status"] == "DIM_XBRL_OK":
-            if row["concept_or_section"] != "AuditorName":
-                failures.append(company)
-            if not any(item["concept_or_section"] == "AuditorName" for item in evidence):
-                failures.append(f"{company}:missing_evidence")
-        elif row["status"] != "NEEDS_REVIEW":
-            failures.append(f"{company}:{row['status']}")
+        targets = [
+            row
+            for row in inventory
+            if row["company"] == company
+            and row["source_role"] == "target_10k"
+        ]
+        target_ranks = [
+            (
+                role_rank[str(row["entity_role"])]
+                if str(row["entity_role"]) in role_rank
+                else 5
+            )
+            for row in targets
+        ]
+        best_rank = min(target_ranks) if target_ranks else -1
+        preferred_targets = [
+            row
+            for row in targets
+            if (
+                role_rank[str(row["entity_role"])]
+                if str(row["entity_role"]) in role_rank
+                else 5
+            )
+            == best_rank
+        ]
+        if not preferred_targets:
+            failures.append(f"{company}:target_10k_missing")
+            continue
+        target = sorted(
+            preferred_targets,
+            key=lambda row: (
+                str(row["reportDate"]),
+                str(row["filingDate"]),
+                str(row["accession"]),
+            ),
+            reverse=True,
+        )[0]
+        prior_rows = [
+            row
+            for row in inventory
+            if row["company"] == company
+            and row["source_role"] == "prior_10k"
+            and str(row["cik"]) == str(target["cik"])
+            and str(row["reportDate"]) < str(target["reportDate"])
+        ]
+        prior = (
+            sorted(
+                prior_rows,
+                key=lambda row: (
+                    str(row["reportDate"]),
+                    str(row["filingDate"]),
+                    str(row["accession"]),
+                ),
+                reverse=True,
+            )[0]
+            if prior_rows
+            else None
+        )
+        current_candidates = [target]
+        if target["form"] == "10-K/A":
+            originals = [
+                row
+                for row in inventory
+                if row["company"] == company
+                and row["source_role"] == "target_original_full_instance"
+                and str(row["cik"]) == str(target["cik"])
+                and row["reportDate"] == target["reportDate"]
+            ]
+            if originals:
+                current_candidates.append(
+                    sorted(
+                        originals,
+                        key=lambda row: (
+                            str(row["filingDate"]),
+                            str(row["accession"]),
+                        ),
+                        reverse=True,
+                    )[0]
+                )
+        raw_candidates = list(current_candidates)
+        if prior is not None:
+            raw_candidates.append(prior)
+        try:
+            raw_materials = []
+            seen_accessions = set()
+            for candidate in raw_candidates:
+                accession = str(candidate["accession"])
+                if accession in seen_accessions:
+                    continue
+                seen_accessions.add(accession)
+                raw_materials.extend(
+                    request_bound_xbrl_material_rows(
+                        candidate=candidate,
+                        observation_rows=observation_rows,
+                    )
+                )
+            facts = []
+            for material in raw_materials:
+                parsed_rows = parse_instance_with_fallback(
+                    material_row=material,
+                )
+                facts.extend(
+                    row
+                    for row in parsed_rows
+                    if row["accession"] == material["accession"]
+                    and row["concept"] == "AuditorName"
+                    and is_dei_namespace(namespace=str(row["namespace"]))
+                )
+        except FileNotFoundError as error:
+            return not_evaluated_validation_row(
+                check_id="c04_uses_auditorname_for_all_companies",
+                details=f"raw AuditorName evidence missing: {error}",
+            )
+        except (KeyError, OSError, TypeError, ValueError) as error:
+            return validation_row(
+                check_id="c04_uses_auditorname_for_all_companies",
+                status="FAIL",
+                details=f"raw AuditorName evidence invalid: {error}",
+            )
+        current, current_source, current_reason = (
+            select_auditor_fact_from_candidates(
+                facts=facts,
+                candidates=current_candidates,
+            )
+        )
+        prior_fact = None
+        prior_reason = "missing_or_blank"
+        if prior is not None:
+            prior_fact, prior_reason = auditor_fact_for_accession(
+                facts=facts,
+                accession=str(prior["accession"]),
+                period_end=str(prior["reportDate"]),
+            )
+
+        expected_components = []
+        if current is None:
+            expected_value = ""
+            expected_status = "NEEDS_REVIEW"
+            expected_accession = str(current_source["accession"])
+            current_issue = (
+                "conflicting dei:AuditorName values"
+                if current_reason == "conflicting_values"
+                else "missing or blank dei:AuditorName"
+            )
+            expected_notes = (
+                f"需复核: current 10-K has {current_issue}; "
+                f"current accession/material {target['accession']}."
+            )
+            expected_quote = expected_notes
+            scan_candidates = (
+                [current_source]
+                if current_reason == "conflicting_values"
+                else current_candidates
+            )
+            expected_components = validation_auditor_material_components(
+                candidates=scan_candidates,
+                material_rows=raw_materials,
+            )
+        elif prior is None or prior_fact is None:
+            expected_value = ""
+            expected_status = "NEEDS_REVIEW"
+            expected_accession = str(current["accession"])
+            missing = (
+                "prior_10k inventory row"
+                if prior is None
+                else str(prior["accession"])
+            )
+            prior_issue = (
+                "conflicting AuditorName values"
+                if prior_reason == "conflicting_values"
+                else "missing or blank AuditorName"
+            )
+            expected_notes = (
+                "需复核: current auditor read from dei:AuditorName, but prior "
+                f"10-K has {prior_issue} ({missing})."
+            )
+            expected_quote = (
+                "current dei:AuditorName="
+                f"{normalize_fact_text(value=current['value'])}; "
+                f"prior_issue={prior_issue};prior_accession={missing}"
+            )
+            expected_components.append(
+                validation_auditor_fact_component(
+                    fact=current,
+                    material_rows=raw_materials,
+                )
+            )
+            if prior is not None:
+                expected_components.extend(
+                    validation_auditor_material_components(
+                        candidates=[prior],
+                        material_rows=raw_materials,
+                    )
+                )
+        else:
+            current_name = normalize_fact_text(value=current["value"])
+            prior_name = normalize_fact_text(value=prior_fact["value"])
+            changed = canonical_auditor_name(
+                value=current_name,
+            ) != canonical_auditor_name(value=prior_name)
+            expected_value = "1" if changed else "0"
+            expected_status = "NEEDS_REVIEW" if changed else "DIM_XBRL_OK"
+            expected_accession = ";".join(
+                [current["accession"], prior_fact["accession"]]
+            )
+            expected_notes = (
+                f"auditor {'changed' if changed else 'unchanged'}; "
+                f"current_accession={current['accession']}; "
+                f"prior_accession={prior_fact['accession']}; "
+                "manual confirmation required when changed."
+            )
+            expected_quote = f"current={current_name}; prior={prior_name}"
+            expected_components = [
+                validation_auditor_fact_component(
+                    fact=fact,
+                    material_rows=raw_materials,
+                )
+                for fact in [current, prior_fact]
+            ]
+
+        period_end = str(target["reportDate"])
+        try:
+            period_start = validation_c04_period_start(
+                inventory=inventory,
+                company=company,
+                cik=str(target["cik"]),
+                period_end=period_end,
+            )
+        except (TypeError, ValueError) as error:
+            return validation_row(
+                check_id="c04_uses_auditorname_for_all_companies",
+                status="FAIL",
+                details=f"{company}:invalid C04 period: {error}",
+            )
+        expected_metric = {field: "" for field in METRICS_FIELDNAMES}
+        expected_metric.update(
+            {
+                "company": company,
+                "cik": str(target["cik"]),
+                "metric_id": "C04",
+                "metric_name": "Auditor changes",
+                "value": expected_value,
+                "unit": "flag" if expected_value else "",
+                "status": expected_status,
+                "source_class": "DIM_XBRL",
+                "formula": "text/event extraction",
+                "period_start": period_start,
+                "period_end": period_end,
+                "fiscal_year": "",
+                "fiscal_period": "FY",
+                "accession": expected_accession,
+                "form": "",
+                "filed_date": str(target["filingDate"]),
+                "concept_or_section": "AuditorName",
+                "context_or_dimension": "current/prior 10-K instance",
+                "confidence": "0.80" if expected_value else "0.45",
+                "notes": expected_notes,
+            }
+        )
+        for field in METRICS_FIELDNAMES:
+            if metric[field] != expected_metric[field]:
+                failures.append(
+                    f"{company}:metric_{field}={metric[field]},"
+                    f"expected={expected_metric[field]}"
+                )
+        expected_evidence = []
+        if expected_components:
+            expected_evidence.append(
+                validation_c04_evidence_row(
+                    company=company,
+                    cik=str(target["cik"]),
+                    components=expected_components,
+                    period_start=period_start,
+                    period_end=period_end,
+                    value=expected_value,
+                    quote=expected_quote,
+                )
+            )
+        exact_errors = exact_artifact_row_errors(
+            rows=evidence,
+            expected_rows=expected_evidence,
+            fields=EVIDENCE_FIELDNAMES,
+            artifact_name="c04_evidence",
+        )
+        failures.extend(f"{company}:{error}" for error in exact_errors)
     return validation_row(
         check_id="c04_uses_auditorname_for_all_companies",
         status="PASS" if not failures else "FAIL",
@@ -11765,7 +14736,11 @@ def check_eleventh_company_behavior_lodging() -> dict:
     text = rows[0]["value"]
     fact = lodging_kpi_fact_from_text(text=text)
     status = "MDA_OK" if fact["revpar"] and fact["occupancy"] else "NOT_EXTRACTED"
-    passes = status == "MDA_OK" and fact["revpar"] == "140" and fact["occupancy"] == "70"
+    passes = (
+        status == "MDA_OK"
+        and fact["revpar"] == "140"
+        and fact["occupancy"] == "70"
+    )
     return validation_row(
         check_id="eleventh_company_behavior_lodging",
         status="PASS" if passes else "FAIL",
@@ -11911,7 +14886,9 @@ def recall_regression_failures(
             continue
         key = (snapshot["company"], metric_id)
         if key not in status_by_key:
-            failures.append(f"{snapshot['company']}:{metric_id}:missing_current")
+            failures.append(
+                f"{snapshot['company']}:{metric_id}:missing_current"
+            )
             continue
         current_status = status_by_key[key]
         if current_status not in RECALL_REGRESSION_STATUSES:
@@ -11926,14 +14903,22 @@ def recall_regression_failures(
             or "旧值被判伪" in reason
             or "数据源变更" in reason
         )
-        if not allowed or "extractor regression" in reason or "抽取器退化" in reason:
+        if (
+            not allowed
+            or "extractor regression" in reason
+            or "抽取器退化" in reason
+        ):
             failures.append(
-                f"{snapshot['company']}:{metric_id}:{previous_status}->{current_status}"
+                f"{snapshot['company']}:{metric_id}:"
+                f"{previous_status}->{current_status}"
             )
     return failures
 
 
-def check_ok_status_recall_not_regressed_without_reason(*, metrics: list[dict]) -> dict:
+def check_ok_status_recall_not_regressed_without_reason(
+    *,
+    metrics: list[dict],
+) -> dict:
     """Validate previous OK cells do not silently regress to missing/review."""
     snapshot = previous_ok_status_snapshot_rows()
     if not snapshot:
@@ -11946,17 +14931,31 @@ def check_ok_status_recall_not_regressed_without_reason(*, metrics: list[dict]) 
     return validation_row(
         check_id="ok_status_recall_not_regressed_without_reason",
         status="PASS" if not failures else "FAIL",
-        details=";".join(failures[:20]) if failures else f"snapshot_rows={len(snapshot)}",
+        details=(
+            ";".join(failures[:20])
+            if failures
+            else f"snapshot_rows={len(snapshot)}"
+        ),
     )
 
 
-def check_lodging_ok_recall_not_regressed_without_reason(*, metrics: list[dict]) -> dict:
-    """Validate previous lodging B10/B11 OK recall is preserved or justified."""
-    failures = recall_regression_failures(metrics=metrics, metric_filter={"B10", "B11"})
+def check_lodging_ok_recall_not_regressed_without_reason(
+    *,
+    metrics: list[dict],
+) -> dict:
+    """Validate previous lodging B10/B11 recall or justification."""
+    failures = recall_regression_failures(
+        metrics=metrics,
+        metric_filter={"B10", "B11"},
+    )
     return validation_row(
         check_id="lodging_ok_recall_not_regressed_without_reason",
         status="PASS" if not failures else "FAIL",
-        details=";".join(failures) if failures else "lodging B10/B11 recall preserved",
+        details=(
+            ";".join(failures)
+            if failures
+            else "lodging B10/B11 recall preserved"
+        ),
     )
 
 
@@ -11968,15 +14967,616 @@ def check_registry_profile_matches_sic_rules_or_has_override_reason() -> dict:
         actual = str(company_config["industry_profile"])
         if inferred == actual:
             continue
-        reason = profile_override_reason(company_id=str(company_config["company_id"]))
+        reason = profile_override_reason(
+            company_id=str(company_config["company_id"])
+        )
         if not reason:
             failures.append(
-                f"{company_config['company_id']}:{actual}!={inferred}:missing_override"
+                f"{company_config['company_id']}:{actual}!={inferred}:"
+                "missing_override"
             )
     return validation_row(
         check_id="registry_profile_matches_sic_rules_or_has_override_reason",
         status="PASS" if not failures else "FAIL",
-        details=";".join(failures) if failures else "registry profiles match SIC rules",
+        details=(
+            ";".join(failures)
+            if failures
+            else "registry profiles match SIC rules"
+        ),
+    )
+
+
+def keyed_artifact_exact_set_errors(
+    *,
+    rows: list[dict],
+    expected_keys: set[tuple[str, str]],
+    artifact_name: str,
+) -> list[str]:
+    """Return missing, unexpected, and duplicate two-field key errors.
+
+    Args:
+        rows: Artifact rows containing company and metric_id.
+        expected_keys: Independently derived complete key set.
+        artifact_name: Short artifact label used in diagnostics.
+
+    Returns:
+        Empty list only when actual keys form the expected unique set.
+    """
+    counts = {}
+    # Cardinality is retained separately so a duplicate cannot hide a deletion.
+    for row in rows:
+        company = str(require_key(mapping=row, key="company"))
+        metric_id = str(require_key(mapping=row, key="metric_id"))
+        key = (company, metric_id)
+        counts[key] = counts[key] + 1 if key in counts else 1
+    actual_keys = set(counts)
+    error_groups = [
+        ("missing", sorted(expected_keys - actual_keys)),
+        ("unexpected", sorted(actual_keys - expected_keys)),
+        (
+            "duplicate",
+            sorted(key for key, count in counts.items() if count != 1),
+        ),
+    ]
+    errors = []
+    for label, keys in error_groups:
+        if not keys:
+            continue
+        rendered = ",".join(
+            f"{company}:{metric_id}" for company, metric_id in keys
+        )
+        errors.append(f"{artifact_name}_{label}={rendered}")
+    return errors
+
+
+def exact_artifact_row_errors(
+    *,
+    rows: list[dict],
+    expected_rows: list[dict],
+    fields: list[str],
+    artifact_name: str,
+) -> list[str]:
+    """Return multiset differences for complete rows over selected fields.
+
+    Args:
+        rows: Current artifact rows.
+        expected_rows: Independently derived expected rows.
+        fields: Ordered fields defining one row identity.
+        artifact_name: Short diagnostic label.
+
+    Returns:
+        Missing and unexpected row summaries with duplicate counts preserved.
+    """
+    def identities(*, source_rows: list[dict]) -> Counter:
+        """Return string-normalized row identities with multiplicity."""
+        return Counter(
+            tuple(str(require_key(mapping=row, key=field)) for field in fields)
+            for row in source_rows
+        )
+
+    actual = identities(source_rows=rows)
+    expected = identities(source_rows=expected_rows)
+    errors = []
+    for label, differences in [
+        ("missing", expected - actual),
+        ("unexpected", actual - expected),
+    ]:
+        for identity, count in list(differences.items())[:20]:
+            errors.append(
+                f"{artifact_name}_{label}={count}:" + "|".join(identity)
+            )
+    return errors
+
+
+def request_observation_rows() -> list[dict]:
+    """Return schema-checked rows from the attested current request ledger.
+
+    Returns:
+        Complete request observations after manifest and row-shape validation.
+    """
+    validate_request_log_manifest(log_path=REQUEST_LOG_PATH)
+    return parse_request_log_rows(
+        text=REQUEST_LOG_PATH.read_bytes().decode("utf-8"),
+    )
+
+
+def response_identities_from_request_rows(
+    *,
+    rows: list[dict],
+) -> list[tuple[str, str, str, str, str]]:
+    """Return content identities from explicit request observations.
+
+    Args:
+        rows: Manifest-attested request log rows.
+
+    Returns:
+        Ordered URL, status, byte length, body hash, and document name tuples
+        for every observation carrying response bytes.
+    """
+    identities = []
+    for row in rows:
+        if not row["content_sha256"]:
+            continue
+        identities.append(
+            (
+                request_log_source_url(row=row),
+                row["status_code"],
+                row["content_length"],
+                row["content_sha256"],
+                row["document_name"],
+            )
+        )
+    return identities
+
+
+def request_observation_identities(
+) -> list[tuple[str, str, str, str, str]]:
+    """Return content identities from the attested current request ledger."""
+    return response_identities_from_request_rows(
+        rows=request_observation_rows(),
+    )
+
+
+def response_observation_statuses(
+    *,
+    path: Path,
+    source_url: str,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> tuple[bytes, set[str]]:
+    """Return repository bytes and matching recorded HTTP statuses.
+
+    Args:
+        path: Stable working-copy path consumed by a downstream parser.
+        source_url: Canonical SEC endpoint for that path.
+        observation_identities: Response identities from the attested ledger.
+
+    Returns:
+        Current bytes and every recorded status matching their full identity.
+    """
+    if path.is_symlink() or not path.is_file():
+        raise FileNotFoundError(
+            f"Saved response is not a regular file: {path}"
+        )
+    try:
+        relative_path = path.relative_to(WORKDIR).as_posix()
+    except ValueError as error:
+        raise ValueError(
+            f"Saved response escapes repository: {path}"
+        ) from error
+    repository_artifact_candidate(relative_path=relative_path)
+    body = path.read_bytes()
+    digest = hashlib.sha256(body).hexdigest()
+    statuses = {
+        status
+        for url, status, length, content_hash, document_name
+        in observation_identities
+        if url == source_url
+        and length == str(len(body))
+        and content_hash == digest
+        and document_name == path.name
+    }
+    if not statuses:
+        raise ValueError(
+            "Saved bytes lack a matching request observation: "
+            f"{path}"
+        )
+    return body, statuses
+
+
+def latest_successful_response_identity(
+    *,
+    source_url: str,
+    document_name: str,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> tuple[str, str, str, str, str]:
+    """Return the last successful observation for one URL/document pair.
+
+    Args:
+        source_url: Canonical SEC endpoint.
+        document_name: Expected response basename.
+        observation_identities: Ledger-ordered response identities.
+
+    Returns:
+        The latest status-200 identity; absence is an input-contract error.
+    """
+    for identity in reversed(observation_identities):
+        url, status, _length, _content_hash, name = identity
+        if url == source_url and name == document_name and status == "200":
+            return identity
+    raise ValueError(
+        "No successful request observation for response: "
+        f"{source_url} {document_name}"
+    )
+
+
+def verified_successful_response_bytes(
+    *,
+    path: Path,
+    source_url: str,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> bytes:
+    """Return repository bytes only when a 200 request proves them.
+
+    Args:
+        path: Stable working-copy path consumed by a downstream parser.
+        source_url: Canonical SEC endpoint for that path.
+        observation_identities: Response identities from the attested ledger.
+
+    Returns:
+        Current body bytes matching the latest recorded 200 response.
+    """
+    body, statuses = response_observation_statuses(
+        path=path,
+        source_url=source_url,
+        observation_identities=observation_identities,
+    )
+    if "200" not in statuses:
+        raise ValueError(
+            "Saved bytes lack a matching successful request observation: "
+            f"{path}; statuses={sorted(statuses)}"
+        )
+    actual_identity = (
+        source_url,
+        "200",
+        str(len(body)),
+        hashlib.sha256(body).hexdigest(),
+        path.name,
+    )
+    latest_identity = latest_successful_response_identity(
+        source_url=source_url,
+        document_name=path.name,
+        observation_identities=observation_identities,
+    )
+    if actual_identity != latest_identity:
+        raise ValueError(
+            "Saved bytes do not match the latest successful observation: "
+            f"{path}"
+        )
+    return body
+
+
+def immutable_successful_body_identities(
+    *,
+    source_url: str,
+    document_name: str,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> set[tuple[str, str]]:
+    """Return the sole allowed successful body identities or fail.
+
+    Args:
+        source_url: Canonical SEC archive endpoint for one immutable artifact.
+        document_name: Expected response basename.
+        observation_identities: Ledger-ordered response identities.
+
+    Returns:
+        Zero or one `(content_length, content_sha256)` identities.
+    """
+    successful_bodies = {
+        (length, content_hash)
+        for url, status, length, content_hash, name in observation_identities
+        if url == source_url and name == document_name and status == "200"
+    }
+    if len(successful_bodies) > 1:
+        raise ValueError(
+            "Immutable SEC artifact has conflicting successful bodies: "
+            f"{source_url} {document_name}"
+        )
+    return successful_bodies
+
+
+def verified_immutable_response_bytes(
+    *,
+    path: Path,
+    source_url: str,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> bytes:
+    """Return one immutable SEC artifact only when every 200 agrees.
+
+    Args:
+        path: Stable working-copy path for one filing-bound artifact.
+        source_url: Canonical SEC archive endpoint for that artifact.
+        observation_identities: Ledger-ordered response identities.
+
+    Returns:
+        Current bytes matching the sole successful content identity.
+    """
+    immutable_successful_body_identities(
+        source_url=source_url,
+        document_name=path.name,
+        observation_identities=observation_identities,
+    )
+    return verified_successful_response_bytes(
+        path=path,
+        source_url=source_url,
+        observation_identities=observation_identities,
+    )
+
+
+def verified_submission_payload(
+    *,
+    path: Path,
+    source_url: str,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> dict:
+    """Parse one submissions body only when a successful request proves it.
+
+    Args:
+        path: Stable working-copy submissions path.
+        source_url: Canonical SEC submissions endpoint for that path.
+        observation_identities: Successful identities from the attested ledger.
+
+    Returns:
+        Parsed JSON object whose current bytes match a recorded 200 response.
+    """
+    body = verified_successful_response_bytes(
+        path=path,
+        source_url=source_url,
+        observation_identities=observation_identities,
+    )
+    try:
+        payload = json.loads(body.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ValueError(f"Saved submissions JSON is invalid: {path}") from error
+    if not isinstance(payload, dict):
+        raise TypeError(f"Saved submissions root must be object: {path}")
+    return payload
+
+
+def verified_submission_payloads(
+    *,
+    cik: int,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> list[dict]:
+    """Return the request-bound base and bounded supplement payloads.
+
+    Args:
+        cik: Filing CIK whose submissions chain is required.
+        observation_identities: Successful identities from the attested ledger.
+
+    Returns:
+        Base payload followed by every supplement in the collection boundary.
+    """
+    submission = verified_submission_payload(
+        path=submissions_path(cik=cik),
+        source_url=submissions_url(cik=cik),
+        observation_identities=observation_identities,
+    )
+    payloads = [submission]
+    for file_name in submission_supplemental_names(
+        submission=submission,
+        cik=cik,
+    ):
+        payloads.append(
+            verified_submission_payload(
+                path=supplemental_submission_path(file_name=file_name),
+                source_url=submissions_file_url(file_name=file_name),
+                observation_identities=observation_identities,
+            )
+        )
+    return payloads
+
+
+def expected_8k_window_inventory_rows(
+    *,
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> list[dict]:
+    """Rebuild target, prior, and FY 8-K rows from request-bound submissions.
+
+    Returns:
+        Filing rows defining each fiscal window and its selected 8-Ks, without
+        issuing network requests or trusting the current inventory CSV.
+    """
+    expected = []
+    for role_row in all_role_rows():
+        rows = filing_rows_from_submission_payloads(
+            company=str(role_row["company"]),
+            cik=int(role_row["cik"]),
+            entity_role=str(role_row["entity_role"]),
+            payloads=verified_submission_payloads(
+                cik=int(role_row["cik"]),
+                observation_identities=observation_identities,
+            ),
+        )
+        target = select_latest_10k(rows=rows)
+        try:
+            prior = select_prior_10k(
+                rows=rows,
+                target_report_date=str(target["reportDate"]),
+            )
+        except RuntimeError as error:
+            print(
+                "Prior 10-K unavailable while rebuilding 8-K validation "
+                f"window for {role_row['company']} {role_row['cik']}: {error}"
+            )
+            prior = None
+        expected.append(
+            filing_output_row(row=target, source_role="target_10k")
+        )
+        if prior is not None:
+            expected.append(
+                filing_output_row(row=prior, source_role="prior_10k")
+            )
+        window_start, window_end = fiscal_window(
+            target_row=target,
+            prior_row=prior,
+        )
+        expected.extend(
+            filing_output_row(row=row, source_role="fy_8k")
+            for row in select_8k_window(
+                rows=rows,
+                window_start=window_start,
+                window_end=window_end,
+            )
+        )
+    return expected
+
+
+def expected_8k_event_rows(
+    *,
+    inventory: list[dict],
+    observation_identities: list[tuple[str, str, str, str, str]],
+) -> list[dict]:
+    """Replay saved 8-K documents into the expected portable event rows.
+
+    Args:
+        inventory: Independently rebuilt FY-window filing rows.
+        observation_identities: Successful identities from the attested ledger.
+
+    Returns:
+        Exact normalized event rows derived from saved hdr or primary bytes.
+    """
+    expected = []
+    for filing_row in inventory:
+        cik = int(filing_row["cik"])
+        accession = str(filing_row["accession"])
+        base_path = accession_dir_path(
+            company=str(filing_row["company"]),
+            cik=cik,
+            accession=accession,
+        )
+        hdr_path = base_path / f"{accession}.hdr.sgml"
+        primary_path = base_path / str(filing_row["primaryDocument"])
+        primary_url = str(filing_row["source_url"])
+        hdr_url = hdr_sgml_url(cik=cik, accession=accession)
+
+        # Source selection must not hide a conflicting successful version of
+        # the other filing-bound document already present in the ledger.
+        for document_path, source_url in [
+            (hdr_path, hdr_url),
+            (primary_path, primary_url),
+        ]:
+            successful_bodies = immutable_successful_body_identities(
+                source_url=source_url,
+                document_name=document_path.name,
+                observation_identities=observation_identities,
+            )
+            if document_path.is_file() and successful_bodies:
+                verified_immutable_response_bytes(
+                    path=document_path,
+                    source_url=source_url,
+                    observation_identities=observation_identities,
+                )
+        rows = []
+        if hdr_path.is_file():
+            _body, hdr_statuses = response_observation_statuses(
+                path=hdr_path,
+                source_url=hdr_url,
+                observation_identities=observation_identities,
+            )
+            if "200" in hdr_statuses:
+                rows = event_rows_from_document(
+                    filing_row=filing_row,
+                    document_path=hdr_path,
+                    source_url=hdr_url,
+                    item_source="hdr.sgml",
+                )
+        if not rows:
+            if not primary_path.is_file():
+                raise FileNotFoundError(
+                    "Missing saved 8-K replay source; "
+                    f"hdr={hdr_path}; primary={primary_path}"
+                )
+            verified_immutable_response_bytes(
+                path=primary_path,
+                source_url=primary_url,
+                observation_identities=observation_identities,
+            )
+            rows = event_rows_from_document(
+                filing_row=filing_row,
+                document_path=primary_path,
+                source_url=primary_url,
+                item_source="primary_document",
+            )
+        if not rows:
+            raise ValueError(
+                f"No 8-K item could be replayed for accession {accession}"
+            )
+        expected.extend(
+            normalize_csv_row(row=row, fieldnames=EVENT_FIELDNAMES)
+            for row in rows
+        )
+    return expected
+
+
+def check_8k_event_chain_exact_set(
+    *,
+    inventory: list[dict],
+    events: list[dict],
+) -> dict:
+    """Validate submissions, inventory, raw items, and events exactly."""
+    try:
+        observations = request_observation_identities()
+        expected_window_inventory = expected_8k_window_inventory_rows(
+            observation_identities=observations,
+        )
+    except FileNotFoundError as error:
+        return not_evaluated_validation_row(
+            check_id="eightk_event_chain_exact_set",
+            details=f"saved submissions missing: {error}",
+        )
+    except (KeyError, TypeError, ValueError) as error:
+        return validation_row(
+            check_id="eightk_event_chain_exact_set",
+            status="FAIL",
+            details=f"saved submissions invalid: {error}",
+        )
+    window_roles = {"target_10k", "prior_10k", "fy_8k"}
+    actual_window_inventory = [
+        row for row in inventory if row["source_role"] in window_roles
+    ]
+    errors = exact_artifact_row_errors(
+        rows=actual_window_inventory,
+        expected_rows=expected_window_inventory,
+        fields=FILING_FIELDNAMES,
+        artifact_name="eightk_window_inventory",
+    )
+    expected_inventory = [
+        row
+        for row in expected_window_inventory
+        if row["source_role"] == "fy_8k"
+    ]
+    errors.extend(
+        event_inventory_coverage_errors(
+            inventory=expected_inventory,
+            events=events,
+        )
+    )
+    if errors:
+        return validation_row(
+            check_id="eightk_event_chain_exact_set",
+            status="FAIL",
+            details=";".join(errors[:20]),
+        )
+    try:
+        expected_events = expected_8k_event_rows(
+            inventory=expected_inventory,
+            observation_identities=observations,
+        )
+    except FileNotFoundError as error:
+        return not_evaluated_validation_row(
+            check_id="eightk_event_chain_exact_set",
+            details=f"saved 8-K evidence missing: {error}",
+        )
+    except ValueError as error:
+        return validation_row(
+            check_id="eightk_event_chain_exact_set",
+            status="FAIL",
+            details=str(error),
+        )
+    errors = exact_artifact_row_errors(
+        rows=events,
+        expected_rows=expected_events,
+        fields=EVENT_FIELDNAMES,
+        artifact_name="events",
+    )
+    return validation_row(
+        check_id="eightk_event_chain_exact_set",
+        status="PASS" if not errors else "FAIL",
+        details=(
+            f"inventory_rows={len(expected_inventory)};events={len(events)}"
+            if not errors
+            else ";".join(errors[:20])
+        ),
     )
 
 
@@ -11984,18 +15584,520 @@ def check_coverage_join(
     *,
     coverage: list[dict],
     evidence_rows: list[dict],
+    metrics: list[dict],
 ) -> dict:
-    """Validate coverage.has_evidence equals the actual evidence join."""
+    """Validate coverage identity and evidence joins against metrics."""
+    if not metrics:
+        return not_evaluated_validation_row(
+            check_id="coverage_has_evidence_matches_metric_evidence_join",
+            details="metrics_matrix rows missing",
+        )
+    # Coverage must describe the full, unique matrix before flags are trusted.
+    metric_keys = {
+        (str(row["company"]), str(row["metric_id"]))
+        for row in metrics
+    }
+    failures = keyed_artifact_exact_set_errors(
+        rows=metrics,
+        expected_keys=metric_keys,
+        artifact_name="metrics_matrix",
+    )
+    failures.extend(
+        keyed_artifact_exact_set_errors(
+            rows=coverage,
+            expected_keys=metric_keys,
+            artifact_name="coverage_matrix",
+        )
+    )
+    if failures:
+        return validation_row(
+            check_id="coverage_has_evidence_matches_metric_evidence_join",
+            status="FAIL",
+            details=";".join(failures[:20]),
+        )
+    if not evidence_rows:
+        return not_evaluated_validation_row(
+            check_id="coverage_has_evidence_matches_metric_evidence_join",
+            details="metric_evidence rows missing",
+        )
     evidence_pairs = evidence_key_set(evidence_rows=evidence_rows)
     mismatches = []
     for row in coverage:
-        expected = "1" if (row["company"], row["metric_id"]) in evidence_pairs else "0"
+        key = (row["company"], row["metric_id"])
+        expected = "1" if key in evidence_pairs else "0"
         if row["has_evidence"] != expected:
             mismatches.append(f"{row['company']}:{row['metric_id']}")
     return validation_row(
         check_id="coverage_has_evidence_matches_metric_evidence_join",
         status="PASS" if not mismatches else "FAIL",
-        details=";".join(mismatches[:20]) if mismatches else "coverage join matches",
+        details=(
+            ";".join(mismatches[:20])
+            if mismatches
+            else "coverage join matches"
+        ),
+    )
+
+
+def numeric_evidence_matches_metric(*, metric: dict, evidence: dict) -> bool:
+    """Return whether one evidence row fully supports one numeric metric.
+
+    Args:
+        metric: Numeric metrics_matrix row under validation.
+        evidence: Candidate metric_evidence row for the same logical key.
+
+    Returns:
+        True when value, unit, period, filing identity, source, concept, and
+        extraction method are all present and aligned.
+    """
+    required_fields = [
+        "value_normalized",
+        "unit",
+        "period_end",
+        "accession",
+        "source_url",
+        "concept_or_section",
+        "extraction_method",
+    ]
+    if any(not evidence[field] for field in required_fields):
+        return False
+    if (
+        evidence["company"] != metric["company"]
+        or evidence["metric_id"] != metric["metric_id"]
+        or evidence["value_normalized"] != metric["value"]
+        or evidence["unit"] != metric["unit"]
+        or evidence["period_start"] != metric["period_start"]
+        or evidence["period_end"] != metric["period_end"]
+    ):
+        return False
+    metric_accessions = artifact_path_parts(
+        path_text=str(metric["accession"])
+    )
+    evidence_accessions = artifact_path_parts(
+        path_text=str(evidence["accession"])
+    )
+    source_urls = artifact_path_parts(path_text=str(evidence["source_url"]))
+    return (
+        bool(evidence_accessions)
+        and evidence_accessions == metric_accessions
+        and bool(source_urls)
+        and all(is_official_sec_url(source_url=url) for url in source_urls)
+    )
+
+
+def event_metric_evidence_errors(
+    *,
+    metric: dict,
+    evidence_rows: list[dict],
+    events: list[dict],
+) -> list[str]:
+    """Return exact component-evidence errors for one positive 8-K metric.
+
+    Args:
+        metric: `8K_ITEM_OK` metric row.
+        evidence_rows: Complete metric evidence rows.
+        events: Complete, independently replay-validated event rows.
+
+    Returns:
+        Empty only when value, accession multiset, and every evidence component
+        exactly match the event rows contributing to the metric.
+    """
+    company_events = [
+        row for row in events if row["company"] == metric["company"]
+    ]
+    matching = event_rows_for_metric(
+        events=company_events,
+        metric_id=str(metric["metric_id"]),
+    )
+    expected_value = str(len(matching))
+    expected_accessions = [str(row["accession"]) for row in matching]
+    errors = []
+    if not matching:
+        errors.append("positive_metric_has_no_event")
+    if str(metric["value"]) != expected_value:
+        errors.append(
+            f"value={metric['value']},expected={expected_value}"
+        )
+    if (
+        artifact_path_parts(path_text=str(metric["accession"]))
+        != expected_accessions
+    ):
+        errors.append("metric_accessions_do_not_match_events")
+    extraction_method = (
+        "eightk_item_keyword"
+        if metric["metric_id"] == "E01"
+        else "eightk_item"
+    )
+    # Validation derives the complete row contract directly from event data;
+    # reusing the production evidence builder would let one shared bug prove
+    # its own output correct.
+    expected_evidence = [
+        {
+            "company": str(metric["company"]),
+            "cik": str(event["cik"]),
+            "metric_id": str(metric["metric_id"]),
+            "source_url": str(event["source_url"]),
+            "repo_relative_path": str(event["repo_relative_path"]),
+            "content_sha256": str(event["content_sha256"]),
+            "accession": str(event["accession"]),
+            "document_name": str(event["document_name"]),
+            "concept_or_section": f"8-K Item {event['item_code']}",
+            "context_or_dimension": "FY window",
+            "unit": "count",
+            "period_start": str(metric["period_start"]),
+            "period_end": str(metric["period_end"]),
+            "value_raw": "1",
+            "value_normalized": str(metric["value"]),
+            "evidence_quote": str(event["brief"])[:1000],
+            "extraction_method": extraction_method,
+            "parser_version": "sec_pipeline_v1",
+        }
+        for event in matching
+    ]
+    actual_evidence = [
+        row
+        for row in evidence_rows
+        if row["company"] == metric["company"]
+        and row["metric_id"] == metric["metric_id"]
+    ]
+    errors.extend(
+        exact_artifact_row_errors(
+            rows=actual_evidence,
+            expected_rows=expected_evidence,
+            fields=EVIDENCE_FIELDNAMES,
+            artifact_name="event_evidence",
+        )
+    )
+    return errors
+
+
+def expected_event_metric_target(
+    *,
+    inventory: list[dict],
+    company: str,
+) -> dict:
+    """Return the target filing that owns one company's event outputs.
+
+    Args:
+        inventory: Filing rows whose target/prior identities were independently
+            rebuilt from saved submissions.
+        company: Logical company owning the event metric.
+
+    Returns:
+        Preferred primary/successor target, then predecessor fallback.
+    """
+    targets = [
+        row
+        for row in inventory
+        if row["company"] == company and row["source_role"] == "target_10k"
+    ]
+    if not targets:
+        raise ValueError(f"Missing event target 10-K for {company}")
+    role_rank = {"primary": 0, "successor": 0, "predecessor": 1}
+    return sorted(
+        targets,
+        key=lambda row: (
+            role_rank[row["entity_role"]]
+            if row["entity_role"] in role_rank
+            else 5,
+            str(row["filingDate"]),
+        ),
+    )[0]
+
+
+def expected_event_metric_period(
+    *,
+    inventory: list[dict],
+    company: str,
+) -> tuple[str, str]:
+    """Derive one event metric period from exact-checked filing inventory.
+
+    Args:
+        inventory: Filing rows whose target/prior identities were independently
+            rebuilt from saved submissions.
+        company: Logical company owning the event metric.
+
+    Returns:
+        Fiscal period start and end dates used by event outputs.
+    """
+    target = expected_event_metric_target(
+        inventory=inventory,
+        company=company,
+    )
+    period_end = str(target["reportDate"])
+    prior_dates = [
+        str(row["reportDate"])
+        for row in inventory
+        if row["company"] == company
+        and row["source_role"] == "prior_10k"
+        and str(row["reportDate"])
+        and str(row["reportDate"]) < period_end
+    ]
+    if prior_dates:
+        period_start = (
+            parse_date_text(value=max(prior_dates)) + timedelta(days=1)
+        ).isoformat()
+    else:
+        end_date = parse_date_text(value=period_end)
+        period_start = date(
+            year=end_date.year,
+            month=1,
+            day=1,
+        ).isoformat()
+    return period_start, period_end
+
+
+def expected_event_metric_row(
+    *,
+    company: str,
+    metric_id: str,
+    events: list[dict],
+    inventory: list[dict],
+) -> dict:
+    """Independently derive every deterministic event metric field.
+
+    Args:
+        company: Logical company owning the output row.
+        metric_id: C01 or E01-E05 identifier validated by this gate.
+        events: Complete replay-validated event component rows.
+        inventory: Exact-checked target/prior/FY filing inventory.
+
+    Returns:
+        One complete metrics-matrix row contract.
+    """
+    target = expected_event_metric_target(
+        inventory=inventory,
+        company=company,
+    )
+    period_start, period_end = expected_event_metric_period(
+        inventory=inventory,
+        company=company,
+    )
+    company_events = [row for row in events if row["company"] == company]
+    matching = event_rows_for_metric(
+        events=company_events,
+        metric_id=metric_id,
+    )
+    company_inventory = [
+        row
+        for row in inventory
+        if row["company"] == company and row["source_role"] == "fy_8k"
+    ]
+    scanned_accessions = ";".join(
+        sorted({str(row["accession"]) for row in company_inventory})
+    )
+    scanned_dates = ";".join(
+        sorted({str(row["filingDate"]) for row in company_inventory})
+    )
+    scanned_context = (
+        "FY-window 8-K accessions scanned"
+        if scanned_accessions
+        else "No FY-window 8-K accession in inventory"
+    )
+    if metric_id == "E01":
+        metric_name = "M&A announcements"
+        concept = "8-K Item 1.01/2.01/8.01"
+        confidence = "0.75"
+        if matching:
+            status = "8K_ITEM_OK"
+            accession = ";".join(
+                str(event["accession"]) for event in matching
+            )
+            filed_date = ""
+            notes = "M&A candidate from item mapping and keyword rule."
+        else:
+            status = "NOT_AVAILABLE_SEC"
+            accession = scanned_accessions
+            filed_date = scanned_dates
+            notes = "FY-window 8-K scanned; no M&A item rule matched."
+        context = scanned_context
+    else:
+        specs = {
+            spec_metric_id: (metric_name, code, notes)
+            for spec_metric_id, metric_name, code, _status, notes
+            in eight_k_event_update_specs()
+        }
+        if metric_id not in specs:
+            raise ValueError(f"Unknown event metric id: {metric_id}")
+        metric_name, code, positive_notes = specs[metric_id]
+        concept = f"8-K Item {code}"
+        if matching:
+            status = "8K_ITEM_OK"
+            accession = ";".join(
+                str(event["accession"]) for event in matching
+            )
+            filed_date = ";".join(
+                str(event["filing_date"]) for event in matching
+            )
+            context = "FY window"
+            confidence = str(matching[0]["confidence"])
+            notes = positive_notes
+        else:
+            status = "NOT_AVAILABLE_SEC"
+            accession = scanned_accessions
+            filed_date = scanned_dates
+            context = scanned_context
+            confidence = "0.80"
+            notes = f"FY-window 8-K scanned; no item {code} found."
+            if metric_id == "E02":
+                notes = "No Item 1.03 in FY-window 8-K; zero is normal."
+    row = {field: "" for field in METRICS_FIELDNAMES}
+    row.update(
+        {
+            "company": company,
+            "cik": str(target["cik"]),
+            "metric_id": metric_id,
+            "metric_name": metric_name,
+            "value": str(len(matching)),
+            "unit": "count",
+            "status": status,
+            "source_class": "8K_ITEM",
+            "formula": "text/event extraction",
+            "period_start": period_start,
+            "period_end": period_end,
+            "fiscal_year": "",
+            "fiscal_period": "FY",
+            "accession": accession,
+            "form": "",
+            "filed_date": filed_date,
+            "concept_or_section": concept,
+            "context_or_dimension": context,
+            "confidence": confidence,
+            "notes": notes,
+        }
+    )
+    return row
+
+
+def check_8k_event_outputs_match_events(
+    *,
+    metrics: list[dict],
+    evidence_rows: list[dict],
+    events: list[dict],
+    inventory: list[dict],
+) -> dict:
+    """Validate event metrics and evidence against the complete event set.
+
+    Args:
+        metrics: Complete metrics matrix rows.
+        evidence_rows: Complete metric evidence rows.
+        events: Parsed FY-window event components.
+        inventory: Filing inventory defining the expected FY-window accessions.
+
+    Returns:
+        PASS only when every event-backed output matches its contributing
+        events, including an explicit scan row for a legitimate zero.
+    """
+    failures = event_inventory_coverage_errors(
+        inventory=inventory,
+        events=events,
+    )
+    event_metric_ids = {
+        metric_id
+        for metric_id, _name, _code, _status, _notes
+        in eight_k_event_update_specs()
+        if metric_id != "C04"
+    } | {"E01"}
+    expected_keys = {
+        key
+        for key in expected_metrics_matrix_keys()
+        if key[1] in event_metric_ids
+    }
+    for company, metric_id in sorted(expected_keys):
+        metric_rows = [
+            row
+            for row in metrics
+            if row["company"] == company and row["metric_id"] == metric_id
+        ]
+        if len(metric_rows) != 1:
+            failures.append(
+                f"metric_cardinality={company}:{metric_id}:{len(metric_rows)}"
+            )
+            continue
+        metric = metric_rows[0]
+        company_events = [row for row in events if row["company"] == company]
+        try:
+            expected_metric = expected_event_metric_row(
+                company=company,
+                metric_id=metric_id,
+                events=events,
+                inventory=inventory,
+            )
+        except (KeyError, TypeError, ValueError) as error:
+            # A damaged filing inventory is a validation failure, not an
+            # exception that may prevent Stage 12 from publishing its result.
+            failures.append(
+                f"{company}:{metric_id}:expected_metric_invalid={error}"
+            )
+            continue
+        matching = event_rows_for_metric(
+            events=company_events,
+            metric_id=metric_id,
+        )
+        for field in METRICS_FIELDNAMES:
+            if metric[field] != expected_metric[field]:
+                failures.append(
+                    f"{company}:{metric_id}:{field}={metric[field]},"
+                    f"expected={expected_metric[field]}"
+                )
+        if matching:
+            failures.extend(
+                f"{company}:{metric_id}:{error}"
+                for error in event_metric_evidence_errors(
+                    metric=metric,
+                    evidence_rows=evidence_rows,
+                    events=events,
+                )
+            )
+            continue
+
+        source_urls, locator_accessions = event_scan_locators(
+            events=company_events,
+        )
+        zero_evidence = [
+            row
+            for row in evidence_rows
+            if row["company"] == company and row["metric_id"] == metric_id
+        ]
+        if len(zero_evidence) != 1:
+            failures.append(
+                f"{company}:{metric_id}:zero_evidence_rows="
+                f"{len(zero_evidence)}"
+            )
+            continue
+        evidence = zero_evidence[0]
+        expected_evidence_fields = {
+            "company": company,
+            "cik": expected_metric["cik"],
+            "metric_id": metric_id,
+            "source_url": source_urls,
+            "repo_relative_path": "outputs/events.csv",
+            "accession": locator_accessions,
+            "document_name": "events.csv",
+            "concept_or_section": expected_metric["concept_or_section"],
+            "context_or_dimension": expected_metric["context_or_dimension"],
+            "unit": expected_metric["unit"],
+            "period_start": expected_metric["period_start"],
+            "period_end": expected_metric["period_end"],
+            "value_raw": "0",
+            "value_normalized": "0",
+            "evidence_quote": expected_metric["notes"],
+            "extraction_method": "eightk_zero_item_scan",
+            "parser_version": "sec_pipeline_v1",
+        }
+        for field, expected in expected_evidence_fields.items():
+            if evidence[field] != expected:
+                failures.append(
+                    f"{company}:{metric_id}:evidence_{field}="
+                    f"{evidence[field]},expected={expected}"
+                )
+    return validation_row(
+        check_id="eightk_event_outputs_match_events",
+        status="PASS" if not failures else "FAIL",
+        details=(
+            f"event_metric_keys={len(expected_keys)}"
+            if not failures
+            else ";".join(failures[:20])
+        ),
     )
 
 
@@ -12003,21 +16105,41 @@ def check_numeric_ok_requires_evidence(
     *,
     metrics: list[dict],
     evidence_rows: list[dict],
+    events: list[dict],
 ) -> dict:
-    """Validate OK numeric rows have at least one evidence row."""
-    evidence_pairs = evidence_key_set(evidence_rows=evidence_rows)
+    """Validate each numeric OK row has complete matching evidence identity."""
     failures = []
     for row in metrics:
         if row["status"] not in NUMERIC_EVIDENCE_STATUSES:
             continue
         if row["value"] == "":
             continue
-        if (row["company"], row["metric_id"]) not in evidence_pairs:
+        if row["source_class"] == "8K_ITEM" and row["status"] == "8K_ITEM_OK":
+            event_errors = event_metric_evidence_errors(
+                metric=row,
+                evidence_rows=evidence_rows,
+                events=events,
+            )
+            failures.extend(
+                f"{row['company']}:{row['metric_id']}:{error}"
+                for error in event_errors
+            )
+            continue
+        matching_rows = [
+            evidence
+            for evidence in evidence_rows
+            if numeric_evidence_matches_metric(metric=row, evidence=evidence)
+        ]
+        if not matching_rows:
             failures.append(f"{row['company']}:{row['metric_id']}")
     return validation_row(
         check_id="numeric_ok_status_requires_evidence_row",
         status="PASS" if not failures else "FAIL",
-        details=";".join(failures[:20]) if failures else "all numeric OK rows evidenced",
+        details=(
+            ";".join(failures[:20])
+            if failures
+            else "all numeric OK rows have complete matching evidence"
+        ),
     )
 
 
@@ -12249,23 +16371,20 @@ def check_metrics_matrix_applicability_matches_02_04_spec(
     *,
     metrics: list[dict],
 ) -> dict:
-    """Validate optional B metric applicability matches the spec boundary."""
-    failures = []
-    if len(metrics) != 230:
-        failures.append(f"row_count={len(metrics)}")
-    for row in metrics:
-        metric_id = row["metric_id"]
-        if metric_id not in optional_b_metric_ids():
-            continue
-        if not optional_b_metric_is_main_applicable(
-            company=row["company"],
-            metric_id=metric_id,
-        ):
-            failures.append(f"{row['company']}:{metric_id}")
+    """Validate matrix keys are the unique config-derived expected set."""
+    failures = keyed_artifact_exact_set_errors(
+        rows=metrics,
+        expected_keys=expected_metrics_matrix_keys(),
+        artifact_name="metrics_matrix",
+    )
     return validation_row(
         check_id="metrics_matrix_applicability_matches_02_04_spec",
         status="PASS" if not failures else "FAIL",
-        details="main matrix optional B scope matches spec" if not failures else ";".join(failures),
+        details=(
+            "metrics matrix exact key set matches config contract"
+            if not failures
+            else ";".join(failures)
+        ),
     )
 
 
@@ -12274,11 +16393,12 @@ def check_no_unexpected_optional_b_metrics_in_main_matrix(
     metrics: list[dict],
 ) -> dict:
     """Validate B10-B13 main rows only exist for mounted extractors."""
+    expected_keys = expected_metrics_matrix_keys()
     expected_counts = {
-        "B10": 1,
-        "B11": 1,
-        "B12": 1,
-        "B13": 2,
+        metric_id: len(
+            [key for key in expected_keys if key[1] == metric_id]
+        )
+        for metric_id in optional_b_metric_ids()
     }
     failures = []
     for metric_id, expected_count in expected_counts.items():
@@ -12288,17 +16408,27 @@ def check_no_unexpected_optional_b_metrics_in_main_matrix(
     return validation_row(
         check_id="no_unexpected_optional_b_metrics_in_main_matrix",
         status="PASS" if not failures else "FAIL",
-        details="optional B metric counts match target scope" if not failures else ";".join(failures),
+        details=(
+            "optional B metric counts match target scope"
+            if not failures
+            else ";".join(failures)
+        ),
     )
 
 
 def check_c02_matrix_matches_governance_signals(*, metrics: list[dict]) -> dict:
     """Validate C02 matrix rows mirror governance_signals rows."""
+    path = WORKDIR / "outputs" / "governance_signals.csv"
     signals = [
         row
-        for row in read_csv_file(path=WORKDIR / "outputs" / "governance_signals.csv")
+        for row in read_csv_file(path=path)
         if row["signal_id"] == "C02"
     ]
+    if not path.exists() or not signals:
+        return not_evaluated_validation_row(
+            check_id="c02_matrix_matches_governance_signals",
+            details="governance_signals C02 evidence missing",
+        )
     failures = []
     for signal in signals:
         row = metric_lookup(
@@ -12323,6 +16453,11 @@ def check_c02_text_qual_requires_evidence_quote(
     evidence_rows: list[dict],
 ) -> dict:
     """Validate each TEXT_QUAL C02 row has quoted DEF 14A evidence."""
+    if not metrics:
+        return not_evaluated_validation_row(
+            check_id="c02_text_qual_requires_evidence_quote",
+            details="metrics_matrix rows missing",
+        )
     failures = []
     for row in metrics:
         if row["metric_id"] != "C02" or row["status"] != "TEXT_QUAL":
@@ -12343,6 +16478,11 @@ def check_c02_text_qual_requires_evidence_quote(
 
 def check_no_placeholder_notes_in_final_metrics(*, metrics: list[dict]) -> dict:
     """Validate final matrix does not retain initialization notes."""
+    if not metrics:
+        return not_evaluated_validation_row(
+            check_id="no_placeholder_notes_in_final_metrics",
+            details="metrics_matrix rows missing",
+        )
     failures = [
         f"{row['company']}:{row['metric_id']}"
         for row in metrics
@@ -12351,7 +16491,11 @@ def check_no_placeholder_notes_in_final_metrics(*, metrics: list[dict]) -> dict:
     return validation_row(
         check_id="no_placeholder_notes_in_final_metrics",
         status="PASS" if not failures else "FAIL",
-        details="no placeholder initialization notes remain" if not failures else ";".join(failures),
+        details=(
+            "no placeholder initialization notes remain"
+            if not failures
+            else ";".join(failures)
+        ),
     )
 
 
@@ -12613,7 +16757,11 @@ def check_b03_bridge_fragment_negative_fixture_rejected_or_needs_review() -> dic
     return validation_row(
         check_id="b03_bridge_fragment_negative_fixture_rejected_or_needs_review",
         status="PASS" if not failures else "FAIL",
-        details="bridge chain contains aggregate concepts only" if not failures else ";".join(failures),
+        details=(
+            "bridge chain contains aggregate concepts only"
+            if not failures
+            else ";".join(failures)
+        ),
     )
 
 
@@ -12791,15 +16939,22 @@ def check_jpm_a04_nim_raw_row_anchor_or_proxy_caveat(
 
 def check_jpm_table_values_not_added_to_golden_until_manual_confirmation() -> dict:
     """Validate JPM MD&A table values are not locked into golden."""
-    rows = read_csv_file(
-        path=(
-            WORKDIR
-            / "tests"
-            / "fixtures"
-            / "sec_10_company_spike"
-            / "golden_expected_values.csv"
-        )
+    path = (
+        WORKDIR
+        / "tests"
+        / "fixtures"
+        / "sec_10_company_spike"
+        / "golden_expected_values.csv"
     )
+    rows = read_csv_file(path=path)
+    if not path.exists() or not rows:
+        return not_evaluated_validation_row(
+            check_id=(
+                "jpm_table_values_not_added_to_golden_until_"
+                "manual_confirmation"
+            ),
+            details="golden_expected_values fixture missing or empty",
+        )
     forbidden = {"metric_value_A03", "metric_value_A04", "metric_value_A11", "metric_value_A12"}
     failures = [
         row["assertion_id"]
@@ -12827,7 +16982,11 @@ def check_paramount_stub_period_values_not_main_annual_ok(
     return validation_row(
         check_id="paramount_stub_period_values_not_main_annual_ok",
         status="PASS" if not failures else "FAIL",
-        details="Paramount annual period metrics are blank" if not failures else ";".join(failures),
+        details=(
+            "Paramount annual period metrics are blank"
+            if not failures
+            else ";".join(failures)
+        ),
     )
 
 
@@ -12948,60 +17107,614 @@ def write_spec_implementation_audit() -> list[dict]:
     return rows
 
 
+def expected_golden_assertion_ids() -> list[str]:
+    """Return the assertion ids generated for the configured full run.
+
+    Returns:
+        G1 ids derived from the company registry, configured G2 structural ids,
+        and every fixture-owned numeric/concept assertion id.
+    """
+    assertion_ids = []
+    for company_config in load_company_registry():
+        company_slug = slugify(text=str(company_config["company"]))
+        assertion_ids.extend(
+            [
+                f"G1_{company_slug}_cik",
+                f"G1_{company_slug}_fye",
+            ]
+        )
+        # A role-chain assertion exists exactly when the registry declares
+        # more than one entity role for the logical company.
+        if len(company_config["roles"]) > 1:
+            assertion_ids.append(f"G1_{company_slug}_role_chain")
+    financial_configs = company_configs_with_extractor(
+        extractor_name="BaselCapitalRatioExtractor",
+    )
+    if not financial_configs:
+        raise RuntimeError("No financial institution profile configured")
+    assertion_ids.append(G2_FINANCIAL_ASSETSCURRENT_ASSERTION_ID)
+    assertion_ids.extend(
+        f"G2_financial_{metric_id.lower()}_not_std"
+        for metric_id in G2_FINANCIAL_NON_STD_METRIC_IDS
+    )
+    captive_configs = company_configs_with_extractor(
+        extractor_name="CaptiveFinanceDebtExtractor",
+    )
+    if captive_configs:
+        assertion_ids.append(G2_CAPTIVE_FINANCE_ASSERTION_ID)
+    assertion_ids.append(G2_AUDITORNAME_ASSERTION_ID)
+    fixture_path = (
+        WORKDIR
+        / "tests"
+        / "fixtures"
+        / "sec_10_company_spike"
+        / "golden_expected_values.csv"
+    )
+    assertion_ids.extend(
+        row["assertion_id"] for row in read_csv_file(path=fixture_path)
+    )
+    return assertion_ids
+
+
 def check_golden_results_all_pass() -> dict:
-    """Validate existing original golden assertion results all pass."""
+    """Validate the full Golden exact set is unique and all rows pass."""
     rows = read_csv_file(path=WORKDIR / "outputs" / "golden_results.csv")
-    failures = [row["assertion_id"] for row in rows if row["status"] != "PASS"]
+    indexed, duplicates = golden_rows_by_assertion(rows=rows)
+    expected_ids = expected_golden_assertion_ids()
+    expected_set = set(expected_ids)
+    actual_set = set(indexed)
+    expected_duplicates = sorted(
+        assertion_id
+        for assertion_id in expected_set
+        if expected_ids.count(assertion_id) > 1
+    )
+    missing = sorted(expected_set - actual_set)
+    unexpected = sorted(actual_set - expected_set)
+    non_pass = sorted(
+        row["assertion_id"] for row in rows if row["status"] != "PASS"
+    )
+    failures = []
+    for label, values in [
+        ("expected_duplicate", expected_duplicates),
+        ("missing", missing),
+        ("unexpected", unexpected),
+        ("duplicate", sorted(set(duplicates))),
+        ("non_pass", non_pass),
+    ]:
+        if values:
+            failures.append(f"{label}=" + ",".join(values[:20]))
     return validation_row(
         check_id="existing_golden_results_still_pass",
-        status="PASS" if rows and not failures else "FAIL",
-        details=";".join(failures[:20]) if failures else f"rows={len(rows)}",
+        status="PASS" if not failures else "FAIL",
+        details=";".join(failures) if failures else f"rows={len(rows)}",
     )
 
 
+def immutable_request_headers_hash(
+    *,
+    relative_path: str,
+    headers_relative_path: str,
+    content_sha256: str,
+) -> str:
+    """Return the header hash encoded by an immutable attempt locator.
+
+    Args:
+        relative_path: Repository-relative response body path.
+        headers_relative_path: Repository-relative headers sidecar path.
+        content_sha256: Recorded response body digest.
+
+    Returns:
+        Encoded headers digest for current immutable attempts, or an empty
+        string for legacy stable paths.
+    """
+    body_path = Path(relative_path)
+    headers_path = Path(headers_relative_path)
+    immutable_prefix = ("evidence", "request_attempts")
+    body_is_immutable = body_path.parts[:2] == immutable_prefix
+    headers_are_immutable = headers_path.parts[:2] == immutable_prefix
+    if not body_is_immutable and not headers_are_immutable:
+        return ""
+    if (
+        not body_is_immutable
+        or not headers_are_immutable
+        or len(body_path.parts) != 5
+        or body_path.parts[2] != content_sha256[:2]
+        or body_path.parts[3] != content_sha256
+        or headers_path.parent != body_path.parent
+    ):
+        raise ValueError("immutable_request_locator_mismatch")
+    prefix = f"{body_path.name}."
+    suffix = ".headers.json"
+    if (
+        not headers_path.name.startswith(prefix)
+        or not headers_path.name.endswith(suffix)
+    ):
+        raise ValueError("immutable_headers_locator_mismatch")
+    digest = headers_path.name[len(prefix):-len(suffix)]
+    if re.fullmatch(pattern=r"[0-9a-f]{64}", string=digest) is None:
+        raise ValueError("immutable_headers_hash_invalid")
+    return digest
+
+
+def required_request_observation_keys(
+) -> tuple[set[tuple[str, str]], set[tuple[str, str]]]:
+    """Return request identities required by current downstream evidence.
+
+    Returns:
+        Exact URL/body-hash keys for raw artifacts and URL/accession keys for
+        the supported derived event aggregate.
+    """
+    artifact_specs = portable_locator_artifact_specs(
+        existing_optional_only=True,
+    )
+    artifact_specs.extend(concept_inventory_artifact_specs())
+    raw_keys = set()
+    derived_keys = set()
+    for path, _fieldnames in artifact_specs:
+        if not path.exists():
+            continue
+        for row in read_csv_file(path=path):
+            source_urls = artifact_path_parts(
+                path_text=str(row["source_url"]),
+            )
+            accessions = artifact_path_parts(
+                path_text=str(row["accession"]),
+            )
+            if is_derived_locator_aggregate(row=row):
+                if len(source_urls) != len(accessions):
+                    raise ValueError(
+                        f"{path.name}: derived request identity misaligned"
+                    )
+                derived_keys.update(zip(source_urls, accessions))
+                continue
+            content_hashes = artifact_path_parts(
+                path_text=str(row["content_sha256"]),
+            )
+            if len(source_urls) != len(content_hashes):
+                raise ValueError(
+                    f"{path.name}: raw request identity misaligned"
+                )
+            raw_keys.update(zip(source_urls, content_hashes))
+    return raw_keys, derived_keys
+
+
+def stored_response_observation_keys() -> set[tuple[str, str, str]]:
+    """Return observation identities independently preserved by sidecars.
+
+    Returns:
+        URL, status, and body hash for every parseable response sidecar.
+    """
+    keys = set()
+    evidence_dir = WORKDIR / "evidence"
+    if not evidence_dir.exists():
+        return keys
+    for path in sorted(evidence_dir.rglob("*.headers.json")):
+        if path.is_symlink() or not path.is_file():
+            raise ValueError(f"invalid response sidecar path: {path}")
+        try:
+            payload = read_json_file(path=path)
+            source_url = str(payload["url"])
+            status_code = str(payload["status_code"])
+            content_sha256 = str(payload["sha256"])
+        except (KeyError, OSError, TypeError, ValueError):
+            # A cited corrupt sidecar is classified by the row-level check;
+            # it cannot independently prove that another row is missing.
+            continue
+        keys.add((source_url, status_code, content_sha256))
+    return keys
+
+
+def committed_request_observation_sequence() -> list[tuple[str, ...]]:
+    """Return the reviewed HEAD request ledger as an append-only baseline.
+
+    Returns:
+        Complete-row sequence from the current Git HEAD.
+
+    Raises:
+        FileNotFoundError: The checkout or reviewed HEAD ledger is unavailable.
+    """
+    metadata_error = git_checkout_metadata_error(repo_root=WORKDIR)
+    if metadata_error:
+        raise FileNotFoundError(
+            "request-log Git history baseline is unavailable: "
+            f"{metadata_error}"
+        )
+    git_prefix = [
+        "git",
+        "--no-replace-objects",
+        "-C",
+        str(WORKDIR),
+    ]
+    repository_check = subprocess.run(
+        args=[*git_prefix, "rev-parse", "--show-toplevel"],
+        check=False,
+        capture_output=True,
+        env=sanitized_git_environment(),
+    )
+    if (
+        repository_check.returncode != 0
+        or not repository_check.stdout.strip()
+    ):
+        raise FileNotFoundError(
+            "request-log Git history baseline is unavailable"
+        )
+    try:
+        repository_root = Path(
+            repository_check.stdout.decode("utf-8").strip()
+        ).resolve()
+    except (OSError, UnicodeDecodeError) as error:
+        print(f"Request-log Git toplevel is invalid: {error}")
+        raise FileNotFoundError(
+            "request-log Git history baseline is unavailable"
+        ) from error
+    if repository_root != WORKDIR.resolve():
+        raise FileNotFoundError(
+            "request-log Git history baseline is unavailable"
+        )
+    result = subprocess.run(
+        args=[
+            *git_prefix,
+            "show",
+            "HEAD:evidence/requests_log.csv",
+        ],
+        check=False,
+        capture_output=True,
+        env=sanitized_git_environment(),
+    )
+    if result.returncode != 0:
+        diagnostic = result.stderr.decode(
+            "utf-8",
+            errors="replace",
+        ).strip()
+        raise FileNotFoundError(
+            "committed request-log history baseline is unavailable: "
+            f"{diagnostic}"
+        )
+    try:
+        text = result.stdout.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise ValueError("committed request log is not UTF-8") from error
+    rows = parse_request_log_rows(text=text)
+    return [
+        tuple(row[field] for field in REQUEST_LOG_FIELDNAMES)
+        for row in rows
+    ]
+
+
 def check_requests_log_sec_only() -> dict:
-    """Validate request log contains only SEC URLs with explicit User-Agent."""
+    """Validate SEC request metadata and resolvable response observations."""
     rows = read_csv_file(path=REQUEST_LOG_PATH)
     failures = []
-    for index, row in enumerate(rows):
-        sec_url = row["url"].startswith("https://www.sec.gov/") or row["url"].startswith(
-            "https://data.sec.gov/"
+    unavailable = []
+    header = set(csv_header(path=REQUEST_LOG_PATH))
+    expected_fields = set(REQUEST_LOG_FIELDNAMES)
+    missing_fields = sorted(expected_fields - header)
+    unexpected_fields = sorted(header - expected_fields)
+    if missing_fields:
+        failures.append("missing_fields=" + ",".join(missing_fields))
+    if unexpected_fields:
+        failures.append("unexpected_fields=" + ",".join(unexpected_fields))
+    try:
+        validate_request_log_manifest(log_path=REQUEST_LOG_PATH)
+    except FileNotFoundError:
+        unavailable.append("request_log_manifest_missing")
+    except ValueError as error:
+        failures.append(f"request_log_manifest_invalid:{error}")
+    if missing_fields or unexpected_fields:
+        return validation_row(
+            check_id="requests_log_sec_only",
+            status="FAIL",
+            details=";".join(failures),
         )
-        if not sec_url or row["user_agent"] == "" or row["retry_attempt"] == "":
-            failures.append(str(index))
+    actual_sequence = [
+        tuple(row[field] for field in REQUEST_LOG_FIELDNAMES)
+        for row in rows
+    ]
+    try:
+        committed_sequence = committed_request_observation_sequence()
+    except FileNotFoundError:
+        unavailable.append("request_log_history_baseline_unavailable")
+        committed_sequence = []
+    except ValueError as error:
+        failures.append(f"committed_request_log_invalid:{error}")
+        committed_sequence = []
+    if actual_sequence[:len(committed_sequence)] != committed_sequence:
+        mismatch_row = min(len(actual_sequence), len(committed_sequence)) + 1
+        for index in range(min(len(actual_sequence), len(committed_sequence))):
+            if actual_sequence[index] != committed_sequence[index]:
+                mismatch_row = index + 1
+                break
+        failures.append(
+            "committed_request_log_prefix_mismatch="
+            f"row_{mismatch_row}"
+        )
+    observed_raw_keys = {
+        (row["source_url"], row["content_sha256"])
+        for row in rows
+        if row["content_sha256"]
+    }
+    observed_derived_keys = {
+        (row["source_url"], row["accession"])
+        for row in rows
+        if row["content_sha256"]
+    }
+    observed_sidecar_keys = {
+        (
+            row["source_url"],
+            row["status_code"],
+            row["content_sha256"],
+        )
+        for row in rows
+        if row["headers_repo_relative_path"]
+    }
+    try:
+        required_raw_keys, required_derived_keys = (
+            required_request_observation_keys()
+        )
+        required_sidecar_keys = stored_response_observation_keys()
+    except ValueError as error:
+        failures.append(f"downstream_request_identity_invalid:{error}")
+        required_raw_keys = set()
+        required_derived_keys = set()
+        required_sidecar_keys = set()
+    missing_raw_keys = sorted(required_raw_keys - observed_raw_keys)
+    missing_derived_keys = sorted(
+        required_derived_keys - observed_derived_keys
+    )
+    missing_sidecar_keys = sorted(
+        required_sidecar_keys - observed_sidecar_keys
+    )
+    if missing_raw_keys:
+        failures.append(
+            "missing_downstream_raw_observations="
+            f"{missing_raw_keys[:20]}"
+        )
+    if missing_derived_keys:
+        failures.append(
+            "missing_downstream_event_observations="
+            f"{missing_derived_keys[:20]}"
+        )
+    if missing_sidecar_keys:
+        failures.append(
+            "missing_stored_response_observations="
+            f"{missing_sidecar_keys[:20]}"
+        )
+    for index, row in enumerate(rows):
+        source_url = request_log_source_url(row=row)
+        relative_path = str(row["repo_relative_path"])
+        headers_relative_path = str(row["headers_repo_relative_path"])
+        if (
+            not is_official_sec_url(source_url=source_url)
+            or row["method"] != "GET"
+            or not row["purpose"]
+            or not row["user_agent"]
+            or not row["document_name"]
+            or not is_utc_iso_timestamp(value=row["timestamp_utc"])
+        ):
+            failures.append(f"{index}:invalid_request_metadata")
+            continue
+        derived_accession = request_accession(source_url=source_url)
+        if (
+            derived_accession
+            and row["document_name"] != Path(urlparse(source_url).path).name
+        ):
+            failures.append(f"{index}:document_name_mismatch")
+            continue
+        try:
+            status_code = int(row["status_code"])
+            retry_attempt = int(row["retry_attempt"])
+            content_length = int(row["content_length"])
+        except ValueError:
+            failures.append(f"{index}:invalid_numeric_metadata")
+            continue
+        if (
+            (status_code != 0 and not 100 <= status_code <= 599)
+            or retry_attempt < 0
+            or content_length < 0
+        ):
+            failures.append(f"{index}:invalid_numeric_metadata")
+            continue
+        error_text = row["error"]
+        redirect_disabled = (
+            300 <= status_code < 400
+            and error_text.startswith(REDIRECT_DISABLED_ERROR_PREFIX)
+        )
+        if (
+            (status_code == 0 and not error_text)
+            or (0 < status_code < 300 and error_text)
+            or (300 <= status_code < 400 and not redirect_disabled)
+            or (status_code >= 400 and not error_text)
+        ):
+            failures.append(f"{index}:status_error_mismatch")
+            continue
+        for locator in [relative_path, headers_relative_path]:
+            if (
+                locator
+                and (
+                    Path(locator).is_absolute()
+                    or ".." in Path(locator).parts
+                )
+            ):
+                failures.append(f"{index}:non_portable_response_locator")
+        if derived_accession and row["accession"] != derived_accession:
+            failures.append(f"{index}:accession_mismatch")
+            continue
+        digest = row["content_sha256"]
+        if not digest:
+            if (
+                status_code != 0
+                or content_length != 0
+                or relative_path
+                or headers_relative_path
+            ):
+                failures.append(f"{index}:body_locator_without_hash")
+            continue
+        if re.fullmatch(pattern=r"[0-9a-f]{64}", string=digest) is None:
+            failures.append(f"{index}:invalid_content_sha256")
+            continue
+        if status_code == 0 or not relative_path or not headers_relative_path:
+            unavailable.append(f"{index}:response_locator_missing")
+            continue
+        try:
+            body_path = request_artifact_candidate(
+                workdir=WORKDIR,
+                relative_path=relative_path,
+            )
+            headers_path = request_artifact_candidate(
+                workdir=WORKDIR,
+                relative_path=headers_relative_path,
+            )
+            encoded_headers_hash = immutable_request_headers_hash(
+                relative_path=relative_path,
+                headers_relative_path=headers_relative_path,
+                content_sha256=digest,
+            )
+        except ValueError as error:
+            failures.append(f"{index}:{error}")
+            continue
+        if not body_path.is_file() or not headers_path.is_file():
+            unavailable.append(f"{index}:response_artifact_missing")
+            continue
+        if row["document_name"] != body_path.name:
+            failures.append(f"{index}:document_name_mismatch")
+            continue
+        if (
+            file_sha256(path_text=str(body_path)) != digest
+            or body_path.stat().st_size != content_length
+        ):
+            unavailable.append(f"{index}:response_body_hash_mismatch")
+            continue
+        headers_bytes = headers_path.read_bytes()
+        if (
+            encoded_headers_hash
+            and hashlib.sha256(headers_bytes).hexdigest()
+            != encoded_headers_hash
+        ):
+            unavailable.append(f"{index}:response_headers_hash_mismatch")
+            continue
+        try:
+            headers_payload = json.loads(headers_bytes.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            unavailable.append(f"{index}:response_headers_invalid_json")
+            continue
+        required_header_keys = {
+            "url",
+            "status_code",
+            "headers",
+            "content_length",
+            "sha256",
+            "saved_at_utc",
+        }
+        if (
+            not isinstance(headers_payload, dict)
+            or set(headers_payload) != required_header_keys
+            or not isinstance(headers_payload["headers"], dict)
+        ):
+            unavailable.append(f"{index}:response_headers_schema_mismatch")
+            continue
+        response_headers = headers_payload["headers"]
+        redirect_location = next(
+            (
+                str(value)
+                for key, value in response_headers.items()
+                if str(key).casefold() == "location"
+            ),
+            "",
+        )
+        if redirect_disabled and not redirect_location:
+            failures.append(f"{index}:redirect_location_missing")
+            continue
+        if (
+            str(headers_payload["url"]) != source_url
+            or str(headers_payload["status_code"]) != row["status_code"]
+            or str(headers_payload["content_length"]) != row["content_length"]
+            or str(headers_payload["sha256"]) != digest
+            or not is_utc_iso_timestamp(
+                value=str(headers_payload["saved_at_utc"])
+            )
+        ):
+            unavailable.append(f"{index}:response_headers_observation_mismatch")
+    if failures:
+        return validation_row(
+            check_id="requests_log_sec_only",
+            status="FAIL",
+            details=";".join(failures[:20]),
+        )
+    if unavailable:
+        return not_evaluated_validation_row(
+            check_id="requests_log_sec_only",
+            details=";".join(unavailable[:20]),
+        )
     return validation_row(
         check_id="requests_log_sec_only",
-        status="PASS" if rows and not failures else "FAIL",
-        details=";".join(failures[:20]) if failures else f"rows={len(rows)}",
+        status="PASS" if rows else "FAIL",
+        details=f"rows={len(rows)}" if rows else "request rows missing",
     )
 
 
 def check_stratified_audit_all_pass_or_explicitly_caveated(
     *,
     audit_rows: list[dict],
+    metrics: list[dict],
 ) -> dict:
-    """Validate stratified audit failures are not silently swallowed.
+    """Validate the complete deterministic audit sample and its verdicts.
 
     Args:
         audit_rows: Rows written to outputs/stratified_audit.csv.
+        metrics: Current metrics_matrix rows that define the expected sample.
 
     Returns:
-        PASS when every sampled row passed; FAIL lists failing audit ids.
+        PASS when the exact unique sample exists and every row passed.
     """
-    failures = [
-        f"{row['audit_id']}:{row['company']}:{row['metric_id']}:{row['audit_notes']}"
-        for row in audit_rows
-        if row["audit_verdict"] == "FAIL"
+    expected = [
+        (bucket, row["company"], row["metric_id"])
+        for bucket, row in select_stratified_audit_metrics(metrics=metrics)
     ]
+    actual = [
+        (row["source_bucket"], row["company"], row["metric_id"])
+        for row in audit_rows
+    ]
+    expected_ids = [
+        f"AUDIT_{index:02d}" for index in range(1, len(expected) + 1)
+    ]
+    actual_ids = [row["audit_id"] for row in audit_rows]
+    duplicate_keys = sorted({key for key in actual if actual.count(key) > 1})
+    duplicate_ids = sorted(
+        {audit_id for audit_id in actual_ids if actual_ids.count(audit_id) > 1}
+    )
+    failures = []
+    if actual != expected:
+        failures.append(
+            "sample_exact_set_mismatch:"
+            f"missing={sorted(set(expected) - set(actual))}:"
+            f"unexpected={sorted(set(actual) - set(expected))}"
+        )
+    if duplicate_keys:
+        failures.append(f"duplicate_sample_keys={duplicate_keys}")
+    if actual_ids != expected_ids:
+        failures.append(
+            "audit_id_sequence_mismatch:"
+            f"expected={expected_ids}:actual={actual_ids}"
+        )
+    if duplicate_ids:
+        failures.append(f"duplicate_audit_ids={duplicate_ids}")
+    failures.extend(
+        (
+            f"{row['audit_id']}:{row['company']}:"
+            f"{row['metric_id']}:{row['audit_notes']}"
+        )
+        for row in audit_rows
+        if row["audit_verdict"] != "PASS"
+    )
     return validation_row(
         check_id="stratified_audit_all_pass_or_explicitly_caveated",
-        status="PASS" if audit_rows and not failures else "FAIL",
+        status="PASS" if expected and not failures else "FAIL",
         details=(
             ";".join(failures[:20])
             if failures
-            else f"rows={len(audit_rows)}"
-            if audit_rows
-            else "stratified audit rows missing"
+            else f"rows={len(audit_rows)} exact_sample=true"
+            if expected
+            else "expected stratified audit sample is empty"
         ),
     )
 
@@ -13056,6 +17769,31 @@ def stratified_candidates(
         used_keys.add(key)
         if len(selected) == limit:
             break
+    return selected
+
+
+def select_stratified_audit_metrics(
+    *,
+    metrics: list[dict],
+) -> list[tuple[str, dict]]:
+    """Return the complete deterministic sample required by the audit.
+
+    Args:
+        metrics: Current metrics_matrix rows.
+
+    Returns:
+        Ordered source-bucket and metric pairs for every configured stratum.
+    """
+    used_keys: set[tuple[str, str]] = set()
+    selected = []
+    for bucket, source_classes, limit in STRATIFIED_AUDIT_SPECS:
+        for row in stratified_candidates(
+            metrics=metrics,
+            source_classes=source_classes,
+            used_keys=used_keys,
+            limit=limit,
+        ):
+            selected.append((bucket, row))
     return selected
 
 
@@ -13119,23 +17857,7 @@ def build_stratified_audit_rows() -> list[dict]:
     """
     metrics = load_metrics()
     evidence_rows = read_csv_file(path=WORKDIR / "outputs" / "metric_evidence.csv")
-    strata = [
-        ("STD_XBRL_DERIVED", {"STD_XBRL", "DERIVED"}, 8),
-        ("DIM_XBRL", {"DIM_XBRL"}, 4),
-        ("DEF14A", {"DEF14A"}, 3),
-        ("MDA_TEXT", {"MDA", "TEXT"}, 3),
-        ("8K_ITEM", {"8K_ITEM"}, 2),
-    ]
-    used_keys: set[tuple[str, str]] = set()
-    selected: list[tuple[str, dict]] = []
-    for bucket, source_classes, limit in strata:
-        for row in stratified_candidates(
-            metrics=metrics,
-            source_classes=source_classes,
-            used_keys=used_keys,
-            limit=limit,
-        ):
-            selected.append((bucket, row))
+    selected = select_stratified_audit_metrics(metrics=metrics)
     rows = []
     for index, (bucket, metric) in enumerate(selected, start=1):
         evidence = evidence_for_metric(
@@ -13205,7 +17927,10 @@ def implementation_map_rows() -> list[dict]:
             "function_or_line": "Round 3 metadata and verdict vocabulary",
             "validation_id": "manual_manifest_review",
             "status": "implemented",
-            "notes": "Manifest distinguishes pipeline self-verdict from external audit verdict.",
+            "notes": (
+                "Manifest distinguishes pipeline self-verdict from external "
+                "audit verdict."
+            ),
         },
         {
             "instruction_id": "I2",
@@ -13213,7 +17938,10 @@ def implementation_map_rows() -> list[dict]:
             "function_or_line": "concept_is_basel_threshold_or_requirement",
             "validation_id": "basel_threshold_concepts_never_match_primary_metric",
             "status": "implemented",
-            "notes": "Bare wellcapitalized concepts remain regulatory_threshold candidates only.",
+            "notes": (
+                "Bare wellcapitalized concepts remain regulatory_threshold "
+                "candidates only."
+            ),
         },
         {
             "instruction_id": "I3",
@@ -13221,7 +17949,10 @@ def implementation_map_rows() -> list[dict]:
             "function_or_line": "captive_dimension_member_allowed",
             "validation_id": "gm_like_captive_finance_fixture_triggers_review",
             "status": "implemented",
-            "notes": "Contains matching is guarded by ordinary credit and lease exclusions.",
+            "notes": (
+                "Contains matching is guarded by ordinary credit and lease "
+                "exclusions."
+            ),
         },
         {
             "instruction_id": "I4",
@@ -13229,7 +17960,10 @@ def implementation_map_rows() -> list[dict]:
             "function_or_line": "check_eleventh_company_behavior_financial_institution",
             "validation_id": "eleventh_company_behavior_financial_institution",
             "status": "implemented",
-            "notes": "Fixture asserts selected concept, context, dimensions, and value.",
+            "notes": (
+                "Fixture asserts selected concept, context, dimensions, and "
+                "value."
+            ),
         },
         {
             "instruction_id": "I5",
@@ -13237,7 +17971,10 @@ def implementation_map_rows() -> list[dict]:
             "function_or_line": "original_full_instance_fallback_row",
             "validation_id": "FullInstanceFallbackTest",
             "status": "implemented",
-            "notes": "10-K/A targets map to same-period original 10-K full-instance role.",
+            "notes": (
+                "10-K/A targets map to same-period original 10-K "
+                "full-instance role."
+            ),
         },
         {
             "instruction_id": "I6",
@@ -13245,7 +17982,10 @@ def implementation_map_rows() -> list[dict]:
             "function_or_line": "parse_instance_with_fallback",
             "validation_id": "basel_ratio_extractor_not_single_issuer_specific",
             "status": "implemented",
-            "notes": "Inline route, scale/sign cases, and amount crosscheck protect derived inputs.",
+            "notes": (
+                "Inline route, scale/sign cases, and amount crosscheck "
+                "protect derived inputs."
+            ),
         },
         {
             "instruction_id": "I7",
@@ -13277,23 +18017,533 @@ def write_implementation_map() -> list[dict]:
     return rows
 
 
-def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
-    """Run P0 repair validation and optionally exit nonzero on failure.
+def csv_header(*, path: Path) -> list[str]:
+    """Return a CSV header or an empty list for a missing file."""
+    if not path.exists():
+        return []
+    with path.open(mode="r", encoding="utf-8", newline="") as file_obj:
+        return next(csv.reader(file_obj), [])
+
+
+def validation_input_available(*, path: Path) -> bool:
+    """Return whether one required validation input has usable content.
+
+    Args:
+        path: Required CSV or Markdown artifact path.
+
+    Returns:
+        True for a non-empty non-CSV file or a CSV with header and data row.
+    """
+    if not path.is_file() or path.stat().st_size == 0:
+        return False
+    if path.suffix.lower() != ".csv":
+        return True
+    with path.open(mode="r", encoding="utf-8", newline="") as file_obj:
+        reader = csv.reader(file_obj)
+        header = next(reader, [])
+        first_row = next(reader, [])
+    return bool(header and first_row)
+
+
+def required_validation_input_row(*, mode: str) -> dict:
+    """Validate structural inputs and full-only domain evidence availability.
+
+    Args:
+        mode: Current validation package mode.
+
+    Returns:
+        PASS, WORKSPACE_INCOMPLETE, or NOT_EVALUATED_MISSING_EVIDENCE.
+    """
+    required_paths = [
+        WORKDIR / "outputs" / "metrics_matrix.csv",
+        WORKDIR / "outputs" / "metric_evidence.csv",
+        WORKDIR / "outputs" / "coverage_matrix.csv",
+        WORKDIR / "outputs" / "golden_results.csv",
+        WORKDIR / "outputs" / "company_resolution.csv",
+        WORKDIR / "outputs" / "latest_filings_inventory.csv",
+        WORKDIR / "outputs" / "accession_materials_inventory.csv",
+        WORKDIR / "outputs" / "governance_signals.csv",
+        WORKDIR / "outputs" / "events.csv",
+        WORKDIR / "outputs" / "risk_legal_signals.csv",
+        WORKDIR / "outputs" / "exceptions_and_review_items.md",
+        (
+            WORKDIR
+            / "tests"
+            / "fixtures"
+            / "regression"
+            / "previous_ok_status_snapshot.csv"
+        ),
+        (
+            WORKDIR
+            / "tests"
+            / "fixtures"
+            / "sec_10_company_spike"
+            / "golden_expected_values.csv"
+        ),
+    ]
+    missing_structural = [
+        str(path.relative_to(WORKDIR))
+        for path in required_paths
+        if not validation_input_available(path=path)
+    ]
+    if missing_structural:
+        return validation_row(
+            check_id="required_validation_inputs_available",
+            status="WORKSPACE_INCOMPLETE",
+            details="missing structural inputs: " + ";".join(missing_structural),
+        )
+    if mode != "FULL_VALIDATION":
+        return validation_row(
+            check_id="required_validation_inputs_available",
+            status="PASS",
+            details=f"structural inputs available; mode={mode}",
+        )
+    missing_domain_evidence = []
+    for company_config in load_company_registry():
+        company_slug = slugify(text=str(company_config["company"]))
+        for suffix in ["instance", "ecd"]:
+            path = (
+                WORKDIR
+                / "outputs"
+                / "concept_inventory"
+                / f"{company_slug}_{suffix}.csv"
+            )
+            if not validation_input_available(path=path):
+                missing_domain_evidence.append(str(path.relative_to(WORKDIR)))
+    if missing_domain_evidence:
+        return not_evaluated_validation_row(
+            check_id="required_validation_inputs_available",
+            details="missing domain evidence: " + ";".join(missing_domain_evidence),
+        )
+    return validation_row(
+        check_id="required_validation_inputs_available",
+        status="PASS",
+        details="all structural and full domain inputs available",
+    )
+
+
+def locator_component_alignment_errors(
+    *,
+    row: dict,
+    verify_local_provenance: bool = True,
+) -> list[str]:
+    """Return count, origin, or URL/accession identity alignment errors.
+
+    Args:
+        row: Portable locator row with the five identity fields.
+        verify_local_provenance: Whether local JSON/CSV bytes are available for
+            source-specific reverse coverage checks.
+
+    Returns:
+        Empty list for aligned scalar or semicolon-delimited locators.
+    """
+    relative_paths = artifact_path_parts(
+        path_text=str(row["repo_relative_path"]),
+    )
+    path_count = len(relative_paths)
+    path_bound_fields = ["content_sha256", "document_name"]
+    errors = [
+        f"{field}={len(artifact_path_parts(path_text=str(row[field])))}"
+        for field in path_bound_fields
+        if len(artifact_path_parts(path_text=str(row[field]))) != path_count
+    ]
+    content_hashes = artifact_path_parts(
+        path_text=str(row["content_sha256"]),
+    )
+    for index, content_hash in enumerate(content_hashes):
+        if re.fullmatch(
+            pattern=r"[0-9a-f]{64}",
+            string=content_hash,
+        ) is None:
+            errors.append(f"content_sha256[{index}]=invalid")
+    document_names = artifact_path_parts(
+        path_text=str(row["document_name"]),
+    )
+    if len(document_names) == path_count:
+        for index, (relative_path, document_name) in enumerate(
+            zip(relative_paths, document_names)
+        ):
+            if Path(relative_path).name != document_name:
+                errors.append(f"document_name[{index}]=path_mismatch")
+    source_urls = artifact_path_parts(path_text=str(row["source_url"]))
+    accessions = artifact_path_parts(path_text=str(row["accession"]))
+    for index, accession in enumerate(accessions):
+        if re.fullmatch(
+            pattern=r"\d{10}-\d{2}-\d{6}",
+            string=accession,
+        ) is None:
+            errors.append(f"accession[{index}]=invalid")
+    source_count = len(source_urls)
+    accession_count = len(accessions)
+    # Only the declared event-scan artifact may aggregate multiple SEC
+    # observations; every other schema binds source and accession per path.
+    is_derived_aggregate = is_derived_locator_aggregate(row=row)
+    if not is_derived_aggregate:
+        if source_count != path_count:
+            errors.append(
+                f"source_url={source_count},repo_relative_path={path_count}"
+            )
+        if accession_count != path_count:
+            errors.append(
+                f"accession={accession_count},repo_relative_path={path_count}"
+            )
+    if source_count != accession_count:
+        errors.append(f"source_url={source_count},accession={accession_count}")
+        return errors
+    for index, (source_url, accession) in enumerate(
+        zip(source_urls, accessions)
+    ):
+        if not is_official_sec_url(source_url=source_url):
+            errors.append(f"source_url[{index}]=non_sec")
+            continue
+        archive_cik, derived_accession = archive_url_identity(
+            source_url=source_url,
+        )
+        if is_derived_aggregate:
+            if not derived_accession:
+                errors.append(
+                    f"source_url[{index}]=unsupported_source_type"
+                )
+            elif accession != derived_accession:
+                errors.append(f"source_url[{index}]=accession_mismatch")
+            continue
+        if source_count != path_count or len(document_names) != path_count:
+            continue
+        component = artifact_component_row(
+            row=row,
+            index=index,
+            component_count=path_count,
+        )
+        component["source_url"] = source_url
+        component["accession"] = accession
+        component["repo_relative_path"] = relative_paths[index]
+        component["document_name"] = document_names[index]
+        if companyfacts_url_cik(source_url=source_url):
+            try:
+                candidate = repository_artifact_candidate(
+                    relative_path=relative_paths[index],
+                )
+            except ValueError:
+                errors.append(
+                    f"source_url[{index}]=companyfacts_identity_mismatch"
+                )
+                continue
+            if not companyfacts_component_matches(
+                path=candidate,
+                row=component,
+                verify_provenance=verify_local_provenance,
+            ):
+                errors.append(
+                    f"source_url[{index}]=companyfacts_identity_mismatch"
+                )
+            continue
+        if not derived_accession:
+            errors.append(f"source_url[{index}]=unsupported_source_type")
+            continue
+        if accession != derived_accession:
+            errors.append(f"source_url[{index}]=accession_mismatch")
+        if Path(urlparse(source_url).path).name != document_names[index]:
+            errors.append(f"source_url[{index}]=document_name_mismatch")
+        try:
+            row_cik = str(int(row["cik"]))
+        except (KeyError, TypeError, ValueError):
+            row_cik = ""
+        if archive_cik != row_cik:
+            errors.append(f"source_url[{index}]=cik_mismatch")
+        if not accession_material_path_matches(
+            path=Path(relative_paths[index]),
+            accession=accession,
+            cik=row_cik,
+        ):
+            errors.append(
+                f"repo_relative_path[{index}]=accession_or_cik_mismatch"
+            )
+    if (
+        is_derived_aggregate
+        and verify_local_provenance
+        and not event_aggregate_pairs_match(row=row)
+    ):
+        errors.append("source_url=events_exact_set_mismatch")
+    return errors
+
+
+def check_portable_artifact_locators(*, mode: str) -> dict:
+    """Validate portable locator schemas and full raw-material resolution.
+
+    Args:
+        mode: Current validation package mode.
+
+    Returns:
+        PASS for aligned schemas and resolvable full evidence, a light skip for
+        intentionally omitted raw files, or an explicit failure/non-evaluation.
+    """
+    locator_files = portable_locator_artifact_specs(
+        existing_optional_only=True,
+    )
+    locator_files.extend(concept_inventory_artifact_specs())
+    evidence_path_files = [
+        path
+        for path in [
+            WORKDIR / "outputs" / "golden_results.csv",
+            WORKDIR / "outputs" / "golden_candidates.csv",
+        ]
+        if path.exists()
+    ]
+    schema_failures = []
+    locator_fields = {
+        "source_url",
+        "repo_relative_path",
+        "content_sha256",
+        "accession",
+        "document_name",
+    }
+    for path, _fieldnames in locator_files:
+        header = set(csv_header(path=path))
+        missing_fields = sorted(locator_fields - header)
+        if missing_fields:
+            schema_failures.append(
+                f"{path.name}:missing={','.join(missing_fields)}"
+            )
+        if "local_path" in header or "source_path" in header:
+            schema_failures.append(f"{path.name}:legacy_path_column_present")
+        if not missing_fields:
+            for row_number, row in enumerate(read_csv_file(path=path), start=2):
+                missing_values = sorted(
+                    field for field in locator_fields if not row[field]
+                )
+                if missing_values:
+                    schema_failures.append(
+                        f"{path.name}:{row_number}:blank="
+                        + ",".join(missing_values)
+                    )
+                alignment_errors = locator_component_alignment_errors(
+                    row=row,
+                    verify_local_provenance=mode == "FULL_VALIDATION",
+                )
+                if alignment_errors:
+                    schema_failures.append(
+                        f"{path.name}:{row_number}:unaligned="
+                        + ",".join(alignment_errors)
+                    )
+    for path in evidence_path_files:
+        header = set(csv_header(path=path))
+        if "evidence_path" not in header:
+            schema_failures.append(f"{path.name}:missing=evidence_path")
+            continue
+        for row_number, row in enumerate(read_csv_file(path=path), start=2):
+            evidence_path = row["evidence_path"]
+            if not evidence_path:
+                schema_failures.append(
+                    f"{path.name}:{row_number}:blank=evidence_path"
+                )
+                continue
+            try:
+                normalized_path = repo_relative_artifact_paths(
+                    path_text=evidence_path,
+                    row={},
+                )
+            except ValueError as error:
+                schema_failures.append(f"{path.name}:{row_number}:{error}")
+                continue
+            if normalized_path != evidence_path:
+                schema_failures.append(
+                    f"{path.name}:{row_number}:non_portable_evidence_path"
+                )
+    if schema_failures:
+        return validation_row(
+            check_id="portable_artifact_locators",
+            status="FAIL",
+            details=";".join(schema_failures[:20]),
+        )
+    if mode == "LIGHT_REVIEW_MODE":
+        return skipped_light_validation_row(
+            check_id="portable_artifact_locators",
+            details=(
+                "portable schemas verified; raw artifact resolution skipped "
+                "in light mode"
+            ),
+        )
+    resolution_paths = [path for path, _fieldnames in locator_files]
+    unresolved = []
+    locator_row_count = 0
+    resolved_locator_keys = set()
+    for path in resolution_paths:
+        rows = read_csv_file(path=path)
+        locator_row_count += len(rows)
+        for row in rows:
+            locator_key = tuple(
+                str(row[field])
+                for field in [
+                    "source_url",
+                    "repo_relative_path",
+                    "content_sha256",
+                    "accession",
+                    "document_name",
+                ]
+            )
+            if locator_key in resolved_locator_keys:
+                continue
+            resolved_locator_keys.add(locator_key)
+            try:
+                resolve_artifact_paths(row=row)
+            except (FileNotFoundError, ValueError) as error:
+                unresolved.append(f"{path.name}:{error}")
+    for path in evidence_path_files:
+        rows = read_csv_file(path=path)
+        locator_row_count += len(rows)
+        for row in rows:
+            for relative_path in artifact_path_parts(
+                path_text=row["evidence_path"],
+            ):
+                if not repository_artifact_candidate(
+                    relative_path=relative_path,
+                ).exists():
+                    unresolved.append(
+                        f"{path.name}:missing={relative_path}"
+                    )
+    if unresolved:
+        return not_evaluated_validation_row(
+            check_id="portable_artifact_locators",
+            details=";".join(unresolved[:20]),
+        )
+    return validation_row(
+        check_id="portable_artifact_locators",
+        status="PASS",
+        details=(
+            "portable schemas and artifacts verified; "
+            f"rows={locator_row_count}"
+        ),
+    )
+
+
+def blocking_validation_rows(*, rows: list[dict], mode: str) -> list[dict]:
+    """Return rows that prevent the current validation mode from passing.
+
+    Args:
+        rows: Repair validation rows.
+        mode: FULL_VALIDATION, LIGHT_REVIEW_MODE, or WORKSPACE_INCOMPLETE.
+
+    Returns:
+        FAIL and WORKSPACE_INCOMPLETE rows in every mode; full validation also
+        blocks NOT_EVALUATED and any accidental light-only skip.
+    """
+    always_blocking = {"FAIL", "WORKSPACE_INCOMPLETE"}
+    full_only_blocking = {
+        "NOT_EVALUATED_MISSING_EVIDENCE",
+        "SKIPPED_LIGHT_PACKAGE",
+    }
+    return [
+        row
+        for row in rows
+        if row["status"] in always_blocking
+        or (mode != "LIGHT_REVIEW_MODE" and row["status"] in full_only_blocking)
+    ]
+
+
+def validation_manifest_result(*, rows: list[dict], mode: str) -> str:
+    """Return the terminal manifest result implied by validation rows.
+
+    Args:
+        rows: Complete repair validation result rows.
+        mode: Validation package mode for this run.
+
+    Returns:
+        FAILED, PASSED_WITH_CAVEATS, or PASSED under the closed mode rules.
+    """
+    if blocking_validation_rows(rows=rows, mode=mode):
+        return "FAILED"
+    caveat_statuses = {
+        "SKIPPED_LIGHT_PACKAGE",
+        "NOT_EVALUATED_MISSING_EVIDENCE",
+    }
+    if any(row["status"] in caveat_statuses for row in rows):
+        return "PASSED_WITH_CAVEATS"
+    return "PASSED"
+
+
+def projected_terminal_validation_manifest(
+    *,
+    rows: list[dict],
+) -> tuple[dict, dict]:
+    """Return active and projected manifests without publishing success.
+
+    Args:
+        rows: Complete validation rows produced by a deferred run.
+
+    Returns:
+        The persisted IN_PROGRESS manifest and an in-memory terminal copy used
+        to build downstream artifacts before success becomes observable.
+    """
+    active_manifest = read_validation_run_manifest()
+    if active_manifest["result"] != "IN_PROGRESS":
+        raise RuntimeError("Deferred validation manifest is not IN_PROGRESS")
+    terminal_manifest = dict(active_manifest)
+    terminal_manifest["result"] = validation_manifest_result(
+        rows=rows,
+        mode=str(active_manifest["mode"]),
+    )
+    errors = validation_manifest_errors(manifest=terminal_manifest)
+    if errors:
+        raise ValueError(
+            "Invalid projected validation manifest: " + "; ".join(errors)
+        )
+    return active_manifest, terminal_manifest
+
+
+def run_repair_validation(
+    *,
+    exit_on_failure: bool,
+    manifest: dict | None = None,
+) -> list[dict]:
+    """Run P0 checks while leaving terminal publication to the stage.
 
     Args:
         exit_on_failure: When True, raise SystemExit(1) for any P0 failure.
+        manifest: Optional fresh IN_PROGRESS manifest already published by the
+            calling stage before it modified any batch artifact.
 
     Returns:
         Validation result rows written to outputs/repair_validation_results.csv.
     """
-    metrics = load_metrics()
-    evidence_rows = read_csv_file(path=WORKDIR / "outputs" / "metric_evidence.csv")
-    coverage = read_csv_file(path=WORKDIR / "outputs" / "coverage_matrix.csv")
     mode, light_reasons = validation_package_mode()
+    if manifest is None:
+        manifest = new_validation_run_manifest(
+            mode=mode,
+            started_at_utc=utc_now_iso(),
+        )
+    else:
+        errors = validation_manifest_errors(manifest=manifest)
+        if errors:
+            raise ValueError(
+                "Invalid prestarted validation manifest: "
+                + "; ".join(errors)
+            )
+        if manifest["result"] != "IN_PROGRESS":
+            raise RuntimeError(
+                "Prestarted validation manifest is not IN_PROGRESS"
+            )
+        if manifest["refreshed_artifacts"]:
+            raise RuntimeError(
+                "Prestarted validation manifest already refreshed artifacts"
+            )
+        if read_validation_run_manifest() != manifest:
+            raise RuntimeError(
+                "Prestarted validation manifest differs from persisted run"
+            )
+        # Repair may complete evidence that changes package classification;
+        # retain the run identity while recording the validation-time mode.
+        manifest["mode"] = mode
+    write_validation_run_manifest(manifest=manifest)
     write_implementation_map()
+    mark_validation_artifact_refreshed(
+        manifest=manifest,
+        artifact="implementation_map.csv",
+    )
     write_spec_implementation_audit()
-    if mode == "FULL_VALIDATION":
-        write_stub_period_sidecar()
+    mark_validation_artifact_refreshed(
+        manifest=manifest,
+        artifact="spec_implementation_audit.csv",
+    )
     if mode == "WORKSPACE_INCOMPLETE":
         rows = [workspace_incomplete_row(reasons=light_reasons)]
         write_csv_file(
@@ -13301,10 +18551,57 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
             fieldnames=REPAIR_VALIDATION_FIELDNAMES,
             rows=rows,
         )
+        mark_validation_artifact_refreshed(
+            manifest=manifest,
+            artifact="repair_validation_results.csv",
+        )
         if exit_on_failure:
             print(rows[0]["details"])
             raise SystemExit(1)
         return rows
+    required_input = required_validation_input_row(mode=mode)
+    if required_input["status"] != "PASS":
+        # Dependent helpers cannot make honest claims when their shared input
+        # contract is incomplete; stop before writing misleading PASS rows.
+        rows = [
+            validation_row(
+                check_id="validation_package_mode",
+                status="PASS",
+                details=f"mode={mode}",
+            ),
+            required_input,
+            validation_row(
+                check_id="validation_gate_result",
+                status="FAIL",
+                details="required_validation_inputs_available",
+            ),
+        ]
+        write_csv_file(
+            path=WORKDIR / "outputs" / "repair_validation_results.csv",
+            fieldnames=REPAIR_VALIDATION_FIELDNAMES,
+            rows=rows,
+        )
+        mark_validation_artifact_refreshed(
+            manifest=manifest,
+            artifact="repair_validation_results.csv",
+        )
+        if exit_on_failure:
+            print(required_input["details"])
+            raise SystemExit(1)
+        return rows
+    if mode == "FULL_VALIDATION":
+        write_stub_period_sidecar()
+        mark_validation_artifact_refreshed(
+            manifest=manifest,
+            artifact="stub_period_metrics.csv",
+        )
+    metrics = load_metrics()
+    evidence_rows = read_csv_file(path=WORKDIR / "outputs" / "metric_evidence.csv")
+    coverage = read_csv_file(path=WORKDIR / "outputs" / "coverage_matrix.csv")
+    inventory = read_csv_file(
+        path=WORKDIR / "outputs" / "latest_filings_inventory.csv"
+    )
+    events = read_csv_file(path=WORKDIR / "outputs" / "events.csv")
     light_mode = mode == "LIGHT_REVIEW_MODE"
     light_details = (
         "mode=LIGHT_REVIEW_MODE; " + "; ".join(light_reasons)
@@ -13312,6 +18609,15 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
         else "mode=FULL_VALIDATION"
     )
     audit_rows = write_stratified_audit()
+    mark_validation_artifact_refreshed(
+        manifest=manifest,
+        artifact="stratified_audit.csv",
+    )
+    scalability_check = check_no_company_identity_branch_in_production()
+    mark_validation_artifact_refreshed(
+        manifest=manifest,
+        artifact="scalability_audit.csv",
+    )
     c03_peo_check = check_c03_def14a_ok_requires_peo(
         metrics=metrics,
         evidence_rows=evidence_rows,
@@ -13322,7 +18628,39 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
             status="PASS",
             details=light_details,
         ),
-        check_no_company_identity_branch_in_production(),
+        required_input,
+        check_portable_artifact_locators(mode=mode),
+        (
+            skipped_light_validation_row(
+                check_id="eightk_event_chain_exact_set",
+                details=(
+                    f"{light_details}; requires saved submissions and raw 8-K "
+                    "documents"
+                ),
+            )
+            if light_mode
+            else check_8k_event_chain_exact_set(
+                inventory=inventory,
+                events=events,
+            )
+        ),
+        (
+            skipped_light_validation_row(
+                check_id="eightk_event_outputs_match_events",
+                details=(
+                    f"{light_details}; requires complete 8-K inventory, "
+                    "events, metrics, and evidence"
+                ),
+            )
+            if light_mode
+            else check_8k_event_outputs_match_events(
+                metrics=metrics,
+                evidence_rows=evidence_rows,
+                events=events,
+                inventory=inventory,
+            )
+        ),
+        scalability_check,
         check_registry_profile_matches_sic_rules_or_has_override_reason(),
         check_metrics_matrix_applicability_matches_02_04_spec(metrics=metrics),
         check_no_unexpected_optional_b_metrics_in_main_matrix(metrics=metrics),
@@ -13353,6 +18691,17 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
         check_basel_ratio_extractor(
             metrics=metrics,
             evidence_rows=evidence_rows,
+        ),
+        (
+            skipped_light_validation_row(
+                check_id="jpm_cet1_capital_scale_crosscheck",
+                details=(
+                    f"{light_details}; requires outputs/concept_inventory/"
+                    "jpmorgan_chase_instance.csv"
+                ),
+            )
+            if light_mode
+            else check_jpm_cet1_capital_scale_crosscheck()
         ),
         check_basel_concept_resolver_handles_tierone_spelling(),
         check_basel_concept_resolver_handles_banking_regulation_ratio_family(),
@@ -13476,9 +18825,20 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
             status=c03_peo_check["status"],
             details="C03 PeoTotalCompAmt generic gate mirrors DEF14A evidence check",
         ),
-        check_c04_auditorname_all_companies(
-            metrics=metrics,
-            evidence_rows=evidence_rows,
+        (
+            skipped_light_validation_row(
+                check_id="c04_uses_auditorname_for_all_companies",
+                details=(
+                    f"{light_details}; requires current/prior local "
+                    "AuditorName facts"
+                ),
+            )
+            if light_mode
+            else check_c04_auditorname_all_companies(
+                metrics=metrics,
+                evidence_rows=evidence_rows,
+                inventory=inventory,
+            )
         ),
         check_eleventh_company_smoke_mounts(),
         check_eleventh_company_behavior_lodging(),
@@ -13486,10 +18846,15 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
         check_eleventh_company_behavior_captive_finance(),
         check_eleventh_company_behavior_rpo_crpo(),
         check_ok_status_recall_not_regressed_without_reason(metrics=metrics),
-        check_coverage_join(coverage=coverage, evidence_rows=evidence_rows),
+        check_coverage_join(
+            coverage=coverage,
+            evidence_rows=evidence_rows,
+            metrics=metrics,
+        ),
         check_numeric_ok_requires_evidence(
             metrics=metrics,
             evidence_rows=evidence_rows,
+            events=events,
         ),
         check_d04_going_concern_text(metrics=metrics, evidence_rows=evidence_rows),
         (
@@ -13507,29 +18872,39 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
         ),
         check_stratified_audit_all_pass_or_explicitly_caveated(
             audit_rows=audit_rows,
+            metrics=metrics,
         ),
     ]
-    failed_ids = [
-        row["check_id"]
+    blocking_rows = blocking_validation_rows(rows=rows, mode=mode)
+    failed_ids = [row["check_id"] for row in blocking_rows]
+    caveat_rows = [
+        row
         for row in rows
-        if row["status"] in {"FAIL", "WORKSPACE_INCOMPLETE"}
-        and row["check_id"] != "existing_repair_validation_still_pass"
+        if row["status"]
+        in {
+            "SKIPPED_LIGHT_PACKAGE",
+            "NOT_EVALUATED_MISSING_EVIDENCE",
+        }
     ]
     rows.append(
         validation_row(
-            check_id="existing_repair_validation_still_pass",
+            check_id="validation_gate_result",
             status=(
                 "FAIL"
                 if failed_ids
-                else "PASS_LIGHT_REVIEW"
-                if light_mode
+                else "SKIPPED_LIGHT_PACKAGE"
+                if light_mode and caveat_rows
                 else "PASS"
             ),
             details=(
                 ";".join(failed_ids[:20])
                 if failed_ids
-                else "light review gates pass; full evidence checks skipped"
-                if light_mode
+                else (
+                    "full gate not evaluated; light-scope checks have no "
+                    "blocking failures; caveats: "
+                    + ";".join([row["check_id"] for row in caveat_rows])
+                )
+                if caveat_rows
                 else "all gates pass"
             ),
         )
@@ -13539,22 +18914,22 @@ def run_repair_validation(*, exit_on_failure: bool) -> list[dict]:
         fieldnames=REPAIR_VALIDATION_FIELDNAMES,
         rows=rows,
     )
-    failures = [
-        row
-        for row in rows
-        if row["severity"] == "P0" and row["status"] == "FAIL"
-    ]
-    if failures and exit_on_failure:
+    mark_validation_artifact_refreshed(
+        manifest=manifest,
+        artifact="repair_validation_results.csv",
+    )
+    blocking_rows = blocking_validation_rows(rows=rows, mode=mode)
+    if blocking_rows and exit_on_failure:
         print("Repair validation failed:")
-        for row in failures:
+        for row in blocking_rows:
             print(f"{row['check_id']}: {row['details']}")
         raise SystemExit(1)
-    if not failures and light_mode:
+    if not blocking_rows and light_mode:
         print(
             "Light review validation complete; full-evidence checks skipped: "
             + "; ".join(light_reasons)
         )
-    elif not failures:
+    elif not blocking_rows:
         print("Repair validation complete; all P0 checks pass")
     return rows
 
@@ -13655,8 +19030,8 @@ def request_stats() -> dict:
     sec_only = [
         row
         for row in rows
-        if row["url"].startswith("https://www.sec.gov/")
-        or row["url"].startswith("https://data.sec.gov/")
+        if request_log_source_url(row=row).startswith("https://www.sec.gov/")
+        or request_log_source_url(row=row).startswith("https://data.sec.gov/")
     ]
     statuses: dict[str, int] = {}
     for row in sec_only:
@@ -13675,22 +19050,79 @@ def report_verdict(
     golden_rows: list[dict],
     metric_rows: list[dict],
     validation_rows: list[dict],
+    validation_manifest: dict,
 ) -> str:
     """Return GO / GO WITH CAVEATS / NO-GO for the final report."""
+    if validation_manifest_errors(manifest=validation_manifest):
+        return "NO-GO"
+    mode = str(require_key(mapping=validation_manifest, key="mode"))
+    manifest_result = str(
+        require_key(mapping=validation_manifest, key="result")
+    )
+    if manifest_result in {"FAILED", "IN_PROGRESS"}:
+        return "NO-GO"
+    if not manifest_artifact_was_refreshed(
+        manifest=validation_manifest,
+        artifact="repair_validation_results.csv",
+    ):
+        return "NO-GO"
+    if not validation_rows or not golden_rows:
+        return "NO-GO"
+    required_validation_fields = {"check_id", "severity", "status"}
+    if any(
+        not required_validation_fields.issubset(row)
+        or row["severity"] != "P0"
+        or row["status"] not in VALIDATION_STATUSES
+        for row in validation_rows
+    ):
+        return "NO-GO"
+    aggregate_rows = [
+        row
+        for row in validation_rows
+        if row["check_id"] == "validation_gate_result"
+    ]
+    if len(aggregate_rows) != 1:
+        return "NO-GO"
+    aggregate_status = aggregate_rows[0]["status"]
+    if mode == "FULL_VALIDATION" and (
+        manifest_result != "PASSED" or aggregate_status != "PASS"
+    ):
+        return "NO-GO"
+    if mode == "LIGHT_REVIEW_MODE" and (
+        manifest_result != "PASSED_WITH_CAVEATS"
+        or aggregate_status != "SKIPPED_LIGHT_PACKAGE"
+    ):
+        return "NO-GO"
+    if mode == "WORKSPACE_INCOMPLETE":
+        return "NO-GO"
     if any(
         row["severity"] == "P0"
         and row["status"] in {"FAIL", "WORKSPACE_INCOMPLETE"}
         for row in validation_rows
     ):
         return "NO-GO"
-    if any(row["status"] == "FAIL" for row in golden_rows):
+    if mode != "LIGHT_REVIEW_MODE" and any(
+        row["status"]
+        in {
+            "NOT_EVALUATED_MISSING_EVIDENCE",
+            "SKIPPED_LIGHT_PACKAGE",
+        }
+        for row in validation_rows
+    ):
+        return "NO-GO"
+    if any(
+        "status" not in row or row["status"] != "PASS"
+        for row in golden_rows
+    ):
         return "NO-GO"
     validation_caveat_statuses = {
         "SKIPPED_LIGHT_PACKAGE",
-        "PASS_LIGHT_REVIEW",
-        "PASS_LIGHT_GOLDEN_INTEGRITY",
+        "NOT_EVALUATED_MISSING_EVIDENCE",
     }
-    if any(row["status"] in validation_caveat_statuses for row in validation_rows):
+    if mode == "LIGHT_REVIEW_MODE" or any(
+        row["status"] in validation_caveat_statuses
+        for row in validation_rows
+    ):
         return "GO WITH CAVEATS"
     caveat_statuses = {"NOT_EXTRACTED", "NEEDS_REVIEW", "PARSE_FAILED"}
     if any(row["status"] in caveat_statuses for row in metric_rows):
@@ -13698,22 +19130,46 @@ def report_verdict(
     return "GO"
 
 
-def build_report_markdown() -> str:
-    """Build the final Chinese Markdown report."""
+def build_report_markdown(*, validation_manifest: dict | None = None) -> str:
+    """Build the final Chinese Markdown report for one validation run.
+
+    Args:
+        validation_manifest: Optional projected terminal manifest. Stage 11/12
+            supplies it before terminal success is persisted; other callers
+            read the current persisted manifest.
+
+    Returns:
+        Complete UTF-8 Markdown report text.
+    """
     metrics = load_metrics()
     resolution = read_csv_file(path=WORKDIR / "outputs" / "company_resolution.csv")
     coverage = read_csv_file(path=WORKDIR / "outputs" / "coverage_matrix.csv")
     golden = read_csv_file(path=WORKDIR / "outputs" / "golden_results.csv")
-    validation = read_csv_file(
-        path=WORKDIR / "outputs" / "repair_validation_results.csv"
-    )
-    stratified_audit = read_csv_file(path=WORKDIR / "outputs" / "stratified_audit.csv")
+    if validation_manifest is None:
+        validation_manifest = read_validation_run_manifest()
+    validation = []
+    if manifest_artifact_was_refreshed(
+        manifest=validation_manifest,
+        artifact="repair_validation_results.csv",
+    ):
+        validation = read_csv_file(
+            path=WORKDIR / "outputs" / "repair_validation_results.csv"
+        )
+    stratified_audit = []
+    if manifest_artifact_was_refreshed(
+        manifest=validation_manifest,
+        artifact="stratified_audit.csv",
+    ):
+        stratified_audit = read_csv_file(
+            path=WORKDIR / "outputs" / "stratified_audit.csv"
+        )
     events = read_csv_file(path=WORKDIR / "outputs" / "events.csv")
     stats = request_stats()
     verdict = report_verdict(
         golden_rows=golden,
         metric_rows=metrics,
         validation_rows=validation,
+        validation_manifest=validation_manifest,
     )
     ok_statuses = {
         "OK",
@@ -13729,6 +19185,20 @@ def build_report_markdown() -> str:
     valued_count = len([row for row in metrics if row["value"]])
     blank_count = len(metrics) - valued_count
     validation_count = len(validation)
+    validation_status_counts: dict[str, int] = {}
+    for row in validation:
+        status = row["status"]
+        if status not in validation_status_counts:
+            validation_status_counts[status] = 0
+        validation_status_counts[status] += 1
+    refreshed_artifacts = require_key(
+        mapping=validation_manifest,
+        key="refreshed_artifacts",
+    )
+    not_refreshed_artifacts = require_key(
+        mapping=validation_manifest,
+        key="not_refreshed_artifacts",
+    )
     lines = [
         "# REPORT_十公司财务指标",
         "",
@@ -13741,16 +19211,63 @@ def build_report_markdown() -> str:
             f"空值：{blank_count}；validation rows：{validation_count}。"
         ),
         f"- OK/TEXT 类：{ok_count}；待复核/不可得类：{caveat_count}。",
-        "- 本次只使用 SEC 官方响应和本地 evidence 文件；未使用第三方数据或模型记忆补数。",
-        "- Repair validation 若有 P0 FAIL，verdict 强制为 NO-GO。",
-        "- Stratified audit 任一 FAIL 会进入 repair validation gate，不能被报告静默吞掉。",
+        (
+            "- Validation 状态分布："
+            f"`{json_text(value=validation_status_counts)}`。"
+        ),
+        (
+            "- 本次只使用 SEC 官方响应和本地 evidence 文件；"
+            "未使用第三方数据或模型记忆补数。"
+        ),
+        (
+            "- Repair validation 若有 P0 FAIL、WORKSPACE_INCOMPLETE，或 full "
+            "关键检查 NOT_EVALUATED，verdict 强制为 NO-GO。"
+        ),
+        (
+            "- Stratified audit 任一 FAIL 会进入 repair validation gate，"
+            "不能被报告静默吞掉。"
+        ),
+        "",
+        "## Validation run manifest",
+        "",
+        f"- run_id: `{validation_manifest['run_id']}`",
+        f"- source_commit: `{validation_manifest['source_commit']}`",
+        "- `source_commit` 后缀 `+dirty` 表示运行时工作树含未提交改动。",
+        f"- started_at_utc: `{validation_manifest['started_at_utc']}`",
+        f"- mode: `{validation_manifest['mode']}`",
+        f"- result: `{validation_manifest['result']}`",
+        (
+            "- refreshed_artifacts: `"
+            + ", ".join([str(name) for name in refreshed_artifacts])
+            + "`"
+        ),
+        (
+            "- not_refreshed_artifacts: `"
+            + (
+                ", ".join([str(name) for name in not_refreshed_artifacts])
+                if not_refreshed_artifacts
+                else "none"
+            )
+            + "`"
+        ),
+        (
+            "- 报告只展示 manifest 标记为本次 refreshed 的 validation/audit "
+            "artifact；文件存在本身不证明新鲜度。"
+        ),
         "",
         "## 数据来源和请求统计",
         "",
         "- company_tickers_exchange、submissions、companyfacts、"
         "accession materials、8-K hdr.sgml、DEF 14A primary document "
         "均通过 SEC 官方 URL 请求。",
-        "- 所有请求记录在 `evidence/requests_log.csv`，原始响应保存在 `evidence/` 子目录，并带 headers/hash 旁路文件。",
+        (
+            "- 所有请求记录在 `evidence/requests_log.csv`；新 attempt 的"
+            "响应 body/header 以 content-addressed immutable 路径保存。"
+        ),
+        (
+            "- 历史 request row 若已无法解析到与记录 hash 一致的 bytes，"
+            "只能是 NOT_EVALUATED，不能作为本次可复现 PASS 证据。"
+        ),
         "",
         "## 公司身份解析表",
         "",
@@ -13844,7 +19361,8 @@ def build_report_markdown() -> str:
             "## Governance / Risk / Event signals 摘要",
             "",
             f"- FY-window 8-K item rows: {len(events)}。",
-            "- DEF 14A 输出 governance_signals，并在存在 ecd facts 时 dump 到 concept_inventory。",
+            "- DEF 14A 输出 governance_signals，并在存在 ecd facts 时 "
+            "dump 到 concept_inventory。",
             "- C04 auditor change 使用 current/prior 10-K instance 的 "
             "`dei:AuditorName` 对照；缺失时只针对 AuditorName 补抓 "
             "SEC 官方 XBRL instance，仍不可判定才标 NEEDS_REVIEW。",
@@ -13961,11 +19479,31 @@ def build_readme() -> str:
             "",
             "## 配置",
             "",
+            "- 运行时支持 POSIX 本地文件系统上的 Python 3.9+。",
             "- SEC HTTP 配置：`config/sec_config.json`。",
             "- 所有时间戳使用 UTC；文本编码 UTF-8。",
-            "- 全局请求速率默认 5 requests/sec。",
+            "- 单个 `SecHttpClient` 实例执行进程内请求节流，默认 5 requests/sec；",
+            (
+                "  不同 client 或进程之间不协调限速；同一 "
+                "repository 的 request log"
+            ),
+            (
+                "  publication 会在 cooperating threads / POSIX processes "
+                "间串行化，不承诺网络文件系统锁语义。"
+            ),
+            (
+                "- immutable response 防预存和最终文件名 symlink/hardlink "
+                "别名，但假设单次写入期间父目录 namespace 稳定；它不是 "
+                "WORM 存储。"
+            ),
+            (
+                "- `SecHttpClient` 不自动跟随 HTTP redirect；首跳 3xx "
+                "body、headers、Location 与日志会保留，目标 URL "
+                "只能作为"
+                "下一次显式、重新校验的请求。"
+            ),
             "",
-            "## 从干净目录运行 M0-M7",
+            "## 从干净目录运行阶段 00-11",
             "",
             "```bash",
             "python3 scripts/00_smoke_test_sec_access.py",
@@ -13983,8 +19521,14 @@ def build_readme() -> str:
             "```",
             "",
             (
-                "M7 会先应用 bounded P0 local repair，然后生成 coverage、"
-                "exceptions、repair validation、最终报告和本 README。"
+                "阶段 11 的 bounded repair primarily uses local artifacts, "
+                "but C04 AuditorName repair only fetches the next official "
+                "SEC candidate while all ordered local facts remain "
+                "unavailable."
+            ),
+            (
+                "随后阶段 11 生成 coverage、exceptions、validation run "
+                "manifest、repair validation、最终报告和本 README。"
             ),
             "",
             "## 验收顺序",
@@ -13996,29 +19540,63 @@ def build_readme() -> str:
             "python3 scripts/12_validate_repair.py",
             "```",
             "",
-            "- `outputs/golden_results.csv` 必须全 PASS。",
+            (
+                "- `outputs/golden_results.csv` 必须与配置/generator/"
+                "fixture 推导的 assertion exact set 一致、唯一且全 "
+                "PASS。"
+            ),
+            (
+                "- `outputs/stratified_audit.csv` 必须与当前 metrics "
+                "推导的"
+                "五层 deterministic sample exact set 一致且唯一。"
+            ),
             (
                 "- 完整工作区 `outputs/repair_validation_results.csv` 必须全 PASS；"
                 "轻量审核包中依赖 raw evidence / concept inventory 的检查必须显示为 "
-                "`SKIPPED_LIGHT_PACKAGE`，总 gate 显示为 `PASS_LIGHT_REVIEW`。"
+                "`SKIPPED_LIGHT_PACKAGE`；full gate 本身也不能写成 PASS。"
+            ),
+            (
+                "- validation status 只使用 `PASS`、`FAIL`、"
+                "`SKIPPED_LIGHT_PACKAGE`、"
+                "`NOT_EVALUATED_MISSING_EVIDENCE`、"
+                "`WORKSPACE_INCOMPLETE`。缺材料不能写成 PASS。"
             ),
             (
                 "- 轻量审核包必须在根目录包含 "
                 "`LIGHT_REVIEW_PACKAGE.marker`；未声明的缺 evidence / "
                 "concept inventory 工作区必须 `WORKSPACE_INCOMPLETE`。"
             ),
+            (
+                "- full 模式中的关键 `NOT_EVALUATED_MISSING_EVIDENCE` "
+                "阻止 GO；light 模式只能把它作为显式 caveat。"
+            ),
+            (
+                "- 先读 `outputs/validation_run_manifest.json` 判断本次真正"
+                "刷新的 validation artifact；旧文件存在不代表本次已评估。"
+            ),
+            (
+                "- 阶段 11/12 的报告写入成功后才发布 terminal "
+                "manifest；写入失败必须保持 `IN_PROGRESS`。"
+            ),
+            "- manifest 的 `source_commit` 带 `+dirty` 时，表示运行时工作树含未提交改动。",
             "- `metrics/evidence/coverage/report` 必须能互相追溯一致。",
             "",
             "### 第二层：去公司特例验收",
             "",
             "```bash",
             "python3 tools/check_no_company_literals.py",
+            "python3 tools/check_capability_contract_alignment.py",
             "```",
             "",
             "- 生产 extractor 不得出现公司名业务分支。",
             "- `config/`、`tests/fixtures/`、报告模板可以出现公司名。",
             "- 自动审计使用 AST 扫描 Python literal，明细写入 "
             "`outputs/scalability_audit.csv`。",
+            (
+                "- capability checker 只验证 anchor/path/symbol 等结构事实；"
+                "symbol 存在不等于 claim 已被证明，证据强度仍由 reviewer "
+                "判断为 direct / partial / structural / none。"
+            ),
             "",
             "### 第三层：第 11 家公司测试",
             "",
@@ -14042,21 +19620,54 @@ def build_readme() -> str:
                 "exceptions/report 更新。"
             ),
             (
-                "- C04 只针对 AuditorName 对照补抓 SEC 官方 XBRL instance；"
+                "- C04 先检查 target 10-K/A，再在 AuditorName 不可用时"
+                "回退同 CIK、同期间原始 10-K；"
+                "空白/冲突事实必须降级；仍缺失时才按候选顺序"
+                "最小补抓 SEC 官方 XBRL instance；"
+                "期间起点只允许由同 CIK prior 10-K 推导；"
                 "所有请求仍通过 `SecHttpClient.fetch(...)` 写入 "
-                "`evidence/requests_log.csv`。"
+                "`evidence/requests_log.csv` 及其 exact-set manifest。"
+            ),
+            (
+                "- full validation 从 submissions 推导 FY 8-K inventory，"
+                "重放 raw hdr/primary item 并与 `events.csv` exact-set "
+                "比对；正向 count 逐 event component 保留 evidence，零值"
+                "只在完整扫描确无匹配项时成立。"
+            ),
+            (
+                "- `metrics_matrix.csv` 必须恰好包含 registry/profile/"
+                "applicability contract 推导的 unique `(company, "
+                "metric_id)` set；`coverage_matrix.csv` 必须与该 matrix "
+                "exact key set "
+                "完全一致。"
             ),
             (
                 "- `outputs/stratified_audit.csv` 固化验收分层抽样："
-                "STD_XBRL/DERIVED、DIM_XBRL、DEF14A、MDA/TEXT、8K_ITEM。"
+                "STD_XBRL/DERIVED、DIM_XBRL、DEF14A、MDA/TEXT、8K_ITEM；"
+                "缺行、重复或多余样本均失败。"
             ),
             "",
             "## P0 validation 失败定位",
             "",
-            "- 先打开 `outputs/repair_validation_results.csv`，按 `check_id` 查看 FAIL 行。",
+            (
+                "- 先打开 `outputs/repair_validation_results.csv`，按 "
+                "`check_id` 查看 FAIL 行。"
+            ),
             (
                 "- 对证据缺失类失败，按 `(company, metric_id)` join "
                 "`outputs/metrics_matrix.csv` 与 `outputs/metric_evidence.csv`。"
+            ),
+            (
+                "- 对 matrix/coverage 完整性失败，"
+                "先看 details 中的 "
+                "missing、unexpected 与 duplicate keys；禁止用固定"
+                "行数或"
+                "复制现有行凑齐集合。"
+            ),
+            (
+                "- 对 8-K 失败，按 submissions→FY inventory→raw filing→"
+                "events→metric/component evidence 顺序核对 missing、"
+                "unexpected 与 duplicate identity。"
             ),
             (
                 "- 对 C03 失败，检查 `outputs/concept_inventory/*_ecd.csv` "
@@ -14066,7 +19677,19 @@ def build_readme() -> str:
                 "- 对 FI Basel ratio 失败，检查对应 "
                 "`outputs/concept_inventory/*_instance.csv` 的 ratio facts。"
             ),
-            "- 对请求边界失败，检查 `evidence/requests_log.csv` 的 URL、User-Agent 和 retry_attempt。",
+            (
+                "- 对请求边界失败，先检查 "
+                "`evidence/requests_log_manifest.json` 的 row count/hash、"
+                "Git HEAD/base 有序前缀与下游/sidecar 反向覆盖，再"
+                "检查 "
+                "`evidence/requests_log.csv` 的 "
+                "URL、User-Agent、retry_attempt、body/header locator 和 "
+                "content_sha256。"
+            ),
+            (
+                "- 对 `NOT_EVALUATED_MISSING_EVIDENCE`，不要把空 failure list "
+                "解释为通过；按 details 补齐所需材料后重跑。"
+            ),
             "",
             "## 主要输出",
             "",
@@ -14077,10 +19700,12 @@ def build_readme() -> str:
             "- `outputs/coverage_matrix.csv`",
             "- `outputs/exceptions_and_review_items.md`",
             "- `outputs/repair_validation_results.csv`",
+            "- `outputs/validation_run_manifest.json`",
             "- `outputs/stratified_audit.csv`",
             "- `outputs/events.csv`",
             "- `outputs/golden_results.csv`",
             "- `outputs/implementation_map.csv`",
+            "- `evidence/requests_log_manifest.json`",
             "- `REPORT_十公司财务指标.md`",
             "",
             "## 轻量审核包",
@@ -14098,8 +19723,38 @@ def build_readme() -> str:
             (
                 "- 轻量包中 `python3 scripts/10_run_golden_assertions.py` "
                 "重算随包 `outputs/golden_results.csv` snapshot integrity，"
-                "通过时输出 `PASS_LIGHT_GOLDEN_INTEGRITY`；完整数值 golden "
+                "通过时输出 `PASS: LIGHT_REVIEW_MODE`；完整数值 golden "
                 "rerun 需要本地完整 `evidence/`。"
+            ),
+            (
+                "- reviewer 必须以 `validation_run_manifest.json` 的 "
+                "`refreshed_artifacts` / `not_refreshed_artifacts` 判断新鲜度，"
+                "不能只检查 CSV 是否存在；该最小 manifest 只跟踪 validation/"
+                "audit artifacts，Golden、矩阵与 evidence 仍需各自重跑来源。"
+            ),
+            (
+                "- 新写入的证据 locator 使用 `source_url`、"
+                "`repo_relative_path`、`content_sha256`、`accession`、"
+                "`document_name`；历史绝对路径只作 relocation hint。"
+            ),
+            (
+                "- `evidence/requests_log.csv` 的 response body 也使用上述"
+                " portable 字段，headers 使用 `headers_repo_relative_path`；"
+                "`requests_log_manifest.json` 以严格 JSON key/type 与 CSV "
+                "行 schema 绑定整表 row count/hash；"
+                "working ledger 必须保留 HEAD 有序前缀；PR checker 先要求 "
+                "base/HEAD 的每条 current/legacy row 与声明 schema 精确同宽，"
+                "再对 legacy base 独立规范化 portable 完整字段、对 current "
+                "base 逐字段保留有序前缀，之后只允许合法尾部追加；下游/sidecar "
+                "反向覆盖完整集合；"
+                "新 attempt 指向 content-addressed immutable copy；旧 "
+                "`url/local_path/sha256` 只作为显式 legacy bootstrap "
+                "输入，常规阶段不会为缺 manifest 的日志重签。"
+                "mutable submissions 重放必须匹配 ledger 中最新成功 200；"
+                "filing-bound archive 文档若存在冲突成功 bodies 则失败。"
+                "无 Git history baseline 或历史 hash 对应原 "
+                "bytes 时，"
+                "full gate 必须 NOT_EVALUATED。"
             ),
             (
                 "- `outputs/implementation_map.csv` 映射 I1-I8 的实现位置、"
@@ -14122,8 +19777,44 @@ def build_readme() -> str:
     )
 
 
+def write_terminal_report(*, text: str, manifest: dict) -> None:
+    """Persist a report only when it names the projected terminal run.
+
+    Args:
+        text: Complete generated report Markdown.
+        manifest: Projected terminal validation manifest.
+
+    Expected output:
+        The regular report file contains the same run id and result that may
+        subsequently become observable in the terminal manifest.
+    """
+    expected_lines = [
+        f"- run_id: `{manifest['run_id']}`",
+        f"- result: `{manifest['result']}`",
+    ]
+    missing_lines = [line for line in expected_lines if line not in text]
+    if missing_lines:
+        raise ValueError(
+            "Terminal report does not match projected manifest: "
+            + ";".join(missing_lines)
+        )
+    write_utf8_text_atomically(
+        path=WORKDIR / "REPORT_十公司财务指标.md",
+        text=text,
+    )
+
+
 def stage_build_report() -> None:
-    """M7: build crosschecks, coverage, exceptions, report, and README."""
+    """Stage 11: repair, validate, and build derived review documents."""
+    mode, _light_reasons = validation_package_mode()
+    manifest = new_validation_run_manifest(
+        mode=mode,
+        started_at_utc=utc_now_iso(),
+    )
+    # Publish this run before migration or repair can partially replace any
+    # batch artifact, so an interrupted stage cannot expose an older success.
+    write_validation_run_manifest(manifest=manifest)
+    migrate_portable_artifact_inventories()
     apply_p0_repairs()
     coverage = build_coverage_matrix()
     write_csv_file(
@@ -14160,24 +19851,55 @@ def stage_build_report() -> None:
         build_exceptions_markdown(),
         encoding="utf-8",
     )
-    run_repair_validation(exit_on_failure=False)
-    stratified_audit = build_stratified_audit_rows()
-    write_csv_file(
-        path=WORKDIR / "outputs" / "stratified_audit.csv",
-        fieldnames=STRATIFIED_AUDIT_FIELDNAMES,
-        rows=stratified_audit,
+    rows = run_repair_validation(
+        exit_on_failure=False,
+        manifest=manifest,
     )
-    (WORKDIR / "REPORT_十公司财务指标.md").write_text(
-        build_report_markdown(),
-        encoding="utf-8",
+    active_manifest, terminal_manifest = (
+        projected_terminal_validation_manifest(rows=rows)
     )
-    (WORKDIR / "README_RUN.md").write_text(build_readme(), encoding="utf-8")
-    print("M7 report build complete")
+    report_text = build_report_markdown(
+        validation_manifest=terminal_manifest,
+    )
+    readme_text = build_readme()
+    write_terminal_report(
+        text=report_text,
+        manifest=terminal_manifest,
+    )
+    write_utf8_text_atomically(
+        path=WORKDIR / "README_RUN.md",
+        text=readme_text,
+    )
+    finish_validation_run_manifest(
+        manifest=active_manifest,
+        result=str(terminal_manifest["result"]),
+    )
+    print("Stage 11 report build complete")
 
 
 def stage_validate_repair() -> None:
-    """M7 repair gate: validate P0 repairs and exit nonzero on failures."""
-    run_repair_validation(exit_on_failure=True)
+    """Stage 12: validate repairs, refresh the report, and fail on blockers."""
+    rows = run_repair_validation(exit_on_failure=False)
+    active_manifest, terminal_manifest = (
+        projected_terminal_validation_manifest(rows=rows)
+    )
+    write_terminal_report(
+        text=build_report_markdown(validation_manifest=terminal_manifest),
+        manifest=terminal_manifest,
+    )
+    finish_validation_run_manifest(
+        manifest=active_manifest,
+        result=str(terminal_manifest["result"]),
+    )
+    failures = blocking_validation_rows(
+        rows=rows,
+        mode=str(terminal_manifest["mode"]),
+    )
+    if failures:
+        print("Repair validation failed:")
+        for row in failures:
+            print(f"{row['check_id']}: {row['details']}")
+        raise SystemExit(1)
 
 
 def run_stage(*, stage_name: str) -> None:

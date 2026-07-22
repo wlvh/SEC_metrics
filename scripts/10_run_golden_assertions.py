@@ -1,4 +1,4 @@
-"""Run M7 golden assertions.
+"""Run stage 10 golden assertions.
 
 Purpose:
     Independently recompute structure and numeric assertions from this run's

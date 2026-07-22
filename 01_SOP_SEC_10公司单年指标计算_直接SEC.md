@@ -72,7 +72,7 @@ Codex 直接访问 SEC 官方 endpoint。所有请求必须：
 
 ```text
 User-Agent: <organization> <contact email>
-全局请求速率默认 <= 5 req/s
+每个 SecHttpClient 实例在进程内默认节流至 <= 5 req/s；不同 client 或进程不协调限速
 遇到 403 / 429 / 5xx 指数退避
 所有请求记录到 evidence/requests_log.csv
 所有原始响应落盘或记录 hash / status / size / URL

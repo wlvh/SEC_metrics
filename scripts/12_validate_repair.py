@@ -1,9 +1,9 @@
 """Run repair validation.
 
 Purpose:
-    Validate the bounded SEC ten-company repair package after M7 report build.
-    The script writes outputs/repair_validation_results.csv and exits nonzero
-    on any P0 validation failure.
+    Validate the bounded SEC ten-company repair package after stage 11. The
+    script writes the validation run manifest and validation results, refreshes
+    the report verdict, and exits nonzero on any blocking P0 status.
 
 Call relationships:
     main calls sec_pipeline.run_stage for 12_validate_repair.

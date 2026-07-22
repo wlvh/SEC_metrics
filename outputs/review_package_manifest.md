@@ -67,7 +67,28 @@ concept inventories stay in the local workspace.
 - nested `.zip`
 - `.sha256`
 
-## Validation Snapshot
+## Current Repository Reviewer Freshness Rule
+
+This rule applies when a new package is generated after the validation-manifest
+feature was introduced. It does not retroactively change the contents of the
+historical package listed below, which did not include that manifest.
+
+- Read `outputs/validation_run_manifest.json` before any validation or audit
+  CSV. Only names in `refreshed_artifacts` are evidence from that run;
+  `not_refreshed_artifacts` may still exist as stale files.
+- The only repair-validation statuses are `PASS`, `FAIL`,
+  `SKIPPED_LIGHT_PACKAGE`, `NOT_EVALUATED_MISSING_EVIDENCE`, and
+  `WORKSPACE_INCOMPLETE`.
+- Missing evidence is never PASS. In full mode, a critical NOT_EVALUATED blocks
+  GO; in light mode, skipped or NOT_EVALUATED remains an explicit caveat.
+- Run `python3 tools/check_capability_contract_alignment.py` for mechanical
+  anchor/path/symbol structure. A symbol existing does not prove the claim;
+  reviewers still grade evidence as direct, partial, structural, or none.
+
+## Historical Validation Snapshot
+
+The counts below describe only the package run recorded on 2026-07-13. They are
+not evidence for a later run.
 
 - `python3 scripts/10_run_golden_assertions.py`: PASS, 63 golden rows.
 - `outputs/metrics_matrix.csv`: 230 rows, 161 valued cells, 69 blank cells.
@@ -84,9 +105,11 @@ concept inventories stay in the local workspace.
   missing raw `evidence/` and `outputs/concept_inventory/` are treated as
   explicit light-package limitations, not silent failures.
 - In light-package mode, raw-evidence checks may be reported as
-  `SKIPPED_LIGHT_PACKAGE` or equivalent light-review caveats.
-- Full numeric acceptance remains the current local workspace run summarized
-  above.
+  `SKIPPED_LIGHT_PACKAGE` or `NOT_EVALUATED_MISSING_EVIDENCE`; neither is PASS.
+- Full numeric acceptance requires a separate full-workspace run. Its manifest
+  proves freshness only for the six tracked validation/audit artifacts;
+  Golden and metrics require their own rerun evidence. The historical counts
+  above are not a substitute.
 
 ## Package File
 
