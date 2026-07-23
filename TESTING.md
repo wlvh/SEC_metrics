@@ -1,183 +1,219 @@
 # SEC_metrics 测试与验证流程
 
-本文件是项目测试策略、真实命令、full/light 边界和测试副作用的权威入口。所有命令默认在仓库根目录执行；完整阶段顺序以 `README_RUN.md` 为准。
+本文件是测试策略、真实命令、full/light 边界、snapshot provenance 和测试副作用的权威入口。所有命令默认从仓库根目录执行；完整阶段顺序以 `README_RUN.md` 为准。
 
 ## 1. 测试原则
 
-- 测行为与契约，不用脆弱的源码字符串或固定数量断言替代真实结果。
+- 测行为与契约，不用脆弱的源码字符串、固定行数或单个 happy path 替代不变量。
 - 默认使用固定 fixture、临时工作区和本地 evidence，保持确定性与隔离。
-- 单元级成功不能替代 Golden、repair gate 或完整阶段场景；light review 不能替代 full validation。
-- 新增测试前先说明它覆盖的真实缺口；避免为 13 个薄 wrapper 重复编写同构测试。
-- Bug 修复先加入能稳定复现的最小回归，再修实现；跨阶段状态事故还需要场景级回归。
-- 任何会联网或覆盖 `evidence/`、`outputs/`、报告的命令，都应在干净且隔离的 checkout 中运行，并在执行前确认配置。
-- 测试记录必须包含原样命令、结果、证据路径和未运行原因；不能把预期结果写成已通过。
+- 单元级成功不能替代 Golden、repair gate、snapshot checker 或完整阶段场景；light 不能替代 full。
+- Bug 修复先加入稳定最小复现，再修实现；跨阶段状态事故还要补 scenario 证据。
+- 完整性修复至少考虑：删行、重复、多余集合、字段值、CSV 行形状、顺序/版本、跨 accession/document、symlink/hardlink、publication failure、post-run tamper。
+- 任何会联网或覆盖 `evidence/`、`outputs/`、README、报告的命令，都应在干净隔离 checkout 中执行，并先确认 SEC identity。
+- 测试记录必须包含原样命令、实际结果、证据路径和未运行原因；不得把预期写成已通过。
 
 ## 2. 环境与前提
 
-- 运行时兼容边界为 POSIX 本地文件系统上的 Python 3.9+，当前代码只导入标准库和本地模块；快速回归至少在 Python 3.9 与当前默认解释器各运行一次。
-- 仓库没有 `pyproject.toml`、requirements、tox 或 CI workflow；Python 3.9 下限由本测试契约和双解释器回归维护，不代表已有 CI 自动执行。
-- 快速测试建议设置 `PYTHONDONTWRITEBYTECODE=1`，避免在仓库生成 `__pycache__`。
-- live SEC 命令读取 `config/sec_config.json`，只允许官方 SEC 域名，并写入请求日志和 raw evidence。阶段 11 也可能在 C04 AuditorName 本地材料缺失时条件式联网。
-- 当前 `config/sec_config.json` 的联系邮箱是示例值；任何可能联网的命令（包括上述阶段 11 条件分支）运行前，必须由运行负责人换成有效 organization/contact email。
+- 运行时边界为 POSIX 本地文件系统上的 Python 3.9+，当前代码只导入标准库和本地模块。
+- 快速回归至少在 Python 3.9 与当前默认解释器各运行一次；仓库没有 CI 自动维护该承诺。
+- 建议设置 `PYTHONDONTWRITEBYTECODE=1`，避免生成 `__pycache__`。
+- live SEC 命令读取 `config/sec_config.json`，只允许官方 SEC 域名，并写 request ledger 与 raw evidence。
+- stage 11 可能在 C04 本地 AuditorName 材料不足时条件式联网；示例 organization/contact email 不能用于合规 live run。
+- stage 12 full 模式要求 provenance source-input closure clean。closure 内 tracked、staged 或 untracked 改动都会在主 gate 前失败；生成的 evidence/outputs 不在 source closure 内。
 
-## 3. 真实测试与验证层级
+## 3. 测试与验收层级
 
 | 层级 | 命令 / 入口 | 网络 | 仓库写入 | 通过条件 | 不能替代 |
 |---|---|---:|---:|---|---|
-| 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py'` | 否 | 测试设计上只写临时目录 | unittest 全部通过；允许的 skip 必须在记录中说明 | full evidence、Golden、完整阶段 |
-| 能力文档对齐 | `python3 tools/check_capability_contract_alignment.py`；PR 再加 `--base-ref <base>` | 否 | 否 | 清除会重定向仓库的 Git 环境变量并禁用 replacement refs 后，证据路径存在于 HEAD、是 regular blob 且工作树 bytes 未偏离 HEAD；anchor grammar/唯一性、type/status 枚举、null anchor 的 `untested_reason`/`pending_since`、`file::symbol` 与 Markdown directive 均合法；跨 base tombstone 不删除/复用，base 与 HEAD 的每条 request row 严格匹配其 current/legacy CSV schema，legacy row 独立规范化为 portable 完整字段，current row 逐字段保留有序前缀且只尾部追加 | claim 语义与证据强度判断 |
-| 静态扩展性 gate | `python3 tools/check_no_company_literals.py` | 否 | 是，覆盖 `outputs/scalability_audit.csv` | 无禁止 identity literal，进程退出 0 | 指标正确性、场景回归 |
-| Golden | `python3 scripts/10_run_golden_assertions.py` | full 模式会联网；light 不联网 | full 模式覆盖 Golden outputs，并可能追加 evidence/log | 所有适用 assertion PASS；light 只能得到受限完整性结果 | repair gate、外部验收 |
-| Repair / validation gate | `python3 scripts/12_validate_repair.py` | 否 | 是，覆盖多个 validation/audit outputs、run manifest 与报告 | full 不存在 FAIL、`WORKSPACE_INCOMPLETE`、`NOT_EVALUATED_MISSING_EVIDENCE` 或 light-only skip；light 只能显式 caveat | live 数据采集、完整场景 |
-| Report build | `python3 scripts/11_build_report.py` | 条件式：C04 AuditorName 本地材料缺失时联网 | 是，先应用 repair；可能追加 SEC evidence，再重建多个 outputs、报告和 `README_RUN.md` | 命令完成只证明产物已生成 | 独立阶段 12 gate |
-| Live smoke | `python3 scripts/00_smoke_test_sec_access.py` | 是 | 是，写 request log 与 raw response | 官方 SEC 请求满足脚本判据 | 后续指标与验证 |
-| 完整场景 | 按 `README_RUN.md` 从 `00` 运行到 `11`，再运行 `12` | 是 | 是，大量 evidence/outputs/report | 每阶段成功，Golden 与最终 repair gate 均通过 | 外部审计接受 |
+| 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py'` | 否 | 测试设计上只写 temp dir | 全部通过；skip 数和原因记录 | full evidence、Golden、完整场景 |
+| Provenance 专项 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_validation_provenance` | 否 | temp Git repo | clean/full/light、dirty source、equivalent tree、artifact tamper、postflight fail-closed、README idempotency 通过 | 业务指标/SEC evidence |
+| 能力文档对齐 | `python3 tools/check_capability_contract_alignment.py`；PR 再加 `--base-ref <base>` | 否 | 否 | Git/anchor/path/symbol/tombstone/request-history 机械规则通过 | claim 语义 |
+| 静态扩展性 | `python3 tools/check_no_company_literals.py` | 否 | 覆盖 scalability audit | 无禁止 identity literal | 指标正确性 |
+| Golden | `python3 scripts/10_run_golden_assertions.py` | full 可能联网 | 覆盖 Golden，可能追加 evidence/log | exact assertion set 唯一且全 PASS | repair/provenance/外部验收 |
+| Repair gate | `python3 scripts/12_validate_repair.py` | 否 | 覆盖 validation/audit、manifest、report、provenance | 原有 full/light terminal 条件通过，且 sidecar publication/self-check 成功 | live 采集、外部接受 |
+| Snapshot 复核 | `python3 tools/check_validation_snapshot.py` | 否 | 否 | source closure clean/等价；artifact key set/hash/size 匹配 | 重新运行 Golden/repair |
+| Report build | `python3 scripts/11_build_report.py` | 条件式 | 覆盖多个 outputs、manifest、report、README；删除旧 sidecar | 命令完成只证明报告构建完成 | 独立 stage 12 |
+| Live smoke | `python3 scripts/00_smoke_test_sec_access.py` | 是 | request log/raw response | 官方 SEC 请求满足脚本判据 | 后续指标与验证 |
+| 完整场景 | 按 README 执行 00–11，再执行 12 和 checker | 是 | 大量 artifact | 每阶段成功；Golden/repair/provenance 全通过 | 外部审计接受 |
 
 ## 4. 快速回归覆盖
 
-当前 `tests/test_sec_pipeline_validation.py` 覆盖：
+`tests/test_sec_pipeline_validation.py` 当前覆盖的主要边界包括：
 
-- `LIGHT_REVIEW_MODE` 与 `WORKSPACE_INCOMPLETE` 的工作区形状和 marker 行为。
-- light snapshot、fixture 与 metrics matrix 篡改检测。
-- metrics matrix 的配置派生 `(company, metric_id)` unique exact set，以及 coverage 与 matrix exact key set 对齐；删一补重复、删一补未知和 coverage 缩集均不能 PASS。
-- full Golden 的配置/fixture expected assertion exact set、唯一性与删行/增行检测；stratified audit 的五层 deterministic exact set、唯一性与缩集检测。
-- 8-K 从 manifest 验证后的有序 request ledger 取得 request-bound base/supplement submissions bytes（当前 bytes 必须匹配同 URL/document 的最新成功 200 完整身份），推导 FY inventory，再从 raw hdr/primary bytes 重放 item，并与 `events.csv` 做 row-multiset exact set；删除 filing/event、重复 item、回滚到旧成功 submissions 后同步缩减 inventory/events、修改未登记工作副本、删除 supplement、正向 count/accession 或其他确定性 metric 字段漂移、删除 component evidence，以及把真实命中伪装成零均不能 PASS。filing-bound raw 文档出现冲突成功 bodies 也必须失败。hdr 无 item时的 primary fallback、primary-only 成功路径与两者都无 item 的失败边界由固定 fixture 覆盖；正向事件按每个被计数组件保留独立 filing identity，零值必须保留完整 scan evidence。
-- Basel threshold 排除、actual ratio 选择与 iXBRL scale/parser route；inline namespace fixture 同时覆盖官方 DEI URI 的自定义 prefix、伪 DEI prefix 和冲突 namespace 声明 fail closed。
-- captive finance recall/exclusion 与第 11 家 financial institution fixture。
-- 10-K/A 到同期间原始 10-K full-instance fallback。
-- AST string-addition constant folding 与 I1-I8 implementation map。
-- 缺失 JPM CET1 evidence 不得形成空 failure list 或 PASS。
-- full/light 中 `NOT_EVALUATED_MISSING_EVIDENCE` 对 report verdict 的不同影响。
-- validation run manifest 的 refreshed/not-refreshed 清单、stale CSV 隔离，以及报告写入失败时不得提前暴露成功终态。
-- clone A 生成 locator、移动到不同绝对路径的 clone B 后直接执行阶段 11；clone A 的祖先目录与仓库内目录重复使用 `evidence` anchor 时，迁移必须按 hash、URL、accession、document 与 filing directory 选择唯一的当前 clone 后缀，无匹配或多匹配均 fail closed，不能简单取首个或最后一个 anchor。同一 request 的 body/header 必须来自同一个旧仓库根；body 只命中内层候选而 sidecar 只命中外层候选的混合 observation 必须由生产迁移和独立 checker 同时拒绝。已有 hash 不得被迁移重签，`..` 与 symlink 不得逃逸仓库；同名同 hash 的跨 accession 文件不得被重定位；多 source/accession 对单路径的豁免只能由明确的 `events.csv` 派生语义触发，不得根据字段数量猜测。
-- RPO claim 所需 instance fact 缺失、Golden fixture 缺失或 metrics 为空时不能 PASS。
-- 同一逻辑请求路径的多次 attempt 保留各自 content-addressed body/header；两个独立进程并发追加同一 request ledger 时不得丢行，且 manifest 必须保持有效；request-log manifest 的 JSON key/type 与 CSV 行列宽必须严格。working ledger 必须保留 Git HEAD 的完整有序前缀；runtime committed-HEAD parser 与 PR checker 都拒绝 current row 的多余/缺失单元格，checker 的 current 接受集合不得比 runtime 更宽。PR checker 还对 legacy/current base 与 HEAD 的 prefix、appended tail 逐行校验精确 shape，对 legacy base 独立规范化 portable path、hash、URL-derived accession/document，并以独立实现覆盖重复 anchor 的唯一命中与歧义拒绝；current base 比较完整 row，之后只允许合法尾部追加。重排、删行、identity 字段改写及重签不能把旧响应重新定义为最新。下游 locator、已存 response sidecar 与 URL/accession/document 联合身份继续提供反向约束；hash mismatch 显式 NOT_EVALUATED。
-- mock transport 的 response-read timeout、`IncompleteRead` 和已发请求后的 persistence failure 必须形成明确 observation；初始 URL 必须是精确官方 HTTPS origin，redirect 只保留首跳 3xx observation 而不自动请求下一跳；snapshot symlink、大小写 namespace alias、目录型文件目标、hash-prefix symlink，以及最终文件名在检查后的 symlink/hardlink 注入均不得覆盖仓库内外 victim；working/log/manifest hardlink 必须通过新 inode 替换断开，UUID transaction path 预占必须 fail closed。
-- C04 必须先检查 `target_10k`（含 10-K/A），只有本地 AuditorName 不可用时才回退同 CIK、同期间原始 10-K；已有有序候选事实时不触发 fetch。空白或纯标点名称不是事实，不同 canonical 名称冲突时不得 first-win 或联网掩盖；后续 200 material observation 覆盖同 identity 的旧 503 current row。full C04 gate 必须从 request-bound accession index 分别重建当期候选/上期 10-K 实例集；同一 filing-bound URL/document 的多个成功 bodies 必须一致，删除 derived material row 不能隐藏已有原始事实；validator 不得复用生产 metric/evidence row builder。两期事实可用时 evidence 必须保留双 raw locator；事实缺失/冲突时必须精确绑定对应 raw scan，把 locator 换成同 accession 的无关合法文档也必须失败；同步篡改完整 C04 metric 与 evidence 不能替代原始 DEI 事实重算。C04 期间起点只取同 CIK prior；没有同 CIK prior 时回退当年 1 月 1 日，不能跨 successor/predecessor CIK 拼接；生产 repair 路径必须把该期间同时写入 metric 与 evidence，不能只测试 period helper；损坏 metrics/evidence/inventory row schema 必须返回 FAIL 而非逃逸崩溃。
-- numeric OK evidence 必须同时匹配 value、unit、period、accession，并具备 SEC source、concept/section 与 extraction method。
-- capability contract 的 live alignment、repo root 必须等于实际 Git toplevel、HEAD regular blob 与工作树逐字节一致、Git replacement ref/assume-unchanged/仓库重定向环境变量不得改写证据、anchor/directive grammar、type/status 枚举、null metadata、跨 base tombstone 不复用、legacy/current request row 精确行形状、legacy→portable 独立规范化、current→current 完整字段有序前缀，以及本地 `PR_BODY.md` 隔离；嵌在父 Git 仓库、无 `.git` 的离线包、object-store symlink 或 `objects/info/alternates`/`http-alternates` 不能借用其他 checkout 的 HEAD。真实 `git worktree add` 场景中，无 alias 的登记目录必须通过；gitdir 最终 component、gitdir 中间 component 和 commondir 中间 component 任一为 symlink 时，即使 Git 本身仍能解析 HEAD，guard 与下游 source-commit / base-history 读取也必须 fail closed。
+- `LIGHT_REVIEW_MODE`、`WORKSPACE_INCOMPLETE`、marker 与五态 validation；
+- metrics matrix 配置派生 exact key set、coverage exact join、删一补重复/未知；
+- full Golden assertion exact set、stratified audit deterministic exact sample；
+- 8-K request-bound submissions/fiscal inventory/raw hdr/primary/events/component evidence 完整链；
+- mutable submissions 最新成功 200、filing-bound conflicting bodies、primary fallback 与零值 scan evidence；
+- Basel threshold 排除、actual ratio selection、iXBRL scale/sign/parser route；
+- captive finance、RPO/cRPO、第 11 家公司和 company-identity AST scanner；
+- 10-K/A 到同期间原始 10-K full-instance fallback；
+- C03 PeoTotalCompAmt、C04 current/prior AuditorName 原始重放与同 CIK period；
+- numeric evidence 对 value/unit/period/accession/source/concept/method 的完整匹配；
+- portable locator 的多 anchor、hash/URL/accession/document identity、clone relocation 与跨 root 拒绝；
+- request-log manifest key/type、CSV 精确列宽、Git HEAD/base 有序前缀、并发 publication、downstream/sidecar 反向覆盖；
+- no implicit redirect、read timeout/IncompleteRead、persistence failure observation、symlink/hardlink/UUID path 注入；
+- report/manifest publication 顺序、stale audit 隔离与 failure propagation；
+- capability contract 的 HEAD blob、working bytes、anchor/directive grammar、test symbol 和 Git workspace boundary。
 
-边界说明：
+`tests/test_validation_provenance.py` 新增独立覆盖：
 
-- `validation_package_mode()` 的 `FULL_VALIDATION` 工作区分类目前没有独立 unittest；完整模式仍依赖真实完整工作区、Golden 和 repair gate 的运行证据。
-- `FullInstanceFallbackTest` 只覆盖 10-K/A 到同期间原始 10-K 的 full-instance fallback，不得计入 package-mode coverage；它在缺少 `evidence/submissions/` 时整类 skip，必须在测试记录中保留 skip 数量与原因。
-- 依赖当前 full 工作区的 8-K 真实证据回放测试，只在 submissions 或对应 raw 8-K 材料不可用时 skip 该真实形状用例；request-bound 缩集、primary fallback 和 parser 固定 fixture 不依赖 full 工作区，不得被同步 skip。
-- 快速回归中的重复-anchor clone A/B 场景覆盖 locator 迁移、唯一身份选择、歧义拒绝、request body/header 共同旧仓库根和阶段 11 消费边界；它仍不等于真实 SEC 全批次重跑。
-- 8-K expected-event replay 与生产路径共用 item parser；固定 hdr/primary parser fixture 只锚定已支持格式，不是独立的通用 SEC 文档 oracle，因此 full gate 不单独证明所有未见格式的解析完整性。
-- 快速回归不访问网络，也不证明阶段 00-12 的完整 artifact handoff。
+- clean Git source closure + full manifest/artifact round trip；
+- source path 的 unstaged/staged/untracked dirty 拒绝；
+- source tree byte mutation 与 artifact SHA-256 mutation；
+- artifact commit/merge commit 改变 SHA、但 source-input tree 等价时 warning；strict 模式仍拒绝 commit mismatch；
+- 显式 light package 无 Git 的 `LIGHT_PACKAGE_NO_GIT` sidecar；
+- provenance postflight 失败时 manifest→FAILED、report→NO-GO；regular sidecar 删除，unsafe alias 保持不可验收；
+- generated README 的 marker-delimited route injection 幂等。
 
-## 5. Fixture 简介
+这些测试证明 provenance helper 的内容绑定，不证明 SEC 指标方法或完整 00–12 live handoff。
 
-| 路径 | 用途 |
-|---|---|
-| `tests/fixtures/sec_10_company_spike/golden_expected_values.csv` | 固定结构与数值 Golden expected |
-| `tests/fixtures/eleventh_company_smoke/` | 配置驱动的新增公司/profile 行为与去公司特例边界 |
-| `tests/fixtures/inline_scale_route/mock_inline_scale.xml` | iXBRL scale、sign 与 parser route 回归 |
-| `tests/fixtures/regression/previous_ok_status_snapshot.csv` | 已有 OK recall 的回退防护 |
+## 5. Full、light 与不完整 workspace
 
-fixture 可以包含公司身份；生产 `scripts/` 与 `tools/` 不得用公司身份触发业务分支。
+`validation_package_mode()` 的既有分类保持：
 
-## 6. FULL、LIGHT 与不完整 workspace
+1. `evidence/`、request log 和 concept inventory 形状存在时进入 `FULL_VALIDATION` 初始分类；required-input gate 继续逐项判断 domain evidence。
+2. 缺 full materials 且根目录有 `LIGHT_REVIEW_PACKAGE.marker` 时进入 `LIGHT_REVIEW_MODE`。
+3. 缺 full materials 且无 marker 时为 `WORKSPACE_INCOMPLETE`。
 
-`validation_package_mode()` 当前按工作区形状判定：
+Provenance 叠加规则：
 
-1. `evidence/`、`evidence/requests_log.csv` 和至少一个 `outputs/concept_inventory/*.csv` 存在时，进入 `FULL_VALIDATION` 形状；required-input gate 仍逐项检查核心输出和每家公司需要的 instance/ecd evidence。
-2. 上述材料有缺失且根目录存在 `LIGHT_REVIEW_PACKAGE.marker` 时，返回 `LIGHT_REVIEW_MODE`。
-3. 材料有缺失且没有 marker 时，返回 `WORKSPACE_INCOMPLETE`。
+- full stage 12 必须在 Git checkout 中捕获 clean source closure；
+- light 无 Git 时，对随包可见 source files 计算 deterministic tree digest并标为 `LIGHT_PACKAGE_NO_GIT`；
+- workspace incomplete 或原有 gate 失败不发布 success sidecar；
+- light sidecar只证明随包 bytes，不能补足 Git history 或 raw evidence。
 
-重要限制：
+## 6. Snapshot provenance 测试不变量
 
-- `FULL_VALIDATION` 只是初始形状分类，不证明每个 raw evidence 文件都齐全；缺少关键 domain evidence 必须写成 `NOT_EVALUATED_MISSING_EVIDENCE` 并阻止正常 GO。
-- 完整工作区优先于 marker；不能仅靠 marker 强制降为 light。
-- repair validation 的 status 只允许 `PASS`、`FAIL`、`SKIPPED_LIGHT_PACKAGE`、`NOT_EVALUATED_MISSING_EVIDENCE`、`WORKSPACE_INCOMPLETE`。
-- light 中依赖 raw evidence 或 concept inventory 的检查必须显示 `SKIPPED_LIGHT_PACKAGE` 或 `NOT_EVALUATED_MISSING_EVIDENCE`，manifest result 只能是带 caveat 的受限通过。
-- helper 缺少验证所需 evidence 时不得用空 failures 形成 PASS。
-- 未声明的部分工作区必须硬失败，不能自动降级为 light。
+### 6.1 Source closure
+
+当前 policy 覆盖：`scripts/`、`tools/`、`config/`、`tests/`、能力契约、指标定义、AGENTS/SOP/TESTING/architecture/interact、business guide 和两个稳定概念/provenance 文档。
+
+测试必须证明：
+
+- path set 来自 `git ls-files`，不是目录当前剩余文件自证；
+- unstaged、staged 和 untracked source path 均阻断；
+- symlink、missing/non-regular source 失败；
+- digest 对排序后的 path、byte length 与 per-file SHA-256 records 计算；
+- stage 12 运行前后 HEAD、tree digest、file count 与 checkout status 不变。
+
+### 6.2 Artifact closure
+
+full 至少绑定 manifest、report、README、Golden、metrics/evidence/coverage/events、request log/manifest 与 refreshed validation artifacts。light 绑定随包集合。
+
+测试必须证明：
+
+- sidecar artifact key set 与 manifest 推导 expected set 完全一致；
+- 缺 key、多余 key、非法 digest schema、size mismatch 和 SHA-256 mismatch 均失败；
+- manifest run_id/mode/result/source_commit 与 sidecar identity 一致；
+- sidecar 本身不自哈希，避免循环 identity。
+
+### 6.3 Commit 语义
+
+- 同一次 stage 12 publication：HEAD 必须完全相同；
+- 后续 checker：commit 相同为直接通过；commit 不同但完整 source tree 等价只产生 warning；tree 不同硬失败；
+- 不允许仅凭 `manifest.source_commit` 的 `+dirty` 后缀推断 source 安全或不安全。
 
 ## 7. 写入副作用
 
-### 7.1 静态扩展性 gate
+### 7.1 Stage 11
 
-`tools/check_no_company_literals.py` 会覆盖 `outputs/scalability_audit.csv`。运行后必须用 `git status --short` 检查是否产生非预期 diff。
+- 首先删除可安全识别的旧 regular `outputs/validation_snapshot_provenance.json`；alias/非 regular 路径在修改新 artifact 前失败；
+- 执行 portable migration、bounded repair、coverage/audit/manifest/report/README；
+- 可能条件式追加 C04 SEC evidence/request rows；
+- 最后幂等注入 README role routes；
+- 不发布 terminal snapshot provenance。
 
-### 7.2 Golden
+### 7.2 Stage 12
 
-full 模式会通过 G2 访问 SEC companyconcept，可能更新 `evidence/requests_log.csv` 和 raw response，并覆盖：
+- 首先删除可安全识别的旧 regular sidecar；alias/非 regular 路径直接失败；
+- 在运行原有 gate 前捕获 clean source snapshot；
+- 原有逻辑写 implementation/spec/stub/stratified/scalability/repair、manifest 和报告；
+- 只有 full/PASSED 或 light/PASSED_WITH_CAVEATS 才计算并发布 artifact digests；
+- sidecar 原子写入后必须重新读取和自验；
+- postflight 失败时删除 regular sidecar；unsafe alias 保持不可验收；manifest 改为 FAILED、报告改为 NO-GO，并非零退出。
 
-- `outputs/golden_results.csv`
-- `outputs/golden_candidates.csv`
+### 7.3 Snapshot checker
 
-light 模式只做随包 snapshot integrity，不能被记录成 full Golden 重算。
+只读。它不会修复、重签或更新任何 artifact；失败后必须回到 source/run 重新生成，不能手工改 expected digest。
 
-### 7.3 Repair gate
+### 7.4 其他现有副作用
 
-阶段 12 在任何 validation 写入前创建 `outputs/validation_run_manifest.json`，然后逐项登记 `refreshed_artifacts`。它总会先重建 implementation map 与 spec audit；full 模式还写 stub-period sidecar。FULL/LIGHT 工作区继续重建 stratified/scalability audit 与 repair validation。若工作区为 `WORKSPACE_INCOMPLETE`，它只写 repair validation 的失败行，不会刷新 stratified/scalability audit；此时已有文件必须留在 `not_refreshed_artifacts`，不得作为本次运行证据。阶段 12 先用 projected terminal manifest 构建并写入报告，报告持久化成功后才把 manifest 从 `IN_PROGRESS` 写成终态；报告写入失败必须保留 `IN_PROGRESS`。它是 gate，但不是只读检查。
-
-### 7.4 Report build
-
-阶段 11 会先把 locator-bearing artifact 迁移为 `source_url`、`repo_relative_path`、`content_sha256`、`accession`、`document_name`；对 request log，只在已有 exact-set manifest 验证成功后执行常规 normalization，缺 manifest 的 legacy schema 必须离开常规阶段做显式一次性 bootstrap；随后执行 bounded P0 repair，生成 coverage、crosscheck、异常清单、审计、run manifest、最终报告与 `README_RUN.md`。bounded repair primarily uses local artifacts；C04 repair 先检查 filed target（含 amendment），再遍历同期间原始 10-K fallback，只有有序本地候选仍无事实时才最小补抓官方 SEC material，空白/冲突事实必须降级；C04 期间不跨 CIK。full C04 gate 从 request-bound accession index 分别重建当期候选与上期 10-K 实例集，重放两期官方 DEI `AuditorName`，不以可缩减的 derived material/concept inventory 定义原始证据集。8-K repair 复用阶段 07 的 event→metric/evidence 实现；full validation 另从 request-bound submissions 与 raw filing 重放 expected set。submissions 必须匹配有序 ledger 中最新成功 200；filing-bound raw 文档若存在冲突成功 bodies 则失败。新请求的每次有响应体 attempt 使用 content-addressed immutable body/header；`evidence/requests_log_manifest.json` 记录整份日志的 row count 与 SHA-256，validation 要求 working ledger 保留 Git HEAD 有序前缀，PR checker 要求 base/HEAD 的每条 current/legacy row 形状严格且 HEAD 保留 base 的 migration-neutral 有序前缀，两层都只允许合法尾部追加；下游 locator 与已存 response sidecar 提供反向覆盖。任一不一致都不能 PASS。该 HEAD 基线只在 Git checkout 中存在；无 `.git` 的离线包必须显示 `NOT_EVALUATED_MISSING_EVIDENCE:request_log_history_baseline_unavailable`，FULL validation 因此阻断，LIGHT 本就不执行该 full gate。历史 request row 的 hash 若已无法解析到原 bytes，full gate 也必须写成 NOT_EVALUATED。该分支会追加请求日志及 manifest、raw response、headers/hash、accession material inventory 和 instance inventory；所以阶段 11 不是保证离线的命令。内部 deferred validation 只有在报告和 README 写入成功后才发布 manifest 终态，且不能替代独立阶段 12。
+- `check_no_company_literals.py` 覆盖 `outputs/scalability_audit.csv`；
+- full Golden 可能访问 companyconcept、追加 request log/raw evidence，并覆盖 Golden outputs；
+- stage 11/12 不是只读检查；执行后必须检查 `git status --short`。
 
 ## 8. 按变更类型选择测试
 
 | 变更类型 | 最低证据 | 追加证据 |
 |---|---|---|
-| 纯工作流文档 | `python3 tools/check_capability_contract_alignment.py`、JSON 解析与 `git diff --check` | 只有文档声明引用了代码行为时，运行相关快速回归 |
-| 普通 Python 逻辑 | 快速回归 | scalability gate；涉及指标/验证时再跑 Golden 与 repair gate |
-| 公司、CIK、profile 或 extractor 配置 | 快速回归、第 11 家 fixture、scalability gate | 在隔离 checkout 跑受影响阶段、Golden 与 repair gate |
-| parser、期间、证据或 CSV schema | 快速回归 + 受影响阶段 | 隔离 checkout 中完整场景、Golden、repair gate 与产物 diff |
-| validation / report verdict | 快速回归 + Golden + repair gate | 验证失败传播与报告内容，阶段 11 后仍显式跑 12 |
-| SEC HTTP 客户端或 URL | 快速回归中的本地 persistence failure/path、read-timeout、symlink 与 request-log exact-set 测试 | 有效身份下的 live smoke 与 retry/backoff mock，再按影响范围跑场景 |
-| 仅报告文案 | 生成器相关检查，不能手改生成报告替代代码 | 若运行阶段 11，必须随后运行阶段 12 |
+| 纯工作流文档 | JSON 解析、capability alignment、`git diff --check` | 文档引用具体代码行为时跑相关快速回归 |
+| Provenance source path/schema | provenance 专项 + 快速回归 | 临时 Git repo 负例矩阵、stage wrapper scenario |
+| 普通 Python 逻辑 | 快速回归 | scalability；涉及指标/validation 再跑 Golden/repair/checker |
+| 公司/CIK/profile/extractor 配置 | 快速回归、第 11 家 fixture、scalability | 隔离 checkout 受影响阶段、Golden、repair、checker |
+| parser/期间/evidence/CSV schema | 快速回归 + 受影响阶段 | 隔离完整场景、artifact diff、provenance |
+| verdict/manifest/report | 快速回归 + repair + provenance | failure propagation、postflight fail-closed、stage 11 后显式 stage 12 |
+| HTTP client/URL | persistence/timeout/redirect/alias/request-log tests | 有效身份 live smoke 与场景 |
+| 仅报告/README 文案 | generator或post-processor tests | 若跑 stage 11，随后跑 stage 12/checker |
 
-纯文档变更不强制重跑联网阶段 00-11；不得为了“全绿”无谓覆盖已审计的 evidence 与 outputs。
+纯文档变更不强制联网重跑 00–11；不得为了“全绿”无谓覆盖已审计 evidence。但 source closure 内文档变更会使旧 snapshot checker 失败，这是预期行为：更新验收契约后需要新的 provenance 才能声明当前 source 等价。
 
 ## 9. 推荐执行顺序
 
-### 9.1 普通代码改动
+### 普通代码改动
 
 1. 快速回归。
-2. 静态扩展性 gate。
-3. 受影响的 Golden 或阶段场景。
-4. 最终 repair gate。
-5. 检查 `git status`，确认生成 artifact 与预期一致。
+2. provenance 专项（涉及 source/artifact/terminal publication 时必跑）。
+3. capability alignment 和 scalability gate。
+4. 受影响 Golden/阶段场景。
+5. stage 12 repair gate。
+6. `tools/check_validation_snapshot.py`。
+7. 检查 `git status` 与 artifact diff。
 
-### 9.2 数据采集、阶段 handoff 或 schema 改动
+### 数据采集、阶段 handoff 或 schema 改动
 
-1. 创建干净、隔离的 checkout。
-2. 确认有效 SEC 身份配置与目标 scope。
-3. 按 `README_RUN.md` 执行完整阶段。
-4. 显式执行阶段 12。
-5. 核对 metrics/evidence/coverage/report、请求日志与 artifact diff。
+1. 创建干净隔离 checkout。
+2. 确认有效 SEC identity 和 scope。
+3. 按 README 完整执行 00–11。
+4. 显式执行 stage 12。
+5. 运行 snapshot checker。
+6. 核对 metrics/evidence/coverage/report/request/provenance diff。
 
-### 9.3 纯工作流文档同步
+### 纯文档同步
 
-1. 验证 `capability_contract.json` 是 UTF-8 合法 JSON。
-2. 运行 `python3 tools/check_capability_contract_alignment.py`；PR 场景再以实际 base 运行 `python3 tools/check_capability_contract_alignment.py --base-ref <base>`，机械检查 HEAD regular-file/blob 与工作树 bytes 一致性、anchor、必填 metadata、test symbol、tombstone 历史，以及 base/HEAD request row 的严格行形状和有序前缀。
-3. 运行与所引用行为相关的快速回归。
-4. 运行固定上游对应的 workflow docs 机械检查。
-5. 记录机械检查只证明最终文件状态，不证明分析、审计或测试历史。
+1. 验证 JSON 和 capability anchors。
+2. 运行 capability checker；PR 场景加真实 base。
+3. 运行 provenance 专项测试，因为 source closure policy/文档引用可能变化。
+4. 运行被引用行为的相关快速回归。
+5. 记录没有执行 live/full 的原因和影响。
 
 ## 10. 失败定位
 
-- unittest：从失败 test method 回到对应 helper 与 fixture；不要用改 expected 的方式消除真实回归。
-- Golden：查看 `outputs/golden_results.csv` 的 expected、actual、evidence path 与 notes。
-- Repair：先读 `outputs/validation_run_manifest.json`，只打开 `refreshed_artifacts` 中的 validation/audit 文件；再查看 `outputs/repair_validation_results.csv` 的 `check_id`、status 与 details。
-- 指标/证据不一致：先核对 `metrics_matrix.csv` 是否恰好包含 registry/profile/applicability contract 推导的 unique `(company, metric_id)` set，再与 `metric_evidence.csv` join；8-K 指标还要从 request ledger→submissions bytes→inventory→raw filing bytes→events→metric/component evidence 顺向核对。
-- coverage：先核对 `coverage_matrix.csv` 的 unique key set 是否与 metrics matrix 完全一致，再检查 status、has_evidence、needs_review 与 reason。
-- live 请求：在阶段顺序运行前提下，先核对 `evidence/requests_log_manifest.json` 的整表 row count/hash、Git HEAD/base 有序前缀、下游 locator 与已存 sidecar 反向覆盖，再检查 `evidence/requests_log.csv` 的 URL、status、User-Agent、retry_attempt、error，以及 body/header locator 与 `content_sha256`；完整性不一致是 FAIL，历史 bytes mismatch 只能是 NOT_EVALUATED。同一 repository 的 log publication 在 cooperating threads / POSIX processes 间串行化，但限速仍是 per-client，且不承诺网络文件系统锁语义。
-- light 包：先确认 marker、manifest mode/result 与缺失材料，禁止把 skipped 或 NOT_EVALUATED 当 PASS。
+- provenance checker：先看 missing sidecar/schema/identity；再看 dirty source/tree mismatch；最后定位具体 artifact path 的 size/SHA mismatch。
+- unittest：从失败 method 回到 helper/fixture；不得改 expected 掩盖回归。
+- Golden：看 assertion expected/actual/evidence path/notes。
+- Repair：先读 manifest，只打开本轮 refreshed audit；再看 `check_id/status/details`。
+- 指标/evidence：先核对 matrix exact key set，再 join evidence；8-K 继续顺向检查 ledger→submissions→inventory→raw→events→components。
+- request：先验证 request-log manifest、Git prefix、downstream/sidecar 反向覆盖，再看 URL/status/UA/retry/error/body/header/hash。
+- light：确认 marker、manifest mode/result、sidecar checkout status 和缺失材料；禁止把 skipped/NOT_EVALUATED 写 PASS。
 
 ## 11. 新增或修改测试
 
-- 行为性 Bug 必须先有可复现的最小回归。
-- 只有跨阶段累计状态、阶段间 artifact 或固定顺序才能暴露的问题，必须增加 scenario 级回归；单 helper 测试不能替代。
-- 测试新增或职责改变时更新本文件的覆盖与 fixture 简介。
-- 不为薄 wrapper 重复写同构测试，不用正则统计源码中的指标/检查数量，不自动测试教学文案风格。
+- 行为 Bug 必须先有最小复现。
+- 跨阶段累计状态、artifact handoff 或 publication 顺序问题必须有 scenario 级回归。
+- source closure 新增路径时至少加入：clean、dirty、untracked、tree-equivalent commit 和 byte-mismatch 用例。
+- artifact closure 新增路径时至少加入：missing、unexpected、size/hash tamper 用例。
+- 不为薄 wrapper 重复写同构测试；wrapper 只测试它新增的 invalidation、preflight、postflight 和 failure propagation。
+- 测试职责改变时同步本文件和 capability contract。
 
 ## 12. 已知高价值缺口
 
-- `validation_package_mode()` 的 `FULL_VALIDATION` shape 缺少临时工作区单元测试。
-- mock transport 已覆盖精确官方 origin、禁用自动 redirect、response-read timeout、请求前 working/root/namespace alias preflight，以及响应后动态 snapshot/persistence failure observation；尚未覆盖 User-Agent 与完整 retry/backoff 矩阵。
-- immutable snapshot 防止预存或最终文件名竞态注入的 symlink/hardlink，但假设一次调用期间父目录 namespace 稳定；它不是针对恶意同 UID 进程的 WORM 存储。manifest 加 Git HEAD 只能约束已提交历史和有 sidecar 的当前成功响应；尚未提交、无 body 的 `status_code=0` 行若被人工删除并重新签名，没有外部锚可恢复。
-- Git workspace 回归证明检查时已存在的 gitdir/commondir lexical path alias 会被拒绝；guard 与后续 Git CLI 不是原子系统调用，尚未覆盖恶意同 UID 进程在两者之间主动切换 namespace 的 TOCTOU。
-- 尚无使用录制 SEC fixture、临时工作区贯穿阶段 00-12 artifact 契约的离线 scenario test。
+- `validation_package_mode()` 的 `FULL_VALIDATION` shape 仍缺少独立临时工作区单元测试。
+- provenance helper 已有独立 temp Git tests，但尚无录制 SEC fixture 驱动的 stage 00–12 离线 scenario，不能证明完整 handoff。
+- 当前 source closure 是显式 path policy；尚无自动检查证明所有未来运行/验收输入都已登记，新增关键路径依赖 code review。
+- sidecar 是本地自证明，不是外部签名、透明日志或 WORM；尚无组织级发布签名/attestation。
+- postflight fail-closed 会重写 manifest/report，但不回滚 stage 12 已写的其他 artifact。
+- Git guard 与后续 Git CLI 非原子，仍有主动同 UID namespace TOCTOU 边界。
+- mock transport 尚未覆盖 User-Agent 与完整 retry/backoff 矩阵。
+- 8-K expected replay 与生产路径共用 item parser，不是未见格式的独立 oracle。
+- 仓库无 CI；所有双解释器、full scenario、capability alignment 和 provenance 检查依赖人工执行。
