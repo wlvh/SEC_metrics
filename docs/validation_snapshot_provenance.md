@@ -48,7 +48,6 @@ architecture.md
 interact.md
 docs/business_user_guide.md
 docs/validation_snapshot_provenance.md
-docs/concepts/sec_xbrl_and_evidence_model.md
 ```
 
 每个文件以如下 record 进入整树 SHA-256：
@@ -58,6 +57,8 @@ repo_relative_path NUL byte_length NUL content_sha256 LF
 ```
 
 路径按字典序排序。任何 tracked modification、staged modification、删除或 closure 内 untracked 文件，都会使 stage 12 在运行主 gate 前失败。symlink 或非 regular file 也失败。
+
+无 Git 的显式 light package 不能通过删掉某个 singleton 文件来缩小 closure。上面逐项列出的文件都必须存在，并且必须是非 symlink regular file；缺失任一项即失败。light package 仍可按随包实际内容枚举 `scripts/`、`tools/`、`config/` 和 `tests/`，但不能省略能力契约、指标定义或核心治理/验收文档。
 
 生成的 `evidence/`、`outputs/`、报告和 README 不进入 source tree；它们由 artifact closure 单独绑定。这样 stage 00–11 的合法生成副作用不会被误判为 source dirty。
 

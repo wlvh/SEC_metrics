@@ -2,91 +2,111 @@
 
 ## 1. 触发条件
 
-只有用户明确要求提交、推送或创建 PR 时才执行本流程。普通分析、测试或本地修改不自动获得发布权限。默认分支是 `main`，向 `main` 合并使用 PR。
+只有用户明确要求提交、推送或创建 PR 时，才执行本流程。普通本地修改、分析、测试或工作流文档同步不自动获得 commit、push 或 PR 权限。
+
+本仓库默认分支是 `main`。向 `main` 合并代码时使用 PR；未收到发布请求时保留本地修改并报告状态。
 
 ## 2. 分支与提交策略
 
 - 发布分支不得是 `main`，PR base 使用 `main`。
-- 未有其他约定时，建议一个 PR 保持一个有意义的 commit；连接器限制导致多个机械提交时，PR body 必须如实说明。
-- 已发布分支只能使用 `--force-with-lease`，禁止裸 `--force`。
-- 不得覆盖、重置或混入用户已有无关工作区修改。
-- 默认创建 draft PR；只有用户明确要求 ready，或 maintainer 完成所有发布级验证后，才标记 ready for review。
+- 未有其他团队约定时，建议一个 PR 保持一个有意义的 commit；这是一项默认建议，不是不可豁免的历史事实。
+- 已存在 PR 的修复可在更新 PR body 的 Review / 修复记录后使用 `git commit --amend`。
+- 重写已发布分支时只允许 `git push --force-with-lease`，禁止裸 `--force`。
+- 不得覆盖或混入用户已有的无关工作区修改。
 
 ## 3. PR body 文件
 
-`.github/pull_request_template.md` 是长期模板。`PR_BODY.md` 是被 `.gitignore` 保护的本地草稿，不得提交。PR body 只能记录已完成事实，文件清单来自真实 diff，不包含历史草稿或未落地计划。
+`.github/pull_request_template.md` 是长期模板。`PR_BODY.md` 是由模板生成的本地临时草稿，受 `.gitignore` 保护，不得提交仓库。
+
+仅在发布流程中执行：
+
+```bash
+cp .github/pull_request_template.md PR_BODY.md
+```
+
+PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自真实 diff，不得包含历史草稿、未落地计划或本地未提交的其他工作。
 
 ## 4. 变更范围核对
 
 - [ ] 用户已明确要求发布。
 - [ ] 当前分支不是 `main`，目标 base 是 `main`。
-- [ ] 已确认 upstream/base，并运行真实 `git diff --name-status <base>...HEAD`。
-- [ ] 已从真实 Git toplevel 运行 `python3 tools/check_capability_contract_alignment.py --base-ref <base>`。
-- [ ] PR body 文件清单与 diff 双向一致。
-- [ ] `git status --short` 没有混入范围外修改或未跟踪文件。
-- [ ] 新增、删除、重命名、历史文档降级和生成 artifact 变化已单独说明。
+- [ ] 已确认 upstream/base，并运行真实的 `git diff --name-only <base>...HEAD`。
+- [ ] 已从实际 Git toplevel 以同一 base 运行 `python3 tools/check_capability_contract_alignment.py --base-ref <base>`；清除仓库重定向环境变量并禁用 replacement refs 后，证据文件必须是 HEAD regular blob、与工作树逐字节一致，anchor/directive grammar 与 entry type/status 必须合法，deprecated tombstone 不得删除/复用；base/HEAD 的每条 legacy/current request row 必须与声明 schema 精确同宽，legacy row 必须独立规范化为 portable 完整字段，current row 必须逐字段保留 base 有序前缀且只能追加合法 tail row。
+- [ ] PR body 的文件清单与 diff 双向一致：不遗漏，也不多写。
+- [ ] 已检查 `git status --short`，没有混入本 PR 范围外的修改或未跟踪文件。
+- [ ] 删除、重命名和生成 artifact 的变化已单独说明。
 
 ## 5. 文档影响
 
-### 架构、能力与用户行为
+### 5.1 架构
 
-- [ ] 模块、wrapper、调用链、数据流、状态、错误、依赖、配置、source closure、artifact publication 或扩展点变化已更新 `architecture.md`。
-- [ ] 能力/行为变化先更新或确认 `capability_contract.json`，再同步 `interact.md` 和 business guide。
-- [ ] 新的“必须/不得/能做/不能做”声明使用稳定 anchor；自动化行为登记真实 `file::symbol`。
-- [ ] 业务指南只解释契约与用户行为，不独立发明功能。
+- [ ] 若模块、调用链、数据流、状态、错误、依赖、配置、terminal publication 或 provenance 变化，已更新 `architecture.md`。
+- [ ] 若无需更新，已在 PR body 中说明为什么没有架构影响。
 
-### 文件地图、SOP 与历史文档
+### 5.2 能力契约与用户文档
 
-- [ ] 核心文件职责和阅读路由已同步 `AGENTS.md`。
-- [ ] 测试层级、fixture、命令、副作用和高价值缺口已同步 `TESTING.md`。
-- [ ] `SOP.md` 只保留动作、权威引用和验收。
-- [ ] 竞争权威的旧文档已明确标记 active/concept/history，不再保存动态“当前结论”。
-- [ ] 生成型 README/report 行为改在 generator 或稳定 post-processor，不只手改生成文件。
+- [ ] 修改能力边界时，先更新或确认 `capability_contract.json`，再检查 `interact.md` 与 `docs/business_user_guide.md`。
+- [ ] 修改用户可观察行为时，先更新或确认 `interact.md`，再检查业务指南。
+- [ ] 新增“能做 / 不能做 / 必须 / 不得”的声明时，使用稳定 `anchor_id`；Markdown 不引用 JSON path 或数组位置。
+- [ ] 新增 agent 行为承诺时，登记真实 test anchor；未自动化时使用 `test_anchor: null` 并说明原因。
+- [ ] 业务指南只教学性解释能力契约和可观察行为，不独立发明功能。
+
+### 5.3 文件地图与测试说明
+
+- [ ] 核心配置、模块、业务逻辑或标准流程变化已同步 `AGENTS.md` 文件简介或 SOP 清单。
+- [ ] `AGENTS.md` 仍把 `SOP.md` 作为标准流程的一级导航，没有用专项文档列表替代 SOP 路由。
+- [ ] 测试、fixture、命令、副作用或分层变化已同步 `TESTING.md`。
+- [ ] `SOP.md` 保持已有编号和导航职责，只保留动作、权威引用和验收，不复制易漂移的脚本清单或测试细节。
 
 ## 6. 测试与验证证据
 
-对每条实际执行命令，PR body 记录：原样命令、PASS/FAIL/SKIP/受限结果、证据路径、未运行项及原因。
+测试策略以 `TESTING.md` 为唯一权威。对每条实际执行的命令，PR body 必须记录：
 
-- [ ] 已按 `TESTING.md` 选择最小且充分层级，没有用 unittest 替代 Golden、repair gate、snapshot checker 或完整场景。
-- [ ] 涉及 source/artifact/terminal publication 时运行 `tests/test_validation_provenance.py`。
-- [ ] 涉及 capability contract 或 Markdown anchor 时运行 alignment checker。
-- [ ] light 的 skipped、NOT_EVALUATED 和 `LIGHT_PACKAGE_NO_GIT` 没有写成 full validation。
-- [ ] 会覆盖 `evidence/`、`outputs/`、README 或报告的命令在干净隔离 checkout 中执行。
-- [ ] 若运行 stage 11，随后按适用范围单独运行 stage 12。
-- [ ] 若 stage 12 返回零，随后运行 `python3 tools/check_validation_snapshot.py`；未运行时不能声称当前 checkout 已完成 full validation。
-- [ ] source closure 变更覆盖 clean、dirty、untracked、equivalent-commit 和 tree mismatch。
-- [ ] artifact closure 变更覆盖 missing、unexpected、size/hash tamper。
-- [ ] 失败未通过改 expected、删除负例、放宽断言、重签旧 artifact 或静默跳过掩盖。
+- 原样命令。
+- PASS / FAIL / SKIP 或受限结果。
+- 证据或 artifact 路径。
+- 未运行的适用测试及原因。
 
-## 7. 用户、数据与 provenance 影响
+检查项：
 
-- [ ] 用户可见入口、status、退出码、manifest/provenance/report 关系已对照 `interact.md`。
-- [ ] 指标口径变化已对照指标定义，并核对 evidence 与 Golden。
-- [ ] SEC 请求仍统一经过 `SecHttpClient`；request-log manifest 的 key/type/row schema/count/hash 完整。
-- [ ] 公司/CIK/profile 扩展没有引入生产 identity branch。
-- [ ] 没有把历史绝对路径当跨机器权威地址。
-- [ ] 新一轮 stage 11/12 会使旧 provenance 失效，不会留下新报告 + 旧 success proof。
-- [ ] full success 绑定 clean source-input tree 和关键 artifact SHA-256/size；commit SHA 变化只在完整 source tree 等价时允许 warning。
+- [ ] 已按变更类型选择测试层级，没有用 unittest 替代 Golden、repair gate、snapshot checker 或完整场景。
+- [ ] light review 的 skipped、`LIGHT_PACKAGE_NO_GIT` 与受限状态没有写成 full validation。
+- [ ] 运行会覆盖 `evidence/`、`outputs/` 或报告的命令前使用了干净、隔离的 checkout。
+- [ ] 若运行 `scripts/11_build_report.py`，已按适用范围单独运行最终 `scripts/12_validate_repair.py` 和 `python3 tools/check_validation_snapshot.py`。
+- [ ] 修改 source/artifact provenance 时，已运行 dirty/staged/untracked、显式 source 缺失、tree/commit mismatch、artifact key/hash/size tamper、unsafe alias 与 postflight failure 负例。
+- [ ] 测试失败未通过修改 expected、放宽断言、重签旧证据或静默跳过来掩盖。
+- [ ] 对修复过的完整性不变量已运行负例矩阵，而不只是原始单点复现：删行/重复/多余集合、CSV 多余/缺失单元格、prefix/appended tail、跨 accession/document、transport failure path 与报告写入失败按适用范围覆盖。
+
+## 7. 用户与数据影响
+
+- [ ] 用户可见入口、输出字段、status、默认行为、错误提示或排序变化已对照 `interact.md` 验收。
+- [ ] 指标口径变化已对照 `02_指标定义_SEC_10公司单年指标.md`，并核对 evidence 与 Golden。
+- [ ] SEC 请求变化仍只走 `SecHttpClient`，保留 URL、User-Agent、状态、retry、headers/hash 与请求日志；`evidence/requests_log_manifest.json` 的 key/type、CSV 行 schema、整表 row count/hash 均严格一致。
+- [ ] 公司/CIK/profile 扩展没有引入生产 identity branch，并已运行对应扩展性证据。
+- [ ] 没有把历史 absolute `local_path` 当作跨机器权威地址。
+- [ ] 没有把成功 manifest、报告存在或 commit 字符串相等单独写成 snapshot 验收证明。
 
 ## 8. 发布声明约束
 
-当前仓库没有 CI workflow、生产部署或自动调度。除非本 PR 实际增加并验证这些能力，PR body 必须写“不适用/未实现”。流水线 GO、snapshot provenance 和 checker PASS 都不等于外部审计接受或生产发布许可。
+当前仓库没有 CI workflow、生产部署或自动调度实现。除非本 PR 的代码、配置和运行证据确实增加并验证了这些能力，否则 PR body 必须写“不适用”或“未实现”，不得声称 CI、部署、调度、前端、API 或 vNext 切换已经完成。
+
+流水线 GO 类自判与仓库内 snapshot provenance 都不等于外部审计接受或生产发布许可。
 
 ## 9. 创建 PR
 
-发布能力可用且已认证时，推送 feature branch 并创建 draft PR。CLI 示例：
+只有 GitHub CLI/发布能力可用且已认证时，才执行发布命令；不可用时报告阻塞，不伪造 URL 或成功状态。
 
 ```bash
-gh pr create --draft --title "<标题>" --body-file PR_BODY.md --head <feature-branch> --base main
+gh pr create --title "<标题>" --body-file PR_BODY.md --head <feature-branch> --base main
 ```
 
-连接器创建时同样使用真实 repository、head branch、base branch 和 draft 状态。成功后返回真实 PR URL。
+成功后返回真实 PR URL，并明确 draft/ready 状态。用户未要求 draft 时，不自行创建 draft；用户未要求 PR 时，本节完全不执行。
 
 ## 10. 最终核对
 
-- [ ] Review / 修复记录包含每轮发现、判断、处理与证据。
-- [ ] 同类返工记录原验收缺口、当前不变量、反例矩阵和原样命令。
-- [ ] 已知限制、未运行测试、回滚方式与当前 patch 一致。
-- [ ] PR body 没有未来计划冒充完成事实。
+- [ ] Review / 修复记录包含每轮真实发现、判断、处理结果与证据。
+- [ ] 曾在较早轮次声明“已修复”的同类问题，已明确记录原验收缺口、当前不变量、反例矩阵和可原样执行的命令，避免以新点例覆盖旧失实声明。
+- [ ] 已知限制、未解决决策和回滚方式与当前 patch 一致。
+- [ ] PR body 没有未执行命令的虚假 PASS，也没有未来计划冒充完成事实。
 - [ ] `PR_BODY.md` 未进入 diff。
-- [ ] branch、base、commit、push 与 PR URL 来自实时结果。
+- [ ] 当前分支、base、commit、push 与 PR URL 均来自实时命令结果。
