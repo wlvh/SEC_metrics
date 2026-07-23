@@ -2,18 +2,32 @@
 
 ## Executive Summary
 
-- Verdict: **GO WITH CAVEATS**。
-- SEC 请求总数：858；状态分布：`{"403":5,"200":817,"404":34,"0":2}`。
-- 指标格子：230；有值：161；空值：69；validation rows：75。
+- Verdict: **NO-GO**。
+- SEC 请求总数：859；状态分布：`{"403":5,"200":817,"404":35,"0":2}`。
+- 指标格子：230；有值：161；空值：69；validation rows：80。
 - OK/TEXT 类：181；待复核/不可得类：49。
+- Validation 状态分布：`{"PASS":78,"NOT_EVALUATED_MISSING_EVIDENCE":1,"FAIL":1}`。
 - 本次只使用 SEC 官方响应和本地 evidence 文件；未使用第三方数据或模型记忆补数。
-- Repair validation 若有 P0 FAIL，verdict 强制为 NO-GO。
+- Repair validation 若有 P0 FAIL、WORKSPACE_INCOMPLETE，或 full 关键检查 NOT_EVALUATED，verdict 强制为 NO-GO。
 - Stratified audit 任一 FAIL 会进入 repair validation gate，不能被报告静默吞掉。
+
+## Validation run manifest
+
+- run_id: `3d96e1f0-2026-4fb5-be20-bf7b6d054119`
+- source_commit: `796895e8f5ae4510819b67588d52bdc6dbb1cae7+dirty`
+- `source_commit` 后缀 `+dirty` 表示运行时工作树含未提交改动。
+- started_at_utc: `2026-07-22T19:01:28.890004+00:00`
+- mode: `FULL_VALIDATION`
+- result: `FAILED`
+- refreshed_artifacts: `implementation_map.csv, spec_implementation_audit.csv, stub_period_metrics.csv, stratified_audit.csv, scalability_audit.csv, repair_validation_results.csv`
+- not_refreshed_artifacts: `none`
+- 报告只展示 manifest 标记为本次 refreshed 的 validation/audit artifact；文件存在本身不证明新鲜度。
 
 ## 数据来源和请求统计
 
 - company_tickers_exchange、submissions、companyfacts、accession materials、8-K hdr.sgml、DEF 14A primary document 均通过 SEC 官方 URL 请求。
-- 所有请求记录在 `evidence/requests_log.csv`，原始响应保存在 `evidence/` 子目录，并带 headers/hash 旁路文件。
+- 所有请求记录在 `evidence/requests_log.csv`；新 attempt 的响应 body/header 以 content-addressed immutable 路径保存。
+- 历史 request row 若已无法解析到与记录 hash 一致的 bytes，只能是 NOT_EVALUATED，不能作为本次可复现 PASS 证据。
 
 ## 公司身份解析表
 
@@ -196,9 +210,13 @@
 | check_id | severity | status | details |
 |---|---|---|---|
 | validation_package_mode | P0 | PASS | mode=FULL_VALIDATION |
+| required_validation_inputs_available | P0 | PASS | all structural and full domain inputs available |
+| portable_artifact_locators | P0 | PASS | portable schemas and artifacts verified; rows=55521 |
+| eightk_event_chain_exact_set | P0 | PASS | inventory_rows=151;events=326 |
+| eightk_event_outputs_match_events | P0 | PASS | event_metric_keys=60 |
 | no_company_identity_branch_in_production | P0 | PASS | no identity literals in production branches |
 | registry_profile_matches_sic_rules_or_has_override_reason | P0 | PASS | registry profiles match SIC rules |
-| metrics_matrix_applicability_matches_02_04_spec | P0 | PASS | main matrix optional B scope matches spec |
+| metrics_matrix_applicability_matches_02_04_spec | P0 | PASS | metrics matrix exact key set matches config contract |
 | no_unexpected_optional_b_metrics_in_main_matrix | P0 | PASS | optional B metric counts match target scope |
 | c02_matrix_matches_governance_signals | P0 | PASS | C02 matrix rows match governance signals |
 | c02_text_qual_requires_evidence_quote | P0 | PASS | C02 TEXT_QUAL rows have evidence quotes |
@@ -206,6 +224,7 @@
 | b06_needs_review_captive_finance_has_blank_main_value_or_candidate_role | P0 | PASS | captive-finance B06 main value blank with evidence and sidecar candidate role |
 | rpo_crpo_prefers_instance_fact | P0 | PASS | B12 instance preference verified |
 | basel_ratio_extractor_not_single_issuer_specific | P0 | PASS | Basel ratios and iXBRL scale route verified |
+| jpm_cet1_capital_scale_crosscheck | P0 | PASS | scaled CET1 amount verified |
 | basel_concept_resolver_handles_tierone_spelling | P0 | PASS | TierOne spelling resolves to CET1/A02 |
 | basel_concept_resolver_handles_banking_regulation_ratio_family | P0 | PASS | banking regulation ratio family matched |
 | basel_cet1_never_classified_as_a01 | P0 | PASS | CET1 concepts excluded from A01 |
@@ -230,11 +249,6 @@
 | lodging_ok_recall_not_regressed_without_reason | P0 | PASS | lodging B10/B11 recall preserved |
 | captive_finance_debt_not_ford_specific | P0 | PASS | B06 captive finance verified |
 | captive_finance_signal_requires_segment_dimension | P0 | PASS | dimension required |
-| captive_finance_excludes_normal_finance_lease_terms | P0 | PASS | normal finance terms excluded |
-| enphase_b06_not_captive_finance_false_positive | P0 | PASS | no non-signal company is marked captive review |
-| b06_total_debt_prefers_total_debt_concepts | P0 | PASS | direct total debt selected |
-| b06_no_adder_double_count | P0 | PASS | Tier 1 B06 has no adders |
-| b06_tier_pairing_uses_current_sibling | P0 | PASS | Enphase current/noncurrent siblings selected |
 
 ## Scalability gate
 
@@ -301,7 +315,7 @@
 | Macy's | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Macy's | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
 | Paramount Skydance / Paramount Global | C03 | Executive compensation signals | NOT_EXTRACTED | No numeric ecd:PeoTotalCompAmt fact matched target fiscal year; C03 degraded from previous ecd_fact_count. |
-| Paramount Skydance / Paramount Global | C04 | Auditor changes | NEEDS_REVIEW | 需复核: current auditor read from dei:AuditorName, but prior 10-K instance is missing or lacks AuditorName (prior_10k inventory row). |
+| Paramount Skydance / Paramount Global | C04 | Auditor changes | NEEDS_REVIEW | 需复核: current auditor read from dei:AuditorName, but prior 10-K has missing or blank AuditorName (prior_10k inventory row). |
 | Paramount Skydance / Paramount Global | E02 | Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. |
 | Paramount Skydance / Paramount Global | E04 | Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. |
 | Enphase Energy | E01 | M&A announcements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no M&A item rule matched. |
@@ -314,6 +328,6 @@
 - 可产品化：companyfacts 标准公司级事实、8-K item inventory、基础 risk heading/keyword 定性信号、请求日志/hash 证据链。
 - 暂不可直接产品化：复杂 Basel/NPL/AUM/VaR 表格抽取、工业/金融维度债务拆分、DEF 14A 董事会结构化计数、复杂 MD&A 表格 KPI。
 
-## Verdict: GO WITH CAVEATS
+## Verdict: NO-GO
 
 - 本 spike 未构建生产系统、报价模型、前端或 daily update 调度。

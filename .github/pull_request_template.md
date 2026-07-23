@@ -80,6 +80,7 @@ git diff --name-only <base>...HEAD
 <!--
 单 commit 策略下，这里就是修复历史。
 每次 review、修复、merge-readiness 反馈后都必须更新。
+重复问题必须记录：较早声明为何不足、本轮固定的不变量、反例矩阵与可原样执行命令。
 -->
 
 | 轮次 | 来源 | 问题摘要 | 判断 | 处理结果 | 证据 |
@@ -89,7 +90,25 @@ git diff --name-only <base>...HEAD
 
 ---
 
-## 7. 已知限制与回滚
+## 7. 测试证据
+
+<!--
+每条证据写可原样执行的命令、实际结果和产物或日志路径。
+不能用 quick unittest 代替 Golden、repair gate 或完整场景。
+未运行项必须说明原因、影响和对应 caveat，不得写成 PASS。
+-->
+
+| 层级 / 目的 | 原样命令 | 实际结果 | 证据路径 |
+|---|---|---|---|
+|  |  |  |  |
+
+未运行项与原因：
+
+- 无
+
+---
+
+## 8. 已知限制与回滚
 
 已知限制：
 
@@ -101,13 +120,15 @@ git diff --name-only <base>...HEAD
 
 ---
 
-## 8. 最终自检
+## 9. 最终自检
 
 - [ ] 当前分支不是主干
 - [ ] 已执行 `git diff --name-only <base>...HEAD`
+- [ ] 已从实际 Git toplevel 执行 `python3 tools/check_capability_contract_alignment.py --base-ref <base>`，确认 Git 环境未重定向、anchor/directive grammar 合法，tombstone 未删除/复用；base/HEAD 的 legacy/current request row 精确同宽，legacy row 独立规范化，current row 逐字段保留 base 有序前缀且只追加合法 tail row
 - [ ] “变更范围”与实际 diff 一致
 - [ ] PR body 不包含历史草稿、旧分支名、未落地计划
 - [ ] 已按 `TESTING.md` 完成测试与测试记录
 - [ ] 用户可见变化已对照 `interact.md`
 - [ ] 架构变化已对照 `architecture.md`
 - [ ] 每轮 review / 修复都已写入“Review / 修复记录”
+- [ ] 同类返工已用字段值、行形状、位置与 schema 维度的负例矩阵验收，不只记录单点 PASS

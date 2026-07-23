@@ -43,7 +43,7 @@ Since the merge, this document carries a three-tier confidence marker:
 [ASSERTED]         A claim inherited from a report or an earlier document, not independently re-verified this round.
 ```
 
-Anything not explicitly marked defaults to [SOURCE-VERIFIED]. Claims about current output statistics, gate results, and package file listings are updated to whatever the current workspace actually measures.
+Anything not explicitly marked defaults to [SOURCE-VERIFIED]. The numerical counts below are the explicitly labelled Round-3 historical snapshot, not proof of a later run. For current tracked validation or audit evidence, read `outputs/validation_run_manifest.json` first and use only its `refreshed_artifacts`; Golden, metrics, and other inputs need their own rerun provenance.
 
 ---
 
@@ -53,7 +53,7 @@ Anything not explicitly marked defaults to [SOURCE-VERIFIED]. Claims about curre
 
 **The nature of the work is a spike** — engineering jargon for a one-off exploratory build meant to establish feasibility, not a production system. Its success criterion is written into SOP 01 and is worth memorizing: **not "every metric has a number", but "every company × metric cell carries all six of value / status / formula / source / evidence / confidence."** Honestly labelling the status when the data cannot be found is a legitimate outcome. Guessing a number to fill the matrix is failure. That single value judgment drives every mechanism described in the rest of this document.
 
-**Final deliverables, as actually measured** ([MEASURED], counted directly from the round-3 package):
+**Historical Round-3 deliverables** ([MEASURED] for that package only):
 
 ```text
 Metrics matrix    230 rows = 10 companies × 22–27 metrics
@@ -99,7 +99,7 @@ XBRL (eXtensible Business Reporting Language) is the standard for turning financ
 
 ### 2.3 HTTP discipline
 
-[SOURCE-VERIFIED + MEASURED] as implemented in `sec_http.py`: every request carries `User-Agent: <organization> <email>` (an SEC hard requirement — omit it and you get a 403); a global rate limit of ≤5 requests/second (sleep-throttled); exponential backoff and retry on 403/429/5xx; every request appended to `evidence/requests_log.csv`; every raw response persisted to disk. The current workspace's `evidence/requests_log.csv` holds 859 request records spanning exactly two domains — **www.sec.gov and data.sec.gov** — and zero third-party data sources.
+[SOURCE-VERIFIED] as implemented in `sec_http.py`: every request carries `User-Agent: <organization> <email>`; each `SecHttpClient` instance applies process-local sleep pacing at the configured rate, with no coordination across clients or processes; 403/429/5xx responses use exponential backoff and retry; and every request attempt is appended to `evidence/requests_log.csv`. New attempts with a response body persist an immutable content-addressed body/header pair as well as the caller-visible working path. The historical Round-3 log contained 859 request records across exactly **www.sec.gov and data.sec.gov**, but 38 old rows no longer resolve to bytes matching their recorded hash; those observations are `NOT_EVALUATED_MISSING_EVIDENCE`, not reproducible PASS evidence.
 
 ---
 
@@ -109,20 +109,22 @@ XBRL (eXtensible Business Reporting Language) is the standard for turning financ
 
 All logic lives in a single module, `scripts/sec_pipeline.py` (~14,000 lines). The thirteen numbered scripts from `00_smoke_test_sec_access.py` to `12_validate_repair.py` are about twenty lines each and do exactly one thing: `run_stage(stage_name="...")`. The dispatch table is the `STAGES` dict at the tail of the monolith. This shape is a pragmatic choice for a spike and should be split apart when the system is productionized — but what **must survive the split** is the logical architecture described below.
 
-### 3.2 The pipeline: the M0–M7 dataflow
+### 3.2 The pipeline: physical stages 00–12
 
 ```text
-M0  Identity resolution   company_tickers + submissions ──> company_resolution.csv
-M1  Locate the filings    submissions ──> latest_filings_inventory.csv
+00-01 Identity resolution company_tickers + submissions ──> company_resolution.csv
+02    Locate the filings  submissions ──> latest_filings_inventory.csv
                           (target 10-K / prior 10-K / DEF 14A / every 8-K in the fiscal-year window)
-M2  Standard metrics      companyfacts JSON ──> concept_inventory + selection algorithm
+03-04 Standard metrics    companyfacts JSON ──> concept_inventory + selection algorithm
                           ──> standard and derived metrics
-M3  Dimensional facts     streaming parse of the accession's iXBRL instance ──> {company}_instance.csv
+05-06 Dimensional facts   fetch and parse accession iXBRL ──> {company}_instance.csv
                           ──> consumed by the Basel / RPO / AuditorName resolvers
-M4  Event signals         hdr.sgml of every 8-K ──> <ITEMS> parse ──> events.csv
-M5  Governance & pay      ecd-taxonomy facts in the DEF 14A ──> C03 compensation / C02 board
-M6  Text KPIs             MD&A text ──> table machine (lodging KPIs) + risk/legal text signals
-M7  Assembly & acceptance metrics_matrix + coverage + golden assertions + report + verdict
+07    Event signals       hdr.sgml of every 8-K ──> <ITEMS> parse ──> events.csv
+08    Governance & pay    ecd-taxonomy facts in DEF 14A ──> C03 compensation / C02 board
+09    Text KPIs           MD&A text ──> lodging KPIs + risk/legal text signals
+10    Golden assertions   independently recomputed acceptance assertions
+11    Bounded repair      primarily local; C04 AuditorName may conditionally fetch official SEC material when required local facts are unavailable; then report generation
+12    Independent gate    validation run manifest + repair validation + refreshed report verdict
 ```
 
 Each stage's output is simultaneously the next stage's input and an independently auditable intermediate artifact. This "persist every layer" design is what lets an agent recompute and verify from any cut point in the pipeline.
@@ -366,7 +368,7 @@ The iron rule: **an assertion failure halts the run and reports the actual value
 
 On independence: the assertions and the computation share a selection function (they live in the same monolith), but the expected values were locked externally by a human. If the selection logic carries a systematic bug, the produced value will fail against the locked constant and expose it. [MEASURED] A completely independent third-party implementation recomputed every golden value and reconciled it against live SEC; all three agree.
 
-### 5.3 Defense three: validation gates (75 checks)
+### 5.3 Defense three: validation gates
 
 Grouped by what they defend against:
 
@@ -376,7 +378,7 @@ Grouped by what they defend against:
 - **The recall ratchet.** The set of cells holding OK-class statuses must not shrink relative to the previous snapshot; the snapshot is a read-only fixture file. This guards against silent capability regression — the "fix A, break B" pattern.
 - **The stratified-audit gate.** A stratified sample of valued cells is re-reviewed for quote support, and any single FAIL turns validation red. It is also correct-by-construction: the gate bites on the **recomputed-on-the-spot** result, not on the persisted file, so tampering with the CSV achieves nothing ([MEASURED] and verified).
 
-### 5.4 Defense four: regression tests (17 unittests + integrity recomputation)
+### 5.4 Defense four: regression tests + integrity recomputation
 
 The verification system itself must be falsifiable. The light review package — the package with bulky raw evidence stripped out — once had a **circular self-attestation** defect: the golden check merely counted `PASS` strings in a CSV. The package shipped a piece of paper saying everything passed, and the validation then verified that the paper said everything passed.
 
@@ -394,7 +396,7 @@ Evidence absent, no marker                  → WORKSPACE_INCOMPLETE, a hard fai
                                                from "corrupted workspace")
 ```
 
-The current 17 unittests also cover: the Basel same-dimension threshold head-to-head, captive-finance recall/exclusion, the FI value-level fixture, the iXBRL scale route, the JPM CET1 amount cross-check, the 10-K/A full-instance fallback, AST string-concatenation folding, and the I1–I8 implementation mapping.
+The current regression suite also covers: the Basel same-dimension threshold head-to-head, captive-finance recall/exclusion, the FI value-level fixture, the iXBRL scale route, claim-level missing-evidence non-evaluation, run-manifest fail-closed behavior, clone-root/path-containment portability, immutable per-attempt request persistence, the 10-K/A full-instance fallback, AST string-concatenation folding, capability-contract alignment, and the I1–I8 implementation mapping.
 
 ### 5.5 The conservation law
 
@@ -410,7 +412,7 @@ The operational corollary is stated in §7.3: **an extractor without a fixture a
 
 ## 6. Risk register: what is closed and what is still open (as of 2026-07-09)
 
-In the current workspace, `python3 scripts/12_validate_repair.py` returns PASS on every P0, and `python3 -m unittest tests/test_sec_pipeline_validation.py` runs all 17 tests green. What follows deliberately stops treating old audit items as if they were current risks, and splits them into **closed** and **still open**.
+The risk register below is inherited from the Round-3 review. It is not evidence that a later validation run passed; use the current run manifest, refreshed validation artifacts, and current test output for that claim.
 
 ### 6.1 Closed risks (implemented in code + covered by validation/tests)
 
@@ -469,7 +471,7 @@ related_ciks / roles      For the Paramount-style dual-CIK case: the predecessor
                           annotation. Event scanning will then cross CIKs automatically.
 ```
 
-Then run M0→M7 and read three things: `company_resolution.csv` (is the identity resolution right?), `coverage_matrix.csv` (which pathway did each metric take, and why was anything unavailable?), and `exceptions_and_review_items.md` (everything awaiting human judgment).
+Then run stages 00→11 followed by the independent stage 12 gate. Read `validation_run_manifest.json` first, then `company_resolution.csv` (is the identity resolution right?), `coverage_matrix.csv` (which pathway did each metric take, and why was anything unavailable?), and `exceptions_and_review_items.md` (everything awaiting human judgment).
 
 **The correct expectation**: NOT_EXTRACTED and NEEDS_REVIEW appearing on a new company's first run is a normal and honest result. A **suspiciously all-green** result is the one to be alarmed by.
 
@@ -529,27 +531,29 @@ scripts/
 config/
   company_registry.csv          The company registry — the only legal home of individual-company info.
   metric_applicability.yaml     Industry profile → extractors + SIC rules + lexical config.
-tools/check_no_company_literals.py   Entry point of the AST generalization gate.
+tools/check_no_company_literals.py              Entry point of the AST generalization gate.
+tools/check_capability_contract_alignment.py   Mechanical anchor/path/symbol alignment only.
 tests/
   fixtures/sec_10_company_spike/golden_expected_values.csv   The locked expected values.
   fixtures/eleventh_company_smoke/   The 11th-company behavior fixture
                                      (mock data for four real companies across four industries).
   fixtures/regression/previous_ok_status_snapshot.csv        The recall-ratchet baseline.
-  test_sec_pipeline_validation.py    17 unittest regressions.
+  test_sec_pipeline_validation.py    Deterministic regression and scenario tests.
 outputs/   (the schema of every CSV is in §6 of instruction document 03)
   metrics_matrix.csv     The primary deliverable: 230 rows, 20 columns.
                          The whole row — not the value — is the minimum auditable unit.
   metric_evidence.csv    Evidence detail (quote / verbatim text / extraction method).
   coverage_matrix.csv    Per-cell pathway and availability attribution.
-  golden_results.csv     Results of the 63 assertions.
-  repair_validation_results.csv   Results of the 75 gates.
+  golden_results.csv     Golden assertion results for its recorded run.
+  validation_run_manifest.json    The latest validation run's refreshed/not-refreshed evidence list.
+  repair_validation_results.csv   Repair-gate results; trust it only when the manifest marks it refreshed.
   basel_ratio_candidates.csv      The full candidate set of ratios, including role-tagged
                                   threshold context.
   stratified_audit.csv / scalability_audit.csv / events.csv
   governance_signals.csv / risk_legal_signals.csv
   company_resolution.csv / latest_filings_inventory.csv
   exceptions_and_review_items.md  Everything awaiting human judgment.
-evidence/  (full package only)   requests_log.csv + every raw SEC response persisted to disk.
+evidence/  (full package only)   requests_log.csv + raw SEC responses; new attempts retain content-addressed immutable body/header copies.
 LIGHT_REVIEW_PACKAGE.marker      The explicit declaration marker of a light review package.
 ```
 
@@ -561,7 +565,7 @@ LIGHT_REVIEW_PACKAGE.marker      The explicit declaration marker of a light revi
 
 ## 9. How to read the output files: navigating from the matrix to the evidence
 
-This section is the hands-on entry point. Everything above explains *why* the system is designed this way; this explains, once you have a delivery package in hand, in what order to open the files, which fields to read, and how to decide whether a number is trustworthy.
+This section is the hands-on entry point. Open `outputs/validation_run_manifest.json` first. It records the run id, source commit, UTC start, mode, result, and which tracked validation/audit artifacts were or were not refreshed. A CSV's mere existence is never freshness evidence. Golden, metrics, and other inputs are outside this minimal manifest and need their own rerun provenance. Everything below explains how to read artifacts that the manifest identifies as current.
 
 ### 9.1 `metrics_matrix.csv`: the primary deliverable, not the only evidence
 
@@ -616,7 +620,7 @@ Every OK-class value should have a matching row here. When auditing by hand, joi
 
 ```text
 company, cik, metric_id
-source_url, local_path, accession, document_name
+source_url, repo_relative_path, content_sha256, accession, document_name
 concept_or_section, context_or_dimension, unit
 period_start, period_end
 value_raw, value_normalized
@@ -660,17 +664,17 @@ In full-package mode, golden should be recomputed from raw evidence / companyfac
 
 ### 9.5 `repair_validation_results.csv`: gate results are not business results
 
-This file records the validation gates — de-special-casing, Basel threshold, light golden integrity, stratified audit, the 11th-company behavior test, and so on. Read it with three statuses in mind:
+This file records the validation gates — de-special-casing, Basel threshold, light golden integrity, stratified audit, the 11th-company behavior test, and so on. Read it only when the current manifest marks it refreshed, and use the closed five-status vocabulary:
 
 ```text
-PASS                       The check ran and passed.
-SKIPPED_LIGHT_PACKAGE      The light package lacks the heavyweight evidence; the check was
-                           honestly skipped.
-PASS_LIGHT_REVIEW          The light package is internally consistent and passed — but this is
-                           not a full-evidence acceptance.
+PASS                            Required evidence existed; the check ran and passed.
+FAIL                            The check ran and found a failure.
+SKIPPED_LIGHT_PACKAGE           A declared light package omitted a full-only check.
+NOT_EVALUATED_MISSING_EVIDENCE  Required evidence was missing, so no pass/fail claim is possible.
+WORKSPACE_INCOMPLETE             Structural material is missing outside the permitted light boundary.
 ```
 
-Do not mistake `PASS_LIGHT_REVIEW` for a whole-project ACCEPT. A light package can only demonstrate that code, snapshot, and config are mutually consistent. It cannot demonstrate that all the raw SEC evidence is present.
+Missing evidence is never PASS. In full mode, a critical `NOT_EVALUATED_MISSING_EVIDENCE` blocks GO. In light mode, skipped and not-evaluated rows remain explicit caveats, and the manifest result is `PASSED_WITH_CAVEATS` at most.
 
 ### 9.6 `basel_ratio_candidates.csv`: the separation layer between actual ratio and threshold
 
@@ -695,7 +699,8 @@ What follows is a repeatable manual audit procedure. Any cell holding a value ca
 1. Find company + metric_id in metrics_matrix.csv.
 2. Check status / source_class / value / unit / period / accession.
 3. Join on the same company + metric_id in metric_evidence.csv.
-4. Open local_path or evidence_quote and confirm the quote/concept supports the value.
+4. Resolve repo_relative_path in the current clone (or relocate by accession/document/hash),
+   then confirm the evidence_quote/concept supports the value. A legacy absolute path is only a hint.
 5. Check that formula matches the metric definition in document 02.
 6. Check that the status is honest: cannot extract → NOT_EXTRACTED; not applicable →
    N_A_STRUCTURAL; not comparable → NOT_MEANINGFUL.
@@ -812,7 +817,7 @@ pattern = "January 31, 2026"
 
 *Symptom*: evidence / concept_inventory are missing, yet the run reports a full PASS.
 
-*Handle*: `LIGHT_REVIEW_PACKAGE.marker` must be present, and light mode must emit `PASS_LIGHT_REVIEW` or `PASS_LIGHT_GOLDEN_INTEGRITY`. It may never impersonate full validation.
+*Handle*: `LIGHT_REVIEW_PACKAGE.marker` must be present. Full-only checks must emit `SKIPPED_LIGHT_PACKAGE` or `NOT_EVALUATED_MISSING_EVIDENCE`, and the run manifest must retain the caveat. Light mode may never impersonate full validation.
 
 ### 11.6 coverage and evidence disagree
 
@@ -845,7 +850,7 @@ whether the raw SEC responses genuinely exist;
 whether requests_log covers every request;
 whether companyfacts / submissions / accession materials are complete;
 whether the full concept_inventory is recomputable;
-whether every evidence local_path actually opens.
+whether every full evidence artifact resolves and matches its content hash.
 ```
 
 ### 12.2 Formal acceptance sequence for a full package
@@ -867,15 +872,17 @@ python3 scripts/10_run_golden_assertions.py
 python3 scripts/11_build_report.py
 python3 scripts/12_validate_repair.py
 python3 tools/check_no_company_literals.py
+python3 tools/check_capability_contract_alignment.py
 ```
 
 Then check:
 
 ```text
-is evidence/requests_log.csv SEC-only?
+does validation_run_manifest.json identify this run and mark each artifact refreshed or stale?
+is evidence/requests_log.csv SEC-only, and does each hashed row still resolve to matching body/header evidence?
 are evidence/submissions/, companyfacts/, accession_materials/ complete?
 is golden_results.csv all PASS?
-is repair_validation_results.csv free of FAIL?
+is repair_validation_results.csv free of FAIL, WORKSPACE_INCOMPLETE, and full-mode NOT_EVALUATED?
 is stratified_audit.csv all PASS?
 does the REPORT verdict agree with the gates?
 do the exceptions list every remaining NOT_EXTRACTED / NEEDS_REVIEW?
@@ -1018,13 +1025,15 @@ python3 -m py_compile scripts/sec_pipeline.py tools/check_no_company_literals.py
 python3 scripts/10_run_golden_assertions.py
 python3 scripts/12_validate_repair.py
 python3 tools/check_no_company_literals.py
+python3 tools/check_capability_contract_alignment.py
 ```
 
 Expected:
 
 ```text
-PASS_LIGHT_GOLDEN_INTEGRITY
-PASS_LIGHT_REVIEW
+PASS: LIGHT_REVIEW_MODE for the light golden integrity scope
+validation manifest result = PASSED_WITH_CAVEATS
+full-only rows = SKIPPED_LIGHT_PACKAGE or NOT_EVALUATED_MISSING_EVIDENCE
 scalability_audit.csv = 0 violations
 ```
 
@@ -1061,9 +1070,16 @@ grep -RIn "expected_value\|golden\|hardcode" scripts/ tests/
 # Quick look at failing gates
 python3 - <<'PYCODE'
 import csv
-for r in csv.DictReader(open('outputs/repair_validation_results.csv')):
-    if r.get('status') not in {'PASS','SKIPPED_LIGHT_PACKAGE','PASS_LIGHT_REVIEW','PASS_LIGHT_GOLDEN_INTEGRITY'}:
-        print(r)
+import json
+from pathlib import Path
+
+manifest = json.loads(Path('outputs/validation_run_manifest.json').read_text(encoding='utf-8'))
+if 'repair_validation_results.csv' not in manifest['refreshed_artifacts']:
+    raise SystemExit('repair_validation_results.csv is stale for this run')
+with Path('outputs/repair_validation_results.csv').open(encoding='utf-8', newline='') as file_obj:
+    for row in csv.DictReader(file_obj):
+        if row['status'] != 'PASS':
+            print(row)
 PYCODE
 ```
 

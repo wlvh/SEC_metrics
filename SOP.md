@@ -4,21 +4,21 @@
 
 每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。
 
-## SOP 1：SEC M0-M7 完整批次运行
+## SOP 1：SEC 阶段 00-12 完整批次运行
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 确认公司范围、CIK role、指标适用性和有效 SEC 请求身份 | `config/`；`01_SOP_SEC_10公司单年指标计算_直接SEC.md`；`02_指标定义_SEC_10公司单年指标.md` | 配置结构有效，范围和口径已由运行负责人确认 |
-| 2 | 从干净工作区按阶段顺序执行完整批次 | `README_RUN.md` 的“从干净目录运行 M0-M7” | 各阶段退出 0，预期 evidence 与 outputs 已生成 |
-| 3 | 执行完整批次的分层验证 | `TESTING.md` 的完整场景、Golden 与 repair gate | Golden 与独立最终 gate 满足对应模式的通过条件 |
-| 4 | 交付当前批次的报告、证据和限制 | `interact.md`；`docs/business_user_guide.md` | 报告、矩阵、evidence、coverage、exceptions 与 gate 能互相追溯 |
+| 2 | 从干净工作区按阶段 00-11 顺序执行完整批次 | `README_RUN.md` 的“从干净目录运行阶段 00-11” | 各阶段退出 0，预期 evidence 与 outputs 已生成 |
+| 3 | 单独执行阶段 12 分层验证 | `TESTING.md` 的完整场景、Golden 与 repair gate | Golden 与独立最终 gate 满足 full 通过条件，run manifest 已完成 |
+| 4 | 先按 manifest 确认本次 validation/audit 证据，再交付报告、证据和限制 | `interact.md`；`docs/business_user_guide.md` | reviewer 只把 `refreshed_artifacts` 视为本轮 tracked validation/audit；Golden、矩阵与 evidence 另核对重跑来源，最终 artifact 能互相追溯 |
 
 ## SOP 2：分层验收与失败定位
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 按变更类型选择最小且充分的测试层级 | `TESTING.md` 的测试层级与变更决策表 | 每条适用命令、结果和未运行原因已记录 |
-| 2 | 定位 unittest、Golden、repair、coverage 或请求失败 | `TESTING.md` 的失败定位；`README_RUN.md` 的验收顺序与 P0 定位 | 失败已对应到具体 test、check_id、company/metric 或请求记录 |
+| 2 | 先读 validation run manifest，再定位 unittest、Golden、repair、coverage 或请求失败 | `TESTING.md` 的失败定位；`README_RUN.md` 的验收顺序与 P0 定位 | stale artifact 已排除，失败已对应到具体 test、check_id、company/metric 或请求记录 |
 | 3 | 修复真实原因并重跑受影响层及下游 gate | `TESTING.md`；`architecture.md` 的阶段依赖与错误模型 | 没有放宽断言、静默跳过或以 light 结果冒充 full |
 | 4 | 核对生成 artifact 与工作区范围 | `TESTING.md` 的写入副作用；`PR_Checklist.md` 的变更范围 | `git status` 只包含预期文件，失败证据与处置可复核 |
 

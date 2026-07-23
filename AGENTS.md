@@ -26,8 +26,10 @@
 - `scripts/sec_pipeline.py`：阶段调度、解析、计算、富化、repair、验证、审计与报告的单体内核。
 - `scripts/sec_http.py`：官方 SEC 域名限制、进程内节流、重试、请求日志与 raw response 落盘。
 - `scripts/sec_urls.py`：集中构造 SEC 官方 endpoint。
+- `scripts/git_workspace.py`：集中清理 Git 重定向环境，并校验 checkout 与 object/ref 存储边界。
 - `scripts/00_*.py` 至 `scripts/12_*.py`：无参数单阶段 CLI wrapper。
 - `tools/check_no_company_literals.py`：生产 Python identity literal 的扩展性 gate。
+- `tools/check_capability_contract_alignment.py`：能力契约 anchor、文档路径与 `file::symbol` 的机械结构 gate；不证明 claim 语义成立。
 
 ### 业务逻辑与运行入口
 
@@ -37,6 +39,7 @@
 - `CIK变更应对方案.md`：CIK、successor/predecessor 与实体连续性规则。
 - `evidence/`：SEC 原始响应、请求日志与 headers/hash 侧车。
 - `outputs/`：inventory、指标、证据、coverage、Golden、validation 与审计派生产物。
+- `outputs/validation_run_manifest.json`：最近一次 repair validation 实际刷新/未刷新的证据清单，不是 runtime checkpoint。
 - `REPORT_十公司财务指标.md`：当前批次的派生中文报告，不独立定义能力或指标口径。
 
 测试文件和 fixture 的职责统一由 `TESTING.md` 管理，不在此逐项复制。新增、删除或改变上述核心文件职责时，必须同步更新本节。
@@ -71,7 +74,7 @@
 4. 禁止使用第三方数据、新闻、搜索结果或模型记忆为 SEC 指标补数。
 5. 可采信的非空数值必须有 matching metric evidence；证据不足时使用明确 status 和 notes，不得猜数。
 6. 公司身份、CIK role、行业 profile 与适用性来自 `config/`；生产代码不得按公司名、CIK、ticker、固定 accession 或固定财年日期写业务分支。
-7. 历史 CSV 的绝对 `local_path` 不是跨机器权威地址；优先使用 SEC URL、accession、hash、period 和仓库内相对证据。
+7. 新 artifact 使用 `source_url`、`repo_relative_path`、`content_sha256`、`accession` 与 `document_name`；历史绝对 `local_path` / `source_path` 只作 relocation hint，绝不是跨机器权威地址。
 
 ## 5. 代码规范
 
@@ -94,6 +97,6 @@
 
 需要执行标准流程时，读取 `SOP.md` 中对应章节：
 
-- SEC M0-M7 完整批次运行
+- SEC 阶段 00-12 完整批次运行
 - 分层验收与失败定位
 - PR 发布（仅用户明确要求时）

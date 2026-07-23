@@ -1,6 +1,6 @@
 # Exceptions and Review Items
 
-Generated UTC: 2026-07-09T10:08:09.676952+00:00
+Generated UTC: 2026-07-22T19:00:52.503480+00:00
 
 ## 本轮修复前降级的错值
 
@@ -60,7 +60,7 @@ Generated UTC: 2026-07-09T10:08:09.676952+00:00
 | Paramount Skydance / Paramount Global | B05 Free cash flow | NOT_MEANINGFUL | successor stub period 2025-08-08 to 2025-12-31; annual metric not comparable. Next step: improve the relevant industry extractor or source registry. |
 | Paramount Skydance / Paramount Global | B07 Interest coverage ratio | NOT_MEANINGFUL | successor stub period 2025-08-08 to 2025-12-31; annual metric not comparable. Next step: improve the relevant industry extractor or source registry. |
 | Paramount Skydance / Paramount Global | C03 Executive compensation signals | NOT_EXTRACTED | No numeric ecd:PeoTotalCompAmt fact matched target fiscal year; C03 degraded from previous ecd_fact_count. Next step: improve industry extractor, header mapping, or concept resolver. |
-| Paramount Skydance / Paramount Global | C04 Auditor changes | NEEDS_REVIEW | 需复核: current auditor read from dei:AuditorName, but prior 10-K instance is missing or lacks AuditorName (prior_10k inventory row). Next step: manual review required before treating as numeric truth. |
+| Paramount Skydance / Paramount Global | C04 Auditor changes | NEEDS_REVIEW | 需复核: current auditor read from dei:AuditorName, but prior 10-K has missing or blank AuditorName (prior_10k inventory row). Next step: manual review required before treating as numeric truth. |
 | Paramount Skydance / Paramount Global | E02 Bankruptcy filings | NOT_AVAILABLE_SEC | No Item 1.03 in FY-window 8-K; zero is normal. Next step: leave blank unless SEC source later discloses it. |
 | Paramount Skydance / Paramount Global | E04 Financial restatements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no item 4.02 found. Next step: leave blank unless SEC source later discloses it. |
 | Enphase Energy | E01 M&A announcements | NOT_AVAILABLE_SEC | FY-window 8-K scanned; no M&A item rule matched. Next step: leave blank unless SEC source later discloses it. |

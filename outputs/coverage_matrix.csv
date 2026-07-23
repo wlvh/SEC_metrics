@@ -196,7 +196,7 @@ Paramount Skydance / Paramount Global,B09,OK,STD_XBRL,1,1,0,0,Cash and cash equi
 Paramount Skydance / Paramount Global,C01,8K_ITEM_OK,8K_ITEM,1,1,0,0,CEO/CFO or director/officer event.
 Paramount Skydance / Paramount Global,C02,TEXT_QUAL,DEF14A,0,1,0,0,Textual board evidence captured; structured counts need review.
 Paramount Skydance / Paramount Global,C03,NOT_EXTRACTED,DEF14A,0,0,1,0,本轮没抽到: No numeric ecd:PeoTotalCompAmt fact matched target fiscal year; C03 degraded from previous ecd_fact_count.
-Paramount Skydance / Paramount Global,C04,NEEDS_REVIEW,DIM_XBRL,0,1,1,1,"需复核: current auditor read from dei:AuditorName, but prior 10-K instance is missing or lacks AuditorName (prior_10k inventory row)."
+Paramount Skydance / Paramount Global,C04,NEEDS_REVIEW,DIM_XBRL,0,1,1,1,"需复核: current auditor read from dei:AuditorName, but prior 10-K has missing or blank AuditorName (prior_10k inventory row)."
 Paramount Skydance / Paramount Global,D01,TEXT_QUAL,TEXT,0,1,0,0,Risk factor heading or theme evidence.
 Paramount Skydance / Paramount Global,D02,TEXT_QUAL,TEXT,0,1,0,0,Legal proceedings or litigation text evidence.
 Paramount Skydance / Paramount Global,D03,TEXT_QUAL,TEXT,0,1,0,0,Keyword scan across risk/legal text.
