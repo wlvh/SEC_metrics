@@ -44,12 +44,14 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from validation_provenance import (  # noqa: E402
     PROVENANCE_RELATIVE_PATH,
+    SOURCE_POLICY_RELATIVE_PATH,
     ValidationProvenanceError,
     capture_source_snapshot,
     ensure_readme_routes,
     ensure_report_provenance_notice,
     fail_validation_snapshot,
     invalidate_validation_snapshot,
+    load_source_policy,
     publish_validation_snapshot,
     verify_validation_snapshot,
 )
@@ -79,35 +81,56 @@ class ValidationProvenanceTest(unittest.TestCase):
         )
         return result.stdout.strip()
 
-    def _initialize_source_repo(self) -> str:
-        self._git("init")
-        self._git("config", "user.email", "tests@example.com")
-        self._git("config", "user.name", "SEC metrics tests")
-        source_files = {
+    def _write_source_inputs(self) -> None:
+        """Create policy-defined source fixtures."""
+        policy = load_source_policy(workdir=TEST_ROOT)
+        fixtures = {
             "scripts/app.py": "VALUE = 1\n",
             "tools/check.py": "print('ok')\n",
             "config/settings.json": "{}\n",
             "tests/test_dummy.py": "# fixture\n",
-            "capability_contract.json": "{}\n",
-            "02_指标定义_SEC_10公司单年指标.md": "# metrics\n",
-            "AGENTS.md": "# agents\n",
-            "SOP.md": "# sop\n",
-            "TESTING.md": "# testing\n",
-            "architecture.md": "# architecture\n",
-            "interact.md": "# interact\n",
-            "docs/business_user_guide.md": "# guide\n",
-            "docs/validation_snapshot_provenance.md": "# provenance\n",
-            "docs/concepts/sec_xbrl_and_evidence_model.md": "# concepts\n",
         }
-        for path, content in source_files.items():
+        for path, content in fixtures.items():
             self._write(path, content)
+        self._write(
+            SOURCE_POLICY_RELATIVE_PATH.as_posix(),
+            (TEST_ROOT / SOURCE_POLICY_RELATIVE_PATH).read_text(
+                encoding="utf-8"
+            ),
+        )
+        for relative in policy.acceptance_source_files:
+            content = "# fixture\n"
+            if relative == "capability_contract.json":
+                content = "{}\n"
+            elif relative == "SOP.md":
+                content = (
+                    "# SOP\n\n"
+                    "| 步骤 | 动作 | 权威引用 | 验收 |\n"
+                    "|---|---|---|---|\n"
+                    "| 1 | run | "
+                    "`01_SOP_SEC_10公司单年指标计算_直接SEC.md` | pass |\n"
+                )
+            self._write(relative, content)
+
+    def _initialize_source_repo(self) -> str:
+        """Initialize and commit one complete policy-defined source tree."""
+        self._git("init")
+        self._git("config", "user.email", "tests@example.com")
+        self._git("config", "user.name", "SEC metrics tests")
+        self._write_source_inputs()
         self._git("add", ".")
         self._git("commit", "-m", "initial source")
         return self._git("rev-parse", "HEAD")
 
-    def _write_success_artifacts(self, *, mode: str, source_commit: str) -> None:
+    def _write_success_artifacts(
+        self, *, mode: str, source_commit: str
+    ) -> None:
         refreshed = ["repair_validation_results.csv", "stratified_audit.csv"]
-        result = "PASSED" if mode == "FULL_VALIDATION" else "PASSED_WITH_CAVEATS"
+        result = (
+            "PASSED"
+            if mode == "FULL_VALIDATION"
+            else "PASSED_WITH_CAVEATS"
+        )
         manifest = {
             "run_id": "run-1",
             "source_commit": source_commit,
@@ -140,16 +163,23 @@ class ValidationProvenanceTest(unittest.TestCase):
             self._write("evidence/requests_log.csv", "header\nrow\n")
             self._write(
                 "evidence/requests_log_manifest.json",
-                '{"schema_version": 1, "row_count": 1, "content_sha256": "x"}\n',
+                '{"schema_version": 1, "row_count": 1, '
+                '"content_sha256": "x"}\n',
             )
         else:
             self._write("LIGHT_REVIEW_PACKAGE.marker", "light\n")
 
     def test_clean_full_snapshot_round_trip(self) -> None:
         head = self._initialize_source_repo()
-        self._write_success_artifacts(mode="FULL_VALIDATION", source_commit=head)
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION",
+            source_commit=head,
+        )
         source = capture_source_snapshot(workdir=self.workdir)
-        publish_validation_snapshot(workdir=self.workdir, source_snapshot=source)
+        publish_validation_snapshot(
+            workdir=self.workdir,
+            source_snapshot=source,
+        )
         result = verify_validation_snapshot(workdir=self.workdir)
         self.assertTrue(result.ok, result.errors)
         self.assertEqual(result.warnings, ())
@@ -160,6 +190,98 @@ class ValidationProvenanceTest(unittest.TestCase):
         with self.assertRaisesRegex(
             ValidationProvenanceError,
             "Source-input files are dirty",
+        ):
+            capture_source_snapshot(workdir=self.workdir)
+
+    def test_authoritative_method_change_is_rejected(self) -> None:
+        """Changing the SOP authority input must not remain falsely clean."""
+        self._initialize_source_repo()
+        self._write(
+            "01_SOP_SEC_10公司单年指标计算_直接SEC.md",
+            "# changed method\n",
+        )
+        with self.assertRaisesRegex(
+            ValidationProvenanceError,
+            "01_SOP_SEC_10公司单年指标计算_直接SEC.md",
+        ):
+            capture_source_snapshot(workdir=self.workdir)
+
+    def test_sop_authority_reference_must_be_classified(self) -> None:
+        """Removing an SOP authority input from policy must fail closed."""
+        self._initialize_source_repo()
+        self._write(
+            "SOP.md",
+            (
+                "# SOP\n\n"
+                "| 步骤 | 动作 | 权威引用 | 验收 |\n"
+                "|---|---|---|---|\n"
+                "| 1 | run | "
+                "01_SOP_SEC_10公司单年指标计算_直接SEC.md | pass |\n"
+            ),
+        )
+        policy_path = self.workdir / SOURCE_POLICY_RELATIVE_PATH
+        payload = json.loads(policy_path.read_text(encoding="utf-8"))
+        payload["acceptance_source_files"].remove(
+            "01_SOP_SEC_10公司单年指标计算_直接SEC.md"
+        )
+        policy_path.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        with self.assertRaisesRegex(
+            ValidationProvenanceError,
+            "not classified by source policy",
+        ):
+            capture_source_snapshot(workdir=self.workdir)
+        result = verify_validation_snapshot(workdir=self.workdir)
+        self.assertTrue(
+            any(
+                "not classified by source policy" in error
+                for error in result.errors
+            ),
+            result.errors,
+        )
+        self.assertIn(
+            "validation snapshot provenance is missing",
+            result.errors,
+        )
+
+    def test_document_roles_are_explicit(self) -> None:
+        """Keep AGENTS file-map roles aligned with the machine policy."""
+        policy = load_source_policy(workdir=TEST_ROOT)
+        self.assertIn(
+            "01_SOP_SEC_10公司单年指标计算_直接SEC.md",
+            policy.acceptance_source_files,
+        )
+        self.assertIn(
+            "CIK变更应对方案.md",
+            policy.acceptance_source_files,
+        )
+        self.assertIn(
+            "SEC_metrics_Project_Overview_and_Expert_Guide.md",
+            policy.explanatory_non_authoritative,
+        )
+        self.assertIn(
+            "PR_Checklist.md",
+            policy.publication_governance_files,
+        )
+
+    def test_explanatory_document_cannot_be_sop_authority(self) -> None:
+        """An explanatory role must not silently become a run authority."""
+        self._initialize_source_repo()
+        self._write(
+            "SOP.md",
+            (
+                "# SOP\n\n"
+                "| 步骤 | 动作 | 权威引用 | 验收 |\n"
+                "|---|---|---|---|\n"
+                "| 1 | run | "
+                "`SEC_metrics_Project_Overview_and_Expert_Guide.md` | pass |\n"
+            ),
+        )
+        with self.assertRaisesRegex(
+            ValidationProvenanceError,
+            "explanatory non-authoritative",
         ):
             capture_source_snapshot(workdir=self.workdir)
 
@@ -323,23 +445,7 @@ class ValidationProvenanceTest(unittest.TestCase):
         self.assertIn("source commit mismatch", strict_result.errors)
 
     def test_light_package_publishes_limited_non_git_provenance(self) -> None:
-        for path, content in {
-            "scripts/app.py": "VALUE = 1\n",
-            "tools/check.py": "print('ok')\n",
-            "config/settings.json": "{}\n",
-            "tests/test_dummy.py": "# fixture\n",
-            "capability_contract.json": "{}\n",
-            "02_指标定义_SEC_10公司单年指标.md": "# metrics\n",
-            "AGENTS.md": "# agents\n",
-            "SOP.md": "# sop\n",
-            "TESTING.md": "# testing\n",
-            "architecture.md": "# architecture\n",
-            "interact.md": "# interact\n",
-            "docs/business_user_guide.md": "# guide\n",
-            "docs/validation_snapshot_provenance.md": "# provenance\n",
-            "docs/concepts/sec_xbrl_and_evidence_model.md": "# concepts\n",
-        }.items():
-            self._write(path, content)
+        self._write_source_inputs()
         self._write_success_artifacts(
             mode="LIGHT_REVIEW_MODE",
             source_commit="UNAVAILABLE_NON_GIT_WORKSPACE",

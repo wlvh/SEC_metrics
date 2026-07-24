@@ -18,7 +18,8 @@
 ## Validation snapshot provenance
 
 - stage 11 在修改报告前删除可安全识别的旧 regular `outputs/validation_snapshot_provenance.json`；alias/非 regular 目标提前失败。
-- stage 12 只在 source-input closure 无未提交改动时继续；成功后绑定当前 Git commit、完整 source-input tree SHA-256，以及 manifest、报告、README、metrics/evidence/coverage/Golden、request ledger 与 refreshed validation artifact 的 SHA-256/size。
+- `config/validation_source_policy.json` 分类 runtime source、acceptance source、generated artifact、发布治理和解释性文档；SOP 权威引用必须有明确角色，解释性非权威文档不能作为运行权威。
+- stage 12 只在 policy-defined source closure 无未提交改动时继续；成功后绑定当前 Git commit、完整 source-input tree SHA-256，以及 manifest、报告、README、metrics/evidence/coverage/Golden、request ledger 与 refreshed validation artifact 的 SHA-256/size。
 - 提交或 merge 导致 commit SHA 改变时，checker 只有在完整 source-input tree 仍等价时才给 warning 并允许继续；任一 source byte 或 artifact byte 漂移都失败。
 - light package 可以生成显式 `LIGHT_PACKAGE_NO_GIT` 的受限 provenance，但不能升级为 full validation。
 <!-- validation-reading-routes:end -->

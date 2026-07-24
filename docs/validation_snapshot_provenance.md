@@ -24,7 +24,8 @@ acceptance artifact closure
 
 ## 2. 核心文件
 
-- `scripts/validation_provenance.py`：捕获、发布、验证和 fail-closed helper。
+- `config/validation_source_policy.json`：runtime/acceptance source 与非 source 文档角色的机器可读真相源。
+- `scripts/validation_provenance.py`：读取 policy、校验 SOP 权威引用、捕获、发布、验证和 fail-closed helper。
 - `scripts/11_build_report.py`：新一轮报告开始前删除可安全识别的旧 regular provenance；alias/非 regular 目标提前失败，避免 stale success proof。
 - `scripts/12_validate_repair.py`：stage 12 返回零之前，发布并重新验证 provenance。
 - `tools/check_validation_snapshot.py`：读取当前 checkout 与 artifact bytes 的独立验收入口。
@@ -32,23 +33,36 @@ acceptance artifact closure
 
 ## 3. Source-input closure
 
-Git checkout 中，closure 由 `git ls-files` 对以下路径求精确集合：
+`config/validation_source_policy.json` 是 source/document 角色的机器可读真相源。Git checkout 中，closure 由 `git ls-files` 对 policy 中的 `runtime_source_directories`、`acceptance_source_files` 以及 policy 文件自身求精确集合，不再由 Python tuple 手工维护。
+
+当前 runtime source directories：
 
 ```text
 scripts/
 tools/
 config/
 tests/
-capability_contract.json
+```
+
+当前 acceptance source files：
+
+```text
+01_SOP_SEC_10公司单年指标计算_直接SEC.md
 02_指标定义_SEC_10公司单年指标.md
 AGENTS.md
+CIK变更应对方案.md
 SOP.md
 TESTING.md
 architecture.md
-interact.md
+capability_contract.json
 docs/business_user_guide.md
 docs/validation_snapshot_provenance.md
+interact.md
 ```
+
+policy 同时明确不进入 source tree 的角色：`README_RUN.md` / `REPORT_十公司财务指标.md` 是另行做 byte binding 的 generated artifacts；`PR_Checklist.md` / `.github/pull_request_template.md` 是发布治理；`.gitignore` 是仓库卫生；`SEC_metrics_Project_Overview_and_Expert_Guide.md` 是解释性非权威文档。`CIK变更应对方案.md` 会影响身份连续性和跨 CIK 口径，因此属于 acceptance source，而不是解释性背景。
+
+loader 会解析 `SOP.md` 每个表格的“权威引用”列。引用必须由 runtime source、acceptance source、snapshot artifact 或非批次发布治理角色明确覆盖；未分类引用立即失败。被标记为 `explanatory_non_authoritative` 的文件不能继续留在权威引用列，否则也立即失败。policy 文件路径由代码作为 bootstrap source 单独加入 closure，因此 policy 即使把 `config/` 从 runtime directories 移除，也不能把自身未提交修改隐藏掉。
 
 每个文件以如下 record 进入整树 SHA-256：
 
@@ -58,7 +72,7 @@ repo_relative_path NUL byte_length NUL content_sha256 LF
 
 路径按字典序排序。任何 tracked modification、staged modification、删除或 closure 内 untracked 文件，都会使 stage 12 在运行主 gate 前失败。symlink 或非 regular file 也失败。
 
-无 Git 的显式 light package 不能通过删掉某个 singleton 文件来缩小 closure。上面逐项列出的文件都必须存在，并且必须是非 symlink regular file；缺失任一项即失败。light package 仍可按随包实际内容枚举 `scripts/`、`tools/`、`config/` 和 `tests/`，但不能省略能力契约、指标定义或核心治理/验收文档。
+无 Git 的显式 light package 不能通过删掉某个 acceptance source 文件来缩小 closure。policy、自身声明的全部 acceptance source files 和 runtime source directories 都必须存在，并且必须是非 symlink regular file/real directory；缺失任一项即失败。light package 仍可按随包实际内容枚举 runtime source directories，但不能省略 `01_SOP...md`、CIK identity rules、能力契约、指标定义或核心治理/验收文档。
 
 生成的 `evidence/`、`outputs/`、报告和 README 不进入 source tree；它们由 artifact closure 单独绑定。这样 stage 00–11 的合法生成副作用不会被误判为 source dirty。
 
@@ -165,5 +179,5 @@ python3 tools/check_validation_snapshot.py
 
 - sidecar 是仓库内自证明，不替代外部时间戳、签名或不可篡改存储；能同时改写全部文件并重签的人仍在本地信任边界内。
 - Git workspace guard 与后续 Git 命令不是一个原子系统调用，不宣称抵御恶意同 UID 进程的主动 namespace TOCTOU。
-- source closure 是显式策略。新增会影响运行或验收的路径时，必须更新 closure、文档和负例测试。
+- source closure 是显式 policy。新增会影响运行或验收的路径时，必须在 `config/validation_source_policy.json` 分类，并同步文档和负例测试；新增 SOP 权威引用若未分类会被 checker 拒绝。
 - provenance 证明 bytes 一致，不证明业务方法本身正确；Golden、repair validation、外部审计和人工判断仍各自负责自己的结论。

@@ -59,8 +59,8 @@ architecture.md
 - `docs/validation_snapshot_provenance.md`：source-input tree、artifact digest、publication 顺序与 checker 语义。
 - `TESTING.md`：测试层级、真实命令、full/light 边界与副作用。
 - `SOP.md`：标准流程的一级导航，只保留动作、权威引用与验收。
-- `PR_Checklist.md`：仅在用户明确要求发布时使用的 PR 核对流程。
-- `.github/pull_request_template.md`：长期 PR body 模板。
+- `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
+- `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
 
 ### 核心配置
@@ -68,6 +68,7 @@ architecture.md
 - `config/sec_config.json`：SEC User-Agent、请求速率、重试与退避参数。
 - `config/company_registry.csv`：逻辑公司、CIK role、行业 profile、财年底与连续性。
 - `config/metric_applicability.yaml`：SIC/profile 规则、extractor 路由与行业参数；当前由 JSON parser 读取，内容必须保持 JSON 兼容。
+- `config/validation_source_policy.json`：机器可读的 runtime/acceptance source、生成 artifact、发布治理和解释性文档角色；provenance closure 的真相源。
 
 ### 核心模块
 
@@ -75,7 +76,7 @@ architecture.md
 - `scripts/sec_http.py`：精确官方 SEC origin 限制、无隐式 redirect、进程内节流、重试、immutable attempt body/header、request ledger、整表 manifest 与 cooperating-process publication lock。
 - `scripts/sec_urls.py`：集中构造 SEC 官方 endpoint。
 - `scripts/git_workspace.py`：集中清理 Git 重定向环境，并校验 checkout 与 object/ref 存储边界。
-- `scripts/validation_provenance.py`：捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
+- `scripts/validation_provenance.py`：读取 source policy、校验 SOP 权威引用角色、捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
 - `scripts/00_*.py` 至 `scripts/12_*.py`：无参数单阶段 CLI wrapper；stage 11/12 额外负责旧 provenance 失效与终态 publication。
 - `tools/check_validation_snapshot.py`：独立复核当前 checkout、manifest、provenance sidecar 与关键 artifact bytes。
 - `tools/check_no_company_literals.py`：生产 Python identity literal 的扩展性 gate。
@@ -83,11 +84,11 @@ architecture.md
 
 ### 业务逻辑与运行入口
 
-- `01_SOP_SEC_10公司单年指标计算_直接SEC.md`：业务方法与原始设计说明；其中 M0–M7 是概念阶段，不是当前 `scripts/00_*`–`12_*` 的物理顺序，实际运行以 `README_RUN.md` 为准。
+- `01_SOP_SEC_10公司单年指标计算_直接SEC.md`：当前运行路径中的业务方法输入，属于 acceptance source；其中 M0–M7 是概念阶段，不是当前 `scripts/00_*`–`12_*` 的物理顺序，实际运行以 `README_RUN.md` 为准。
 - `02_指标定义_SEC_10公司单年指标.md`：指标定义、候选链、公式、适用性与降级语义。
-- `SEC_metrics_Project_Overview_and_Expert_Guide.md`：长篇解释性文档；其中历史数量或历史验收结论不是当前状态源。
+- `SEC_metrics_Project_Overview_and_Expert_Guide.md`：解释性非权威文档；其中历史数量或历史验收结论不是当前状态源，也不得作为 SOP 运行权威。
 - `README_RUN.md`：完整阶段顺序、验收入口、主要输出和 light review 说明。
-- `CIK变更应对方案.md`：CIK、successor/predecessor 与实体连续性规则。
+- `CIK变更应对方案.md`：CIK、successor/predecessor 与实体连续性规则，属于 acceptance source。
 - `evidence/requests_log.csv`：按 request attempt 记录的请求 ledger。
 - `evidence/requests_log_manifest.json`：绑定 request CSV 的 schema version、row count 与整表 SHA-256；缺失或失配时 request history 不能视为完整证据。
 - `evidence/request_attempts/`：content-addressed immutable response body/header attempts。
@@ -106,6 +107,7 @@ architecture.md
 - 用户可观察验收以 `interact.md` 为准。
 - 业务指南只能派生解释能力契约与用户行为，不能自行承诺功能。
 - 测试策略以 `TESTING.md` 为准；SOP 和 PR checklist 只引用，不复制易漂移细节。
+- source/document 角色与 acceptance source closure 以 `config/validation_source_policy.json` 为准；SOP 权威引用必须被 policy 分类，解释性非权威文档不得作为运行权威。
 - 当前运行状态只能从 validation manifest、snapshot checker 与报告共同判断；长篇 Markdown 中的历史数量或结论不是当前状态源。
 - 生成报告和 CSV 是当前代码与输入的 snapshot，不替代源代码、契约、provenance sidecar 或独立 gate。
 
@@ -115,7 +117,7 @@ architecture.md
 
 1. exact commit 相同且 source-input closure clean，是最直接的匹配；
 2. artifact commit 或 merge commit 改变 SHA 时，只有 `tools/check_validation_snapshot.py` 证明完整 source-input tree 等价，才可继续；
-3. closure 内任一 tracked/untracked 改动、文件缺失、symlink、tree digest 变化或关键 artifact hash 变化都使 snapshot 不可验收；
+3. closure 由 `config/validation_source_policy.json` 定义；policy 自身、runtime source 目录或 acceptance source 文件中的任一 tracked/untracked 改动、文件缺失、symlink、tree digest 变化或关键 artifact hash 变化都使 snapshot 不可验收；
 4. `+dirty` 只说明整个工作树含改动，最终判断必须看 source-input closure 和 tree digest。
 
 ## 3. 工作规则
@@ -130,6 +132,7 @@ architecture.md
 8. 修改测试、fixture、测试副作用或推荐顺序时更新 `TESTING.md`。
 9. `PR_BODY.md` 是被忽略的本地发布草稿，只在用户明确要求 PR 时由长期模板生成，永不提交。
 10. 修改生成型 README/report 行为时改 generator 或稳定 post-processor；不得只手工编辑生成文件。
+11. 新增或改变会影响运行/验收的文件，先更新 `config/validation_source_policy.json` 的角色；新增 SOP 权威引用必须由 policy 覆盖并通过 provenance 回归。
 
 ## 4. SEC 与数据规则
 
