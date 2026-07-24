@@ -7,6 +7,7 @@ PR body 原则：
 4. 用户可见变化对照 interact.md。
 5. 架构变化对照 architecture.md。
 6. 每轮 review / 修复都必须写入“Review / 修复记录”。
+7. 文档治理必须就地修正漂移，不得在没有替代路由的情况下删除既有权威入口、SOP 导航或长期解释内容。
 -->
 
 ## 1. 背景与目标
@@ -18,9 +19,16 @@ PR body 原则：
 <!--
 写核心思路和关键取舍。
 不要复述所有代码。
+
+若涉及 source / artifact provenance，必须说明：
+- source-input closure；
+- acceptance artifact closure；
+- stale proof 如何失效；
+- publication 或 postflight 失败如何 fail closed。
 -->
 
 ---
+
 ## 3. 变更范围
 
 <!--
@@ -29,13 +37,15 @@ git diff --name-only <base>...HEAD
 
 只列本 PR 实际改动的文件或目录。
 不要写当前 patch 中不存在的文件。
+删除、历史化、重命名和新增导航文件必须单独列明。
 -->
 
 | 文件 / 目录 | 变更类型 | 说明 |
 |---|---|---|
-|  | 新增 / 修改 / 删除 |  |
+|  | 新增 / 修改 / 删除 / 重命名 |  |
 
 ---
+
 ## 4. 文档影响
 
 <!--
@@ -49,6 +59,11 @@ git diff --name-only <base>...HEAD
 如果本 PR 改变业务人员能问什么、怎么问、结果怎么看、什么时候该找人，请检查 docs/business_user_guide.md。
 
 如果新增“能做 / 不能做 / 必须追问 / 必须拒绝”的声明，请确认它有 capability_contract.json anchor_id 或对应测试锚点。
+
+如果修改 AGENTS.md、SOP.md、README_RUN.md 或长期总览文档：
+- 保留既有一级导航和稳定章节编号，除非 PR 明确证明迁移必要；
+- 不得把“减少重复”变成删除发现路径；
+- 旧内容漂移时优先在原文件就地纠偏，历史化或拆分必须说明替代入口、兼容路径和迁移理由。
 -->
 
 受影响文档：
@@ -73,6 +88,19 @@ git diff --name-only <base>...HEAD
 - Yes / No
 - 说明：
 
+Source / artifact provenance 变化：
+
+- Yes / No
+- source-input closure：
+- artifact closure：
+- stale-proof invalidation / fail-closed 行为：
+
+文档导航变化：
+
+- Yes / No
+- 原入口是否保留：
+- 新旧路径如何兼容：
+
 ---
 
 ## 6. Review / 修复记录
@@ -94,8 +122,17 @@ git diff --name-only <base>...HEAD
 
 <!--
 每条证据写可原样执行的命令、实际结果和产物或日志路径。
-不能用 quick unittest 代替 Golden、repair gate 或完整场景。
+不能用 quick unittest 代替 Golden、repair gate、snapshot checker 或完整场景。
 未运行项必须说明原因、影响和对应 caveat，不得写成 PASS。
+
+涉及完整性不变量时，至少覆盖适用的负例：
+- dirty / staged / untracked source；
+- 缺失、重复或多余 artifact key；
+- SHA-256 / size 篡改；
+- stale sidecar；
+- symlink / alias；
+- report 或 manifest publication failure；
+- light package 缩小声明 source closure。
 -->
 
 | 层级 / 目的 | 原样命令 | 实际结果 | 证据路径 |
@@ -132,3 +169,6 @@ git diff --name-only <base>...HEAD
 - [ ] 架构变化已对照 `architecture.md`
 - [ ] 每轮 review / 修复都已写入“Review / 修复记录”
 - [ ] 同类返工已用字段值、行形状、位置与 schema 维度的负例矩阵验收，不只记录单点 PASS
+- [ ] 若改变 source/artifact terminal publication，已运行 snapshot provenance 专项与独立 checker
+- [ ] 若修改文档体系，`AGENTS.md` 仍能发现 `SOP.md`，SOP 稳定编号与核心权威入口未被无替代删除
+- [ ] 对漂移文档的处理是就地纠偏，或已明确记录拆分/历史化的替代入口、兼容路径和理由
