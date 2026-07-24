@@ -1,5 +1,7 @@
 # SEC_metrics PR 提交检查清单
 
+> 文档角色：仅用于 commit/push/PR 的发布治理，不属于数据批次 acceptance source。
+
 ## 1. 触发条件
 
 只有用户明确要求提交、推送或创建 PR 时，才执行本流程。普通本地修改、分析、测试或工作流文档同步不自动获得 commit、push 或 PR 权限。

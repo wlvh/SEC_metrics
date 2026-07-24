@@ -2,7 +2,7 @@
 
 ## 使用原则
 
-每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。
+每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。`config/validation_source_policy.json` 必须把每个权威引用分类为运行/验收 source、snapshot artifact 或非批次治理角色；解释性非权威文档不能作为本表的运行权威。
 
 ## 快速入口：只读取现有结果
 
@@ -17,7 +17,7 @@
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
-| 1 | 确认公司范围、CIK role、指标适用性和有效 SEC 请求身份 | `config/`；`01_SOP_SEC_10公司单年指标计算_直接SEC.md`；`02_指标定义_SEC_10公司单年指标.md` | 配置结构有效，范围和口径已由运行负责人确认；`01_SOP...` 的 M0–M7 仅作业务概念说明 |
+| 1 | 确认公司范围、CIK role、指标适用性和有效 SEC 请求身份 | `config/`；`01_SOP_SEC_10公司单年指标计算_直接SEC.md`；`02_指标定义_SEC_10公司单年指标.md`；`CIK变更应对方案.md` | 配置结构有效，范围、身份连续性和口径已由运行负责人确认；`01_SOP...` 的 M0–M7 仅作业务概念说明 |
 | 2 | 从干净工作区按阶段 00-11 顺序执行完整批次 | `README_RUN.md` 的“从干净目录运行阶段 00-11” | 各阶段完成，预期 evidence 与 outputs 已生成；stage 11 exit 0 只代表报告构建完成 |
 | 3 | 单独执行阶段 12 分层验证 | `TESTING.md` 的完整场景、Golden、repair gate 与 provenance 专项 | Golden 与独立最终 gate 满足 full 通过条件，run manifest 已完成，provenance publication/self-check 成功 |
 | 4 | 独立重验终态 | `python3 tools/check_validation_snapshot.py` | terminal manifest、source-input tree 与关键 artifact bytes 仍一致 |

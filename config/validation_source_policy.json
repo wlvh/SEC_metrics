@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "runtime_source_directories": [
+    "scripts",
+    "tools",
+    "config",
+    "tests"
+  ],
+  "acceptance_source_files": [
+    "01_SOP_SEC_10公司单年指标计算_直接SEC.md",
+    "02_指标定义_SEC_10公司单年指标.md",
+    "AGENTS.md",
+    "CIK变更应对方案.md",
+    "SOP.md",
+    "TESTING.md",
+    "architecture.md",
+    "capability_contract.json",
+    "docs/business_user_guide.md",
+    "docs/validation_snapshot_provenance.md",
+    "interact.md"
+  ],
+  "generated_artifacts": [
+    "README_RUN.md",
+    "REPORT_十公司财务指标.md"
+  ],
+  "publication_governance_files": [
+    ".github/pull_request_template.md",
+    "PR_Checklist.md"
+  ],
+  "repository_hygiene_files": [
+    ".gitignore"
+  ],
+  "explanatory_non_authoritative": [
+    "SEC_metrics_Project_Overview_and_Expert_Guide.md"
+  ]
+}

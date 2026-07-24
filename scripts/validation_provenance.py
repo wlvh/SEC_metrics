@@ -15,20 +15,24 @@ from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 from git_workspace import git_checkout_metadata_error, sanitized_git_environment
 
 SCHEMA = 1
+SOURCE_POLICY_SCHEMA = 1
 PROVENANCE_RELATIVE_PATH = Path("outputs/validation_snapshot_provenance.json")
+SOURCE_POLICY_RELATIVE_PATH = Path("config/validation_source_policy.json")
 MANIFEST = Path("outputs/validation_run_manifest.json")
 REPORT = Path("REPORT_十公司财务指标.md")
 README = Path("README_RUN.md")
+SOP = Path("SOP.md")
 LIGHT_MARKER = Path("LIGHT_REVIEW_PACKAGE.marker")
-SOURCE_DIRS = ("scripts", "tools", "config", "tests")
-SOURCE_FILES = (
-    "capability_contract.json",
-    "02_指标定义_SEC_10公司单年指标.md",
-    "AGENTS.md", "SOP.md", "TESTING.md", "architecture.md", "interact.md",
-    "docs/business_user_guide.md",
-    "docs/validation_snapshot_provenance.md",
+SOURCE_POLICY_KEYS = {
+    "schema_version", "runtime_source_directories",
+    "acceptance_source_files", "generated_artifacts",
+    "publication_governance_files", "repository_hygiene_files",
+    "explanatory_non_authoritative",
+}
+SOP_REFERENCE_PATTERN = re.compile(
+    r"(?<![\w./-])((?:\.?[\w-]+/)*[\w.-]+\."
+    r"(?:md|json|csv|yaml|yml|py)|(?:\.?[\w-]+/)+)"
 )
-SOURCE_PATHS = SOURCE_DIRS + SOURCE_FILES
 FULL_CORE = (
     MANIFEST.as_posix(), REPORT.as_posix(), README.as_posix(),
     "outputs/golden_results.csv", "outputs/metrics_matrix.csv",
@@ -48,19 +52,25 @@ README_END = "<!-- validation-reading-routes:end -->"
 README_BLOCK = """<!-- validation-reading-routes:start -->
 ## 只读取现有结果
 
-1. 先读 `outputs/validation_run_manifest.json`；非 terminal success 时停止。
-2. 运行 `python3 tools/check_validation_snapshot.py`；source tree 或 artifact digest 失配时停止。
-3. checker 通过后再读报告、metrics 与 evidence。
+1. 先读 `outputs/validation_run_manifest.json`；`result` 不是 `PASSED` / `PASSED_WITH_CAVEATS` 时停止验收。
+2. 运行 `python3 tools/check_validation_snapshot.py`；缺少 provenance、源输入树不一致、关键 artifact hash 失配或 source input 有未提交改动时停止验收。
+3. 再读 `REPORT_十公司财务指标.md`，随后按需查看 `outputs/metrics_matrix.csv` 与 `outputs/metric_evidence.csv`。
+4. `source_commit` 与当前 HEAD 不同不自动等于失败；只有独立 checker 证明 source-input tree 等价时，merge commit 等 SHA 变化才可接受。
 
 ## 执行新批次
 
-1. 在 clean source checkout 中按顺序运行 `00`–`11`；stage 11 exit 0 只表示报告完成。
-2. 单独运行 `python3 scripts/12_validate_repair.py`。
-3. stage 12 exit 0、terminal manifest 成功且 snapshot checker 通过，才构成完整批次成功。
+1. 使用干净 checkout，并配置有效 SEC organization/contact email。
+2. 按顺序运行阶段 `00`–`11`；stage 11 exit 0 只表示报告构建完成。
+3. 单独运行 `python3 scripts/12_validate_repair.py`。
+4. 只有 stage 12 exit 0、terminal manifest 成功，且 `python3 tools/check_validation_snapshot.py` 通过，才构成完整批次成功。
 
 ## Validation snapshot provenance
 
-stage 12 绑定 source-input tree 及 manifest/report/README/metrics/evidence/coverage/Golden/request/validation artifacts 的 SHA-256 与 size。commit SHA 改变时，仅完整 source tree 等价可作为 warning 接受；light provenance 不能升级为 full validation。
+- stage 11 在修改报告前删除可安全识别的旧 regular `outputs/validation_snapshot_provenance.json`；alias/非 regular 目标提前失败。
+- `config/validation_source_policy.json` 分类 runtime source、acceptance source、generated artifact、发布治理和解释性文档；SOP 权威引用必须有明确角色，解释性非权威文档不能作为运行权威。
+- stage 12 只在 policy-defined source closure 无未提交改动时继续；成功后绑定当前 Git commit、完整 source-input tree SHA-256，以及 manifest、报告、README、metrics/evidence/coverage/Golden、request ledger 与 refreshed validation artifact 的 SHA-256/size。
+- 提交或 merge 导致 commit SHA 改变时，checker 只有在完整 source-input tree 仍等价时才给 warning 并允许继续；任一 source byte 或 artifact byte 漂移都失败。
+- light package 可以生成显式 `LIGHT_PACKAGE_NO_GIT` 的受限 provenance，但不能升级为 full validation。
 <!-- validation-reading-routes:end -->"""
 REPORT_START = "<!-- validation-snapshot-provenance:start -->"
 REPORT_END = "<!-- validation-snapshot-provenance:end -->"
@@ -74,11 +84,37 @@ REPORT_BLOCK = """<!-- validation-snapshot-provenance:start -->
 
 
 class ValidationProvenanceError(RuntimeError):
+    """Report an invalid or unverifiable validation snapshot state."""
+
     pass
 
 
 @dataclass(frozen=True)
+class SourcePolicy:
+    """Classify files that can affect runtime, acceptance, or documentation."""
+
+    runtime_source_directories: Tuple[str, ...]
+    acceptance_source_files: Tuple[str, ...]
+    generated_artifacts: Tuple[str, ...]
+    publication_governance_files: Tuple[str, ...]
+    repository_hygiene_files: Tuple[str, ...]
+    explanatory_non_authoritative: Tuple[str, ...]
+
+    @property
+    def source_paths(self) -> Tuple[str, ...]:
+        """Return the policy-bound Git pathspecs, including the policy itself."""
+        paths = (
+            *self.runtime_source_directories,
+            *self.acceptance_source_files,
+            SOURCE_POLICY_RELATIVE_PATH.as_posix(),
+        )
+        return tuple(sorted(set(paths)))
+
+
+@dataclass(frozen=True)
 class SourceSnapshot:
+    """Describe one deterministic and clean source-input tree."""
+
     checkout_status: str
     source_commit: Optional[str]
     tree_sha256: str
@@ -88,11 +124,14 @@ class SourceSnapshot:
 
 @dataclass(frozen=True)
 class VerificationResult:
+    """Return all snapshot verification errors and non-fatal warnings."""
+
     errors: Tuple[str, ...]
     warnings: Tuple[str, ...]
 
     @property
     def ok(self) -> bool:
+        """Return whether verification found no errors."""
         return not self.errors
 
 
@@ -172,95 +211,358 @@ def _nul(content: bytes) -> List[str]:
     return [item.decode("utf-8") for item in content.split(b"\0") if item]
 
 
-def _git_paths(workdir: Path) -> List[str]:
-    paths = sorted(set(_nul(_git(workdir, ["ls-files", "-z", "--", *SOURCE_PATHS]))))
-    if not paths:
-        raise ValidationProvenanceError("Git source-input closure is empty")
+def _json(path: Path) -> Dict[str, object]:
+    """Read one UTF-8 JSON object or fail at the current boundary."""
+    try:
+        payload = json.loads(_read(path).decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ValidationProvenanceError(
+            "Invalid UTF-8 JSON object: {}".format(path)
+        ) from error
+    if not isinstance(payload, dict):
+        raise ValidationProvenanceError(
+            "JSON root must be an object: {}".format(path)
+        )
+    return payload
+
+
+def _policy_values(
+    *, payload: Mapping[str, object], key: str
+) -> Tuple[str, ...]:
+    """Return one required, unique array of non-empty policy paths."""
+    values = payload[key]
+    if not isinstance(values, list):
+        raise ValidationProvenanceError(
+            "Source policy {} must be a non-empty string array".format(key)
+        )
+    if not values or any(
+        not isinstance(value, str) or not value for value in values
+    ):
+        raise ValidationProvenanceError(
+            "Source policy {} must be a non-empty string array".format(key)
+        )
+    if len(values) != len(set(values)):
+        raise ValidationProvenanceError(
+            "Source policy {} contains duplicate paths".format(key)
+        )
+    return tuple(values)
+
+
+def _validate_policy_path(*, relative: str, directory: bool) -> None:
+    """Require a normalized repository-relative file or directory path."""
+    path = Path(relative)
+    invalid = any((
+        path.is_absolute(),
+        ".." in path.parts,
+        path.as_posix() != relative,
+        relative in {"", "."},
+    ))
+    if invalid:
+        raise ValidationProvenanceError(
+            "Source policy path is not normalized repository-relative: "
+            "{}".format(relative)
+        )
+    if directory and len(path.parts) != 1:
+        raise ValidationProvenanceError(
+            "Runtime source directory must be a top-level path: {}".format(
+                relative
+            )
+        )
+
+
+def _sop_authority_references(*, workdir: Path) -> Tuple[str, ...]:
+    """Extract repository paths only from SOP table authority columns."""
+    try:
+        text = _read(_repo(workdir, SOP.as_posix())).decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise ValidationProvenanceError("SOP.md must be UTF-8") from error
+    authority_index: Optional[int] = None
+    found_header = False
+    references = set()
+    for line in text.splitlines():
+        if not line.strip().startswith("|"):
+            authority_index = None
+            continue
+        cells = [cell.strip() for cell in line.strip().strip("|").split("|")]
+        if "权威引用" in cells:
+            authority_index = cells.index("权威引用")
+            found_header = True
+            continue
+        if authority_index is None or len(cells) <= authority_index:
+            continue
+        if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
+            continue
+        for match in SOP_REFERENCE_PATTERN.finditer(cells[authority_index]):
+            relative = match.group(1)
+            if relative.startswith("./"):
+                relative = relative[2:]
+            references.add(relative)
+    if not found_header or not references:
+        raise ValidationProvenanceError(
+            "SOP.md must contain non-empty authority-reference table columns"
+        )
+    return tuple(sorted(references))
+
+
+def _validate_sop_authority_references(
+    *, workdir: Path, policy: SourcePolicy
+) -> None:
+    """Reject unclassified or falsely authoritative SOP file references."""
+    source_files = set(policy.acceptance_source_files)
+    generated = set(policy.generated_artifacts)
+    governance = set(policy.publication_governance_files)
+    governance.update(policy.repository_hygiene_files)
+    artifacts = set(FULL_CORE)
+    classified = source_files | generated | governance | artifacts
+    unclassified = []
+    explanatory = []
+    for relative in _sop_authority_references(workdir=workdir):
+        normalized = relative.rstrip("/")
+        runtime = any(
+            normalized == directory or normalized.startswith(directory + "/")
+            for directory in policy.runtime_source_directories
+        )
+        if relative in policy.explanatory_non_authoritative:
+            explanatory.append(relative)
+        elif not runtime and relative not in classified:
+            unclassified.append(relative)
+    if explanatory:
+        raise ValidationProvenanceError(
+            "SOP authority references explanatory non-authoritative files: "
+            "{}".format(",".join(explanatory))
+        )
+    if unclassified:
+        raise ValidationProvenanceError(
+            "SOP authority references are not classified by source policy: "
+            "{}".format(",".join(unclassified))
+        )
+
+
+def load_source_policy(*, workdir: Path) -> SourcePolicy:
+    """Load and validate the machine-readable source and document policy."""
+    payload = _json(_repo(workdir, SOURCE_POLICY_RELATIVE_PATH.as_posix()))
+    if set(payload) != SOURCE_POLICY_KEYS:
+        raise ValidationProvenanceError(
+            "Source policy keys do not match the required schema"
+        )
+    schema_version = payload["schema_version"]
+    valid_schema = all((
+        type(schema_version) is int,
+        schema_version == SOURCE_POLICY_SCHEMA,
+    ))
+    if not valid_schema:
+        raise ValidationProvenanceError(
+            "Unsupported source policy schema_version"
+        )
+    runtime = _policy_values(
+        payload=payload,
+        key="runtime_source_directories",
+    )
+    acceptance = _policy_values(
+        payload=payload,
+        key="acceptance_source_files",
+    )
+    generated = _policy_values(payload=payload, key="generated_artifacts")
+    publication = _policy_values(
+        payload=payload,
+        key="publication_governance_files",
+    )
+    hygiene = _policy_values(
+        payload=payload,
+        key="repository_hygiene_files",
+    )
+    explanatory = _policy_values(
+        payload=payload,
+        key="explanatory_non_authoritative",
+    )
+    for relative in runtime:
+        _validate_policy_path(relative=relative, directory=True)
+    role_files = acceptance + generated + publication + hygiene + explanatory
+    for relative in role_files:
+        _validate_policy_path(relative=relative, directory=False)
+    duplicates = sorted(
+        relative for relative in set(role_files)
+        if role_files.count(relative) > 1
+    )
+    if duplicates:
+        raise ValidationProvenanceError(
+            "Source policy assigns multiple roles to: {}".format(
+                ",".join(duplicates)
+            )
+        )
+    if SOP.as_posix() not in acceptance:
+        raise ValidationProvenanceError(
+            "SOP.md must be an acceptance source file"
+        )
+    if set(generated) != {README.as_posix(), REPORT.as_posix()}:
+        raise ValidationProvenanceError(
+            "Source policy generated_artifacts must match README and report"
+        )
+    policy = SourcePolicy(
+        runtime_source_directories=runtime,
+        acceptance_source_files=acceptance,
+        generated_artifacts=generated,
+        publication_governance_files=publication,
+        repository_hygiene_files=hygiene,
+        explanatory_non_authoritative=explanatory,
+    )
+    _validate_sop_authority_references(workdir=workdir, policy=policy)
+    return policy
+
+
+def _git_paths(*, workdir: Path, policy: SourcePolicy) -> List[str]:
+    """Return the exact tracked source closure declared by the policy."""
+    paths = sorted(set(_nul(_git(
+        workdir,
+        ["ls-files", "-z", "--", *policy.source_paths],
+    ))))
+    required = set(policy.acceptance_source_files)
+    required.add(SOURCE_POLICY_RELATIVE_PATH.as_posix())
+    missing = sorted(required - set(paths))
+    if missing:
+        raise ValidationProvenanceError(
+            "Required source inputs are not tracked: {}".format(
+                ",".join(missing)
+            )
+        )
+    empty_directories = sorted(
+        directory for directory in policy.runtime_source_directories
+        if not any(
+            path == directory or path.startswith(directory + "/")
+            for path in paths
+        )
+    )
+    if empty_directories:
+        raise ValidationProvenanceError(
+            "Runtime source directories have no tracked files: {}".format(
+                ",".join(empty_directories)
+            )
+        )
     return paths
 
 
-def _dirty(workdir: Path) -> List[str]:
+def _dirty(*, workdir: Path, policy: SourcePolicy) -> List[str]:
+    """Return tracked, staged, ignored, or untracked source-policy changes."""
     commands = (
-        ["diff", "--name-only", "-z", "--", *SOURCE_PATHS],
-        ["diff", "--cached", "--name-only", "-z", "--", *SOURCE_PATHS],
-        ["ls-files", "--others", "-z", "--", *SOURCE_PATHS],
+        ["diff", "--name-only", "-z", "--", *policy.source_paths],
+        ["diff", "--cached", "--name-only", "-z", "--", *policy.source_paths],
+        ["ls-files", "--others", "-z", "--", *policy.source_paths],
     )
     paths = set()
     for command in commands:
         paths.update(_nul(_git(workdir, command)))
     return sorted(
         path for path in paths
-        if "__pycache__" not in Path(path).parts and Path(path).suffix not in {".pyc", ".pyo"}
+        if all((
+            "__pycache__" not in Path(path).parts,
+            Path(path).suffix not in {".pyc", ".pyo"},
+        ))
     )
 
 
-def _filesystem_paths(workdir: Path) -> List[str]:
+def _filesystem_paths(*, workdir: Path, policy: SourcePolicy) -> List[str]:
+    """Enumerate a complete no-Git light-package source closure."""
     paths: List[str] = []
-    for directory_name in SOURCE_DIRS:
-        directory = workdir / directory_name
-        if not directory.exists():
-            continue
+    for directory_name in policy.runtime_source_directories:
+        directory = _repo(workdir, directory_name)
         if directory.is_symlink() or not directory.is_dir():
-            raise ValidationProvenanceError("Source directory is not a real directory: {}".format(directory))
+            raise ValidationProvenanceError(
+                "Source directory is not a real directory: {}".format(
+                    directory
+                )
+            )
         for path in directory.rglob("*"):
             if path.is_symlink():
-                raise ValidationProvenanceError("Source input is a symlink: {}".format(path))
+                raise ValidationProvenanceError(
+                    "Source input is a symlink: {}".format(path)
+                )
             if path.is_dir():
                 continue
             relative = path.relative_to(workdir)
-            if "__pycache__" in relative.parts or path.suffix in {".pyc", ".pyo"}:
+            ignored = any((
+                "__pycache__" in relative.parts,
+                path.suffix in {".pyc", ".pyo"},
+            ))
+            if ignored:
                 continue
             if not path.is_file():
-                raise ValidationProvenanceError("Source input is not a regular file: {}".format(path))
+                raise ValidationProvenanceError(
+                    "Source input is not a regular file: {}".format(path)
+                )
             paths.append(relative.as_posix())
-    # Explicit singleton files are part of the declared closure, not optional
-    # discoveries. A no-Git light package cannot delete one to shrink its proof.
-    for relative in SOURCE_FILES:
-        path = _repo(workdir, relative)
-        _read(path)
+    # Explicit files prevent light packages from deleting a singleton to shrink
+    # the closure. The policy stays explicit even if config/ is reclassified.
+    explicit = policy.acceptance_source_files + (
+        SOURCE_POLICY_RELATIVE_PATH.as_posix(),
+    )
+    for relative in explicit:
+        _read(_repo(workdir, relative))
         paths.append(relative)
     paths = sorted(set(paths))
     if not paths:
-        raise ValidationProvenanceError("Filesystem source-input closure is empty")
+        raise ValidationProvenanceError(
+            "Filesystem source-input closure is empty"
+        )
     return paths
 
 
-def _tree(workdir: Path, paths: Iterable[str]) -> Tuple[str, int]:
+def _tree(*, workdir: Path, paths: Iterable[str]) -> Tuple[str, int]:
+    """Hash repository-relative path, byte length, and content identity."""
     digest, count = hashlib.sha256(), 0
     for relative in sorted(paths):
         content = _read(_repo(workdir, relative))
-        digest.update("{}\0{}\0{}\n".format(relative, len(content), hashlib.sha256(content).hexdigest()).encode("utf-8"))
+        record = "{}\0{}\0{}\n".format(
+            relative,
+            len(content),
+            hashlib.sha256(content).hexdigest(),
+        )
+        digest.update(record.encode("utf-8"))
         count += 1
     return digest.hexdigest(), count
 
 
 def capture_source_snapshot(*, workdir: Path) -> SourceSnapshot:
+    """Capture one clean policy-defined Git or explicit light source tree."""
+    policy = load_source_policy(workdir=workdir)
     metadata_error = git_checkout_metadata_error(repo_root=workdir)
     if metadata_error:
         if not _repo(workdir, LIGHT_MARKER.as_posix()).is_file():
             raise ValidationProvenanceError(
-                "Git source provenance unavailable outside an explicit light package: " + metadata_error
+                "Git source provenance unavailable outside an explicit light "
+                "package: {}".format(metadata_error)
             )
-        tree, count = _tree(workdir, _filesystem_paths(workdir))
-        return SourceSnapshot("LIGHT_PACKAGE_NO_GIT", None, tree, count, ())
+        tree, count = _tree(
+            workdir=workdir,
+            paths=_filesystem_paths(workdir=workdir, policy=policy),
+        )
+        return SourceSnapshot(
+            checkout_status="LIGHT_PACKAGE_NO_GIT",
+            source_commit=None,
+            tree_sha256=tree,
+            file_count=count,
+            dirty_paths=(),
+        )
     commit = _git(workdir, ["rev-parse", "HEAD"]).decode("utf-8").strip()
     if re.fullmatch(r"[0-9a-f]{40}", commit) is None:
-        raise ValidationProvenanceError("Git HEAD is not a full commit SHA: {}".format(commit))
-    dirty = _dirty(workdir)
+        raise ValidationProvenanceError(
+            "Git HEAD is not a full commit SHA: {}".format(commit)
+        )
+    dirty = _dirty(workdir=workdir, policy=policy)
     if dirty:
-        raise ValidationProvenanceError("Source-input files are dirty: {}".format(",".join(dirty)))
-    tree, count = _tree(workdir, _git_paths(workdir))
-    return SourceSnapshot("GIT_CLEAN", commit, tree, count, ())
-
-
-def _json(path: Path) -> Dict[str, object]:
-    try:
-        payload = json.loads(_read(path).decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError) as error:
-        raise ValidationProvenanceError("Invalid UTF-8 JSON object: {}".format(path)) from error
-    if not isinstance(payload, dict):
-        raise ValidationProvenanceError("JSON root must be an object: {}".format(path))
-    return payload
+        raise ValidationProvenanceError(
+            "Source-input files are dirty: {}".format(",".join(dirty))
+        )
+    tree, count = _tree(
+        workdir=workdir,
+        paths=_git_paths(workdir=workdir, policy=policy),
+    )
+    return SourceSnapshot(
+        checkout_status="GIT_CLEAN",
+        source_commit=commit,
+        tree_sha256=tree,
+        file_count=count,
+        dirty_paths=(),
+    )
 
 
 def _manifest(workdir: Path) -> Dict[str, object]:
@@ -411,14 +713,23 @@ def _schema_errors(payload: Mapping[str, object]) -> List[str]:
 
 
 def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: bool = True) -> VerificationResult:
+    """Verify policy, source identity, manifest identity, and artifact bytes."""
     errors: List[str] = []
     warnings: List[str] = []
     try:
+        load_source_policy(workdir=workdir)
+    except ValidationProvenanceError as error:
+        errors.append(str(error))
+    try:
         path = _repo(workdir, PROVENANCE_RELATIVE_PATH.as_posix())
     except ValidationProvenanceError as error:
-        return VerificationResult((str(error),), ())
+        errors.append(str(error))
+        return VerificationResult(tuple(errors), ())
     if not path.exists():
-        return VerificationResult(("validation snapshot provenance is missing",), ())
+        errors.append("validation snapshot provenance is missing")
+        return VerificationResult(tuple(errors), ())
+    if errors:
+        return VerificationResult(tuple(errors), ())
     try:
         payload, manifest = _json(path), _manifest(workdir)
     except ValidationProvenanceError as error:
@@ -430,10 +741,15 @@ def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: b
         if payload[pkey] != manifest[mkey]:
             errors.append("{} does not match validation manifest".format(pkey))
     published = SourceSnapshot(
-        str(payload["source_checkout_status"]),
-        str(payload["source_commit"]) if payload["source_commit"] is not None else None,
-        str(payload["source_input_tree_sha256"]), int(payload["source_file_count"]),
-        tuple(str(x) for x in payload["source_dirty_paths"]),
+        checkout_status=str(payload["source_checkout_status"]),
+        source_commit=(
+            str(payload["source_commit"])
+            if payload["source_commit"] is not None
+            else None
+        ),
+        tree_sha256=str(payload["source_input_tree_sha256"]),
+        file_count=int(payload["source_file_count"]),
+        dirty_paths=tuple(str(x) for x in payload["source_dirty_paths"]),
     )
     if not _manifest_matches(str(manifest["source_commit"]), published):
         errors.append("validation manifest source_commit does not identify the published source commit")

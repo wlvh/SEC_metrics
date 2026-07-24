@@ -2,9 +2,9 @@
 
 **Purpose**: give project owners, auditors, and developers a complete working grasp of the SEC_metrics spike — its objective, architecture, computation logic, evidence chain, accuracy defenses, acceptance procedure, extension path, and the boundaries of expert review.
 
-> **Document status: active explanatory guide with historical run snapshots.**
+> **Document status: explanatory non-authoritative guide with historical run snapshots.**
 >
-> Stable principles, architecture, metric semantics, and audit procedures remain current unless contradicted by code, tests, or the authoritative documents they cite. Numerical counts, code-line counts, risk-closure statements, and acceptance conclusions labelled Round-3 are historical measurements, not the current repository verdict. For current state, read `outputs/validation_run_manifest.json`, run `python3 tools/check_validation_snapshot.py`, and then read `REPORT_十公司财务指标.md`.
+> This file cannot be used as an authoritative SOP input. Stable principles, architecture, metric semantics, and audit procedures remain current only when supported by code, tests, or the authoritative documents they cite. Numerical counts, code-line counts, risk-closure statements, and acceptance conclusions labelled Round-3 are historical measurements, not the current repository verdict. For current state, read `outputs/validation_run_manifest.json`, run `python3 tools/check_validation_snapshot.py`, and then read `REPORT_十公司财务指标.md`.
 
 ---
 

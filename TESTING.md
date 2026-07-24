@@ -26,7 +26,7 @@
 | 层级 | 命令 / 入口 | 网络 | 仓库写入 | 通过条件 | 不能替代 |
 |---|---|---:|---:|---|---|
 | 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py'` | 否 | 测试设计上只写临时目录 | unittest 全部通过；允许的 skip 必须在记录中说明 | full evidence、Golden、完整阶段 |
-| Provenance 专项 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_validation_provenance tests.test_validation_provenance_light_package` | 否 | 只写临时目录和临时 Git 仓库 | clean/full/light、dirty source、缺 singleton source、equivalent tree、artifact tamper 与 postflight fail-closed 回归通过 | 业务指标、Golden、SEC evidence |
+| Provenance 专项 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_validation_provenance tests.test_validation_provenance_light_package` | 否 | 只写临时目录和临时 Git 仓库 | source policy schema/角色、SOP 权威引用、`01_SOP...md` dirty 负例、clean/full/light、缺 acceptance source、equivalent tree、artifact tamper 与 postflight fail-closed 回归通过 | 业务指标、Golden、SEC evidence |
 | 能力文档对齐 | `python3 tools/check_capability_contract_alignment.py`；PR 再加 `--base-ref <base>` | 否 | 否 | 清除会重定向仓库的 Git 环境变量并禁用 replacement refs 后，证据路径存在于 HEAD、是 regular blob 且工作树 bytes 未偏离 HEAD；anchor grammar/唯一性、type/status 枚举、null anchor 的 `untested_reason`/`pending_since`、`file::symbol` 与 Markdown directive 均合法；跨 base tombstone 不删除/复用，base 与 HEAD 的每条 request row 严格匹配其 current/legacy CSV schema，legacy row 独立规范化为 portable 完整字段，current row 逐字段保留有序前缀且只尾部追加 | claim 语义与证据强度判断 |
 | 静态扩展性 gate | `python3 tools/check_no_company_literals.py` | 否 | 是，覆盖 `outputs/scalability_audit.csv` | 无禁止 identity literal，进程退出 0 | 指标正确性、场景回归 |
 | Golden | `python3 scripts/10_run_golden_assertions.py` | full 模式会联网；light 不联网 | full 模式覆盖 Golden outputs，并可能追加 evidence/log | 所有适用 assertion PASS；light 只能得到受限完整性结果 | repair gate、snapshot checker、外部验收 |
@@ -62,6 +62,8 @@
 
 `tests/test_validation_provenance.py` 与 `tests/test_validation_provenance_light_package.py` 额外覆盖：
 
+- `config/validation_source_policy.json` 的 exact schema、互斥角色与 SOP 权威引用分类；`01_SOP...md` 或 CIK identity rules 作为 acceptance source，Expert Guide 作为解释性非权威文档，PR Checklist 作为发布治理；
+- 只修改 `01_SOP...md` 时 source capture 必须明确拒绝，不能保持相同 digest/count 与 `GIT_CLEAN`；从 policy 删除该 SOP 权威输入也必须 fail closed；
 - clean full/light round-trip、manifest source-commit 绑定和内容等价 merge commit warning；
 - staged、untracked、ignored 或修改后的 source input 拒绝；
 - 无 Git light package 缺少任一显式 singleton source 文件时失败，不能通过删文件缩小 closure；
@@ -141,7 +143,7 @@ stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失
 | 普通 Python 逻辑 | 快速回归 | scalability gate；涉及指标/验证时再跑 Golden 与 repair gate |
 | 公司、CIK、profile 或 extractor 配置 | 快速回归、第 11 家 fixture、scalability gate | 在隔离 checkout 跑受影响阶段、Golden 与 repair gate |
 | parser、期间、证据或 CSV schema | 快速回归 + 受影响阶段 | 隔离 checkout 中完整场景、Golden、repair gate 与产物 diff |
-| validation / report verdict / provenance | 快速回归 + provenance 专项 + Golden + repair gate | 阶段 11 后显式跑 12 和 snapshot checker，验证失败传播、sidecar 与报告内容 |
+| validation / report verdict / provenance | 快速回归 + provenance 专项 + source policy JSON/SOP authority alignment + Golden + repair gate | 阶段 11 后显式跑 12 和 snapshot checker，验证失败传播、sidecar 与报告内容 |
 | SEC HTTP 客户端或 URL | 快速回归中的本地 persistence failure/path、read-timeout、symlink 与 request-log exact-set 测试 | 有效身份下的 live smoke 与 retry/backoff mock，再按影响范围跑场景 |
 | 仅报告文案 | 生成器相关检查，不能手改生成报告替代代码 | 若运行阶段 11，必须随后运行阶段 12 和 snapshot checker |
 
@@ -181,7 +183,7 @@ stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失
 - unittest：从失败 test method 回到对应 helper 与 fixture；不要用改 expected 的方式消除真实回归。
 - Golden：查看 `outputs/golden_results.csv` 的 expected、actual、evidence path 与 notes。
 - Repair：先读 `outputs/validation_run_manifest.json`，只打开 `refreshed_artifacts` 中的 validation/audit 文件；再查看 `outputs/repair_validation_results.csv` 的 `check_id`、status 与 details。
-- Snapshot：运行 `python3 tools/check_validation_snapshot.py`，先区分 missing/unsafe sidecar、source dirty/tree/file-count mismatch、manifest identity mismatch 与具体 artifact SHA-256/size mismatch。
+- Snapshot：运行 `python3 tools/check_validation_snapshot.py`，先区分 source policy schema/角色或 SOP authority mismatch、missing/unsafe sidecar、source dirty/tree/file-count mismatch、manifest identity mismatch 与具体 artifact SHA-256/size mismatch。
 - 指标/证据不一致：先核对 `metrics_matrix.csv` 是否恰好包含 registry/profile/applicability contract 推导的 unique `(company, metric_id)` set，再与 `metric_evidence.csv` join；8-K 指标还要从 request ledger→submissions bytes→inventory→raw filing bytes→events→metric/component evidence 顺向核对。
 - coverage：先核对 `coverage_matrix.csv` 的 unique key set 是否与 metrics matrix 完全一致，再检查 status、has_evidence、needs_review 与 reason。
 - live 请求：在阶段顺序运行前提下，先核对 `evidence/requests_log_manifest.json` 的整表 row count/hash、Git HEAD/base 有序前缀、下游 locator 与已存 sidecar 反向覆盖，再检查 `evidence/requests_log.csv` 的 URL、status、User-Agent、retry_attempt、error，以及 body/header locator 与 `content_sha256`；完整性不一致是 FAIL，历史 bytes mismatch 只能是 NOT_EVALUATED。同一 repository 的 log publication 在 cooperating threads / POSIX processes 间串行化，但限速仍是 per-client，且不承诺网络文件系统锁语义。

@@ -19,12 +19,12 @@ SEC_metrics 是配置驱动、SEC-only、单财年批处理研究流程。它能
 
 ## 3. 入口与完整完成态
 
-刷新一个完整批次时，运行负责人从 source-input closure clean 的工作区按照 `README_RUN.md` 依序执行阶段 `00` 至 `11`，随后单独运行 `scripts/12_validate_repair.py`。每个 wrapper 只执行一个固定阶段，仓库没有替代这一顺序的统一 orchestrator。
+刷新一个完整批次时，运行负责人从 source-input closure clean 的工作区按照 `README_RUN.md` 依序执行阶段 `00` 至 `11`，随后单独运行 `scripts/12_validate_repair.py`。closure 由 `config/validation_source_policy.json` 定义；其中 runtime source directories、acceptance source files 和 policy 文件自身有未提交改动时都不算 clean。每个 wrapper 只执行一个固定阶段，仓库没有替代这一顺序的统一 orchestrator。
 <!-- capability-anchor: BEHAVIOR.final_state_requires_full_sequence -->
 
 业务验收对象是完成上述顺序且通过最终 gate 后的矩阵、证据、coverage、审计和报告。阶段 `08` 等中间产物可能仍包含待后续 repair 的值；`scripts/11_build_report.py` 即使内部 P0 检查失败也可能生成 NO-GO 报告，因此“报告存在”或“stage 11 exit 0”不等于“批次通过”。阶段 `11` / `12` 会先保持 manifest=`IN_PROGRESS`，用同一 run 的 projected terminal state 原子替换非 symlink regular report，并校验报告的 run_id/result；报告（阶段 11 还包括 README）持久化成功后才发布 manifest 终态。写入失败或 alias 目标时不得留下成功 manifest 与旧/缺报告的跨 run 组合。
 
-stage 11/12 开始时会使旧 `outputs/validation_snapshot_provenance.json` 失效。stage 12 只有在既有 Golden/repair/report terminal publication 成功，并且 source-input tree 与关键 artifact digest sidecar 已原子写入、重新读取且验证通过后，才返回零。provenance postflight 失败必须使终态 fail closed，而不能留下可复用的旧 success proof。
+stage 11/12 开始时会使旧 `outputs/validation_snapshot_provenance.json` 失效。stage 12 在主 gate 前读取 source policy，并机械检查 `SOP.md` 的权威引用是否已分类；未分类引用或把 explanatory non-authoritative 文件放在权威引用列都会失败。只有既有 Golden/repair/report terminal publication 成功，并且 source-input tree 与关键 artifact digest sidecar 已原子写入、重新读取且验证通过后，stage 12 才返回零。provenance postflight 失败必须使终态 fail closed，而不能留下可复用的旧 success proof。
 <!-- capability-anchor: BEHAVIOR.validation_snapshot_binds_source_and_artifacts -->
 
 ## 4. 核心用户旅程
@@ -64,7 +64,7 @@ C04 不仅检查已生成的 metric 文字。repair 必须先检查 filed `targe
 
 ### 4.5 判断批次能否继续使用
 
-用户最后先读 `outputs/validation_run_manifest.json`，只把 `refreshed_artifacts` 中的 tracked validation/audit 文件视为本次运行已刷新；随后必须运行 `python3 tools/check_validation_snapshot.py`，验证当前 source-input tree 与 `outputs/validation_snapshot_provenance.json` 记录的关键 artifact SHA-256/size。checker 通过后，再核对 repair validation、stratified audit、Golden、矩阵、evidence 与报告中的 GO、GO WITH CAVEATS 或 NO-GO。
+用户最后先读 `outputs/validation_run_manifest.json`，只把 `refreshed_artifacts` 中的 tracked validation/audit 文件视为本次运行已刷新；随后必须运行 `python3 tools/check_validation_snapshot.py`，验证 source policy/SOP authority alignment、当前 source-input tree 与 `outputs/validation_snapshot_provenance.json` 记录的关键 artifact SHA-256/size。checker 通过后，再核对 repair validation、stratified audit、Golden、矩阵、evidence 与报告中的 GO、GO WITH CAVEATS 或 NO-GO。
 <!-- capability-anchor: CAPABILITY.validation_verdict -->
 <!-- capability-anchor: BEHAVIOR.validation_manifest_controls_freshness -->
 
