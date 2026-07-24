@@ -2,11 +2,15 @@
 
 **Purpose**: give project owners, auditors, and developers a complete working grasp of the SEC_metrics spike — its objective, architecture, computation logic, evidence chain, accuracy defenses, acceptance procedure, extension path, and the boundaries of expert review.
 
+> **Document status: active explanatory guide with historical run snapshots.**
+>
+> Stable principles, architecture, metric semantics, and audit procedures remain current unless contradicted by code, tests, or the authoritative documents they cite. Numerical counts, code-line counts, risk-closure statements, and acceptance conclusions labelled Round-3 are historical measurements, not the current repository verdict. For current state, read `outputs/validation_run_manifest.json`, run `python3 tools/check_validation_snapshot.py`, and then read `REPORT_十公司财务指标.md`.
+
 ---
 
 ## Table of Contents
 
-0. Confidence declaration and current status
+0. Confidence declaration, historical snapshot, and current-state reading rule
 1. What this project is: scope and actual deliverables
 2. Where the data comes from: SEC's three data planes and an XBRL primer
 3. Architecture: monolith, pipeline, and the three principles of knowledge placement
@@ -26,16 +30,16 @@
 
 ---
 
-## 0. Confidence declaration for this document (read this section first)
+## 0. Confidence declaration, historical snapshot, and current-state rule (read this section first)
 
-The current verdict must be split into two layers:
+The Round-3 verdict recorded by this document was split into two layers. It must not be reused as the current repository verdict:
 
-| Object of acceptance | Current conclusion | Reason |
+| Historical object of acceptance | Historical conclusion | Reason |
 |---|---|---|
 | Removal of company-specific branching + light-review hardening | ACCEPT WITH CAVEATS | Company-name-keyed business dispatch is at zero; the profile / extractor / concept-probe architecture is in place; both the Basel threshold defect and the light-golden circular self-attestation defect are fixed. |
 | Scale-ready productionization | Partially complete; a live pilot is still required | The old risks — scale route, 10-K/A fallback, Basel threshold, captive finance — are closed. Still outstanding: FI SIC coverage, lodging-table recall, and value-level assertions for newly consumed dimensional amount facts. All of it needs a real 11th company (Hilton / Citi / GM / ServiceNow) run end to end. |
 
-Since the merge, this document carries a three-tier confidence marker:
+For interpreting that historical snapshot, this document carries a three-tier confidence marker:
 
 ```text
 [MEASURED]         Code or an adversarial test was executed; the run output is the proof.
@@ -43,7 +47,16 @@ Since the merge, this document carries a three-tier confidence marker:
 [ASSERTED]         A claim inherited from a report or an earlier document, not independently re-verified this round.
 ```
 
-Anything not explicitly marked defaults to [SOURCE-VERIFIED]. The numerical counts below are the explicitly labelled Round-3 historical snapshot, not proof of a later run. For current tracked validation or audit evidence, read `outputs/validation_run_manifest.json` first and use only its `refreshed_artifacts`; Golden, metrics, and other inputs need their own rerun provenance.
+Anything not explicitly marked defaults to [SOURCE-VERIFIED]. The numerical counts below are the explicitly labelled Round-3 historical snapshot, not proof of a later run. Current acceptance uses this order:
+
+```text
+outputs/validation_run_manifest.json
+→ python3 tools/check_validation_snapshot.py
+→ REPORT_十公司财务指标.md
+→ metrics / evidence / coverage and refreshed validation artifacts
+```
+
+The manifest identifies the run and freshness set; the checker binds the current source-input tree and key artifact bytes to that run. A report, CSV, historical count, or old ACCEPT conclusion is never current-state proof by itself.
 
 ---
 
@@ -99,7 +112,9 @@ XBRL (eXtensible Business Reporting Language) is the standard for turning financ
 
 ### 2.3 HTTP discipline
 
-[SOURCE-VERIFIED] as implemented in `sec_http.py`: every request carries `User-Agent: <organization> <email>`; each `SecHttpClient` instance applies process-local sleep pacing at the configured rate, with no coordination across clients or processes; 403/429/5xx responses use exponential backoff and retry; and every request attempt is appended to `evidence/requests_log.csv`. New attempts with a response body persist an immutable content-addressed body/header pair as well as the caller-visible working path. The historical Round-3 log contained 859 request records across exactly **www.sec.gov and data.sec.gov**, but 38 old rows no longer resolve to bytes matching their recorded hash; those observations are `NOT_EVALUATED_MISSING_EVIDENCE`, not reproducible PASS evidence.
+[SOURCE-VERIFIED] as implemented in `sec_http.py`: every request carries `User-Agent: <organization> <email>`; each `SecHttpClient` instance applies process-local sleep pacing at the configured rate, with no coordination across clients or processes; 403/429/5xx responses use exponential backoff and retry; redirect following is disabled; and every request attempt is appended to `evidence/requests_log.csv`. New attempts with a response body persist an immutable content-addressed body/header pair as well as the caller-visible working path. `evidence/requests_log_manifest.json` binds the request CSV schema, row count, and whole-file SHA-256.
+
+The Round-3 snapshot recorded 859 request rows and 38 historical rows whose recorded body identity could no longer be replayed. Those numbers are historical only. Current request-history completeness must be read from the present request log/manifest, response sidecars, validation rows, and snapshot checker; any row that no longer resolves to matching bytes is `NOT_EVALUATED_MISSING_EVIDENCE`, never reproducible PASS evidence.
 
 ---
 
@@ -107,7 +122,7 @@ XBRL (eXtensible Business Reporting Language) is the standard for turning financ
 
 ### 3.1 Physical shape: one monolith plus thirteen thin wrappers
 
-All logic lives in a single module, `scripts/sec_pipeline.py` (~14,000 lines). The thirteen numbered scripts from `00_smoke_test_sec_access.py` to `12_validate_repair.py` are about twenty lines each and do exactly one thing: `run_stage(stage_name="...")`. The dispatch table is the `STAGES` dict at the tail of the monolith. This shape is a pragmatic choice for a spike and should be split apart when the system is productionized — but what **must survive the split** is the logical architecture described below.
+The physical architecture remains a monolithic `scripts/sec_pipeline.py` plus thirteen numbered wrappers from `00_smoke_test_sec_access.py` to `12_validate_repair.py`. The wrappers call `run_stage(stage_name="...")`; stage 11 and stage 12 additionally enforce validation-provenance publication around the monolith. The historical Round-3 line count was approximately 14,000 and must not be treated as a current metric. This shape is a pragmatic choice for a spike and should be split apart when the system is productionized — but what **must survive the split** is the logical architecture described below.
 
 ### 3.2 The pipeline: physical stages 00–12
 
@@ -124,7 +139,7 @@ All logic lives in a single module, `scripts/sec_pipeline.py` (~14,000 lines). T
 09    Text KPIs           MD&A text ──> lodging KPIs + risk/legal text signals
 10    Golden assertions   independently recomputed acceptance assertions
 11    Bounded repair      primarily local; C04 AuditorName may conditionally fetch official SEC material when required local facts are unavailable; then report generation
-12    Independent gate    validation run manifest + repair validation + refreshed report verdict
+12    Independent gate    validation run manifest + repair validation + refreshed report verdict + snapshot provenance publication/self-check
 ```
 
 Each stage's output is simultaneously the next stage's input and an independently auditable intermediate artifact. This "persist every layer" design is what lets an agent recompute and verify from any cut point in the pipeline.
@@ -192,9 +207,9 @@ When extending to a thousand companies, advance by industry cluster. For each cl
 
 ## 4. How the numbers are computed: the five data pathways, one by one
 
-The 161 valued cells in the matrix arrive via five pathways. Each one's mechanism, error-prevention design, and known boundaries follow.
+The 161 valued cells referenced below belong to the historical Round-3 matrix. The pathways and invariants remain the useful part; current row counts must come from the current artifacts.
 
-### 4.1 Pathway one: STD_XBRL standard metrics + DERIVED (69 cells — revenue, net income, assets, cash flow, and so on)
+### 4.1 Pathway one: STD_XBRL standard metrics + DERIVED (historical Round-3: 69 cells — revenue, net income, assets, cash flow, and so on)
 
 **The selection algorithm** (locked in definition document 02; [MEASURED] every Enphase and Ford value was recomputed by a fully independent implementation and reconciled against live SEC, with agreement):
 
@@ -220,7 +235,7 @@ RevenueFromContractWithCustomerExcludingAssessedTax → Revenues
 
 Real-world evidence that this is necessary ([MEASURED]): Marriott and Pfizer fall back to `Revenues`; Ford's capex hits the tail of the chain at `PaymentsToAcquireProductiveAssets` — live SEC confirms the conventional concept at the head of the chain **simply does not exist** in Ford's companyfacts; Ford's net income hits `ProfitLoss` (a basis that includes non-controlling interests, transparently annotated in the notes).
 
-**Derived formulas and basis discipline** (44 cells):
+**Derived formulas and basis discipline** (historical Round-3: 44 cells):
 
 ```text
 EBITDA proxy       = operating income + D&A (impairment explicitly NOT added back;
@@ -241,7 +256,7 @@ Current ratio        structurally inapplicable to banks → JPM is marked N_A_ST
                      line item" into machine evidence)
 ```
 
-### 4.2 Pathway two: DIM_XBRL dimensional metrics (12 cells — JPM's two capital ratios plus AuditorName for all 10 companies)
+### 4.2 Pathway two: DIM_XBRL dimensional metrics (historical Round-3: 12 cells — JPM's two capital ratios plus AuditorName for all 10 companies)
 
 This pathway consumes the instance inventory that M3 streams out (several thousand facts per company, with complete dimensions). Three resolvers:
 
@@ -271,15 +286,15 @@ Three design principles here are worth committing to memory:
 
 **(c) Exclude thresholds.** A bank's 10-K tags both the actual ratio and the **regulatory minimum requirement** (the 7.0% adequacy floor, the 6.5% well-capitalized floor). The two share the same unit, the same dimensions, and the same period. Without lexical exclusion, the regulatory floor can be selected as the bank's actual ratio ([MEASURED]: a same-dimension head-to-head test defeated the earlier filter in round 4; the final version culls thresholds at the candidate-pool stage). Excluded threshold facts are **not discarded** — they are moved into `basel_ratio_candidates.csv` tagged `candidate_role=regulatory_threshold`. They are valuable context: the distance between the actual ratio and the floor *is* the capital buffer.
 
-Final JPM output: A01 = 0.155, A02 = 0.146 (parent-company consolidated scope; the Basel basis is stated in the notes).
+Historical Round-3 JPM output: A01 = 0.155, A02 = 0.146 (parent-company consolidated scope; the Basel basis is stated in the notes).
 
 **The RPO resolver** (B12 — Salesforce's remaining performance obligation). RPO is a mandatory disclosure under ASC 606, the current revenue-recognition standard, and `us-gaap:RevenueRemainingPerformanceObligation` is a standard concept — which means this metric is obtainable for **any company in the market** with zero company-specific code. The resolver: exact-or-suffix concept match (tolerating a company-prefixed extension) + exclusion of timing-axis concepts + USD unit + prefer a total-type fact, falling back to summing the current and noncurrent components. [MEASURED] Salesforce total RPO = $72.4B = $35.1B current + $37.3B noncurrent — internally consistent.
 
 The historical lesson: the first-generation implementation was a text regex with the date string `"as of January 31, 2026"` burned into it, laboriously reconstructing a number that was already sitting there, structured. **If a concept exists in the structured inventory, a text regex is forbidden.** That rule is now frozen into a validation gate.
 
-**The AuditorName comparator** (C04 — auditor rotation signal). `dei:AuditorName` is a standard fact that every 10-K is required to tag. Two paths: scan 8-K item 4.01 (the item type dedicated to auditor changes), and compare AuditorName between the current-year and prior-year 10-K instances. All ten companies pass through as DIM_XBRL_OK.
+**The AuditorName comparator** (C04 — auditor rotation signal). `dei:AuditorName` is a standard fact in annual-report instances. The current authoritative C04 path compares the current and prior 10-K facts, replayed from request-bound accession materials with same-CIK period discipline. An 8-K Item 4.01 can provide event context, but it does not independently determine the C04 metric. Missing or conflicting annual-report facts must degrade explicitly rather than being first-win selected or silently replaced by an 8-K signal.
 
-### 4.3 Pathway three: MDA text KPIs (2 cells — Marriott's occupancy and RevPAR)
+### 4.3 Pathway three: MDA text KPIs (historical Round-3: 2 cells — Marriott's occupancy and RevPAR)
 
 Technically the most delicate component in the project, because it has to reliably lift numbers out of a **free-text table with no structured tags**. RevPAR (revenue per available room), ADR (average daily rate), and occupancy are the lodging industry's three headline KPIs, and they appear only inside the operating-statistics tables of the MD&A. The final pipeline ([MEASURED] against four synthetic adversarial tables):
 
@@ -308,7 +323,7 @@ Step 5 is the keystone. Whichever assignment of the three numbers satisfies the 
 
 [MEASURED]: Marriott's column order (RevPAR first) and Hilton's customary column order (Occupancy first) are both resolved correctly, with an identity error of 0.02%. A three-year comparison table (whose rhythm does not match) and a growth-rate sentence such as "RevPAR increased 2.0%" (the prototype of the round-1 incident) both honestly come back empty-handed. The identity gate compresses the wrong-rhythm failure mode into **lost recall rather than a wrong value** — and that ordering of failure severities is the correct one. The evidence quote carries four segments at once: `raw_header= / raw_row= / parsed= / identity_error=`, so it is simultaneously verbatim and re-checkable.
 
-### 4.4 Pathway four: DEF14A governance (8 cells — CEO compensation)
+### 4.4 Pathway four: DEF14A governance (historical Round-3: 8 cells — CEO compensation)
 
 `ecd` is the executive-compensation XBRL taxonomy that the SEC's pay-versus-performance rule requires every filer to use in its proxy statement (DEF 14A). C03 consumes `ecd:PeoTotalCompAmt` directly (PEO = principal executive officer, i.e. the CEO): iterate over every company, filter on the same concept, require the USD unit and the target fiscal-year end — **zero company-identity keys, generalizing by construction**. Eight companies hit (JPM $40.6M, Salesforce $49.4M, ...); Marriott's and Paramount's proxies carry no such ecd concept, and are honestly marked NOT_EXTRACTED.
 
@@ -316,9 +331,9 @@ Multi-PEO scenarios (co-CEOs, a mid-year handover): all line items go into `gove
 
 The historical lesson: the first-generation implementation captured meaningless small decimals mismatched by a text regex (66, 196, ...) while the correct answer lay unconsumed in the ecd inventory the pipeline had itself dumped to disk. That is the origin of the term **"last-mile consumption failure"**, and the reason the "inventory-first" gate exists.
 
-### 4.5 Pathway five: 8-K event signals (60 cells)
+### 4.5 Pathway five: 8-K event signals (historical Round-3: 60 cells)
 
-An 8-K is a real-time report of a material event, and the `hdr.sgml` header of each one carries an `<ITEMS>` tag listing the item numbers (5.02 = executive change, 4.01 = auditor change, 4.02 = restatement, 1.03 = bankruptcy, 1.01 = material agreement, 2.01/8.01 = M&A-related). M4 parses the item numbers of every 8-K in the fiscal-year window (about 326 events in the final version, with 125 multi-item filings correctly split into separate rows) and maps them onto C01 and E01–E05.
+An 8-K is a real-time report of a material event, and the `hdr.sgml` header of each one carries an `<ITEMS>` tag listing the item numbers (5.02 = executive change, 4.01 = auditor change, 4.02 = restatement, 1.03 = bankruptcy, 1.01 = material agreement, 2.01/8.01 = M&A-related). M4 parses the item numbers of every 8-K in the fiscal-year window. The Round-3 snapshot contained about 326 event rows and 125 multi-item filings; current counts must come from `outputs/events.csv` and the current validation chain.
 
 Two design points. E01 (M&A) cannot rest on Item 8.01 alone — that is the "Other Events" catch-all — so body-text keyword confirmation is required. And when the E02 (bankruptcy) count is zero, the report explicitly states that **zero is the expected result**: the semantics of a zero must be declared, or a reader cannot distinguish "it did not happen" from "we did not look."
 
@@ -353,7 +368,7 @@ Every value must carry three things: accession (which filing) + concept_or_secti
 
 The meta-rule established from that: **a wrong value wearing an OK status is an order of magnitude more dangerous than a missing value.** A miss is a visible hole. A wrong number is a silent poison.
 
-### 5.2 Defense two: the golden assertion system (63 assertions)
+### 5.2 Defense two: the golden assertion system (historical Round-3: 63 assertions)
 
 Golden assertions are the dedicated antidote to "the code ran, and the number is wrong." For two benchmark companies — Enphase (clean standard XBRL) and Ford (deliberately chosen to step on mines) — every core value was checked by hand against the original annual report in advance and **frozen as an expected value** (stored in `tests/fixtures/sec_10_company_spike/golden_expected_values.csv`). The pipeline must independently reproduce exactly the same numbers.
 
@@ -366,7 +381,7 @@ Four groups:
 
 The iron rule: **an assertion failure halts the run and reports the actual value. Never modify the expected value. Never hard-code around it.**
 
-On independence: the assertions and the computation share a selection function (they live in the same monolith), but the expected values were locked externally by a human. If the selection logic carries a systematic bug, the produced value will fail against the locked constant and expose it. [MEASURED] A completely independent third-party implementation recomputed every golden value and reconciled it against live SEC; all three agree.
+On independence: the assertions and the computation share a selection function (they live in the same monolith), but the expected values were locked externally by a human. If the selection logic carries a systematic bug, the produced value will fail against the locked constant and expose it. [MEASURED] A completely independent third-party implementation recomputed every golden value and reconciled it against live SEC; all three agree. Physical module independence remains a target architecture, not a description of the current monolith.
 
 ### 5.3 Defense three: validation gates
 
@@ -396,7 +411,7 @@ Evidence absent, no marker                  → WORKSPACE_INCOMPLETE, a hard fai
                                                from "corrupted workspace")
 ```
 
-The current regression suite also covers: the Basel same-dimension threshold head-to-head, captive-finance recall/exclusion, the FI value-level fixture, the iXBRL scale route, claim-level missing-evidence non-evaluation, run-manifest fail-closed behavior, clone-root/path-containment portability, immutable per-attempt request persistence, the 10-K/A full-instance fallback, AST string-concatenation folding, capability-contract alignment, and the I1–I8 implementation mapping.
+The current regression suite also covers: the Basel same-dimension threshold head-to-head, captive-finance recall/exclusion, the FI value-level fixture, the iXBRL scale route, claim-level missing-evidence non-evaluation, run-manifest fail-closed behavior, clone-root/path-containment portability, immutable per-attempt request persistence, the 10-K/A full-instance fallback, AST string-concatenation folding, capability-contract alignment, and the I1–I8 implementation mapping. The PR adds a separate source/artifact snapshot-provenance layer: stage 12 must publish and re-read a sidecar that binds a clean source-input tree and the expected artifact key set by SHA-256/size; missing explicit light-package source files, stale proof, source drift, or artifact tampering fail closed.
 
 ### 5.5 The conservation law
 
@@ -410,11 +425,11 @@ The operational corollary is stated in §7.3: **an extractor without a fixture a
 
 ---
 
-## 6. Risk register: what is closed and what is still open (as of 2026-07-09)
+## 6. Historical Round-3 risk register: what was closed and what remained open (as of 2026-07-09)
 
-The risk register below is inherited from the Round-3 review. It is not evidence that a later validation run passed; use the current run manifest, refreshed validation artifacts, and current test output for that claim.
+The risk register below is inherited from the Round-3 review. It is not evidence that a later validation run passed; use the current run manifest, snapshot checker, refreshed validation artifacts, and current test output for that claim.
 
-### 6.1 Closed risks (implemented in code + covered by validation/tests)
+### 6.1 Closed risks (implemented in code + covered by validation/tests in that snapshot)
 
 **C1 — the 10-K/A full-instance fallback is implemented.** The old version had only a local AuditorName fallback inside C04. There is now a general `original_full_instance_fallback_row`: when the target is a 10-K/A, or the target instance holds fewer than 500 facts, or a key fact group is missing, it locates the original 10-K for the same reporting period and writes it into the inventory with `source_role=target_original_full_instance`. The corresponding test asserts that an amended target finds the original 10-K and that a sparse target triggers the fallback reason.
 
@@ -471,7 +486,7 @@ related_ciks / roles      For the Paramount-style dual-CIK case: the predecessor
                           annotation. Event scanning will then cross CIKs automatically.
 ```
 
-Then run stages 00→11 followed by the independent stage 12 gate. Read `validation_run_manifest.json` first, then `company_resolution.csv` (is the identity resolution right?), `coverage_matrix.csv` (which pathway did each metric take, and why was anything unavailable?), and `exceptions_and_review_items.md` (everything awaiting human judgment).
+Then run stages 00→11 followed by the independent stage 12 gate and `python3 tools/check_validation_snapshot.py`. Read `validation_run_manifest.json` first, run the checker, then inspect `company_resolution.csv` (is the identity resolution right?), `coverage_matrix.csv` (which pathway did each metric take, and why was anything unavailable?), and `exceptions_and_review_items.md` (everything awaiting human judgment).
 
 **The correct expectation**: NOT_EXTRACTED and NEEDS_REVIEW appearing on a new company's first run is a normal and honest result. A **suspiciously all-green** result is the one to be alarmed by.
 
@@ -524,28 +539,34 @@ The exceptions list the pilot produces *is* the first genuine requirements docum
 
 ```text
 scripts/
-  sec_pipeline.py        The whole-logic monolith (~14,000 lines). Reading entry points below.
-  sec_http.py            HTTP client: UA, rate limiting, backoff, logging.
+  sec_pipeline.py        The whole-logic monolith. Historical line counts are snapshot metadata.
+  sec_http.py            Exact SEC origins, no implicit redirect, pacing/backoff,
+                         immutable body/header attempts, request ledger + whole-file manifest.
   sec_urls.py            Endpoint URL construction (CIK zero-padding, etc.).
-  00..12_*.py            Thirteen thin stage wrappers; they only call run_stage.
+  git_workspace.py       Git metadata/environment boundary checks.
+  validation_provenance.py  Source-tree capture, artifact-digest publication and fail-closed handling.
+  00..12_*.py            Thirteen thin stage wrappers; stage 11/12 also manage provenance lifecycle.
 config/
   company_registry.csv          The company registry — the only legal home of individual-company info.
   metric_applicability.yaml     Industry profile → extractors + SIC rules + lexical config.
 tools/check_no_company_literals.py              Entry point of the AST generalization gate.
 tools/check_capability_contract_alignment.py   Mechanical anchor/path/symbol alignment only.
+tools/check_validation_snapshot.py             Independent source/artifact byte verifier.
 tests/
   fixtures/sec_10_company_spike/golden_expected_values.csv   The locked expected values.
   fixtures/eleventh_company_smoke/   The 11th-company behavior fixture
                                      (mock data for four real companies across four industries).
   fixtures/regression/previous_ok_status_snapshot.csv        The recall-ratchet baseline.
   test_sec_pipeline_validation.py    Deterministic regression and scenario tests.
+  test_validation_provenance*.py     Snapshot source/artifact and light-closure regressions.
 outputs/   (the schema of every CSV is in §6 of instruction document 03)
-  metrics_matrix.csv     The primary deliverable: 230 rows, 20 columns.
+  metrics_matrix.csv     The primary deliverable; row counts are run-specific.
                          The whole row — not the value — is the minimum auditable unit.
   metric_evidence.csv    Evidence detail (quote / verbatim text / extraction method).
   coverage_matrix.csv    Per-cell pathway and availability attribution.
   golden_results.csv     Golden assertion results for its recorded run.
-  validation_run_manifest.json    The latest validation run's refreshed/not-refreshed evidence list.
+  validation_run_manifest.json    Run identity, mode/result and refreshed/not-refreshed list.
+  validation_snapshot_provenance.json  Successful stage-12 source tree and artifact SHA-256/size binding.
   repair_validation_results.csv   Repair-gate results; trust it only when the manifest marks it refreshed.
   basel_ratio_candidates.csv      The full candidate set of ratios, including role-tagged
                                   threshold context.
@@ -553,19 +574,21 @@ outputs/   (the schema of every CSV is in §6 of instruction document 03)
   governance_signals.csv / risk_legal_signals.csv
   company_resolution.csv / latest_filings_inventory.csv
   exceptions_and_review_items.md  Everything awaiting human judgment.
-evidence/  (full package only)   requests_log.csv + raw SEC responses; new attempts retain content-addressed immutable body/header copies.
+evidence/  (full package only)
+  requests_log.csv + requests_log_manifest.json
+  request_attempts/ + raw SEC responses and sidecars
 LIGHT_REVIEW_PACKAGE.marker      The explicit declaration marker of a light review package.
 ```
 
 **Code-reading path** (in dependency order; the skeleton can be read end to end in roughly half a day):
 
-`run_stage` dispatch table (tail of the file) → the three-state `validation_package_mode` decision → `select_component`, the selection algorithm (the beating heart of every number in this project) → `load_company_registry` + `extractor_names_for_profile`, the dispatch chain → one complete extractor (the five-stage lodging machine is the recommended one) → `stage_run_golden_assertions` + `light_golden_snapshot_integrity_failures`, the two verification paths → the `check_*` family of gates.
+`run_stage` dispatch table (tail of the file) → the three-state `validation_package_mode` decision → `select_component`, the selection algorithm (the beating heart of every number in this project) → `load_company_registry` + `extractor_names_for_profile`, the dispatch chain → one complete extractor (the five-stage lodging machine is the recommended one) → `stage_run_golden_assertions` + `light_golden_snapshot_integrity_failures`, the two verification paths → the `check_*` family of gates → `validation_provenance.py` and `tools/check_validation_snapshot.py`, the terminal byte-binding layer.
 
 ---
 
 ## 9. How to read the output files: navigating from the matrix to the evidence
 
-This section is the hands-on entry point. Open `outputs/validation_run_manifest.json` first. It records the run id, source commit, UTC start, mode, result, and which tracked validation/audit artifacts were or were not refreshed. A CSV's mere existence is never freshness evidence. Golden, metrics, and other inputs are outside this minimal manifest and need their own rerun provenance. Everything below explains how to read artifacts that the manifest identifies as current.
+This section is the hands-on entry point. Open `outputs/validation_run_manifest.json` first. If its result is not `PASSED` or `PASSED_WITH_CAVEATS`, stop acceptance. Next run `python3 tools/check_validation_snapshot.py`; a missing sidecar, dirty or changed source-input tree, manifest/provenance identity mismatch, or artifact SHA-256/size mismatch makes the snapshot unusable. Only then read the report and the artifacts below. A CSV's mere existence is never freshness evidence, and historical Markdown counts are never current-state evidence.
 
 ### 9.1 `metrics_matrix.csv`: the primary deliverable, not the only evidence
 
@@ -664,7 +687,7 @@ In full-package mode, golden should be recomputed from raw evidence / companyfac
 
 ### 9.5 `repair_validation_results.csv`: gate results are not business results
 
-This file records the validation gates — de-special-casing, Basel threshold, light golden integrity, stratified audit, the 11th-company behavior test, and so on. Read it only when the current manifest marks it refreshed, and use the closed five-status vocabulary:
+This file records the validation gates — de-special-casing, Basel threshold, light golden integrity, stratified audit, the 11th-company behavior test, and so on. Read it only when the current manifest marks it refreshed and the snapshot checker validates its bytes, and use the closed five-status vocabulary:
 
 ```text
 PASS                            Required evidence existed; the check ran and passed.
@@ -817,13 +840,19 @@ pattern = "January 31, 2026"
 
 *Symptom*: evidence / concept_inventory are missing, yet the run reports a full PASS.
 
-*Handle*: `LIGHT_REVIEW_PACKAGE.marker` must be present. Full-only checks must emit `SKIPPED_LIGHT_PACKAGE` or `NOT_EVALUATED_MISSING_EVIDENCE`, and the run manifest must retain the caveat. Light mode may never impersonate full validation.
+*Handle*: `LIGHT_REVIEW_PACKAGE.marker` must be present. Full-only checks must emit `SKIPPED_LIGHT_PACKAGE` or `NOT_EVALUATED_MISSING_EVIDENCE`, and the run manifest must retain the caveat. Light mode may never impersonate full validation. In addition, every explicit source file in the no-Git light closure must exist as a non-symlink regular file; deleting one must not shrink the proof set.
 
 ### 11.6 coverage and evidence disagree
 
 *Symptom*: coverage says `has_evidence=1`, but `metric_evidence` has no corresponding row.
 
 *Handle*: coverage must be generated from an actual join of `metrics_matrix` against `metric_evidence` — never by setting the column to 1 across the board.
+
+### 11.7 A successful-looking snapshot no longer matches the checkout
+
+*Symptom*: the manifest is terminal-success or the report says GO, but `tools/check_validation_snapshot.py` reports a source-tree, run-identity, artifact-key-set, size, or SHA-256 mismatch.
+
+*Handle*: treat the snapshot as stale or tampered. Do not edit the sidecar or report to make the checker green; rerun the affected stages from a clean source checkout and publish a new terminal snapshot.
 
 ---
 
@@ -840,7 +869,8 @@ whether the validation snapshot is internally consistent;
 whether golden snapshot integrity resists tampering;
 whether scalability_audit reports 0 violations;
 whether the 11th-company behavior fixture runs;
-whether the stratified audit is all PASS.
+whether the stratified audit is all PASS;
+whether the declared no-Git source closure and packaged artifact bytes remain unchanged.
 ```
 
 Not suitable for verifying:
@@ -871,6 +901,7 @@ python3 scripts/09_extract_mda_and_risk_text.py
 python3 scripts/10_run_golden_assertions.py
 python3 scripts/11_build_report.py
 python3 scripts/12_validate_repair.py
+python3 tools/check_validation_snapshot.py
 python3 tools/check_no_company_literals.py
 python3 tools/check_capability_contract_alignment.py
 ```
@@ -879,6 +910,9 @@ Then check:
 
 ```text
 does validation_run_manifest.json identify this run and mark each artifact refreshed or stale?
+does validation_snapshot_provenance.json identify the same run, and does the checker pass?
+is the source-input closure clean or content-equivalent to the recorded source tree?
+do the artifact digest keys, sizes, and SHA-256 values match the current bytes?
 is evidence/requests_log.csv SEC-only, and does each hashed row still resolve to matching body/header evidence?
 are evidence/submissions/, companyfacts/, accession_materials/ complete?
 is golden_results.csv all PASS?
@@ -903,13 +937,16 @@ Do not sample 20 values at random: the clean STD_XBRL metrics are so numerous th
 ### 12.4 Verdict rules
 
 ```text
-ACCEPT               Full package, evidence chain, golden, coverage, and report all pass, with
-                     no third-party data backfill anywhere.
+ACCEPT               Full package, evidence chain, golden, coverage, report, and snapshot checker
+                     all pass, with no third-party data backfill anywhere.
 ACCEPT WITH CAVEATS  A small number of text / MD&A / DEF14A extractions failed, but were honestly
-                     marked NOT_EXTRACTED and recorded in exceptions.
+                     marked NOT_EXTRACTED and recorded in exceptions; provenance still passes.
 REJECT               Core files missing; values without evidence; third-party backfill; a golden
-                     failure reported as success; a key basis misapplied; results not reproducible.
+                     failure reported as success; a key basis misapplied; provenance mismatch;
+                     results not reproducible.
 ```
+
+These are external acceptance labels. The pipeline's report uses `GO`, `GO WITH CAVEATS`, and `NO-GO`; neither vocabulary should be inferred from an old paragraph when current run evidence disagrees.
 
 ---
 
@@ -977,6 +1014,7 @@ fixture tests     the 11th-company behavior test
 golden tests      the Enphase / Ford benchmarks
 scalability gate  the company-literal scan
 light integrity   the snapshot tamper regression
+provenance tests  source closure, artifact key/hash/size and publication failure
 full integration  a periodic small live-SEC sample
 ```
 
@@ -1005,6 +1043,7 @@ After reading this document, you should be able to do the following:
 5. **Add a company without changing code**: touch only the registry, run validation, read the exceptions.
 6. **Design a new extractor**: define the basis, the data source, the evidence, and the status *first*; then write the extraction logic; then write the validation and the fixture.
 7. **Give Codex the right instruction**: not "fix Salesforce", but "`RpoCrpoExtractor` must consume the instance fact first; company-name branches are forbidden; add a behavior fixture."
+8. **Separate historical documentation from current state**: read the manifest, run the snapshot checker, and never promote an old count or verdict into a current claim.
 
 All of which collapses into one simple test:
 
@@ -1021,9 +1060,10 @@ Miss any one of the five, and what you have merely looks like a number.
 ### 15.1 Light-package review
 
 ```bash
-python3 -m py_compile scripts/sec_pipeline.py tools/check_no_company_literals.py
+python3 -m py_compile scripts/sec_pipeline.py tools/check_no_company_literals.py tools/check_validation_snapshot.py
 python3 scripts/10_run_golden_assertions.py
 python3 scripts/12_validate_repair.py
+python3 tools/check_validation_snapshot.py
 python3 tools/check_no_company_literals.py
 python3 tools/check_capability_contract_alignment.py
 ```
@@ -1034,6 +1074,7 @@ Expected:
 PASS: LIGHT_REVIEW_MODE for the light golden integrity scope
 validation manifest result = PASSED_WITH_CAVEATS
 full-only rows = SKIPPED_LIGHT_PACKAGE or NOT_EVALUATED_MISSING_EVIDENCE
+snapshot checker = PASS for the declared light source/artifact closure
 scalability_audit.csv = 0 violations
 ```
 
@@ -1053,6 +1094,7 @@ python3 scripts/09_extract_mda_and_risk_text.py
 python3 scripts/10_run_golden_assertions.py
 python3 scripts/11_build_report.py
 python3 scripts/12_validate_repair.py
+python3 tools/check_validation_snapshot.py
 ```
 
 ### 15.3 Common grep / audit commands
@@ -1066,6 +1108,9 @@ grep -RIn "yfinance\|bloomberg\|refinitiv\|macrotrends\|stockanalysis\|wikipedia
 
 # Look for hard-coding that could bypass golden
 grep -RIn "expected_value\|golden\|hardcode" scripts/ tests/
+
+# Verify source/artifact byte binding before reading current results
+python3 tools/check_validation_snapshot.py
 
 # Quick look at failing gates
 python3 - <<'PYCODE'
@@ -1133,4 +1178,6 @@ correct-by-construction   The gate bites on a live recomputation rather than on 
 tamper test               Deliberately corrupting an input to check whether a defense has teeth.
 LIGHT_REVIEW_MODE         The review-package mode with bulky evidence stripped out; it must be
                           declared by an explicit marker.
+validation snapshot       A terminal run identity plus a sidecar binding the declared source-input
+                          tree and expected acceptance artifacts by SHA-256 and size.
 ```
