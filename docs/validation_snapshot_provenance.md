@@ -13,7 +13,8 @@
 
 ```text
 source-input closure
-    代码、工具、配置、测试、指标定义、能力契约和核心验收文档
+    Requirement、MetricSpec、代码、工具、配置、测试、指标定义、
+    能力契约和核心验收文档
 
 acceptance artifact closure
     manifest、报告、README、metrics/evidence/coverage/Golden、events、
@@ -39,10 +40,12 @@ acceptance artifact closure
 当前 runtime source directories：
 
 ```text
+catalog/
 scripts/
 tools/
 config/
 tests/
+requirements/
 ```
 
 当前 acceptance source files：
@@ -183,3 +186,27 @@ python3 tools/check_validation_snapshot.py
 - Git workspace guard 与后续 Git 命令不是一个原子系统调用，不宣称抵御恶意同 UID 进程的主动 namespace TOCTOU。
 - source closure 是显式 policy。新增会影响运行或验收的路径时，必须在 `config/validation_source_policy.json` 分类，并同步文档和负例测试；新增 SOP 权威引用若未分类会被 checker 拒绝。
 - provenance 证明 bytes 一致，不证明业务方法本身正确；Golden、repair validation、外部审计和人工判断仍各自负责自己的结论。
+
+## 9. vNext recorded publication 与当前 provenance 的关系
+
+Issue #12 的 Requirement Snapshot 和 `catalog/` 已进入当前 source-input closure。这意味着 exact FSD/Issue、Decision Register、baseline、旧路径 inventory、MetricSpec 或 trait 文件的 tracked/staged/untracked byte/path 变化都会使 stage 12 source capture 失败；删除这些目录不能缩小 closure。`tests/vnext/`、`scripts/vnext/` 与 vNext tools 也分别通过现有 `tests/`、`scripts/`、`tools/` runtime directory 进入同一 source tree。
+
+当前 acceptance artifact closure 仍是第 5 节的现行 00–12 root artifact 集合。仓库尚未完成 Cutover，也没有已提交的 `artifacts/vnext/active_publication.json`，因此不能声称现有 `outputs/validation_snapshot_provenance.json` 已绑定 vNext Run、ReviewUnit、Trace、publication bundle 或 latest status。把未发布的 OPEN/FROZEN workspace 加进现行 sidecar，反而会把开发临时状态误写成当前业务 snapshot。
+
+vNext recorded transaction primitive 对每个 prepared bundle 自身执行另一层 exact binding；其中 `request_attempt_id`、portable locator 与 body/header hash 已进入 SourceReference，但 request-ledger 有序前缀/membership 的 live adapter 仍待 full staging，不能由 recorded fixture 自证：
+
+```text
+Requirement hashes
++ FROZEN Run content/audit hash
++ ReviewUnit / Trace / DerivedAsset identities
++ request-ledger used prefix/source identities
++ complete legacy-compatible artifact file set
++ PASSED publication validation receipt
+→ immutable PublicationManifest
+→ lock + predecessor CAS
+→ active pointer（唯一正式 commit point）
+```
+
+bundle 的 `publication_validation_receipt.json` 在 preparation 前产生并被 manifest hash；最终 `outputs/acceptance_receipts/<receipt_id>.json` 必须位于 bundle 自哈希之外，在 commands 完成后引用 artifact hash 与状态，避免 receipt 把自身纳入自身 digest 的循环证明。`latest_run_status` 也独立于 active bundle，用来显示最近失败/withheld 尝试而不重写上一成功 publication。
+
+未来 Cutover 必须先扩展 machine policy/schema 和 snapshot checker，使成功 active provenance exact-bind Requirement、active pointer、完整 bundle manifest/files、FROZEN Run、review/rendered context、Trace、derived assets、publication validation receipt 与 ledger used prefix；compatibility mirrors 还必须逐字节等于 active bundle。rollback 只能把 pointer CAS 到一个已验证的 prior committed bundle，重建 mirrors 后重新运行只读 report 与 snapshot checker，再按相同规则恢复新 bundle。上述 active closure、真实 rollback 和 checker 集成当前均未完成，recorded publication tests 不能替代它们。

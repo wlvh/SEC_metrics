@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "baseline_commit": "c37cecdfe88344d78172dd9dc24bd4c445763901",
+  "source_files": {
+    "scripts/sec_pipeline.py": "32aa84f427f8e43396dc736941dfa805d105f20e177f9a23855720050917fc6f",
+    "config/metric_applicability.yaml": "09457bfa3170149f2e86af52d5013605f04c7b13ec4724792993660cc5dbcf94"
+  },
+  "lodging_production_symbols": [
+    "text_has_lodging_kpi_keywords",
+    "scope_pattern",
+    "lodging_header_order",
+    "lodging_metric_orders",
+    "lodging_table_segments",
+    "lodging_scope_row_labels",
+    "normalized_scope_text",
+    "lodging_scope_matches",
+    "lodging_section_before",
+    "lodging_numeric_cells",
+    "lodging_quote_text",
+    "lodging_identity_error",
+    "lodging_candidate_from_cells",
+    "lodging_kpi_fact_from_text",
+    "upsert_lodging_text_metric",
+    "apply_lodging_kpi_metrics",
+    "repair_lodging_kpis"
+  ],
+  "lodging_validation_symbols": [
+    "check_lodging_kpi_extractor",
+    "check_lodging_header_mapping_not_position_regex",
+    "check_lodging_revpar_adr_occupancy_identity",
+    "check_eleventh_company_behavior_lodging",
+    "check_lodging_ok_recall_not_regressed_without_reason"
+  ],
+  "b03_production_symbols": [
+    "non_fi_metric_rows",
+    "resolve_operating_income_component",
+    "resolve_da_component",
+    "compatible_component_hits",
+    "select_target_component"
+  ],
+  "legacy_write_entry_points": [
+    "stage_extract_mda_and_risk_text",
+    "apply_p0_repairs",
+    "apply_lodging_kpi_metrics",
+    "repair_lodging_kpis",
+    "non_fi_metric_rows"
+  ],
+  "legacy_configuration": {
+    "profile_extractor": "LodgingKpiExtractor",
+    "settings": [
+      "lodging_scope_priority",
+      "revpar_usd_range",
+      "occupancy_percent_range"
+    ],
+    "identity_relative_tolerance": "0.05"
+  }
+}

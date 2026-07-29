@@ -40,6 +40,19 @@
 - immutable response 防预存和最终文件名 symlink/hardlink 别名，但假设单次写入期间父目录 namespace 稳定；它不是 WORM 存储。
 - `SecHttpClient` 不自动跟随 HTTP redirect；首跳 3xx body、headers、Location 与日志会保留，目标 URL 只能作为下一次显式、重新校验的请求。
 
+## vNext recorded shadow（尚未切流）
+
+- `scripts/vnext/` 与 `catalog/` 只提供 recorded/shadow 原语；当前根目录结果、stage 00-12 与 snapshot checker 仍是 active 路径。
+- D-01、有效 SEC 身份、第二真实布局、独立 holdout、live 三轮、staging parity、旧 producer 退出、Cutover 与真实 rollback/full 任一未完成时，不得声称 vNext active。
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3.9 -m unittest discover -s tests/vnext -t . -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests/vnext -t . -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py --scope recorded
+```
+
+recorded runner 的最高状态是 `PASSED_RECORDED_ONLY`，receipt 写入 `outputs/acceptance_receipts/`；它不执行 live stage、Cutover 或 full acceptance。测试策略与 NOT_RUN 记录以 `TESTING.md` 为准。
+
 ## 从干净目录运行阶段 00-11
 
 ```bash
@@ -148,4 +161,8 @@ python3 tools/check_capability_contract_alignment.py
 - 轻量包中 `python3 scripts/10_run_golden_assertions.py` 重算随包 `outputs/golden_results.csv` snapshot integrity，通过时输出 `PASS: LIGHT_REVIEW_MODE`；完整数值 golden rerun 需要本地完整 `evidence/`。
 - reviewer 必须以 manifest 的 `refreshed_artifacts` / `not_refreshed_artifacts` 和 snapshot checker 共同判断新鲜度，不能只检查 CSV 是否存在。
 - 新写入的证据 locator 使用 `source_url`、`repo_relative_path`、`content_sha256`、`accession`、`document_name`；历史绝对路径只作 relocation hint。
+- `evidence/requests_log.csv` 的 response body 也使用上述 portable 字段，headers 使用 `headers_repo_relative_path`；`requests_log_manifest.json` 以严格 JSON key/type 与 CSV 行 schema 绑定整表 row count/hash；working ledger 必须保留 HEAD 有序前缀；PR checker 先要求 base/HEAD 的每条 current/legacy row 与声明 schema 精确同宽，再对 legacy base 独立规范化 portable 完整字段、对 current base 逐字段保留有序前缀，之后只允许合法尾部追加；下游/sidecar 反向覆盖完整集合；新 attempt 指向 content-addressed immutable copy；旧 `url/local_path/sha256` 只作为显式 legacy bootstrap 输入，常规阶段不会为缺 manifest 的日志重签。mutable submissions 重放必须匹配 ledger 中最新成功 200；filing-bound archive 文档若存在冲突成功 bodies 则失败。无 Git history baseline 或历史 hash 对应原 bytes 时，full gate 必须 NOT_EVALUATED。
+- `outputs/implementation_map.csv` 映射 I1-I8 的实现位置、validation id 和当前状态，供审计方逐项复核。
 - `GO WITH CAVEATS` 是 pipeline self-verdict；`ACCEPT WITH CAVEATS` 仅保留给外部审计验收结论。
+- 包清单写入 `outputs/review_package_manifest.md`；压缩包写入 `outputs/review_package/`。
+- 若审核官需要追溯 raw SEC source，回到本地完整工作区读取 `evidence/` 和 `outputs/concept_inventory/`。

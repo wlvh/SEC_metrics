@@ -96,7 +96,60 @@ class IncompleteRequestSnapshotError(FileNotFoundError):
     """Signal that a snapshot body exists without its attributable header."""
 
 
+class SecIdentityError(ValueError):
+    """Report an unusable SEC User-Agent organization or contact email."""
+
+
 _NO_REDIRECT_OPENER = build_opener(NoRedirectHandler())
+
+
+def validate_sec_identity(*, config: dict) -> tuple[str, str]:
+    """Validate and normalize the accountable SEC User-Agent identity.
+
+    Args:
+        config: Configuration containing explicit organization/contact fields.
+
+    Returns:
+        Stripped organization and contact email.
+
+    Raises:
+        SecIdentityError: On missing, null, blank, malformed, or example-only
+            identity values.
+    """
+    for field in ("organization", "contact_email"):
+        if field not in config:
+            raise SecIdentityError(
+                "SEC config identity field is missing: {}".format(field)
+            )
+        if type(config[field]) is not str:
+            raise SecIdentityError(
+                "SEC config identity field must be text: {}".format(field)
+            )
+    organization = config["organization"].strip()
+    email = config["contact_email"].strip()
+    if not organization:
+        raise SecIdentityError("SEC organization cannot be blank")
+    if any(
+        ord(character) < 32 or ord(character) == 127
+        for character in organization
+    ):
+        raise SecIdentityError("SEC organization contains control characters")
+    if re.fullmatch(
+        r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@"
+        r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
+        r"(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+",
+        email,
+    ) is None:
+        raise SecIdentityError("SEC contact email is malformed")
+    domain = email.rsplit("@", maxsplit=1)[1].casefold()
+    if domain in {
+        "example.com",
+        "example.net",
+        "example.org",
+        "localhost",
+    } or domain.endswith((".example", ".invalid", ".test")):
+        raise SecIdentityError("SEC contact email uses a reserved domain")
+    return organization, email
 
 
 def urlopen(*, request: Request, timeout: float) -> object:
@@ -157,6 +210,9 @@ def load_config(*, config_path: Path) -> dict:
     for key in required_keys:
         if key not in config:
             raise KeyError(f"SEC config missing required key: {key}")
+    organization, contact_email = validate_sec_identity(config=config)
+    config["organization"] = organization
+    config["contact_email"] = contact_email
     return config
 
 

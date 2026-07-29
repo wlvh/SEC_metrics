@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "requirement_id": "ai_first_v3_3_1",
+  "issue_contract_revision": "R2",
+  "decisions": [
+    {
+      "decision_id": "D-03",
+      "status": "APPROVED",
+      "choice": {
+        "applicable_migrated_withheld_policy": "BLOCK_ENTIRE_PUBLICATION_CANDIDATE",
+        "partial_publication": false
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-07-29T12:41:52Z",
+      "supersedes_decision_id": null,
+      "evidence": "ISSUE_CONTRACT.md#38-状态模型withheld-与用户可见新鲜度"
+    },
+    {
+      "decision_id": "D-04",
+      "status": "APPROVED",
+      "choice": {
+        "publication_model": "IMMUTABLE_COMPLETE_BUNDLE_PLUS_ATOMIC_ACTIVE_POINTER",
+        "root_files_are_compatibility_mirrors": true,
+        "direct_root_reader_group_atomicity": false
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-07-29T12:41:52Z",
+      "supersedes_decision_id": null,
+      "evidence": "ISSUE_CONTRACT.md#311-完整-publication-bundleactive-pointer-与读取保证"
+    },
+    {
+      "decision_id": "D-05",
+      "status": "APPROVED",
+      "choice": {
+        "business_compatibility_fields": "EXACT",
+        "b10_b11_method_fields": "VERSIONED_DECLARATIVE_DELTA",
+        "b03_evidence_grain": "ONE_ROW_PER_SOURCE_COMPONENT_WITH_RECONCILIATION_RECEIPT"
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-07-29T12:41:52Z",
+      "supersedes_decision_id": null,
+      "evidence": "ISSUE_CONTRACT.md#310-legacy-projectionparity-与-evidence-grain"
+    },
+    {
+      "decision_id": "D-06",
+      "status": "APPROVED",
+      "choice": {
+        "decision_target": "WHOLE_REVIEW_UNIT",
+        "binds_selected_competing_unresolved": true,
+        "binds_canonical_and_rendered_context": true,
+        "parallel_effective_decisions": "FAIL_CLOSED"
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-07-29T12:41:52Z",
+      "supersedes_decision_id": null,
+      "evidence": "ISSUE_CONTRACT.md#37-reviewunitreviewdecision-与安全渲染"
+    },
+    {
+      "decision_id": "D-05",
+      "status": "APPROVED",
+      "choice": {
+        "business_compatibility_fields": "EXACT_EXCEPT_APPROVED_UNIT_SAFETY_DELTAS",
+        "b10_b11_method_fields": "VERSIONED_DECLARATIVE_DELTA",
+        "b03_evidence_grain": "ONE_ROW_PER_SOURCE_COMPONENT_WITH_RECONCILIATION_RECEIPT",
+        "b01_result_unit": "PRESERVE_SELECTED_REPORTED_UNIT",
+        "b03_component_unit_policy": "EXACT_MATCH_OR_WITHHOLD",
+        "b03_unit_parity": "APPROVED_FAIL_CLOSED_DIVERGENCE_FROM_LEGACY",
+        "legacy_b03_component_unit_guard": "ABSENT_KNOWN_LIMITATION_NOT_MODIFIED",
+        "b10_unit_policy": "PERCENT_TO_CANONICAL_RATIO",
+        "b11_adr_unit_policy": "EXACT_USD_OR_WITHHOLD",
+        "currency_conversion": "NOT_IMPLEMENTED"
+      },
+      "approved_by": "user:current-thread",
+      "approved_at_utc": "2026-07-30T07:02:01Z",
+      "supersedes_decision_id": "sha256:589397915a29b5573c97f15b056b4ee37aaad46609768fc634be6a8e4473d686",
+      "evidence": "02_指标定义_SEC_10公司单年指标.md#04-vnext-metricspec-与当前-active-口径的关系"
+    },
+    {
+      "decision_id": "D-07",
+      "status": "APPROVED",
+      "choice": {
+        "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
+        "semantic_prefilter": false,
+        "oversized_payload_policy": "BLOCK_LIVE_CUTOVER"
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-07-29T12:41:52Z",
+      "supersedes_decision_id": null,
+      "evidence": "ISSUE_CONTRACT.md#32-来源rawblob-sourcereference-与-ai-输入契约"
+    },
+    {
+      "decision_id": "D-08",
+      "status": "APPROVED",
+      "choice": {
+        "method_change_id": "METH-01",
+        "lodging_identity_relative_tolerance": "0.01",
+        "inclusive_boundary": true
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-07-29T12:41:52Z",
+      "supersedes_decision_id": null,
+      "evidence": "ISSUE_CONTRACT.md#39-数值容差与唯一批准的方法变更"
+    },
+    {
+      "decision_id": "D-24",
+      "status": "APPROVED",
+      "choice": {
+        "security_claim": "DEPENDENCY_CALL_GRAPH_EGRESS_AND_WRITE_CONSTRAINTS_ONLY",
+        "same_process_strong_sandbox_claim": false
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-07-29T12:41:52Z",
+      "supersedes_decision_id": null,
+      "evidence": "ISSUE_CONTRACT.md#33-ai-adapterattempt-与诚实安全边界"
+    }
+  ],
+  "pending_decisions": [
+    {
+      "decision_id": "D-01",
+      "status": "PENDING_EXTERNAL_APPROVAL",
+      "required_choice_fields": [
+        "provider",
+        "model",
+        "endpoint_host",
+        "region",
+        "retention",
+        "data_use",
+        "timeout_seconds",
+        "retry_count",
+        "maximum_payload_bytes",
+        "filing_egress_policy"
+      ],
+      "effect": "REMOTE_MODEL_DISABLED_AND_LIVE_CUTOVER_BLOCKED",
+      "evidence": "ISSUE_CONTRACT.md#10-风险与开放问题"
+    }
+  ]
+}

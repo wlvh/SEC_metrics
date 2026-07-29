@@ -1,0 +1,390 @@
+{
+  "schema_version": 1,
+  "scope": "full",
+  "status": "FAILED",
+  "started_at_utc": "2026-07-29T14:18:11.519911+00:00",
+  "finished_at_utc": "2026-07-29T14:18:27.395626+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/Users/lyuhongwang/opt/anaconda3/bin/python3.9",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/vnext",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "interpreter": "/Users/lyuhongwang/opt/anaconda3/bin/python3.9",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 1096,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "9ea65aeaa98f785ec662ef234935c0bbc5b96bc249bdbd815667ebdd1094ddbf",
+      "stderr_size": 11622,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "duration_ms": 10354,
+      "stdout_sha256": "30c495c82a4ddb0e03dc68fa45564e021166ef37d65cb7f5b7ed61ad849869a5",
+      "stdout_size": 1839,
+      "stderr_sha256": "8e83d4400b5ba76d3f2f388248bc2b8db38a5ebbf9a5fb71b9fdc05086e24e12",
+      "stderr_size": 1818,
+      "reason": "NONZERO_RETURN_CODE",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_validation_provenance",
+        "tests.test_validation_provenance_light_package"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 3424,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "aba2c1eb602627f8a8d959c3d6cbe8fb05dcc919c8a335d78c41de789410920f",
+      "stderr_size": 121,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "tools/check_vnext_semantics.py",
+        "--repo-root",
+        ".",
+        "--output",
+        "outputs/semantic_audit_receipt.json",
+        "--secret-token-env",
+        "VNEXT_SECRET_SCAN_TOKEN",
+        "--secret-root",
+        "artifacts/vnext",
+        "--secret-root",
+        "outputs"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 95,
+      "stdout_sha256": "da66f330ff2eb6f0bd21ab6480fa96f34548a626e1a1361e94ccf9c511d584ec",
+      "stdout_size": 109,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE",
+        "VNEXT_SECRET_SCAN_TOKEN"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "tools/check_no_company_literals.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 813,
+      "stdout_sha256": "9d790f2e376d752859e16f80b7b53f3fae78d805ab3134e165fdc4d3bd62c3fd",
+      "stdout_size": 63,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/00_smoke_test_sec_access.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/01_resolve_companies.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/02_inventory_filings.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/03_companyfacts_inventory.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/04_compute_standard_metrics.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/05_fetch_accession_materials.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/06_parse_xbrl_instances.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/07_extract_8k_events.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/08_extract_def14a.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/09_extract_mda_and_risk_text.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/10_run_golden_assertions.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/11_build_report.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "scripts/12_validate_repair.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "tools/check_validation_snapshot.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "NOT_RUN",
+      "return_code": null,
+      "duration_ms": 0,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "D01_EXTERNAL_APPROVAL_PENDING;SEC_CONTACT_EMAIL_IS_EXAMPLE;SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "error_class": "",
+      "environment_keys": []
+    }
+  ],
+  "external_blockers": [
+    {
+      "code": "D01_EXTERNAL_APPROVAL_PENDING",
+      "detail": "Remote model, filing egress, retention, and provider policy are unapproved."
+    },
+    {
+      "code": "SEC_CONTACT_EMAIL_IS_EXAMPLE",
+      "detail": "Live SEC stages require an accountable organization and contact email."
+    },
+    {
+      "code": "SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "detail": "Source-input files are dirty: 01_SOP_SEC_10公司单年指标计算_直接SEC.md,02_指标定义_SEC_10公司单年指标.md,AGENTS.md,SOP.md,TESTING.md,architecture.md,capability_contract.json,catalog/company_traits.yaml,catalog/disclosures/lodging_kpi_table.md,catalog/metrics/B01_revenue.md,catalog/metrics/B03_ebitda_margin.md,catalog/metrics/B10_occupancy.md,catalog/metrics/B11_revpar.md,config/validation_source_policy.json,docs/business_user_guide.md,docs/validation_snapshot_provenance.md,interact.md,requirements/ai_first_v3_3_1/FSD.md,requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md,requirements/ai_first_v3_3_1/ISSUE_CONTRACT.md,requirements/ai_first_v3_3_1/baseline_manifest.json,requirements/ai_first_v3_3_1/decision_register.json,requirements/ai_first_v3_3_1/legacy_path_inventory.json,scripts/sec_pipeline.py,scripts/vnext/__init__.py,scripts/vnext/ai_adapter.py,scripts/vnext/calculator.py,scripts/vnext/canonical.py,scripts/vnext/constraints.py,scripts/vnext/evidence.py,scripts/vnext/observations.py,scripts/vnext/projector.py,scripts/vnext/publication.py,scripts/vnext/reader.py,scripts/vnext/reader_input.py,scripts/vnext/records.py,scripts/vnext/render.py,scripts/vnext/replay.py,scripts/vnext/report.py,scripts/vnext/requirements.py,scripts/vnext/review.py,scripts/vnext/run_store.py,scripts/vnext/sources.py,scripts/vnext/specs.py,scripts/vnext/states.py,scripts/vnext/table_grid.py,scripts/vnext/traits.py,scripts/vnext/workflow.py,tests/__init__.py,tests/fixtures/vnext/sample_lodging.html,tests/test_validation_provenance.py,tests/vnext/__init__.py,tests/vnext/common.py,tests/vnext/test_acceptance_runner.py,tests/vnext/test_ai_reader_contract.py,tests/vnext/test_b03_calculator.py,tests/vnext/test_canonical_hashes.py,tests/vnext/test_evidence_checker.py,tests/vnext/test_legacy_projector.py,tests/vnext/test_publication.py,tests/vnext/test_reader_input_manifest.py,tests/vnext/test_replay.py,tests/vnext/test_report_read_only.py,tests/vnext/test_requirement_baseline.py,tests/vnext/test_review_binding.py,tests/vnext/test_review_renderer.py,tests/vnext/test_semantic_audit.py,tests/vnext/test_source_records.py,tests/vnext/test_spec_compiler.py,tests/vnext/test_state_model.py,tests/vnext/test_table_grid_locator.py,tools/check_vnext_semantics.py,tools/run_acceptance.py,tools/vnext_review.py"
+    }
+  ],
+  "artifact_hashes": {
+    "outputs/scalability_audit.csv": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+    "outputs/semantic_audit_receipt.json": "47b07bdcccdbac9a9d804fe15fb9ccdd8223e169bb5c3ced65fd16682453014b"
+  },
+  "acceptance_receipt_id": "sha256:c7b9844e733a4bebe5dd14b047dbeeebf4cc5dbd2ed3188ea778f76d86312326"
+}

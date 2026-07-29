@@ -277,7 +277,7 @@ def build_http_client(*, workspace: Path) -> sec_http.SecHttpClient:
         json.dumps(
             {
                 "organization": "fixture",
-                "contact_email": "fixture@example.com",
+                "contact_email": "a@b.co",
                 "rate_limit_per_sec": 10,
                 "max_retries": 0,
                 "backoff_initial_seconds": 0,
@@ -5235,7 +5235,7 @@ class PortableRequestLogTest(unittest.TestCase):
                 json.dumps(
                     {
                         "organization": "fixture",
-                        "contact_email": "fixture@example.com",
+                        "contact_email": "a@b.co",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -5532,7 +5532,7 @@ class PortableRequestLogTest(unittest.TestCase):
                 json.dumps(
                     {
                         "organization": "fixture",
-                        "contact_email": "fixture@example.com",
+                        "contact_email": "a@b.co",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -5858,7 +5858,7 @@ class PortableRequestLogTest(unittest.TestCase):
                 json.dumps(
                     {
                         "organization": "fixture",
-                        "contact_email": "fixture@example.com",
+                        "contact_email": "a@b.co",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -5987,7 +5987,7 @@ class PortableRequestLogTest(unittest.TestCase):
                 json.dumps(
                     {
                         "organization": "fixture",
-                        "contact_email": "fixture@example.com",
+                        "contact_email": "a@b.co",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -6916,6 +6916,84 @@ class CapabilityContractAlignmentTest(unittest.TestCase):
         )
         self.assertTrue(
             any("status must be one of" in error for error in checks[2])
+        )
+
+    def test_test_status_is_required_controlled_and_consistent(self) -> None:
+        """Prevent a free-form label from claiming mechanical proof."""
+        entries = [
+            {
+                "anchor_id": "CAPABILITY.missing_test_status",
+                "status": "active",
+                "type": "capability",
+                "test_anchor": None,
+                "untested_reason": "fixture",
+                "pending_since": "2026-07-31",
+            },
+            {
+                "anchor_id": "CAPABILITY.invalid_test_status",
+                "status": "active",
+                "type": "capability",
+                "test_anchor": None,
+                "test_status": "claimed_pass",
+                "untested_reason": "fixture",
+                "pending_since": "2026-07-31",
+            },
+            {
+                "anchor_id": "CAPABILITY.null_automated",
+                "status": "active",
+                "type": "capability",
+                "test_anchor": None,
+                "test_status": "automated_recorded",
+                "untested_reason": "fixture",
+                "pending_since": "2026-07-31",
+            },
+            {
+                "anchor_id": "CAPABILITY.anchor_not_automated",
+                "status": "active",
+                "type": "capability",
+                "test_anchor": (
+                    "tests/vnext/test_state_model.py::"
+                    "StateModelTest.test_only_declared_transitions_are_allowed"
+                ),
+                "test_status": "not_automated",
+            },
+        ]
+        payload = {
+            "deprecated_anchor_ids": [],
+            "contracts": {"capabilities": entries},
+        }
+        errors = contract_alignment.alignment_errors(
+            repo_root=REPO_ROOT,
+            payload=payload,
+        )
+        self.assertIn(
+            (
+                "CAPABILITY.missing_test_status: test_status must be a "
+                "non-empty string"
+            ),
+            errors,
+        )
+        self.assertTrue(
+            any(
+                error.startswith(
+                    "CAPABILITY.invalid_test_status: test_status must be one"
+                )
+                for error in errors
+            )
+        )
+        self.assertIn(
+            (
+                "CAPABILITY.null_automated: null test_anchor requires "
+                "test_status=not_automated"
+            ),
+            errors,
+        )
+        self.assertIn(
+            (
+                "CAPABILITY.anchor_not_automated: non-null test_anchor "
+                "cannot use test_status=not_automated"
+            ),
+            errors,
         )
 
     def test_current_request_history_compares_every_schema_field(self) -> None:
