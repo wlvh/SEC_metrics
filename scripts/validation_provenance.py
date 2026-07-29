@@ -15,7 +15,7 @@ from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 from git_workspace import git_checkout_metadata_error, sanitized_git_environment
 
 SCHEMA = 1
-SOURCE_POLICY_SCHEMA = 1
+SOURCE_POLICY_SCHEMA = 2
 PROVENANCE_RELATIVE_PATH = Path("outputs/validation_snapshot_provenance.json")
 SOURCE_POLICY_RELATIVE_PATH = Path("config/validation_source_policy.json")
 MANIFEST = Path("outputs/validation_run_manifest.json")
@@ -26,6 +26,7 @@ LIGHT_MARKER = Path("LIGHT_REVIEW_PACKAGE.marker")
 SOURCE_POLICY_KEYS = {
     "schema_version", "runtime_source_directories",
     "acceptance_source_files", "generated_artifacts",
+    "full_artifact_directories",
     "publication_governance_files", "repository_hygiene_files",
     "explanatory_non_authoritative",
 }
@@ -67,8 +68,13 @@ README_BLOCK = """<!-- validation-reading-routes:start -->
 ## Validation snapshot provenance
 
 - stage 11 在修改报告前删除可安全识别的旧 regular `outputs/validation_snapshot_provenance.json`；alias/非 regular 目标提前失败。
-- `config/validation_source_policy.json` 分类 runtime source、acceptance source、generated artifact、发布治理和解释性文档；SOP 权威引用必须有明确角色，解释性非权威文档不能作为运行权威。
-- stage 12 只在 policy-defined source closure 无未提交改动时继续；成功后绑定当前 Git commit、完整 source-input tree SHA-256，以及 manifest、报告、README、metrics/evidence/coverage/Golden、request ledger 与 refreshed validation artifact 的 SHA-256/size。
+- `config/validation_source_policy.json` 分类 runtime source、acceptance source、
+  full artifact directory、generated artifact、发布治理和解释性文档；SOP
+  权威引用必须有明确角色，解释性非权威文档不能作为运行权威。
+- stage 12 只在 policy-defined source closure 无未提交改动时继续；成功后绑定
+  当前 Git commit、完整 source-input tree SHA-256，以及 manifest、报告、README、
+  metrics/evidence/coverage/Golden、request ledger、full request-attempt
+  recursive exact set 与 refreshed validation artifact 的 SHA-256/size。
 - 提交或 merge 导致 commit SHA 改变时，checker 只有在完整 source-input tree 仍等价时才给 warning 并允许继续；任一 source byte 或 artifact byte 漂移都失败。
 - light package 可以生成显式 `LIGHT_PACKAGE_NO_GIT` 的受限 provenance，但不能升级为 full validation。
 <!-- validation-reading-routes:end -->"""
@@ -96,6 +102,7 @@ class SourcePolicy:
     runtime_source_directories: Tuple[str, ...]
     acceptance_source_files: Tuple[str, ...]
     generated_artifacts: Tuple[str, ...]
+    full_artifact_directories: Tuple[str, ...]
     publication_governance_files: Tuple[str, ...]
     repository_hygiene_files: Tuple[str, ...]
     explanatory_non_authoritative: Tuple[str, ...]
@@ -313,6 +320,7 @@ def _validate_sop_authority_references(
     governance = set(policy.publication_governance_files)
     governance.update(policy.repository_hygiene_files)
     artifacts = set(FULL_CORE)
+    artifacts.update(policy.full_artifact_directories)
     classified = source_files | generated | governance | artifacts
     unclassified = []
     explanatory = []
@@ -363,6 +371,10 @@ def load_source_policy(*, workdir: Path) -> SourcePolicy:
         key="acceptance_source_files",
     )
     generated = _policy_values(payload=payload, key="generated_artifacts")
+    full_artifacts = _policy_values(
+        payload=payload,
+        key="full_artifact_directories",
+    )
     publication = _policy_values(
         payload=payload,
         key="publication_governance_files",
@@ -377,6 +389,8 @@ def load_source_policy(*, workdir: Path) -> SourcePolicy:
     )
     for relative in runtime:
         _validate_policy_path(relative=relative, directory=True)
+    for relative in full_artifacts:
+        _validate_policy_path(relative=relative, directory=False)
     role_files = acceptance + generated + publication + hygiene + explanatory
     for relative in role_files:
         _validate_policy_path(relative=relative, directory=False)
@@ -398,10 +412,27 @@ def load_source_policy(*, workdir: Path) -> SourcePolicy:
         raise ValidationProvenanceError(
             "Source policy generated_artifacts must match README and report"
         )
+    overlapping_directories = sorted(
+        artifact
+        for artifact in full_artifacts
+        for source in runtime
+        if (
+            artifact == source
+            or artifact.startswith(source + "/")
+            or source.startswith(artifact + "/")
+        )
+    )
+    if overlapping_directories:
+        raise ValidationProvenanceError(
+            "Source and full artifact directories overlap: {}".format(
+                ",".join(overlapping_directories)
+            )
+        )
     policy = SourcePolicy(
         runtime_source_directories=runtime,
         acceptance_source_files=acceptance,
         generated_artifacts=generated,
+        full_artifact_directories=full_artifacts,
         publication_governance_files=publication,
         repository_hygiene_files=hygiene,
         explanatory_non_authoritative=explanatory,
@@ -604,15 +635,86 @@ def _manifest_matches(value: str, snapshot: SourceSnapshot) -> bool:
     )
 
 
-def _artifact_paths(manifest: Mapping[str, object]) -> List[str]:
+def _full_artifact_directory_paths(
+    *,
+    workdir: Path,
+    directories: Sequence[str],
+) -> List[str]:
+    """Return the exact regular, single-link files in full artifact dirs.
+
+    Args:
+        workdir: Repository root containing validation artifacts.
+        directories: Policy-declared directories included only in full mode.
+
+    Returns:
+        Sorted repository-relative file paths from every declared directory.
+
+    Raises:
+        ValidationProvenanceError: A directory is absent or contains an
+            unsafe, non-regular, or hard-linked entry.
+    """
+    paths: List[str] = []
+    for relative in directories:
+        directory = _repo(workdir, relative)
+        if directory.is_symlink() or not directory.is_dir():
+            raise ValidationProvenanceError(
+                "Full artifact directory is not a real directory: {}".format(
+                    directory
+                )
+            )
+        directory_paths = []
+        for path in sorted(directory.rglob("*")):
+            if path.is_symlink():
+                raise ValidationProvenanceError(
+                    "Full artifact path is a symlink: {}".format(path)
+                )
+            if path.is_dir():
+                continue
+            if not path.is_file():
+                raise ValidationProvenanceError(
+                    "Full artifact path is not a regular file: {}".format(
+                        path
+                    )
+                )
+            if os.lstat(path).st_nlink != 1:
+                raise ValidationProvenanceError(
+                    "Full artifact path is not single-link: {}".format(path)
+                )
+            directory_paths.append(path.relative_to(workdir).as_posix())
+        if not directory_paths:
+            raise ValidationProvenanceError(
+                "Full artifact directory contains no files: {}".format(
+                    directory
+                )
+            )
+        paths.extend(directory_paths)
+    return sorted(set(paths))
+
+
+def _artifact_paths(
+    *,
+    workdir: Path,
+    manifest: Mapping[str, object],
+    policy: SourcePolicy,
+) -> List[str]:
+    """Return the exact core, refreshed, and policy artifact file set."""
     refreshed = manifest["refreshed_artifacts"]
     if not isinstance(refreshed, list) or any(not isinstance(x, str) for x in refreshed):
         raise ValidationProvenanceError("Validation manifest refreshed_artifacts must be a string array")
     invalid = [x for x in refreshed if not x or Path(x).name != x or "/" in x or "\\" in x]
     if invalid:
         raise ValidationProvenanceError("Validation manifest refreshed artifact names are not basenames: " + ",".join(invalid))
-    core = FULL_CORE if manifest["mode"] == "FULL_VALIDATION" else LIGHT_CORE
-    return sorted(set(core) | {"outputs/{}".format(x) for x in refreshed})
+    full_mode = manifest["mode"] == "FULL_VALIDATION"
+    core = FULL_CORE if full_mode else LIGHT_CORE
+    paths = set(core) | {"outputs/{}".format(x) for x in refreshed}
+    if full_mode:
+        paths.update(
+            _full_artifact_directory_paths(
+                workdir=workdir,
+                directories=policy.full_artifact_directories,
+            )
+        )
+    return sorted(paths)
 
 
 def _digests(workdir: Path, paths: Iterable[str]) -> Dict[str, Dict[str, object]]:
@@ -633,6 +735,7 @@ def invalidate_validation_snapshot(*, workdir: Path) -> None:
 
 
 def publish_validation_snapshot(*, workdir: Path, source_snapshot: SourceSnapshot) -> Dict[str, object]:
+    policy = load_source_policy(workdir=workdir)
     manifest = _manifest(workdir)
     expected = {"FULL_VALIDATION": "PASSED", "LIGHT_REVIEW_MODE": "PASSED_WITH_CAVEATS"}
     mode, result = str(manifest["mode"]), str(manifest["result"])
@@ -654,7 +757,14 @@ def publish_validation_snapshot(*, workdir: Path, source_snapshot: SourceSnapsho
         "source_input_tree_sha256": source_snapshot.tree_sha256,
         "source_file_count": source_snapshot.file_count,
         "source_dirty_paths": list(source_snapshot.dirty_paths),
-        "artifact_digests": _digests(workdir, _artifact_paths(manifest)),
+        "artifact_digests": _digests(
+            workdir=workdir,
+            paths=_artifact_paths(
+                workdir=workdir,
+                manifest=manifest,
+                policy=policy,
+            ),
+        ),
         "generated_at_utc": _utc(),
     }
     path = workdir / PROVENANCE_RELATIVE_PATH
@@ -716,8 +826,9 @@ def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: b
     """Verify policy, source identity, manifest identity, and artifact bytes."""
     errors: List[str] = []
     warnings: List[str] = []
+    policy: Optional[SourcePolicy] = None
     try:
-        load_source_policy(workdir=workdir)
+        policy = load_source_policy(workdir=workdir)
     except ValidationProvenanceError as error:
         errors.append(str(error))
     try:
@@ -728,7 +839,7 @@ def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: b
     if not path.exists():
         errors.append("validation snapshot provenance is missing")
         return VerificationResult(tuple(errors), ())
-    if errors:
+    if errors or policy is None:
         return VerificationResult(tuple(errors), ())
     try:
         payload, manifest = _json(path), _manifest(workdir)
@@ -771,7 +882,11 @@ def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: b
             else:
                 errors.append("source commit mismatch")
     try:
-        expected_paths = _artifact_paths(manifest)
+        expected_paths = _artifact_paths(
+            workdir=workdir,
+            manifest=manifest,
+            policy=policy,
+        )
     except ValidationProvenanceError as error:
         errors.append(str(error))
         expected_paths = []

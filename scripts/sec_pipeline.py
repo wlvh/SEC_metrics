@@ -34,12 +34,16 @@ from urllib.parse import urlparse
 from xml.etree import ElementTree
 
 from sec_http import (
+    IncompleteRequestSnapshotError,
     REDIRECT_DISABLED_ERROR_PREFIX,
+    REQUEST_ATTEMPT_PATH_PARTS,
     REQUEST_LOG_FIELDNAMES,
     SecHttpClient,
     legacy_repository_path_candidates,
+    legacy_response_snapshot_paths,
     migrate_request_log,
     parse_request_log_rows,
+    read_request_snapshot_bytes,
     request_accession,
     request_artifact_candidate,
     request_log_source_url,
@@ -17209,10 +17213,22 @@ def immutable_request_headers_hash(
     """
     body_path = Path(relative_path)
     headers_path = Path(headers_relative_path)
-    immutable_prefix = ("evidence", "request_attempts")
-    body_is_immutable = body_path.parts[:2] == immutable_prefix
-    headers_are_immutable = headers_path.parts[:2] == immutable_prefix
-    if not body_is_immutable and not headers_are_immutable:
+    body_prefix = body_path.parts[:2]
+    headers_prefix = headers_path.parts[:2]
+    body_uses_namespace = tuple(
+        part.casefold() for part in body_prefix
+    ) == REQUEST_ATTEMPT_PATH_PARTS
+    headers_use_namespace = tuple(
+        part.casefold() for part in headers_prefix
+    ) == REQUEST_ATTEMPT_PATH_PARTS
+    body_is_immutable = body_prefix == REQUEST_ATTEMPT_PATH_PARTS
+    headers_are_immutable = headers_prefix == REQUEST_ATTEMPT_PATH_PARTS
+    if (
+        (body_uses_namespace and not body_is_immutable)
+        or (headers_use_namespace and not headers_are_immutable)
+    ):
+        raise ValueError("immutable_request_locator_case_mismatch")
+    if not body_uses_namespace and not headers_use_namespace:
         return ""
     if (
         not body_is_immutable
@@ -17572,19 +17588,68 @@ def check_requests_log_sec_only() -> dict:
         except ValueError as error:
             failures.append(f"{index}:{error}")
             continue
-        if not body_path.is_file() or not headers_path.is_file():
-            unavailable.append(f"{index}:response_artifact_missing")
-            continue
+        if not encoded_headers_hash:
+            try:
+                body_path, headers_path = legacy_response_snapshot_paths(
+                    workdir=WORKDIR,
+                    content_sha256=digest,
+                    source_url=source_url,
+                    status_code=row["status_code"],
+                    content_length=row["content_length"],
+                    document_name=row["document_name"],
+                    timestamp_utc=row["timestamp_utc"],
+                )
+            except IncompleteRequestSnapshotError as error:
+                unavailable.append(f"{index}:{error}")
+                continue
+            except FileNotFoundError:
+                # Legacy working paths remain diagnostic hints when the exact
+                # immutable recovery pair is unavailable.
+                pass
+            except ValueError as error:
+                failures.append(f"{index}:{error}")
+                continue
+            else:
+                relative_path = body_path.relative_to(WORKDIR).as_posix()
+                headers_relative_path = headers_path.relative_to(
+                    WORKDIR
+                ).as_posix()
+                encoded_headers_hash = immutable_request_headers_hash(
+                    relative_path=relative_path,
+                    headers_relative_path=headers_relative_path,
+                    content_sha256=digest,
+                )
+        if encoded_headers_hash:
+            try:
+                body_bytes = read_request_snapshot_bytes(
+                    workdir=WORKDIR,
+                    path=body_path,
+                )
+                headers_bytes = read_request_snapshot_bytes(
+                    workdir=WORKDIR,
+                    path=headers_path,
+                )
+            except FileNotFoundError:
+                unavailable.append(f"{index}:response_artifact_missing")
+                continue
+            except ValueError as error:
+                failures.append(f"{index}:{error}")
+                continue
+        else:
+            if not body_path.is_file() or not headers_path.is_file():
+                unavailable.append(f"{index}:response_artifact_missing")
+                continue
+            body_bytes = body_path.read_bytes()
+            headers_bytes = headers_path.read_bytes()
         if row["document_name"] != body_path.name:
             failures.append(f"{index}:document_name_mismatch")
             continue
         if (
-            file_sha256(path_text=str(body_path)) != digest
-            or body_path.stat().st_size != content_length
+            hashlib.sha256(body_bytes).hexdigest() != digest
+            or len(body_bytes) != content_length
         ):
             unavailable.append(f"{index}:response_body_hash_mismatch")
             continue
-        headers_bytes = headers_path.read_bytes()
         if (
             encoded_headers_hash
             and hashlib.sha256(headers_bytes).hexdigest()
@@ -17643,7 +17708,10 @@ def check_requests_log_sec_only() -> dict:
     if unavailable:
         return not_evaluated_validation_row(
             check_id="requests_log_sec_only",
-            details=";".join(unavailable[:20]),
+            details=(
+                f"total_unavailable={len(unavailable)};"
+                + ";".join(unavailable[:20])
+            ),
         )
     return validation_row(
         check_id="requests_log_sec_only",

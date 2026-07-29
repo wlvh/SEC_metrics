@@ -15,6 +15,17 @@ from pathlib import Path
 
 
 TEST_ROOT = Path(__file__).resolve().parents[1]
+REQUEST_ATTEMPT_BODY = (
+    "evidence/request_attempts/aa/"
+    + "a" * 64
+    + "/sample.json"
+)
+REQUEST_ATTEMPT_HEADERS = (
+    REQUEST_ATTEMPT_BODY
+    + "."
+    + "b" * 64
+    + ".headers.json"
+)
 
 if "git_workspace" not in sys.modules:
     fake_git_workspace = types.ModuleType("git_workspace")
@@ -166,6 +177,8 @@ class ValidationProvenanceTest(unittest.TestCase):
                 '{"schema_version": 1, "row_count": 1, '
                 '"content_sha256": "x"}\n',
             )
+            self._write(REQUEST_ATTEMPT_BODY, "body\n")
+            self._write(REQUEST_ATTEMPT_HEADERS, "headers\n")
         else:
             self._write("LIGHT_REVIEW_PACKAGE.marker", "light\n")
 
@@ -264,6 +277,10 @@ class ValidationProvenanceTest(unittest.TestCase):
         self.assertIn(
             "PR_Checklist.md",
             policy.publication_governance_files,
+        )
+        self.assertEqual(
+            policy.full_artifact_directories,
+            ("evidence/request_attempts",),
         )
 
     def test_explanatory_document_cannot_be_sop_authority(self) -> None:
@@ -373,6 +390,78 @@ class ValidationProvenanceTest(unittest.TestCase):
         )
         self.assertTrue(
             any("outputs/unexpected.csv" in item for item in result.errors)
+        )
+
+    def test_full_request_attempt_directory_is_exactly_bound(self) -> None:
+        """Tamper, set drift, and aliases break the full artifact closure."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION",
+            source_commit=head,
+        )
+        source = capture_source_snapshot(workdir=self.workdir)
+        publish_validation_snapshot(
+            workdir=self.workdir,
+            source_snapshot=source,
+        )
+        body_path = self.workdir / REQUEST_ATTEMPT_BODY
+
+        self._write(REQUEST_ATTEMPT_BODY, "tampered\n")
+        tampered = verify_validation_snapshot(workdir=self.workdir)
+        self.assertTrue(
+            any(
+                REQUEST_ATTEMPT_BODY in error
+                and "artifact SHA-256 mismatch" in error
+                for error in tampered.errors
+            ),
+            tampered.errors,
+        )
+
+        self._write(REQUEST_ATTEMPT_BODY, "body\n")
+        body_path.unlink()
+        deleted = verify_validation_snapshot(workdir=self.workdir)
+        self.assertTrue(
+            any(
+                REQUEST_ATTEMPT_BODY in error
+                and "artifact digest key set mismatch" in error
+                for error in deleted.errors
+            ),
+            deleted.errors,
+        )
+
+        self._write(REQUEST_ATTEMPT_BODY, "body\n")
+        added_path = "evidence/request_attempts/ff/unexpected.bin"
+        self._write(added_path, "unexpected\n")
+        added = verify_validation_snapshot(workdir=self.workdir)
+        self.assertTrue(
+            any(
+                added_path in error
+                and "artifact digest key set mismatch" in error
+                for error in added.errors
+            ),
+            added.errors,
+        )
+
+        (self.workdir / added_path).unlink()
+        body_path.unlink()
+        body_path.symlink_to(self.workdir / REQUEST_ATTEMPT_HEADERS)
+        symlinked = verify_validation_snapshot(workdir=self.workdir)
+        self.assertTrue(
+            any("Full artifact path is a symlink" in error
+                for error in symlinked.errors),
+            symlinked.errors,
+        )
+
+        body_path.unlink()
+        os.link(
+            src=self.workdir / REQUEST_ATTEMPT_HEADERS,
+            dst=body_path,
+        )
+        hardlinked = verify_validation_snapshot(workdir=self.workdir)
+        self.assertTrue(
+            any("Full artifact path is not single-link" in error
+                for error in hardlinked.errors),
+            hardlinked.errors,
         )
 
     def test_stage_invalidation_removes_only_regular_provenance(self) -> None:

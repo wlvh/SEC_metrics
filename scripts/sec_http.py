@@ -68,6 +68,7 @@ LEGACY_REQUEST_LOG_FIELDNAMES = [
 ]
 REQUEST_LOG_MANIFEST_NAME = "requests_log_manifest.json"
 REQUEST_LOG_MANIFEST_SCHEMA_VERSION = 1
+REQUEST_ATTEMPT_PATH_PARTS = ("evidence", "request_attempts")
 _REQUEST_LOG_THREAD_LOCK = threading.RLock()
 _IMMUTABLE_ARTIFACT_THREAD_LOCK = threading.RLock()
 OFFICIAL_SEC_HOSTS = frozenset({"www.sec.gov", "data.sec.gov"})
@@ -89,6 +90,10 @@ class NoRedirectHandler(HTTPRedirectHandler):
     ) -> None:
         """Return no follow-up request for every HTTP redirect response."""
         return None
+
+
+class IncompleteRequestSnapshotError(FileNotFoundError):
+    """Signal that a snapshot body exists without its attributable header."""
 
 
 _NO_REDIRECT_OPENER = build_opener(NoRedirectHandler())
@@ -262,6 +267,46 @@ def request_log_source_url(*, row: dict) -> str:
     raise KeyError("Request log row requires source_url or legacy url")
 
 
+def request_headers_bytes_match_identity(
+    *,
+    content: bytes,
+    content_sha256: str,
+    source_url: str,
+    status_code: str,
+    content_length: str,
+) -> bool:
+    """Return whether headers bytes match one request observation.
+
+    Args:
+        content: Candidate UTF-8 JSON sidecar bytes.
+        content_sha256: Immutable response-body identity.
+        source_url: Requested official SEC URL.
+        status_code: Recorded HTTP status text.
+        content_length: Recorded response byte length text.
+
+    Returns:
+        True only when required sidecar fields match the observation.
+    """
+    try:
+        payload = json.loads(content.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return False
+    required_fields = {
+        "url",
+        "status_code",
+        "content_length",
+        "sha256",
+    }
+    if not isinstance(payload, dict) or not required_fields.issubset(payload):
+        return False
+    return (
+        str(payload["url"]) == source_url
+        and str(payload["status_code"]) == status_code
+        and str(payload["content_length"]) == content_length
+        and str(payload["sha256"]) == content_sha256
+    )
+
+
 def request_candidate_matches_identity(
     *,
     path: Path,
@@ -295,22 +340,15 @@ def request_candidate_matches_identity(
             hashlib.sha256(path.read_bytes()).hexdigest() == content_sha256
         )
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        content = path.read_bytes()
+    except OSError:
         return False
-    required_fields = {
-        "url",
-        "status_code",
-        "content_length",
-        "sha256",
-    }
-    if not isinstance(payload, dict) or not required_fields.issubset(payload):
-        return False
-    return (
-        str(payload["url"]) == source_url
-        and str(payload["status_code"]) == status_code
-        and str(payload["content_length"]) == content_length
-        and str(payload["sha256"]) == content_sha256
+    return request_headers_bytes_match_identity(
+        content=content,
+        content_sha256=content_sha256,
+        source_url=source_url,
+        status_code=status_code,
+        content_length=content_length,
     )
 
 
@@ -505,7 +543,7 @@ def response_working_paths(
     reserved_root = (
         workdir / "evidence" / "request_attempts"
     ).resolve(strict=False)
-    reserved_parts = ("evidence", "request_attempts")
+    reserved_parts = REQUEST_ATTEMPT_PATH_PARTS
     for path in paths:
         resolved_path = path.resolve(strict=False)
         relative_parts = resolved_path.relative_to(resolved_workdir).parts
@@ -593,8 +631,7 @@ def response_snapshot_path(
         is_headers=False,
     )
     relative_path = Path(
-        "evidence",
-        "request_attempts",
+        *REQUEST_ATTEMPT_PATH_PARTS,
         content_sha256[:2],
         content_sha256,
         local_path.name,
@@ -603,6 +640,193 @@ def response_snapshot_path(
         workdir=workdir,
         relative_path=relative_path.as_posix(),
     )
+
+
+def read_request_snapshot_bytes(*, workdir: Path, path: Path) -> bytes:
+    """Read one immutable request artifact without accepting aliases.
+
+    Args:
+        workdir: Current repository root.
+        path: Canonical content-addressed request artifact path.
+
+    Returns:
+        Exact bytes from a single-link regular file below the repository.
+
+    Raises:
+        FileNotFoundError: The declared immutable artifact is absent.
+        ValueError: A symlink, hardlink, directory, or unsafe path is present.
+    """
+    if not os.path.lexists(path):
+        raise FileNotFoundError(
+            f"Immutable request artifact is unavailable: {path}"
+        )
+    try:
+        verified_path = repository_write_path(
+            workdir=workdir,
+            path=path,
+        )
+        content, _metadata = read_verified_immutable_bytes(path=verified_path)
+    except (OSError, RuntimeError, ValueError) as error:
+        raise ValueError(
+            f"Immutable request artifact is unsafe: {path}"
+        ) from error
+    return content
+
+
+def legacy_response_snapshot_paths(
+    *,
+    workdir: Path,
+    content_sha256: str,
+    source_url: str,
+    status_code: str,
+    content_length: str,
+    document_name: str,
+    timestamp_utc: str,
+) -> tuple[Path, Path]:
+    """Return one exact immutable snapshot pair for a legacy observation.
+
+    Args:
+        workdir: Current repository root.
+        content_sha256: Historical response-body SHA-256 from the ledger.
+        source_url: Historical official SEC request URL.
+        status_code: Historical HTTP status text.
+        content_length: Historical body length text.
+        document_name: Historical response document name.
+        timestamp_utc: Ledger publication time bounding eligible sidecars.
+
+    Returns:
+        The unique content-addressed body and headers paths.
+
+    Raises:
+        FileNotFoundError: The body or matching headers sidecar is absent.
+        IncompleteRequestSnapshotError: The body exists but its attributable
+            headers sidecar is absent.
+        ValueError: Multiple matching sidecars make the observation ambiguous.
+    """
+    if Path(document_name).name != document_name:
+        raise ValueError(
+            f"Legacy request document name is not a file name: "
+            f"{document_name}"
+        )
+    relative_body_path = Path(
+        *REQUEST_ATTEMPT_PATH_PARTS,
+        content_sha256[:2],
+        content_sha256,
+        document_name,
+    )
+    body_path = request_artifact_candidate(
+        workdir=workdir,
+        relative_path=relative_body_path.as_posix(),
+    )
+    body_bytes = read_request_snapshot_bytes(
+        workdir=workdir,
+        path=body_path,
+    )
+    if (
+        len(body_bytes) != int(content_length)
+        or hashlib.sha256(body_bytes).hexdigest() != content_sha256
+    ):
+        raise ValueError(
+            f"Legacy immutable response body identity mismatch: {body_path}"
+        )
+
+    try:
+        ledger_timestamp = datetime.fromisoformat(timestamp_utc)
+    except ValueError as error:
+        raise ValueError(
+            f"Legacy request timestamp is invalid: {timestamp_utc}"
+        ) from error
+    if (
+        ledger_timestamp.tzinfo is None
+        or ledger_timestamp.utcoffset()
+        != timezone.utc.utcoffset(ledger_timestamp)
+    ):
+        raise ValueError(
+            f"Legacy request timestamp is not UTC: {timestamp_utc}"
+        )
+
+    matched_headers = []
+    prefix = f"{document_name}."
+    suffix = ".headers.json"
+    for candidate in sorted(body_path.parent.iterdir()):
+        if (
+            not candidate.name.startswith(prefix)
+            or not candidate.name.endswith(suffix)
+        ):
+            continue
+        encoded_digest = candidate.name[len(prefix):-len(suffix)]
+        if (
+            re.fullmatch(pattern=r"[0-9a-f]{64}", string=encoded_digest)
+            is None
+        ):
+            continue
+        relative_candidate = candidate.relative_to(workdir)
+        candidate = request_artifact_candidate(
+            workdir=workdir,
+            relative_path=relative_candidate.as_posix(),
+        )
+        headers_bytes = read_request_snapshot_bytes(
+            workdir=workdir,
+            path=candidate,
+        )
+        if hashlib.sha256(headers_bytes).hexdigest() != encoded_digest:
+            raise ValueError(
+                f"Legacy immutable response headers hash mismatch: "
+                f"{candidate}"
+            )
+        if request_headers_bytes_match_identity(
+            content=headers_bytes,
+            content_sha256=content_sha256,
+            source_url=source_url,
+            status_code=status_code,
+            content_length=content_length,
+        ):
+            payload = json.loads(headers_bytes.decode("utf-8"))
+            if "saved_at_utc" not in payload:
+                raise ValueError(
+                    f"Legacy immutable response headers lack saved_at_utc: "
+                    f"{candidate}"
+                )
+            saved_at_text = str(payload["saved_at_utc"])
+            try:
+                saved_at = datetime.fromisoformat(saved_at_text)
+            except ValueError as error:
+                raise ValueError(
+                    f"Legacy immutable response headers timestamp invalid: "
+                    f"{candidate}"
+                ) from error
+            if (
+                saved_at.tzinfo is None
+                or saved_at.utcoffset()
+                != timezone.utc.utcoffset(saved_at)
+            ):
+                raise ValueError(
+                    f"Legacy immutable response headers timestamp not UTC: "
+                    f"{candidate}"
+                )
+            # A sidecar persisted after the ledger row cannot belong to that
+            # observation; the latest eligible time separates same-body tries.
+            if saved_at <= ledger_timestamp:
+                matched_headers.append((saved_at, candidate))
+    if not matched_headers:
+        raise IncompleteRequestSnapshotError(
+            f"legacy_snapshot_headers_missing: "
+            f"{body_path.parent}"
+        )
+    latest_timestamp = max(
+        saved_at for saved_at, _candidate in matched_headers
+    )
+    latest_headers = [
+        candidate
+        for saved_at, candidate in matched_headers
+        if saved_at == latest_timestamp
+    ]
+    if len(latest_headers) > 1:
+        raise ValueError(
+            "Legacy immutable response headers are ambiguous: "
+            f"{body_path.parent}"
+        )
+    return body_path, latest_headers[0]
 
 
 def request_log_manifest_path(*, log_path: Path) -> Path:

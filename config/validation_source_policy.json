@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "runtime_source_directories": [
     "scripts",
     "tools",
@@ -22,6 +22,9 @@
   "generated_artifacts": [
     "README_RUN.md",
     "REPORT_十公司财务指标.md"
+  ],
+  "full_artifact_directories": [
+    "evidence/request_attempts"
   ],
   "publication_governance_files": [
     ".github/pull_request_template.md",
