@@ -1,24 +1,32 @@
 # REPORT_十公司财务指标
 
+<!-- validation-snapshot-provenance:start -->
+## Validation snapshot provenance
+
+- 报告存在或显示 GO，不单独证明当前 checkout 可验收。
+- 必须同时满足 terminal manifest 成功，且 `python3 tools/check_validation_snapshot.py` 通过。
+- checker 验证 source-input tree 和关键 artifact SHA-256/size。
+<!-- validation-snapshot-provenance:end -->
+
 ## Executive Summary
 
-- Verdict: **NO-GO**。
+- Verdict: **GO WITH CAVEATS**。
 - SEC 请求总数：859；状态分布：`{"403":5,"200":817,"404":35,"0":2}`。
 - 指标格子：230；有值：161；空值：69；validation rows：80。
 - OK/TEXT 类：181；待复核/不可得类：49。
-- Validation 状态分布：`{"PASS":78,"NOT_EVALUATED_MISSING_EVIDENCE":1,"FAIL":1}`。
+- Validation 状态分布：`{"PASS":80}`。
 - 本次只使用 SEC 官方响应和本地 evidence 文件；未使用第三方数据或模型记忆补数。
 - Repair validation 若有 P0 FAIL、WORKSPACE_INCOMPLETE，或 full 关键检查 NOT_EVALUATED，verdict 强制为 NO-GO。
 - Stratified audit 任一 FAIL 会进入 repair validation gate，不能被报告静默吞掉。
 
 ## Validation run manifest
 
-- run_id: `3d96e1f0-2026-4fb5-be20-bf7b6d054119`
-- source_commit: `796895e8f5ae4510819b67588d52bdc6dbb1cae7+dirty`
+- run_id: `9d511cc8-8d24-49f7-8fb6-bc5ba10747e2`
+- source_commit: `7dee963d82d5b768013c984e709d28408401eb00+dirty`
 - `source_commit` 后缀 `+dirty` 表示运行时工作树含未提交改动。
-- started_at_utc: `2026-07-22T19:01:28.890004+00:00`
+- started_at_utc: `2026-07-29T10:43:58.796183+00:00`
 - mode: `FULL_VALIDATION`
-- result: `FAILED`
+- result: `PASSED`
 - refreshed_artifacts: `implementation_map.csv, spec_implementation_audit.csv, stub_period_metrics.csv, stratified_audit.csv, scalability_audit.csv, repair_validation_results.csv`
 - not_refreshed_artifacts: `none`
 - 报告只展示 manifest 标记为本次 refreshed 的 validation/audit artifact；文件存在本身不证明新鲜度。
@@ -328,6 +336,6 @@
 - 可产品化：companyfacts 标准公司级事实、8-K item inventory、基础 risk heading/keyword 定性信号、请求日志/hash 证据链。
 - 暂不可直接产品化：复杂 Basel/NPL/AUM/VaR 表格抽取、工业/金融维度债务拆分、DEF 14A 董事会结构化计数、复杂 MD&A 表格 KPI。
 
-## Verdict: NO-GO
+## Verdict: GO WITH CAVEATS
 
 - 本 spike 未构建生产系统、报价模型、前端或 daily update 调度。
