@@ -17,7 +17,8 @@ source-input closure
 
 acceptance artifact closure
     manifest、报告、README、metrics/evidence/coverage/Golden、events、
-    request log/manifest，以及本轮 refreshed validation artifacts
+    request log/manifest、full request-attempt recursive exact set，
+    以及本轮 refreshed validation artifacts
 ```
 
 第一层用 deterministic tree digest 绑定；第二层逐文件记录 SHA-256 与 size。
@@ -74,7 +75,7 @@ repo_relative_path NUL byte_length NUL content_sha256 LF
 
 无 Git 的显式 light package 不能通过删掉某个 acceptance source 文件来缩小 closure。policy、自身声明的全部 acceptance source files 和 runtime source directories 都必须存在，并且必须是非 symlink regular file/real directory；缺失任一项即失败。light package 仍可按随包实际内容枚举 runtime source directories，但不能省略 `01_SOP...md`、CIK identity rules、能力契约、指标定义或核心治理/验收文档。
 
-生成的 `evidence/`、`outputs/`、报告和 README 不进入 source tree；它们由 artifact closure 单独绑定。这样 stage 00–11 的合法生成副作用不会被误判为 source dirty。
+生成的 `evidence/`、`outputs/`、报告和 README 不进入 source tree。full 模式下，policy 声明的 `evidence/request_attempts/` 由 artifact closure 按 recursive exact file set 单独绑定；其他文件只在进入核心或 refreshed artifact 清单时绑定。这样 stage 00–11 的合法生成副作用不会被误判为 source dirty，也不能在 stage 12 后静默删除、新增或篡改已绑定的 immutable attempt。
 
 ## 4. Commit 与 tree 的关系
 
@@ -110,6 +111,7 @@ outputs/events.csv
 outputs/<manifest.refreshed_artifacts>
 evidence/requests_log.csv
 evidence/requests_log_manifest.json
+evidence/request_attempts/**（仅 full；policy 声明目录的 recursive exact file set）
 REPORT_十公司财务指标.md
 README_RUN.md
 ```
@@ -123,7 +125,7 @@ README_RUN.md
 }
 ```
 
-sidecar 的 key set 必须和当前 manifest 推导的 expected set 完全一致；缺少、多余、size 变化或 SHA-256 变化都失败。light package 不要求被明确省略的 raw evidence，但仍绑定随包 source 与 artifact bytes，并标记 `LIGHT_PACKAGE_NO_GIT`。
+sidecar 的 key set 必须和当前 manifest、mode 与 policy 推导的 expected set 完全一致；full artifact directory 中删除、新增、symlink、hardlink、size 变化或 SHA-256 变化都失败。light package 不要求被明确省略的 raw evidence，也不要求 full-only artifact directory，但仍绑定随包 source 与 artifact bytes，并标记 `LIGHT_PACKAGE_NO_GIT`。
 
 ## 6. Publication 顺序
 

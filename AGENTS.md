@@ -68,7 +68,7 @@ architecture.md
 - `config/sec_config.json`：SEC User-Agent、请求速率、重试与退避参数。
 - `config/company_registry.csv`：逻辑公司、CIK role、行业 profile、财年底与连续性。
 - `config/metric_applicability.yaml`：SIC/profile 规则、extractor 路由与行业参数；当前由 JSON parser 读取，内容必须保持 JSON 兼容。
-- `config/validation_source_policy.json`：机器可读的 runtime/acceptance source、生成 artifact、发布治理和解释性文档角色；provenance closure 的真相源。
+- `config/validation_source_policy.json`：机器可读的 runtime/acceptance source、full artifact directory、生成 artifact、发布治理和解释性文档角色；provenance closure 的真相源。
 
 ### 核心模块
 

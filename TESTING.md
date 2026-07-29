@@ -26,7 +26,7 @@
 | 层级 | 命令 / 入口 | 网络 | 仓库写入 | 通过条件 | 不能替代 |
 |---|---|---:|---:|---|---|
 | 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py'` | 否 | 测试设计上只写临时目录 | unittest 全部通过；允许的 skip 必须在记录中说明 | full evidence、Golden、完整阶段 |
-| Provenance 专项 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_validation_provenance tests.test_validation_provenance_light_package` | 否 | 只写临时目录和临时 Git 仓库 | source policy schema/角色、SOP 权威引用、`01_SOP...md` dirty 负例、clean/full/light、缺 acceptance source、equivalent tree、artifact tamper 与 postflight fail-closed 回归通过 | 业务指标、Golden、SEC evidence |
+| Provenance 专项 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_validation_provenance tests.test_validation_provenance_light_package` | 否 | 只写临时目录和临时 Git 仓库 | source policy schema/角色、SOP 权威引用、`01_SOP...md` dirty 负例、clean/full/light、缺 acceptance source、equivalent tree、full artifact directory exact set、artifact tamper 与 postflight fail-closed 回归通过 | 业务指标、Golden、SEC evidence |
 | 能力文档对齐 | `python3 tools/check_capability_contract_alignment.py`；PR 再加 `--base-ref <base>` | 否 | 否 | 清除会重定向仓库的 Git 环境变量并禁用 replacement refs 后，证据路径存在于 HEAD、是 regular blob 且工作树 bytes 未偏离 HEAD；anchor grammar/唯一性、type/status 枚举、null anchor 的 `untested_reason`/`pending_since`、`file::symbol` 与 Markdown directive 均合法；跨 base tombstone 不删除/复用，base 与 HEAD 的每条 request row 严格匹配其 current/legacy CSV schema，legacy row 独立规范化为 portable 完整字段，current row 逐字段保留有序前缀且只尾部追加 | claim 语义与证据强度判断 |
 | 静态扩展性 gate | `python3 tools/check_no_company_literals.py` | 否 | 是，覆盖 `outputs/scalability_audit.csv` | 无禁止 identity literal，进程退出 0 | 指标正确性、场景回归 |
 | Golden | `python3 scripts/10_run_golden_assertions.py` | full 模式会联网；light 不联网 | full 模式覆盖 Golden outputs，并可能追加 evidence/log | 所有适用 assertion PASS；light 只能得到受限完整性结果 | repair gate、snapshot checker、外部验收 |
@@ -54,7 +54,7 @@
 - validation run manifest 的 refreshed/not-refreshed 清单、stale CSV 隔离，以及报告写入失败时不得提前暴露成功终态。
 - clone A 生成 locator、移动到不同绝对路径的 clone B 后直接执行阶段 11；clone A 的祖先目录与仓库内目录重复使用 `evidence` anchor 时，迁移必须按 hash、URL、accession、document 与 filing directory 选择唯一的当前 clone 后缀，无匹配或多匹配均 fail closed，不能简单取首个或最后一个 anchor。同一 request 的 body/header 必须来自同一个旧仓库根；body 只命中内层候选而 sidecar 只命中外层候选的混合 observation 必须由生产迁移和独立 checker 同时拒绝。已有 hash 不得被迁移重签，`..` 与 symlink 不得逃逸仓库；同名同 hash 的跨 accession 文件不得被重定位；多 source/accession 对单路径的豁免只能由明确的 `events.csv` 派生语义触发，不得根据字段数量猜测。
 - RPO claim 所需 instance fact 缺失、Golden fixture 缺失或 metrics 为空时不能 PASS。
-- 同一逻辑请求路径的多次 attempt 保留各自 content-addressed body/header；两个独立进程并发追加同一 request ledger 时不得丢行，且 manifest 必须保持有效；request-log manifest 的 JSON key/type 与 CSV 行列宽必须严格。working ledger 必须保留 Git HEAD 的完整有序前缀；runtime committed-HEAD parser 与 PR checker 都拒绝 current row 的多余/缺失单元格，checker 的 current 接受集合不得比 runtime 更宽。PR checker 还对 legacy/current base 与 HEAD 的 prefix、appended tail 逐行校验精确 shape，对 legacy base 独立规范化 portable path、hash、URL-derived accession/document，并以独立实现覆盖重复 anchor 的唯一命中与歧义拒绝；current base 比较完整 row，之后只允许合法尾部追加。重排、删行、identity 字段改写及重签不能把旧响应重新定义为最新。下游 locator、已存 response sidecar 与 URL/accession/document 联合身份继续提供反向约束；hash mismatch 显式 NOT_EVALUATED。
+- 同一逻辑请求路径的多次 attempt 保留各自 content-addressed body/header；legacy locator 即使 working body 仍匹配也必须优先解析 snapshot，避免相同 body 掩盖被覆盖的 header。同 body 多 attempt 只把不晚于各 row `timestamp_utc` 的最新匹配 `saved_at_utc` 归给该 row；删掉原 header、仅留后一次 header 不得 PASS，同时间多个匹配必须 FAIL。validator 只允许按 ledger body SHA/length 读取 single-link regular content-addressed body；snapshot body 不存在才验证原 legacy pair，body 存在但 header 缺失仍为 NOT_EVALUATED，body identity 错、latest eligible timestamp 并列多 sidecar、snapshot symlink/hardlink 与 reserved namespace 大小写别名为 FAIL，已声明 immutable locator 的篡改不得回退。两个独立进程并发追加同一 request ledger 时不得丢行，且 manifest 必须保持有效；request-log manifest 的 JSON key/type 与 CSV 行列宽必须严格。working ledger 必须保留 Git HEAD 的完整有序前缀；runtime committed-HEAD parser 与 PR checker 都拒绝 current row 的多余/缺失单元格，checker 的 current 接受集合不得比 runtime 更宽。PR checker 还对 legacy/current base 与 HEAD 的 prefix、appended tail 逐行校验精确 shape，对 legacy base 独立规范化 portable path、hash、URL-derived accession/document，并以独立实现覆盖重复 anchor 的唯一命中与歧义拒绝；current base 比较完整 row，之后只允许合法尾部追加。重排、删行、identity 字段改写及重签不能把旧响应重新定义为最新。下游 locator、已存 response sidecar 与 URL/accession/document 联合身份继续提供反向约束；hash mismatch 显式 NOT_EVALUATED，并报告 unavailable 总数后最多展示前 20 条明细。
 - mock transport 的 response-read timeout、`IncompleteRead` 和已发请求后的 persistence failure 必须形成明确 observation；初始 URL 必须是精确官方 HTTPS origin，redirect 只保留首跳 3xx observation 而不自动请求下一跳；snapshot symlink、大小写 namespace alias、目录型文件目标、hash-prefix symlink，以及最终文件名在检查后的 symlink/hardlink 注入均不得覆盖仓库内外 victim；working/log/manifest hardlink 必须通过新 inode 替换断开，UUID transaction path 预占必须 fail closed。
 - C04 必须先检查 `target_10k`（含 10-K/A），只有本地 AuditorName 不可用时才回退同 CIK、同期间原始 10-K；已有有序候选事实时不触发 fetch。空白或纯标点名称不是事实，不同 canonical 名称冲突时不得 first-win 或联网掩盖；后续 200 material observation 覆盖同 identity 的旧 503 current row。full C04 gate 必须从 request-bound accession index 分别重建当期候选/上期 10-K 实例集；同一 filing-bound URL/document 的多个成功 bodies 必须一致，删除 derived material row 不能隐藏已有原始事实；validator 不得复用生产 metric/evidence row builder。两期事实可用时 evidence 必须保留双 raw locator；事实缺失/冲突时必须精确绑定对应 raw scan，把 locator 换成同 accession 的无关合法文档也必须失败；同步篡改完整 C04 metric 与 evidence 不能替代原始 DEI 事实重算。C04 期间起点只取同 CIK prior；没有同 CIK prior 时回退当年 1 月 1 日，不能跨 successor/predecessor CIK 拼接；生产 repair 路径必须把该期间同时写入 metric 与 evidence，不能只测试 period helper；损坏 metrics/evidence/inventory row schema 必须返回 FAIL 而非逃逸崩溃。
 - numeric OK evidence 必须同时匹配 value、unit、period、accession，并具备 SEC source、concept/section 与 extraction method。
@@ -68,6 +68,7 @@
 - staged、untracked、ignored 或修改后的 source input 拒绝；
 - 无 Git light package 缺少任一显式 singleton source 文件时失败，不能通过删文件缩小 closure；
 - provenance key set、artifact hash/size、source tree、stale/unsafe sidecar 和 postflight failure 篡改检测；
+- full snapshot 发布后，`evidence/request_attempts/` recursive exact set 的删除、新增、bytes 篡改、symlink 与 hardlink 检测；light package 不把该 full-only directory 冒充随包 evidence；
 - stage 11/12 wrapper 与 README/report notice 的 publication/idempotency 行为。
 
 边界说明：
@@ -133,7 +134,7 @@ light 模式只做随包 snapshot integrity，不能被记录成 full Golden 重
 
 ### 7.5 Validation snapshot provenance
 
-stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失效。stage 12 只在既有 terminal gate 成功后计算 source-input tree 与关键 artifact SHA-256/size，原子写 sidecar并从磁盘重新验证；任一 postflight 失败都尝试把 manifest 降为 `FAILED`、把报告改为 `NO-GO` 并非零退出。checker 本身只读，不修复也不重签 artifact。
+stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失效。stage 12 只在既有 terminal gate 成功后计算 source-input tree、核心 artifact 与 policy-declared full artifact directory recursive exact set 的 SHA-256/size，原子写 sidecar并从磁盘重新验证；任一 postflight 失败都尝试把 manifest 降为 `FAILED`、把报告改为 `NO-GO` 并非零退出。checker 本身只读，不修复也不重签 artifact。
 
 ## 8. 按变更类型选择测试
 

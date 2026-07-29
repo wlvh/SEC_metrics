@@ -5591,6 +5591,259 @@ class PortableRequestLogTest(unittest.TestCase):
         )
         self.assertEqual(check["status"], "PASS")
 
+    def test_legacy_overwrite_uses_unique_immutable_snapshot(self) -> None:
+        """A legacy working locator resolves only one exact snapshot pair."""
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            workspace = Path(tmp_dir) / "workspace"
+            client = build_http_client(workspace=workspace)
+            log_path = client.log_path
+            response_path = workspace / "evidence" / "raw" / "sample.json"
+            first = client._persist_result(
+                url="https://www.sec.gov/mock/sample.json",
+                status_code=503,
+                body=b"first",
+                headers={"Content-Type": "application/json"},
+                local_path=response_path,
+                error="retryable",
+            )
+            client._append_log_row(
+                result=first,
+                purpose="fixture",
+                attempt=0,
+            )
+            second = client._persist_result(
+                url="https://www.sec.gov/mock/sample.json",
+                status_code=200,
+                body=b"second",
+                headers={"Content-Type": "application/json"},
+                local_path=response_path,
+                error="",
+            )
+            client._append_log_row(
+                result=second,
+                purpose="fixture",
+                attempt=1,
+            )
+            rows = read_rows(path=log_path)
+            rows[0]["repo_relative_path"] = str(
+                response_path.relative_to(workspace)
+            )
+            rows[0]["headers_repo_relative_path"] = str(
+                response_path.with_suffix(
+                    response_path.suffix + ".headers.json"
+                ).relative_to(workspace)
+            )
+            write_rows(
+                path=log_path,
+                fieldnames=sec_http.REQUEST_LOG_FIELDNAMES,
+                rows=rows,
+            )
+            sec_http.refresh_request_log_manifest(
+                workdir=workspace,
+                log_path=log_path,
+            )
+            immutable_body = Path(first.local_path)
+            immutable_body_bytes = immutable_body.read_bytes()
+            immutable_headers = Path(first.headers_path)
+            with patched_workspace(workspace=workspace), mock.patch.object(
+                sec_pipeline,
+                "committed_request_observation_sequence",
+                return_value=[],
+            ):
+                baseline = sec_pipeline.check_requests_log_sec_only()
+                immutable_body.unlink()
+                missing = sec_pipeline.check_requests_log_sec_only()
+                alias_target = response_path.with_name("recovered-copy.bin")
+                alias_target.write_bytes(immutable_body_bytes)
+                immutable_body.symlink_to(alias_target)
+                unsafe_symlink = sec_pipeline.check_requests_log_sec_only()
+                immutable_body.unlink()
+                os.link(src=alias_target, dst=immutable_body)
+                unsafe_hardlink = sec_pipeline.check_requests_log_sec_only()
+                immutable_body.unlink()
+                alias_target.unlink()
+                immutable_body.write_bytes(immutable_body_bytes)
+                payload = json.loads(
+                    immutable_headers.read_text(encoding="utf-8")
+                )
+                payload["headers"]["X-Duplicate"] = "same timestamp"
+                duplicate_bytes = json.dumps(
+                    payload,
+                    ensure_ascii=False,
+                    indent=2,
+                ).encode("utf-8")
+                duplicate_digest = hashlib.sha256(
+                    duplicate_bytes
+                ).hexdigest()
+                duplicate_path = immutable_headers.with_name(
+                    f"{immutable_body.name}.{duplicate_digest}.headers.json"
+                )
+                duplicate_path.write_bytes(duplicate_bytes)
+                ambiguous = sec_pipeline.check_requests_log_sec_only()
+        self.assertEqual(baseline["status"], "PASS")
+        self.assertEqual(
+            missing["status"],
+            "NOT_EVALUATED_MISSING_EVIDENCE",
+        )
+        self.assertIn("response_body_hash_mismatch", missing["details"])
+        self.assertEqual(unsafe_symlink["status"], "FAIL")
+        self.assertIn("artifact is unsafe", unsafe_symlink["details"])
+        self.assertEqual(unsafe_hardlink["status"], "FAIL")
+        self.assertIn("artifact is unsafe", unsafe_hardlink["details"])
+        self.assertEqual(ambiguous["status"], "FAIL")
+        self.assertIn(
+            "Legacy immutable response headers are ambiguous",
+            ambiguous["details"],
+        )
+
+    def test_legacy_same_body_uses_temporal_header_boundary(self) -> None:
+        """Ledger time attributes same-body attempts to their own headers."""
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            workspace = Path(tmp_dir) / "workspace"
+            client = build_http_client(workspace=workspace)
+            response_path = workspace / "evidence" / "raw" / "sample.json"
+            first = client._persist_result(
+                url="https://www.sec.gov/mock/sample.json",
+                status_code=200,
+                body=b"same-body",
+                headers={"X-Generation": "first"},
+                local_path=response_path,
+                error="",
+            )
+            client._append_log_row(
+                result=first,
+                purpose="first fixture",
+                attempt=0,
+            )
+            second = client._persist_result(
+                url="https://www.sec.gov/mock/sample.json",
+                status_code=200,
+                body=b"same-body",
+                headers={"X-Generation": "second"},
+                local_path=response_path,
+                error="",
+            )
+            client._append_log_row(
+                result=second,
+                purpose="second fixture",
+                attempt=1,
+            )
+            rows = read_rows(path=client.log_path)
+            rows[0]["repo_relative_path"] = response_path.relative_to(
+                workspace
+            ).as_posix()
+            rows[0]["headers_repo_relative_path"] = response_path.with_suffix(
+                response_path.suffix + ".headers.json"
+            ).relative_to(workspace).as_posix()
+            write_rows(
+                path=client.log_path,
+                fieldnames=sec_http.REQUEST_LOG_FIELDNAMES,
+                rows=rows,
+            )
+            sec_http.refresh_request_log_manifest(
+                workdir=workspace,
+                log_path=client.log_path,
+            )
+            first_headers = Path(first.headers_path)
+            with patched_workspace(workspace=workspace), mock.patch.object(
+                sec_pipeline,
+                "committed_request_observation_sequence",
+                return_value=[],
+            ):
+                attributed = sec_pipeline.check_requests_log_sec_only()
+                first_headers.unlink()
+                missing = sec_pipeline.check_requests_log_sec_only()
+        self.assertEqual(attributed["status"], "PASS")
+        self.assertEqual(
+            missing["status"],
+            "NOT_EVALUATED_MISSING_EVIDENCE",
+        )
+        self.assertIn(
+            "legacy_snapshot_headers_missing",
+            missing["details"],
+        )
+
+    def test_casefolded_immutable_locator_cannot_use_legacy_fallback(
+        self,
+    ) -> None:
+        """A reserved namespace case alias fails before snapshot fallback."""
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            workspace = Path(tmp_dir) / "workspace"
+            client = build_http_client(workspace=workspace)
+            response_path = workspace / "evidence" / "raw" / "sample.json"
+            result = client._persist_result(
+                url="https://www.sec.gov/mock/sample.json",
+                status_code=200,
+                body=b"body",
+                headers={"Content-Type": "application/json"},
+                local_path=response_path,
+                error="",
+            )
+            client._append_log_row(
+                result=result,
+                purpose="fixture",
+                attempt=0,
+            )
+            rows = read_rows(path=client.log_path)
+            legacy_rows = [dict(row) for row in rows]
+            legacy_rows[0]["repo_relative_path"] = response_path.relative_to(
+                workspace
+            ).as_posix()
+            legacy_rows[0][
+                "headers_repo_relative_path"
+            ] = response_path.with_suffix(
+                response_path.suffix + ".headers.json"
+            ).relative_to(workspace).as_posix()
+            write_rows(
+                path=client.log_path,
+                fieldnames=sec_http.REQUEST_LOG_FIELDNAMES,
+                rows=legacy_rows,
+            )
+            sec_http.refresh_request_log_manifest(
+                workdir=workspace,
+                log_path=client.log_path,
+            )
+            snapshot_body = Path(result.local_path)
+            snapshot_body.write_bytes(b"evil")
+            with patched_workspace(workspace=workspace), mock.patch.object(
+                sec_pipeline,
+                "committed_request_observation_sequence",
+                return_value=[],
+            ):
+                tampered_snapshot = sec_pipeline.check_requests_log_sec_only()
+            snapshot_body.write_bytes(b"body")
+            for field in (
+                "repo_relative_path",
+                "headers_repo_relative_path",
+            ):
+                parts = Path(rows[0][field]).parts
+                rows[0][field] = Path("Evidence", *parts[1:]).as_posix()
+            write_rows(
+                path=client.log_path,
+                fieldnames=sec_http.REQUEST_LOG_FIELDNAMES,
+                rows=rows,
+            )
+            sec_http.refresh_request_log_manifest(
+                workdir=workspace,
+                log_path=client.log_path,
+            )
+            with patched_workspace(workspace=workspace), mock.patch.object(
+                sec_pipeline,
+                "committed_request_observation_sequence",
+                return_value=[],
+            ):
+                check = sec_pipeline.check_requests_log_sec_only()
+        self.assertEqual(tampered_snapshot["status"], "FAIL")
+        self.assertIn(
+            "Legacy immutable response body identity mismatch",
+            tampered_snapshot["details"],
+        )
+        self.assertEqual(check["status"], "FAIL")
+        self.assertIn(
+            "immutable_request_locator_case_mismatch",
+            check["details"],
+        )
+
     def test_immutable_headers_and_log_metadata_tampering_cannot_pass(
         self,
     ) -> None:
@@ -5777,6 +6030,7 @@ class PortableRequestLogTest(unittest.TestCase):
             "NOT_EVALUATED_MISSING_EVIDENCE",
         )
         self.assertIn("response_body_hash_mismatch", mismatch["details"])
+        self.assertIn("total_unavailable=1", mismatch["details"])
         self.assertEqual(restored["status"], "PASS")
 
     def test_transport_failure_still_validates_url_identity(self) -> None:
