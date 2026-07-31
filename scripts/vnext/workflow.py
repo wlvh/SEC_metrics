@@ -13,7 +13,8 @@ from pathlib import Path
 from typing import Callable, Dict, Mapping, Optional, Sequence
 
 from .ai_adapter import AIAdapter, run_ai_attempt
-from .calculator import calculate_observation_metric, withheld_metric_result
+from .calculator import calculate_metric, calculate_observation_metric
+from .calculator import withheld_metric_result
 from .canonical import sha256_file, strict_json_loads
 from .evidence import check_evidence
 from .reader import validate_reader_output
@@ -30,7 +31,8 @@ from .run_store import write_review_assets
 from .run_store import write_attempt_payloads
 from .sources import load_raw_blob_bytes, raw_blob_record
 from .sources import source_reference_record
-from .specs import SpecError, compile_spec_file, parse_spec_document
+from .specs import SpecError, compile_spec_file, compile_spec_files
+from .specs import parse_spec_document
 from .table_grid import build_table_grid
 from .traits import TraitError, repository_company_traits
 
@@ -59,7 +61,9 @@ def _required_roles(*, compiled_spec: Mapping[str, object]) -> Sequence[str]:
 
 def _load_disclosure_plan(
     *, repo_root: Path, disclosure_spec_path: str,
-) -> tuple[Dict[str, object], Sequence[str]]:
+) -> tuple[
+    Dict[str, object], Sequence[str], Dict[str, Dict[str, object]]
+]:
     """Load one disclosure Spec and derive its exact metric Spec paths.
 
     Args:
@@ -67,7 +71,8 @@ def _load_disclosure_plan(
         disclosure_spec_path: Repository-relative disclosure Spec locator.
 
     Returns:
-        Compiled disclosure wrapper and ordered closure paths.
+        Compiled disclosure wrapper, ordered closure paths, and authoritative
+        metric wrappers keyed by metric ID.
 
     Raises:
         WorkflowError: When the locator escapes the disclosure catalog or its
@@ -114,9 +119,21 @@ def _load_disclosure_plan(
         raise WorkflowError("Disclosure metric Spec exact set differs")
     paths = [repo_root / relative]
     paths.extend(metric_paths[metric_id] for metric_id in sorted(metric_paths))
-    return compiled_spec, [
-        path.relative_to(repo_root).as_posix() for path in paths
-    ]
+    try:
+        metric_specs = compile_spec_files(
+            paths=[metric_paths[metric_id] for metric_id in metric_paths],
+        )
+    except SpecError as error:
+        raise WorkflowError(
+            "Disclosure metric Spec closure cannot be compiled"
+        ) from error
+    if set(metric_specs) != required_metric_ids:
+        raise WorkflowError("Disclosure metric Spec exact set differs")
+    return (
+        compiled_spec,
+        [path.relative_to(repo_root).as_posix() for path in paths],
+        metric_specs,
+    )
 
 
 def create_review_run(
@@ -160,7 +177,7 @@ def create_review_run(
         Run, attempt, Candidate, Evidence, and ReviewUnit identities. Rejection
         returns without creating a ReviewUnit and never invokes a fallback.
     """
-    compiled_spec, spec_paths = _load_disclosure_plan(
+    compiled_spec, spec_paths, metric_specs = _load_disclosure_plan(
         repo_root=repo_root,
         disclosure_spec_path=disclosure_spec_path,
     )
@@ -176,13 +193,67 @@ def create_review_run(
     required_traits = set(semantic["applicability"]["all"])
     forbidden_traits = set(semantic["applicability"]["none"])
     supplied_traits = set(company_traits)
+    spec_file_hashes = {
+        relative: sha256_file(path=repo_root / relative)
+        for relative in spec_paths
+    }
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+    )
     if not required_traits.issubset(supplied_traits) or (
         forbidden_traits & supplied_traits
     ):
+        # Structural inapplicability is a durable business fact. Persist the
+        # Run and Calculator output while deliberately omitting source and AI
+        # records so freeze/replay can prove both the result and zero egress.
+        records = []
+        result_ids = []
+        trace_ids = []
+        for metric_id in sorted(metric_specs):
+            metric_spec = metric_specs[metric_id]
+            target_scope = dict(metric_spec["compiled"]["required_claims"])
+            target = {
+                "company_id": company_id,
+                "period_start": target_period["period_start"],
+                "period_end": target_period["period_end"],
+                "accession": None,
+                "entity": None,
+                "scope": target_scope,
+                "scope_key": scope_key(scope=target_scope),
+            }
+            result, trace, observations = calculate_metric(
+                compiled_spec=metric_spec,
+                target=target,
+                company_traits=company_traits,
+                structured_facts=[],
+                verified_observations=[],
+            )
+            if observations or result["applicability"] != "N_A_STRUCTURAL":
+                raise WorkflowError(
+                    "Inapplicable disclosure metric did not produce N/A"
+                )
+            records.extend((trace, result))
+            result_ids.append(result["result_id"])
+            trace_ids.append(trace["trace_id"])
+        create_run(
+            run_dir=run_dir,
+            run_id=run_id,
+            company_id=company_id,
+            company_traits=company_traits,
+            target_period=target_period,
+            source_references=[],
+            missing_required_source_roles=[],
+            spec_file_hashes=spec_file_hashes,
+            requirement_hashes=requirement["hashes"],
+        )
+        for record in records:
+            append_run_record(run_dir=run_dir, record=record)
         return {
             "run_id": run_id,
             "status": "N_A_STRUCTURAL",
             "attempt_count": 0,
+            "result_ids": result_ids,
+            "trace_ids": trace_ids,
         }
     roles = _required_roles(compiled_spec=compiled_spec)
     raw_blob = raw_blob_record(
@@ -198,13 +269,6 @@ def create_review_run(
         document_name=document_name,
         source_role=source_role,
         request_attempt_id=request_attempt_id,
-    )
-    spec_file_hashes = {
-        relative: sha256_file(path=repo_root / relative)
-        for relative in spec_paths
-    }
-    requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
     )
     create_run(
         run_dir=run_dir,

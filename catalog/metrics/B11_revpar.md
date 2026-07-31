@@ -36,7 +36,18 @@
     "fiscal_year": "",
     "form": "",
     "formula": "reviewed AI table observation",
-    "notes_template": "Reviewed current-period RevPAR claim from immutable table-grid evidence."
+    "notes_template": "Reviewed current-period RevPAR claim from immutable table-grid evidence.",
+    "metric_context_style": "constant",
+    "evidence_context_style": "constant",
+    "evidence_unit_policy": "projected_result",
+    "evidence_extraction_method": "reviewed_ai_table",
+    "parser_version": "vnext_projector_v1",
+    "allowed_metric_delta_fields": ["formula", "notes"],
+    "allowed_evidence_delta_fields": [
+      "evidence_quote",
+      "extraction_method",
+      "parser_version"
+    ]
   },
   "dependencies": []
 }

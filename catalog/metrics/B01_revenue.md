@@ -39,7 +39,18 @@
     "source_class": "STD_XBRL",
     "formula": "direct",
     "confidence": "0.95",
-    "notes": "Revenue candidate chain from metric definition."
+    "notes": "Revenue candidate chain from metric definition.",
+    "metric_context_style": "companyfacts_fiscal",
+    "evidence_context_style": "companyfacts_period",
+    "evidence_unit_policy": "observation",
+    "evidence_extraction_method": "companyfacts_direct",
+    "parser_version": "vnext_projector_v1",
+    "allowed_metric_delta_fields": [],
+    "allowed_evidence_delta_fields": [
+      "evidence_quote",
+      "extraction_method",
+      "parser_version"
+    ]
   },
   "dependencies": []
 }

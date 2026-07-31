@@ -136,8 +136,9 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "publication_id",
             "candidate_status",
             "requirement_hashes",
-            "run_content_hash",
-            "run_bindings",
+            "batch_manifest_id",
+            "projection_manifest_id",
+            "validation_receipt_id",
             "files",
             "ledger_binding",
             "previous_publication_id",
@@ -270,6 +271,7 @@ TEXT_FIELDS = {
     "approval_effect_hash",
     "attempt_id",
     "audit_manifest_hash",
+    "batch_manifest_id",
     "candidate_hash",
     "candidate_status",
     "company_id",
@@ -295,6 +297,7 @@ TEXT_FIELDS = {
     "provider_request_id",
     "publication",
     "publication_id",
+    "projection_manifest_id",
     "quality",
     "raw_asset_id",
     "raw_response_sha256",
@@ -319,7 +322,6 @@ TEXT_FIELDS = {
     "reviewed_spec_semantic_hash",
     "reviewer_id",
     "reviewer_type",
-    "run_content_hash",
     "run_id",
     "scope_key",
     "semantic_role",
@@ -377,7 +379,6 @@ MAPPING_FIELDS = {
     "normalized_values",
     "requirement_hashes",
     "required_claims",
-    "run_bindings",
     "sampling_parameters",
     "scope",
     "selected",
@@ -761,8 +762,9 @@ def _expected_identifier(
             for key in (
                 "candidate_status",
                 "requirement_hashes",
-                "run_content_hash",
-                "run_bindings",
+                "batch_manifest_id",
+                "projection_manifest_id",
+                "validation_receipt_id",
                 "files",
                 "ledger_binding",
                 "previous_publication_id",
@@ -1026,10 +1028,23 @@ def _validate_record_semantics(
         checks = record["checks"]
         if any(
             not isinstance(check, dict)
-            or set(check) != {"check", "status"}
+            or set(check) not in (
+                {"check", "status"},
+                {"check", "evidence_hash", "status"},
+            )
             or not isinstance(check["check"], str)
             or not check["check"]
             or check["status"] not in {"PASS", "FAIL"}
+            or (
+                "evidence_hash" in check
+                and (
+                    not isinstance(check["evidence_hash"], str)
+                    or re.fullmatch(
+                        r"sha256:[0-9a-f]{64}", check["evidence_hash"]
+                    )
+                    is None
+                )
+            )
             for check in checks
         ):
             raise RecordError("Validation receipt check is invalid")

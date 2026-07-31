@@ -2,21 +2,28 @@
 
 from __future__ import annotations
 
+import csv
 import fcntl
+import io
 import os
 import re
 import shutil
+import subprocess
+import sys
+import tempfile
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Mapping, Optional
 
 from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
-from .canonical import content_hash, parse_utc_timestamp
+from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
 from .canonical import sha256_bytes, sha256_file, strict_json_file
 from .canonical import strict_json_loads
 from .projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
-from .projector import PROJECTION_GATE_FILES, build_projection_manifest
+from .projector import PROJECTION_GATE_FILES, PROJECTION_MANIFEST_FIELDS
+from .projector import build_projection_manifest
+from .projector import golden_row_passes
 from .projector import projection_file_hashes
 from .records import validate_record
 from .run_store import RunStoreError, load_run_for_status
@@ -57,22 +64,6 @@ REQUIREMENT_HASH_FIELDS = {
     "issue_body_sha256",
     "legacy_path_inventory_sha256",
 }
-RUN_BINDING_FIELDS = {
-    "audit_manifest_hash",
-    "derived_asset_ids",
-    "migrated_metric_ids",
-    "observation_ids",
-    "release_id",
-    "release_plan_sha256",
-    "result_ids",
-    "review_unit_hashes",
-    "run_id",
-    "trace_ids",
-    "validation_receipt_id",
-}
-RUN_VALIDATION_VIEW_BINDING_FIELDS = RUN_BINDING_FIELDS - {
-    "validation_receipt_id"
-}
 LEDGER_BINDING_FIELDS = {
     "requests_log_manifest_sha256",
     "row_count",
@@ -89,26 +80,40 @@ PUBLICATION_ID_PATTERN = re.compile(r"^publication_[0-9a-f]{64}$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 CONTENT_ID_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
 LATEST_STATUS_FILENAME = "latest_run_status.json"
-PROJECTION_MANIFEST_FIELDS = {
-    "candidate_artifact_hashes",
-    "derived_asset_ids",
-    "gate_receipt_hashes",
-    "legacy_input_hashes",
-    "migrated_metric_ids",
-    "observation_ids",
-    "projection_manifest_id",
-    "publication_candidate_status",
-    "release_id",
-    "release_plan_sha256",
-    "requirement_hashes",
-    "result_ids",
-    "review_unit_hashes",
-    "run_audit_manifest_hash",
-    "run_content_manifest_hash",
-    "run_id",
-    "schema_version",
-    "trace_ids",
-}
+METRIC_FIELDS = (
+    "company", "cik", "metric_id", "metric_name", "value", "unit",
+    "status", "source_class", "formula", "period_start", "period_end",
+    "fiscal_year", "fiscal_period", "accession", "form", "filed_date",
+    "concept_or_section", "context_or_dimension", "confidence", "notes",
+)
+EVIDENCE_FIELDS = (
+    "company", "cik", "metric_id", "source_url", "repo_relative_path",
+    "content_sha256", "accession", "document_name", "concept_or_section",
+    "context_or_dimension", "unit", "period_start", "period_end",
+    "value_raw", "value_normalized", "evidence_quote",
+    "extraction_method", "parser_version",
+)
+COVERAGE_FIELDS = (
+    "company", "metric_id", "status", "source_class",
+    "has_numeric_value", "has_evidence", "needs_text_extraction",
+    "needs_review", "reason",
+)
+GOLDEN_FIELDS = (
+    "assertion_id", "description", "expected", "actual", "status",
+    "evidence_path", "notes",
+)
+REPAIR_FIELDS = ("check_id", "severity", "status", "details")
+SCALABILITY_FIELDS = (
+    "file", "line", "literal", "type", "allowed", "reason",
+    "replacement_plan",
+)
+STRATIFIED_FIELDS = (
+    "audit_id", "source_bucket", "company", "metric_id", "metric_name",
+    "value", "unit", "status", "source_class", "period_start",
+    "period_end", "accession", "concept_or_section",
+    "context_or_dimension", "evidence_value", "evidence_unit",
+    "evidence_quote", "audit_verdict", "audit_notes",
+)
 
 
 class PublicationError(RuntimeError):
@@ -192,20 +197,22 @@ def _validate_id_list(
         raise PublicationError("{} must be a unique array".format(label))
 
 
-def _validate_publication_bindings(
+def _validate_publication_metadata(
     *,
     requirement_hashes: Mapping[str, object],
-    run_content_hash: object,
-    run_bindings: Mapping[str, object],
+    batch_manifest_id: object,
+    projection_manifest_id: object,
+    validation_receipt_id: object,
     ledger_binding: Mapping[str, object],
     previous_publication_id: object,
 ) -> None:
-    """Validate nested publication provenance before hashing or reading.
+    """Validate publication identities before hashing or reading.
 
     Args:
         requirement_hashes: Exact Requirement digest mapping.
-        run_content_hash: FROZEN Run content identity.
-        run_bindings: Run/review/trace/validation identities.
+        batch_manifest_id: Complete FROZEN Run collection identity.
+        projection_manifest_id: Run-derived projection proof identity.
+        validation_receipt_id: Execution-bound gate receipt identity.
         ledger_binding: Used request-ledger prefix identities.
         previous_publication_id: Optional prepared predecessor.
 
@@ -220,47 +227,16 @@ def _validate_publication_bindings(
         for field in requirement_hashes
     ):
         raise PublicationError("Requirement hash fields/values are invalid")
-    if (
-        type(run_content_hash) is not str
-        or CONTENT_ID_PATTERN.fullmatch(run_content_hash) is None
+    for identity, label in (
+        (batch_manifest_id, "BatchManifest"),
+        (projection_manifest_id, "ProjectionManifest"),
+        (validation_receipt_id, "ValidationReceipt"),
     ):
-        raise PublicationError("Run content hash is invalid")
-    if type(run_bindings) is not dict or set(
-        run_bindings
-    ) != RUN_BINDING_FIELDS:
-        raise PublicationError("Run binding fields are not exact")
-    for field in ("audit_manifest_hash", "validation_receipt_id"):
         if (
-            type(run_bindings[field]) is not str
-            or CONTENT_ID_PATTERN.fullmatch(run_bindings[field]) is None
+            type(identity) is not str
+            or CONTENT_ID_PATTERN.fullmatch(identity) is None
         ):
-            raise PublicationError("Run binding digest is invalid")
-    if type(run_bindings["run_id"]) is not str or not run_bindings["run_id"]:
-        raise PublicationError("Run identity is invalid")
-    for field in (
-        "derived_asset_ids",
-        "observation_ids",
-        "result_ids",
-        "review_unit_hashes",
-        "trace_ids",
-    ):
-        _validate_id_list(
-            values=run_bindings[field], label=field, content_ids=True,
-        )
-    migrated = run_bindings["migrated_metric_ids"]
-    if (
-        type(migrated) is not list
-        or not migrated
-        or any(type(value) is not str or not value for value in migrated)
-        or len(migrated) != len(set(migrated))
-        or type(run_bindings["release_id"]) is not str
-        or not run_bindings["release_id"]
-        or type(run_bindings["release_plan_sha256"]) is not str
-        or SHA256_PATTERN.fullmatch(
-            run_bindings["release_plan_sha256"]
-        ) is None
-    ):
-        raise PublicationError("Release/metric Run bindings are invalid")
+            raise PublicationError("{} identity is invalid".format(label))
     if type(ledger_binding) is not dict or set(
         ledger_binding
     ) != LEDGER_BINDING_FIELDS:
@@ -294,7 +270,7 @@ def _validate_publication_bindings(
 def publication_staging_context(
     *,
     repo_root: Path,
-    run_dir: Path,
+    batch_manifest_path: Path,
     legacy_snapshot_dir: Path,
     staging_dir: Path,
 ) -> Dict[str, object]:
@@ -302,7 +278,7 @@ def publication_staging_context(
 
     Args:
         repo_root: Repository containing Requirement and release-plan bytes.
-        run_dir: Persisted Run reloaded through the full freeze verifier.
+        batch_manifest_path: Complete persisted FROZEN Run collection.
         legacy_snapshot_dir: Legacy inputs used by the projection.
         staging_dir: Candidate and gate artifacts used by the projection.
 
@@ -315,7 +291,7 @@ def publication_staging_context(
     try:
         projection = build_projection_manifest(
             repo_root=repo_root,
-            run_dir=run_dir,
+            batch_manifest_path=batch_manifest_path,
             legacy_snapshot_dir=legacy_snapshot_dir,
             staging_dir=staging_dir,
         )
@@ -324,32 +300,23 @@ def publication_staging_context(
             "Publication requires a verified projection context"
         ) from error
     if projection["publication_candidate_status"] != "PUBLISHABLE":
-        raise PublicationError("FROZEN Run results are not publishable")
-    run_bindings = {
-        "audit_manifest_hash": projection["run_audit_manifest_hash"],
-        "derived_asset_ids": projection["derived_asset_ids"],
-        "migrated_metric_ids": projection["migrated_metric_ids"],
-        "observation_ids": projection["observation_ids"],
-        "release_id": projection["release_id"],
-        "release_plan_sha256": projection["release_plan_sha256"],
-        "result_ids": projection["result_ids"],
-        "review_unit_hashes": projection["review_unit_hashes"],
-        "run_id": projection["run_id"],
-        "trace_ids": projection["trace_ids"],
-    }
+        raise PublicationError("FROZEN batch results are not publishable")
     return {
+        "batch_manifest_id": projection["batch_manifest_id"],
         "projection_manifest": projection,
+        "projection_manifest_id": projection["projection_manifest_id"],
         "requirement_hashes": dict(projection["requirement_hashes"]),
-        "run_bindings": run_bindings,
-        "run_content_hash": projection["run_content_manifest_hash"],
     }
 
 
-def _read_staging_files(*, staging_dir: Path) -> Dict[str, bytes]:
+def _read_staging_files(
+    *, staging_dir: Path, include_receipt: bool
+) -> Dict[str, bytes]:
     """Read one exact regular-file staging candidate.
 
     Args:
         staging_dir: Dedicated candidate directory.
+        include_receipt: Whether the execution receipt must already exist.
 
     Returns:
         Required bundle-relative paths to exact bytes.
@@ -371,11 +338,16 @@ def _read_staging_files(*, staging_dir: Path) -> Dict[str, bytes]:
             actual_directories.add(relative)
         else:
             raise PublicationError("Publication staging entry is unsafe")
-    if actual_files != REQUIRED_BUNDLE_FILES or actual_directories:
+    expected_files = (
+        REQUIRED_BUNDLE_FILES
+        if include_receipt
+        else REQUIRED_BUNDLE_FILES - {"publication_validation_receipt.json"}
+    )
+    if actual_files != expected_files or actual_directories:
         raise PublicationError("Publication staging exact set differs")
     return {
         relative: (staging_dir / relative).read_bytes()
-        for relative in sorted(REQUIRED_BUNDLE_FILES)
+        for relative in sorted(expected_files)
     }
 
 
@@ -383,8 +355,8 @@ def publication_validation_view_id(
     *,
     files: Mapping[str, bytes],
     requirement_hashes: Mapping[str, object],
-    run_content_hash: str,
-    run_bindings: Mapping[str, object],
+    batch_manifest_id: str,
+    projection_manifest_id: str,
     ledger_binding: Mapping[str, object],
     previous_publication_id: Optional[str],
 ) -> str:
@@ -393,8 +365,8 @@ def publication_validation_view_id(
     Args:
         files: Required bundle bytes before or after adding the receipt.
         requirement_hashes: Exact Requirement Snapshot identities.
-        run_content_hash: FROZEN Run content identity.
-        run_bindings: Run identities, optionally including the receipt ID.
+        batch_manifest_id: Complete FROZEN Run collection identity.
+        projection_manifest_id: Exact Run-derived projection proof.
         ledger_binding: Exact request-ledger prefix used by the candidate.
         previous_publication_id: Prepared predecessor identity.
 
@@ -420,25 +392,11 @@ def publication_validation_view_id(
         for relative in expected_paths
     ):
         raise PublicationError("Publication validation view requires bytes")
-    if frozenset(run_bindings) not in {
-        frozenset(RUN_VALIDATION_VIEW_BINDING_FIELDS),
-        frozenset(RUN_BINDING_FIELDS),
-    }:
-        raise PublicationError("Run validation-view bindings are not exact")
-    view_run_bindings = {
-        field: run_bindings[field]
-        for field in sorted(RUN_VALIDATION_VIEW_BINDING_FIELDS)
-    }
-    complete_run_bindings = dict(view_run_bindings)
-    complete_run_bindings["validation_receipt_id"] = (
-        run_bindings["validation_receipt_id"]
-        if "validation_receipt_id" in run_bindings
-        else "sha256:" + "0" * 64
-    )
-    _validate_publication_bindings(
+    _validate_publication_metadata(
         requirement_hashes=requirement_hashes,
-        run_content_hash=run_content_hash,
-        run_bindings=complete_run_bindings,
+        batch_manifest_id=batch_manifest_id,
+        projection_manifest_id=projection_manifest_id,
+        validation_receipt_id="sha256:" + "0" * 64,
         ledger_binding=ledger_binding,
         previous_publication_id=previous_publication_id,
     )
@@ -452,11 +410,11 @@ def publication_validation_view_id(
     return "staging:" + content_hash(
         value={
             "artifact_hashes": artifacts,
+            "batch_manifest_id": batch_manifest_id,
             "ledger_binding": dict(ledger_binding),
             "previous_publication_id": previous_publication_id,
+            "projection_manifest_id": projection_manifest_id,
             "requirement_hashes": dict(requirement_hashes),
-            "run_bindings": view_run_bindings,
-            "run_content_hash": run_content_hash,
         }
     )
 
@@ -499,8 +457,9 @@ def _validate_receipt_artifacts(
     files: Mapping[str, bytes],
     receipt: Mapping[str, object],
     requirement_hashes: Mapping[str, object],
-    run_content_hash: str,
-    run_bindings: Mapping[str, object],
+    batch_manifest_id: str,
+    projection_manifest_id: str,
+    gate_evidence: Mapping[str, object],
     ledger_binding: Mapping[str, object],
     previous_publication_id: Optional[str],
 ) -> None:
@@ -510,8 +469,9 @@ def _validate_receipt_artifacts(
         files: Complete required bundle bytes including the receipt.
         receipt: Strict PASSED ValidationReceipt.
         requirement_hashes: Exact Requirement Snapshot identities.
-        run_content_hash: FROZEN Run identity named by the staging view.
-        run_bindings: Run/review/trace identities.
+        batch_manifest_id: Complete FROZEN Run collection identity.
+        projection_manifest_id: Exact Run-derived projection proof.
+        gate_evidence: Independently recomputed check evidence.
         ledger_binding: Exact request-ledger prefix identities.
         previous_publication_id: Prepared predecessor identity.
 
@@ -524,13 +484,21 @@ def _validate_receipt_artifacts(
         set(check_names) != REQUIRED_PUBLICATION_CHECKS
         or len(check_names) != len(set(check_names))
         or any(check["status"] != "PASS" for check in checks)
+        or any(
+            set(check) != {"check", "evidence_hash", "status"}
+            or check["evidence_hash"]
+            != content_hash(value=gate_evidence[str(check["check"])])
+            for check in checks
+        )
     ):
-        raise PublicationError("Publication required gate set did not PASS")
+        raise PublicationError(
+            "Publication required gate execution did not PASS"
+        )
     expected_view = publication_validation_view_id(
         files=files,
         requirement_hashes=requirement_hashes,
-        run_content_hash=run_content_hash,
-        run_bindings=run_bindings,
+        batch_manifest_id=batch_manifest_id,
+        projection_manifest_id=projection_manifest_id,
         ledger_binding=ledger_binding,
         previous_publication_id=previous_publication_id,
     )
@@ -560,16 +528,16 @@ def _validate_projection_manifest(
     *,
     content: bytes,
     requirement_hashes: Mapping[str, object],
-    run_content_hash: str,
-    run_bindings: Mapping[str, object],
+    batch_manifest_id: str,
+    projection_manifest_id: str,
 ) -> Dict[str, object]:
     """Validate the bundled ProjectionManifest as candidate authority.
 
     Args:
         content: Exact bundled ``projection_manifest.json`` bytes.
         requirement_hashes: Publication Requirement binding.
-        run_content_hash: Publication Run content identity.
-        run_bindings: Publication Run/review/trace/validation identities.
+        batch_manifest_id: Publication batch identity.
+        projection_manifest_id: Publication projection identity.
 
     Returns:
         Strict isolated ProjectionManifest.
@@ -592,7 +560,7 @@ def _validate_projection_manifest(
     manifest = dict(parsed)
     if (
         type(manifest["schema_version"]) is not int
-        or manifest["schema_version"] != 1
+        or manifest["schema_version"] != 2
     ):
         raise PublicationError("Bundled ProjectionManifest version differs")
     for field in (
@@ -619,6 +587,135 @@ def _validate_projection_manifest(
         raise PublicationError("Projection migrated metrics are invalid")
     if not manifest["result_ids"]:
         raise PublicationError("Projection result set is empty")
+    expected_entries = manifest["expected_result_keys"]
+    result_bindings = manifest["result_bindings"]
+    run_bindings = manifest["run_bindings"]
+    expected_fields = {"applicability", "company_id", "metric_id"}
+    result_fields = {
+        "applicability", "company_id", "evidence_row_hashes", "metric_id",
+        "metric_row_hash", "result_id", "trace_id", "unit", "value",
+    }
+    run_fields = {
+        "audit_manifest_hash", "company_id", "content_manifest_hash",
+        "result_ids", "run_id", "run_path", "validation_receipt_id",
+    }
+    if (
+        type(expected_entries) is not list
+        or type(result_bindings) is not list
+        or type(run_bindings) is not list
+        or not expected_entries
+        or not result_bindings
+        or not run_bindings
+        or any(
+            not isinstance(entry, dict) or set(entry) != expected_fields
+            for entry in expected_entries
+        )
+        or any(
+            not isinstance(binding, dict) or set(binding) != result_fields
+            for binding in result_bindings
+        )
+        or any(
+            not isinstance(binding, dict) or set(binding) != run_fields
+            for binding in run_bindings
+        )
+        or any(
+            type(entry["company_id"]) is not str
+            or not entry["company_id"]
+            or type(entry["metric_id"]) is not str
+            or not entry["metric_id"]
+            or entry["applicability"] not in {
+                "APPLICABLE", "N_A_STRUCTURAL",
+            }
+            for entry in expected_entries
+        )
+        or any(
+            type(binding["company_id"]) is not str
+            or not binding["company_id"]
+            or type(binding["metric_id"]) is not str
+            or not binding["metric_id"]
+            or binding["applicability"] not in {
+                "APPLICABLE", "N_A_STRUCTURAL",
+            }
+            or not (
+                binding["value"] is None
+                or type(binding["value"]) is str
+            )
+            or not (
+                binding["unit"] is None
+                or type(binding["unit"]) is str
+            )
+            for binding in result_bindings
+        )
+        or any(
+            type(binding["company_id"]) is not str
+            or not binding["company_id"]
+            or type(binding["run_id"]) is not str
+            or not binding["run_id"]
+            or type(binding["run_path"]) is not str
+            or not binding["run_path"]
+            for binding in run_bindings
+        )
+    ):
+        raise PublicationError("Projection batch proof shape is invalid")
+    expected_keys = [
+        (entry["company_id"], entry["metric_id"])
+        for entry in expected_entries
+    ]
+    result_keys = [
+        (binding["company_id"], binding["metric_id"])
+        for binding in result_bindings
+    ]
+    if (
+        len(expected_keys) != len(set(expected_keys))
+        or expected_keys != result_keys
+        or any(
+            expected_entries[index]["applicability"]
+            != result_bindings[index]["applicability"]
+            for index in range(len(expected_entries))
+        )
+        or any(
+            entry["applicability"] not in {
+                "APPLICABLE", "N_A_STRUCTURAL",
+            }
+            for entry in expected_entries
+        )
+    ):
+        raise PublicationError("Projection batch exact set differs")
+    for binding in result_bindings:
+        _validate_id_list(
+            values=binding["evidence_row_hashes"],
+            label="Projection evidence_row_hashes",
+            content_ids=True,
+        )
+        for field in ("metric_row_hash", "result_id", "trace_id"):
+            if (
+                type(binding[field]) is not str
+                or CONTENT_ID_PATTERN.fullmatch(binding[field]) is None
+            ):
+                raise PublicationError("Projection Result proof is invalid")
+    if sorted(
+        binding["result_id"] for binding in result_bindings
+    ) != sorted(manifest["result_ids"]):
+        raise PublicationError("Projection Result identity order differs")
+    bound_result_ids = []
+    for binding in run_bindings:
+        for field in (
+            "audit_manifest_hash", "content_manifest_hash",
+            "validation_receipt_id",
+        ):
+            if (
+                type(binding[field]) is not str
+                or CONTENT_ID_PATTERN.fullmatch(binding[field]) is None
+            ):
+                raise PublicationError("Projection Run proof is invalid")
+        _validate_id_list(
+            values=binding["result_ids"],
+            label="Projection Run result_ids",
+            content_ids=True,
+        )
+        bound_result_ids.extend(binding["result_ids"])
+    if sorted(bound_result_ids) != sorted(manifest["result_ids"]):
+        raise PublicationError("Projection Run Result binding differs")
     expected_hash_paths = {
         "candidate_artifact_hashes": set(PROJECTION_CANDIDATE_FILES),
         "gate_receipt_hashes": set(PROJECTION_GATE_FILES),
@@ -643,15 +740,9 @@ def _validate_projection_manifest(
         or not manifest["release_id"]
         or type(manifest["release_plan_sha256"]) is not str
         or SHA256_PATTERN.fullmatch(manifest["release_plan_sha256"]) is None
-        or type(manifest["run_id"]) is not str
-        or not manifest["run_id"]
     ):
-        raise PublicationError("Projection release/Run identity is invalid")
-    for field in (
-        "projection_manifest_id",
-        "run_audit_manifest_hash",
-        "run_content_manifest_hash",
-    ):
+        raise PublicationError("Projection release identity is invalid")
+    for field in ("batch_manifest_id", "projection_manifest_id"):
         if (
             type(manifest[field]) is not str
             or CONTENT_ID_PATTERN.fullmatch(manifest[field]) is None
@@ -664,21 +755,13 @@ def _validate_projection_manifest(
     }
     if manifest["projection_manifest_id"] != content_hash(value=body):
         raise PublicationError("ProjectionManifest identity differs")
-    expected = {
-        "derived_asset_ids": run_bindings["derived_asset_ids"],
-        "migrated_metric_ids": run_bindings["migrated_metric_ids"],
-        "observation_ids": run_bindings["observation_ids"],
-        "release_id": run_bindings["release_id"],
-        "release_plan_sha256": run_bindings["release_plan_sha256"],
-        "result_ids": run_bindings["result_ids"],
-        "review_unit_hashes": run_bindings["review_unit_hashes"],
-        "run_audit_manifest_hash": run_bindings["audit_manifest_hash"],
-        "run_content_manifest_hash": run_content_hash,
-        "run_id": run_bindings["run_id"],
-        "trace_ids": run_bindings["trace_ids"],
-    }
-    if any(manifest[field] != expected[field] for field in expected):
-        raise PublicationError("ProjectionManifest Run binding differs")
+    if (
+        manifest["batch_manifest_id"] != batch_manifest_id
+        or manifest["projection_manifest_id"] != projection_manifest_id
+    ):
+        raise PublicationError(
+            "ProjectionManifest publication binding differs"
+        )
     if manifest["requirement_hashes"] != dict(requirement_hashes):
         raise PublicationError("ProjectionManifest Requirement differs")
     if manifest["publication_candidate_status"] != "PUBLISHABLE":
@@ -731,11 +814,863 @@ def _validate_projection_artifact_bindings(
             raise PublicationError("Projection legacy input bytes differ")
 
 
+def _csv_rows(
+    *, content: bytes, fieldnames: tuple, label: str
+) -> list:
+    """Parse one strict publication CSV artifact.
+
+    Args:
+        content: Complete candidate bytes.
+        fieldnames: Required ordered header.
+        label: Diagnostic artifact name.
+
+    Returns:
+        Ordered string-valued rows.
+
+    Raises:
+        PublicationError: On invalid UTF-8, header, or row width.
+    """
+    try:
+        text = content.decode("utf-8")
+        reader = csv.DictReader(io.StringIO(text, newline=""))
+        if tuple(reader.fieldnames or ()) != fieldnames:
+            raise PublicationError("{} CSV schema differs".format(label))
+        rows = []
+        for row in reader:
+            if None in row or any(row[field] is None for field in fieldnames):
+                raise PublicationError(
+                    "{} CSV row width differs".format(label)
+                )
+            rows.append({field: str(row[field]) for field in fieldnames})
+    except (UnicodeDecodeError, csv.Error) as error:
+        raise PublicationError("{} CSV is invalid".format(label)) from error
+    return rows
+
+
+def _csv_bytes(*, rows: list, fieldnames: tuple) -> bytes:
+    """Serialize one exact publication CSV deterministically.
+
+    Args:
+        rows: Ordered exact-schema string mappings.
+        fieldnames: Required output column order.
+
+    Returns:
+        UTF-8 CSV bytes with stable line endings.
+    """
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(
+        output,
+        fieldnames=list(fieldnames),
+        lineterminator="\n",
+        extrasaction="raise",
+    )
+    writer.writeheader()
+    for row in rows:
+        if set(row) != set(fieldnames):
+            raise PublicationError("Generated publication CSV schema differs")
+        writer.writerow({field: row[field] for field in fieldnames})
+    return output.getvalue().encode("utf-8")
+
+
+def _expected_coverage_rows(*, metrics: list, evidence: list) -> list:
+    """Derive the complete coverage matrix from candidate rows.
+
+    Args:
+        metrics: Parsed full metrics matrix.
+        evidence: Parsed full evidence rows.
+
+    Returns:
+        Ordered coverage rows with no caller-authored status fields.
+    """
+    evidence_keys = {
+        (row["company"], row["metric_id"]) for row in evidence
+    }
+    output = []
+    for metric in metrics:
+        key = (metric["company"], metric["metric_id"])
+        status = metric["status"]
+        output.append(
+            {
+                "company": metric["company"],
+                "metric_id": metric["metric_id"],
+                "status": status,
+                "source_class": metric["source_class"],
+                "has_numeric_value": "1" if metric["value"] else "0",
+                "has_evidence": "1" if key in evidence_keys else "0",
+                "needs_text_extraction": (
+                    "1"
+                    if status in {"NOT_EXTRACTED", "NEEDS_REVIEW"}
+                    else "0"
+                ),
+                "needs_review": "1" if status == "NEEDS_REVIEW" else "0",
+                "reason": _coverage_reason(metric=metric),
+            }
+        )
+    return output
+
+
+def _expected_stratified_rows(
+    *, metrics: list, evidence: list, migrated_ids: set
+) -> list:
+    """Audit every numeric migrated row against one bound evidence row.
+
+    Args:
+        metrics: Parsed full metrics matrix.
+        evidence: Parsed full evidence rows.
+        migrated_ids: Repository-owned migrated metric set.
+
+    Returns:
+        Deterministic comprehensive vNext audit rows.
+
+    Raises:
+        PublicationError: When a numeric migrated result lacks evidence.
+    """
+    evidence_by_key = {}
+    for row in evidence:
+        key = (row["company"], row["metric_id"])
+        if key not in evidence_by_key:
+            evidence_by_key[key] = []
+        evidence_by_key[key].append(row)
+    output = []
+    for metric in metrics:
+        if metric["metric_id"] not in migrated_ids or not metric["value"]:
+            continue
+        key = (metric["company"], metric["metric_id"])
+        if key not in evidence_by_key or not evidence_by_key[key]:
+            raise PublicationError("Migrated audit row lacks evidence")
+        bound_evidence = evidence_by_key[key]
+        output.append(
+            {
+                "audit_id": "AUDIT_{:02d}".format(len(output) + 1),
+                "source_bucket": metric["source_class"],
+                **{
+                    field: metric[field]
+                    for field in (
+                        "company", "metric_id", "metric_name", "value",
+                        "unit", "status", "source_class", "period_start",
+                        "period_end", "accession", "concept_or_section",
+                        "context_or_dimension",
+                    )
+                },
+                "evidence_value": ";".join(
+                    row["value_normalized"] for row in bound_evidence
+                ),
+                "evidence_unit": ";".join(
+                    row["unit"] for row in bound_evidence
+                ),
+                "evidence_quote": " | ".join(
+                    row["evidence_quote"] for row in bound_evidence
+                ),
+                "audit_verdict": "PASS",
+                "audit_notes": (
+                    "Candidate Result and all evidence rows are bound."
+                ),
+            }
+        )
+    if not output:
+        raise PublicationError("Migrated stratified audit is empty")
+    return output
+
+
+def _markdown_cell(*, value: object) -> str:
+    """Render one untrusted scalar without changing Markdown table shape.
+
+    Args:
+        value: Candidate scalar rendered for a recorded report.
+
+    Returns:
+        Single-line pipe-safe text.
+    """
+    return (
+        str(value)
+        .replace("\\", "\\\\")
+        .replace("|", "\\|")
+        .replace("\r", " ")
+        .replace("\n", " ")
+    )
+
+
+def _expected_documents(
+    *, metrics: list, projection: Mapping[str, object]
+) -> Dict[str, bytes]:
+    """Render deterministic recorded-only bundle documentation.
+
+    Args:
+        metrics: Parsed full candidate matrix.
+        projection: Strict ProjectionManifest for the same view.
+
+    Returns:
+        README and report bytes derived only from verified candidate data.
+    """
+    report_lines = [
+        "# vNext recorded publication report",
+        "",
+        (
+            "> Recorded/shadow artifact; this is not active/full Cutover "
+            "evidence."
+        ),
+        "",
+        "- Batch: `{}`".format(projection["batch_manifest_id"]),
+        "- Projection: `{}`".format(
+            projection["projection_manifest_id"]
+        ),
+        "",
+        "| Company | Metric | Value | Unit | Status |",
+        "|---|---|---:|---|---|",
+    ]
+    report_lines.extend(
+        "| {} | {} | {} | {} | {} |".format(
+            _markdown_cell(value=row["company"]),
+            _markdown_cell(value=row["metric_id"]),
+            _markdown_cell(value=row["value"]),
+            _markdown_cell(value=row["unit"]),
+            _markdown_cell(value=row["status"]),
+        )
+        for row in metrics
+    )
+    readme = "\n".join(
+        [
+            "# vNext recorded publication bundle",
+            "",
+            "- batch_manifest_id: `{}`".format(
+                projection["batch_manifest_id"]
+            ),
+            "- projection_manifest_id: `{}`".format(
+                projection["projection_manifest_id"]
+            ),
+            "- rows: `{}`".format(len(metrics)),
+            "- boundary: recorded/shadow only; full Cutover not proven",
+            "",
+        ]
+    )
+    return {
+        "README_RUN.md": readme.encode("utf-8"),
+        "REPORT_十公司财务指标.md": (
+            "\n".join(report_lines) + "\n"
+        ).encode("utf-8"),
+    }
+
+
+def _write_generated_artifact(
+    *, path: Path, content: bytes, label: str
+) -> None:
+    """Create one generated artifact or reject divergent caller bytes.
+
+    Args:
+        path: Fixed staging destination.
+        content: Exact production-derived bytes.
+        label: Diagnostic artifact identity.
+
+    Raises:
+        PublicationError: When an existing entry is unsafe or differs.
+    """
+    if path.is_symlink() or (path.exists() and not path.is_file()):
+        raise PublicationError("{} path is unsafe".format(label))
+    if path.exists():
+        if path.read_bytes() != content:
+            raise PublicationError(
+                "{} differs from gate execution".format(label)
+            )
+        return
+    atomic_write_bytes(path=path, content=content)
+
+
+def _json_mapping(*, content: bytes, label: str) -> Dict[str, object]:
+    """Parse one strict UTF-8 JSON object from candidate bytes.
+
+    Args:
+        content: Complete JSON bytes.
+        label: Diagnostic artifact name.
+
+    Returns:
+        Isolated mapping.
+    """
+    try:
+        parsed = strict_json_loads(text=content.decode("utf-8"))
+    except (UnicodeDecodeError, CanonicalError) as error:
+        raise PublicationError("{} JSON is invalid".format(label)) from error
+    if not isinstance(parsed, dict):
+        raise PublicationError("{} JSON root must be object".format(label))
+    return dict(parsed)
+
+
+def _coverage_reason(*, metric: Mapping[str, str]) -> str:
+    """Rebuild the legacy coverage reason for one metric row.
+
+    Args:
+        metric: Exact metrics-matrix row.
+
+    Returns:
+        Deterministic user-facing coverage reason.
+    """
+    status = metric["status"]
+    notes = metric["notes"]
+    if status == "NOT_AVAILABLE_SEC":
+        return "SEC 未披露: " + notes
+    if status == "NOT_EXTRACTED":
+        return (
+            notes
+            if notes.startswith("本轮没抽到:")
+            else "本轮没抽到: " + notes
+        )
+    if status == "NEEDS_REVIEW":
+        return (
+            notes
+            if notes.startswith("需复核:")
+            else "多事实需复核/需复核: " + notes
+        )
+    if status == "N_A_STRUCTURAL":
+        return "结构不适用: " + notes
+    return notes
+
+
+def _semantic_gate_evidence(
+    *, receipt: Mapping[str, object], repo_root: Optional[Path]
+) -> Dict[str, object]:
+    """Validate semantic-audit proof and optionally current source bytes.
+
+    Args:
+        receipt: Bundled semantic audit receipt.
+        repo_root: Repository checked during preparation, or ``None`` during
+            immutable read-back.
+
+    Returns:
+        Stable proof summary independent of repository availability.
+    """
+    if set(receipt) != {
+        "failure_code", "hits", "schema_version", "source_hashes", "status",
+    } or (
+        receipt["schema_version"] != 1
+        or receipt["status"] != "PASS"
+        or receipt["failure_code"] != ""
+        or receipt["hits"] != []
+        or not isinstance(receipt["source_hashes"], dict)
+        or not receipt["source_hashes"]
+    ):
+        raise PublicationError("Semantic audit did not PASS")
+    source_hashes = receipt["source_hashes"]
+    if any(
+        type(relative) is not str
+        or not relative
+        or type(source_hashes[relative]) is not str
+        or SHA256_PATTERN.fullmatch(source_hashes[relative]) is None
+        for relative in source_hashes
+    ):
+        raise PublicationError("Semantic audit source binding is invalid")
+    if repo_root is not None and receipt != _execute_semantic_audit(
+        repo_root=repo_root,
+    ):
+        raise PublicationError("Semantic audit execution differs")
+    return {
+        "source_count": len(source_hashes),
+        "source_hashes_id": content_hash(value=source_hashes),
+    }
+
+
+def _execute_semantic_audit(*, repo_root: Path) -> Dict[str, object]:
+    """Run the repository semantic gate and return its exact receipt.
+
+    Args:
+        repo_root: Repository containing the audited source and gate tool.
+
+    Returns:
+        Strict semantic-audit receipt produced by the real gate executable.
+
+    Raises:
+        PublicationError: When the gate is missing, times out, fails, or emits
+            an unreadable receipt.
+    """
+    tool_path = repo_root / "tools" / "check_vnext_semantics.py"
+    if tool_path.is_symlink() or not tool_path.is_file():
+        raise PublicationError("Semantic audit executable is unsafe")
+    try:
+        with tempfile.TemporaryDirectory(
+            prefix="sec-metrics-semantic-"
+        ) as directory:
+            output_path = Path(directory) / "receipt.json"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(tool_path),
+                    "--repo-root",
+                    str(repo_root),
+                    "--output",
+                    str(output_path),
+                ],
+                cwd=str(repo_root),
+                check=False,
+                capture_output=True,
+                timeout=60,
+            )
+            if completed.returncode != 0:
+                raise PublicationError("Semantic audit execution failed")
+            payload = strict_json_file(path=output_path)
+    except (OSError, subprocess.TimeoutExpired, CanonicalError) as error:
+        raise PublicationError("Semantic audit execution failed") from error
+    if not isinstance(payload, dict):
+        raise PublicationError("Semantic audit receipt is malformed")
+    return dict(payload)
+
+
+def _publication_gate_evidence(
+    *, files: Mapping[str, bytes], projection: Mapping[str, object],
+    repo_root: Optional[Path]
+) -> Dict[str, object]:
+    """Execute all publication checks against one exact candidate view.
+
+    Args:
+        files: Required candidate artifacts, with or without the final receipt.
+        projection: Strict ProjectionManifest bound to those bytes.
+        repo_root: Repository authority during preparation, or ``None`` during
+            immutable read-back.
+
+    Returns:
+        One deterministic evidence object per required publication check.
+
+    Raises:
+        PublicationError: When any check cannot prove its invariant.
+    """
+    metrics = _csv_rows(
+        content=files["metrics_matrix.csv"],
+        fieldnames=METRIC_FIELDS,
+        label="Metrics",
+    )
+    evidence = _csv_rows(
+        content=files["metric_evidence.csv"],
+        fieldnames=EVIDENCE_FIELDS,
+        label="Evidence",
+    )
+    metric_keys = [(row["company"], row["metric_id"]) for row in metrics]
+    if len(metric_keys) != len(set(metric_keys)):
+        raise PublicationError("Metrics compatibility key is duplicated")
+    evidence_keys = {(row["company"], row["metric_id"]) for row in evidence}
+    if any(
+        row["value"]
+        and (row["company"], row["metric_id"]) not in evidence_keys
+        for row in metrics
+    ):
+        raise PublicationError("Numeric metric lacks matching evidence")
+
+    coverage = _csv_rows(
+        content=files["coverage_matrix.csv"],
+        fieldnames=COVERAGE_FIELDS,
+        label="Coverage",
+    )
+    expected_coverage = _expected_coverage_rows(
+        metrics=metrics, evidence=evidence,
+    )
+    if coverage != expected_coverage:
+        raise PublicationError("Coverage does not match candidate rows")
+
+    golden = _csv_rows(
+        content=files["golden_results.csv"],
+        fieldnames=GOLDEN_FIELDS,
+        label="Golden",
+    )
+    golden_ids = [row["assertion_id"] for row in golden]
+    if (
+        not golden
+        or len(golden_ids) != len(set(golden_ids))
+        or any(
+            row["status"] != "PASS" or not golden_row_passes(row=row)
+            for row in golden
+        )
+    ):
+        raise PublicationError("Golden execution did not PASS")
+
+    compatibility = _json_mapping(
+        content=files["legacy_invariant_migration_receipt.json"],
+        label="Compatibility receipt",
+    )
+    if (
+        set(compatibility) != {
+            "batch_manifest_id", "evidence_reconciliations",
+            "legacy_input_hashes", "metric_cells", "receipt_id",
+            "schema_version", "status",
+        }
+        or compatibility["schema_version"] != 1
+        or compatibility["status"] != "PASS"
+        or compatibility["batch_manifest_id"]
+        != projection["batch_manifest_id"]
+        or compatibility["legacy_input_hashes"]
+        != projection["legacy_input_hashes"]
+        or type(compatibility["evidence_reconciliations"]) is not list
+        or type(compatibility["metric_cells"]) is not list
+        or any(
+            type(row) is not dict
+            or set(row) != {
+                "comparisons", "exact_cells", "key", "method_cells",
+                "status",
+            }
+            or row["status"] != "PASS"
+            or type(row["comparisons"]) is not dict
+            or type(row["exact_cells"]) is not list
+            or type(row["method_cells"]) is not list
+            or any(
+                type(cell) is not dict
+                or set(cell) != {
+                    "class", "field", "key", "new", "old", "status",
+                }
+                or cell["class"] != "EXACT"
+                or cell["status"] != "PASS"
+                for cell in row["exact_cells"]
+            )
+            or any(
+                type(cell) is not dict
+                or set(cell) != {
+                    "class", "field", "key", "new", "old", "status",
+                }
+                or cell["class"] != "DECLARATIVE_METHOD_DELTA"
+                or cell["status"] != "RECORDED"
+                for cell in row["method_cells"]
+            )
+            for row in compatibility["evidence_reconciliations"]
+        )
+        or any(
+            not isinstance(cell, dict)
+            or "status" not in cell
+            or cell["status"] not in {"PASS", "RECORDED"}
+            for cell in compatibility["metric_cells"]
+        )
+    ):
+        raise PublicationError("Compatibility execution did not PASS")
+    compatibility_body = {
+        key: compatibility[key]
+        for key in compatibility
+        if key not in {"receipt_id", "schema_version"}
+    }
+    if compatibility["receipt_id"] != content_hash(
+        value=compatibility_body
+    ):
+        raise PublicationError("Compatibility execution identity differs")
+
+    migrated_ids = set(projection["migrated_metric_ids"])
+    migrated_metric_hashes = sorted(
+        content_hash(value=row)
+        for row in metrics
+        if row["metric_id"] in migrated_ids
+    )
+    bound_metric_hashes = sorted(
+        binding["metric_row_hash"]
+        for binding in projection["result_bindings"]
+    )
+    migrated_evidence_hashes = sorted(
+        content_hash(value=row)
+        for row in evidence
+        if row["metric_id"] in migrated_ids
+    )
+    bound_evidence_hashes = sorted(
+        identity
+        for binding in projection["result_bindings"]
+        for identity in binding["evidence_row_hashes"]
+    )
+    if (
+        migrated_metric_hashes != bound_metric_hashes
+        or migrated_evidence_hashes != bound_evidence_hashes
+    ):
+        raise PublicationError("Projection rows differ from Result proof")
+
+    repair = _csv_rows(
+        content=files["repair_validation_results.csv"],
+        fieldnames=REPAIR_FIELDS,
+        label="Repair validation",
+    )
+    repair_ids = [row["check_id"] for row in repair]
+    validation = _json_mapping(
+        content=files["validation_run_manifest.json"],
+        label="Validation manifest",
+    )
+    required_refreshed = {
+        "coverage_matrix.csv", "golden_results.csv",
+        "legacy_invariant_migration_receipt.json",
+        "repair_validation_results.csv", "scalability_audit.csv",
+        "semantic_audit_receipt.json", "stratified_audit.csv",
+    }
+    validation_fields = {
+        "mode", "not_refreshed_artifacts", "refreshed_artifacts",
+        "result", "run_id", "source_commit", "started_at_utc",
+    }
+    if (
+        not repair
+        or len(repair_ids) != len(set(repair_ids))
+        or any(row["status"] != "PASS" for row in repair)
+        or set(validation) != validation_fields
+        or any(
+            type(validation[field]) is not str or not validation[field]
+            for field in (
+                "mode", "result", "run_id", "source_commit",
+                "started_at_utc",
+            )
+        )
+        or any(
+            type(validation[field]) is not list
+            or any(
+                type(relative) is not str or not relative
+                for relative in validation[field]
+            )
+            or len(validation[field]) != len(set(validation[field]))
+            for field in (
+                "refreshed_artifacts", "not_refreshed_artifacts",
+            )
+        )
+        or validation["mode"] != "RECORDED_VNEXT"
+        or validation["result"] != "PASSED_RECORDED_ONLY"
+        or validation["run_id"]
+        != "validation:" + projection["projection_manifest_id"]
+        or validation["source_commit"]
+        != "RECORDED_VNEXT_NO_SOURCE_COMMIT"
+        or set(validation["refreshed_artifacts"]) != required_refreshed
+        or validation["not_refreshed_artifacts"] != []
+    ):
+        raise PublicationError("Repair validation execution did not PASS")
+    try:
+        parse_utc_timestamp(value=validation["started_at_utc"])
+    except CanonicalError as error:
+        raise PublicationError(
+            "Recorded validation timestamp is invalid"
+        ) from error
+
+    scalability = _csv_rows(
+        content=files["scalability_audit.csv"],
+        fieldnames=SCALABILITY_FIELDS,
+        label="Scalability audit",
+    )
+    if scalability:
+        raise PublicationError("Scalability audit contains forbidden literals")
+
+    semantic = _semantic_gate_evidence(
+        receipt=_json_mapping(
+            content=files["semantic_audit_receipt.json"],
+            label="Semantic audit",
+        ),
+        repo_root=repo_root,
+    )
+
+    stratified = _csv_rows(
+        content=files["stratified_audit.csv"],
+        fieldnames=STRATIFIED_FIELDS,
+        label="Stratified audit",
+    )
+    expected_stratified = _expected_stratified_rows(
+        metrics=metrics, evidence=evidence, migrated_ids=migrated_ids,
+    )
+    if stratified != expected_stratified:
+        raise PublicationError("Stratified audit execution did not PASS")
+
+    expected_documents = _expected_documents(
+        metrics=metrics, projection=projection,
+    )
+    if any(
+        files[relative] != expected_documents[relative]
+        for relative in expected_documents
+    ):
+        raise PublicationError("Publication document differs from candidate")
+    return {
+        "COVERAGE": {"rows_id": content_hash(value=coverage)},
+        "GOLDEN": {"rows_id": content_hash(value=golden)},
+        "LEGACY_INVARIANT_MIGRATION": {
+            "receipt_id": compatibility["receipt_id"],
+        },
+        "PROJECTION_EXACT_SET": {
+            "evidence_rows_id": content_hash(value=migrated_evidence_hashes),
+            "metric_rows_id": content_hash(value=migrated_metric_hashes),
+        },
+        "REPAIR_VALIDATION": {
+            "manifest_id": content_hash(value=validation),
+            "rows_id": content_hash(value=repair),
+        },
+        "SCALABILITY_AUDIT": {"rows_id": content_hash(value=scalability)},
+        "SEMANTIC_AUDIT": semantic,
+        "STRATIFIED_AUDIT": {"rows_id": content_hash(value=stratified)},
+    }
+
+
+def _finalize_staging_view(
+    *, repo_root: Path, staging_dir: Path, context: Mapping[str, object],
+    validated_at_utc: str
+) -> Dict[str, object]:
+    """Generate every non-Projector artifact from one verified candidate.
+
+    Args:
+        repo_root: Repository authority used by the semantic executable.
+        staging_dir: Candidate root already containing Projector artifacts.
+        context: Recomputed Projector staging context.
+        validated_at_utc: Explicit UTC execution timestamp.
+
+    Returns:
+        Strict staged ProjectionManifest.
+
+    Raises:
+        PublicationError: When caller-authored bytes differ from generated
+            coverage, audits, validation metadata, or documentation.
+    """
+    try:
+        parse_utc_timestamp(value=validated_at_utc)
+    except CanonicalError as error:
+        raise PublicationError(
+            "Recorded validation timestamp is invalid"
+        ) from error
+    projection_path = staging_dir / "projection_manifest.json"
+    if projection_path.is_symlink() or not projection_path.is_file():
+        raise PublicationError("Staged ProjectionManifest is unsafe")
+    projection = _validate_projection_manifest(
+        content=projection_path.read_bytes(),
+        requirement_hashes=context["requirement_hashes"],
+        batch_manifest_id=str(context["batch_manifest_id"]),
+        projection_manifest_id=str(context["projection_manifest_id"]),
+    )
+    if projection != context["projection_manifest"]:
+        raise PublicationError("Staged ProjectionManifest differs")
+    metrics = _csv_rows(
+        content=(staging_dir / "metrics_matrix.csv").read_bytes(),
+        fieldnames=METRIC_FIELDS,
+        label="Metrics",
+    )
+    evidence = _csv_rows(
+        content=(staging_dir / "metric_evidence.csv").read_bytes(),
+        fieldnames=EVIDENCE_FIELDS,
+        label="Evidence",
+    )
+    migrated_ids = set(projection["migrated_metric_ids"])
+    semantic = _execute_semantic_audit(repo_root=repo_root)
+    refreshed = sorted(
+        {
+            "coverage_matrix.csv", "golden_results.csv",
+            "legacy_invariant_migration_receipt.json",
+            "repair_validation_results.csv", "scalability_audit.csv",
+            "semantic_audit_receipt.json", "stratified_audit.csv",
+        }
+    )
+    generated = {
+        "coverage_matrix.csv": _csv_bytes(
+            rows=_expected_coverage_rows(
+                metrics=metrics, evidence=evidence,
+            ),
+            fieldnames=COVERAGE_FIELDS,
+        ),
+        "scalability_audit.csv": _csv_bytes(
+            rows=[], fieldnames=SCALABILITY_FIELDS,
+        ),
+        "semantic_audit_receipt.json": (
+            canonical_json_bytes(value=semantic) + b"\n"
+        ),
+        "stratified_audit.csv": _csv_bytes(
+            rows=_expected_stratified_rows(
+                metrics=metrics,
+                evidence=evidence,
+                migrated_ids=migrated_ids,
+            ),
+            fieldnames=STRATIFIED_FIELDS,
+        ),
+        "validation_run_manifest.json": canonical_json_bytes(
+            value={
+                "run_id": (
+                    "validation:" + projection["projection_manifest_id"]
+                ),
+                "source_commit": "RECORDED_VNEXT_NO_SOURCE_COMMIT",
+                "started_at_utc": validated_at_utc,
+                "mode": "RECORDED_VNEXT",
+                "refreshed_artifacts": refreshed,
+                "not_refreshed_artifacts": [],
+                "result": "PASSED_RECORDED_ONLY",
+            }
+        ) + b"\n",
+    }
+    generated.update(
+        _expected_documents(metrics=metrics, projection=projection)
+    )
+    for relative in generated:
+        _write_generated_artifact(
+            path=staging_dir / relative,
+            content=generated[relative],
+            label=relative,
+        )
+    return projection
+
+
+def write_publication_validation_receipt(
+    *, repo_root: Path, batch_manifest_path: Path,
+    legacy_snapshot_dir: Path, staging_dir: Path,
+    ledger_binding: Mapping[str, object],
+    previous_publication_id: Optional[str], validated_at_utc: str
+) -> Dict[str, object]:
+    """Execute publication gates and persist their content-bound receipt.
+
+    Args:
+        repo_root: Repository authority used by Projector and semantic audit.
+        batch_manifest_path: Complete FROZEN Run collection.
+        legacy_snapshot_dir: Legacy inputs named by ProjectionManifest.
+        staging_dir: Exact candidate view without a validation receipt.
+        ledger_binding: Used request-ledger prefix identities.
+        previous_publication_id: Prepared predecessor identity.
+        validated_at_utc: Explicit UTC gate execution timestamp.
+
+    Returns:
+        Strict persisted ValidationReceipt.
+    """
+    context = publication_staging_context(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+    )
+    projection = _finalize_staging_view(
+        repo_root=repo_root,
+        staging_dir=staging_dir,
+        context=context,
+        validated_at_utc=validated_at_utc,
+    )
+    files = _read_staging_files(
+        staging_dir=staging_dir, include_receipt=False,
+    )
+    gate_evidence = _publication_gate_evidence(
+        files=files, projection=projection, repo_root=repo_root,
+    )
+    body = {
+        "status": "PASSED",
+        "view_id": publication_validation_view_id(
+            files=files,
+            requirement_hashes=context["requirement_hashes"],
+            batch_manifest_id=context["batch_manifest_id"],
+            projection_manifest_id=context["projection_manifest_id"],
+            ledger_binding=ledger_binding,
+            previous_publication_id=previous_publication_id,
+        ),
+        "checks": [
+            {
+                "check": check,
+                "evidence_hash": content_hash(value=gate_evidence[check]),
+                "status": "PASS",
+            }
+            for check in sorted(REQUIRED_PUBLICATION_CHECKS)
+        ],
+        "artifact_hashes": {
+            relative: {
+                "sha256": sha256_bytes(content=files[relative]),
+                "size": len(files[relative]),
+            }
+            for relative in sorted(files)
+        },
+    }
+    receipt = validate_record(
+        record={
+            **body,
+            "record_type": "VALIDATION_RECEIPT",
+            "validation_receipt_id": content_hash(value=body),
+        }
+    )
+    atomic_write_json(
+        path=staging_dir / "publication_validation_receipt.json",
+        value=receipt,
+    )
+    return receipt
+
+
 def prepare_publication_bundle(
     *,
     publication_root: Path,
     repo_root: Path,
-    run_dir: Path,
+    batch_manifest_path: Path,
     legacy_snapshot_dir: Path,
     staging_dir: Path,
     ledger_binding: Mapping[str, object],
@@ -746,7 +1681,7 @@ def prepare_publication_bundle(
     Args:
         publication_root: Single root from which bundle storage is derived.
         repo_root: Repository containing Requirement and release authority.
-        run_dir: Persisted FROZEN Run locator.
+        batch_manifest_path: Complete persisted FROZEN Run collection.
         legacy_snapshot_dir: Legacy inputs named by ProjectionManifest.
         staging_dir: Exact candidate artifact directory.
         ledger_binding: Exact used request-ledger prefix/source bindings.
@@ -761,7 +1696,9 @@ def prepare_publication_bundle(
     """
     layout = publication_layout(publication_root=publication_root)
     publications_dir = layout["publications_dir"]
-    files = _read_staging_files(staging_dir=staging_dir)
+    files = _read_staging_files(
+        staging_dir=staging_dir, include_receipt=True,
+    )
     try:
         receipt_file = strict_json_loads(
             text=files["publication_validation_receipt.json"].decode("utf-8")
@@ -783,28 +1720,27 @@ def prepare_publication_bundle(
         raise PublicationError("Publication staging validation is not PASSED")
     context = publication_staging_context(
         repo_root=repo_root,
-        run_dir=run_dir,
+        batch_manifest_path=batch_manifest_path,
         legacy_snapshot_dir=legacy_snapshot_dir,
         staging_dir=staging_dir,
     )
     requirement_hashes = context["requirement_hashes"]
-    run_content_hash = context["run_content_hash"]
-    run_bindings = dict(context["run_bindings"])
-    run_bindings["validation_receipt_id"] = validated_receipt[
-        "validation_receipt_id"
-    ]
-    _validate_publication_bindings(
+    batch_manifest_id = context["batch_manifest_id"]
+    projection_manifest_id = context["projection_manifest_id"]
+    validation_receipt_id = validated_receipt["validation_receipt_id"]
+    _validate_publication_metadata(
         requirement_hashes=requirement_hashes,
-        run_content_hash=run_content_hash,
-        run_bindings=run_bindings,
+        batch_manifest_id=batch_manifest_id,
+        projection_manifest_id=projection_manifest_id,
+        validation_receipt_id=validation_receipt_id,
         ledger_binding=ledger_binding,
         previous_publication_id=previous_publication_id,
     )
     projection = _validate_projection_manifest(
         content=files["projection_manifest.json"],
         requirement_hashes=requirement_hashes,
-        run_content_hash=run_content_hash,
-        run_bindings=run_bindings,
+        batch_manifest_id=batch_manifest_id,
+        projection_manifest_id=projection_manifest_id,
     )
     if projection != context["projection_manifest"]:
         raise PublicationError(
@@ -819,8 +1755,11 @@ def prepare_publication_bundle(
         files=files,
         receipt=validated_receipt,
         requirement_hashes=requirement_hashes,
-        run_content_hash=run_content_hash,
-        run_bindings=run_bindings,
+        batch_manifest_id=batch_manifest_id,
+        projection_manifest_id=projection_manifest_id,
+        gate_evidence=_publication_gate_evidence(
+            files=files, projection=projection, repo_root=repo_root,
+        ),
         ledger_binding=ledger_binding,
         previous_publication_id=previous_publication_id,
     )
@@ -840,8 +1779,9 @@ def prepare_publication_bundle(
     manifest_identity = {
         "candidate_status": "PUBLISHABLE",
         "requirement_hashes": dict(requirement_hashes),
-        "run_content_hash": run_content_hash,
-        "run_bindings": dict(run_bindings),
+        "batch_manifest_id": batch_manifest_id,
+        "projection_manifest_id": projection_manifest_id,
+        "validation_receipt_id": validation_receipt_id,
         "files": file_records,
         "ledger_binding": dict(ledger_binding),
         "previous_publication_id": previous_publication_id,
@@ -854,8 +1794,9 @@ def prepare_publication_bundle(
         "publication_id": publication_id,
         "candidate_status": "PUBLISHABLE",
         "requirement_hashes": dict(requirement_hashes),
-        "run_content_hash": run_content_hash,
-        "run_bindings": dict(run_bindings),
+        "batch_manifest_id": batch_manifest_id,
+        "projection_manifest_id": projection_manifest_id,
+        "validation_receipt_id": validation_receipt_id,
         "files": file_records,
         "ledger_binding": dict(ledger_binding),
         "previous_publication_id": previous_publication_id,
@@ -924,10 +1865,11 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         "publication_id"
     ] != bundle_dir.name and not bundle_dir.name.startswith("."):
         raise PublicationError("Publication directory identity differs")
-    _validate_publication_bindings(
+    _validate_publication_metadata(
         requirement_hashes=manifest["requirement_hashes"],
-        run_content_hash=manifest["run_content_hash"],
-        run_bindings=manifest["run_bindings"],
+        batch_manifest_id=manifest["batch_manifest_id"],
+        projection_manifest_id=manifest["projection_manifest_id"],
+        validation_receipt_id=manifest["validation_receipt_id"],
         ledger_binding=manifest["ledger_binding"],
         previous_publication_id=manifest["previous_publication_id"],
     )
@@ -990,8 +1932,8 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
     projection = _validate_projection_manifest(
         content=(bundle_dir / "projection_manifest.json").read_bytes(),
         requirement_hashes=manifest["requirement_hashes"],
-        run_content_hash=str(manifest["run_content_hash"]),
-        run_bindings=manifest["run_bindings"],
+        batch_manifest_id=str(manifest["batch_manifest_id"]),
+        projection_manifest_id=str(manifest["projection_manifest_id"]),
     )
     bundle_files = {
         relative: (bundle_dir / relative).read_bytes()
@@ -1019,23 +1961,27 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         receipt["record_type"] != "VALIDATION_RECEIPT"
         or receipt["status"] not in PUBLISHABLE_VALIDATION_STATUSES
         or receipt["validation_receipt_id"]
-        != manifest["run_bindings"]["validation_receipt_id"]
+        != manifest["validation_receipt_id"]
     ):
         raise PublicationError("Bundled validation receipt binding differs")
     _validate_receipt_artifacts(
         files=bundle_files,
         receipt=receipt,
         requirement_hashes=manifest["requirement_hashes"],
-        run_content_hash=str(manifest["run_content_hash"]),
-        run_bindings=manifest["run_bindings"],
+        batch_manifest_id=str(manifest["batch_manifest_id"]),
+        projection_manifest_id=str(manifest["projection_manifest_id"]),
+        gate_evidence=_publication_gate_evidence(
+            files=bundle_files, projection=projection, repo_root=None,
+        ),
         ledger_binding=manifest["ledger_binding"],
         previous_publication_id=manifest["previous_publication_id"],
     )
     identity = {
         "candidate_status": manifest["candidate_status"],
         "requirement_hashes": manifest["requirement_hashes"],
-        "run_content_hash": manifest["run_content_hash"],
-        "run_bindings": manifest["run_bindings"],
+        "batch_manifest_id": manifest["batch_manifest_id"],
+        "projection_manifest_id": manifest["projection_manifest_id"],
+        "validation_receipt_id": manifest["validation_receipt_id"],
         "files": manifest["files"],
         "ledger_binding": manifest["ledger_binding"],
         "previous_publication_id": manifest["previous_publication_id"],
@@ -1558,46 +2504,54 @@ def write_latest_run_status(
             latest_manifest = verify_publication_bundle(
                 bundle_dir=publications_dir / str(latest_publication_id),
             )
-            latest_run_id = str(latest_manifest["run_bindings"]["run_id"])
+            latest_run_id = "batch:" + str(
+                latest_manifest["batch_manifest_id"]
+            ).split(":", maxsplit=1)[1]
             latest_run_status = "FROZEN"
             candidate_status = "PUBLISHABLE"
             expected_latest_id = latest_manifest["publication_id"]
         pointer = _read_pointer(pointer_path=pointer_path)
         if pointer is None:
             expected_active_id = None
-            active_manifest = None
+            active_projection = None
         else:
             active_view = PublicationView._open_paths(
                 publications_dir=publications_dir,
                 pointer_path=pointer_path,
             )
             expected_active_id = active_view.publication_id
-            active_manifest = active_view.manifest
-        if (
-            active_manifest is not None
-            and active_manifest["run_bindings"]["run_id"] == latest_run_id
-        ):
+            active_projection = _json_mapping(
+                content=active_view.read_bytes(
+                    relative_path="projection_manifest.json"
+                ),
+                label="Active ProjectionManifest",
+            )
+        matching_active_runs = (
+            []
+            if active_projection is None
+            else [
+                binding
+                for binding in active_projection["run_bindings"]
+                if binding["run_id"] == latest_run_id
+            ]
+        )
+        if len(matching_active_runs) > 1:
+            raise PublicationError("Active batch Run identity is duplicated")
+        if matching_active_runs:
             if latest_run_status != "FROZEN":
                 raise PublicationError(
                     "Active Run identity conflicts with latest Run state"
                 )
             if latest_run_dir is not None:
-                if result_status != "PUBLISHABLE":
-                    raise PublicationError(
-                        "Active Run identity conflicts with latest Run state"
-                    )
-                if (
-                    active_manifest["run_content_hash"]
-                    != latest_run["content_manifest_hash"]
-                    or active_manifest["run_bindings"][
-                        "audit_manifest_hash"
-                    ] != latest_run["audit_manifest_hash"]
-                ):
+                active_run = matching_active_runs[0]
+                if active_run["content_manifest_hash"] != latest_run[
+                    "content_manifest_hash"
+                ] or active_run["audit_manifest_hash"] != latest_run[
+                    "audit_manifest_hash"
+                ]:
                     raise PublicationError(
                         "Active and latest Run content identities differ"
                     )
-                candidate_status = "PUBLISHABLE"
-                expected_latest_id = expected_active_id
         expected_latest_success = (
             latest_run_status == "FROZEN"
             and candidate_status == "PUBLISHABLE"

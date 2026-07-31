@@ -142,7 +142,23 @@
     "source_class": "DERIVED",
     "formula": "(Operating income + D&A) / revenue",
     "confidence": "0.90",
-    "component_evidence_grain": "one_source_binding_per_row"
+    "component_evidence_grain": "one_source_binding_per_row",
+    "metric_context_style": "companyfacts_fiscal",
+    "evidence_context_style": "companyfacts_fiscal",
+    "evidence_unit_policy": "observation",
+    "evidence_extraction_method": "companyfacts_component",
+    "parser_version": "vnext_projector_v1",
+    "evidence_role_order": [
+      "operating_income",
+      "depreciation_and_amortization",
+      "revenue"
+    ],
+    "allowed_metric_delta_fields": [],
+    "allowed_evidence_delta_fields": [
+      "evidence_quote",
+      "extraction_method",
+      "parser_version"
+    ]
   }
 }
 ---

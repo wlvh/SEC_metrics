@@ -14,15 +14,17 @@ from unittest import mock
 
 from tests.vnext.common import REPO_ROOT, compiled_specs, fixed_clock
 from tests.vnext.common import reader_response
+from tests.vnext.projection_fixture_support import scoped_repository
 from tools.vnext_review import append_human_decision
 from vnext.ai_adapter import RecordedAdapter
 from vnext.calculator import calculate_metric, calculate_observation_metric
 from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes
 from vnext.canonical import sha256_file
 from vnext.observations import reviewed_observation, structured_observation
-from vnext.projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
-from vnext.projector import PROJECTION_GATE_FILES, ProjectionError
-from vnext.projector import build_projection_manifest
+from vnext.projector import ProjectionError
+from vnext.projector import _project_result, _record_indexes
+from vnext.projector import load_projection_batch_manifest
+from vnext.projector import write_projection_batch_manifest
 from vnext.records import metric_result_contract_hash
 from vnext.render import render_review_markdown
 from vnext.requirements import load_requirement_snapshot
@@ -37,6 +39,7 @@ from vnext.run_store import write_attempt_payloads
 from vnext.run_store import write_validation_receipt
 from vnext.sources import companyfacts_structured_facts, raw_blob_record
 from vnext.sources import source_reference_record
+from vnext.specs import compile_spec_file
 from vnext.table_grid import build_table_grid
 from vnext.traits import repository_company_ciks, repository_company_traits
 from vnext.workflow import create_review_run as create_workflow_review_run
@@ -154,11 +157,14 @@ def approve_and_finalize(*, run_dir: Path) -> Mapping[str, object]:
     )
 
 
-def freeze_fixture(*, run_dir: Path) -> Dict[str, object]:
+def freeze_fixture(
+    *, run_dir: Path, repo_root: Path = REPO_ROOT
+) -> Dict[str, object]:
     """Validate and freeze a fully reviewed deterministic Run.
 
     Args:
         run_dir: OPEN finalized Run.
+        repo_root: Repository authority used to create the Run.
 
     Returns:
         FROZEN Run manifest.
@@ -168,33 +174,38 @@ def freeze_fixture(*, run_dir: Path) -> Dict[str, object]:
         status="PASSED",
         checks=[{"check": "RECORDED_REPLAY_FIXTURE", "status": "PASS"}],
     )
-    return freeze_run(run_dir=run_dir, repo_root=REPO_ROOT)
+    return freeze_run(run_dir=run_dir, repo_root=repo_root)
 
 
-def create_projection_roots(*, root: Path) -> Mapping[str, Path]:
-    """Persist the exact legacy, candidate, and gate files for projection.
+def _compiled_specs_at(*, repo_root: Path) -> Dict[str, Mapping[str, object]]:
+    """Compile the release MetricSpecs from one fixture repository.
 
     Args:
-        root: Empty fixture workspace.
+        repo_root: Repository containing the copied or primary catalog.
 
     Returns:
-        Legacy snapshot and staging locators containing deterministic bytes.
+        B01/B03/B10/B11 compiled wrappers keyed by metric ID.
     """
-    legacy_dir = root / "legacy"
-    staging_dir = root / "staging"
-    legacy_dir.mkdir()
-    staging_dir.mkdir()
-    for relative in LEGACY_INPUT_FILES:
-        (legacy_dir / relative).write_bytes(
-            "legacy:{}\n".format(relative).encode("utf-8")
-        )
-    for relative in PROJECTION_CANDIDATE_FILES + PROJECTION_GATE_FILES:
-        (staging_dir / relative).write_bytes(
-            "staging:{}\n".format(relative).encode("utf-8")
-        )
+    b01 = compile_spec_file(
+        path=repo_root / "catalog" / "metrics" / "B01_revenue.md",
+        dependency_specs={},
+    )
     return {
-        "legacy_snapshot_dir": legacy_dir,
-        "staging_dir": staging_dir,
+        "B01": b01,
+        "B03": compile_spec_file(
+            path=(
+                repo_root / "catalog" / "metrics" / "B03_ebitda_margin.md"
+            ),
+            dependency_specs={"B01": b01},
+        ),
+        "B10": compile_spec_file(
+            path=repo_root / "catalog" / "metrics" / "B10_occupancy.md",
+            dependency_specs={},
+        ),
+        "B11": compile_spec_file(
+            path=repo_root / "catalog" / "metrics" / "B11_revpar.md",
+            dependency_specs={},
+        ),
     }
 
 
@@ -448,6 +459,7 @@ def create_structured_b03_run(
     repo_relative_path: str,
     accession: str,
     run_id: str,
+    repo_root: Path = REPO_ROOT,
 ) -> Dict[str, object]:
     """Create one replayable Pfizer B03 Run from exact Company Facts bytes.
 
@@ -456,6 +468,7 @@ def create_structured_b03_run(
         repo_relative_path: Existing real or boundary-fixture raw JSON path.
         accession: Exact filing observation selected from those bytes.
         run_id: Unique Run identity for the scenario.
+        repo_root: Repository authority containing the source and Specs.
 
     Returns:
         Result, Trace, and selected observations left in an OPEN Run.
@@ -464,7 +477,7 @@ def create_structured_b03_run(
     entity = "78003"
     document_name = "CIK0000078003.json"
     raw = raw_blob_record(
-        repo_root=REPO_ROOT,
+        repo_root=repo_root,
         repo_relative_path=repo_relative_path,
         media_type="application/json",
     )
@@ -479,14 +492,14 @@ def create_structured_b03_run(
         source_role="companyfacts",
         request_attempt_id="request:attempt:" + accession,
     )
-    specs = compiled_specs()
+    specs = _compiled_specs_at(repo_root=repo_root)
     traits = repository_company_traits(
-        repo_root=REPO_ROOT, company_id=company_id,
+        repo_root=repo_root, company_id=company_id,
     )
     allowed_ciks = repository_company_ciks(
-        repo_root=REPO_ROOT, company_id=company_id,
+        repo_root=repo_root, company_id=company_id,
     )
-    raw_bytes = (REPO_ROOT / repo_relative_path).read_bytes()
+    raw_bytes = (repo_root / repo_relative_path).read_bytes()
     scope = {"consolidation": "entity"}
     target = {
         "company_id": company_id,
@@ -531,14 +544,14 @@ def create_structured_b03_run(
         verified_observations=b01_observations,
     )
     requirement = load_requirement_snapshot(
-        snapshot_dir=REPO_ROOT / "requirements" / "ai_first_v3_3_1"
+        snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1"
     )
     spec_paths = {
         "catalog/metrics/B01_revenue.md": (
-            REPO_ROOT / "catalog" / "metrics" / "B01_revenue.md"
+            repo_root / "catalog" / "metrics" / "B01_revenue.md"
         ),
         "catalog/metrics/B03_ebitda_margin.md": (
-            REPO_ROOT / "catalog" / "metrics" / "B03_ebitda_margin.md"
+            repo_root / "catalog" / "metrics" / "B03_ebitda_margin.md"
         ),
     }
     create_run(
@@ -569,13 +582,14 @@ def create_structured_b03_run(
 
 
 def create_full_release_run(
-    *, run_dir: Path, run_id: str,
+    *, run_dir: Path, run_id: str, repo_root: Path = REPO_ROOT,
 ) -> Dict[str, object]:
     """Create one replayable Run containing the exact Phase 1 metric set.
 
     Args:
         run_dir: New Run directory.
         run_id: Unique Run identity for the scenario.
+        repo_root: Repository authority containing source and release Specs.
 
     Returns:
         B01/B03/B10/B11 results left in one OPEN Run.
@@ -590,6 +604,7 @@ def create_full_release_run(
         repo_relative_path=relative,
         accession=accession,
         run_id=run_id,
+        repo_root=repo_root,
     )
     manifest, records, _decisions = load_open_run(run_dir=run_dir)
     source = next(
@@ -597,19 +612,19 @@ def create_full_release_run(
         for record in records
         if record["record_type"] == "SOURCE_REFERENCE"
     )
-    specs = compiled_specs()
+    specs = _compiled_specs_at(repo_root=repo_root)
     traits = repository_company_traits(
-        repo_root=REPO_ROOT, company_id="pfizer",
+        repo_root=repo_root, company_id="pfizer",
     )
     target = b03["trace"]["calculation_target"]
     b01_facts = companyfacts_structured_facts(
-        raw_bytes=(REPO_ROOT / relative).read_bytes(),
+        raw_bytes=(repo_root / relative).read_bytes(),
         source_reference=source,
         approved_concepts=_structured_concepts(
             compiled_spec=specs["B01"],
         ),
         allowed_ciks=repository_company_ciks(
-            repo_root=REPO_ROOT, company_id="pfizer",
+            repo_root=repo_root, company_id="pfizer",
         ),
     )
     b01_result, b01_trace, b01_observations = calculate_metric(
@@ -652,7 +667,7 @@ def create_full_release_run(
     ):
         relative_path = "catalog/metrics/" + filename
         manifest["spec_file_hashes"][relative_path] = sha256_file(
-            path=REPO_ROOT / relative_path,
+            path=repo_root / relative_path,
         )
     manifest_path.write_bytes(canonical_json_bytes(value=manifest) + b"\n")
     return results
@@ -925,39 +940,97 @@ class ReplayTest(unittest.TestCase):
             with self.assertRaisesRegex(RunStoreError, "missing source"):
                 freeze_run(run_dir=run_dir, repo_root=REPO_ROOT)
 
+    def test_projector_preserves_baseline_fields_absent_from_review_source(
+        self,
+    ) -> None:
+        """Project real reviewed facts whose source has no form/filed keys."""
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory) / "run"
+            create_review_run(run_dir=run_dir)
+            approve_and_finalize(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir)
+            manifest, records, _decisions = load_frozen_run(
+                run_dir=run_dir,
+                repo_root=REPO_ROOT,
+            )
+            indexes = _record_indexes(runs=[(manifest, records)])
+            with (
+                REPO_ROOT / "config" / "company_registry.csv"
+            ).open(encoding="utf-8", newline="") as stream:
+                company = next(
+                    row
+                    for row in csv.DictReader(stream)
+                    if row["company_id"] == "marriott_international"
+                )
+            with (
+                REPO_ROOT / "outputs" / "metrics_matrix.csv"
+            ).open(encoding="utf-8", newline="") as stream:
+                reader = csv.DictReader(stream)
+                metric_fields = tuple(reader.fieldnames or ())
+                baselines = {
+                    row["metric_id"]: row
+                    for row in reader
+                    if row["company"] == "Marriott International"
+                    and row["metric_id"] in {"B10", "B11"}
+                }
+            for metric_id, expected_value in (
+                ("B10", "69.3"),
+                ("B11", "128.8"),
+            ):
+                result = indexes["results"][
+                    ("marriott_international", metric_id)
+                ]
+                trace = indexes["traces"][str(result["trace_id"])]
+                source_binding = indexes["observations"][
+                    str(trace["input_observation_ids"][0])
+                ]["source_binding"]
+                self.assertNotIn("form", source_binding)
+                self.assertNotIn("filed", source_binding)
+
+                row, evidence, contributor_count = _project_result(
+                    result=result,
+                    trace=trace,
+                    company=company,
+                    spec=compiled_specs()[metric_id],
+                    baseline_row=baselines[metric_id],
+                    indexes=indexes,
+                    fiscal_year=str(
+                        manifest["target_period"]["fiscal_year"]
+                    ),
+                    metric_fields=metric_fields,
+                )
+
+                self.assertEqual(expected_value, row["value"])
+                self.assertEqual("", row["form"])
+                self.assertEqual(
+                    baselines[metric_id]["filed_date"],
+                    row["filed_date"],
+                )
+                self.assertEqual(1, contributor_count)
+                self.assertEqual(1, len(evidence))
+
     def test_projector_reloads_the_persisted_frozen_run(self) -> None:
         """Reject a self-consistent caller story when Run bytes disagree."""
         with tempfile.TemporaryDirectory() as directory:
-            run_dir = Path(directory) / "run"
+            root = Path(directory)
+            repo_root = scoped_repository(workspace=root)
+            batch_root = root / "batch"
+            batch_root.mkdir()
+            run_dir = batch_root / "run"
             create_full_release_run(
                 run_dir=run_dir, run_id="run:projection:verified",
             )
             freeze_fixture(run_dir=run_dir)
-            roots = create_projection_roots(root=Path(directory))
-            projection = build_projection_manifest(
-                repo_root=REPO_ROOT,
-                run_dir=run_dir,
-                **roots,
+            batch_path = batch_root / "batch_manifest.json"
+            batch = write_projection_batch_manifest(
+                repo_root=repo_root,
+                batch_manifest_path=batch_path,
+                run_dirs=[run_dir],
             )
             self.assertEqual(
-                "ai_first_v3_3_1_phase_1", projection["release_id"],
+                "ai_first_v3_3_1_phase_1", batch["release_id"],
             )
-            self.assertEqual(
-                ["B01", "B03", "B10", "B11"],
-                projection["migrated_metric_ids"],
-            )
-            self.assertEqual(
-                set(LEGACY_INPUT_FILES),
-                set(projection["legacy_input_hashes"]),
-            )
-            self.assertEqual(
-                set(PROJECTION_CANDIDATE_FILES),
-                set(projection["candidate_artifact_hashes"]),
-            )
-            self.assertEqual(
-                set(PROJECTION_GATE_FILES),
-                set(projection["gate_receipt_hashes"]),
-            )
+            self.assertEqual(4, len(batch["expected_result_keys"]))
             manifest_path = run_dir / "manifest.json"
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
             manifest["content_manifest_hash"] = "sha256:" + "f" * 64
@@ -971,11 +1044,12 @@ class ReplayTest(unittest.TestCase):
                 encoding="utf-8",
             )
 
-            with self.assertRaisesRegex(ProjectionError, "verified FROZEN"):
-                build_projection_manifest(
-                    repo_root=REPO_ROOT,
-                    run_dir=run_dir,
-                    **roots,
+            with self.assertRaisesRegex(
+                ProjectionError, "verified FROZEN|repository Runs"
+            ):
+                load_projection_batch_manifest(
+                    repo_root=repo_root,
+                    batch_manifest_path=batch_path,
                 )
 
     def test_projector_rejects_duplicate_legacy_compatibility_key(
@@ -983,7 +1057,11 @@ class ReplayTest(unittest.TestCase):
     ) -> None:
         """Do not project two scope grains into one legacy metric cell."""
         with tempfile.TemporaryDirectory() as directory:
-            run_dir = Path(directory) / "run"
+            root = Path(directory)
+            repo_root = scoped_repository(workspace=root)
+            batch_root = root / "batch"
+            batch_root.mkdir()
+            run_dir = batch_root / "run"
             create_full_release_run(
                 run_dir=run_dir, run_id="run:projection:duplicate",
             )
@@ -1037,39 +1115,79 @@ class ReplayTest(unittest.TestCase):
             append_run_record(run_dir=run_dir, record=duplicate_trace)
             append_run_record(run_dir=run_dir, record=duplicate_result)
             freeze_fixture(run_dir=run_dir)
-            roots = create_projection_roots(root=Path(directory))
 
-            with self.assertRaisesRegex(ProjectionError, "legacy.*duplicated"):
-                build_projection_manifest(
-                    repo_root=REPO_ROOT,
-                    run_dir=run_dir,
-                    **roots,
+            with self.assertRaisesRegex(
+                ProjectionError, "company metric coordinate is duplicated"
+            ):
+                write_projection_batch_manifest(
+                    repo_root=repo_root,
+                    batch_manifest_path=batch_root / "batch_manifest.json",
+                    run_dirs=[run_dir],
                 )
 
     def test_projector_requires_persisted_projection_inputs(self) -> None:
-        """Reject a missing candidate file instead of trusting hash maps."""
+        """Reject missing Run bytes instead of trusting a batch manifest."""
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            run_dir = root / "run"
+            repo_root = scoped_repository(workspace=root)
+            batch_root = root / "batch"
+            batch_root.mkdir()
+            run_dir = batch_root / "run"
             create_full_release_run(
                 run_dir=run_dir, run_id="run:projection:missing-input",
             )
             freeze_fixture(run_dir=run_dir)
-            roots = create_projection_roots(root=root)
-            (roots["staging_dir"] / "metrics_matrix.csv").unlink()
+            batch_path = batch_root / "batch_manifest.json"
+            write_projection_batch_manifest(
+                repo_root=repo_root,
+                batch_manifest_path=batch_path,
+                run_dirs=[run_dir],
+            )
+            (run_dir / "records.jsonl").unlink()
 
-            with self.assertRaisesRegex(ProjectionError, "unsafe or missing"):
-                build_projection_manifest(
-                    repo_root=REPO_ROOT,
-                    run_dir=run_dir,
-                    **roots,
+            with self.assertRaisesRegex(ProjectionError, "verified FROZEN"):
+                load_projection_batch_manifest(
+                    repo_root=repo_root,
+                    batch_manifest_path=batch_path,
+                )
+
+    def test_projector_rejects_intermediate_run_locator_symlink(self) -> None:
+        """Keep a persisted batch Run below its original real namespace."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            repo_root = scoped_repository(workspace=root)
+            batch_root = root / "batch"
+            run_parent = batch_root / "runs"
+            run_parent.mkdir(parents=True)
+            run_dir = run_parent / "run"
+            create_full_release_run(
+                run_dir=run_dir, run_id="run:projection:parent-symlink",
+            )
+            freeze_fixture(run_dir=run_dir)
+            batch_path = batch_root / "batch_manifest.json"
+            write_projection_batch_manifest(
+                repo_root=repo_root,
+                batch_manifest_path=batch_path,
+                run_dirs=[run_dir],
+            )
+            external_parent = root / "external-runs"
+            run_parent.rename(external_parent)
+            run_parent.symlink_to(external_parent, target_is_directory=True)
+
+            with self.assertRaisesRegex(ProjectionError, "unsafe"):
+                load_projection_batch_manifest(
+                    repo_root=repo_root,
+                    batch_manifest_path=batch_path,
                 )
 
     def test_projector_requires_complete_release_result_set(self) -> None:
         """Do not let a B03-only Run shrink the repository release plan."""
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            run_dir = root / "run"
+            repo_root = scoped_repository(workspace=root)
+            batch_root = root / "batch"
+            batch_root.mkdir()
+            run_dir = batch_root / "run"
             create_structured_b03_run(
                 run_dir=run_dir,
                 repo_relative_path=(
@@ -1080,15 +1198,33 @@ class ReplayTest(unittest.TestCase):
                 run_id="run:projection:b03-dependency",
             )
             freeze_fixture(run_dir=run_dir)
-            roots = create_projection_roots(root=root)
 
             with self.assertRaisesRegex(
-                ProjectionError, "Migrated metric exact set differs"
+                ProjectionError, "Complete batch company metric exact set"
             ):
-                build_projection_manifest(
+                write_projection_batch_manifest(
+                    repo_root=repo_root,
+                    batch_manifest_path=batch_root / "batch_manifest.json",
+                    run_dirs=[run_dir],
+                )
+
+    def test_projector_rejects_single_company_as_complete_batch(self) -> None:
+        """Require every registry company and migrated metric coordinate."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            run_dir = root / "run"
+            create_full_release_run(
+                run_dir=run_dir,
+                run_id="run:projection:single-company",
+            )
+            freeze_fixture(run_dir=run_dir)
+            with self.assertRaisesRegex(
+                ProjectionError, "complete batch|company.*metric"
+            ):
+                write_projection_batch_manifest(
                     repo_root=REPO_ROOT,
-                    run_dir=run_dir,
-                    **roots,
+                    batch_manifest_path=root / "batch_manifest.json",
+                    run_dirs=[run_dir],
                 )
 
     def test_freeze_requires_effective_decision_for_each_review_unit(

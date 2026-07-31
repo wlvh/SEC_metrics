@@ -93,7 +93,7 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 - `scripts/git_workspace.py`：集中清理 Git 重定向环境，并校验 checkout 与 object/ref 存储边界。
 - `scripts/validation_provenance.py`：读取 source policy、校验 SOP 权威引用角色、捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
 - `scripts/00_*.py` 至 `scripts/12_*.py`：无参数单阶段 CLI wrapper；stage 11/12 额外负责旧 provenance 失效与终态 publication。
-- `scripts/vnext/`：尚未切流的 recorded shadow 组件；分别负责 strict canonical/schema/state、source/table-grid、集中 untrusted-input/review 资源预算、Spec/constraint、从仓库派生 Spec/Requirement/temperature 的 review workflow、固定 Reader response validator、由模块固定仓库 Requirement effective D-01 授权且只构造仓库 transport/记录实际 TransportObservation 的 AI adapter、Evidence、Review、Calculator、Run freeze/replay、只消费 verified FROZEN Run 与 release plan 的 Projector、pinned report input，以及由单一 root 派生路径的 publication transaction primitives。
+- `scripts/vnext/`：尚未切流的 recorded shadow 组件；分别负责 strict canonical/schema/state、source/table-grid、集中 untrusted-input/review 资源预算、Spec/constraint、从仓库派生 Spec/Requirement/temperature 的 review workflow、固定 Reader response validator、由模块固定仓库 Requirement effective D-01 授权且只构造仓库 transport/记录实际 TransportObservation 的 AI adapter、Evidence、Review、Calculator、Run freeze/replay、从 registry/applicability/release plan 与 PASSED FROZEN Runs 派生 complete BatchManifest 并实际生成 legacy-compatible candidate 的 Projector、执行并绑定 staging gates 的 publication receipt、pinned report input，以及由单一 root 派生路径的 publication transaction primitives。
 - `tools/check_validation_snapshot.py`：独立复核当前 checkout、manifest、provenance sidecar 与关键 artifact bytes。
 - `tools/check_no_company_literals.py`：生产 Python identity literal 的扩展性 gate。
 - `tools/check_capability_contract_alignment.py`：能力契约 anchor、文档路径与 `file::symbol` 的机械结构 gate；不证明 claim 语义成立。

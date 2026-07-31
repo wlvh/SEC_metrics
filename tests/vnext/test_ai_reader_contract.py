@@ -22,7 +22,10 @@ from vnext.canonical import canonical_json_bytes, sha256_bytes
 from vnext.requirements import load_requirement_snapshot
 from vnext.reader_input import build_reader_input_manifest
 from vnext.reader_input import prepare_reader_request
+from vnext.replay import replay_frozen_results
+from vnext.run_store import freeze_run
 from vnext.run_store import load_open_run
+from vnext.run_store import write_validation_receipt
 from vnext.sources import raw_blob_record
 from vnext.table_grid import build_table_grid
 from vnext.workflow import create_review_run
@@ -722,11 +725,12 @@ class AiReaderContractTest(unittest.TestCase):
             self.assertEqual(active_before, active_after)
 
     def test_non_lodging_stops_before_source_or_ai(self) -> None:
-        """Return structural N/A and zero attempts when inapplicable."""
+        """Persist replayable structural results without source or AI I/O."""
         with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory) / "run"
             result = create_review_run(
                 repo_root=REPO_ROOT,
-                run_dir=Path(directory) / "unused",
+                run_dir=run_dir,
                 run_id="run:recorded:nonlodging:001",
                 company_id="pfizer",
                 target_period={
@@ -750,8 +754,52 @@ class AiReaderContractTest(unittest.TestCase):
                 ),
                 clock=fixed_clock,
             )
-        self.assertEqual("N_A_STRUCTURAL", result["status"])
-        self.assertEqual(0, result["attempt_count"])
+            self.assertEqual("N_A_STRUCTURAL", result["status"])
+            self.assertEqual(0, result["attempt_count"])
+            self.assertTrue(run_dir.is_dir())
+            manifest, records, decisions = load_open_run(run_dir=run_dir)
+            self.assertEqual("pfizer", manifest["company_id"])
+            self.assertEqual([], decisions)
+            self.assertEqual(
+                {"B10", "B11"},
+                {
+                    record["metric_id"]
+                    for record in records
+                    if record["record_type"] == "METRIC_RESULT"
+                },
+            )
+            self.assertEqual(
+                {"N_A_STRUCTURAL"},
+                {
+                    record["applicability"]
+                    for record in records
+                    if record["record_type"] == "METRIC_RESULT"
+                },
+            )
+            self.assertEqual(
+                {"B10", "B11"},
+                {
+                    record["metric_id"]
+                    for record in records
+                    if record["record_type"] == "EXECUTION_TRACE"
+                },
+            )
+            self.assertFalse(
+                any(
+                    record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+                    for record in records
+                )
+            )
+            write_validation_receipt(
+                run_dir=run_dir,
+                status="PASSED",
+                checks=[{"check": "N_A_RECORD", "status": "PASS"}],
+            )
+            freeze_run(run_dir=run_dir, repo_root=REPO_ROOT)
+            replay = replay_frozen_results(
+                run_dir=run_dir, repo_root=REPO_ROOT,
+            )
+            self.assertEqual(2, len(replay["results"]))
 
 
 if __name__ == "__main__":
