@@ -21,10 +21,10 @@
 
 ## Validation run manifest
 
-- run_id: `471a076f-1114-496d-a7b6-adf07e2843fe`
-- source_commit: `246c108e11b9c3fed88c7e43dd9a9121532cfffd+dirty`
+- run_id: `ca7110fb-681a-40ac-8cd5-1e82df02114e`
+- source_commit: `673cccc04ada3bfb215fcf4ffba68bf5469df7e4+dirty`
 - `source_commit` 后缀 `+dirty` 表示运行时工作树含未提交改动。
-- started_at_utc: `2026-08-01T07:26:15.639579+00:00`
+- started_at_utc: `2026-08-01T08:11:15.196703+00:00`
 - mode: `FULL_VALIDATION`
 - result: `PASSED`
 - refreshed_artifacts: `implementation_map.csv, spec_implementation_audit.csv, stub_period_metrics.csv, stratified_audit.csv, scalability_audit.csv, repair_validation_results.csv`
