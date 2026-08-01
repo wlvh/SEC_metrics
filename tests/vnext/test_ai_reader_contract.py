@@ -16,8 +16,8 @@ import vnext.ai_adapter as ai_adapter
 from tests.vnext.common import REPO_ROOT, compiled_specs, fixed_clock
 from tests.vnext.common import reader_response, sample_asset
 from tests.vnext.common import sample_source_reference
-from vnext.ai_adapter import AIAdapterError, ApprovedTransportAdapter
-from vnext.ai_adapter import RecordedAdapter, run_ai_attempt
+from vnext.ai_adapter import AIAdapterError, build_approved_transport_adapter
+from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
 from vnext.canonical import canonical_json_bytes, sha256_bytes
 from vnext.requirements import load_requirement_snapshot
 from vnext.reader_input import build_reader_input_manifest
@@ -192,12 +192,69 @@ class _FixtureApprovedTransport:
 class AiReaderContractTest(unittest.TestCase):
     """Prove remote fail-closed behavior and immutable recorded attempts."""
 
+    def test_run_attempt_rejects_caller_adapter_before_complete(self) -> None:
+        """Require factory authority and the repository implementation."""
+        fixture = reader_attempt_fixture()
+        calls: List[bytes] = []
+
+        class CallerAdapter:
+            """Return forged no-egress facts after observing request bytes."""
+
+            def complete(self, *, request_bytes: bytes) -> object:
+                """Model unauthorized egress hidden by recorded facts."""
+                calls.append(request_bytes)
+                return build_recorded_adapter(
+                    response_bytes=fixture["response_bytes"],
+                    fixture_id="fixture:forged-authority",
+                ).complete(request_bytes=request_bytes)
+
+        authorized = build_recorded_adapter(
+            response_bytes=fixture["response_bytes"],
+            fixture_id="fixture:authorized",
+        )
+
+        class CallerSubclass(type(authorized)):
+            """Override a repository class without factory construction."""
+
+            def complete(self, *, request_bytes: bytes) -> object:
+                """Model a subclass attempting the same hidden egress."""
+                return CallerAdapter().complete(request_bytes=request_bytes)
+
+        unauthorized = (
+            CallerAdapter(),
+            object.__new__(CallerSubclass),
+            object.__new__(type(authorized)),
+        )
+        for adapter in unauthorized:
+            with self.subTest(adapter_type=type(adapter).__name__), (
+                self.assertRaisesRegex(
+                    AIAdapterError, "repository-constructed adapter"
+                )
+            ):
+                run_ai_attempt(
+                    adapter=adapter,
+                    prepared_request=fixture["prepared_request"],
+                    clock=fixed_clock,
+                )
+        self.assertEqual([], calls)
+
+        # Exact class dispatch prevents an instance-level method replacement
+        # from becoming a second hidden transport entry.
+        authorized.complete = CallerAdapter().complete
+        response, _raw, _attempt = run_ai_attempt(
+            adapter=authorized,
+            prepared_request=fixture["prepared_request"],
+            clock=fixed_clock,
+        )
+        self.assertEqual(fixture["response_bytes"], response)
+        self.assertEqual([], calls)
+
     def test_recorded_attempt_opens_no_socket_and_retries_are_distinct(
         self,
     ) -> None:
         """Keep response hashes stable and give retries new audit IDs."""
         fixture = reader_attempt_fixture()
-        adapter = RecordedAdapter(
+        adapter = build_recorded_adapter(
             response_bytes=fixture["response_bytes"],
             fixture_id="fixture:reader:001",
         )
@@ -225,7 +282,7 @@ class AiReaderContractTest(unittest.TestCase):
     def test_schema_failure_preserves_raw_hash_without_fallback(self) -> None:
         """Record invalid model bytes and return no usable response."""
         fixture = reader_attempt_fixture()
-        adapter = RecordedAdapter(
+        adapter = build_recorded_adapter(
             response_bytes=b'{"invalid":true}',
             fixture_id="fixture:reader:invalid",
         )
@@ -251,7 +308,7 @@ class AiReaderContractTest(unittest.TestCase):
             prepared,
             request_bytes=canonical_json_bytes(value=body),
         )
-        adapter = RecordedAdapter(
+        adapter = build_recorded_adapter(
             response_bytes=fixture["response_bytes"],
             fixture_id="fixture:reader:filtered",
         )
@@ -290,11 +347,11 @@ class AiReaderContractTest(unittest.TestCase):
 
         # A caller cannot supply policy, root, or transport implementation.
         with self.assertRaises(TypeError):
-            ApprovedTransportAdapter(
+            build_approved_transport_adapter(
                 decision=forged,
             )
         with self.assertRaisesRegex(AIAdapterError, "approved D-01"):
-            ApprovedTransportAdapter()
+            build_approved_transport_adapter()
         self.assertEqual([], calls)
 
         # Patching private module-owned authorities models a future committed
@@ -308,7 +365,7 @@ class AiReaderContractTest(unittest.TestCase):
                 snapshot_dir=snapshot_dir,
             )
             with self.assertRaises(TypeError):
-                ApprovedTransportAdapter(
+                build_approved_transport_adapter(
                     repo_root=repo_root,
                 )
             self.assertEqual([], calls)
@@ -330,7 +387,7 @@ class AiReaderContractTest(unittest.TestCase):
                 {"approved-provider": transport_factory},
                 create=True,
             ):
-                adapter = ApprovedTransportAdapter()
+                adapter = build_approved_transport_adapter()
                 result = adapter.complete(
                     request_bytes=b"filing-bytes",
                 )
@@ -391,7 +448,7 @@ class AiReaderContractTest(unittest.TestCase):
                 with self.assertRaisesRegex(
                     AIAdapterError, "policy differs from D-01"
                 ):
-                    ApprovedTransportAdapter()
+                    build_approved_transport_adapter()
         self.assertEqual([], calls)
 
     def _assert_attempt_audits_actual_host_and_transport_failure(
@@ -428,7 +485,7 @@ class AiReaderContractTest(unittest.TestCase):
                         {"approved-provider": transport_factory},
                         create=True,
                     ):
-                        adapter = ApprovedTransportAdapter()
+                        adapter = build_approved_transport_adapter()
                         prepared = reader_attempt_fixture()[
                             "prepared_request"
                         ]
@@ -494,7 +551,7 @@ class AiReaderContractTest(unittest.TestCase):
                 {"approved-provider": transport_factory},
                 create=True,
             ):
-                adapter = ApprovedTransportAdapter()
+                adapter = build_approved_transport_adapter()
                 with self.assertRaisesRegex(
                     AIAdapterError, "without transport observation"
                 ):
@@ -539,7 +596,7 @@ class AiReaderContractTest(unittest.TestCase):
                 {"approved-provider": transport_factory},
                 create=True,
             ):
-                adapter = ApprovedTransportAdapter()
+                adapter = build_approved_transport_adapter()
                 with self.assertRaisesRegex(
                     AIAdapterError, "without transport observation"
                 ):
@@ -574,7 +631,7 @@ class AiReaderContractTest(unittest.TestCase):
                 {"approved-provider": transport_factory},
                 create=True,
             ):
-                adapter = ApprovedTransportAdapter()
+                adapter = build_approved_transport_adapter()
 
                 # Replace both bound files with the repository's current
                 # PENDING authority after construction but before egress.
@@ -614,7 +671,7 @@ class AiReaderContractTest(unittest.TestCase):
                 {"approved-provider": transport_factory},
                 create=True,
             ):
-                adapter = ApprovedTransportAdapter()
+                adapter = build_approved_transport_adapter()
                 prepared = reader_attempt_fixture()["prepared_request"]
                 _response, _raw, attempt = run_ai_attempt(
                     adapter=adapter,
@@ -679,7 +736,7 @@ class AiReaderContractTest(unittest.TestCase):
                 disclosure_spec_path=(
                     "catalog/disclosures/lodging_kpi_table.md"
                 ),
-                adapter=RecordedAdapter(
+                adapter=build_recorded_adapter(
                     response_bytes=response,
                     fixture_id="fixture:lodging:001",
                 ),
@@ -748,7 +805,7 @@ class AiReaderContractTest(unittest.TestCase):
                 disclosure_spec_path=(
                     "catalog/disclosures/lodging_kpi_table.md"
                 ),
-                adapter=RecordedAdapter(
+                adapter=build_recorded_adapter(
                     response_bytes=b"not consulted",
                     fixture_id="fixture:not-consulted",
                 ),

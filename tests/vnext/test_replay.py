@@ -16,7 +16,7 @@ from tests.vnext.common import REPO_ROOT, compiled_specs, fixed_clock
 from tests.vnext.common import reader_response
 from tests.vnext.projection_fixture_support import scoped_repository
 from tools.vnext_review import append_human_decision
-from vnext.ai_adapter import RecordedAdapter
+from vnext.ai_adapter import build_recorded_adapter
 from vnext.calculator import calculate_metric, calculate_observation_metric
 from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes
 from vnext.canonical import sha256_file
@@ -100,7 +100,7 @@ def create_review_run(
         disclosure_spec_path=(
             "catalog/disclosures/lodging_kpi_table.md"
         ),
-        adapter=RecordedAdapter(
+        adapter=build_recorded_adapter(
             response_bytes=(
                 reader_response(asset=asset, reported_units=reported_units)
                 if recorded_response_bytes is None

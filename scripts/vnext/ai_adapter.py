@@ -29,6 +29,7 @@ _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 _TRANSPORT_FACTORIES: Mapping[str, Callable[..., object]] = MappingProxyType(
     {}
 )
+_ADAPTER_AUTHORITY = object()
 
 
 class AIAdapterError(RuntimeError):
@@ -330,6 +331,18 @@ class AIAdapter(ABC):
     model: str
     endpoint_host: str
 
+    def __init__(self, *, authority: object) -> None:
+        """Bind one adapter to the module-owned construction authority.
+
+        Args:
+            authority: Private token available only to repository factories.
+        """
+        if authority is not _ADAPTER_AUTHORITY:
+            raise AIAdapterError(
+                "AI adapter must come from a repository factory"
+            )
+        self._authority = authority
+
     @abstractmethod
     def complete(self, *, request_bytes: bytes) -> TransportResult:
         """Return raw response bytes, provider request ID, and transport facts.
@@ -343,16 +356,20 @@ class AIAdapter(ABC):
         raise NotImplementedError
 
 
-class RecordedAdapter(AIAdapter):
+class _RecordedAdapter(AIAdapter):
     """Return immutable recorded bytes without opening a network socket."""
 
-    def __init__(self, *, response_bytes: bytes, fixture_id: str) -> None:
+    def __init__(
+        self, *, response_bytes: bytes, fixture_id: str, authority: object
+    ) -> None:
         """Create a deterministic recorded adapter.
 
         Args:
             response_bytes: Frozen response payload.
             fixture_id: Opaque test/recording identity.
+            authority: Module-owned construction token.
         """
+        super().__init__(authority=authority)
         if not response_bytes or not fixture_id:
             raise AIAdapterError(
                 "Recorded response and fixture_id are required"
@@ -394,6 +411,25 @@ class RecordedAdapter(AIAdapter):
             provider_request_id=self._fixture_id,
             observation=observation,
         )
+
+
+def build_recorded_adapter(
+    *, response_bytes: bytes, fixture_id: str
+) -> AIAdapter:
+    """Build the only repository-authorized no-egress adapter.
+
+    Args:
+        response_bytes: Frozen response payload.
+        fixture_id: Opaque test/recording identity.
+
+    Returns:
+        Exact private recorded adapter accepted by ``run_ai_attempt``.
+    """
+    return _RecordedAdapter(
+        response_bytes=response_bytes,
+        fixture_id=fixture_id,
+        authority=_ADAPTER_AUTHORITY,
+    )
 
 
 def approved_transport_policy(
@@ -523,16 +559,20 @@ def transport_observation_mismatch(
     return None
 
 
-class ApprovedTransportAdapter(AIAdapter):
+class _ApprovedTransportAdapter(AIAdapter):
     """Execute only a repository-registered exact-D-01 transport."""
 
-    def __init__(self) -> None:
+    def __init__(self, *, authority: object) -> None:
         """Compile D-01 and construct its repository-owned provider adapter.
+
+        Args:
+            authority: Module-owned construction token.
 
         Raises:
             AIAdapterError: When D-01 is unavailable, its provider has no
                 committed factory, or the factory is not bound to exact policy.
         """
+        super().__init__(authority=authority)
         policy, requirement_closure_hash = _load_transport_policy()
         if policy.provider not in _TRANSPORT_FACTORIES:
             raise AIAdapterError(
@@ -630,6 +670,48 @@ class ApprovedTransportAdapter(AIAdapter):
                 error_class="AIAdapterError",
             )
         return result
+
+
+def build_approved_transport_adapter() -> AIAdapter:
+    """Build the only repository-authorized remote transport adapter.
+
+    Returns:
+        Exact private adapter compiled from effective approved D-01.
+    """
+    return _ApprovedTransportAdapter(authority=_ADAPTER_AUTHORITY)
+
+
+def _authorized_adapter_implementation(
+    *, adapter: AIAdapter
+) -> Callable[..., TransportResult]:
+    """Select only a factory-built repository adapter implementation.
+
+    Args:
+        adapter: Candidate adapter supplied to the workflow.
+
+    Returns:
+        Exact class-owned implementation safe to invoke for this adapter.
+
+    Raises:
+        AIAdapterError: Before invocation when type or factory authority
+            differs.
+    """
+    if type(adapter) is _RecordedAdapter:
+        implementation = _RecordedAdapter.complete
+    elif type(adapter) is _ApprovedTransportAdapter:
+        implementation = _ApprovedTransportAdapter.complete
+    else:
+        raise AIAdapterError(
+            "AI attempt requires a repository-constructed adapter"
+        )
+    if (
+        not hasattr(adapter, "_authority")
+        or adapter._authority is not _ADAPTER_AUTHORITY
+    ):
+        raise AIAdapterError(
+            "AI attempt requires a repository-constructed adapter"
+        )
+    return implementation
 
 
 def _utc_now(*, clock: Optional[Callable[[], datetime]] = None) -> str:
@@ -800,6 +882,9 @@ def run_ai_attempt(
     prepared = _validate_prepared_request(
         prepared_request=prepared_request,
     )
+    adapter_implementation = _authorized_adapter_implementation(
+        adapter=adapter,
+    )
     request_bytes = prepared["request_bytes"]
     task_contract_bytes = prepared["task_contract_bytes"]
     task_contract = prepared["task_contract"]
@@ -813,7 +898,8 @@ def run_ai_attempt(
     error_class = ""
     status = "SUCCEEDED"
     try:
-        result = adapter.complete(
+        result = adapter_implementation(
+            self=adapter,
             request_bytes=request_bytes
         )
         response = result.response_bytes

@@ -394,6 +394,16 @@
         "since": "2026-07-31"
       },
       {
+        "anchor_id": "BEHAVIOR.vnext_ai_adapter_factory_authority",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "vNext AI attempt 只接受仓库 builder 构造并带 module authority 的私有 exact recorded/approved adapter；在生成 attempt 或调用 complete 前校验类型与构造 authority，并固定分派仓库类实现，caller duck object、子类或实例级 complete 替换不得取得 filing bytes 后伪装 recorded no-egress。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_run_attempt_rejects_caller_adapter_before_complete",
+        "test_status": "automated_recorded_negative",
+        "since": "2026-08-01"
+      },
+      {
         "anchor_id": "BEHAVIOR.vnext_remote_transport_repository_authority",
         "type": "agent_behavior",
         "status": "active",
