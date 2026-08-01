@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import copy
 import unittest
+from decimal import localcontext
 
 from vnext.projector import ProjectionError, compatibility_receipt
+from vnext.projector import _projection_value, golden_row_passes
 from vnext.projector import project_evidence_rows, project_metric_rows
 from vnext.projector import reconcile_component_evidence
 from vnext.projector import reject_legacy_migrated_writes
@@ -13,6 +15,31 @@ from vnext.projector import reject_legacy_migrated_writes
 
 class LegacyProjectorTest(unittest.TestCase):
     """Prove non-migrated preservation and explicit migrated deltas."""
+
+    def test_projector_arithmetic_ignores_global_decimal_context(self) -> None:
+        """Keep projection bytes and Golden verdict on contract precision."""
+        with localcontext() as context:
+            context.prec = 3
+            projected = _projection_value(
+                result={
+                    "value": "0.12345678901234567890123456789",
+                },
+                projection={"value_multiplier": "100"},
+            )
+            golden_passed = golden_row_passes(
+                row={
+                    "expected": "0",
+                    "actual": "0.00005004",
+                    "notes": "diff=0.00005004 tolerance=0.00005",
+                }
+            )
+        with self.subTest(boundary="projection"):
+            self.assertEqual(
+                "12.34567890123456789012345679",
+                projected,
+            )
+        with self.subTest(boundary="golden"):
+            self.assertFalse(golden_passed)
 
     def test_complete_metric_projection_preserves_nonmigrated_order(
         self,

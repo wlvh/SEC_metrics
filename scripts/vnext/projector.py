@@ -10,7 +10,8 @@ from pathlib import Path
 from typing import Dict, List, Mapping, Optional, Sequence, Set, Tuple
 
 from .calculator import metric_is_applicable
-from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
+from .canonical import CanonicalError, arithmetic_context
+from .canonical import atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, decimal_text
 from .canonical import parse_decimal, sha256_file
 from .canonical import strict_json_file
@@ -1194,9 +1195,10 @@ def _projection_value(
         if "value_multiplier" in projection
         else "1"
     )
-    value = parse_decimal(value=str(result["value"])) * parse_decimal(
-        value=multiplier
-    )
+    with arithmetic_context():
+        value = parse_decimal(value=str(result["value"])) * parse_decimal(
+            value=multiplier
+        )
     return decimal_text(value=value)
 
 
@@ -2038,10 +2040,11 @@ def golden_row_passes(*, row: Mapping[str, object]) -> bool:
     match = re.search(r"tolerance=([^ ]+)", str(row["notes"]))
     if match is not None:
         try:
-            difference = abs(
-                Decimal(actual) - Decimal(expected)
-            )
-            return difference <= Decimal(match.group(1))
+            with arithmetic_context():
+                difference = abs(
+                    Decimal(actual) - Decimal(expected)
+                )
+                return difference <= Decimal(match.group(1))
         except InvalidOperation:
             return False
     return actual == expected

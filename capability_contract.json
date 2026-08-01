@@ -614,6 +614,16 @@
         "since": "2026-07-31"
       },
       {
+        "anchor_id": "BEHAVIOR.vnext_projector_decimal_context",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "vNext Projector 的 declarative value multiplier 与 Golden tolerance comparison 必须使用 canonical 28/ROUND_HALF_EVEN arithmetic context；调用进程修改全局 Decimal precision 不得改变 candidate bytes 或 gate verdict。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_legacy_projector.py::LegacyProjectorTest.test_projector_arithmetic_ignores_global_decimal_context",
+        "test_status": "automated_recorded_negative",
+        "since": "2026-08-01"
+      },
+      {
         "anchor_id": "BEHAVIOR.vnext_legacy_projection_key_unique",
         "type": "agent_behavior",
         "status": "active",
