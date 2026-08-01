@@ -3,6 +3,7 @@
   "status": "PASS",
   "failure_code": "",
   "source_hashes": {
+    "scripts/sec_pipeline.py": "ee37752c3a9cbddfadc9ed11796abd79a026bb0874a0d36e2577c372a6c2e3b6",
     "scripts/vnext/__init__.py": "a36dc7448c250e89c5a77fcd2c2e5aae2a39caaa6a16d06b1020c52b94e7671a",
     "scripts/vnext/ai_adapter.py": "43b2b4585aeb5d20653d6afa72609155b432c70c69efe6f23ae871a4c00e8fee",
     "scripts/vnext/calculator.py": "75c31bb5245437ea9ff4e64f4d0b6671d3bb98452a44b149257a6d0149c0b674",
@@ -11,7 +12,7 @@
     "scripts/vnext/evidence.py": "221a735589188d44b0e589d5bcfa4d0d28c78467e67face9798734daaf4e35f4",
     "scripts/vnext/observations.py": "b8c2a79bf69adba9dc63fc90230e8ad17586dcc0649f67465d3123b36ea69feb",
     "scripts/vnext/projector.py": "5c6fed76728e9974c198ea33ba4a5c97d238cee0fabb5b3fee72330e2adb6b39",
-    "scripts/vnext/publication.py": "cdf6b5f513238f3536d23d6c361b794864defdc47fb5982ada7240e22e7c88ae",
+    "scripts/vnext/publication.py": "52857101479534f8b8c6a089e5b8ed987094b6f680ba8814b46dcd54b1b2f72e",
     "scripts/vnext/reader.py": "1dea4891527c44e4f0d999e9e7d59ee562ca68991985e7508b772fbf7e4c78c0",
     "scripts/vnext/reader_input.py": "de700d16a2e80358ef3be2d74f072dcaee1a2e0e965945c276ecc3e2b35a0f78",
     "scripts/vnext/records.py": "65f38317fb8efbbed19995b723bda8f4a8f6cecad60df1875e75f494bee824be",
@@ -28,6 +29,8 @@
     "scripts/vnext/table_grid.py": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
     "scripts/vnext/traits.py": "5efc47b12118afd4edc97873e195141d13a861fb4e72d8b8cb9d7adea84e2bf4",
     "scripts/vnext/workflow.py": "7ab143690b31ac9e106d36984e09be070ca2be5589cd9226e8c8c8700749f614",
+    "tools/check_no_company_literals.py": "60a8f25508cbea682212bee13b4391b112ad3efbb2d9ef32628583309b7156c0",
+    "tools/check_vnext_semantics.py": "57a7c7497091cf376379960ad8f6abe1bd998f177f500f238f7c6249368bd15b",
     "tools/run_acceptance.py": "7f4063e18a21601cc6967a7dadd69685f8b69806782bd5485c0027945788ede8",
     "tools/vnext_review.py": "7f59c3fa27c2b732dc6641eca1d228e7de0387ebe098970637fadbccad8780d3"
   },
