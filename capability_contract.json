@@ -577,7 +577,7 @@
         "anchor_id": "BEHAVIOR.vnext_publication_receipt_exact",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "vNext publication receipt 只能由生产 gate runner 在重跑 Projector、semantic audit 与 company-literal scalability audit，并从 candidate 生成 coverage/scalability/stratified/recorded-validation/README/report 后产生；已有 caller bytes 必须逐 byte 相等。semantic receipt 绑定 checker 自身与 gate 依赖 bytes，publisher 独立验证 hash 后才执行 checker，prepare 还会再次执行两道 audit。无自引用 candidate view 绑定 Requirement、Batch/Run/Result proof、ledger prefix、prepared predecessor、精确 required gate set及每项 execution evidence hash，并按 path、SHA-256 与 size 覆盖除 receipt 自身外全部 bundle artifact。自签 PASS、伪造空 scalability CSV、替换 checker 重放旧 PASS、自写报告或任一缺失、多余、失败、row/byte 漂移都会阻止 prepare/commit。",
+        "statement": "vNext publication receipt 只能由生产 gate runner 在重跑 Projector、semantic audit 与递归覆盖 scripts/tools（含 vNext）的 company-literal scalability audit，并从 candidate 生成 coverage/scalability/stratified/recorded-validation/README/report 后产生；已有 caller bytes 必须逐 byte 相等。semantic receipt 绑定 checker 自身与 gate 依赖 bytes，publisher 独立验证 hash 后才执行 checker，prepare 还会再次执行两道 audit。无自引用 candidate view 绑定 Requirement、Batch/Run/Result proof、ledger prefix、prepared predecessor、精确 required gate set及每项 execution evidence hash，并按 path、SHA-256 与 size 覆盖除 receipt 自身外全部 bundle artifact。自签 PASS、伪造空 scalability CSV、在 vNext 加 identity branch、替换 checker 重放旧 PASS、自写报告或任一缺失、多余、失败、row/byte 漂移都会阻止 prepare/commit。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_self_signed_pass_without_gate_execution_cannot_prepare",
         "test_status": "automated_recorded_negative_matrix",

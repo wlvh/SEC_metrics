@@ -13176,12 +13176,12 @@ def production_python_paths() -> list[Path]:
     """Return production Python paths covered by the scalability scanner.
 
     Returns:
-        Sorted scripts/ and tools/ Python files. Config, fixture, docs, and
-        generated report markdown paths are intentionally outside this scanner.
+        Recursively sorted scripts/ and tools/ Python files. Config, fixture,
+        docs, and generated report paths are outside this scanner.
     """
     paths = []
     for directory in [WORKDIR / "scripts", WORKDIR / "tools"]:
-        paths.extend(sorted(directory.glob("*.py")))
+        paths.extend(sorted(directory.rglob("*.py")))
     return paths
 
 

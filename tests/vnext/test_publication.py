@@ -896,6 +896,49 @@ class PublicationTest(unittest.TestCase):
                     publication_root=root / "publication", **inputs,
                 )
 
+    def test_scalability_gate_scans_vnext_sources(self) -> None:
+        """Reject a registry ticker branch inside vNext production code."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = publication_inputs(
+                root=root,
+                tag="recursive-scalability-gate",
+                previous_publication_id=None,
+            )
+            (
+                inputs["staging_dir"]
+                / "publication_validation_receipt.json"
+            ).unlink()
+            (
+                inputs["staging_dir"] / "semantic_audit_receipt.json"
+            ).unlink()
+            bad_path = (
+                inputs["repo_root"]
+                / "scripts"
+                / "vnext"
+                / "forged_company_branch.py"
+            )
+            bad_path.write_text(
+                '"""Adversarial vNext production branch."""\n'
+                'TARGET_TICKER = "PFE"\n',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                PublicationError, "Scalability audit execution"
+            ):
+                write_publication_validation_receipt(
+                    repo_root=inputs["repo_root"],
+                    batch_manifest_path=inputs["batch_manifest_path"],
+                    legacy_snapshot_dir=inputs["legacy_snapshot_dir"],
+                    staging_dir=inputs["staging_dir"],
+                    ledger_binding=inputs["ledger_binding"],
+                    previous_publication_id=(
+                        inputs["previous_publication_id"]
+                    ),
+                    validated_at_utc="2026-07-31T00:00:00Z",
+                )
+
     def test_semantic_gate_binds_checker_bytes(self) -> None:
         """Reject a checker replaced by a replay of its prior PASS bytes."""
         with tempfile.TemporaryDirectory() as directory:
