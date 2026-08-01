@@ -13200,11 +13200,18 @@ def build_scalability_audit_rows() -> list[dict]:
     return rows
 
 
-def write_scalability_audit() -> list[dict]:
-    """Write outputs/scalability_audit.csv and return audit rows."""
+def write_scalability_audit(*, output_path: Path) -> list[dict]:
+    """Write the scalability audit to one explicit output path.
+
+    Args:
+        output_path: CSV destination owned by the calling validation boundary.
+
+    Returns:
+        Exact scanner rows written to the destination.
+    """
     rows = build_scalability_audit_rows()
     write_csv_file(
-        path=WORKDIR / "outputs" / "scalability_audit.csv",
+        path=output_path,
         fieldnames=SCALABILITY_AUDIT_FIELDNAMES,
         rows=rows,
     )
@@ -13231,7 +13238,9 @@ def scanner_constant_folding_tamper_detected() -> bool:
 
 def check_no_company_identity_branch_in_production() -> dict:
     """Validate production branches do not use company identity literals."""
-    rows = write_scalability_audit()
+    rows = write_scalability_audit(
+        output_path=WORKDIR / "outputs" / "scalability_audit.csv",
+    )
     failures = [row for row in rows if row["allowed"] != "1"]
     if not scanner_constant_folding_tamper_detected():
         failures.append({"literal": "string_addition_tamper"})

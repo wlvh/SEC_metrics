@@ -28,6 +28,16 @@ class SemanticAuditTest(unittest.TestCase):
         )
         self.assertEqual("PASS", receipt["status"])
         self.assertIn("tools/vnext_review.py", receipt["source_hashes"])
+        self.assertIn(
+            "tools/check_vnext_semantics.py", receipt["source_hashes"],
+        )
+        self.assertIn(
+            "tools/check_no_company_literals.py",
+            receipt["source_hashes"],
+        )
+        self.assertIn(
+            "scripts/sec_pipeline.py", receipt["source_hashes"],
+        )
 
     def test_business_literal_in_executable_is_reported(self) -> None:
         """Reject a metric/company parser branch by AST literal."""

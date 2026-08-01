@@ -95,9 +95,9 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 - `scripts/00_*.py` 至 `scripts/12_*.py`：无参数单阶段 CLI wrapper；stage 11/12 额外负责旧 provenance 失效与终态 publication。
 - `scripts/vnext/`：尚未切流的 recorded shadow 组件；分别负责 strict canonical/schema/state、source/table-grid、集中 untrusted-input/review 资源预算、Spec/constraint、从仓库派生 Spec/Requirement/temperature 的 review workflow、固定 Reader response validator、由模块固定仓库 Requirement effective D-01 授权且只构造仓库 transport/记录实际 TransportObservation 的 AI adapter、Evidence、Review、Calculator、Run freeze/replay、从 registry/applicability/release plan 与 PASSED FROZEN Runs 派生 complete BatchManifest 并实际生成 legacy-compatible candidate 的 Projector、执行并绑定 staging gates 的 publication receipt、pinned report input，以及由单一 root 派生路径的 publication transaction primitives。
 - `tools/check_validation_snapshot.py`：独立复核当前 checkout、manifest、provenance sidecar 与关键 artifact bytes。
-- `tools/check_no_company_literals.py`：生产 Python identity literal 的扩展性 gate。
+- `tools/check_no_company_literals.py`：生产 Python identity literal 的扩展性 gate；支持把真实 scanner 结果写到调用方显式指定的隔离 CSV，供 publication runner 生成并在 prepare 时重验。
 - `tools/check_capability_contract_alignment.py`：能力契约 anchor、文档路径与 `file::symbol` 的机械结构 gate；不证明 claim 语义成立。
-- `tools/check_vnext_semantics.py`：扫描 vNext/bridge executable 的业务 literal、AI adapter authority 与 secret token 泄漏；secret root/递归 namespace 中任意 symlink 都 fail closed，并写 hash-only receipt。
+- `tools/check_vnext_semantics.py`：扫描 vNext/bridge executable 的业务 literal、AI adapter authority 与 secret token 泄漏；secret root/递归 namespace 中任意 symlink 都 fail closed，并写绑定 checker 自身、scalability checker 与其 producer bytes 的 hash-only receipt。
 - `tools/vnext_review.py`：对 OPEN recorded Run 追加显式 HUMAN review decision 的最小 CLI。
 - `tools/run_acceptance.py`：按 `TESTING.md` 记录原样命令、解释器、return code、耗时、stdout/stderr digest、artifact hash 与 NOT_RUN 原因；full scope 把 live 00–11 与必须执行的离线 Stage 12/checker 分开记录，recorded 成功不等于 full 成功。
 

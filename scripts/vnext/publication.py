@@ -114,6 +114,11 @@ STRATIFIED_FIELDS = (
     "context_or_dimension", "evidence_value", "evidence_unit",
     "evidence_quote", "audit_verdict", "audit_notes",
 )
+SEMANTIC_GATE_SOURCE_PATHS = {
+    "scripts/sec_pipeline.py",
+    "tools/check_no_company_literals.py",
+    "tools/check_vnext_semantics.py",
+}
 
 
 class PublicationError(RuntimeError):
@@ -1124,6 +1129,40 @@ def _coverage_reason(*, metric: Mapping[str, str]) -> str:
     return notes
 
 
+def _verify_semantic_source_hashes(
+    *, source_hashes: Mapping[str, object], repo_root: Path
+) -> None:
+    """Verify declared semantic-gate sources independently of the checker.
+
+    Args:
+        source_hashes: Portable source path to exact SHA-256 mapping.
+        repo_root: Repository authority containing those source files.
+
+    Raises:
+        PublicationError: When a path is unsafe or current bytes differ.
+    """
+    if repo_root.is_symlink() or not repo_root.is_dir():
+        raise PublicationError("Semantic audit repository is unsafe")
+    for relative in sorted(source_hashes):
+        path = repo_root
+        for part in _safe_relative(value=relative).parts:
+            path = path / part
+            if path.is_symlink():
+                raise PublicationError(
+                    "Semantic audit source binding is unsafe"
+                )
+        try:
+            actual = sha256_file(path=path)
+        except CanonicalError as error:
+            raise PublicationError(
+                "Semantic audit source binding is unsafe"
+            ) from error
+        if actual != source_hashes[relative]:
+            raise PublicationError(
+                "Semantic audit source binding differs"
+            )
+
+
 def _semantic_gate_evidence(
     *, receipt: Mapping[str, object], repo_root: Optional[Path]
 ) -> Dict[str, object]:
@@ -1157,10 +1196,14 @@ def _semantic_gate_evidence(
         for relative in source_hashes
     ):
         raise PublicationError("Semantic audit source binding is invalid")
-    if repo_root is not None and receipt != _execute_semantic_audit(
-        repo_root=repo_root,
-    ):
-        raise PublicationError("Semantic audit execution differs")
+    if not SEMANTIC_GATE_SOURCE_PATHS.issubset(source_hashes):
+        raise PublicationError("Semantic audit source binding is incomplete")
+    if repo_root is not None:
+        _verify_semantic_source_hashes(
+            source_hashes=source_hashes, repo_root=repo_root,
+        )
+        if receipt != _execute_semantic_audit(repo_root=repo_root):
+            raise PublicationError("Semantic audit execution differs")
     return {
         "source_count": len(source_hashes),
         "source_hashes_id": content_hash(value=source_hashes),
@@ -1210,6 +1253,60 @@ def _execute_semantic_audit(*, repo_root: Path) -> Dict[str, object]:
     if not isinstance(payload, dict):
         raise PublicationError("Semantic audit receipt is malformed")
     return dict(payload)
+
+
+def _execute_scalability_audit(*, repo_root: Path) -> list:
+    """Run the real company-literal gate and return its exact CSV rows.
+
+    Args:
+        repo_root: Repository containing the scanner and production sources.
+
+    Returns:
+        Exact scalability audit rows; a successful gate normally returns none.
+
+    Raises:
+        PublicationError: When the executable or scan result is unsafe.
+    """
+    tool_path = repo_root / "tools" / "check_no_company_literals.py"
+    if tool_path.is_symlink() or not tool_path.is_file():
+        raise PublicationError("Scalability audit executable is unsafe")
+    try:
+        with tempfile.TemporaryDirectory(
+            prefix="sec-metrics-scalability-"
+        ) as directory:
+            output_path = Path(directory) / "scalability_audit.csv"
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    str(tool_path),
+                    "--output",
+                    str(output_path),
+                ],
+                cwd=str(repo_root),
+                check=False,
+                capture_output=True,
+                timeout=60,
+            )
+            if completed.returncode != 0:
+                raise PublicationError(
+                    "Scalability audit execution failed"
+                )
+            if output_path.is_symlink() or not output_path.is_file():
+                raise PublicationError(
+                    "Scalability audit execution produced no safe CSV"
+                )
+            rows = _csv_rows(
+                content=output_path.read_bytes(),
+                fieldnames=SCALABILITY_FIELDS,
+                label="Scalability audit",
+            )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise PublicationError(
+            "Scalability audit execution failed"
+        ) from error
+    if rows:
+        raise PublicationError("Scalability audit execution failed")
+    return rows
 
 
 def _publication_gate_evidence(
@@ -1437,6 +1534,11 @@ def _publication_gate_evidence(
     )
     if scalability:
         raise PublicationError("Scalability audit contains forbidden literals")
+    if (
+        repo_root is not None
+        and scalability != _execute_scalability_audit(repo_root=repo_root)
+    ):
+        raise PublicationError("Scalability audit execution differs")
 
     semantic = _semantic_gate_evidence(
         receipt=_json_mapping(
@@ -1532,6 +1634,7 @@ def _finalize_staging_view(
         label="Evidence",
     )
     migrated_ids = set(projection["migrated_metric_ids"])
+    scalability = _execute_scalability_audit(repo_root=repo_root)
     semantic = _execute_semantic_audit(repo_root=repo_root)
     refreshed = sorted(
         {
@@ -1549,7 +1652,7 @@ def _finalize_staging_view(
             fieldnames=COVERAGE_FIELDS,
         ),
         "scalability_audit.csv": _csv_bytes(
-            rows=[], fieldnames=SCALABILITY_FIELDS,
+            rows=scalability, fieldnames=SCALABILITY_FIELDS,
         ),
         "semantic_audit_receipt.json": (
             canonical_json_bytes(value=semantic) + b"\n"

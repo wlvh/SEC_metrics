@@ -34,6 +34,11 @@ FORBIDDEN_AI_IMPORTS = {
     "urllib",
 }
 FORBIDDEN_AI_CALLS = {"eval", "exec", "open", "system"}
+GATE_SOURCE_PATHS = (
+    "scripts/sec_pipeline.py",
+    "tools/check_no_company_literals.py",
+    "tools/check_vnext_semantics.py",
+)
 
 
 class SemanticAuditError(RuntimeError):
@@ -230,20 +235,30 @@ def run_audit(
         Deterministic receipt mapping.
     """
     source_root = repo_root / "scripts" / "vnext"
-    files = list(source_root.glob("*.py"))
-    files.extend((repo_root / "tools").glob("vnext_*.py"))
+    audit_files = list(source_root.glob("*.py"))
+    audit_files.extend((repo_root / "tools").glob("vnext_*.py"))
     acceptance_runner = repo_root / "tools" / "run_acceptance.py"
     if acceptance_runner.is_file() and not acceptance_runner.is_symlink():
-        files.append(acceptance_runner)
-    files = sorted(files)
-    if not files:
+        audit_files.append(acceptance_runner)
+    audit_files = sorted(audit_files)
+    if not audit_files:
         raise SemanticAuditError("vNext executable source set is empty")
+    bound_files = set(audit_files)
+    for relative in GATE_SOURCE_PATHS:
+        path = repo_root / relative
+        if path.is_symlink() or not path.is_file():
+            raise SemanticAuditError(
+                "Gate source is not a regular file: {}".format(relative)
+            )
+        bound_files.add(path)
     hits = []
-    source_hashes = {}
-    for path in files:
-        source_hashes[path.relative_to(repo_root).as_posix()] = _sha256(
+    source_hashes = {
+        path.relative_to(repo_root).as_posix(): _sha256(
             content=path.read_bytes()
         )
+        for path in sorted(bound_files)
+    }
+    for path in audit_files:
         hits.extend(audit_python_file(path=path, repo_root=repo_root))
     if secret_token:
         hits.extend(

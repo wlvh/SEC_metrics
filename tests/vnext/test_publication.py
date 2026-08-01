@@ -869,6 +869,71 @@ class PublicationTest(unittest.TestCase):
                     **inputs,
                 )
 
+    def test_scalability_gate_executes_real_scanner(self) -> None:
+        """Reject a company branch added after the candidate gate ran."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = publication_inputs(
+                root=root,
+                tag="real-scalability-gate",
+                previous_publication_id=None,
+            )
+            bad_path = (
+                inputs["repo_root"]
+                / "scripts"
+                / "forged_company_branch.py"
+            )
+            bad_path.write_text(
+                '"""Adversarial production branch."""\n'
+                'TARGET_COMPANY = "Pfizer"\n',
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                PublicationError, "Scalability audit execution"
+            ):
+                prepare_publication_bundle(
+                    publication_root=root / "publication", **inputs,
+                )
+
+    def test_semantic_gate_binds_checker_bytes(self) -> None:
+        """Reject a checker replaced by a replay of its prior PASS bytes."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = publication_inputs(
+                root=root,
+                tag="semantic-checker-binding",
+                previous_publication_id=None,
+            )
+            staged_receipt = (
+                inputs["staging_dir"] / "semantic_audit_receipt.json"
+            ).read_bytes()
+            checker = (
+                inputs["repo_root"]
+                / "tools"
+                / "check_vnext_semantics.py"
+            )
+            checker.write_text(
+                '"""Replay a previously valid receipt."""\n'
+                "import argparse\n"
+                "from pathlib import Path\n"
+                "parser = argparse.ArgumentParser()\n"
+                'parser.add_argument("--repo-root")\n'
+                'parser.add_argument("--output")\n'
+                "arguments = parser.parse_args()\n"
+                "Path(arguments.output).write_bytes({!r})\n".format(
+                    staged_receipt
+                ),
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(
+                PublicationError, "Semantic audit source binding"
+            ):
+                prepare_publication_bundle(
+                    publication_root=root / "publication", **inputs,
+                )
+
     def test_arbitrary_staging_and_self_signed_pass_cannot_prepare(
         self,
     ) -> None:
