@@ -407,7 +407,7 @@
         "anchor_id": "BEHAVIOR.vnext_remote_transport_repository_authority",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "vNext remote adapter 只从模块固定 repository root 的 Requirement Snapshot 读取唯一 effective APPROVED D-01；调用方不能传入 policy、替代 root 或 transport 实现，D-01 pending 时不能构造 transport，批准后的十个 choice 字段作为一个不可变 policy 交给仓库注册 factory。",
+        "statement": "vNext remote adapter 只从模块固定 repository root 的 Requirement Snapshot 读取唯一 effective APPROVED D-01；调用方不能传入 policy、替代 root 或 transport 实现，D-01 pending 时不能构造 transport。approved adapter 不保留可替换 transport；每次 attempt 在 D-01/payload preflight 后从模块 registry 新建并校验 exact-policy transport，调用方新增或替换 `_transport` 不会被调用。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_remote_adapter_binds_policy_owned_repository_transport",
         "test_status": "automated_recorded_negative",

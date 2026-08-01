@@ -388,9 +388,15 @@ class AiReaderContractTest(unittest.TestCase):
                 create=True,
             ):
                 adapter = build_approved_transport_adapter()
+                caller_transport_calls: List[bytes] = []
+                adapter._transport = _FixtureApprovedTransport(
+                    policy=adapter.policy,
+                    calls=caller_transport_calls,
+                )
                 result = adapter.complete(
                     request_bytes=b"filing-bytes",
                 )
+        self.assertEqual([], caller_transport_calls)
         self.assertEqual([b"filing-bytes"], calls)
         self.assertEqual(
             reader_attempt_fixture()["response_bytes"],
@@ -448,7 +454,9 @@ class AiReaderContractTest(unittest.TestCase):
                 with self.assertRaisesRegex(
                     AIAdapterError, "policy differs from D-01"
                 ):
-                    build_approved_transport_adapter()
+                    build_approved_transport_adapter().complete(
+                        request_bytes=b"filing-bytes",
+                    )
         self.assertEqual([], calls)
 
     def _assert_attempt_audits_actual_host_and_transport_failure(

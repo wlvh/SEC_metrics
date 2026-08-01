@@ -105,7 +105,7 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 
 ## 8. vNext recorded shadow 的可观察行为（尚未切流）
 
-仓库已包含可离线复核的 vNext recorded shadow：Requirement/Spec、table-grid Reader input、recorded AI response、机械 Evidence、整单 Review、freeze/replay、Spec-driven Calculator、Projector 与 publication transaction primitives。AI attempt 只调用仓库 builder 构造的私有 recorded/approved adapter；任意带 `complete` 的调用方对象会在取得 filing bytes 前失败，不能把未授权 egress 伪装成 recorded no-egress。它面向开发者、运行负责人和 reviewer，不是当前业务结果的新入口，也不替代第 3–5 节的 00–12 验收。
+仓库已包含可离线复核的 vNext recorded shadow：Requirement/Spec、table-grid Reader input、recorded AI response、机械 Evidence、整单 Review、freeze/replay、Spec-driven Calculator、Projector 与 publication transaction primitives。AI attempt 只调用仓库 builder 构造的私有 recorded/approved adapter；任意带 `complete` 的调用方对象会在取得 filing bytes 前失败，approved adapter 也不保留可由调用方替换的 transport，而是在每次 attempt 从仓库注册表新建并校验。未授权 egress 不能伪装成 recorded no-egress。它面向开发者、运行负责人和 reviewer，不是当前业务结果的新入口，也不替代第 3–5 节的 00–12 验收。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
 ### 8.1 审核酒店 disclosure group

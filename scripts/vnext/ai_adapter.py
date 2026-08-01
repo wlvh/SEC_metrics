@@ -559,18 +559,48 @@ def transport_observation_mismatch(
     return None
 
 
+def _build_repository_transport(*, policy: TransportPolicy) -> object:
+    """Construct one fresh repository transport bound to exact D-01.
+
+    Args:
+        policy: Current immutable effective D-01 policy.
+
+    Returns:
+        Repository-factory transport with the exact policy and API.
+
+    Raises:
+        AIAdapterError: When no factory exists or its result is invalid.
+    """
+    if policy.provider not in _TRANSPORT_FACTORIES:
+        raise AIAdapterError(
+            "D-01 provider has no repository transport factory"
+        )
+    transport = _TRANSPORT_FACTORIES[policy.provider](policy=policy)
+    if not hasattr(transport, "policy") or transport.policy != policy:
+        raise AIAdapterError(
+            "Repository transport policy differs from D-01"
+        )
+    if not hasattr(transport, "complete") or not callable(
+        transport.complete
+    ):
+        raise AIAdapterError(
+            "Repository transport implementation is invalid"
+        )
+    return transport
+
+
 class _ApprovedTransportAdapter(AIAdapter):
-    """Execute only a repository-registered exact-D-01 transport."""
+    """Resolve a fresh repository transport for each approved attempt."""
 
     def __init__(self, *, authority: object) -> None:
-        """Compile D-01 and construct its repository-owned provider adapter.
+        """Compile D-01 and verify its repository factory is available.
 
         Args:
             authority: Module-owned construction token.
 
         Raises:
-            AIAdapterError: When D-01 is unavailable, its provider has no
-                committed factory, or the factory is not bound to exact policy.
+            AIAdapterError: When D-01 is unavailable or its provider has no
+                committed factory.
         """
         super().__init__(authority=authority)
         policy, requirement_closure_hash = _load_transport_policy()
@@ -578,23 +608,11 @@ class _ApprovedTransportAdapter(AIAdapter):
             raise AIAdapterError(
                 "D-01 provider has no repository transport factory"
             )
-        transport = _TRANSPORT_FACTORIES[policy.provider](policy=policy)
-        if not hasattr(transport, "policy") or transport.policy != policy:
-            raise AIAdapterError(
-                "Repository transport policy differs from D-01"
-            )
-        if not hasattr(transport, "complete") or not callable(
-            transport.complete
-        ):
-            raise AIAdapterError(
-                "Repository transport implementation is invalid"
-            )
         self.provider = policy.provider
         self.model = policy.model
         self.endpoint_host = policy.endpoint_host
         self.requirement_closure_hash = requirement_closure_hash
         self.policy = policy
-        self._transport = transport
 
     def complete(self, *, request_bytes: bytes) -> TransportResult:
         """Execute one exact-policy transport and verify returned facts.
@@ -619,10 +637,6 @@ class _ApprovedTransportAdapter(AIAdapter):
             or current_closure_hash != self.requirement_closure_hash
         ):
             raise AIAdapterError("D-01 changed before transport")
-        if self._transport.policy != current_policy:
-            raise AIAdapterError(
-                "Repository transport policy changed before transport"
-            )
         if len(request_bytes) > self.policy.maximum_payload_bytes:
             raise TransportAttemptError(
                 "Reader payload exceeds D-01 maximum",
@@ -634,8 +648,9 @@ class _ApprovedTransportAdapter(AIAdapter):
                 raw_response_bytes=None,
                 error_class="AIAdapterError",
             )
+        transport = _build_repository_transport(policy=current_policy)
         try:
-            result = self._transport.complete(request_bytes=request_bytes)
+            result = transport.complete(request_bytes=request_bytes)
         except TransportAttemptError:
             raise
         except (AIAdapterError, OSError, TimeoutError, ValueError) as error:
