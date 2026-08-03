@@ -12,6 +12,9 @@ from pathlib import Path
 from typing import Dict, Mapping, Optional
 from unittest import mock
 
+from sec_http import REQUEST_LOG_FIELDNAMES, parse_request_log_rows
+from sec_http import request_log_attempt_id
+from sec_http import request_log_csv_bytes, request_log_manifest_payload
 from tests.vnext.common import REPO_ROOT
 from tests.vnext.projection_fixture_support import scoped_repository
 from tests.vnext.test_replay import create_full_release_run, freeze_fixture
@@ -25,6 +28,7 @@ from vnext.publication import EVIDENCE_FIELDS, GOLDEN_FIELDS
 from vnext.publication import METRIC_FIELDS, REPAIR_FIELDS
 from vnext.publication import PublicationView, commit_publication
 from vnext.publication import prepare_publication_bundle
+from vnext.publication import publication_ledger_binding
 from vnext.publication import publication_layout
 from vnext.publication import publication_validation_view_id
 from vnext.publication import recover_publication_mirrors, rollback_publication
@@ -224,14 +228,137 @@ def legacy_snapshot(*, workspace: Path) -> Path:
     return legacy_dir
 
 
+def write_request_ledger_rows(
+    *, repo_root: Path, rows: list[dict[str, str]]
+) -> None:
+    """Persist one exact current-schema request ledger and manifest.
+
+    Args:
+        repo_root: Scoped repository containing the audit chain.
+        rows: Complete ordered request observations.
+
+    Expected output:
+        CSV and manifest bytes describe the same exact ordered row set.
+    """
+    log_path = repo_root / "evidence" / "requests_log.csv"
+    log_path.parent.mkdir(exist_ok=True)
+    log_path.write_bytes(request_log_csv_bytes(rows=rows))
+    manifest = request_log_manifest_payload(log_path=log_path)
+    (log_path.parent / "requests_log_manifest.json").write_bytes(
+        canonical_json_bytes(value=manifest) + b"\n"
+    )
+
+
+def request_ledger_fixture(
+    *,
+    repo_root: Path,
+    row_changes: Optional[Mapping[str, str]] = None,
+) -> str:
+    """Write one real request row with immutable body/header evidence.
+
+    Args:
+        repo_root: Scoped repository containing the Company Facts fixture.
+        row_changes: Optional deliberate current-row mutations for negatives.
+
+    Returns:
+        Deterministic attempt identity derived from the ordered ledger row.
+    """
+    relative = (
+        "tests/fixtures/vnext/companyfacts_b03_crosscheck/"
+        "CIK0000078003.json"
+    )
+    source_url = (
+        "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json"
+    )
+    document_name = "CIK0000078003.json"
+    content = (repo_root / relative).read_bytes()
+    digest = sha256_bytes(content=content)
+    body_relative = Path(
+        "evidence", "request_attempts", digest[:2], digest, document_name,
+    )
+    body_path = repo_root / body_relative
+    body_path.parent.mkdir(parents=True)
+    body_path.write_bytes(content)
+    headers_bytes = canonical_json_bytes(
+        value={
+            "url": source_url,
+            "status_code": 200,
+            "headers": {"Content-Type": "application/json"},
+            "content_length": len(content),
+            "sha256": digest,
+            "saved_at_utc": "2026-08-03T00:00:00+00:00",
+        }
+    ) + b"\n"
+    headers_relative = body_relative.with_name(
+        "{}.{}.headers.json".format(
+            document_name, sha256_bytes(content=headers_bytes),
+        )
+    )
+    (repo_root / headers_relative).write_bytes(headers_bytes)
+    row = {
+        "timestamp_utc": "2026-08-03T00:00:01+00:00",
+        "method": "GET",
+        "source_url": source_url,
+        "status_code": "200",
+        "purpose": "vnext_publication_fixture",
+        "repo_relative_path": body_relative.as_posix(),
+        "headers_repo_relative_path": headers_relative.as_posix(),
+        "content_length": str(len(content)),
+        "content_sha256": digest,
+        "accession": "",
+        "document_name": document_name,
+        "user_agent": "SEC metrics fixture fixture@example.com",
+        "retry_attempt": "0",
+        "error": "",
+    }
+    if set(row) != set(REQUEST_LOG_FIELDNAMES):
+        raise AssertionError("Request ledger fixture fields differ")
+    if row_changes is not None:
+        if not set(row_changes).issubset(set(row)):
+            raise AssertionError("Request ledger mutation field is unknown")
+        row.update(row_changes)
+    write_request_ledger_rows(
+        repo_root=repo_root, rows=[row],
+    )
+    return request_log_attempt_id(row_index=0, row=row)
+
+
+def append_unrelated_request_ledger_row(*, repo_root: Path) -> None:
+    """Append a valid row that the frozen publication Batch never consumed.
+
+    Args:
+        repo_root: Scoped repository containing the current ledger.
+
+    Expected output:
+        The full ledger grows while every Batch-consumed row remains unchanged.
+    """
+    log_path = repo_root / "evidence" / "requests_log.csv"
+    rows = parse_request_log_rows(
+        text=log_path.read_text(encoding="utf-8")
+    )
+    unrelated = dict(rows[-1])
+    unrelated["timestamp_utc"] = "2026-08-03T00:00:02+00:00"
+    unrelated["purpose"] = "unrelated_later_request"
+    rows.append(unrelated)
+    write_request_ledger_rows(repo_root=repo_root, rows=rows)
+
+
 def complete_projection_fixture(
-    *, workspace: Path, tag: str
+    *,
+    workspace: Path,
+    tag: str,
+    request_ledger: bool = True,
+    source_request_attempt_id: Optional[str] = None,
+    request_ledger_row_changes: Optional[Mapping[str, str]] = None,
 ) -> Dict[str, object]:
     """Build a genuine one-company batch and complete semantic staging view.
 
     Args:
         workspace: Empty fixture workspace.
         tag: Stable Run identity suffix.
+        request_ledger: Whether to persist the real request audit chain.
+        source_request_attempt_id: Optional SourceReference attempt override.
+        request_ledger_row_changes: Optional deliberate ledger row mutation.
 
     Returns:
         Repository, batch, legacy, and staging locators.
@@ -240,12 +367,23 @@ def complete_projection_fixture(
     repo_root = scoped_repository(
         workspace=workspace, baseline_snapshot_dir=legacy_dir,
     )
+    attempt_id = (
+        request_ledger_fixture(
+            repo_root=repo_root,
+            row_changes=request_ledger_row_changes,
+        )
+        if request_ledger
+        else "request:attempt:unavailable"
+    )
+    if source_request_attempt_id is not None:
+        attempt_id = source_request_attempt_id
     batch_root = workspace / "batch"
     batch_root.mkdir()
     run_dir = batch_root / "run"
     create_full_release_run(
         run_dir=run_dir, run_id="run:publication:" + tag,
         repo_root=repo_root,
+        request_attempt_id=attempt_id,
     )
     freeze_fixture(run_dir=run_dir, repo_root=repo_root)
     batch_path = batch_root / "batch_manifest.json"
@@ -400,7 +538,10 @@ def resign_staging(*, inputs: Mapping[str, object]) -> None:
         requirement_hashes=projection["requirement_hashes"],
         batch_manifest_id=projection["batch_manifest_id"],
         projection_manifest_id=projection["projection_manifest_id"],
-        ledger_binding=inputs["ledger_binding"],
+        ledger_binding=publication_ledger_binding(
+            repo_root=inputs["repo_root"],
+            batch_manifest_path=inputs["batch_manifest_path"],
+        ),
         previous_publication_id=inputs["previous_publication_id"],
     )
     write_json(
@@ -451,12 +592,6 @@ def publication_inputs(
     inputs = complete_projection_fixture(workspace=workspace, tag=tag)
     inputs.update(
         {
-            "ledger_binding": {
-                "requests_log_manifest_sha256": "a" * 64,
-                "row_count": 1,
-                "source_reference_ids": ["sha256:" + "b" * 64],
-                "used_request_attempt_ids": ["request:attempt:fixture"],
-            },
             "previous_publication_id": previous_publication_id,
         }
     )
@@ -465,7 +600,6 @@ def publication_inputs(
         batch_manifest_path=inputs["batch_manifest_path"],
         legacy_snapshot_dir=inputs["legacy_snapshot_dir"],
         staging_dir=inputs["staging_dir"],
-        ledger_binding=inputs["ledger_binding"],
         previous_publication_id=inputs["previous_publication_id"],
         validated_at_utc="2026-07-31T00:00:00Z",
     )
@@ -517,6 +651,151 @@ def create_failed_run(*, run_dir: Path, run_id: str) -> None:
 class PublicationTest(unittest.TestCase):
     """Prove only complete verified bundles become active."""
 
+    def test_missing_request_ledger_blocks_before_validation_receipt(
+        self,
+    ) -> None:
+        """Do not issue publication PASS without the actual audit chain."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory) / "candidate"
+            workspace.mkdir()
+            inputs = complete_projection_fixture(
+                workspace=workspace,
+                tag="missing-request-ledger",
+                request_ledger=False,
+            )
+
+            with self.assertRaisesRegex(
+                PublicationError, "request ledger"
+            ):
+                write_publication_validation_receipt(
+                    repo_root=inputs["repo_root"],
+                    batch_manifest_path=inputs["batch_manifest_path"],
+                    legacy_snapshot_dir=inputs["legacy_snapshot_dir"],
+                    staging_dir=inputs["staging_dir"],
+                    previous_publication_id=None,
+                    validated_at_utc="2026-08-03T00:00:00Z",
+                )
+            self.assertFalse(
+                (
+                    inputs["staging_dir"]
+                    / "publication_validation_receipt.json"
+                ).exists()
+            )
+
+    def test_publication_entrypoints_do_not_accept_ledger_authority(
+        self,
+    ) -> None:
+        """Keep request-ledger facts derived inside publication entrypoints."""
+        self.assertEqual(
+            {
+                "batch_manifest_path",
+                "legacy_snapshot_dir",
+                "previous_publication_id",
+                "repo_root",
+                "staging_dir",
+                "validated_at_utc",
+            },
+            set(
+                inspect.signature(
+                    write_publication_validation_receipt
+                ).parameters
+            ),
+        )
+        self.assertEqual(
+            {
+                "batch_manifest_path",
+                "legacy_snapshot_dir",
+                "previous_publication_id",
+                "publication_root",
+                "repo_root",
+                "staging_dir",
+            },
+            set(inspect.signature(prepare_publication_bundle).parameters),
+        )
+
+    def test_batch_source_absent_from_request_ledger_cannot_validate(
+        self,
+    ) -> None:
+        """Reject a batch whose consumed source names no real ledger row."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            inputs = complete_projection_fixture(
+                workspace=workspace,
+                tag="unknown-request-attempt",
+                source_request_attempt_id=(
+                    "request:attempt:" + "f" * 64
+                ),
+            )
+
+            with self.assertRaisesRegex(
+                PublicationError, "request ledger attempt is absent"
+            ):
+                write_publication_validation_receipt(
+                    repo_root=inputs["repo_root"],
+                    batch_manifest_path=inputs["batch_manifest_path"],
+                    legacy_snapshot_dir=inputs["legacy_snapshot_dir"],
+                    staging_dir=inputs["staging_dir"],
+                    previous_publication_id=None,
+                    validated_at_utc="2026-08-03T00:00:00Z",
+                )
+
+    def test_unrelated_ledger_tail_preserves_used_publication_prefix(
+        self,
+    ) -> None:
+        """Do not bind later requests that this Batch never consumed."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = publication_inputs(
+                root=root,
+                tag="unrelated-ledger-tail",
+                previous_publication_id=None,
+            )
+            before = publication_ledger_binding(
+                repo_root=inputs["repo_root"],
+                batch_manifest_path=inputs["batch_manifest_path"],
+            )
+            append_unrelated_request_ledger_row(
+                repo_root=inputs["repo_root"],
+            )
+            after = publication_ledger_binding(
+                repo_root=inputs["repo_root"],
+                batch_manifest_path=inputs["batch_manifest_path"],
+            )
+
+            self.assertEqual(before, after)
+            prepare_publication_bundle(
+                publication_root=root / "publication", **inputs,
+            )
+
+    def test_declared_request_ledger_locators_must_identify_attempt(
+        self,
+    ) -> None:
+        """Reject a row that points away from its immutable body/header."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            inputs = complete_projection_fixture(
+                workspace=workspace,
+                tag="wrong-request-locators",
+                request_ledger_row_changes={
+                    "repo_relative_path": (
+                        "evidence/never-existed-body.json"
+                    ),
+                    "headers_repo_relative_path": (
+                        "evidence/never-existed-headers.json"
+                    ),
+                },
+            )
+
+            with self.assertRaisesRegex(PublicationError, "locator"):
+                write_publication_validation_receipt(
+                    repo_root=inputs["repo_root"],
+                    batch_manifest_path=inputs["batch_manifest_path"],
+                    legacy_snapshot_dir=inputs["legacy_snapshot_dir"],
+                    staging_dir=inputs["staging_dir"],
+                    previous_publication_id=None,
+                    validated_at_utc="2026-08-03T00:00:00Z",
+                )
+
     def test_complete_batch_projects_publishes_and_reads_active_view(
         self,
     ) -> None:
@@ -534,6 +813,17 @@ class PublicationTest(unittest.TestCase):
 
             manifest = prepare_publication_bundle(
                 publication_root=root / "publication", **inputs,
+            )
+            expected_ledger = publication_ledger_binding(
+                repo_root=inputs["repo_root"],
+                batch_manifest_path=inputs["batch_manifest_path"],
+            )
+            self.assertEqual(expected_ledger, manifest["ledger_binding"])
+            self.assertEqual(
+                1, len(expected_ledger["source_reference_ids"]),
+            )
+            self.assertEqual(
+                1, len(expected_ledger["used_request_attempt_ids"]),
             )
             commit_publication(
                 publication_root=root / "publication",
@@ -694,7 +984,6 @@ class PublicationTest(unittest.TestCase):
                     batch_manifest_path=inputs["batch_manifest_path"],
                     legacy_snapshot_dir=inputs["legacy_snapshot_dir"],
                     staging_dir=inputs["staging_dir"],
-                    ledger_binding=inputs["ledger_binding"],
                     previous_publication_id=(
                         inputs["previous_publication_id"]
                     ),
@@ -932,7 +1221,6 @@ class PublicationTest(unittest.TestCase):
                     batch_manifest_path=inputs["batch_manifest_path"],
                     legacy_snapshot_dir=inputs["legacy_snapshot_dir"],
                     staging_dir=inputs["staging_dir"],
-                    ledger_binding=inputs["ledger_binding"],
                     previous_publication_id=(
                         inputs["previous_publication_id"]
                     ),
@@ -1085,15 +1373,11 @@ class PublicationTest(unittest.TestCase):
                     publication_root=root, **inputs,
                 )
 
-    def test_invalid_nested_ledger_binding_cannot_prepare(self) -> None:
-        """Reject ambiguous row counts, digests, and duplicate source IDs."""
+    def test_invalid_request_ledger_manifest_cannot_prepare(self) -> None:
+        """Reject malformed persisted row counts and content digests."""
         invalid_values = (
             ("row_count", True),
-            ("requests_log_manifest_sha256", "not-a-digest"),
-            (
-                "source_reference_ids",
-                ["sha256:" + "b" * 64, "sha256:" + "b" * 64],
-            ),
+            ("content_sha256", "not-a-digest"),
         )
         for field, value in invalid_values:
             with self.subTest(field=field), tempfile.TemporaryDirectory() as d:
@@ -1103,11 +1387,48 @@ class PublicationTest(unittest.TestCase):
                     tag="invalid-ledger-" + field,
                     previous_publication_id=None,
                 )
-                inputs["ledger_binding"][field] = value
-                with self.assertRaises(PublicationError):
+                manifest_path = (
+                    inputs["repo_root"]
+                    / "evidence"
+                    / "requests_log_manifest.json"
+                )
+                manifest = json.loads(
+                    manifest_path.read_text(encoding="utf-8")
+                )
+                manifest[field] = value
+                write_json(path=manifest_path, value=manifest)
+                with self.assertRaisesRegex(
+                    PublicationError, "request ledger"
+                ):
                     prepare_publication_bundle(
                         publication_root=root, **inputs,
                     )
+
+    def test_missing_immutable_request_headers_cannot_prepare(self) -> None:
+        """Require the consumed ledger row's immutable header sidecar."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs = publication_inputs(
+                root=root,
+                tag="missing-request-headers",
+                previous_publication_id=None,
+            )
+            row = read_csv(
+                path=(
+                    inputs["repo_root"] / "evidence" / "requests_log.csv"
+                )
+            )[0]
+            (
+                inputs["repo_root"]
+                / row["headers_repo_relative_path"]
+            ).unlink()
+
+            with self.assertRaisesRegex(
+                PublicationError, "immutable attempt is invalid"
+            ):
+                prepare_publication_bundle(
+                    publication_root=root, **inputs,
+                )
 
     def test_latest_failed_attempt_is_visible_without_moving_active(
         self,
@@ -1328,7 +1649,19 @@ class PublicationTest(unittest.TestCase):
                     )
                     resign_staging(inputs=inputs)
                 elif mutation == "ledger_binding":
-                    inputs["ledger_binding"]["row_count"] += 1
+                    log_path = (
+                        inputs["repo_root"]
+                        / "evidence"
+                        / "requests_log.csv"
+                    )
+                    ledger_rows = parse_request_log_rows(
+                        text=log_path.read_text(encoding="utf-8")
+                    )
+                    ledger_rows[0]["purpose"] = "tampered_used_request"
+                    write_request_ledger_rows(
+                        repo_root=inputs["repo_root"],
+                        rows=ledger_rows,
+                    )
                 elif mutation == "predecessor":
                     inputs["previous_publication_id"] = (
                         "publication_" + "d" * 64

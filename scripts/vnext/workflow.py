@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Callable, Dict, Mapping, Optional, Sequence
 
 from .ai_adapter import AIAdapter, run_ai_attempt
+from .ai_adapter import validate_adapter_repository_authority
 from .calculator import calculate_metric, calculate_observation_metric
 from .calculator import withheld_metric_result
 from .canonical import sha256_file, strict_json_loads
@@ -177,6 +178,11 @@ def create_review_run(
         Run, attempt, Candidate, Evidence, and ReviewUnit identities. Rejection
         returns without creating a ReviewUnit and never invokes a fallback.
     """
+    # Close the only joint remote boundary before loading Spec or filing
+    # bytes, so D-01 cannot authorize a payload assembled from another tree.
+    validate_adapter_repository_authority(
+        adapter=adapter, repo_root=repo_root,
+    )
     compiled_spec, spec_paths, metric_specs = _load_disclosure_plan(
         repo_root=repo_root,
         disclosure_spec_path=disclosure_spec_path,

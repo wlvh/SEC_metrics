@@ -192,13 +192,13 @@ vNext recorded shadow 已能让开发者和审核人离线演示完整表格输�
 9. Run validation receipt 必须同时绑定 Run 的 company/period/Spec/Requirement/source 身份与实际 records、decisions、review、AI bytes；receipt 后改变任一项都不能 freeze。manifest 明确声明缺少 required source role 时，只允许冻结全 WITHHELD 的失败审计，不能同时保留 PUBLISHED Result。
 <!-- capability-anchor: BEHAVIOR.vnext_review_binds_visible_unit -->
 
-未来存在 active publication 后，任何 APPLICABLE/WITHHELD 或不完整 bundle 都不能替换 active。Projector 必须重新加载由 registry/applicability/release plan 派生的 complete BatchManifest 及其全部 PASSED FROZEN Runs，生成完整 legacy-compatible candidate，并拒绝缺公司、缺 N/A 或同一 legacy key 的多个 scope；publisher 必须读取 bundle 内 ProjectionManifest，不能用另一份游离 Result 把 BLOCKED 改成 PUBLISHABLE。publication gate runner 必须从 verified candidate 生成 coverage/audit/recorded validation/report，再以无自引用 view 同时绑定 Requirement、Batch/Run/Result proof、ledger、predecessor、每项 gate execution evidence 和所有非 receipt artifact 的 path/SHA-256/size；rollback 只能回到当前 active 已记录的 committed predecessor。
+未来存在 active publication 后，任何 APPLICABLE/WITHHELD 或不完整 bundle 都不能替换 active。Projector 必须重新加载由 registry/applicability/release plan 派生的 complete BatchManifest 及其全部 PASSED FROZEN Runs，生成完整 legacy-compatible candidate，并拒绝缺公司、缺 N/A 或同一 legacy key 的多个 scope；publisher 必须读取 bundle 内 ProjectionManifest，不能用另一份游离 Result 把 BLOCKED 改成 PUBLISHABLE。publication gate runner 必须从 verified candidate 生成 coverage/audit/recorded validation/report，再以无自引用 view 同时绑定 Requirement、Batch/Run/Result proof、截至最后一个已消费 request row 的最小 ledger prefix、row 声明 locator、predecessor、每项 gate execution evidence和所有非 receipt artifact 的 path/SHA-256/size；rollback 只能回到当前 active 已记录的 committed predecessor。
 <!-- capability-anchor: BEHAVIOR.vnext_withheld_cannot_publish -->
 
 判断展示版本必须同时读取 active pointer 与 latest run status：active 是当前可用的上一成功完整版本；latest 可能失败、withheld 或仍在 staging。status writer 只接收 persisted Run directory 或 publication ID，在 pointer lock 内加载真实状态并验证 active pointer/bundle；不接受调用方自报的状态枚举、boolean、view 或 manifest。bundle storage、pointer/lock、status 和 mirrors 全部从单一 publication root 派生，调用方不能分别定义互相矛盾的路径。`active_is_latest_success` 由两者 publication ID 是否相同派生。FAILED/BLOCKED 不得携带 latest publication ID，不能把旧 active 描述成最新运行成功。
 <!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
 
-当前还没有可供业务采信的 vNext active publication。request-ledger 有序前缀/membership adapter、单 Run 跨进程多写者编排、外部 AI 决策、有效 SEC 身份、第二真实布局、独立 holdout、live 三轮稳定性、完整 staging parity、旧 producer 退出、Cutover 与真实 rollback/full validation 尚未完成；recorded PASS 只能证明离线组件，不证明这些条件。
+当前还没有可供业务采信的 vNext active publication。request-ledger 最小已用有序前缀/membership adapter 已有 scoped recorded 验证，但尚未经过真实十公司 full staging；单 Run 跨进程多写者编排、外部 AI 决策、有效 SEC 身份、第二真实布局、独立 holdout、live 三轮稳定性、完整 staging parity、旧 producer 退出、Cutover 与真实 rollback/full validation 尚未完成。recorded PASS 只能证明离线组件，不证明这些条件。
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
 
 ## 11. 最短建议

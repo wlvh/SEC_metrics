@@ -1136,6 +1136,7 @@ def _record_indexes(
         "derived_asset_ids": set(),
         "review_unit_hashes": set(),
     }
+    used_source_reference_ids = set()
     result_runs: Dict[Tuple[str, str], Mapping[str, object]] = {}
     id_fields = {
         "EXECUTION_TRACE": ("traces", "trace_id"),
@@ -1144,6 +1145,38 @@ def _record_indexes(
         "RAW_BLOB": ("raw", "raw_asset_id"),
     }
     for manifest, records in runs:
+        run_used_source_ids = set()
+        run_source_ids = {
+            str(reference["source_reference_id"])
+            for reference in manifest["source_references"]
+        }
+        reader_manifests = {
+            str(record["reader_input_manifest_id"]): record
+            for record in records
+            if record["record_type"] == "READER_INPUT_MANIFEST"
+        }
+        for record in records:
+            if record["record_type"] == "VERIFIED_OBSERVATION":
+                run_used_source_ids.add(
+                    str(record["source_binding"]["source_reference_id"])
+                )
+            elif record["record_type"] == "AI_EXTRACTION_ATTEMPT":
+                reader_id = str(record["reader_input_manifest_hash"])
+                if reader_id not in reader_manifests:
+                    raise ProjectionError(
+                        "Projection AI attempt ReaderInputManifest is absent"
+                    )
+                run_used_source_ids.update(
+                    str(source_id)
+                    for source_id in reader_manifests[reader_id][
+                        "source_reference_ids"
+                    ]
+                )
+        if not run_used_source_ids.issubset(run_source_ids):
+            raise ProjectionError(
+                "Projection consumed SourceReference is outside its Run"
+            )
+        used_source_reference_ids.update(run_used_source_ids)
         for record in records:
             record_type = str(record["record_type"])
             if record_type == "METRIC_RESULT":
@@ -1172,8 +1205,41 @@ def _record_indexes(
                     str(record["review_unit_hash"])
                 )
     indexes["result_runs"] = result_runs
+    if not used_source_reference_ids.issubset(set(indexes["sources"])):
+        raise ProjectionError(
+            "Projection consumed SourceReference record is absent"
+        )
+    indexes["used_source_reference_ids"] = used_source_reference_ids
     indexes.update(audit_ids)
     return indexes
+
+
+def load_projection_used_source_references(
+    *, repo_root: Path, batch_manifest_path: Path
+) -> List[Dict[str, object]]:
+    """Reload the verified batch and return only sources actually consumed.
+
+    Args:
+        repo_root: Repository authority used to replay every FROZEN Run.
+        batch_manifest_path: Complete persisted batch locator.
+
+    Returns:
+        SourceReferences consumed by a verified Observation or by an actual
+        AI attempt's ReaderInputManifest, ordered by content identity.
+    """
+    batch = load_projection_batch_manifest(
+        repo_root=repo_root, batch_manifest_path=batch_manifest_path,
+    )
+    runs = _batch_runs(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        batch_manifest=batch,
+    )
+    indexes = _record_indexes(runs=runs)
+    return [
+        dict(indexes["sources"][source_id])
+        for source_id in sorted(indexes["used_source_reference_ids"])
+    ]
 
 
 def _projection_value(

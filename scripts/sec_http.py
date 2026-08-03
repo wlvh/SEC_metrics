@@ -926,6 +926,86 @@ def parse_request_log_rows(*, text: str) -> list[dict[str, str]]:
     return rows
 
 
+def request_log_prefix_bytes(*, text: str, row_count: int) -> bytes:
+    """Return the exact CSV bytes through one ordered data-row prefix.
+
+    Args:
+        text: UTF-8-decoded current-schema request ledger.
+        row_count: Number of ordered data rows included in the prefix.
+
+    Returns:
+        Original header and requested rows, preserving exact CSV bytes.
+
+    Raises:
+        ValueError: When the prefix length or ledger shape is invalid.
+    """
+    if type(row_count) is not int or row_count < 0:
+        raise ValueError(
+            "Request log prefix row count must be a non-negative integer"
+        )
+    with io.StringIO(text, newline="") as file_obj:
+        reader = csv.DictReader(file_obj)
+        if reader.fieldnames != REQUEST_LOG_FIELDNAMES:
+            raise ValueError(
+                f"Unexpected request log schema: {reader.fieldnames}"
+            )
+        prefix_end = file_obj.tell()
+        expected_fields = set(REQUEST_LOG_FIELDNAMES)
+        for row_index in range(row_count):
+            try:
+                row = next(reader)
+            except StopIteration as error:
+                raise ValueError(
+                    "Request log prefix exceeds available rows"
+                ) from error
+            if set(row) != expected_fields or any(
+                row[field] is None for field in REQUEST_LOG_FIELDNAMES
+            ):
+                raise ValueError(
+                    "Unexpected request log row shape at line {}".format(
+                        row_index + 2
+                    )
+                )
+            prefix_end = file_obj.tell()
+    return text[:prefix_end].encode("utf-8")
+
+
+def request_log_attempt_id(*, row_index: int, row: dict[str, str]) -> str:
+    """Derive one stable request-attempt identity from its ordered ledger row.
+
+    Args:
+        row_index: Zero-based data-row position in ``requests_log.csv``.
+        row: Exact current-schema request observation.
+
+    Returns:
+        Content-derived audit identity stable under append-only ledger growth.
+
+    Raises:
+        ValueError: When the position or row shape is ambiguous.
+    """
+    if type(row_index) is not int or row_index < 0:
+        raise ValueError(
+            "Request log row index must be a non-negative integer"
+        )
+    if set(row) != set(REQUEST_LOG_FIELDNAMES) or any(
+        type(row[field]) is not str for field in REQUEST_LOG_FIELDNAMES
+    ):
+        raise ValueError("Request log attempt row shape is invalid")
+    # The row position distinguishes repeated observations while remaining
+    # stable when the append-only ledger gains later rows.
+    identity_bytes = json.dumps(
+        {
+            "row_index": row_index,
+            "row_values": [row[field] for field in REQUEST_LOG_FIELDNAMES],
+            "schema_version": REQUEST_LOG_MANIFEST_SCHEMA_VERSION,
+        },
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    ).encode("utf-8")
+    return "request:attempt:" + hashlib.sha256(identity_bytes).hexdigest()
+
+
 def request_log_manifest_payload(*, log_path: Path) -> dict:
     """Build the exact-set integrity payload for one request log.
 

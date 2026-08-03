@@ -14,7 +14,13 @@ import tempfile
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Mapping, Optional
+from typing import Dict, Mapping, Optional, Tuple
+
+from sec_http import REQUEST_LOG_MANIFEST_SCHEMA_VERSION
+from sec_http import legacy_response_snapshot_paths, parse_request_log_rows
+from sec_http import request_accession, request_log_attempt_id
+from sec_http import request_log_prefix_bytes
+from sec_http import validate_request_log_manifest
 
 from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
@@ -24,9 +30,11 @@ from .projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
 from .projector import PROJECTION_GATE_FILES, PROJECTION_MANIFEST_FIELDS
 from .projector import build_projection_manifest
 from .projector import golden_row_passes
+from .projector import load_projection_used_source_references
 from .projector import projection_file_hashes
 from .records import validate_record
 from .run_store import RunStoreError, load_run_for_status
+from .sources import SourceError, resolve_repository_file
 from .states import PUBLISHABLE_VALIDATION_STATUSES
 from .states import publication_candidate_status
 
@@ -65,7 +73,7 @@ REQUIREMENT_HASH_FIELDS = {
     "legacy_path_inventory_sha256",
 }
 LEDGER_BINDING_FIELDS = {
-    "requests_log_manifest_sha256",
+    "requests_log_prefix_sha256",
     "row_count",
     "source_reference_ids",
     "used_request_attempt_ids",
@@ -202,6 +210,195 @@ def _validate_id_list(
         raise PublicationError("{} must be a unique array".format(label))
 
 
+def _request_row_for_source(
+    *,
+    repo_root: Path,
+    source: Mapping[str, object],
+    attempt_rows: Mapping[str, Tuple[int, Mapping[str, str]]],
+) -> int:
+    """Validate one consumed SourceReference against its immutable request.
+
+    Args:
+        repo_root: Repository containing the independent request audit chain.
+        source: SourceReference consumed by the verified batch.
+        attempt_rows: Deterministic attempt identities mapped to row metadata.
+
+    Returns:
+        Zero-based ordered request-ledger row index.
+
+    Raises:
+        PublicationError: When the attempt, joined source identity, or
+            immutable body/header pair is absent, ambiguous, or inconsistent.
+    """
+    attempt_id = str(source["request_attempt_id"])
+    if attempt_id not in attempt_rows:
+        raise PublicationError(
+            "Consumed SourceReference request ledger attempt is absent"
+        )
+    row_index, row = attempt_rows[attempt_id]
+    raw_asset_id = str(source["raw_asset_id"])
+    content_sha256 = raw_asset_id.split(":", maxsplit=1)[-1]
+    source_url = str(source["source_url"])
+    archive_accession = request_accession(source_url=source_url)
+    expected_accession = (
+        archive_accession if archive_accession else str(row["accession"])
+    )
+    if (
+        row["method"] != "GET"
+        or row["status_code"] != "200"
+        or row["error"]
+        or row["source_url"] != source_url
+        or row["content_sha256"] != content_sha256
+        or row["document_name"] != source["document_name"]
+        or expected_accession not in {"", str(source["accession"])}
+        or (
+            archive_accession
+            and row["accession"] != archive_accession
+        )
+    ):
+        raise PublicationError(
+            "Consumed SourceReference differs from request ledger attempt"
+        )
+    try:
+        body_path, headers_path = legacy_response_snapshot_paths(
+            workdir=repo_root,
+            content_sha256=content_sha256,
+            source_url=source_url,
+            status_code=str(row["status_code"]),
+            content_length=str(row["content_length"]),
+            document_name=str(row["document_name"]),
+            timestamp_utc=str(row["timestamp_utc"]),
+        )
+    except (OSError, ValueError) as error:
+        raise PublicationError(
+            "Consumed request ledger immutable attempt is invalid"
+        ) from error
+    try:
+        declared_body_path = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path=str(row["repo_relative_path"]),
+        )
+        declared_headers_path = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path=str(row["headers_repo_relative_path"]),
+        )
+    except (OSError, SourceError) as error:
+        raise PublicationError(
+            "Consumed request ledger locator is invalid"
+        ) from error
+    # The row's portable locators are part of the attempt identity. Deriving
+    # a valid sibling by hash must not hide a stale or fabricated locator.
+    if (
+        declared_body_path.resolve() != body_path.resolve()
+        or declared_headers_path.resolve() != headers_path.resolve()
+    ):
+        raise PublicationError(
+            "Consumed request ledger locator differs from immutable attempt"
+        )
+    return int(row_index)
+
+
+def publication_ledger_binding(
+    *, repo_root: Path, batch_manifest_path: Path
+) -> Dict[str, object]:
+    """Derive exact publication provenance from batch and request ledger.
+
+    Args:
+        repo_root: Repository containing the request audit chain.
+        batch_manifest_path: Complete verified FROZEN Run collection.
+
+    Returns:
+        Minimal ordered ledger prefix through the latest consumed row, plus
+        the exact consumed SourceReference and request-attempt identities.
+
+    Raises:
+        PublicationError: When the ledger, membership, or immutable attempt
+            evidence cannot be verified from persisted authority.
+    """
+    try:
+        log_path = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path="evidence/requests_log.csv",
+        )
+        manifest_path = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path="evidence/requests_log_manifest.json",
+        )
+        validate_request_log_manifest(log_path=log_path)
+        log_bytes = log_path.read_bytes()
+        log_text = log_bytes.decode("utf-8")
+        manifest_bytes = manifest_path.read_bytes()
+        rows = parse_request_log_rows(text=log_text)
+        manifest = strict_json_loads(
+            text=manifest_bytes.decode("utf-8")
+        )
+    except (OSError, SourceError, UnicodeDecodeError, ValueError) as error:
+        raise PublicationError(
+            "Publication request ledger is unavailable or invalid"
+        ) from error
+    expected_manifest = {
+        "schema_version": REQUEST_LOG_MANIFEST_SCHEMA_VERSION,
+        "row_count": len(rows),
+        "content_sha256": sha256_bytes(content=log_bytes),
+    }
+    if type(manifest) is not dict or manifest != expected_manifest:
+        raise PublicationError("Publication request ledger changed while read")
+    attempt_rows = {}
+    for row_index, row in enumerate(rows):
+        attempt_id = request_log_attempt_id(
+            row_index=row_index, row=row,
+        )
+        if attempt_id in attempt_rows:
+            raise PublicationError(
+                "Publication request ledger attempt identity is duplicated"
+            )
+        attempt_rows[attempt_id] = (row_index, row)
+    try:
+        sources = load_projection_used_source_references(
+            repo_root=repo_root,
+            batch_manifest_path=batch_manifest_path,
+        )
+    except ValueError as error:
+        raise PublicationError(
+            "Publication batch source membership is invalid"
+        ) from error
+    used_attempt_rows = {
+        (
+            _request_row_for_source(
+                repo_root=repo_root,
+                source=source,
+                attempt_rows=attempt_rows,
+            ),
+            str(source["request_attempt_id"]),
+        )
+        for source in sources
+    }
+    prefix_row_count = (
+        max(row_index for row_index, _attempt_id in used_attempt_rows) + 1
+        if used_attempt_rows
+        else 0
+    )
+    try:
+        prefix_bytes = request_log_prefix_bytes(
+            text=log_text, row_count=prefix_row_count,
+        )
+    except ValueError as error:
+        raise PublicationError(
+            "Publication request ledger prefix is invalid"
+        ) from error
+    return {
+        "requests_log_prefix_sha256": sha256_bytes(content=prefix_bytes),
+        "row_count": prefix_row_count,
+        "source_reference_ids": [
+            str(source["source_reference_id"]) for source in sources
+        ],
+        "used_request_attempt_ids": [
+            attempt_id
+            for _row_index, attempt_id in sorted(used_attempt_rows)
+        ],
+    }
+
+
 def _validate_publication_metadata(
     *,
     requirement_hashes: Mapping[str, object],
@@ -247,9 +444,9 @@ def _validate_publication_metadata(
     ) != LEDGER_BINDING_FIELDS:
         raise PublicationError("Ledger binding fields are not exact")
     if (
-        type(ledger_binding["requests_log_manifest_sha256"]) is not str
+        type(ledger_binding["requests_log_prefix_sha256"]) is not str
         or SHA256_PATTERN.fullmatch(
-            ledger_binding["requests_log_manifest_sha256"]
+            ledger_binding["requests_log_prefix_sha256"]
         ) is None
         or type(ledger_binding["row_count"]) is not int
         or ledger_binding["row_count"] < 0
@@ -1694,7 +1891,6 @@ def _finalize_staging_view(
 def write_publication_validation_receipt(
     *, repo_root: Path, batch_manifest_path: Path,
     legacy_snapshot_dir: Path, staging_dir: Path,
-    ledger_binding: Mapping[str, object],
     previous_publication_id: Optional[str], validated_at_utc: str
 ) -> Dict[str, object]:
     """Execute publication gates and persist their content-bound receipt.
@@ -1704,13 +1900,16 @@ def write_publication_validation_receipt(
         batch_manifest_path: Complete FROZEN Run collection.
         legacy_snapshot_dir: Legacy inputs named by ProjectionManifest.
         staging_dir: Exact candidate view without a validation receipt.
-        ledger_binding: Used request-ledger prefix identities.
         previous_publication_id: Prepared predecessor identity.
         validated_at_utc: Explicit UTC gate execution timestamp.
 
     Returns:
         Strict persisted ValidationReceipt.
     """
+    ledger_binding = publication_ledger_binding(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+    )
     context = publication_staging_context(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
@@ -1776,7 +1975,6 @@ def prepare_publication_bundle(
     batch_manifest_path: Path,
     legacy_snapshot_dir: Path,
     staging_dir: Path,
-    ledger_binding: Mapping[str, object],
     previous_publication_id: Optional[str],
 ) -> Dict[str, object]:
     """Create and verify one immutable complete PUBLISHABLE bundle.
@@ -1787,7 +1985,6 @@ def prepare_publication_bundle(
         batch_manifest_path: Complete persisted FROZEN Run collection.
         legacy_snapshot_dir: Legacy inputs named by ProjectionManifest.
         staging_dir: Exact candidate artifact directory.
-        ledger_binding: Exact used request-ledger prefix/source bindings.
         previous_publication_id: Active predecessor at preparation time.
 
     Returns:
@@ -1797,6 +1994,10 @@ def prepare_publication_bundle(
         PublicationError: On incomplete set, unsafe paths, existing divergent
             bundle, or write/hash failure.
     """
+    ledger_binding = publication_ledger_binding(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+    )
     layout = publication_layout(publication_root=publication_root)
     publications_dir = layout["publications_dir"]
     files = _read_staging_files(

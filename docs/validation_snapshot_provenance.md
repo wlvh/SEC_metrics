@@ -193,7 +193,7 @@ Issue #12 的 Requirement Snapshot 和 `catalog/` 已进入当前 source-input c
 
 当前 acceptance artifact closure 仍是第 5 节的现行 00–12 root artifact 集合。仓库尚未完成 Cutover，也没有已提交的 `artifacts/vnext/active_publication.json`，因此不能声称现有 `outputs/validation_snapshot_provenance.json` 已绑定 vNext Run、ReviewUnit、Trace、publication bundle 或 latest status。把未发布的 OPEN/FROZEN workspace 加进现行 sidecar，反而会把开发临时状态误写成当前业务 snapshot。
 
-vNext recorded transaction primitive 对每个 prepared bundle 自身执行另一层 exact binding；其中 `request_attempt_id`、portable locator 与 body/header hash 已进入 SourceReference，但 request-ledger 有序前缀/membership 的 live adapter 仍待 full staging，不能由 recorded fixture 自证：
+vNext recorded transaction primitive 对每个 prepared bundle 自身执行另一层 exact binding；publisher 从 verified Batch 的实际消费路径派生 SourceReference/`request_attempt_id` exact set，以 current-schema ledger 的有序行身份验证整表 manifest、row 声明的 portable locator 与 immutable body/header，再只绑定截至最后一个已消费 row 的最小有序 prefix；后续未被该 Batch 使用的合法 append 不改变 candidate view。该 adapter 尚待真实十公司 full staging，不能由 scoped recorded fixture 自证 full closure：
 
 ```text
 Requirement hashes

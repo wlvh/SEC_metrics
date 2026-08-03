@@ -424,6 +424,63 @@ class AiReaderContractTest(unittest.TestCase):
             adapter.requirement_closure_hash,
         )
 
+    def test_remote_workflow_rejects_payload_root_outside_authority(
+        self,
+    ) -> None:
+        """Reject a foreign workflow root before approved transport egress."""
+        calls: List[bytes] = []
+        relative = "tests/fixtures/vnext/sample_lodging.html"
+
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            authority_root = workspace / "authority"
+            write_approved_d01_snapshot(repo_root=authority_root)
+
+            def transport_factory(*, policy: object) -> object:
+                """Return one observable repository-owned transport."""
+                return _FixtureApprovedTransport(
+                    policy=policy, calls=calls,
+                )
+
+            with mock.patch(
+                "vnext.ai_adapter._REPOSITORY_ROOT", authority_root,
+            ), mock.patch.object(
+                ai_adapter,
+                "_TRANSPORT_FACTORIES",
+                {"approved-provider": transport_factory},
+                create=True,
+            ):
+                adapter = build_approved_transport_adapter()
+                with self.assertRaisesRegex(
+                    AIAdapterError, "repository authority"
+                ):
+                    create_review_run(
+                        repo_root=REPO_ROOT,
+                        run_dir=workspace / "run",
+                        run_id="run:remote:foreign-root",
+                        company_id="marriott_international",
+                        target_period={
+                            "fiscal_year": 2025,
+                            "period_start": "2025-01-01",
+                            "period_end": "2025-12-31",
+                        },
+                        source_repo_relative_path=relative,
+                        source_media_type="text/html",
+                        source_url=(
+                            "https://www.sec.gov/Archives/sample.htm"
+                        ),
+                        accession="0001048286-25-000001",
+                        document_name="sample_lodging.html",
+                        source_role="target_primary",
+                        request_attempt_id="request:attempt:fixture",
+                        disclosure_spec_path=(
+                            "catalog/disclosures/lodging_kpi_table.md"
+                        ),
+                        adapter=adapter,
+                        clock=fixed_clock,
+                    )
+        self.assertEqual([], calls)
+
     def _assert_transport_policy_mismatch_blocks_before_payload(self) -> None:
         """Reject a provider transport not bound to exact approved policy."""
         calls: List[bytes] = []

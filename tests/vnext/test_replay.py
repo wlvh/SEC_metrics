@@ -460,6 +460,7 @@ def create_structured_b03_run(
     accession: str,
     run_id: str,
     repo_root: Path = REPO_ROOT,
+    request_attempt_id: Optional[str] = None,
 ) -> Dict[str, object]:
     """Create one replayable Pfizer B03 Run from exact Company Facts bytes.
 
@@ -469,6 +470,7 @@ def create_structured_b03_run(
         accession: Exact filing observation selected from those bytes.
         run_id: Unique Run identity for the scenario.
         repo_root: Repository authority containing the source and Specs.
+        request_attempt_id: Optional exact SEC request-ledger identity.
 
     Returns:
         Result, Trace, and selected observations left in an OPEN Run.
@@ -490,7 +492,11 @@ def create_structured_b03_run(
         accession=accession,
         document_name=document_name,
         source_role="companyfacts",
-        request_attempt_id="request:attempt:" + accession,
+        request_attempt_id=(
+            request_attempt_id
+            if request_attempt_id is not None
+            else "request:attempt:" + accession
+        ),
     )
     specs = _compiled_specs_at(repo_root=repo_root)
     traits = repository_company_traits(
@@ -582,7 +588,11 @@ def create_structured_b03_run(
 
 
 def create_full_release_run(
-    *, run_dir: Path, run_id: str, repo_root: Path = REPO_ROOT,
+    *,
+    run_dir: Path,
+    run_id: str,
+    repo_root: Path = REPO_ROOT,
+    request_attempt_id: Optional[str] = None,
 ) -> Dict[str, object]:
     """Create one replayable Run containing the exact Phase 1 metric set.
 
@@ -590,6 +600,7 @@ def create_full_release_run(
         run_dir: New Run directory.
         run_id: Unique Run identity for the scenario.
         repo_root: Repository authority containing source and release Specs.
+        request_attempt_id: Optional exact SEC request-ledger identity.
 
     Returns:
         B01/B03/B10/B11 results left in one OPEN Run.
@@ -605,6 +616,7 @@ def create_full_release_run(
         accession=accession,
         run_id=run_id,
         repo_root=repo_root,
+        request_attempt_id=request_attempt_id,
     )
     manifest, records, _decisions = load_open_run(run_dir=run_dir)
     source = next(

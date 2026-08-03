@@ -729,6 +729,51 @@ def _authorized_adapter_implementation(
     return implementation
 
 
+def validate_adapter_repository_authority(
+    *, adapter: AIAdapter, repo_root: Path
+) -> None:
+    """Require approved payload bytes and D-01 to share one repository root.
+
+    Args:
+        adapter: Recorded or repository-approved adapter.
+        repo_root: Repository from which the workflow will load payload bytes.
+
+    Expected output:
+        Recorded fixtures remain portable. An approved adapter is accepted
+        only for the physical repository that owns its D-01 authority.
+
+    Raises:
+        AIAdapterError: Before repository payload reads when the adapter is
+            unauthorized or an approved workflow names another repository.
+    """
+    _authorized_adapter_implementation(adapter=adapter)
+    if type(adapter) is _RecordedAdapter:
+        return
+    if not isinstance(repo_root, Path) or repo_root.is_symlink():
+        raise AIAdapterError(
+            "Approved workflow repository authority is unsafe"
+        )
+    authority = _REPOSITORY_ROOT
+    if not isinstance(authority, Path) or authority.is_symlink():
+        raise AIAdapterError(
+            "Approved workflow repository authority is unsafe"
+        )
+    try:
+        workflow_root = repo_root.resolve(strict=True)
+        authority_root = authority.resolve(strict=True)
+    except (OSError, RuntimeError) as error:
+        raise AIAdapterError(
+            "Approved workflow repository authority is unavailable"
+        ) from error
+    # The transport policy and every outbound byte must come from one
+    # physical repository; accepting two caller-composable roots would make
+    # an APPROVED decision govern unrelated payload content.
+    if workflow_root != authority_root:
+        raise AIAdapterError(
+            "Approved workflow repository authority differs from D-01"
+        )
+
+
 def _utc_now(*, clock: Optional[Callable[[], datetime]] = None) -> str:
     """Return an explicit UTC ISO-8601 timestamp.
 
