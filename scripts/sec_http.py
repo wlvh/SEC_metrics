@@ -96,7 +96,60 @@ class IncompleteRequestSnapshotError(FileNotFoundError):
     """Signal that a snapshot body exists without its attributable header."""
 
 
+class SecIdentityError(ValueError):
+    """Report an unusable SEC User-Agent organization or contact email."""
+
+
 _NO_REDIRECT_OPENER = build_opener(NoRedirectHandler())
+
+
+def validate_sec_identity(*, config: dict) -> tuple[str, str]:
+    """Validate and normalize the accountable SEC User-Agent identity.
+
+    Args:
+        config: Configuration containing explicit organization/contact fields.
+
+    Returns:
+        Stripped organization and contact email.
+
+    Raises:
+        SecIdentityError: On missing, null, blank, malformed, or example-only
+            identity values.
+    """
+    for field in ("organization", "contact_email"):
+        if field not in config:
+            raise SecIdentityError(
+                "SEC config identity field is missing: {}".format(field)
+            )
+        if type(config[field]) is not str:
+            raise SecIdentityError(
+                "SEC config identity field must be text: {}".format(field)
+            )
+    organization = config["organization"].strip()
+    email = config["contact_email"].strip()
+    if not organization:
+        raise SecIdentityError("SEC organization cannot be blank")
+    if any(
+        ord(character) < 32 or ord(character) == 127
+        for character in organization
+    ):
+        raise SecIdentityError("SEC organization contains control characters")
+    if re.fullmatch(
+        r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@"
+        r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
+        r"(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+",
+        email,
+    ) is None:
+        raise SecIdentityError("SEC contact email is malformed")
+    domain = email.rsplit("@", maxsplit=1)[1].casefold()
+    if domain in {
+        "example.com",
+        "example.net",
+        "example.org",
+        "localhost",
+    } or domain.endswith((".example", ".invalid", ".test")):
+        raise SecIdentityError("SEC contact email uses a reserved domain")
+    return organization, email
 
 
 def urlopen(*, request: Request, timeout: float) -> object:
@@ -157,6 +210,9 @@ def load_config(*, config_path: Path) -> dict:
     for key in required_keys:
         if key not in config:
             raise KeyError(f"SEC config missing required key: {key}")
+    organization, contact_email = validate_sec_identity(config=config)
+    config["organization"] = organization
+    config["contact_email"] = contact_email
     return config
 
 
@@ -868,6 +924,86 @@ def parse_request_log_rows(*, text: str) -> list[dict[str, str]]:
                 f"Unexpected request log row shape at line {row_number}"
             )
     return rows
+
+
+def request_log_prefix_bytes(*, text: str, row_count: int) -> bytes:
+    """Return the exact CSV bytes through one ordered data-row prefix.
+
+    Args:
+        text: UTF-8-decoded current-schema request ledger.
+        row_count: Number of ordered data rows included in the prefix.
+
+    Returns:
+        Original header and requested rows, preserving exact CSV bytes.
+
+    Raises:
+        ValueError: When the prefix length or ledger shape is invalid.
+    """
+    if type(row_count) is not int or row_count < 0:
+        raise ValueError(
+            "Request log prefix row count must be a non-negative integer"
+        )
+    with io.StringIO(text, newline="") as file_obj:
+        reader = csv.DictReader(file_obj)
+        if reader.fieldnames != REQUEST_LOG_FIELDNAMES:
+            raise ValueError(
+                f"Unexpected request log schema: {reader.fieldnames}"
+            )
+        prefix_end = file_obj.tell()
+        expected_fields = set(REQUEST_LOG_FIELDNAMES)
+        for row_index in range(row_count):
+            try:
+                row = next(reader)
+            except StopIteration as error:
+                raise ValueError(
+                    "Request log prefix exceeds available rows"
+                ) from error
+            if set(row) != expected_fields or any(
+                row[field] is None for field in REQUEST_LOG_FIELDNAMES
+            ):
+                raise ValueError(
+                    "Unexpected request log row shape at line {}".format(
+                        row_index + 2
+                    )
+                )
+            prefix_end = file_obj.tell()
+    return text[:prefix_end].encode("utf-8")
+
+
+def request_log_attempt_id(*, row_index: int, row: dict[str, str]) -> str:
+    """Derive one stable request-attempt identity from its ordered ledger row.
+
+    Args:
+        row_index: Zero-based data-row position in ``requests_log.csv``.
+        row: Exact current-schema request observation.
+
+    Returns:
+        Content-derived audit identity stable under append-only ledger growth.
+
+    Raises:
+        ValueError: When the position or row shape is ambiguous.
+    """
+    if type(row_index) is not int or row_index < 0:
+        raise ValueError(
+            "Request log row index must be a non-negative integer"
+        )
+    if set(row) != set(REQUEST_LOG_FIELDNAMES) or any(
+        type(row[field]) is not str for field in REQUEST_LOG_FIELDNAMES
+    ):
+        raise ValueError("Request log attempt row shape is invalid")
+    # The row position distinguishes repeated observations while remaining
+    # stable when the append-only ledger gains later rows.
+    identity_bytes = json.dumps(
+        {
+            "row_index": row_index,
+            "row_values": [row[field] for field in REQUEST_LOG_FIELDNAMES],
+            "schema_version": REQUEST_LOG_MANIFEST_SCHEMA_VERSION,
+        },
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
+    ).encode("utf-8")
+    return "request:attempt:" + hashlib.sha256(identity_bytes).hexdigest()
 
 
 def request_log_manifest_payload(*, log_path: Path) -> dict:

@@ -3,8 +3,8 @@
 
 Purpose:
     Check only deterministic structure: unique anchors, Markdown references,
-    document paths, Python file::symbol locators, explicit untested reasons,
-    and the persistent deprecated-anchor registry.
+    document paths, Python file::symbol locators, controlled evidence labels,
+    explicit untested reasons, and the persistent deprecated-anchor registry.
 
 Call relationships:
     main() calls check_alignment(), prints every structural error, and exits
@@ -49,6 +49,19 @@ ENTRY_TYPES = {
     "responsibility_boundary",
 }
 ENTRY_STATUSES = {"active", "deprecated"}
+TEST_STATUSES = {
+    "automated_partial",
+    "automated_partial_scenario",
+    "automated_recorded",
+    "automated_recorded_negative",
+    "automated_recorded_negative_matrix",
+    "automated_recorded_real_bytes",
+    "automated_recorded_scenario",
+    "mechanical_alignment",
+    "not_automated",
+    "validation_gate",
+    "validation_gate_partial",
+}
 CURRENT_REQUEST_HISTORY_FIELDS = [
     "timestamp_utc",
     "method",
@@ -619,11 +632,13 @@ def markdown_anchor_syntax_errors(
 
 
 def python_symbols(*, path: Path) -> set[str]:
-    """Return top-level and Class.member Python symbols from one source file."""
+    """Return top-level and Class.member symbols from one Python file."""
     tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
     symbols = set()
     for node in tree.body:
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+        ):
             symbols.add(node.name)
         if not isinstance(node, ast.ClassDef):
             continue
@@ -676,7 +691,9 @@ def test_anchor_errors(
             f"{anchor_id}: test anchor path must be repository-relative"
         ]
     source_path = repo_root / file_path
-    if not source_path.resolve(strict=False).is_relative_to(repo_root.resolve()):
+    if not source_path.resolve(strict=False).is_relative_to(
+        repo_root.resolve()
+    ):
         return [
             f"{anchor_id}: test anchor path must be repository-relative"
         ]
@@ -694,6 +711,39 @@ def test_anchor_errors(
     if symbol not in python_symbols(path=source_path):
         errors.append(f"{anchor_id}: symbol missing: {test_anchor}")
     return errors
+
+
+def test_status_errors(*, entry: dict) -> list[str]:
+    """Validate the controlled evidence-classification label.
+
+    Args:
+        entry: One capability-contract entry.
+
+    Returns:
+        Structural errors for missing, unknown, or anchor-inconsistent labels.
+        A valid label classifies evidence only; it never proves the statement.
+    """
+    anchor_id = require_key(mapping=entry, key="anchor_id")
+    if not valid_required_text(mapping=entry, key="test_status"):
+        return [f"{anchor_id}: test_status must be a non-empty string"]
+    test_status = entry["test_status"]
+    if test_status not in TEST_STATUSES:
+        return [
+            f"{anchor_id}: test_status must be one of "
+            f"{sorted(TEST_STATUSES)}"
+        ]
+    test_anchor = require_key(mapping=entry, key="test_anchor")
+    if test_anchor is None and test_status != "not_automated":
+        return [
+            f"{anchor_id}: null test_anchor requires "
+            "test_status=not_automated"
+        ]
+    if test_anchor is not None and test_status == "not_automated":
+        return [
+            f"{anchor_id}: non-null test_anchor cannot use "
+            "test_status=not_automated"
+        ]
+    return []
 
 
 def document_path_errors(
@@ -840,6 +890,9 @@ def alignment_errors(
             deprecated_entries.add(anchor_id)
         else:
             active_anchors.add(anchor_id)
+        errors.extend(
+            test_status_errors(entry=entry)
+        )
         errors.extend(
             test_anchor_errors(
                 repo_root=repo_root,

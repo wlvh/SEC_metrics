@@ -50,7 +50,7 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 - [ ] 修改能力边界时，先更新或确认 `capability_contract.json`，再检查 `interact.md` 与 `docs/business_user_guide.md`。
 - [ ] 修改用户可观察行为时，先更新或确认 `interact.md`，再检查业务指南。
 - [ ] 新增“能做 / 不能做 / 必须 / 不得”的声明时，使用稳定 `anchor_id`；Markdown 不引用 JSON path 或数组位置。
-- [ ] 新增 agent 行为承诺时，登记真实 test anchor；未自动化时使用 `test_anchor: null` 并说明原因。
+- [ ] 新增 agent 行为承诺时，登记真实 test anchor 与受控 `test_status`；两者有无必须一致，且 symbol/标签存在不得写成 statement 已被证明；未自动化时使用 `test_anchor: null`、`test_status: not_automated` 并说明原因。
 - [ ] 业务指南只教学性解释能力契约和可观察行为，不独立发明功能。
 
 ### 5.3 文件地图与测试说明
@@ -59,6 +59,7 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 - [ ] `AGENTS.md` 仍把 `SOP.md` 作为标准流程的一级导航，没有用专项文档列表替代 SOP 路由。
 - [ ] 测试、fixture、命令、副作用或分层变化已同步 `TESTING.md`。
 - [ ] `SOP.md` 保持已有编号和导航职责，只保留动作、权威引用和验收，不复制易漂移的脚本清单或测试细节。
+- [ ] 若涉及 vNext，已核对 exact Requirement/Decision/SU 状态、`catalog/`、recorded/full 边界和当前 active 00–12 路径；没有把 shadow 原语写成已完成 Cutover。
 
 ## 6. 测试与验证证据
 
@@ -75,9 +76,11 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 - [ ] light review 的 skipped、`LIGHT_PACKAGE_NO_GIT` 与受限状态没有写成 full validation。
 - [ ] 运行会覆盖 `evidence/`、`outputs/` 或报告的命令前使用了干净、隔离的 checkout。
 - [ ] 若运行 `scripts/11_build_report.py`，已按适用范围单独运行最终 `scripts/12_validate_repair.py` 和 `python3 tools/check_validation_snapshot.py`。
+- [ ] 若本 PR 改动 source-input closure 或 policy-bound 生成 artifact，全部 source/code/test/doc bytes 冻结后，已在 clean 隔离 checkout 运行 Stage 12；terminal artifact diff 已作为后续 artifact commit 发布，或按单 commit 政策经 amend 折叠进最终 commit。最终 PR HEAD 必须与受测 source tree 等价且 snapshot checker PASS。D-01 pending、SEC 示例邮箱或 live 00–11 未运行不能作为 Stage 12/checker 的 NOT_RUN 理由。
 - [ ] 修改 source/artifact provenance 时，已运行 dirty/staged/untracked、显式 source 缺失、tree/commit mismatch、artifact key/hash/size tamper、unsafe alias 与 postflight failure 负例。
 - [ ] 测试失败未通过修改 expected、放宽断言、重签旧证据或静默跳过来掩盖。
-- [ ] 对修复过的完整性不变量已运行负例矩阵，而不只是原始单点复现：删行/重复/多余集合、CSV 多余/缺失单元格、prefix/appended tail、跨 accession/document、transport failure path 与报告写入失败按适用范围覆盖。
+- [ ] 对修复过的完整性不变量已运行负例矩阵，而不只是原始单点复现：删行/重复/多余集合、CSV 多余/缺失单元格、prefix/appended tail、跨 accession/document、append 后磁盘 mutation、transport policy/actual-fact failure path、untrusted-input 资源上限与报告写入失败按适用范围覆盖。
+- [ ] vNext PR 已分别记录 Python 3.9/default recorded tests、semantic/provenance/alignment、第二真实布局、独立 holdout、live 三轮、staging、旧 producer throw、Cutover 与 rollback/full 的 PASS 或 NOT_RUN/BLOCKED；`PASSED_RECORDED_ONLY` 没有写成 full。
 
 ## 7. 用户与数据影响
 
@@ -91,6 +94,8 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 ## 8. 发布声明约束
 
 当前仓库没有 CI workflow、生产部署或自动调度实现。除非本 PR 的代码、配置和运行证据确实增加并验证了这些能力，否则 PR body 必须写“不适用”或“未实现”，不得声称 CI、部署、调度、前端、API 或 vNext 切换已经完成。
+
+vNext Cutover 声明还必须有 APPROVED D-01、有效 SEC 身份、clean committed isolated checkout、第二真实布局、实现冻结后的独立 holdout、remote live 三轮稳定性、完整 staging parity、旧 lodging/B03 producer 不可达、active pointer、并发/故障、previous-bundle rollback→report→snapshot checker→restore 和最终 full acceptance receipt。缺任一项只能发布 recorded/shadow 改动说明。
 
 流水线 GO 类自判与仓库内 snapshot provenance 都不等于外部审计接受或生产发布许可。
 

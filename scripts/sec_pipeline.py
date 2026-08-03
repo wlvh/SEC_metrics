@@ -13176,12 +13176,12 @@ def production_python_paths() -> list[Path]:
     """Return production Python paths covered by the scalability scanner.
 
     Returns:
-        Sorted scripts/ and tools/ Python files. Config, fixture, docs, and
-        generated report markdown paths are intentionally outside this scanner.
+        Recursively sorted scripts/ and tools/ Python files. Config, fixture,
+        docs, and generated report paths are outside this scanner.
     """
     paths = []
     for directory in [WORKDIR / "scripts", WORKDIR / "tools"]:
-        paths.extend(sorted(directory.glob("*.py")))
+        paths.extend(sorted(directory.rglob("*.py")))
     return paths
 
 
@@ -13200,11 +13200,18 @@ def build_scalability_audit_rows() -> list[dict]:
     return rows
 
 
-def write_scalability_audit() -> list[dict]:
-    """Write outputs/scalability_audit.csv and return audit rows."""
+def write_scalability_audit(*, output_path: Path) -> list[dict]:
+    """Write the scalability audit to one explicit output path.
+
+    Args:
+        output_path: CSV destination owned by the calling validation boundary.
+
+    Returns:
+        Exact scanner rows written to the destination.
+    """
     rows = build_scalability_audit_rows()
     write_csv_file(
-        path=WORKDIR / "outputs" / "scalability_audit.csv",
+        path=output_path,
         fieldnames=SCALABILITY_AUDIT_FIELDNAMES,
         rows=rows,
     )
@@ -13231,7 +13238,9 @@ def scanner_constant_folding_tamper_detected() -> bool:
 
 def check_no_company_identity_branch_in_production() -> dict:
     """Validate production branches do not use company identity literals."""
-    rows = write_scalability_audit()
+    rows = write_scalability_audit(
+        output_path=WORKDIR / "outputs" / "scalability_audit.csv",
+    )
     failures = [row for row in rows if row["allowed"] != "1"]
     if not scanner_constant_folding_tamper_detected():
         failures.append({"literal": "string_addition_tamper"})
@@ -19571,6 +19580,41 @@ def build_readme() -> str:
                 "下一次显式、重新校验的请求。"
             ),
             "",
+            "## vNext recorded shadow（尚未切流）",
+            "",
+            (
+                "- `scripts/vnext/` 与 `catalog/` 只提供 recorded/shadow "
+                "原语；当前根目录结果、stage 00-12 与 snapshot checker "
+                "仍是 active 路径。"
+            ),
+            (
+                "- D-01、有效 SEC 身份、第二真实布局、独立 holdout、live "
+                "三轮、staging parity、旧 producer 退出、Cutover 与真实 "
+                "rollback/full 任一未完成时，不得声称 vNext active。"
+            ),
+            "",
+            "```bash",
+            (
+                "PYTHONDONTWRITEBYTECODE=1 python3.9 -m unittest discover "
+                "-s tests/vnext -t . -p 'test_*.py' -v"
+            ),
+            (
+                "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover "
+                "-s tests/vnext -t . -p 'test_*.py' -v"
+            ),
+            (
+                "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py "
+                "--scope recorded"
+            ),
+            "```",
+            "",
+            (
+                "recorded runner 的最高状态是 `PASSED_RECORDED_ONLY`，receipt "
+                "写入 `outputs/acceptance_receipts/`；它不执行 live stage、"
+                "Cutover 或 full acceptance。测试策略与 NOT_RUN 记录以 "
+                "`TESTING.md` 为准。"
+            ),
+            "",
             "## 从干净目录运行阶段 00-11",
             "",
             "```bash",
@@ -19606,6 +19650,7 @@ def build_readme() -> str:
             "```bash",
             "python3 scripts/10_run_golden_assertions.py",
             "python3 scripts/12_validate_repair.py",
+            "python3 tools/check_validation_snapshot.py",
             "```",
             "",
             (
@@ -19646,7 +19691,17 @@ def build_readme() -> str:
                 "- 阶段 11/12 的报告写入成功后才发布 terminal "
                 "manifest；写入失败必须保持 `IN_PROGRESS`。"
             ),
-            "- manifest 的 `source_commit` 带 `+dirty` 时，表示运行时工作树含未提交改动。",
+            (
+                "- stage 12 在成功返回前还必须发布并自验 "
+                "`outputs/validation_snapshot_provenance.json`；缺失 "
+                "sidecar、source-input dirty/tree mismatch 或关键 artifact "
+                "hash mismatch 都使完整批次失败。"
+            ),
+            (
+                "- manifest 的 `source_commit` 带 `+dirty` 只说明整个"
+                "工作树含未提交改动；最终 source 判断以 provenance "
+                "checker 的 source-input closure 为准。"
+            ),
             "- `metrics/evidence/coverage/report` 必须能互相追溯一致。",
             "",
             "### 第二层：去公司特例验收",
@@ -19722,6 +19777,11 @@ def build_readme() -> str:
                 "`check_id` 查看 FAIL 行。"
             ),
             (
+                "- snapshot checker 失败时，先区分 source-input "
+                "dirty/tree mismatch、manifest/provenance identity mismatch "
+                "与具体 artifact SHA-256/size mismatch。"
+            ),
+            (
                 "- 对证据缺失类失败，按 `(company, metric_id)` join "
                 "`outputs/metrics_matrix.csv` 与 `outputs/metric_evidence.csv`。"
             ),
@@ -19769,6 +19829,7 @@ def build_readme() -> str:
             "- `outputs/exceptions_and_review_items.md`",
             "- `outputs/repair_validation_results.csv`",
             "- `outputs/validation_run_manifest.json`",
+            "- `outputs/validation_snapshot_provenance.json`",
             "- `outputs/stratified_audit.csv`",
             "- `outputs/events.csv`",
             "- `outputs/golden_results.csv`",
@@ -19789,16 +19850,20 @@ def build_readme() -> str:
                 "缺 raw evidence 的检查必须显示为 `SKIPPED_LIGHT_PACKAGE`。"
             ),
             (
+                "- 轻量包可发布 `LIGHT_PACKAGE_NO_GIT` provenance，"
+                "用于证明随包 source/artifact bytes 未漂移；它仍不能"
+                "替代 full Git history 或 raw evidence validation。"
+            ),
+            (
                 "- 轻量包中 `python3 scripts/10_run_golden_assertions.py` "
                 "重算随包 `outputs/golden_results.csv` snapshot integrity，"
                 "通过时输出 `PASS: LIGHT_REVIEW_MODE`；完整数值 golden "
                 "rerun 需要本地完整 `evidence/`。"
             ),
             (
-                "- reviewer 必须以 `validation_run_manifest.json` 的 "
-                "`refreshed_artifacts` / `not_refreshed_artifacts` 判断新鲜度，"
-                "不能只检查 CSV 是否存在；该最小 manifest 只跟踪 validation/"
-                "audit artifacts，Golden、矩阵与 evidence 仍需各自重跑来源。"
+                "- reviewer 必须以 manifest 的 `refreshed_artifacts` / "
+                "`not_refreshed_artifacts` 和 snapshot checker 共同判断"
+                "新鲜度，不能只检查 CSV 是否存在。"
             ),
             (
                 "- 新写入的证据 locator 使用 `source_url`、"

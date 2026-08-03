@@ -47,6 +47,18 @@ architecture.md
 
 需要发布 PR 时，先读取 `SOP.md` 的 PR 发布章节，再执行 `PR_Checklist.md`。涉及 SEC 访问、证据、manifest、verdict、source provenance 或 artifact publication 的改动，必须同时核对用户可观察后果和负例测试。
 
+### 开发或复核 vNext recorded shadow
+
+```text
+requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
+→ requirements/ai_first_v3_3_1/decision_register.json
+→ architecture.md「vNext recorded shadow」
+→ TESTING.md「vNext recorded shadow」
+→ SOP.md「vNext recorded shadow」
+```
+
+该路径只验证尚未切流的 recorded/shadow 实现，不改变根目录当前结果入口。D-01、有效 SEC 联系身份、第二真实布局、独立 holdout、live 三轮稳定性、staging parity、旧 producer 退出、Cutover 和真实 rollback/full validation 任一未满足时，都不得把 recorded PASS 写成 active/full PASS。
+
 ## 1. 文件简介
 
 ### 核心治理与工作流文档
@@ -62,25 +74,32 @@ architecture.md
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
 - `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
+- `requirements/ai_first_v3_3_1/`：Issue #12 的 exact FSD/Issue、Decision Register、冻结基线、旧路径 inventory、SU 映射与当前阻塞；属于 source-input closure，不是运行结果。
 
 ### 核心配置
 
 - `config/sec_config.json`：SEC User-Agent、请求速率、重试与退避参数。
+- `config/vnext_release_plan.json`：Projector 的仓库级 release identity 与 migrated metric exact set；不能由 Run 结果反推。
 - `config/company_registry.csv`：逻辑公司、CIK role、行业 profile、财年底与连续性。
 - `config/metric_applicability.yaml`：SIC/profile 规则、extractor 路由与行业参数；当前由 JSON parser 读取，内容必须保持 JSON 兼容。
 - `config/validation_source_policy.json`：机器可读的 runtime/acceptance source、full artifact directory、生成 artifact、发布治理和解释性文档角色；provenance closure 的真相源。
+- `catalog/`：vNext JSON-compatible MetricSpec、disclosure group 与 company trait 目录；业务选择、guard、quality、projection 和 identity constraint 的 recorded truth source。
 
 ### 核心模块
 
 - `scripts/sec_pipeline.py`：阶段调度、解析、计算、富化、repair、验证、审计与报告的单体内核。
-- `scripts/sec_http.py`：精确官方 SEC origin 限制、无隐式 redirect、进程内节流、重试、immutable attempt body/header、request ledger、整表 manifest 与 cooperating-process publication lock。
+- `scripts/sec_http.py`：集中验证有效 SEC organization/contact email，并负责精确官方 SEC origin、无隐式 redirect、进程内节流、重试、immutable attempt body/header、request ledger、整表 manifest 与 cooperating-process publication lock。
 - `scripts/sec_urls.py`：集中构造 SEC 官方 endpoint。
 - `scripts/git_workspace.py`：集中清理 Git 重定向环境，并校验 checkout 与 object/ref 存储边界。
 - `scripts/validation_provenance.py`：读取 source policy、校验 SOP 权威引用角色、捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
 - `scripts/00_*.py` 至 `scripts/12_*.py`：无参数单阶段 CLI wrapper；stage 11/12 额外负责旧 provenance 失效与终态 publication。
+- `scripts/vnext/`：尚未切流的 recorded shadow 组件；分别负责 strict canonical/schema/state、source/table-grid、集中 untrusted-input/review 资源预算、Spec/constraint、从仓库派生 Spec/Requirement/temperature 的 review workflow、固定 Reader response validator、只接受仓库 factory 构造的私有 recorded/approved 类型并由模块固定 Requirement effective D-01 授权、approved workflow 在 payload read 前要求同一物理 repository、每次 attempt 从仓库注册表新建而不在 adapter 保留可替换 transport、记录实际 TransportObservation 的 AI adapter、Evidence、Review、Calculator、Run freeze/replay、从 registry/applicability/release plan 与 PASSED FROZEN Runs 派生 complete BatchManifest 并实际生成 legacy-compatible candidate 的 Projector、从 verified Batch 实际消费来源派生并验证 request-ledger 最小已用 prefix、row 声明 locator 与 immutable attempt 的 publication receipt、pinned report input，以及由单一 root 派生路径的 publication transaction primitives。
 - `tools/check_validation_snapshot.py`：独立复核当前 checkout、manifest、provenance sidecar 与关键 artifact bytes。
-- `tools/check_no_company_literals.py`：生产 Python identity literal 的扩展性 gate。
+- `tools/check_no_company_literals.py`：递归扫描 `scripts/`、`tools/` 全部生产 Python identity literal 的扩展性 gate；支持把真实 scanner 结果写到调用方显式指定的隔离 CSV，供 publication runner 生成并在 prepare 时重验。
 - `tools/check_capability_contract_alignment.py`：能力契约 anchor、文档路径与 `file::symbol` 的机械结构 gate；不证明 claim 语义成立。
+- `tools/check_vnext_semantics.py`：扫描 vNext/bridge executable 的业务 literal、AI adapter authority 与 secret token 泄漏；secret root/递归 namespace 中任意 symlink 都 fail closed，并写绑定 checker 自身、scalability checker 与其 producer bytes 的 hash-only receipt。
+- `tools/vnext_review.py`：对 OPEN recorded Run 追加显式 HUMAN review decision 的最小 CLI。
+- `tools/run_acceptance.py`：按 `TESTING.md` 记录原样命令、解释器、return code、耗时、stdout/stderr digest、artifact hash 与 NOT_RUN 原因；full scope 把 live 00–11 与必须执行的离线 Stage 12/checker 分开记录，recorded 成功不等于 full 成功。
 
 ### 业务逻辑与运行入口
 
@@ -96,6 +115,7 @@ architecture.md
 - `outputs/validation_run_manifest.json`：最近一次 repair validation 实际刷新/未刷新的证据清单，不是 runtime checkpoint，也不单独证明当前 checkout。
 - `outputs/validation_snapshot_provenance.json`：成功 stage 12 对 source-input tree 与关键 artifact bytes 的绑定。
 - `REPORT_十公司财务指标.md`：当前批次的派生中文报告，不独立定义能力、指标口径或成功状态。
+- `artifacts/vnext/`：未来 recorded Run/review/publication 的本地运行域；当前没有已提交 active pointer，且不得替代根目录现行结果。OPEN/FAILED workspace 和凭据不得提交。
 
 测试文件和 fixture 的职责统一由 `TESTING.md` 管理，不在此逐项复制。新增、删除或改变上述核心文件职责时，必须同步更新本节。
 
@@ -110,6 +130,7 @@ architecture.md
 - source/document 角色与 acceptance source closure 以 `config/validation_source_policy.json` 为准；SOP 权威引用必须被 policy 分类，解释性非权威文档不得作为运行权威。
 - 当前运行状态只能从 validation manifest、snapshot checker 与报告共同判断；长篇 Markdown 中的历史数量或结论不是当前状态源。
 - 生成报告和 CSV 是当前代码与输入的 snapshot，不替代源代码、契约、provenance sidecar 或独立 gate。
+- vNext recorded 能力以 Requirement Snapshot、catalog、`scripts/vnext/`、recorded tests 与 acceptance receipt 为准；它不是当前 active 数据批次，也不能改变前两条的现行结果判断规则。
 
 ### Source provenance 与当前 checkout
 
@@ -122,7 +143,7 @@ architecture.md
 
 ## 3. 工作规则
 
-1. 先读本文件，再按第 0 节和 `SOP.md` 选择对应流程；不要把规划中的 vNext、Databricks、前端、API、CI、部署或调度写成当前已实现事实。
+1. 先读本文件，再按第 0 节和 `SOP.md` 选择对应流程；只把 vNext 写成测试实际证明的 recorded/shadow 原语，不把它、Databricks、前端、API、CI、部署或调度写成已完成 active Cutover。
 2. 主分支为 `main`。只有用户明确要求 commit、push 或 PR 时才执行发布；对 `main` 的合并通过 PR。
 3. 用户未要求发布时，只保留并报告本地修改，不擅自创建分支、commit、push 或 PR。
 4. 工作区可能包含用户已有修改；只处理任务范围，禁止覆盖、重置或混入无关 diff。
@@ -168,5 +189,6 @@ architecture.md
 
 - 只读取现有结果
 - SEC 阶段 00-12 完整批次运行
+- vNext recorded shadow（不切流）
 - 分层验收与失败定位
 - PR 发布（仅用户明确要求时）

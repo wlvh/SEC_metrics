@@ -1,6 +1,6 @@
 # SEC_metrics 架构说明
 
-本文档描述当前可运行的 SEC-only 单财年指标批处理管道。它以代码、配置、测试和已落盘产物为事实依据，不把尚未启用的 vNext、Databricks、前端或数据库方案写成当前能力。
+本文档描述当前可运行的 SEC-only 单财年批处理，以及已经由 recorded tests 证明但尚未切流的 vNext shadow 原语。它以代码、配置、测试和已落盘产物为事实依据，不把 vNext shadow 写成 active Cutover，也不把 Databricks、前端或数据库方案写成当前能力。
 
 本文档不负责：
 
@@ -22,6 +22,7 @@
 - `config/` 中公司、CIK role、行业 profile 或 extractor 路由变化
 - `evidence/`、`outputs/` 的权威边界或生命周期变化
 - validation manifest、snapshot provenance、artifact publication 或 full/light 判定变化
+- Requirement Snapshot、MetricSpec、vNext object/state、Review/freeze/replay、Projector 或 publication transaction 原语变化
 - 错误模型、测试边界或扩展入口变化
 
 ## 1. 系统目的与边界
@@ -180,7 +181,8 @@ flowchart LR
 
 - 运行时代码当前只使用 Python 标准库与本地模块；支持边界为 POSIX 本地文件系统上的 Python 3.9+，由 `TESTING.md` 的双解释器回归维护，仓库尚无 CI 或第三方依赖清单。
 - 外部网络依赖仅为 `www.sec.gov` 和 `data.sec.gov`。
-- `config/sec_config.json` 管理 organization、contact email、每秒请求数、重试次数和退避初值。当前联系邮箱是示例值；live 运行前必须由运行负责人替换为有效联系信息。
+- `config/sec_config.json` 管理 organization、contact email、每秒请求数、重试次数和退避初值。`SecHttpClient` 与 acceptance runner 共用同一个 identity validator：organization 必须是非空文字，邮箱必须具有基本合法的 dotted domain 且不能使用 example 域。当前联系邮箱是示例值；live 运行前必须由运行负责人替换为有效联系信息。
+<!-- capability-anchor: BEHAVIOR.sec_identity_shared_fail_fast -->
 - 限速状态保存在单个 `SecHttpClient` 实例中，只提供进程内 pacing，不是跨阶段进程或多进程协调器；request-ledger publication 的 POSIX 锁只防丢行，不提供全局限速，也不承诺网络文件系统锁语义。
 - `config/metric_applicability.yaml` 由 `json.load` 读取，虽然后缀为 YAML，内容必须保持 JSON 兼容语法。
 
@@ -206,3 +208,132 @@ flowchart LR
 - 报告生成与最终通过判定是两个步骤，操作者必须显式运行阶段 12 和 snapshot checker。
 - `outputs/` 是可发布 snapshot 还是纯可再生产物，仓库尚未冻结长期生命周期策略。
 - 8-K full gate 与生产路径共用 item parser；固定 hdr/primary fixture 只是已支持格式的行为锚点，不是独立的通用 SEC 文档 parser oracle。因此该 gate 能捕获 request/raw/derived 链的集合与交接漂移，但不能单独证明未见格式的解析完整性。
+
+## 11. vNext recorded shadow（尚未切流）
+
+### 11.1 当前身份与不可越过的边界
+
+`scripts/vnext/` 是 Issue #12 的离线 recorded/shadow 实现，不是第二套 active 批处理入口。它当前可以编译 Spec、消费 recorded Reader response、生成 Evidence/ReviewUnit、追加 HUMAN decision、freeze/replay Run、计算 B03、投影完整 legacy rows，并在临时目录验证 publication transaction primitives。
+<!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
+
+当前根目录 `outputs/`、`REPORT_十公司财务指标.md`、`outputs/validation_run_manifest.json` 与 snapshot checker 仍由 00–12 现行路径负责。仓库没有已提交的 `artifacts/vnext/active_publication.json`，现行 stage 11 也没有改为消费 vNext `PublicationView`。D-01 remote provider/egress 决策、有效 SEC 联系身份、第二真实 lodging 布局、实现冻结后的独立 holdout、live 三轮稳定性、全量 staging parity、旧 producer 退出、真实 Cutover 和 rollback/full validation 均未完成。
+<!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
+
+### 11.2 核心对象与事实所有权
+
+| 对象 | 唯一职责 | 关键绑定 |
+|---|---|---|
+| Requirement Snapshot | 冻结 exact FSD/Issue、Decision Register、baseline 与旧路径 inventory | 文件 SHA-256、baseline commit/tree/artifact anchors、Decision supersedes 单链 |
+| RawBlob / SourceReference | 分离相同 bytes 与不同 filing observation identity | repo-relative path、content hash、SEC URL、accession、document、request attempt |
+| DerivedAsset / ReaderInputManifest | 把目标文档全部表格转成 metric-neutral table-grid，并精确列出 Reader 输入 | transform semantic version、parent raw IDs、完整有序 table IDs/hash |
+| AIExtractionAttempt / Candidate | 把 exact request、Spec-derived task contract 与 raw response 保存为 Run 内 content-addressed bytes；remote attempt 另存 transport 实际观察，Candidate 的业务 hash 不含随机 attempt ID，但 freeze 必须从这些 bytes 重建请求与 Candidate | attempt ID、三类 bytes/path/hash、ReaderInputManifest、TransportObservation 的 egress/host/region/timeout/retry/payload；失败不回退 |
+| EvidenceCheck | 只按 Candidate 提供的 locator 重读 cell 与 local labels，并运行 Spec generic constraint；freeze 从原表与约束重放，不信任自报 PASS | Candidate、asset、source、manifest、ordered checks、compiled Spec constraints；不搜索替代值 |
+| ReviewUnit / ReviewDecision | 绑定 reviewer 实际看到的整张表、selected/competing/unresolved、Evidence 与完整 compiled Spec/source | canonical context hash、rendered review hash、Spec-derived required/approved claims、HUMAN identity、单链 supersedes |
+| VerifiedObservation / ExecutionTrace / MetricResult | 把已审事实、通用角色选择、guard、Decimal step 与结果分层 | observation IDs、Spec closure、semantic runtime versions、scope、quality、publication |
+| Run / ValidationReceipt | 隔离 OPEN/FROZEN/FAILED 与 NOT_RUN/PASSED/FAILED，并冻结 company traits 与相互一致的 fiscal year/精确 period start/end（允许跨日历年，最长 53 周） | exact record graph、Spec/source/review/attempt bytes、validation artifact exact set、content/audit manifest hash |
+| release plan / BatchManifest / ProjectionManifest / PublicationManifest | release plan 定义迁移指标；BatchManifest 聚合完整 verified Run 集合；Projector 生成完整 legacy-compatible candidate；publisher 从 bundle 内 proof 决定 candidate 状态 | registry/display mapping、traits/applicability、release config、baseline schema、Requirement、Run、从实际消费 SourceReference 派生并由声明 locator/immutable attempt 验证的最小已用 ledger prefix、gate execution、bundle files |
+| active pointer / latest run status | active 只指向一个已验证完整 bundle；latest 单独暴露最近尝试 | lock+CAS、previous publication、manifest hash、stale-active message |
+
+对象采用 strict canonical JSON、NFC、显式 ordered/set collection、固定点 Decimal 28/ROUND_HALF_EVEN 与 semantic version hash。Calculator、constraint interpreter、Projector 倍率换算与 Golden 容差比较共用这一显式 arithmetic context，不继承调用进程可变的全局 Decimal context。日期只接受跨 Python 3.9+ 一致的扩展 `YYYY-MM-DD`，UTC 时间只接受扩展日期/时间字段和 `Z`/`+00:00`；unit-policy Calculator、Spec interpreter 与 timestamp canonicalizer 的语义变更分别递增组件版本。必需字段缺失、duplicate JSON key、NaN/Infinity、非法 surrogate、未知字段/状态/op/guard/quality、dependency cycle、AST 超过 depth 32/node 256 时 fail fast。
+<!-- capability-anchor: BEHAVIOR.vnext_projector_decimal_context -->
+
+### 11.3 Recorded 数据流
+
+```mermaid
+flowchart LR
+    Req["Requirement + Decision"] --> Spec["Compiled MetricSpec closure"]
+    Raw["SEC-bound raw fixture"] --> Grid["Complete table-grid"]
+    Grid --> Input["Exact ReaderInputManifest"]
+    Spec --> Attempt["Recorded AI attempt"]
+    Input --> Attempt
+    Attempt --> Candidate
+    Candidate --> Evidence["Mechanical EvidenceCheck"]
+    Evidence --> Review["Rendered whole ReviewUnit"]
+    Review --> Human["HUMAN ReviewDecision"]
+    Human --> Obs["VerifiedObservation"]
+    Spec --> Calc["Generic Calculator"]
+    Obs --> Calc
+    Calc --> Trace["Trace + MetricResult"]
+    Trace --> Frozen["Validated FROZEN Run"]
+    Frozen --> Replay["AI-free replay"]
+    Authority["Registry + traits + release plan"] --> Batch["Content-addressed BatchManifest"]
+    Frozen --> Batch
+    Legacy["Complete legacy snapshot"] --> Project["Run-derived complete projection"]
+    Batch --> Project
+    Project --> Gates["Executed staging gates"]
+    Gates --> Bundle["Prepared immutable bundle"]
+```
+
+Trait applicability 在 source/AI 前判断；company traits 只能由现有 registry、profile 配置与 trait catalog 确定性投影，workflow 不接受调用方注入，freeze 会再次从仓库重算。workflow 只接收 disclosure Spec locator 和 adapter，不接收 compiled Spec、Spec path/hash set、Requirement hashes、derived URI、sampling mapping 或 response-validator callback；这些事实分别从 repository、RawBlob identity 与固定 Reader contract 派生。non-lodging recorded case 不创建 source/AI record，但仍从仓库 Spec 生成并持久化 `N_A_STRUCTURAL` Result/Trace 与 Run，因此可以 freeze、replay 和进入 batch projection；AI attempt 数保持为零。lodging Reader 必须一次消费 target document 的全部 table-grid，一次返回 occupancy、RevPAR、ADR 角色以及 competing/unresolved；代码不能用业务词预筛表格。
+<!-- capability-anchor: BEHAVIOR.vnext_review_workflow_repository_authority -->
+
+完整输入只适用于集中资源预算内的数据。`resource_limits.py` 固定原始 HTML、表数、行列、span/entity 数字词法、解析期 source cell、span 展开 cell、单元格/表文字、全 filing cells、review 总 bytes 与物理行上限；`table_grid.py` 在 Python 3.9 大整数解析、创建下一项 source cell 或矩形物化前预检并以稳定 `TableGridError` 失败，不静默裁剪 filing 内容。untrusted filing text 始终是数据，renderer 只做 visible escaping/control visualization，不把它当指令；超长 cell 通过 HTML comment 内换行保留全部可见字符并限制物理行，review 总 bytes 超限则明确 `RenderError`，不生成残缺审核页。
+<!-- capability-anchor: BEHAVIOR.vnext_company_traits_repository_authority -->
+<!-- capability-anchor: BEHAVIOR.vnext_table_grid_resource_budget -->
+<!-- capability-anchor: BEHAVIOR.vnext_review_renderer_resource_budget -->
+
+Evidence Checker 的能力刻意不对称：它能证明给定 locator 的 cell/text/label 与 Candidate 声明机械一致，也能执行 Spec 中的 generic arithmetic identity；它不能自行选择经济 scope、搜索另一个相似值或批准业务口径。整个 ReviewUnit 的任何实质、source/Spec 或 rendered bytes 变化都会让旧决定失效。HUMAN CLI 只接收真正的审核选择与身份；APPROVE/REJECT 的 claims 从 ReviewUnit 派生，不再让 reviewer 上传两份系统已有的 claims 文件。
+<!-- capability-anchor: BEHAVIOR.vnext_review_binds_visible_unit -->
+
+### 11.4 Spec 与 Calculator
+
+业务语义只进入 `catalog/`：B01 concept priority、`legacy_companyfacts_v1` selection policy 与 `preserve_reported` unit policy；lodging disclosure group 的三角色、role→MetricSpec/supporting-unit contract、required claims、forbidden confusions 与 1% identity；B03 的 B01 reuse、OI direct/reconstruction、D&A direct/composed、optional CostsAndExpenses cross-check、top-level equality/annual/nonzero guards、formula、quality 与 legacy projection。
+
+`scripts/vnext/calculator.py` 只执行 compiled data 表达的通用 role、`choose_first`、cardinality、guard、四则运算、unit policy 和 quality propagation，不按 B03、公司、行业或业务 scope 词分支。B01 保留被选 Company Facts 的 reported unit，与现行 legacy 行为一致；B03 component unit 必须一致；B10 执行 percent→ratio；B11/ADR 在没有换汇能力时只接受 USD，否则整单 WITHHELD。每个 rejected branch 与 reason 进入 Trace，但只有通过全部 guard/cross-check 的 accepted branch 才贡献 `DERIVED_BRANCH_SELECTED` 和 component Observation IDs；被拒分支只保留机械 cross-check 与 rejection 证据。数值结果 quality 取 input Observation 与 accepted Spec branch quality 中更保守者，因此 exact 组件的 OI reconstruction 仍为 APPROX，而 exact D&A composition 不降级。B03 可由 Spec、Observation IDs 和 Trace 重算。Revenue 为零时结果保留为 `PUBLISHED / NOT_MEANINGFUL / DENOMINATOR_ZERO`；source identity、unit 不兼容、候选歧义或 cross-check 超界时为 WITHHELD。
+
+### 11.5 双网络边界与安全声明
+
+- SEC 网络仍只归 `SecHttpClient` 所有；vNext source records 只消费已经审计和落盘的 SEC bytes/ledger identity。
+- AI 网络只允许由仓库代码注册的 provider transport 所有；`run_ai_attempt` 只接受 adapter、Reader factory 生成并联合绑定 manifest/task/request/Spec identity 的 prepared request 和 clock，temperature 固定为 0，响应固定进入严格 Reader validator，调用方不能传 sampling mapping 或 no-op callback。adapter 必须分别由 `build_recorded_adapter` 或 `build_approved_transport_adapter` 构造为模块私有 exact type；`run_ai_attempt` 在生成 attempt 或调用 `complete` 前验证 factory authority，并直接分派到该私有类的仓库实现，因此 duck object、子类或实例级方法替换都不能先取得 filing bytes 再伪造 no-egress observation。approved builder 不接受 caller policy、root 或 transport，而是从自身模块路径推导固定 repository root，验证 Requirement closure，把唯一 effective APPROVED D-01 的十个 `choice` 字段编译成不可变 `TransportPolicy`；`create_review_run` 使用 approved adapter 时还会在读取 Spec/filing bytes 前要求 payload root 解析为同一物理 repository，因此 D-01 与实际请求不存在可自由组合的第二 root。approved adapter 不保存 transport 对象；每次 outbound request 前重新加载 policy/closure、执行 payload 上限，然后按 provider 从模块注册表新建 transport 并核对其 exact policy/API，因此调用方新增或替换 adapter `_transport` 字段没有调用点。transport 返回 `TransportObservation` 的实际 egress、provider/model/host、region、timeout/retry、retention/data-use、payload 与 request size，attempt 顶层标签从该 observation 构造。观察与批准不一致、带完整 observation 的 timeout/transport failure 都形成独立 FAILED attempt；异常或旧式 tuple 等结果缺少 observation 时直接失败，不能猜测并写入获批 host。freeze/load 对磁盘重读的每条 SUCCEEDED attempt 都重新执行 response schema 和 recorded/effective D-01 验证，即使没有 Candidate 引用也不能绕过。D-01 pending/absent/rejected 或 provider factory 未实现时构造失败；recorded adapter 明确记录 no-egress 且不开网络。
+- 这是调用图、依赖和 egress authority 的收窄，不是同一 Python 进程内的强安全沙箱，也不抵御能改代码、环境或全部 artifact 的主体。
+- secret 只可从环境或未提交 store 注入。recorded acceptance 用一次性 canary 证明 semantic gate 能扫描 publishable roots；receipt 不复制 token，声明 root 或递归 namespace 中出现任意文件、目录、broken 或 looping symlink 都 fail closed。当前没有已启用的 secret-consuming remote producer，因此该证据不证明 canary 已穿过真实产物生成链路；启用 live transport 前必须补齐这一闭环。
+<!-- capability-anchor: BEHAVIOR.vnext_remote_transport_repository_authority -->
+<!-- capability-anchor: BEHAVIOR.vnext_remote_transport_policy_enforced -->
+<!-- capability-anchor: BEHAVIOR.vnext_ai_adapter_factory_authority -->
+<!-- capability-anchor: BEHAVIOR.vnext_remote_transport_success_replayed -->
+<!-- capability-anchor: BEHAVIOR.vnext_secret_scan_symlink_fail_closed -->
+
+### 11.6 Freeze、投影与事务原语
+
+OPEN Run 可以追加 record/decision/review asset；`PASSED`、`FAILED` 与 `NOT_RUN` validation receipt 都允许 freeze，以便把成功、失败或未执行事实封成不可变 audit/replay Run，但只有 `PASSED` 满足 publication 的 validation 状态门。AI attempt 的 STARTED snapshot 只属于 OPEN 工作过程；freeze/load 要求每条 attempt 已到 SUCCEEDED 或 FAILED，并对每条 SUCCEEDED raw response 重放 Reader schema。Run manifest 若声明 `missing_required_source_roles` 非空，可以封存全 WITHHELD 的失败审计，但不能同时携带任何 PUBLISHED Result。workflow 与 review 后的 finalizer 都不接受 caller-supplied traits，finalizer 只接收 `run_dir` 与 `repo_root`，也不再接收 compiled MetricSpec、metric/unit 或期间。Run 入口要求 fiscal-year 标签落在精确起止日覆盖的日历年内，期间最长 53 周，既拒绝 FY2025/2030 这类自相矛盾输入，也允许零售等跨年财年。freeze 会重新读取 Requirement、Run-bound Spec、registry/profile trait projection、RawBlob/source、derived table-grid、content-addressed request/task/raw-response、Evidence、review context 与 rendered bytes：它从仓库 Spec 重建 task contract 和完整 request，重新解析 raw response 得到 Candidate，按原 payload/locator/constraint 重放 Evidence；结构化路径则从 SourceReference 绑定的 Company Facts raw bytes 重建 fact set、选择与计算，包括即使没有独立 B01 Result 也必须先重算的 B03→B01 复用 Observation。ExecutionTrace 还保存 exact calculation target，因此没有 selected Observation 的 structured WITHHELD 也必须从 raw bytes 重跑；合法的 1.01% cross-check rejection 可以 FROZEN/replay，不能把可发布事实伪装成调用方自报失败。每个 ReviewUnit 必须已有唯一有效 HUMAN decision；ReviewDecision 自身也必须满足 `REJECT ⇒ approved_claims={}` 与 `APPROVE ⇒ approved_claims=ReviewUnit.required_claims`，这两条语义在 record load、低层 append、finalizer、freeze 和 replay 全部重放，而不只由 CLI 构造器保证。每个 decision 的 published/supporting Observation role 与 published Result/Trace 必须是 exact set，不能只验证幸存记录。freeze 还会逐字段重建全部 reviewed Observation，并重新调用仓库 Spec Calculator 比较完整 Result/Trace；所有非 supporting Observation 必须被 Trace 精确消费，不能把游离记录带入 FROZEN projection。metric/spec closure/unit/company/精确期间、scope、quality、applicability、publication 与 reason 同样逐项回绑；其中 numeric quality 必须由已重放的 input Observation 和 accepted Spec branch quality 共同派生，不能仅凭组件 Observation 全为 EXACT 就覆盖 Spec 声明的 APPROX。`source_mode=ai_table` 的 Observation 不得以空 approval effect 冒充 structured input。Trace 以无环 `result_contract_hash` 绑定完整 Result；Run validation receipt 以无自引用 immutable-view hash 绑定 company/period/Spec/Requirement 等 Run 身份，并以 path/SHA-256/size 绑定除自身和 manifest 外的 exact audit artifact set。上述检查全部通过后才生成 FROZEN content/audit hash。FROZEN 文件 API 不可追加，任何 byte drift 使 load/replay 失败；replay API 不接受模型或网络对象。当前 Run mutation primitive 按单 Run 单写者使用；recorded publication 的 request-ledger prefix/membership closure 已实现，但跨进程多写者编排、权威 required-source plan、remote transport live staging 与该 ledger adapter 的真实十公司 full staging 尚未完成，不能据此宣称 production orchestration ready。
+<!-- capability-anchor: BEHAVIOR.vnext_freeze_rebinds_authority -->
+<!-- capability-anchor: BEHAVIOR.vnext_result_business_state_rebound -->
+<!-- capability-anchor: BEHAVIOR.vnext_reviewed_calculator_replay -->
+<!-- capability-anchor: BEHAVIOR.vnext_structured_raw_replay -->
+<!-- capability-anchor: BEHAVIOR.vnext_structured_dependency_replay -->
+<!-- capability-anchor: BEHAVIOR.vnext_structured_withheld_replay -->
+<!-- capability-anchor: BEHAVIOR.vnext_observation_consumption_exact -->
+<!-- capability-anchor: BEHAVIOR.vnext_freeze_rebuilds_ai_bytes -->
+<!-- capability-anchor: BEHAVIOR.vnext_supporting_observation_authority -->
+<!-- capability-anchor: BEHAVIOR.vnext_review_decision_required -->
+<!-- capability-anchor: BEHAVIOR.vnext_review_decision_semantics_replayed -->
+<!-- capability-anchor: BEHAVIOR.vnext_ai_observation_requires_review -->
+<!-- capability-anchor: BEHAVIOR.vnext_run_period_exact -->
+<!-- capability-anchor: BEHAVIOR.vnext_run_validation_receipt_exact -->
+<!-- capability-anchor: BEHAVIOR.vnext_freeze_accepts_audit_validation_states -->
+<!-- capability-anchor: BEHAVIOR.vnext_publication_requires_passed_validation -->
+<!-- capability-anchor: BEHAVIOR.vnext_attempts_terminal_and_replayable -->
+<!-- capability-anchor: BEHAVIOR.vnext_missing_sources_withhold -->
+
+Batch authority 不改变单 Run 单写者模型。`write_projection_batch_manifest()` 接收 Run locators，但只把全部 locator 下的真实 `PASSED`、verified FROZEN Runs 聚合成 content-addressed BatchManifest；expected `(company_id, metric_id, applicability)` exact set 从 `company_registry.csv`、release plan、MetricSpec applicability 与仓库 traits 联合派生，display-name 映射只认 registry。所有 Run 必须绑定同一 Requirement、同一 fiscal year；同一公司的 split Runs 还必须绑定同一精确 period。缺公司、缺 N/A、重复坐标、额外结果、跨 period、非 PASSED receipt、Run bytes 漂移或中间 symlink locator 都失败。单公司 Run 无法自行证明完整 release。
+
+Projector 的 candidate/manifest 入口只接收 `repo_root`、`batch_manifest_path`、`legacy_snapshot_dir` 与 `staging_dir` 四个稳定 locator。它重载 BatchManifest 及全部 FROZEN Runs，并要求 legacy metrics/evidence/Golden 的 schema、row count、size 与 SHA-256 全部匹配 Requirement 中的 frozen baseline；合法表头但任意增加的非迁移行也会在投影前失败。随后它调用共享 row projection、component reconciliation 与 compatibility checks，实际生成并逐 byte 重验 staging metrics/evidence/compatibility、复制已冻结且通过的 Golden bytes，并从本次 batch/parity/result-row 执行事实生成固定 repair rows，而不是登记调用方给出的 hash 或 PASS。Projector 的 declarative value multiplier 与 Golden tolerance comparison 都在 canonical 28/ROUND_HALF_EVEN context 内执行，因此外部代码修改全局 Decimal precision 不会改变 candidate bytes 或 gate verdict。migrated metric exact set 完整取自仓库 `config/vnext_release_plan.json`；不能从当前 Result 或 Spec closure 缩小 release 范围。非迁移 rows 原序保留，迁移 keys 按 registry display mapping 原位替换；Spec 显式常量覆盖对应 legacy 字段，review source model 不拥有的 `form/filed_date` 等 metadata 只能保留 frozen baseline，不能因缺 key 崩溃或猜值。同一内部 `(company_id, metric_id)` 只允许一个结果，不允许两个 scope grain留给 legacy 行层隐式覆盖。B03 component evidence 以一个 source binding 一行输出，并由 reconciliation receipt 精确重建冻结的 `;`/`+` 聚合；evidence 的 identity/period exact cells 与 `evidence_quote`、`extraction_method`、`parser_version` old→new cells 也进入 receipt。任何 APPLICABLE/WITHHELD、compatibility FAIL 或 gate FAIL 都使 candidate 为 BLOCKED。
+<!-- capability-anchor: BEHAVIOR.vnext_withheld_cannot_publish -->
+<!-- capability-anchor: BEHAVIOR.vnext_projector_verified_release -->
+<!-- capability-anchor: BEHAVIOR.vnext_legacy_projection_key_unique -->
+
+Publication receipt 只能由 `write_publication_validation_receipt()` 的 gate runner 产生。runner 与 `prepare_publication_bundle()` 不接受 caller `ledger_binding`；二者从 verified Batch 中有 Observation 的 SourceReference 与实际 AI attempt 引用的 ReaderInputManifest source exact set 派生已消费来源，再以 current-schema request row 的有序位置和完整字段重算 SEC `request_attempt_id`。publisher 先验证当前整表 manifest，再要求每个 row 声明的 portable body/header locator 与由联合身份选出的 immutable attempt 完全相同，并只把截至最后一个已消费 row 的最小有序 prefix hash/row count 写进 candidate view；后续未被该 Batch 使用的合法 ledger append 不改变该 view。不存在的 ledger、自报 attempt、已用 prefix/locator/bytes 漂移都不能得到 PASS receipt 或 `PUBLISHABLE`。runner 还重新执行 Projector、真实 semantic-audit executable 与真实 company-literal scalability executable；scalability source set 递归覆盖 `scripts/`、`tools/`，包括 `scripts/vnext/`。runner 从同一 candidate 生成 coverage、scalability、全量 migrated numeric stratified audit、`PASSED_RECORDED_ONLY` validation manifest 及 recorded-only README/report；已有同名 caller bytes 只有逐 byte 相等才可保留。semantic receipt 除被审计源码外还绑定 semantic checker 自身、scalability checker 与其 `sec_pipeline` producer 的精确 bytes；publisher 在调用 checker 前独立核对这些 hash，不能用替换后的 checker 重放旧 PASS。随后 runner 验证 CSV/schema、frozen Golden binding、compatibility/result-row/全部 evidence、Projector repair rows 与每项 required check，并保存 execution evidence hash。prepare 再次重跑同一 Projector、semantic gate 与 scalability gate，并要求 staged ProjectionManifest、receipt view、BatchManifest、Requirement、派生 ledger prefix、prepared predecessor，以及全部非 receipt artifact 的 path/SHA-256/size 完全一致。仅有八个 PASS 名称、header-only scalability CSV、自写 repair/report/validation PASS 或自洽 artifact hash、但没有这些可重算 execution bytes 的 receipt 无法 prepare。这里的 Golden 证明依赖 Phase 1 strict parity 与 frozen baseline，不等于已在 active pinned view 上重新执行现行 Stage 10/12；真实十公司 staging/full gate 仍是 Cutover 前置项。
+
+Immutable read-back 不依赖已经搬移或清理的 historical Run/legacy locator，也不重新运行会随 checkout 漂移的 semantic executable；它把可信 prepare 时持久化的 Batch/Run/Result row proof、gate evidence hashes、ProjectionManifest 与 exact bundle bytes 作为复验边界，重新解析 CSV/JSON、重算 row/check/content identity并核对全部 byte bindings。这是“prepare 时重执行业务语义，read-back 时验证持久化证明与 byte integrity”的明确边界，不是对历史外部 full validation 的再次执行，也不把 recorded publication primitive 升格为 active/full PASS。
+
+bundle namespace 必须只有声明的 regular files/directories，不接受 symlink、额外文件或大小写别名。commit、rollback、recovery、PublicationView 与 latest writer 只接受单一 `publication_root`，内部固定派生 immutable storage、pointer、lock、status 与 compatibility mirrors；调用方不能分别命名一套互相矛盾的路径。commit 使用 POSIX lock、expected active ID CAS、已验证 bundle manifest 与唯一 active pointer。rollback 只允许当前 pointer 已证明的 committed predecessor，不接受 prepared-only sibling。固定根 mirror 在 pointer 前准备，失败时恢复上一 bytes；崩溃后的 mirror 可从 active pointer 重建。`PublicationView` 只解析一次 pointer 并 pin 一个 bundle ID；`scripts/vnext/report.py` 只从一个 view 读取 report inputs，不开网络、不 repair、不写 authoritative artifact。latest status 独立于 active：单个 latest Run 最多派生 BLOCKED/NOT_EVALUATED，不能冒充完整 batch PUBLISHABLE；prepared publication 使用 BatchManifest identity。writer 在同一个 pointer lock 内加载真实 Run/bundle并派生状态，不接受调用方自报枚举、boolean、view 或 manifest。若 active batch 中同一 Run identity 被 locator 解析为 FAILED 或不同 content/audit hash，状态写入必须失败。
+<!-- capability-anchor: BEHAVIOR.vnext_publication_receipt_exact -->
+<!-- capability-anchor: BEHAVIOR.vnext_rollback_committed_predecessor -->
+<!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
+<!-- capability-anchor: BEHAVIOR.vnext_latest_lock_snapshot -->
+<!-- capability-anchor: BEHAVIOR.vnext_publication_authority_isolated -->
+<!-- capability-anchor: BEHAVIOR.vnext_mirror_authority_isolated -->
+<!-- capability-anchor: BEHAVIOR.vnext_latest_status_path_isolated -->
+<!-- capability-anchor: BEHAVIOR.vnext_publication_paths_not_self_reported -->
+
+上述都是 recorded transaction primitives 的能力说明。只有实际 staged complete bundle、现行 consumers 切换、旧 producer throw-test、active pointer、rollback→report→snapshot checker→restore 和最终 full acceptance receipt 都完成后，才能删除本节的“尚未切流”边界。

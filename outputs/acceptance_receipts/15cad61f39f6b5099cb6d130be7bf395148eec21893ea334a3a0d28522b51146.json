@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "scope": "recorded",
+  "status": "PASSED_RECORDED_ONLY",
+  "started_at_utc": "2026-07-30T07:24:06.717836+00:00",
+  "finished_at_utc": "2026-07-30T07:24:28.134246+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/Users/lyuhongwang/opt/anaconda3/bin/python3.9",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/vnext",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "interpreter": "/Users/lyuhongwang/opt/anaconda3/bin/python3.9",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 3341,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "099e6439a0506fe4725031ecd7d5730c388d7099ff14e1666eb0af564dc7b218",
+      "stderr_size": 20382,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 13048,
+      "stdout_sha256": "ddb02efbeb1adc138e16058e33f2b9ab27653f84e446e206e1744a9b1798f3cd",
+      "stdout_size": 1839,
+      "stderr_sha256": "e6eea557f8138c6880e6743c45e23b4e328e4b4bdcdfc960a135d88729bfb0e4",
+      "stderr_size": 410,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_validation_provenance",
+        "tests.test_validation_provenance_light_package"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 3956,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "6462d56d3cbed8d0de5db5442f2e3ac0ad7543a396652e07231316a006973af2",
+      "stderr_size": 121,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "tools/check_vnext_semantics.py",
+        "--repo-root",
+        ".",
+        "--output",
+        "outputs/semantic_audit_receipt.json",
+        "--secret-token-env",
+        "VNEXT_SECRET_SCAN_TOKEN",
+        "--secret-root",
+        "artifacts/vnext",
+        "--secret-root",
+        "outputs"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 113,
+      "stdout_sha256": "da66f330ff2eb6f0bd21ab6480fa96f34548a626e1a1361e94ccf9c511d584ec",
+      "stdout_size": 109,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE",
+        "VNEXT_SECRET_SCAN_TOKEN"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "tools/check_no_company_literals.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 858,
+      "stdout_sha256": "9d790f2e376d752859e16f80b7b53f3fae78d805ab3134e165fdc4d3bd62c3fd",
+      "stdout_size": 63,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    }
+  ],
+  "external_blockers": [
+    {
+      "code": "D01_EXTERNAL_APPROVAL_PENDING",
+      "detail": "Remote model, filing egress, retention, and provider policy are unapproved."
+    },
+    {
+      "code": "SEC_CONTACT_EMAIL_IS_EXAMPLE",
+      "detail": "Live SEC stages require an accountable organization and contact email."
+    },
+    {
+      "code": "SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "detail": "Source-input files are dirty: 02_指标定义_SEC_10公司单年指标.md,TESTING.md,architecture.md,capability_contract.json,catalog/disclosures/lodging_kpi_table.md,catalog/metrics/B01_revenue.md,docs/business_user_guide.md,interact.md,requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md,requirements/ai_first_v3_3_1/baseline_manifest.json,requirements/ai_first_v3_3_1/decision_register.json,scripts/vnext/ai_adapter.py,scripts/vnext/calculator.py,scripts/vnext/publication.py,scripts/vnext/reader_input.py,scripts/vnext/records.py,scripts/vnext/run_store.py,scripts/vnext/specs.py,scripts/vnext/workflow.py,tests/vnext/common.py,tests/vnext/test_ai_reader_contract.py,tests/vnext/test_b03_calculator.py,tests/vnext/test_publication.py,tests/vnext/test_record_schemas.py,tests/vnext/test_replay.py,tests/vnext/test_requirement_baseline.py"
+    }
+  ],
+  "artifact_hashes": {
+    "outputs/scalability_audit.csv": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+    "outputs/semantic_audit_receipt.json": "1140dd7e3c02fa87d285b189db1c33019154be25cf8bd9beb2a09b5a23a93687"
+  },
+  "acceptance_receipt_id": "sha256:15cad61f39f6b5099cb6d130be7bf395148eec21893ea334a3a0d28522b51146"
+}

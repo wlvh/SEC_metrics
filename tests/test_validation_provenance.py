@@ -75,6 +75,12 @@ class ValidationProvenanceTest(unittest.TestCase):
         self.temp_dir = tempfile.TemporaryDirectory()
         self.workdir = Path(self.temp_dir.name)
 
+    def test_vnext_requirement_and_catalog_are_source_inputs(self) -> None:
+        """Prevent Requirement or Spec deletion from shrinking the closure."""
+        policy = load_source_policy(workdir=TEST_ROOT)
+        self.assertIn("catalog", policy.runtime_source_directories)
+        self.assertIn("requirements", policy.runtime_source_directories)
+
     def tearDown(self) -> None:
         self.temp_dir.cleanup()
 
@@ -96,10 +102,12 @@ class ValidationProvenanceTest(unittest.TestCase):
         """Create policy-defined source fixtures."""
         policy = load_source_policy(workdir=TEST_ROOT)
         fixtures = {
+            "catalog/spec.md": "---\n{}\n---\n",
             "scripts/app.py": "VALUE = 1\n",
             "tools/check.py": "print('ok')\n",
             "config/settings.json": "{}\n",
             "tests/test_dummy.py": "# fixture\n",
+            "requirements/snapshot.md": "# requirement fixture\n",
         }
         for path, content in fixtures.items():
             self._write(path, content)

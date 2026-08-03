@@ -11,6 +11,8 @@
 - Bug 修复先加入能稳定复现的最小回归，再修实现；跨阶段状态事故还需要场景级回归。
 - 任何会联网或覆盖 `evidence/`、`outputs/`、报告的命令，都应在干净且隔离的 checkout 中运行，并在执行前确认配置。
 - 测试记录必须包含原样命令、结果、证据路径和未运行原因；不能把预期结果写成已通过。
+- capability `test_status` 只是受控证据分类，必须与 `test_anchor` 有无一致；alignment checker 验证该结构，但 symbol 存在和标签本身都不证明 statement 语义成立。
+<!-- capability-anchor: BEHAVIOR.capability_test_status_controlled -->
 
 ## 2. 环境与前提
 
@@ -20,15 +22,21 @@
 - live SEC 命令读取 `config/sec_config.json`，只允许官方 SEC 域名，并写入请求日志和 raw evidence。阶段 11 也可能在 C04 AuditorName 本地材料缺失时条件式联网。
 - 当前 `config/sec_config.json` 的联系邮箱是示例值；任何可能联网的命令（包括上述阶段 11 条件分支）运行前，必须由运行负责人换成有效 organization/contact email。
 - stage 12 full 模式要求 provenance source-input closure clean；closure 内 tracked、staged 或 untracked 改动会在主 gate 前失败。生成的 evidence/outputs 不属于 source closure。
+- vNext 快速测试只使用 recorded response/test double，并在 replay、Reader 或 report input 边界阻断 socket；它不需要 AI 或 SEC 凭据，也不能证明 live 稳定性。
+- vNext remote adapter 当前由模块固定 repository root 下的 Requirement Snapshot 与有效 Decision D-01 默认关闭；调用方不能传入自报批准 mapping、替代 authority root 或 transport 实现，approved workflow 还会在读取 Spec/filing bytes 前要求 payload root 与 D-01 authority 解析为同一物理 repository。仓库尚未登记任何 live provider factory。provider/model/endpoint/region/retention/data-use/payload/filing-egress 未获 HUMAN 批准、SEC 邮箱仍为示例值或 source closure 未提交时，live 00–11 必须记录 NOT_RUN；离线 Stage 12/checker 仍实际运行，外部 blocker 不得掩盖其失败。
 
 ## 3. 真实测试与验证层级
 
 | 层级 | 命令 / 入口 | 网络 | 仓库写入 | 通过条件 | 不能替代 |
 |---|---|---:|---:|---|---|
-| 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -p 'test_*.py'` | 否 | 测试设计上只写临时目录 | unittest 全部通过；允许的 skip 必须在记录中说明 | full evidence、Golden、完整阶段 |
+| 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -t . -p 'test_*.py'` | 否 | 测试设计上只写临时目录 | unittest 全部通过；允许的 skip 必须在记录中说明 | full evidence、Golden、完整阶段 |
+| vNext Python 3.9 floor | `PYTHONDONTWRITEBYTECODE=1 python3.9 -m unittest discover -s tests/vnext -t . -p 'test_*.py' -v` | 否 | 只写临时目录 | recorded vNext tests 全部通过；解释器不存在时必须记录 NOT_RUN | 默认解释器回归、live AI、Cutover |
+| vNext 默认解释器 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests/vnext -t . -p 'test_*.py' -v` | 否 | 只写临时目录 | recorded vNext tests 全部通过 | Python 3.9 floor、live AI、Cutover |
+| vNext semantic gate | 由 `tools/run_acceptance.py --scope recorded` 把一次性 token 注入 scanner 环境后执行 `tools/check_vnext_semantics.py`；本次 acceptance 不把 token 写入被扫描文件 | 否 | 覆盖 `outputs/semantic_audit_receipt.json` | production/bridge executable 无业务 parser literal，AI adapter 无越权 I/O，并实际遍历 publishable roots；token 阳性匹配及 root/nested file/nested directory/broken/loop symlink fail-closed 由独立单测证明，receipt 绑定 checker 自身、scalability checker 与其 producer bytes | 业务结果 parity、producer canary、强进程沙箱 |
+| vNext acceptance receipt | `PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py --scope recorded` | 否 | 写 `outputs/acceptance_receipts/`，并由内部 gate 写 semantic/scalability receipt | 只有全部 recorded 命令真实 return code=0 且无 NOT_RUN 时为 `PASSED_RECORDED_ONLY` | full acceptance、stage 00–12、live 三轮、Cutover |
 | Provenance 专项 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.test_validation_provenance tests.test_validation_provenance_light_package` | 否 | 只写临时目录和临时 Git 仓库 | source policy schema/角色、SOP 权威引用、`01_SOP...md` dirty 负例、clean/full/light、缺 acceptance source、equivalent tree、full artifact directory exact set、artifact tamper 与 postflight fail-closed 回归通过 | 业务指标、Golden、SEC evidence |
-| 能力文档对齐 | `python3 tools/check_capability_contract_alignment.py`；PR 再加 `--base-ref <base>` | 否 | 否 | 清除会重定向仓库的 Git 环境变量并禁用 replacement refs 后，证据路径存在于 HEAD、是 regular blob 且工作树 bytes 未偏离 HEAD；anchor grammar/唯一性、type/status 枚举、null anchor 的 `untested_reason`/`pending_since`、`file::symbol` 与 Markdown directive 均合法；跨 base tombstone 不删除/复用，base 与 HEAD 的每条 request row 严格匹配其 current/legacy CSV schema，legacy row 独立规范化为 portable 完整字段，current row 逐字段保留有序前缀且只尾部追加 | claim 语义与证据强度判断 |
-| 静态扩展性 gate | `python3 tools/check_no_company_literals.py` | 否 | 是，覆盖 `outputs/scalability_audit.csv` | 无禁止 identity literal，进程退出 0 | 指标正确性、场景回归 |
+| 能力文档对齐 | `python3 tools/check_capability_contract_alignment.py`；PR 再加 `--base-ref <base>` | 否 | 否 | 清除会重定向仓库的 Git 环境变量并禁用 replacement refs 后，证据路径存在于 HEAD、是 regular blob 且工作树 bytes 未偏离 HEAD；anchor grammar/唯一性、type/status 枚举、受控 `test_status` 与 `test_anchor` 有无一致、null anchor 的 `untested_reason`/`pending_since`、`file::symbol` 与 Markdown directive 均合法；跨 base tombstone 不删除/复用，base 与 HEAD 的每条 request row 严格匹配其 current/legacy CSV schema，legacy row 独立规范化为 portable 完整字段，current row 逐字段保留有序前缀且只尾部追加 | claim 语义与证据强度判断；label/symbol 存在不证明 statement |
+| 静态扩展性 gate | `python3 tools/check_no_company_literals.py` | 否 | 是，覆盖 `outputs/scalability_audit.csv`；publication runner 使用显式隔离输出 | 递归扫描 `scripts/`、`tools/`（含 `scripts/vnext/`）后无禁止 identity literal，进程退出 0；publication prepare 重跑同一 executable | 指标正确性、场景回归 |
 | Golden | `python3 scripts/10_run_golden_assertions.py` | full 模式会联网；light 不联网 | full 模式覆盖 Golden outputs，并可能追加 evidence/log | 所有适用 assertion PASS；light 只能得到受限完整性结果 | repair gate、snapshot checker、外部验收 |
 | Repair / validation gate | `python3 scripts/12_validate_repair.py` | 否 | 是，覆盖多个 validation/audit outputs、run manifest、报告与 provenance sidecar | 原有 full/light terminal 条件通过，且 source/artifact provenance publication/self-check 成功 | live 数据采集、完整场景 |
 | Snapshot 复核 | `python3 tools/check_validation_snapshot.py` | 否 | 否 | source closure clean/等价；artifact key set、SHA-256 与 size 匹配 | 重新运行 Golden/repair、外部审计 |
@@ -37,6 +45,43 @@
 | 完整场景 | 按 `README_RUN.md` 从 `00` 运行到 `11`，再运行 `12` 和 snapshot checker | 是 | 是，大量 evidence/outputs/report | 每阶段成功，Golden、repair gate 与 provenance 均通过 | 外部审计接受 |
 
 ## 4. 快速回归覆盖
+
+### 4.1 vNext recorded shadow
+
+`tests/vnext/` 当前覆盖：
+
+- strict JSON duplicate/non-finite/surrogate、NFC、ordered/set、Decimal 28/HALF_EVEN、跨 Python 3.9+ 一致的扩展日期/UTC 时间、semantic runtime version 与 content identity；Run/Review/Validation/Publication 状态分离，PASSED/FAILED/NOT_RUN 均可 freeze，而 FAILED/NOT_RUN publication 负例失败关闭。FROZEN Run 不接受 STARTED attempt；每条 SUCCEEDED attempt 都要从 raw response bytes 重放 schema，即使没有 Candidate 引用也不能跳过。
+- Requirement Snapshot exact bytes/hash、Decision 单链、`catalog/` MetricSpec 默认展开、ordered `choose_first`、selection policy closure、dependency、cardinality、未知 op/guard、AST depth 32/node 256 和 Python 3.9 syntax surface。
+- SEC-only portable SourceReference、同 bytes 多 observation identity、完整 HTML table-grid、merged-cell locator round-trip、ReaderInputManifest exact table set；业务词变化不能筛掉或重排输入表。集中资源预算负例覆盖 span 面积、表数、span/entity 十进制词法、解析期 source cell、展开 cell、cell/table text 与全 filing 总量；Python 3.9 在大整数转换前即失败，其他超限也必须在下一次对象/矩形物化前稳定失败且不裁剪。
+- provider-neutral recorded AI attempt、request/task contract/raw response 三类 content-addressed bytes、freeze 从仓库 Spec 重建请求并重算 digest/Candidate、schema failure 不回退；`run_ai_attempt` 只接受 adapter、`PreparedReaderRequest` 和 clock，重新校验完整 table set/system/task binding，固定 temperature=0 与严格 Reader validator，不接受 caller sampling mapping 或 callback。recorded/approved adapter 只能由仓库 builder 构造为私有 exact type；authority 在 `complete` 前校验，duck object、子类与实例级方法替换都不能取得 filing bytes。approved adapter 不保存 transport；每次 attempt 在 D-01/payload preflight 后从模块 registry 新建并验证 exact-policy transport，调用方替换 `_transport` 不会被调用。该普通 Python 对象用于降低误用自由度，不是安全边界；freeze/load 仍从持久化 bytes 与仓库 Spec 独立重放。remote adapter 只能从模块固定 repository root 的 Requirement Snapshot 与 effective APPROVED D-01 编译，approved workflow 的 payload root 必须与该 authority 是同一物理 repository；caller policy/root/transport 被拒且 cross-root 在任何 payload read/transport 前失败。批准测试 snapshot 将十个字段交给仓库 factory；每次 outbound 前重读 policy/closure，已构造 adapter 遇到 D-01 撤回时 transport=0；policy mismatch 与 payload 超限在 egress 前失败，host mismatch 和带 observation 的 timeout 分别产生记录实际 `TransportObservation` 的 FAILED attempt；异常或旧式 tuple 缺 observation 时失败且不生成猜测审计。freeze/replay 对直接写入的 SUCCEEDED attempt 重新执行 response schema 与 recorded/effective D-01 policy 绑定。测试只证明仓库调用图、policy 执行与审计绑定，不声称同进程强安全沙箱或 remote live 稳定性。
+- Reader 一次返回 lodging disclosure group 的三角色；Evidence 只重读给定 cell/local label，不搜索相似值；1% identity 0.99/1.00/1.01% 边界；完整表格安全渲染和 invisible/control/bidi 可见化。超长 cell 全文保留并通过 HTML comment 限制物理行，总 review bytes 超限明确失败，不静默截断。
+- 整个 ReviewUnit 的 canonical/rendered binding、HUMAN identity、approved claims 与 supersedes 单链；HUMAN CLI 从 ReviewUnit 派生 APPROVE 全量 claims 或 REJECT 空 claims，不要求 reviewer 复述 claim 文件；REJECT+claims 与 partial APPROVE 在低层 append 拒绝，append 后直接改磁盘的负例还覆盖 finalizer 和 freeze reload。每个 ReviewUnit 必须有唯一 effective decision，published/supporting Observation roles 和 published Result/Trace 必须 exact-complete。workflow 只接收 disclosure locator、外部 source facts 与 adapter，内部从 repository/RawBlob 派生 compiled Spec closure、Requirement hashes、derived URI 与 temperature=0；finalizer 不接受调用方 traits 或二次 compiled semantics/metric/unit/period，入口与 freeze 从 registry/profile 重算 traits，fiscal-year 标签必须落在不超过 53 周的精确期间内；freeze 重建全部 reviewed Observation、按仓库 Spec 重跑 Calculator、拒绝 AI-table metric 伪装 structured input与未被 Trace 消费的游离 Observation，并把 Result/Trace 的 value/formula/scope/quality/applicability/publication/reason 回绑 Run target、decision、input 与仓库 Spec。FROZEN Run byte tamper 拒绝，无 socket replay。
+- B01 reported unit 原样携带、B03 component unit exact guard、B10 percent→ratio、B11/ADR 非 USD WITHHELD，以及 B01 observation reuse、B03 direct/fallback、D&A 防双计、cross-check、Decimal、quality、NOT_MEANINGFUL 与 Marriott/Pfizer legacy anchor。Pfizer 真实 Company Facts 的 APPROX 结果必须逐位匹配 legacy `OK_APPROX` 并完成 freeze/replay；0.99/1.00% PUBLISHED 与 1.01% WITHHELD 必须贯穿 calculate→append→freeze→replay。freeze 从 raw bytes 重建 B01/B03 fact set，在 B03 没有配套 B01 Result 时仍按 B01 Spec 重算复用 Observation；被拒分支不保留 selected component IDs，结果 quality 取 Observation 与 accepted Spec branch 中更保守者。通用 Calculator executable 不含指标/公司/行业业务 literal。
+- 完整 legacy row projection、B03 source-grain component evidence/reconciliation、evidence identity exact cells、方法字段 old→new receipt、legacy write gate；content-addressed BatchManifest 从 registry/display mapping、traits/applicability、release plan 与全部 PASSED FROZEN Runs 派生 company×metric exact set。baseline manifest 同时绑定 legacy metrics/evidence/Golden 的 schema、row count、size 与 SHA-256，合法 schema 中增加任意非迁移行也在投影前失败。Projector candidate/manifest 入口只接收 `repo_root`、`batch_manifest_path`、`legacy_snapshot_dir` 与 `staging_dir` 四个 locator，实际生成并逐 byte 重验 metrics/evidence/compatibility/frozen Golden/固定 repair execution rows，不接受 caller hash/status/metric mapping；projection multiplier 与 Golden tolerance comparison 必须使用 canonical 28/ROUND_HALF_EVEN context，在调用方把全局 Decimal precision 降低后仍生成相同 bytes/verdict。真实 reviewed B10/B11 Observation 缺少 `form/filed` 时按 Spec 常量/冻结 baseline 补齐，不猜值也不抛 `KeyError`。缺公司/缺 N/A/重复或额外坐标、单公司冒充整批、跨 period、Run locator 中间 symlink、B03 dependency 冒充顶层输出和同一 key 多 scope 均失败。non-lodging workflow 还必须在 source/AI=0 时持久化可 freeze/replay 的 N/A Result/Trace。
+- Publication 正向 fixture 必须通过生产 `write_publication_validation_receipt()` 执行 gate，不得用测试 helper 自签业务 PASS receipt。runner 与 prepare 都不接收 caller `ledger_binding`：它们从 verified Batch 中实际产生 Observation 的 SourceReference，以及实际 AI attempt 引用的 ReaderInputManifest source exact set 派生使用集合；SEC attempt ID 由 current-schema ledger 行及其有序位置重算，并联合验证整表 manifest、SourceReference URL/accession/document/raw hash、row 声明的 portable body/header locator 与 immutable attempt。receipt 只绑定截至最后一个已消费 row 的最小有序前缀，后续未被该 Batch 使用的合法 append 不改变 candidate view；ledger 缺失、attempt 不属于该前缀、已用 prefix/locator/bytes 漂移均在 PASS receipt 或 `PUBLISHABLE` 前失败。runner 还重跑 Projector、真实 semantic-audit executable 与真实 company-literal scalability executable；后者递归扫描 `scripts/`、`tools/`，不能漏掉 `scripts/vnext/`。runner 从 candidate 生成 coverage、scanner-derived header-only scalability PASS artifact、覆盖全部 migrated numeric rows及其全部 evidence rows的 stratified audit、`PASSED_RECORDED_ONLY` validation manifest 和 recorded-only README/report；已有 caller bytes 必须逐 byte 相等。semantic receipt 必须绑定 checker 自身、scalability checker 与其 producer bytes，publisher 在执行 checker 前独立核对 hash。随后 runner 验证 candidate CSV/frozen Golden binding/compatibility/Result-row/evidence/Projector repair 与每项 required check，prepare 再次执行 Projector 与两道 executable gate，并要求 evidence hash、candidate view 与 artifact path/hash/size 一致。任意文本、自签 PASS、伪造 header-only scalability CSV、在顶层或 vNext 源码加入 identity branch、替换 checker 重放旧 PASS、自写 repair/report PASS、删除/增加 migrated row、CSV value 与 Run 不一致、畸形 nested JSON 或 storage symlink 均不能准备 bundle。完整 batch→projection→prepare→commit→`PublicationView` 正向场景断言 active bytes 与 Run-derived matrix 一致且包含 N/A 行。该 recorded Golden 证明来自 frozen baseline + strict parity；它不冒充 active pinned view 的现行 Stage 10/12 full 重跑。immutable read-back 重算持久化 proof 与 bundle bytes，不依赖历史 Run/legacy locator，也不冒充外部 full validation 重跑。
+- report input loader 只读一个 pinned view，测试断言 socket=0 且输入目录 bytes 不变；这不表示现行 `scripts/11_build_report.py` 已切换到 vNext view。
+- acceptance runner 保留原样 argv、解释器、真实 return code、duration、stdout/stderr SHA-256/size、artifact hash、NOT_RUN 原因；semantic gate 使用一次性随机 token 触发 publishable-root 遍历，但该次 acceptance 没有把 token 注入被扫描文件，也没有构造 symlink 负例，因此不构成阳性检出或 symlink mutation 证明。token match 与 symlink fail-closed 分别由 `test_secret_like_token_scan_reports_hash_not_token`、`test_secret_scan_fails_closed_for_every_symlink_shape` 单测证明；当前也无 secret-consuming producer，不能写成已穿过真实产物链路。full scope 只把 live 00–11 标为 NOT_RUN，并实际执行离线 Stage 12/checker；离线失败优先形成 FAILED，FAIL/INCOMPLETE/BLOCKED 不可冒充 PASS。
+
+明确未由 recorded tests 证明：第二个真实 lodging filing、实现冻结后由独立作者加入的第三 holdout、remote live Reader 连续三轮稳定性、全十家公司完整 staging parity、旧 lodging/B03 producer 从 active call graph 退出、active pointer Cutover、真实 previous-bundle rollback→report→snapshot checker→restore，以及 clean committed checkout 的 full 00–12 acceptance。这些项必须保留为 NOT_RUN/BLOCKED。
+
+完整性负例必须按不变量覆盖全部入口，而不是只保留最初复现：Spec 身份同时覆盖 published Result/Trace 与 supporting Observation；期间覆盖 Run/Candidate/Observation/Result/Batch；digest 同时覆盖 request-only、Attempt/Candidate 协同 response 篡改与 FAILED attempt 的 task-Spec 替换；batch 覆盖 missing/extra/duplicate company×metric 与 locator alias；projection 覆盖 delete/add/value drift；receipt 覆盖自签 PASS、missing execution evidence、missing/extra/hash/size/internal FAIL/missing required check/旧 view；状态机覆盖 prepared-only sibling rollback 与 FAILED/BLOCKED+latest-success。新增权威参数或凭证入口时，必须在这些贯穿场景中增行。
+
+| 不变量 | 已覆盖入口 | 贯穿 mutation test |
+|---|---|---|
+| repository authority | registry/profile company traits；published Result/Trace；supporting Observation；AI-table source mode；Company Facts raw fact/selection；跨 MetricSpec structured dependency；无 selected Observation 的 structured WITHHELD；AI adapter exact type/factory authority；D-01 Requirement closure、固定 root、workflow payload 同 root 与仓库 transport factory；workflow/finalizer API | `test_freeze_rejects_company_traits_detached_from_registry`、`test_non_lodging_stops_before_source_or_ai`、`test_freeze_rejects_result_metric_spec_identity_substitution`、`test_freeze_rejects_supporting_role_identity_and_unit_substitution`、`test_freeze_rejects_ai_metric_disguised_as_structured_input`、`test_freeze_rejects_structured_value_absent_from_raw_bytes`、`test_freeze_rejects_forged_structured_dependency`、`test_freeze_rejects_false_structured_withheld_result`、`test_run_attempt_rejects_caller_adapter_before_complete`、`test_remote_adapter_binds_policy_owned_repository_transport`、`test_remote_workflow_rejects_payload_root_outside_authority` |
+| remote policy 与事实 | D-01 十字段；每 attempt 新建的 factory transport 与 caller `_transport` 替换；payload preflight；actual host；带 observation 的 timeout/transport failure；缺 observation fail hard；no-egress fact；disk-reloaded SUCCEEDED attempt | `test_remote_adapter_binds_policy_owned_repository_transport`、`test_remote_transport_policy_enforcement_matrix`、`test_freeze_rejects_remote_success_bypassing_adapter` |
+| untrusted resource budget | span/table/row/column/source cell/expanded cell/text/filing-total；review physical line 与 total bytes | `test_table_grid_resource_budget_matrix`、`test_review_renderer_resource_budget_matrix` |
+| complete reviewed graph | CLI derives whole-unit claims；effective HUMAN decision 与决定自身 APPROVE/REJECT claims 语义；published/supporting Observation role exact set；published Result/Trace exact set与业务状态；Observation+accepted Spec branch quality；Calculator value/formula；Observation consumption exact set | `test_review_cli_derives_claims_from_review_unit`、`test_freeze_requires_effective_decision_for_each_review_unit`、`test_review_decision_semantics_cross_every_trust_boundary`、`test_freeze_rejects_supporting_role_identity_and_unit_substitution`、`test_freeze_rejects_result_business_state_detached_from_inputs`、`test_pfizer_approx_real_bytes_freezes_and_replays`、`test_b03_cross_check_boundaries_freeze_and_replay`、`test_freeze_recalculates_reviewed_result_from_observation`、`test_freeze_rejects_unconsumed_structured_observation`、`test_freeze_rejects_applicable_result_rebranded_structural` |
+| exact business coordinates | Run fiscal-year/日期/最长 53 周；Candidate；Observation；Result/Trace calculation target；B01/B03/B10/B11/ADR unit | `test_loaded_run_reapplies_period_and_trait_invariants`、`test_run_period_is_the_only_finalization_period`、`test_freeze_rejects_false_structured_withheld_result`、`test_b01_preserves_selected_reported_currency`、`test_b03_mixed_component_currency_fails_closed`、`test_reviewed_currency_mismatch_materializes_withheld_results` |
+| digest/schema from bytes | successful/failed task contract；request；每条 SUCCEEDED raw response；Candidate；Evidence replay；STARTED terminal gate | `test_freeze_recomputes_attempt_digests_from_exact_bytes`、`test_freeze_rebuilds_failed_attempt_request_from_task_spec`、`test_freeze_replays_every_successful_ai_response`、`test_freeze_rejects_nonterminal_ai_attempt` |
+| receipt proves exact view | Run immutable identity/artifacts；publication Requirement/Batch/Projection、从 consumed source 派生的真实 ledger membership/最小已用 prefix/声明 locator/predecessor、required gate execution evidence、artifact exact set/SHA-256/size | `test_run_validation_receipt_binds_immutable_manifest_view`、`test_missing_request_ledger_blocks_before_validation_receipt`、`test_batch_source_absent_from_request_ledger_cannot_validate`、`test_unrelated_ledger_tail_preserves_used_publication_prefix`、`test_declared_request_ledger_locators_must_identify_attempt`、`test_self_signed_pass_without_gate_execution_cannot_prepare`、`test_receipt_binds_exact_artifacts_checks_and_view` |
+| state follows committed history | forward commit；rollback；prepared sibling；mirrors/pointer | `test_rollback_rejects_prepared_never_committed_sibling`、`test_pinned_view_survives_forward_commit_and_rollback` |
+| validation/source/publication 分离 | PASSED/FAILED/NOT_RUN freeze；FAILED/NOT_RUN publication block；missing-role+PUBLISHED block；missing-role+WITHHELD audit freeze；SOP 状态表 | `test_freeze_accepts_each_audit_validation_state`、`test_nonpassed_validation_receipt_cannot_prepare`、`test_missing_source_role_cannot_freeze_published_result`、`test_human_rejection_materializes_withheld_results`、`test_sop_structured_validation_state_contract` |
+| projection authority | repository-derived complete BatchManifest；persisted FROZEN Run full reload；non-lodging durable N/A；legacy/candidate/gate exact set；dependency Spec 不冒充缺失输出；legacy compatibility key uniqueness；bundled ProjectionManifest/result-row identity；fixed Decimal arithmetic context | `test_projector_rejects_single_company_as_complete_batch`、`test_projector_reloads_the_persisted_frozen_run`、`test_projector_requires_persisted_projection_inputs`、`test_projector_requires_complete_release_result_set`、`test_projector_rejects_intermediate_run_locator_symlink`、`test_non_lodging_stops_before_source_or_ai`、`test_candidate_row_mutations_cannot_prepare`、`test_complete_batch_projects_publishes_and_reads_active_view`、`test_projector_arithmetic_ignores_global_decimal_context` |
+| status cannot contradict itself | persisted latest Run/publication locator；lock 内重验 latest bundle；pointer-verified active publication；root-derived path layout | `test_active_run_cannot_be_rebranded_failed_in_latest_status`、`test_latest_success_binds_corresponding_publication`、`test_latest_status_revalidates_candidate_inside_pointer_lock`、`test_publication_layout_is_derived_from_one_root` |
+| shared external gates | acceptance 与 live client 共用 SEC identity validator；semantic scanner 对 symlink 与 token 泄漏 fail closed | `test_sec_identity_gate_and_http_client_share_fail_fast_rules`、`test_secret_scan_fails_closed_for_every_symlink_shape` |
+
+### 4.2 现行 00–12 快速回归
 
 当前 `tests/test_sec_pipeline_validation.py` 覆盖：
 
@@ -88,6 +133,8 @@
 | `tests/fixtures/eleventh_company_smoke/` | 配置驱动的新增公司/profile 行为与去公司特例边界 |
 | `tests/fixtures/inline_scale_route/mock_inline_scale.xml` | iXBRL scale、sign 与 parser route 回归 |
 | `tests/fixtures/regression/previous_ok_status_snapshot.csv` | 已有 OK recall 的回退防护 |
+| `tests/fixtures/vnext/sample_lodging.html` | recorded lodging 完整 table-grid、merged cells、三角色、adversarial untrusted text 与 review/replay fixture；不是第二真实 filing 或独立 holdout |
+| `tests/fixtures/vnext/companyfacts_b03_crosscheck/CIK0000078003.json` | B03 0.99/1.00/1.01% cross-check 的最小 Company Facts 场景；使用 production parser/calculator/freeze/replay，不冒充第二真实 filing |
 
 fixture 可以包含公司身份；生产 `scripts/` 与 `tools/` 不得用公司身份触发业务分支。
 
@@ -136,6 +183,12 @@ light 模式只做随包 snapshot integrity，不能被记录成 full Golden 重
 
 stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失效。stage 12 只在既有 terminal gate 成功后计算 source-input tree、核心 artifact 与 policy-declared full artifact directory recursive exact set 的 SHA-256/size，原子写 sidecar并从磁盘重新验证；任一 postflight 失败都尝试把 manifest 降为 `FAILED`、把报告改为 `NO-GO` 并非零退出。checker 本身只读，不修复也不重签 artifact。
 
+### 7.6 vNext semantic 与 acceptance receipts
+
+`tools/check_vnext_semantics.py` 覆盖 `outputs/semantic_audit_receipt.json`；`tools/check_no_company_literals.py` 仍会覆盖 `outputs/scalability_audit.csv`。`tools/run_acceptance.py` 在 `outputs/acceptance_receipts/<receipt_id>.json` 写一份非循环 receipt，记录这两份文件 hash；receipt 自身不进入被它记录的 artifact hash 集合。
+
+`--scope recorded` 只允许返回 `PASSED_RECORDED_ONLY`，不能写成 full。`--scope full` 在运行 recorded gates后检查 D-01、SEC 身份与 source closure；可能联网或重建上游 evidence 的 stage 00–11 显式记录为 NOT_RUN，但纯离线 Stage 12 与 snapshot checker 必须真实执行。任一离线命令失败时 full receipt 为 `FAILED`；两者通过但仍有 D-01、有效 SEC identity、live/Cutover blocker 时为非零 `BLOCKED`。full runner 必须在干净隔离 checkout 中执行，并保留逐命令真实证据。
+
 ## 8. 按变更类型选择测试
 
 | 变更类型 | 最低证据 | 追加证据 |
@@ -147,6 +200,7 @@ stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失
 | validation / report verdict / provenance | 快速回归 + provenance 专项 + source policy JSON/SOP authority alignment + Golden + repair gate | 阶段 11 后显式跑 12 和 snapshot checker，验证失败传播、sidecar 与报告内容 |
 | SEC HTTP 客户端或 URL | 快速回归中的本地 persistence failure/path、read-timeout、symlink 与 request-log exact-set 测试 | 有效身份下的 live smoke 与 retry/backoff mock，再按影响范围跑场景 |
 | 仅报告文案 | 生成器相关检查，不能手改生成报告替代代码 | 若运行阶段 11，必须随后运行阶段 12 和 snapshot checker |
+| vNext Requirement/Spec/Reader/Review/Calculator/Publication | Python 3.9 + 默认解释器 recorded tests、semantic gate、provenance 专项、capability JSON/anchor 结构检查 | 第二真实布局与独立 holdout；D-01 批准后 live 三轮；隔离 checkout staging/Cutover/rollback/full acceptance |
 
 纯文档变更不强制重跑联网阶段 00-11；不得为了“全绿”无谓覆盖已审计的 evidence 与 outputs。
 
@@ -179,6 +233,15 @@ stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失
 4. 运行固定上游对应的 workflow docs 机械检查。
 5. 记录机械检查只证明最终文件状态，不证明分析、审计或测试历史。
 
+### 9.4 vNext recorded shadow 改动
+
+1. 在 Python 3.9 与默认解释器分别运行 `tests/vnext/`。
+2. 运行 provenance 专项，证明 `requirements/` 与 `catalog/` 不能从 source closure 消失。
+3. 运行 `python3 tools/run_acceptance.py --scope recorded`，保留 receipt ID 与路径。
+4. 在 commit 后运行 capability alignment；工作树未提交时 checker 按设计拒绝 HEAD/worktree bytes 不一致，必须如实记录，不能把 JSON parse 成功替代 alignment。
+5. 在 clean committed isolated checkout 运行 `python3 tools/run_acceptance.py --scope full`；即使 D-01/SEC identity 阻塞 live 00–11，也必须确认 receipt 中 Stage 12 与 snapshot checker 实际执行并 PASS，最终状态诚实为 BLOCKED。
+6. 仅在 D-01、有效 SEC 身份与所需 fixture/live 前提全部满足时安排 live shadow、staging、Cutover 和 rollback；否则记录 NOT_RUN/BLOCKED。
+
 ## 10. 失败定位
 
 - unittest：从失败 test method 回到对应 helper 与 fixture；不要用改 expected 的方式消除真实回归。
@@ -204,3 +267,9 @@ stage 11/12 开始时先使旧 `outputs/validation_snapshot_provenance.json` 失
 - immutable request snapshot 与 validation provenance sidecar 都是仓库内完整性机制，不是外部签名、透明日志或针对恶意同 UID 进程的 WORM；能同时修改全部文件并重签的人仍在本地信任边界内。
 - Git workspace 回归证明检查时已存在的 gitdir/commondir lexical path alias 会被拒绝；guard 与后续 Git CLI 不是原子系统调用，尚未覆盖恶意同 UID 进程在两者之间主动切换 namespace 的 TOCTOU。
 - 尚无使用录制 SEC fixture、临时工作区贯穿阶段 00-12 artifact 契约的离线 scenario test。
+- vNext 只有一个 synthetic/recorded lodging table fixture；第二真实 filing 摘录和实现冻结后的独立第三 holdout 尚未建立。
+- D-01 provider/egress 决策与有效 SEC 联系身份未满足，因此没有 remote live Reader 三轮稳定性证据。
+- vNext publication 已有独立 transaction primitives，但尚未接管现行 00–12 root outputs；旧 lodging/B03 producer 仍在 active call graph，没有真实 Cutover、full staging parity 或 rollback→report→snapshot checker→restore 证据。
+- vNext SourceReference 会重新校验 exact SEC origin、portable locator 与 raw/header hash，freeze 也会从 RawBlob bytes 重建 table-grid；recorded publication 已从 verified Batch 的实际消费路径派生 SourceReference/attempt exact set，先验证 request-ledger 整表 manifest，再绑定截至最后一个已用 row 的最小有序前缀，并要求 row 声明的 portable locator 与 immutable body/header 同一。该适配器尚未经过真实十公司 full staging，scoped recorded fixture 不能替代 full 闭包证明。
+- vNext freeze 负例必须覆盖 Candidate 缺成功 attempt/response binding、自报 PASS Evidence 与 cell/constraint 重放不一致、ReviewUnit required claims 脱离仓库 compiled Spec、Observation provenance 字段脱离 SourceReference，以及 MetricResult status/reason/value 脱离 Trace `result_contract_hash`；只验证各对象能自哈希不算通过。
+- vNext Run mutation primitive 当前按单 Run 单写者使用；publication commit 已有 POSIX lock/CAS 并发回归，但不能把它外推为 Run append/review/freeze 的跨进程编排证明。

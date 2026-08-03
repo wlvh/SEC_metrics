@@ -266,6 +266,27 @@ Codex 要做：
 
 所有文本/表格抽取必须保存原文片段。
 
+#### vNext recorded shadow 方法（尚未替代 M6 active 路径）
+
+Issue #12 的 recorded shadow 把 lodging 表格路径拆成以下数据交接：
+
+```text
+已审计 SEC raw bytes / SourceReference
+-> metric-neutral complete table-grid
+-> exact ReaderInputManifest（目标文档全部表格）
+-> 一次 disclosure-group Reader response（B10、B11、ADR）
+-> mechanical Evidence（只重读给定 locator/cell/local labels）
+-> 完整表格 rendered ReviewUnit
+-> HUMAN whole-unit decision
+-> Verified Observations / direct results
+```
+
+Reader 前不得按 occupancy、RevPAR、ADR、scope 或公司词筛选 table bytes；模型必须返回 selected、competing 与 unresolved claims。程序可检查 locator、文本、单位、local labels 和 `RevPAR ≈ ADR × Occupancy` 声明式 identity，但不能替 reviewer 决定 comparable/systemwide/worldwide/current-year 的经济口径。reviewer 实际看到的完整表格、Evidence、Spec/source 和 rendered bytes 共同进入 ReviewUnit hash。
+
+该 recorded 方法当前只有 synthetic fixture，不具备第二真实 filing、独立 holdout 或 live 三轮稳定性证据；现行 stage 09/11 的 lodging parser/repair 仍是 active 路径。D-01 未批准时禁止 remote Reader，不能把 recorded output 投影到当前根目录结果。
+
+结构化 B01/B03 recorded shadow 不经过 AI。B01 复用现有 Company Facts selection policy 的显式、版本化展开；B03 只执行 `catalog/metrics/B03_ebitda_margin.md` 编译后的角色顺序、cardinality、guard、cross-check、Decimal、quality 与 formula，业务 fallback 不再进入通用 Calculator 控制流。该实现只有在 full staging parity、旧 producer 退出与 Cutover gate 完成后才可替代现行生产计算。
+
 ### M7：组装矩阵、断言和报告
 
 目标：输出完整交付物；本概念阶段在物理实现中跨越 stage 10、11、12。

@@ -58,7 +58,7 @@ git diff --name-only <base>...HEAD
 
 如果本 PR 改变业务人员能问什么、怎么问、结果怎么看、什么时候该找人，请检查 docs/business_user_guide.md。
 
-如果新增“能做 / 不能做 / 必须追问 / 必须拒绝”的声明，请确认它有 capability_contract.json anchor_id 或对应测试锚点。
+如果新增“能做 / 不能做 / 必须追问 / 必须拒绝”的声明，请确认它有 capability_contract.json anchor_id、真实测试锚点与受控 test_status；标签和 symbol 存在不等于 statement 已被证明。
 
 如果修改 AGENTS.md、SOP.md、README_RUN.md 或长期总览文档：
 - 保留既有一级导航和稳定章节编号，除非 PR 明确证明迁移必要；
@@ -131,8 +131,18 @@ Source / artifact provenance 变化：
 - SHA-256 / size 篡改；
 - stale sidecar；
 - symlink / alias；
+- 构造/append 后直接修改磁盘并从 finalizer/freeze/replay 重读；
+- transport policy 与实际 host/region/timeout/retry/payload/failure 事实不一致；
+- untrusted input 的 span/table/text/expanded-cell/rendered-byte 资源上限；
 - report 或 manifest publication failure；
 - light package 缩小声明 source closure。
+
+若改动 source-input closure 或 policy-bound 生成 artifact，必须记录：
+- 冻结后的 source tree 在 clean 隔离 checkout 上 Stage 12 exit 0；
+- terminal artifact diff 以独立 artifact commit 发布，或按单 commit 政策经
+  amend 折叠进最终 commit；
+- 最终 PR HEAD 的 source tree 与受测 source tree 等价，且 snapshot checker exit 0。
+D-01、SEC 联系身份或 live 00–11 blocker 不能把离线 Stage 12/checker 写成 NOT_RUN。
 -->
 
 | 层级 / 目的 | 原样命令 | 实际结果 | 证据路径 |
@@ -168,7 +178,8 @@ Source / artifact provenance 变化：
 - [ ] 用户可见变化已对照 `interact.md`
 - [ ] 架构变化已对照 `architecture.md`
 - [ ] 每轮 review / 修复都已写入“Review / 修复记录”
-- [ ] 同类返工已用字段值、行形状、位置与 schema 维度的负例矩阵验收，不只记录单点 PASS
+- [ ] 同类返工已用字段值、行形状、位置、schema、持久化重读、transport actual fact 与资源上限维度的负例矩阵验收，不只记录单点 PASS
 - [ ] 若改变 source/artifact terminal publication，已运行 snapshot provenance 专项与独立 checker
+- [ ] 若改动 source closure/生成 artifact，terminal artifact 已独立提交或按单 commit 政策 amend 折叠；最终 PR HEAD 与受测 source tree 等价且 snapshot checker PASS
 - [ ] 若修改文档体系，`AGENTS.md` 仍能发现 `SOP.md`，SOP 稳定编号与核心权威入口未被无替代删除
 - [ ] 对漂移文档的处理是就地纠偏，或已明确记录拆分/历史化的替代入口、兼容路径和理由

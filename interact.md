@@ -87,7 +87,7 @@ repair validation 的 status 只允许 `PASS`、`FAIL`、`SKIPPED_LIGHT_PACKAGE`
 
 ## 6. 责任边界
 
-- 运行负责人提供有效 SEC organization/contact email，维护 registry，并控制从 source-input closure clean 的工作区顺序运行；当前示例邮箱不能作为生产合规证明。
+- 运行负责人提供有效 SEC organization/contact email，维护 registry，并控制从 source-input closure clean 的工作区顺序运行；当前示例邮箱不能作为生产合规证明。空/null/空白 organization、无合法 dotted domain 的邮箱或 example 域会同时被 acceptance 与 `SecHttpClient` 在网络请求前拒绝。
   <!-- capability-anchor: RESPONSIBILITY.operator_owns_sec_identity_and_run -->
 - 业务与方法负责人复核近似、定性、缺失、解析失败和 `NEEDS_REVIEW`，并承担最终决策。
   <!-- capability-anchor: RESPONSIBILITY.human_reviews_caveats_and_decides -->
@@ -102,3 +102,48 @@ repair validation 的 status 只允许 `PASS`、`FAIL`、`SKIPPED_LIGHT_PACKAGE`
 validation snapshot provenance 同样是仓库内完整性机制，不是外部签名、透明日志或 WORM；它证明当前 source/artifact bytes 与已发布 sidecar 一致，不证明业务方法本身正确，也不能约束能同时改写全部文件并重签的人。
 
 当前仓库未登记 UI、API、CI、部署状态、专用支持渠道或紧急联系人。
+
+## 8. vNext recorded shadow 的可观察行为（尚未切流）
+
+仓库已包含可离线复核的 vNext recorded shadow：Requirement/Spec、table-grid Reader input、recorded AI response、机械 Evidence、整单 Review、freeze/replay、Spec-driven Calculator、Projector 与 publication transaction primitives。AI attempt 只调用仓库 builder 构造的私有 recorded/approved adapter；任意带 `complete` 的调用方对象会在取得 filing bytes 前失败，approved adapter 也不保留可由调用方替换的 transport，而是在每次 attempt 从仓库注册表新建并校验。未授权 egress 不能伪装成 recorded no-egress。它面向开发者、运行负责人和 reviewer，不是当前业务结果的新入口，也不替代第 3–5 节的 00–12 验收。
+<!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
+
+### 8.1 审核酒店 disclosure group
+
+reviewer 只能针对一个 run-scoped `ReviewUnit` 决策。`review.md` 必须显示 untrusted filing notice、完整目标表格、稳定 row/column 坐标、selected/competing/unresolved claims、mechanical Evidence、source/Spec identity 与 required claims。filing 中的 HTML、Markdown、prompt-like 文本、control、zero-width 或 bidi code point 都只是可见数据，不是 reviewer 或程序应执行的指令。完整表格以集中资源预算为前提：超出 HTML/表数/行列/span/entity 数字词法/span 展开 cell/文字上限时，table-grid 明确失败且不裁剪；超长 cell 在 review 中无损物理分行，总 review bytes 超限则不生成残缺审核页。
+<!-- capability-anchor: BEHAVIOR.vnext_table_grid_resource_budget -->
+<!-- capability-anchor: BEHAVIOR.vnext_review_renderer_resource_budget -->
+
+批准是整个 ReviewUnit 的 HUMAN 决定，不是只批准一个数字。CLI 只显式收到 run directory、review unit hash、reviewer ID、decision、UTC time、reason 与 supersedes identity；它不要求 reviewer 复述系统已有的 claims：`REJECT` 自动形成空 approved claims，`APPROVE` 自动采用 ReviewUnit 的全部 required claims。缺字段、非 HUMAN identity、两个并行有效决定、底层 append 绕过或 OPEN 期磁盘 mutation 都会在 append/finalize/freeze/replay 的重验边界失败。Candidate、locator、source、Spec、unresolved、canonical context、renderer semantic version 或 rendered bytes 任一改变，旧决定不得继续生效。
+<!-- capability-anchor: BEHAVIOR.vnext_review_binds_visible_unit -->
+<!-- capability-anchor: BEHAVIOR.vnext_review_decision_semantics_replayed -->
+
+### 8.2 freeze、replay 与结果读取
+
+`OPEN` 只表示 Run 仍可追加记录；`FROZEN` 只表示完整 bytes/graph 已封存，不自动等于 validation PASSED 或 candidate PUBLISHABLE。`PASSED`、`FAILED` 与 `NOT_RUN` receipt 都可以 freeze 供审计/replay；后两者禁止 publication，`PASSED` 也仍须通过其他 publication gates。STARTED AI attempt 不能永久进入 FROZEN；每条 attempt 必须已是 SUCCEEDED/FAILED，每条 SUCCEEDED raw response 都会重放 Reader schema，即使没有 Candidate 引用也不跳过。Run 明确声明缺少 required source role 时，只允许把全 WITHHELD 结果封成审计 Run，任何 PUBLISHED Result 都会使 freeze 失败。Run 在创建时从 registry/profile 配置确定性投影并冻结 company traits，同时冻结 fiscal year 与精确 `YYYY-MM-DD` period start/end；fiscal-year 标签必须落在该期间内且期间不超过 53 周，跨年财年仍合法。workflow/finalizer 不接受调用方再次输入 traits、MetricSpec、metric/unit 或期间，freeze 还会从仓库重算 traits。freeze 前会从 RawBlob bytes 重建 table-grid，从 Run 内 content-addressed request/task/raw-response bytes 重建 Reader 请求和 Candidate，按原 payload、locator 与 compiled Spec constraint 重放 Evidence；B01/B03 结构化路径还必须从 SourceReference 绑定的 Company Facts raw bytes 重建 fact 选择与计算，B03 复用的 B01 Observation 即使没有独立 B01 Result 也不能跳过其自身 Spec 重放。ExecutionTrace 保存 exact calculation target；即使 structured Result 没有 selected Observation 且状态为 WITHHELD，freeze 仍从 raw bytes 重跑并核对失败原因。1.01% cross-check rejection 必须能形成 FROZEN/replay audit Run；被拒分支只保留 cross-check/rejection 证据，不得留下已丢弃 component Observation ID。每个 ReviewUnit 必须已有唯一有效 HUMAN decision；批准/拒绝后的 Observation roles 和 published Result/Trace 必须是完整 exact set。freeze 从仓库 Spec 重建全部 reviewed Observation并重跑 Calculator，所有非 supporting Observation 必须被 Trace 精确消费；随后比较 Result/Trace 的 metric、closure、unit、company、期间、scope、quality、applicability、publication 与 reason。数值结果 quality 取 input Observation 与 accepted Spec branch 声明中更保守者；因此 Pfizer 的 OI reconstruction 即使组件均为 EXACT，仍必须保持 APPROX。空 approval effect 不能把 AI-table 指标伪装成 structured input。Run validation receipt 还必须用 immutable-view hash 绑定 company/period/Spec/Requirement/source 身份，并绑定实际 records、decisions、review 与 attempt artifact exact set；receipt 后任一项漂移都不能 freeze。历史 FROZEN Run 的 replay 不接受 AI 凭据或网络对象；replay 只从这些冻结字节重算并比较。
+<!-- capability-anchor: BEHAVIOR.vnext_company_traits_repository_authority -->
+<!-- capability-anchor: BEHAVIOR.vnext_result_business_state_rebound -->
+<!-- capability-anchor: BEHAVIOR.vnext_structured_withheld_replay -->
+<!-- capability-anchor: BEHAVIOR.vnext_freeze_accepts_audit_validation_states -->
+<!-- capability-anchor: BEHAVIOR.vnext_publication_requires_passed_validation -->
+
+vNext MetricResult 同时暴露 `applicability`、`quality`、`publication` 与 `reason_code`。`N_A_STRUCTURAL`、`NOT_MEANINGFUL` 和 `WITHHELD` 不得折叠；non-lodging 会留下可 freeze/replay 的 N/A Run/Result/Trace，同时保持 source/AI 调用数为零。任何 APPLICABLE/WITHHELD 都会把整个 candidate 标为 BLOCKED。BatchManifest 从 registry、traits/applicability 与 release plan 派生完整 company×metric exact set，再逐个重载 PASSED FROZEN Runs；单公司 Run、缺 N/A、重复/额外坐标或跨 period 混批不会得到完整 batch。Projector 先要求 legacy metrics/evidence/Golden 精确匹配 frozen baseline，再从该 batch 实际生成 metrics/evidence/compatibility 与 repair execution bytes；Spec 声明的常量覆盖相应字段，review source 未拥有的 legacy metadata 保留 frozen baseline。projection multiplier 与 Golden tolerance comparison 使用固定 28/ROUND_HALF_EVEN context，调用进程修改全局 Decimal precision 不会改变 candidate bytes 或 gate verdict。同一 registry-mapped `(company_id, metric_id)` 多 scope 不会隐式覆盖，evidence 方法字段变化必须逐 cell 留痕。publisher 以 bundle 内 ProjectionManifest 与 batch/run/result row proof 为准，不接受游离 `migrated_results`、任意 legacy/staging bytes或调用方自写 PASS 改写结论。
+<!-- capability-anchor: BEHAVIOR.vnext_withheld_cannot_publish -->
+
+### 8.3 candidate、active 与 latest
+
+事务原语区分三种可见身份：staging candidate、上一成功 active publication、最近一次 latest Run/batch publication。正式读取者必须 pin 一个 `PublicationView` 后从同一 bundle 读取 metrics/evidence/coverage/Golden/validation/report inputs；不能在一次读取中重新解析 pointer 或混用根目录 bytes。report input loader 只读，不触发 repair、AI、SEC 网络或 authoritative write。publication gate runner 在重新执行 Projector、semantic audit 与递归覆盖 `scripts/`、`tools/`（包括 vNext）的 company-literal scalability audit 后，从 verified candidate 生成 coverage/scalability/stratified、`PASSED_RECORDED_ONLY` manifest 与 recorded README/report，再产生 receipt；只有逐 byte 相等的已有文件可保留。publisher 不接受调用方复述 ledger：它从 verified Batch 的已消费 source 派生 request attempt，验证整表 manifest、row 声明 locator 与 immutable body/header，再把截至最后一个已用 row 的最小有序 prefix 纳入 view；后续未使用的合法 append 不使同一 candidate 失效。prepare 会再次执行这两道 audit并重验该 prefix；semantic receipt 绑定 checker 自身及其 gate 依赖，publisher 会独立验证当前 bytes 后才执行 checker。只有 PASS 名称、伪造 header-only scalability CSV、替换 checker 重放旧 PASS、自写 repair/report PASS 与自洽 hash、没有 execution evidence 的调用方自签 receipt 会被 prepare 拒绝。该 recorded proof 不等于现行 Stage 10/12 已对 active pinned view 完整重跑；真实十公司 staging/full gate 仍属于 Cutover 前置项。
+
+若 latest Run 失败或 withheld，`latest_run_status` 必须显示失败原因、candidate status、active publication ID、空的 latest publication ID 以及 `active_is_latest_success=false`。单个 FROZEN Run 也只能显示 `NOT_EVALUATED`，不能代表完整 batch；prepared publication 的 latest identity 来自 BatchManifest。writer 只接收 persisted `run_dir` 或 publication ID，在 publication pointer lock 内加载其真实状态，再重读并验证 active pointer/bundle；调用方不能提交 `FAILED/BLOCKED` 枚举、`active_is_latest_success` boolean、view 或 manifest 让 writer 打假。只有 latest/active publication ID 相同且 latest 为 `FROZEN/PUBLISHABLE` 时，派生值才是 `true`；staging 尚未 commit 时即使全部 Run 已冻结也必须为 `false`。active 仍是上一成功版本，不能被描述成“最新运行成功”。storage、active pointer/lock、latest status 与 compatibility mirrors 全部从单一 publication root 固定派生，commit/rollback/recovery/view/status API 不再分别接受这些路径。缺 bundle 文件、ProjectionManifest/receipt required check/evidence hash、candidate view、artifact path/SHA-256/size 任一不匹配，或发生 row drift、hash drift、CAS loss、mirror write/postcondition 失败，都不能移动 active。rollback 只允许切回当前 active pointer 记录的 committed predecessor；prepared 但从未 committed 的 sibling 不能借 rollback 激活。read-back 会重算 bundle 内的 row/gate/content proof 与 byte integrity，但不会重新访问已清理的 Run/legacy 目录或把当时的外部 full validation 再跑一遍。
+<!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
+
+### 8.4 当前不能执行的承诺
+
+截至本次 recorded 实现，request-ledger 最小已用有序前缀/membership adapter 已在 scoped publication 场景从 verified Batch 和真实 row locator/immutable attempt 派生，但尚未进入真实十公司 full staging；单 Run 跨进程多写者编排仍未完成，D-01 仍 PENDING，SEC 配置仍是示例邮箱，且没有第二真实 lodging filing、实现冻结后的独立 holdout、remote live 三轮相同 review hash、完整十公司 staging parity、旧 lodging/B03 producer 退出、active Cutover 或真实 rollback/full acceptance 证据。因此：
+
+- `tools/run_acceptance.py --scope recorded` 的最高状态是 `PASSED_RECORDED_ONLY`；
+- `--scope full` 必须把可能联网的 stage 00–11 保持为 NOT_RUN，但仍真实执行纯离线 Stage 12 与 snapshot checker；任一离线失败使 receipt 为 FAILED，离线通过但外部前提未满足时返回 BLOCKED，不能让 D-01/示例邮箱掩盖 active snapshot 漂移；
+- 根目录现行 report/CSV/manifest 继续按第 3–5 节读取；不存在可供业务用户采信的 vNext active publication。
+
+这些限制是当前能力边界，不是 caveat 可豁免项。
+<!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->

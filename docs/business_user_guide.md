@@ -162,7 +162,7 @@ full validation 需要本地 raw evidence、请求日志和 concept inventory �
 - status 为 `NEEDS_REVIEW`、`PARSE_FAILED` 或关键 `NOT_EXTRACTED`。
 - `OK_APPROX`、`TEXT_QUAL` 或复杂表格结果将影响高风险决定。
 - 需要改变 company registry、报告期、指标定义或 successor/predecessor 口径。
-- live 刷新前 `config/sec_config.json` 尚未配置有效的 SEC organization 与 contact email。
+- live 刷新前 `config/sec_config.json` 尚未配置有效的 SEC organization 与 contact email；acceptance 与实际 SEC client 共用同一 validator，空/null/空白 organization、畸形邮箱和 example 域都会在联网前失败。
 - Golden、P0 validation、workspace 完整性、分层审计或 snapshot checker 出现失败，或 full 关键检查为 `NOT_EVALUATED_MISSING_EVIDENCE`。
 - 需要外部审计接受、生产发布或正式业务批准。
 
@@ -172,6 +172,35 @@ full validation 需要本地 raw evidence、请求日志和 concept inventory �
 
 仓库目前没有登记具体联系人、即时通信频道或紧急升级路径。需要升级时应由仓库负责人明确分派，不能在文档中虚构渠道。
 
-## 10. 最短建议
+## 10. vNext recorded shadow 如何复核
+
+vNext recorded shadow 已能让开发者和审核人离线演示完整表格输入、模型候选留痕、机械 Evidence、整单 HUMAN Review、freeze/replay、Spec-driven B03 和 publication transaction primitives。
+<!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
+
+但它尚未成为业务结果入口。业务人员当前仍从第 4 节所列 root manifest、snapshot checker、report 和 CSV 开始，不应在 `artifacts/vnext/` 中自行挑选一个 OPEN/FROZEN Run 当成正式结果。
+
+审核 recorded lodging ReviewUnit 时：
+
+1. 确认 `review.md` 显示完整目标表，而不是只显示命中行；所有 filing 文本均标为 untrusted data。
+2. 同时阅读 selected、competing、unresolved、cell locator、local scope labels、机械检查与 required claims。
+3. 只有具名 HUMAN reviewer 能批准整单；required claims 必须来自仓库中重新编译且 hash-bound 的完整 Spec，只批准 B10 或一个数值、忽略 B11/ADR/competing/unresolved 都不成立。
+4. 任一表格、locator、source、Spec、unresolved 或 reviewer 实际看到的 rendered bytes 改变，原决定应失效并重新审核。
+5. Company traits 只能从 registry/profile 配置投影，并在入口与 freeze 两次核对；调用方不能把 Pfizer 临时标成 lodging。Run 还会固定精确 `YYYY-MM-DD` 起止日和 role→metric/unit；财年标签必须落在最长 53 周的精确期间内，但允许跨日历年。B10 把 percent 转为 ratio，B11/ADR 若不是 USD 则整单 WITHHELD。B01 结构化结果保留 SEC fact 的 reported unit，不把 EUR 数值改贴 USD 标签。
+6. 每个 ReviewUnit 在 freeze 前必须已有唯一有效 HUMAN decision；published/supporting Observation 和最终 Result/Trace 必须按批准范围完整出现，不能删掉一项后只验证剩余记录。AI-table 指标不能用空 approval effect 冒充 structured input，未被 Trace 消费的游离 Observation 也不能进入 FROZEN Run。
+7. STARTED AI attempt 不能进入 FROZEN Run；每条 attempt 必须已终止为 SUCCEEDED/FAILED。freeze 会从保存的 exact request、task contract 和每条 SUCCEEDED raw response bytes 重放严格 Reader schema，即使该 attempt 没有 Candidate 引用也不跳过；随后逐字段重建 reviewed Observation、重跑 Calculator 并比较 Result/Trace 的值、scope、quality、applicability、publication 与 reason。只有相邻对象中的 digest、ID 或自洽公式字符串相同，不构成审计证明。
+8. B01/B03 还会从 SourceReference 绑定的 Company Facts raw bytes 重新选择结构化 fact。B03 即使不发布独立 B01 Result，也必须先按 B01 Spec 重算复用的 Revenue Observation；没有 selected Observation 的 structured WITHHELD 也要从 Trace 保存的 exact calculation target 重跑，不能把调用方传入的 Revenue 或失败理由当成已验证事实。
+9. Run validation receipt 必须同时绑定 Run 的 company/period/Spec/Requirement/source 身份与实际 records、decisions、review、AI bytes；receipt 后改变任一项都不能 freeze。manifest 明确声明缺少 required source role 时，只允许冻结全 WITHHELD 的失败审计，不能同时保留 PUBLISHED Result。
+<!-- capability-anchor: BEHAVIOR.vnext_review_binds_visible_unit -->
+
+未来存在 active publication 后，任何 APPLICABLE/WITHHELD 或不完整 bundle 都不能替换 active。Projector 必须重新加载由 registry/applicability/release plan 派生的 complete BatchManifest 及其全部 PASSED FROZEN Runs，生成完整 legacy-compatible candidate，并拒绝缺公司、缺 N/A 或同一 legacy key 的多个 scope；publisher 必须读取 bundle 内 ProjectionManifest，不能用另一份游离 Result 把 BLOCKED 改成 PUBLISHABLE。publication gate runner 必须从 verified candidate 生成 coverage/audit/recorded validation/report，再以无自引用 view 同时绑定 Requirement、Batch/Run/Result proof、截至最后一个已消费 request row 的最小 ledger prefix、row 声明 locator、predecessor、每项 gate execution evidence和所有非 receipt artifact 的 path/SHA-256/size；rollback 只能回到当前 active 已记录的 committed predecessor。
+<!-- capability-anchor: BEHAVIOR.vnext_withheld_cannot_publish -->
+
+判断展示版本必须同时读取 active pointer 与 latest run status：active 是当前可用的上一成功完整版本；latest 可能失败、withheld 或仍在 staging。status writer 只接收 persisted Run directory 或 publication ID，在 pointer lock 内加载真实状态并验证 active pointer/bundle；不接受调用方自报的状态枚举、boolean、view 或 manifest。bundle storage、pointer/lock、status 和 mirrors 全部从单一 publication root 派生，调用方不能分别定义互相矛盾的路径。`active_is_latest_success` 由两者 publication ID 是否相同派生。FAILED/BLOCKED 不得携带 latest publication ID，不能把旧 active 描述成最新运行成功。
+<!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
+
+当前还没有可供业务采信的 vNext active publication。request-ledger 最小已用有序前缀/membership adapter 已有 scoped recorded 验证，但尚未经过真实十公司 full staging；单 Run 跨进程多写者编排、外部 AI 决策、有效 SEC 身份、第二真实布局、独立 holdout、live 三轮稳定性、完整 staging parity、旧 producer 退出、Cutover 与真实 rollback/full validation 尚未完成。recorded PASS 只能证明离线组件，不证明这些条件。
+<!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
+
+## 11. 最短建议
 
 先看 manifest，再跑 snapshot checker，然后看 status 与 evidence，最后看 gate。看到空值不要猜，看到零值先确认语义，看到 GO WITH CAVEATS 要继续读 caveat。

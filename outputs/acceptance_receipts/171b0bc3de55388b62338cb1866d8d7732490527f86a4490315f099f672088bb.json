@@ -1,0 +1,152 @@
+{
+  "schema_version": 1,
+  "scope": "recorded",
+  "status": "FAILED",
+  "started_at_utc": "2026-07-29T14:17:47.921665+00:00",
+  "finished_at_utc": "2026-07-29T14:18:03.744061+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/Users/lyuhongwang/opt/anaconda3/bin/python3.9",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests/vnext",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "interpreter": "/Users/lyuhongwang/opt/anaconda3/bin/python3.9",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 1078,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "ab02244bd16cf332a961e104c912738980587ce4bff681c8c405124ebaa0db9f",
+      "stderr_size": 11622,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-t",
+        ".",
+        "-p",
+        "test_*.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "duration_ms": 10329,
+      "stdout_sha256": "c1cd6807797eec9f4a006fa994db7d033ad9ad61baf8d9d5d26b20310647c2c0",
+      "stdout_size": 1839,
+      "stderr_sha256": "26a9dc1af5610ef4cd3c94129971ae0e4d75b750fb35b8cdf57f8b9041caca5a",
+      "stderr_size": 1818,
+      "reason": "NONZERO_RETURN_CODE",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "-m",
+        "unittest",
+        "tests.test_validation_provenance",
+        "tests.test_validation_provenance_light_package"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 3424,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "c8f9537788235a73f74899cfc5da262799027e46bd699153d7be9e7e7e5181a9",
+      "stderr_size": 121,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "tools/check_vnext_semantics.py",
+        "--repo-root",
+        ".",
+        "--output",
+        "outputs/semantic_audit_receipt.json",
+        "--secret-token-env",
+        "VNEXT_SECRET_SCAN_TOKEN",
+        "--secret-root",
+        "artifacts/vnext",
+        "--secret-root",
+        "outputs"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 97,
+      "stdout_sha256": "da66f330ff2eb6f0bd21ab6480fa96f34548a626e1a1361e94ccf9c511d584ec",
+      "stdout_size": 109,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE",
+        "VNEXT_SECRET_SCAN_TOKEN"
+      ]
+    },
+    {
+      "argv": [
+        "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+        "tools/check_no_company_literals.py"
+      ],
+      "interpreter": "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/bin/python3.14",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 801,
+      "stdout_sha256": "9d790f2e376d752859e16f80b7b53f3fae78d805ab3134e165fdc4d3bd62c3fd",
+      "stdout_size": 63,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "PYTHONDONTWRITEBYTECODE"
+      ]
+    }
+  ],
+  "external_blockers": [
+    {
+      "code": "D01_EXTERNAL_APPROVAL_PENDING",
+      "detail": "Remote model, filing egress, retention, and provider policy are unapproved."
+    },
+    {
+      "code": "SEC_CONTACT_EMAIL_IS_EXAMPLE",
+      "detail": "Live SEC stages require an accountable organization and contact email."
+    },
+    {
+      "code": "SOURCE_INPUT_CLOSURE_NOT_CLEAN",
+      "detail": "Source-input files are dirty: 01_SOP_SEC_10公司单年指标计算_直接SEC.md,02_指标定义_SEC_10公司单年指标.md,AGENTS.md,SOP.md,TESTING.md,architecture.md,capability_contract.json,catalog/company_traits.yaml,catalog/disclosures/lodging_kpi_table.md,catalog/metrics/B01_revenue.md,catalog/metrics/B03_ebitda_margin.md,catalog/metrics/B10_occupancy.md,catalog/metrics/B11_revpar.md,config/validation_source_policy.json,docs/business_user_guide.md,docs/validation_snapshot_provenance.md,interact.md,requirements/ai_first_v3_3_1/FSD.md,requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md,requirements/ai_first_v3_3_1/ISSUE_CONTRACT.md,requirements/ai_first_v3_3_1/baseline_manifest.json,requirements/ai_first_v3_3_1/decision_register.json,requirements/ai_first_v3_3_1/legacy_path_inventory.json,scripts/sec_pipeline.py,scripts/vnext/__init__.py,scripts/vnext/ai_adapter.py,scripts/vnext/calculator.py,scripts/vnext/canonical.py,scripts/vnext/constraints.py,scripts/vnext/evidence.py,scripts/vnext/observations.py,scripts/vnext/projector.py,scripts/vnext/publication.py,scripts/vnext/reader.py,scripts/vnext/reader_input.py,scripts/vnext/records.py,scripts/vnext/render.py,scripts/vnext/replay.py,scripts/vnext/report.py,scripts/vnext/requirements.py,scripts/vnext/review.py,scripts/vnext/run_store.py,scripts/vnext/sources.py,scripts/vnext/specs.py,scripts/vnext/states.py,scripts/vnext/table_grid.py,scripts/vnext/traits.py,scripts/vnext/workflow.py,tests/__init__.py,tests/fixtures/vnext/sample_lodging.html,tests/test_validation_provenance.py,tests/vnext/__init__.py,tests/vnext/common.py,tests/vnext/test_acceptance_runner.py,tests/vnext/test_ai_reader_contract.py,tests/vnext/test_b03_calculator.py,tests/vnext/test_canonical_hashes.py,tests/vnext/test_evidence_checker.py,tests/vnext/test_legacy_projector.py,tests/vnext/test_publication.py,tests/vnext/test_reader_input_manifest.py,tests/vnext/test_replay.py,tests/vnext/test_report_read_only.py,tests/vnext/test_requirement_baseline.py,tests/vnext/test_review_binding.py,tests/vnext/test_review_renderer.py,tests/vnext/test_semantic_audit.py,tests/vnext/test_source_records.py,tests/vnext/test_spec_compiler.py,tests/vnext/test_state_model.py,tests/vnext/test_table_grid_locator.py,tools/check_vnext_semantics.py,tools/run_acceptance.py,tools/vnext_review.py"
+    }
+  ],
+  "artifact_hashes": {
+    "outputs/scalability_audit.csv": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+    "outputs/semantic_audit_receipt.json": "47b07bdcccdbac9a9d804fe15fb9ccdd8223e169bb5c3ced65fd16682453014b"
+  },
+  "acceptance_receipt_id": "sha256:171b0bc3de55388b62338cb1866d8d7732490527f86a4490315f099f672088bb"
+}
