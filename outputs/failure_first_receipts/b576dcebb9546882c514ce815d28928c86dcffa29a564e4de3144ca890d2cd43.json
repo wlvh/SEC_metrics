@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-HOLDOUT-FREEZE-CLOSURE-001",
+  "observed_at_utc": "2026-08-06T13:18:35Z",
+  "expected_failure": "Production freeze omitted bridge, operator, stage wrapper, or config bytes",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_cutover_qualification.CutoverQualificationTest.test_production_freeze_covers_bridge_operator_and_stage_wrappers",
+      "-v"
+    ],
+    "duration_ms": 200,
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH"
+    ],
+    "error_class": "AssertionError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "SEMANTIC_TREE_UNCHANGED",
+    "return_code": 1,
+    "combined_output_sha256": "7e84a63f2f7730e053472e3c74ae4691bf4096f6dd6bdf4fd9e712d2d1f55a78",
+    "combined_output_size": 1459
+  },
+  "failure_first_receipt_id": "sha256:b576dcebb9546882c514ce815d28928c86dcffa29a564e4de3144ca890d2cd43"
+}

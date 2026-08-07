@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-README-GENERATOR-POSTPROCESSOR-CLOSURE-001",
+  "observed_at_utc": "2026-08-06T16:01:32Z",
+  "command": [
+    "PYTHONDONTWRITEBYTECODE=1",
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_readme_matches_generator_and_stable_postprocessor",
+    "-v"
+  ],
+  "return_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "957f86ecabeaae7fa691add1fd32f9851731f1a052f8ace79f24df7c3b39c407",
+  "stderr_size": 1280,
+  "expected_failure": "build_readme omitted the stable validation-reading-routes block, so direct generator output and the required post-processed checked-in README could not be identical",
+  "recorded_root_mutation": {
+    "path": "README_RUN.md",
+    "before_sha256": "5afe261bb5cfa7558567d941cf72583df8a5e3c6828dc331bd91741c62ab2674",
+    "after_sha256": "6374958cd9a06461d0c685134f6409f9ed4ac09fa3ef79f47ee96a4239c56ee0"
+  },
+  "outcome": "FAILED_BEFORE_FIX",
+  "evidence_level": "FAILURE_FIRST_NOT_ACCEPTANCE",
+  "failure_first_receipt_id": "sha256:89b44d18a9332ec9cb00fceda3f240777965fa2c391f5be032fc2ef15dfacf79"
+}

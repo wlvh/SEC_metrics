@@ -1,0 +1,27 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest -v tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_remote_adapter_direct_complete_requires_live_source_authority tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_remote_attempt_rejects_factory_request_without_sec_authority",
+  "duration_ms": 179,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "Both public remote paths invoked the repository transport instead of raising AIAdapterError before egress.",
+  "output_sha256": "55b84272f42285c263931625955e0eb45bb17467a580d39a760d77aeae3ddc58",
+  "output_size": 2310,
+  "production_file_sha256": "56d0b67fa6733795963524d041ff8a07598e32a257921d96dbd6caf23a248420",
+  "receipt_id": "sha256:971adba13861bfd986bd318c963bc7f4013305dd02bad926164d236dd951a7eb",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-07T07:42:52Z",
+  "return_code": 1,
+  "scenario_id": "REMOTE_SOURCE_AUTHORITY_BYPASS_PRE_FIX",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "stderr_sha256": "55b84272f42285c263931625955e0eb45bb17467a580d39a760d77aeae3ddc58",
+  "stderr_size": 2310,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "test_file_sha256": "73c2301ee09a4f2863774fe89bcc48e21ac4e8f774a9626af0faeebe0c6effd8"
+}

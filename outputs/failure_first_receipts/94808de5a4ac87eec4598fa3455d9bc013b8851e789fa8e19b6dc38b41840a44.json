@@ -1,0 +1,27 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest -v tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_remote_authorized_method_rejects_imported_token_and_raw tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_openai_transport_class_rejects_caller_raw_bytes tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_openai_transport_factory_rejects_caller_raw_bytes",
+  "duration_ms": 109,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "The imported module token plus private raw bytes, direct _OpenAIResponsesTransport construction, and the importable OpenAI transport factory all reached observable transport instead of failing before egress.",
+  "output_sha256": "a18b03fa3cb7c39b4d1327015d8dedf9dada6ffc9291875c4769361867f3c379",
+  "output_size": 3231,
+  "production_file_sha256": "bb59930f4fe76caa2e3b8102dcad51d5cdf16cfd8f8b8e0d5616752db59502e1",
+  "receipt_id": "sha256:94808de5a4ac87eec4598fa3455d9bc013b8851e789fa8e19b6dc38b41840a44",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-07T08:18:06Z",
+  "return_code": 1,
+  "scenario_id": "REMOTE_RAW_CALLABLE_BYPASS_PRE_FIX",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "stderr_sha256": "a18b03fa3cb7c39b4d1327015d8dedf9dada6ffc9291875c4769361867f3c379",
+  "stderr_size": 3231,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "test_file_sha256": "38a06fbefef6a98d9573ba316bbe846c52fef245d26cef3f3b62568031f91e73"
+}

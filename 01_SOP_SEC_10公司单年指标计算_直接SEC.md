@@ -266,9 +266,9 @@ Codex 要做：
 
 所有文本/表格抽取必须保存原文片段。
 
-#### vNext recorded shadow 方法（尚未替代 M6 active 路径）
+#### vNext formal 方法（尚无 active publication）
 
-Issue #12 的 recorded shadow 把 lodging 表格路径拆成以下数据交接：
+Issue #12 的同一 recorded/live production path 把 lodging 表格路径拆成以下数据交接：
 
 ```text
 已审计 SEC raw bytes / SourceReference
@@ -283,9 +283,9 @@ Issue #12 的 recorded shadow 把 lodging 表格路径拆成以下数据交接�
 
 Reader 前不得按 occupancy、RevPAR、ADR、scope 或公司词筛选 table bytes；模型必须返回 selected、competing 与 unresolved claims。程序可检查 locator、文本、单位、local labels 和 `RevPAR ≈ ADR × Occupancy` 声明式 identity，但不能替 reviewer 决定 comparable/systemwide/worldwide/current-year 的经济口径。reviewer 实际看到的完整表格、Evidence、Spec/source 和 rendered bytes 共同进入 ReviewUnit hash。
 
-该 recorded 方法当前只有 synthetic fixture，不具备第二真实 filing、独立 holdout 或 live 三轮稳定性证据；现行 stage 09/11 的 lodging parser/repair 仍是 active 路径。D-01 未批准时禁止 remote Reader，不能把 recorded output 投影到当前根目录结果。
+effective D-01 已由 exact R3 Addendum 批准，OpenAI 只作为公开 SEC table-grid 的处理器，不是 evidence source；正式 transport 固定 Responses API、`gpt-5.6-terra`、`api.openai.com`、`store=false` 与 strict schema。release input plan先按exact source identity绑定ledger中最后一个验证通过的immutable request attempt；recorded可显式保留唯一legacy working locator，formal live拒绝该locator class。Stage 09/11 的 legacy lodging writer/resolver 已 fail closed，active Stage 10/11/12具备 pinned PublicationView分支；每个terminal cycle还要求report、Stage12与checker共用同一pinned transaction。qualification只能按第二布局receipt→semantic freeze及pre-holdout inventory→独立holdout推进；三次live attempt必须进入portable content-addressed audit closure。首次Cutover只读导入verified legacy A，再提交绑定A的formal B；generic public formal mutation入口不能绕过该编排，rollback也不启用旧parser。但当前没有第二真实布局/holdout合格 bytes、live三轮、HUMAN Decision、十公司staging或committed active publication，所以业务用户仍读取既有root snapshot。
 
-结构化 B01/B03 recorded shadow 不经过 AI。B01 复用现有 Company Facts selection policy 的显式、版本化展开；B03 只执行 `catalog/metrics/B03_ebitda_margin.md` 编译后的角色顺序、cardinality、guard、cross-check、Decimal、quality 与 formula，业务 fallback 不再进入通用 Calculator 控制流。该实现只有在 full staging parity、旧 producer 退出与 Cutover gate 完成后才可替代现行生产计算。
+结构化 B01/B03 不经过 AI。B01使用 Company Facts selection policy 的显式、版本化展开；B03只执行仓库 MetricSpec编译后的角色顺序、cardinality、guard、cross-check、Decimal、quality与formula。legacy B01/B03 production write和专用resolver已退出；只有formal staging、publication commit与full acceptance真实完成后，root mirrors才可视为该实现的正式生产结果。
 
 ### M7：组装矩阵、断言和报告
 

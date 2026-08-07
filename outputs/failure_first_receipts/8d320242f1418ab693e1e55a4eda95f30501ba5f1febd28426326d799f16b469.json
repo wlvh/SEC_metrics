@@ -1,0 +1,22 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_resume_rejects_run_from_previous_release_input_plan",
+  "duration_ms": 156,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "AssertionError: CutoverError not raised",
+  "output_sha256": "e48e1163c3899154ca643aaf7c0a07a57851139ce7cc134ef0e74f13dddc6ae4",
+  "output_size": 838,
+  "receipt_id": "sha256:8d320242f1418ab693e1e55a4eda95f30501ba5f1febd28426326d799f16b469",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-06T16:07:10Z",
+  "return_code": 1,
+  "scenario_id": "RELEASE_INPUT_PLAN_STALE_RUN_REUSE",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "test_file_sha256": "d38bdeb4d0857508f5eb677c150f5af106c2f1d1c9514a7d55b9be25424075e8"
+}

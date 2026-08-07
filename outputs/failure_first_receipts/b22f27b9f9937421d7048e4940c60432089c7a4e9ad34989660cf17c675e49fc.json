@@ -1,0 +1,32 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_public_output_dir_rejects_all_formal_overlaps_before_write",
+      "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_public_fake_python39_cannot_mutate_formal_authority"
+    ],
+    "duration_ms": 1429,
+    "outcome": "FAILED",
+    "return_code": 1,
+    "stderr_sha256": "4bd9bbd332003e101f82a2f69ad029932f665ddbf8442ae3084c397e51ec1110",
+    "stderr_size": 5433,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "expected_failure": "Acceptance must reject output/formal-authority ancestor or descendant overlap before writes and reject a caller fake Python 3.9 before it can mutate formal authority.",
+  "failure_first_receipt_id": "sha256:b22f27b9f9937421d7048e4940c60432089c7a4e9ad34989660cf17c675e49fc",
+  "observed_at_utc": "2026-08-07T08:23:28Z",
+  "observed_failures": [
+    "recorded and full public CLI wrote acceptance artifacts under formal namespace ancestors or descendants",
+    "caller shell executable rewrote the SEC ledger before formal state snapshot and self-reported PYTHON_3_9"
+  ],
+  "scenario_id": "FF-ACCEPTANCE-PREFLIGHT-AUTHORITY-001",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "test_source_sha256": {
+    "tests/vnext/test_acceptance_runner.py": "382cc9146272b6a9e46a1a9599f723c8ac94edd4c05bb53a3f4231d725d698a2"
+  }
+}

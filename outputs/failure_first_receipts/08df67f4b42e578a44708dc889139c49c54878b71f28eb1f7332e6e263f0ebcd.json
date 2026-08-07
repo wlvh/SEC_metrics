@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-FORMAL-PUBLICATION-001",
+  "observed_at_utc": "2026-08-06T10:19:14Z",
+  "expected_failure": "Formal Cutover publication generator is absent",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_formal_publication",
+      "-v"
+    ],
+    "duration_ms": 104,
+    "environment_keys": [],
+    "error_class": "ImportError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "b903ff0e4ab1c6d188f6025289a71a57048bbaafff4a19e8ffbb3553068d6270",
+    "stderr_size": 1093,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:08df67f4b42e578a44708dc889139c49c54878b71f28eb1f7332e6e263f0ebcd"
+}

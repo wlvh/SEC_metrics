@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-PUBLICATION-FIXTURE-B03-FORM-001",
+  "observed_at_utc": "2026-08-06T14:46:42Z",
+  "expected_failure": "Publication integration fixture must preserve frozen scalar B03 form while component Evidence stays source-grain",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_publication.PublicationTest.test_complete_batch_projects_publishes_and_reads_active_view"
+    ],
+    "duration_ms": 640,
+    "environment_keys": [],
+    "error_class": "PublicationError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "FIXTURE_B03_FORM_DRIFT_BLOCKED_PUBLISHABLE_BATCH",
+    "return_code": 1,
+    "stderr_sha256": "26b1e53cf4754f1bcd86309fae58903dbadb1b058f1735b04c8ba17ada5f8484",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "observed_failure": "legacy fixture encoded form as 10-K repeated four times while frozen production baseline and Projector require scalar 10-K",
+  "failure_first_receipt_id": "sha256:70ad41329aab54fddb052ca252a768478ee4275ca1429fa985a6c5d16060115b"
+}

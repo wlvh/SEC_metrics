@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scenario_id": "CUTOVER_ORCHESTRATOR_MISSING",
+  "observed_at_utc": "2026-08-06T10:14:51.458459+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_cutover_orchestrator",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_ms": 86,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "51e5d9ec893e5591aae55585c015b1fbed2da56a0390d1f3c8d67ebc47633efb",
+  "stderr_size": 959,
+  "expected_failure": "ModuleNotFoundError: No module named vnext.cutover",
+  "outcome": "FAILED_BEFORE_FIX"
+}

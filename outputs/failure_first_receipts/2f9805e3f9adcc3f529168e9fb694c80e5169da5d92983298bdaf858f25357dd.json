@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-FULL-SEC-ACQUISITION-BINDING-001",
+  "observed_at_utc": "2026-08-06T11:30:28Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_formal_binding_hashes_runs_batch_pointer_and_snapshot",
+    "-v"
+  ],
+  "return_code": 1,
+  "expected_failure": "Final full evidence must bind the exact live SEC acquisition receipt identity and bytes",
+  "observed_failure": "AcceptanceError: Cutover acceptance evidence is incomplete",
+  "outcome": "FAILED_BEFORE_FIX",
+  "failure_first_receipt_id": "sha256:2f9805e3f9adcc3f529168e9fb694c80e5169da5d92983298bdaf858f25357dd"
+}

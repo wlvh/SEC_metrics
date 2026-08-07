@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "fixture_id": "marriott-2025-real-layout-v1",
+  "company_id": "marriott_international",
+  "accession": "0001048286-26-000007",
+  "document_name": "mar-20251231.htm",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+  "source_repo_relative_path": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+  "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+  "request_attempt_id": "request:attempt:ab0e9646e2392c66a2c835f60030605e2fde2f3676774b18fbaa6dc2ccaca125",
+  "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+  "table_id": "table_000011",
+  "response_path": "fixtures/vnext/recorded/marriott_2025_reader_response.json",
+  "response_sha256": "6477df29c60e7388533ed8cadd2c60f6e7f379e13b8786addb94f22027e588e7",
+  "excerpt_path": "fixtures/vnext/recorded/marriott_2025_table_grid_excerpt.json",
+  "excerpt_sha256": "669bc989fd0686f143a53229e7044de01b83346f7ea6554a578801db862a856f",
+  "selection_reason": "Frozen Marriott production anchor with current public SEC 10-K source bytes.",
+  "layout_characteristics": [
+    "three horizontally separated KPI blocks",
+    "scope group and target row are separate",
+    "year headers use colspan",
+    "occupancy value uses colspan"
+  ],
+  "fixture_provenance_id": "sha256:cf74803789fc46b63da500a4d35dae0c8a30ac2ff709e9810835522772677ef1"
+}

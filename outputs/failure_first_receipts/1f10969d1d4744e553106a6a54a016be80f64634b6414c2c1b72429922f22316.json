@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-R3-GOVERNANCE-001",
+  "observed_at_utc": "2026-08-06T09:26:30Z",
+  "expected_failure": "R3 addendum and D-01 approval are not yet bound",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_requirement_baseline.RequirementBaselineTest.test_exact_snapshot_binds_r2_r3_release_and_approved_d01",
+      "tests.vnext.test_requirement_baseline.RequirementBaselineTest.test_r3_addendum_byte_change_invalidates_snapshot"
+    ],
+    "duration_ms": 65,
+    "environment_keys": [],
+    "error_class": "",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "94df4bde0c58e737eb94c9337651fda63e546e4e005a472843b32ed585380bad",
+    "stderr_size": 1676,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:1f10969d1d4744e553106a6a54a016be80f64634b6414c2c1b72429922f22316"
+}

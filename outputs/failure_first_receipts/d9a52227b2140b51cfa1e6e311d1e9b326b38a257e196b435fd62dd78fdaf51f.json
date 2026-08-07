@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-STAGE12-INITIAL-MIRROR-RECOVERY-001",
+  "observed_at_utc": "2026-08-06T13:20:25Z",
+  "expected_failure": "Stage 12 leaked the initial mirror mismatch before pointer-based recovery",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_report_read_only.ReportReadOnlyTest.test_public_stage12_recovers_initial_mirror_divergence",
+      "-v"
+    ],
+    "duration_ms": 200,
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH"
+    ],
+    "error_class": "ValueError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "RECOVERY_BOUNDARY_NOT_ENTERED",
+    "return_code": 1,
+    "combined_output_sha256": "15b83355b2de84aa3d4a7fe45abad6889e4f8c6f680fb5fb64f3bfdce4a7bf82",
+    "combined_output_size": 1687
+  },
+  "failure_first_receipt_id": "sha256:d9a52227b2140b51cfa1e6e311d1e9b326b38a257e196b435fd62dd78fdaf51f"
+}

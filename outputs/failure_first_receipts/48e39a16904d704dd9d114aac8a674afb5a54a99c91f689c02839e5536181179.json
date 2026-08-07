@@ -1,0 +1,31 @@
+{
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3.9 -m unittest discover -s tests/vnext -t . -p 'test_*.py' -v",
+  "expected_failure": "The final Python 3.9 vNext suite must expose any cross-module authority or public-CLI regression before recorded acceptance.",
+  "failure_first_receipt_id": "sha256:48e39a16904d704dd9d114aac8a674afb5a54a99c91f689c02839e5536181179",
+  "observed_at_utc": "2026-08-07T04:12:26Z",
+  "observed_failure_summary": {
+    "duration_seconds": "1239.226",
+    "errors": 7,
+    "failures": 2,
+    "return_code": 1,
+    "tests_run": 369
+  },
+  "outcome": "FAILED_BEFORE_FIX",
+  "representative_root_failures": [
+    {
+      "failure": "Publication authority lock is missing or unsafe after the isolated committed chain copied pointer/history/mirrors without the required lock file.",
+      "test": "tests.vnext.test_formal_fault_matrix.FormalFaultMatrixTest.test_precommit_source_never_switches_official_pointer"
+    },
+    {
+      "failure": "PublicationView rejected an isolated scenario before fault execution because its authority lock was absent.",
+      "test": "tests.vnext.test_formal_fault_matrix.FormalFaultMatrixTest.test_public_matrix_persists_every_required_fault_receipt"
+    },
+    {
+      "failure": "The positive test helper passed both caller recorded-response and fixture-id after the production boundary began rejecting mixed authority.",
+      "test": "tests.vnext.test_operator_cli.OperatorCliTest.test_recorded_prepare_status_list_and_show_use_real_run"
+    }
+  ],
+  "scenario_id": "FINAL_PYTHON39_VNEXT_FULL_FAILURE_FIRST",
+  "schema_version": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a"
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-FORMAL-ARTIFACT-CLOSURE-001",
+  "observed_at_utc": "2026-08-06T14:24:44Z",
+  "expected_failure": "Full snapshot policy must bind qualification, publication fault, and live Cutover audit directories",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.test_validation_provenance.ValidationProvenanceTest.test_document_roles_are_explicit"
+    ],
+    "duration_ms": 98,
+    "environment_keys": [],
+    "error_class": "AssertionError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "FORMAL_ARTIFACT_DIRECTORIES_UNCLASSIFIED",
+    "return_code": 1,
+    "stderr_sha256": "e646014f0f02acf8b3fd90e319d861f25b3555a43f875c108c63d6070a2c6ae2",
+    "stderr_size": 959,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:16e7ec540fec0bdf41f66c70d44fb44df7502b75d547957a64c7522075e84847"
+}

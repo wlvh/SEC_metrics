@@ -1,32 +1,38 @@
-"""Run stage 11 bounded repair and report generation.
+"""Run the stage 11 legacy builder or pinned active report reader.
 
-Stage 11 may build a report even when the terminal validation later fails. It
-therefore invalidates any older validation-snapshot provenance before changing
-artifacts and re-injects the task-oriented reading routes into the generated
-README after the monolithic stage returns.
+The pipeline stage itself selects the active PublicationView before any legacy
+write boundary. This wrapper deliberately performs no pre/post processing, so
+an active report read cannot invalidate provenance or rewrite root mirrors.
 """
 
+from __future__ import annotations
+
+import argparse
+import sys
 from pathlib import Path
-
-from validation_provenance import (
-    ensure_readme_routes,
-    ensure_report_provenance_notice,
-    invalidate_validation_snapshot,
-)
+from typing import Sequence
 
 
-WORKDIR = Path(__file__).resolve().parents[1]
+def build_parser() -> argparse.ArgumentParser:
+    """Build active read-back or isolated legacy-candidate arguments."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--workspace-dir")
+    return parser
 
 
-def main() -> None:
-    """Execute report build without leaving an older success proof reusable."""
-    invalidate_validation_snapshot(workdir=WORKDIR)
-    from sec_pipeline import run_stage
+def main(*, argv: Sequence[str]) -> None:
+    """Dispatch active read-back or one isolated candidate transaction."""
+    from sec_pipeline import run_legacy_candidate_stage, run_stage
 
-    run_stage(stage_name="11_build_report")
-    ensure_readme_routes(workdir=WORKDIR)
-    ensure_report_provenance_notice(workdir=WORKDIR)
+    arguments = build_parser().parse_args(list(argv))
+    if arguments.workspace_dir is None:
+        run_stage(stage_name="11_build_report")
+        return
+    run_legacy_candidate_stage(
+        stage_name="11_build_report",
+        workspace_dir=Path(arguments.workspace_dir),
+    )
 
 
 if __name__ == "__main__":
-    main()
+    main(argv=sys.argv[1:])

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-LEGACY-ROLLBACK-FULL-CLOSURE-001",
+  "observed_at_utc": "2026-08-06T14:55:07Z",
+  "expected_failure": "Rollback terminal fixture must retain every policy-bound append-only formal audit directory while the active pointer returns to imported legacy A",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_legacy_terminal_cycle.LegacyTerminalCycleTest.test_rollback_legacy_report_stage12_checker_then_restore"
+    ],
+    "duration_ms": 5308,
+    "environment_keys": [],
+    "error_class": "ValidationProvenanceError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "QUALIFICATION_AUDIT_DIRECTORY_ABSENT_AFTER_ROLLBACK",
+    "return_code": 1,
+    "stderr_sha256": "daff44f054d1687036cf0060a7681632979dfe21582f42ca36a88d249b72314e",
+    "stderr_size": 2301,
+    "stdout_sha256": "2d2dbd8edfd30cd021502b7a6d3cf2cdaf8e03a561f5c24d64c4b203bbbca886",
+    "stdout_size": 209
+  },
+  "failure_first_receipt_id": "sha256:9bad02e9d9f2c746670a43a782691ad2d170d3ed3222068f127c48c6159d874c"
+}

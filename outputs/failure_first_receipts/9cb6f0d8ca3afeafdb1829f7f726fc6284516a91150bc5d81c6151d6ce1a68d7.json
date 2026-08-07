@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-FAULT-MATRIX-LEGACY-PREDECESSOR-001",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_formal_fault_matrix"
+  ],
+  "return_code": 1,
+  "observed_failure": "FAULT_MATRIX_FORMAL_INPUT_INVALID rejected the verified LEGACY_BASELINE predecessor during the public precommit matrix",
+  "status": "FAILED_BEFORE_FIX"
+}

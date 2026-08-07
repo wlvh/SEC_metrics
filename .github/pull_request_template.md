@@ -29,6 +29,45 @@ PR body 原则：
 
 ---
 
+### Issue #12 formal Cutover（适用时必填）
+
+<!--
+R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细契约；R3 只覆盖其明确列出的决定。
+代码已实现、recorded 已通过、active 已提交和 full 已通过是四种不同结论。
+缺任一 Done gate 时本 PR 必须 Draft，开头写 Progress on #12，不得写 Closes #12。
+-->
+
+- base SHA / head SHA / tree shape：
+- immutable R2 hash / R3 Addendum hash / effective D-01 ID+hash：
+- SU-00–SU-11 矩阵：
+- AC-01–AC-28 矩阵：
+- R3-D1–R3-D7 落地位置：
+- recorded acceptance receipt：
+- second layout accession/source/hash/receipt：
+- post-freeze holdout accession/source/hash/receipt：
+- second-layout-before-freeze / pre-holdout exact inventory / production semantic freeze proof：
+- SEC Stage00/01/02/03/05 acquisition commands / ledger tail / inventory receipt / `formal_receipts.sec_acquisition` binding：
+- release source plan latest verified immutable request-attempt binding / live legacy-locator rejection：
+- live attempts/model/request/assistant-output/provider-envelope/observation hashes + portable audit closure：
+- HUMAN decision binding：
+- ten-company parity / migrated field diff / non-migrated diff：
+- B03 reconciliation receipt：
+- old producer/invariant migration + old-resolver-throws receipt：
+- 14项 fault-injection receipts / verified legacy A→formal B→receipts→private official CAS proof：
+- active publication / previous publication / root mirror hashes：
+- Cutover / rollback / restore receipts：
+- public generic formal receipt/commit fail-closed proof / three same-pinned-view terminal cycles：
+- full acceptance / final snapshot hash：
+- exact commands / interpreters / return codes / durations / stdout+stderr digests：
+- GitHub checks present/absent（本地结果不得写成CI PASS）：
+- 未完成与精确 blocker：
+
+当前 evidence level（recorded / staging / active / full）：
+
+-
+
+---
+
 ## 3. 变更范围
 
 <!--
@@ -142,7 +181,7 @@ Source / artifact provenance 变化：
 - terminal artifact diff 以独立 artifact commit 发布，或按单 commit 政策经
   amend 折叠进最终 commit；
 - 最终 PR HEAD 的 source tree 与受测 source tree 等价，且 snapshot checker exit 0。
-D-01、SEC 联系身份或 live 00–11 blocker 不能把离线 Stage 12/checker 写成 NOT_RUN。
+历史D-01 pending record不得误写成effective decision仍pending；缺SEC/OpenAI secret、HUMAN或live证据必须明确BLOCKED/NOT_RUN，不能伪造full PASS，也不能掩盖本可执行离线gate的真实失败。
 -->
 
 | 层级 / 目的 | 原样命令 | 实际结果 | 证据路径 |
@@ -161,9 +200,23 @@ D-01、SEC 联系身份或 live 00–11 blocker 不能把离线 Stage 12/checker
 
 -
 
+active / latest 区别：
+
+-
+
+OpenAI 处理器与 SEC evidence source 边界：
+
+-
+
+root mirrors 组原子性边界：
+
+-
+
 回滚方式：
 
 -
+
+<!-- rollback 只切回 committed predecessor 并重建 mirrors，不得重新启用旧 parser。 -->
 
 ---
 
@@ -183,3 +236,5 @@ D-01、SEC 联系身份或 live 00–11 blocker 不能把离线 Stage 12/checker
 - [ ] 若改动 source closure/生成 artifact，terminal artifact 已独立提交或按单 commit 政策 amend 折叠；最终 PR HEAD 与受测 source tree 等价且 snapshot checker PASS
 - [ ] 若修改文档体系，`AGENTS.md` 仍能发现 `SOP.md`，SOP 稳定编号与核心权威入口未被无替代删除
 - [ ] 对漂移文档的处理是就地纠偏，或已明确记录拆分/历史化的替代入口、兼容路径和理由
+- [ ] Issue #12 正文未修改，未新增 Issue 评论
+- [ ] 缺任一 formal Done gate 时 PR 保持 Draft、body 使用 `Progress on #12`，未写 `Closes #12`

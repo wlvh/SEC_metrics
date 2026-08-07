@@ -1,0 +1,23 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_readme_routes_formal_and_legacy_batches_without_root_writes"
+    ],
+    "return_code": 1,
+    "stderr_sha256": "340cde9b80e23b6f0c45a994ef158bad050d6f5ad7cbf56597c731f9a1bb0ca0",
+    "stderr_size": 27837,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "expected_failure": "Generated runbook must distinguish formal full acceptance from a complete external legacy candidate cycle and include Stage 12.",
+  "failure_first_receipt_id": "sha256:eddfc67fb2774f62fc1bc6aafb291cec0de8d759ca8b0fc5b94438c9d648c4f9",
+  "formal_state_changed": false,
+  "observed_at_utc": "2026-08-07T09:03:39Z",
+  "outcome": "FAILED_AS_EXPECTED",
+  "schema_version": 1,
+  "scenario_id": "FF-RUNBOOK-FORMAL-LEGACY-ROUTES-001"
+}

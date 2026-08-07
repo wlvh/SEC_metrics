@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-ACTIVE-STAGE12-ROOT-REWRITE-001",
+  "observed_at_utc": "2026-08-06T11:06:47Z",
+  "expected_failure": "Public Stage 12 rewrites a committed active report on provenance postflight failure",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_report_read_only.ReportReadOnlyTest.test_public_stage12_never_rewrites_active_root_mirrors",
+      "-v"
+    ],
+    "duration_ms": 143,
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH"
+    ],
+    "error_class": "",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "3fe6401ff281a5ee393493893f907b3748bd123916720a4f7a736fb826dbba00",
+    "stderr_size": 2120,
+    "stdout_sha256": "966878c097511ee0e6b37e953bb2eecce96ce65d6febbc7512ca48c8ed4008e1",
+    "stdout_size": 232
+  },
+  "failure_first_receipt_id": "sha256:79b543fd3343be8307955752ca25a29ea3e706092b17fe050bddf7a506bd990e"
+}

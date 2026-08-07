@@ -28,7 +28,7 @@ acceptance artifact closure
 
 - `config/validation_source_policy.json`：runtime/acceptance source 与非 source 文档角色的机器可读真相源。
 - `scripts/validation_provenance.py`：读取 policy、校验 SOP 权威引用、捕获、发布、验证和 fail-closed helper。
-- `scripts/11_build_report.py`：新一轮报告开始前删除可安全识别的旧 regular provenance；alias/非 regular 目标提前失败，避免 stale success proof。
+- `scripts/11_build_report.py`：无参数时只分派active stage 11；legacy candidate使用`sec_pipeline.py --workspace-dir <absolute-isolated-root> 11_build_report`显式选择数据根。wrapper不做pre/post authoritative write；隔离candidate一旦生成新artifact，旧sidecar会因byte mismatch失效，正式active路径只读一次pinned `PublicationView`。
 - `scripts/12_validate_repair.py`：stage 12 返回零之前，发布并重新验证 provenance。
 - `tools/check_validation_snapshot.py`：读取当前 checkout 与 artifact bytes 的独立验收入口。
 - `outputs/validation_snapshot_provenance.json`：成功 full/light terminal run 的 sidecar。
@@ -130,12 +130,14 @@ README_RUN.md
 
 sidecar 的 key set 必须和当前 manifest、mode 与 policy 推导的 expected set 完全一致；full artifact directory 中删除、新增、symlink、hardlink、size 变化或 SHA-256 变化都失败。light package 不要求被明确省略的 raw evidence，也不要求 full-only artifact directory，但仍绑定随包 source 与 artifact bytes，并标记 `LIGHT_PACKAGE_NO_GIT`。
 
-## 6. Publication 顺序
+## 6. Terminal publication 顺序
+
+没有 active pointer 的 legacy/light 或隔离 candidate 沿用原有终态链：
 
 ```text
 stage 11 start
-→ 删除旧 provenance
 → bounded repair / report / README
+→ 旧 provenance 因 artifact bytes 改变而不再可验收
 
 stage 12 start
 → 删除旧 provenance
@@ -147,7 +149,28 @@ stage 12 start
 → 成功后 stage 12 才 exit 0
 ```
 
-若既有 stage 12 已生成成功 manifest/report，但 provenance postflight 写入或自验失败，wrapper 会：
+正式 vNext active 路径使用不同但同样 fail-closed 的顺序：
+
+```text
+publisher 验证 complete candidate bundle
+→ 独占锁内写 content-addressed publication switch intent
+→ 原子写 root mirrors
+→ predecessor CAS 提交 outputs/active_publication.json
+→ 完成 committed switch receipt、重建/校验 mirrors 并删除 exact intent
+→ 启动一次 tools/vnext_terminal_cycle.py
+→ 单进程 pin 一次 PublicationView transaction
+→ stage 10 校验 bundle 内 Golden
+→ stage 11 复用该 transaction，只读并校验 bundle 内 report
+→ stage 12 复用该 transaction，校验完整 bundle、receipt 与 root mirrors
+→ 发布并回读 validation snapshot provenance
+→ snapshot verifier 复用同一transaction完成终态只读确认
+```
+
+active Stage 11 不调用 AI/SEC、不运行 repair，也不写 authoritative artifact。active Stage 12 允许写终态 provenance sidecar，但不得重新生成或改写 active bundle/root mirrors；报告 provenance notice 已是 prepared bundle 的受哈希内容。rollback/restore 只切 committed pointer 并从所选 bundle 恢复 mirrors，随后重新执行同一 Stage 11/12/checker 链，不会重新启用 legacy producer。
+
+switch intent位于`outputs/publication_switch_intents/<sha256>.json`，并以`PUBLICATION_SWITCH_INTENT`绑定previous/proposed pointer、previous switch receipt tip、switch mode及全部root mirror的present-or-null/hash/size。PublicationView在shared lock内先确认没有pending intent；pending、多份或tamper只读失败且不清理。writer/recovery仍持exclusive lock：pointer==proposed时补齐或幂等验证switch edge并从proposed bundle重建mirrors；pointer==previous时移除本事务edge、验证previous tip并恢复previous state；其他pointer状态fail closed。initial A→B失败会移除A孤儿edge、pointer与intent，避免下一次重试继承伪history。
+
+若legacy/light stage 12已生成成功manifest/report，但provenance postflight写入或自验失败，wrapper会：
 
 1. 删除可安全识别的未完成或旧 regular sidecar；unsafe alias 保留为 checker 必然拒绝的状态；
 2. 把 manifest `result` 降为 `FAILED`；
@@ -155,6 +178,8 @@ stage 12 start
 4. 非零退出。
 
 因此不会留下“stage 12 exit 0 但没有 source/artifact binding”的成功态。
+
+active stage 12不执行上述legacy FAILED/NO-GO重写。active postflight失败时只移除未完成sidecar、依据当时official pointer恢复root mirrors并非零退出；committed bundle及其manifest/report bytes保持不变。
 
 ## 7. 人工验收命令
 
@@ -184,16 +209,21 @@ python3 tools/check_validation_snapshot.py
 
 - sidecar 是仓库内自证明，不替代外部时间戳、签名或不可篡改存储；能同时改写全部文件并重签的人仍在本地信任边界内。
 - Git workspace guard 与后续 Git 命令不是一个原子系统调用，不宣称抵御恶意同 UID 进程的主动 namespace TOCTOU。
+- recorded acceptance 的 socket=0 证明依赖 macOS `/usr/bin/sandbox-exec` 对整个子进程树施加 `(deny network*)`；Python audit hook 只是第二道保护。该 executable 缺失时以 `OFFLINE_PROCESS_SANDBOX_REQUIRED` fail closed，不把较弱的同进程保护描述成等价证据。
 - source closure 是显式 policy。新增会影响运行或验收的路径时，必须在 `config/validation_source_policy.json` 分类，并同步文档和负例测试；新增 SOP 权威引用若未分类会被 checker 拒绝。
 - provenance 证明 bytes 一致，不证明业务方法本身正确；Golden、repair validation、外部审计和人工判断仍各自负责自己的结论。
 
-## 9. vNext recorded publication 与当前 provenance 的关系
+## 9. vNext formal publication 与当前 provenance 的关系
 
-Issue #12 的 Requirement Snapshot 和 `catalog/` 已进入当前 source-input closure。这意味着 exact FSD/Issue、Decision Register、baseline、旧路径 inventory、MetricSpec 或 trait 文件的 tracked/staged/untracked byte/path 变化都会使 stage 12 source capture 失败；删除这些目录不能缩小 closure。`tests/vnext/`、`scripts/vnext/` 与 vNext tools 也分别通过现有 `tests/`、`scripts/`、`tools/` runtime directory 进入同一 source tree。
+Issue #12 的 exact FSD、immutable R2、exact R3 Addendum、Decision Register、baseline、release plan、旧路径 inventory、semantic runtime、`catalog/`、`fixtures/` 与 vNext code/tests/tools 都进入 source-input closure。Candidate binding使canonicalizer semantic version 2→3，source-plan latest verified immutable request-attempt binding使其3→4；当前semantic runtime versions hash为`sha256:394bbd29f4f8d67ef07a085c8e3e5c84db6c2ac22deee3e587f1e1a8684c59e8`。任一 R2/R3/FSD/Decision 或 semantic byte/path 变化都会使旧 Requirement、approval、Run、Batch、publication 与 snapshot失效；GitHub 当前可变 Issue body不是运行时唯一 authority。
 
-当前 acceptance artifact closure 仍是第 5 节的现行 00–12 root artifact 集合。仓库尚未完成 Cutover，也没有已提交的 `artifacts/vnext/active_publication.json`，因此不能声称现有 `outputs/validation_snapshot_provenance.json` 已绑定 vNext Run、ReviewUnit、Trace、publication bundle 或 latest status。把未发布的 OPEN/FROZEN workspace 加进现行 sidecar，反而会把开发临时状态误写成当前业务 snapshot。
+机器可读policy还把以下目录定义为full artifact closure：`artifacts/vnext/qualification`、`evidence/request_attempts`、`outputs/failure_first_receipts`、`outputs/publication_fault_receipts`与`outputs/vnext_cutover_audits`。full snapshot要求这些目录存在、regular且递归bytes闭合；不能把failure-first、qualification、fault或portable live audit receipt留在临时目录后口头声明完成。
 
-vNext recorded transaction primitive 对每个 prepared bundle 自身执行另一层 exact binding；publisher 从 verified Batch 的实际消费路径派生 SourceReference/`request_attempt_id` exact set，以 current-schema ledger 的有序行身份验证整表 manifest、row 声明的 portable locator 与 immutable body/header，再只绑定截至最后一个已消费 row 的最小有序 prefix；后续未被该 Batch 使用的合法 append 不改变 candidate view。该 adapter 尚待真实十公司 full staging，不能由 scoped recorded fixture 自证 full closure：
+qualification freeze不仅绑定production semantic tree hash，也绑定freeze时已存在的fixture/Run namespace exact inventory。第二真实布局必须先形成HUMAN-reviewed receipt；holdout fixture与Run必须在该inventory中不存在，且只能在freeze后加入。这样“post-freeze”由bytes与namespace证明，而不是时间口述。
+
+artifact closure 是动态的：没有 `outputs/active_publication.json` 时，沿用第 5 节的既有 root closure；pointer存在时，provenance verifier 通过一个 pinned `PublicationView` 读取 official pointer，验证唯一 selected immutable bundle、`publication_manifest.json`、bundle exact namespace与全部 root mirrors，并把这些 exact bytes纳入 sidecar。任意未被 pointer选择的 sibling publication、OPEN/FAILED workspace与 `latest_run_status` 不进入 active closure，避免把开发/失败尝试误写成业务 snapshot。
+
+每个 prepared bundle 自身还有一层 exact binding；release input plan先从通过manifest验证的ledger按exact source identity选择最后一个验证通过的immutable request attempt，并将attempt/body/header/class纳入plan identity；recorded可显式保留唯一legacy working locator，formal live拒绝该class。publisher再从verified Batch实际消费路径派生SourceReference/`request_attempt_id` exact set，验证整表manifest、声明locator与immutable body/header，并只绑定最小合法ledger prefix：
 
 ```text
 Requirement hashes
@@ -207,6 +237,12 @@ Requirement hashes
 → active pointer（唯一正式 commit point）
 ```
 
-bundle 的 `publication_validation_receipt.json` 在 preparation 前产生并被 manifest hash；最终 `outputs/acceptance_receipts/<receipt_id>.json` 必须位于 bundle 自哈希之外，在 commands 完成后引用 artifact hash 与状态，避免 receipt 把自身纳入自身 digest 的循环证明。`latest_run_status` 也独立于 active bundle，用来显示最近失败/withheld 尝试而不重写上一成功 publication。
+recorded writer最高生成`PASSED_RECORDED_ONLY`且不能移动正式pointer；formal writer要求clean committed source并生成`FULL_VALIDATION/PASSED` candidate。bundle 的 `publication_validation_receipt.json` 在 preparation 前产生并被 manifest hash；最终 acceptance receipt 位于 bundle 自哈希之外，避免循环证明。`latest_run_status` 独立于 active bundle，最近失败/withheld尝试不得改写上一成功 active。
 
-未来 Cutover 必须先扩展 machine policy/schema 和 snapshot checker，使成功 active provenance exact-bind Requirement、active pointer、完整 bundle manifest/files、FROZEN Run、review/rendered context、Trace、derived assets、publication validation receipt 与 ledger used prefix；compatibility mirrors 还必须逐字节等于 active bundle。rollback 只能把 pointer CAS 到一个已验证的 prior committed bundle，重建 mirrors 后重新运行只读 report 与 snapshot checker，再按相同规则恢复新 bundle。上述 active closure、真实 rollback 和 checker 集成当前均未完成，recorded publication tests 不能替代它们。
+acceptance receipt 还有一层独立的运行 authority binding：在 recorded/full gate 前记录 clean source commit/tree/file count，并绑定 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 Requirement hash map；recorded gate 后重读并要求 exact 相等，full final evidence还必须回绑同一值。live acquisition只从固定repository-owned `artifacts/vnext/cutover`恢复，caller不能覆盖workspace authority；pinned receipt在Cutover resume与full封口时都按当前`sys.executable` name/binary SHA-256、五条固定命令、ledger prefix/tail、attempt exact set和inventory current bytes机械重验。持久化前，runner递归把repo/output/current Python/Python 3.9/sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$PYTHON39`、`$SANDBOX_EXEC`等portable token；`runtime_bindings`保存executable name、availability与binary SHA-256，残余host path只保存path hash。本机绝对路径不会进入receipt，但logical/executed argv、return code、duration、stdout/stderr digest及NOT_RUN原因仍保留。acceptance 自己生成的 semantic/scalability receipts 位于本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/`，只能包含两个声明的 regular files；full 按 repo-owned path 重新打开并重算 SHA-256。root scanner outputs、caller 自报 hash、旧 receipt、absolute/`..`/symlink escape 或 dirty/drift source 均不能闭合该证据。这一层不替代 stage 12 sidecar，也不会把 recorded 提升为 full。
+
+正式core还exact固定module-owned repository、上述workspace、`outputs` legacy snapshot与publication root，fault-matrix public/core沿用相同authority。每次有效live调用（包括HUMAN/committed resume）都fresh运行固定SEC阶段；历史disk receipt只允许重验source-exact pinned semantic plan，不能作为本次执行证明，本次receipt以`invocation_sec_acquisition`单独进入audit/full closure。
+
+recorded runner 在启动子进程前逐 byte 备份 active pointer、root mirrors 与 provenance sidecar，OS sandbox同时禁止这些路径写入。若仍观测到漂移，runner先恢复 exact bytes，但 receipt 仍以 `RECORDED_ACTIVE_STATE_CHANGED` 失败；若结束状态不可读，则恢复后以 `RECORDED_GATE_EXECUTION_FAILED` 失败，不能因补偿成功而声称本次运行无漂移。full runner 在每次 Cutover child 返回后重新读取 official state；非零、HUMAN blocker或非法结果若意外提交，必须回到调用前 predecessor，首次无 pointer 时恢复调用前 root bytes，并持久化 recovery receipt。该补偿不回滚独立 append-only request ledger，不构成 HUMAN Decision，也不改变原 blocker。
+
+active closure与checker集成已有动态测试，但本轮仓库没有 committed active pointer，因此现有 sidecar仍不能证明vNext active Run/Review/Trace。真实 Cutover还必须生成第二布局/holdout资格、live三轮、HUMAN、十公司staging与previous publication evidence。三次live Run不能只引用可清理workspace：Cutover会把exact request/schema/assistant-output/provider-envelope/model/TransportObservation/Candidate/Evidence/Review/compatibility复制到`outputs/vnext_cutover_audits/<content-id>/`；Candidate绑定assistant-output hash，provider-envelope hash保持独立审计。acceptance删除或离开原workspace后仍按manifest逐byte重验。首次Cutover把冻结legacy root bytes只读导入为verified predecessor A，再提交formal B；public generic formal receipt/commit API不能执行该写入。随后执行new B→一次单进程terminal cycle→rollback A→同一终态入口→restore B→同一终态入口，每个cycle复用一个pinned transaction，并绑定五项gate exact set与结构化result文件SHA-256。rollback只切pointer并重建mirrors，不回滚request ledger，也不重新启用旧parser。当前无这些运行receipts，不能由实现测试替代。

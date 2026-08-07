@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-CUTOVER-PRECOMMIT-FAULT-MATRIX-001",
+  "observed_at_utc": "2026-08-06T11:24:53Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_fault_matrix_passes_before_first_official_pointer_mutation",
+    "-v"
+  ],
+  "return_code": 1,
+  "expected_failure": "Formal first Cutover has no precommit fault-matrix entrypoint and would mutate the official pointer before fault qualification",
+  "observed_failure": "AttributeError: vnext.cutover has no run_cutover_publication_fault_matrix attribute",
+  "outcome": "FAILED_BEFORE_FIX",
+  "failure_first_receipt_id": "sha256:77e815683f18a4eadda8bf7a81bbc50dd5062ef5b99e84973c4e88a55d304d21"
+}

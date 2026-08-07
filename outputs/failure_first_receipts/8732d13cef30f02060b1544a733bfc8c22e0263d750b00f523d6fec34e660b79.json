@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-RECORDED-FIXTURE-COLD-START-001",
+  "observed_at_utc": "2026-08-06T16:06:00Z",
+  "expected_failure": "Public operator has no content-addressed fixture discovery/shortcut module before implementation.",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.vnext.test_recorded_fixture_operator",
+        "-v"
+      ],
+      "duration_ms": 97,
+      "interpreter": "python3",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "stderr_sha256": "f2d8cd5764f3d3f50b0033b693eed33dc10bf729fca91f1069cd7d1384496866",
+      "stderr_size": 1005,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0
+    },
+    {
+      "argv": [
+        "python3.9",
+        "-m",
+        "unittest",
+        "tests.vnext.test_recorded_fixture_operator",
+        "-v"
+      ],
+      "duration_ms": 169,
+      "interpreter": "python3.9",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "stderr_sha256": "4b7fe64ebc4fb4e445aca3e272aa9b72b4099fa6a3fbd48d8600f15ad8ea5ae6",
+      "stderr_size": 891,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0
+    }
+  ],
+  "failure_first_receipt_id": "sha256:8732d13cef30f02060b1544a733bfc8c22e0263d750b00f523d6fec34e660b79"
+}

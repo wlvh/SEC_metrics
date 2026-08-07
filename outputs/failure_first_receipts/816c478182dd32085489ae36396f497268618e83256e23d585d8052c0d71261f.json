@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "scenario_id": "OLD_RESOLVERS_THROW_PUBLIC_CUTOVER_TEST_FLOW",
+  "observed_at_utc": "2026-08-06T15:38:56Z",
+  "evidence_tier": "TEST_ONLY_PUBLIC_FLOW",
+  "human_decision_evidence": "TEST_ONLY_NOT_ACCEPTANCE",
+  "test_symbol": "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+  "production_entrypoint": "vnext.cutover.run_cutover",
+  "workflow_stages_exercised": [
+    "release input plan",
+    "OPEN structured Run",
+    "three Reader Runs through the production Responses adapter",
+    "three explicit test-only HUMAN decisions",
+    "freeze and replay validation",
+    "complete BatchManifest",
+    "Legacy Projector strict compatibility",
+    "ProjectionManifest",
+    "formal public publication prepare and commit",
+    "official PublicationView read-back in an isolated repository"
+  ],
+  "retired_producers": {
+    "source": "sec_pipeline.RETIRED_LEGACY_PRODUCER_NAMES",
+    "count": 22,
+    "patched_behavior": "every named function raises AssertionError immediately",
+    "names": [
+      "apply_lodging_kpi_metrics",
+      "compatible_component_hits",
+      "custom_da_observation_note",
+      "lodging_candidate_from_cells",
+      "lodging_header_order",
+      "lodging_identity_error",
+      "lodging_kpi_fact_from_text",
+      "lodging_metric_orders",
+      "lodging_numeric_cells",
+      "lodging_quote_text",
+      "lodging_scope_matches",
+      "lodging_scope_row_labels",
+      "lodging_section_before",
+      "lodging_table_segments",
+      "non_fi_metric_rows",
+      "normalized_scope_text",
+      "repair_lodging_kpis",
+      "resolve_da_component",
+      "resolve_operating_income_component",
+      "scope_pattern",
+      "text_has_lodging_kpi_keywords",
+      "upsert_lodging_text_metric"
+    ]
+  },
+  "substituted_external_prerequisites": [
+    "SEC acquisition and inventory",
+    "OpenAI network transport response",
+    "second-layout and post-freeze holdout qualification receipts",
+    "publication fault-matrix prerequisite receipt"
+  ],
+  "executions": [
+    {
+      "interpreter": "python3",
+      "version": "Python 3.14.3",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+        "-v"
+      ],
+      "return_code": 0,
+      "reported_test_duration_seconds": 316.652,
+      "outcome": "PASSED"
+    },
+    {
+      "interpreter": "python3.9",
+      "version": "Python 3.9.12",
+      "command": [
+        "python3.9",
+        "-m",
+        "unittest",
+        "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+        "-v"
+      ],
+      "return_code": 0,
+      "reported_test_duration_seconds": 568.013,
+      "outcome": "PASSED"
+    }
+  ],
+  "proves": [
+    "the supported public run_cutover path reaches PUBLISHED with all retired lodging and B03 resolver symbols made unusable",
+    "the same test passes under the default interpreter and Python 3.9"
+  ],
+  "does_not_prove": [
+    "real SEC acquisition",
+    "real OpenAI live execution",
+    "real HUMAN acceptance decision",
+    "second-layout or post-freeze holdout qualification",
+    "ten-company staging",
+    "formal repository Cutover",
+    "full acceptance"
+  ],
+  "outcome": "PASSED_TEST_ONLY_PUBLIC_FLOW"
+}

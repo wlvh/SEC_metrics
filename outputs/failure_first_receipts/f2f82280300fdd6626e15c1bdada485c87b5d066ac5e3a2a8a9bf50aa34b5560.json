@@ -1,0 +1,22 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest tests.vnext.test_publication.PublicationTest.test_pre_pointer_crash_orphan_edge_cannot_authorize_pointer",
+  "duration_ms": 8749,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "AssertionError: PublicationError not raised after pointer was replaced by a pre-pointer crash orphan edge",
+  "output_sha256": "b02dd8aaf1b18d2840bdcba74c2593eef36fef1ff3048b072d592ec3f6f1fde6",
+  "output_size": 818,
+  "receipt_id": "sha256:f2f82280300fdd6626e15c1bdada485c87b5d066ac5e3a2a8a9bf50aa34b5560",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-06T16:41:15Z",
+  "return_code": 1,
+  "scenario_id": "PRE_POINTER_CRASH_ORPHAN_EDGE_AUTHORITY",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "test_file_sha256": "a40bebe5e17f6780518aacc100fbacd32ea6f5bc65488002a110f6677cd10e90"
+}

@@ -40,15 +40,24 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "status",
             "provider",
             "model",
+            "model_requested",
+            "model_returned",
+            "api",
             "endpoint_host",
             "transport_observation",
             "sampling_parameters",
             "reader_input_manifest_hash",
             "request_body_sha256",
             "request_body_path",
+            "reader_payload_sha256",
+            "reader_payload_path",
             "task_contract_sha256",
             "task_contract_path",
             "task_spec_semantic_hash",
+            "output_schema_sha256",
+            "output_schema_path",
+            "assistant_output_sha256",
+            "assistant_output_path",
             "raw_response_sha256",
             "raw_response_path",
             "provider_request_id",
@@ -120,7 +129,7 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "record_type",
             "candidate_hash",
             "attempt_id",
-            "raw_response_sha256",
+            "assistant_output_sha256",
             "disclosure_group",
             "source_reference_ids",
             "derived_asset_ids",
@@ -290,6 +299,9 @@ TEXT_FIELDS = {
     "media_type",
     "metric_id",
     "model",
+    "model_requested",
+    "model_returned",
+    "api",
     "observation_id",
     "period_end",
     "period_start",
@@ -302,6 +314,8 @@ TEXT_FIELDS = {
     "raw_asset_id",
     "raw_response_sha256",
     "raw_response_path",
+    "reader_payload_sha256",
+    "reader_payload_path",
     "reader_input_manifest_hash",
     "reader_input_manifest_id",
     "reason",
@@ -312,6 +326,10 @@ TEXT_FIELDS = {
     "request_attempt_id",
     "request_body_sha256",
     "request_body_path",
+    "output_schema_sha256",
+    "output_schema_path",
+    "assistant_output_sha256",
+    "assistant_output_path",
     "result_id",
     "result_contract_hash",
     "review_context_hash",
@@ -833,9 +851,9 @@ def _validate_enums(*, record_type: str, record: Mapping[str, object]) -> None:
         if record["reviewer_type"] != "HUMAN":
             raise RecordError("PoC review decision must be HUMAN")
     if record_type == "OBSERVATION_CANDIDATE" and re.fullmatch(
-        r"[0-9a-f]{64}", str(record["raw_response_sha256"])
+        r"[0-9a-f]{64}", str(record["assistant_output_sha256"])
     ) is None:
-        raise RecordError("Candidate response digest is invalid")
+        raise RecordError("Candidate assistant output digest is invalid")
     if record_type == "VERIFIED_OBSERVATION" and record["quality"] not in {
         "EXACT",
         "APPROX",
@@ -894,6 +912,10 @@ def _validate_record_semantics(
             "egress_attempted",
             "provider",
             "model",
+            "model_requested",
+            "model_returned",
+            "api",
+            "store",
             "endpoint_host",
             "region",
             "retention",
@@ -912,6 +934,9 @@ def _validate_record_semantics(
         for field in (
             "provider",
             "model",
+            "model_requested",
+            "model_returned",
+            "api",
             "endpoint_host",
             "region",
             "retention",
@@ -924,6 +949,8 @@ def _validate_record_semantics(
                 )
         if type(observation["egress_attempted"]) is not bool:
             raise RecordError("Attempt egress observation must be boolean")
+        if type(observation["store"]) is not bool or observation["store"]:
+            raise RecordError("Attempt must explicitly use store=false")
         for field in (
             "timeout_seconds",
             "retry_count",
@@ -947,7 +974,18 @@ def _validate_record_semantics(
             observation["endpoint_host"] != "none"
         ):
             raise RecordError("Non-egress attempt claims an observed host")
-        for field in ("provider", "model", "endpoint_host"):
+        if not observation["egress_attempted"] and (
+            observation["model_returned"] != "none"
+        ):
+            raise RecordError("Non-egress attempt claims a returned model")
+        for field in (
+            "provider",
+            "model",
+            "model_requested",
+            "model_returned",
+            "api",
+            "endpoint_host",
+        ):
             if record[field] != observation[field]:
                 raise RecordError(
                     "Attempt top-level transport fact differs: {}".format(
@@ -955,7 +993,10 @@ def _validate_record_semantics(
                     )
                 )
         sampling = record["sampling_parameters"]
-        if set(sampling) not in ({"temperature"}, {"temperature", "seed"}):
+        if set(sampling) not in (
+            {"temperature", "reasoning_effort"},
+            {"temperature", "reasoning_effort", "seed"},
+        ):
             raise RecordError("Attempt sampling fields are not exact")
         if type(sampling["temperature"]) is not int or sampling[
             "temperature"
@@ -963,6 +1004,8 @@ def _validate_record_semantics(
             raise RecordError("Attempt temperature must be integer zero")
         if "seed" in sampling and type(sampling["seed"]) is not int:
             raise RecordError("Attempt seed must be an integer")
+        if sampling["reasoning_effort"] != "none":
+            raise RecordError("Attempt reasoning effort must be none")
         started = _utc_timestamp(
             value=str(record["started_at_utc"]), field="started_at_utc",
         )
@@ -971,7 +1014,12 @@ def _validate_record_semantics(
         )
         if finished < started:
             raise RecordError("Attempt finished before it started")
-        for field in ("request_body_sha256", "task_contract_sha256"):
+        for field in (
+            "request_body_sha256",
+            "reader_payload_sha256",
+            "task_contract_sha256",
+            "output_schema_sha256",
+        ):
             if re.fullmatch(r"[0-9a-f]{64}", str(record[field])) is None:
                 raise RecordError(
                     "Attempt digest is invalid: {}".format(field)
@@ -988,14 +1036,39 @@ def _validate_record_semantics(
             r"[0-9a-f]{64}", response_digest
         ) is None:
             raise RecordError("Attempt response digest is invalid")
+        assistant_digest = str(record["assistant_output_sha256"])
+        assistant_path = str(record["assistant_output_path"])
+        if bool(assistant_digest) != bool(assistant_path):
+            raise RecordError("Attempt assistant output presence differs")
+        if assistant_digest and re.fullmatch(
+            r"[0-9a-f]{64}", assistant_digest
+        ) is None:
+            raise RecordError("Attempt assistant output digest is invalid")
         path_contract = {
             "request_body_path": "attempt_payloads/request_{}.bin".format(
                 record["request_body_sha256"]
+            ),
+            "reader_payload_path": (
+                "attempt_payloads/reader_payload_{}.json".format(
+                    record["reader_payload_sha256"]
+                )
             ),
             "task_contract_path": (
                 "attempt_payloads/task_contract_{}.json".format(
                     record["task_contract_sha256"]
                 )
+            ),
+            "output_schema_path": (
+                "attempt_payloads/output_schema_{}.json".format(
+                    record["output_schema_sha256"]
+                )
+            ),
+            "assistant_output_path": (
+                "attempt_payloads/assistant_output_{}.json".format(
+                    assistant_digest
+                )
+                if assistant_digest
+                else ""
             ),
             "raw_response_path": (
                 "attempt_payloads/response_{}.bin".format(response_digest)
@@ -1009,7 +1082,9 @@ def _validate_record_semantics(
                     "Attempt content-addressed path differs: {}".format(field)
                 )
         if record["status"] == "SUCCEEDED" and (
-            not response_digest or record["error_class"]
+            not response_digest
+            or not assistant_digest
+            or record["error_class"]
         ):
             raise RecordError("Successful attempt response state is invalid")
         if record["status"] == "FAILED" and not record["error_class"]:

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-PINNED-PROVENANCE-CYCLE-001",
+  "observed_at_utc": "2026-08-06T14:33:38Z",
+  "expected_failure": "Provenance reopened the mutable active pointer after pinned bundle reads began",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.test_validation_provenance.ValidationProvenanceTest.test_publish_cycle_never_reopens_pointer_after_internal_switch",
+      "-v"
+    ],
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "return_code": 1,
+    "duration_ms": 322,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0,
+    "stderr_sha256": "cb932f99faf37c4015bd247eaf0240a6deab78f1f72fc15582a52b9a87bd218b",
+    "stderr_size": 3582,
+    "reason": "ACTIVE_POINTER_REOPENED_DURING_CONSUMPTION",
+    "error_class": "CanonicalError",
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_legacy_persistence_helpers_reject_migrated_rows"
+  ],
+  "evidence_level": "FAILURE_FIRST",
+  "finished_at_utc": "2026-08-06T09:36:10.643001+00:00",
+  "observed_failures": [
+    "save_metrics accepted a migrated B01 row",
+    "save_evidence accepted a migrated B01 row",
+    "append_evidence accepted a migrated B01 row"
+  ],
+  "return_code": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "started_at_utc": "2026-08-06T09:36:10.564639+00:00",
+  "stderr_excerpt": "FFFF\n======================================================================\nFAIL: test_legacy_persistence_helpers_reject_migrated_rows (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_legacy_persistence_helpers_reject_migrated_rows) (writer='save_metrics')\nReject migrated metrics at every legacy CSV persistence helper.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<repository-root>/tests/vnext/test_legacy_cutover.py\", line 171, in test_legacy_persistence_helpers_reject_migrated_rows\n    with self.assertRaisesRegex(\n         ~~~~~~~~~~~~~~~~~~~~~~^\n        sec_pipeline.LegacyPathStillActiveError,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        r\"^LEGACY_PATH_STILL_ACTIVE:\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ):\n    ^\nAssertionError: LegacyPathStillActiveError not raised\n\n======================================================================\nFAIL: test_legacy_persistence_helpers_reject_migrated_rows (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_legacy_persistence_helpers_reject_migrated_rows) (writer='save_evidence')\nReject migrated metrics at every legacy CSV persistence helper.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<repository-root>/tests/vnext/test_legacy_cutover.py\", line 171, in test_legacy_persistence_helpers_reject_migrated_rows\n    with self.assertRaisesRegex(\n         ~~~~~~~~~~~~~~~~~~~~~~^\n        sec_pipeline.LegacyPathStillActiveError,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        r\"^LEGACY_PATH_STILL_ACTIVE:\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ):\n    ^\nAssertionError: LegacyPathStillActiveError not raised\n\n======================================================================\nFAIL: test_legacy_persistence_helpers_reject_migrated_rows (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_legacy_persistence_helpers_reject_migrated_rows) (writer='append_evidence')\nReject migrated metrics at every legacy CSV persistence helper.\n--------------------------------------------------------------",
+  "stderr_sha256": "60fea89dd52ba57f260fd23d419c6bc44db0b15ebe7de6a986123fd2bda3c076",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "test_target": "legacy persistence helper migrated-row rejection"
+}

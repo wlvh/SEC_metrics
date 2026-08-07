@@ -74,6 +74,8 @@ _IMMUTABLE_ARTIFACT_THREAD_LOCK = threading.RLock()
 OFFICIAL_SEC_HOSTS = frozenset({"www.sec.gov", "data.sec.gov"})
 REDIRECT_DISABLED_ERROR_PREFIX = "RedirectDisabled: "
 REPOSITORY_PATH_ANCHORS = ("evidence", "outputs", "tests", "config")
+SEC_ORGANIZATION = "axaxl"
+SEC_CONTACT_EMAIL_ENV = "SEC_CONTACT_EMAIL"
 
 
 class NoRedirectHandler(HTTPRedirectHandler):
@@ -97,7 +99,18 @@ class IncompleteRequestSnapshotError(FileNotFoundError):
 
 
 class SecIdentityError(ValueError):
-    """Report an unusable SEC User-Agent organization or contact email."""
+    """Report an unusable SEC User-Agent identity with a stable code."""
+
+    def __init__(self, *, code: str, detail: str) -> None:
+        """Retain the machine-readable failure code and human detail.
+
+        Args:
+            code: Stable operator/acceptance error code.
+            detail: Diagnostic that never contains the contact-email value.
+        """
+        self.code = code
+        self.detail = detail
+        super().__init__(f"{code}: {detail}")
 
 
 _NO_REDIRECT_OPENER = build_opener(NoRedirectHandler())
@@ -107,40 +120,52 @@ def validate_sec_identity(*, config: dict) -> tuple[str, str]:
     """Validate and normalize the accountable SEC User-Agent identity.
 
     Args:
-        config: Configuration containing explicit organization/contact fields.
+        config: Repository configuration containing the fixed organization.
 
     Returns:
-        Stripped organization and contact email.
+        Fixed organization and the validated environment-owned contact email.
 
     Raises:
-        SecIdentityError: On missing, null, blank, malformed, or example-only
-            identity values.
+        SecIdentityError: When the organization differs from ``axaxl`` or
+            ``SEC_CONTACT_EMAIL`` is missing, malformed, or reserved.
     """
-    for field in ("organization", "contact_email"):
-        if field not in config:
-            raise SecIdentityError(
-                "SEC config identity field is missing: {}".format(field)
-            )
-        if type(config[field]) is not str:
-            raise SecIdentityError(
-                "SEC config identity field must be text: {}".format(field)
-            )
+    # The approved organization is repository-owned; changing its spelling is
+    # an authority change and therefore fails before any network operation.
+    if "organization" not in config or type(config["organization"]) is not str:
+        raise SecIdentityError(
+            code="SEC_ORGANIZATION_INVALID",
+            detail=f"SEC organization must equal {SEC_ORGANIZATION}",
+        )
     organization = config["organization"].strip()
-    email = config["contact_email"].strip()
-    if not organization:
-        raise SecIdentityError("SEC organization cannot be blank")
-    if any(
-        ord(character) < 32 or ord(character) == 127
-        for character in organization
-    ):
-        raise SecIdentityError("SEC organization contains control characters")
+    if organization != SEC_ORGANIZATION:
+        raise SecIdentityError(
+            code="SEC_ORGANIZATION_INVALID",
+            detail=f"SEC organization must equal {SEC_ORGANIZATION}",
+        )
+
+    # The config file is not a credential authority. Reading the process
+    # environment here keeps the SEC client and live-acceptance gate identical.
+    if SEC_CONTACT_EMAIL_ENV not in os.environ:
+        raise SecIdentityError(
+            code="SEC_CONTACT_EMAIL_REQUIRED",
+            detail=f"{SEC_CONTACT_EMAIL_ENV} is required",
+        )
+    email = os.environ[SEC_CONTACT_EMAIL_ENV].strip()
+    if not email:
+        raise SecIdentityError(
+            code="SEC_CONTACT_EMAIL_REQUIRED",
+            detail=f"{SEC_CONTACT_EMAIL_ENV} is required",
+        )
     if re.fullmatch(
         r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@"
         r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
         r"(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+",
         email,
     ) is None:
-        raise SecIdentityError("SEC contact email is malformed")
+        raise SecIdentityError(
+            code="SEC_CONTACT_EMAIL_INVALID",
+            detail=f"{SEC_CONTACT_EMAIL_ENV} is malformed",
+        )
     domain = email.rsplit("@", maxsplit=1)[1].casefold()
     if domain in {
         "example.com",
@@ -148,7 +173,10 @@ def validate_sec_identity(*, config: dict) -> tuple[str, str]:
         "example.org",
         "localhost",
     } or domain.endswith((".example", ".invalid", ".test")):
-        raise SecIdentityError("SEC contact email uses a reserved domain")
+        raise SecIdentityError(
+            code="SEC_CONTACT_EMAIL_INVALID",
+            detail=f"{SEC_CONTACT_EMAIL_ENV} uses a reserved domain",
+        )
     return organization, email
 
 
@@ -190,8 +218,9 @@ def load_config(*, config_path: Path) -> dict:
     """Load centralized SEC HTTP configuration.
 
     Args:
-        config_path: UTF-8 JSON path with organization, contact_email,
-            rate_limit_per_sec, max_retries, and backoff_initial_seconds.
+        config_path: UTF-8 JSON path with the fixed organization, request rate,
+            retry count, and backoff. The contact comes only from the process
+            ``SEC_CONTACT_EMAIL`` environment variable.
 
     Returns:
         Parsed configuration dictionary.
@@ -202,7 +231,6 @@ def load_config(*, config_path: Path) -> dict:
         config = json.load(file_obj)
     required_keys = [
         "organization",
-        "contact_email",
         "rate_limit_per_sec",
         "max_retries",
         "backoff_initial_seconds",

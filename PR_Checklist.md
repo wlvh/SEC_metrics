@@ -59,7 +59,7 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 - [ ] `AGENTS.md` 仍把 `SOP.md` 作为标准流程的一级导航，没有用专项文档列表替代 SOP 路由。
 - [ ] 测试、fixture、命令、副作用或分层变化已同步 `TESTING.md`。
 - [ ] `SOP.md` 保持已有编号和导航职责，只保留动作、权威引用和验收，不复制易漂移的脚本清单或测试细节。
-- [ ] 若涉及 vNext，已核对 exact Requirement/Decision/SU 状态、`catalog/`、recorded/full 边界和当前 active 00–12 路径；没有把 shadow 原语写成已完成 Cutover。
+- [ ] 若涉及 vNext，已核对 exact FSD、immutable R2、exact R3 Addendum、Decision 单链、SU/AC、`catalog/`、recorded/staging/active/full 边界；没有把实现/recorded测试写成已完成 Cutover。
 
 ## 6. 测试与验证证据
 
@@ -76,11 +76,11 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 - [ ] light review 的 skipped、`LIGHT_PACKAGE_NO_GIT` 与受限状态没有写成 full validation。
 - [ ] 运行会覆盖 `evidence/`、`outputs/` 或报告的命令前使用了干净、隔离的 checkout。
 - [ ] 若运行 `scripts/11_build_report.py`，已按适用范围单独运行最终 `scripts/12_validate_repair.py` 和 `python3 tools/check_validation_snapshot.py`。
-- [ ] 若本 PR 改动 source-input closure 或 policy-bound 生成 artifact，全部 source/code/test/doc bytes 冻结后，已在 clean 隔离 checkout 运行 Stage 12；terminal artifact diff 已作为后续 artifact commit 发布，或按单 commit 政策经 amend 折叠进最终 commit。最终 PR HEAD 必须与受测 source tree 等价且 snapshot checker PASS。D-01 pending、SEC 示例邮箱或 live 00–11 未运行不能作为 Stage 12/checker 的 NOT_RUN 理由。
+- [ ] 若本 PR 改动 source-input closure 或 policy-bound 生成 artifact，全部 source/code/test/doc bytes 冻结后，已在 clean 隔离 checkout 运行适用的 Stage 12/checker；terminal artifact diff 已提交或折叠进最终 commit。最终 PR HEAD 必须与受测 source tree 等价。缺 live secret/HUMAN 不得被写成已有 full PASS，也不得掩盖本可执行离线 gate 的真实失败。
 - [ ] 修改 source/artifact provenance 时，已运行 dirty/staged/untracked、显式 source 缺失、tree/commit mismatch、artifact key/hash/size tamper、unsafe alias 与 postflight failure 负例。
 - [ ] 测试失败未通过修改 expected、放宽断言、重签旧证据或静默跳过来掩盖。
 - [ ] 对修复过的完整性不变量已运行负例矩阵，而不只是原始单点复现：删行/重复/多余集合、CSV 多余/缺失单元格、prefix/appended tail、跨 accession/document、append 后磁盘 mutation、transport policy/actual-fact failure path、untrusted-input 资源上限与报告写入失败按适用范围覆盖。
-- [ ] vNext PR 已分别记录 Python 3.9/default recorded tests、semantic/provenance/alignment、第二真实布局、独立 holdout、live 三轮、staging、旧 producer throw、Cutover 与 rollback/full 的 PASS 或 NOT_RUN/BLOCKED；`PASSED_RECORDED_ONLY` 没有写成 full。
+- [ ] vNext PR已分别记录Python 3.9/default tests、semantic/provenance/alignment、固定SEC acquisition/inventory命令与ledger-tail/inventory receipt、release source plan的latest verified immutable attempt binding及live legacy-locator拒绝、第二布局receipt→semantic freeze/pre-holdout inventory→独立holdout、live三轮portable audit closure、HUMAN、ten-company staging、old-resolver-throws、全部14项fault matrix、verified legacy A→formal B→bound receipts→private official CAS顺序、Cutover、rollback/restore与full receipt的真实PASS或NOT_RUN/BLOCKED；`PASSED_RECORDED_ONLY`没有写成full。
 
 ## 7. 用户与数据影响
 
@@ -93,9 +93,11 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 
 ## 8. 发布声明约束
 
-当前仓库没有 CI workflow、生产部署或自动调度实现。除非本 PR 的代码、配置和运行证据确实增加并验证了这些能力，否则 PR body 必须写“不适用”或“未实现”，不得声称 CI、部署、调度、前端、API 或 vNext 切换已经完成。
+当前仓库没有 CI workflow、生产部署、自动调度、UI 或 API。除非真实实现和运行证据增加这些能力，否则 PR body 必须写“不适用/未实现”。vNext formal代码存在也不等于active切换完成。
 
-vNext Cutover 声明还必须有 APPROVED D-01、有效 SEC 身份、clean committed isolated checkout、第二真实布局、实现冻结后的独立 holdout、remote live 三轮稳定性、完整 staging parity、旧 lodging/B03 producer 不可达、active pointer、并发/故障、previous-bundle rollback→report→snapshot checker→restore 和最终 full acceptance receipt。缺任一项只能发布 recorded/shadow 改动说明。
+vNext Cutover声明必须有APPROVED D-01、R3 Addendum hash、有效SEC/OpenAI环境、clean committed isolated checkout、固定SEC Stage00/01/02/03/05 acquisition/inventory receipt及其command/ledger-tail binding，并由final full receipt的`formal_receipts.sec_acquisition`绑定其path/bytes/hash/ID/type/status；release input plan还必须绑定exact source的latest verified immutable request attempt，formal live不得消费`LEGACY_WORKING_LOCATOR`。还必须有第二布局先于freeze、freeze-bound pre-holdout inventory、post-freeze holdout、remote live三轮portable audit closure、具名HUMAN、十公司strict parity、旧producer不可达、verified legacy A与formal B、active/previous publication、fault receipts、每个cycle同一pinned view的rollback→report/Stage12/checker→restore和最终full receipt。public generic formal receipt/commit入口必须fail closed。缺任一项时PR必须Draft，body保持`Progress on #12`，不得写`Closes #12`。
+
+root CSV/报告是active bundle compatibility mirrors；PR body必须说明active与latest分离、mirrors不向任意无PublicationView reader承诺组原子、rollback不启用旧parser、OpenAI不是SEC evidence source。
 
 流水线 GO 类自判与仓库内 snapshot provenance 都不等于外部审计接受或生产发布许可。
 
@@ -107,7 +109,7 @@ vNext Cutover 声明还必须有 APPROVED D-01、有效 SEC 身份、clean commi
 gh pr create --title "<标题>" --body-file PR_BODY.md --head <feature-branch> --base main
 ```
 
-成功后返回真实 PR URL，并明确 draft/ready 状态。用户未要求 draft 时，不自行创建 draft；用户未要求 PR 时，本节完全不执行。
+成功后返回真实 PR URL，并明确 draft/ready 状态。Issue #12 formal Cutover缺任一Done gate时只能创建/保持Draft；用户未要求PR时本节完全不执行。不得修改Issue正文或新增Issue评论来补Requirement。
 
 ## 10. 最终核对
 

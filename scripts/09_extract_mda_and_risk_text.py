@@ -6,16 +6,35 @@ Purpose:
     concern statements.
 
 Call relationships:
-    main calls sec_pipeline.run_stage for 09_extract_mda_and_risk_text.
+    main calls sec_pipeline.run_legacy_candidate_stage for the retained
+    non-migrated portion of 09_extract_mda_and_risk_text.
 """
 
-from sec_pipeline import run_stage
+from __future__ import annotations
+
+import argparse
+import sys
+from pathlib import Path
+from typing import Sequence
+
+from sec_pipeline import run_legacy_candidate_stage
 
 
-def main() -> None:
-    """Execute the MD&A and risk text extraction stage."""
-    run_stage(stage_name="09_extract_mda_and_risk_text")
+def build_parser() -> argparse.ArgumentParser:
+    """Build the explicit isolated-candidate command contract."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--workspace-dir", required=True)
+    return parser
+
+
+def main(*, argv: Sequence[str]) -> None:
+    """Execute Stage 09 only below the supplied isolated candidate root."""
+    arguments = build_parser().parse_args(list(argv))
+    run_legacy_candidate_stage(
+        stage_name="09_extract_mda_and_risk_text",
+        workspace_dir=Path(arguments.workspace_dir),
+    )
 
 
 if __name__ == "__main__":
-    main()
+    main(argv=sys.argv[1:])

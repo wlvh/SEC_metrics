@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "requirement_id": "ai_first_v3_3_1",
   "repository_commit": "c37cecdfe88344d78172dd9dc24bd4c445763901",
   "source_input_tree_sha256": "06015f6d66ae09f2dfe32ede121c544c93475297848edeea741fd9350a465f59",
@@ -8,11 +8,22 @@
   "baseline_source_policy_sha256": "9ce9a981a2d390984018eabd4f836bec8d0ef95c0b7dc7ccf24da31ac2f4804d",
   "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
   "issue_contract_revision": "R2",
+  "r3_addendum_revision": "R3",
   "issue_number": 12,
   "issue_url": "https://github.com/wlvh/SEC_metrics/issues/12",
   "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
-  "decision_register_sha256": "28f33a8f515cabde12297f13759066a2e9187b95bd59c798afb912fd1d0c9387",
-  "legacy_path_inventory_sha256": "e105ee13ae5c7edf80cc5e2ed668df3f975c0f9e21c72a99190db30f0b014f5e",
+  "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+  "decision_register_sha256": "14d7aeac0bd77d90bfad5a2f08560d9f923cabc924ef957b6804e5e41be274b9",
+  "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+  "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+  "semantic_runtime_versions": {
+    "calculator_semantic_version": "5",
+    "canonicalizer_semantic_version": "4",
+    "projector_semantic_version": "2",
+    "review_renderer_semantic_version": "2",
+    "spec_interpreter_semantic_version": "2"
+  },
+  "semantic_runtime_versions_hash": "sha256:394bbd29f4f8d67ef07a085c8e3e5c84db6c2ac22deee3e587f1e1a8684c59e8",
   "created_at_utc": "2026-07-29T12:47:40Z",
   "checked_in_validation_state": {
     "manifest_source_commit": "7dee963d82d5b768013c984e709d28408401eb00+dirty",

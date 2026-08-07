@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "evidence_type": "FAILURE_FIRST_TEST",
+  "captured_at_utc": "2026-08-06T10:00:20Z",
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "source_tree": "c023571102669eecdaf38aff7c0cd66488ed3ba6",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_full_scope_without_authorization_fails_before_commands",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_authorized_full_with_missing_prerequisite_runs_nothing",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 0.095891125,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "5b7084b867517c9d8bc476e43ac267d12e370e40f713b6a14621dc93ec2f7486",
+  "stderr_size": 2169,
+  "failure_code": "PSEUDO_FULL_MODE_STILL_PRESENT",
+  "failure_excerpt": "execute_acceptance does not accept explicit execute_live authorization",
+  "expected_before_fix": true
+}

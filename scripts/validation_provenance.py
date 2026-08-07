@@ -10,9 +10,21 @@ import uuid
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
+from typing import (
+    TYPE_CHECKING,
+    Dict,
+    Iterable,
+    List,
+    Mapping,
+    Optional,
+    Sequence,
+    Tuple,
+)
 
 from git_workspace import git_checkout_metadata_error, sanitized_git_environment
+
+if TYPE_CHECKING:
+    from vnext.publication import PublicationView
 
 SCHEMA = 1
 SOURCE_POLICY_SCHEMA = 2
@@ -23,6 +35,8 @@ REPORT = Path("REPORT_十公司财务指标.md")
 README = Path("README_RUN.md")
 SOP = Path("SOP.md")
 LIGHT_MARKER = Path("LIGHT_REVIEW_PACKAGE.marker")
+ACTIVE_POINTER = Path("outputs/active_publication.json")
+PUBLICATIONS_DIRECTORY = Path("outputs/publications")
 SOURCE_POLICY_KEYS = {
     "schema_version", "runtime_source_directories",
     "acceptance_source_files", "generated_artifacts",
@@ -61,13 +75,13 @@ README_BLOCK = """<!-- validation-reading-routes:start -->
 ## 执行新批次
 
 1. 使用干净 checkout，并配置有效 SEC organization/contact email。
-2. 按顺序运行阶段 `00`–`11`；stage 11 exit 0 只表示报告构建完成。
-3. 单独运行 `python3 scripts/12_validate_repair.py`。
-4. 只有 stage 12 exit 0、terminal manifest 成功，且 `python3 tools/check_validation_snapshot.py` 通过，才构成完整批次成功。
+2. 正式刷新只运行 `python3 tools/run_acceptance.py --scope full --execute-live`；它负责 Cutover、new/rollback/restore 三轮 terminal validation 与最终 full receipt。
+3. 内部 legacy 非迁移 candidate 按下文把阶段 `00`–`11` 统一指向一个源码 checkout 外的绝对隔离数据根；它不更新 active pointer 或 root mirrors。
+4. 只有 formal full 命令真实返回 0 才是正式完整批次成功；candidate stage 11、recorded receipt、NOT_RUN 或单独 checker 都不能冒充 full。
 
 ## Validation snapshot provenance
 
-- stage 11 在修改报告前删除可安全识别的旧 regular `outputs/validation_snapshot_provenance.json`；alias/非 regular 目标提前失败。
+- legacy candidate stage 11 在修改候选报告前删除可安全识别的旧 regular `outputs/validation_snapshot_provenance.json`；alias/非 regular 目标提前失败。active stage 11 只读 pinned view，不碰 sidecar 或 mirrors。
 - `config/validation_source_policy.json` 分类 runtime source、acceptance source、
   full artifact directory、generated artifact、发布治理和解释性文档；SOP
   权威引用必须有明确角色，解释性非权威文档不能作为运行权威。
@@ -140,6 +154,21 @@ class VerificationResult:
     def ok(self) -> bool:
         """Return whether verification found no errors."""
         return not self.errors
+
+
+@dataclass(frozen=True)
+class ValidationPublicationTransaction:
+    """Pin active publication authority for one validation consumption cycle.
+
+    Attributes:
+        publication_view: One verified immutable bundle view, or ``None`` for
+            the pre-Cutover legacy layout.
+        pointer_bytes: Exact pointer bytes observed around the one permitted
+            pointer parse, or ``None`` when no pointer existed at cycle start.
+    """
+
+    publication_view: Optional["PublicationView"]
+    pointer_bytes: Optional[bytes]
 
 
 def _utc() -> str:
@@ -691,13 +720,379 @@ def _full_artifact_directory_paths(
     return sorted(set(paths))
 
 
+def _validate_publication_transaction(
+    *, workdir: Path, transaction: ValidationPublicationTransaction
+) -> None:
+    """Require one transaction to remain bound to its initial pointer bytes.
+
+    Args:
+        workdir: Repository root owning the optional active pointer.
+        transaction: Cycle-local view and exact initial pointer bytes.
+
+    Expected output:
+        No pointer is parsed here. A byte change or appearance/disappearance
+        fails the cycle before a second authority can enter its artifact set.
+
+    Raises:
+        ValidationProvenanceError: The transaction shape, root ownership, or
+            current pointer bytes differ from the pinned observation.
+    """
+    if not isinstance(transaction, ValidationPublicationTransaction):
+        raise ValidationProvenanceError(
+            "Validation publication transaction type is invalid"
+        )
+    pointer_path = _repo(
+        workdir=workdir,
+        relative=ACTIVE_POINTER.as_posix(),
+    )
+    view = transaction.publication_view
+    if transaction.pointer_bytes is None:
+        if view is not None or os.path.lexists(pointer_path):
+            raise ValidationProvenanceError(
+                "ACTIVE_POINTER_CHANGED_DURING_VALIDATION_TRANSACTION"
+            )
+        return
+    if view is None or not os.path.lexists(pointer_path):
+        raise ValidationProvenanceError(
+            "ACTIVE_POINTER_CHANGED_DURING_VALIDATION_TRANSACTION"
+        )
+    if _read(path=pointer_path) != transaction.pointer_bytes:
+        raise ValidationProvenanceError(
+            "ACTIVE_POINTER_CHANGED_DURING_VALIDATION_TRANSACTION"
+        )
+    expected_bundle = _repo(
+        workdir=workdir,
+        relative=(
+            PUBLICATIONS_DIRECTORY / view.publication_id
+        ).as_posix(),
+    )
+    if view.bundle_dir != expected_bundle:
+        raise ValidationProvenanceError(
+            "Pinned publication view is not owned by validation root"
+        )
+
+
+def validate_validation_publication_transaction(
+    *, workdir: Path, transaction: ValidationPublicationTransaction
+) -> None:
+    """Revalidate one pinned terminal-cycle authority without reopening it.
+
+    Args:
+        workdir: Repository root owning the active pointer and bundle store.
+        transaction: Exact pointer bytes and ``PublicationView`` pinned once
+            at terminal-cycle start.
+
+    Expected output:
+        The pointer bytes and root-derived bundle identity still match the
+        initial observation.  No second pointer parse or view is created.
+
+    Raises:
+        ValidationProvenanceError: The pointer changed, disappeared, appeared,
+            or the view does not belong to the repository root.
+    """
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=transaction,
+    )
+
+
+def pin_validation_publication_transaction(
+    *, workdir: Path
+) -> ValidationPublicationTransaction:
+    """Parse the optional active pointer exactly once for one read cycle.
+
+    Args:
+        workdir: Repository root owning the active pointer and bundle store.
+
+    Returns:
+        A pinned formal view, or an explicit pointer-absent legacy transaction.
+
+    Raises:
+        ValidationProvenanceError: The pointer changes while it is opened or
+            the selected bundle cannot be verified from this repository root.
+    """
+    pointer_path = _repo(
+        workdir=workdir,
+        relative=ACTIVE_POINTER.as_posix(),
+    )
+    if not os.path.lexists(pointer_path):
+        return ValidationPublicationTransaction(
+            publication_view=None,
+            pointer_bytes=None,
+        )
+    initial_pointer = _read(path=pointer_path)
+    try:
+        from vnext import publication
+    except ImportError as error:
+        raise ValidationProvenanceError(
+            "Active publication verifier is unavailable"
+        ) from error
+    try:
+        view = publication.PublicationView.open(publication_root=workdir)
+    except (OSError, ValueError, publication.PublicationError) as error:
+        raise ValidationProvenanceError(
+            "Active publication bundle verification failed: {}".format(
+                error
+            )
+        ) from error
+    transaction = ValidationPublicationTransaction(
+        publication_view=view,
+        pointer_bytes=initial_pointer,
+    )
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=transaction,
+    )
+    return transaction
+
+
+def _active_publication_artifact_paths(
+    *,
+    workdir: Path,
+    publication_transaction: ValidationPublicationTransaction,
+) -> List[str]:
+    """Pin and validate the optional formal active-publication closure.
+
+    Args:
+        workdir: Repository root containing the official pointer, immutable
+            publication storage, and fixed-root compatibility mirrors.
+        publication_transaction: One cycle-local pointer/view observation.
+
+    Returns:
+        Empty for the legacy layout, otherwise the pointer, every file in the
+        one pointer-selected complete bundle, its manifest, and every mirror.
+
+    Raises:
+        ValidationProvenanceError: The pointer, active namespace, manifest
+            binding, artifact digest, or mirror parity is unsafe or differs.
+    """
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=publication_transaction,
+    )
+    view = publication_transaction.publication_view
+    if view is None:
+        return []
+    try:
+        from vnext import publication
+    except ImportError as error:
+        raise ValidationProvenanceError(
+            "Active publication verifier is unavailable"
+        ) from error
+    publication_id = view.publication_id
+    bundle_relative = PUBLICATIONS_DIRECTORY / publication_id
+    bundle_dir = view.bundle_dir
+    manifest = view.manifest
+    if not isinstance(manifest, dict):
+        raise ValidationProvenanceError(
+            "Active publication manifest root must be an object"
+        )
+    manifest_relative = (
+        bundle_relative / "publication_manifest.json"
+    ).as_posix()
+    records = manifest["files"]
+    if not isinstance(records, list) or any(
+        not isinstance(record, dict) or "path" not in record
+        for record in records
+    ):
+        raise ValidationProvenanceError(
+            "Active publication file records are invalid"
+        )
+    record_paths = [str(record["path"]) for record in records]
+    public_paths = {
+        relative
+        for relative in record_paths
+        if not relative.startswith(publication.INTERNAL_PREFIX)
+    }
+    internal_paths = set(record_paths) - public_paths
+    if (
+        len(record_paths) != len(set(record_paths))
+        or public_paths != publication.REQUIRED_BUNDLE_FILES
+        or any(
+            not relative.startswith(publication.INTERNAL_PREFIX)
+            for relative in internal_paths
+        )
+    ):
+        raise ValidationProvenanceError(
+            "Active publication bundle file exact set differs"
+        )
+
+    expected_files = set(record_paths) | {"publication_manifest.json"}
+    actual_files = set()
+    for path in bundle_dir.rglob("*"):
+        relative = path.relative_to(bundle_dir).as_posix()
+        if path.is_symlink():
+            raise ValidationProvenanceError(
+                "Active publication namespace contains a symlink"
+            )
+        if path.is_file():
+            actual_files.add(relative)
+        elif not path.is_dir():
+            raise ValidationProvenanceError(
+                "Active publication namespace entry is unsafe"
+            )
+    if actual_files != expected_files:
+        raise ValidationProvenanceError(
+            "Active publication namespace exact set differs"
+        )
+
+    closure = {ACTIVE_POINTER.as_posix(), manifest_relative}
+    for record in records:
+        relative = str(record["path"])
+        bundle_file_relative = (bundle_relative / relative).as_posix()
+        try:
+            bundle_content = view.read_bytes(relative_path=relative)
+        except (OSError, ValueError, publication.PublicationError) as error:
+            raise ValidationProvenanceError(
+                "Active publication artifact verification failed: {}".format(
+                    error
+                )
+            ) from error
+        closure.add(bundle_file_relative)
+        if relative in publication.ROOT_MIRROR_RELATIVE_PATHS:
+            mirror_relative = publication.ROOT_MIRROR_RELATIVE_PATHS[
+                relative
+            ]
+            mirror_content = _read(
+                path=_repo(
+                    workdir=workdir,
+                    relative=mirror_relative,
+                )
+            )
+            if mirror_content != bundle_content:
+                raise ValidationProvenanceError(
+                    "Active publication root mirror differs: {}".format(
+                        mirror_relative
+                    )
+                )
+            closure.add(mirror_relative)
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=publication_transaction,
+    )
+    return sorted(closure)
+
+
+def _active_legacy_import_proof(
+    *,
+    workdir: Path,
+    publication_transaction: ValidationPublicationTransaction,
+) -> Optional[Mapping[str, object]]:
+    """Read the optional verified legacy-import identity from active state.
+
+    Args:
+        workdir: Repository root owning the unique active pointer.
+        publication_transaction: Same pinned view used for artifact closure.
+
+    Returns:
+        ``None`` without an active imported predecessor, otherwise its strict
+        bundle-verified marker and frozen validation-manifest identity.
+
+    Raises:
+        ValidationProvenanceError: When an existing pointer or marker-bearing
+            bundle cannot be completely verified.
+    """
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=publication_transaction,
+    )
+    view = publication_transaction.publication_view
+    if view is None:
+        return None
+    try:
+        from vnext import publication
+    except ImportError as error:
+        raise ValidationProvenanceError(
+            "Active legacy import verifier is unavailable"
+        ) from error
+    try:
+        identity = publication.verified_legacy_baseline_identity(
+            publication_view=view,
+        )
+    except (OSError, ValueError, publication.PublicationError) as error:
+        raise ValidationProvenanceError(
+            "Active legacy import proof verification failed: {}".format(
+                error
+            )
+        ) from error
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=publication_transaction,
+    )
+    return identity
+
+
+def _legacy_manifest_commit_is_bound(
+    *,
+    workdir: Path,
+    manifest: Mapping[str, object],
+    source_snapshot: SourceSnapshot,
+    legacy_proof: Optional[Mapping[str, object]],
+    artifact_paths: Iterable[str],
+    digest_paths: Iterable[str],
+) -> bool:
+    """Authorize one historical manifest commit only through imported bytes.
+
+    Args:
+        workdir: Repository root containing the root validation manifest.
+        manifest: Parsed root terminal validation manifest.
+        source_snapshot: Current clean source closure being attested.
+        legacy_proof: Verified active legacy import identity, when present.
+        artifact_paths: Exact current artifact closure selected by policy.
+        digest_paths: Exact artifact keys included in the sidecar.
+
+    Returns:
+        Whether the old manifest commit is explicitly bound to the verified
+        active marker, baseline manifest, complete bundle, root mirror, and
+        current sidecar digest closure.
+    """
+    if legacy_proof is None or source_snapshot.source_commit is None:
+        return False
+    if (
+        legacy_proof["record_type"] != "LEGACY_BASELINE_IMPORT"
+        or manifest["mode"] != "FULL_VALIDATION"
+        or manifest["result"] != "PASSED"
+        or _commit_base(value=str(manifest["source_commit"])) is None
+    ):
+        return False
+    publication_id = str(legacy_proof["publication_id"])
+    prefix = (PUBLICATIONS_DIRECTORY / publication_id).as_posix()
+    # The exception is legal only when the sidecar binds both authorities and
+    # both copies of the frozen manifest, never from a marker claim alone.
+    required = {
+        ACTIVE_POINTER.as_posix(),
+        MANIFEST.as_posix(),
+        prefix + "/publication_manifest.json",
+        prefix + "/validation_run_manifest.json",
+        prefix + "/internal/legacy_baseline_import.json",
+        prefix + "/internal/legacy_baseline_manifest.json",
+    }
+    if (
+        not required.issubset(set(artifact_paths))
+        or not required.issubset(set(digest_paths))
+    ):
+        return False
+    manifest_bytes = _read(
+        path=_repo(
+            workdir=workdir,
+            relative=MANIFEST.as_posix(),
+        )
+    )
+    return (
+        len(manifest_bytes) == legacy_proof["validation_manifest_size"]
+        and hashlib.sha256(manifest_bytes).hexdigest()
+        == legacy_proof["validation_manifest_sha256"]
+    )
+
+
 def _artifact_paths(
     *,
     workdir: Path,
     manifest: Mapping[str, object],
     policy: SourcePolicy,
+    publication_transaction: ValidationPublicationTransaction,
 ) -> List[str]:
-    """Return the exact core, refreshed, and policy artifact file set."""
+    """Return one transaction's exact core and active artifact file set."""
     refreshed = manifest["refreshed_artifacts"]
     if not isinstance(refreshed, list) or any(not isinstance(x, str) for x in refreshed):
         raise ValidationProvenanceError("Validation manifest refreshed_artifacts must be a string array")
@@ -707,6 +1102,12 @@ def _artifact_paths(
     full_mode = manifest["mode"] == "FULL_VALIDATION"
     core = FULL_CORE if full_mode else LIGHT_CORE
     paths = set(core) | {"outputs/{}".format(x) for x in refreshed}
+    paths.update(
+        _active_publication_artifact_paths(
+            workdir=workdir,
+            publication_transaction=publication_transaction,
+        )
+    )
     if full_mode:
         paths.update(
             _full_artifact_directory_paths(
@@ -734,18 +1135,79 @@ def invalidate_validation_snapshot(*, workdir: Path) -> None:
     path.unlink()
 
 
-def publish_validation_snapshot(*, workdir: Path, source_snapshot: SourceSnapshot) -> Dict[str, object]:
+def publish_validation_snapshot(
+    *,
+    workdir: Path,
+    source_snapshot: SourceSnapshot,
+    publication_transaction: Optional[
+        ValidationPublicationTransaction
+    ] = None,
+) -> Dict[str, object]:
+    """Publish and self-check provenance within one pinned read transaction.
+
+    Args:
+        workdir: Repository root containing sources and artifacts.
+        source_snapshot: Clean source closure captured before terminal work.
+        publication_transaction: Optional already pinned Stage 12 view. When
+            absent this function opens at most one transaction for the cycle.
+
+    Returns:
+        Persisted provenance object after verification with the same view.
+    """
+    transaction = (
+        publication_transaction
+        if publication_transaction is not None
+        else pin_validation_publication_transaction(workdir=workdir)
+    )
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=transaction,
+    )
     policy = load_source_policy(workdir=workdir)
     manifest = _manifest(workdir)
     expected = {"FULL_VALIDATION": "PASSED", "LIGHT_REVIEW_MODE": "PASSED_WITH_CAVEATS"}
     mode, result = str(manifest["mode"]), str(manifest["result"])
     if mode not in expected or result != expected[mode]:
         raise ValidationProvenanceError("Only a successful full/light terminal manifest can be attested: mode={} result={}".format(mode, result))
-    if not _manifest_matches(str(manifest["source_commit"]), source_snapshot):
-        raise ValidationProvenanceError("Validation manifest source_commit does not identify the captured source commit")
     current = capture_source_snapshot(workdir=workdir)
     if current != source_snapshot:
         raise ValidationProvenanceError("Source input or Git HEAD changed during terminal validation")
+    artifact_paths = _artifact_paths(
+        workdir=workdir,
+        manifest=manifest,
+        policy=policy,
+        publication_transaction=transaction,
+    )
+    legacy_proof = _active_legacy_import_proof(
+        workdir=workdir,
+        publication_transaction=transaction,
+    )
+    if (
+        not _manifest_matches(
+            value=str(manifest["source_commit"]),
+            snapshot=source_snapshot,
+        )
+        and not _legacy_manifest_commit_is_bound(
+            workdir=workdir,
+            manifest=manifest,
+            source_snapshot=source_snapshot,
+            legacy_proof=legacy_proof,
+            artifact_paths=artifact_paths,
+            digest_paths=artifact_paths,
+        )
+    ):
+        raise ValidationProvenanceError(
+            "Validation manifest source_commit does not identify the "
+            "captured source commit"
+        )
+    artifact_digests = _digests(
+        workdir=workdir,
+        paths=artifact_paths,
+    )
+    _validate_publication_transaction(
+        workdir=workdir,
+        transaction=transaction,
+    )
     payload: Dict[str, object] = {
         "schema_version": SCHEMA,
         "run_id": str(manifest["run_id"]),
@@ -757,19 +1219,16 @@ def publish_validation_snapshot(*, workdir: Path, source_snapshot: SourceSnapsho
         "source_input_tree_sha256": source_snapshot.tree_sha256,
         "source_file_count": source_snapshot.file_count,
         "source_dirty_paths": list(source_snapshot.dirty_paths),
-        "artifact_digests": _digests(
-            workdir=workdir,
-            paths=_artifact_paths(
-                workdir=workdir,
-                manifest=manifest,
-                policy=policy,
-            ),
-        ),
+        "artifact_digests": artifact_digests,
         "generated_at_utc": _utc(),
     }
     path = workdir / PROVENANCE_RELATIVE_PATH
     _write_json(workdir, path, payload)
-    checked = verify_validation_snapshot(workdir=workdir, allow_equivalent_source_tree=False)
+    checked = verify_validation_snapshot(
+        workdir=workdir,
+        allow_equivalent_source_tree=False,
+        publication_transaction=transaction,
+    )
     if not checked.ok:
         raise ValidationProvenanceError("Published validation provenance failed verification: " + "; ".join(checked.errors))
     return payload
@@ -822,10 +1281,29 @@ def _schema_errors(payload: Mapping[str, object]) -> List[str]:
     return errors
 
 
-def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: bool = True) -> VerificationResult:
-    """Verify policy, source identity, manifest identity, and artifact bytes."""
+def verify_validation_snapshot(
+    *,
+    workdir: Path,
+    allow_equivalent_source_tree: bool = True,
+    publication_transaction: Optional[
+        ValidationPublicationTransaction
+    ] = None,
+) -> VerificationResult:
+    """Verify one pinned publication/source/artifact snapshot transaction."""
     errors: List[str] = []
     warnings: List[str] = []
+    try:
+        transaction = (
+            publication_transaction
+            if publication_transaction is not None
+            else pin_validation_publication_transaction(workdir=workdir)
+        )
+        _validate_publication_transaction(
+            workdir=workdir,
+            transaction=transaction,
+        )
+    except ValidationProvenanceError as error:
+        return VerificationResult((str(error),), ())
     policy: Optional[SourcePolicy] = None
     try:
         policy = load_source_policy(workdir=workdir)
@@ -862,8 +1340,10 @@ def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: b
         file_count=int(payload["source_file_count"]),
         dirty_paths=tuple(str(x) for x in payload["source_dirty_paths"]),
     )
-    if not _manifest_matches(str(manifest["source_commit"]), published):
-        errors.append("validation manifest source_commit does not identify the published source commit")
+    manifest_source_matches = _manifest_matches(
+        value=str(manifest["source_commit"]),
+        snapshot=published,
+    )
     try:
         current = capture_source_snapshot(workdir=workdir)
     except ValidationProvenanceError as error:
@@ -886,6 +1366,7 @@ def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: b
             workdir=workdir,
             manifest=manifest,
             policy=policy,
+            publication_transaction=transaction,
         )
     except ValidationProvenanceError as error:
         errors.append(str(error))
@@ -913,6 +1394,36 @@ def verify_validation_snapshot(*, workdir: Path, allow_equivalent_source_tree: b
                 errors.append("artifact size mismatch: {}".format(relative))
             if hashlib.sha256(content).hexdigest() != sha:
                 errors.append("artifact SHA-256 mismatch: {}".format(relative))
+    if not manifest_source_matches:
+        try:
+            legacy_proof = _active_legacy_import_proof(
+                workdir=workdir,
+                publication_transaction=transaction,
+            )
+        except ValidationProvenanceError as error:
+            errors.append(str(error))
+            legacy_proof = None
+        digest_paths = (
+            set(str(relative) for relative in digests)
+            if isinstance(digests, dict)
+            else set()
+        )
+        if not _legacy_manifest_commit_is_bound(
+            workdir=workdir,
+            manifest=manifest,
+            source_snapshot=published,
+            legacy_proof=legacy_proof,
+            artifact_paths=expected_paths,
+            digest_paths=digest_paths,
+        ):
+            errors.append("validation manifest source_commit does not identify the published source commit")
+    try:
+        _validate_publication_transaction(
+            workdir=workdir,
+            transaction=transaction,
+        )
+    except ValidationProvenanceError as error:
+        errors.append(str(error))
     return VerificationResult(tuple(errors), tuple(warnings))
 
 

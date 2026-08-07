@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "scenario_id": "ISSUE12_ACTIVE_STAGE_CONSUMERS_MISSING",
+  "observed_at_utc": "2026-08-06T10:21:59Z",
+  "command": "python3 -m unittest tests.vnext.test_report_read_only -v",
+  "interpreter": "python3",
+  "return_code": 1,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "587ee8544664adb5f336f46fa52726d635c9bd738188a63a169478a6a4472d3d",
+  "failure": "ImportError: read_validated_report is absent from scripts/vnext/report.py",
+  "expected_after_fix": "Stage 10, 11, and 12 consume one pinned active PublicationView without network, repair, or authoritative writes"
+}

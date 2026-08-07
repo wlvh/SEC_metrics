@@ -16,27 +16,83 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Mapping, Optional, Tuple
 
+from git_workspace import sanitized_git_environment
 from sec_http import REQUEST_LOG_MANIFEST_SCHEMA_VERSION
 from sec_http import legacy_response_snapshot_paths, parse_request_log_rows
 from sec_http import request_accession, request_log_attempt_id
+from sec_http import request_headers_bytes_match_identity
 from sec_http import request_log_prefix_bytes
 from sec_http import validate_request_log_manifest
+from validation_provenance import ValidationProvenanceError
+from validation_provenance import capture_source_snapshot
 
 from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
 from .canonical import sha256_bytes, sha256_file, strict_json_file
 from .canonical import strict_json_loads
 from .projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
+from .projector import LEGACY_MIGRATION_STATUSES, LEGACY_PROOF_MODES
 from .projector import PROJECTION_GATE_FILES, PROJECTION_MANIFEST_FIELDS
-from .projector import build_projection_manifest
+from .projector import ProjectionError, build_projection_manifest
 from .projector import golden_row_passes
+from .projector import load_projection_batch_manifest
+from .projector import load_legacy_path_inventory
 from .projector import load_projection_used_source_references
 from .projector import projection_file_hashes
+from .qualification import QualificationError, qualification_closure_paths
+from .qualification import validate_cutover_qualifications
 from .records import validate_record
+from .requirements import RequirementError, SNAPSHOT_FILES
+from .requirements import load_requirement_snapshot
 from .run_store import RunStoreError, load_run_for_status
 from .sources import SourceError, resolve_repository_file
 from .states import PUBLISHABLE_VALIDATION_STATUSES
 from .states import publication_candidate_status
+
+
+RECORDED_VALIDATION_MODE = "RECORDED_VNEXT"
+RECORDED_VALIDATION_RESULT = "PASSED_RECORDED_ONLY"
+FORMAL_VALIDATION_MODE = "FULL_VALIDATION"
+FORMAL_VALIDATION_RESULT = "PASSED"
+RECORDED_SOURCE_COMMIT = "RECORDED_VNEXT_NO_SOURCE_COMMIT"
+LEGACY_BASELINE_IMPORT_MANIFEST = (
+    "internal/legacy_baseline_import.json"
+)
+LEGACY_BASELINE_MANIFEST = "internal/legacy_baseline_manifest.json"
+LEGACY_BASELINE_SUPPORT_PREFIX = "internal/legacy_baseline_support/"
+LEGACY_BASELINE_REQUIRED_ARTIFACTS = {
+    "outputs/golden_results.csv",
+    "outputs/metric_evidence.csv",
+    "outputs/metrics_matrix.csv",
+    "outputs/validation_run_manifest.json",
+    "outputs/validation_snapshot_provenance.json",
+}
+LEGACY_SYNTHETIC_METADATA_FILES = {
+    "legacy_invariant_migration_receipt.json",
+    "projection_manifest.json",
+    "publication_validation_receipt.json",
+}
+LEGACY_BASELINE_IMPORT_FIELDS = {
+    "baseline_artifacts",
+    "baseline_manifest_sha256",
+    "baseline_repository_commit",
+    "legacy_baseline_import_id",
+    "record_type",
+    "requirement_hashes",
+    "root_artifacts",
+    "schema_version",
+    "supporting_artifacts",
+}
+LEGACY_BASELINE_ARTIFACT_FIELDS = {"sha256", "size"}
+LEGACY_ROOT_ARTIFACT_FIELDS = {
+    "origin", "root_path", "sha256", "size",
+}
+LEGACY_SUPPORT_ARTIFACT_FIELDS = {
+    "bundle_path", "sha256", "size",
+}
+LEGACY_COMMIT_AUTHORITY = "LEGACY_BASELINE"
+FORMAL_COMMIT_AUTHORITY = "FORMAL"
+RECORDED_COMMIT_AUTHORITY = "RECORDED"
 
 
 REQUIRED_BUNDLE_FILES = {
@@ -55,11 +111,48 @@ REQUIRED_BUNDLE_FILES = {
     "stratified_audit.csv",
     "validation_run_manifest.json",
 }
+INTERNAL_CLOSURE_MANIFEST = "internal/closure_manifest.json"
+INTERNAL_BATCH_MANIFEST = "internal/batch/batch_manifest.json"
+INTERNAL_REQUEST_LOCATOR_PROVENANCE = (
+    "internal/request_locator_provenance.json"
+)
+INTERNAL_AUTHORITY_ROOT = "internal/authority"
+INTERNAL_PREFIX = "internal/"
+CLOSURE_MANIFEST_FIELDS = {
+    "authority_root",
+    "batch_manifest_id",
+    "batch_manifest_path",
+    "closure_id",
+    "files",
+    "ledger_binding",
+    "qualification_binding",
+    "request_locator_provenance_id",
+    "run_bindings",
+    "schema_version",
+}
+CLOSURE_AUTHORITY_FILES = {
+    "catalog/company_traits.yaml",
+    "config/company_registry.csv",
+    "config/metric_applicability.yaml",
+    "config/vnext_release_plan.json",
+} | {
+    "requirements/ai_first_v3_3_1/{}".format(relative)
+    for relative in SNAPSHOT_FILES.values()
+}
+ROOT_MIRROR_RELATIVE_PATHS = {
+    relative: (
+        relative
+        if relative in {"README_RUN.md", "REPORT_十公司财务指标.md"}
+        else "outputs/" + relative
+    )
+    for relative in REQUIRED_BUNDLE_FILES
+}
 REQUIRED_PUBLICATION_CHECKS = {
     "COVERAGE",
     "GOLDEN",
     "LEGACY_INVARIANT_MIGRATION",
     "PROJECTION_EXACT_SET",
+    "REQUEST_LOCATOR_TIER",
     "REPAIR_VALIDATION",
     "SCALABILITY_AUDIT",
     "SEMANTIC_AUDIT",
@@ -71,12 +164,51 @@ REQUIREMENT_HASH_FIELDS = {
     "fsd_sha256",
     "issue_body_sha256",
     "legacy_path_inventory_sha256",
+    "r3_addendum_sha256",
+    "release_plan_sha256",
+    "semantic_runtime_versions_hash",
 }
+REQUIREMENT_CONTENT_HASH_FIELDS = {"semantic_runtime_versions_hash"}
 LEDGER_BINDING_FIELDS = {
+    "request_locator_classes",
+    "request_locator_proof_id",
+    "request_locator_tier",
     "requests_log_prefix_sha256",
     "row_count",
     "source_reference_ids",
     "used_request_attempt_ids",
+}
+REQUEST_LOCATOR_CLASSES = {
+    "IMMUTABLE_ATTEMPT",
+    "LEGACY_WORKING_LOCATOR",
+}
+LEGACY_BASELINE_LOCATOR_TIER = "LEGACY_BASELINE_IMPORT"
+REQUEST_LOCATOR_TIERS = {
+    FORMAL_VALIDATION_MODE,
+    LEGACY_BASELINE_LOCATOR_TIER,
+    RECORDED_VALIDATION_MODE,
+}
+REQUEST_LOCATOR_PROVENANCE_FIELDS = {
+    "record_type",
+    "request_locator_classes",
+    "request_locator_proof_id",
+    "schema_version",
+    "source_proofs",
+    "validation_tier",
+}
+REQUEST_LOCATOR_SOURCE_PROOF_FIELDS = {
+    "body_sha256",
+    "body_size",
+    "headers_sha256",
+    "headers_size",
+    "ledger_row_index",
+    "locator_class",
+    "original_body_locator",
+    "original_headers_locator",
+    "portable_body_locator",
+    "portable_headers_locator",
+    "request_attempt_id",
+    "source_reference_id",
 }
 POINTER_FIELDS = {
     "bundle_manifest_sha256",
@@ -84,10 +216,43 @@ POINTER_FIELDS = {
     "previous_publication_id",
     "publication_id",
 }
+SWITCH_RECEIPT_FIELDS = {
+    "pointer",
+    "previous_switch_receipt_id",
+    "record_type",
+    "schema_version",
+    "switch_mode",
+    "switch_receipt_id",
+}
+SWITCH_INTENT_FIELDS = {
+    "intent_id",
+    "previous_mirror_state",
+    "previous_pointer",
+    "previous_switch_receipt_id",
+    "proposed_pointer",
+    "record_type",
+    "schema_version",
+    "switch_mode",
+}
+SWITCH_INTENT_MIRROR_FIELDS = {"sha256", "size"}
 PUBLICATION_ID_PATTERN = re.compile(r"^publication_[0-9a-f]{64}$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 CONTENT_ID_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
+SWITCH_TEMP_PATTERN = re.compile(
+    r"^\.[0-9a-f]{64}\.json\.[0-9a-f]{32}\.tmp$"
+)
 LATEST_STATUS_FILENAME = "latest_run_status.json"
+FAULT_RECEIPT_OUTCOMES = {
+    "ABORTED_ACTIVE_PRESERVED",
+    "CAS_LOST_ACTIVE_PRESERVED",
+    "EXACTLY_ONE_WINNER",
+    "MIXED_FISCAL_YEAR_BLOCKED",
+    "PINNED_VIEW_STABLE",
+    "RECOVERED_FROM_ACTIVE",
+    "TAMPER_REJECTED",
+    "WITHHELD_BLOCKED",
+}
+FAULT_STATE_FIELDS = {"active_publication_id", "mirror_hashes"}
 METRIC_FIELDS = (
     "company", "cik", "metric_id", "metric_name", "value", "unit",
     "status", "source_class", "formula", "period_start", "period_end",
@@ -133,6 +298,20 @@ class PublicationError(RuntimeError):
     """Report incomplete bundles, CAS loss, tamper, or commit failure."""
 
 
+def _fault_injection_checkpoint(*, fault_point: str) -> None:
+    """Expose a named no-op transaction boundary for dynamic fault tests.
+
+    Args:
+        fault_point: Stable checkpoint identity patched only by failure tests.
+
+    Expected output:
+        Production execution continues unchanged. Tests may replace this
+        function with an exception at one named I/O boundary.
+    """
+    if not isinstance(fault_point, str) or not fault_point:
+        raise PublicationError("Publication fault point is invalid")
+
+
 def publication_layout(*, publication_root: Path) -> Dict[str, object]:
     """Derive every mutable and immutable publication path from one root.
 
@@ -150,14 +329,40 @@ def publication_layout(*, publication_root: Path) -> Dict[str, object]:
         publication_root.exists() and not publication_root.is_dir()
     ):
         raise PublicationError("Publication root must be a real directory")
-    publications_dir = publication_root / "publications"
+    outputs_dir = publication_root / "outputs"
+    artifacts_root = publication_root / "artifacts"
+    artifacts_dir = artifacts_root / "vnext"
+    for path, label in (
+        (outputs_dir, "Publication outputs"),
+        (artifacts_root, "Publication artifacts"),
+        (artifacts_dir, "vNext artifacts"),
+    ):
+        if path.is_symlink() or (
+            path.exists() and not path.is_dir()
+        ):
+            raise PublicationError("{} must be a real directory".format(label))
+    publications_dir = outputs_dir / "publications"
     if publications_dir.is_symlink() or (
         publications_dir.exists() and not publications_dir.is_dir()
     ):
         raise PublicationError("Publication storage must be a real directory")
-    pointer_path = publication_root / "active_publication.json"
+    switch_receipts_dir = outputs_dir / "publication_switch_receipts"
+    if switch_receipts_dir.is_symlink() or (
+        switch_receipts_dir.exists() and not switch_receipts_dir.is_dir()
+    ):
+        raise PublicationError(
+            "Publication switch history must be a real directory"
+        )
+    switch_intents_dir = outputs_dir / "publication_switch_intents"
+    if switch_intents_dir.is_symlink() or (
+        switch_intents_dir.exists() and not switch_intents_dir.is_dir()
+    ):
+        raise PublicationError(
+            "Publication switch intents must be a real directory"
+        )
+    pointer_path = outputs_dir / "active_publication.json"
     lock_path = pointer_path.with_suffix(pointer_path.suffix + ".lock")
-    latest_status_path = publication_root / LATEST_STATUS_FILENAME
+    latest_status_path = artifacts_dir / LATEST_STATUS_FILENAME
     for path, label in (
         (pointer_path, "Active pointer"),
         (lock_path, "Publication lock"),
@@ -168,13 +373,16 @@ def publication_layout(*, publication_root: Path) -> Dict[str, object]:
     layout = {
         "publications_dir": publications_dir,
         "pointer_path": pointer_path,
+        "switch_receipts_dir": switch_receipts_dir,
+        "switch_intents_dir": switch_intents_dir,
         "latest_status_path": latest_status_path,
         "mirror_paths": {
-            relative: publication_root / relative
-            for relative in REQUIRED_BUNDLE_FILES
+            relative: publication_root / ROOT_MIRROR_RELATIVE_PATHS[relative]
+            for relative in sorted(REQUIRED_BUNDLE_FILES)
         },
     }
     _validate_mirror_paths(
+        publication_root=publication_root,
         publications_dir=layout["publications_dir"],
         pointer_path=layout["pointer_path"],
         latest_status_path=layout["latest_status_path"],
@@ -215,21 +423,28 @@ def _request_row_for_source(
     repo_root: Path,
     source: Mapping[str, object],
     attempt_rows: Mapping[str, Tuple[int, Mapping[str, str]]],
-) -> int:
-    """Validate one consumed SourceReference against its immutable request.
+    validation_tier: str,
+) -> Tuple[int, Dict[str, object]]:
+    """Validate one consumed SourceReference against its tiered request.
 
     Args:
         repo_root: Repository containing the independent request audit chain.
         source: SourceReference consumed by the verified batch.
         attempt_rows: Deterministic attempt identities mapped to row metadata.
+        validation_tier: Recorded or formal publication evidence tier.
 
     Returns:
-        Zero-based ordered request-ledger row index.
+        Ordered request-ledger row index and exact portable locator proof.
 
     Raises:
         PublicationError: When the attempt, joined source identity, or
-            immutable body/header pair is absent, ambiguous, or inconsistent.
+            allowed body/header pair is absent, ambiguous, or inconsistent.
     """
+    if validation_tier not in {
+        FORMAL_VALIDATION_MODE,
+        RECORDED_VALIDATION_MODE,
+    }:
+        raise PublicationError("Publication request locator tier is invalid")
     attempt_id = str(source["request_attempt_id"])
     if attempt_id not in attempt_rows:
         raise PublicationError(
@@ -259,62 +474,184 @@ def _request_row_for_source(
         raise PublicationError(
             "Consumed SourceReference differs from request ledger attempt"
         )
+    body_locator = str(row["repo_relative_path"])
+    headers_locator = str(row["headers_repo_relative_path"])
+    body_claims_attempt = body_locator.startswith(
+        "evidence/request_attempts/"
+    )
+    headers_claims_attempt = headers_locator.startswith(
+        "evidence/request_attempts/"
+    )
+    if body_claims_attempt != headers_claims_attempt:
+        raise PublicationError(
+            "Consumed request ledger locator pair is incomplete"
+        )
     try:
-        body_path, headers_path = legacy_response_snapshot_paths(
-            workdir=repo_root,
+        declared_body_path = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path=body_locator,
+        )
+        declared_headers_path = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path=headers_locator,
+        )
+    except (OSError, SourceError) as error:
+        raise PublicationError(
+            (
+                "Consumed request ledger immutable attempt is invalid"
+                if body_claims_attempt
+                else "Consumed request ledger locator is invalid"
+            )
+        ) from error
+    if body_claims_attempt:
+        try:
+            body_path, headers_path = legacy_response_snapshot_paths(
+                workdir=repo_root,
+                content_sha256=content_sha256,
+                source_url=source_url,
+                status_code=str(row["status_code"]),
+                content_length=str(row["content_length"]),
+                document_name=str(row["document_name"]),
+                timestamp_utc=str(row["timestamp_utc"]),
+            )
+        except (OSError, ValueError) as error:
+            raise PublicationError(
+                "Consumed request ledger immutable attempt is invalid"
+            ) from error
+        # Deriving a valid sibling by hash must not hide a stale row locator.
+        if (
+            declared_body_path.resolve() != body_path.resolve()
+            or declared_headers_path.resolve() != headers_path.resolve()
+        ):
+            raise PublicationError(
+                "Consumed request ledger locator differs from immutable "
+                "attempt"
+            )
+        locator_class = "IMMUTABLE_ATTEMPT"
+    else:
+        if validation_tier != RECORDED_VALIDATION_MODE:
+            raise PublicationError(
+                "LIVE_SOURCE_ATTEMPT_INCOMPLETE: formal publication "
+                "requires an immutable request attempt"
+            )
+        locator_class = "LEGACY_WORKING_LOCATOR"
+    try:
+        body_bytes = declared_body_path.read_bytes()
+        headers_bytes = declared_headers_path.read_bytes()
+        content_length = int(row["content_length"])
+    except (OSError, ValueError) as error:
+        raise PublicationError(
+            "Consumed request ledger locator bytes are invalid"
+        ) from error
+    if (
+        len(body_bytes) != content_length
+        or sha256_bytes(content=body_bytes) != content_sha256
+        or not request_headers_bytes_match_identity(
+            content=headers_bytes,
             content_sha256=content_sha256,
             source_url=source_url,
             status_code=str(row["status_code"]),
             content_length=str(row["content_length"]),
-            document_name=str(row["document_name"]),
-            timestamp_utc=str(row["timestamp_utc"]),
         )
-    except (OSError, ValueError) as error:
-        raise PublicationError(
-            "Consumed request ledger immutable attempt is invalid"
-        ) from error
-    try:
-        declared_body_path = resolve_repository_file(
-            repo_root=repo_root,
-            repo_relative_path=str(row["repo_relative_path"]),
-        )
-        declared_headers_path = resolve_repository_file(
-            repo_root=repo_root,
-            repo_relative_path=str(row["headers_repo_relative_path"]),
-        )
-    except (OSError, SourceError) as error:
-        raise PublicationError(
-            "Consumed request ledger locator is invalid"
-        ) from error
-    # The row's portable locators are part of the attempt identity. Deriving
-    # a valid sibling by hash must not hide a stale or fabricated locator.
-    if (
-        declared_body_path.resolve() != body_path.resolve()
-        or declared_headers_path.resolve() != headers_path.resolve()
     ):
         raise PublicationError(
-            "Consumed request ledger locator differs from immutable attempt"
+            "Consumed request ledger locator bytes are invalid"
         )
-    return int(row_index)
+    proof = {
+        "body_sha256": sha256_bytes(content=body_bytes),
+        "body_size": len(body_bytes),
+        "headers_sha256": sha256_bytes(content=headers_bytes),
+        "headers_size": len(headers_bytes),
+        "ledger_row_index": int(row_index),
+        "locator_class": locator_class,
+        "original_body_locator": body_locator,
+        "original_headers_locator": headers_locator,
+        # The closure preserves repository-relative topology below its own
+        # authority root. These are therefore executable portable locators,
+        # not rewritten claims that resemble immutable HTTP attempts.
+        "portable_body_locator": body_locator,
+        "portable_headers_locator": headers_locator,
+        "request_attempt_id": attempt_id,
+        "source_reference_id": str(source["source_reference_id"]),
+    }
+    return int(row_index), proof
 
 
-def publication_ledger_binding(
-    *, repo_root: Path, batch_manifest_path: Path
+def _request_locator_provenance(
+    *, validation_tier: str,
+    source_proofs: object,
 ) -> Dict[str, object]:
-    """Derive exact publication provenance from batch and request ledger.
+    """Bind one evidence tier to every exact original locator and byte hash.
 
     Args:
-        repo_root: Repository containing the request audit chain.
-        batch_manifest_path: Complete verified FROZEN Run collection.
+        validation_tier: Recorded, formal, or opaque legacy-import tier.
+        source_proofs: Ordered source-to-ledger locator proof array.
 
     Returns:
-        Minimal ordered ledger prefix through the latest consumed row, plus
-        the exact consumed SourceReference and request-attempt identities.
-
-    Raises:
-        PublicationError: When the ledger, membership, or immutable attempt
-            evidence cannot be verified from persisted authority.
+        Content-addressed provenance record used by manifest and replay.
     """
+    if validation_tier not in REQUEST_LOCATOR_TIERS:
+        raise PublicationError("Request locator provenance tier is invalid")
+    if type(source_proofs) is not list or any(
+        not isinstance(proof, dict)
+        or set(proof) != REQUEST_LOCATOR_SOURCE_PROOF_FIELDS
+        for proof in source_proofs
+    ):
+        raise PublicationError("Request locator source proofs are invalid")
+    classes = sorted({str(proof["locator_class"]) for proof in source_proofs})
+    if any(locator not in REQUEST_LOCATOR_CLASSES for locator in classes):
+        raise PublicationError("Request locator class is invalid")
+    body = {
+        "record_type": "REQUEST_LOCATOR_PROVENANCE",
+        "request_locator_classes": classes,
+        "schema_version": 1,
+        "source_proofs": list(source_proofs),
+        "validation_tier": validation_tier,
+    }
+    return {
+        **body,
+        "request_locator_proof_id": content_hash(value=body),
+    }
+
+
+def _empty_legacy_ledger_binding() -> Dict[str, object]:
+    """Return the explicit no-request binding for an opaque predecessor."""
+    provenance = _request_locator_provenance(
+        validation_tier=LEGACY_BASELINE_LOCATOR_TIER,
+        source_proofs=[],
+    )
+    return {
+        "request_locator_classes": [],
+        "request_locator_proof_id": provenance[
+            "request_locator_proof_id"
+        ],
+        "request_locator_tier": LEGACY_BASELINE_LOCATOR_TIER,
+        "requests_log_prefix_sha256": sha256_bytes(content=b""),
+        "row_count": 0,
+        "source_reference_ids": [],
+        "used_request_attempt_ids": [],
+    }
+
+
+def _publication_ledger_evidence(
+    *, repo_root: Path, batch_manifest_path: Path,
+    validation_tier: str,
+) -> Dict[str, object]:
+    """Derive the exact request prefix and replayable locator provenance.
+
+    Args:
+        repo_root: Repository containing Batch and request authority.
+        batch_manifest_path: Complete FROZEN Run collection.
+        validation_tier: Recorded or formal publication tier.
+
+    Returns:
+        A strict ledger binding plus its content-addressed source proofs.
+    """
+    if validation_tier not in {
+        FORMAL_VALIDATION_MODE,
+        RECORDED_VALIDATION_MODE,
+    }:
+        raise PublicationError("Publication request locator tier is invalid")
     try:
         log_path = resolve_repository_file(
             repo_root=repo_root,
@@ -362,17 +699,22 @@ def publication_ledger_binding(
         raise PublicationError(
             "Publication batch source membership is invalid"
         ) from error
-    used_attempt_rows = {
-        (
-            _request_row_for_source(
-                repo_root=repo_root,
-                source=source,
-                attempt_rows=attempt_rows,
-            ),
-            str(source["request_attempt_id"]),
+    source_rows_and_proofs = [
+        _request_row_for_source(
+            repo_root=repo_root,
+            source=source,
+            attempt_rows=attempt_rows,
+            validation_tier=validation_tier,
         )
         for source in sources
+    ]
+    used_attempt_rows = {
+        (row_index, str(source["request_attempt_id"]))
+        for source, (row_index, _proof) in zip(
+            sources, source_rows_and_proofs
+        )
     }
+    source_proofs = [proof for _row_index, proof in source_rows_and_proofs]
     prefix_row_count = (
         max(row_index for row_index, _attempt_id in used_attempt_rows) + 1
         if used_attempt_rows
@@ -386,7 +728,16 @@ def publication_ledger_binding(
         raise PublicationError(
             "Publication request ledger prefix is invalid"
         ) from error
-    return {
+    provenance = _request_locator_provenance(
+        validation_tier=validation_tier,
+        source_proofs=source_proofs,
+    )
+    binding = {
+        "request_locator_classes": provenance["request_locator_classes"],
+        "request_locator_proof_id": provenance[
+            "request_locator_proof_id"
+        ],
+        "request_locator_tier": validation_tier,
         "requests_log_prefix_sha256": sha256_bytes(content=prefix_bytes),
         "row_count": prefix_row_count,
         "source_reference_ids": [
@@ -397,6 +748,35 @@ def publication_ledger_binding(
             for _row_index, attempt_id in sorted(used_attempt_rows)
         ],
     }
+    return {"binding": binding, "provenance": provenance}
+
+
+def publication_ledger_binding(
+    *, repo_root: Path, batch_manifest_path: Path,
+    validation_tier: str = FORMAL_VALIDATION_MODE,
+) -> Dict[str, object]:
+    """Derive exact publication provenance from batch and request ledger.
+
+    Args:
+        repo_root: Repository containing the request audit chain.
+        batch_manifest_path: Complete verified FROZEN Run collection.
+        validation_tier: Explicit evidence tier; the generic default remains
+            formal and therefore never accepts a legacy working locator.
+
+    Returns:
+        Minimal ordered ledger prefix through the latest consumed row, plus
+        the exact consumed SourceReference and request-attempt identities.
+
+    Raises:
+        PublicationError: When the ledger, membership, or immutable attempt
+            evidence cannot be verified from persisted authority.
+    """
+    evidence = _publication_ledger_evidence(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        validation_tier=validation_tier,
+    )
+    return dict(evidence["binding"])
 
 
 def _validate_publication_metadata(
@@ -425,7 +805,11 @@ def _validate_publication_metadata(
         requirement_hashes
     ) != REQUIREMENT_HASH_FIELDS or any(
         type(requirement_hashes[field]) is not str
-        or SHA256_PATTERN.fullmatch(requirement_hashes[field]) is None
+        or (
+            CONTENT_ID_PATTERN
+            if field in REQUIREMENT_CONTENT_HASH_FIELDS
+            else SHA256_PATTERN
+        ).fullmatch(requirement_hashes[field]) is None
         for field in requirement_hashes
     ):
         raise PublicationError("Requirement hash fields/values are invalid")
@@ -444,7 +828,36 @@ def _validate_publication_metadata(
     ) != LEDGER_BINDING_FIELDS:
         raise PublicationError("Ledger binding fields are not exact")
     if (
-        type(ledger_binding["requests_log_prefix_sha256"]) is not str
+        type(ledger_binding["request_locator_tier"]) is not str
+        or ledger_binding["request_locator_tier"] not in REQUEST_LOCATOR_TIERS
+        or type(ledger_binding["request_locator_proof_id"]) is not str
+        or CONTENT_ID_PATTERN.fullmatch(
+            ledger_binding["request_locator_proof_id"]
+        ) is None
+        or type(ledger_binding["request_locator_classes"]) is not list
+        or ledger_binding["request_locator_classes"]
+        != sorted(set(ledger_binding["request_locator_classes"]))
+        or any(
+            type(locator) is not str
+            or locator not in REQUEST_LOCATOR_CLASSES
+            for locator in ledger_binding["request_locator_classes"]
+        )
+        or (
+            ledger_binding["request_locator_tier"]
+            == FORMAL_VALIDATION_MODE
+            and "LEGACY_WORKING_LOCATOR"
+            in ledger_binding["request_locator_classes"]
+        )
+        or (
+            ledger_binding["request_locator_tier"]
+            == LEGACY_BASELINE_LOCATOR_TIER
+            and ledger_binding != _empty_legacy_ledger_binding()
+        )
+        or (
+            bool(ledger_binding["source_reference_ids"])
+            != bool(ledger_binding["request_locator_classes"])
+        )
+        or type(ledger_binding["requests_log_prefix_sha256"]) is not str
         or SHA256_PATTERN.fullmatch(
             ledger_binding["requests_log_prefix_sha256"]
         ) is None
@@ -467,6 +880,394 @@ def _validate_publication_metadata(
         or PUBLICATION_ID_PATTERN.fullmatch(previous_publication_id) is None
     ):
         raise PublicationError("Publication predecessor is invalid")
+
+
+def _write_prepared_publication_bundle(
+    *, publications_dir: Path, files: Mapping[str, bytes],
+    requirement_hashes: Mapping[str, object], batch_manifest_id: str,
+    projection_manifest_id: str, validation_receipt_id: str,
+    ledger_binding: Mapping[str, object],
+    previous_publication_id: Optional[str],
+) -> Dict[str, object]:
+    """Write one immutable bundle from already verified exact bytes.
+
+    Args:
+        publications_dir: Fixed immutable publication storage.
+        files: Complete public and internal bundle-relative byte mapping.
+        requirement_hashes: Verified Requirement authority hashes.
+        batch_manifest_id: Verified or legacy-import-derived Batch identity.
+        projection_manifest_id: Verified or legacy-derived projection identity.
+        validation_receipt_id: Verified or legacy-derived validation identity.
+        ledger_binding: Exact consumed request-ledger prefix binding.
+        previous_publication_id: Prepared predecessor or ``None``.
+
+    Returns:
+        Strict content-addressed PublicationManifest.
+    """
+    _validate_publication_metadata(
+        requirement_hashes=requirement_hashes,
+        batch_manifest_id=batch_manifest_id,
+        projection_manifest_id=projection_manifest_id,
+        validation_receipt_id=validation_receipt_id,
+        ledger_binding=ledger_binding,
+        previous_publication_id=previous_publication_id,
+    )
+    file_records = []
+    for relative in sorted(files):
+        _safe_relative(value=relative)
+        content = files[relative]
+        if not isinstance(content, bytes):
+            raise PublicationError("Publication file content must be bytes")
+        file_records.append(
+            {
+                "path": relative,
+                "sha256": sha256_bytes(content=content),
+                "size": len(content),
+            }
+        )
+    identity = {
+        "candidate_status": "PUBLISHABLE",
+        "requirement_hashes": dict(requirement_hashes),
+        "batch_manifest_id": batch_manifest_id,
+        "projection_manifest_id": projection_manifest_id,
+        "validation_receipt_id": validation_receipt_id,
+        "files": file_records,
+        "ledger_binding": dict(ledger_binding),
+        "previous_publication_id": previous_publication_id,
+    }
+    publication_id = (
+        "publication_" + content_hash(value=identity).split(":", 1)[1]
+    )
+    manifest = {
+        "record_type": "PUBLICATION_MANIFEST",
+        "publication_id": publication_id,
+        **identity,
+    }
+    validate_record(record=manifest)
+    publications_dir.mkdir(parents=True, exist_ok=True)
+    final_dir = publications_dir / publication_id
+    if final_dir.exists():
+        existing = verify_publication_bundle(bundle_dir=final_dir)
+        if existing != manifest:
+            raise PublicationError(
+                "Existing publication ID has divergent bytes"
+            )
+        return manifest
+    temporary = publications_dir / ".{}.{}.tmp".format(
+        publication_id, uuid.uuid4().hex
+    )
+    temporary.mkdir()
+    try:
+        ordered_files = sorted(files)
+        midpoint = max(1, len(ordered_files) // 2)
+        for index, relative in enumerate(ordered_files, start=1):
+            destination = temporary / _safe_relative(value=relative)
+            atomic_write_bytes(path=destination, content=files[relative])
+            if index == midpoint:
+                _fault_injection_checkpoint(fault_point="MID_BUNDLE_WRITE")
+        atomic_write_json(
+            path=temporary / "publication_manifest.json", value=manifest,
+        )
+        verify_publication_bundle(bundle_dir=temporary)
+        os.replace(str(temporary), str(final_dir))
+        _fsync_directory(path=publications_dir)
+    except (OSError, CanonicalError, PublicationError) as error:
+        raise PublicationError("Publication bundle write failed") from error
+    finally:
+        if temporary.exists():
+            shutil.rmtree(temporary)
+    verify_publication_bundle(bundle_dir=final_dir)
+    return manifest
+
+
+def _optional_legacy_source_file(
+    *, legacy_root: Path, relative_path: str,
+) -> Optional[bytes]:
+    """Read one optional regular legacy-root file without following aliases.
+
+    Args:
+        legacy_root: Frozen compatibility-root snapshot.
+        relative_path: Root-relative POSIX locator.
+
+    Returns:
+        Exact immutable source bytes, or ``None`` when the path is absent.
+    """
+    relative = _safe_relative(value=relative_path)
+    path = legacy_root
+    for part in relative.parts:
+        path = path / part
+        if path.is_symlink():
+            raise PublicationError("Legacy baseline source is unsafe")
+    if not path.exists():
+        return None
+    if not path.is_file():
+        raise PublicationError("Legacy baseline source is unsafe")
+    return path.read_bytes()
+
+
+def _read_legacy_source_file(
+    *, legacy_root: Path, relative_path: str,
+) -> bytes:
+    """Require one exact regular legacy-root source file.
+
+    Args:
+        legacy_root: Frozen compatibility-root snapshot.
+        relative_path: Root-relative POSIX locator.
+
+    Returns:
+        Exact immutable source bytes.
+    """
+    content = _optional_legacy_source_file(
+        legacy_root=legacy_root, relative_path=relative_path,
+    )
+    if content is None:
+        raise PublicationError("Legacy baseline source is incomplete")
+    return content
+
+
+def _legacy_import_metadata_bytes(
+    *, relative_path: str, baseline_manifest_sha256: str,
+    requirement_hashes: Mapping[str, object],
+) -> bytes:
+    """Render an honest placeholder for one absent vNext-only root artifact.
+
+    Args:
+        relative_path: One of three fixed metadata bundle roles.
+        baseline_manifest_sha256: Frozen baseline authority digest.
+        requirement_hashes: Current exact Requirement closure.
+
+    Returns:
+        Canonical JSON declaring data import rather than executed validation.
+    """
+    if relative_path not in LEGACY_SYNTHETIC_METADATA_FILES:
+        raise PublicationError("Legacy synthetic metadata role is invalid")
+    payload = {
+        "schema_version": 1,
+        "record_type": "LEGACY_BASELINE_IMPORT_ARTIFACT",
+        "artifact_role": relative_path,
+        "status": "IMPORTED_FROZEN_LEGACY_BASELINE",
+        "baseline_manifest_sha256": baseline_manifest_sha256,
+        "requirement_hashes": dict(requirement_hashes),
+        "producer_execution": "NOT_RUN_DATA_IMPORT_ONLY",
+    }
+    return canonical_json_bytes(value=payload) + b"\n"
+
+
+def _baseline_artifact_records(
+    *, baseline: Mapping[str, object], legacy_root: Path,
+    root_files: Mapping[str, bytes],
+) -> tuple[Dict[str, object], Dict[str, bytes], Dict[str, object]]:
+    """Validate baseline-owned bytes and build portable support records.
+
+    Args:
+        baseline: Verified Requirement baseline manifest.
+        legacy_root: Frozen source containing baseline artifact locators.
+        root_files: Exact 14 public bundle bytes keyed by bundle path.
+
+    Returns:
+        Normalized baseline records, internal support bytes, and support index.
+    """
+    if "artifact_digests" not in baseline or type(
+        baseline["artifact_digests"]
+    ) is not dict:
+        raise PublicationError("Legacy baseline artifact map is invalid")
+    artifacts = baseline["artifact_digests"]
+    if not LEGACY_BASELINE_REQUIRED_ARTIFACTS.issubset(artifacts):
+        raise PublicationError("Legacy baseline artifact proof is incomplete")
+    root_to_bundle = {
+        root_relative: bundle_relative
+        for bundle_relative, root_relative
+        in ROOT_MIRROR_RELATIVE_PATHS.items()
+    }
+    normalized = {}
+    support_files = {}
+    support_index = {}
+    for source_relative in sorted(artifacts):
+        record = artifacts[source_relative]
+        if (
+            type(source_relative) is not str
+            or not isinstance(record, dict)
+            or "sha256" not in record
+            or "size" not in record
+            or type(record["sha256"]) is not str
+            or SHA256_PATTERN.fullmatch(record["sha256"]) is None
+            or type(record["size"]) is not int
+            or record["size"] < 0
+        ):
+            raise PublicationError("Legacy baseline artifact proof is invalid")
+        if source_relative in root_to_bundle:
+            content = root_files[root_to_bundle[source_relative]]
+            bundle_path = root_to_bundle[source_relative]
+        else:
+            content = _read_legacy_source_file(
+                legacy_root=legacy_root,
+                relative_path=source_relative,
+            )
+            bundle_path = LEGACY_BASELINE_SUPPORT_PREFIX + source_relative
+            _safe_relative(value=bundle_path)
+            if bundle_path in support_files:
+                raise PublicationError(
+                    "Legacy baseline support path is duplicated"
+                )
+            support_files[bundle_path] = content
+            support_index[source_relative] = {
+                "bundle_path": bundle_path,
+                "sha256": sha256_bytes(content=content),
+                "size": len(content),
+            }
+        actual = {
+            "sha256": sha256_bytes(content=content),
+            "size": len(content),
+        }
+        expected = {
+            "sha256": record["sha256"],
+            "size": record["size"],
+        }
+        if actual != expected:
+            raise PublicationError("Legacy baseline artifact bytes differ")
+        normalized[source_relative] = expected
+        if source_relative in root_to_bundle and bundle_path not in root_files:
+            raise PublicationError("Legacy baseline root binding differs")
+    return normalized, support_files, support_index
+
+
+def _legacy_import_identity(
+    *, legacy_baseline_import_id: str, role: str,
+) -> str:
+    """Derive one standard content identity from the legacy import proof.
+
+    Args:
+        legacy_baseline_import_id: Content-addressed strict import identity.
+        role: Batch, projection, or validation namespace.
+
+    Returns:
+        Standard ``sha256:`` identity accepted by PublicationManifest.
+    """
+    return content_hash(
+        value={
+            "legacy_baseline_import_id": legacy_baseline_import_id,
+            "role": role,
+        }
+    )
+
+
+def prepare_legacy_baseline_predecessor(
+    *, publication_root: Path, repo_root: Path, legacy_root: Path,
+) -> Dict[str, object]:
+    """Import frozen legacy root bytes as an immutable rollback predecessor.
+
+    Args:
+        publication_root: Formal immutable bundle storage root.
+        repo_root: Requirement authority containing the frozen baseline.
+        legacy_root: Root with frozen legacy compatibility artifacts and every
+            additional artifact named by the baseline manifest. Only the three
+            fixed vNext metadata roles may be absent and synthesized honestly.
+
+    Returns:
+        Prepared legacy PublicationManifest with no predecessor.
+
+    This function only reads and hashes data. It never invokes a legacy
+    producer, repair function, report generator, network request, or parser.
+    """
+    if legacy_root.is_symlink() or not legacy_root.is_dir():
+        raise PublicationError("Legacy baseline root is unsafe")
+    try:
+        requirement = load_requirement_snapshot(
+            snapshot_dir=(
+                repo_root / "requirements" / "ai_first_v3_3_1"
+            )
+        )
+    except (OSError, RequirementError, ValueError) as error:
+        raise PublicationError(
+            "Legacy baseline Requirement authority is invalid"
+        ) from error
+    baseline = requirement["baseline"]
+    baseline_path = (
+        repo_root
+        / "requirements"
+        / "ai_first_v3_3_1"
+        / "baseline_manifest.json"
+    )
+    baseline_bytes = baseline_path.read_bytes()
+    baseline_sha256 = sha256_bytes(content=baseline_bytes)
+    root_files = {}
+    root_origins = {}
+    for bundle_relative, root_relative in sorted(
+        ROOT_MIRROR_RELATIVE_PATHS.items()
+    ):
+        content = _optional_legacy_source_file(
+            legacy_root=legacy_root,
+            relative_path=root_relative,
+        )
+        if content is None:
+            content = _legacy_import_metadata_bytes(
+                relative_path=bundle_relative,
+                baseline_manifest_sha256=baseline_sha256,
+                requirement_hashes=requirement["hashes"],
+            )
+            root_origins[bundle_relative] = (
+                "SYNTHESIZED_LEGACY_BASELINE_IMPORT"
+            )
+        else:
+            root_origins[bundle_relative] = "FROZEN_ROOT_BYTES"
+        root_files[bundle_relative] = content
+    root_records = {
+        relative: {
+            "origin": root_origins[relative],
+            "root_path": ROOT_MIRROR_RELATIVE_PATHS[relative],
+            "sha256": sha256_bytes(content=root_files[relative]),
+            "size": len(root_files[relative]),
+        }
+        for relative in sorted(root_files)
+    }
+    baseline_records, support_files, support_index = (
+        _baseline_artifact_records(
+            baseline=baseline,
+            legacy_root=legacy_root,
+            root_files=root_files,
+        )
+    )
+    marker_body = {
+        "schema_version": 1,
+        "record_type": "LEGACY_BASELINE_IMPORT",
+        "baseline_manifest_sha256": baseline_sha256,
+        "baseline_repository_commit": baseline["repository_commit"],
+        "requirement_hashes": dict(requirement["hashes"]),
+        "root_artifacts": root_records,
+        "baseline_artifacts": baseline_records,
+        "supporting_artifacts": support_index,
+    }
+    import_id = content_hash(value=marker_body)
+    marker = {
+        **marker_body,
+        "legacy_baseline_import_id": import_id,
+    }
+    files = {
+        **root_files,
+        **support_files,
+        LEGACY_BASELINE_MANIFEST: baseline_bytes,
+        LEGACY_BASELINE_IMPORT_MANIFEST: (
+            canonical_json_bytes(value=marker) + b"\n"
+        ),
+    }
+    empty_ledger = _empty_legacy_ledger_binding()
+    layout = publication_layout(publication_root=publication_root)
+    return _write_prepared_publication_bundle(
+        publications_dir=Path(layout["publications_dir"]),
+        files=files,
+        requirement_hashes=requirement["hashes"],
+        batch_manifest_id=_legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="BATCH",
+        ),
+        projection_manifest_id=_legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="PROJECTION",
+        ),
+        validation_receipt_id=_legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="VALIDATION",
+        ),
+        ledger_binding=empty_ledger,
+        previous_publication_id=None,
+    )
 
 
 def publication_staging_context(
@@ -509,6 +1310,440 @@ def publication_staging_context(
         "projection_manifest_id": projection["projection_manifest_id"],
         "requirement_hashes": dict(projection["requirement_hashes"]),
     }
+
+
+def _closure_file_record(*, path: str, content: bytes) -> Dict[str, object]:
+    """Describe one immutable portable-closure file.
+
+    Args:
+        path: Normalized bundle-relative locator.
+        content: Exact file bytes.
+
+    Returns:
+        Strict path, SHA-256, and byte-size mapping.
+    """
+    _safe_relative(value=path)
+    if not path.startswith(INTERNAL_PREFIX):
+        raise PublicationError("Closure file must use the internal namespace")
+    return {
+        "path": path,
+        "sha256": sha256_bytes(content=content),
+        "size": len(content),
+    }
+
+
+def _validated_run_documents(*, run_dir: Path) -> Tuple[
+    Dict[str, object], list
+]:
+    """Read the exact Run manifest and record sequence used by closure copy.
+
+    Args:
+        run_dir: Already batch-verified FROZEN Run directory.
+
+    Returns:
+        Validated Run manifest and ordered validated record mappings.
+
+    Raises:
+        PublicationError: When persisted Run JSON is malformed or unsafe.
+    """
+    manifest_path = run_dir / "manifest.json"
+    records_path = run_dir / "records.jsonl"
+    try:
+        manifest_payload = strict_json_file(path=manifest_path)
+        if not isinstance(manifest_payload, dict):
+            raise PublicationError("Closure Run manifest root is invalid")
+        manifest = validate_record(record=manifest_payload)
+        records_text = records_path.read_text(encoding="utf-8")
+        lines = records_text.splitlines()
+        if any(not line for line in lines):
+            raise PublicationError("Closure Run records contain a blank line")
+        records = []
+        for line in lines:
+            payload = strict_json_loads(text=line)
+            if not isinstance(payload, dict):
+                raise PublicationError("Closure Run record root is invalid")
+            records.append(validate_record(record=payload))
+    except (CanonicalError, OSError, UnicodeDecodeError, ValueError) as error:
+        raise PublicationError("Closure Run documents are invalid") from error
+    if manifest["status"] != "FROZEN":
+        raise PublicationError("Closure accepts only FROZEN Runs")
+    return manifest, records
+
+
+def _copy_tree_into_closure(
+    *, source_root: Path, destination_root: Path,
+    files: Dict[str, bytes]
+) -> None:
+    """Copy one exact regular-file tree into the in-memory closure.
+
+    Args:
+        source_root: Verified source directory.
+        destination_root: Bundle-relative destination root.
+        files: Mutable output byte mapping.
+
+    Expected output:
+        Every source file is represented once; aliases and special entries
+        fail before any publication directory is written.
+    """
+    if source_root.is_symlink() or not source_root.is_dir():
+        raise PublicationError("Closure source tree is unsafe")
+    for source in sorted(source_root.rglob("*")):
+        if source.is_symlink():
+            raise PublicationError("Closure source tree contains a symlink")
+        if source.is_dir():
+            continue
+        if not source.is_file():
+            raise PublicationError("Closure source tree entry is unsafe")
+        relative = source.relative_to(source_root)
+        destination = (destination_root / relative).as_posix()
+        _safe_relative(value=destination)
+        if destination in files:
+            raise PublicationError("Closure destination is duplicated")
+        files[destination] = source.read_bytes()
+
+
+def _portable_closure_files(
+    *, repo_root: Path, batch_manifest_path: Path,
+    ledger_binding: Mapping[str, object],
+    include_cutover_qualification: bool, validation_tier: str,
+) -> Dict[str, bytes]:
+    """Build one self-contained Batch/Run/repository authority closure.
+
+    Args:
+        repo_root: Repository carrying the exact Run-bound authority bytes.
+        batch_manifest_path: Verified complete FROZEN BatchManifest.
+        ledger_binding: Previously derived minimal consumed ledger prefix.
+        include_cutover_qualification: Whether formal Cutover layout evidence
+            must be verified and carried into the portable authority tree.
+        validation_tier: Recorded or formal request-locator evidence tier.
+
+    Returns:
+        Bundle-relative closure files, including its content-addressed index.
+
+    Raises:
+        PublicationError: When Batch, Run, Spec, source, or authority bytes
+            cannot be copied through safe portable locators.
+    """
+    try:
+        batch = load_projection_batch_manifest(
+            repo_root=repo_root,
+            batch_manifest_path=batch_manifest_path,
+        )
+    except (OSError, ProjectionError) as error:
+        raise PublicationError(
+            "Publication closure requires a verified BatchManifest"
+        ) from error
+    ledger_evidence = _publication_ledger_evidence(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        validation_tier=validation_tier,
+    )
+    if ledger_evidence["binding"] != ledger_binding:
+        raise PublicationError("Closure request locator binding differs")
+    locator_provenance = ledger_evidence["provenance"]
+    files = {
+        INTERNAL_BATCH_MANIFEST: batch_manifest_path.read_bytes(),
+        INTERNAL_REQUEST_LOCATOR_PROVENANCE: (
+            canonical_json_bytes(value=locator_provenance) + b"\n"
+        ),
+    }
+    authority_paths = set(CLOSURE_AUTHORITY_FILES)
+    qualification_binding = None
+    if include_cutover_qualification:
+        # Formal publication must remain independently auditable after the
+        # mutable qualification workspace and original checkout disappear.
+        try:
+            qualification_binding = validate_cutover_qualifications(
+                repo_root=repo_root,
+            )
+            authority_paths.update(
+                qualification_closure_paths(repo_root=repo_root)
+            )
+        except (OSError, QualificationError) as error:
+            raise PublicationError(
+                "Formal qualification closure is unavailable"
+            ) from error
+    metric_root = repo_root / "catalog" / "metrics"
+    if metric_root.is_symlink() or not metric_root.is_dir():
+        raise PublicationError("Closure MetricSpec catalog is unsafe")
+    metric_paths = sorted(metric_root.glob("*.md"))
+    if not metric_paths:
+        raise PublicationError("Closure MetricSpec catalog is empty")
+    for metric_path in metric_paths:
+        try:
+            authority_paths.add(
+                metric_path.relative_to(repo_root).as_posix()
+            )
+        except ValueError as error:
+            raise PublicationError(
+                "Closure MetricSpec path escapes repository"
+            ) from error
+
+    # Preserve the BatchManifest's relative Run topology so its exact bytes
+    # remain authoritative after the original mutable workspace is removed.
+    for binding in batch["runs"]:
+        relative_run = str(binding["run_path"])
+        run_dir = batch_manifest_path.parent / relative_run
+        manifest, records = _validated_run_documents(run_dir=run_dir)
+        for relative in manifest["spec_file_hashes"]:
+            authority_paths.add(str(relative))
+        for record in records:
+            if record["record_type"] == "RAW_BLOB":
+                authority_paths.add(str(record["storage_uri"]))
+        _copy_tree_into_closure(
+            source_root=run_dir,
+            destination_root=(
+                Path(INTERNAL_BATCH_MANIFEST).parent / relative_run
+            ),
+            files=files,
+        )
+
+    # Carry the exact minimal legal request prefix and exact locator bytes
+    # consumed by this Batch. A recorded legacy locator keeps its honest class
+    # and original path; it is never copied into the immutable-attempt tree.
+    try:
+        log_path = resolve_repository_file(
+            repo_root=repo_root,
+            repo_relative_path="evidence/requests_log.csv",
+        )
+        log_text = log_path.read_text(encoding="utf-8")
+        prefix_bytes = request_log_prefix_bytes(
+            text=log_text,
+            row_count=int(ledger_binding["row_count"]),
+        )
+        prefix_rows = parse_request_log_rows(
+            text=prefix_bytes.decode("utf-8")
+        )
+    except (
+        OSError, SourceError, UnicodeDecodeError, ValueError,
+        KeyError, TypeError,
+    ) as error:
+        raise PublicationError("Closure request ledger is invalid") from error
+    used_attempt_ids = set(ledger_binding["used_request_attempt_ids"])
+    copied_attempt_ids = set()
+    for row_index, row in enumerate(prefix_rows):
+        attempt_id = request_log_attempt_id(
+            row_index=row_index,
+            row=row,
+        )
+        if attempt_id not in used_attempt_ids:
+            continue
+        copied_attempt_ids.add(attempt_id)
+    if copied_attempt_ids != used_attempt_ids:
+        raise PublicationError("Closure consumed ledger attempts differ")
+    for proof in locator_provenance["source_proofs"]:
+        authority_paths.add(str(proof["original_body_locator"]))
+        authority_paths.add(str(proof["original_headers_locator"]))
+    ledger_destination = (
+        Path(INTERNAL_AUTHORITY_ROOT) / "evidence/requests_log.csv"
+    ).as_posix()
+    ledger_manifest_destination = (
+        Path(INTERNAL_AUTHORITY_ROOT)
+        / "evidence/requests_log_manifest.json"
+    ).as_posix()
+    files[ledger_destination] = prefix_bytes
+    files[ledger_manifest_destination] = canonical_json_bytes(
+        value={
+            "schema_version": REQUEST_LOG_MANIFEST_SCHEMA_VERSION,
+            "row_count": len(prefix_rows),
+            "content_sha256": sha256_bytes(content=prefix_bytes),
+        }
+    ) + b"\n"
+
+    # Repository paths are copied under a private root rather than rewritten;
+    # the existing Run verifier can therefore reapply Spec, Requirement,
+    # traits, source, Review, Trace, and receipt invariants without host paths.
+    for relative in sorted(authority_paths):
+        try:
+            source = resolve_repository_file(
+                repo_root=repo_root,
+                repo_relative_path=relative,
+            )
+        except (OSError, SourceError) as error:
+            raise PublicationError(
+                "Closure authority file is unsafe or missing"
+            ) from error
+        destination = (Path(INTERNAL_AUTHORITY_ROOT) / relative).as_posix()
+        if destination in files:
+            raise PublicationError("Closure authority path is duplicated")
+        files[destination] = source.read_bytes()
+
+    file_records = [
+        _closure_file_record(path=path, content=files[path])
+        for path in sorted(files)
+    ]
+    body = {
+        "authority_root": INTERNAL_AUTHORITY_ROOT,
+        "batch_manifest_id": batch["batch_manifest_id"],
+        "batch_manifest_path": INTERNAL_BATCH_MANIFEST,
+        "files": file_records,
+        "ledger_binding": dict(ledger_binding),
+        "qualification_binding": qualification_binding,
+        "request_locator_provenance_id": locator_provenance[
+            "request_locator_proof_id"
+        ],
+        "run_bindings": list(batch["runs"]),
+    }
+    closure = {
+        **body,
+        "schema_version": 3,
+        "closure_id": content_hash(value=body),
+    }
+    files[INTERNAL_CLOSURE_MANIFEST] = (
+        canonical_json_bytes(value=closure) + b"\n"
+    )
+    return files
+
+
+def _verify_portable_closure(
+    *, bundle_dir: Path, manifest: Mapping[str, object],
+    projection: Mapping[str, object]
+) -> None:
+    """Reapply Batch and every FROZEN Run verifier inside one bundle.
+
+    Args:
+        bundle_dir: Immutable publication directory under verification.
+        manifest: Parsed PublicationManifest binding every file byte.
+        projection: Parsed ProjectionManifest binding the consumed Runs.
+
+    Raises:
+        PublicationError: On closure schema, byte set, portable locator,
+            Batch identity, or deep Run replay drift.
+    """
+    closure_path = bundle_dir / INTERNAL_CLOSURE_MANIFEST
+    try:
+        payload = strict_json_file(path=closure_path)
+    except CanonicalError as error:
+        raise PublicationError(
+            "Publication closure manifest is invalid"
+        ) from error
+    if (
+        not isinstance(payload, dict)
+        or set(payload) != CLOSURE_MANIFEST_FIELDS
+    ):
+        raise PublicationError("Publication closure fields are not exact")
+    closure = dict(payload)
+    body = {
+        key: closure[key]
+        for key in closure
+        if key not in {"closure_id", "schema_version"}
+    }
+    if (
+        closure["schema_version"] != 3
+        or type(closure["closure_id"]) is not str
+        or closure["closure_id"] != content_hash(value=body)
+        or closure["authority_root"] != INTERNAL_AUTHORITY_ROOT
+        or closure["batch_manifest_path"] != INTERNAL_BATCH_MANIFEST
+        or closure["batch_manifest_id"] != manifest["batch_manifest_id"]
+        or closure["ledger_binding"] != manifest["ledger_binding"]
+        or closure["request_locator_provenance_id"]
+        != manifest["ledger_binding"]["request_locator_proof_id"]
+        or closure["run_bindings"] != projection["run_bindings"]
+    ):
+        raise PublicationError("Publication closure identity differs")
+    records = closure["files"]
+    if type(records) is not list or any(
+        not isinstance(record, dict)
+        or set(record) != {"path", "sha256", "size"}
+        for record in records
+    ):
+        raise PublicationError(
+            "Publication closure file records are invalid"
+        )
+    closure_paths = [str(record["path"]) for record in records]
+    if (
+        not closure_paths
+        or len(closure_paths) != len(set(closure_paths))
+        or closure_paths != sorted(closure_paths)
+        or any(
+            not path.startswith(INTERNAL_PREFIX)
+            or path == INTERNAL_CLOSURE_MANIFEST
+            for path in closure_paths
+        )
+    ):
+        raise PublicationError("Publication closure file exact set differs")
+    publication_records = {
+        str(record["path"]): record for record in manifest["files"]
+    }
+    expected_paths = (
+        set(REQUIRED_BUNDLE_FILES)
+        | {INTERNAL_CLOSURE_MANIFEST}
+        | set(closure_paths)
+    )
+    if set(publication_records) != expected_paths:
+        raise PublicationError("Publication closure namespace differs")
+    for record in records:
+        path = str(record["path"])
+        if publication_records[path] != record:
+            raise PublicationError(
+                "Publication closure digest binding differs"
+            )
+
+    authority_root = bundle_dir / INTERNAL_AUTHORITY_ROOT
+    batch_path = bundle_dir / INTERNAL_BATCH_MANIFEST
+    try:
+        batch = load_projection_batch_manifest(
+            repo_root=authority_root,
+            batch_manifest_path=batch_path,
+        )
+    except (OSError, ProjectionError) as error:
+        raise PublicationError(
+            "Publication closure Batch/Run replay failed"
+        ) from error
+    if (
+        batch["batch_manifest_id"] != manifest["batch_manifest_id"]
+        or batch["runs"] != projection["run_bindings"]
+    ):
+        raise PublicationError("Publication closure Batch binding differs")
+    try:
+        locator_payload = strict_json_file(
+            path=bundle_dir / INTERNAL_REQUEST_LOCATOR_PROVENANCE
+        )
+        if (
+            not isinstance(locator_payload, dict)
+            or set(locator_payload) != REQUEST_LOCATOR_PROVENANCE_FIELDS
+        ):
+            raise PublicationError(
+                "Publication request locator provenance fields differ"
+            )
+        locator_provenance = _request_locator_provenance(
+            validation_tier=str(locator_payload["validation_tier"]),
+            source_proofs=locator_payload["source_proofs"],
+        )
+        if locator_provenance != locator_payload:
+            raise PublicationError(
+                "Publication request locator provenance identity differs"
+            )
+        portable_evidence = _publication_ledger_evidence(
+            repo_root=authority_root,
+            batch_manifest_path=batch_path,
+            validation_tier=str(
+                manifest["ledger_binding"]["request_locator_tier"]
+            ),
+        )
+    except (CanonicalError, PublicationError) as error:
+        raise PublicationError(
+            "Publication closure ledger replay failed"
+        ) from error
+    if (
+        locator_provenance != portable_evidence["provenance"]
+        or portable_evidence["binding"] != manifest["ledger_binding"]
+    ):
+        raise PublicationError("Publication closure ledger binding differs")
+    qualification_binding = closure["qualification_binding"]
+    if qualification_binding is not None:
+        try:
+            portable_qualification = validate_cutover_qualifications(
+                repo_root=authority_root,
+            )
+        except (OSError, QualificationError, ValueError) as error:
+            raise PublicationError(
+                "Publication closure qualification replay failed"
+            ) from error
+        if portable_qualification != qualification_binding:
+            raise PublicationError(
+                "Publication closure qualification binding differs"
+            )
 
 
 def _read_staging_files(
@@ -1193,28 +2428,59 @@ def _markdown_cell(*, value: object) -> str:
 
 
 def _expected_documents(
-    *, metrics: list, projection: Mapping[str, object]
+    *, metrics: list, projection: Mapping[str, object], validation_mode: str
 ) -> Dict[str, bytes]:
-    """Render deterministic recorded-only bundle documentation.
+    """Render deterministic documentation for one validation tier.
 
     Args:
         metrics: Parsed full candidate matrix.
         projection: Strict ProjectionManifest for the same view.
+        validation_mode: Recorded evidence or formal Cutover candidate mode.
 
     Returns:
         README and report bytes derived only from verified candidate data.
+
+    Raises:
+        PublicationError: When the validation tier is unknown.
     """
-    report_lines = [
-        "# vNext recorded publication report",
-        "",
+    if validation_mode not in {
+        RECORDED_VALIDATION_MODE,
+        FORMAL_VALIDATION_MODE,
+    }:
+        raise PublicationError("Publication documentation mode is invalid")
+    formal = validation_mode == FORMAL_VALIDATION_MODE
+    report_title = (
+        "# vNext formal publication report"
+        if formal
+        else "# vNext recorded publication report"
+    )
+    boundary = (
         (
+            "> Immutable PUBLISHABLE Cutover candidate; it is official only "
+            "while the verified active pointer names this bundle."
+        )
+        if formal
+        else (
             "> Recorded/shadow artifact; this is not active/full Cutover "
             "evidence."
-        ),
+        )
+    )
+    report_lines = [
+        report_title,
+        "",
+        boundary,
         "",
         "- Batch: `{}`".format(projection["batch_manifest_id"]),
         "- Projection: `{}`".format(
             projection["projection_manifest_id"]
+        ),
+        "- run_id: `validation:{}`".format(
+            projection["projection_manifest_id"]
+        ),
+        "- result: `{}`".format(
+            FORMAL_VALIDATION_RESULT
+            if formal
+            else RECORDED_VALIDATION_RESULT
         ),
         "",
         "| Company | Metric | Value | Unit | Status |",
@@ -1230,20 +2496,93 @@ def _expected_documents(
         )
         for row in metrics
     )
+    if formal:
+        report_lines.extend(
+            [
+                "",
+                "## Active 与 latest",
+                "",
+                (
+                    "- active publication 是当前正式可读版本；latest run "
+                    "可以失败或未发布，两者不能混同。"
+                ),
+                (
+                    "- OpenAI 只处理公开 SEC table-grid，不是 SEC evidence "
+                    "source；HUMAN review 负责批准 hash-bound claims。"
+                ),
+                "",
+                "<!-- validation-snapshot-provenance:start -->",
+                "## Validation snapshot provenance",
+                "",
+                (
+                    "- 报告存在或显示 GO，不单独证明当前 checkout 可验收。"
+                ),
+                (
+                    "- 必须同时满足 terminal manifest 成功，且 "
+                    "`python3 tools/check_validation_snapshot.py` 通过。"
+                ),
+                (
+                    "- checker 验证 source-input tree、active pointer、"
+                    "immutable bundle 与关键 artifact SHA-256/size。"
+                ),
+                "<!-- validation-snapshot-provenance:end -->",
+            ]
+        )
+    readme_title = (
+        "# vNext formal publication bundle"
+        if formal
+        else "# vNext recorded publication bundle"
+    )
+    readme_boundary = (
+        (
+            "- boundary: formal PUBLISHABLE bundle; active only when the "
+            "verified pointer names this publication"
+        )
+        if formal
+        else "- boundary: recorded/shadow only; full Cutover not proven"
+    )
+    readme_lines = [
+        readme_title,
+        "",
+        "- batch_manifest_id: `{}`".format(
+            projection["batch_manifest_id"]
+        ),
+        "- projection_manifest_id: `{}`".format(
+            projection["projection_manifest_id"]
+        ),
+        "- rows: `{}`".format(len(metrics)),
+        readme_boundary,
+    ]
+    if formal:
+        readme_lines.extend(
+            [
+                "",
+                "## 正式读取入口",
+                "",
+                (
+                    "业务用户继续读取 root `outputs/metrics_matrix.csv`、"
+                    "`outputs/metric_evidence.csv` 与根报告；内部读取必须先"
+                    "打开并 pin `PublicationView`。"
+                ),
+                (
+                    "root mirrors 不向未持有 PublicationView 的任意并发"
+                    "读取者承诺组原子。"
+                ),
+                (
+                    "rollback 只切换 active pointer 并恢复 mirrors，不会"
+                    "重新启用 legacy parser，也不会回滚 SEC request ledger。"
+                ),
+                "",
+                "## 验收",
+                "",
+                "```bash",
+                "python3 scripts/12_validate_repair.py",
+                "python3 tools/check_validation_snapshot.py",
+                "```",
+            ]
+        )
     readme = "\n".join(
-        [
-            "# vNext recorded publication bundle",
-            "",
-            "- batch_manifest_id: `{}`".format(
-                projection["batch_manifest_id"]
-            ),
-            "- projection_manifest_id: `{}`".format(
-                projection["projection_manifest_id"]
-            ),
-            "- rows: `{}`".format(len(metrics)),
-            "- boundary: recorded/shadow only; full Cutover not proven",
-            "",
-        ]
+        [*readme_lines, ""]
     )
     return {
         "README_RUN.md": readme.encode("utf-8"),
@@ -1506,9 +2845,153 @@ def _execute_scalability_audit(*, repo_root: Path) -> list:
     return rows
 
 
+def _validate_legacy_migration_receipt(
+    *, receipt: Mapping[str, object], projection: Mapping[str, object],
+    repo_root: Optional[Path]
+) -> None:
+    """Validate compatibility cells and the exact legacy migration ledger.
+
+    Args:
+        receipt: Parsed legacy invariant migration receipt.
+        projection: Strict ProjectionManifest for the same candidate.
+        repo_root: Repository authority during prepare, or ``None`` on
+            immutable bundle read-back.
+
+    Raises:
+        PublicationError: On malformed parity, incomplete inventory coverage,
+            invalid status/proof, repository drift, or receipt identity drift.
+    """
+    required_fields = {
+        "allowed_statuses", "batch_manifest_id",
+        "evidence_reconciliations", "legacy_input_hashes",
+        "legacy_path_inventory_sha256", "metric_cells",
+        "migration_entries", "receipt_id", "schema_version", "status",
+    }
+    if (
+        set(receipt) != required_fields
+        or receipt["schema_version"] != 2
+        or receipt["status"] != "PASS"
+        or receipt["batch_manifest_id"] != projection["batch_manifest_id"]
+        or receipt["legacy_input_hashes"]
+        != projection["legacy_input_hashes"]
+        or receipt["legacy_path_inventory_sha256"]
+        != projection["requirement_hashes"][
+            "legacy_path_inventory_sha256"
+        ]
+        or receipt["allowed_statuses"] != list(LEGACY_MIGRATION_STATUSES)
+        or type(receipt["evidence_reconciliations"]) is not list
+        or type(receipt["metric_cells"]) is not list
+        or type(receipt["migration_entries"]) is not list
+        or not receipt["migration_entries"]
+    ):
+        raise PublicationError("Compatibility execution did not PASS")
+    if any(
+        type(row) is not dict
+        or set(row) != {
+            "comparisons", "exact_cells", "key", "method_cells", "status",
+        }
+        or row["status"] != "PASS"
+        or type(row["comparisons"]) is not dict
+        or type(row["exact_cells"]) is not list
+        or type(row["method_cells"]) is not list
+        or any(
+            type(cell) is not dict
+            or set(cell) != {
+                "class", "field", "key", "new", "old", "status",
+            }
+            or cell["class"] != "EXACT"
+            or cell["status"] != "PASS"
+            for cell in row["exact_cells"]
+        )
+        or any(
+            type(cell) is not dict
+            or set(cell) != {
+                "class", "field", "key", "new", "old", "status",
+            }
+            or cell["class"] != "DECLARATIVE_METHOD_DELTA"
+            or cell["status"] != "RECORDED"
+            for cell in row["method_cells"]
+        )
+        for row in receipt["evidence_reconciliations"]
+    ) or any(
+        not isinstance(cell, dict)
+        or "status" not in cell
+        or cell["status"] not in {"PASS", "RECORDED"}
+        for cell in receipt["metric_cells"]
+    ):
+        raise PublicationError("Compatibility execution did not PASS")
+    entry_fields = {
+        "entry_id", "inventory_field", "kind", "legacy_symbol",
+        "proof_anchors", "proof_hash", "proof_mode", "proof_sources",
+        "reason", "status",
+    }
+    entry_ids = []
+    for entry in receipt["migration_entries"]:
+        if (
+            type(entry) is not dict
+            or set(entry) != entry_fields
+            or type(entry["entry_id"]) is not str
+            or type(entry["inventory_field"]) is not str
+            or type(entry["legacy_symbol"]) is not str
+            or entry["entry_id"]
+            != "{}:{}".format(
+                entry["inventory_field"], entry["legacy_symbol"]
+            )
+            or entry["kind"] not in {"CONFIGURATION", "INVARIANT", "PRODUCER"}
+            or entry["status"] not in LEGACY_MIGRATION_STATUSES
+            or entry["proof_mode"] not in LEGACY_PROOF_MODES
+            or LEGACY_PROOF_MODES[entry["proof_mode"]] != entry["status"]
+            or type(entry["reason"]) is not str
+            or not entry["reason"]
+            or type(entry["proof_anchors"]) is not list
+            or not entry["proof_anchors"]
+            or len(entry["proof_anchors"]) != len(set(entry["proof_anchors"]))
+            or type(entry["proof_sources"]) is not list
+            or len(entry["proof_sources"]) != len(entry["proof_anchors"])
+        ):
+            raise PublicationError("Legacy migration ledger entry is invalid")
+        for index, source in enumerate(entry["proof_sources"]):
+            if (
+                type(source) is not dict
+                or set(source) != {"anchor", "source_sha256"}
+                or source["anchor"] != entry["proof_anchors"][index]
+                or type(source["source_sha256"]) is not str
+                or SHA256_PATTERN.fullmatch(source["source_sha256"]) is None
+            ):
+                raise PublicationError(
+                    "Legacy migration proof source is invalid"
+                )
+        proof_body = {
+            key: entry[key] for key in entry if key != "proof_hash"
+        }
+        if entry["proof_hash"] != content_hash(value=proof_body):
+            raise PublicationError("Legacy migration proof identity differs")
+        entry_ids.append(entry["entry_id"])
+    if len(entry_ids) != len(set(entry_ids)):
+        raise PublicationError("Legacy migration ledger entry is duplicated")
+    if repo_root is not None:
+        try:
+            inventory = load_legacy_path_inventory(repo_root=repo_root)
+        except ValueError as error:
+            raise PublicationError(
+                "Legacy migration inventory cannot be verified"
+            ) from error
+        if receipt["migration_entries"] != inventory["migration_entries"]:
+            raise PublicationError(
+                "Legacy migration ledger differs from inventory"
+            )
+    body = {
+        key: receipt[key]
+        for key in receipt
+        if key not in {"receipt_id", "schema_version"}
+    }
+    if receipt["receipt_id"] != content_hash(value=body):
+        raise PublicationError("Compatibility execution identity differs")
+
+
 def _publication_gate_evidence(
     *, files: Mapping[str, bytes], projection: Mapping[str, object],
-    repo_root: Optional[Path]
+    repo_root: Optional[Path], ledger_binding: Mapping[str, object],
 ) -> Dict[str, object]:
     """Execute all publication checks against one exact candidate view.
 
@@ -1517,6 +3000,7 @@ def _publication_gate_evidence(
         projection: Strict ProjectionManifest bound to those bytes.
         repo_root: Repository authority during preparation, or ``None`` during
             immutable read-back.
+        ledger_binding: Tier, locator class, proof, and minimal prefix binding.
 
     Returns:
         One deterministic evidence object per required publication check.
@@ -1576,67 +3060,11 @@ def _publication_gate_evidence(
         content=files["legacy_invariant_migration_receipt.json"],
         label="Compatibility receipt",
     )
-    if (
-        set(compatibility) != {
-            "batch_manifest_id", "evidence_reconciliations",
-            "legacy_input_hashes", "metric_cells", "receipt_id",
-            "schema_version", "status",
-        }
-        or compatibility["schema_version"] != 1
-        or compatibility["status"] != "PASS"
-        or compatibility["batch_manifest_id"]
-        != projection["batch_manifest_id"]
-        or compatibility["legacy_input_hashes"]
-        != projection["legacy_input_hashes"]
-        or type(compatibility["evidence_reconciliations"]) is not list
-        or type(compatibility["metric_cells"]) is not list
-        or any(
-            type(row) is not dict
-            or set(row) != {
-                "comparisons", "exact_cells", "key", "method_cells",
-                "status",
-            }
-            or row["status"] != "PASS"
-            or type(row["comparisons"]) is not dict
-            or type(row["exact_cells"]) is not list
-            or type(row["method_cells"]) is not list
-            or any(
-                type(cell) is not dict
-                or set(cell) != {
-                    "class", "field", "key", "new", "old", "status",
-                }
-                or cell["class"] != "EXACT"
-                or cell["status"] != "PASS"
-                for cell in row["exact_cells"]
-            )
-            or any(
-                type(cell) is not dict
-                or set(cell) != {
-                    "class", "field", "key", "new", "old", "status",
-                }
-                or cell["class"] != "DECLARATIVE_METHOD_DELTA"
-                or cell["status"] != "RECORDED"
-                for cell in row["method_cells"]
-            )
-            for row in compatibility["evidence_reconciliations"]
-        )
-        or any(
-            not isinstance(cell, dict)
-            or "status" not in cell
-            or cell["status"] not in {"PASS", "RECORDED"}
-            for cell in compatibility["metric_cells"]
-        )
-    ):
-        raise PublicationError("Compatibility execution did not PASS")
-    compatibility_body = {
-        key: compatibility[key]
-        for key in compatibility
-        if key not in {"receipt_id", "schema_version"}
-    }
-    if compatibility["receipt_id"] != content_hash(
-        value=compatibility_body
-    ):
-        raise PublicationError("Compatibility execution identity differs")
+    _validate_legacy_migration_receipt(
+        receipt=compatibility,
+        projection=projection,
+        repo_root=repo_root,
+    )
 
     migrated_ids = set(projection["migrated_metric_ids"])
     migrated_metric_hashes = sorted(
@@ -1684,6 +3112,10 @@ def _publication_gate_evidence(
         "mode", "not_refreshed_artifacts", "refreshed_artifacts",
         "result", "run_id", "source_commit", "started_at_utc",
     }
+    validation_modes = {
+        RECORDED_VALIDATION_MODE: RECORDED_VALIDATION_RESULT,
+        FORMAL_VALIDATION_MODE: FORMAL_VALIDATION_RESULT,
+    }
     if (
         not repair
         or len(repair_ids) != len(set(repair_ids))
@@ -1707,12 +3139,21 @@ def _publication_gate_evidence(
                 "refreshed_artifacts", "not_refreshed_artifacts",
             )
         )
-        or validation["mode"] != "RECORDED_VNEXT"
-        or validation["result"] != "PASSED_RECORDED_ONLY"
+        or validation["mode"] not in validation_modes
+        or validation["result"] != validation_modes[validation["mode"]]
         or validation["run_id"]
         != "validation:" + projection["projection_manifest_id"]
-        or validation["source_commit"]
-        != "RECORDED_VNEXT_NO_SOURCE_COMMIT"
+        or (
+            validation["mode"] == RECORDED_VALIDATION_MODE
+            and validation["source_commit"] != RECORDED_SOURCE_COMMIT
+        )
+        or (
+            validation["mode"] == FORMAL_VALIDATION_MODE
+            and re.fullmatch(
+                r"[0-9a-f]{40}", validation["source_commit"]
+            )
+            is None
+        )
         or set(validation["refreshed_artifacts"]) != required_refreshed
         or validation["not_refreshed_artifacts"] != []
     ):
@@ -1721,8 +3162,21 @@ def _publication_gate_evidence(
         parse_utc_timestamp(value=validation["started_at_utc"])
     except CanonicalError as error:
         raise PublicationError(
-            "Recorded validation timestamp is invalid"
+            "Publication validation timestamp is invalid"
         ) from error
+    if (
+        type(ledger_binding) is not dict
+        or set(ledger_binding) != LEDGER_BINDING_FIELDS
+        or validation["mode"] != ledger_binding["request_locator_tier"]
+        or (
+            validation["mode"] == FORMAL_VALIDATION_MODE
+            and "LEGACY_WORKING_LOCATOR"
+            in ledger_binding["request_locator_classes"]
+        )
+    ):
+        raise PublicationError(
+            "Publication request locator tier differs from validation"
+        )
 
     scalability = _csv_rows(
         content=files["scalability_audit.csv"],
@@ -1757,7 +3211,9 @@ def _publication_gate_evidence(
         raise PublicationError("Stratified audit execution did not PASS")
 
     expected_documents = _expected_documents(
-        metrics=metrics, projection=projection,
+        metrics=metrics,
+        projection=projection,
+        validation_mode=str(validation["mode"]),
     )
     if any(
         files[relative] != expected_documents[relative]
@@ -1774,6 +3230,15 @@ def _publication_gate_evidence(
             "evidence_rows_id": content_hash(value=migrated_evidence_hashes),
             "metric_rows_id": content_hash(value=migrated_metric_hashes),
         },
+        "REQUEST_LOCATOR_TIER": {
+            "locator_classes": list(
+                ledger_binding["request_locator_classes"]
+            ),
+            "locator_proof_id": ledger_binding[
+                "request_locator_proof_id"
+            ],
+            "validation_tier": ledger_binding["request_locator_tier"],
+        },
         "REPAIR_VALIDATION": {
             "manifest_id": content_hash(value=validation),
             "rows_id": content_hash(value=repair),
@@ -1786,7 +3251,7 @@ def _publication_gate_evidence(
 
 def _finalize_staging_view(
     *, repo_root: Path, staging_dir: Path, context: Mapping[str, object],
-    validated_at_utc: str
+    validated_at_utc: str, validation_mode: str, source_commit: str
 ) -> Dict[str, object]:
     """Generate every non-Projector artifact from one verified candidate.
 
@@ -1795,6 +3260,8 @@ def _finalize_staging_view(
         staging_dir: Candidate root already containing Projector artifacts.
         context: Recomputed Projector staging context.
         validated_at_utc: Explicit UTC execution timestamp.
+        validation_mode: Recorded or formal full-validation tier.
+        source_commit: Sentinel for recorded mode or exact Git commit for full.
 
     Returns:
         Strict staged ProjectionManifest.
@@ -1807,8 +3274,22 @@ def _finalize_staging_view(
         parse_utc_timestamp(value=validated_at_utc)
     except CanonicalError as error:
         raise PublicationError(
-            "Recorded validation timestamp is invalid"
+            "Publication validation timestamp is invalid"
         ) from error
+    expected_results = {
+        RECORDED_VALIDATION_MODE: RECORDED_VALIDATION_RESULT,
+        FORMAL_VALIDATION_MODE: FORMAL_VALIDATION_RESULT,
+    }
+    if validation_mode not in expected_results:
+        raise PublicationError("Publication validation mode is invalid")
+    if (
+        validation_mode == RECORDED_VALIDATION_MODE
+        and source_commit != RECORDED_SOURCE_COMMIT
+    ) or (
+        validation_mode == FORMAL_VALIDATION_MODE
+        and re.fullmatch(r"[0-9a-f]{40}", source_commit) is None
+    ):
+        raise PublicationError("Publication source commit is invalid")
     projection_path = staging_dir / "projection_manifest.json"
     if projection_path.is_symlink() or not projection_path.is_file():
         raise PublicationError("Staged ProjectionManifest is unsafe")
@@ -1867,17 +3348,21 @@ def _finalize_staging_view(
                 "run_id": (
                     "validation:" + projection["projection_manifest_id"]
                 ),
-                "source_commit": "RECORDED_VNEXT_NO_SOURCE_COMMIT",
+                "source_commit": source_commit,
                 "started_at_utc": validated_at_utc,
-                "mode": "RECORDED_VNEXT",
+                "mode": validation_mode,
                 "refreshed_artifacts": refreshed,
                 "not_refreshed_artifacts": [],
-                "result": "PASSED_RECORDED_ONLY",
+                "result": expected_results[validation_mode],
             }
         ) + b"\n",
     }
     generated.update(
-        _expected_documents(metrics=metrics, projection=projection)
+        _expected_documents(
+            metrics=metrics,
+            projection=projection,
+            validation_mode=validation_mode,
+        )
     )
     for relative in generated:
         _write_generated_artifact(
@@ -1888,12 +3373,41 @@ def _finalize_staging_view(
     return projection
 
 
-def write_publication_validation_receipt(
+def _repository_source_commit(*, repo_root: Path) -> str:
+    """Return the clean repository HEAD used by a formal publication.
+
+    Args:
+        repo_root: Repository whose runtime and Requirement bytes are used.
+
+    Returns:
+        Exact forty-character Git commit.
+
+    Raises:
+        PublicationError: When Git identity is unavailable or tracked bytes are
+            dirty. Generated untracked staging is deliberately outside this
+            authority check and is bound separately by the receipt.
+    """
+    try:
+        snapshot = capture_source_snapshot(workdir=repo_root)
+    except (OSError, ValidationProvenanceError) as error:
+        raise PublicationError(
+            "Formal publication source-input closure is unavailable"
+        ) from error
+    if (
+        snapshot.source_commit is None
+        or re.fullmatch(r"[0-9a-f]{40}", snapshot.source_commit) is None
+    ):
+        raise PublicationError("Formal publication Git HEAD is invalid")
+    return snapshot.source_commit
+
+
+def _write_publication_validation_receipt(
     *, repo_root: Path, batch_manifest_path: Path,
     legacy_snapshot_dir: Path, staging_dir: Path,
-    previous_publication_id: Optional[str], validated_at_utc: str
+    previous_publication_id: Optional[str], validated_at_utc: str,
+    validation_mode: str, source_commit: str
 ) -> Dict[str, object]:
-    """Execute publication gates and persist their content-bound receipt.
+    """Execute one tier of publication gates and persist its receipt.
 
     Args:
         repo_root: Repository authority used by Projector and semantic audit.
@@ -1902,6 +3416,8 @@ def write_publication_validation_receipt(
         staging_dir: Exact candidate view without a validation receipt.
         previous_publication_id: Prepared predecessor identity.
         validated_at_utc: Explicit UTC gate execution timestamp.
+        validation_mode: Recorded or formal validation tier.
+        source_commit: Tier-appropriate exact source identity.
 
     Returns:
         Strict persisted ValidationReceipt.
@@ -1909,6 +3425,7 @@ def write_publication_validation_receipt(
     ledger_binding = publication_ledger_binding(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
+        validation_tier=validation_mode,
     )
     context = publication_staging_context(
         repo_root=repo_root,
@@ -1921,12 +3438,17 @@ def write_publication_validation_receipt(
         staging_dir=staging_dir,
         context=context,
         validated_at_utc=validated_at_utc,
+        validation_mode=validation_mode,
+        source_commit=source_commit,
     )
     files = _read_staging_files(
         staging_dir=staging_dir, include_receipt=False,
     )
     gate_evidence = _publication_gate_evidence(
-        files=files, projection=projection, repo_root=repo_root,
+        files=files,
+        projection=projection,
+        repo_root=repo_root,
+        ledger_binding=ledger_binding,
     )
     body = {
         "status": "PASSED",
@@ -1968,6 +3490,96 @@ def write_publication_validation_receipt(
     return receipt
 
 
+def write_publication_validation_receipt(
+    *, repo_root: Path, batch_manifest_path: Path,
+    legacy_snapshot_dir: Path, staging_dir: Path,
+    previous_publication_id: Optional[str], validated_at_utc: str
+) -> Dict[str, object]:
+    """Execute the offline recorded gates without authorizing Cutover.
+
+    Args:
+        repo_root: Repository authority used by Projector and semantic audit.
+        batch_manifest_path: Complete FROZEN Run collection.
+        legacy_snapshot_dir: Legacy inputs named by ProjectionManifest.
+        staging_dir: Exact candidate view without a validation receipt.
+        previous_publication_id: Prepared predecessor identity.
+        validated_at_utc: Explicit UTC gate execution timestamp.
+
+    Returns:
+        Recorded-only content-bound ValidationReceipt.
+    """
+    return _write_publication_validation_receipt(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+        validated_at_utc=validated_at_utc,
+        validation_mode=RECORDED_VALIDATION_MODE,
+        source_commit=RECORDED_SOURCE_COMMIT,
+    )
+
+
+def _write_cutover_publication_validation_receipt(
+    *, repo_root: Path, batch_manifest_path: Path,
+    legacy_snapshot_dir: Path, staging_dir: Path,
+    previous_publication_id: Optional[str], validated_at_utc: str
+) -> Dict[str, object]:
+    """Execute formal pre-commit gates against one clean Git authority.
+
+    Args:
+        repo_root: Repository authority used by Projector and semantic audit.
+        batch_manifest_path: Complete FROZEN Run collection.
+        legacy_snapshot_dir: Legacy inputs named by ProjectionManifest.
+        staging_dir: Exact candidate view without a validation receipt.
+        previous_publication_id: Prepared predecessor identity.
+        validated_at_utc: Explicit UTC gate execution timestamp.
+
+    Returns:
+        Content-bound receipt whose generated documents and terminal manifest
+        are eligible for formal pointer commit.
+    """
+    # Qualification is repository-owned release authority. Validate it before
+    # creating a receipt that could make this candidate pointer-eligible.
+    validate_cutover_qualifications(repo_root=repo_root)
+    return _write_publication_validation_receipt(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+        validated_at_utc=validated_at_utc,
+        validation_mode=FORMAL_VALIDATION_MODE,
+        source_commit=_repository_source_commit(repo_root=repo_root),
+    )
+
+
+def write_cutover_publication_validation_receipt(
+    *, repo_root: Path, batch_manifest_path: Path,
+    legacy_snapshot_dir: Path, staging_dir: Path,
+    previous_publication_id: Optional[str], validated_at_utc: str
+) -> Dict[str, object]:
+    """Reject direct formal-receipt creation outside Cutover orchestration.
+
+    Args:
+        repo_root: Ignored caller repository candidate.
+        batch_manifest_path: Ignored caller Batch candidate.
+        legacy_snapshot_dir: Ignored caller compatibility input.
+        staging_dir: Ignored caller staging directory.
+        previous_publication_id: Ignored caller predecessor.
+        validated_at_utc: Ignored caller validation time.
+
+    Raises:
+        PublicationError: Always. Formal receipt authority is held by the
+            single Cutover orchestrator, not this compatibility tombstone.
+    """
+    del (
+        repo_root, batch_manifest_path, legacy_snapshot_dir, staging_dir,
+        previous_publication_id, validated_at_utc,
+    )
+    raise PublicationError("FORMAL_CUTOVER_AUTHORITY_REQUIRED")
+
+
 def prepare_publication_bundle(
     *,
     publication_root: Path,
@@ -1994,14 +3606,25 @@ def prepare_publication_bundle(
         PublicationError: On incomplete set, unsafe paths, existing divergent
             bundle, or write/hash failure.
     """
-    ledger_binding = publication_ledger_binding(
-        repo_root=repo_root,
-        batch_manifest_path=batch_manifest_path,
-    )
     layout = publication_layout(publication_root=publication_root)
     publications_dir = layout["publications_dir"]
     files = _read_staging_files(
         staging_dir=staging_dir, include_receipt=True,
+    )
+    validation_manifest = _json_mapping(
+        content=files["validation_run_manifest.json"],
+        label="Validation manifest",
+    )
+    validation_mode = str(validation_manifest["mode"])
+    if validation_mode not in {
+        FORMAL_VALIDATION_MODE,
+        RECORDED_VALIDATION_MODE,
+    }:
+        raise PublicationError("Publication validation mode is invalid")
+    ledger_binding = publication_ledger_binding(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        validation_tier=validation_mode,
     )
     try:
         receipt_file = strict_json_loads(
@@ -2062,78 +3685,237 @@ def prepare_publication_bundle(
         batch_manifest_id=batch_manifest_id,
         projection_manifest_id=projection_manifest_id,
         gate_evidence=_publication_gate_evidence(
-            files=files, projection=projection, repo_root=repo_root,
+            files=files,
+            projection=projection,
+            repo_root=repo_root,
+            ledger_binding=ledger_binding,
         ),
         ledger_binding=ledger_binding,
         previous_publication_id=previous_publication_id,
     )
-    file_records = []
-    for relative in sorted(files):
-        _safe_relative(value=relative)
-        content = files[relative]
-        if not isinstance(content, bytes):
-            raise PublicationError("Publication file content must be bytes")
-        file_records.append(
-            {
-                "path": relative,
-                "sha256": sha256_bytes(content=content),
-                "size": len(content),
-            }
-        )
-    manifest_identity = {
-        "candidate_status": "PUBLISHABLE",
-        "requirement_hashes": dict(requirement_hashes),
-        "batch_manifest_id": batch_manifest_id,
-        "projection_manifest_id": projection_manifest_id,
-        "validation_receipt_id": validation_receipt_id,
-        "files": file_records,
-        "ledger_binding": dict(ledger_binding),
-        "previous_publication_id": previous_publication_id,
-    }
-    publication_id = (
-        "publication_" + content_hash(value=manifest_identity).split(":", 1)[1]
+    closure_files = _portable_closure_files(
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        ledger_binding=ledger_binding,
+        include_cutover_qualification=(
+            validation_mode == FORMAL_VALIDATION_MODE
+        ),
+        validation_tier=validation_mode,
     )
-    manifest = {
-        "record_type": "PUBLICATION_MANIFEST",
-        "publication_id": publication_id,
-        "candidate_status": "PUBLISHABLE",
-        "requirement_hashes": dict(requirement_hashes),
-        "batch_manifest_id": batch_manifest_id,
-        "projection_manifest_id": projection_manifest_id,
-        "validation_receipt_id": validation_receipt_id,
-        "files": file_records,
-        "ledger_binding": dict(ledger_binding),
-        "previous_publication_id": previous_publication_id,
-    }
-    validate_record(record=manifest)
-    publications_dir.mkdir(parents=True, exist_ok=True)
-    final_dir = publications_dir / publication_id
-    if final_dir.exists():
-        existing = verify_publication_bundle(bundle_dir=final_dir)
-        if existing != manifest:
-            raise PublicationError(
-                "Existing publication ID has divergent bytes"
-            )
-        return manifest
-    temporary = publications_dir / ".{}.{}.tmp".format(
-        publication_id, uuid.uuid4().hex
+    if set(files).intersection(closure_files):
+        raise PublicationError("Publication closure overlaps user artifacts")
+    files.update(closure_files)
+    return _write_prepared_publication_bundle(
+        publications_dir=Path(publications_dir),
+        files=files,
+        requirement_hashes=requirement_hashes,
+        batch_manifest_id=str(batch_manifest_id),
+        projection_manifest_id=str(projection_manifest_id),
+        validation_receipt_id=str(validation_receipt_id),
+        ledger_binding=ledger_binding,
+        previous_publication_id=previous_publication_id,
     )
-    temporary.mkdir()
+
+
+def _verify_legacy_baseline_import(
+    *, bundle_dir: Path, manifest: Mapping[str, object],
+    internal_paths: set,
+) -> None:
+    """Verify one opaque legacy predecessor without running old producers.
+
+    Args:
+        bundle_dir: Immutable imported predecessor directory.
+        manifest: Strict outer PublicationManifest.
+        internal_paths: Exact internal paths declared by the outer manifest.
+
+    Raises:
+        PublicationError: On marker, baseline, strict hash, or identity drift.
+    """
     try:
-        for relative in sorted(files):
-            destination = temporary / _safe_relative(value=relative)
-            atomic_write_bytes(path=destination, content=files[relative])
-        atomic_write_json(
-            path=temporary / "publication_manifest.json", value=manifest,
+        marker_payload = strict_json_file(
+            path=bundle_dir / LEGACY_BASELINE_IMPORT_MANIFEST
         )
-        verify_publication_bundle(bundle_dir=temporary)
-        os.replace(str(temporary), str(final_dir))
-        _fsync_directory(path=publications_dir)
-    finally:
-        if temporary.exists():
-            shutil.rmtree(temporary)
-    verify_publication_bundle(bundle_dir=final_dir)
-    return manifest
+        baseline_payload = strict_json_file(
+            path=bundle_dir / LEGACY_BASELINE_MANIFEST
+        )
+    except CanonicalError as error:
+        raise PublicationError(
+            "Legacy baseline import metadata is invalid"
+        ) from error
+    if (
+        not isinstance(marker_payload, dict)
+        or set(marker_payload) != LEGACY_BASELINE_IMPORT_FIELDS
+        or not isinstance(baseline_payload, dict)
+    ):
+        raise PublicationError("Legacy baseline import fields are not exact")
+    marker = dict(marker_payload)
+    body = {
+        field: marker[field]
+        for field in marker
+        if field != "legacy_baseline_import_id"
+    }
+    import_id = marker["legacy_baseline_import_id"]
+    if (
+        marker["schema_version"] != 1
+        or marker["record_type"] != "LEGACY_BASELINE_IMPORT"
+        or type(import_id) is not str
+        or CONTENT_ID_PATTERN.fullmatch(import_id) is None
+        or import_id != content_hash(value=body)
+        or marker["requirement_hashes"] != manifest["requirement_hashes"]
+    ):
+        raise PublicationError("Legacy baseline import identity differs")
+    baseline_path = bundle_dir / LEGACY_BASELINE_MANIFEST
+    if (
+        marker["baseline_manifest_sha256"]
+        != sha256_file(path=baseline_path)
+        or marker["baseline_repository_commit"]
+        != baseline_payload["repository_commit"]
+        or type(marker["baseline_repository_commit"]) is not str
+        or re.fullmatch(
+            r"[0-9a-f]{40}", marker["baseline_repository_commit"]
+        ) is None
+    ):
+        raise PublicationError("Legacy baseline manifest binding differs")
+    baseline_artifacts = baseline_payload["artifact_digests"]
+    if (
+        type(baseline_artifacts) is not dict
+        or not LEGACY_BASELINE_REQUIRED_ARTIFACTS.issubset(
+            baseline_artifacts
+        )
+    ):
+        raise PublicationError("Legacy baseline artifact proof is incomplete")
+    normalized_baseline = {}
+    for relative in sorted(baseline_artifacts):
+        record = baseline_artifacts[relative]
+        if (
+            type(relative) is not str
+            or not isinstance(record, dict)
+            or "sha256" not in record
+            or "size" not in record
+            or type(record["sha256"]) is not str
+            or SHA256_PATTERN.fullmatch(record["sha256"]) is None
+            or type(record["size"]) is not int
+            or record["size"] < 0
+        ):
+            raise PublicationError(
+                "Legacy baseline artifact proof is invalid"
+            )
+        normalized_baseline[relative] = {
+            "sha256": record["sha256"],
+            "size": record["size"],
+        }
+    if marker["baseline_artifacts"] != normalized_baseline:
+        raise PublicationError("Legacy baseline artifact index differs")
+    root_artifacts = marker["root_artifacts"]
+    if (
+        type(root_artifacts) is not dict
+        or set(root_artifacts) != REQUIRED_BUNDLE_FILES
+    ):
+        raise PublicationError("Legacy root artifact exact set differs")
+    for relative in sorted(root_artifacts):
+        record = root_artifacts[relative]
+        path = bundle_dir / relative
+        origin = (
+            record["origin"] if isinstance(record, dict) and
+            "origin" in record else None
+        )
+        if (
+            not isinstance(record, dict)
+            or set(record) != LEGACY_ROOT_ARTIFACT_FIELDS
+            or origin not in {
+                "FROZEN_ROOT_BYTES",
+                "SYNTHESIZED_LEGACY_BASELINE_IMPORT",
+            }
+            or record["root_path"]
+            != ROOT_MIRROR_RELATIVE_PATHS[relative]
+            or record["sha256"] != sha256_file(path=path)
+            or record["size"] != path.stat().st_size
+        ):
+            raise PublicationError("Legacy root artifact binding differs")
+        if origin == "SYNTHESIZED_LEGACY_BASELINE_IMPORT" and (
+            relative not in LEGACY_SYNTHETIC_METADATA_FILES
+            or path.read_bytes() != _legacy_import_metadata_bytes(
+                relative_path=relative,
+                baseline_manifest_sha256=marker[
+                    "baseline_manifest_sha256"
+                ],
+                requirement_hashes=manifest["requirement_hashes"],
+            )
+        ):
+            raise PublicationError(
+                "Legacy synthetic metadata binding differs"
+            )
+    root_to_bundle = {
+        root_relative: bundle_relative
+        for bundle_relative, root_relative
+        in ROOT_MIRROR_RELATIVE_PATHS.items()
+    }
+    expected_support = {}
+    for source_relative in sorted(normalized_baseline):
+        baseline_record = normalized_baseline[source_relative]
+        if source_relative in root_to_bundle:
+            root_record = root_artifacts[
+                root_to_bundle[source_relative]
+            ]
+            if {
+                "sha256": root_record["sha256"],
+                "size": root_record["size"],
+            } != baseline_record:
+                raise PublicationError(
+                    "Legacy baseline public artifact differs"
+                )
+            continue
+        bundle_path = LEGACY_BASELINE_SUPPORT_PREFIX + source_relative
+        support_path = bundle_dir / _safe_relative(value=bundle_path)
+        expected_support[source_relative] = {
+            "bundle_path": bundle_path,
+            "sha256": sha256_file(path=support_path),
+            "size": support_path.stat().st_size,
+        }
+        if {
+            "sha256": expected_support[source_relative]["sha256"],
+            "size": expected_support[source_relative]["size"],
+        } != baseline_record:
+            raise PublicationError(
+                "Legacy baseline support artifact differs"
+            )
+    supporting = marker["supporting_artifacts"]
+    if type(supporting) is not dict or supporting != expected_support:
+        raise PublicationError("Legacy baseline support index differs")
+    if any(
+        not isinstance(supporting[relative], dict)
+        or set(supporting[relative]) != LEGACY_SUPPORT_ARTIFACT_FIELDS
+        for relative in supporting
+    ):
+        raise PublicationError("Legacy baseline support fields differ")
+    expected_internal = {
+        LEGACY_BASELINE_IMPORT_MANIFEST,
+        LEGACY_BASELINE_MANIFEST,
+        *(
+            record["bundle_path"]
+            for record in supporting.values()
+        ),
+    }
+    if internal_paths != expected_internal:
+        raise PublicationError("Legacy baseline internal exact set differs")
+    expected_ledger = _empty_legacy_ledger_binding()
+    if (
+        manifest["batch_manifest_id"]
+        != _legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="BATCH",
+        )
+        or manifest["projection_manifest_id"]
+        != _legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="PROJECTION",
+        )
+        or manifest["validation_receipt_id"]
+        != _legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="VALIDATION",
+        )
+        or manifest["ledger_binding"] != expected_ledger
+        or manifest["previous_publication_id"] is not None
+    ):
+        raise PublicationError("Legacy baseline outer binding differs")
 
 
 def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
@@ -2182,7 +3964,19 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
     expected_paths = {str(record["path"]) for record in manifest["files"]}
     if len(expected_paths) != len(manifest["files"]):
         raise PublicationError("Publication file paths are duplicated")
-    if expected_paths != REQUIRED_BUNDLE_FILES:
+    public_paths = {
+        path for path in expected_paths if not path.startswith(INTERNAL_PREFIX)
+    }
+    internal_paths = expected_paths - public_paths
+    legacy_import = LEGACY_BASELINE_IMPORT_MANIFEST in internal_paths
+    if (
+        public_paths != REQUIRED_BUNDLE_FILES
+        or any(not path.startswith(INTERNAL_PREFIX) for path in internal_paths)
+        or (
+            not legacy_import
+            and INTERNAL_CLOSURE_MANIFEST not in internal_paths
+        )
+    ):
         raise PublicationError("Publication bundle file exact set differs")
     expected_files = expected_paths | {"publication_manifest.json"}
     expected_directories = {
@@ -2233,6 +4027,28 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
             or sha256_file(path=path) != record["sha256"]
         ):
             raise PublicationError("Publication artifact digest differs")
+    identity = {
+        "candidate_status": manifest["candidate_status"],
+        "requirement_hashes": manifest["requirement_hashes"],
+        "batch_manifest_id": manifest["batch_manifest_id"],
+        "projection_manifest_id": manifest["projection_manifest_id"],
+        "validation_receipt_id": manifest["validation_receipt_id"],
+        "files": manifest["files"],
+        "ledger_binding": manifest["ledger_binding"],
+        "previous_publication_id": manifest["previous_publication_id"],
+    }
+    expected_id = (
+        "publication_" + content_hash(value=identity).split(":", 1)[1]
+    )
+    if manifest["publication_id"] != expected_id:
+        raise PublicationError("Publication manifest identity differs")
+    if legacy_import:
+        _verify_legacy_baseline_import(
+            bundle_dir=bundle_dir,
+            manifest=manifest,
+            internal_paths=internal_paths,
+        )
+        return manifest
     projection = _validate_projection_manifest(
         content=(bundle_dir / "projection_manifest.json").read_bytes(),
         requirement_hashes=manifest["requirement_hashes"],
@@ -2275,27 +4091,57 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         batch_manifest_id=str(manifest["batch_manifest_id"]),
         projection_manifest_id=str(manifest["projection_manifest_id"]),
         gate_evidence=_publication_gate_evidence(
-            files=bundle_files, projection=projection, repo_root=None,
+            files=bundle_files,
+            projection=projection,
+            repo_root=None,
+            ledger_binding=manifest["ledger_binding"],
         ),
         ledger_binding=manifest["ledger_binding"],
         previous_publication_id=manifest["previous_publication_id"],
     )
-    identity = {
-        "candidate_status": manifest["candidate_status"],
-        "requirement_hashes": manifest["requirement_hashes"],
-        "batch_manifest_id": manifest["batch_manifest_id"],
-        "projection_manifest_id": manifest["projection_manifest_id"],
-        "validation_receipt_id": manifest["validation_receipt_id"],
-        "files": manifest["files"],
-        "ledger_binding": manifest["ledger_binding"],
-        "previous_publication_id": manifest["previous_publication_id"],
-    }
-    expected_id = (
-        "publication_" + content_hash(value=identity).split(":", 1)[1]
+    _verify_portable_closure(
+        bundle_dir=bundle_dir,
+        manifest=manifest,
+        projection=projection,
     )
-    if manifest["publication_id"] != expected_id:
-        raise PublicationError("Publication manifest identity differs")
     return manifest
+
+
+def _validate_pointer_mapping(*, pointer: Mapping[str, object]) -> None:
+    """Validate one in-memory active pointer without trusting its origin.
+
+    Args:
+        pointer: Candidate exact pointer mapping.
+
+    Raises:
+        PublicationError: When fields, identities, or timestamp differ.
+    """
+    if set(pointer) != POINTER_FIELDS:
+        raise PublicationError("Active pointer fields are not exact")
+    for key in (
+        "publication_id",
+        "bundle_manifest_sha256",
+        "committed_at_utc",
+    ):
+        if not isinstance(pointer[key], str) or not pointer[key]:
+            raise PublicationError("Active pointer field is empty")
+    previous = pointer["previous_publication_id"]
+    if previous is not None and (
+        not isinstance(previous, str) or not previous
+    ):
+        raise PublicationError("Active pointer predecessor is invalid")
+    if PUBLICATION_ID_PATTERN.fullmatch(str(pointer["publication_id"])) is None:
+        raise PublicationError("Active publication identity is invalid")
+    if (
+        previous is not None
+        and PUBLICATION_ID_PATTERN.fullmatch(previous) is None
+    ):
+        raise PublicationError("Active predecessor identity is invalid")
+    if SHA256_PATTERN.fullmatch(
+        str(pointer["bundle_manifest_sha256"])
+    ) is None:
+        raise PublicationError("Active manifest digest is invalid")
+    _validate_utc_timestamp(value=str(pointer["committed_at_utc"]))
 
 
 def _read_pointer(*, pointer_path: Path) -> Optional[Dict[str, object]]:
@@ -2321,35 +4167,634 @@ def _read_pointer(*, pointer_path: Path) -> Optional[Dict[str, object]]:
         raise PublicationError("Active pointer JSON is invalid") from error
     if not isinstance(parsed, dict):
         raise PublicationError("Active pointer root must be object")
-    if set(parsed) != POINTER_FIELDS:
-        raise PublicationError("Active pointer fields are not exact")
-    for key in (
-        "publication_id",
-        "bundle_manifest_sha256",
-        "committed_at_utc",
-    ):
-        if not isinstance(parsed[key], str) or not parsed[key]:
-            raise PublicationError("Active pointer field is empty")
-    previous = parsed["previous_publication_id"]
-    if previous is not None and (
-        not isinstance(previous, str) or not previous
-    ):
-        raise PublicationError("Active pointer predecessor is invalid")
-    if PUBLICATION_ID_PATTERN.fullmatch(str(parsed["publication_id"])) is None:
-        raise PublicationError("Active publication identity is invalid")
-    if (
-        previous is not None
-        and PUBLICATION_ID_PATTERN.fullmatch(previous) is None
-    ):
-        raise PublicationError("Active predecessor identity is invalid")
-    if SHA256_PATTERN.fullmatch(str(parsed["bundle_manifest_sha256"])) is None:
-        raise PublicationError("Active manifest digest is invalid")
-    _validate_utc_timestamp(value=str(parsed["committed_at_utc"]))
+    _validate_pointer_mapping(pointer=parsed)
     return dict(parsed)
+
+
+def _switch_receipts_dir(*, pointer_path: Path) -> Path:
+    """Derive persistent switch-history storage from the fixed pointer path.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+
+    Returns:
+        Sibling content-addressed switch-receipt directory.
+    """
+    return pointer_path.parent / "publication_switch_receipts"
+
+
+def _switch_intents_dir(*, pointer_path: Path) -> Path:
+    """Derive the single-writer recovery journal from the fixed pointer.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+
+    Returns:
+        Sibling content-addressed switch-intent directory.
+    """
+    return pointer_path.parent / "publication_switch_intents"
+
+
+def _validate_switch_mirror_state(*, state: object) -> None:
+    """Require an exact pre-switch hash/size record for every root mirror.
+
+    Args:
+        state: Candidate mirror-state mapping from a switch intent.
+
+    Raises:
+        PublicationError: On missing paths, boolean sizes, or invalid hashes.
+    """
+    if not isinstance(state, dict) or set(state) != REQUIRED_BUNDLE_FILES:
+        raise PublicationError("Publication switch mirror state differs")
+    for record in state.values():
+        if record is None:
+            continue
+        if (
+            not isinstance(record, dict)
+            or set(record) != SWITCH_INTENT_MIRROR_FIELDS
+            or type(record["size"]) is not int
+            or record["size"] < 0
+            or type(record["sha256"]) is not str
+            or SHA256_PATTERN.fullmatch(record["sha256"]) is None
+        ):
+            raise PublicationError(
+                "Publication switch mirror state is invalid"
+            )
+
+
+def _load_switch_intent(
+    *, pointer_path: Path
+) -> Optional[Dict[str, object]]:
+    """Load the sole content-addressed incomplete switch transaction.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+
+    Returns:
+        Exact pending intent, or ``None`` when no recovery is required.
+
+    Raises:
+        PublicationError: On multiple, unsafe, malformed, or tampered intents.
+    """
+    intent_dir = _switch_intents_dir(pointer_path=pointer_path)
+    if not intent_dir.exists():
+        return None
+    if intent_dir.is_symlink() or not intent_dir.is_dir():
+        raise PublicationError("Publication switch recovery intent is unsafe")
+    paths = list(intent_dir.iterdir())
+    if not paths:
+        return None
+    if len(paths) != 1:
+        raise PublicationError(
+            "Publication switch recovery intent is ambiguous"
+        )
+    path = paths[0]
+    if path.is_symlink() or not path.is_file():
+        raise PublicationError("Publication switch recovery intent is unsafe")
+    try:
+        payload = strict_json_file(
+            path=path, allowed_fields=SWITCH_INTENT_FIELDS,
+        )
+    except CanonicalError as error:
+        raise PublicationError(
+            "Publication switch recovery intent is invalid"
+        ) from error
+    if not isinstance(payload, dict) or set(payload) != SWITCH_INTENT_FIELDS:
+        raise PublicationError(
+            "Publication switch recovery intent fields differ"
+        )
+    intent = dict(payload)
+    previous_pointer = intent["previous_pointer"]
+    proposed_pointer = intent["proposed_pointer"]
+    if previous_pointer is not None:
+        if not isinstance(previous_pointer, dict):
+            raise PublicationError(
+                "Publication switch prior pointer is invalid"
+            )
+        _validate_pointer_mapping(pointer=previous_pointer)
+    if not isinstance(proposed_pointer, dict):
+        raise PublicationError("Publication switch proposed pointer is invalid")
+    _validate_pointer_mapping(pointer=proposed_pointer)
+    _validate_switch_mirror_state(state=intent["previous_mirror_state"])
+    previous_switch = intent["previous_switch_receipt_id"]
+    body = {
+        field: intent[field]
+        for field in intent
+        if field != "intent_id"
+    }
+    intent_id = intent["intent_id"]
+    if (
+        intent["schema_version"] != 1
+        or intent["record_type"] != "PUBLICATION_SWITCH_INTENT"
+        or intent["switch_mode"] not in {"COMMIT", "ROLLBACK"}
+        or type(intent_id) is not str
+        or CONTENT_ID_PATTERN.fullmatch(intent_id) is None
+        or intent_id != content_hash(value=body)
+        or path.name != "{}.json".format(intent_id.split(":", 1)[1])
+        or (
+            previous_switch is not None
+            and (
+                type(previous_switch) is not str
+                or CONTENT_ID_PATTERN.fullmatch(previous_switch) is None
+            )
+        )
+        or ((previous_pointer is None) != (previous_switch is None))
+    ):
+        raise PublicationError(
+            "Publication switch recovery intent identity differs"
+        )
+    return intent
+
+
+def _write_switch_intent(
+    *, pointer_path: Path, previous_pointer: Optional[Mapping[str, object]],
+    proposed_pointer: Mapping[str, object], switch_mode: str,
+    previous_switch_receipt_id: Optional[str],
+    previous_mirror_state: Mapping[str, object],
+) -> Dict[str, object]:
+    """Persist recovery authority before the first mirror mutation.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+        previous_pointer: Exact pointer observed under the exclusive lock.
+        proposed_pointer: Complete pointer that this transaction will commit.
+        switch_mode: ``COMMIT`` or ``ROLLBACK``.
+        previous_switch_receipt_id: Current immutable history tip.
+        previous_mirror_state: Exact present/absent root mirror digest state.
+
+    Returns:
+        Content-addressed switch intent kept until commit or rollback closes.
+    """
+    _validate_switch_mirror_state(state=dict(previous_mirror_state))
+    body = {
+        "schema_version": 1,
+        "record_type": "PUBLICATION_SWITCH_INTENT",
+        "switch_mode": switch_mode,
+        "previous_pointer": (
+            dict(previous_pointer) if previous_pointer is not None else None
+        ),
+        "proposed_pointer": dict(proposed_pointer),
+        "previous_switch_receipt_id": previous_switch_receipt_id,
+        "previous_mirror_state": dict(previous_mirror_state),
+    }
+    intent = {**body, "intent_id": content_hash(value=body)}
+    intent_dir = _switch_intents_dir(pointer_path=pointer_path)
+    if intent_dir.is_symlink() or (
+        intent_dir.exists() and not intent_dir.is_dir()
+    ):
+        raise PublicationError("Publication switch recovery intent is unsafe")
+    intent_dir.mkdir(parents=True, exist_ok=True)
+    if list(intent_dir.iterdir()):
+        raise PublicationError("Publication switch recovery intent is pending")
+    path = intent_dir / "{}.json".format(
+        str(intent["intent_id"]).split(":", 1)[1]
+    )
+    atomic_write_bytes(
+        path=path, content=canonical_json_bytes(value=intent) + b"\n",
+    )
+    return intent
+
+
+def _remove_switch_intent(
+    *, pointer_path: Path, intent: Mapping[str, object]
+) -> None:
+    """Remove only the exact transaction-owned intent after closure.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+        intent: Previously content-verified intent mapping.
+
+    Raises:
+        PublicationError: When the journal changed before removal.
+    """
+    path = _switch_intents_dir(pointer_path=pointer_path) / "{}.json".format(
+        str(intent["intent_id"]).split(":", 1)[1]
+    )
+    expected = canonical_json_bytes(value=dict(intent)) + b"\n"
+    if (
+        path.is_symlink()
+        or not path.is_file()
+        or path.read_bytes() != expected
+    ):
+        raise PublicationError("Publication switch recovery intent changed")
+    path.unlink()
+
+
+def _assert_no_pending_switch_intent(*, pointer_path: Path) -> None:
+    """Keep every read-only consumer out of an incomplete transaction.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+
+    Raises:
+        PublicationError: Whenever a verified recovery intent remains.
+    """
+    if _load_switch_intent(pointer_path=pointer_path) is not None:
+        raise PublicationError("Publication switch recovery intent is pending")
+
+
+def _load_switch_receipts(
+    *, switch_receipts_dir: Path
+) -> Dict[str, Dict[str, object]]:
+    """Load and content-verify every persisted publication switch edge.
+
+    Args:
+        switch_receipts_dir: Root-derived switch history directory.
+
+    Returns:
+        Switch receipt identity to exact mapping.
+
+    Raises:
+        PublicationError: On unsafe namespace, schema, hash, or chain values.
+    """
+    if switch_receipts_dir.is_symlink() or not switch_receipts_dir.is_dir():
+        raise PublicationError("Committed publication switch history is missing")
+    receipts: Dict[str, Dict[str, object]] = {}
+    for path in sorted(switch_receipts_dir.iterdir()):
+        # Atomic writers expose this exact hidden name only while fsyncing a
+        # future receipt. It is not a committed history member and readers
+        # must not turn normal concurrent preparation into a false failure.
+        if SWITCH_TEMP_PATTERN.fullmatch(path.name) is not None:
+            continue
+        if path.is_symlink() or not path.is_file():
+            raise PublicationError("Publication switch history is unsafe")
+        try:
+            payload = strict_json_file(
+                path=path,
+                allowed_fields=SWITCH_RECEIPT_FIELDS,
+            )
+        except CanonicalError as error:
+            raise PublicationError(
+                "Publication switch receipt is invalid"
+            ) from error
+        if not isinstance(payload, dict) or set(payload) != (
+            SWITCH_RECEIPT_FIELDS
+        ):
+            raise PublicationError("Publication switch fields are not exact")
+        receipt = dict(payload)
+        pointer = receipt["pointer"]
+        if not isinstance(pointer, dict):
+            raise PublicationError("Publication switch pointer is invalid")
+        _validate_pointer_mapping(pointer=pointer)
+        previous_switch = receipt["previous_switch_receipt_id"]
+        body = {
+            field: receipt[field]
+            for field in receipt
+            if field != "switch_receipt_id"
+        }
+        switch_id = receipt["switch_receipt_id"]
+        if (
+            receipt["schema_version"] != 1
+            or receipt["record_type"] != "PUBLICATION_SWITCH"
+            or receipt["switch_mode"] not in {"COMMIT", "ROLLBACK"}
+            or type(switch_id) is not str
+            or CONTENT_ID_PATTERN.fullmatch(switch_id) is None
+            or switch_id != content_hash(value=body)
+            or path.name != "{}.json".format(switch_id.split(":", 1)[1])
+            or (
+                previous_switch is not None
+                and (
+                    type(previous_switch) is not str
+                    or CONTENT_ID_PATTERN.fullmatch(previous_switch) is None
+                )
+            )
+        ):
+            raise PublicationError("Publication switch identity differs")
+        if switch_id in receipts:
+            raise PublicationError("Publication switch identity is duplicated")
+        receipts[str(switch_id)] = receipt
+    if not receipts:
+        raise PublicationError("Committed publication switch history is empty")
+    return receipts
+
+
+def _switch_receipt_for_pointer(
+    *, pointer_path: Path, pointer: Mapping[str, object]
+) -> Dict[str, object]:
+    """Prove one pointer and predecessor through an immutable switch chain.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+        pointer: Already shape-validated pointer mapping.
+
+    Returns:
+        Unique committed switch edge whose pointer bytes match exactly.
+
+    Raises:
+        PublicationError: When no unique edge or linked predecessor exists.
+    """
+    receipts = _load_switch_receipts(
+        switch_receipts_dir=_switch_receipts_dir(pointer_path=pointer_path)
+    )
+    predecessor_ids = {
+        str(receipt["previous_switch_receipt_id"])
+        for receipt in receipts.values()
+        if receipt["previous_switch_receipt_id"] is not None
+    }
+    if not predecessor_ids.issubset(receipts):
+        raise PublicationError(
+            "Publication switch predecessor receipt is missing"
+        )
+    tip_ids = set(receipts) - predecessor_ids
+    if len(tip_ids) != 1:
+        raise PublicationError(
+            "Publication switch history lacks one committed switch tip"
+        )
+    current = receipts[tip_ids.pop()]
+    if current["pointer"] != dict(pointer):
+        raise PublicationError(
+            "Active pointer is not the committed switch history tip"
+        )
+    tip = current
+    visited = set()
+    while True:
+        switch_id = str(current["switch_receipt_id"])
+        if switch_id in visited:
+            raise PublicationError("Publication switch history contains a cycle")
+        visited.add(switch_id)
+        current_pointer = current["pointer"]
+        previous_publication = current_pointer["previous_publication_id"]
+        previous_switch = current["previous_switch_receipt_id"]
+        if previous_switch is None:
+            if previous_publication is not None:
+                raise PublicationError(
+                    "Publication switch predecessor proof is missing"
+                )
+            break
+        if previous_switch not in receipts:
+            raise PublicationError(
+                "Publication switch predecessor receipt is missing"
+            )
+        previous = receipts[str(previous_switch)]
+        if previous["pointer"]["publication_id"] != previous_publication:
+            raise PublicationError(
+                "Publication switch predecessor identity differs"
+            )
+        current = previous
+    if visited != set(receipts):
+        raise PublicationError(
+            "Publication switch history is not one committed chain"
+        )
+    return tip
+
+
+def _write_switch_receipt(
+    *, pointer_path: Path, pointer: Mapping[str, object], switch_mode: str,
+    previous_switch_receipt_id: Optional[str]
+) -> Dict[str, object]:
+    """Persist one content-addressed edge after the pointer commit point.
+
+    Args:
+        pointer_path: Root-derived active pointer path. The caller holds its
+            exclusive lock across pointer replacement and this write.
+        pointer: Complete proposed pointer mapping.
+        switch_mode: ``COMMIT`` or ``ROLLBACK``.
+        previous_switch_receipt_id: Current committed edge, or ``None`` for the
+            first pointer.
+
+    Returns:
+        Exact switch receipt mapping.
+
+    Raises:
+        PublicationError: On invalid values or divergent addressed reuse.
+    """
+    _validate_pointer_mapping(pointer=pointer)
+    if switch_mode not in {"COMMIT", "ROLLBACK"}:
+        raise PublicationError("Publication switch mode is invalid")
+    if previous_switch_receipt_id is not None and (
+        CONTENT_ID_PATTERN.fullmatch(previous_switch_receipt_id) is None
+    ):
+        raise PublicationError("Previous publication switch identity is invalid")
+    body = {
+        "schema_version": 1,
+        "record_type": "PUBLICATION_SWITCH",
+        "switch_mode": switch_mode,
+        "previous_switch_receipt_id": previous_switch_receipt_id,
+        "pointer": dict(pointer),
+    }
+    receipt = {**body, "switch_receipt_id": content_hash(value=body)}
+    receipt_dir = _switch_receipts_dir(pointer_path=pointer_path)
+    if receipt_dir.is_symlink() or (
+        receipt_dir.exists() and not receipt_dir.is_dir()
+    ):
+        raise PublicationError("Publication switch history is unsafe")
+    receipt_dir.mkdir(parents=True, exist_ok=True)
+    path = receipt_dir / "{}.json".format(
+        str(receipt["switch_receipt_id"]).split(":", 1)[1]
+    )
+    expected = canonical_json_bytes(value=receipt) + b"\n"
+    if path.exists():
+        if path.is_symlink() or not path.is_file():
+            raise PublicationError("Publication switch receipt is unsafe")
+        if path.read_bytes() != expected:
+            raise PublicationError("Publication switch receipt bytes differ")
+    else:
+        atomic_write_bytes(path=path, content=expected)
+    return receipt
+
+
+def _switch_receipt_from_intent(
+    *, intent: Mapping[str, object]
+) -> Dict[str, object]:
+    """Derive the exact history edge owned by one pending intent.
+
+    Args:
+        intent: Content-verified switch intent.
+
+    Returns:
+        Exact content-addressed switch receipt mapping.
+    """
+    body = {
+        "schema_version": 1,
+        "record_type": "PUBLICATION_SWITCH",
+        "switch_mode": intent["switch_mode"],
+        "previous_switch_receipt_id": intent[
+            "previous_switch_receipt_id"
+        ],
+        "pointer": dict(intent["proposed_pointer"]),
+    }
+    return {**body, "switch_receipt_id": content_hash(value=body)}
+
+
+def _remove_intent_switch_receipt(
+    *, pointer_path: Path, intent: Mapping[str, object]
+) -> None:
+    """Remove an exact post-pointer edge when recovery rolls back the intent.
+
+    Args:
+        pointer_path: Root-derived active pointer path.
+        intent: Content-verified pending switch transaction.
+
+    Raises:
+        PublicationError: When the transaction-owned receipt bytes changed.
+    """
+    receipt = _switch_receipt_from_intent(intent=intent)
+    path = _switch_receipts_dir(pointer_path=pointer_path) / "{}.json".format(
+        str(receipt["switch_receipt_id"]).split(":", 1)[1]
+    )
+    if not path.exists():
+        return
+    expected = canonical_json_bytes(value=receipt) + b"\n"
+    if (
+        path.is_symlink()
+        or not path.is_file()
+        or path.read_bytes() != expected
+    ):
+        raise PublicationError("Publication switch receipt recovery differs")
+    path.unlink()
+
+
+def _sync_mirrors_from_bundle(
+    *, bundle_dir: Path, mirror_paths: Mapping[str, Path]
+) -> None:
+    """Replace every root mirror from one already verified bundle.
+
+    Args:
+        bundle_dir: Immutable active or predecessor bundle.
+        mirror_paths: Root-derived exact compatibility mirror mapping.
+
+    Expected output:
+        Every mirror byte equals its bundle source before recovery closes.
+    """
+    verify_publication_bundle(bundle_dir=bundle_dir)
+    for relative, target in mirror_paths.items():
+        source = bundle_dir / _safe_relative(value=relative)
+        if source.is_symlink() or not source.is_file():
+            raise PublicationError("Recovery mirror source is unavailable")
+        if target.exists() and (target.is_symlink() or not target.is_file()):
+            raise PublicationError("Recovery mirror target is unsafe")
+        atomic_write_bytes(path=target, content=source.read_bytes())
+
+
+def _restore_pre_switch_mirrors(
+    *, publications_dir: Path, mirror_paths: Mapping[str, Path],
+    intent: Mapping[str, object]
+) -> None:
+    """Reconstruct the exact pre-pointer mirror presence and bytes.
+
+    Args:
+        publications_dir: Root-derived immutable bundle parent.
+        mirror_paths: Root-derived compatibility mirror mapping.
+        intent: Content-verified switch intent with pre-switch digests.
+
+    Raises:
+        PublicationError: When no immutable bundle can reproduce prior bytes.
+    """
+    previous_pointer = intent["previous_pointer"]
+    source_pointer = (
+        previous_pointer
+        if previous_pointer is not None
+        else intent["proposed_pointer"]
+    )
+    bundle_dir = publications_dir / str(source_pointer["publication_id"])
+    verify_publication_bundle(bundle_dir=bundle_dir)
+    state = intent["previous_mirror_state"]
+    for relative, target in mirror_paths.items():
+        record = state[relative]
+        if record is None:
+            if target.exists():
+                if target.is_symlink() or not target.is_file():
+                    raise PublicationError("Recovery mirror target is unsafe")
+                target.unlink()
+            continue
+        source = bundle_dir / _safe_relative(value=relative)
+        if source.is_symlink() or not source.is_file():
+            raise PublicationError("Recovery mirror source is unavailable")
+        content = source.read_bytes()
+        if (
+            len(content) != record["size"]
+            or sha256_bytes(content=content) != record["sha256"]
+        ):
+            raise PublicationError(
+                "Recovery bundle cannot reproduce pre-switch mirrors"
+            )
+        if target.exists() and (target.is_symlink() or not target.is_file()):
+            raise PublicationError("Recovery mirror target is unsafe")
+        atomic_write_bytes(path=target, content=content)
+
+
+def _recover_switch_intent_locked(
+    *, publications_dir: Path, pointer_path: Path,
+    mirror_paths: Mapping[str, Path]
+) -> Optional[str]:
+    """Complete or roll back one persisted switch under the exclusive lock.
+
+    Args:
+        publications_dir: Root-derived immutable bundle parent.
+        pointer_path: Root-derived official pointer.
+        mirror_paths: Root-derived compatibility mirrors.
+
+    Returns:
+        Recovered publication ID, or ``None`` when no intent existed.
+
+    Raises:
+        PublicationError: On tamper or a state outside previous/proposed bytes.
+
+    Why:
+        Pointer replacement is the commit point. A crash after it completes
+        the history edge; a crash before it restores the prior mirror view.
+    """
+    intent = _load_switch_intent(pointer_path=pointer_path)
+    if intent is None:
+        return None
+    previous_pointer = intent["previous_pointer"]
+    proposed_pointer = intent["proposed_pointer"]
+    current_pointer = _read_pointer(pointer_path=pointer_path)
+    if current_pointer == proposed_pointer:
+        bundle_dir = publications_dir / str(
+            proposed_pointer["publication_id"]
+        )
+        manifest = verify_publication_bundle(bundle_dir=bundle_dir)
+        manifest_hash = sha256_file(
+            path=bundle_dir / "publication_manifest.json"
+        )
+        if manifest_hash != proposed_pointer["bundle_manifest_sha256"]:
+            raise PublicationError(
+                "Pending switch pointer manifest hash differs"
+            )
+        _write_switch_receipt(
+            pointer_path=pointer_path,
+            pointer=proposed_pointer,
+            switch_mode=str(intent["switch_mode"]),
+            previous_switch_receipt_id=intent[
+                "previous_switch_receipt_id"
+            ],
+        )
+        _switch_receipt_for_pointer(
+            pointer_path=pointer_path, pointer=proposed_pointer,
+        )
+        _sync_mirrors_from_bundle(
+            bundle_dir=bundle_dir, mirror_paths=mirror_paths,
+        )
+        _remove_switch_intent(pointer_path=pointer_path, intent=intent)
+        return str(manifest["publication_id"])
+    if current_pointer != previous_pointer:
+        raise PublicationError(
+            "Pending switch pointer is neither previous nor proposed"
+        )
+    _remove_intent_switch_receipt(
+        pointer_path=pointer_path, intent=intent,
+    )
+    if previous_pointer is not None:
+        _switch_receipt_for_pointer(
+            pointer_path=pointer_path, pointer=previous_pointer,
+        )
+    _restore_pre_switch_mirrors(
+        publications_dir=publications_dir,
+        mirror_paths=mirror_paths,
+        intent=intent,
+    )
+    _remove_switch_intent(pointer_path=pointer_path, intent=intent)
+    return (
+        str(previous_pointer["publication_id"])
+        if previous_pointer is not None
+        else None
+    )
 
 
 def _validate_mirror_paths(
     *,
+    publication_root: Path,
     publications_dir: Path,
     pointer_path: Path,
     latest_status_path: Path,
@@ -2358,6 +4803,7 @@ def _validate_mirror_paths(
     """Require distinct mirror destinations outside authority storage.
 
     Args:
+        publication_root: Repository root owning formal output locations.
         publications_dir: Immutable bundle parent.
         pointer_path: Unique active pointer.
         latest_status_path: Latest-run status authority path.
@@ -2368,27 +4814,36 @@ def _validate_mirror_paths(
     """
     if set(mirror_paths) != REQUIRED_BUNDLE_FILES:
         raise PublicationError("Compatibility mirror exact set differs")
+    expected_mirrors = {
+        relative: publication_root / ROOT_MIRROR_RELATIVE_PATHS[relative]
+        for relative in REQUIRED_BUNDLE_FILES
+    }
+    if dict(mirror_paths) != expected_mirrors:
+        raise PublicationError("Compatibility mirror mapping differs")
     resolved = [path.resolve(strict=False) for path in mirror_paths.values()]
     if len(resolved) != len(set(resolved)):
         raise PublicationError("Compatibility mirrors must be distinct")
-    publication_root = publications_dir.resolve(strict=False)
+    publication_storage = publications_dir.resolve(strict=False)
     pointer = pointer_path.resolve(strict=False)
     lock = pointer_path.with_suffix(
         pointer_path.suffix + ".lock"
     ).resolve(strict=False)
     latest_status = latest_status_path.resolve(strict=False)
-    if pointer == publication_root or publication_root in pointer.parents:
+    if (
+        pointer == publication_storage
+        or publication_storage in pointer.parents
+    ):
         raise PublicationError(
             "Active pointer overlaps publication storage"
         )
-    canonical_status = pointer_path.with_name(
-        LATEST_STATUS_FILENAME
+    canonical_status = (
+        publication_root / "artifacts" / "vnext" / LATEST_STATUS_FILENAME
     ).resolve(strict=False)
     if latest_status != canonical_status:
         raise PublicationError("Latest status path is not canonical")
     if (
-        latest_status in {pointer, lock, publication_root}
-        or publication_root in latest_status.parents
+        latest_status in {pointer, lock, publication_storage}
+        or publication_storage in latest_status.parents
     ):
         raise PublicationError(
             "Latest status path overlaps publication authority"
@@ -2403,7 +4858,7 @@ def _validate_mirror_paths(
                 "Compatibility mirror targets latest status path"
             )
         try:
-            target.relative_to(publication_root)
+            target.relative_to(publication_storage)
         except ValueError:
             continue
         raise PublicationError("Compatibility mirror targets bundle storage")
@@ -2439,21 +4894,130 @@ def _validate_utc_timestamp(*, value: str) -> None:
         raise PublicationError("Publication timestamp is invalid") from error
 
 
-def _switch_publication(
+def _publication_commit_authority(*, bundle_dir: Path) -> str:
+    """Classify one verified bundle's only legal forward-commit authority.
+
+    Args:
+        bundle_dir: Already verified immutable bundle directory.
+
+    Returns:
+        ``FORMAL``, ``RECORDED``, or ``LEGACY_BASELINE``.
+    """
+    if (bundle_dir / LEGACY_BASELINE_IMPORT_MANIFEST).is_file():
+        return LEGACY_COMMIT_AUTHORITY
+    try:
+        validation = strict_json_file(
+            path=bundle_dir / "validation_run_manifest.json"
+        )
+        receipt = strict_json_file(
+            path=bundle_dir / "publication_validation_receipt.json"
+        )
+        closure = strict_json_file(
+            path=bundle_dir / INTERNAL_CLOSURE_MANIFEST
+        )
+    except CanonicalError as error:
+        raise PublicationError(
+            "Publication commit authority is invalid"
+        ) from error
+    if (
+        not isinstance(validation, dict)
+        or not isinstance(receipt, dict)
+        or not isinstance(closure, dict)
+    ):
+        raise PublicationError("Publication commit authority is invalid")
+    authority = {
+        (FORMAL_VALIDATION_MODE, FORMAL_VALIDATION_RESULT): (
+            FORMAL_COMMIT_AUTHORITY
+        ),
+        (RECORDED_VALIDATION_MODE, RECORDED_VALIDATION_RESULT): (
+            RECORDED_COMMIT_AUTHORITY
+        ),
+    }
+    key = (validation["mode"], validation["result"])
+    if key not in authority:
+        raise PublicationError("Publication commit authority is invalid")
+    ledger_binding = closure["ledger_binding"]
+    if (
+        not isinstance(ledger_binding, dict)
+        or ledger_binding["request_locator_tier"] != validation["mode"]
+        or (
+            validation["mode"] == FORMAL_VALIDATION_MODE
+            and "LEGACY_WORKING_LOCATOR"
+            in ledger_binding["request_locator_classes"]
+        )
+    ):
+        raise PublicationError(
+            "Publication commit request locator authority is invalid"
+        )
+    if key == (FORMAL_VALIDATION_MODE, FORMAL_VALIDATION_RESULT) and (
+        receipt["status"] != FORMAL_VALIDATION_RESULT
+        or closure["qualification_binding"] is None
+    ):
+        raise PublicationError(
+            "Formal publication qualification authority is absent"
+        )
+    return authority[key]
+
+
+def _require_formal_forward_commit(*, authority: str) -> None:
+    """Reject every non-formal bundle at the public forward-commit boundary.
+
+    Args:
+        authority: Classification returned from immutable bundle bytes.
+
+    Raises:
+        PublicationError: Recorded and legacy-import bundles need different
+            workflows and can never use ordinary forward commit.
+    """
+    if authority == RECORDED_COMMIT_AUTHORITY:
+        raise PublicationError(
+            "recorded-only publication cannot become active"
+        )
+    if authority == LEGACY_COMMIT_AUTHORITY:
+        raise PublicationError(
+            "legacy baseline publication requires initial chain commit"
+        )
+    if authority != FORMAL_COMMIT_AUTHORITY:
+        raise PublicationError("Publication commit authority is invalid")
+
+
+def _require_existing_active_for_forward_commit(
+    *, pointer_path: Path,
+) -> None:
+    """Require ordinary forward commits to extend a committed chain.
+
+    Args:
+        pointer_path: Unique active publication commit point.
+
+    Raises:
+        PublicationError: When no active predecessor exists and the caller
+            attempts to bypass the atomic initial legacy-to-vNext chain.
+    """
+    if _read_pointer(pointer_path=pointer_path) is None:
+        raise PublicationError(
+            "first formal publication requires initial publication chain"
+        )
+
+
+def _switch_publication_locked(
     *,
     publications_dir: Path,
     pointer_path: Path,
+    bundle_dir: Path,
+    manifest: Mapping[str, object],
     publication_id: str,
     expected_previous_publication_id: Optional[str],
     committed_at_utc: str,
     mirror_paths: Mapping[str, Path],
     switch_mode: str,
 ) -> Dict[str, object]:
-    """Switch the active pointer after preparing every compatibility mirror.
+    """Switch one verified bundle while the caller holds the pointer lock.
 
     Args:
         publications_dir: Bundle parent.
         pointer_path: Unique active commit point.
+        bundle_dir: Verified immutable bundle directory.
+        manifest: Verified PublicationManifest.
         publication_id: Prepared bundle to activate.
         expected_previous_publication_id: CAS predecessor.
         committed_at_utc: Explicit UTC timestamp.
@@ -2468,91 +5032,374 @@ def _switch_publication(
         PublicationError: On CAS loss, tamper, unsafe mirrors, or any commit
             failure. The previous pointer and mirror bytes are restored.
     """
+    previous_pointer = _read_pointer(pointer_path=pointer_path)
+    previous_switch = (
+        _switch_receipt_for_pointer(
+            pointer_path=pointer_path,
+            pointer=previous_pointer,
+        )
+        if previous_pointer is not None
+        else None
+    )
+    current_id = (
+        str(previous_pointer["publication_id"])
+        if previous_pointer is not None
+        else None
+    )
+    if current_id != expected_previous_publication_id:
+        raise PublicationError("Publication CAS predecessor changed")
+    if switch_mode == "COMMIT":
+        if manifest["previous_publication_id"] != current_id:
+            raise PublicationError("Prepared bundle predecessor differs")
+    elif (
+        previous_pointer is None
+        or previous_pointer["previous_publication_id"] != publication_id
+    ):
+        raise PublicationError(
+            "Rollback target is not the committed predecessor"
+        )
+    manifest_bytes = (bundle_dir / "publication_manifest.json").read_bytes()
+    pointer = {
+        "publication_id": publication_id,
+        "bundle_manifest_sha256": sha256_bytes(content=manifest_bytes),
+        "previous_publication_id": current_id,
+        "committed_at_utc": committed_at_utc,
+    }
+    snapshots: Dict[Path, Optional[bytes]] = {}
+    previous_mirror_state: Dict[str, object] = {}
+    ordered_mirrors = list(mirror_paths)
+    for relative in ordered_mirrors:
+        source = bundle_dir / _safe_relative(value=relative)
+        if not source.is_file() or source.is_symlink():
+            raise PublicationError("Mirror source is unavailable")
+        target = mirror_paths[relative]
+        if target.exists() and (
+            target.is_symlink() or not target.is_file()
+        ):
+            raise PublicationError("Mirror target is unsafe")
+        content = target.read_bytes() if target.exists() else None
+        snapshots[target] = content
+        previous_mirror_state[relative] = (
+            {
+                "sha256": sha256_bytes(content=content),
+                "size": len(content),
+            }
+            if content is not None
+            else None
+        )
+    intent = _write_switch_intent(
+        pointer_path=pointer_path,
+        previous_pointer=previous_pointer,
+        proposed_pointer=pointer,
+        switch_mode=switch_mode,
+        previous_switch_receipt_id=(
+            str(previous_switch["switch_receipt_id"])
+            if previous_switch is not None
+            else None
+        ),
+        previous_mirror_state=previous_mirror_state,
+    )
+    switch_receipt: Optional[Dict[str, object]] = None
+    try:
+        midpoint = max(1, len(ordered_mirrors) // 2)
+        for index, relative in enumerate(ordered_mirrors, start=1):
+            atomic_write_bytes(
+                path=mirror_paths[relative],
+                content=(bundle_dir / relative).read_bytes(),
+            )
+            if sha256_file(path=mirror_paths[relative]) != sha256_file(
+                path=bundle_dir / relative
+            ):
+                raise PublicationError("Compatibility mirror hash differs")
+            if index == midpoint:
+                _fault_injection_checkpoint(fault_point="MID_MIRROR_WRITE")
+        # The pointer is the unique official commit point; fixed-root mirrors
+        # are prepared first and recovered from the pointer after a crash.
+        _fault_injection_checkpoint(
+            fault_point="MIRRORS_WRITTEN_BEFORE_POINTER_COMMIT"
+        )
+        atomic_write_json(path=pointer_path, value=pointer)
+        _fault_injection_checkpoint(
+            fault_point="POINTER_WRITTEN_BEFORE_SWITCH_RECEIPT"
+        )
+        # The pointer is the unique commit point. Persisting its history edge
+        # beforehand would let a pre-pointer crash leave an orphan that later
+        # pointer tamper could misrepresent as committed.
+        switch_receipt = _write_switch_receipt(
+            pointer_path=pointer_path,
+            pointer=pointer,
+            switch_mode=switch_mode,
+            previous_switch_receipt_id=(
+                str(previous_switch["switch_receipt_id"])
+                if previous_switch is not None
+                else None
+            ),
+        )
+        opened = PublicationView._open_paths(
+            publications_dir=publications_dir, pointer_path=pointer_path,
+        )
+        if opened.publication_id != publication_id:
+            raise PublicationError("Active pointer postcondition failed")
+        _remove_switch_intent(
+            pointer_path=pointer_path, intent=intent,
+        )
+    except (OSError, ValueError, PublicationError) as error:
+        _restore_mirrors(snapshots=snapshots)
+        if previous_pointer is None:
+            if (
+                pointer_path.exists()
+                and pointer_path.is_file()
+                and not pointer_path.is_symlink()
+            ):
+                pointer_path.unlink()
+        else:
+            atomic_write_json(path=pointer_path, value=previous_pointer)
+        if switch_receipt is not None:
+            receipt_path = _switch_receipts_dir(
+                pointer_path=pointer_path,
+            ) / "{}.json".format(
+                str(switch_receipt["switch_receipt_id"]).split(":", 1)[1]
+            )
+            if (
+                receipt_path.is_file()
+                and not receipt_path.is_symlink()
+                and receipt_path.read_bytes()
+                == canonical_json_bytes(value=switch_receipt) + b"\n"
+            ):
+                receipt_path.unlink()
+        _remove_switch_intent(
+            pointer_path=pointer_path, intent=intent,
+        )
+        raise PublicationError(
+            "Publication commit aborted and rolled back"
+        ) from error
+    return pointer
+
+
+def _switch_publication(
+    *,
+    publications_dir: Path,
+    pointer_path: Path,
+    publication_id: str,
+    expected_previous_publication_id: Optional[str],
+    committed_at_utc: str,
+    mirror_paths: Mapping[str, Path],
+    switch_mode: str,
+) -> Dict[str, object]:
+    """Verify authority, lock, and switch one publication.
+
+    Args:
+        publications_dir: Bundle parent.
+        pointer_path: Unique active commit point.
+        publication_id: Prepared bundle to activate.
+        expected_previous_publication_id: CAS predecessor.
+        committed_at_utc: Explicit UTC timestamp.
+        mirror_paths: Bundle-relative file to root compatibility mirror.
+        switch_mode: ``COMMIT`` or ``ROLLBACK``.
+
+    Returns:
+        New active pointer.
+    """
     if switch_mode not in {"COMMIT", "ROLLBACK"}:
         raise PublicationError("Publication switch mode is invalid")
     _validate_utc_timestamp(value=committed_at_utc)
     bundle_dir = publications_dir / publication_id
     manifest = verify_publication_bundle(bundle_dir=bundle_dir)
+    if switch_mode == "COMMIT":
+        _require_formal_forward_commit(
+            authority=_publication_commit_authority(bundle_dir=bundle_dir)
+        )
     lock_path = pointer_path.with_suffix(pointer_path.suffix + ".lock")
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open(mode="a+b") as lock_file:
         fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
-        previous_pointer = _read_pointer(pointer_path=pointer_path)
-        current_id = (
-            str(previous_pointer["publication_id"])
-            if previous_pointer is not None
-            else None
+        _recover_switch_intent_locked(
+            publications_dir=publications_dir,
+            pointer_path=pointer_path,
+            mirror_paths=mirror_paths,
         )
-        if current_id != expected_previous_publication_id:
-            raise PublicationError("Publication CAS predecessor changed")
         if switch_mode == "COMMIT":
-            if manifest["previous_publication_id"] != current_id:
-                raise PublicationError("Prepared bundle predecessor differs")
-        elif (
-            previous_pointer is None
-            or previous_pointer["previous_publication_id"] != publication_id
+            # Only the initial-chain primitive may create the first pointer;
+            # ordinary commits must extend the rollback-capable chain.
+            _require_existing_active_for_forward_commit(
+                pointer_path=pointer_path
+            )
+        return _switch_publication_locked(
+            publications_dir=publications_dir,
+            pointer_path=pointer_path,
+            bundle_dir=bundle_dir,
+            manifest=manifest,
+            publication_id=publication_id,
+            expected_previous_publication_id=(
+                expected_previous_publication_id
+            ),
+            committed_at_utc=committed_at_utc,
+            mirror_paths=mirror_paths,
+            switch_mode=switch_mode,
+        )
+
+
+def _commit_initial_publication_chain(
+    *, publication_root: Path,
+    legacy_predecessor_publication_id: str,
+    successor_publication_id: str,
+    committed_at_utc: str,
+) -> Dict[str, object]:
+    """Atomically establish legacy predecessor and first formal successor.
+
+    Args:
+        publication_root: Root containing both prepared immutable bundles.
+        legacy_predecessor_publication_id: Imported opaque legacy baseline A.
+        successor_publication_id: Formally validated first vNext publication
+            B.
+        committed_at_utc: Explicit UTC observation time for both pointer
+            writes.
+
+    Returns:
+        The committed predecessor pointer and final active pointer.
+
+    Raises:
+        PublicationError: Unless the root has no active pointer, A is a strict
+            legacy import, B is formal and binds A, and both writes succeed.
+            A failed second write restores the original no-pointer root bytes.
+    """
+    _validate_utc_timestamp(value=committed_at_utc)
+    layout = publication_layout(publication_root=publication_root)
+    publications_dir = Path(layout["publications_dir"])
+    pointer_path = Path(layout["pointer_path"])
+    mirror_paths = layout["mirror_paths"]
+    legacy_dir = publications_dir / legacy_predecessor_publication_id
+    successor_dir = publications_dir / successor_publication_id
+    legacy_manifest = verify_publication_bundle(bundle_dir=legacy_dir)
+    successor_manifest = verify_publication_bundle(bundle_dir=successor_dir)
+    if (
+        _publication_commit_authority(bundle_dir=legacy_dir)
+        != LEGACY_COMMIT_AUTHORITY
+        or legacy_manifest["previous_publication_id"] is not None
+    ):
+        raise PublicationError(
+            "Initial predecessor is not an imported legacy baseline"
+        )
+    _require_formal_forward_commit(
+        authority=_publication_commit_authority(bundle_dir=successor_dir)
+    )
+    if successor_manifest["previous_publication_id"] != (
+        legacy_predecessor_publication_id
+    ):
+        raise PublicationError(
+            "Initial successor does not bind legacy predecessor"
+        )
+    lock_path = pointer_path.with_suffix(pointer_path.suffix + ".lock")
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open(mode="a+b") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        _recover_switch_intent_locked(
+            publications_dir=publications_dir,
+            pointer_path=pointer_path,
+            mirror_paths=mirror_paths,
+        )
+        if _read_pointer(pointer_path=pointer_path) is not None:
+            raise PublicationError(
+                "Initial publication chain requires no active pointer"
+            )
+        receipt_dir = _switch_receipts_dir(pointer_path=pointer_path)
+        if receipt_dir.is_symlink() or (
+            receipt_dir.exists() and not receipt_dir.is_dir()
         ):
+            raise PublicationError("Initial switch history is unsafe")
+        existing_receipts = (
+            list(receipt_dir.iterdir()) if receipt_dir.exists() else []
+        )
+        if existing_receipts:
             raise PublicationError(
-                "Rollback target is not the committed predecessor"
+                "Initial publication chain found orphan switch history"
             )
-        manifest_bytes = (
-            bundle_dir / "publication_manifest.json"
-        ).read_bytes()
-        pointer = {
-            "publication_id": publication_id,
-            "bundle_manifest_sha256": sha256_bytes(content=manifest_bytes),
-            "previous_publication_id": current_id,
-            "committed_at_utc": committed_at_utc,
-        }
-        snapshots: Dict[Path, Optional[bytes]] = {}
+        original_mirrors: Dict[Path, Optional[bytes]] = {}
+        for target in mirror_paths.values():
+            if target.exists() and (
+                target.is_symlink() or not target.is_file()
+            ):
+                raise PublicationError("Initial legacy root is unsafe")
+            original_mirrors[target] = (
+                target.read_bytes() if target.exists() else None
+            )
         try:
-            for relative in mirror_paths:
-                source = bundle_dir / _safe_relative(value=relative)
-                if not source.is_file() or source.is_symlink():
-                    raise PublicationError("Mirror source is unavailable")
-                target = mirror_paths[relative]
-                if target.exists() and (
-                    target.is_symlink() or not target.is_file()
-                ):
-                    raise PublicationError("Mirror target is unsafe")
-                snapshots[target] = (
-                    target.read_bytes() if target.exists() else None
-                )
-            for relative in mirror_paths:
-                atomic_write_bytes(
-                    path=mirror_paths[relative],
-                    content=(bundle_dir / relative).read_bytes(),
-                )
-                if sha256_file(path=mirror_paths[relative]) != sha256_file(
-                    path=bundle_dir / relative
-                ):
-                    raise PublicationError("Compatibility mirror hash differs")
-            # The pointer is the unique official commit point; fixed-root
-            # mirrors are prepared first and have no group-atomic guarantee.
-            atomic_write_json(path=pointer_path, value=pointer)
-            opened = PublicationView._open_paths(
-                publications_dir=publications_dir, pointer_path=pointer_path,
+            predecessor_pointer = _switch_publication_locked(
+                publications_dir=publications_dir,
+                pointer_path=pointer_path,
+                bundle_dir=legacy_dir,
+                manifest=legacy_manifest,
+                publication_id=legacy_predecessor_publication_id,
+                expected_previous_publication_id=None,
+                committed_at_utc=committed_at_utc,
+                mirror_paths=mirror_paths,
+                switch_mode="COMMIT",
             )
-            if opened.publication_id != publication_id:
-                raise PublicationError("Active pointer postcondition failed")
-        except (OSError, ValueError, PublicationError) as error:
-            _restore_mirrors(snapshots=snapshots)
-            if previous_pointer is None:
-                if (
-                    pointer_path.exists()
-                    and pointer_path.is_file()
-                    and not pointer_path.is_symlink()
-                ):
-                    pointer_path.unlink()
-            else:
-                atomic_write_json(path=pointer_path, value=previous_pointer)
+            active_pointer = _switch_publication_locked(
+                publications_dir=publications_dir,
+                pointer_path=pointer_path,
+                bundle_dir=successor_dir,
+                manifest=successor_manifest,
+                publication_id=successor_publication_id,
+                expected_previous_publication_id=(
+                    legacy_predecessor_publication_id
+                ),
+                committed_at_utc=committed_at_utc,
+                mirror_paths=mirror_paths,
+                switch_mode="COMMIT",
+            )
+        except PublicationError as error:
+            _restore_mirrors(snapshots=original_mirrors)
+            if pointer_path.exists() and (
+                pointer_path.is_symlink() or not pointer_path.is_file()
+            ):
+                raise PublicationError(
+                    "Initial publication pointer recovery is unsafe"
+                ) from error
+            if pointer_path.exists():
+                pointer_path.unlink()
+            if receipt_dir.exists():
+                for path in list(receipt_dir.iterdir()):
+                    if path.is_symlink() or not path.is_file():
+                        raise PublicationError(
+                            "Initial switch history recovery is unsafe"
+                        ) from error
+                    path.unlink()
             raise PublicationError(
-                "Publication commit aborted and rolled back"
+                "initial publication chain aborted and restored legacy root"
             ) from error
-        return pointer
+    return {
+        "predecessor_pointer": predecessor_pointer,
+        "active_pointer": active_pointer,
+    }
 
 
-def commit_publication(
+def commit_initial_publication_chain(
+    *, publication_root: Path,
+    legacy_predecessor_publication_id: str,
+    successor_publication_id: str,
+    committed_at_utc: str,
+) -> Dict[str, object]:
+    """Reject a direct initial-chain mutation outside Cutover orchestration.
+
+    Args:
+        publication_root: Ignored caller publication root.
+        legacy_predecessor_publication_id: Ignored imported predecessor.
+        successor_publication_id: Ignored formal successor.
+        committed_at_utc: Ignored caller commit time.
+
+    Raises:
+        PublicationError: Always. Only the Cutover orchestrator may invoke the
+            private atomic initial-chain primitive after all release evidence.
+    """
+    del (
+        publication_root, legacy_predecessor_publication_id,
+        successor_publication_id, committed_at_utc,
+    )
+    raise PublicationError("FORMAL_CUTOVER_AUTHORITY_REQUIRED")
+
+
+def _commit_publication(
     *,
     publication_root: Path,
     publication_id: str,
@@ -2580,6 +5427,86 @@ def commit_publication(
         mirror_paths=layout["mirror_paths"],
         switch_mode="COMMIT",
     )
+
+
+def _commit_recorded_sandbox_publication(
+    *, publication_root: Path, publication_id: str,
+    expected_active_publication_id: Optional[str], committed_at_utc: str,
+) -> Dict[str, object]:
+    """Commit one RECORDED bundle only inside a prevalidated sandbox root.
+
+    Args:
+        publication_root: Internally derived recorded sandbox root.
+        publication_id: Prepared RECORDED bundle identity.
+        expected_active_publication_id: Sandbox pointer observed before prepare.
+        committed_at_utc: Explicit UTC transaction time.
+
+    Returns:
+        Complete sandbox pointer produced by the shared transaction primitive.
+
+    Raises:
+        PublicationError: Unless the bundle is exactly RECORDED and the
+            sandbox CAS predecessor still matches.
+    """
+    _validate_utc_timestamp(value=committed_at_utc)
+    layout = publication_layout(publication_root=publication_root)
+    bundle_dir = Path(layout["publications_dir"]) / publication_id
+    manifest = verify_publication_bundle(bundle_dir=bundle_dir)
+    if _publication_commit_authority(bundle_dir=bundle_dir) != (
+        RECORDED_COMMIT_AUTHORITY
+    ):
+        raise PublicationError(
+            "Recorded sandbox accepts only RECORDED publication bundles"
+        )
+    pointer_path = Path(layout["pointer_path"])
+    lock_path = pointer_path.with_suffix(pointer_path.suffix + ".lock")
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open(mode="a+b") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        _recover_switch_intent_locked(
+            publications_dir=Path(layout["publications_dir"]),
+            pointer_path=pointer_path,
+            mirror_paths=layout["mirror_paths"],
+        )
+        return _switch_publication_locked(
+            publications_dir=Path(layout["publications_dir"]),
+            pointer_path=pointer_path,
+            bundle_dir=bundle_dir,
+            manifest=manifest,
+            publication_id=publication_id,
+            expected_previous_publication_id=(
+                expected_active_publication_id
+            ),
+            committed_at_utc=committed_at_utc,
+            mirror_paths=layout["mirror_paths"],
+            switch_mode="COMMIT",
+        )
+
+
+def commit_publication(
+    *,
+    publication_root: Path,
+    publication_id: str,
+    expected_active_publication_id: Optional[str],
+    committed_at_utc: str,
+) -> Dict[str, object]:
+    """Reject direct formal forward mutation outside Cutover orchestration.
+
+    Args:
+        publication_root: Ignored caller publication root.
+        publication_id: Ignored prepared publication identity.
+        expected_active_publication_id: Ignored caller CAS predecessor.
+        committed_at_utc: Ignored caller commit time.
+
+    Raises:
+        PublicationError: Always. The public API cannot mint formal Cutover
+            authority from a caller-supplied bundle or predecessor.
+    """
+    del (
+        publication_root, publication_id, expected_active_publication_id,
+        committed_at_utc,
+    )
+    raise PublicationError("FORMAL_CUTOVER_AUTHORITY_REQUIRED")
 
 
 def rollback_publication(
@@ -2632,6 +5559,11 @@ def recover_publication_mirrors(
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open(mode="a+b") as lock_file:
         fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        _recover_switch_intent_locked(
+            publications_dir=publications_dir,
+            pointer_path=pointer_path,
+            mirror_paths=mirror_paths,
+        )
         view = PublicationView._open_paths(
             publications_dir=publications_dir, pointer_path=pointer_path,
         )
@@ -2641,6 +5573,159 @@ def recover_publication_mirrors(
                 content=view.read_bytes(relative_path=relative),
             )
         return view.publication_id
+
+
+def publication_state_snapshot(
+    *, publication_root: Path
+) -> Dict[str, object]:
+    """Read the official pointer identity and every root mirror digest.
+
+    Args:
+        publication_root: Repository root owning the formal publication layout.
+
+    Returns:
+        Exact active publication ID plus one SHA-256 or ``None`` per required
+        compatibility mirror.
+
+    Raises:
+        PublicationError: When pointer, bundle, or a present mirror is unsafe.
+    """
+    layout = publication_layout(publication_root=publication_root)
+    pointer = _read_pointer(pointer_path=layout["pointer_path"])
+    active_id = None
+    if pointer is not None:
+        active_id = PublicationView._open_paths(
+            publications_dir=layout["publications_dir"],
+            pointer_path=layout["pointer_path"],
+        ).publication_id
+    mirror_hashes: Dict[str, Optional[str]] = {}
+    for relative, path in layout["mirror_paths"].items():
+        if path.is_symlink() or (path.exists() and not path.is_file()):
+            raise PublicationError("Compatibility mirror is unsafe")
+        mirror_hashes[relative] = (
+            sha256_file(path=path) if path.exists() else None
+        )
+    return {
+        "active_publication_id": active_id,
+        "mirror_hashes": mirror_hashes,
+    }
+
+
+def _validate_fault_state(*, state: Mapping[str, object]) -> None:
+    """Validate one independently observed pointer and mirror state.
+
+    Args:
+        state: Snapshot returned by :func:`publication_state_snapshot`.
+
+    Raises:
+        PublicationError: On an incomplete identity or digest mapping.
+    """
+    if type(state) is not dict or set(state) != FAULT_STATE_FIELDS:
+        raise PublicationError("Publication fault state fields differ")
+    active_id = state["active_publication_id"]
+    if active_id is not None and (
+        type(active_id) is not str
+        or PUBLICATION_ID_PATTERN.fullmatch(active_id) is None
+    ):
+        raise PublicationError("Publication fault active identity is invalid")
+    hashes = state["mirror_hashes"]
+    if type(hashes) is not dict or set(hashes) != REQUIRED_BUNDLE_FILES:
+        raise PublicationError("Publication fault mirror exact set differs")
+    if any(
+        digest is not None
+        and (
+            type(digest) is not str
+            or SHA256_PATTERN.fullmatch(digest) is None
+        )
+        for digest in hashes.values()
+    ):
+        raise PublicationError("Publication fault mirror digest is invalid")
+
+
+def write_publication_fault_receipt(
+    *,
+    publication_root: Path,
+    scenario_id: str,
+    prepared_publication_id: Optional[str],
+    fault_point: str,
+    before: Mapping[str, object],
+    after: Mapping[str, object],
+    outcome: str,
+    temporary_workspace_cleaned: bool,
+) -> Dict[str, object]:
+    """Persist one content-addressed publication fault observation.
+
+    Args:
+        publication_root: Repository root owning formal receipt storage.
+        scenario_id: Stable failure-matrix scenario identity.
+        prepared_publication_id: Candidate exercised by the scenario, or
+            ``None`` when a pre-prepare gate correctly blocked it.
+        fault_point: Exact transaction checkpoint that failed or raced.
+        before: Independently observed pre-attempt publication state.
+        after: Independently observed terminal publication state.
+        outcome: Stable classified fault outcome.
+        temporary_workspace_cleaned: Whether no temporary bundle remains.
+
+    Returns:
+        Strict receipt whose identity and filename derive from its body.
+
+    Raises:
+        PublicationError: On malformed observation data or divergent reuse.
+    """
+    publication_layout(publication_root=publication_root)
+    _validate_fault_state(state=before)
+    _validate_fault_state(state=after)
+    if not isinstance(scenario_id, str) or not scenario_id:
+        raise PublicationError("Publication fault scenario is required")
+    if prepared_publication_id is not None and (
+        type(prepared_publication_id) is not str
+        or PUBLICATION_ID_PATTERN.fullmatch(prepared_publication_id) is None
+    ):
+        raise PublicationError("Prepared publication identity is invalid")
+    if not isinstance(fault_point, str) or not fault_point:
+        raise PublicationError("Publication fault point is required")
+    if outcome not in FAULT_RECEIPT_OUTCOMES:
+        raise PublicationError("Publication fault outcome is invalid")
+    if type(temporary_workspace_cleaned) is not bool:
+        raise PublicationError(
+            "Publication temporary-workspace result must be boolean"
+        )
+    body = {
+        "schema_version": 1,
+        "scenario_id": scenario_id,
+        "active_before": before["active_publication_id"],
+        "prepared_publication_id": prepared_publication_id,
+        "fault_point": fault_point,
+        "active_after": after["active_publication_id"],
+        "mirror_hashes_before": dict(before["mirror_hashes"]),
+        "mirror_hashes_after": dict(after["mirror_hashes"]),
+        "outcome": outcome,
+        "temporary_workspace_cleaned": temporary_workspace_cleaned,
+    }
+    receipt = {
+        **body,
+        "fault_receipt_id": content_hash(value=body),
+    }
+    receipt_dir = (
+        publication_root / "outputs" / "publication_fault_receipts"
+    )
+    if receipt_dir.is_symlink() or (
+        receipt_dir.exists() and not receipt_dir.is_dir()
+    ):
+        raise PublicationError("Publication fault receipt root is unsafe")
+    receipt_dir.mkdir(parents=True, exist_ok=True)
+    path = receipt_dir / "{}.json".format(
+        str(receipt["fault_receipt_id"]).split(":", maxsplit=1)[1]
+    )
+    expected = canonical_json_bytes(value=receipt) + b"\n"
+    if path.exists():
+        if path.is_symlink() or not path.is_file():
+            raise PublicationError("Publication fault receipt is unsafe")
+        if path.read_bytes() != expected:
+            raise PublicationError("Publication fault receipt bytes differ")
+    else:
+        atomic_write_json(path=path, value=receipt)
+    return receipt
 
 
 @dataclass(frozen=True)
@@ -2667,10 +5752,29 @@ class PublicationView:
             PublicationError: On missing/tampered pointer or bundle.
         """
         layout = publication_layout(publication_root=publication_root)
-        return cls._open_paths(
-            publications_dir=layout["publications_dir"],
-            pointer_path=layout["pointer_path"],
-        )
+        pointer_path = Path(layout["pointer_path"])
+        lock_path = pointer_path.with_suffix(pointer_path.suffix + ".lock")
+        if (
+            lock_path.is_symlink()
+            or not lock_path.exists()
+            or not lock_path.is_file()
+        ):
+            raise PublicationError(
+                "Publication authority lock is missing or unsafe"
+            )
+        # A forward switch holds this same file exclusively from mirror
+        # preparation through pointer and committed-edge persistence. Readers
+        # therefore observe either complete transaction, never the deliberate
+        # pointer-before-edge interval.
+        with lock_path.open(mode="rb") as lock_file:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_SH)
+            _assert_no_pending_switch_intent(
+                pointer_path=pointer_path,
+            )
+            return cls._open_paths(
+                publications_dir=layout["publications_dir"],
+                pointer_path=pointer_path,
+            )
 
     @classmethod
     def _open_paths(
@@ -2688,6 +5792,10 @@ class PublicationView:
         pointer = _read_pointer(pointer_path=pointer_path)
         if pointer is None:
             raise PublicationError("Active publication pointer is missing")
+        _switch_receipt_for_pointer(
+            pointer_path=pointer_path,
+            pointer=pointer,
+        )
         publication_id = str(pointer["publication_id"])
         bundle_dir = publications_dir / publication_id
         manifest = verify_publication_bundle(bundle_dir=bundle_dir)
@@ -2732,6 +5840,236 @@ class PublicationView:
         ):
             raise PublicationError("Pinned publication artifact changed")
         return content
+
+
+def complete_recorded_publication_sandbox(
+    *, repo_root: Path, workspace_dir: Path, batch_manifest_path: Path,
+    legacy_snapshot_dir: Path, staging_dir: Path, validated_at_utc: str,
+    committed_at_utc: str,
+) -> Dict[str, object]:
+    """Validate, commit, and read back one isolated RECORDED publication.
+
+    Args:
+        repo_root: Repository authority and formal publication root.
+        workspace_dir: Repository-contained recorded workflow workspace.
+        batch_manifest_path: Complete recorded FROZEN BatchManifest.
+        legacy_snapshot_dir: Frozen compatibility inputs for projection.
+        staging_dir: Candidate view produced by the recorded Cutover path.
+        validated_at_utc: Explicit UTC time for recorded gates.
+        committed_at_utc: Explicit UTC time for the sandbox pointer switch.
+
+    Returns:
+        Sandbox publication identity, pointer digest, exact read-back hashes,
+        mirror hashes, predecessor, and portable sandbox root.
+
+    Raises:
+        PublicationError: On an unsafe/overlapping workspace, non-RECORDED
+            bundle, CAS loss, formal-state change, or read-back mismatch.
+
+    Why:
+        Recorded UAT needs the real publication transaction and pinned read
+        path without accepting caller-selected authority or touching the
+        repository's formal pointer and root compatibility mirrors.
+    """
+    if repo_root.is_symlink() or not repo_root.is_dir():
+        raise PublicationError("Recorded sandbox repository is unsafe")
+    if workspace_dir.is_symlink() or (
+        workspace_dir.exists() and not workspace_dir.is_dir()
+    ):
+        raise PublicationError("Recorded sandbox workspace is unsafe")
+    repository_lexical = Path(os.path.abspath(str(repo_root)))
+    workspace_lexical = Path(os.path.abspath(str(workspace_dir)))
+    lexical_allowed_root = repository_lexical / "artifacts" / "vnext"
+    try:
+        allowed_relative = workspace_lexical.relative_to(
+            lexical_allowed_root
+        )
+    except ValueError as error:
+        raise PublicationError(
+            "Recorded sandbox workspace must be under artifacts/vnext"
+        ) from error
+    if allowed_relative == Path("."):
+        raise PublicationError(
+            "Recorded sandbox workspace must be under artifacts/vnext"
+        )
+    workspace_relative = workspace_lexical.relative_to(repository_lexical)
+    current = repository_lexical
+    for part in workspace_relative.parts:
+        current = current / part
+        if current.is_symlink() or (
+            current.exists() and not current.is_dir()
+        ):
+            raise PublicationError(
+                "Recorded sandbox workspace contains a symlink"
+            )
+    repository = repository_lexical.resolve()
+    workspace = workspace_lexical.resolve(strict=False)
+    allowed_root = repository / "artifacts" / "vnext"
+    try:
+        resolved_relative = workspace.relative_to(allowed_root)
+    except ValueError as error:
+        raise PublicationError(
+            "Recorded sandbox workspace contains a symlink"
+        ) from error
+    if resolved_relative == Path("."):
+        raise PublicationError(
+            "Recorded sandbox workspace must be under artifacts/vnext"
+        )
+    # Authority and containment are proven before the first filesystem write.
+    workspace.mkdir(parents=True, exist_ok=True)
+    sandbox_root = workspace / "recorded-publication"
+    formal_layout = publication_layout(publication_root=repository)
+    protected_paths = {
+        Path(formal_layout["pointer_path"]).resolve(),
+        Path(formal_layout["publications_dir"]).resolve(),
+        *(
+            Path(path).resolve()
+            for path in formal_layout["mirror_paths"].values()
+        ),
+    }
+    if any(
+        sandbox_root == protected
+        or sandbox_root in protected.parents
+        or protected in sandbox_root.parents
+        for protected in protected_paths
+    ):
+        raise PublicationError(
+            "Recorded sandbox overlaps formal publication authority"
+        )
+    for candidate in (
+        batch_manifest_path, legacy_snapshot_dir, staging_dir,
+    ):
+        resolved = candidate.resolve()
+        if (
+            resolved == sandbox_root
+            or resolved in sandbox_root.parents
+            or sandbox_root in resolved.parents
+        ):
+            raise PublicationError(
+                "Recorded sandbox overlaps a publication input"
+            )
+    formal_before = publication_state_snapshot(
+        publication_root=repository,
+    )
+    layout = publication_layout(publication_root=sandbox_root)
+    existing_pointer = _read_pointer(pointer_path=layout["pointer_path"])
+    previous_publication_id = None
+    if existing_pointer is not None:
+        previous_publication_id = PublicationView.open(
+            publication_root=sandbox_root,
+        ).publication_id
+    write_publication_validation_receipt(
+        repo_root=repository,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+        validated_at_utc=validated_at_utc,
+    )
+    manifest = prepare_publication_bundle(
+        publication_root=sandbox_root,
+        repo_root=repository,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+    )
+    pointer = _commit_recorded_sandbox_publication(
+        publication_root=sandbox_root,
+        publication_id=str(manifest["publication_id"]),
+        expected_active_publication_id=previous_publication_id,
+        committed_at_utc=committed_at_utc,
+    )
+    view = PublicationView.open(publication_root=sandbox_root)
+    readback_hashes = {
+        relative: sha256_bytes(
+            content=view.read_bytes(relative_path=relative)
+        )
+        for relative in sorted(REQUIRED_BUNDLE_FILES)
+    }
+    state = publication_state_snapshot(publication_root=sandbox_root)
+    if (
+        view.publication_id != manifest["publication_id"]
+        or pointer["publication_id"] != manifest["publication_id"]
+        or state["active_publication_id"] != manifest["publication_id"]
+        or state["mirror_hashes"] != readback_hashes
+    ):
+        raise PublicationError("Recorded sandbox read-back differs")
+    if publication_state_snapshot(publication_root=repository) != formal_before:
+        raise PublicationError("Recorded sandbox changed formal publication")
+    return {
+        "previous_publication_id": previous_publication_id,
+        "publication_id": view.publication_id,
+        "pointer_sha256": sha256_file(path=layout["pointer_path"]),
+        "readback_hashes": readback_hashes,
+        "root_mirror_hashes": state["mirror_hashes"],
+        "publication_root": (
+            workspace_relative / "recorded-publication"
+        ).as_posix(),
+    }
+
+
+def verified_legacy_baseline_identity(
+    *, publication_view: PublicationView,
+) -> Optional[Dict[str, object]]:
+    """Return the verified legacy-import identity for one pinned view.
+
+    Args:
+        publication_view: Pinned view whose listed marker, when present, must
+            survive a fresh complete bundle verification.
+
+    Returns:
+        ``None`` for a normal formal publication; otherwise the content-bound
+        import, baseline, Requirement, and frozen validation-manifest identity.
+
+    Raises:
+        PublicationError: When a marker-bearing view is not the exact verified
+            bundle represented by its publication identity and manifest.
+    """
+    listed = {
+        str(record["path"])
+        for record in publication_view.manifest["files"]
+    }
+    if LEGACY_BASELINE_IMPORT_MANIFEST not in listed:
+        return None
+    verified = verify_publication_bundle(
+        bundle_dir=publication_view.bundle_dir,
+    )
+    if (
+        verified["publication_id"] != publication_view.publication_id
+        or dict(verified) != dict(publication_view.manifest)
+    ):
+        raise PublicationError("Pinned legacy publication identity differs")
+    marker_bytes = publication_view.read_bytes(
+        relative_path=LEGACY_BASELINE_IMPORT_MANIFEST,
+    )
+    try:
+        marker = strict_json_loads(text=marker_bytes.decode("utf-8"))
+    except (CanonicalError, UnicodeDecodeError) as error:
+        raise PublicationError(
+            "Verified legacy import marker cannot be decoded"
+        ) from error
+    if not isinstance(marker, dict):
+        raise PublicationError("Verified legacy import marker is not object")
+    validation_record = marker["baseline_artifacts"][
+        "outputs/validation_run_manifest.json"
+    ]
+    return {
+        "record_type": marker["record_type"],
+        "publication_id": publication_view.publication_id,
+        "legacy_baseline_import_id": marker[
+            "legacy_baseline_import_id"
+        ],
+        "baseline_manifest_sha256": marker[
+            "baseline_manifest_sha256"
+        ],
+        "baseline_repository_commit": marker[
+            "baseline_repository_commit"
+        ],
+        "requirement_hashes": marker["requirement_hashes"],
+        "validation_manifest_sha256": validation_record["sha256"],
+        "validation_manifest_size": validation_record["size"],
+    }
 
 
 def write_latest_run_status(

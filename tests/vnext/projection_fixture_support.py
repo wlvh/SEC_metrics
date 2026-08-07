@@ -77,8 +77,18 @@ def scoped_repository(
     """
     repo_root = workspace / "repo"
     repo_root.mkdir()
-    for relative in ("catalog", "config", "requirements"):
+    for relative in ("catalog", "config", "fixtures", "requirements"):
         shutil.copytree(REPO_ROOT / relative, repo_root / relative)
+    policy = json.loads(
+        (
+            repo_root / "config" / "validation_source_policy.json"
+        ).read_text(encoding="utf-8")
+    )
+    for relative in policy["acceptance_source_files"]:
+        source = REPO_ROOT / relative
+        destination = repo_root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
     fixture = (
         "tests/fixtures/vnext/companyfacts_b03_crosscheck/"
         "CIK0000078003.json"

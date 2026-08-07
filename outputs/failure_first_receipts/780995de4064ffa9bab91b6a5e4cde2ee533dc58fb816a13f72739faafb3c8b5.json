@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "scenario_id": "PUBLIC_CUTOVER_RETIRED_RESOLVERS_RAW_RESPONSE_BINDING",
+  "observed_at_utc": "2026-08-06T14:50:45.127768Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 25.779927,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "cfe3b46a14375e9506d28ea36dbbd5698b1279e10f3f15fdc2c58dd24a5f05f1",
+  "stderr_size": 2963,
+  "reproduction": {
+    "entrypoint": "vnext.cutover.run_cutover",
+    "provider_boundary": "real approved OpenAI Responses adapter with socket replaced by deterministic provider response",
+    "workflow": "real source plan -> structured Run -> three review Runs -> explicit test-only HUMAN APPROVE -> resume -> freeze",
+    "retired_producers": "every sec_pipeline.RETIRED_LEGACY_PRODUCER_NAMES member raises immediately",
+    "substituted_prerequisites": [
+      "SEC acquisition",
+      "qualification",
+      "fault matrix"
+    ]
+  },
+  "observed_failure": "RunStoreError: Candidate AI attempt binding differs",
+  "root_cause": "Run replay compares provider-envelope raw_response_sha256 with the Candidate hash of assistant Structured Output bytes",
+  "expected_fix": "Candidate replay binds assistant_output_sha256 while raw provider response remains independently content-addressed",
+  "outcome": "FAILED_BEFORE_FIX"
+}

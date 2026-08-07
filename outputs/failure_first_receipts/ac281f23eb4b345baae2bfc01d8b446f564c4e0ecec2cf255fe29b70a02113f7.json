@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-LEGACY-ROLLBACK-TERMINAL-001",
+  "observed_at_utc": "2026-08-06T14:09:56Z",
+  "expected_failure": "Verified imported legacy predecessor cannot pass active Stage 12 because its honest NOT_RUN_DATA_IMPORT_ONLY receipt is rejected as a formal receipt",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_legacy_terminal_cycle"
+    ],
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "return_code": 1,
+    "observed": [
+      "ValueError: Active publication receipt field is invalid: validation_receipt_id",
+      "SystemExit: 1"
+    ]
+  }
+}

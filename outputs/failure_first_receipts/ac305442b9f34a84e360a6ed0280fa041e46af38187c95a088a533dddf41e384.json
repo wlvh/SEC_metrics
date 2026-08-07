@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-ACTIVE-STAGE11-WRAPPER-WRITE-001",
+  "observed_at_utc": "2026-08-06T11:05:05Z",
+  "expected_failure": "Public Stage 11 wrapper writes before and after an active PublicationView read",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_report_read_only.ReportReadOnlyTest.test_public_stage11_wrapper_has_no_active_write_boundary",
+      "-v"
+    ],
+    "duration_ms": 107,
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH"
+    ],
+    "error_class": "",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "5d1ce09bea43870b00f189b1bd5cbc1901282f6fa1174c426a537c97ad8ba23b",
+    "stderr_size": 1878,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  }
+}

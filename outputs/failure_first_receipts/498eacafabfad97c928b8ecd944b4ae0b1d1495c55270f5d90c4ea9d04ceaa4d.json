@@ -1,0 +1,22 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest tests.vnext.test_operator_cli.OperatorCliTest.test_live_prepare_rejects_unbound_source_before_openai tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_sec_acquisition_receipt_binds_fixed_stages_and_ledger_tail tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_pinned_plan_rejects_caller_self_signed_sec_pass",
+  "duration_ms": 479,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "Caller self-hashed minimal LIVE_SEC_ACQUISITION PASSED receipt was accepted as pinned acquisition evidence.",
+  "output_sha256": "58c226b3f44d47dd80b5a9b3a08716579499e1b8441a9830daa4533bc865d36a",
+  "output_size": 2520,
+  "receipt_id": "sha256:498eacafabfad97c928b8ecd944b4ae0b1d1495c55270f5d90c4ea9d04ceaa4d",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-07T07:14:04Z",
+  "return_code": 1,
+  "scenario_id": "PINNED_SEC_RECEIPT_CALLER_SELF_SIGNED_PASS",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "test_file_sha256": "55672916990e8da3f3007d1e8a2690e5a601f3660c620b9119e5a2043a0c57ad"
+}

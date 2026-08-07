@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scenario_id": "INCOMPATIBLE_CANDIDATE_WAS_RECORDED_PASS",
+  "observed_at_utc": "2026-08-06T10:21:14.682962+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_failed_compatibility_never_reaches_publication",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_ms": 87,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "b885e5c578b679123e454d125c7a9de4d103a1a975e16cf20e30c6a3d0985b90",
+  "stderr_size": 1112,
+  "expected_failure": "AssertionError: BLOCKED != PASSED_RECORDED_ONLY",
+  "outcome": "FAILED_BEFORE_FIX"
+}

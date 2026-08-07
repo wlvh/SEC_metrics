@@ -23,6 +23,10 @@ def recorded_transport_observation(*, request_body_bytes: int) -> dict:
         "egress_attempted": False,
         "provider": "recorded",
         "model": "recorded-response-v1",
+        "model_requested": "recorded-response-v1",
+        "model_returned": "none",
+        "api": "recorded",
+        "store": False,
         "endpoint_host": "none",
         "region": "local",
         "retention": "immutable-fixture",
@@ -63,21 +67,39 @@ class RecordSchemaTest(unittest.TestCase):
             "status": "SUCCEEDED",
             "provider": "recorded",
             "model": "recorded-response-v1",
+            "model_requested": "recorded-response-v1",
+            "model_returned": "none",
+            "api": "recorded",
             "endpoint_host": "none",
             "transport_observation": recorded_transport_observation(
                 request_body_bytes=1,
             ),
-            "sampling_parameters": {"temperature": float("nan")},
+            "sampling_parameters": {
+                "temperature": float("nan"),
+                "reasoning_effort": "none",
+            },
             "reader_input_manifest_hash": "sha256:" + "a" * 64,
             "request_body_sha256": "b" * 64,
             "request_body_path": "attempt_payloads/request_{}.bin".format(
                 "b" * 64
+            ),
+            "reader_payload_sha256": "f" * 64,
+            "reader_payload_path": (
+                "attempt_payloads/reader_payload_{}.json".format("f" * 64)
             ),
             "task_contract_sha256": "d" * 64,
             "task_contract_path": (
                 "attempt_payloads/task_contract_{}.json".format("d" * 64)
             ),
             "task_spec_semantic_hash": "sha256:" + "e" * 64,
+            "output_schema_sha256": "a" * 64,
+            "output_schema_path": (
+                "attempt_payloads/output_schema_{}.json".format("a" * 64)
+            ),
+            "assistant_output_sha256": "c" * 64,
+            "assistant_output_path": (
+                "attempt_payloads/assistant_output_{}.json".format("c" * 64)
+            ),
             "raw_response_sha256": "c" * 64,
             "raw_response_path": "attempt_payloads/response_{}.bin".format(
                 "c" * 64
@@ -100,21 +122,39 @@ class RecordSchemaTest(unittest.TestCase):
             "status": "SUCCEEDED",
             "provider": "recorded",
             "model": "recorded-response-v1",
+            "model_requested": "recorded-response-v1",
+            "model_returned": "none",
+            "api": "recorded",
             "endpoint_host": "none",
             "transport_observation": recorded_transport_observation(
                 request_body_bytes=1,
             ),
-            "sampling_parameters": {"temperature": 0},
+            "sampling_parameters": {
+                "temperature": 0,
+                "reasoning_effort": "none",
+            },
             "reader_input_manifest_hash": "sha256:" + "a" * 64,
             "request_body_sha256": "b" * 64,
             "request_body_path": "attempt_payloads/request_{}.bin".format(
                 "b" * 64
+            ),
+            "reader_payload_sha256": "f" * 64,
+            "reader_payload_path": (
+                "attempt_payloads/reader_payload_{}.json".format("f" * 64)
             ),
             "task_contract_sha256": "d" * 64,
             "task_contract_path": (
                 "attempt_payloads/task_contract_{}.json".format("d" * 64)
             ),
             "task_spec_semantic_hash": "sha256:" + "e" * 64,
+            "output_schema_sha256": "a" * 64,
+            "output_schema_path": (
+                "attempt_payloads/output_schema_{}.json".format("a" * 64)
+            ),
+            "assistant_output_sha256": "c" * 64,
+            "assistant_output_path": (
+                "attempt_payloads/assistant_output_{}.json".format("c" * 64)
+            ),
             "raw_response_sha256": "c" * 64,
             "raw_response_path": "attempt_payloads/response_{}.bin".format(
                 "c" * 64
@@ -125,7 +165,10 @@ class RecordSchemaTest(unittest.TestCase):
             "error_class": "",
         }
         invalid_cases = (
-            ("sampling_parameters", {"temperature": False}),
+            (
+                "sampling_parameters",
+                {"temperature": False, "reasoning_effort": "none"},
+            ),
             ("started_at_utc", "2026-07-29T13:00:00+08:00"),
             ("finished_at_utc", "2026-07-29T12:00:00+00:00"),
         )

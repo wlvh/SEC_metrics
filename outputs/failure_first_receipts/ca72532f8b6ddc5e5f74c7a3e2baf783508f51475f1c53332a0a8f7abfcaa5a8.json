@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-LIVE-SEC-ACQUISITION-001",
+  "observed_at_utc": "2026-08-06T11:11:07Z",
+  "expected_failure": "Authorized full Cutover does not acquire and inventory official SEC inputs before release planning",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_live_acquires_sec_inventory_before_release_planning",
+      "-v"
+    ],
+    "duration_ms": 89,
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH"
+    ],
+    "error_class": "",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "c5b3985c78590115d3d2f46215439fed5fd05b4b728c4a4a4cd6e14871e7ecaa",
+    "stderr_size": 1808,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  }
+}

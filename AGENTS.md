@@ -25,7 +25,7 @@ SOP.md「SOP 1：SEC 阶段 00-12 完整批次运行」
 → TESTING.md
 ```
 
-阶段 `00`–`11` 负责采集、计算、repair 与报告构建；阶段 `12` 是独立终态 gate。stage 11 exit 0 只说明报告构建完成，不代表完整批次成功。
+阶段 `00`–`11` 保留采集与非迁移 candidate 能力，阶段 `12` 是独立终态 gate。每个formal terminal cycle以同一pinned transaction贯穿Stage10/11/12；内部candidate命令通过`sec_pipeline.py --workspace-dir <absolute-isolated-root> <stage>`显式选择源码checkout外的数据根，legacy Stage04/09/11不能在源码repository root、其任意子目录或含active pointer的workspace覆盖mirrors。stage 11 exit 0 本身不代表完整批次成功。
 
 ### 分层验收或失败定位
 
@@ -47,17 +47,22 @@ architecture.md
 
 需要发布 PR 时，先读取 `SOP.md` 的 PR 发布章节，再执行 `PR_Checklist.md`。涉及 SEC 访问、证据、manifest、verdict、source provenance 或 artifact publication 的改动，必须同时核对用户可观察后果和负例测试。
 
-### 开发或复核 vNext recorded shadow
+### 开发、复核或执行 vNext Cutover
 
 ```text
-requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
+requirements/ai_first_v3_3_1/FSD.md
+→ requirements/ai_first_v3_3_1/ISSUE_CONTRACT.md（immutable R2）
+→ requirements/ai_first_v3_3_1/ISSUE_CONTRACT_R3_ADDENDUM.md（exact R3 snapshot）
 → requirements/ai_first_v3_3_1/decision_register.json
-→ architecture.md「vNext recorded shadow」
-→ TESTING.md「vNext recorded shadow」
-→ SOP.md「vNext recorded shadow」
+→ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
+→ architecture.md「vNext Cutover 实现」
+→ TESTING.md「vNext recorded / formal Cutover」
+→ SOP.md「vNext operator 与正式 Cutover」
 ```
 
-该路径只验证尚未切流的 recorded/shadow 实现，不改变根目录当前结果入口。D-01、有效 SEC 联系身份、第二真实布局、独立 holdout、live 三轮稳定性、staging parity、旧 producer 退出、Cutover 和真实 rollback/full validation 任一未满足时，都不得把 recorded PASS 写成 active/full PASS。
+R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细状态/证据/发布边界，R3 只覆盖其明确列出的决定；两份 exact bytes 都是 Requirement authority。Decision Register 保留历史 D-01 pending record，并以 R3 的单链 superseding record 形成唯一 effective `APPROVED` D-01。
+
+代码已具备同一 recorded/live operator、显式 HUMAN Review、固定 OpenAI/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。qualification固定按第二布局receipt→semantic freeze及pre-holdout inventory→独立holdout执行；首次formal chain只读导入verified legacy A并提交绑定A的B；public generic formal mutation入口fail closed；三次live attempt形成portable audit closure；每个terminal cycle只启动一次公开CLI，并以单进程、单次pinned transaction贯穿Stage10 Golden、Stage11 report、Stage12 active validation与snapshot publish/verify。publication switch会先在独占锁内写content-addressed intent；pending/tamper时reader fail closed，writer按exact pointer分支恢复receipt与mirrors或回滚上一状态。full live path还会在release planning前固定执行SEC Stage00/01/02/03/05，并持久化原样命令、request-ledger合法tail与inventory receipt；持久acceptance receipt以portable runtime token和binary SHA-256绑定解释器，不保存本机绝对路径。release input plan绑定exact source的latest verified attempt及locator class，recorded可逐path/hash/headers/size重验唯一`LEGACY_WORKING_LOCATOR`并在portable closure绑定tier/class，formal live只允许`IMMUTABLE_ATTEMPT`并拒绝legacy。这仍不等于本仓库已经产生active Cutover证据。本轮因`OPENAI_API_KEY`、`SEC_CONTACT_EMAIL`、qualification与HUMAN前提缺失，该live acquisition未执行且没有对应receipt；第二真实布局/holdout、live三轮、十公司formal staging、active/previous publication、rollback/restore与full receipt也不存在。因此业务用户仍读取现有root CSV/报告，任何recorded或实现测试PASS都不得写成active/full PASS。
 
 ## 1. 文件简介
 
@@ -74,7 +79,7 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
 - `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
-- `requirements/ai_first_v3_3_1/`：Issue #12 的 exact FSD/Issue、Decision Register、冻结基线、旧路径 inventory、SU 映射与当前阻塞；属于 source-input closure，不是运行结果。
+- `requirements/ai_first_v3_3_1/`：Issue #12 的 exact FSD、immutable R2、exact R3 Addendum、Decision Register、冻结基线、旧路径 inventory、SU 映射与当前阻塞；属于 source-input closure，不是运行结果。
 
 ### 核心配置
 
@@ -82,8 +87,8 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 - `config/vnext_release_plan.json`：Projector 的仓库级 release identity 与 migrated metric exact set；不能由 Run 结果反推。
 - `config/company_registry.csv`：逻辑公司、CIK role、行业 profile、财年底与连续性。
 - `config/metric_applicability.yaml`：SIC/profile 规则、extractor 路由与行业参数；当前由 JSON parser 读取，内容必须保持 JSON 兼容。
-- `config/validation_source_policy.json`：机器可读的 runtime/acceptance source、full artifact directory、生成 artifact、发布治理和解释性文档角色；provenance closure 的真相源。
-- `catalog/`：vNext JSON-compatible MetricSpec、disclosure group 与 company trait 目录；业务选择、guard、quality、projection 和 identity constraint 的 recorded truth source。
+- `config/validation_source_policy.json`：机器可读的 runtime/acceptance source、full artifact directory、生成 artifact、发布治理和解释性文档角色；qualification、request attempts、failure-first、fault与portable live audit receipts都属于full artifact closure；provenance closure 的真相源。
+- `catalog/`：vNext JSON-compatible MetricSpec、disclosure group 与 company trait 目录；业务选择、guard、quality、projection 和 identity constraint 的仓库级 truth source。
 
 ### 核心模块
 
@@ -92,14 +97,16 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 - `scripts/sec_urls.py`：集中构造 SEC 官方 endpoint。
 - `scripts/git_workspace.py`：集中清理 Git 重定向环境，并校验 checkout 与 object/ref 存储边界。
 - `scripts/validation_provenance.py`：读取 source policy、校验 SOP 权威引用角色、捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
-- `scripts/00_*.py` 至 `scripts/12_*.py`：无参数单阶段 CLI wrapper；stage 11/12 额外负责旧 provenance 失效与终态 publication。
-- `scripts/vnext/`：尚未切流的 recorded shadow 组件；分别负责 strict canonical/schema/state、source/table-grid、集中 untrusted-input/review 资源预算、Spec/constraint、从仓库派生 Spec/Requirement/temperature 的 review workflow、固定 Reader response validator、只接受仓库 factory 构造的私有 recorded/approved 类型并由模块固定 Requirement effective D-01 授权、approved workflow 在 payload read 前要求同一物理 repository、每次 attempt 从仓库注册表新建而不在 adapter 保留可替换 transport、记录实际 TransportObservation 的 AI adapter、Evidence、Review、Calculator、Run freeze/replay、从 registry/applicability/release plan 与 PASSED FROZEN Runs 派生 complete BatchManifest 并实际生成 legacy-compatible candidate 的 Projector、从 verified Batch 实际消费来源派生并验证 request-ledger 最小已用 prefix、row 声明 locator 与 immutable attempt 的 publication receipt、pinned report input，以及由单一 root 派生路径的 publication transaction primitives。
+- `scripts/00_*.py` 至 `scripts/12_*.py`：薄单阶段 CLI；04/09 只接受`--workspace-dir <absolute-isolated-root>`，11 无参数时只作active read-back、带该参数时构建legacy candidate，其余wrapper保持无参数。candidate全链统一经`sec_pipeline.py --workspace-dir ... <stage>`；legacy stage 11 mutation使旧provenance失配，stage 12负责终态publication，active stage 11只读。
+- `scripts/vnext/`：vNext的canonical/schema/state、source/table-grid、latest verified request-attempt与locator-tier source plan、Spec/constraint、固定Responses API adapter、Evidence/Review/Calculator、Run freeze/replay、complete BatchManifest/Projector、固定SEC Stage00/01/02/03/05 acquisition/inventory、资格门、正式Cutover编排、pinned `PublicationView`与publication/rollback transaction实现。recorded可exact验证并闭合legacy working locator，正式live只允许immutable attempt；二者仍受各自Review、staging与publication gates约束。
 - `tools/check_validation_snapshot.py`：独立复核当前 checkout、manifest、provenance sidecar 与关键 artifact bytes。
 - `tools/check_no_company_literals.py`：递归扫描 `scripts/`、`tools/` 全部生产 Python identity literal 的扩展性 gate；支持把真实 scanner 结果写到调用方显式指定的隔离 CSV，供 publication runner 生成并在 prepare 时重验。
 - `tools/check_capability_contract_alignment.py`：能力契约 anchor、文档路径与 `file::symbol` 的机械结构 gate；不证明 claim 语义成立。
 - `tools/check_vnext_semantics.py`：扫描 vNext/bridge executable 的业务 literal、AI adapter authority 与 secret token 泄漏；secret root/递归 namespace 中任意 symlink 都 fail closed，并写绑定 checker 自身、scalability checker 与其 producer bytes 的 hash-only receipt。
-- `tools/vnext_review.py`：对 OPEN recorded Run 追加显式 HUMAN review decision 的最小 CLI。
-- `tools/run_acceptance.py`：按 `TESTING.md` 记录原样命令、解释器、return code、耗时、stdout/stderr digest、artifact hash 与 NOT_RUN 原因；full scope 把 live 00–11 与必须执行的离线 Stage 12/checker 分开记录，recorded 成功不等于 full 成功。
+- `tools/vnext_operator.py` / `tools/vnext_review.py`：同一套 recorded/live operator 与 HUMAN review CLI；支持fixture list/show、prepare/status/review/finalize/replay/project/publish/rollback/restore/acceptance，默认隐藏 traceback 并可输出 JSON。fixture catalog拥有recorded source/response/Spec/company/period authority，拒绝caller业务覆盖。
+- `tools/vnext_qualification.py` / `tools/vnext_cutover.py`：先验证第二真实布局，再冻结production semantic tree及pre-holdout inventory，最后验证post-freeze holdout；live Cutover在release planning前固定执行SEC acquisition/inventory并持久化命令、ledger tail、inventory receipt与portable all-attempt audit closure。受控`--fixture-id` cold-start走同一Run/Batch/Projector状态机，只接受`artifacts/vnext/recorded-*`专用workspace；live core exact固定module-owned repository、`artifacts/vnext/cutover`、`outputs` legacy snapshot与formal publication root，caller override在load/write前拒绝；formal fault matrix沿用同一固定root。每次有效live调用（包括HUMAN resume）都会fresh执行SEC acquisition，再复用source-exact pinned semantic plan，并把本次receipt单独回绑audit/full closure。receipt按当前解释器binary、五条固定命令、ledger prefix/tail、attempt exact set与inventory current bytes重验；recorded resume只向`<workspace>/recorded-publication`做sandbox CAS/PublicationView read-back，正式active/root与formal namespace保持不变，TEST_ONLY review不构成formal HUMAN证据。
+- `tools/vnext_terminal_cycle.py`：formal new/rollback/restore各调用一次；在单进程中pin一次publication transaction，依序验证Stage10 Golden、Stage11 report、Stage12 active publication、snapshot publish与snapshot verify，并把exact gate set、pointer/mirror hash和零网络/repair/write计数形成content-addressed结果。
+- `tools/run_acceptance.py`：recorded scope在macOS `/usr/bin/sandbox-exec` process-tree边界强制离线，剥离child live secrets，并绑定clean source/Requirement、隔离gate exact artifacts、formal namespace exact trees、pointer lock/latest status与SEC ledger bytes；sandbox递归拒绝live Cutover/qualification/request-attempt/publication/publication-switch/fault/live-audit写入，并保护pointer lock/latest status单文件。缺sandbox、alias/special entry或任一漂移均fail closed，root drift即使恢复也保持失败，ledger不回滚。持久receipt以`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$PYTHON39`和`$SANDBOX_EXEC`替代host-local路径，并用runtime binary SHA-256保留执行身份。full未显式授权时返回稳定错误；获授权后编排acquisition、Cutover、三次单进程terminal validation、rollback、restore与最终evidence binding，并在HUMAN/失败子进程意外commit时恢复调用前authority且保留原blocker。7200秒默认值只是单命令上限；只有实际完整返回0才是full PASS。
 
 ### 业务逻辑与运行入口
 
@@ -115,7 +122,8 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 - `outputs/validation_run_manifest.json`：最近一次 repair validation 实际刷新/未刷新的证据清单，不是 runtime checkpoint，也不单独证明当前 checkout。
 - `outputs/validation_snapshot_provenance.json`：成功 stage 12 对 source-input tree 与关键 artifact bytes 的绑定。
 - `REPORT_十公司财务指标.md`：当前批次的派生中文报告，不独立定义能力、指标口径或成功状态。
-- `artifacts/vnext/`：未来 recorded Run/review/publication 的本地运行域；当前没有已提交 active pointer，且不得替代根目录现行结果。OPEN/FAILED workspace 和凭据不得提交。
+- `artifacts/vnext/`：Run、review、qualification、immutable publication bundle 与 latest attempt 状态的本地运行域；OPEN/FAILED workspace 和凭据不得提交，也不得替代 root CSV/报告。
+- `outputs/active_publication.json`：正式 active identity 的唯一 committed pointer。当前仓库没有该 pointer；不能把实现测试或 recorded receipt 当作已 Cutover。
 
 测试文件和 fixture 的职责统一由 `TESTING.md` 管理，不在此逐项复制。新增、删除或改变上述核心文件职责时，必须同步更新本节。
 
@@ -130,7 +138,7 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 - source/document 角色与 acceptance source closure 以 `config/validation_source_policy.json` 为准；SOP 权威引用必须被 policy 分类，解释性非权威文档不得作为运行权威。
 - 当前运行状态只能从 validation manifest、snapshot checker 与报告共同判断；长篇 Markdown 中的历史数量或结论不是当前状态源。
 - 生成报告和 CSV 是当前代码与输入的 snapshot，不替代源代码、契约、provenance sidecar 或独立 gate。
-- vNext recorded 能力以 Requirement Snapshot、catalog、`scripts/vnext/`、recorded tests 与 acceptance receipt 为准；它不是当前 active 数据批次，也不能改变前两条的现行结果判断规则。
+- vNext 实现能力以 FSD、immutable R2、R3 Addendum、effective Decision、catalog、代码与测试为准；当前运行状态只由 qualification/live/staging/publication/full receipts 和 active pointer 证明。没有 active pointer 时，现有 root 结果入口不因代码已实现而自动切换。
 
 ### Source provenance 与当前 checkout
 
@@ -143,7 +151,7 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 
 ## 3. 工作规则
 
-1. 先读本文件，再按第 0 节和 `SOP.md` 选择对应流程；只把 vNext 写成测试实际证明的 recorded/shadow 原语，不把它、Databricks、前端、API、CI、部署或调度写成已完成 active Cutover。
+1. 先读本文件，再按第 0 节和 `SOP.md` 选择对应流程；明确区分实现就绪、recorded、staging、active 与 full 证据，不把代码能力写成已完成 active Cutover，也不虚构 Databricks、前端、API、CI、部署或调度。
 2. 主分支为 `main`。只有用户明确要求 commit、push 或 PR 时才执行发布；对 `main` 的合并通过 PR。
 3. 用户未要求发布时，只保留并报告本地修改，不擅自创建分支、commit、push 或 PR。
 4. 工作区可能包含用户已有修改；只处理任务范围，禁止覆盖、重置或混入无关 diff。
@@ -158,7 +166,7 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 ## 4. SEC 与数据规则
 
 1. 所有生产网络请求只允许访问官方 SEC 域名，并统一经过 `SecHttpClient`。
-2. live 请求前必须确认 `config/sec_config.json` 使用有效 organization/contact email；示例邮箱不是生产合规证明。
+2. live 请求的 organization 固定为 `axaxl`；contact email 只从 `SEC_CONTACT_EMAIL` 环境变量读取。缺失、畸形或 example/reserved-domain 邮箱必须在联网前以稳定错误失败。
 3. 所有请求尝试保留 UTC 日志；有响应体时保存 immutable raw bytes、headers 与 SHA-256。
 4. `requests_log.csv` 与 `requests_log_manifest.json` 共同构成 ledger publication；row count/hash、CSV schema、HEAD/base 有序前缀、下游 locator 与 sidecar 任一失配都不能 PASS。
 5. 禁止使用第三方数据、新闻、搜索结果或模型记忆为 SEC 指标补数。
@@ -189,6 +197,6 @@ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
 
 - 只读取现有结果
 - SEC 阶段 00-12 完整批次运行
-- vNext recorded shadow（不切流）
+- vNext operator 与正式 Cutover
 - 分层验收与失败定位
 - PR 发布（仅用户明确要求时）

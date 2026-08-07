@@ -35,8 +35,8 @@ UTC_TIMESTAMP_PATTERN = re.compile(
 )
 SEMANTIC_VERSIONS = {
     "calculator_semantic_version": "5",
-    "canonicalizer_semantic_version": "2",
-    "projector_semantic_version": "1",
+    "canonicalizer_semantic_version": "4",
+    "projector_semantic_version": "2",
     "review_renderer_semantic_version": "2",
     "spec_interpreter_semantic_version": "2",
 }

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-LEGACY-NONMIGRATED-STAGE-UNREACHABLE-001",
+  "observed_at_utc": "2026-08-07T08:21:44Z",
+  "evidence_level": "FAILURE_FIRST_PUBLIC_CLI",
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "scripts/04_compute_standard_metrics.py"
+    ],
+    "return_code": 1
+  },
+  "expected": {
+    "pre_cutover_nonmigrated_stage_available": true,
+    "migrated_metrics_produced_by_legacy": false
+  },
+  "observed": {
+    "error_code": "LEGACY_PATH_STILL_ACTIVE",
+    "producer": "04_compute_standard_metrics",
+    "reason": "WORKDIR and the module repository root are the same fixed path, so the public wrapper always fails before computing retained non-migrated candidate rows."
+  },
+  "active_publication_present": false,
+  "formal_state_changed": false
+}

@@ -49,6 +49,25 @@ import check_capability_contract_alignment as contract_alignment  # noqa: E402
 import sec_http  # noqa: E402
 
 
+_SEC_CONTACT_ENVIRONMENT = None
+
+
+def setUpModule() -> None:
+    """Provide the environment-owned SEC contact for HTTP client fixtures."""
+    global _SEC_CONTACT_ENVIRONMENT
+    _SEC_CONTACT_ENVIRONMENT = mock.patch.dict(
+        os.environ,
+        {"SEC_CONTACT_EMAIL": "ledger-fixture@corp.co"},
+    )
+    _SEC_CONTACT_ENVIRONMENT.start()
+
+
+def tearDownModule() -> None:
+    """Restore the caller environment after all SEC client fixtures finish."""
+    if _SEC_CONTACT_ENVIRONMENT is not None:
+        _SEC_CONTACT_ENVIRONMENT.stop()
+
+
 def read_rows(*, path: Path) -> list[dict]:
     """Read CSV rows for test fixture mutation.
 
@@ -276,8 +295,7 @@ def build_http_client(*, workspace: Path) -> sec_http.SecHttpClient:
     config_path.write_text(
         json.dumps(
             {
-                "organization": "fixture",
-                "contact_email": "a@b.co",
+                "organization": "axaxl",
                 "rate_limit_per_sec": 10,
                 "max_retries": 0,
                 "backoff_initial_seconds": 0,
@@ -1064,6 +1082,7 @@ class ValidationRunManifestTest(unittest.TestCase):
     def _projected_report(*, validation_manifest: dict) -> str:
         """Return a minimal report bound to one projected terminal run."""
         return (
+            "# REPORT_十公司财务指标\n\n"
             f"- run_id: `{validation_manifest['run_id']}`\n"
             f"- result: `{validation_manifest['result']}`\n"
         )
@@ -1193,7 +1212,7 @@ class ValidationRunManifestTest(unittest.TestCase):
             ), mock.patch.object(
                 sec_pipeline,
                 "build_readme",
-                return_value="# readme\n",
+                return_value="# README_RUN\n",
             ):
                 with self.assertRaises(IsADirectoryError):
                     sec_pipeline.stage_build_report()
@@ -1307,7 +1326,7 @@ class ValidationRunManifestTest(unittest.TestCase):
             ), mock.patch.object(
                 sec_pipeline,
                 "build_readme",
-                return_value="# readme\n",
+                return_value="# README_RUN\n",
             ):
                 sec_pipeline.stage_build_report()
                 manifest = sec_pipeline.read_validation_run_manifest()
@@ -3678,6 +3697,7 @@ class PortableArtifactPathTest(unittest.TestCase):
             def projected_report(*, validation_manifest: dict) -> str:
                 """Return a minimal report bound to the deferred run."""
                 return (
+                    "# REPORT_十公司财务指标\n\n"
                     f"- run_id: `{validation_manifest['run_id']}`\n"
                     f"- result: `{validation_manifest['result']}`\n"
                 )
@@ -3709,7 +3729,7 @@ class PortableArtifactPathTest(unittest.TestCase):
             ), mock.patch.object(
                 sec_pipeline,
                 "build_readme",
-                return_value="# readme\n",
+                return_value="# README_RUN\n",
             ):
                 sec_pipeline.stage_build_report()
 
@@ -5234,8 +5254,7 @@ class PortableRequestLogTest(unittest.TestCase):
             config_path.write_text(
                 json.dumps(
                     {
-                        "organization": "fixture",
-                        "contact_email": "a@b.co",
+                        "organization": "axaxl",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -5531,8 +5550,7 @@ class PortableRequestLogTest(unittest.TestCase):
             config_path.write_text(
                 json.dumps(
                     {
-                        "organization": "fixture",
-                        "contact_email": "a@b.co",
+                        "organization": "axaxl",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -5857,8 +5875,7 @@ class PortableRequestLogTest(unittest.TestCase):
             config_path.write_text(
                 json.dumps(
                     {
-                        "organization": "fixture",
-                        "contact_email": "a@b.co",
+                        "organization": "axaxl",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -5986,8 +6003,7 @@ class PortableRequestLogTest(unittest.TestCase):
             config_path.write_text(
                 json.dumps(
                     {
-                        "organization": "fixture",
-                        "contact_email": "a@b.co",
+                        "organization": "axaxl",
                         "rate_limit_per_sec": 10,
                         "max_retries": 0,
                         "backoff_initial_seconds": 0,
@@ -8822,6 +8838,82 @@ class ImplementationMapTest(unittest.TestCase):
             instruction_ids,
             {"I1", "I2", "I3", "I4", "I5", "I6", "I7", "I8"},
         )
+
+
+class RunbookGeneratorTest(unittest.TestCase):
+    """Keep the checked-in runbook aligned with supported operator states."""
+
+    def test_checked_in_readme_is_exact_generator_output(self) -> None:
+        """Reject a hand-edited README or an unregenerated source change."""
+        self.assertEqual(
+            sec_pipeline.build_readme(),
+            (REPO_ROOT / "README_RUN.md").read_text(encoding="utf-8"),
+        )
+
+    def test_vnext_runbook_preserves_transition_and_authority_order(
+        self,
+    ) -> None:
+        """Document one executable order without a second formal authority."""
+        runbook = sec_pipeline.build_readme()
+        second = runbook.index("--fixture-id SECOND_LAYOUT_FIXTURE")
+        freeze = runbook.index("vnext_qualification.py freeze")
+        holdout = runbook.index("--fixture-id POST_FREEZE_HOLDOUT_FIXTURE")
+        self.assertLess(second, freeze)
+        self.assertLess(freeze, holdout)
+        resume = runbook.index("vnext_operator.py --json resume")
+        replay = runbook.index("vnext_operator.py --json replay")
+        self.assertNotIn(
+            "vnext_operator.py --json freeze",
+            runbook[resume:replay],
+        )
+        self.assertIn("FORMAL_CUTOVER_AUTHORITY_REQUIRED", runbook)
+        self.assertIn("pre-holdout", runbook)
+        self.assertIn("portable audit closure", runbook)
+        self.assertIn("LEGACY_WORKING_LOCATOR", runbook)
+        self.assertIn("LIVE_SOURCE_ATTEMPT_INCOMPLETE", runbook)
+        self.assertIn("SOURCE_LEDGER_BINDING_AMBIGUOUS", runbook)
+
+    def test_vnext_runbook_documents_portable_command_receipts(self) -> None:
+        """Keep durable acceptance evidence free of host-local paths."""
+        runbook = sec_pipeline.build_readme()
+        self.assertIn("runtime_bindings", runbook)
+        self.assertIn("$PYTHON_CURRENT", runbook)
+        self.assertIn("$PYTHON39", runbook)
+        self.assertIn("runtime binary SHA-256", runbook)
+        self.assertIn("不持久化本机绝对路径", runbook)
+
+    def test_vnext_runbook_documents_one_pinned_terminal_process(self) -> None:
+        """Require one process and one pin across each terminal cycle."""
+        runbook = sec_pipeline.build_readme()
+        self.assertIn("tools/vnext_terminal_cycle.py --json", runbook)
+        self.assertIn("每个 new/rollback/restore cycle 只启动一次", runbook)
+        self.assertIn("单进程、单次 pinned transaction", runbook)
+        self.assertIn(
+            "Stage 10 Golden→Stage 11 report→Stage 12 active validation→"
+            "snapshot publish→verify",
+            runbook,
+        )
+
+    def test_vnext_runbook_documents_switch_intent_recovery(self) -> None:
+        """Expose hard-crash recovery without weakening read authority."""
+        runbook = sec_pipeline.build_readme()
+        self.assertIn("outputs/publication_switch_intents/", runbook)
+        self.assertIn("content-addressed switch intent", runbook)
+        self.assertIn("共享锁 reader fail closed", runbook)
+        self.assertIn("独占锁 writer/recovery", runbook)
+        self.assertIn("pointer 已是 proposed", runbook)
+        self.assertIn("pointer 仍是 previous", runbook)
+
+    def test_vnext_runbook_uses_only_catalog_recorded_authority(self) -> None:
+        """Never publish a caller-selected response as a supported command."""
+        runbook = sec_pipeline.build_readme()
+        self.assertIn(
+            "python3 tools/vnext_operator.py --json prepare "
+            "--fixture-id FIXTURE_ID",
+            runbook,
+        )
+        self.assertNotIn("--recorded-response", runbook)
+        self.assertIn("RECORDED_FIXTURE_OVERRIDE_FORBIDDEN", runbook)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,22 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest tests.vnext.test_cutover.CutoverFailureFirstTest.test_failed_postcommit_readback_never_writes_passed_receipt",
+  "duration_ms": 4689,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "A failed resume left one official formal_cutover_committed receipt with status PASSED",
+  "output_sha256": "35fa08cbcd44dc1f4268739810ca0fbc7f4cd97bb9f0198db5f1472ac2e0aefd",
+  "output_size": 1363,
+  "receipt_id": "sha256:c1a2b0c4ed6dfcdf7eed16dd8ab3cd8310ea2f8ae1788154ffa800696330a2de",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-06T16:07:10Z",
+  "return_code": 1,
+  "scenario_id": "POSTCOMMIT_RESUME_FALSE_PASSED_RECEIPT",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "test_file_sha256": "6b8143146ff0fe43e1a6225388b7c6becbad5320c5ae62b492a2284cc8ea4a48"
+}

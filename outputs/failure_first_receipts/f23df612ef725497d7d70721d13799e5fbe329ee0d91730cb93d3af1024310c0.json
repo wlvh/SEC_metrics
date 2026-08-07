@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scenario_id": "ACTIVE_PUBLICATION_TRANSITIVE_CLOSURE_ABSENT",
+  "observed_at_utc": "2026-08-06T10:33:14.324085Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_publication.PublicationTest.test_bundle_carries_portable_frozen_run_transitive_closure",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 4.21499,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "343cc461411bdb678242c349baf8f66fe22f9792c892c82df5a9abd1dd080ea1",
+  "stderr_size": 1050,
+  "expected_failure": "internal/closure_manifest.json is absent from the prepared publication bundle",
+  "outcome": "FAILED_BEFORE_FIX"
+}

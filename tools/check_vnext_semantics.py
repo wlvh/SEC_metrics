@@ -4,7 +4,8 @@ The audit parses Python ASTs under ``scripts/vnext`` and emits one receipt row
 per literal/import/call match. Business semantic literals are allowed only in
 catalog, Requirement snapshots, and tests, so any executable match fails with
 ``SEMANTIC_PARSER_REINTRODUCED``. The AI adapter additionally forbids direct
-SEC transport, shell, subprocess, filesystem, and broad network imports.
+SEC transport, shell, subprocess, filesystem, and broad network imports except
+for the repository-pinned OpenAI Responses transport.
 """
 
 from __future__ import annotations
@@ -34,6 +35,12 @@ FORBIDDEN_AI_IMPORTS = {
     "urllib",
 }
 FORBIDDEN_AI_CALLS = {"eval", "exec", "open", "system"}
+PINNED_OPENAI_CONSTANTS = {
+    "_OPENAI_API_KEY_ENV": "OPENAI_API_KEY",
+    "_OPENAI_ENDPOINT_HOST": "api.openai.com",
+    "_OPENAI_RESPONSES_URL": "https://api.openai.com/v1/responses",
+}
+PINNED_OPENAI_IMPORTS = {"socket", "urllib"}
 GATE_SOURCE_PATHS = (
     "scripts/sec_pipeline.py",
     "tools/check_no_company_literals.py",
@@ -74,6 +81,36 @@ def _attribute_name(*, node: ast.AST) -> str:
     return ""
 
 
+def _has_pinned_openai_transport(
+    *, tree: ast.AST, relative_path: str
+) -> bool:
+    """Return whether one adapter declares the exact remote authority.
+
+    Args:
+        tree: Parsed adapter module.
+        relative_path: Portable repository-relative source path.
+
+    Returns:
+        True only for the fixed adapter path and exact endpoint/key constants.
+    """
+    if relative_path != "scripts/vnext/ai_adapter.py":
+        return False
+    constants: Dict[str, str] = {}
+    for node in ast.walk(tree):
+        if (
+            isinstance(node, ast.Assign)
+            and len(node.targets) == 1
+            and isinstance(node.targets[0], ast.Name)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        ):
+            constants[node.targets[0].id] = node.value.value
+    return all(
+        name in constants and constants[name] == value
+        for name, value in PINNED_OPENAI_CONSTANTS.items()
+    )
+
+
 def audit_python_file(
     *, path: Path, repo_root: Path
 ) -> List[Dict[str, object]]:
@@ -95,6 +132,9 @@ def audit_python_file(
     except (UnicodeDecodeError, SyntaxError) as error:
         raise SemanticAuditError("Cannot parse {}".format(path)) from error
     relative = path.relative_to(repo_root).as_posix()
+    pinned_openai_transport = _has_pinned_openai_transport(
+        tree=tree, relative_path=relative,
+    )
     hits: List[Dict[str, object]] = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, str):
@@ -122,6 +162,8 @@ def audit_python_file(
         else:
             names = []
         for name in names:
+            if pinned_openai_transport and name in PINNED_OPENAI_IMPORTS:
+                continue
             if name in FORBIDDEN_AI_IMPORTS:
                 hits.append(
                     {
@@ -137,7 +179,13 @@ def audit_python_file(
                     }
                 )
         if isinstance(node, ast.Call):
-            call_name = _attribute_name(node=node.func).split(".")[-1]
+            full_call_name = _attribute_name(node=node.func)
+            call_name = full_call_name.split(".")[-1]
+            if (
+                pinned_openai_transport
+                and full_call_name == "_OPENAI_OPENER.open"
+            ):
+                continue
             if call_name in FORBIDDEN_AI_CALLS:
                 hits.append(
                     {

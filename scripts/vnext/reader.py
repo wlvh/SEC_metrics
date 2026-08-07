@@ -347,7 +347,7 @@ def validate_reader_output(
         "record_type": "OBSERVATION_CANDIDATE",
         "candidate_hash": content_hash(value=substantive),
         "attempt_id": attempt_id,
-        "raw_response_sha256": sha256_bytes(
+        "assistant_output_sha256": sha256_bytes(
             content=response_text.encode("utf-8")
         ),
         "disclosure_group": parsed["disclosure_group"],

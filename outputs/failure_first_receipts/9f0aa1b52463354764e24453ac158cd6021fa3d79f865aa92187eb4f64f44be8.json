@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "evidence_type": "FAILURE_FIRST_TEST",
+  "captured_at_utc": "2026-08-06T09:45:39Z",
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "source_tree": "c023571102669eecdaf38aff7c0cd66488ed3ba6",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_semantic_audit.SemanticAuditTest.test_fixed_openai_transport_is_narrowly_allowed",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 0.078349709,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "53c4d6cbda73408a0febd046d155931b033588483b65da7c88b490b9ab928f6a",
+  "stderr_size": 1929,
+  "failure_code": "PINNED_OPENAI_TRANSPORT_REJECTED",
+  "failure_excerpt": "AI_FORBIDDEN_IMPORT and AI_FORBIDDEN_CALL reject the fixed repository-owned Responses transport",
+  "expected_before_fix": true
+}

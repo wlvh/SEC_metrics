@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "scenario_id": "ACCEPTANCE_FAIL_CLOSED_BOUNDARY_GAPS",
+  "observed_at_utc": "2026-08-06T16:10:50Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_guard_sanitizes_secrets_and_blocks_dash_s_child",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_terminal_cycles_remove_live_secrets_and_deny_network",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_scope_fails_if_active_or_mirrors_change",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_scope_rejects_missing_gate_artifacts",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_python39_override_must_be_a_real_python39",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_public_output_dir_cannot_escape_repository",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_default_timeout_exceeds_observed_python39_gate_duration",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_human_after_unexpected_commit_recovers_predecessor",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_resumed_cutover_uses_declared_predecessor_after_crash",
+    "-v"
+  ],
+  "return_code": 1,
+  "failed_scenarios": [
+    "recorded children inherited OPENAI_API_KEY and SEC_CONTACT_EMAIL and a child Python -S escaped the socket hook",
+    "terminal cycles had no process-tree network isolation or secret sanitization",
+    "recorded active or mirror drift was detected but not restored",
+    "missing semantic and scalability artifacts still produced PASSED_RECORDED_ONLY",
+    "caller-supplied true executable was accepted as Python 3.9",
+    "absolute and symlinked acceptance output roots escaped the repository",
+    "the default 900 second command timeout was not above the observed Python 3.9 gate duration",
+    "a HUMAN_REVIEW_REQUIRED child result performed no official state read-back or predecessor recovery",
+    "a committed Cutover resume compared active B with declared predecessor A and stopped as CUTOVER_NOT_PUBLISHED"
+  ],
+  "outcome": "FAILED_BEFORE_FIX",
+  "reported_test_duration_ms": 63,
+  "development_timeout_observation": {
+    "command_duration_ms": 900027,
+    "outcome": "FAILED",
+    "reason": "COMMAND_TIMEOUT",
+    "transient_failed_receipt_excluded_from_closure": true
+  },
+  "failure_first_receipt_id": "sha256:78123fe9b38df1b71c186fa9dca1a05d65ac78b58e6fecdf0434cb7d70af5121"
+}

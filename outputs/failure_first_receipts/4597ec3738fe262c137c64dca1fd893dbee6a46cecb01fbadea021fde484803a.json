@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-RECORDED-FIXTURE-RESPONSE-AUTHORITY-001",
+  "observed_at_utc": "2026-08-07T03:08:15Z",
+  "expected_failure": "Fixture shortcuts accepted a simultaneous caller recorded-response locator instead of rejecting mixed catalog/caller authority before workflow execution.",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_fixture_prepare_rejects_recorded_response_override",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_cutover_fixture_rejects_recorded_response_override"
+    ],
+    "interpreter": "python3",
+    "return_code": 1,
+    "outcome": "FAILED"
+  },
+  "failure": "Prepare returned PREPARE_ARGUMENTS_REQUIRED and Cutover reached mocked workflow as CUTOVER_FAILED, proving mixed authority lacked a dedicated preflight rejection.",
+  "failure_first_receipt_id": "sha256:4597ec3738fe262c137c64dca1fd893dbee6a46cecb01fbadea021fde484803a"
+}

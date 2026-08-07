@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-PY39-VNEXT-FULL-REGRESSION-001",
+  "observed_at_utc": "2026-08-06T13:06:11Z",
+  "command": [
+    "python3.9",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests/vnext",
+    "-t",
+    ".",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_ms": 540325,
+  "expected_failure": "Python 3.9 vNext full regression must preserve the public legacy-resolver throw flow and report every missing live prerequisite",
+  "observed_failures": [
+    "ValidationProvenanceError: README_RUN.md has an unexpected title",
+    "expected both OPENAI_API_KEY_REQUIRED and SEC_CONTACT_EMAIL_REQUIRED but test expected only SEC_CONTACT_EMAIL_REQUIRED"
+  ],
+  "test_count": 270,
+  "outcome": "FAILED_BEFORE_FIX",
+  "failure_first_receipt_id": "sha256:77e0bfcd04eaff00f896bbb023c88525a17c1e33a3c710e042e560954e995dca"
+}
