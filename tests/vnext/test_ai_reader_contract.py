@@ -771,6 +771,10 @@ class AiReaderContractTest(unittest.TestCase):
         self.assertEqual(2, len(body["messages"]))
         self.assertEqual("system", body["messages"][0]["role"])
         self.assertEqual("user", body["messages"][1]["role"])
+        self.assertIn(
+            '"unresolved_competing_claims"',
+            body["messages"][0]["content"],
+        )
         self.assertEqual(
             ai_adapter.READER_OUTPUT_JSON_SCHEMA,
             json.loads(schema_bytes.decode("utf-8")),

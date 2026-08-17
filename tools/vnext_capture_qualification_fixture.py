@@ -207,12 +207,14 @@ def _request_attempt_id(*, result: object) -> str:
         and row["content_length"] == str(result.content_length)
         and row["error"] == ""
     ]
-    if len(matching_indices) != 1:
+    if not matching_indices:
         raise CaptureError(
             code="QUALIFICATION_CAPTURE_LEDGER_INVALID",
-            message="SEC request attempt is not uniquely ledger-bound",
+            message="SEC request attempt is absent from the ledger",
         )
-    index = matching_indices[0]
+    # Identical SEC body retries intentionally share immutable bytes.  The
+    # newest matching append is the attempt produced by this completed fetch.
+    index = matching_indices[-1]
     return request_log_attempt_id(row_index=index, row=rows[index])
 
 
@@ -571,6 +573,13 @@ def main(*, argv: Sequence[str]) -> int:
             "error_code": error.code,
             "message": str(error),
         }, ensure_ascii=False, sort_keys=True))
+        if arguments.debug and error.__cause__ is not None:
+            traceback.print_exception(
+                type(error.__cause__),
+                error.__cause__,
+                error.__cause__.__traceback__,
+                file=sys.stderr,
+            )
         return 2
     except Exception as error:
         print(json.dumps({
