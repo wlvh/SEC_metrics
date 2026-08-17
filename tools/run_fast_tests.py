@@ -126,6 +126,7 @@ def run_fast_tests(*, jobs: int) -> Dict[str, object]:
     return {
         "evidence_tier": "FAST_LOCAL_ONLY",
         "jobs": jobs,
+        "per_case_timeout_seconds": FAST_TEST_TIMEOUT_SECONDS,
         "duration_seconds": round(time.monotonic() - started, 3),
         "tests": rows,
         "status": (

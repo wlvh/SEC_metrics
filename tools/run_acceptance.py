@@ -57,11 +57,13 @@ from validation_provenance import (  # noqa: E402
     ValidationProvenanceError,
     capture_source_snapshot,
 )
+from run_fast_tests import FAST_TEST_TIMEOUT_SECONDS  # noqa: E402
 
 
 TERMINAL_PUBLICATION_COMMAND = "tools/vnext_terminal_cycle.py"
 FULL_CUTOVER_COMMAND = "tools/vnext_cutover.py"
 FAST_TEST_COMMAND = "tools/run_fast_tests.py"
+R4_FAST_CASE_TIMEOUT_SECONDS = FAST_TEST_TIMEOUT_SECONDS
 R4_ISSUE_COMMENT_URL = (
     "https://github.com/wlvh/SEC_metrics/issues/12"
     "#issuecomment-5313207170"
@@ -1299,6 +1301,8 @@ def _recorded_gate_execution(
             "issue_comment_url": R4_ISSUE_COMMENT_URL,
             "command": fast_test_commands[0],
             "active_state_unchanged": before == observed_after,
+            "per_case_timeout_seconds": R4_FAST_CASE_TIMEOUT_SECONDS,
+            "recorded_gate_timeout_seconds": R4_RECORDED_TIMEOUT_SECONDS,
         }
         runtime_bindings, replacements = _receipt_runtime_context(
             repo_root=repo_root,
@@ -2712,6 +2716,8 @@ def formal_evidence_binding(
         "command",
         "evidence_tier",
         "issue_comment_url",
+        "per_case_timeout_seconds",
+        "recorded_gate_timeout_seconds",
         "scenario_id",
     }
     if (
@@ -2721,6 +2727,10 @@ def formal_evidence_binding(
         != "R4_FAST_CONCURRENT_TEST_POLICY"
         or fast_test_payload["evidence_tier"] != "FAST_LOCAL_ONLY"
         or fast_test_payload["issue_comment_url"] != R4_ISSUE_COMMENT_URL
+        or fast_test_payload["per_case_timeout_seconds"]
+        != R4_FAST_CASE_TIMEOUT_SECONDS
+        or fast_test_payload["recorded_gate_timeout_seconds"]
+        != R4_RECORDED_TIMEOUT_SECONDS
         or fast_test_payload["active_state_unchanged"] is not True
         or type(fast_test_payload["command"]) is not dict
         or "outcome" not in fast_test_payload["command"]

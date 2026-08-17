@@ -74,6 +74,10 @@ class RequirementBaselineTest(unittest.TestCase):
             "R4_FAST_CONCURRENT_NON_ISOLATED",
             d26["choice"]["test_execution_policy"],
         )
+        self.assertEqual(30, d26["choice"]["per_case_timeout_seconds"])
+        self.assertEqual(
+            60, d26["choice"]["recorded_gate_timeout_seconds"],
+        )
 
     def test_requirement_byte_change_invalidates_snapshot(self) -> None:
         """Reject an FSD byte edit even when every other file is unchanged."""
