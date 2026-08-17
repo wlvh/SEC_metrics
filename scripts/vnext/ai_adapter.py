@@ -645,7 +645,8 @@ def build_deepseek_chat_completions_body(
                     " Unit strings are case-sensitive: use USD for currency "
                     "and percent for percentage values. Copy every locator's "
                     "row, column, origin, and span fields exactly from the "
-                    "supplied table cell; never infer merged-cell geometry."
+                    "supplied table cell; never infer merged-cell geometry. "
+                    "Return no prose and no JSON keys beyond this schema."
                 ),
             },
             {"role": "user", "content": reader_text},
