@@ -68,6 +68,31 @@ RUN_VALIDATION_VIEW_FIELDS = (
     "spec_file_hashes",
     "target_period",
 )
+_QUALIFICATION_RUN_PREFIX = "run:qualification:"
+_QUALIFICATION_FIXTURE_FIELDS = {
+    "accession",
+    "cik",
+    "company_id",
+    "company_traits",
+    "disclosure_spec_path",
+    "document_name",
+    "excerpt_repo_relative_path",
+    "excerpt_sha256",
+    "fixture_id",
+    "layout_differences",
+    "qualification_role",
+    "recorded_response_repo_relative_path",
+    "recorded_response_sha256",
+    "request_attempt_id",
+    "schema_version",
+    "selection_reason",
+    "source_media_type",
+    "source_repo_relative_path",
+    "source_role",
+    "source_sha256",
+    "source_url",
+    "target_period",
+}
 FORMAL_RUN_VALIDATION_CHECKS = (
     "REVIEW_BINDINGS",
     "REVIEW_ASSETS",
@@ -828,6 +853,89 @@ def load_run_bound_specs(
         raise RunStoreError("Run Spec closure cannot be compiled") from error
 
 
+def _qualification_fixture_traits(
+    *, repo_root: Path, manifest: Mapping[str, object],
+) -> Tuple[List[str], List[str]]:
+    """Derive traits for one non-production qualification Run from its fixture.
+
+    Args:
+        repo_root: Repository containing the fixed qualification fixture tree.
+        manifest: Persisted Run whose identity must name one safe fixture.
+
+    Returns:
+        Exact fixture-owned traits and its single external CIK.
+
+    Raises:
+        TraitError: When the Run is not a qualification Run or its fixture,
+            company, period, source identity, or bytes do not bind exactly.
+
+    This is the sole registry exception: production Runs still use only the
+    configured company registry.  Qualification issuers are deliberately
+    outside that registry, so their traits must be reconstructed from the
+    source-bound fixture rather than supplied by a caller.
+    """
+    run_id = manifest["run_id"]
+    if type(run_id) is not str or not run_id.startswith(
+        _QUALIFICATION_RUN_PREFIX
+    ):
+        raise TraitError("Run is not a qualification fixture Run")
+    fixture_id = run_id[len(_QUALIFICATION_RUN_PREFIX):]
+    if (
+        not fixture_id
+        or any(
+            character not in "abcdefghijklmnopqrstuvwxyz0123456789_-"
+            for character in fixture_id
+        )
+    ):
+        raise TraitError("Qualification fixture identity is invalid")
+    fixture_root = repo_root / "fixtures/vnext/layouts" / fixture_id
+    fixture_path = fixture_root / "fixture_manifest.json"
+    source_path = fixture_root / "source.htm"
+    if (
+        fixture_root.is_symlink()
+        or fixture_path.is_symlink()
+        or source_path.is_symlink()
+        or not fixture_path.is_file()
+        or not source_path.is_file()
+    ):
+        raise TraitError("Qualification fixture is absent or unsafe")
+    fixture = strict_json_file(path=fixture_path)
+    if (
+        not isinstance(fixture, dict)
+        or set(fixture) != _QUALIFICATION_FIXTURE_FIELDS
+        or fixture["schema_version"] != 1
+        or fixture["fixture_id"] != fixture_id
+        or fixture["qualification_role"]
+        not in {"SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"}
+        or fixture["company_id"] != manifest["company_id"]
+        or fixture["company_traits"] != manifest["company_traits"]
+        or fixture["target_period"] != manifest["target_period"]
+        or fixture["source_repo_relative_path"]
+        != source_path.relative_to(repo_root).as_posix()
+        or fixture["source_sha256"] != sha256_file(path=source_path)
+        or type(fixture["cik"]) is not str
+        or not fixture["cik"].isdigit()
+        or int(fixture["cik"]) <= 0
+    ):
+        raise TraitError("Qualification fixture binding differs from Run")
+    references = manifest["source_references"]
+    if (
+        not isinstance(references, list)
+        or len(references) != 1
+        or references[0]["company_id"] != fixture["company_id"]
+        or references[0]["source_url"] != fixture["source_url"]
+        or references[0]["accession"] != fixture["accession"]
+        or references[0]["document_name"] != fixture["document_name"]
+        or references[0]["source_role"] != fixture["source_role"]
+        or references[0]["request_attempt_id"]
+        != fixture["request_attempt_id"]
+        or references[0]["raw_asset_id"]
+        != "sha256:" + fixture["source_sha256"]
+    ):
+        raise TraitError("Qualification SourceReference differs from fixture")
+    return list(fixture["company_traits"]), [str(int(fixture["cik"]))]
+
+
 def _verify_repository_bindings(
     *,
     repo_root: Path,
@@ -927,10 +1035,17 @@ def _verify_repository_bindings(
         repository_ciks = repository_company_ciks(
             repo_root=repo_root, company_id=str(manifest["company_id"]),
         )
-    except TraitError as error:
-        raise RunStoreError(
-            "Run company traits cannot be derived from repository"
-        ) from error
+    except TraitError:
+        try:
+            repository_traits, repository_ciks = (
+                _qualification_fixture_traits(
+                    repo_root=repo_root, manifest=manifest,
+                )
+            )
+        except TraitError as qualification_error:
+            raise RunStoreError(
+                "Run company traits cannot be derived from repository"
+            ) from qualification_error
     if manifest["company_traits"] != repository_traits:
         raise RunStoreError("Run company traits differ from repository")
     return compiled_by_id, raw_bytes_by_id, repository_ciks, requirement

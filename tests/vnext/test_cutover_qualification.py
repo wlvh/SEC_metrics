@@ -22,6 +22,8 @@ from scripts.vnext.qualification import write_production_freeze_receipt
 from scripts.vnext.review import system_review_allowed
 from tools import vnext_qualification
 from vnext.requirements import load_requirement_snapshot
+from vnext.run_store import _qualification_fixture_traits
+from vnext.traits import TraitError
 
 
 def run_qualification_cli(*arguments: str) -> tuple[int, str, str]:
@@ -158,6 +160,44 @@ class CutoverQualificationTest(unittest.TestCase):
             snapshot_dir=repo_root / "requirements/ai_first_v3_3_1",
         )
         self.assertTrue(system_review_allowed(requirement=requirement))
+
+    def test_qualification_traits_are_bound_outside_registry(self) -> None:
+        """Allow only the fixture-bound external issuer trait exception."""
+        repo_root = Path(__file__).resolve().parents[2]
+        fixture_id = "hilton-2024-sec-layout-v3"
+        fixture = json.loads(
+            (
+                repo_root / "fixtures/vnext/layouts" / fixture_id
+                / "fixture_manifest.json"
+            ).read_text(encoding="utf-8")
+        )
+        manifest = {
+            "run_id": "run:qualification:" + fixture_id,
+            "company_id": fixture["company_id"],
+            "company_traits": fixture["company_traits"],
+            "target_period": fixture["target_period"],
+            "source_references": [
+                {
+                    "company_id": fixture["company_id"],
+                    "source_url": fixture["source_url"],
+                    "accession": fixture["accession"],
+                    "document_name": fixture["document_name"],
+                    "source_role": fixture["source_role"],
+                    "request_attempt_id": fixture["request_attempt_id"],
+                    "raw_asset_id": "sha256:" + fixture["source_sha256"],
+                }
+            ],
+        }
+        traits, ciks = _qualification_fixture_traits(
+            repo_root=repo_root, manifest=manifest,
+        )
+        self.assertEqual(fixture["company_traits"], traits)
+        self.assertEqual([fixture["cik"]], ciks)
+        manifest["company_traits"] = []
+        with self.assertRaises(TraitError):
+            _qualification_fixture_traits(
+                repo_root=repo_root, manifest=manifest,
+            )
 
     def test_registry_identity_rejects_company_id_cik_alias(self) -> None:
         """Treat primary, related, and role CIK as production identity."""

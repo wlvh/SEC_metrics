@@ -385,7 +385,7 @@
         "anchor_id": "BEHAVIOR.vnext_company_traits_repository_authority",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "vNext company traits 只能由 canonical registry、profile 配置与 trait catalog 确定性投影；workflow 不接受调用方注入，freeze 必须从仓库重新投影并逐值比较。",
+        "statement": "vNext production company traits只能由 canonical registry、profile 配置与 trait catalog 确定性投影；workflow 不接受调用方注入，freeze 必须从仓库重新投影并逐值比较。唯一例外是run:qualification:<fixture-id>：外部qualification issuer必须不在production registry，freeze只从其固定fixture_manifest重建company、traits、period、CIK、SourceReference和source bytes并逐值比较，不能由调用方注入。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_company_traits_detached_from_registry",
         "test_status": "automated_recorded_negative",
