@@ -37,7 +37,7 @@ SEC_metrics 为当前 registry 中配置的公司生成最近年度 SEC 申报�
   <!-- capability-anchor: BOUNDARY.sec_only_point_in_time -->
 - 不保证复杂表格、维度债务、治理与风险指标都能自动得到数值；它们可能明确降级。
   <!-- capability-anchor: BOUNDARY.complex_extraction_can_degrade -->
-- 当前没有前端、API、daily scheduler或生产数据库服务；vNext Cutover与full acquisition编排已实现，但本轮live acquisition未执行，committed active publication/full receipt均不存在。
+- 当前没有前端、API、daily scheduler或生产数据库服务；vNext Cutover与full acquisition编排已实现，本轮SEC acquisition已执行并通过receipt，但live Reader因provider余额失败，committed active publication/full receipt仍不存在。
   <!-- capability-anchor: BOUNDARY.not_production_service -->
 - 不替人做投资、信用、报价、监管或外部审计决定。
   <!-- capability-anchor: RESPONSIBILITY.human_reviews_caveats_and_decides -->
@@ -213,7 +213,7 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 判断展示版本必须同时读取 active pointer 与 latest run status：active 是当前可用的上一成功完整版本；latest 可能失败、withheld 或仍在 staging。status writer 只接收 persisted Run directory 或 publication ID，在 pointer lock 内加载真实状态并验证 active pointer/bundle；不接受调用方自报的状态枚举、boolean、view 或 manifest。bundle storage、pointer/lock、status 和 mirrors 全部从单一 publication root 派生，调用方不能分别定义互相矛盾的路径。`active_is_latest_success` 由两者 publication ID 是否相同派生。FAILED/BLOCKED 不得携带 latest publication ID，不能把旧 active 描述成最新运行成功。
 <!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
 
-当前还没有可供业务采信的 vNext active publication。effective D-01 已固定为DeepSeek，D-06允许可审计SYSTEM review，legacy migrated producers 已退出代码路径，Stage 10/11/12 也具备 pinned active 分支；但本轮仍缺第二真实布局/holdout合格 bytes、live三轮、十公司 formal staging、active publication、rollback/restore和 full receipt。首次A→B会创建previous publication，故其预先不存在不是blocker。root CSV/报告仍是业务入口。root mirrors未来只保证逐byte等于一个 active bundle，不向绕过 PublicationView 的任意 reader承诺跨文件组原子性。
+当前还没有可供业务采信的 vNext active publication。effective D-01 已固定为DeepSeek，D-06允许可审计SYSTEM review，legacy migrated producers 已退出代码路径，Stage 10/11/12 也具备 pinned active 分支；Hilton/Hyatt真实布局qualification与SEC acquisition均已完成，但三次live Reader因provider `Insufficient Balance`失败，故仍缺十公司 formal staging、active publication、rollback/restore和 full receipt。首次A→B会创建previous publication，故其预先不存在不是blocker。root CSV/报告仍是业务入口。root mirrors未来只保证逐byte等于一个 active bundle，不向绕过 PublicationView 的任意 reader承诺跨文件组原子性。
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
 
 ## 11. 最短建议

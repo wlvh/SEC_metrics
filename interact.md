@@ -12,7 +12,7 @@ SEC_metrics 是配置驱动、SEC-only、单财年批处理研究流程。它能
 <!-- capability-anchor: CAPABILITY.sec_latest_fiscal_batch -->
 <!-- capability-anchor: CAPABILITY.sec_governance_risk_event_signals -->
 
-它不是自然语言问答系统，不会在运行时追问公司、日期或指标；也不是实时行情、生产API、daily scheduler或报价模型。vNext formal Cutover与full acquisition编排已实现，但本轮live acquisition未执行，committed active pointer/full receipt均不存在，不能称为已切换产品。
+它不是自然语言问答系统，不会在运行时追问公司、日期或指标；也不是实时行情、生产API、daily scheduler或报价模型。vNext formal Cutover与full acquisition编排已实现，本轮SEC acquisition已通过，但live Reader因provider余额失败，committed active pointer/full receipt仍不存在，不能称为已切换产品。
 <!-- capability-anchor: BOUNDARY.configured_batch_not_interactive -->
 <!-- capability-anchor: BOUNDARY.sec_only_point_in_time -->
 <!-- capability-anchor: BOUNDARY.not_production_service -->
@@ -161,7 +161,7 @@ Issue #12 R4 的 acceptance 先并发运行 `tools/run_fast_tests.py --jobs 4` �
 
 ### 8.4 当前不能执行的承诺
 
-effective D-01已由R5固定为DeepSeek，D-06允许可审计SYSTEM review；固定SEC Stage00/01/02/03/05 acquisition/inventory、legacy migrated producer退出、PublicationView consumers、qualification、fault/rollback primitives和new/rollback/restore终态编排也已实现。当前live acquisition尚未执行且无receipt；第二真实布局/holdout合格bytes、live三轮、十公司formal staging、committed active publication、rollback/restore与full receipt也不存在。因此：
+effective D-01已由R5固定为DeepSeek，D-06允许可审计SYSTEM review；固定SEC Stage00/01/02/03/05 acquisition/inventory、legacy migrated producer退出、PublicationView consumers、qualification、fault/rollback primitives和new/rollback/restore终态编排也已实现。第二真实布局/holdout与SEC acquisition receipt均已通过；三次live Reader因provider `Insufficient Balance`失败，故十公司formal staging、committed active publication、rollback/restore与full receipt仍不存在。因此：
 
 - `tools/run_acceptance.py --scope recorded` 强制离线且不修改 pointer/root mirrors，按 R4 只封存并发快速本地证据，最高状态是 `PASSED_FAST_LOCAL_ONLY`；
 - `--scope full` 未带 `--execute-live` 返回 `LIVE_EXECUTION_NOT_AUTHORIZED`；带授权但凭据或qualification缺失时返回 BLOCKED且不开始 Cutover；首次A→B不要求预先存在previous publication；
