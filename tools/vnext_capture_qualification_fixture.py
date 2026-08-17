@@ -43,6 +43,7 @@ from vnext.qualification import (  # noqa: E402
     LAYOUT_REFERENCE_INDEX,
     _layout_signature,
 )
+from vnext.evidence import check_evidence  # noqa: E402
 from vnext.reader import ReaderError, validate_reader_output  # noqa: E402
 from vnext.reader_input import (  # noqa: E402
     build_reader_input_manifest,
@@ -409,7 +410,7 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
         response = strict_json_loads(
             text=transport.response_bytes.decode("utf-8")
         )
-        validate_reader_output(
+        candidate_record = validate_reader_output(
             response_text=transport.response_bytes.decode("utf-8"),
             attempt_id="attempt:qualification-capture:" + fixture_id,
             required_roles=required_reader_roles(compiled_spec=compiled_spec),
@@ -418,6 +419,23 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
             ],
             derived_asset_ids=[str(derived_asset["derived_asset_id"])],
         )
+        evidence = check_evidence(
+            candidate=candidate_record,
+            derived_asset=derived_asset,
+            reader_manifest=reader_manifest,
+            reader_payload_body=strict_json_loads(
+                text=prepared_request.request_bytes.decode("utf-8")
+            ),
+            source_references=[source_reference],
+            identity_constraints=compiled_spec["compiled"][
+                "identity_constraints"
+            ],
+        )
+        if evidence["status"] != "PASS":
+            raise CaptureError(
+                code="QUALIFICATION_CAPTURE_EVIDENCE_REJECTED",
+                message="Reader response failed mechanical evidence checks",
+            )
         excerpt = _excerpt(
             derived_asset=derived_asset,
             response=response,
@@ -426,6 +444,8 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
         layout_differences = _layout_differences(
             excerpt=excerpt, response=response,
         )
+    except CaptureError:
+        raise
     except (
         AIAdapterError, ReaderError, SpecError, TableGridError, UnicodeDecodeError,
         ValueError,

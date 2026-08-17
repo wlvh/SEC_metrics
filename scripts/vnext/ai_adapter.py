@@ -640,7 +640,8 @@ def build_deepseek_chat_completions_body(
                     "words required by the task, never currency or percent "
                     "symbols. Every selected and scope-evidence locator must "
                     "use exactly the derived_asset_id and table_id named by "
-                    "table_locator."
+                    "table_locator. claimed_period must use the filing year "
+                    "as FY<year>, never a semantic requirement token."
                 ),
             },
             {"role": "user", "content": reader_text},
