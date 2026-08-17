@@ -57,7 +57,7 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py --scope recorded
 ```
 
-R4只并发运行六个直接、非隔离、非 freeze/replay 的本地边界用例；recorded runner 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，receipt 写入 `outputs/acceptance_receipts/`。它不是 CI、live stage、formal Cutover 或 full acceptance。测试策略以 `TESTING.md` 为准。
+R4只并发运行六个直接、非隔离、非 freeze/replay 的本地边界用例；每例最多30秒，recorded gate每条最多60秒。recorded runner 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，receipt 写入 `outputs/acceptance_receipts/`。它不是 CI、live stage、formal Cutover 或 full acceptance。测试策略以 `TESTING.md` 为准。
 recorded/full acceptance 的持久命令证据使用 `runtime_bindings`：`$PYTHON_CURRENT` 与可用时的 `$SANDBOX_EXEC` 绑定 executable name 和 runtime binary SHA-256；argv、interpreter、output locator 与诊断中的本地路径递归替换为 portable token，剩余 host path 只保留 SHA-256，不持久化本机绝对路径。
 acceptance `--output-dir` 不能等于、包含或位于任何正式 pointer、mirror、SEC ledger、publication/qualification/audit namespace 下；命中时在首次写入前返回 `ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY`。R4不再启动 Python 3.9 全量测试或任何隔离 repository/worktree；formal authority 前后仍会 exact read-back。
 

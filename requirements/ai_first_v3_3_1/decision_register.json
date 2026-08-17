@@ -145,6 +145,8 @@
           "final_acceptance"
         ],
         "required_fast_command": "python3 tools/run_fast_tests.py --jobs 4",
+        "per_case_timeout_seconds": 30,
+        "recorded_gate_timeout_seconds": 60,
         "prohibited_required_test_classes": [
           "broad_repository_regression",
           "isolated_repository_or_worktree",

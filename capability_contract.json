@@ -465,7 +465,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #12 R4将开发、PR和final acceptance的必跑测试收敛为tools/run_fast_tests.py的六个并发直接边界用例；不得要求全仓/双解释器回归、隔离repository/worktree、freeze/replay或长串行套件。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
+        "statement": "Issue #12 R4将开发、PR和final acceptance的必跑测试收敛为tools/run_fast_tests.py的六个并发直接边界用例，每例最多30秒，recorded快速/静态gate每条最多60秒；不得要求全仓/双解释器回归、隔离repository/worktree、freeze/replay或长串行套件。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",

@@ -19824,10 +19824,11 @@ def build_readme() -> str:
             "",
             (
                 "R4只并发运行六个直接、非隔离、非 freeze/replay 的本地边界"
-                "用例；recorded runner 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，"
-                "receipt 写入 `outputs/acceptance_receipts/`。它不是 CI、live "
-                "stage、formal Cutover 或 full acceptance。测试策略以 "
-                "`TESTING.md` 为准。"
+                "用例；每例最多30秒，recorded gate每条最多60秒。recorded runner"
+                " 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，receipt 写入 "
+                "`outputs/acceptance_receipts/`。它不是 CI、live stage、"
+                "formal Cutover 或 full acceptance。测试策略以 `TESTING.md`"
+                " 为准。"
             ),
             (
                 "recorded/full acceptance 的持久命令证据使用 "

@@ -92,6 +92,7 @@ RECORDED_GATE_ARTIFACTS = (
     "semantic_audit_receipt.json",
 )
 DEFAULT_TIMEOUT_SECONDS = 7200
+R4_RECORDED_TIMEOUT_SECONDS = 60
 NETWORK_DENY_SANDBOX_PROFILE = "(version 1) (allow default) (deny network*)"
 OFFLINE_GUARD_SOURCE = b"""\
 import sys
@@ -1196,13 +1197,17 @@ def _recorded_gate_execution(
     Args:
         repo_root: Repository root whose active state must remain unchanged.
         current_python: Default interpreter.
-        python39: Python 3.9 floor interpreter or ``None``.
+        python39: Retained receipt parameter; R4 does not run it.
         gate_output_dir: Isolated audit-artifact directory.
-        timeout_seconds: Per-command timeout.
+        timeout_seconds: Requested command timeout; recorded R4 gates are
+            capped at ``R4_RECORDED_TIMEOUT_SECONDS``.
 
     Returns:
         Command evidence, before/after publication state, and artifact hashes.
     """
+    recorded_timeout_seconds = min(
+        timeout_seconds, R4_RECORDED_TIMEOUT_SECONDS,
+    )
     backup = _recorded_authority_backup(repo_root=repo_root)
     before = _recorded_state_snapshot(repo_root=repo_root)
     environment = _offline_environment(guard_dir=gate_output_dir / "guard")
@@ -1225,7 +1230,7 @@ def _recorded_gate_execution(
         argv=probe,
         repo_root=repo_root,
         environment=environment,
-        timeout_seconds=timeout_seconds,
+        timeout_seconds=recorded_timeout_seconds,
         sandbox_profile=sandbox_profile,
     ))
     secret_token = "scan-" + uuid.uuid4().hex
@@ -1246,7 +1251,7 @@ def _recorded_gate_execution(
             argv=argv,
             repo_root=repo_root,
             environment=command_environment,
-            timeout_seconds=timeout_seconds,
+            timeout_seconds=recorded_timeout_seconds,
             sandbox_profile=sandbox_profile,
         ))
     try:

@@ -40,6 +40,7 @@ FAST_TESTS = (
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
     "test_r4_plan_uses_fast_runner_without_full_discovery",
 )
+FAST_TEST_TIMEOUT_SECONDS = 30
 
 
 class FastTestError(ValueError):
@@ -58,14 +59,35 @@ def _run_case(*, test_name: str) -> Dict[str, object]:
     environment = dict(os.environ)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
     started = time.monotonic()
-    completed = subprocess.run(
-        args=[sys.executable, "-m", "unittest", "-q", test_name],
-        cwd=str(REPO_ROOT),
-        check=False,
-        capture_output=True,
-        encoding="utf-8",
-        env=environment,
-    )
+    try:
+        completed = subprocess.run(
+            args=[sys.executable, "-m", "unittest", "-q", test_name],
+            cwd=str(REPO_ROOT),
+            check=False,
+            capture_output=True,
+            encoding="utf-8",
+            env=environment,
+            timeout=FAST_TEST_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as error:
+        stderr = error.stderr
+        stdout = error.stdout
+        if isinstance(stderr, bytes):
+            stderr = stderr.decode("utf-8", errors="replace")
+        if isinstance(stdout, bytes):
+            stdout = stdout.decode("utf-8", errors="replace")
+        return {
+            "test": test_name,
+            "return_code": 124,
+            "duration_seconds": round(time.monotonic() - started, 3),
+            "stderr_tail": (
+                (stderr or "")[-2000:]
+                + "\nFAST_TEST_TIMEOUT_SECONDS={}\n".format(
+                    FAST_TEST_TIMEOUT_SECONDS,
+                )
+            ),
+            "stdout_tail": (stdout or "")[-2000:],
+        }
     return {
         "test": test_name,
         "return_code": completed.returncode,

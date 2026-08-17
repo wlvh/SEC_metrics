@@ -633,6 +633,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
         )
         self.assertTrue(all("unittest discover" not in text for text in command_text))
         self.assertTrue(all("python3.9" not in text for text in command_text))
+        self.assertEqual(60, run_acceptance.R4_RECORDED_TIMEOUT_SECONDS)
 
     def test_recorded_plan_keeps_required_gate_layers_in_order(self) -> None:
         """Keep only R4 fast and static gates in deterministic order."""

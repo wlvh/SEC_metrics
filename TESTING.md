@@ -10,7 +10,7 @@
 PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 ```
 
-它只并发执行六个直接、非隔离、非 freeze/replay 的边界用例。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree、freeze/replay 场景或长串行套件作为上述三个阶段的必跑项。下文保留的重型场景仅是历史覆盖/人工故障诊断或真实 live 运营流程说明，不是 R4 final acceptance 的测试要求。R4 receipt 的最高测试状态是 `PASSED_FAST_LOCAL_ONLY`，绝不等同 CI、live、full acceptance 或 active Cutover。
+它只并发执行六个直接、非隔离、非 freeze/replay 的边界用例，每例硬上限 30 秒；recorded acceptance 的任一快速/静态 gate 硬上限 60 秒。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree、freeze/replay 场景或长串行套件作为上述三个阶段的必跑项。下文保留的重型场景仅是历史覆盖/人工故障诊断或真实 live 运营流程说明，不是 R4 final acceptance 的测试要求。R4 receipt 的最高测试状态是 `PASSED_FAST_LOCAL_ONLY`，绝不等同 CI、live、full acceptance 或 active Cutover。
 
 <!-- capability-anchor: BEHAVIOR.r4_fast_concurrent_test_policy -->
 
