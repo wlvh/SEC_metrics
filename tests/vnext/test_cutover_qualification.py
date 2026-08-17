@@ -17,6 +17,7 @@ from scripts.vnext.qualification import SEMANTIC_DIRECTORIES
 from scripts.vnext.qualification import SEMANTIC_FILES
 from scripts.vnext.qualification import QualificationError
 from scripts.vnext.qualification import production_semantic_tree
+from scripts.vnext.qualification import reset_qualification_chain
 from scripts.vnext.qualification import validate_cutover_qualifications
 from scripts.vnext.qualification import write_production_freeze_receipt
 from scripts.vnext.review import system_review_allowed
@@ -197,6 +198,51 @@ class CutoverQualificationTest(unittest.TestCase):
         with self.assertRaises(TraitError):
             _qualification_fixture_traits(
                 repo_root=repo_root, manifest=manifest,
+            )
+
+    def test_failed_qualification_chain_can_reset_with_audit(self) -> None:
+        """Archive only a failed pre-active chain before requalification."""
+        with tempfile.TemporaryDirectory() as temporary:
+            repo_root = Path(temporary)
+            manifest_path = repo_root / "artifacts/vnext/qualification/manifest.json"
+            manifest_path.parent.mkdir(parents=True, exist_ok=True)
+            previous = {
+                "schema_version": 1,
+                "production_freeze_receipt": {"stale": "freeze"},
+                "second_layout_receipt": {"stale": "second"},
+                "holdout_receipt": {"stale": "holdout"},
+            }
+            manifest_path.write_text(
+                json.dumps(previous), encoding="utf-8",
+            )
+            with mock.patch.object(
+                qualification,
+                "validate_cutover_qualifications",
+                side_effect=QualificationError(
+                    code="POST_FREEZE_PRODUCTION_DRIFT",
+                    message="drift",
+                ),
+            ):
+                receipt = reset_qualification_chain(
+                    repo_root=repo_root,
+                    reset_at_utc="2026-08-17T00:00:00Z",
+                    reason="SOURCE_PATH_NORMALIZATION",
+                )
+            self.assertEqual(
+                "POST_FREEZE_PRODUCTION_DRIFT",
+                receipt["prior_blocker_code"],
+            )
+            self.assertTrue(
+                (repo_root / receipt["receipt_path"]).is_file(),
+            )
+            self.assertEqual(
+                {
+                    "schema_version": 1,
+                    "production_freeze_receipt": None,
+                    "second_layout_receipt": None,
+                    "holdout_receipt": None,
+                },
+                json.loads(manifest_path.read_text(encoding="utf-8")),
             )
 
     def test_registry_identity_rejects_company_id_cik_alias(self) -> None:

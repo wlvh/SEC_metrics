@@ -20080,6 +20080,13 @@ def build_readme() -> str:
                 "tree 漂移，`status` 必须失败。"
             ),
             (
+                "如果尚无 active publication 的 qualification chain 因 source/"
+                "semantic drift 失败，先运行 `python3 tools/vnext_qualification.py "
+                "reset --reset-at-utc UTC_TIME --reason STABLE_REASON`。reset 会"
+                "content-addressed 地保存旧 manifest 与 blocker，绝不删除 Run、"
+                "fixture 或 SEC evidence；随后必须从新的第二布局重新开始。"
+            ),
+            (
                 "release input plan 会先验证 request-ledger manifest，再按 "
                 "exact SEC URL/body hash/accession/document 选择有序 ledger 中"
                 "最后一个验证通过的 attempt，并绑定 attempt ID、body/header "

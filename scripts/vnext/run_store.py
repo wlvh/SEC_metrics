@@ -890,16 +890,29 @@ def _qualification_fixture_traits(
         raise TraitError("Qualification fixture identity is invalid")
     fixture_root = repo_root / "fixtures/vnext/layouts" / fixture_id
     fixture_path = fixture_root / "fixture_manifest.json"
-    source_path = fixture_root / "source.htm"
     if (
         fixture_root.is_symlink()
         or fixture_path.is_symlink()
-        or source_path.is_symlink()
         or not fixture_path.is_file()
-        or not source_path.is_file()
     ):
         raise TraitError("Qualification fixture is absent or unsafe")
     fixture = strict_json_file(path=fixture_path)
+    if (
+        not isinstance(fixture, dict)
+        or "source_repo_relative_path" not in fixture
+        or type(fixture["source_repo_relative_path"]) is not str
+    ):
+        raise TraitError("Qualification fixture fields are invalid")
+    source_relative = Path(str(fixture["source_repo_relative_path"]))
+    source_path = repo_root / source_relative
+    if (
+        source_relative.is_absolute()
+        or ".." in source_relative.parts
+        or fixture_root not in source_path.parents
+        or source_path.is_symlink()
+        or not source_path.is_file()
+    ):
+        raise TraitError("Qualification fixture source is absent or unsafe")
     if (
         not isinstance(fixture, dict)
         or set(fixture) != _QUALIFICATION_FIXTURE_FIELDS

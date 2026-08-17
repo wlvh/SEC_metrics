@@ -78,6 +78,7 @@ LAYOUT_DIFFERENCE_KINDS = {
 _SHA256_ID = re.compile(r"^sha256:[0-9a-f]{64}$")
 _SHA256_HEX = re.compile(r"^[0-9a-f]{64}$")
 _ACCESSION = re.compile(r"^[0-9]{10}-[0-9]{2}-[0-9]{6}$")
+_RESET_REASON = re.compile(r"^[A-Z][A-Z0-9_]{2,80}$")
 _SEC_ARCHIVE_SOURCE = re.compile(
     r"^https://www\.sec\.gov/Archives/edgar/data/"
     r"([0-9]{1,10})/([0-9]{18})/([^/?#]+)$"
@@ -417,6 +418,103 @@ def write_production_freeze_receipt(
         role="production_freeze_receipt",
         receipt_id=receipt_id,
         receipt_path=relative.as_posix(),
+    )
+    return {**receipt, "receipt_path": relative.as_posix()}
+
+
+def reset_qualification_chain(
+    *, repo_root: Path, reset_at_utc: str, reason: str,
+) -> Dict[str, object]:
+    """Archive one failed qualification chain before a clean requalification.
+
+    Args:
+        repo_root: Repository owning the formal qualification namespace.
+        reset_at_utc: Explicit UTC audit time for the reset receipt.
+        reason: Stable uppercase failure reason supplied by the operator.
+
+    Returns:
+        Content-addressed reset receipt and a fresh unqualified manifest.
+
+    Raises:
+        QualificationError: When no failed chain exists, an active publication
+            could be affected, or the prior manifest cannot be audited.
+
+    A reset never deletes Runs, receipts, fixture bytes, or SEC evidence.  It
+    only moves the mutable manifest to a fresh chain after persisting the
+    prior manifest and its current blocker as immutable audit evidence.
+    """
+    try:
+        parse_utc_timestamp(value=reset_at_utc)
+    except ValueError as error:
+        raise QualificationError(
+            code="QUALIFICATION_RESET_TIME_INVALID",
+            message="Qualification reset timestamp must be UTC",
+        ) from error
+    if type(reason) is not str or _RESET_REASON.fullmatch(reason) is None:
+        raise QualificationError(
+            code="QUALIFICATION_RESET_REASON_INVALID",
+            message="Qualification reset reason is invalid",
+        )
+    active_path = repo_root / "outputs/active_publication.json"
+    if active_path.exists() or active_path.is_symlink():
+        raise QualificationError(
+            code="QUALIFICATION_RESET_ACTIVE_FORBIDDEN",
+            message="Qualification reset is forbidden after active publication",
+        )
+    manifest_path = repo_root / QUALIFICATION_MANIFEST
+    if manifest_path.is_symlink() or not manifest_path.is_file():
+        raise QualificationError(
+            code="QUALIFICATION_RESET_NOTHING_TO_RESET",
+            message="Qualification manifest is absent",
+        )
+    prior_manifest = strict_json_file(path=manifest_path)
+    expected_fields = {
+        "holdout_receipt",
+        "production_freeze_receipt",
+        "schema_version",
+        "second_layout_receipt",
+    }
+    if (
+        not isinstance(prior_manifest, dict)
+        or set(prior_manifest) != expected_fields
+        or prior_manifest["schema_version"] != 1
+    ):
+        raise QualificationError(
+            code="QUALIFICATION_RESET_MANIFEST_INVALID",
+            message="Qualification manifest fields are invalid",
+        )
+    try:
+        validate_cutover_qualifications(repo_root=repo_root)
+    except QualificationError as error:
+        blocker_code = error.code
+    else:
+        raise QualificationError(
+            code="QUALIFICATION_RESET_VALID_CHAIN_FORBIDDEN",
+            message="A valid qualification chain cannot be reset",
+        )
+    body = {
+        "schema_version": 1,
+        "receipt_type": "QUALIFICATION_CHAIN_RESET",
+        "reset_at_utc": reset_at_utc,
+        "reason": reason,
+        "prior_blocker_code": blocker_code,
+        "prior_manifest_sha256": sha256_file(path=manifest_path),
+        "prior_manifest": prior_manifest,
+    }
+    reset_id = content_hash(value=body)
+    receipt = {**body, "reset_id": reset_id}
+    relative = QUALIFICATION_ROOT / "resets" / (
+        reset_id.split(":", maxsplit=1)[1] + ".json"
+    )
+    atomic_write_json(path=repo_root / relative, value=receipt)
+    atomic_write_json(
+        path=manifest_path,
+        value={
+            "schema_version": 1,
+            "production_freeze_receipt": None,
+            "second_layout_receipt": None,
+            "holdout_receipt": None,
+        },
     )
     return {**receipt, "receipt_path": relative.as_posix()}
 

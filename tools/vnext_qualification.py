@@ -29,6 +29,7 @@ from vnext.canonical import CanonicalError, sha256_file  # noqa: E402
 from vnext.canonical import strict_json_file  # noqa: E402
 from vnext.qualification import QUALIFICATION_ROOT  # noqa: E402
 from vnext.qualification import QualificationError  # noqa: E402
+from vnext.qualification import reset_qualification_chain  # noqa: E402
 from vnext.qualification import validate_cutover_qualifications  # noqa: E402
 from vnext.qualification import write_layout_qualification_receipt  # noqa: E402
 from vnext.qualification import write_production_freeze_receipt  # noqa: E402
@@ -187,6 +188,9 @@ def main(*, argv: Sequence[str]) -> int:
     subparsers = parser.add_subparsers(dest="command", required=True)
     freeze = subparsers.add_parser("freeze")
     freeze.add_argument("--frozen-at-utc", required=True)
+    reset = subparsers.add_parser("reset")
+    reset.add_argument("--reset-at-utc", required=True)
+    reset.add_argument("--reason", required=True)
     prepare = subparsers.add_parser("prepare")
     prepare.add_argument("--fixture-id", required=True)
     subparsers.add_parser("status")
@@ -202,6 +206,18 @@ def main(*, argv: Sequence[str]) -> int:
                 "semantic_tree_id": receipt["semantic_tree_id"],
                 "receipt_id": receipt["receipt_id"],
                 "receipt_path": receipt["receipt_path"],
+            }
+        elif arguments.command == "reset":
+            receipt = reset_qualification_chain(
+                repo_root=REPO_ROOT,
+                reset_at_utc=arguments.reset_at_utc,
+                reason=arguments.reason,
+            )
+            output = {
+                "status": "RESET",
+                "reset_id": receipt["reset_id"],
+                "receipt_path": receipt["receipt_path"],
+                "prior_blocker_code": receipt["prior_blocker_code"],
             }
         elif arguments.command == "prepare":
             output = prepare_layout(fixture_id=arguments.fixture_id)

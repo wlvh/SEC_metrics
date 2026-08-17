@@ -122,6 +122,8 @@ live core还在任何业务read/write前exact固定module-owned repository、`ar
 release input plan会先验证request-ledger manifest，再按exact SEC URL/body hash/accession/document从有序ledger选择最后一个验证通过的request attempt，并把attempt ID、body/header locator与locator class纳入plan identity。recorded离线Run可保留唯一且逐path/hash/headers/size验证的`LEGACY_WORKING_LOCATOR`，portable closure保留tier/class；formal live只允许`IMMUTABLE_ATTEMPT`，遇legacy class必须返回`LIVE_SOURCE_ATTEMPT_INCOMPLETE`。plan生成后ledger binding漂移则返回`SOURCE_LEDGER_BINDING_AMBIGUOUS`，均不得继续调用AI或准备publication。
 
 HUMAN reviewer 可以亲自执行 decide；既有HUMAN decision优先，Agent、模型、fixture helper 与 acceptance runner都不得伪装为HUMAN。只有 ReviewUnit、rendered context、Spec/source/Evidence exact 且 decision 仍为 effective tip，旧决定才可复用。无HUMAN时仅D-06固定SYSTEM identity可写入APPROVE。错误 supersedes 会显示 Run ID、ReviewUnit hash、requested/current tip、chain 摘要与恢复命令。qualification 只接受有效 HUMAN 或D-06 SYSTEM `APPROVE`、disclosure Spec exact Result set全部`PUBLISHED`且Run validation=`PASSED`的receipt；`REJECT`或WITHHELD必须保留为审计结果，不能冻结为第二布局或holdout的Cutover资格。qualification CLI 对意外错误也只给结构化`QUALIFICATION_COMMAND_FAILED`，只有`--debug`显示traceback。
+
+active pointer 尚不存在且 qualification chain 已失败时，运行负责人可以使用 `qualification reset --reset-at-utc ... --reason ...`。该命令只接受稳定原因，先保存content-addressed reset receipt（旧manifest、blocker和UTC时间）再清空当前资格索引；它不删除任何 Run、fixture、receipt 或 SEC ledger，并在 active publication 存在时fail closed。reset 后必须从新的second layout重新走到freeze和holdout，不能混接旧链。
 <!-- capability-anchor: BEHAVIOR.vnext_qualification_requires_approved_published_layout -->
 
 ### 8.1 审核酒店 disclosure group

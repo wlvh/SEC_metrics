@@ -505,7 +505,7 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
             message="DeepSeek capture lacks required audit bytes",
         )
     fixture_root.mkdir(parents=True, exist_ok=False)
-    source_path = fixture_root / "source.htm"
+    source_path = fixture_root / str(candidate["document_name"])
     response_path = fixture_root / "recorded_response.json"
     excerpt_path = fixture_root / "excerpt.json"
     raw_provider_path = fixture_root / "provider_response.json"
