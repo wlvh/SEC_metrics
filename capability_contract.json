@@ -135,7 +135,7 @@
         "anchor_id": "BOUNDARY.vnext_cutover_not_complete",
         "type": "capability_boundary",
         "status": "active",
-        "statement": "effective D-01已由exact R3 Addendum单链批准；固定SEC Stage00/01/02/03/05 acquisition/inventory、legacy B01/B03/B10/B11 writer/resolver fail-closed、pinned consumers、qualification、fault/rollback primitives与new/rollback/restore终态编排均已实现。但本轮因OPENAI_API_KEY、SEC_CONTACT_EMAIL、qualification与HUMAN前提缺失，live acquisition未执行且无receipt；第二真实布局/holdout、live三轮、十公司formal staging、committed active/previous publication、rollback/restore与full receipt也不存在。recorded最高只能PASSED_RECORDED_ONLY；full未授权返回LIVE_EXECUTION_NOT_AUTHORIZED，授权但prerequisite缺失时不执行Cutover。只有full --execute-live最终真实返回0才能声称Cutover/full acceptance。",
+        "statement": "effective D-01已由exact R3 Addendum单链批准；固定SEC Stage00/01/02/03/05 acquisition/inventory、legacy B01/B03/B10/B11 writer/resolver fail-closed、pinned consumers、qualification、fault/rollback primitives与new/rollback/restore终态编排均已实现。但本轮因OPENAI_API_KEY、SEC_CONTACT_EMAIL、qualification与HUMAN前提缺失，live acquisition未执行且无receipt；第二真实布局/holdout、live三轮、十公司formal staging、committed active/previous publication、rollback/restore与full receipt也不存在。R4 recorded测试最高只能PASSED_FAST_LOCAL_ONLY；full未授权返回LIVE_EXECUTION_NOT_AUTHORIZED，授权但prerequisite缺失时不执行Cutover。只有full --execute-live最终真实返回0才能声称Cutover/full acceptance。",
         "audience": ["business_user", "operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_authorized_full_with_missing_prerequisite_runs_nothing",
         "test_status": "automated_partial",
@@ -462,6 +462,16 @@
         "since": "2026-07-31"
       },
       {
+        "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Issue #12 R4将开发、PR和final acceptance的必跑测试收敛为tools/run_fast_tests.py的六个并发直接边界用例；不得要求全仓/双解释器回归、隔离repository/worktree、freeze/replay或长串行套件。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
+        "audience": ["developer", "reviewer", "operator"],
+        "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
+        "test_status": "validation_gate",
+        "since": "2026-08-17"
+      },
+      {
         "anchor_id": "BEHAVIOR.vnext_secret_scan_symlink_fail_closed",
         "type": "agent_behavior",
         "status": "active",
@@ -545,7 +555,7 @@
         "anchor_id": "BEHAVIOR.vnext_freeze_rebuilds_ai_bytes",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "vNext freeze从Run-bound仓库Spec和content-addressed task/request/schema bytes重建每个AI attempt；structured assistant output与完整provider envelope分别content-addressed。每条成功attempt从assistant output重放严格Reader schema，OBSERVATION_CANDIDATE必须绑定同attempt的assistant_output_sha256，raw_response_sha256独立审计provider envelope；Candidate reachability或协同改写两个digest都不能构成证明。Candidate binding使canonicalizer semantic version 2→3；source plan绑定latest verified request attempt及locator class且formal live拒绝LEGACY_WORKING_LOCATOR使其3→4。当前semantic runtime versions hash为sha256:394bbd29f4f8d67ef07a085c8e3e5c84db6c2ac22deee3e587f1e1a8684c59e8，任一变化都使旧closure/approval/Run/Batch/publication失效。",
+        "statement": "vNext freeze从Run-bound仓库Spec和content-addressed task/request/schema bytes重建每个AI attempt；structured assistant output与完整provider envelope分别content-addressed。每条成功attempt从assistant output重放严格Reader schema，OBSERVATION_CANDIDATE必须绑定同attempt的assistant_output_sha256，raw_response_sha256独立审计provider envelope；Candidate reachability或协同改写两个digest都不能构成证明。Candidate binding使canonicalizer semantic version 2→3；source plan绑定latest verified request attempt及locator class且formal live拒绝LEGACY_WORKING_LOCATOR使其3→4；frozen legacy inventory Git-blob binding使projector semantic version 2→3。当前semantic runtime versions hash为sha256:59a98abb0ccc2fb3625dd140bc159a1a6c2c8e389e34af452e24e579538decd7，任一变化都使旧closure/approval/Run/Batch/publication失效。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_replays_every_successful_ai_response",
         "test_status": "automated_recorded_negative",
@@ -595,7 +605,7 @@
         "anchor_id": "BEHAVIOR.vnext_publication_receipt_exact",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "vNext recorded publication receipt只能由生产gate runner重跑Projector、semantic/scalability audit并从同一candidate生成全部bundle artifact；runner/prepare从verified Batch实际消费路径派生SEC ledger最小合法prefix，不接受caller自签PASS或ledger。recorded writer最高生成PASSED_RECORDED_ONLY且不动正式active；public generic formal receipt/initial-chain/forward-commit入口固定fail closed。Cutover orchestrator要求固定的module-owned authority roots与clean committed source、qualification/live/HUMAN/staging、fresh invocation SEC acquisition及portable all-attempt audit closure；旧disk receipt只能重验历史pinned semantic plan，不能替代本次acquisition。orchestrator先只读导入verified legacy A、prepare绑定A的formal B并在固定隔离root执行14项fault matrix，再持久化并逐字节绑定本次SEC acquisition、staging parity、Cutover、audit与fault receipts，最后才允许private official CAS。acceptance持久receipt还必须以portable token替代repo/output/runtime绝对路径，并用runtime binary SHA-256绑定实际解释器；output directory不能与formal authority形成equal/ancestor/descendant overlap，caller Python 3.9必须在正式状态完整备份后的network+formal-file sandbox中证明为native CPython 3.9并通过exact post-probe read-back。任一Requirement、Run/Result、ledger、predecessor、receipt或artifact path/hash/size/gate evidence漂移都会阻止prepare/commit。",
+        "statement": "vNext recorded publication receipt只能由生产gate runner重跑Projector、semantic/scalability audit并从同一candidate生成全部bundle artifact；runner/prepare从verified Batch实际消费路径派生SEC ledger最小合法prefix，不接受caller自签PASS或ledger。recorded writer最高生成PASSED_RECORDED_ONLY且不动正式active；public generic formal receipt/initial-chain/forward-commit入口固定fail closed。Cutover orchestrator要求固定的module-owned authority roots与clean committed source、qualification/live/HUMAN/staging、fresh invocation SEC acquisition及portable all-attempt audit closure；旧disk receipt只能重验历史pinned semantic plan，不能替代本次acquisition。orchestrator先只读导入verified legacy A、prepare绑定A的formal B并在固定隔离root执行14项fault matrix，再持久化并逐字节绑定本次SEC acquisition、staging parity、Cutover、audit与fault receipts，最后才允许private official CAS。acceptance持久receipt还必须以portable token替代repo/output/runtime绝对路径，并用runtime binary SHA-256绑定实际解释器；output directory不能与formal authority形成equal/ancestor/descendant overlap，R4不再启动caller Python 3.9全量测试或probe。任一Requirement、Run/Result、ledger、predecessor、receipt或artifact path/hash/size/gate evidence漂移都会阻止prepare/commit。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_self_signed_pass_without_gate_execution_cannot_prepare",
         "test_status": "automated_recorded_negative_matrix",
@@ -620,6 +630,26 @@
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_complete_batch_projects_publishes_and_reads_active_view",
         "test_status": "automated_recorded_scenario",
         "since": "2026-07-31"
+      },
+      {
+        "anchor_id": "BEHAVIOR.vnext_legacy_inventory_binds_frozen_git",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "vNext legacy invariant migration receipt 只接受与Requirement baseline repository_commit相同的inventory baseline_commit，并以隔离Git读取冻结sec_pipeline.py和metric applicability blob的精确SHA-256；伪commit、缺失/额外source_files或当前anchor不能替代历史旧路径证据。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_legacy_projector.py::LegacyProjectorTest.test_legacy_inventory_binds_frozen_commit_and_source_blobs",
+        "test_status": "automated_recorded_negative_matrix",
+        "since": "2026-08-17"
+      },
+      {
+        "anchor_id": "BEHAVIOR.vnext_qualification_requires_approved_published_layout",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "vNext第二布局和post-freeze holdout只有在有效HUMAN APPROVE、disclosure Spec exact Result set全为PUBLISHED且Run ValidationReceipt为PASSED时才能形成qualification receipt；REJECT或WITHHELD Run只能保留审计，不能进入Cutover资格。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_cutover_qualification.py::CutoverQualificationTest.test_layout_terminal_requires_approval_publish_and_validation",
+        "test_status": "automated_recorded_negative_matrix",
+        "since": "2026-08-17"
       },
       {
         "anchor_id": "BEHAVIOR.vnext_projector_decimal_context",

@@ -1,10 +1,10 @@
-"""Run deterministic acceptance gates and preserve exact command evidence.
+"""Run the R4 fast acceptance gates and preserve exact command evidence.
 
-The recorded scope runs only offline checks. The full scope requires explicit
-live authorization and then runs every live/Cutover/terminal command rather
-than manufacturing a permanently NOT_RUN pseudo-full plan. Each command keeps
-exact argv, interpreter, return code, duration, and stdout/stderr digests;
-skipped work is never labeled PASS.
+The recorded scope runs only the user-authorized concurrent fast local set.
+The full scope still requires explicit live authorization, but it no longer
+runs broad repository, isolated-workspace, or freeze/replay test suites.
+Every command keeps exact argv, interpreter, return code, duration, and
+stdout/stderr digests; fast evidence is never described as CI or full testing.
 """
 
 from __future__ import annotations
@@ -61,9 +61,10 @@ from validation_provenance import (  # noqa: E402
 
 TERMINAL_PUBLICATION_COMMAND = "tools/vnext_terminal_cycle.py"
 FULL_CUTOVER_COMMAND = "tools/vnext_cutover.py"
-OLD_RESOLVER_FLOW_TEST = (
-    "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest."
-    "test_public_cutover_ignores_all_retired_resolvers"
+FAST_TEST_COMMAND = "tools/run_fast_tests.py"
+R4_ISSUE_COMMENT_URL = (
+    "https://github.com/wlvh/SEC_metrics/issues/12"
+    "#issuecomment-5313207170"
 )
 PUBLICATION_OPERATOR_COMMAND = "tools/vnext_operator.py"
 ACTIVE_POINTER_PATH = Path("outputs/active_publication.json")
@@ -843,104 +844,23 @@ def recorded_commands(
     python39: Optional[str],
     gate_output_dir: Path,
 ) -> List[Dict[str, object]]:
-    """Build the deterministic offline command plan in TESTING.md order.
+    """Build the R4 concurrent fast command plan in TESTING.md order.
 
     Args:
         current_python: Default interpreter path.
-        python39: Python 3.9 path or ``None``.
+        python39: Retained only for receipt compatibility; R4 does not run it.
         gate_output_dir: Isolated non-mirror directory for gate artifacts.
 
     Returns:
         Plan records with argv and optional skip reason.
     """
-    plan: List[Dict[str, object]] = []
-    vnext_args = [
-        "-m",
-        "unittest",
-        "discover",
-        "-s",
-        "tests/vnext",
-        "-t",
-        ".",
-        "-p",
-        "test_*.py",
-        "-v",
-    ]
-    if python39 is None:
-        plan.append(
-            {
-                "argv": ["python3.9", *vnext_args],
-                "reason": "PYTHON39_INTERPRETER_NOT_FOUND",
-            }
-        )
-    else:
-        plan.append({"argv": [python39, *vnext_args], "reason": ""})
-    plan.extend(
-        [
-            {
-                "argv": [current_python, *vnext_args],
-                "reason": "",
-            },
-            {
-                "argv": [
-                    current_python,
-                    "-m",
-                    "unittest",
-                    "discover",
-                    "-s",
-                    "tests",
-                    "-t",
-                    ".",
-                    "-p",
-                    "test_*.py",
-                    "-v",
-                ],
-                "reason": "",
-            },
-            {
-                "argv": [
-                    current_python,
-                    "-m",
-                    "unittest",
-                    OLD_RESOLVER_FLOW_TEST,
-                    "-v",
-                ],
-                "reason": "",
-            },
-            {
-                "argv": [
-                    current_python,
-                    "-m",
-                    "unittest",
-                    "tests.test_validation_provenance",
-                    "-v",
-                ],
-                "reason": "",
-            },
-            {
-                "argv": [
-                    current_python,
-                    "-m",
-                    "unittest",
-                    "tests.test_validation_provenance_light_package",
-                    "-v",
-                ],
-                "reason": "",
-            },
-            {
-                "argv": [
-                    current_python,
-                    "-m",
-                    "unittest",
-                    "tests.vnext.test_canonical_hashes",
-                    "tests.vnext.test_record_schemas",
-                    "tests.vnext.test_spec_compiler",
-                    "tests.vnext.test_review_binding",
-                    "tests.vnext.test_replay",
-                    "-v",
-                ],
-                "reason": "",
-            },
+    del python39
+    plan: List[Dict[str, object]] = [
+        {
+            "argv": [current_python, FAST_TEST_COMMAND, "--jobs", "4"],
+            "reason": "",
+        },
+        *[
             {
                 "argv": [
                     current_python,
@@ -974,8 +894,8 @@ def recorded_commands(
                 ],
                 "reason": "",
             },
-        ]
-    )
+        ],
+    ]
     return plan
 
 
@@ -1356,25 +1276,23 @@ def _recorded_gate_execution(
             "outcome": "PASSED",
             "restored_state_sha256": content_hash(value=after),
         }
-    old_resolver_commands = [
+    fast_test_commands = [
         command
         for command in commands
-        if OLD_RESOLVER_FLOW_TEST in command["argv"]
+        if FAST_TEST_COMMAND in command["argv"]
     ]
     if (
-        len(old_resolver_commands) != 1
-        or old_resolver_commands[0]["outcome"] != "PASSED"
+        len(fast_test_commands) != 1
+        or fast_test_commands[0]["outcome"] != "PASSED"
     ):
-        old_resolver_receipt = None
+        fast_test_receipt = None
     else:
-        old_resolver_body = {
+        fast_test_body = {
             "schema_version": 1,
-            "scenario_id": (
-                "OLD_RESOLVERS_THROW_PUBLIC_CUTOVER_TEST_FLOW"
-            ),
-            "evidence_tier": "TEST_ONLY_PUBLIC_FLOW",
-            "human_decision_evidence": "TEST_ONLY_NOT_ACCEPTANCE",
-            "command": old_resolver_commands[0],
+            "scenario_id": "R4_FAST_CONCURRENT_TEST_POLICY",
+            "evidence_tier": "FAST_LOCAL_ONLY",
+            "issue_comment_url": R4_ISSUE_COMMENT_URL,
+            "command": fast_test_commands[0],
             "active_state_unchanged": before == observed_after,
         }
         runtime_bindings, replacements = _receipt_runtime_context(
@@ -1383,32 +1301,32 @@ def _recorded_gate_execution(
             current_python=current_python,
             python39=python39,
         )
-        old_resolver_body["runtime_bindings"] = runtime_bindings
-        portable_old_resolver = _portable_receipt_value(
-            value=old_resolver_body,
+        fast_test_body["runtime_bindings"] = runtime_bindings
+        portable_fast_test = _portable_receipt_value(
+            value=fast_test_body,
             replacements=replacements,
         )
-        if not isinstance(portable_old_resolver, dict):
+        if not isinstance(portable_fast_test, dict):
             raise AcceptanceError(
-                "OLD_RESOLVER_RECEIPT_ROOT_INVALID"
+                "FAST_TEST_POLICY_RECEIPT_ROOT_INVALID"
             )
-        old_resolver_id = content_hash(value=portable_old_resolver)
-        old_resolver_path = gate_output_dir / (
-            "old_resolver_throws_{}.json".format(
-                old_resolver_id.split(":", maxsplit=1)[1]
+        fast_test_id = content_hash(value=portable_fast_test)
+        fast_test_path = gate_output_dir / (
+            "r4_fast_test_policy_{}.json".format(
+                fast_test_id.split(":", maxsplit=1)[1]
             )
         )
-        old_resolver_value = {
-            **portable_old_resolver,
-            "old_resolver_throws_receipt_id": old_resolver_id,
+        fast_test_value = {
+            **portable_fast_test,
+            "r4_fast_test_policy_receipt_id": fast_test_id,
         }
         atomic_write_json(
-            path=old_resolver_path, value=old_resolver_value,
+            path=fast_test_path, value=fast_test_value,
         )
-        old_resolver_receipt = {
-            "receipt_id": old_resolver_id,
-            "path": str(old_resolver_path),
-            "sha256": sha256_file(path=old_resolver_path),
+        fast_test_receipt = {
+            "receipt_id": fast_test_id,
+            "path": str(fast_test_path),
+            "sha256": sha256_file(path=fast_test_path),
         }
     hashes = artifact_hashes(gate_output_dir=gate_output_dir)
     artifact_closure_complete = set(hashes) == set(
@@ -1437,7 +1355,7 @@ def _recorded_gate_execution(
             for name in RECORDED_GATE_ARTIFACTS
             if name in hashes
         },
-        "old_resolver_throws_receipt": old_resolver_receipt,
+        "r4_fast_test_policy_receipt": fast_test_receipt,
     }
 
 
@@ -2768,46 +2686,45 @@ def formal_evidence_binding(
     ):
         raise AcceptanceError("Live attempt audit result identity differs")
 
-    old_reference = (
-        recorded_evidence["old_resolver_throws_receipt"]
-        if "old_resolver_throws_receipt" in recorded_evidence
+    fast_test_reference = (
+        recorded_evidence["r4_fast_test_policy_receipt"]
+        if "r4_fast_test_policy_receipt" in recorded_evidence
         else None
     )
     if (
-        type(old_reference) is not dict
-        or set(old_reference) != {"path", "receipt_id", "sha256"}
+        type(fast_test_reference) is not dict
+        or set(fast_test_reference) != {"path", "receipt_id", "sha256"}
     ):
-        raise AcceptanceError("Old-resolver public-flow evidence is absent")
-    old_binding, old_payload = _bind_addressed_receipt(
+        raise AcceptanceError("R4 fast-test policy evidence is absent")
+    fast_test_binding, fast_test_payload = _bind_addressed_receipt(
         repo_root=repo_root,
-        path_value=old_reference["path"],
-        expected_id=old_reference["receipt_id"],
-        identity_field="old_resolver_throws_receipt_id",
+        path_value=fast_test_reference["path"],
+        expected_id=fast_test_reference["receipt_id"],
+        identity_field="r4_fast_test_policy_receipt_id",
     )
-    old_payload_fields = {
+    fast_test_payload_fields = {
         "active_state_unchanged",
         "command",
         "evidence_tier",
-        "human_decision_evidence",
+        "issue_comment_url",
         "scenario_id",
     }
     if (
-        old_binding["sha256"] != old_reference["sha256"]
-        or not old_payload_fields.issubset(old_payload)
-        or old_payload["scenario_id"]
-        != "OLD_RESOLVERS_THROW_PUBLIC_CUTOVER_TEST_FLOW"
-        or old_payload["evidence_tier"] != "TEST_ONLY_PUBLIC_FLOW"
-        or old_payload["human_decision_evidence"]
-        != "TEST_ONLY_NOT_ACCEPTANCE"
-        or old_payload["active_state_unchanged"] is not True
-        or type(old_payload["command"]) is not dict
-        or "outcome" not in old_payload["command"]
-        or old_payload["command"]["outcome"] != "PASSED"
+        fast_test_binding["sha256"] != fast_test_reference["sha256"]
+        or not fast_test_payload_fields.issubset(fast_test_payload)
+        or fast_test_payload["scenario_id"]
+        != "R4_FAST_CONCURRENT_TEST_POLICY"
+        or fast_test_payload["evidence_tier"] != "FAST_LOCAL_ONLY"
+        or fast_test_payload["issue_comment_url"] != R4_ISSUE_COMMENT_URL
+        or fast_test_payload["active_state_unchanged"] is not True
+        or type(fast_test_payload["command"]) is not dict
+        or "outcome" not in fast_test_payload["command"]
+        or fast_test_payload["command"]["outcome"] != "PASSED"
     ):
-        raise AcceptanceError("Old-resolver public-flow receipt is invalid")
+        raise AcceptanceError("R4 fast-test policy receipt is invalid")
     acceptance_evidence = {
         **declared_evidence,
-        "old_resolver_throws_receipt_id": old_reference["receipt_id"],
+        "r4_fast_test_policy_receipt_id": fast_test_reference["receipt_id"],
     }
 
     cutover_receipt_path, _cutover_relative = _repository_path(
@@ -2842,7 +2759,7 @@ def formal_evidence_binding(
         "cutover": cutover_binding,
         "live_attempt_audit": live_attempt_audit,
         "live_stability": stability_binding,
-        "old_resolver_throws": old_binding,
+        "r4_fast_test_policy": fast_test_binding,
         "sec_acquisition": acquisition_binding,
         "invocation_sec_acquisition": invocation_acquisition_binding,
         "staging_parity": staging_binding,
@@ -2948,7 +2865,7 @@ def formal_evidence_binding(
             "cutover": cutover_binding,
             "fault_matrix": fault_matrix,
             "live_stability": stability_binding,
-            "old_resolver_throws": old_binding,
+            "r4_fast_test_policy": fast_test_binding,
             "sec_acquisition": acquisition_binding,
             "invocation_sec_acquisition": (
                 invocation_acquisition_binding
@@ -3270,7 +3187,7 @@ def execute_acceptance(
                     status = "ACCEPTANCE_AUTHORITY_CHANGED"
                     blocking_detail = {"code": status}
                 elif scope == "recorded":
-                    status = "PASSED_RECORDED_ONLY"
+                    status = "PASSED_FAST_LOCAL_ONLY"
     if scope == "full" and not status:
         predecessor_state = recorded_evidence["publication_state_after"]
         previous_id = predecessor_state["active_publication_id"]
@@ -3890,13 +3807,10 @@ def main(*, argv: Sequence[str]) -> int:
     output_dir = _resolve_acceptance_output_dir(
         repo_root=repo_root, value=arguments.output_dir,
     )
-    python39 = (
-        None
-        if arguments.scope == "full" and not arguments.execute_live
-        else resolve_python39(
-            explicit_path=arguments.python39, repo_root=repo_root,
-        )
-    )
+    # R4 removes the Python 3.9 full-suite gate from every acceptance scope.
+    # Keep the option parser for a non-breaking CLI surface, but never launch
+    # an additional interpreter merely to duplicate fast local evidence.
+    python39 = None
     receipt = execute_acceptance(
         repo_root=repo_root,
         scope=arguments.scope,
@@ -3914,7 +3828,7 @@ def main(*, argv: Sequence[str]) -> int:
     if receipt["blocking_detail"] is not None:
         summary["blocking_detail"] = receipt["blocking_detail"]
     print(json.dumps(summary, ensure_ascii=False))
-    return 0 if receipt["status"] in {"PASSED", "PASSED_RECORDED_ONLY"} else 1
+    return 0 if receipt["status"] in {"PASSED", "PASSED_FAST_LOCAL_ONLY"} else 1
 
 
 if __name__ == "__main__":

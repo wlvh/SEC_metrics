@@ -18,6 +18,7 @@ from typing import Dict, Mapping, Sequence
 from .canonical import atomic_write_json, content_hash, parse_utc_timestamp
 from .canonical import sha256_file
 from .canonical import strict_json_file
+from .records import RecordError, validate_record
 from .review import effective_review_decision
 from .run_store import load_run_for_status
 from .table_grid import TableGridError, resolve_cell
@@ -597,6 +598,94 @@ def _layout_fixture_manifest(
     return fixture
 
 
+def _layout_validation_receipt(*, run_path: Path) -> Dict[str, object]:
+    """Load the terminal validation record bound to one layout Run.
+
+    Args:
+        run_path: Frozen qualification Run directory.
+
+    Returns:
+        Strict ValidationReceipt record for the exact Run bytes.
+
+    Raises:
+        QualificationError: If the receipt is absent, malformed, or not a
+            ValidationReceipt record.
+    """
+    try:
+        payload = strict_json_file(path=run_path / "validation.json")
+        if not isinstance(payload, dict):
+            raise RecordError("Layout validation receipt must be an object")
+        receipt = validate_record(record=payload)
+    except (OSError, ValueError) as error:
+        raise QualificationError(
+            code="LAYOUT_VALIDATION_NOT_PASSED",
+            message="Layout Run validation receipt is invalid",
+        ) from error
+    if receipt["record_type"] != "VALIDATION_RECEIPT":
+        raise QualificationError(
+            code="LAYOUT_VALIDATION_NOT_PASSED",
+            message="Layout Run lacks a validation receipt",
+        )
+    return receipt
+
+
+def _require_qualified_layout_terminal(
+    *,
+    decision: Mapping[str, object],
+    results: Sequence[Mapping[str, object]],
+    validation: Mapping[str, object],
+    expected_metric_ids: Sequence[str],
+) -> None:
+    """Require an approved, publishable terminal outcome for one layout.
+
+    Args:
+        decision: Effective ReviewDecision already bound to the ReviewUnit.
+        results: Validated MetricResult records produced from that decision.
+        validation: Strict terminal ValidationReceipt for the same Run.
+        expected_metric_ids: Exact result IDs declared by the disclosure Spec.
+
+    Returns:
+        None.
+
+    Raises:
+        QualificationError: If HUMAN rejected the layout, mechanical Run
+            validation did not pass, or any layout result is not publishable.
+    """
+    # A real layout only proves generalization when its HUMAN reviewer accepts
+    # the claims; a rejected Run is valuable audit evidence but not a Cutover
+    # qualification witness.
+    if (
+        decision["reviewer_type"] != "HUMAN"
+        or decision["decision"] != "APPROVE"
+    ):
+        raise QualificationError(
+            code="LAYOUT_HUMAN_APPROVAL_REQUIRED",
+            message="Layout qualification requires an effective HUMAN APPROVE",
+        )
+    if (
+        validation["record_type"] != "VALIDATION_RECEIPT"
+        or validation["status"] != "PASSED"
+    ):
+        raise QualificationError(
+            code="LAYOUT_VALIDATION_NOT_PASSED",
+            message="Layout qualification requires PASSED Run validation",
+        )
+    result_ids = [record["metric_id"] for record in results]
+    if (
+        set(result_ids) != set(expected_metric_ids)
+        or len(result_ids) != len(set(result_ids))
+    ):
+        raise QualificationError(
+            code="LAYOUT_RESULT_SET_INVALID",
+            message="Layout Result metric exact set differs from the Spec",
+        )
+    if any(record["publication"] != "PUBLISHED" for record in results):
+        raise QualificationError(
+            code="LAYOUT_RESULTS_NOT_PUBLISHED",
+            message="Layout qualification requires published metric results",
+        )
+
+
 def write_layout_qualification_receipt(
     *, repo_root: Path, fixture_id: str,
 ) -> Dict[str, object]:
@@ -701,11 +790,18 @@ def write_layout_qualification_receipt(
     decision = effective_review_decision(
         review_unit=units[0], decisions=decisions,
     )
-    if decision["reviewer_type"] != "HUMAN":
-        raise QualificationError(
-            code="LAYOUT_HUMAN_REVIEW_REQUIRED",
-            message="Layout Run lacks an effective HUMAN decision",
-        )
+    validation = _layout_validation_receipt(run_path=run_path)
+    expected_metric_ids = tuple(
+        units[0]["compiled_spec"]["legacy_projection"][
+            "role_metric_ids"
+        ].values()
+    )
+    _require_qualified_layout_terminal(
+        decision=decision,
+        results=results,
+        validation=validation,
+        expected_metric_ids=expected_metric_ids,
+    )
     tree = production_semantic_tree(repo_root=repo_root)
     if role == "POST_FREEZE_HOLDOUT":
         index = strict_json_file(path=repo_root / QUALIFICATION_MANIFEST)
@@ -1838,15 +1934,20 @@ def _validate_layout_receipt(
     result_ids = {
         record["metric_id"]: record["result_id"] for record in results
     }
+    validation = _layout_validation_receipt(run_path=run_path)
+    _require_qualified_layout_terminal(
+        decision=decision,
+        results=results,
+        validation=validation,
+        expected_metric_ids=tuple(expected_metric_ids),
+    )
     if (
         not required_traits.issubset(set(manifest["company_traits"]))
-        or set(result_ids) != expected_metric_ids
         or result_ids != receipt["metric_result_ids"]
         or units[0]["review_unit_hash"] != receipt["review_unit_hash"]
         or units[0]["review_context_hash"] != receipt["review_context_hash"]
         or decision["review_decision_id"]
         != receipt["effective_human_decision_id"]
-        or decision["reviewer_type"] != "HUMAN"
     ):
         raise QualificationError(
             code="LAYOUT_RUN_INVALID",

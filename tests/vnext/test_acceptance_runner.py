@@ -27,7 +27,7 @@ from run_acceptance import (  # noqa: E402
     _offline_environment,
     _validated_live_attempt_audit,
     AcceptanceError,
-    OLD_RESOLVER_FLOW_TEST,
+    FAST_TEST_COMMAND,
     execute_acceptance,
     external_blockers,
     formal_evidence_binding,
@@ -383,16 +383,9 @@ class AcceptanceRunnerTest(unittest.TestCase):
                         attempts=attempts,
                     )
 
-    def test_old_resolver_gate_targets_formal_publication_flow(self) -> None:
-        """Require the acceptance gate to traverse vNext Run through commit."""
-        self.assertEqual(
-            (
-                "tests.vnext.test_cutover_orchestrator."
-                "CutoverOrchestratorTest."
-                "test_public_cutover_ignores_all_retired_resolvers"
-            ),
-            OLD_RESOLVER_FLOW_TEST,
-        )
+    def test_r4_fast_gate_has_a_stable_public_command(self) -> None:
+        """Expose the sole R4 test runner as a stable public command."""
+        self.assertEqual("tools/run_fast_tests.py", FAST_TEST_COMMAND)
 
     def test_sec_identity_gate_and_http_client_share_fail_fast_rules(
         self,
@@ -581,11 +574,11 @@ class AcceptanceRunnerTest(unittest.TestCase):
         self.assertIn("tools/run_acceptance.py --scope recorded", readme)
         self.assertIn("--scope full --execute-live", readme)
         self.assertIn("review decide", readme)
-        self.assertIn("PASSED_RECORDED_ONLY", readme)
+        self.assertIn("PASSED_FAST_LOCAL_ONLY", readme)
         self.assertIn(
             "ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY", readme,
         )
-        self.assertIn("native CPython 3.9", readme)
+        self.assertIn("R4不再启动 Python 3.9 全量测试", readme)
 
     def test_readme_matches_generator_and_stable_postprocessor(self) -> None:
         """Keep the checked-in README reproducible by the stage 11 path."""
@@ -625,27 +618,24 @@ class AcceptanceRunnerTest(unittest.TestCase):
         )
         self.assertIn("formal Cutover 或 full acceptance", generated)
 
-    def test_full_discovery_uses_repository_top_level(self) -> None:
-        """Run both interpreters at vNext scope before the full repository."""
-        with tempfile.TemporaryDirectory() as directory:
-            plan = recorded_commands(
-                current_python=sys.executable,
-                python39="/python3.9",
-                gate_output_dir=Path(directory),
-            )
-        vnext_argv = plan[0]["argv"]
-        self.assertEqual(".", vnext_argv[vnext_argv.index("-t") + 1])
-        current_vnext_argv = plan[1]["argv"]
-        self.assertEqual(
-            ".",
-            current_vnext_argv[current_vnext_argv.index("-t") + 1],
+    def test_r4_plan_uses_fast_runner_without_full_discovery(self) -> None:
+        """Keep R4 acceptance free of full-suite and floor-interpreter work."""
+        plan = recorded_commands(
+            current_python=sys.executable,
+            python39=None,
+            gate_output_dir=REPO_ROOT / "outputs" / "acceptance_receipts",
         )
-        self.assertEqual(sys.executable, current_vnext_argv[0])
-        full_argv = plan[2]["argv"]
-        self.assertEqual(".", full_argv[full_argv.index("-t") + 1])
+        command_text = [" ".join(row["argv"]) for row in plan]
+        self.assertEqual(4, len(command_text))
+        self.assertEqual(
+            "{} {} --jobs 4".format(sys.executable, FAST_TEST_COMMAND),
+            command_text[0],
+        )
+        self.assertTrue(all("unittest discover" not in text for text in command_text))
+        self.assertTrue(all("python3.9" not in text for text in command_text))
 
     def test_recorded_plan_keeps_required_gate_layers_in_order(self) -> None:
-        """Keep provenance, light, semantic, scalability, and capability real."""
+        """Keep only R4 fast and static gates in deterministic order."""
         with tempfile.TemporaryDirectory() as directory:
             plan = recorded_commands(
                 current_python=sys.executable,
@@ -657,13 +647,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
             for row in plan
         ]
         expected_fragments = (
-            "tests/vnext",
-            "tests/vnext",
-            "discover -s tests -t .",
-            OLD_RESOLVER_FLOW_TEST,
-            "tests.test_validation_provenance -v",
-            "tests.test_validation_provenance_light_package -v",
-            "tests.vnext.test_canonical_hashes",
+            FAST_TEST_COMMAND,
             "tools/check_vnext_semantics.py",
             "tools/check_no_company_literals.py",
             "tools/check_capability_contract_alignment.py",
@@ -706,7 +690,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
                     output_dir=Path(directory),
                     timeout_seconds=30,
                 )
-            self.assertEqual("PASSED_RECORDED_ONLY", receipt["status"])
+            self.assertEqual("PASSED_FAST_LOCAL_ONLY", receipt["status"])
             self.assertEqual([], receipt["external_blockers"])
             self.assertTrue(receipt["recorded_evidence"][
                 "active_state_unchanged"
@@ -719,21 +703,21 @@ class AcceptanceRunnerTest(unittest.TestCase):
                     text = path.read_text(encoding="utf-8")
                     self.assertNotIn(str(REPO_ROOT), text)
                     self.assertNotIn(sys.executable, text)
-            old_resolver_paths = [
+            fast_policy_paths = [
                 path
                 for path in persisted_json
-                if path.name.startswith("old_resolver_throws_")
+                if path.name.startswith("r4_fast_test_policy_")
             ]
-            self.assertEqual(1, len(old_resolver_paths))
-            old_resolver = json.loads(
-                old_resolver_paths[0].read_text(encoding="utf-8")
+            self.assertEqual(1, len(fast_policy_paths))
+            fast_policy = json.loads(
+                fast_policy_paths[0].read_text(encoding="utf-8")
             )
             self.assertEqual(
                 "$PYTHON_CURRENT",
-                old_resolver["command"]["argv"][0],
+                fast_policy["command"]["argv"][0],
             )
             self.assertIn(
-                "$PYTHON_CURRENT", old_resolver["runtime_bindings"]
+                "$PYTHON_CURRENT", fast_policy["runtime_bindings"]
             )
 
     def test_recorded_scope_blocks_sockets_and_never_calls_live_preflight(
@@ -760,7 +744,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
                 output_dir=Path(directory),
                 timeout_seconds=30,
             )
-        self.assertEqual("PASSED_RECORDED_ONLY", receipt["status"])
+        self.assertEqual("PASSED_FAST_LOCAL_ONLY", receipt["status"])
         preflight.assert_not_called()
         self.assertTrue(runner.call_args_list)
         for command in runner.call_args_list:
@@ -1063,7 +1047,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
                 output_dir=Path(directory),
                 timeout_seconds=30,
             )
-        self.assertEqual("PASSED_RECORDED_ONLY", receipt["status"])
+        self.assertEqual("PASSED_FAST_LOCAL_ONLY", receipt["status"])
         expected = json.loads(json.dumps(acceptance_authority()))
         self.assertEqual(expected, receipt["authority_binding"])
 

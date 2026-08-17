@@ -62,7 +62,7 @@ requirements/ai_first_v3_3_1/FSD.md
 
 R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细状态/证据/发布边界，R3 只覆盖其明确列出的决定；两份 exact bytes 都是 Requirement authority。Decision Register 保留历史 D-01 pending record，并以 R3 的单链 superseding record 形成唯一 effective `APPROVED` D-01。
 
-代码已具备同一 recorded/live operator、显式 HUMAN Review、固定 OpenAI/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。qualification固定按第二布局receipt→semantic freeze及pre-holdout inventory→独立holdout执行；首次formal chain只读导入verified legacy A并提交绑定A的B；public generic formal mutation入口fail closed；三次live attempt形成portable audit closure；每个terminal cycle只启动一次公开CLI，并以单进程、单次pinned transaction贯穿Stage10 Golden、Stage11 report、Stage12 active validation与snapshot publish/verify。publication switch会先在独占锁内写content-addressed intent；pending/tamper时reader fail closed，writer按exact pointer分支恢复receipt与mirrors或回滚上一状态。full live path还会在release planning前固定执行SEC Stage00/01/02/03/05，并持久化原样命令、request-ledger合法tail与inventory receipt；持久acceptance receipt以portable runtime token和binary SHA-256绑定解释器，不保存本机绝对路径。release input plan绑定exact source的latest verified attempt及locator class，recorded可逐path/hash/headers/size重验唯一`LEGACY_WORKING_LOCATOR`并在portable closure绑定tier/class，formal live只允许`IMMUTABLE_ATTEMPT`并拒绝legacy。这仍不等于本仓库已经产生active Cutover证据。本轮因`OPENAI_API_KEY`、`SEC_CONTACT_EMAIL`、qualification与HUMAN前提缺失，该live acquisition未执行且没有对应receipt；第二真实布局/holdout、live三轮、十公司formal staging、active/previous publication、rollback/restore与full receipt也不存在。因此业务用户仍读取现有root CSV/报告，任何recorded或实现测试PASS都不得写成active/full PASS。
+代码已具备同一 recorded/live operator、显式 HUMAN Review、固定 OpenAI/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。qualification固定按第二布局的有效 HUMAN `APPROVE`、`PUBLISHED` Result 与 `PASSED` Run validation receipt→semantic freeze及pre-holdout inventory→独立holdout执行；`REJECT`/WITHHELD Run只能保留审计，不能成为资格证据。旧路径 inventory还会回读冻结baseline Git commit中的精确`sec_pipeline.py`与适用性配置blob，不能以当前anchor或伪hash替代历史生产路径。首次formal chain只读导入verified legacy A并提交绑定A的B；public generic formal mutation入口fail closed；三次live attempt形成portable audit closure；每个terminal cycle只启动一次公开CLI，并以单进程、单次pinned transaction贯穿Stage10 Golden、Stage11 report、Stage12 active validation与snapshot publish/verify。publication switch会先在独占锁内写content-addressed intent；pending/tamper时reader fail closed，writer按exact pointer分支恢复receipt与mirrors或回滚上一状态。full live path还会在release planning前固定执行SEC Stage00/01/02/03/05，并持久化原样命令、request-ledger合法tail与inventory receipt；持久acceptance receipt以portable runtime token和binary SHA-256绑定解释器，不保存本机绝对路径。release input plan绑定exact source的latest verified attempt及locator class，recorded可逐path/hash/headers/size重验唯一`LEGACY_WORKING_LOCATOR`并在portable closure绑定tier/class，formal live只允许`IMMUTABLE_ATTEMPT`并拒绝legacy。这仍不等于本仓库已经产生active Cutover证据。本轮因`OPENAI_API_KEY`、`SEC_CONTACT_EMAIL`、qualification与HUMAN前提缺失，该live acquisition未执行且没有对应receipt；第二真实布局/holdout、live三轮、十公司formal staging、active/previous publication、rollback/restore与full receipt也不存在。因此业务用户仍读取现有root CSV/报告，任何recorded或实现测试PASS都不得写成active/full PASS。
 
 ## 1. 文件简介
 
@@ -186,9 +186,10 @@ R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细状态/证据/发布边�
 
 ## 6. Review 与测试
 
+- Issue #12 的开发、PR 与 final acceptance 受 R4 用户授权约束：只运行 `python3 tools/run_fast_tests.py --jobs 4` 及其快速静态 gate；不再把全仓/双解释器回归、隔离 repository/worktree、freeze/replay 或长串行套件作为必跑测试。`PASSED_FAST_LOCAL_ONLY` 不是 CI、live 或 Cutover。
 - 发现 Bug 时遵循 `TESTING.md`：先补稳定复现，再修实现；跨阶段问题同时补场景级证据。
 - 不用 quick unittest 替代 Golden、repair gate、snapshot checker 或完整场景，也不用 light review 冒充 full validation。
-- 会写 `evidence/`、`outputs/` 或报告的命令优先在干净、隔离的 checkout 运行。
+- 真实运营中会写 `evidence/`、`outputs/` 或报告的命令仍须遵循其受控 authority；它们不是 R4 测试。
 - 用户要求 PR 时，逐项完成 `PR_Checklist.md`；任何豁免、未运行测试、known limitation 和未解决决策写入 PR body。
 
 ## 7. SOP 清单

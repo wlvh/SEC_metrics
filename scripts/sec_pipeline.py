@@ -19809,16 +19809,12 @@ def build_readme() -> str:
                 "也不会改变这一产品边界。"
             ),
             "",
-            "### Recorded 离线演练",
+            "### R4 并发快速验收",
             "",
             "```bash",
             (
-                "PYTHONDONTWRITEBYTECODE=1 python3.9 -m unittest discover "
-                "-s tests/vnext -t . -p 'test_*.py' -v"
-            ),
-            (
-                "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover "
-                "-s tests/vnext -t . -p 'test_*.py' -v"
+                "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py "
+                "--jobs 4"
             ),
             (
                 "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py "
@@ -19827,14 +19823,15 @@ def build_readme() -> str:
             "```",
             "",
             (
-                "recorded runner 的最高状态是 `PASSED_RECORDED_ONLY`，receipt "
-                "写入 `outputs/acceptance_receipts/`；它不执行 live stage、"
-                "formal Cutover 或 full acceptance。测试策略与 NOT_RUN 记录以 "
+                "R4只并发运行六个直接、非隔离、非 freeze/replay 的本地边界"
+                "用例；recorded runner 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，"
+                "receipt 写入 `outputs/acceptance_receipts/`。它不是 CI、live "
+                "stage、formal Cutover 或 full acceptance。测试策略以 "
                 "`TESTING.md` 为准。"
             ),
             (
                 "recorded/full acceptance 的持久命令证据使用 "
-                "`runtime_bindings`：`$PYTHON_CURRENT`、`$PYTHON39` 与可用时的 "
+                "`runtime_bindings`：`$PYTHON_CURRENT` 与可用时的 "
                 "`$SANDBOX_EXEC` 绑定 executable name 和 runtime binary "
                 "SHA-256；argv、interpreter、output locator 与诊断中的本地路径"
                 "递归替换为 portable token，剩余 host path 只保留 SHA-256，"
@@ -19844,11 +19841,9 @@ def build_readme() -> str:
                 "acceptance `--output-dir` 不能等于、包含或位于任何正式 "
                 "pointer、mirror、SEC ledger、publication/qualification/audit "
                 "namespace 下；命中时在首次写入前返回 "
-                "`ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY`。caller "
-                "指定的 Python 3.9 只接受 native CPython 3.9 binary，并在完整"
-                "正式状态 snapshot/byte backup 后、network+formal file deny "
-                "sandbox 内探测；探测后 exact read-back，漂移必须恢复且整轮"
-                "失败。"
+                "`ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY`。R4不再"
+                "启动 Python 3.9 全量测试或任何隔离 repository/worktree；"
+                "formal authority 前后仍会 exact read-back。"
             ),
             "",
             "### Cold-start recorded fixture 与 sandbox PublicationView",
@@ -20067,7 +20062,9 @@ def build_readme() -> str:
             "",
             (
                 "qualification 的固定顺序是：第二真实布局首次 `prepare` "
-                "停在 HUMAN Review，决策后重跑同一命令形成 receipt；然后 "
+                "停在 HUMAN Review，只有有效 HUMAN `APPROVE`、全量 "
+                "`PUBLISHED` Result 与 `PASSED` Run validation后重跑同一命令"
+                "才能形成 receipt；`REJECT`/WITHHELD 只保留审计；然后 "
                 "`freeze` 同时绑定 production semantic tree 与 pre-holdout "
                 "fixture/Run inventory；最后才加入并 `prepare` 独立 holdout。"
                 "若 holdout bytes/Run 在 freeze 前已存在，或 holdout 后 semantic "

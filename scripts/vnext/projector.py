@@ -6,19 +6,22 @@ import ast
 import csv
 import io
 import re
+import subprocess
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Dict, List, Mapping, Optional, Sequence, Set, Tuple
+
+from git_workspace import git_checkout_metadata_error, sanitized_git_environment
 
 from .calculator import metric_is_applicable
 from .canonical import CanonicalError, arithmetic_context
 from .canonical import atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, decimal_text
-from .canonical import parse_decimal, sha256_file
+from .canonical import parse_decimal, sha256_bytes, sha256_file
 from .canonical import strict_json_file
 from .records import metric_result_contract_hash
 from .records import validate_record
-from .requirements import load_requirement_snapshot
+from .requirements import RequirementError, load_requirement_snapshot
 from .run_store import RunStoreError, load_frozen_run
 from .specs import SpecError, compile_spec_files, parse_spec_document
 from .states import publication_candidate_status
@@ -160,6 +163,12 @@ FORMAL_CUTOVER_WRITER_ANCHORS = {
 PUBLIC_COMMIT_TOMBSTONE_ANCHOR = (
     "scripts/vnext/publication.py::commit_publication"
 )
+LEGACY_BASELINE_SOURCE_FILES = (
+    "config/metric_applicability.yaml",
+    "scripts/sec_pipeline.py",
+)
+_GIT_COMMIT = re.compile(r"^[0-9a-f]{40}$")
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
 def _python_source_contract(*, path: Path) -> Dict[str, object]:
@@ -278,6 +287,108 @@ def _legacy_anchor_evidence(
     return evidence
 
 
+def _frozen_legacy_source_bytes(
+    *, repo_root: Path, baseline_commit: str, relative: str,
+) -> bytes:
+    """Read one immutable legacy source blob from its frozen Git commit.
+
+    Args:
+        repo_root: Repository whose local Git metadata owns the baseline.
+        baseline_commit: Full immutable commit SHA from the Requirement baseline.
+        relative: Fixed repository-relative source path.
+
+    Returns:
+        Exact blob bytes from ``baseline_commit`` rather than current sources.
+
+    Raises:
+        ProjectionError: If Git authority, commit identity, or source blob is
+            unavailable or unsafe.
+    """
+    metadata_error = git_checkout_metadata_error(repo_root=repo_root)
+    if metadata_error:
+        raise ProjectionError("Frozen legacy Git authority is unsafe")
+    if _GIT_COMMIT.fullmatch(baseline_commit) is None:
+        raise ProjectionError("Frozen legacy baseline commit is invalid")
+    try:
+        commit = subprocess.run(
+            [
+                "git", "--no-replace-objects", "-C", str(repo_root),
+                "cat-file", "-e", baseline_commit + "^{commit}",
+            ],
+            check=False,
+            capture_output=True,
+            env=sanitized_git_environment(),
+            timeout=30,
+        )
+        if commit.returncode != 0:
+            raise ProjectionError("Frozen legacy baseline commit is absent")
+        blob = subprocess.run(
+            [
+                "git", "--no-replace-objects", "-C", str(repo_root),
+                "cat-file", "blob", baseline_commit + ":" + relative,
+            ],
+            check=False,
+            capture_output=True,
+            env=sanitized_git_environment(),
+            timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise ProjectionError("Frozen legacy Git read failed") from error
+    if blob.returncode != 0:
+        raise ProjectionError("Frozen legacy baseline source is absent")
+    return blob.stdout
+
+
+def _verify_frozen_legacy_source_inventory(
+    *, repo_root: Path, inventory: Mapping[str, object],
+) -> None:
+    """Bind legacy path inventory entries to the Requirement baseline tree.
+
+    Args:
+        repo_root: Repository containing the immutable Requirement snapshot.
+        inventory: Strict legacy path inventory currently being expanded.
+
+    Returns:
+        None.
+
+    Raises:
+        ProjectionError: If the inventory names a different baseline, changes
+            its fixed source set, or records a digest unlike the frozen blob.
+    """
+    snapshot_dir = repo_root / "requirements" / "ai_first_v3_3_1"
+    try:
+        requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)
+    except RequirementError as error:
+        raise ProjectionError("Legacy Requirement baseline is invalid") from error
+    baseline = requirement["baseline"]
+    baseline_commit = baseline["repository_commit"]
+    source_files = inventory["source_files"]
+    if (
+        type(baseline_commit) is not str
+        or _GIT_COMMIT.fullmatch(baseline_commit) is None
+        or inventory["baseline_commit"] != baseline_commit
+    ):
+        raise ProjectionError("Legacy inventory baseline commit differs")
+    if (
+        not isinstance(source_files, dict)
+        or set(source_files) != set(LEGACY_BASELINE_SOURCE_FILES)
+        or any(
+            type(source_files[relative]) is not str
+            or _SHA256.fullmatch(source_files[relative]) is None
+            for relative in LEGACY_BASELINE_SOURCE_FILES
+        )
+    ):
+        raise ProjectionError("Legacy inventory baseline source set differs")
+    for relative in LEGACY_BASELINE_SOURCE_FILES:
+        frozen_bytes = _frozen_legacy_source_bytes(
+            repo_root=repo_root,
+            baseline_commit=baseline_commit,
+            relative=relative,
+        )
+        if sha256_bytes(content=frozen_bytes) != source_files[relative]:
+            raise ProjectionError("Legacy inventory baseline source differs")
+
+
 def load_legacy_path_inventory(*, repo_root: Path) -> Dict[str, object]:
     """Load and mechanically expand the frozen legacy migration inventory.
 
@@ -320,6 +431,9 @@ def load_legacy_path_inventory(*, repo_root: Path) -> Dict[str, object]:
         or set(parsed["migration_rules"]) != set(LEGACY_INVENTORY_GROUP_FIELDS)
     ):
         raise ProjectionError("Legacy path inventory fields differ")
+    _verify_frozen_legacy_source_inventory(
+        repo_root=repo_root, inventory=parsed,
+    )
     configuration = parsed["legacy_configuration"]
     expected_configuration_keys = [
         "profile_extractor:" + str(configuration["profile_extractor"]),
@@ -469,6 +583,8 @@ def legacy_invariant_migration_receipt(
         "evidence_reconciliations": list(
             compatibility["evidence_reconciliations"]
         ),
+        "legacy_baseline_commit": inventory["baseline_commit"],
+        "legacy_baseline_source_files": dict(inventory["source_files"]),
         "legacy_input_hashes": dict(compatibility["legacy_input_hashes"]),
         "legacy_path_inventory_sha256": sha256_file(
             path=(

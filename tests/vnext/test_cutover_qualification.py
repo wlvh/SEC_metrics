@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import contextlib
+import io
 import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 from scripts.vnext import qualification
 from scripts.vnext.canonical import content_hash
@@ -16,10 +19,148 @@ from scripts.vnext.qualification import QualificationError
 from scripts.vnext.qualification import production_semantic_tree
 from scripts.vnext.qualification import validate_cutover_qualifications
 from scripts.vnext.qualification import write_production_freeze_receipt
+from tools import vnext_qualification
+
+
+def run_qualification_cli(*arguments: str) -> tuple[int, str, str]:
+    """Run the qualification CLI while isolating its terminal output.
+
+    Args:
+        arguments: Exact CLI tokens excluding the executable and script path.
+
+    Returns:
+        Return code, stdout, and stderr captured from one command boundary.
+    """
+    stdout = io.StringIO()
+    stderr = io.StringIO()
+    with contextlib.redirect_stdout(stdout):
+        with contextlib.redirect_stderr(stderr):
+            return_code = vnext_qualification.main(argv=list(arguments))
+    return return_code, stdout.getvalue(), stderr.getvalue()
 
 
 class CutoverQualificationTest(unittest.TestCase):
     """Exercise the fixed repository-owned qualification authority."""
+
+    def test_layout_terminal_requires_approval_publish_and_validation(
+        self,
+    ) -> None:
+        """Reject audit-only layout outcomes before they become Cutover proof."""
+        approved = {
+            "reviewer_type": "HUMAN",
+            "decision": "APPROVE",
+        }
+        published = (
+            {"metric_id": "B10", "publication": "PUBLISHED"},
+            {"metric_id": "B11", "publication": "PUBLISHED"},
+        )
+        passed = {
+            "record_type": "VALIDATION_RECEIPT",
+            "status": "PASSED",
+        }
+        qualification._require_qualified_layout_terminal(
+            decision=approved,
+            results=published,
+            validation=passed,
+            expected_metric_ids=("B10", "B11"),
+        )
+
+        cases = (
+            (
+                "rejected decision",
+                {"reviewer_type": "HUMAN", "decision": "REJECT"},
+                published,
+                passed,
+                "LAYOUT_HUMAN_APPROVAL_REQUIRED",
+            ),
+            (
+                "withheld result",
+                approved,
+                (
+                    {"metric_id": "B10", "publication": "WITHHELD"},
+                    {"metric_id": "B11", "publication": "PUBLISHED"},
+                ),
+                passed,
+                "LAYOUT_RESULTS_NOT_PUBLISHED",
+            ),
+            (
+                "failed validation",
+                approved,
+                published,
+                {
+                    "record_type": "VALIDATION_RECEIPT",
+                    "status": "FAILED",
+                },
+                "LAYOUT_VALIDATION_NOT_PASSED",
+            ),
+        )
+        for label, decision, results, validation, code in cases:
+            with self.subTest(label=label), self.assertRaisesRegex(
+                QualificationError, code,
+            ):
+                qualification._require_qualified_layout_terminal(
+                    decision=decision,
+                    results=results,
+                    validation=validation,
+                    expected_metric_ids=("B10", "B11"),
+                )
+
+    def test_qualification_cli_keeps_unexpected_errors_structured(
+        self,
+    ) -> None:
+        """Hide unexpected tracebacks unless the operator opts into debug."""
+        failure = RuntimeError("unexpected qualification fixture state")
+        with mock.patch(
+            "tools.vnext_qualification.prepare_layout",
+            side_effect=failure,
+        ):
+            return_code, stdout, stderr = run_qualification_cli(
+                "prepare", "--fixture-id", "second-layout",
+            )
+        self.assertEqual(2, return_code)
+        self.assertEqual("", stderr)
+        payload = json.loads(stdout)
+        self.assertEqual("BLOCKED", payload["status"])
+        self.assertEqual(
+            "QUALIFICATION_COMMAND_FAILED", payload["error_code"],
+        )
+        self.assertEqual("Qualification command failed", payload["message"])
+        self.assertEqual("RuntimeError", payload["details"]["error_class"])
+        self.assertNotIn("Traceback", stdout)
+
+        with mock.patch(
+            "tools.vnext_qualification.prepare_layout",
+            side_effect=failure,
+        ):
+            return_code, stdout, stderr = run_qualification_cli(
+                "--debug", "prepare", "--fixture-id", "second-layout",
+            )
+        self.assertEqual(2, return_code)
+        self.assertEqual("QUALIFICATION_COMMAND_FAILED", json.loads(
+            stdout,
+        )["error_code"])
+        self.assertIn("Traceback", stderr)
+
+    def test_qualification_review_command_keeps_human_choice_explicit(
+        self,
+    ) -> None:
+        """Avoid steering a pending reviewer toward an automatic approval."""
+        repo_root = Path(__file__).resolve().parents[2]
+        blocker = vnext_qualification._review_blocker(
+            run_dir=(
+                repo_root / "artifacts/vnext/qualification/runs/second-layout"
+            ),
+            manifest={"run_id": "run:qualification:second-layout"},
+            records=[
+                {
+                    "record_type": "REVIEW_UNIT",
+                    "review_unit_hash": "sha256:" + "a" * 64,
+                },
+            ],
+        )
+        self.assertIn(
+            "APPROVE_OR_REJECT", blocker.details["review_command"],
+        )
 
     def test_registry_identity_rejects_company_id_cik_alias(self) -> None:
         """Treat primary, related, and role CIK as production identity."""

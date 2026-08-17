@@ -8,9 +8,12 @@ import tempfile
 import unittest
 from decimal import localcontext
 from pathlib import Path
+from unittest import mock
 
 from tests.vnext.common import REPO_ROOT
 from tests.vnext.projection_fixture_support import scoped_repository
+from vnext.canonical import canonical_json_bytes, sha256_bytes, sha256_file
+from vnext import projector
 from vnext.projector import ProjectionError, compatibility_receipt
 from vnext.projector import _joined_binding_field, _project_result
 from vnext.projector import legacy_invariant_migration_receipt
@@ -23,6 +26,120 @@ from vnext.projector import reject_legacy_migrated_writes
 
 class LegacyProjectorTest(unittest.TestCase):
     """Prove non-migrated preservation and explicit migrated deltas."""
+
+    def _write_inventory_with_rebound_requirement(
+        self, *, repo_root: Path, inventory: dict,
+    ) -> None:
+        """Persist one adversarial inventory while retaining its hash binding.
+
+        Args:
+            repo_root: Isolated Git-backed Requirement fixture.
+            inventory: Mutated legacy inventory object under test.
+
+        Returns:
+            None.
+
+        The test deliberately updates the baseline's inventory digest so each
+        mutation reaches the frozen-tree authority check rather than failing
+        only because a stale file hash was detected first.
+        """
+        inventory_path = (
+            repo_root / "requirements" / "ai_first_v3_3_1"
+            / "legacy_path_inventory.json"
+        )
+        inventory_path.write_bytes(canonical_json_bytes(value=inventory) + b"\n")
+        baseline_path = (
+            repo_root / "requirements" / "ai_first_v3_3_1"
+            / "baseline_manifest.json"
+        )
+        baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+        baseline["legacy_path_inventory_sha256"] = sha256_file(
+            path=inventory_path,
+        )
+        baseline_path.write_bytes(canonical_json_bytes(value=baseline) + b"\n")
+
+    def test_legacy_inventory_binds_frozen_commit_and_source_blobs(
+        self,
+    ) -> None:
+        """Reject forged frozen inventory claims without a workspace fixture."""
+        baseline_commit = "a" * 40
+        frozen_sources = {
+            "config/metric_applicability.yaml": b"applicability\n",
+            "scripts/sec_pipeline.py": b"legacy producer\n",
+        }
+        inventory = {
+            "baseline_commit": baseline_commit,
+            "source_files": {
+                relative: sha256_bytes(content=content)
+                for relative, content in frozen_sources.items()
+            },
+        }
+
+        def frozen_source(
+            *, repo_root: Path, baseline_commit: str, relative: str,
+        ) -> bytes:
+            """Return deterministic immutable bytes without a test repository.
+
+            Args:
+                repo_root: Unused production authority locator.
+                baseline_commit: Expected frozen commit identity.
+                relative: Exact source file selected by the inventory.
+
+            Returns:
+                Fixture bytes for the requested frozen source path.
+            """
+            if repo_root != REPO_ROOT or baseline_commit != "a" * 40:
+                raise AssertionError("Unexpected frozen source authority")
+            return frozen_sources[relative]
+
+        mutations = (
+            (
+                "baseline commit",
+                lambda inventory: inventory.__setitem__(
+                    "baseline_commit", "0" * 40,
+                ),
+                "Legacy inventory baseline commit differs",
+            ),
+            (
+                "source digest",
+                lambda inventory: inventory["source_files"].__setitem__(
+                    "scripts/sec_pipeline.py", "f" * 64,
+                ),
+                "Legacy inventory baseline source differs",
+            ),
+            (
+                "extra source",
+                lambda inventory: inventory["source_files"].__setitem__(
+                    "scripts/extra.py", "e" * 64,
+                ),
+                "Legacy inventory baseline source set differs",
+            ),
+            (
+                "missing source",
+                lambda inventory: inventory["source_files"].pop(
+                    "config/metric_applicability.yaml",
+                ),
+                "Legacy inventory baseline source set differs",
+            ),
+        )
+        with mock.patch(
+            "vnext.projector.load_requirement_snapshot",
+            return_value={"baseline": {"repository_commit": baseline_commit}},
+        ), mock.patch(
+            "vnext.projector._frozen_legacy_source_bytes",
+            side_effect=frozen_source,
+        ):
+            projector._verify_frozen_legacy_source_inventory(
+                repo_root=REPO_ROOT, inventory=inventory,
+            )
+            for label, mutate, message in mutations:
+                candidate = copy.deepcopy(inventory)
+                mutate(candidate)
+                with self.subTest(label=label):
+                    with self.assertRaisesRegex(ProjectionError, message):
+                        projector._verify_frozen_legacy_source_inventory(
+                            repo_root=REPO_ROOT, inventory=candidate,
+                        )
 
     def test_repeated_component_form_collapses_to_frozen_scalar(self) -> None:
         """Keep B03 metric form scalar while evidence remains component grain."""
@@ -205,9 +322,8 @@ class LegacyProjectorTest(unittest.TestCase):
                     "scripts/vnext/projector.py::write_projection_candidate",
                     "scripts/vnext/publication.py::commit_publication",
                 ]
-            inventory_path.write_text(
-                json.dumps(inventory, ensure_ascii=False, indent=2) + "\n",
-                encoding="utf-8",
+            self._write_inventory_with_rebound_requirement(
+                repo_root=repo_root, inventory=inventory,
             )
 
             with self.assertRaisesRegex(

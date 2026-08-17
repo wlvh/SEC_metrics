@@ -68,6 +68,12 @@ class RequirementBaselineTest(unittest.TestCase):
             "c37cecdfe88344d78172dd9dc24bd4c445763901",
             snapshot["baseline"]["repository_commit"],
         )
+        d26 = snapshot["effective_decisions"]["D-26"]
+        self.assertEqual("APPROVED", d26["status"])
+        self.assertEqual(
+            "R4_FAST_CONCURRENT_NON_ISOLATED",
+            d26["choice"]["test_execution_policy"],
+        )
 
     def test_requirement_byte_change_invalidates_snapshot(self) -> None:
         """Reject an FSD byte edit even when every other file is unchanged."""

@@ -1128,9 +1128,11 @@ class ReplayTest(unittest.TestCase):
             batch_root.mkdir()
             run_dir = batch_root / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:verified",
+                run_dir=run_dir,
+                run_id="run:projection:verified",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
             batch_path = batch_root / "batch_manifest.json"
             batch = write_projection_batch_manifest(
                 repo_root=repo_root,
@@ -1173,7 +1175,9 @@ class ReplayTest(unittest.TestCase):
             batch_root.mkdir()
             run_dir = batch_root / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:duplicate",
+                run_dir=run_dir,
+                run_id="run:projection:duplicate",
+                repo_root=repo_root,
             )
             _manifest, records, _decisions = load_open_run(run_dir=run_dir)
             original_trace = next(
@@ -1196,15 +1200,17 @@ class ReplayTest(unittest.TestCase):
             target = dict(original_trace["calculation_target"])
             target["scope"] = scope
             target["scope_key"] = content_hash(value=scope)
-            spec = compiled_specs()["B01"]
+            spec = _compiled_specs_at(repo_root=repo_root)["B01"]
             facts = companyfacts_structured_facts(
-                raw_bytes=(REPO_ROOT / str(raw["storage_uri"])).read_bytes(),
+                raw_bytes=(
+                    repo_root / str(raw["storage_uri"])
+                ).read_bytes(),
                 source_reference=source,
                 approved_concepts=_structured_concepts(
                     compiled_spec=spec,
                 ),
                 allowed_ciks=repository_company_ciks(
-                    repo_root=REPO_ROOT,
+                    repo_root=repo_root,
                     company_id=str(source["company_id"]),
                 ),
             )
@@ -1213,7 +1219,7 @@ class ReplayTest(unittest.TestCase):
                     compiled_spec=spec,
                     target=target,
                     company_traits=repository_company_traits(
-                        repo_root=REPO_ROOT,
+                        repo_root=repo_root,
                         company_id=str(source["company_id"]),
                     ),
                     structured_facts=facts,
@@ -1224,7 +1230,7 @@ class ReplayTest(unittest.TestCase):
                 append_run_record(run_dir=run_dir, record=observation)
             append_run_record(run_dir=run_dir, record=duplicate_trace)
             append_run_record(run_dir=run_dir, record=duplicate_result)
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
 
             with self.assertRaisesRegex(
                 ProjectionError, "company metric coordinate is duplicated"
@@ -1244,9 +1250,11 @@ class ReplayTest(unittest.TestCase):
             batch_root.mkdir()
             run_dir = batch_root / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:missing-input",
+                run_dir=run_dir,
+                run_id="run:projection:missing-input",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
             batch_path = batch_root / "batch_manifest.json"
             write_projection_batch_manifest(
                 repo_root=repo_root,
@@ -1271,9 +1279,11 @@ class ReplayTest(unittest.TestCase):
             run_parent.mkdir(parents=True)
             run_dir = run_parent / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:parent-symlink",
+                run_dir=run_dir,
+                run_id="run:projection:parent-symlink",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
             batch_path = batch_root / "batch_manifest.json"
             write_projection_batch_manifest(
                 repo_root=repo_root,
@@ -1306,8 +1316,9 @@ class ReplayTest(unittest.TestCase):
                 ),
                 accession="0000078003-26-100099",
                 run_id="run:projection:b03-dependency",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
 
             with self.assertRaisesRegex(
                 ProjectionError, "Complete batch company metric exact set"

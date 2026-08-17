@@ -50,17 +50,16 @@
 - Requirement authority 同时绑定 exact FSD、immutable R2、exact R3 Addendum、Decision Register、frozen baseline、release plan 与 semantic runtime versions；任一 bytes 变化都会使旧 approval、Run、Batch 与 publication 失效。
 - 当前交付仍是仓库 CLI/文件，没有 UI、API、scheduler、生产数据库或自动 HUMAN approval 服务；recorded sandbox 也不会改变这一产品边界。
 
-### Recorded 离线演练
+### R4 并发快速验收
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 python3.9 -m unittest discover -s tests/vnext -t . -p 'test_*.py' -v
-PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests/vnext -t . -p 'test_*.py' -v
+PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py --scope recorded
 ```
 
-recorded runner 的最高状态是 `PASSED_RECORDED_ONLY`，receipt 写入 `outputs/acceptance_receipts/`；它不执行 live stage、formal Cutover 或 full acceptance。测试策略与 NOT_RUN 记录以 `TESTING.md` 为准。
-recorded/full acceptance 的持久命令证据使用 `runtime_bindings`：`$PYTHON_CURRENT`、`$PYTHON39` 与可用时的 `$SANDBOX_EXEC` 绑定 executable name 和 runtime binary SHA-256；argv、interpreter、output locator 与诊断中的本地路径递归替换为 portable token，剩余 host path 只保留 SHA-256，不持久化本机绝对路径。
-acceptance `--output-dir` 不能等于、包含或位于任何正式 pointer、mirror、SEC ledger、publication/qualification/audit namespace 下；命中时在首次写入前返回 `ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY`。caller 指定的 Python 3.9 只接受 native CPython 3.9 binary，并在完整正式状态 snapshot/byte backup 后、network+formal file deny sandbox 内探测；探测后 exact read-back，漂移必须恢复且整轮失败。
+R4只并发运行六个直接、非隔离、非 freeze/replay 的本地边界用例；recorded runner 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，receipt 写入 `outputs/acceptance_receipts/`。它不是 CI、live stage、formal Cutover 或 full acceptance。测试策略以 `TESTING.md` 为准。
+recorded/full acceptance 的持久命令证据使用 `runtime_bindings`：`$PYTHON_CURRENT` 与可用时的 `$SANDBOX_EXEC` 绑定 executable name 和 runtime binary SHA-256；argv、interpreter、output locator 与诊断中的本地路径递归替换为 portable token，剩余 host path 只保留 SHA-256，不持久化本机绝对路径。
+acceptance `--output-dir` 不能等于、包含或位于任何正式 pointer、mirror、SEC ledger、publication/qualification/audit namespace 下；命中时在首次写入前返回 `ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY`。R4不再启动 Python 3.9 全量测试或任何隔离 repository/worktree；formal authority 前后仍会 exact read-back。
 
 ### Cold-start recorded fixture 与 sandbox PublicationView
 
@@ -123,7 +122,7 @@ python3 tools/vnext_qualification.py status
 python3 tools/run_acceptance.py --scope full --execute-live
 ```
 
-qualification 的固定顺序是：第二真实布局首次 `prepare` 停在 HUMAN Review，决策后重跑同一命令形成 receipt；然后 `freeze` 同时绑定 production semantic tree 与 pre-holdout fixture/Run inventory；最后才加入并 `prepare` 独立 holdout。若 holdout bytes/Run 在 freeze 前已存在，或 holdout 后 semantic tree 漂移，`status` 必须失败。
+qualification 的固定顺序是：第二真实布局首次 `prepare` 停在 HUMAN Review，只有有效 HUMAN `APPROVE`、全量 `PUBLISHED` Result 与 `PASSED` Run validation后重跑同一命令才能形成 receipt；`REJECT`/WITHHELD 只保留审计；然后 `freeze` 同时绑定 production semantic tree 与 pre-holdout fixture/Run inventory；最后才加入并 `prepare` 独立 holdout。若 holdout bytes/Run 在 freeze 前已存在，或 holdout 后 semantic tree 漂移，`status` 必须失败。
 release input plan 会先验证 request-ledger manifest，再按 exact SEC URL/body hash/accession/document 选择有序 ledger 中最后一个验证通过的 attempt，并绑定 attempt ID、body/header locator 与 locator class。recorded 可保留唯一且逐 path/hash/headers/size 验证的 `LEGACY_WORKING_LOCATOR`，portable closure 必须记录其 tier/class；formal live 只允许 `IMMUTABLE_ATTEMPT`，以 `LIVE_SOURCE_ATTEMPT_INCOMPLETE` 拒绝 legacy class。plan 后 ledger binding 漂移则以 `SOURCE_LEDGER_BINDING_AMBIGUOUS` 失败。
 live 只在显式 `--execute-live` 下执行；缺凭据、qualification、HUMAN Decision、三轮稳定、strict parity、fault matrix、rollback/restore 或 terminal checker 任一证据时都不得产生 full PASS。Rollback 只切 committed predecessor pointer，不会重新启用旧 parser。
 首次 formal Cutover 会把冻结 legacy root bytes 导入为immutable predecessor A（不运行旧 parser），再把 formal vNext bundle B 绑定 A 并原子建立 initial chain。三次 live attempt 的 request/schema/assistant-output/provider-envelope/model/TransportObservation/Candidate/Evidence/Review/compatibility 会复制进 content-addressed portable audit closure；原 Run workspace 清理后，acceptance 仍须逐 byte 重验该 closure。new、rollback A、restore B 的report/Stage 12/checker 各自共用同一 pinned publication transaction。

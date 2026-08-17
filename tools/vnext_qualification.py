@@ -13,6 +13,7 @@ import argparse
 import json
 import shlex
 import sys
+import traceback
 from pathlib import Path
 from typing import Dict, Mapping, Optional, Sequence
 
@@ -146,7 +147,7 @@ def _review_blocker(
             "--review-unit-hash",
             str(unit["review_unit_hash"]),
             "--decision",
-            "APPROVE",
+            "APPROVE_OR_REJECT",
             "--reviewer-id",
             "<human-id>",
             "--decided-at-utc",
@@ -271,26 +272,38 @@ def main(*, argv: Sequence[str]) -> int:
                 "status": "PASSED",
                 **validate_cutover_qualifications(repo_root=REPO_ROOT),
             }
-    except (
-        AIAdapterError,
-        CanonicalError,
-        QualificationCliError,
-        QualificationError,
-        RunStoreError,
-        WorkflowError,
-        OSError,
-        ValueError,
-    ) as error:
+    # The CLI boundary intentionally catches ordinary exceptions so an unsafe
+    # fixture or unexpected implementation failure cannot leak a traceback to
+    # a reviewer unless they explicitly request diagnostic output.
+    except Exception as error:
         if arguments.debug:
-            raise
-        code = error.code if hasattr(error, "code") else type(error).__name__
-        details = error.details if hasattr(error, "details") else {}
+            traceback.print_exc()
+        if isinstance(error, QualificationCliError):
+            code = error.code
+            details = error.details
+            message = str(error)
+        elif isinstance(error, QualificationError):
+            code = error.code
+            details = {}
+            message = str(error)
+        elif isinstance(
+            error,
+            (AIAdapterError, CanonicalError, RunStoreError, WorkflowError,
+             OSError, ValueError),
+        ):
+            code = type(error).__name__
+            details = {}
+            message = str(error)
+        else:
+            code = "QUALIFICATION_COMMAND_FAILED"
+            details = {"error_class": type(error).__name__}
+            message = "Qualification command failed"
         print(
             json.dumps(
                 {
                     "status": "BLOCKED",
                     "error_code": code,
-                    "message": str(error),
+                    "message": message,
                     "details": details,
                 },
                 ensure_ascii=False,

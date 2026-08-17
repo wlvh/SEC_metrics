@@ -133,6 +133,31 @@
       "approved_at_utc": "2026-08-06T08:57:27Z",
       "supersedes_decision_id": "sha256:96db3da17996b2da8e175668ad2197e77f18ddf6601ac6a85c8c06f0770be992",
       "evidence": "ISSUE_CONTRACT_R3_ADDENDUM.md#r3-d3d-01-pending-openai-remote-policy"
+    },
+    {
+      "decision_id": "D-26",
+      "status": "APPROVED",
+      "choice": {
+        "test_execution_policy": "R4_FAST_CONCURRENT_NON_ISOLATED",
+        "applies_to": [
+          "development",
+          "pull_request",
+          "final_acceptance"
+        ],
+        "required_fast_command": "python3 tools/run_fast_tests.py --jobs 4",
+        "prohibited_required_test_classes": [
+          "broad_repository_regression",
+          "isolated_repository_or_worktree",
+          "freeze_replay",
+          "long_running_serial_suite"
+        ],
+        "evidence_tier": "FAST_LOCAL_ONLY",
+        "may_claim_ci_pass": false
+      },
+      "approved_by": "user:current-thread",
+      "approved_at_utc": "2026-08-17T07:44:45Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5313207170"
     }
   ],
   "pending_decisions": [

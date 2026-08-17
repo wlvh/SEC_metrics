@@ -30,6 +30,7 @@ from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
 from .canonical import sha256_bytes, sha256_file, strict_json_file
 from .canonical import strict_json_loads
+from .projector import LEGACY_BASELINE_SOURCE_FILES
 from .projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
 from .projector import LEGACY_MIGRATION_STATUSES, LEGACY_PROOF_MODES
 from .projector import PROJECTION_GATE_FILES, PROJECTION_MANIFEST_FIELDS
@@ -2864,6 +2865,7 @@ def _validate_legacy_migration_receipt(
     required_fields = {
         "allowed_statuses", "batch_manifest_id",
         "evidence_reconciliations", "legacy_input_hashes",
+        "legacy_baseline_commit", "legacy_baseline_source_files",
         "legacy_path_inventory_sha256", "metric_cells",
         "migration_entries", "receipt_id", "schema_version", "status",
     }
@@ -2878,6 +2880,20 @@ def _validate_legacy_migration_receipt(
         != projection["requirement_hashes"][
             "legacy_path_inventory_sha256"
         ]
+        or type(receipt["legacy_baseline_commit"]) is not str
+        or re.fullmatch(r"[0-9a-f]{40}", receipt["legacy_baseline_commit"])
+        is None
+        or not isinstance(receipt["legacy_baseline_source_files"], dict)
+        or set(receipt["legacy_baseline_source_files"])
+        != set(LEGACY_BASELINE_SOURCE_FILES)
+        or any(
+            type(receipt["legacy_baseline_source_files"][relative])
+            is not str
+            or SHA256_PATTERN.fullmatch(
+                receipt["legacy_baseline_source_files"][relative]
+            ) is None
+            for relative in LEGACY_BASELINE_SOURCE_FILES
+        )
         or receipt["allowed_statuses"] != list(LEGACY_MIGRATION_STATUSES)
         or type(receipt["evidence_reconciliations"]) is not list
         or type(receipt["metric_cells"]) is not list
@@ -2979,6 +2995,15 @@ def _validate_legacy_migration_receipt(
         if receipt["migration_entries"] != inventory["migration_entries"]:
             raise PublicationError(
                 "Legacy migration ledger differs from inventory"
+            )
+        if (
+            receipt["legacy_baseline_commit"]
+            != inventory["baseline_commit"]
+            or receipt["legacy_baseline_source_files"]
+            != inventory["source_files"]
+        ):
+            raise PublicationError(
+                "Legacy migration baseline differs from inventory"
             )
     body = {
         key: receipt[key]

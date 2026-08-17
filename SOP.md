@@ -4,6 +4,10 @@
 
 每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。`config/validation_source_policy.json` 必须把每个权威引用分类为运行/验收 source、snapshot artifact 或非批次治理角色；解释性非权威文档不能作为本表的运行权威。
 
+## R4 测试执行边界
+
+按 [Issue #12 R4 用户授权](https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5313207170)，开发、PR 与 final acceptance 的唯一必跑测试是 `python3 tools/run_fast_tests.py --jobs 4`，随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY` 本地证据。不得把全仓/双解释器套件、隔离 repository/worktree、freeze/replay 或长串行场景列为必跑测试。下文的 qualification、live、staging、rollback/restore 是实际运营发布流程，不由 R4 测试替代，也不得凭快速测试声称完成。
+
 ## 快速入口：只读取现有结果
 
 | 步骤 | 动作 | 权威引用 | 验收 |
@@ -43,7 +47,7 @@ Freeze 保存不可变审计与 replay 事实，不代表 validation 通过；pu
 | 2 | 用同一 operator 创建、查看并推进 Run；recorded 只替换 transport/source acquisition | `python3 tools/vnext_operator.py --help`；`interact.md` | recorded 时 socket=0、root/active 不变；live 必须显式 `--execute-live`，只读 `OPENAI_API_KEY`，SEC organization 固定 `axaxl` 且 email 只读 `SEC_CONTACT_EMAIL` |
 | 3 | 让具名 HUMAN 复核 `review.md` 和完整 ReviewUnit，并通过 `review list/show/decide` 追加单链决定 | `tools/vnext_operator.py review`；`tools/vnext_review.py` | 程序、模型、fixture 和 acceptance runner 均不得自动批准；缺决定返回 `HUMAN_REVIEW_REQUIRED`、保留 OPEN Run 并给出恢复命令 |
 | 4 | release input plan先绑定exact source的latest verified request attempt及locator class；finalize/freeze 后做无网络 replay，再由 complete BatchManifest 与 Projector 形成 strict-compatible staging | `architecture.md`；`TESTING.md` | recorded legacy locator必须逐path/hash/headers/size验证并在closure显式绑定tier/class；formal live只允许immutable attempt并拒绝legacy。所有 Run 都是 `PASSED/FROZEN`；十公司×四指标 exact set、N/A、期间、字段/evidence/reconciliation parity 全部通过；WITHHELD 阻止整批发布 |
-| 5 | 先完成第二真实布局及HUMAN-reviewed receipt，再冻结production semantic tree和pre-holdout inventory，最后才加入独立holdout | `tools/vnext_qualification.py` | `prepare SECOND`→HUMAN→重跑prepare→`freeze`→新增`HOLDOUT`→HUMAN→重跑prepare→`status`顺序成立；至少两项materially different，holdout在freeze前不存在且加入后semantic hash不漂移 |
+| 5 | 先完成第二真实布局的有效 HUMAN `APPROVE`、全量`PUBLISHED` Result和`PASSED` Run validation receipt，再冻结production semantic tree和pre-holdout inventory，最后才加入独立holdout | `tools/vnext_qualification.py` | `prepare SECOND`→HUMAN→重跑prepare→`freeze`→新增`HOLDOUT`→HUMAN→重跑prepare→`status`顺序成立；`REJECT`/WITHHELD只保留审计而不能签发资格receipt；至少两项materially different，holdout在freeze前不存在且加入后semantic hash不漂移 |
 | 6 | 只在全部资格和凭据满足后执行 live Cutover；同一命令先执行固定SEC acquisition/inventory，再依次验证 new→rollback→restore | `python3 tools/run_acceptance.py --scope full --execute-live` | 三次live attempt的portable audit closure、十公司staging、verified legacy A→formal B commit，以及每轮单次调用`tools/vnext_terminal_cycle.py`、共用同一pinned view完成五项gate均真实产生并返回0 |
 
 ### Cold-start recorded fixture 与 sandbox publication
@@ -61,7 +65,7 @@ python3 tools/vnext_cutover.py --json --fixture-id <id> \
 
 sandbox publication 的 request closure按证据层级验证：recorded 可接受历史ledger row明确声明、且body/headers的repository path、hash、size全部匹配的唯一`LEGACY_WORKING_LOCATOR`，portable closure必须保留locator tier/class；缺失、歧义或bytes漂移均失败。formal/live仍只允许`IMMUTABLE_ATTEMPT`，legacy class稳定返回`LIVE_SOURCE_ATTEMPT_INCOMPLETE`，不得因recorded可重放就升级为formal证据。
 
-`python3 tools/run_acceptance.py --scope recorded` 的最高状态仍是 `PASSED_RECORDED_ONLY`，且不得修改正式 pointer、root mirrors、formal namespace或SEC ledger。generic operator `publish`只能准备inactive recorded bundle；public generic formal receipt/commit API会以`FORMAL_CUTOVER_AUTHORITY_REQUIRED`或`FORMAL_COMMIT_REQUIRES_CUTOVER`失败，不能绕过Cutover orchestrator。source plan后ledger binding漂移以`SOURCE_LEDGER_BINDING_AMBIGUOUS`失败，formal live遇`LEGACY_WORKING_LOCATOR`以`LIVE_SOURCE_ATTEMPT_INCOMPLETE`失败。首次formal Cutover把冻结legacy bytes只读导入为verified predecessor A，再原子建立A→formal B；rollback到A也不会调用旧parser。`--scope full` 未带 `--execute-live` 返回 `LIVE_EXECUTION_NOT_AUTHORIZED`。本轮仓库尚无合格第二布局/holdout bytes、live/HUMAN/staging/active predecessor/full receipts，所需两个环境凭据也缺失，因此当前业务入口仍是 root CSV/报告；实现就绪不等于 active Cutover。
+`python3 tools/run_acceptance.py --scope recorded` 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，且不得修改正式 pointer、root mirrors、formal namespace或SEC ledger。generic operator `publish`只能准备inactive recorded bundle；public generic formal receipt/commit API会以`FORMAL_CUTOVER_AUTHORITY_REQUIRED`或`FORMAL_COMMIT_REQUIRES_CUTOVER`失败，不能绕过Cutover orchestrator。source plan后ledger binding漂移以`SOURCE_LEDGER_BINDING_AMBIGUOUS`失败，formal live遇`LEGACY_WORKING_LOCATOR`以`LIVE_SOURCE_ATTEMPT_INCOMPLETE`失败。首次formal Cutover把冻结legacy bytes只读导入为verified predecessor A，再原子建立A→formal B；rollback到A也不会调用旧parser。`--scope full` 未带 `--execute-live` 返回 `LIVE_EXECUTION_NOT_AUTHORIZED`。本轮仓库尚无合格第二布局/holdout bytes、live/HUMAN/staging/active predecessor/full receipts，所需两个环境凭据也缺失，因此当前业务入口仍是 root CSV/报告；R4快速本地证据不等于 active Cutover。
 
 recorded acceptance 当前要求 macOS `/usr/bin/sandbox-exec` 对整个子进程树拒绝网络，以literal保护正式pointer/mirrors/sidecar/ledger、pointer lock与latest run status，以subpath保护live Cutover、qualification、request attempts、publication、publication switch intent/receipt、fault与live audit tree；缺失时稳定返回 `OFFLINE_PROCESS_SANDBOX_REQUIRED`，不得降级。runner 还会从 recorded 与 terminal-validation 子进程剥离 live secrets，绑定 clean source/Requirement、本次隔离 semantic/scalability exact artifacts，并在前后重验formal namespace exact tree与pointer lock/latest status bytes。持久receipt用`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$PYTHON39`、`$SANDBOX_EXEC`等portable token替换host路径，并对实际runtime binary保存SHA-256；本机绝对路径不落盘。每个new/rollback/restore terminal cycle只启动一次`tools/vnext_terminal_cycle.py`，在单进程、单次pin中完成Stage10→Stage11→Stage12→snapshot publish→verify。若 recorded 仍产生 root drift，会先恢复原 bytes 但本次 receipt 保持失败；namespace/ledger漂移fail closed且不删除可能的并发合法append。full Cutover 子进程若在非零、`HUMAN_REVIEW_REQUIRED` 或非法返回时意外 commit，会恢复调用前 predecessor（首次无 pointer 时恢复原 root bytes）并保留原 blocker。默认 7200 秒只是单 command timeout 上限，超时仍为 `FAILED`。
 
