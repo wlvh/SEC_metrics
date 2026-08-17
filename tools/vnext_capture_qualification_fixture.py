@@ -53,6 +53,7 @@ from vnext.reader_input import (  # noqa: E402
 from vnext.sources import raw_blob_record, source_reference_record  # noqa: E402
 from vnext.specs import SpecError, compile_spec_file  # noqa: E402
 from vnext.table_grid import TableGridError, build_table_grid, resolve_cell  # noqa: E402
+from vnext.workflow import _load_disclosure_plan  # noqa: E402
 
 
 _CANDIDATE_PATH = REPO_ROOT / "fixtures/vnext/qualification_candidates.json"
@@ -318,6 +319,38 @@ def _layout_differences(
     return differences
 
 
+def _reader_units_match_specs(
+    *, candidate: Mapping[str, object], disclosure_spec_path: str,
+) -> bool:
+    """Require captured Reader units to equal the compiled metric Specs.
+
+    Args:
+        candidate: Strict Candidate produced by the recorded model response.
+        disclosure_spec_path: Repository disclosure-group Spec locator.
+
+    Returns:
+        True only when every published and supporting role has its exact
+        case-sensitive reported unit before fixture bytes are committed.
+    """
+    disclosure_spec, _paths, metric_specs = _load_disclosure_plan(
+        repo_root=REPO_ROOT, disclosure_spec_path=disclosure_spec_path,
+    )
+    projection = disclosure_spec["compiled"]["legacy_projection"]
+    expected_units = {
+        role: metric_specs[str(metric_id)]["compiled"]["reported_unit"]
+        for role, metric_id in projection["role_metric_ids"].items()
+    }
+    expected_units.update(projection["supporting_role_units"])
+    return (
+        set(candidate["selected"]) == set(expected_units)
+        and all(
+            candidate["selected"][role]["claimed_reported_unit"]
+            == expected_units[role]
+            for role in expected_units
+        )
+    )
+
+
 def capture(*, fixture_id: str) -> Dict[str, object]:
     """Fetch, read, and persist one real qualification fixture.
 
@@ -435,6 +468,14 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
             raise CaptureError(
                 code="QUALIFICATION_CAPTURE_EVIDENCE_REJECTED",
                 message="Reader response failed mechanical evidence checks",
+            )
+        if not _reader_units_match_specs(
+            candidate=candidate_record,
+            disclosure_spec_path=str(candidate["disclosure_spec_path"]),
+        ):
+            raise CaptureError(
+                code="QUALIFICATION_CAPTURE_UNIT_MISMATCH",
+                message="Reader response units differ from fixed metric Specs",
             )
         excerpt = _excerpt(
             derived_asset=derived_asset,

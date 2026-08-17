@@ -642,6 +642,8 @@ def build_deepseek_chat_completions_body(
                     "use exactly the derived_asset_id and table_id named by "
                     "table_locator. claimed_period must use the filing year "
                     "as FY<year>, never a semantic requirement token."
+                    " Unit strings are case-sensitive: use USD for currency "
+                    "and percent for percentage values."
                 ),
             },
             {"role": "user", "content": reader_text},

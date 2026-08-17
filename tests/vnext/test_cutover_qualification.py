@@ -164,7 +164,7 @@ class CutoverQualificationTest(unittest.TestCase):
     def test_qualification_traits_are_bound_outside_registry(self) -> None:
         """Allow only the fixture-bound external issuer trait exception."""
         repo_root = Path(__file__).resolve().parents[2]
-        fixture_id = "hilton-2024-sec-layout-v3"
+        fixture_id = "hilton-2024-sec-layout-v4"
         fixture = json.loads(
             (
                 repo_root / "fixtures/vnext/layouts" / fixture_id
