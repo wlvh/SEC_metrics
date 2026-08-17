@@ -1,0 +1,1839 @@
+{
+  "schema_version": 3,
+  "scope": "recorded",
+  "execute_live": false,
+  "status": "PASSED_FAST_LOCAL_ONLY",
+  "started_at_utc": "2026-08-17T07:59:44.012661+00:00",
+  "finished_at_utc": "2026-08-17T07:59:48.467277+00:00",
+  "commands": [
+    {
+      "argv": [
+        "$PYTHON_CURRENT",
+        "-c",
+        "import socket\ntry:\n socket.socket()\nexcept PermissionError as error:\n assert str(error) == 'RECORDED_SOCKET_BLOCKED'\nelse:\n raise SystemExit('RECORDED_SOCKET_NOT_BLOCKED')"
+      ],
+      "executed_argv": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+        "$PYTHON_CURRENT",
+        "-c",
+        "import socket\ntry:\n socket.socket()\nexcept PermissionError as error:\n assert str(error) == 'RECORDED_SOCKET_BLOCKED'\nelse:\n raise SystemExit('RECORDED_SOCKET_NOT_BLOCKED')"
+      ],
+      "interpreter": "$PYTHON_CURRENT",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 19,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "OPENAI_API_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPATH",
+        "SEC_CONTACT_EMAIL"
+      ],
+      "execution_wrapper": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+      ],
+      "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+    },
+    {
+      "argv": [
+        "$PYTHON_CURRENT",
+        "tools/run_fast_tests.py",
+        "--jobs",
+        "4"
+      ],
+      "executed_argv": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+        "$PYTHON_CURRENT",
+        "tools/run_fast_tests.py",
+        "--jobs",
+        "4"
+      ],
+      "interpreter": "$PYTHON_CURRENT",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 232,
+      "stdout_sha256": "7720681a4729b1b3b3c99eb75805e54d60ccdc0ea25ae2efc7075408766ae4b9",
+      "stdout_size": 1996,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "OPENAI_API_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPATH",
+        "SEC_CONTACT_EMAIL"
+      ],
+      "execution_wrapper": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+      ],
+      "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+    },
+    {
+      "argv": [
+        "$PYTHON_CURRENT",
+        "tools/check_vnext_semantics.py",
+        "--repo-root",
+        ".",
+        "--output",
+        "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/semantic_audit_receipt.json",
+        "--secret-token-env",
+        "VNEXT_SECRET_SCAN_TOKEN",
+        "--secret-root",
+        "artifacts/vnext",
+        "--secret-root",
+        "outputs"
+      ],
+      "executed_argv": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+        "$PYTHON_CURRENT",
+        "tools/check_vnext_semantics.py",
+        "--repo-root",
+        ".",
+        "--output",
+        "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/semantic_audit_receipt.json",
+        "--secret-token-env",
+        "VNEXT_SECRET_SCAN_TOKEN",
+        "--secret-root",
+        "artifacts/vnext",
+        "--secret-root",
+        "outputs"
+      ],
+      "interpreter": "$PYTHON_CURRENT",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 243,
+      "stdout_sha256": "18cecb611c01222973997da7aab5b5b9023b00226c5afc09aff71a4ee3c1b276",
+      "stdout_size": 181,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "OPENAI_API_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPATH",
+        "SEC_CONTACT_EMAIL",
+        "VNEXT_SECRET_SCAN_TOKEN"
+      ],
+      "execution_wrapper": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+      ],
+      "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+    },
+    {
+      "argv": [
+        "$PYTHON_CURRENT",
+        "tools/check_no_company_literals.py",
+        "--output",
+        "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/scalability_audit.csv"
+      ],
+      "executed_argv": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+        "$PYTHON_CURRENT",
+        "tools/check_no_company_literals.py",
+        "--output",
+        "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/scalability_audit.csv"
+      ],
+      "interpreter": "$PYTHON_CURRENT",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 1970,
+      "stdout_sha256": "aea0e91c3ba45dd88d06e41e3dae49c1f423320429c18e3b09b63ade4eba26f7",
+      "stdout_size": 43,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "OPENAI_API_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPATH",
+        "SEC_CONTACT_EMAIL"
+      ],
+      "execution_wrapper": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+      ],
+      "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+    },
+    {
+      "argv": [
+        "$PYTHON_CURRENT",
+        "tools/check_capability_contract_alignment.py"
+      ],
+      "executed_argv": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+        "$PYTHON_CURRENT",
+        "tools/check_capability_contract_alignment.py"
+      ],
+      "interpreter": "$PYTHON_CURRENT",
+      "outcome": "PASSED",
+      "return_code": 0,
+      "duration_ms": 1807,
+      "stdout_sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb",
+      "stdout_size": 108,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_size": 0,
+      "reason": "",
+      "error_class": "",
+      "environment_keys": [
+        "OPENAI_API_KEY",
+        "PYTHONDONTWRITEBYTECODE",
+        "PYTHONPATH",
+        "SEC_CONTACT_EMAIL"
+      ],
+      "execution_wrapper": [
+        "$SANDBOX_EXEC",
+        "-p",
+        "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+      ],
+      "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+    }
+  ],
+  "external_blockers": [],
+  "blocking_detail": null,
+  "not_run_items": [],
+  "authority_binding": {
+    "source": {
+      "checkout_status": "GIT_CLEAN",
+      "source_commit": "66f6456977a498f373c1f6ccf4f0673f4048b7bc",
+      "tree_sha256": "e2b428f29af39e1efdee6321751ab7e27e185c982f7005883db37fc6b9863a0e",
+      "file_count": 142,
+      "dirty_paths": []
+    },
+    "requirements": {
+      "requirement_closure_hash": "sha256:90446963955258e9a7271b8ab6079520dee11600639a67109be9ffee53a5ee13",
+      "hashes": {
+        "baseline_sha256": "bb747012a70aa07f6860db0b69cf46b6e5a9a90396e32b62274e471ad63979d2",
+        "decision_register_sha256": "b1b8119881579c81fa690b228d043abb5cef0ab90aae29e8c5129a23bfbc6edd",
+        "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+        "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+        "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+        "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+        "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+        "semantic_runtime_versions_hash": "sha256:59a98abb0ccc2fb3625dd140bc159a1a6c2c8e389e34af452e24e579538decd7"
+      }
+    }
+  },
+  "recorded_evidence": {
+    "commands": [
+      {
+        "argv": [
+          "$PYTHON_CURRENT",
+          "-c",
+          "import socket\ntry:\n socket.socket()\nexcept PermissionError as error:\n assert str(error) == 'RECORDED_SOCKET_BLOCKED'\nelse:\n raise SystemExit('RECORDED_SOCKET_NOT_BLOCKED')"
+        ],
+        "executed_argv": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+          "$PYTHON_CURRENT",
+          "-c",
+          "import socket\ntry:\n socket.socket()\nexcept PermissionError as error:\n assert str(error) == 'RECORDED_SOCKET_BLOCKED'\nelse:\n raise SystemExit('RECORDED_SOCKET_NOT_BLOCKED')"
+        ],
+        "interpreter": "$PYTHON_CURRENT",
+        "outcome": "PASSED",
+        "return_code": 0,
+        "duration_ms": 19,
+        "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_size": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size": 0,
+        "reason": "",
+        "error_class": "",
+        "environment_keys": [
+          "OPENAI_API_KEY",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONPATH",
+          "SEC_CONTACT_EMAIL"
+        ],
+        "execution_wrapper": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+        ],
+        "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+      },
+      {
+        "argv": [
+          "$PYTHON_CURRENT",
+          "tools/run_fast_tests.py",
+          "--jobs",
+          "4"
+        ],
+        "executed_argv": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+          "$PYTHON_CURRENT",
+          "tools/run_fast_tests.py",
+          "--jobs",
+          "4"
+        ],
+        "interpreter": "$PYTHON_CURRENT",
+        "outcome": "PASSED",
+        "return_code": 0,
+        "duration_ms": 232,
+        "stdout_sha256": "7720681a4729b1b3b3c99eb75805e54d60ccdc0ea25ae2efc7075408766ae4b9",
+        "stdout_size": 1996,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size": 0,
+        "reason": "",
+        "error_class": "",
+        "environment_keys": [
+          "OPENAI_API_KEY",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONPATH",
+          "SEC_CONTACT_EMAIL"
+        ],
+        "execution_wrapper": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+        ],
+        "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+      },
+      {
+        "argv": [
+          "$PYTHON_CURRENT",
+          "tools/check_vnext_semantics.py",
+          "--repo-root",
+          ".",
+          "--output",
+          "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/semantic_audit_receipt.json",
+          "--secret-token-env",
+          "VNEXT_SECRET_SCAN_TOKEN",
+          "--secret-root",
+          "artifacts/vnext",
+          "--secret-root",
+          "outputs"
+        ],
+        "executed_argv": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+          "$PYTHON_CURRENT",
+          "tools/check_vnext_semantics.py",
+          "--repo-root",
+          ".",
+          "--output",
+          "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/semantic_audit_receipt.json",
+          "--secret-token-env",
+          "VNEXT_SECRET_SCAN_TOKEN",
+          "--secret-root",
+          "artifacts/vnext",
+          "--secret-root",
+          "outputs"
+        ],
+        "interpreter": "$PYTHON_CURRENT",
+        "outcome": "PASSED",
+        "return_code": 0,
+        "duration_ms": 243,
+        "stdout_sha256": "18cecb611c01222973997da7aab5b5b9023b00226c5afc09aff71a4ee3c1b276",
+        "stdout_size": 181,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size": 0,
+        "reason": "",
+        "error_class": "",
+        "environment_keys": [
+          "OPENAI_API_KEY",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONPATH",
+          "SEC_CONTACT_EMAIL",
+          "VNEXT_SECRET_SCAN_TOKEN"
+        ],
+        "execution_wrapper": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+        ],
+        "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+      },
+      {
+        "argv": [
+          "$PYTHON_CURRENT",
+          "tools/check_no_company_literals.py",
+          "--output",
+          "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/scalability_audit.csv"
+        ],
+        "executed_argv": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+          "$PYTHON_CURRENT",
+          "tools/check_no_company_literals.py",
+          "--output",
+          "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/scalability_audit.csv"
+        ],
+        "interpreter": "$PYTHON_CURRENT",
+        "outcome": "PASSED",
+        "return_code": 0,
+        "duration_ms": 1970,
+        "stdout_sha256": "aea0e91c3ba45dd88d06e41e3dae49c1f423320429c18e3b09b63ade4eba26f7",
+        "stdout_size": 43,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size": 0,
+        "reason": "",
+        "error_class": "",
+        "environment_keys": [
+          "OPENAI_API_KEY",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONPATH",
+          "SEC_CONTACT_EMAIL"
+        ],
+        "execution_wrapper": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+        ],
+        "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+      },
+      {
+        "argv": [
+          "$PYTHON_CURRENT",
+          "tools/check_capability_contract_alignment.py"
+        ],
+        "executed_argv": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+          "$PYTHON_CURRENT",
+          "tools/check_capability_contract_alignment.py"
+        ],
+        "interpreter": "$PYTHON_CURRENT",
+        "outcome": "PASSED",
+        "return_code": 0,
+        "duration_ms": 1807,
+        "stdout_sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb",
+        "stdout_size": 108,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stderr_size": 0,
+        "reason": "",
+        "error_class": "",
+        "environment_keys": [
+          "OPENAI_API_KEY",
+          "PYTHONDONTWRITEBYTECODE",
+          "PYTHONPATH",
+          "SEC_CONTACT_EMAIL"
+        ],
+        "execution_wrapper": [
+          "$SANDBOX_EXEC",
+          "-p",
+          "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+        ],
+        "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084"
+      }
+    ],
+    "publication_state_before": {
+      "active_publication_id": null,
+      "mirror_hashes": {
+        "README_RUN.md": "b6b8194b78219fa091a4e0154b86261de1b5a897bff57c9b2dcf92215186139a",
+        "REPORT_十公司财务指标.md": "82dc8399e928378a3fb0deb7db5109b59be59bb9152bfec91206dd2430a839d7",
+        "coverage_matrix.csv": "c66695007b3ad55c35fe2fc107f0587333efb600eb278ba7408fcd8cc4f4423c",
+        "golden_results.csv": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+        "legacy_invariant_migration_receipt.json": null,
+        "metric_evidence.csv": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "metrics_matrix.csv": "0fdb969afe0bbc89c28a1f68d41c706ef2f1afc2c926302a04ee503ec12adb42",
+        "projection_manifest.json": null,
+        "publication_validation_receipt.json": null,
+        "repair_validation_results.csv": "ce38a4d549230f5376881c3a975e406d2e218bd84b85bae92302e1cd26d2e2e1",
+        "scalability_audit.csv": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+        "semantic_audit_receipt.json": "b70ebe668fb94c824fe76275d2f990c30b5b7b800a8fbfe93e14d9a07fee14c1",
+        "stratified_audit.csv": "9eceea9b741e73910e978889633861f65a1bfa5f4a3a536e64a55dfe1f79f771",
+        "validation_run_manifest.json": "d4b020629de700ee7e63ccef397866f6ad47c7e903c85aa4a69cdb1a34ae920c"
+      },
+      "authority_hashes": {
+        "outputs/active_publication.json": null,
+        "outputs/validation_snapshot_provenance.json": "46e5c299bf21e40a87f92e40455732c45656c7c6dcf5d88f0f629a92799370be",
+        "evidence/requests_log.csv": "9eeffd42c7ada8fb3439eb2c087f28ce9299d57a3c04789d349f147f631d6bd0",
+        "evidence/requests_log_manifest.json": "805f1c7b8a484a971cb3f75a5dac13fee109e078d15799c78c9fa5e7e64a34f2",
+        "artifacts/vnext/latest_run_status.json": null,
+        "outputs/active_publication.json.lock": null
+      },
+      "formal_namespace_trees": {
+        "artifacts/vnext/cutover": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "artifacts/vnext/qualification": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "evidence/request_attempts": {
+          "exists": true,
+          "directories": [
+            "evidence/request_attempts",
+            "evidence/request_attempts/00",
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d",
+            "evidence/request_attempts/04",
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed",
+            "evidence/request_attempts/0e",
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b",
+            "evidence/request_attempts/0f",
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6",
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b",
+            "evidence/request_attempts/16",
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074",
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1",
+            "evidence/request_attempts/19",
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822",
+            "evidence/request_attempts/25",
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4",
+            "evidence/request_attempts/27",
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a",
+            "evidence/request_attempts/29",
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c",
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8",
+            "evidence/request_attempts/36",
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053",
+            "evidence/request_attempts/3c",
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5",
+            "evidence/request_attempts/3d",
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539",
+            "evidence/request_attempts/60",
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64",
+            "evidence/request_attempts/71",
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b",
+            "evidence/request_attempts/73",
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595",
+            "evidence/request_attempts/7e",
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3",
+            "evidence/request_attempts/86",
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8",
+            "evidence/request_attempts/89",
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12",
+            "evidence/request_attempts/8b",
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8",
+            "evidence/request_attempts/a0",
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9",
+            "evidence/request_attempts/a9",
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1",
+            "evidence/request_attempts/ae",
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a",
+            "evidence/request_attempts/bc",
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c",
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667",
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16",
+            "evidence/request_attempts/c5",
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84",
+            "evidence/request_attempts/c6",
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f",
+            "evidence/request_attempts/c8",
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977",
+            "evidence/request_attempts/d7",
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e",
+            "evidence/request_attempts/e4",
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a",
+            "evidence/request_attempts/eb",
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c",
+            "evidence/request_attempts/ef",
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657",
+            "evidence/request_attempts/f4",
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5",
+            "evidence/request_attempts/f5",
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674",
+            "evidence/request_attempts/fe",
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4"
+          ],
+          "files": {
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d",
+              "size": 335
+            },
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d/jpmorgan_chase_assetscurrent_companyconcept.json.71bc383a25e82941bb8757ac892fecded3cb78740c22d2c5aa89bdd8ab0d93a8.headers.json": {
+              "sha256": "71bc383a25e82941bb8757ac892fecded3cb78740c22d2c5aa89bdd8ab0d93a8",
+              "size": 804
+            },
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed",
+              "size": 335
+            },
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed/jpmorgan_chase_assetscurrent_companyconcept.json.27c27ace524b05d3d54b3a40a461741c9fe750e4fcc50fe81076de6e48e02819.headers.json": {
+              "sha256": "27c27ace524b05d3d54b3a40a461741c9fe750e4fcc50fe81076de6e48e02819",
+              "size": 804
+            },
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b/company_tickers_exchange.json": {
+              "sha256": "0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b",
+              "size": 1925
+            },
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b/company_tickers_exchange.json.a232345dd6edca7ece0e07ce34cd6088771cdced7c9448fc83fc39ed916fbe33.headers.json": {
+              "sha256": "a232345dd6edca7ece0e07ce34cd6088771cdced7c9448fc83fc39ed916fbe33",
+              "size": 651
+            },
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6",
+              "size": 335
+            },
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6/jpmorgan_chase_assetscurrent_companyconcept.json.1fda449372867ff92fa9c2a5d3003748d7992dead892928ccc2473edd2d0262c.headers.json": {
+              "sha256": "1fda449372867ff92fa9c2a5d3003748d7992dead892928ccc2473edd2d0262c",
+              "size": 804
+            },
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b/company_tickers_exchange.json": {
+              "sha256": "0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b",
+              "size": 1925
+            },
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b/company_tickers_exchange.json.cf2ea7ba084a2cdebef6b3f552429d60fbe1f69c6a1613df7922e5e76d5dc701.headers.json": {
+              "sha256": "cf2ea7ba084a2cdebef6b3f552429d60fbe1f69c6a1613df7922e5e76d5dc701",
+              "size": 651
+            },
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074",
+              "size": 335
+            },
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074/jpm_assetscurrent_companyconcept.json.d4ca09483afdc21703261cc59b1c5f6bcdea1aafda9c7d76fb24de552f45d584.headers.json": {
+              "sha256": "d4ca09483afdc21703261cc59b1c5f6bcdea1aafda9c7d76fb24de552f45d584",
+              "size": 804
+            },
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1",
+              "size": 335
+            },
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1/jpmorgan_chase_assetscurrent_companyconcept.json.fb44a8422ac81f166d847d033c0ac04c0dc63101b69216c23db8ee6cb5414a9f.headers.json": {
+              "sha256": "fb44a8422ac81f166d847d033c0ac04c0dc63101b69216c23db8ee6cb5414a9f",
+              "size": 804
+            },
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822",
+              "size": 335
+            },
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822/jpmorgan_chase_assetscurrent_companyconcept.json.9ad1e0c698d86c28cf70968853795d9aadc12e9bed05990fb4cb156aaa4e470d.headers.json": {
+              "sha256": "9ad1e0c698d86c28cf70968853795d9aadc12e9bed05990fb4cb156aaa4e470d",
+              "size": 804
+            },
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4",
+              "size": 335
+            },
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4/jpmorgan_chase_assetscurrent_companyconcept.json.5efc9033c303518fac1db3531483581ac4172c0d5fa4c2a28ed285ec9be1b24d.headers.json": {
+              "sha256": "5efc9033c303518fac1db3531483581ac4172c0d5fa4c2a28ed285ec9be1b24d",
+              "size": 804
+            },
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a",
+              "size": 335
+            },
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a/jpm_assetscurrent_companyconcept.json.d8f1829051f3cd0dd34df7f8fe8fea4ae2643568a11ce995cde33910312d96c7.headers.json": {
+              "sha256": "d8f1829051f3cd0dd34df7f8fe8fea4ae2643568a11ce995cde33910312d96c7",
+              "size": 804
+            },
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c",
+              "size": 335
+            },
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c/jpm_assetscurrent_companyconcept.json.345a5b5785f8c551ed05d2f4d3caf9f4219cd107c8780b81331af746de0708db.headers.json": {
+              "sha256": "345a5b5785f8c551ed05d2f4d3caf9f4219cd107c8780b81331af746de0708db",
+              "size": 804
+            },
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8",
+              "size": 335
+            },
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8/jpm_assetscurrent_companyconcept.json.d7e80c75bd707b2f8c35e910064c7307cf917bb81a7495f4c4b5c361bbb4b8a6.headers.json": {
+              "sha256": "d7e80c75bd707b2f8c35e910064c7307cf917bb81a7495f4c4b5c361bbb4b8a6",
+              "size": 804
+            },
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053",
+              "size": 335
+            },
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053/jpmorgan_chase_assetscurrent_companyconcept.json.fb5856bd3d37616d4a85fdf23bc34345013cba6a993e407d2de5ff0afc4a4323.headers.json": {
+              "sha256": "fb5856bd3d37616d4a85fdf23bc34345013cba6a993e407d2de5ff0afc4a4323",
+              "size": 804
+            },
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5",
+              "size": 335
+            },
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5/jpmorgan_chase_assetscurrent_companyconcept.json.eb7f3d12abed55c2fa78fad4facdeb49d4df0c7a8a77756dabe69513759e555b.headers.json": {
+              "sha256": "eb7f3d12abed55c2fa78fad4facdeb49d4df0c7a8a77756dabe69513759e555b",
+              "size": 804
+            },
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539",
+              "size": 335
+            },
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539/jpmorgan_chase_assetscurrent_companyconcept.json.03da8d5e14fe017989ceb90924b0fdfd60ca7bf9c0ee7ab68c31984e3ffcfb0a.headers.json": {
+              "sha256": "03da8d5e14fe017989ceb90924b0fdfd60ca7bf9c0ee7ab68c31984e3ffcfb0a",
+              "size": 804
+            },
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64",
+              "size": 335
+            },
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64/jpmorgan_chase_assetscurrent_companyconcept.json.9433cb35a86194983a5283cf3d5269d777d07a67ab4963bec72d939ea8e1d0bc.headers.json": {
+              "sha256": "9433cb35a86194983a5283cf3d5269d777d07a67ab4963bec72d939ea8e1d0bc",
+              "size": 804
+            },
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b",
+              "size": 335
+            },
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b/jpm_assetscurrent_companyconcept.json.29a6ef0e2d75b1029d2b843c84f8fa8a06f307f9968d34a3eeb1c72d40fdb22a.headers.json": {
+              "sha256": "29a6ef0e2d75b1029d2b843c84f8fa8a06f307f9968d34a3eeb1c72d40fdb22a",
+              "size": 804
+            },
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595",
+              "size": 335
+            },
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595/jpmorgan_chase_assetscurrent_companyconcept.json.ef162476db7243a500a8105358d7167165cbe9e9a7e4d0db95e63022dcd70232.headers.json": {
+              "sha256": "ef162476db7243a500a8105358d7167165cbe9e9a7e4d0db95e63022dcd70232",
+              "size": 804
+            },
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3",
+              "size": 335
+            },
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3/jpmorgan_chase_assetscurrent_companyconcept.json.b5e3c179db5460df75831cdc58beed88e5b77753fb79b8d28ff3307be568dcd5.headers.json": {
+              "sha256": "b5e3c179db5460df75831cdc58beed88e5b77753fb79b8d28ff3307be568dcd5",
+              "size": 804
+            },
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8",
+              "size": 335
+            },
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8/jpmorgan_chase_assetscurrent_companyconcept.json.51fa4d33d8fef4e414526d786f0920053f976af3ade823af032a6e9dadcc78a2.headers.json": {
+              "sha256": "51fa4d33d8fef4e414526d786f0920053f976af3ade823af032a6e9dadcc78a2",
+              "size": 804
+            },
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12",
+              "size": 335
+            },
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12/jpmorgan_chase_assetscurrent_companyconcept.json.8cc64847fa5295f4301e2e30993b6e7eee25032aed10e960ffccb64f89aa103f.headers.json": {
+              "sha256": "8cc64847fa5295f4301e2e30993b6e7eee25032aed10e960ffccb64f89aa103f",
+              "size": 804
+            },
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8/company_tickers_exchange.json": {
+              "sha256": "8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8",
+              "size": 1925
+            },
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8/company_tickers_exchange.json.2ee0195da0f0a486b894c0f56e542017a95983ef5822380fb814ef481a2dcf4b.headers.json": {
+              "sha256": "2ee0195da0f0a486b894c0f56e542017a95983ef5822380fb814ef481a2dcf4b",
+              "size": 651
+            },
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9/company_tickers_exchange.json": {
+              "sha256": "a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9",
+              "size": 1925
+            },
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9/company_tickers_exchange.json.642efe28c74b1d0eb98a147adba9fae1ed10222fd469312207b8b20da2041e8c.headers.json": {
+              "sha256": "642efe28c74b1d0eb98a147adba9fae1ed10222fd469312207b8b20da2041e8c",
+              "size": 651
+            },
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1",
+              "size": 335
+            },
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1/jpmorgan_chase_assetscurrent_companyconcept.json.806441f92791befe998dc02624c171c4bbfc67b69138b54752e4b8ddc4ba0305.headers.json": {
+              "sha256": "806441f92791befe998dc02624c171c4bbfc67b69138b54752e4b8ddc4ba0305",
+              "size": 804
+            },
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a",
+              "size": 335
+            },
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a/jpmorgan_chase_assetscurrent_companyconcept.json.fa57d7d0baf0301c24c292c4af8d05e94d5e06d19cf1c754b40a03da73389858.headers.json": {
+              "sha256": "fa57d7d0baf0301c24c292c4af8d05e94d5e06d19cf1c754b40a03da73389858",
+              "size": 804
+            },
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c/company_tickers_exchange.json": {
+              "sha256": "bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c",
+              "size": 1925
+            },
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c/company_tickers_exchange.json.1e21bc9e23e32d88d2073fd89838b1feef268e5d2bc52e7d778fdf0f301fc6a5.headers.json": {
+              "sha256": "1e21bc9e23e32d88d2073fd89838b1feef268e5d2bc52e7d778fdf0f301fc6a5",
+              "size": 651
+            },
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667",
+              "size": 335
+            },
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667/jpm_assetscurrent_companyconcept.json.5be21fab87c16fa159cb06d1ba06377ffb826c09c14887cd6941f32f13995d8f.headers.json": {
+              "sha256": "5be21fab87c16fa159cb06d1ba06377ffb826c09c14887cd6941f32f13995d8f",
+              "size": 804
+            },
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16",
+              "size": 335
+            },
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16/jpmorgan_chase_assetscurrent_companyconcept.json.47622b1d942c5f401137803eeecfcf5add7ab3d3786a4453914a30a838fcb37c.headers.json": {
+              "sha256": "47622b1d942c5f401137803eeecfcf5add7ab3d3786a4453914a30a838fcb37c",
+              "size": 804
+            },
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84",
+              "size": 335
+            },
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84/jpmorgan_chase_assetscurrent_companyconcept.json.64c2436f97600effdb7894728079e4c339a9b44de73dfe50f3a3c541019ec9c0.headers.json": {
+              "sha256": "64c2436f97600effdb7894728079e4c339a9b44de73dfe50f3a3c541019ec9c0",
+              "size": 804
+            },
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f",
+              "size": 335
+            },
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f/jpm_assetscurrent_companyconcept.json.d57a77e77b0119fab6230696856fa923b306f988e092e7ea2ad5ef9ccb859363.headers.json": {
+              "sha256": "d57a77e77b0119fab6230696856fa923b306f988e092e7ea2ad5ef9ccb859363",
+              "size": 804
+            },
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977",
+              "size": 335
+            },
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977/jpm_assetscurrent_companyconcept.json.460cd6e595641b61a9896e5adf458b3c2e4f1506a7964f123b80b018ef96a1db.headers.json": {
+              "sha256": "460cd6e595641b61a9896e5adf458b3c2e4f1506a7964f123b80b018ef96a1db",
+              "size": 804
+            },
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e",
+              "size": 335
+            },
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e/jpmorgan_chase_assetscurrent_companyconcept.json.56a3e03c514c71cc048859310eda1f6a8f709b54f0207ef0b4070173d80b3ae2.headers.json": {
+              "sha256": "56a3e03c514c71cc048859310eda1f6a8f709b54f0207ef0b4070173d80b3ae2",
+              "size": 804
+            },
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a",
+              "size": 335
+            },
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a/jpm_assetscurrent_companyconcept.json.75eeac293a56a6ce1b21774df88f7c7cc9c86206a4fbf32c9f4fdad0bb23cd43.headers.json": {
+              "sha256": "75eeac293a56a6ce1b21774df88f7c7cc9c86206a4fbf32c9f4fdad0bb23cd43",
+              "size": 804
+            },
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c",
+              "size": 335
+            },
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c/jpmorgan_chase_assetscurrent_companyconcept.json.2c7063bafe567b3a3d3369a54a6759fd1d5061b9cbd4f31158c294f8cd9e58be.headers.json": {
+              "sha256": "2c7063bafe567b3a3d3369a54a6759fd1d5061b9cbd4f31158c294f8cd9e58be",
+              "size": 804
+            },
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657",
+              "size": 335
+            },
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657/jpmorgan_chase_assetscurrent_companyconcept.json.22b3f3cb2f79062183040b812035fdbf535c867d3994c627a44a3a6c3a2648da.headers.json": {
+              "sha256": "22b3f3cb2f79062183040b812035fdbf535c867d3994c627a44a3a6c3a2648da",
+              "size": 804
+            },
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5",
+              "size": 335
+            },
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5/jpmorgan_chase_assetscurrent_companyconcept.json.4ba2dae794d74dfbb2ffab80070f68da7486ae8534440e36b486c18277f1b4d1.headers.json": {
+              "sha256": "4ba2dae794d74dfbb2ffab80070f68da7486ae8534440e36b486c18277f1b4d1",
+              "size": 804
+            },
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674",
+              "size": 335
+            },
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674/jpmorgan_chase_assetscurrent_companyconcept.json.70896d181b1a50f8031ce9ec3bab29cde4f90851bc1abf7733fa896fc7f7ca58.headers.json": {
+              "sha256": "70896d181b1a50f8031ce9ec3bab29cde4f90851bc1abf7733fa896fc7f7ca58",
+              "size": 804
+            },
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4",
+              "size": 335
+            },
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4/jpmorgan_chase_assetscurrent_companyconcept.json.a046c366596b468d30d1367b017f29b3e2da7d0205e9f4ac1d6aae547f86c741.headers.json": {
+              "sha256": "a046c366596b468d30d1367b017f29b3e2da7d0205e9f4ac1d6aae547f86c741",
+              "size": 804
+            }
+          }
+        },
+        "outputs/publication_fault_receipts": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publications": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publication_switch_intents": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publication_switch_receipts": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/vnext_cutover_audits": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        }
+      }
+    },
+    "publication_state_after": {
+      "active_publication_id": null,
+      "mirror_hashes": {
+        "README_RUN.md": "b6b8194b78219fa091a4e0154b86261de1b5a897bff57c9b2dcf92215186139a",
+        "REPORT_十公司财务指标.md": "82dc8399e928378a3fb0deb7db5109b59be59bb9152bfec91206dd2430a839d7",
+        "coverage_matrix.csv": "c66695007b3ad55c35fe2fc107f0587333efb600eb278ba7408fcd8cc4f4423c",
+        "golden_results.csv": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+        "legacy_invariant_migration_receipt.json": null,
+        "metric_evidence.csv": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "metrics_matrix.csv": "0fdb969afe0bbc89c28a1f68d41c706ef2f1afc2c926302a04ee503ec12adb42",
+        "projection_manifest.json": null,
+        "publication_validation_receipt.json": null,
+        "repair_validation_results.csv": "ce38a4d549230f5376881c3a975e406d2e218bd84b85bae92302e1cd26d2e2e1",
+        "scalability_audit.csv": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+        "semantic_audit_receipt.json": "b70ebe668fb94c824fe76275d2f990c30b5b7b800a8fbfe93e14d9a07fee14c1",
+        "stratified_audit.csv": "9eceea9b741e73910e978889633861f65a1bfa5f4a3a536e64a55dfe1f79f771",
+        "validation_run_manifest.json": "d4b020629de700ee7e63ccef397866f6ad47c7e903c85aa4a69cdb1a34ae920c"
+      },
+      "authority_hashes": {
+        "outputs/active_publication.json": null,
+        "outputs/validation_snapshot_provenance.json": "46e5c299bf21e40a87f92e40455732c45656c7c6dcf5d88f0f629a92799370be",
+        "evidence/requests_log.csv": "9eeffd42c7ada8fb3439eb2c087f28ce9299d57a3c04789d349f147f631d6bd0",
+        "evidence/requests_log_manifest.json": "805f1c7b8a484a971cb3f75a5dac13fee109e078d15799c78c9fa5e7e64a34f2",
+        "artifacts/vnext/latest_run_status.json": null,
+        "outputs/active_publication.json.lock": null
+      },
+      "formal_namespace_trees": {
+        "artifacts/vnext/cutover": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "artifacts/vnext/qualification": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "evidence/request_attempts": {
+          "exists": true,
+          "directories": [
+            "evidence/request_attempts",
+            "evidence/request_attempts/00",
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d",
+            "evidence/request_attempts/04",
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed",
+            "evidence/request_attempts/0e",
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b",
+            "evidence/request_attempts/0f",
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6",
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b",
+            "evidence/request_attempts/16",
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074",
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1",
+            "evidence/request_attempts/19",
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822",
+            "evidence/request_attempts/25",
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4",
+            "evidence/request_attempts/27",
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a",
+            "evidence/request_attempts/29",
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c",
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8",
+            "evidence/request_attempts/36",
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053",
+            "evidence/request_attempts/3c",
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5",
+            "evidence/request_attempts/3d",
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539",
+            "evidence/request_attempts/60",
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64",
+            "evidence/request_attempts/71",
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b",
+            "evidence/request_attempts/73",
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595",
+            "evidence/request_attempts/7e",
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3",
+            "evidence/request_attempts/86",
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8",
+            "evidence/request_attempts/89",
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12",
+            "evidence/request_attempts/8b",
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8",
+            "evidence/request_attempts/a0",
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9",
+            "evidence/request_attempts/a9",
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1",
+            "evidence/request_attempts/ae",
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a",
+            "evidence/request_attempts/bc",
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c",
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667",
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16",
+            "evidence/request_attempts/c5",
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84",
+            "evidence/request_attempts/c6",
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f",
+            "evidence/request_attempts/c8",
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977",
+            "evidence/request_attempts/d7",
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e",
+            "evidence/request_attempts/e4",
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a",
+            "evidence/request_attempts/eb",
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c",
+            "evidence/request_attempts/ef",
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657",
+            "evidence/request_attempts/f4",
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5",
+            "evidence/request_attempts/f5",
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674",
+            "evidence/request_attempts/fe",
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4"
+          ],
+          "files": {
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d",
+              "size": 335
+            },
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d/jpmorgan_chase_assetscurrent_companyconcept.json.71bc383a25e82941bb8757ac892fecded3cb78740c22d2c5aa89bdd8ab0d93a8.headers.json": {
+              "sha256": "71bc383a25e82941bb8757ac892fecded3cb78740c22d2c5aa89bdd8ab0d93a8",
+              "size": 804
+            },
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed",
+              "size": 335
+            },
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed/jpmorgan_chase_assetscurrent_companyconcept.json.27c27ace524b05d3d54b3a40a461741c9fe750e4fcc50fe81076de6e48e02819.headers.json": {
+              "sha256": "27c27ace524b05d3d54b3a40a461741c9fe750e4fcc50fe81076de6e48e02819",
+              "size": 804
+            },
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b/company_tickers_exchange.json": {
+              "sha256": "0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b",
+              "size": 1925
+            },
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b/company_tickers_exchange.json.a232345dd6edca7ece0e07ce34cd6088771cdced7c9448fc83fc39ed916fbe33.headers.json": {
+              "sha256": "a232345dd6edca7ece0e07ce34cd6088771cdced7c9448fc83fc39ed916fbe33",
+              "size": 651
+            },
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6",
+              "size": 335
+            },
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6/jpmorgan_chase_assetscurrent_companyconcept.json.1fda449372867ff92fa9c2a5d3003748d7992dead892928ccc2473edd2d0262c.headers.json": {
+              "sha256": "1fda449372867ff92fa9c2a5d3003748d7992dead892928ccc2473edd2d0262c",
+              "size": 804
+            },
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b/company_tickers_exchange.json": {
+              "sha256": "0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b",
+              "size": 1925
+            },
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b/company_tickers_exchange.json.cf2ea7ba084a2cdebef6b3f552429d60fbe1f69c6a1613df7922e5e76d5dc701.headers.json": {
+              "sha256": "cf2ea7ba084a2cdebef6b3f552429d60fbe1f69c6a1613df7922e5e76d5dc701",
+              "size": 651
+            },
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074",
+              "size": 335
+            },
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074/jpm_assetscurrent_companyconcept.json.d4ca09483afdc21703261cc59b1c5f6bcdea1aafda9c7d76fb24de552f45d584.headers.json": {
+              "sha256": "d4ca09483afdc21703261cc59b1c5f6bcdea1aafda9c7d76fb24de552f45d584",
+              "size": 804
+            },
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1",
+              "size": 335
+            },
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1/jpmorgan_chase_assetscurrent_companyconcept.json.fb44a8422ac81f166d847d033c0ac04c0dc63101b69216c23db8ee6cb5414a9f.headers.json": {
+              "sha256": "fb44a8422ac81f166d847d033c0ac04c0dc63101b69216c23db8ee6cb5414a9f",
+              "size": 804
+            },
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822",
+              "size": 335
+            },
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822/jpmorgan_chase_assetscurrent_companyconcept.json.9ad1e0c698d86c28cf70968853795d9aadc12e9bed05990fb4cb156aaa4e470d.headers.json": {
+              "sha256": "9ad1e0c698d86c28cf70968853795d9aadc12e9bed05990fb4cb156aaa4e470d",
+              "size": 804
+            },
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4",
+              "size": 335
+            },
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4/jpmorgan_chase_assetscurrent_companyconcept.json.5efc9033c303518fac1db3531483581ac4172c0d5fa4c2a28ed285ec9be1b24d.headers.json": {
+              "sha256": "5efc9033c303518fac1db3531483581ac4172c0d5fa4c2a28ed285ec9be1b24d",
+              "size": 804
+            },
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a",
+              "size": 335
+            },
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a/jpm_assetscurrent_companyconcept.json.d8f1829051f3cd0dd34df7f8fe8fea4ae2643568a11ce995cde33910312d96c7.headers.json": {
+              "sha256": "d8f1829051f3cd0dd34df7f8fe8fea4ae2643568a11ce995cde33910312d96c7",
+              "size": 804
+            },
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c",
+              "size": 335
+            },
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c/jpm_assetscurrent_companyconcept.json.345a5b5785f8c551ed05d2f4d3caf9f4219cd107c8780b81331af746de0708db.headers.json": {
+              "sha256": "345a5b5785f8c551ed05d2f4d3caf9f4219cd107c8780b81331af746de0708db",
+              "size": 804
+            },
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8",
+              "size": 335
+            },
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8/jpm_assetscurrent_companyconcept.json.d7e80c75bd707b2f8c35e910064c7307cf917bb81a7495f4c4b5c361bbb4b8a6.headers.json": {
+              "sha256": "d7e80c75bd707b2f8c35e910064c7307cf917bb81a7495f4c4b5c361bbb4b8a6",
+              "size": 804
+            },
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053",
+              "size": 335
+            },
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053/jpmorgan_chase_assetscurrent_companyconcept.json.fb5856bd3d37616d4a85fdf23bc34345013cba6a993e407d2de5ff0afc4a4323.headers.json": {
+              "sha256": "fb5856bd3d37616d4a85fdf23bc34345013cba6a993e407d2de5ff0afc4a4323",
+              "size": 804
+            },
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5",
+              "size": 335
+            },
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5/jpmorgan_chase_assetscurrent_companyconcept.json.eb7f3d12abed55c2fa78fad4facdeb49d4df0c7a8a77756dabe69513759e555b.headers.json": {
+              "sha256": "eb7f3d12abed55c2fa78fad4facdeb49d4df0c7a8a77756dabe69513759e555b",
+              "size": 804
+            },
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539",
+              "size": 335
+            },
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539/jpmorgan_chase_assetscurrent_companyconcept.json.03da8d5e14fe017989ceb90924b0fdfd60ca7bf9c0ee7ab68c31984e3ffcfb0a.headers.json": {
+              "sha256": "03da8d5e14fe017989ceb90924b0fdfd60ca7bf9c0ee7ab68c31984e3ffcfb0a",
+              "size": 804
+            },
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64",
+              "size": 335
+            },
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64/jpmorgan_chase_assetscurrent_companyconcept.json.9433cb35a86194983a5283cf3d5269d777d07a67ab4963bec72d939ea8e1d0bc.headers.json": {
+              "sha256": "9433cb35a86194983a5283cf3d5269d777d07a67ab4963bec72d939ea8e1d0bc",
+              "size": 804
+            },
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b",
+              "size": 335
+            },
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b/jpm_assetscurrent_companyconcept.json.29a6ef0e2d75b1029d2b843c84f8fa8a06f307f9968d34a3eeb1c72d40fdb22a.headers.json": {
+              "sha256": "29a6ef0e2d75b1029d2b843c84f8fa8a06f307f9968d34a3eeb1c72d40fdb22a",
+              "size": 804
+            },
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595",
+              "size": 335
+            },
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595/jpmorgan_chase_assetscurrent_companyconcept.json.ef162476db7243a500a8105358d7167165cbe9e9a7e4d0db95e63022dcd70232.headers.json": {
+              "sha256": "ef162476db7243a500a8105358d7167165cbe9e9a7e4d0db95e63022dcd70232",
+              "size": 804
+            },
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3",
+              "size": 335
+            },
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3/jpmorgan_chase_assetscurrent_companyconcept.json.b5e3c179db5460df75831cdc58beed88e5b77753fb79b8d28ff3307be568dcd5.headers.json": {
+              "sha256": "b5e3c179db5460df75831cdc58beed88e5b77753fb79b8d28ff3307be568dcd5",
+              "size": 804
+            },
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8",
+              "size": 335
+            },
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8/jpmorgan_chase_assetscurrent_companyconcept.json.51fa4d33d8fef4e414526d786f0920053f976af3ade823af032a6e9dadcc78a2.headers.json": {
+              "sha256": "51fa4d33d8fef4e414526d786f0920053f976af3ade823af032a6e9dadcc78a2",
+              "size": 804
+            },
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12",
+              "size": 335
+            },
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12/jpmorgan_chase_assetscurrent_companyconcept.json.8cc64847fa5295f4301e2e30993b6e7eee25032aed10e960ffccb64f89aa103f.headers.json": {
+              "sha256": "8cc64847fa5295f4301e2e30993b6e7eee25032aed10e960ffccb64f89aa103f",
+              "size": 804
+            },
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8/company_tickers_exchange.json": {
+              "sha256": "8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8",
+              "size": 1925
+            },
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8/company_tickers_exchange.json.2ee0195da0f0a486b894c0f56e542017a95983ef5822380fb814ef481a2dcf4b.headers.json": {
+              "sha256": "2ee0195da0f0a486b894c0f56e542017a95983ef5822380fb814ef481a2dcf4b",
+              "size": 651
+            },
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9/company_tickers_exchange.json": {
+              "sha256": "a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9",
+              "size": 1925
+            },
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9/company_tickers_exchange.json.642efe28c74b1d0eb98a147adba9fae1ed10222fd469312207b8b20da2041e8c.headers.json": {
+              "sha256": "642efe28c74b1d0eb98a147adba9fae1ed10222fd469312207b8b20da2041e8c",
+              "size": 651
+            },
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1",
+              "size": 335
+            },
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1/jpmorgan_chase_assetscurrent_companyconcept.json.806441f92791befe998dc02624c171c4bbfc67b69138b54752e4b8ddc4ba0305.headers.json": {
+              "sha256": "806441f92791befe998dc02624c171c4bbfc67b69138b54752e4b8ddc4ba0305",
+              "size": 804
+            },
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a",
+              "size": 335
+            },
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a/jpmorgan_chase_assetscurrent_companyconcept.json.fa57d7d0baf0301c24c292c4af8d05e94d5e06d19cf1c754b40a03da73389858.headers.json": {
+              "sha256": "fa57d7d0baf0301c24c292c4af8d05e94d5e06d19cf1c754b40a03da73389858",
+              "size": 804
+            },
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c/company_tickers_exchange.json": {
+              "sha256": "bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c",
+              "size": 1925
+            },
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c/company_tickers_exchange.json.1e21bc9e23e32d88d2073fd89838b1feef268e5d2bc52e7d778fdf0f301fc6a5.headers.json": {
+              "sha256": "1e21bc9e23e32d88d2073fd89838b1feef268e5d2bc52e7d778fdf0f301fc6a5",
+              "size": 651
+            },
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667",
+              "size": 335
+            },
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667/jpm_assetscurrent_companyconcept.json.5be21fab87c16fa159cb06d1ba06377ffb826c09c14887cd6941f32f13995d8f.headers.json": {
+              "sha256": "5be21fab87c16fa159cb06d1ba06377ffb826c09c14887cd6941f32f13995d8f",
+              "size": 804
+            },
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16",
+              "size": 335
+            },
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16/jpmorgan_chase_assetscurrent_companyconcept.json.47622b1d942c5f401137803eeecfcf5add7ab3d3786a4453914a30a838fcb37c.headers.json": {
+              "sha256": "47622b1d942c5f401137803eeecfcf5add7ab3d3786a4453914a30a838fcb37c",
+              "size": 804
+            },
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84",
+              "size": 335
+            },
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84/jpmorgan_chase_assetscurrent_companyconcept.json.64c2436f97600effdb7894728079e4c339a9b44de73dfe50f3a3c541019ec9c0.headers.json": {
+              "sha256": "64c2436f97600effdb7894728079e4c339a9b44de73dfe50f3a3c541019ec9c0",
+              "size": 804
+            },
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f",
+              "size": 335
+            },
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f/jpm_assetscurrent_companyconcept.json.d57a77e77b0119fab6230696856fa923b306f988e092e7ea2ad5ef9ccb859363.headers.json": {
+              "sha256": "d57a77e77b0119fab6230696856fa923b306f988e092e7ea2ad5ef9ccb859363",
+              "size": 804
+            },
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977",
+              "size": 335
+            },
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977/jpm_assetscurrent_companyconcept.json.460cd6e595641b61a9896e5adf458b3c2e4f1506a7964f123b80b018ef96a1db.headers.json": {
+              "sha256": "460cd6e595641b61a9896e5adf458b3c2e4f1506a7964f123b80b018ef96a1db",
+              "size": 804
+            },
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e",
+              "size": 335
+            },
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e/jpmorgan_chase_assetscurrent_companyconcept.json.56a3e03c514c71cc048859310eda1f6a8f709b54f0207ef0b4070173d80b3ae2.headers.json": {
+              "sha256": "56a3e03c514c71cc048859310eda1f6a8f709b54f0207ef0b4070173d80b3ae2",
+              "size": 804
+            },
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a",
+              "size": 335
+            },
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a/jpm_assetscurrent_companyconcept.json.75eeac293a56a6ce1b21774df88f7c7cc9c86206a4fbf32c9f4fdad0bb23cd43.headers.json": {
+              "sha256": "75eeac293a56a6ce1b21774df88f7c7cc9c86206a4fbf32c9f4fdad0bb23cd43",
+              "size": 804
+            },
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c",
+              "size": 335
+            },
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c/jpmorgan_chase_assetscurrent_companyconcept.json.2c7063bafe567b3a3d3369a54a6759fd1d5061b9cbd4f31158c294f8cd9e58be.headers.json": {
+              "sha256": "2c7063bafe567b3a3d3369a54a6759fd1d5061b9cbd4f31158c294f8cd9e58be",
+              "size": 804
+            },
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657",
+              "size": 335
+            },
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657/jpmorgan_chase_assetscurrent_companyconcept.json.22b3f3cb2f79062183040b812035fdbf535c867d3994c627a44a3a6c3a2648da.headers.json": {
+              "sha256": "22b3f3cb2f79062183040b812035fdbf535c867d3994c627a44a3a6c3a2648da",
+              "size": 804
+            },
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5",
+              "size": 335
+            },
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5/jpmorgan_chase_assetscurrent_companyconcept.json.4ba2dae794d74dfbb2ffab80070f68da7486ae8534440e36b486c18277f1b4d1.headers.json": {
+              "sha256": "4ba2dae794d74dfbb2ffab80070f68da7486ae8534440e36b486c18277f1b4d1",
+              "size": 804
+            },
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674",
+              "size": 335
+            },
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674/jpmorgan_chase_assetscurrent_companyconcept.json.70896d181b1a50f8031ce9ec3bab29cde4f90851bc1abf7733fa896fc7f7ca58.headers.json": {
+              "sha256": "70896d181b1a50f8031ce9ec3bab29cde4f90851bc1abf7733fa896fc7f7ca58",
+              "size": 804
+            },
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4",
+              "size": 335
+            },
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4/jpmorgan_chase_assetscurrent_companyconcept.json.a046c366596b468d30d1367b017f29b3e2da7d0205e9f4ac1d6aae547f86c741.headers.json": {
+              "sha256": "a046c366596b468d30d1367b017f29b3e2da7d0205e9f4ac1d6aae547f86c741",
+              "size": 804
+            }
+          }
+        },
+        "outputs/publication_fault_receipts": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publications": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publication_switch_intents": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publication_switch_receipts": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/vnext_cutover_audits": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        }
+      }
+    },
+    "publication_state_observed_after": {
+      "active_publication_id": null,
+      "mirror_hashes": {
+        "README_RUN.md": "b6b8194b78219fa091a4e0154b86261de1b5a897bff57c9b2dcf92215186139a",
+        "REPORT_十公司财务指标.md": "82dc8399e928378a3fb0deb7db5109b59be59bb9152bfec91206dd2430a839d7",
+        "coverage_matrix.csv": "c66695007b3ad55c35fe2fc107f0587333efb600eb278ba7408fcd8cc4f4423c",
+        "golden_results.csv": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+        "legacy_invariant_migration_receipt.json": null,
+        "metric_evidence.csv": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "metrics_matrix.csv": "0fdb969afe0bbc89c28a1f68d41c706ef2f1afc2c926302a04ee503ec12adb42",
+        "projection_manifest.json": null,
+        "publication_validation_receipt.json": null,
+        "repair_validation_results.csv": "ce38a4d549230f5376881c3a975e406d2e218bd84b85bae92302e1cd26d2e2e1",
+        "scalability_audit.csv": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+        "semantic_audit_receipt.json": "b70ebe668fb94c824fe76275d2f990c30b5b7b800a8fbfe93e14d9a07fee14c1",
+        "stratified_audit.csv": "9eceea9b741e73910e978889633861f65a1bfa5f4a3a536e64a55dfe1f79f771",
+        "validation_run_manifest.json": "d4b020629de700ee7e63ccef397866f6ad47c7e903c85aa4a69cdb1a34ae920c"
+      },
+      "authority_hashes": {
+        "outputs/active_publication.json": null,
+        "outputs/validation_snapshot_provenance.json": "46e5c299bf21e40a87f92e40455732c45656c7c6dcf5d88f0f629a92799370be",
+        "evidence/requests_log.csv": "9eeffd42c7ada8fb3439eb2c087f28ce9299d57a3c04789d349f147f631d6bd0",
+        "evidence/requests_log_manifest.json": "805f1c7b8a484a971cb3f75a5dac13fee109e078d15799c78c9fa5e7e64a34f2",
+        "artifacts/vnext/latest_run_status.json": null,
+        "outputs/active_publication.json.lock": null
+      },
+      "formal_namespace_trees": {
+        "artifacts/vnext/cutover": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "artifacts/vnext/qualification": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "evidence/request_attempts": {
+          "exists": true,
+          "directories": [
+            "evidence/request_attempts",
+            "evidence/request_attempts/00",
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d",
+            "evidence/request_attempts/04",
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed",
+            "evidence/request_attempts/0e",
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b",
+            "evidence/request_attempts/0f",
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6",
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b",
+            "evidence/request_attempts/16",
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074",
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1",
+            "evidence/request_attempts/19",
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822",
+            "evidence/request_attempts/25",
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4",
+            "evidence/request_attempts/27",
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a",
+            "evidence/request_attempts/29",
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c",
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8",
+            "evidence/request_attempts/36",
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053",
+            "evidence/request_attempts/3c",
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5",
+            "evidence/request_attempts/3d",
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539",
+            "evidence/request_attempts/60",
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64",
+            "evidence/request_attempts/71",
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b",
+            "evidence/request_attempts/73",
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595",
+            "evidence/request_attempts/7e",
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3",
+            "evidence/request_attempts/86",
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8",
+            "evidence/request_attempts/89",
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12",
+            "evidence/request_attempts/8b",
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8",
+            "evidence/request_attempts/a0",
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9",
+            "evidence/request_attempts/a9",
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1",
+            "evidence/request_attempts/ae",
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a",
+            "evidence/request_attempts/bc",
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c",
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667",
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16",
+            "evidence/request_attempts/c5",
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84",
+            "evidence/request_attempts/c6",
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f",
+            "evidence/request_attempts/c8",
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977",
+            "evidence/request_attempts/d7",
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e",
+            "evidence/request_attempts/e4",
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a",
+            "evidence/request_attempts/eb",
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c",
+            "evidence/request_attempts/ef",
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657",
+            "evidence/request_attempts/f4",
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5",
+            "evidence/request_attempts/f5",
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674",
+            "evidence/request_attempts/fe",
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4"
+          ],
+          "files": {
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d",
+              "size": 335
+            },
+            "evidence/request_attempts/00/00c7b8b71aaf60652d504f7f50ddb5eeac117b46e6864911495c26d380f2a98d/jpmorgan_chase_assetscurrent_companyconcept.json.71bc383a25e82941bb8757ac892fecded3cb78740c22d2c5aa89bdd8ab0d93a8.headers.json": {
+              "sha256": "71bc383a25e82941bb8757ac892fecded3cb78740c22d2c5aa89bdd8ab0d93a8",
+              "size": 804
+            },
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed",
+              "size": 335
+            },
+            "evidence/request_attempts/04/047ffc72c0c0ed936f85145d56e2a64cc0ca7d5dc8bf85a1cb907c9cb7d6beed/jpmorgan_chase_assetscurrent_companyconcept.json.27c27ace524b05d3d54b3a40a461741c9fe750e4fcc50fe81076de6e48e02819.headers.json": {
+              "sha256": "27c27ace524b05d3d54b3a40a461741c9fe750e4fcc50fe81076de6e48e02819",
+              "size": 804
+            },
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b/company_tickers_exchange.json": {
+              "sha256": "0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b",
+              "size": 1925
+            },
+            "evidence/request_attempts/0e/0eabe2bacaae50d1d2bc8fc3b1fd05bd4906c76fd6c04271d44743382cf5938b/company_tickers_exchange.json.a232345dd6edca7ece0e07ce34cd6088771cdced7c9448fc83fc39ed916fbe33.headers.json": {
+              "sha256": "a232345dd6edca7ece0e07ce34cd6088771cdced7c9448fc83fc39ed916fbe33",
+              "size": 651
+            },
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6",
+              "size": 335
+            },
+            "evidence/request_attempts/0f/0f5b76a711f5f3a3eecce551e4a1197223fd39b16ab68739d621935e01cb31a6/jpmorgan_chase_assetscurrent_companyconcept.json.1fda449372867ff92fa9c2a5d3003748d7992dead892928ccc2473edd2d0262c.headers.json": {
+              "sha256": "1fda449372867ff92fa9c2a5d3003748d7992dead892928ccc2473edd2d0262c",
+              "size": 804
+            },
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b/company_tickers_exchange.json": {
+              "sha256": "0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b",
+              "size": 1925
+            },
+            "evidence/request_attempts/0f/0fabda325995c06a98fd70ed4127a069b2044f08cdd74c71cf8a65ca2274533b/company_tickers_exchange.json.cf2ea7ba084a2cdebef6b3f552429d60fbe1f69c6a1613df7922e5e76d5dc701.headers.json": {
+              "sha256": "cf2ea7ba084a2cdebef6b3f552429d60fbe1f69c6a1613df7922e5e76d5dc701",
+              "size": 651
+            },
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074",
+              "size": 335
+            },
+            "evidence/request_attempts/16/1630302e578ed054a691618e3da42dd53ed3df9c3c496a608728283012344074/jpm_assetscurrent_companyconcept.json.d4ca09483afdc21703261cc59b1c5f6bcdea1aafda9c7d76fb24de552f45d584.headers.json": {
+              "sha256": "d4ca09483afdc21703261cc59b1c5f6bcdea1aafda9c7d76fb24de552f45d584",
+              "size": 804
+            },
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1",
+              "size": 335
+            },
+            "evidence/request_attempts/16/166c56e8f265a1f2b8dad7a5ab47dd34095c6805c9f124ec118c316fd5e46ee1/jpmorgan_chase_assetscurrent_companyconcept.json.fb44a8422ac81f166d847d033c0ac04c0dc63101b69216c23db8ee6cb5414a9f.headers.json": {
+              "sha256": "fb44a8422ac81f166d847d033c0ac04c0dc63101b69216c23db8ee6cb5414a9f",
+              "size": 804
+            },
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822",
+              "size": 335
+            },
+            "evidence/request_attempts/19/1977834e688dba4cd63917cb1ad67c045543926422c5c3fe92c32be291429822/jpmorgan_chase_assetscurrent_companyconcept.json.9ad1e0c698d86c28cf70968853795d9aadc12e9bed05990fb4cb156aaa4e470d.headers.json": {
+              "sha256": "9ad1e0c698d86c28cf70968853795d9aadc12e9bed05990fb4cb156aaa4e470d",
+              "size": 804
+            },
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4",
+              "size": 335
+            },
+            "evidence/request_attempts/25/25a334720d7a0ba67e61d8321d07eced987558c610c64db8b33c5a758cd679c4/jpmorgan_chase_assetscurrent_companyconcept.json.5efc9033c303518fac1db3531483581ac4172c0d5fa4c2a28ed285ec9be1b24d.headers.json": {
+              "sha256": "5efc9033c303518fac1db3531483581ac4172c0d5fa4c2a28ed285ec9be1b24d",
+              "size": 804
+            },
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a",
+              "size": 335
+            },
+            "evidence/request_attempts/27/27e411d344d430052da378c57f49e5c07764e78f381639aab56d9718c3a6154a/jpm_assetscurrent_companyconcept.json.d8f1829051f3cd0dd34df7f8fe8fea4ae2643568a11ce995cde33910312d96c7.headers.json": {
+              "sha256": "d8f1829051f3cd0dd34df7f8fe8fea4ae2643568a11ce995cde33910312d96c7",
+              "size": 804
+            },
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c",
+              "size": 335
+            },
+            "evidence/request_attempts/29/294106615094e5c1bdf278cb841b99ada1932d50495d12cbe674574c8d0bbc0c/jpm_assetscurrent_companyconcept.json.345a5b5785f8c551ed05d2f4d3caf9f4219cd107c8780b81331af746de0708db.headers.json": {
+              "sha256": "345a5b5785f8c551ed05d2f4d3caf9f4219cd107c8780b81331af746de0708db",
+              "size": 804
+            },
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8",
+              "size": 335
+            },
+            "evidence/request_attempts/29/297bd72a1d7f050d9f17e9b9660d4284842a14a436fb931a54493c55f3b656a8/jpm_assetscurrent_companyconcept.json.d7e80c75bd707b2f8c35e910064c7307cf917bb81a7495f4c4b5c361bbb4b8a6.headers.json": {
+              "sha256": "d7e80c75bd707b2f8c35e910064c7307cf917bb81a7495f4c4b5c361bbb4b8a6",
+              "size": 804
+            },
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053",
+              "size": 335
+            },
+            "evidence/request_attempts/36/364a3b20dd338cf08ff52374d10816a7193c63144caf7b7fa6883842e45bf053/jpmorgan_chase_assetscurrent_companyconcept.json.fb5856bd3d37616d4a85fdf23bc34345013cba6a993e407d2de5ff0afc4a4323.headers.json": {
+              "sha256": "fb5856bd3d37616d4a85fdf23bc34345013cba6a993e407d2de5ff0afc4a4323",
+              "size": 804
+            },
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5",
+              "size": 335
+            },
+            "evidence/request_attempts/3c/3cf3e85e75ab28dd245edf3cfb902146a151a2b645a00042a197bc45b55e32f5/jpmorgan_chase_assetscurrent_companyconcept.json.eb7f3d12abed55c2fa78fad4facdeb49d4df0c7a8a77756dabe69513759e555b.headers.json": {
+              "sha256": "eb7f3d12abed55c2fa78fad4facdeb49d4df0c7a8a77756dabe69513759e555b",
+              "size": 804
+            },
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539",
+              "size": 335
+            },
+            "evidence/request_attempts/3d/3dc64d0d4225f4cfd9a689a4ddf8075aee090d5a407390a4df1d24b4f87fe539/jpmorgan_chase_assetscurrent_companyconcept.json.03da8d5e14fe017989ceb90924b0fdfd60ca7bf9c0ee7ab68c31984e3ffcfb0a.headers.json": {
+              "sha256": "03da8d5e14fe017989ceb90924b0fdfd60ca7bf9c0ee7ab68c31984e3ffcfb0a",
+              "size": 804
+            },
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64",
+              "size": 335
+            },
+            "evidence/request_attempts/60/60b20c5e9fb98872d7d53e1e7dd03727b5cf39d8e97dd1b26fb2fb4192dbfb64/jpmorgan_chase_assetscurrent_companyconcept.json.9433cb35a86194983a5283cf3d5269d777d07a67ab4963bec72d939ea8e1d0bc.headers.json": {
+              "sha256": "9433cb35a86194983a5283cf3d5269d777d07a67ab4963bec72d939ea8e1d0bc",
+              "size": 804
+            },
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b",
+              "size": 335
+            },
+            "evidence/request_attempts/71/713d8cb50f1a6002fdda3d89cc1ae0cf250be82011689c3fbbe15cd1bd8c010b/jpm_assetscurrent_companyconcept.json.29a6ef0e2d75b1029d2b843c84f8fa8a06f307f9968d34a3eeb1c72d40fdb22a.headers.json": {
+              "sha256": "29a6ef0e2d75b1029d2b843c84f8fa8a06f307f9968d34a3eeb1c72d40fdb22a",
+              "size": 804
+            },
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595",
+              "size": 335
+            },
+            "evidence/request_attempts/73/7350320cf0d47f70a200a9183cab51d289f3ccfb85165062097ca63b203dc595/jpmorgan_chase_assetscurrent_companyconcept.json.ef162476db7243a500a8105358d7167165cbe9e9a7e4d0db95e63022dcd70232.headers.json": {
+              "sha256": "ef162476db7243a500a8105358d7167165cbe9e9a7e4d0db95e63022dcd70232",
+              "size": 804
+            },
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3",
+              "size": 335
+            },
+            "evidence/request_attempts/7e/7efd90d2bce79e4e58292e2c813f069b4a44143b3b05c13cc64f6af94a345ff3/jpmorgan_chase_assetscurrent_companyconcept.json.b5e3c179db5460df75831cdc58beed88e5b77753fb79b8d28ff3307be568dcd5.headers.json": {
+              "sha256": "b5e3c179db5460df75831cdc58beed88e5b77753fb79b8d28ff3307be568dcd5",
+              "size": 804
+            },
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8",
+              "size": 335
+            },
+            "evidence/request_attempts/86/86185c99565ba8e7267b0be724d274e1cac8c0ebe752c230e6778722dc4276a8/jpmorgan_chase_assetscurrent_companyconcept.json.51fa4d33d8fef4e414526d786f0920053f976af3ade823af032a6e9dadcc78a2.headers.json": {
+              "sha256": "51fa4d33d8fef4e414526d786f0920053f976af3ade823af032a6e9dadcc78a2",
+              "size": 804
+            },
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12",
+              "size": 335
+            },
+            "evidence/request_attempts/89/89ec6f3e9f25bf069424a906e4af941d2b82f23eeff2119ebfe4b53711154a12/jpmorgan_chase_assetscurrent_companyconcept.json.8cc64847fa5295f4301e2e30993b6e7eee25032aed10e960ffccb64f89aa103f.headers.json": {
+              "sha256": "8cc64847fa5295f4301e2e30993b6e7eee25032aed10e960ffccb64f89aa103f",
+              "size": 804
+            },
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8/company_tickers_exchange.json": {
+              "sha256": "8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8",
+              "size": 1925
+            },
+            "evidence/request_attempts/8b/8b45300d51838bc0351ff7f2ab2ab22b349b0049ad40c49e33bcf0410c0436c8/company_tickers_exchange.json.2ee0195da0f0a486b894c0f56e542017a95983ef5822380fb814ef481a2dcf4b.headers.json": {
+              "sha256": "2ee0195da0f0a486b894c0f56e542017a95983ef5822380fb814ef481a2dcf4b",
+              "size": 651
+            },
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9/company_tickers_exchange.json": {
+              "sha256": "a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9",
+              "size": 1925
+            },
+            "evidence/request_attempts/a0/a0c6874ef4190bd359488f58f5ac34ff3aa0060ef744e875e228aa74e5f98de9/company_tickers_exchange.json.642efe28c74b1d0eb98a147adba9fae1ed10222fd469312207b8b20da2041e8c.headers.json": {
+              "sha256": "642efe28c74b1d0eb98a147adba9fae1ed10222fd469312207b8b20da2041e8c",
+              "size": 651
+            },
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1",
+              "size": 335
+            },
+            "evidence/request_attempts/a9/a989aadf23ee138b459825ab445d68c0be49616dbba1bf754d43fa905a477de1/jpmorgan_chase_assetscurrent_companyconcept.json.806441f92791befe998dc02624c171c4bbfc67b69138b54752e4b8ddc4ba0305.headers.json": {
+              "sha256": "806441f92791befe998dc02624c171c4bbfc67b69138b54752e4b8ddc4ba0305",
+              "size": 804
+            },
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a",
+              "size": 335
+            },
+            "evidence/request_attempts/ae/aec95d96050716707647a6bbaba6b07fcd8b5ecae39e596cca4f51eb75b5e53a/jpmorgan_chase_assetscurrent_companyconcept.json.fa57d7d0baf0301c24c292c4af8d05e94d5e06d19cf1c754b40a03da73389858.headers.json": {
+              "sha256": "fa57d7d0baf0301c24c292c4af8d05e94d5e06d19cf1c754b40a03da73389858",
+              "size": 804
+            },
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c/company_tickers_exchange.json": {
+              "sha256": "bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c",
+              "size": 1925
+            },
+            "evidence/request_attempts/bc/bc0eb47a93e55ed87be9272970d53feea20ff6bebd826fcf1e241acf6bd8710c/company_tickers_exchange.json.1e21bc9e23e32d88d2073fd89838b1feef268e5d2bc52e7d778fdf0f301fc6a5.headers.json": {
+              "sha256": "1e21bc9e23e32d88d2073fd89838b1feef268e5d2bc52e7d778fdf0f301fc6a5",
+              "size": 651
+            },
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667",
+              "size": 335
+            },
+            "evidence/request_attempts/bc/bc1c37e0347aa3ef60c1f663c85b4a5ab2eadcb5413802de95eff2a6da6ec667/jpm_assetscurrent_companyconcept.json.5be21fab87c16fa159cb06d1ba06377ffb826c09c14887cd6941f32f13995d8f.headers.json": {
+              "sha256": "5be21fab87c16fa159cb06d1ba06377ffb826c09c14887cd6941f32f13995d8f",
+              "size": 804
+            },
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16",
+              "size": 335
+            },
+            "evidence/request_attempts/bc/bc8fd03c9b889bfab2a5b774f5c087aa4c9bac7b7bd0eedc637816d7c7935b16/jpmorgan_chase_assetscurrent_companyconcept.json.47622b1d942c5f401137803eeecfcf5add7ab3d3786a4453914a30a838fcb37c.headers.json": {
+              "sha256": "47622b1d942c5f401137803eeecfcf5add7ab3d3786a4453914a30a838fcb37c",
+              "size": 804
+            },
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84",
+              "size": 335
+            },
+            "evidence/request_attempts/c5/c5983d01dc852e998721dd22eacd6a1ea9fa066a5da077b079c97f93b8c67f84/jpmorgan_chase_assetscurrent_companyconcept.json.64c2436f97600effdb7894728079e4c339a9b44de73dfe50f3a3c541019ec9c0.headers.json": {
+              "sha256": "64c2436f97600effdb7894728079e4c339a9b44de73dfe50f3a3c541019ec9c0",
+              "size": 804
+            },
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f",
+              "size": 335
+            },
+            "evidence/request_attempts/c6/c6ba2821c070bef276d50c54a3a0467d01edf56037f6e5d59bce539d7101f86f/jpm_assetscurrent_companyconcept.json.d57a77e77b0119fab6230696856fa923b306f988e092e7ea2ad5ef9ccb859363.headers.json": {
+              "sha256": "d57a77e77b0119fab6230696856fa923b306f988e092e7ea2ad5ef9ccb859363",
+              "size": 804
+            },
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977",
+              "size": 335
+            },
+            "evidence/request_attempts/c8/c8113122ee21746412363f1fe9c3b68d16a44d4bec795b7fe57a187340bcc977/jpm_assetscurrent_companyconcept.json.460cd6e595641b61a9896e5adf458b3c2e4f1506a7964f123b80b018ef96a1db.headers.json": {
+              "sha256": "460cd6e595641b61a9896e5adf458b3c2e4f1506a7964f123b80b018ef96a1db",
+              "size": 804
+            },
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e",
+              "size": 335
+            },
+            "evidence/request_attempts/d7/d714cf8e54ad9a273fe676ec4c59ab158708a654cdcf8cc26bea7134cf46512e/jpmorgan_chase_assetscurrent_companyconcept.json.56a3e03c514c71cc048859310eda1f6a8f709b54f0207ef0b4070173d80b3ae2.headers.json": {
+              "sha256": "56a3e03c514c71cc048859310eda1f6a8f709b54f0207ef0b4070173d80b3ae2",
+              "size": 804
+            },
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a/jpm_assetscurrent_companyconcept.json": {
+              "sha256": "e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a",
+              "size": 335
+            },
+            "evidence/request_attempts/e4/e4901692be7a7b94a4796b7037257e1863af228c49ead5716276af286853238a/jpm_assetscurrent_companyconcept.json.75eeac293a56a6ce1b21774df88f7c7cc9c86206a4fbf32c9f4fdad0bb23cd43.headers.json": {
+              "sha256": "75eeac293a56a6ce1b21774df88f7c7cc9c86206a4fbf32c9f4fdad0bb23cd43",
+              "size": 804
+            },
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c",
+              "size": 335
+            },
+            "evidence/request_attempts/eb/ebf5e75fa80ca5416726830a21266a200abb8e942df60c38d239cdce63e7d21c/jpmorgan_chase_assetscurrent_companyconcept.json.2c7063bafe567b3a3d3369a54a6759fd1d5061b9cbd4f31158c294f8cd9e58be.headers.json": {
+              "sha256": "2c7063bafe567b3a3d3369a54a6759fd1d5061b9cbd4f31158c294f8cd9e58be",
+              "size": 804
+            },
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657",
+              "size": 335
+            },
+            "evidence/request_attempts/ef/ef44d7e2ed99745bfaa9550a8ad9b7f3e85115bfda8ec54a9530e8b3337af657/jpmorgan_chase_assetscurrent_companyconcept.json.22b3f3cb2f79062183040b812035fdbf535c867d3994c627a44a3a6c3a2648da.headers.json": {
+              "sha256": "22b3f3cb2f79062183040b812035fdbf535c867d3994c627a44a3a6c3a2648da",
+              "size": 804
+            },
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5",
+              "size": 335
+            },
+            "evidence/request_attempts/f4/f4b26d32c33840ffc423994eb447d29d48d40cefe97794989389c638b3bb9db5/jpmorgan_chase_assetscurrent_companyconcept.json.4ba2dae794d74dfbb2ffab80070f68da7486ae8534440e36b486c18277f1b4d1.headers.json": {
+              "sha256": "4ba2dae794d74dfbb2ffab80070f68da7486ae8534440e36b486c18277f1b4d1",
+              "size": 804
+            },
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674",
+              "size": 335
+            },
+            "evidence/request_attempts/f5/f5a2fe4c3f37f030d6a4231f1719a50ffb14d1a4b1c8075ac2a3c3e13619b674/jpmorgan_chase_assetscurrent_companyconcept.json.70896d181b1a50f8031ce9ec3bab29cde4f90851bc1abf7733fa896fc7f7ca58.headers.json": {
+              "sha256": "70896d181b1a50f8031ce9ec3bab29cde4f90851bc1abf7733fa896fc7f7ca58",
+              "size": 804
+            },
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4/jpmorgan_chase_assetscurrent_companyconcept.json": {
+              "sha256": "fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4",
+              "size": 335
+            },
+            "evidence/request_attempts/fe/fea6a9d06389f00a7a05d08b750a6cbf61df85aefdda5838c3b71888123037e4/jpmorgan_chase_assetscurrent_companyconcept.json.a046c366596b468d30d1367b017f29b3e2da7d0205e9f4ac1d6aae547f86c741.headers.json": {
+              "sha256": "a046c366596b468d30d1367b017f29b3e2da7d0205e9f4ac1d6aae547f86c741",
+              "size": 804
+            }
+          }
+        },
+        "outputs/publication_fault_receipts": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publications": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publication_switch_intents": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/publication_switch_receipts": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        },
+        "outputs/vnext_cutover_audits": {
+          "exists": false,
+          "directories": [],
+          "files": {}
+        }
+      }
+    },
+    "active_state_unchanged": true,
+    "state_recovery": {
+      "outcome": "NOT_REQUIRED",
+      "restored_state_sha256": ""
+    },
+    "socket_guard_sha256": "91dd7ffb3b3b897f6c3985fff252e63995f23c6c1e169a1d8ef7ce6be07b46f3",
+    "sandbox_profile_sha256": "bddd1c0413de56fc2b01757954fc90b8106ea1865b1be93263282e699757f084",
+    "artifact_hashes": {
+      "scalability_audit.csv": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f",
+      "semantic_audit_receipt.json": "22858b490d640744c7094761309831cbcd3e374fcbbbb4dd1de5e1b4e0a53753"
+    },
+    "artifact_closure_complete": true,
+    "artifact_references": {
+      "scalability_audit.csv": {
+        "path": "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/scalability_audit.csv",
+        "sha256": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+      },
+      "semantic_audit_receipt.json": {
+        "path": "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/semantic_audit_receipt.json",
+        "sha256": "22858b490d640744c7094761309831cbcd3e374fcbbbb4dd1de5e1b4e0a53753"
+      }
+    },
+    "r4_fast_test_policy_receipt": {
+      "receipt_id": "sha256:f06b07923fae71fa49212aa5129c30d87ac29a36513f955fe44b9739601b4e4d",
+      "path": "$ACCEPTANCE_OUTPUT/recorded_gate_runs/cf639aea85e7449b956fe92f1f0786a4/r4_fast_test_policy_f06b07923fae71fa49212aa5129c30d87ac29a36513f955fe44b9739601b4e4d.json",
+      "sha256": "ac79537fd7cc3e91dec55c448c3476b16580cd32049876073c8953a4bdb12a5b"
+    }
+  },
+  "cutover_binding": null,
+  "terminal_cycle_ids": {},
+  "terminal_cycle_results": {},
+  "rollback_receipt": null,
+  "restore_receipt": null,
+  "recovery_receipt": null,
+  "full_evidence_binding": null,
+  "runtime_bindings": {
+    "$PYTHON_CURRENT": {
+      "available": true,
+      "executable_name": "python3.14",
+      "sha256": "cbf84109626aa1013bbe408fbb9590bd0f1c1548f038b2221c6b8b87de26ca43"
+    },
+    "$SANDBOX_EXEC": {
+      "available": true,
+      "executable_name": "sandbox-exec",
+      "sha256": "d1ee30dbde955aaa75c7f801fdfea4df05b10129454d7982eb6453f771436d42"
+    }
+  },
+  "acceptance_receipt_id": "sha256:f8336d5720eed25208963dc391e173be7543633227ec8ffff176eb5add354007"
+}
