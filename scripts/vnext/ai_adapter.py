@@ -643,7 +643,9 @@ def build_deepseek_chat_completions_body(
                     "table_locator. claimed_period must use the filing year "
                     "as FY<year>, never a semantic requirement token."
                     " Unit strings are case-sensitive: use USD for currency "
-                    "and percent for percentage values."
+                    "and percent for percentage values. Copy every locator's "
+                    "row, column, origin, and span fields exactly from the "
+                    "supplied table cell; never infer merged-cell geometry."
                 ),
             },
             {"role": "user", "content": reader_text},
