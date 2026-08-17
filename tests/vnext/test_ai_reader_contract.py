@@ -727,6 +727,56 @@ class AiReaderContractTest(unittest.TestCase):
         )
         self.assertNotIn("OPENAI_API_KEY", body_bytes.decode("utf-8"))
 
+    def test_deepseek_chat_envelope_is_json_and_tool_free(self) -> None:
+        """Bind the R5 Reader payload to DeepSeek's official chat envelope."""
+        policy = ai_adapter.TransportPolicy.from_mapping(
+            value={
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash",
+                "api": "chat_completions",
+                "endpoint_host": "api.deepseek.com",
+                "region": "provider-managed-no-residency-guarantee",
+                "retention": "provider-managed; no zero-retention claim",
+                "data_use": (
+                    "provider-managed; no training or data-use guarantee"
+                ),
+                "timeout_seconds": 120,
+                "retry_count": 2,
+                "maximum_payload_bytes": 8388608,
+                "filing_egress_policy": (
+                    "PUBLIC_SEC_FILING_TABLE_GRIDS_ONLY"
+                ),
+            }
+        )
+        prepared = reader_attempt_fixture()["prepared_request"]
+        body_bytes, schema_bytes = (
+            ai_adapter.build_deepseek_chat_completions_body(
+                policy=policy,
+                reader_request_bytes=prepared.request_bytes,
+            )
+        )
+        body = json.loads(body_bytes.decode("utf-8"))
+        self.assertEqual(
+            {
+                "messages", "model", "response_format", "stream",
+                "temperature", "thinking",
+            },
+            set(body),
+        )
+        self.assertEqual("deepseek-v4-flash", body["model"])
+        self.assertEqual({"type": "json_object"}, body["response_format"])
+        self.assertEqual({"type": "disabled"}, body["thinking"])
+        self.assertIs(False, body["stream"])
+        self.assertEqual(0, body["temperature"])
+        self.assertEqual(2, len(body["messages"]))
+        self.assertEqual("system", body["messages"][0]["role"])
+        self.assertEqual("user", body["messages"][1]["role"])
+        self.assertEqual(
+            ai_adapter.READER_OUTPUT_JSON_SCHEMA,
+            json.loads(schema_bytes.decode("utf-8")),
+        )
+        self.assertNotIn("DEEPSEEK_API_KEY", body_bytes.decode("utf-8"))
+
     def test_openai_key_missing_is_observed_without_egress(self) -> None:
         """Return a stable missing-secret failure before opening a socket."""
         policy = ai_adapter.TransportPolicy.from_mapping(

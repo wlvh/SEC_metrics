@@ -651,16 +651,16 @@ def _require_qualified_layout_terminal(
         QualificationError: If HUMAN rejected the layout, mechanical Run
             validation did not pass, or any layout result is not publishable.
     """
-    # A real layout only proves generalization when its HUMAN reviewer accepts
-    # the claims; a rejected Run is valuable audit evidence but not a Cutover
-    # qualification witness.
+    # A real layout only proves generalization after an explicit review record.
+    # D-06 permits SYSTEM when no HUMAN decision exists; a rejected Run remains
+    # audit evidence and cannot become a Cutover qualification witness.
     if (
-        decision["reviewer_type"] != "HUMAN"
+        decision["reviewer_type"] not in {"HUMAN", "SYSTEM"}
         or decision["decision"] != "APPROVE"
     ):
         raise QualificationError(
-            code="LAYOUT_HUMAN_APPROVAL_REQUIRED",
-            message="Layout qualification requires an effective HUMAN APPROVE",
+            code="LAYOUT_REVIEW_APPROVAL_REQUIRED",
+            message="Layout qualification requires an effective review APPROVE",
         )
     if (
         validation["record_type"] != "VALIDATION_RECEIPT"

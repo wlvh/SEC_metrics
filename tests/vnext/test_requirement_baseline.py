@@ -38,9 +38,9 @@ class RequirementBaselineTest(unittest.TestCase):
         self.assertNotIn("D-01", snapshot["pending_decision_ids"])
         d01 = snapshot["effective_decisions"]["D-01"]
         self.assertEqual("APPROVED", d01["status"])
-        self.assertEqual("openai", d01["choice"]["provider"])
-        self.assertEqual("gpt-5.6-terra", d01["choice"]["model"])
-        self.assertEqual("responses", d01["choice"]["api"])
+        self.assertEqual("deepseek", d01["choice"]["provider"])
+        self.assertEqual("deepseek-v4-flash", d01["choice"]["model"])
+        self.assertEqual("chat_completions", d01["choice"]["api"])
         self.assertTrue(d01["supersedes_decision_id"].startswith("sha256:"))
         self.assertEqual(
             "PENDING_EXTERNAL_APPROVAL",
@@ -78,6 +78,10 @@ class RequirementBaselineTest(unittest.TestCase):
         self.assertEqual(
             60, d26["choice"]["recorded_gate_timeout_seconds"],
         )
+        d06 = snapshot["effective_decisions"]["D-06"]
+        self.assertEqual("APPROVED", d06["status"])
+        self.assertIs(False, d06["choice"]["human_review_required"])
+        self.assertEqual("SYSTEM", d06["choice"]["system_reviewer_type"])
 
     def test_requirement_byte_change_invalidates_snapshot(self) -> None:
         """Reject an FSD byte edit even when every other file is unchanged."""

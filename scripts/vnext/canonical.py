@@ -37,7 +37,7 @@ SEMANTIC_VERSIONS = {
     "calculator_semantic_version": "5",
     "canonicalizer_semantic_version": "4",
     "projector_semantic_version": "3",
-    "review_renderer_semantic_version": "2",
+    "review_renderer_semantic_version": "3",
     "spec_interpreter_semantic_version": "2",
 }
 

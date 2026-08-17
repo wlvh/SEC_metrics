@@ -26,6 +26,8 @@ from sec_http import request_log_attempt_id, validate_request_log_manifest
 from sec_http import request_log_prefix_bytes
 from sec_http import validate_sec_identity
 
+from .ai_adapter import AIAdapterError
+from .ai_adapter import api_key_environment_name, api_key_required_error_code
 from .ai_adapter import approved_transport_policy
 from .ai_adapter import build_approved_transport_adapter
 from .ai_adapter import build_recorded_adapter
@@ -59,7 +61,6 @@ from .specs import parse_spec_document
 from .workflow import create_review_run, finalize_reviewed_direct_results
 
 
-_OPENAI_API_KEY_ENV = "OPENAI_API_KEY"
 _SEC_CONFIG_PATH = Path("config/sec_config.json")
 _REQUEST_LOG_PATH = Path("evidence/requests_log.csv")
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
@@ -170,15 +171,16 @@ class CutoverError(RuntimeError):
 
 
 def _sec_stage_environment() -> Dict[str, str]:
-    """Return child environment without unrelated OpenAI authority.
+    """Return child environment without unrelated model authority.
 
     Returns:
-        Current process environment retaining SEC identity but excluding the
-        OpenAI API credential from every SEC-only child stage.
+        Current process environment retaining SEC identity but excluding every
+        supported model credential from SEC-only child stages.
     """
     environment = dict(os.environ)
-    if _OPENAI_API_KEY_ENV in environment:
-        del environment[_OPENAI_API_KEY_ENV]
+    for name in ("DEEPSEEK_API_KEY", "OPENAI_API_KEY"):
+        if name in environment:
+            del environment[name]
     return environment
 
 
@@ -256,11 +258,20 @@ def _validate_live_prerequisites(*, repo_root: Path) -> None:
             message="Live Cutover requires the module-owned repository root.",
         )
     error_codes = []
-    if (
-        _OPENAI_API_KEY_ENV not in os.environ
-        or not os.environ[_OPENAI_API_KEY_ENV].strip()
-    ):
-        error_codes.append("OPENAI_API_KEY_REQUIRED")
+    try:
+        requirement = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+        )
+        policy = approved_transport_policy(requirement=requirement)
+        api_key_name = api_key_environment_name(policy=policy)
+        api_key_error = api_key_required_error_code(policy=policy)
+    except (AIAdapterError, ValueError) as error:
+        raise CutoverError(
+            code="LIVE_TRANSPORT_POLICY_INVALID",
+            message="Live Cutover transport policy is invalid.",
+        ) from error
+    if api_key_name not in os.environ or not os.environ[api_key_name].strip():
+        error_codes.append(api_key_error)
     config_path = repo_root / _SEC_CONFIG_PATH
     try:
         config = strict_json_file(path=config_path)
@@ -2477,7 +2488,7 @@ def _prepare_review_run(
     recorded_response_bytes: Optional[bytes],
     recorded_fixture_id: Optional[str],
 ) -> Dict[str, object]:
-    """Create or resume one table-review Run without inventing a decision.
+    """Create or resume one table-review Run through the D-06 review policy.
 
     Args:
         repo_root: Repository authority for source, Requirement, and Specs.
@@ -2585,15 +2596,6 @@ def _prepare_review_run(
         decisions=decisions,
     )
     if manifest["status"] == "OPEN":
-        bound_decisions = [
-            decision
-            for decision in decisions
-            if decision["review_unit_hash"] == summary["review_unit_hash"]
-        ]
-        if not bound_decisions:
-            summary["status"] = "PENDING_HUMAN_REVIEW"
-            summary["decision_count"] = 0
-            return summary
         results = [
             record
             for record in records

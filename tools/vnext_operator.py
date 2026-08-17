@@ -679,40 +679,6 @@ def _review(*, arguments: argparse.Namespace) -> Dict[str, object]:
     )
 
 
-def _pending_review_error(*, run_dir: Path) -> Optional[OperatorCliError]:
-    """Return a stable HUMAN blocker for the first undecided ReviewUnit.
-
-    Args:
-        run_dir: OPEN Run being finalized.
-
-    Returns:
-        HUMAN_REVIEW_REQUIRED or ``None`` when every unit has a decision.
-    """
-    reviews = list_human_reviews(run_dir=run_dir)
-    pending = [
-        unit
-        for unit in reviews["review_units"]
-        if unit["current_effective_tip"] is None
-    ]
-    if not pending:
-        return None
-    unit = pending[0]
-    review_command = build_review_decision_command(
-        run_dir=run_dir,
-        review_unit_hash=str(unit["review_unit_hash"]),
-    )
-    return OperatorCliError(
-        code="HUMAN_REVIEW_REQUIRED",
-        message="Run finalization requires an explicit HUMAN decision.",
-        details={
-            "run_id": reviews["run_id"],
-            "review_unit_hash": unit["review_unit_hash"],
-            "review_path": unit["review_path"],
-            "review_command": review_command,
-        },
-    )
-
-
 def _finalize(*, run_dir: Path) -> Dict[str, object]:
     """Atomically materialize, mechanically validate, and freeze a Run.
 
@@ -723,9 +689,6 @@ def _finalize(*, run_dir: Path) -> Dict[str, object]:
         Created identities and the mechanically proven FROZEN identity.
     """
     with review_run_lock(run_dir=run_dir):
-        blocker = _pending_review_error(run_dir=run_dir)
-        if blocker is not None:
-            raise blocker
         manifest, records, _decisions = load_open_run(run_dir=run_dir)
         results = [
             record

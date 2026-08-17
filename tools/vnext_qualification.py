@@ -1,8 +1,9 @@
 """Operate the real-layout and post-freeze holdout qualification workflow.
 
 ``prepare`` uses a repository fixture and recorded adapter to create the same
-Reader/Evidence/Review Run as production, stops for the ordinary HUMAN review
-CLI, and on resume freezes the Run and writes its content-addressed receipt.
+Reader/Evidence/Review Run as production, records an authorized optional
+SYSTEM review when no HUMAN decision exists, then freezes and writes its
+content-addressed receipt.
 ``freeze`` records production semantics before the independent holdout is
 added. ``status`` verifies every fixed receipt without opening a socket.
 """
@@ -11,7 +12,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import shlex
 import sys
 import traceback
 from pathlib import Path
@@ -110,64 +110,6 @@ def _fixture_manifest(*, fixture_id: str) -> Dict[str, object]:
     return manifest
 
 
-def _review_blocker(
-    *, run_dir: Path, manifest: Mapping[str, object],
-    records: Sequence[Mapping[str, object]],
-) -> QualificationCliError:
-    """Build the exact HUMAN recovery command for one OPEN layout Run.
-
-    Args:
-        run_dir: Persisted qualification Run directory.
-        manifest: Verified OPEN Run manifest.
-        records: Verified Run records.
-
-    Returns:
-        Structured ``HUMAN_REVIEW_REQUIRED`` error.
-    """
-    units = [
-        record for record in records if record["record_type"] == "REVIEW_UNIT"
-    ]
-    if len(units) != 1:
-        raise QualificationCliError(
-            code="REVIEW_UNIT_NOT_FOUND",
-            message="Qualification Run lacks one ReviewUnit",
-        )
-    unit = units[0]
-    review_path = (
-        run_dir / "review" / str(unit["review_unit_hash"]) / "review.md"
-    )
-    command = " ".join(
-        shlex.quote(value)
-        for value in (
-            "python3",
-            "tools/vnext_review.py",
-            "decide",
-            "--run-dir",
-            run_dir.relative_to(REPO_ROOT).as_posix(),
-            "--review-unit-hash",
-            str(unit["review_unit_hash"]),
-            "--decision",
-            "APPROVE_OR_REJECT",
-            "--reviewer-id",
-            "<human-id>",
-            "--decided-at-utc",
-            "<UTC>",
-            "--reason",
-            "<reason>",
-        )
-    )
-    return QualificationCliError(
-        code="HUMAN_REVIEW_REQUIRED",
-        message="Qualification Run remains OPEN for HUMAN review",
-        details={
-            "run_id": manifest["run_id"],
-            "review_unit_hash": unit["review_unit_hash"],
-            "review_path": review_path.relative_to(REPO_ROOT).as_posix(),
-            "review_command": command,
-        },
-    )
-
-
 def prepare_layout(*, fixture_id: str) -> Dict[str, object]:
     """Create or resume one socket-zero layout Run through freeze/receipt.
 
@@ -197,16 +139,12 @@ def prepare_layout(*, fixture_id: str) -> Dict[str, object]:
         if result["status"] != "PENDING_HUMAN_REVIEW":
             raise QualificationCliError(
                 code="LAYOUT_READER_REJECTED",
-                message="Layout did not reach HUMAN review",
+                message="Layout did not reach the review boundary",
                 details={"status": result["status"]},
             )
     manifest, records, decisions = load_run_for_status(
         run_dir=run_dir, repo_root=REPO_ROOT,
     )
-    if manifest["status"] == "OPEN" and not decisions:
-        raise _review_blocker(
-            run_dir=run_dir, manifest=manifest, records=records,
-        )
     if manifest["status"] == "OPEN":
         has_results = any(
             record["record_type"] == "METRIC_RESULT" for record in records

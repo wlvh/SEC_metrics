@@ -43,12 +43,12 @@
 ## vNext 正式 operator 与证据等级
 
 - 正式 active 状态只由 `outputs/active_publication.json` 指向的 immutable PublicationView 决定；pointer 存在时业务用户读取的 root CSV、README 与报告才是该 active bundle 的 compatibility mirrors，没有 pointer 时它们仍是既有 snapshot。
-- `artifacts/vnext/latest_run_status.json` 表示最近一次更新尝试，可能失败或仍待 HUMAN review；它不能替代 active pointer。失败尝试不得覆盖上一 active。
-- OpenAI Reader 只是公开 SEC filing table-grid 的受限处理器，不是 SEC evidence source；数字 authority 仍由 RawAsset/Evidence/Review/Trace 链提供。
-- ReviewDecision 必须由 HUMAN 使用正式 CLI 显式写入；operator、模型、fixture 和 acceptance runner 都不会自动 APPROVE。
+- `artifacts/vnext/latest_run_status.json` 表示最近一次更新尝试，可能失败或仍待可选 HUMAN review；它不能替代 active pointer。失败尝试不得覆盖上一 active。
+- DeepSeek Reader 只是公开 SEC filing table-grid 的受限处理器，不是 SEC evidence source；数字 authority 仍由 RawAsset/Evidence/Review/Trace 链提供。
+- HUMAN ReviewDecision 是可选的；无 HUMAN decision 时，D-06 授权的 SYSTEM review 会以明确身份写入完整 claims，绝不伪装为 HUMAN。
 - root mirrors 对通过 PublicationView 打开的 reader 提供固定视图；不向任意逐文件读取器承诺跨文件组原子。
 - Requirement authority 同时绑定 exact FSD、immutable R2、exact R3 Addendum、Decision Register、frozen baseline、release plan 与 semantic runtime versions；任一 bytes 变化都会使旧 approval、Run、Batch 与 publication 失效。
-- 当前交付仍是仓库 CLI/文件，没有 UI、API、scheduler、生产数据库或自动 HUMAN approval 服务；recorded sandbox 也不会改变这一产品边界。
+- 当前交付仍是仓库 CLI/文件，没有 UI、API、scheduler、生产数据库或隐式 HUMAN approval 服务；SYSTEM review 的审计身份明确可见，recorded sandbox 也不会改变这一产品边界。
 
 ### R4 并发快速验收
 
@@ -69,21 +69,21 @@ python3 tools/vnext_operator.py --json fixture show --fixture-id FIXTURE_ID
 python3 tools/vnext_cutover.py --json --fixture-id FIXTURE_ID --workspace-dir artifacts/vnext/recorded-cold-start --legacy-snapshot-dir outputs --validated-at-utc UTC_VALIDATED --committed-at-utc UTC_COMMITTED
 ```
 
-fixture catalog 会先逐 byte 验证 source、excerpt、recorded response、Spec 与 provenance，调用方不能覆盖 company、期间或 SEC identity。首次 Cutover 命令预期返回非零 `HUMAN_REVIEW_REQUIRED`：同一 release plan 中无需 HUMAN 审核的 structured Runs 已 FROZEN，需要审核的 lodging Run 仍为 OPEN；JSON 中的每个 `pending_reviews` 项都包含 `review_path`、`review_unit_hash` 与可复制的 `review_command`。此时没有生成 recorded publication。
+fixture catalog 会先逐 byte 验证 source、excerpt、recorded response、Spec 与 provenance，调用方不能覆盖 company、期间或 SEC identity。缺少 HUMAN decision 不再阻塞：D-06 会写入明确的 SYSTEM decision 并继续完成 socket-zero recorded Run；若 HUMAN 已先写入 decision，则该 decision 优先。
 
 ```bash
 python3 tools/vnext_operator.py --json review show --run-dir RUN_DIR --review-unit-hash REVIEW_UNIT_HASH
-# 阅读 review.md 后，逐字复制 HUMAN_REVIEW_REQUIRED 返回的命令
+# 可选：先阅读 review.md 并显式写入 HUMAN decision
 python3 tools/vnext_review.py decide --run-dir RUN_DIR --review-unit-hash REVIEW_UNIT_HASH --decision APPROVE --reviewer-id HUMAN_ID --decided-at-utc UTC_DECIDED --reason 'reviewed exact rendered context'
 python3 tools/vnext_cutover.py --json --fixture-id FIXTURE_ID --workspace-dir artifacts/vnext/recorded-cold-start --legacy-snapshot-dir outputs --validated-at-utc UTC_VALIDATED --committed-at-utc UTC_COMMITTED
 python3 tools/vnext_operator.py --json status --publication-root artifacts/vnext/recorded-cold-start/recorded-publication
 ```
 
 第二次必须重跑同一 Cutover 命令；它从原 OPEN history resume，完成 reviewed Run finalization、validation、freeze 与无网络 replay，再生成 complete BatchManifest、Projector candidate、recorded validation bundle，并通过 CAS 把 sandbox pointer 提交到 `<workspace>/recorded-publication`。最后的 `status` 会用 pinned PublicationView read-back publication 与 root-mirror hashes。整条 recorded 路径 socket=0，且正式 `outputs/active_publication.json` 与 repository root mirrors 前后必须相同。
-自动测试中的 `TEST_ONLY_EXPLICIT_REVIEW` 只证明显式 review UX 和 sandbox transaction；它不是正式 HUMAN Decision、live Cutover 或 full acceptance 证据。真实 operator 不得复制该 reviewer identity，也不得让模型、fixture 或 runner 自动批准。recorded Cutover workspace 的第一层必须使用 `artifacts/vnext/recorded-*` 专用 namespace；live 固定使用 repository-owned `artifacts/vnext/cutover`，任何 live `--workspace-dir` 都以 `LIVE_WORKSPACE_OVERRIDE_FORBIDDEN` 在读取或写入前失败。formal core 还 exact 固定 module-owned repository、`outputs` legacy snapshot 与 publication root；每次有效 live 调用（包括 HUMAN resume）都会先执行 fresh SEC acquisition，再复用 source-exact pinned semantic plan，并把本次 acquisition receipt 单独回绑 audit/full closure。
+自动测试中的 `TEST_ONLY_EXPLICIT_REVIEW` 只证明显式 review UX 和 sandbox transaction；它不是正式 HUMAN Decision、live Cutover 或 full acceptance 证据。SYSTEM decision 必须使用 D-06 固定身份且不得伪装为 HUMAN。recorded Cutover workspace 的第一层必须使用 `artifacts/vnext/recorded-*` 专用 namespace；live 固定使用 repository-owned `artifacts/vnext/cutover`，任何 live `--workspace-dir` 都以 `LIVE_WORKSPACE_OVERRIDE_FORBIDDEN` 在读取或写入前失败。formal core 还 exact 固定 module-owned repository、`outputs` legacy snapshot 与 publication root；每次有效 live 调用（包括 HUMAN 或 SYSTEM resume）都会先执行 fresh SEC acquisition，再复用 source-exact pinned semantic plan，并把本次 acquisition receipt 单独回绑 audit/full closure。
 sandbox publication 仍须闭合 Batch 实际消费的 request-ledger 来源。recorded tier 可以验证历史 row 明确声明的 `LEGACY_WORKING_LOCATOR`，但必须逐项匹配 body/headers 的 repository path、SHA-256 与 size，并把 locator tier/class 写入 portable closure；缺失、歧义或 bytes 漂移都失败。formal/live tier 只接受 `IMMUTABLE_ATTEMPT`，任何 legacy locator 都必须以 `LIVE_SOURCE_ATTEMPT_INCOMPLETE` 停止。
 
-### Granular recorded OPEN Run 与 HUMAN review
+### Granular recorded OPEN Run 与可选 HUMAN review
 
 `fixture show` 返回的 `prepare_command` 是唯一受支持的 recorded prepare 命令；operator 只从仓库 catalog 解析并逐 byte 验证 source/response/Spec/期间身份，不接受调用方展开或覆盖这些字段。它创建真正的 OPEN Run，但不会联网或修改 active/root outputs。任何 caller-selected response 都以 `RECORDED_FIXTURE_OVERRIDE_FORBIDDEN` 停止：
 
@@ -98,7 +98,7 @@ python3 tools/vnext_operator.py --json resume --run-dir RUN_DIR
 python3 tools/vnext_operator.py --json replay --run-dir RUN_DIR
 ```
 
-`resume` 会在 HUMAN Decision 通过后完成 finalization、Run validation 和 freeze；不要再对已经 FROZEN 的 Run 顺序执行一次 `freeze`。若外部流程已自行完成 finalization，才单独使用 `freeze`。
+`resume` 会优先采用已存在的 HUMAN Decision；否则写入 D-06 SYSTEM decision 后完成 finalization、Run validation 和 freeze；不要再对已经 FROZEN 的 Run 顺序执行一次 `freeze`。若外部流程已自行完成 finalization，才单独使用 `freeze`。
 wrong supersedes、stale context 或 parallel effective tip 会 fail closed；恢复命令以 CLI 返回的 exact Run/ReviewUnit 身份为准。默认不打印 traceback，只有 `--debug` 才打印。
 
 ### Granular Complete Batch 与 inactive recorded bundle
@@ -114,17 +114,19 @@ python3 tools/vnext_operator.py --json status --publication-root artifacts/vnext
 ### 正式 qualification、Cutover 与 full acceptance
 
 ```bash
-test -n "$OPENAI_API_KEY" && test -n "$SEC_CONTACT_EMAIL"
-python3 tools/vnext_qualification.py prepare --fixture-id SECOND_LAYOUT_FIXTURE
+test -n "$DEEPSEEK_API_KEY" && test -n "$SEC_CONTACT_EMAIL"
+python3 tools/vnext_capture_qualification_fixture.py --fixture-id SECOND_LAYOUT_FIXTURE_ID
+python3 tools/vnext_qualification.py prepare --fixture-id SECOND_LAYOUT_FIXTURE_ID
 python3 tools/vnext_qualification.py freeze --frozen-at-utc UTC_TIME
-python3 tools/vnext_qualification.py prepare --fixture-id POST_FREEZE_HOLDOUT_FIXTURE
+python3 tools/vnext_capture_qualification_fixture.py --fixture-id POST_FREEZE_HOLDOUT_FIXTURE_ID
+python3 tools/vnext_qualification.py prepare --fixture-id POST_FREEZE_HOLDOUT_FIXTURE_ID
 python3 tools/vnext_qualification.py status
 python3 tools/run_acceptance.py --scope full --execute-live
 ```
 
-qualification 的固定顺序是：第二真实布局首次 `prepare` 停在 HUMAN Review，只有有效 HUMAN `APPROVE`、全量 `PUBLISHED` Result 与 `PASSED` Run validation后重跑同一命令才能形成 receipt；`REJECT`/WITHHELD 只保留审计；然后 `freeze` 同时绑定 production semantic tree 与 pre-holdout fixture/Run inventory；最后才加入并 `prepare` 独立 holdout。若 holdout bytes/Run 在 freeze 前已存在，或 holdout 后 semantic tree 漂移，`status` 必须失败。
+qualification 的固定顺序是：第二真实布局 `prepare` 形成有效 HUMAN 或 D-06 SYSTEM `APPROVE`、全量 `PUBLISHED` Result 与 `PASSED` Run validation的 receipt；`REJECT`/WITHHELD 只保留审计。受控 capture 命令只接受仓库候选目录，先经 SecHttpClient 保存真实 SEC bytes，再调用固定 DeepSeek transport 一次并保存 provider envelope，绝不写入 secret；然后 `freeze` 同时绑定 production semantic tree 与 pre-holdout fixture/Run inventory；最后才加入并 `prepare` 独立 holdout。若 holdout bytes/Run 在 freeze 前已存在，或 holdout 后 semantic tree 漂移，`status` 必须失败。
 release input plan 会先验证 request-ledger manifest，再按 exact SEC URL/body hash/accession/document 选择有序 ledger 中最后一个验证通过的 attempt，并绑定 attempt ID、body/header locator 与 locator class。recorded 可保留唯一且逐 path/hash/headers/size 验证的 `LEGACY_WORKING_LOCATOR`，portable closure 必须记录其 tier/class；formal live 只允许 `IMMUTABLE_ATTEMPT`，以 `LIVE_SOURCE_ATTEMPT_INCOMPLETE` 拒绝 legacy class。plan 后 ledger binding 漂移则以 `SOURCE_LEDGER_BINDING_AMBIGUOUS` 失败。
-live 只在显式 `--execute-live` 下执行；缺凭据、qualification、HUMAN Decision、三轮稳定、strict parity、fault matrix、rollback/restore 或 terminal checker 任一证据时都不得产生 full PASS。Rollback 只切 committed predecessor pointer，不会重新启用旧 parser。
+live 只在显式 `--execute-live` 下执行；缺凭据、qualification、有效 review decision、三轮稳定、strict parity、fault matrix、rollback/restore 或 terminal checker 任一证据时都不得产生 full PASS。Rollback 只切 committed predecessor pointer，不会重新启用旧 parser。
 首次 formal Cutover 会把冻结 legacy root bytes 导入为immutable predecessor A（不运行旧 parser），再把 formal vNext bundle B 绑定 A 并原子建立 initial chain。三次 live attempt 的 request/schema/assistant-output/provider-envelope/model/TransportObservation/Candidate/Evidence/Review/compatibility 会复制进 content-addressed portable audit closure；原 Run workspace 清理后，acceptance 仍须逐 byte 重验该 closure。new、rollback A、restore B 的report/Stage 12/checker 各自共用同一 pinned publication transaction。
 
 ```bash

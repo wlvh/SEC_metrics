@@ -34,6 +34,10 @@ from vnext.canonical import CanonicalError  # noqa: E402
 from vnext.canonical import atomic_write_bytes, atomic_write_json  # noqa: E402
 from vnext.canonical import content_hash  # noqa: E402
 from vnext.canonical import sha256_file, strict_json_file  # noqa: E402
+from vnext.ai_adapter import AIAdapterError  # noqa: E402
+from vnext.ai_adapter import api_key_environment_name  # noqa: E402
+from vnext.ai_adapter import api_key_required_error_code  # noqa: E402
+from vnext.ai_adapter import approved_transport_policy  # noqa: E402
 from vnext.cutover import CutoverError  # noqa: E402
 from vnext.cutover import _validate_live_sec_acquisition_receipt  # noqa: E402
 from vnext.cutover import _verify_live_attempt_audit_closure  # noqa: E402
@@ -747,6 +751,7 @@ def resolve_python39(
         ],
         repo_root=repo_root,
         environment={
+            "DEEPSEEK_API_KEY": None,
             "OPENAI_API_KEY": None,
             "SEC_CONTACT_EMAIL": None,
             "PYTHONDONTWRITEBYTECODE": "1",
@@ -810,14 +815,24 @@ def external_blockers(*, repo_root: Path) -> List[Dict[str, str]]:
                 ),
             }
         )
-    if (
-        "OPENAI_API_KEY" not in os.environ
-        or not os.environ["OPENAI_API_KEY"].strip()
-    ):
+    try:
+        policy = approved_transport_policy(requirement=requirement)
+        api_key_name = api_key_environment_name(policy=policy)
+        api_key_error = api_key_required_error_code(policy=policy)
+    except AIAdapterError as error:
         blockers.append({
-            "code": "OPENAI_API_KEY_REQUIRED",
-            "detail": "OPENAI_API_KEY is required for full live acceptance.",
+            "code": "LIVE_TRANSPORT_POLICY_INVALID",
+            "detail": str(error),
         })
+    else:
+        if (
+            api_key_name not in os.environ
+            or not os.environ[api_key_name].strip()
+        ):
+            blockers.append({
+                "code": api_key_error,
+                "detail": api_key_name + " is required for full live acceptance.",
+            })
     config_path = repo_root / "config/sec_config.json"
     config = json.loads(config_path.read_text(encoding="utf-8"))
     try:
@@ -934,6 +949,7 @@ def _offline_environment(*, guard_dir: Path) -> Dict[str, Optional[str]]:
     if "PYTHONPATH" in os.environ and os.environ["PYTHONPATH"]:
         python_path += os.pathsep + os.environ["PYTHONPATH"]
     return {
+        "DEEPSEEK_API_KEY": None,
         "OPENAI_API_KEY": None,
         "PYTHONDONTWRITEBYTECODE": "1",
         "PYTHONPATH": python_path,
@@ -1685,6 +1701,7 @@ def _validated_publication_switch(
         argv=argv,
         repo_root=repo_root,
         environment={
+            "DEEPSEEK_API_KEY": None,
             "OPENAI_API_KEY": None,
             "PYTHONDONTWRITEBYTECODE": "1",
             "SEC_CONTACT_EMAIL": None,

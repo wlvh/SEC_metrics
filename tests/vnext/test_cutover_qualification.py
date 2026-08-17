@@ -19,7 +19,9 @@ from scripts.vnext.qualification import QualificationError
 from scripts.vnext.qualification import production_semantic_tree
 from scripts.vnext.qualification import validate_cutover_qualifications
 from scripts.vnext.qualification import write_production_freeze_receipt
+from scripts.vnext.review import system_review_allowed
 from tools import vnext_qualification
+from vnext.requirements import load_requirement_snapshot
 
 
 def run_qualification_cli(*arguments: str) -> tuple[int, str, str]:
@@ -64,6 +66,12 @@ class CutoverQualificationTest(unittest.TestCase):
             validation=passed,
             expected_metric_ids=("B10", "B11"),
         )
+        qualification._require_qualified_layout_terminal(
+            decision={"reviewer_type": "SYSTEM", "decision": "APPROVE"},
+            results=published,
+            validation=passed,
+            expected_metric_ids=("B10", "B11"),
+        )
 
         cases = (
             (
@@ -71,7 +79,7 @@ class CutoverQualificationTest(unittest.TestCase):
                 {"reviewer_type": "HUMAN", "decision": "REJECT"},
                 published,
                 passed,
-                "LAYOUT_HUMAN_APPROVAL_REQUIRED",
+                "LAYOUT_REVIEW_APPROVAL_REQUIRED",
             ),
             (
                 "withheld result",
@@ -141,26 +149,15 @@ class CutoverQualificationTest(unittest.TestCase):
         )["error_code"])
         self.assertIn("Traceback", stderr)
 
-    def test_qualification_review_command_keeps_human_choice_explicit(
+    def test_qualification_system_review_is_explicit(
         self,
     ) -> None:
-        """Avoid steering a pending reviewer toward an automatic approval."""
+        """Accept an auditable SYSTEM approval without calling it HUMAN."""
         repo_root = Path(__file__).resolve().parents[2]
-        blocker = vnext_qualification._review_blocker(
-            run_dir=(
-                repo_root / "artifacts/vnext/qualification/runs/second-layout"
-            ),
-            manifest={"run_id": "run:qualification:second-layout"},
-            records=[
-                {
-                    "record_type": "REVIEW_UNIT",
-                    "review_unit_hash": "sha256:" + "a" * 64,
-                },
-            ],
+        requirement = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements/ai_first_v3_3_1",
         )
-        self.assertIn(
-            "APPROVE_OR_REJECT", blocker.details["review_command"],
-        )
+        self.assertTrue(system_review_allowed(requirement=requirement))
 
     def test_registry_identity_rejects_company_id_cik_alias(self) -> None:
         """Treat primary, related, and role CIK as production identity."""

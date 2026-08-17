@@ -25,10 +25,12 @@ from .reader_input import build_reader_input_manifest, prepare_reader_request
 from .reader_input import prepare_live_reader_request
 from .reader_input import required_reader_roles
 from .render import build_review_context, render_review_markdown
-from .review import build_review_unit, effective_review_decision
+from .review import build_review_unit, create_system_review_decision
+from .review import effective_review_decision
 from .observations import reviewed_observation, scope_key
 from .requirements import load_requirement_snapshot
-from .run_store import append_run_record, append_run_records_atomically
+from .run_store import append_review_decision, append_run_record
+from .run_store import append_run_records_atomically
 from .run_store import create_run, load_open_run
 from .run_store import load_run_bound_specs
 from .run_store import RunStoreError
@@ -707,7 +709,7 @@ def finalize_reviewed_direct_results(
     """Turn one effective whole-unit decision into observations/results.
 
     Args:
-        run_dir: OPEN Run after HUMAN decision append.
+        run_dir: OPEN Run after HUMAN decision or optional D-06 SYSTEM path.
         repo_root: Repository whose Run-bound Specs are authoritative.
 
     Returns:
@@ -718,10 +720,6 @@ def finalize_reviewed_direct_results(
         period mismatch, or incomplete role classification.
     """
     manifest, records, decisions = load_open_run(run_dir=run_dir)
-    records_file_hash = sha256_file(path=run_dir / "records.jsonl")
-    decisions_file_hash = sha256_file(
-        path=run_dir / "review_decisions.jsonl"
-    )
     units = [
         record for record in records if record["record_type"] == "REVIEW_UNIT"
     ]
@@ -733,6 +731,49 @@ def finalize_reviewed_direct_results(
         for decision in decisions
         if decision["review_unit_hash"] == unit["review_unit_hash"]
     ]
+    if not bound_decisions:
+        attempts = [
+            record
+            for record in records
+            if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+        ]
+        if len(attempts) != 1:
+            raise WorkflowError(
+                "SYSTEM review requires one terminal AI attempt"
+            )
+        try:
+            requirement = load_requirement_snapshot(
+                snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+            )
+            system_decision = create_system_review_decision(
+                review_unit=unit,
+                required_claims=unit["required_claims"],
+                decided_at_utc=attempts[0]["finished_at_utc"],
+                requirement=requirement,
+            )
+            append_review_decision(run_dir=run_dir, decision=system_decision)
+        except (RunStoreError, ValueError) as error:
+            raise WorkflowError(
+                "Optional SYSTEM review policy cannot finalize the Run"
+            ) from error
+        manifest, records, decisions = load_open_run(run_dir=run_dir)
+        units = [
+            record
+            for record in records
+            if record["record_type"] == "REVIEW_UNIT"
+        ]
+        if len(units) != 1:
+            raise WorkflowError("Finalization requires one ReviewUnit")
+        unit = units[0]
+        bound_decisions = [
+            decision
+            for decision in decisions
+            if decision["review_unit_hash"] == unit["review_unit_hash"]
+        ]
+    records_file_hash = sha256_file(path=run_dir / "records.jsonl")
+    decisions_file_hash = sha256_file(
+        path=run_dir / "review_decisions.jsonl"
+    )
     try:
         decision = effective_review_decision(
             review_unit=unit, decisions=bound_decisions,

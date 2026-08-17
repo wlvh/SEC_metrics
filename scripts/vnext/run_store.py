@@ -8,7 +8,7 @@ from typing import Dict, List, Mapping, Sequence, Tuple
 
 from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
 from .ai_adapter import READER_OUTPUT_JSON_SCHEMA, approved_transport_policy
-from .ai_adapter import build_openai_responses_body
+from .ai_adapter import build_provider_request_body
 from .ai_adapter import transport_observation_mismatch
 from .canonical import atomic_write_bytes, atomic_write_json, content_hash
 from .canonical import canonical_json_bytes
@@ -28,7 +28,9 @@ from .reader import validate_reader_output
 from .reader_input import build_reader_payload, build_reader_task_contract
 from .reader_input import required_reader_roles
 from .requirements import load_requirement_snapshot
-from .review import effective_review_decision, validate_decision_binding
+from .review import effective_review_decision, system_review_allowed
+from .review import SYSTEM_REVIEWER_ID, SYSTEM_REVIEW_REASON
+from .review import validate_decision_binding
 from .sources import companyfacts_structured_facts, load_raw_blob_bytes
 from .specs import SpecError, compile_spec_files
 from .states import FREEZEABLE_VALIDATION_STATUSES, validate_transition
@@ -1518,7 +1520,8 @@ def _validate_record_graph(
         run_dir: Run root containing exact AI attempt bytes.
         manifest: RUN record with SourceReference bindings.
         records: Strict disk-reloaded records.
-        effective_decisions: Effective HUMAN decisions keyed by effect hash.
+        effective_decisions: Effective HUMAN or authorized SYSTEM decisions
+            keyed by effect hash.
         compiled_specs: Repository-compiled Run-bound Specs by metric ID.
         raw_bytes_by_id: Hash-verified Run raw bytes keyed by asset ID.
         company_ciks: Registry-authorized CIKs for the logical company.
@@ -1528,6 +1531,22 @@ def _validate_record_graph(
         RunStoreError: On duplicate primary IDs, detached trace/evidence,
         missing source/asset binding, or Candidate/ReviewUnit drift.
     """
+    system_decisions = [
+        decision
+        for decision in effective_decisions.values()
+        if decision["reviewer_type"] == "SYSTEM"
+    ]
+    if system_decisions and not system_review_allowed(
+        requirement=requirement,
+    ):
+        raise RunStoreError("SYSTEM review is not authorized by D-06")
+    for decision in system_decisions:
+        if (
+            decision["decision"] != "APPROVE"
+            or decision["reviewer_id"] != SYSTEM_REVIEWER_ID
+            or decision["reason"] != SYSTEM_REVIEW_REASON
+        ):
+            raise RunStoreError("SYSTEM review record differs from D-06")
     primary_fields = {
         "AI_EXTRACTION_ATTEMPT": "attempt_id",
         "DERIVED_ASSET": "derived_asset_id",
@@ -1690,7 +1709,7 @@ def _validate_record_graph(
         if observation.egress_attempted:
             policy = approved_transport_policy(requirement=requirement)
             expected_request, expected_schema = (
-                build_openai_responses_body(
+                build_provider_request_body(
                     policy=policy,
                     reader_request_bytes=stored["reader_payload"],
                 )
@@ -2427,7 +2446,8 @@ def _validate_review_bindings(
         decisions: Run decisions.
 
     Returns:
-        Effective HUMAN decisions keyed by approval-effect hash.
+        Effective HUMAN or authorized SYSTEM decisions keyed by approval-effect
+        hash.
 
     Raises:
         RunStoreError: On detached, parallel, or stale decisions.

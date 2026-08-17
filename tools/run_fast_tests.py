@@ -29,10 +29,10 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 FAST_TESTS = (
     "tests.vnext.test_cutover_qualification.CutoverQualificationTest."
     "test_layout_terminal_requires_approval_publish_and_validation",
-    "tests.vnext.test_cutover_qualification.CutoverQualificationTest."
-    "test_qualification_cli_keeps_unexpected_errors_structured",
-    "tests.vnext.test_cutover_qualification.CutoverQualificationTest."
-    "test_qualification_review_command_keeps_human_choice_explicit",
+    "tests.vnext.test_ai_reader_contract.AiReaderContractTest."
+    "test_deepseek_chat_envelope_is_json_and_tool_free",
+    "tests.vnext.test_review_binding.ReviewBindingTest."
+    "test_optional_system_decision_is_auditable",
     "tests.vnext.test_legacy_projector.LegacyProjectorTest."
     "test_legacy_inventory_binds_frozen_commit_and_source_blobs",
     "tests.vnext.test_requirement_baseline.RequirementBaselineTest."

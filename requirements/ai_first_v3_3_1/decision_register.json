@@ -160,6 +160,44 @@
       "approved_at_utc": "2026-08-17T07:44:45Z",
       "supersedes_decision_id": null,
       "evidence": "https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5313207170"
+    },
+    {
+      "decision_id": "D-06",
+      "status": "APPROVED",
+      "choice": {
+        "decision_target": "WHOLE_REVIEW_UNIT",
+        "binds_selected_competing_unresolved": true,
+        "binds_canonical_and_rendered_context": true,
+        "parallel_effective_decisions": "FAIL_CLOSED",
+        "human_review_required": false,
+        "system_reviewer_type": "SYSTEM",
+        "system_approval_policy": "EVIDENCE_BOUND_AUTO_APPROVE"
+      },
+      "approved_by": "user:current-thread",
+      "approved_at_utc": "2026-08-17T09:21:18Z",
+      "supersedes_decision_id": "sha256:2f5e3334a166752a8250bb41c49c6ed72453c56aae88c36ddaef86b336a99fcf",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5314176033"
+    },
+    {
+      "decision_id": "D-01",
+      "status": "APPROVED",
+      "choice": {
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "api": "chat_completions",
+        "endpoint_host": "api.deepseek.com",
+        "region": "provider-managed-no-residency-guarantee",
+        "retention": "provider-managed; no zero-retention claim",
+        "data_use": "provider-managed; no training or data-use guarantee",
+        "timeout_seconds": 120,
+        "retry_count": 2,
+        "maximum_payload_bytes": 8388608,
+        "filing_egress_policy": "PUBLIC_SEC_FILING_TABLE_GRIDS_ONLY"
+      },
+      "approved_by": "user:current-thread",
+      "approved_at_utc": "2026-08-17T09:21:18Z",
+      "supersedes_decision_id": "sha256:97e18510b05dc8423259c274a17c2837e5be2f4841c0cc541ba64dd1d4783978",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5314176033"
     }
   ],
   "pending_decisions": [

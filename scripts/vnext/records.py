@@ -848,8 +848,8 @@ def _validate_enums(*, record_type: str, record: Mapping[str, object]) -> None:
     if record_type == "REVIEW_DECISION":
         if record["decision"] not in {"APPROVE", "REJECT"}:
             raise RecordError("Review decision is invalid")
-        if record["reviewer_type"] != "HUMAN":
-            raise RecordError("PoC review decision must be HUMAN")
+        if record["reviewer_type"] not in {"HUMAN", "SYSTEM"}:
+            raise RecordError("Review decision reviewer type is invalid")
     if record_type == "OBSERVATION_CANDIDATE" and re.fullmatch(
         r"[0-9a-f]{64}", str(record["assistant_output_sha256"])
     ) is None:

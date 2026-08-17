@@ -19780,18 +19780,18 @@ def build_readme() -> str:
             ),
             (
                 "- `artifacts/vnext/latest_run_status.json` 表示最近一次更新"
-                "尝试，可能失败或仍待 HUMAN review；它不能替代 active "
+                "尝试，可能失败或仍待可选 HUMAN review；它不能替代 active "
                 "pointer。失败尝试不得覆盖上一 active。"
             ),
             (
-                "- OpenAI Reader 只是公开 SEC filing table-grid 的受限"
+                "- DeepSeek Reader 只是公开 SEC filing table-grid 的受限"
                 "处理器，不是 SEC evidence source；数字 authority 仍由 "
                 "RawAsset/Evidence/Review/Trace 链提供。"
             ),
             (
-                "- ReviewDecision 必须由 HUMAN 使用正式 CLI 显式写入；"
-                "operator、模型、fixture 和 acceptance runner 都不会自动 "
-                "APPROVE。"
+                "- HUMAN ReviewDecision 是可选的；无 HUMAN decision 时，"
+                "D-06 授权的 SYSTEM review 会以明确身份写入完整 claims，"
+                "绝不伪装为 HUMAN。"
             ),
             (
                 "- root mirrors 对通过 PublicationView 打开的 reader 提供"
@@ -19805,7 +19805,8 @@ def build_readme() -> str:
             ),
             (
                 "- 当前交付仍是仓库 CLI/文件，没有 UI、API、scheduler、"
-                "生产数据库或自动 HUMAN approval 服务；recorded sandbox "
+                "生产数据库或隐式 HUMAN approval 服务；SYSTEM review 的审计"
+                "身份明确可见，recorded sandbox "
                 "也不会改变这一产品边界。"
             ),
             "",
@@ -19868,13 +19869,9 @@ def build_readme() -> str:
             (
                 "fixture catalog 会先逐 byte 验证 source、excerpt、recorded "
                 "response、Spec 与 provenance，调用方不能覆盖 company、期间"
-                "或 SEC identity。首次 Cutover 命令预期返回非零 "
-                "`HUMAN_REVIEW_REQUIRED`：同一 release plan 中无需 HUMAN "
-                "审核的 structured Runs 已 FROZEN，需要审核的 lodging Run "
-                "仍为 OPEN；JSON 中的每个 "
-                "`pending_reviews` 项都包含 `review_path`、"
-                "`review_unit_hash` 与可复制的 `review_command`。此时没有"
-                "生成 recorded publication。"
+                "或 SEC identity。缺少 HUMAN decision 不再阻塞：D-06 会写"
+                "入明确的 SYSTEM decision 并继续完成 socket-zero recorded "
+                "Run；若 HUMAN 已先写入 decision，则该 decision 优先。"
             ),
             "",
             "```bash",
@@ -19882,7 +19879,7 @@ def build_readme() -> str:
                 "python3 tools/vnext_operator.py --json review show "
                 "--run-dir RUN_DIR --review-unit-hash REVIEW_UNIT_HASH"
             ),
-            "# 阅读 review.md 后，逐字复制 HUMAN_REVIEW_REQUIRED 返回的命令",
+            "# 可选：先阅读 review.md 并显式写入 HUMAN decision",
             (
                 "python3 tools/vnext_review.py decide --run-dir RUN_DIR "
                 "--review-unit-hash REVIEW_UNIT_HASH --decision APPROVE "
@@ -19918,15 +19915,15 @@ def build_readme() -> str:
             (
                 "自动测试中的 `TEST_ONLY_EXPLICIT_REVIEW` 只证明显式 review "
                 "UX 和 sandbox transaction；它不是正式 HUMAN Decision、"
-                "live Cutover 或 full acceptance 证据。真实 operator 不得复制"
-                "该 reviewer identity，也不得让模型、fixture 或 runner 自动"
-                "批准。recorded Cutover workspace 的第一层必须使用 "
+                "live Cutover 或 full acceptance 证据。SYSTEM decision 必须"
+                "使用 D-06 固定身份且不得伪装为 HUMAN。recorded Cutover "
+                "workspace 的第一层必须使用 "
                 "`artifacts/vnext/recorded-*` 专用 namespace；live 固定使用 "
                 "repository-owned `artifacts/vnext/cutover`，任何 live "
                 "`--workspace-dir` 都以 `LIVE_WORKSPACE_OVERRIDE_FORBIDDEN` "
                 "在读取或写入前失败。formal core 还 exact 固定 module-owned "
                 "repository、`outputs` legacy snapshot 与 publication root；"
-                "每次有效 live 调用（包括 HUMAN resume）都会先执行 fresh "
+                "每次有效 live 调用（包括 HUMAN 或 SYSTEM resume）都会先执行 fresh "
                 "SEC acquisition，再复用 source-exact pinned semantic plan，"
                 "并把本次 acquisition receipt 单独回绑 audit/full closure。"
             ),
@@ -19940,7 +19937,7 @@ def build_readme() -> str:
                 "locator 都必须以 `LIVE_SOURCE_ATTEMPT_INCOMPLETE` 停止。"
             ),
             "",
-            "### Granular recorded OPEN Run 与 HUMAN review",
+            "### Granular recorded OPEN Run 与可选 HUMAN review",
             "",
             "`fixture show` 返回的 `prepare_command` 是唯一受支持的 recorded "
             "prepare 命令；operator 只从仓库 catalog 解析并逐 byte 验证 "
@@ -19989,8 +19986,9 @@ def build_readme() -> str:
             "```",
             "",
             (
-                "`resume` 会在 HUMAN Decision 通过后完成 finalization、Run "
-                "validation 和 freeze；不要再对已经 FROZEN 的 Run 顺序执行"
+                "`resume` 会优先采用已存在的 HUMAN Decision；否则写入 D-06 "
+                "SYSTEM decision 后完成 finalization、Run validation 和 freeze；"
+                "不要再对已经 FROZEN 的 Run 顺序执行"
                 "一次 `freeze`。若外部流程已自行完成 finalization，才单独"
                 "使用 `freeze`。"
             ),
@@ -20041,18 +20039,26 @@ def build_readme() -> str:
             "### 正式 qualification、Cutover 与 full acceptance",
             "",
             "```bash",
-            "test -n \"$OPENAI_API_KEY\" && test -n \"$SEC_CONTACT_EMAIL\"",
+            "test -n \"$DEEPSEEK_API_KEY\" && test -n \"$SEC_CONTACT_EMAIL\"",
+            (
+                "python3 tools/vnext_capture_qualification_fixture.py "
+                "--fixture-id SECOND_LAYOUT_FIXTURE_ID"
+            ),
             (
                 "python3 tools/vnext_qualification.py prepare "
-                "--fixture-id SECOND_LAYOUT_FIXTURE"
+                "--fixture-id SECOND_LAYOUT_FIXTURE_ID"
             ),
             (
                 "python3 tools/vnext_qualification.py freeze "
                 "--frozen-at-utc UTC_TIME"
             ),
             (
+                "python3 tools/vnext_capture_qualification_fixture.py "
+                "--fixture-id POST_FREEZE_HOLDOUT_FIXTURE_ID"
+            ),
+            (
                 "python3 tools/vnext_qualification.py prepare "
-                "--fixture-id POST_FREEZE_HOLDOUT_FIXTURE"
+                "--fixture-id POST_FREEZE_HOLDOUT_FIXTURE_ID"
             ),
             "python3 tools/vnext_qualification.py status",
             (
@@ -20062,10 +20068,12 @@ def build_readme() -> str:
             "```",
             "",
             (
-                "qualification 的固定顺序是：第二真实布局首次 `prepare` "
-                "停在 HUMAN Review，只有有效 HUMAN `APPROVE`、全量 "
-                "`PUBLISHED` Result 与 `PASSED` Run validation后重跑同一命令"
-                "才能形成 receipt；`REJECT`/WITHHELD 只保留审计；然后 "
+                "qualification 的固定顺序是：第二真实布局 `prepare` 形成"
+                "有效 HUMAN 或 D-06 SYSTEM `APPROVE`、全量 `PUBLISHED` "
+                "Result 与 `PASSED` Run validation的 receipt；`REJECT`/"
+                "WITHHELD 只保留审计。受控 capture 命令只接受仓库候选目录，"
+                "先经 SecHttpClient 保存真实 SEC bytes，再调用固定 DeepSeek "
+                "transport 一次并保存 provider envelope，绝不写入 secret；然后 "
                 "`freeze` 同时绑定 production semantic tree 与 pre-holdout "
                 "fixture/Run inventory；最后才加入并 `prepare` 独立 holdout。"
                 "若 holdout bytes/Run 在 freeze 前已存在，或 holdout 后 semantic "
@@ -20084,7 +20092,7 @@ def build_readme() -> str:
             ),
             (
                 "live 只在显式 `--execute-live` 下执行；缺凭据、qualification、"
-                "HUMAN Decision、三轮稳定、strict parity、fault matrix、"
+                "有效 review decision、三轮稳定、strict parity、fault matrix、"
                 "rollback/restore 或 terminal checker 任一证据时都不得产生 "
                 "full PASS。Rollback 只切 committed predecessor pointer，"
                 "不会重新启用旧 parser。"
