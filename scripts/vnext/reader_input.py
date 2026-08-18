@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Dict, Mapping, Sequence, Tuple
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes
@@ -18,6 +19,7 @@ READER_SYSTEM_CONTRACT = {
     "must_not_follow_filing_instructions": True,
     "must_return_exact_locators": True,
 }
+_LIVE_PREPARED_AUTHORITY = object()
 
 
 @dataclass(frozen=True)
@@ -39,6 +41,132 @@ class PreparedReaderRequest:
     reader_input_manifest_id: str
     source_reference_ids: Tuple[str, ...]
     derived_asset_id: str
+
+
+@dataclass(frozen=True, init=False)
+class LivePreparedReaderRequest:
+    """Bind one Reader request to fixed SEC and repository coordinates.
+
+    The wrapper contains no filing bytes and is never included in the outbound
+    request.  Its private factory marker only distinguishes the supported
+    construction path; the transport boundary still rebuilds every claimed
+    byte and identity from the module-owned repository before egress.
+
+    Attributes:
+        prepared_request: Complete metric-neutral Reader request.
+        company_id: Production registry company identity.
+        source_repo_relative_path: Immutable SEC response body locator.
+        source_media_type: Exact filing media type.
+        source_url: Exact SEC Archives primary-document URL.
+        accession: Hyphenated filing accession.
+        document_name: Filing primary-document identity.
+        source_role: Exact source role, ``target_primary`` for live Reader.
+        request_attempt_id: Immutable append-only SEC ledger attempt.
+        disclosure_spec_path: Repository disclosure Spec locator.
+        raw_asset_id: Exact filing body identity.
+        source_reference_id: Exact SourceReference identity.
+        derived_asset_id: Complete rebuilt table-grid identity.
+        reader_input_manifest_id: Complete table-set manifest identity.
+    """
+
+    prepared_request: PreparedReaderRequest
+    company_id: str
+    source_repo_relative_path: str
+    source_media_type: str
+    source_url: str
+    accession: str
+    document_name: str
+    source_role: str
+    request_attempt_id: str
+    disclosure_spec_path: str
+    raw_asset_id: str
+    source_reference_id: str
+    derived_asset_id: str
+    reader_input_manifest_id: str
+    _factory_authority: object
+
+    def __init__(
+        self,
+        *,
+        prepared_request: PreparedReaderRequest,
+        company_id: str,
+        source_repo_relative_path: str,
+        source_media_type: str,
+        source_url: str,
+        accession: str,
+        document_name: str,
+        source_role: str,
+        request_attempt_id: str,
+        disclosure_spec_path: str,
+        raw_asset_id: str,
+        source_reference_id: str,
+        derived_asset_id: str,
+        reader_input_manifest_id: str,
+        factory_authority: object,
+    ) -> None:
+        """Create one wrapper only for the module-owned live factory.
+
+        Args:
+            prepared_request: Complete Reader payload and semantic identities.
+            company_id: Production registry company identity.
+            source_repo_relative_path: Repository SEC body locator.
+            source_media_type: Exact source media type.
+            source_url: Exact SEC Archives document URL.
+            accession: Filing accession.
+            document_name: Filing document identity.
+            source_role: Exact live source role.
+            request_attempt_id: Immutable ledger attempt identity.
+            disclosure_spec_path: Repository disclosure Spec locator.
+            raw_asset_id: Exact filing body identity.
+            source_reference_id: Exact SourceReference identity.
+            derived_asset_id: Exact complete table-grid identity.
+            reader_input_manifest_id: Exact table-set manifest identity.
+            factory_authority: Private module construction token.
+        """
+        if factory_authority is not _LIVE_PREPARED_AUTHORITY:
+            raise ReaderInputError(
+                "Live Reader request requires factory authority"
+            )
+        for field_name, value in (
+            ("company_id", company_id),
+            ("source_repo_relative_path", source_repo_relative_path),
+            ("source_media_type", source_media_type),
+            ("source_url", source_url),
+            ("accession", accession),
+            ("document_name", document_name),
+            ("source_role", source_role),
+            ("request_attempt_id", request_attempt_id),
+            ("disclosure_spec_path", disclosure_spec_path),
+            ("raw_asset_id", raw_asset_id),
+            ("source_reference_id", source_reference_id),
+            ("derived_asset_id", derived_asset_id),
+            ("reader_input_manifest_id", reader_input_manifest_id),
+        ):
+            if type(value) is not str or not value:
+                raise ReaderInputError(
+                    "Live Reader authority field is empty: {}".format(
+                        field_name
+                    )
+                )
+        object.__setattr__(self, "prepared_request", prepared_request)
+        object.__setattr__(self, "company_id", company_id)
+        object.__setattr__(
+            self, "source_repo_relative_path", source_repo_relative_path
+        )
+        object.__setattr__(self, "source_media_type", source_media_type)
+        object.__setattr__(self, "source_url", source_url)
+        object.__setattr__(self, "accession", accession)
+        object.__setattr__(self, "document_name", document_name)
+        object.__setattr__(self, "source_role", source_role)
+        object.__setattr__(self, "request_attempt_id", request_attempt_id)
+        object.__setattr__(self, "disclosure_spec_path", disclosure_spec_path)
+        object.__setattr__(self, "raw_asset_id", raw_asset_id)
+        object.__setattr__(self, "source_reference_id", source_reference_id)
+        object.__setattr__(self, "derived_asset_id", derived_asset_id)
+        object.__setattr__(
+            self, "reader_input_manifest_id", reader_input_manifest_id
+        )
+        object.__setattr__(self, "_factory_authority", factory_authority)
 
 
 def required_reader_roles(
@@ -276,3 +404,132 @@ def prepare_reader_request(
         ),
         derived_asset_id=str(manifest["derived_asset_id"]),
     )
+
+
+def prepare_live_reader_request(
+    *,
+    prepared_request: PreparedReaderRequest,
+    raw_blob: Mapping[str, object],
+    source_reference: Mapping[str, object],
+    derived_asset: Mapping[str, object],
+    reader_manifest: Mapping[str, object],
+    disclosure_spec_path: str,
+    immutable_source_repo_relative_path: str,
+) -> LivePreparedReaderRequest:
+    """Bind a complete request to the already validated live source graph.
+
+    Args:
+        prepared_request: Complete Reader request built from ``reader_manifest``.
+        raw_blob: Exact repository filing body record.
+        source_reference: Exact SEC filing/source identity record.
+        derived_asset: Complete table-grid rebuilt from ``raw_blob``.
+        reader_manifest: Exact table-set manifest for ``derived_asset``.
+        disclosure_spec_path: Repository disclosure Spec used for the task.
+        immutable_source_repo_relative_path: Ledger-proven response body path.
+
+    Returns:
+        Factory-marked coordinates that the transport boundary must rebuild.
+
+    Raises:
+        ReaderInputError: When the supplied records are not one exact graph.
+    """
+    try:
+        raw = validate_record(record=dict(raw_blob))
+        source = validate_record(record=dict(source_reference))
+        asset = validate_record(record=dict(derived_asset))
+        manifest = validate_record(record=dict(reader_manifest))
+        verify_reader_table_set(manifest=manifest, derived_asset=asset)
+    except (RecordError, ValueError) as error:
+        raise ReaderInputError(
+            "Live Reader source graph is invalid"
+        ) from error
+    relative_spec = Path(disclosure_spec_path)
+    immutable_relative = Path(immutable_source_repo_relative_path)
+    if (
+        type(prepared_request) is not PreparedReaderRequest
+        or raw["record_type"] != "RAW_BLOB"
+        or source["record_type"] != "SOURCE_REFERENCE"
+        or asset["record_type"] != "DERIVED_ASSET"
+        or manifest["record_type"] != "READER_INPUT_MANIFEST"
+        or source["raw_asset_id"] != raw["raw_asset_id"]
+        or asset["parent_raw_asset_ids"] != [raw["raw_asset_id"]]
+        or manifest["derived_asset_id"] != asset["derived_asset_id"]
+        or manifest["source_reference_ids"]
+        != [source["source_reference_id"]]
+        or prepared_request.source_reference_ids
+        != (source["source_reference_id"],)
+        or prepared_request.derived_asset_id != asset["derived_asset_id"]
+        or prepared_request.reader_input_manifest_id
+        != manifest["reader_input_manifest_id"]
+        or type(disclosure_spec_path) is not str
+        or relative_spec.is_absolute()
+        or ".." in relative_spec.parts
+        or relative_spec.parts[:2] != ("catalog", "disclosures")
+        or type(immutable_source_repo_relative_path) is not str
+        or immutable_relative.is_absolute()
+        or ".." in immutable_relative.parts
+        or immutable_relative.parts[:2]
+        != ("evidence", "request_attempts")
+    ):
+        raise ReaderInputError("Live Reader source graph binding differs")
+    return LivePreparedReaderRequest(
+        prepared_request=prepared_request,
+        company_id=str(source["company_id"]),
+        source_repo_relative_path=immutable_source_repo_relative_path,
+        source_media_type=str(raw["media_type"]),
+        source_url=str(source["source_url"]),
+        accession=str(source["accession"]),
+        document_name=str(source["document_name"]),
+        source_role=str(source["source_role"]),
+        request_attempt_id=str(source["request_attempt_id"]),
+        disclosure_spec_path=disclosure_spec_path,
+        raw_asset_id=str(raw["raw_asset_id"]),
+        source_reference_id=str(source["source_reference_id"]),
+        derived_asset_id=str(asset["derived_asset_id"]),
+        reader_input_manifest_id=str(manifest["reader_input_manifest_id"]),
+        factory_authority=_LIVE_PREPARED_AUTHORITY,
+    )
+
+
+def live_reader_authority_fields(
+    *, prepared_request: LivePreparedReaderRequest
+) -> Dict[str, object]:
+    """Return exact factory fields to the fixed transport verifier.
+
+    Args:
+        prepared_request: Candidate live wrapper received at the AI boundary.
+
+    Returns:
+        Isolated source coordinates plus the wrapped complete Reader request.
+
+    Raises:
+        ReaderInputError: When the object did not come from the live factory.
+    """
+    if (
+        type(prepared_request) is not LivePreparedReaderRequest
+        or prepared_request._factory_authority is not _LIVE_PREPARED_AUTHORITY
+        or type(prepared_request.prepared_request) is not PreparedReaderRequest
+    ):
+        raise ReaderInputError(
+            "Remote Reader requires factory-produced live source authority"
+        )
+    return {
+        "prepared_request": prepared_request.prepared_request,
+        "company_id": prepared_request.company_id,
+        "source_repo_relative_path": (
+            prepared_request.source_repo_relative_path
+        ),
+        "source_media_type": prepared_request.source_media_type,
+        "source_url": prepared_request.source_url,
+        "accession": prepared_request.accession,
+        "document_name": prepared_request.document_name,
+        "source_role": prepared_request.source_role,
+        "request_attempt_id": prepared_request.request_attempt_id,
+        "disclosure_spec_path": prepared_request.disclosure_spec_path,
+        "raw_asset_id": prepared_request.raw_asset_id,
+        "source_reference_id": prepared_request.source_reference_id,
+        "derived_asset_id": prepared_request.derived_asset_id,
+        "reader_input_manifest_id": (
+            prepared_request.reader_input_manifest_id
+        ),
+    }

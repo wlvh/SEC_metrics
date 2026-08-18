@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-ACCEPTANCE-TERMINAL-TRANSACTION-001",
+  "observed_at_utc": "2026-08-06T14:28:01Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_first_cutover_failure_uses_validated_imported_predecessor",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_rollback_terminal_failure_restores_validated_new_active",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_restore_terminal_failure_rolls_back_validated_predecessor",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_final_evidence_failure_rolls_back_validated_predecessor",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_full_receipt_write_failure_rolls_back_predecessor"
+  ],
+  "return_code": 1,
+  "observed_failures": [
+    "First no-pointer Cutover compared imported A mirrors to incomplete pre-import root and returned EMERGENCY_ROLLBACK_READBACK_FAILED",
+    "Rollback terminal failure left A active without reverse restore receipt",
+    "Restore terminal failure left B active without reverse rollback receipt",
+    "Final evidence binding failure left B active without recovery",
+    "Final full receipt write failure raised OSError and left B active"
+  ],
+  "expected": "Every failed terminal/final phase compensates to the required byte-exact PublicationView and persists recovery evidence",
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "source_tree": "c023571102669eecdaf38aff7c0cd66488ed3ba6",
+  "status": "FAILED_BEFORE_FIX"
+}

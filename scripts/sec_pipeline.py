@@ -123,6 +123,194 @@ ALLOWED_STATUSES = {
     "NEEDS_REVIEW",
 }
 
+MIGRATED_VNEXT_METRIC_IDS = frozenset({"B01", "B03", "B10", "B11"})
+LEGACY_PATH_STILL_ACTIVE = "LEGACY_PATH_STILL_ACTIVE"
+RETIRED_LEGACY_PRODUCER_NAMES = (
+    "apply_lodging_kpi_metrics",
+    "compatible_component_hits",
+    "custom_da_observation_note",
+    "lodging_candidate_from_cells",
+    "lodging_header_order",
+    "lodging_identity_error",
+    "lodging_kpi_fact_from_text",
+    "lodging_metric_orders",
+    "lodging_numeric_cells",
+    "lodging_quote_text",
+    "lodging_scope_matches",
+    "lodging_scope_row_labels",
+    "lodging_section_before",
+    "lodging_table_segments",
+    "non_fi_metric_rows",
+    "normalized_scope_text",
+    "repair_lodging_kpis",
+    "resolve_da_component",
+    "resolve_operating_income_component",
+    "scope_pattern",
+    "text_has_lodging_kpi_keywords",
+    "upsert_lodging_text_metric",
+)
+
+
+class LegacyPathStillActiveError(RuntimeError):
+    """Reject a retired producer or a legacy write of a migrated metric."""
+
+
+def legacy_path_error(*, producer: str, metric_id: str = "") -> None:
+    """Raise the stable Cutover error for one retired legacy operation.
+
+    Args:
+        producer: Legacy function or stage attempting the operation.
+        metric_id: Migrated metric identifier when the attempted write has one.
+
+    Raises:
+        LegacyPathStillActiveError: Always, with a stable machine-readable code.
+    """
+    metric_detail = f" metric_id={metric_id}" if metric_id else ""
+    raise LegacyPathStillActiveError(
+        f"{LEGACY_PATH_STILL_ACTIVE}: producer={producer}{metric_detail}"
+    )
+
+
+def assert_legacy_candidate_rows(*, rows: list[dict], producer: str) -> None:
+    """Require a legacy-stage collection to exclude all migrated metrics.
+
+    Args:
+        rows: Candidate metric or evidence rows owned by a legacy stage.
+        producer: Stage or helper whose output is being checked.
+
+    Raises:
+        KeyError: When a row lacks its required metric identifier.
+        LegacyPathStillActiveError: When a migrated metric enters the legacy
+            candidate boundary.
+    """
+    for row in rows:
+        if "metric_id" not in row:
+            raise KeyError(f"Required key missing: metric_id producer={producer}")
+        metric_id = str(row["metric_id"])
+        if metric_id in MIGRATED_VNEXT_METRIC_IDS:
+            legacy_path_error(producer=producer, metric_id=metric_id)
+
+
+def configure_legacy_candidate_workspace(*, workspace_dir: Path) -> Path:
+    """Select one explicit non-formal workspace for retained legacy stages.
+
+    Args:
+        workspace_dir: Existing isolated candidate root containing the config,
+            evidence, and outputs consumed by Stage 04/09/11.
+
+    Returns:
+        Resolved regular directory installed as the process-local ``WORKDIR``.
+
+    Raises:
+        LegacyPathStillActiveError: When the candidate equals or descends from
+            this source checkout, contains an active pointer, or uses a
+            symlink component.
+
+    Why:
+        The legacy stages retain non-migrated candidate capability, but their
+        fixed historical ``WORKDIR`` otherwise equals the formal repository
+        root and makes the supported path unreachable.  An explicit isolated
+        root preserves that capability without reopening migrated writers.
+    """
+    global WORKDIR
+    global CONFIG_PATH, COMPANY_REGISTRY_PATH, METRIC_APPLICABILITY_PATH
+    global REQUEST_LOG_PATH, LIGHT_REVIEW_MARKER_PATH
+
+    if not isinstance(workspace_dir, Path) or not workspace_dir.is_absolute():
+        legacy_path_error(producer="configure_legacy_candidate_workspace")
+    current = Path(workspace_dir.anchor)
+    for part in workspace_dir.parts[1:]:
+        current /= part
+        if current.is_symlink():
+            legacy_path_error(
+                producer="configure_legacy_candidate_workspace"
+            )
+    if not workspace_dir.is_dir():
+        legacy_path_error(producer="configure_legacy_candidate_workspace")
+    repository_root = Path(__file__).resolve().parents[1]
+    candidate_root = workspace_dir.resolve(strict=True)
+    if (
+        candidate_root == repository_root
+        or repository_root in candidate_root.parents
+    ):
+        legacy_path_error(producer="configure_legacy_candidate_workspace")
+    if (candidate_root / "outputs" / "active_publication.json").exists():
+        legacy_path_error(producer="configure_legacy_candidate_workspace")
+    WORKDIR = candidate_root
+    CONFIG_PATH = WORKDIR / "config" / "sec_config.json"
+    COMPANY_REGISTRY_PATH = WORKDIR / "config" / "company_registry.csv"
+    METRIC_APPLICABILITY_PATH = (
+        WORKDIR / "config" / "metric_applicability.yaml"
+    )
+    REQUEST_LOG_PATH = WORKDIR / "evidence" / "requests_log.csv"
+    LIGHT_REVIEW_MARKER_PATH = WORKDIR / "LIGHT_REVIEW_PACKAGE.marker"
+    return candidate_root
+
+
+def assert_legacy_stage_workspace(*, stage_name: str) -> None:
+    """Require legacy candidate stages to run outside the repository root.
+
+    Args:
+        stage_name: Public stage dispatcher name about to write artifacts.
+
+    Raises:
+        LegacyPathStillActiveError: When the stage targets the repository root
+            or a formal active pointer, because only the vNext orchestrator may
+            replace compatibility mirrors.
+    """
+    repository_root = Path(__file__).resolve().parents[1]
+    if WORKDIR.resolve() == repository_root:
+        legacy_path_error(producer=stage_name)
+    active_pointer = WORKDIR / "outputs" / "active_publication.json"
+    if active_pointer.exists():
+        legacy_path_error(producer=stage_name)
+
+
+def run_legacy_candidate_stage(*, stage_name: str, workspace_dir: Path) -> None:
+    """Run one retained non-migrated stage in an explicit isolated root.
+
+    Args:
+        stage_name: Exact Stage 04, 09, or 11 dispatcher identity.
+        workspace_dir: Existing absolute isolated candidate workspace.
+
+    Expected output:
+        The selected stage may update only candidate artifacts below the
+        supplied root; migrated metric guards remain active at every writer.
+    """
+    allowed_stages = {
+        "04_compute_standard_metrics",
+        "09_extract_mda_and_risk_text",
+        "11_build_report",
+    }
+    if stage_name not in allowed_stages:
+        raise KeyError(f"Unknown legacy candidate stage: {stage_name}")
+    configure_legacy_candidate_workspace(workspace_dir=workspace_dir)
+    run_stage(stage_name=stage_name)
+
+
+def open_active_publication_view():
+    """Open one formal publication view or select the pre-Cutover path.
+
+    Returns:
+        One verified and pinned ``PublicationView`` when the repository has an
+        active pointer; otherwise ``None`` so existing legacy baseline stages
+        keep their prior behavior.
+
+    Raises:
+        PublicationError: When an existing pointer or its bundle is invalid.
+
+    Notes:
+        The pointer is resolved once per public stage. All downstream reads
+        retain that object and cannot observe a concurrent pointer switch.
+    """
+    pointer_path = WORKDIR / "outputs" / "active_publication.json"
+    if not pointer_path.exists() and not pointer_path.is_symlink():
+        return None
+    from vnext.publication import PublicationView
+
+    return PublicationView.open(publication_root=WORKDIR)
+
+
 METRICS_FIELDNAMES = [
     "company",
     "cik",
@@ -588,8 +776,6 @@ JPM_A10_COMPONENTS = [
     "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
 ]
 STUB_PERIOD_COMPONENT_CHAINS = [
-    ("B01", REVENUE_CHAIN),
-    ("B03", OPERATING_INCOME_CHAIN + DA_CHAIN + DA_COMPOSITION_CHAIN),
     ("B04", NET_INCOME_CHAIN),
     (
         "B05",
@@ -597,7 +783,7 @@ STUB_PERIOD_COMPONENT_CHAINS = [
     ),
     ("B07", OPERATING_INCOME_CHAIN + INTEREST_CHAIN),
 ]
-STUB_PERIOD_MAIN_METRICS = {"B01", "B02", "B03", "B04", "B05", "B07"}
+STUB_PERIOD_MAIN_METRICS = {"B02", "B04", "B05", "B07"}
 
 
 @dataclass(frozen=True)
@@ -4188,7 +4374,7 @@ def select_target_component(
     return hit
 
 
-def compatible_component_hits(
+def compatible_b07_component_hits(
     *,
     hits: list[FactHit],
     period_start: str,
@@ -4196,7 +4382,7 @@ def compatible_component_hits(
     accession: str,
     unit: str,
 ) -> bool:
-    """Return whether duration facts can be safely combined.
+    """Return whether B07 duration facts can be safely combined.
 
     Args:
         hits: Facts that would be added or subtracted together.
@@ -4383,14 +4569,14 @@ def custom_da_observation_note(
     )
 
 
-def resolve_operating_income_component(
+def resolve_b07_operating_income_component(
     *,
     cik: int,
     period_end: str,
     accession: str,
     revenue: FactHit | None,
 ) -> ComponentResolution:
-    """Resolve operating income for B03 and B07.
+    """Resolve operating income only for the non-migrated B07 metric.
 
     Args:
         cik: Target CIK.
@@ -4440,7 +4626,7 @@ def resolve_operating_income_component(
             notes="Operating income and aggregate nonoperating bridge are missing.",
         )
     hits = [pretax, bridge]
-    if not compatible_component_hits(
+    if not compatible_b07_component_hits(
         hits=hits,
         period_start=pretax.start,
         period_end=period_end,
@@ -4995,7 +5181,16 @@ def entity_continuity_yoy_result(
 
 
 def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[dict]]:
-    """Compute B01-B09 companyfacts-supported metrics for a non-FI company."""
+    """Compute only non-migrated companyfacts metrics for a non-FI company.
+
+    Args:
+        company: Registry company whose legacy candidate is being built.
+        target: Selected target 10-K filing row.
+
+    Returns:
+        B02/B04-B09 rows and their evidence. B01/B03 are intentionally absent
+        because the vNext Projector is their sole formal producer.
+    """
     cik = int(target["cik"])
     period_end = str(target["reportDate"])
     accession = str(target["accession"])
@@ -5012,18 +5207,6 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         period_kind="duration",
         accession=accession,
     )
-    row, evidence = metric_from_fact(
-        company=company,
-        cik=cik,
-        metric_id="B01",
-        metric_name="Revenue",
-        hit=revenue,
-        period_end=period_end,
-        notes="Revenue candidate chain from metric definition.",
-    )
-    rows.append(row)
-    evidence_rows.extend(evidence)
-
     prior_revenue = None
     if prior_end:
         prior_revenue = select_component(
@@ -5055,73 +5238,6 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         fiscal_period=revenue.fiscal_period if revenue is not None else "",
         hits=[hit for hit in [revenue, prior_revenue] if hit is not None],
         notes=yoy_notes,
-    )
-    rows.append(row)
-    evidence_rows.extend(evidence)
-
-    operating_income = resolve_operating_income_component(
-        cik=cik,
-        period_end=period_end,
-        accession=accession,
-        revenue=revenue,
-    )
-    da = resolve_da_component(
-        cik=cik,
-        period_end=period_end,
-        accession=accession,
-    )
-    da_custom_note = ""
-    if da.hits:
-        da_custom_note = custom_da_observation_note(
-            company=company,
-            period_start=da.hits[0].start,
-            period_end=period_end,
-            accession=accession,
-        )
-    if (
-        revenue is not None
-        and operating_income.value is not None
-        and da.value is not None
-        and revenue.value != 0
-    ):
-        ebitda_margin = (operating_income.value + da.value) / revenue.value
-        ebitda_status = (
-            "OK_APPROX" if operating_income.status == "OK_APPROX" else "OK"
-        )
-        ebitda_notes = (
-            f"{operating_income.notes} {da.notes}{da_custom_note} "
-            "GAAP EBITDA proxy; impairment is not added back."
-        )
-    else:
-        ebitda_margin = None
-        ebitda_status = (
-            "NEEDS_REVIEW"
-            if "NEEDS_REVIEW" in {operating_income.status, da.status}
-            else "NOT_AVAILABLE_SEC"
-        )
-        ebitda_notes = (
-            f"Required revenue, operating income, or D&A missing. "
-            f"Operating income: {operating_income.notes} D&A: {da.notes}"
-        )
-    row, evidence = derived_metric(
-        company=company,
-        cik=cik,
-        metric_id="B03",
-        metric_name="EBITDA margin",
-        value=ebitda_margin,
-        unit="ratio",
-        status=ebitda_status,
-        formula="(Operating income + D&A) / revenue",
-        period_start=revenue.start if revenue is not None else "",
-        period_end=period_end,
-        fiscal_year=revenue.fiscal_year if revenue is not None else "",
-        fiscal_period=revenue.fiscal_period if revenue is not None else "",
-        hits=(
-            operating_income.hits
-            + da.hits
-            + ([revenue] if revenue is not None else [])
-        ),
-        notes=ebitda_notes,
     )
     rows.append(row)
     evidence_rows.extend(evidence)
@@ -5246,6 +5362,12 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
     rows.append(row)
     evidence_rows.extend(evidence)
 
+    operating_income = resolve_b07_operating_income_component(
+        cik=cik,
+        period_end=period_end,
+        accession=accession,
+        revenue=revenue,
+    )
     interest = select_component(
         cik=cik,
         concept_chain=INTEREST_CHAIN,
@@ -5380,6 +5502,11 @@ def non_fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[
         )
 
     return rows, evidence_rows
+
+
+# The formal Stage 04 call graph uses a name that states its reduced authority;
+# the historical name is rebound to a fail-closed tombstone at module load.
+legacy_non_migrated_metric_rows = non_fi_metric_rows
 
 
 def fi_metric_rows(*, company: str, target: dict) -> tuple[list[dict], list[dict]]:
@@ -5782,9 +5909,7 @@ BASE_METRIC_IDS_BY_TRACK = {
         "B08",
     },
     "non_financial": {
-        "B01",
         "B02",
-        "B03",
         "B04",
         "B05",
         "B06",
@@ -5809,8 +5934,6 @@ COMMON_METRIC_IDS = {
     "E05",
 }
 OPTIONAL_B_EXTRACTOR_BY_METRIC_ID = {
-    "B10": "LodgingKpiExtractor",
-    "B11": "LodgingKpiExtractor",
     "B12": "RpoCrpoExtractor",
     "B13": "CapacityUtilizationExtractor",
 }
@@ -5851,9 +5974,14 @@ def expected_metrics_matrix_keys() -> set[tuple[str, str]]:
 
     Returns:
         One ``(company, metric_id)`` key for every required matrix row. The
-        result is independent of the currently persisted matrix rows.
+        result is independent of matrix contents: a committed active pointer
+        selects the vNext ten-company migrated exact set; its absence retains
+        the frozen pre-Cutover root snapshot contract.
     """
     expected = set()
+    active_cutover = (
+        WORKDIR / "outputs" / "active_publication.json"
+    ).is_file()
     # The acceptance set comes from configuration, never from rows under test.
     for company_config in load_company_registry():
         company = str(require_key(mapping=company_config, key="company"))
@@ -5867,6 +5995,17 @@ def expected_metrics_matrix_keys() -> set[tuple[str, str]]:
             else "non_financial"
         )
         metric_ids = BASE_METRIC_IDS_BY_TRACK[track] | COMMON_METRIC_IDS
+        if active_cutover:
+            metric_ids |= MIGRATED_VNEXT_METRIC_IDS
+        elif track == "non_financial":
+            # Until a committed pointer exists, current root outputs remain the
+            # immutable pre-Cutover snapshot and retain their former exact set.
+            metric_ids |= {"B01", "B03"}
+            if has_extractor(
+                extractors=extractors,
+                extractor_name="LodgingKpiExtractor",
+            ):
+                metric_ids |= {"B10", "B11"}
         for metric_id, extractor_name in (
             OPTIONAL_B_EXTRACTOR_BY_METRIC_ID.items()
         ):
@@ -5895,34 +6034,9 @@ def special_metric_placeholders(
         extractors: Mounted extractor names from metric_applicability.yaml.
 
     Returns:
-        Placeholder rows for optional B10-B13 surfaces.
+        Placeholder rows for non-migrated optional B12-B13 surfaces.
     """
     rows = []
-    if has_extractor(extractors=extractors, extractor_name="LodgingKpiExtractor"):
-        rows.append(
-            placeholder_metric(
-                company=company,
-                cik=cik,
-                metric_id="B10",
-                metric_name="Occupancy rate",
-                status="NOT_EXTRACTED",
-                source_class="MDA",
-                period_end=period_end,
-                notes="Requires MD&A or EX-99 operating statistics.",
-            )
-        )
-        rows.append(
-            placeholder_metric(
-                company=company,
-                cik=cik,
-                metric_id="B11",
-                metric_name="RevPAR",
-                status="NOT_EXTRACTED",
-                source_class="MDA",
-                period_end=period_end,
-                notes="Requires MD&A or EX-99 operating statistics.",
-            )
-        )
     if has_extractor(extractors=extractors, extractor_name="RpoCrpoExtractor"):
         rows.append(
             placeholder_metric(
@@ -5956,7 +6070,8 @@ def special_metric_placeholders(
 
 
 def stage_compute_standard_metrics() -> None:
-    """M2: compute companyfacts-supported metrics and initialize full matrix."""
+    """M2: compute the non-migrated legacy candidate in an isolated workspace."""
+    assert_legacy_stage_workspace(stage_name="04_compute_standard_metrics")
     ensure_output_dirs()
     metric_rows: list[dict] = []
     evidence_rows: list[dict] = []
@@ -5972,7 +6087,10 @@ def stage_compute_standard_metrics() -> None:
         ):
             rows, evidence = fi_metric_rows(company=company, target=target)
         else:
-            rows, evidence = non_fi_metric_rows(company=company, target=target)
+            rows, evidence = legacy_non_migrated_metric_rows(
+                company=company,
+                target=target,
+            )
         metric_rows.extend(rows)
         evidence_rows.extend(evidence)
         metric_rows.extend(
@@ -5991,6 +6109,16 @@ def stage_compute_standard_metrics() -> None:
             )
         )
 
+    # The Projector adds the four migrated exact-set rows only after vNext Run
+    # verification; a legacy-stage leak must fail before any candidate write.
+    assert_legacy_candidate_rows(
+        rows=metric_rows,
+        producer="stage_compute_standard_metrics.metrics",
+    )
+    assert_legacy_candidate_rows(
+        rows=evidence_rows,
+        producer="stage_compute_standard_metrics.evidence",
+    )
     write_csv_file(
         path=WORKDIR / "outputs" / "metrics_matrix.csv",
         fieldnames=METRICS_FIELDNAMES,
@@ -6011,7 +6139,8 @@ def load_metrics() -> list[dict]:
 
 
 def save_metrics(*, rows: list[dict]) -> None:
-    """Write metrics_matrix.csv rows after updates."""
+    """Write a non-migrated legacy metrics candidate after updates."""
+    assert_legacy_candidate_rows(rows=rows, producer="save_metrics")
     write_csv_file(
         path=WORKDIR / "outputs" / "metrics_matrix.csv",
         fieldnames=METRICS_FIELDNAMES,
@@ -6020,7 +6149,25 @@ def save_metrics(*, rows: list[dict]) -> None:
 
 
 def upsert_metric(*, rows: list[dict], new_row: dict) -> list[dict]:
-    """Replace or append one metric row by company and metric_id."""
+    """Replace or append one non-migrated metric row.
+
+    Args:
+        rows: Existing legacy candidate rows.
+        new_row: Complete replacement or appended metric row.
+
+    Returns:
+        Candidate rows with one non-migrated key updated.
+
+    Raises:
+        KeyError: When the new row lacks its required metric identifier.
+        LegacyPathStillActiveError: When a legacy caller attempts to write a
+            metric owned exclusively by the vNext Projector.
+    """
+    if "metric_id" not in new_row:
+        raise KeyError("Required key missing: metric_id producer=upsert_metric")
+    metric_id = str(new_row["metric_id"])
+    if metric_id in MIGRATED_VNEXT_METRIC_IDS:
+        legacy_path_error(producer="upsert_metric", metric_id=metric_id)
     output = []
     replaced = False
     for row in rows:
@@ -6038,7 +6185,8 @@ def upsert_metric(*, rows: list[dict], new_row: dict) -> list[dict]:
 
 
 def append_evidence(*, rows: list[dict]) -> None:
-    """Append metric evidence rows to the canonical evidence CSV."""
+    """Append only non-migrated evidence to the legacy candidate CSV."""
+    assert_legacy_candidate_rows(rows=rows, producer="append_evidence")
     append_csv_file(
         path=WORKDIR / "outputs" / "metric_evidence.csv",
         fieldnames=EVIDENCE_FIELDNAMES,
@@ -8232,12 +8380,19 @@ def write_optional_b_sidecars(
         evidence_rows: Current metric_evidence rows.
 
     Expected output:
-        RPO/cRPO, capacity, and lodging out-of-scope probes remain auditable
-        outside the main annual matrix.
+        Non-migrated RPO/cRPO and capacity probes remain auditable outside the
+        main annual matrix.
     """
+    assert_legacy_candidate_rows(
+        rows=metrics,
+        producer="write_optional_b_sidecars.metrics",
+    )
+    assert_legacy_candidate_rows(
+        rows=evidence_rows,
+        producer="write_optional_b_sidecars.evidence",
+    )
     rpo_rows = []
     capacity_rows = []
-    lodging_rows = []
     for row in metrics:
         metric_id = row["metric_id"]
         if metric_id not in optional_b_metric_ids():
@@ -8263,14 +8418,6 @@ def write_optional_b_sidecars(
                     candidate_role="out_of_scope_capacity_text_signal",
                 )
             )
-        else:
-            lodging_rows.append(
-                optional_b_observation_from_metric(
-                    metric=row,
-                    evidence_rows=evidence_rows,
-                    candidate_role="out_of_scope_lodging_kpi_probe",
-                )
-            )
     write_csv_file(
         path=WORKDIR / "outputs" / "rpo_crpo_observations.csv",
         fieldnames=OPTIONAL_B_OBSERVATION_FIELDNAMES,
@@ -8280,11 +8427,6 @@ def write_optional_b_sidecars(
         path=WORKDIR / "outputs" / "capacity_text_signals.csv",
         fieldnames=OPTIONAL_B_OBSERVATION_FIELDNAMES,
         rows=capacity_rows,
-    )
-    write_csv_file(
-        path=WORKDIR / "outputs" / "lodging_kpi_probe_failures.csv",
-        fieldnames=OPTIONAL_B_OBSERVATION_FIELDNAMES,
-        rows=lodging_rows,
     )
 
 
@@ -8306,6 +8448,14 @@ def prune_non_applicable_optional_b_metrics(
     Returns:
         Pruned metrics and evidence rows.
     """
+    assert_legacy_candidate_rows(
+        rows=metrics,
+        producer="prune_non_applicable_optional_b_metrics.metrics",
+    )
+    assert_legacy_candidate_rows(
+        rows=evidence_rows,
+        producer="prune_non_applicable_optional_b_metrics.evidence",
+    )
     removed_keys = {
         (row["company"], row["metric_id"])
         for row in metrics
@@ -8328,7 +8478,8 @@ def prune_non_applicable_optional_b_metrics(
 
 
 def stage_extract_mda_and_risk_text() -> None:
-    """M6: extract MD&A, risk, legal, and special KPI text evidence."""
+    """M6: add only non-migrated MD&A, risk, legal, and KPI evidence."""
+    assert_legacy_stage_workspace(stage_name="09_extract_mda_and_risk_text")
     primary_rows = material_primary_rows()
     metrics = load_metrics()
     risk_rows: list[dict] = []
@@ -8449,19 +8600,6 @@ def stage_extract_mda_and_risk_text() -> None:
         extractors = company_extractors(company_config=company_config)
         if has_extractor(
             extractors=extractors,
-            extractor_name="LodgingKpiExtractor",
-        ) or text_has_lodging_kpi_keywords(text=text):
-            metrics, evidence_rows = apply_lodging_kpi_metrics(
-                metrics=metrics,
-                evidence_rows=evidence_rows,
-                company=company,
-                text=text,
-                source_url=source_url,
-                local_path=local_path,
-            )
-
-        if has_extractor(
-            extractors=extractors,
             extractor_name="RpoCrpoExtractor",
         ) or text_has_rpo_keywords(text=text):
             metrics, evidence_rows = apply_rpo_crpo_metric(
@@ -8523,6 +8661,14 @@ def stage_extract_mda_and_risk_text() -> None:
                 ),
             )
 
+    assert_legacy_candidate_rows(
+        rows=metrics,
+        producer="stage_extract_mda_and_risk_text.metrics",
+    )
+    assert_legacy_candidate_rows(
+        rows=evidence_rows,
+        producer="stage_extract_mda_and_risk_text.evidence",
+    )
     write_csv_file(
         path=WORKDIR / "outputs" / "risk_legal_signals.csv",
         fieldnames=RISK_FIELDNAMES,
@@ -9514,6 +9660,19 @@ def build_golden_candidates() -> list[dict]:
 
 def stage_run_golden_assertions() -> None:
     """Stage 10: run structure, source-class, numeric, and candidate assertions."""
+    publication_view = open_active_publication_view()
+    if publication_view is not None:
+        from vnext.report import validate_golden_results
+
+        assertion_count = validate_golden_results(
+            publication_view=publication_view,
+        )
+        print(
+            "Stage 10 active Golden validation complete; "
+            f"publication_id={publication_view.publication_id}; "
+            f"assertions={assertion_count}"
+        )
+        return
     mode, reasons = validation_package_mode()
     if mode == "WORKSPACE_INCOMPLETE":
         print("WORKSPACE_INCOMPLETE; " + "; ".join(reasons))
@@ -9563,6 +9722,7 @@ def save_evidence(*, rows: list[dict]) -> None:
     Expected output:
         Existing metric evidence is replaced by the repaired evidence set.
     """
+    assert_legacy_candidate_rows(rows=rows, producer="save_evidence")
     write_csv_file(
         path=WORKDIR / "outputs" / "metric_evidence.csv",
         fieldnames=EVIDENCE_FIELDNAMES,
@@ -12604,6 +12764,14 @@ def apply_p0_repairs() -> None:
     """
     metrics = load_metrics()
     evidence_rows = read_csv_file(path=WORKDIR / "outputs" / "metric_evidence.csv")
+    assert_legacy_candidate_rows(
+        rows=metrics,
+        producer="apply_p0_repairs.metrics",
+    )
+    assert_legacy_candidate_rows(
+        rows=evidence_rows,
+        producer="apply_p0_repairs.evidence",
+    )
     governance_rows = read_csv_file(path=WORKDIR / "outputs" / "governance_signals.csv")
     metrics, evidence_rows, governance_rows = repair_c03_compensation(
         metrics=metrics,
@@ -12616,10 +12784,6 @@ def apply_p0_repairs() -> None:
         governance_rows=governance_rows,
     )
     metrics, evidence_rows = repair_basel_capital_ratios(
-        metrics=metrics,
-        evidence_rows=evidence_rows,
-    )
-    metrics, evidence_rows = repair_lodging_kpis(
         metrics=metrics,
         evidence_rows=evidence_rows,
     )
@@ -14686,7 +14850,6 @@ def check_eleventh_company_smoke_mounts() -> dict:
         if row["expected_extractor"] not in extractors:
             failures.append(f"{company_id}:{row['expected_extractor']}")
     behavior_checks = [
-        check_eleventh_company_behavior_lodging(),
         check_eleventh_company_behavior_financial_institution(),
         check_eleventh_company_behavior_captive_finance(),
         check_eleventh_company_behavior_rpo_crpo(),
@@ -17045,18 +17208,27 @@ def spec_implementation_audit_rows() -> list[dict]:
         {
             "metric_id": "B03",
             "spec_rule": "D&A composition and reconstructed operating income OK_APPROX",
-            "implementation_location": "resolve_da_component; resolve_operating_income_component",
+            "implementation_location": (
+                "scripts/vnext/calculator.py::calculate_metric;"
+                "scripts/vnext/projector.py::_projection_candidate"
+            ),
             "implemented": "1",
             "validation_check": (
-                "marriott_b03_da_composition_positive;"
-                "pfizer_b03_operating_income_reconstruction_ok_approx"
+                "tests/vnext/test_b03_calculator.py;"
+                "legacy_invariant_migration"
             ),
-            "notes": "Impairment is not added back; bridge assumption is noted.",
+            "notes": (
+                "vNext Spec roles own B03; Projector enforces frozen legacy "
+                "compatibility."
+            ),
         },
         {
             "metric_id": "B06",
             "spec_rule": "three-tier total debt resolver and negative equity gate",
-            "implementation_location": "resolve_total_debt_component; non_fi_metric_rows",
+            "implementation_location": (
+                "resolve_total_debt_component;"
+                "legacy_non_migrated_metric_rows"
+            ),
             "implemented": "1",
             "validation_check": (
                 "b06_total_debt_prefers_total_debt_concepts;"
@@ -18567,6 +18739,38 @@ def projected_terminal_validation_manifest(
     return active_manifest, terminal_manifest
 
 
+def check_legacy_production_paths_retired() -> dict:
+    """Verify every historical B03/lodging runtime symbol fails closed.
+
+    Returns:
+        One P0 validation row proving stale callers cannot obtain values or
+        mutate artifacts through the retired production entrypoints.
+
+    Raises:
+        LegacyPathStillActiveError: Never; the stable rejection is consumed as
+            the expected result for each symbol. Any other exception propagates
+            because an unexpected failure is not Cutover proof.
+    """
+    failures = []
+    for producer in RETIRED_LEGACY_PRODUCER_NAMES:
+        try:
+            globals()[producer]()
+        except LegacyPathStillActiveError as error:
+            if not str(error).startswith(f"{LEGACY_PATH_STILL_ACTIVE}:"):
+                failures.append(f"{producer}:unstable_error")
+        else:
+            failures.append(f"{producer}:callable")
+    return validation_row(
+        check_id="legacy_b01_b03_b10_b11_production_paths_retired",
+        status="PASS" if not failures else "FAIL",
+        details=(
+            f"retired_symbols={len(RETIRED_LEGACY_PRODUCER_NAMES)}"
+            if not failures
+            else ";".join(failures)
+        ),
+    )
+
+
 def run_repair_validation(
     *,
     exit_on_failure: bool,
@@ -18823,16 +19027,7 @@ def run_repair_validation(
             check_id="jpm_a12_var_raw_row_anchor",
         ),
         check_jpm_table_values_not_added_to_golden_until_manual_confirmation(),
-        check_lodging_kpi_extractor(
-            metrics=metrics,
-            evidence_rows=evidence_rows,
-        ),
-        check_lodging_header_mapping_not_position_regex(),
-        check_lodging_revpar_adr_occupancy_identity(
-            metrics=metrics,
-            evidence_rows=evidence_rows,
-        ),
-        check_lodging_ok_recall_not_regressed_without_reason(metrics=metrics),
+        check_legacy_production_paths_retired(),
         (
             skipped_light_validation_row(
                 check_id="captive_finance_debt_not_ford_specific",
@@ -18874,22 +19069,7 @@ def run_repair_validation(
         check_ford_b06_captive_finance_still_needs_review(metrics=metrics),
         check_gm_like_captive_finance_fixture_triggers_review(),
         check_entity_continuity_yoy(metrics=metrics),
-        check_marriott_b03_da_composition_positive(
-            metrics=metrics,
-            evidence_rows=evidence_rows,
-        ),
-        check_da_composition_rejects_accumulated_expected_future_schedule(),
-        check_da_composition_completeness_scan_clean_or_noted(metrics=metrics),
-        check_da_custom_line_reconciliation_noted(metrics=metrics),
-        check_pfizer_b03_operating_income_reconstruction_ok_approx(
-            metrics=metrics,
-        ),
         check_pfizer_b07_reuses_approx_operating_income(metrics=metrics),
-        check_direct_operating_income_priority_over_reconstruction(
-            metrics=metrics,
-        ),
-        check_b03_rejects_mixed_accession_period_unit(),
-        check_b03_bridge_fragment_negative_fixture_rejected_or_needs_review(),
         check_paramount_stub_period_values_not_main_annual_ok(metrics=metrics),
         check_paramount_stub_period_sidecar_exists(),
         check_paramount_b06_point_in_time_successor_balance_sheet_note(
@@ -18918,7 +19098,6 @@ def run_repair_validation(
             )
         ),
         check_eleventh_company_smoke_mounts(),
-        check_eleventh_company_behavior_lodging(),
         check_eleventh_company_behavior_financial_institution(),
         check_eleventh_company_behavior_captive_finance(),
         check_eleventh_company_behavior_rpo_crpo(),
@@ -19549,10 +19728,21 @@ def build_report_markdown(*, validation_manifest: dict | None = None) -> str:
 
 
 def build_readme() -> str:
-    """Build README_RUN.md with reproducible commands."""
+    """Build the supported legacy and vNext operator runbook.
+
+    Returns:
+        UTF-8 Markdown containing reproducible recorded, live, review,
+        publication, rollback, and validation commands.
+    """
+    from validation_provenance import README_BLOCK
+
+    # The generator owns the stable route block so a direct build and the
+    # idempotent stage post-processor always produce the same checked-in bytes.
     return "\n".join(
         [
             "# README_RUN",
+            "",
+            README_BLOCK,
             "",
             "## 配置",
             "",
@@ -19580,27 +19770,52 @@ def build_readme() -> str:
                 "下一次显式、重新校验的请求。"
             ),
             "",
-            "## vNext recorded shadow（尚未切流）",
+            "## vNext 正式 operator 与证据等级",
             "",
             (
-                "- `scripts/vnext/` 与 `catalog/` 只提供 recorded/shadow "
-                "原语；当前根目录结果、stage 00-12 与 snapshot checker "
-                "仍是 active 路径。"
+                "- 正式 active 状态只由 `outputs/active_publication.json` "
+                "指向的 immutable PublicationView 决定；pointer 存在时业务"
+                "用户读取的 root CSV、README 与报告才是该 active bundle 的 "
+                "compatibility mirrors，没有 pointer 时它们仍是既有 snapshot。"
             ),
             (
-                "- D-01、有效 SEC 身份、第二真实布局、独立 holdout、live "
-                "三轮、staging parity、旧 producer 退出、Cutover 与真实 "
-                "rollback/full 任一未完成时，不得声称 vNext active。"
+                "- `artifacts/vnext/latest_run_status.json` 表示最近一次更新"
+                "尝试，可能失败或仍待可选 HUMAN review；它不能替代 active "
+                "pointer。失败尝试不得覆盖上一 active。"
             ),
+            (
+                "- DeepSeek Reader 只是公开 SEC filing table-grid 的受限"
+                "处理器，不是 SEC evidence source；数字 authority 仍由 "
+                "RawAsset/Evidence/Review/Trace 链提供。"
+            ),
+            (
+                "- HUMAN ReviewDecision 是可选的；无 HUMAN decision 时，"
+                "D-06 授权的 SYSTEM review 会以明确身份写入完整 claims，"
+                "绝不伪装为 HUMAN。"
+            ),
+            (
+                "- root mirrors 对通过 PublicationView 打开的 reader 提供"
+                "固定视图；不向任意逐文件读取器承诺跨文件组原子。"
+            ),
+            (
+                "- Requirement authority 同时绑定 exact FSD、immutable R2、"
+                "exact R3 Addendum、Decision Register、frozen baseline、"
+                "release plan 与 semantic runtime versions；任一 bytes 变化"
+                "都会使旧 approval、Run、Batch 与 publication 失效。"
+            ),
+            (
+                "- 当前交付仍是仓库 CLI/文件，没有 UI、API、scheduler、"
+                "生产数据库或隐式 HUMAN approval 服务；SYSTEM review 的审计"
+                "身份明确可见，recorded sandbox "
+                "也不会改变这一产品边界。"
+            ),
+            "",
+            "### R4 并发快速验收",
             "",
             "```bash",
             (
-                "PYTHONDONTWRITEBYTECODE=1 python3.9 -m unittest discover "
-                "-s tests/vnext -t . -p 'test_*.py' -v"
-            ),
-            (
-                "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover "
-                "-s tests/vnext -t . -p 'test_*.py' -v"
+                "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py "
+                "--jobs 4"
             ),
             (
                 "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py "
@@ -19609,27 +19824,401 @@ def build_readme() -> str:
             "```",
             "",
             (
-                "recorded runner 的最高状态是 `PASSED_RECORDED_ONLY`，receipt "
-                "写入 `outputs/acceptance_receipts/`；它不执行 live stage、"
-                "Cutover 或 full acceptance。测试策略与 NOT_RUN 记录以 "
-                "`TESTING.md` 为准。"
+                "R4只并发运行六个直接、非隔离、非 freeze/replay 的本地边界"
+                "用例；每例最多30秒，recorded gate每条最多60秒。recorded runner"
+                " 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，receipt 写入 "
+                "`outputs/acceptance_receipts/`。它不是 CI、live stage、"
+                "formal Cutover 或 full acceptance。测试策略以 `TESTING.md`"
+                " 为准。"
+            ),
+            (
+                "recorded/full acceptance 的持久命令证据使用 "
+                "`runtime_bindings`：`$PYTHON_CURRENT` 与可用时的 "
+                "`$SANDBOX_EXEC` 绑定 executable name 和 runtime binary "
+                "SHA-256；argv、interpreter、output locator 与诊断中的本地路径"
+                "递归替换为 portable token，剩余 host path 只保留 SHA-256，"
+                "不持久化本机绝对路径。"
+            ),
+            (
+                "acceptance `--output-dir` 不能等于、包含或位于任何正式 "
+                "pointer、mirror、SEC ledger、publication/qualification/audit "
+                "namespace 下；命中时在首次写入前返回 "
+                "`ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY`。R4不再"
+                "启动 Python 3.9 全量测试或任何隔离 repository/worktree；"
+                "formal authority 前后仍会 exact read-back。"
             ),
             "",
-            "## 从干净目录运行阶段 00-11",
+            "### Cold-start recorded fixture 与 sandbox PublicationView",
             "",
             "```bash",
-            "python3 scripts/00_smoke_test_sec_access.py",
-            "python3 scripts/01_resolve_companies.py",
-            "python3 scripts/02_inventory_filings.py",
-            "python3 scripts/03_companyfacts_inventory.py",
-            "python3 scripts/04_compute_standard_metrics.py",
-            "python3 scripts/05_fetch_accession_materials.py",
-            "python3 scripts/06_parse_xbrl_instances.py",
-            "python3 scripts/07_extract_8k_events.py",
-            "python3 scripts/08_extract_def14a.py",
-            "python3 scripts/09_extract_mda_and_risk_text.py",
-            "python3 scripts/10_run_golden_assertions.py",
-            "python3 scripts/11_build_report.py",
+            "python3 tools/vnext_operator.py --json fixture list",
+            (
+                "python3 tools/vnext_operator.py --json fixture show "
+                "--fixture-id FIXTURE_ID"
+            ),
+            (
+                "python3 tools/vnext_cutover.py --json "
+                "--fixture-id FIXTURE_ID "
+                "--workspace-dir artifacts/vnext/recorded-cold-start "
+                "--legacy-snapshot-dir outputs "
+                "--validated-at-utc UTC_VALIDATED "
+                "--committed-at-utc UTC_COMMITTED"
+            ),
+            "```",
+            "",
+            (
+                "fixture catalog 会先逐 byte 验证 source、excerpt、recorded "
+                "response、Spec 与 provenance，调用方不能覆盖 company、期间"
+                "或 SEC identity。缺少 HUMAN decision 不再阻塞：D-06 会写"
+                "入明确的 SYSTEM decision 并继续完成 socket-zero recorded "
+                "Run；若 HUMAN 已先写入 decision，则该 decision 优先。"
+            ),
+            "",
+            "```bash",
+            (
+                "python3 tools/vnext_operator.py --json review show "
+                "--run-dir RUN_DIR --review-unit-hash REVIEW_UNIT_HASH"
+            ),
+            "# 可选：先阅读 review.md 并显式写入 HUMAN decision",
+            (
+                "python3 tools/vnext_review.py decide --run-dir RUN_DIR "
+                "--review-unit-hash REVIEW_UNIT_HASH --decision APPROVE "
+                "--reviewer-id HUMAN_ID --decided-at-utc UTC_DECIDED "
+                "--reason 'reviewed exact rendered context'"
+            ),
+            (
+                "python3 tools/vnext_cutover.py --json "
+                "--fixture-id FIXTURE_ID "
+                "--workspace-dir artifacts/vnext/recorded-cold-start "
+                "--legacy-snapshot-dir outputs "
+                "--validated-at-utc UTC_VALIDATED "
+                "--committed-at-utc UTC_COMMITTED"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json status "
+                "--publication-root "
+                "artifacts/vnext/recorded-cold-start/recorded-publication"
+            ),
+            "```",
+            "",
+            (
+                "第二次必须重跑同一 Cutover 命令；它从原 OPEN history "
+                "resume，完成 reviewed Run finalization、validation、freeze "
+                "与无网络 replay，再生成 complete BatchManifest、Projector "
+                "candidate、recorded validation bundle，并通过 CAS 把 sandbox "
+                "pointer 提交到 `<workspace>/recorded-publication`。最后的 "
+                "`status` 会用 pinned PublicationView read-back publication "
+                "与 root-mirror hashes。整条 recorded 路径 socket=0，且正式 "
+                "`outputs/active_publication.json` 与 repository root mirrors "
+                "前后必须相同。"
+            ),
+            (
+                "自动测试中的 `TEST_ONLY_EXPLICIT_REVIEW` 只证明显式 review "
+                "UX 和 sandbox transaction；它不是正式 HUMAN Decision、"
+                "live Cutover 或 full acceptance 证据。SYSTEM decision 必须"
+                "使用 D-06 固定身份且不得伪装为 HUMAN。recorded Cutover "
+                "workspace 的第一层必须使用 "
+                "`artifacts/vnext/recorded-*` 专用 namespace；live 固定使用 "
+                "repository-owned `artifacts/vnext/cutover`，任何 live "
+                "`--workspace-dir` 都以 `LIVE_WORKSPACE_OVERRIDE_FORBIDDEN` "
+                "在读取或写入前失败。formal core 还 exact 固定 module-owned "
+                "repository、`outputs` legacy snapshot 与 publication root；"
+                "每次有效 live 调用（包括 HUMAN 或 SYSTEM resume）都会先执行 fresh "
+                "SEC acquisition，再复用 source-exact pinned semantic plan，"
+                "并把本次 acquisition receipt 单独回绑 audit/full closure。"
+            ),
+            (
+                "sandbox publication 仍须闭合 Batch 实际消费的 request-ledger "
+                "来源。recorded tier 可以验证历史 row 明确声明的 "
+                "`LEGACY_WORKING_LOCATOR`，但必须逐项匹配 body/headers 的 "
+                "repository path、SHA-256 与 size，并把 locator tier/class "
+                "写入 portable closure；缺失、歧义或 bytes 漂移都失败。"
+                "formal/live tier 只接受 `IMMUTABLE_ATTEMPT`，任何 legacy "
+                "locator 都必须以 `LIVE_SOURCE_ATTEMPT_INCOMPLETE` 停止。"
+            ),
+            "",
+            "### Granular recorded OPEN Run 与可选 HUMAN review",
+            "",
+            "`fixture show` 返回的 `prepare_command` 是唯一受支持的 recorded "
+            "prepare 命令；operator 只从仓库 catalog 解析并逐 byte 验证 "
+            "source/response/Spec/期间身份，不接受调用方展开或覆盖这些字段。"
+            "它创建真正的 OPEN Run，但不会联网或修改 active/root outputs。"
+            "任何 caller-selected response 都以 "
+            "`RECORDED_FIXTURE_OVERRIDE_FORBIDDEN` 停止：",
+            "",
+            "```bash",
+            (
+                "python3 tools/vnext_operator.py --json status "
+                "--publication-root ."
+            ),
+            (
+                "python3 tools/vnext_operator.py --json prepare "
+                "--fixture-id FIXTURE_ID"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json status "
+                "--run-dir RUN_DIR"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json review list "
+                "--run-dir RUN_DIR"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json review show "
+                "--run-dir RUN_DIR "
+                "--review-unit-hash REVIEW_UNIT_HASH"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json review decide "
+                "--run-dir RUN_DIR "
+                "--review-unit-hash REVIEW_UNIT_HASH --decision APPROVE "
+                "--reviewer-id HUMAN_ID --decided-at-utc UTC_TIME "
+                "--reason 'reviewed exact rendered context'"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json resume "
+                "--run-dir RUN_DIR"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json replay "
+                "--run-dir RUN_DIR"
+            ),
+            "```",
+            "",
+            (
+                "`resume` 会优先采用已存在的 HUMAN Decision；否则写入 D-06 "
+                "SYSTEM decision 后完成 finalization、Run validation 和 freeze；"
+                "不要再对已经 FROZEN 的 Run 顺序执行"
+                "一次 `freeze`。若外部流程已自行完成 finalization，才单独"
+                "使用 `freeze`。"
+            ),
+            (
+                "wrong supersedes、stale context 或 parallel effective tip "
+                "会 fail closed；恢复命令以 CLI 返回的 exact Run/ReviewUnit "
+                "身份为准。默认不打印 traceback，只有 `--debug` 才打印。"
+            ),
+            "",
+            "### Granular Complete Batch 与 inactive recorded bundle",
+            "",
+            "```bash",
+            (
+                "python3 tools/vnext_operator.py --json project "
+                "--batch-manifest artifacts/vnext/staging/batch_manifest.json "
+                "--run-dir RUN_DIR_1 --run-dir RUN_DIR_2 "
+                "--legacy-snapshot-dir . "
+                "--staging-dir artifacts/vnext/staging/candidate"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json publish "
+                "--publication-root artifacts/vnext/recorded-publication "
+                "--batch-manifest artifacts/vnext/staging/batch_manifest.json "
+                "--legacy-snapshot-dir . "
+                "--staging-dir artifacts/vnext/staging/candidate "
+                "--validated-at-utc UTC_TIME"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json status "
+                "--publication-root artifacts/vnext/recorded-publication"
+            ),
+            "```",
+            "",
+            (
+                "`--run-dir` 必须为 current production registry × "
+                "B01/B03/B10/B11 的完整同财年 FROZEN Run exact set，可重复"
+                "任意次；示例中的两个 locator 只是占位。generic `publish` "
+                "只准备 inactive recorded bundle，`--commit` 与所有 public "
+                "generic formal commit API 都以 "
+                "`FORMAL_CUTOVER_AUTHORITY_REQUIRED`/"
+                "`FORMAL_COMMIT_REQUIRES_CUTOVER` 失败。正式 forward commit "
+                "只由 Cutover orchestrator 在全部 live evidence 到齐后执行。"
+                "上节受控 fixture shortcut 的 CAS 只提交其固定 "
+                "`<workspace>/recorded-publication` sandbox，不能借此写正式 "
+                "active pointer 或 repository root mirrors。"
+            ),
+            "",
+            "### 正式 qualification、Cutover 与 full acceptance",
+            "",
+            "```bash",
+            "test -n \"$DEEPSEEK_API_KEY\" && test -n \"$SEC_CONTACT_EMAIL\"",
+            (
+                "python3 tools/vnext_capture_qualification_fixture.py "
+                "--fixture-id SECOND_LAYOUT_FIXTURE_ID"
+            ),
+            (
+                "python3 tools/vnext_qualification.py prepare "
+                "--fixture-id SECOND_LAYOUT_FIXTURE_ID"
+            ),
+            (
+                "python3 tools/vnext_qualification.py freeze "
+                "--frozen-at-utc UTC_TIME"
+            ),
+            (
+                "python3 tools/vnext_capture_qualification_fixture.py "
+                "--fixture-id POST_FREEZE_HOLDOUT_FIXTURE_ID"
+            ),
+            (
+                "python3 tools/vnext_qualification.py prepare "
+                "--fixture-id POST_FREEZE_HOLDOUT_FIXTURE_ID"
+            ),
+            "python3 tools/vnext_qualification.py status",
+            (
+                "python3 tools/run_acceptance.py --scope full "
+                "--execute-live"
+            ),
+            "```",
+            "",
+            (
+                "qualification 的固定顺序是：第二真实布局 `prepare` 形成"
+                "有效 HUMAN 或 D-06 SYSTEM `APPROVE`、全量 `PUBLISHED` "
+                "Result 与 `PASSED` Run validation的 receipt；`REJECT`/"
+                "WITHHELD 只保留审计。受控 capture 命令只接受仓库候选目录，"
+                "先经 SecHttpClient 保存真实 SEC bytes，再调用固定 DeepSeek "
+                "transport 一次并保存 provider envelope，绝不写入 secret；然后 "
+                "`freeze` 同时绑定 production semantic tree 与 pre-holdout "
+                "fixture/Run inventory；最后才加入并 `prepare` 独立 holdout。"
+                "若 holdout bytes/Run 在 freeze 前已存在，或 holdout 后 semantic "
+                "tree 漂移，`status` 必须失败。"
+            ),
+            (
+                "如果尚无 active publication 的 qualification chain 因 source/"
+                "semantic drift 失败，先运行 `python3 tools/vnext_qualification.py "
+                "reset --reset-at-utc UTC_TIME --reason STABLE_REASON`。reset 会"
+                "content-addressed 地保存旧 manifest 与 blocker，绝不删除 Run、"
+                "fixture 或 SEC evidence；随后必须从新的第二布局重新开始。"
+            ),
+            (
+                "release input plan 会先验证 request-ledger manifest，再按 "
+                "exact SEC URL/body hash/accession/document 选择有序 ledger 中"
+                "最后一个验证通过的 attempt，并绑定 attempt ID、body/header "
+                "locator 与 locator class。recorded 可保留唯一且逐 path/hash/"
+                "headers/size 验证的 `LEGACY_WORKING_LOCATOR`，portable closure "
+                "必须记录其 tier/class；formal live 只允许 "
+                "`IMMUTABLE_ATTEMPT`，以 `LIVE_SOURCE_ATTEMPT_INCOMPLETE` "
+                "拒绝 legacy class。plan 后 ledger binding 漂移则以 "
+                "`SOURCE_LEDGER_BINDING_AMBIGUOUS` 失败。"
+            ),
+            (
+                "live 只在显式 `--execute-live` 下执行；缺凭据、qualification、"
+                "有效 review decision、三轮稳定、strict parity、fault matrix、"
+                "rollback/restore 或 terminal checker 任一证据时都不得产生 "
+                "full PASS。Rollback 只切 committed predecessor pointer，"
+                "不会重新启用旧 parser。"
+            ),
+            (
+                "首次 formal Cutover 会把冻结 legacy root bytes 导入为"
+                "immutable predecessor A（不运行旧 parser），再把 formal "
+                "vNext bundle B 绑定 A 并原子建立 initial chain。三次 live "
+                "attempt 的 request/schema/assistant-output/provider-envelope/"
+                "model/TransportObservation/Candidate/Evidence/Review/"
+                "compatibility 会复制进 content-addressed "
+                "portable audit closure；原 Run workspace 清理后，acceptance "
+                "仍须逐 byte 重验该 closure。new、rollback A、restore B 的"
+                "report/Stage 12/checker 各自共用同一 pinned publication "
+                "transaction。"
+            ),
+            "",
+            "```bash",
+            (
+                "python3 tools/vnext_terminal_cycle.py --json "
+                "--publication-root . --expected-publication-id ACTIVE_ID "
+                "--output outputs/terminal_cycle_result.json"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json rollback "
+                "--publication-root . --target-publication-id PREVIOUS_ID "
+                "--expected-active-publication-id NEW_ID "
+                "--committed-at-utc UTC_TIME"
+            ),
+            (
+                "python3 tools/vnext_operator.py --json restore "
+                "--publication-root . --target-publication-id NEW_ID "
+                "--expected-active-publication-id PREVIOUS_ID "
+                "--committed-at-utc UTC_TIME"
+            ),
+            "```",
+            "",
+            (
+                "full acceptance 在每个 new/rollback/restore cycle 只启动一次 "
+                "`tools/vnext_terminal_cycle.py`；该公开入口以单进程、单次 "
+                "pinned transaction 顺序执行 Stage 10 Golden→Stage 11 report→"
+                "Stage 12 active validation→snapshot publish→verify，并在每一步"
+                "重验同一 pointer/PublicationView。结构化 result 与文件 SHA-256 "
+                "共同进入 full receipt；任何 gate 缺失、重复、换序或 pointer "
+                "切换都使该轮失败。"
+            ),
+            (
+                "publication switch 会在 root mirror mutation 前、同一个 "
+                "exclusive lock 内写 `outputs/publication_switch_intents/` 下的 "
+                "content-addressed switch intent，绑定 previous/proposed "
+                "pointer、previous switch tip、mode 与全部 mirror 的存在性/hash/"
+                "size。共享锁 reader fail closed：pending、多份或 tampered intent "
+                "只返回失败，不清理 authority。独占锁 writer/recovery 按 exact "
+                "pointer 恢复：pointer 已是 proposed 时补齐 connected switch edge "
+                "并重建 proposed mirrors；pointer 仍是 previous 时移除本事务 "
+                "edge、恢复 previous state；其他状态失败。initial A→B 失败还会"
+                "清理本次 A 孤儿 edge、pointer 与 intent，重试不继承伪历史。"
+            ),
+            "",
+            "## 内部阶段 00-11（非业务用户产品接口）",
+            "",
+            (
+                "以下内部 baseline 命令统一把数据根显式指向一个已存在的"
+                "干净隔离 candidate checkout；该绝对路径必须不同于本源码"
+                "checkout 且不能含 active pointer。Stage04/09/11 只生成"
+                "非迁移候选，迁移指标只能由 vNext Projector/PublicationView "
+                "提供。"
+            ),
+            "",
+            "```bash",
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 00_smoke_test_sec_access"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 01_resolve_companies"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 02_inventory_filings"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 03_companyfacts_inventory"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 04_compute_standard_metrics"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 05_fetch_accession_materials"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 06_parse_xbrl_instances"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 07_extract_8k_events"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 08_extract_def14a"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE "
+                "09_extract_mda_and_risk_text"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 10_run_golden_assertions"
+            ),
+            (
+                "python3 scripts/sec_pipeline.py --workspace-dir "
+                "/ABSOLUTE/CANDIDATE_WORKSPACE 11_build_report"
+            ),
             "```",
             "",
             (
@@ -19645,13 +20234,24 @@ def build_readme() -> str:
             "",
             "## 验收顺序",
             "",
-            "### 第一层：十家公司功能验收",
+            "### 正式完整验收",
             "",
             "```bash",
-            "python3 scripts/10_run_golden_assertions.py",
-            "python3 scripts/12_validate_repair.py",
-            "python3 tools/check_validation_snapshot.py",
+            "python3 tools/run_acceptance.py --scope full --execute-live",
             "```",
+            "",
+            (
+                "只有该命令真实返回 0 且产生 full receipt 才是 formal "
+                "Cutover 完成。内部 candidate、recorded acceptance、单独 "
+                "Stage 10/11/12 或 snapshot checker 都不能替代它。"
+            ),
+            "",
+            "### 第一层：内部 candidate 十家公司功能 gate",
+            "",
+            (
+                "下列判断由上节隔离 candidate 的 Stage 10/11 生成，"
+                "仅证明非迁移输入与局部 gate；它不写 active/root mirrors。"
+            ),
             "",
             (
                 "- `outputs/golden_results.csv` 必须与配置/generator/"
@@ -19688,11 +20288,13 @@ def build_readme() -> str:
                 "刷新的 validation artifact；旧文件存在不代表本次已评估。"
             ),
             (
-                "- 阶段 11/12 的报告写入成功后才发布 terminal "
-                "manifest；写入失败必须保持 `IN_PROGRESS`。"
+                "- candidate 阶段 11 的报告写入成功后才发布其 terminal "
+                "manifest；写入失败必须保持 `IN_PROGRESS`，且成功也不"
+                "代表 active/full。"
             ),
             (
-                "- stage 12 在成功返回前还必须发布并自验 "
+                "- formal terminal cycle 的 stage 12 在成功返回前还必须"
+                "发布并自验 "
                 "`outputs/validation_snapshot_provenance.json`；缺失 "
                 "sidecar、source-input dirty/tree mismatch 或关键 artifact "
                 "hash mismatch 都使完整批次失败。"
@@ -19737,10 +20339,15 @@ def build_readme() -> str:
             "## 本轮修复的请求边界",
             "",
             (
-                "- Lodging B10/B11 使用表头映射抽取 RevPAR/Occupancy "
-                "绝对值；B12 RPO/cRPO 优先 instance fact；C03 "
-                "PeoTotalCompAmt、FI A01/A02 ratio facts、coverage join、"
-                "exceptions/report 更新。"
+                "- B01/B03/B10/B11 的正式结果只来自 vNext "
+                "Run/Evidence/Review/Projector；legacy lodging/B03 resolver、"
+                "repair 与通用 upsert 对这些指标均已退出，任何重新写入"
+                "尝试以 `LEGACY_PATH_STILL_ACTIVE` 失败。"
+            ),
+            (
+                "- 非迁移能力继续保留：例如 B12 RPO/cRPO 优先 instance "
+                "fact、C03 PeoTotalCompAmt、FI A01/A02 ratio facts，以及 "
+                "coverage、exceptions 与 report consumer。"
             ),
             (
                 "- C04 先检查 target 10-K/A，再在 AuditorName 不可用时"
@@ -19938,7 +20545,28 @@ def write_terminal_report(*, text: str, manifest: dict) -> None:
 
 
 def stage_build_report() -> None:
-    """Stage 11: repair, validate, and build derived review documents."""
+    """Stage 11: validate a non-migrated candidate before vNext projection."""
+    publication_view = open_active_publication_view()
+    if publication_view is not None:
+        from vnext.report import read_validated_report
+
+        report = read_validated_report(publication_view=publication_view)
+        print(report)
+        print(
+            "Stage 11 active report read-back complete; "
+            f"publication_id={publication_view.publication_id}"
+        )
+        return
+    assert_legacy_stage_workspace(stage_name="11_build_report")
+    from validation_provenance import (
+        ensure_readme_routes,
+        ensure_report_provenance_notice,
+        invalidate_validation_snapshot,
+    )
+
+    # Only the legacy builder invalidates an older proof. The active branch
+    # returned above without any authoritative write or postprocessor.
+    invalidate_validation_snapshot(workdir=WORKDIR)
     mode, _light_reasons = validation_package_mode()
     manifest = new_validation_run_manifest(
         mode=mode,
@@ -20003,6 +20631,8 @@ def stage_build_report() -> None:
         path=WORKDIR / "README_RUN.md",
         text=readme_text,
     )
+    ensure_readme_routes(workdir=WORKDIR)
+    ensure_report_provenance_notice(workdir=WORKDIR)
     finish_validation_run_manifest(
         manifest=active_manifest,
         result=str(terminal_manifest["result"]),
@@ -20012,6 +20642,20 @@ def stage_build_report() -> None:
 
 def stage_validate_repair() -> None:
     """Stage 12: validate repairs, refresh the report, and fail on blockers."""
+    publication_view = open_active_publication_view()
+    if publication_view is not None:
+        from vnext.report import validate_active_publication
+
+        result = validate_active_publication(
+            publication_view=publication_view,
+            publication_root=WORKDIR,
+        )
+        print(
+            "Stage 12 active publication validation complete; "
+            f"publication_id={result['publication_id']}; "
+            f"golden_assertions={result['golden_assertion_count']}"
+        )
+        return
     rows = run_repair_validation(exit_on_failure=False)
     active_manifest, terminal_manifest = (
         projected_terminal_validation_manifest(rows=rows)
@@ -20033,6 +20677,42 @@ def stage_validate_repair() -> None:
         for row in failures:
             print(f"{row['check_id']}: {row['details']}")
         raise SystemExit(1)
+
+
+def retired_legacy_entrypoint(*, producer: str):
+    """Build a fail-closed callable for one retired producer symbol.
+
+    Args:
+        producer: Historical production function name retained for diagnostics.
+
+    Returns:
+        A callable that accepts any former signature but always raises the
+        stable Cutover error before touching inputs or outputs.
+    """
+
+    def blocked(*_args: object, **_kwargs: object) -> None:
+        """Reject every invocation of the bound retired producer."""
+        legacy_path_error(producer=producer)
+
+    blocked.__name__ = producer
+    blocked.__qualname__ = producer
+    return blocked
+
+
+def install_retired_legacy_entrypoints() -> None:
+    """Replace historical B03/lodging runtime symbols with tombstones.
+
+    Expected output:
+        Direct imports and stale callers receive ``LEGACY_PATH_STILL_ACTIVE``;
+        the Stage 04 B07 alias remains bound to its non-migrated implementation.
+    """
+    for producer in RETIRED_LEGACY_PRODUCER_NAMES:
+        globals()[producer] = retired_legacy_entrypoint(producer=producer)
+
+
+# Rebinding happens only after all historical function bodies are defined, so
+# no import order can expose them as callable production oracles.
+install_retired_legacy_entrypoints()
 
 
 def run_stage(*, stage_name: str) -> None:
@@ -20058,10 +20738,25 @@ def run_stage(*, stage_name: str) -> None:
 
 
 def main_from_argv(*, argv: list[str]) -> None:
-    """Run a stage by command-line argument for manual debugging."""
-    if len(argv) != 2:
-        raise SystemExit("Usage: python sec_pipeline.py <stage_name>")
-    run_stage(stage_name=argv[1])
+    """Run one stage at root or against explicit isolated candidate data.
+
+    Args:
+        argv: Program name followed by either ``stage_name`` or
+            ``--workspace-dir ABSOLUTE_PATH stage_name``.
+    """
+    if len(argv) == 2:
+        run_stage(stage_name=argv[1])
+        return
+    if len(argv) == 4 and argv[1] == "--workspace-dir":
+        configure_legacy_candidate_workspace(
+            workspace_dir=Path(argv[2]),
+        )
+        run_stage(stage_name=argv[3])
+        return
+    raise SystemExit(
+        "Usage: python sec_pipeline.py "
+        "[--workspace-dir ABSOLUTE_PATH] <stage_name>"
+    )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-ACTIVE-SNAPSHOT-CLOSURE-001",
+  "observed_at_utc": "2026-08-06T10:22:11Z",
+  "expected_failure": "Active pointer, selected bundle exact set, and root mirror parity were outside validation snapshot closure",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.test_validation_provenance.ValidationProvenanceTest.test_active_pointer_bundle_and_mirrors_are_exactly_bound",
+      "tests.test_validation_provenance.ValidationProvenanceTest.test_active_bundle_tamper_missing_and_extra_fail_closed",
+      "tests.test_validation_provenance.ValidationProvenanceTest.test_active_root_mirror_drift_fails_closed",
+      "-v"
+    ],
+    "duration_ms": 1282,
+    "environment_keys": [],
+    "error_class": "AssertionError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "c1b08adc84fb2f0bdcdb345821d48b01bc10d4fb5a49c83756599dd5d56ccf1d",
+    "stderr_size": 3565,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  }
+}

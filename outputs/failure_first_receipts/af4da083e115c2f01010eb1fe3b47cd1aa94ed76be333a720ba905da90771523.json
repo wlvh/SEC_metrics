@@ -1,0 +1,31 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_cutover_rejects_standalone_recorded_response_override",
+      "tests.test_sec_pipeline_validation.RunbookGeneratorTest.test_vnext_runbook_uses_only_catalog_recorded_authority"
+    ],
+    "return_code": 1
+  },
+  "expected_failure": "Every recorded public entrypoint and generated runbook must accept only a verified repository fixture catalog identity, never caller-selected response bytes.",
+  "observed_at_utc": "2026-08-07T05:33:39Z",
+  "observed_failures": [
+    {
+      "actual_code": "CUTOVER_FAILED",
+      "expected_code": "RECORDED_FIXTURE_OVERRIDE_FORBIDDEN",
+      "scenario": "standalone --recorded-response reached run_cutover"
+    },
+    {
+      "actual": "generated README expands caller source and --recorded-response fields",
+      "expected": "catalog fixture prepare command only",
+      "scenario": "generated recorded operator command"
+    }
+  ],
+  "outcome": "FAILED_BEFORE_FIX",
+  "scenario_id": "FF-RECORDED-CATALOG-AUTHORITY-UX-001",
+  "schema_version": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a"
+}

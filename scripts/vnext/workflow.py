@@ -14,32 +14,307 @@ from typing import Callable, Dict, Mapping, Optional, Sequence
 
 from .ai_adapter import AIAdapter, run_ai_attempt
 from .ai_adapter import validate_adapter_repository_authority
+from .batch_workflow import BatchWorkflowError
+from .batch_workflow import validate_request_attempt_binding
 from .calculator import calculate_metric, calculate_observation_metric
 from .calculator import withheld_metric_result
-from .canonical import sha256_file, strict_json_loads
+from .canonical import sha256_file, strict_json_file, strict_json_loads
 from .evidence import check_evidence
 from .reader import validate_reader_output
 from .reader_input import build_reader_input_manifest, prepare_reader_request
+from .reader_input import prepare_live_reader_request
 from .reader_input import required_reader_roles
 from .render import build_review_context, render_review_markdown
-from .review import build_review_unit, effective_review_decision
+from .review import build_review_unit, create_system_review_decision
+from .review import effective_review_decision
 from .observations import reviewed_observation, scope_key
 from .requirements import load_requirement_snapshot
-from .run_store import append_run_record, create_run, load_open_run
+from .run_store import append_review_decision, append_run_record
+from .run_store import append_run_records_atomically
+from .run_store import create_run, load_open_run
 from .run_store import load_run_bound_specs
 from .run_store import RunStoreError
 from .run_store import write_review_assets
 from .run_store import write_attempt_payloads
 from .sources import load_raw_blob_bytes, raw_blob_record
-from .sources import source_reference_record
+from .sources import SourceError, source_reference_record
+from .sources import validate_public_sec_filing_identity
 from .specs import SpecError, compile_spec_file, compile_spec_files
 from .specs import parse_spec_document
 from .table_grid import build_table_grid
-from .traits import TraitError, repository_company_traits
+from .traits import TraitError, repository_company_ciks
+from .traits import repository_company_traits
 
 
 class WorkflowError(RuntimeError):
     """Report incomplete compiled semantics or inconsistent Reader output."""
+
+
+class LiveSourceAuthorityError(WorkflowError):
+    """Report a live source not proven by immutable public SEC authority."""
+
+
+def _validate_live_source_authority(
+    *,
+    repo_root: Path,
+    company_id: str,
+    raw_blob: Mapping[str, object],
+    source_url: str,
+    accession: str,
+    document_name: str,
+    source_role: str,
+    request_attempt_id: str,
+) -> Dict[str, object]:
+    """Rebuild the registry, filing, ledger, body, and header proof pre-egress.
+
+    Args:
+        repo_root: Fixed repository containing registry and SEC audit authority.
+        company_id: Registry logical company identity.
+        raw_blob: Exact candidate filing bytes and media type.
+        source_url: Claimed official SEC primary-document URL.
+        accession: Claimed filing accession.
+        document_name: Claimed filing document identity.
+        source_role: Claimed Run source role.
+        request_attempt_id: Pinned immutable request-ledger row identity.
+
+    Returns:
+        Exact immutable body/header locator proof for transport replay.
+
+    Raises:
+        LiveSourceAuthorityError: Before any AI attempt when the complete public
+        SEC source proof cannot be rebuilt from current repository bytes.
+    """
+    try:
+        validate_public_sec_filing_identity(
+            raw_blob=raw_blob,
+            source_url=source_url,
+            accession=accession,
+            document_name=document_name,
+            source_role=source_role,
+            allowed_ciks=repository_company_ciks(
+                repo_root=repo_root, company_id=company_id,
+            ),
+        )
+        binding = validate_request_attempt_binding(
+            repo_root=repo_root,
+            source_url=source_url,
+            content_sha256=str(raw_blob["raw_asset_id"]).split(
+                ":", maxsplit=1
+            )[1],
+            accession=accession,
+            document_name=document_name,
+            request_attempt_id=request_attempt_id,
+            require_immutable=True,
+        )
+    except (BatchWorkflowError, SourceError, TraitError) as error:
+        raise LiveSourceAuthorityError(
+            "Live Reader source lacks immutable public SEC authority"
+        ) from error
+    if binding["request_attempt_id"] != request_attempt_id:
+        raise LiveSourceAuthorityError(
+            "Live Reader request attempt identity differs"
+        )
+    return binding
+
+
+def create_review_run(
+    *,
+    repo_root: Path,
+    run_dir: Path,
+    run_id: str,
+    company_id: str,
+    target_period: Mapping[str, object],
+    source_repo_relative_path: str,
+    source_media_type: str,
+    source_url: str,
+    accession: str,
+    document_name: str,
+    source_role: str,
+    request_attempt_id: str,
+    disclosure_spec_path: str,
+    adapter: AIAdapter,
+    clock: Optional[Callable[[], datetime]],
+) -> Dict[str, object]:
+    """Create one registry-authorized OPEN Run through HUMAN review.
+
+    Args:
+        repo_root: Repository containing exact raw bytes and Specs.
+        run_dir: New run-scoped directory.
+        run_id: Opaque Run identity.
+        company_id: Logical company identity from the production registry.
+        target_period: Explicit target-period mapping.
+        source_repo_relative_path: Existing raw filing path.
+        source_media_type: Raw filing media type.
+        source_url: Official SEC source URL.
+        accession: Filing accession.
+        document_name: Filing document name.
+        source_role: Run source role.
+        request_attempt_id: Existing SEC ledger attempt identity.
+        disclosure_spec_path: Repository-relative disclosure Spec locator.
+        adapter: Recorded or repository-approved AI transport.
+        clock: Explicit UTC clock or ``None`` for real UTC audit time.
+
+    Returns:
+        Run, attempt, Candidate, Evidence, and ReviewUnit identities.
+    """
+    try:
+        company_traits = repository_company_traits(
+            repo_root=repo_root, company_id=company_id,
+        )
+    except TraitError as error:
+        raise WorkflowError(
+            "Repository company traits are invalid"
+        ) from error
+    return _create_review_run_with_traits(
+        repo_root=repo_root,
+        run_dir=run_dir,
+        run_id=run_id,
+        company_id=company_id,
+        company_traits=company_traits,
+        target_period=target_period,
+        source_repo_relative_path=source_repo_relative_path,
+        source_media_type=source_media_type,
+        source_url=source_url,
+        accession=accession,
+        document_name=document_name,
+        source_role=source_role,
+        request_attempt_id=request_attempt_id,
+        disclosure_spec_path=disclosure_spec_path,
+        adapter=adapter,
+        clock=clock,
+    )
+
+
+def create_layout_qualification_run(
+    *,
+    repo_root: Path,
+    run_dir: Path,
+    run_id: str,
+    fixture_id: str,
+    adapter: AIAdapter,
+    clock: Optional[Callable[[], datetime]],
+) -> Dict[str, object]:
+    """Run a repository fixture company through the production review path.
+
+    Args:
+        repo_root: Repository containing the fixed fixture authority.
+        run_dir: New qualification Run directory.
+        run_id: Opaque Run identity.
+        fixture_id: Safe directory identity below ``fixtures/vnext/layouts``.
+        adapter: Repository-created recorded adapter; live transport is barred.
+        clock: Explicit UTC clock or ``None`` for real UTC audit time.
+
+    Returns:
+        The same Run/Candidate/Evidence/ReviewUnit result as production.
+    """
+    if (
+        not fixture_id
+        or any(character not in "abcdefghijklmnopqrstuvwxyz0123456789_-"
+               for character in fixture_id)
+        or adapter.provider != "recorded"
+    ):
+        raise WorkflowError(
+            "Layout qualification requires a safe fixture and "
+            "socket-zero adapter"
+        )
+    relative_root = Path("fixtures/vnext/layouts") / fixture_id
+    manifest_path = repo_root / relative_root / "fixture_manifest.json"
+    if manifest_path.is_symlink() or not manifest_path.is_file():
+        raise WorkflowError("Layout fixture manifest is absent or unsafe")
+    manifest = strict_json_file(path=manifest_path)
+    required = {
+        "accession",
+        "cik",
+        "company_id",
+        "company_traits",
+        "disclosure_spec_path",
+        "document_name",
+        "excerpt_repo_relative_path",
+        "excerpt_sha256",
+        "fixture_id",
+        "layout_differences",
+        "qualification_role",
+        "recorded_response_repo_relative_path",
+        "recorded_response_sha256",
+        "request_attempt_id",
+        "schema_version",
+        "selection_reason",
+        "source_media_type",
+        "source_repo_relative_path",
+        "source_role",
+        "source_sha256",
+        "source_url",
+        "target_period",
+    }
+    if (
+        not isinstance(manifest, dict)
+        or set(manifest) != required
+        or manifest["schema_version"] != 1
+        or manifest["fixture_id"] != fixture_id
+        or type(manifest["selection_reason"]) is not str
+        or not manifest["selection_reason"].strip()
+        or not isinstance(manifest["company_traits"], list)
+        or not manifest["company_traits"]
+        or len(manifest["company_traits"])
+        != len(set(manifest["company_traits"]))
+        or any(
+            type(trait) is not str or not trait
+            for trait in manifest["company_traits"]
+        )
+    ):
+        raise WorkflowError("Layout fixture manifest fields are not exact")
+    source_path = repo_root / Path(str(manifest["source_repo_relative_path"]))
+    response_path = repo_root / Path(
+        str(manifest["recorded_response_repo_relative_path"])
+    )
+    excerpt_path = repo_root / Path(
+        str(manifest["excerpt_repo_relative_path"])
+    )
+    fixture_root = repo_root / relative_root
+    if (
+        Path(str(manifest["source_repo_relative_path"])).is_absolute()
+        or ".." in Path(str(manifest["source_repo_relative_path"])).parts
+        or fixture_root not in source_path.parents
+        or source_path.is_symlink()
+        or not source_path.is_file()
+        or sha256_file(path=source_path) != manifest["source_sha256"]
+        or Path(
+            str(manifest["recorded_response_repo_relative_path"])
+        ).is_absolute()
+        or ".." in Path(
+            str(manifest["recorded_response_repo_relative_path"])
+        ).parts
+        or fixture_root not in response_path.parents
+        or response_path.is_symlink()
+        or not response_path.is_file()
+        or sha256_file(path=response_path)
+        != manifest["recorded_response_sha256"]
+        or Path(str(manifest["excerpt_repo_relative_path"])).is_absolute()
+        or ".." in Path(str(manifest["excerpt_repo_relative_path"])).parts
+        or fixture_root not in excerpt_path.parents
+        or excerpt_path.is_symlink()
+        or not excerpt_path.is_file()
+        or sha256_file(path=excerpt_path) != manifest["excerpt_sha256"]
+    ):
+        raise WorkflowError("Layout fixture byte binding differs")
+    return _create_review_run_with_traits(
+        repo_root=repo_root,
+        run_dir=run_dir,
+        run_id=run_id,
+        company_id=str(manifest["company_id"]),
+        company_traits=list(manifest["company_traits"]),
+        target_period=manifest["target_period"],
+        source_repo_relative_path=str(manifest["source_repo_relative_path"]),
+        source_media_type=str(manifest["source_media_type"]),
+        source_url=str(manifest["source_url"]),
+        accession=str(manifest["accession"]),
+        document_name=str(manifest["document_name"]),
+        source_role=str(manifest["source_role"]),
+        request_attempt_id=str(manifest["request_attempt_id"]),
+        disclosure_spec_path=str(manifest["disclosure_spec_path"]),
+        adapter=adapter,
+        clock=clock,
+    )
 
 
 def _required_roles(*, compiled_spec: Mapping[str, object]) -> Sequence[str]:
@@ -137,12 +412,13 @@ def _load_disclosure_plan(
     )
 
 
-def create_review_run(
+def _create_review_run_with_traits(
     *,
     repo_root: Path,
     run_dir: Path,
     run_id: str,
     company_id: str,
+    company_traits: Sequence[str],
     target_period: Mapping[str, object],
     source_repo_relative_path: str,
     source_media_type: str,
@@ -155,13 +431,14 @@ def create_review_run(
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
 ) -> Dict[str, object]:
-    """Create one OPEN shadow Run through a pending ReviewUnit.
+    """Create one OPEN Run from already repository-resolved company traits.
 
     Args:
         repo_root: Repository containing exact raw bytes and Specs.
         run_dir: New run-scoped directory.
         run_id: Opaque Run identity.
         company_id: Logical company identity.
+        company_traits: Registry- or fixture-manifest-derived traits.
         target_period: Explicit target-period mapping.
         source_repo_relative_path: Existing raw filing path.
         source_media_type: Raw filing media type.
@@ -180,21 +457,20 @@ def create_review_run(
     """
     # Close the only joint remote boundary before loading Spec or filing
     # bytes, so D-01 cannot authorize a payload assembled from another tree.
-    validate_adapter_repository_authority(
+    adapter_mode = validate_adapter_repository_authority(
         adapter=adapter, repo_root=repo_root,
     )
     compiled_spec, spec_paths, metric_specs = _load_disclosure_plan(
         repo_root=repo_root,
         disclosure_spec_path=disclosure_spec_path,
     )
-    try:
-        company_traits = repository_company_traits(
-            repo_root=repo_root, company_id=company_id,
-        )
-    except TraitError as error:
-        raise WorkflowError(
-            "Repository company traits are invalid"
-        ) from error
+    if (
+        not isinstance(company_traits, list)
+        or not company_traits
+        or any(type(trait) is not str or not trait for trait in company_traits)
+        or len(company_traits) != len(set(company_traits))
+    ):
+        raise WorkflowError("Resolved company traits are invalid")
     semantic = compiled_spec["compiled"]
     required_traits = set(semantic["applicability"]["all"])
     forbidden_traits = set(semantic["applicability"]["none"])
@@ -267,6 +543,18 @@ def create_review_run(
         repo_relative_path=source_repo_relative_path,
         media_type=source_media_type,
     )
+    live_source_binding = None
+    if adapter_mode == "LIVE":
+        live_source_binding = _validate_live_source_authority(
+            repo_root=repo_root,
+            company_id=company_id,
+            raw_blob=raw_blob,
+            source_url=source_url,
+            accession=accession,
+            document_name=document_name,
+            source_role=source_role,
+            request_attempt_id=request_attempt_id,
+        )
     source_reference = source_reference_record(
         raw_blob=raw_blob,
         company_id=company_id,
@@ -312,18 +600,31 @@ def create_review_run(
         derived_asset=derived_asset,
         compiled_spec=compiled_spec,
     )
+    attempt_request = (
+        prepare_live_reader_request(
+            prepared_request=prepared_request,
+            raw_blob=raw_blob,
+            source_reference=source_reference,
+            derived_asset=derived_asset,
+            reader_manifest=reader_manifest,
+            disclosure_spec_path=disclosure_spec_path,
+            immutable_source_repo_relative_path=str(
+                live_source_binding["request_repo_relative_path"]
+            ),
+        )
+        if adapter_mode == "LIVE"
+        else prepared_request
+    )
 
-    response, raw_response, attempt = run_ai_attempt(
+    response, _raw_response, attempt, attempt_payloads = run_ai_attempt(
         adapter=adapter,
-        prepared_request=prepared_request,
+        prepared_request=attempt_request,
         clock=clock,
     )
     write_attempt_payloads(
         run_dir=run_dir,
         attempt=attempt,
-        request_bytes=prepared_request.request_bytes,
-        task_contract_bytes=prepared_request.task_contract_bytes,
-        raw_response_bytes=raw_response,
+        payloads=attempt_payloads,
     )
     append_run_record(run_dir=run_dir, record=attempt)
     if response is None:
@@ -408,7 +709,7 @@ def finalize_reviewed_direct_results(
     """Turn one effective whole-unit decision into observations/results.
 
     Args:
-        run_dir: OPEN Run after HUMAN decision append.
+        run_dir: OPEN Run after HUMAN decision or optional D-06 SYSTEM path.
         repo_root: Repository whose Run-bound Specs are authoritative.
 
     Returns:
@@ -430,6 +731,49 @@ def finalize_reviewed_direct_results(
         for decision in decisions
         if decision["review_unit_hash"] == unit["review_unit_hash"]
     ]
+    if not bound_decisions:
+        attempts = [
+            record
+            for record in records
+            if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+        ]
+        if len(attempts) != 1:
+            raise WorkflowError(
+                "SYSTEM review requires one terminal AI attempt"
+            )
+        try:
+            requirement = load_requirement_snapshot(
+                snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+            )
+            system_decision = create_system_review_decision(
+                review_unit=unit,
+                required_claims=unit["required_claims"],
+                decided_at_utc=attempts[0]["finished_at_utc"],
+                requirement=requirement,
+            )
+            append_review_decision(run_dir=run_dir, decision=system_decision)
+        except (RunStoreError, ValueError) as error:
+            raise WorkflowError(
+                "Optional SYSTEM review policy cannot finalize the Run"
+            ) from error
+        manifest, records, decisions = load_open_run(run_dir=run_dir)
+        units = [
+            record
+            for record in records
+            if record["record_type"] == "REVIEW_UNIT"
+        ]
+        if len(units) != 1:
+            raise WorkflowError("Finalization requires one ReviewUnit")
+        unit = units[0]
+        bound_decisions = [
+            decision
+            for decision in decisions
+            if decision["review_unit_hash"] == unit["review_unit_hash"]
+        ]
+    records_file_hash = sha256_file(path=run_dir / "records.jsonl")
+    decisions_file_hash = sha256_file(
+        path=run_dir / "review_decisions.jsonl"
+    )
     try:
         decision = effective_review_decision(
             review_unit=unit, decisions=bound_decisions,
@@ -512,6 +856,7 @@ def finalize_reviewed_direct_results(
     created_observations = []
     created_results = []
     created_traces = []
+    finalization_records = []
     if decision["decision"] == "REJECT":
         for role in published_roles:
             result, trace = withheld_metric_result(
@@ -519,10 +864,15 @@ def finalize_reviewed_direct_results(
                 target=target,
                 reason_code="HUMAN_REVIEW_REJECTED",
             )
-            append_run_record(run_dir=run_dir, record=trace)
-            append_run_record(run_dir=run_dir, record=result)
+            finalization_records.extend([trace, result])
             created_results.append(result["result_id"])
             created_traces.append(trace["trace_id"])
+        append_run_records_atomically(
+            run_dir=run_dir,
+            records=finalization_records,
+            expected_records_file_hash=records_file_hash,
+            expected_review_decisions_file_hash=decisions_file_hash,
+        )
         return {
             "decision_id": decision["review_decision_id"],
             "observation_ids": [],
@@ -551,10 +901,15 @@ def finalize_reviewed_direct_results(
                 target=target,
                 reason_code="REPORTED_UNIT_MISMATCH",
             )
-            append_run_record(run_dir=run_dir, record=trace)
-            append_run_record(run_dir=run_dir, record=result)
+            finalization_records.extend([trace, result])
             created_results.append(result["result_id"])
             created_traces.append(trace["trace_id"])
+        append_run_records_atomically(
+            run_dir=run_dir,
+            records=finalization_records,
+            expected_records_file_hash=records_file_hash,
+            expected_review_decisions_file_hash=decisions_file_hash,
+        )
         return {
             "decision_id": decision["review_decision_id"],
             "observation_ids": [],
@@ -592,7 +947,7 @@ def finalize_reviewed_direct_results(
             derived_asset_id=str(derived_ids[0]),
             quality="EXACT",
         )
-        append_run_record(run_dir=run_dir, record=observation)
+        finalization_records.append(observation)
         created_observations.append(observation["observation_id"])
         if metric_spec is None:
             continue
@@ -602,10 +957,15 @@ def finalize_reviewed_direct_results(
             company_traits=list(manifest["company_traits"]),
             observation=observation,
         )
-        append_run_record(run_dir=run_dir, record=trace)
-        append_run_record(run_dir=run_dir, record=result)
+        finalization_records.extend([trace, result])
         created_results.append(result["result_id"])
         created_traces.append(trace["trace_id"])
+    append_run_records_atomically(
+        run_dir=run_dir,
+        records=finalization_records,
+        expected_records_file_hash=records_file_hash,
+        expected_review_decisions_file_hash=decisions_file_hash,
+    )
     return {
         "decision_id": decision["review_decision_id"],
         "observation_ids": created_observations,

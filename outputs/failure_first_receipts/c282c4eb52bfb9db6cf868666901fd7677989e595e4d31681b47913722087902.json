@@ -1,0 +1,23 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_repository_descendant_is_not_a_legacy_candidate_workspace"
+    ],
+    "return_code": 1,
+    "stderr_sha256": "1100c4d19e0300eb626697cba2389385a539189a9cea382ddbcfa5d95432ff17",
+    "stderr_size": 1280,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "expected_failure": "Repository-descendant legacy candidate workspace must fail before stage execution.",
+  "failure_first_receipt_id": "sha256:c282c4eb52bfb9db6cf868666901fd7677989e595e4d31681b47913722087902",
+  "formal_state_changed": false,
+  "observed_at_utc": "2026-08-07T09:00:22Z",
+  "outcome": "FAILED_AS_EXPECTED",
+  "schema_version": 1,
+  "scenario_id": "FF-LEGACY-CANDIDATE-REPO-NAMESPACE-001"
+}

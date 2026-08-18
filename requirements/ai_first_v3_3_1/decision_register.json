@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "requirement_id": "ai_first_v3_3_1",
-  "issue_contract_revision": "R2",
+  "issue_contract_revision": "R2_WITH_R3_ADDENDUM",
   "decisions": [
     {
       "decision_id": "D-03",
@@ -112,6 +112,92 @@
       "approved_at_utc": "2026-07-29T12:41:52Z",
       "supersedes_decision_id": null,
       "evidence": "ISSUE_CONTRACT.md#33-ai-adapterattempt-与诚实安全边界"
+    },
+    {
+      "decision_id": "D-01",
+      "status": "APPROVED",
+      "choice": {
+        "provider": "openai",
+        "model": "gpt-5.6-terra",
+        "api": "responses",
+        "endpoint_host": "api.openai.com",
+        "region": "provider-managed-global-no-residency-guarantee",
+        "retention": "default abuse-monitoring up to 30 days; responses store=false; no ZDR claim",
+        "data_use": "not used for training by default; no opt-in sharing",
+        "timeout_seconds": 120,
+        "retry_count": 2,
+        "maximum_payload_bytes": 8388608,
+        "filing_egress_policy": "PUBLIC_SEC_FILING_TABLE_GRIDS_ONLY"
+      },
+      "approved_by": "github-user:30534800",
+      "approved_at_utc": "2026-08-06T08:57:27Z",
+      "supersedes_decision_id": "sha256:96db3da17996b2da8e175668ad2197e77f18ddf6601ac6a85c8c06f0770be992",
+      "evidence": "ISSUE_CONTRACT_R3_ADDENDUM.md#r3-d3d-01-pending-openai-remote-policy"
+    },
+    {
+      "decision_id": "D-26",
+      "status": "APPROVED",
+      "choice": {
+        "test_execution_policy": "R4_FAST_CONCURRENT_NON_ISOLATED",
+        "applies_to": [
+          "development",
+          "pull_request",
+          "final_acceptance"
+        ],
+        "required_fast_command": "python3 tools/run_fast_tests.py --jobs 4",
+        "per_case_timeout_seconds": 30,
+        "recorded_gate_timeout_seconds": 60,
+        "prohibited_required_test_classes": [
+          "broad_repository_regression",
+          "isolated_repository_or_worktree",
+          "freeze_replay",
+          "long_running_serial_suite"
+        ],
+        "evidence_tier": "FAST_LOCAL_ONLY",
+        "may_claim_ci_pass": false
+      },
+      "approved_by": "user:current-thread",
+      "approved_at_utc": "2026-08-17T07:44:45Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5313207170"
+    },
+    {
+      "decision_id": "D-06",
+      "status": "APPROVED",
+      "choice": {
+        "decision_target": "WHOLE_REVIEW_UNIT",
+        "binds_selected_competing_unresolved": true,
+        "binds_canonical_and_rendered_context": true,
+        "parallel_effective_decisions": "FAIL_CLOSED",
+        "human_review_required": false,
+        "system_reviewer_type": "SYSTEM",
+        "system_approval_policy": "EVIDENCE_BOUND_AUTO_APPROVE"
+      },
+      "approved_by": "user:current-thread",
+      "approved_at_utc": "2026-08-17T09:21:18Z",
+      "supersedes_decision_id": "sha256:2f5e3334a166752a8250bb41c49c6ed72453c56aae88c36ddaef86b336a99fcf",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5314176033"
+    },
+    {
+      "decision_id": "D-01",
+      "status": "APPROVED",
+      "choice": {
+        "provider": "deepseek",
+        "model": "deepseek-v4-flash",
+        "api": "chat_completions",
+        "endpoint_host": "api.deepseek.com",
+        "region": "provider-managed-no-residency-guarantee",
+        "retention": "provider-managed; no zero-retention claim",
+        "data_use": "provider-managed; no training or data-use guarantee",
+        "timeout_seconds": 120,
+        "retry_count": 2,
+        "maximum_payload_bytes": 8388608,
+        "filing_egress_policy": "PUBLIC_SEC_FILING_TABLE_GRIDS_ONLY"
+      },
+      "approved_by": "user:current-thread",
+      "approved_at_utc": "2026-08-17T09:21:18Z",
+      "supersedes_decision_id": "sha256:97e18510b05dc8423259c274a17c2837e5be2f4841c0cc541ba64dd1d4783978",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5314176033"
     }
   ],
   "pending_decisions": [

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-LEGACY-INVENTORY-WRITER-ANCHORS-001",
+  "observed_at_utc": "2026-08-07T02:52:02Z",
+  "expected_failure": "Per-item legacy writer migration proof rejected retired overrides that did not bind the real Cutover orchestrator and private formal publication writers.",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.vnext.test_requirement_baseline",
+        "tests.vnext.test_legacy_projector"
+      ],
+      "duration_ms": 510,
+      "interpreter": "python3",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "stderr_sha256": "9525ea9203044a8fd28e368b4e628f2ba7e6bcc51c70a6730007f0f73cdb2648",
+      "stderr_size": 1063,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0
+    }
+  ],
+  "failure_first_receipt_id": "sha256:b606ad012a47c387cf76e3fda80e3e8d63de6ffbac585c952be2866bf3c94eeb"
+}

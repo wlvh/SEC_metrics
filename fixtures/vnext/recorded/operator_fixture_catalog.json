@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "fixtures": [
+    {
+      "fixture_id": "marriott-2025-real-layout-v1",
+      "display_name": "Marriott FY2025 real SEC lodging layout",
+      "provenance_repo_relative_path": "fixtures/vnext/recorded/marriott_2025_fixture_provenance.json",
+      "provenance_sha256": "91f39e38c16060bb240caf9877e1801e67993e4ef96c1935cd331642f323b575",
+      "provenance_id": "sha256:cf74803789fc46b63da500a4d35dae0c8a30ac2ff709e9810835522772677ef1",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_media_type": "text/html",
+      "source_role": "target_primary",
+      "disclosure_spec_path": "catalog/disclosures/lodging_kpi_table.md",
+      "disclosure_spec_sha256": "c5542bf964e69f61ba9c11539d88100046caf7a120b774c07bde82045f9f816a"
+    }
+  ],
+  "catalog_id": "sha256:208c8eb3f20b221700480f75e8df2630747c39dcd809faebbd84e3c705142595"
+}

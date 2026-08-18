@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "scenario_id": "ACCEPTANCE_RECORDED_ROOT_MIRROR_ISOLATION_001",
+  "observed_at_utc": "2026-08-06T11:20:00Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_gate_artifacts_never_target_active_mirrors",
+    "-v"
+  ],
+  "return_code": 1,
+  "expected_failure": "TypeError: recorded_commands() got an unexpected keyword argument 'gate_output_dir'",
+  "outcome": "FAILED_BEFORE_FIX"
+}

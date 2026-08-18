@@ -65,6 +65,27 @@ class SemanticAuditTest(unittest.TestCase):
             hits = audit_python_file(path=path, repo_root=root)
         self.assertIn("AI_FORBIDDEN_IMPORT", [hit["type"] for hit in hits])
 
+    def test_fixed_openai_transport_is_narrowly_allowed(self) -> None:
+        """Allow only the repository-pinned Responses transport boundary."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "scripts/vnext/ai_adapter.py"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                '"""Pinned transport."""\n'
+                "import socket\n"
+                "from urllib.request import Request\n"
+                '_OPENAI_API_KEY_ENV = "OPENAI_API_KEY"\n'
+                '_OPENAI_ENDPOINT_HOST = "api.openai.com"\n'
+                "_OPENAI_RESPONSES_URL = "
+                '"https://api.openai.com/v1/responses"\n'
+                "_OPENAI_OPENER.open(fullurl=Request("
+                "url=_OPENAI_RESPONSES_URL))\n",
+                encoding="utf-8",
+            )
+            hits = audit_python_file(path=path, repo_root=root)
+        self.assertEqual([], hits)
+
     def test_secret_like_token_scan_reports_hash_not_token(self) -> None:
         """Detect leaked bytes without copying a secret into receipts."""
         token = "sk-test-never-publish-123456"

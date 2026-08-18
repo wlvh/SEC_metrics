@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+import re
 from datetime import date
 from decimal import Decimal
 from pathlib import Path
@@ -17,6 +18,88 @@ from .records import validate_record
 
 class SourceError(ValueError):
     """Report an unsafe path or incomplete source identity."""
+
+
+_SEC_ARCHIVE_FILING = re.compile(
+    r"^https://www\.sec\.gov/Archives/edgar/data/"
+    r"([0-9]{1,10})/([0-9]{18})/([^/?#]+)$"
+)
+
+
+def validate_public_sec_filing_identity(
+    *,
+    raw_blob: Mapping[str, object],
+    source_url: str,
+    accession: str,
+    document_name: str,
+    source_role: str,
+    allowed_ciks: Sequence[str],
+) -> Dict[str, str]:
+    """Verify one live Reader source is an exact registry-owned SEC filing.
+
+    Args:
+        raw_blob: Valid exact-byte RawBlob selected for Reader input.
+        source_url: Exact SEC Archives primary-document URL.
+        accession: Hyphenated filing accession bound to the Run.
+        document_name: Primary filing document name bound to the Run.
+        source_role: Required Run role; live Reader accepts target_primary only.
+        allowed_ciks: Registry-authorized unpadded CIKs for the logical company.
+
+    Returns:
+        Normalized CIK, accession, and document identity proven by the URL.
+
+    Raises:
+        SourceError: Before egress when media, role, URL, company, accession, or
+        document identity is not the exact public SEC filing authority.
+    """
+    validate_record(record=dict(raw_blob))
+    if (
+        raw_blob["record_type"] != "RAW_BLOB"
+        or raw_blob["media_type"] != "text/html"
+        or source_role != "target_primary"
+    ):
+        raise SourceError(
+            "Live Reader requires one target_primary SEC HTML filing"
+        )
+    if (
+        not isinstance(allowed_ciks, Sequence)
+        or isinstance(allowed_ciks, (str, bytes))
+        or not allowed_ciks
+        or any(
+            type(cik) is not str or not cik.isdigit() or int(cik) <= 0
+            for cik in allowed_ciks
+        )
+    ):
+        raise SourceError("Live Reader company CIK authority is invalid")
+    try:
+        validate_official_sec_url(url=source_url)
+    except ValueError as error:
+        raise SourceError(
+            "Live Reader source is not an official SEC filing"
+        ) from error
+    match = _SEC_ARCHIVE_FILING.fullmatch(source_url)
+    if match is None:
+        raise SourceError(
+            "Live Reader source is not an exact SEC Archives document"
+        )
+    cik = str(int(match.group(1)))
+    compact = match.group(2)
+    url_accession = "{}-{}-{}".format(
+        compact[:10], compact[10:12], compact[12:]
+    )
+    if (
+        cik not in {str(int(value)) for value in allowed_ciks}
+        or accession != url_accession
+        or document_name != match.group(3)
+    ):
+        raise SourceError(
+            "Live Reader filing identity differs from registry authority"
+        )
+    return {
+        "cik": cik,
+        "accession": url_accession,
+        "document_name": match.group(3),
+    }
 
 
 def resolve_repository_file(

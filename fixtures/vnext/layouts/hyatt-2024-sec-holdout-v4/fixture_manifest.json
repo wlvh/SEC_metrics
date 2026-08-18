@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "fixture_id": "hyatt-2024-sec-holdout-v4",
+  "qualification_role": "POST_FREEZE_HOLDOUT",
+  "company_id": "hyatt_hotels",
+  "cik": "1468174",
+  "company_traits": [
+    "lodging"
+  ],
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "source_role": "target_primary",
+  "source_media_type": "text/html",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1468174/000146817425000006/q42024earningsrelease.htm",
+  "accession": "0001468174-25-000006",
+  "document_name": "q42024earningsrelease.htm",
+  "disclosure_spec_path": "catalog/disclosures/lodging_kpi_table.md",
+  "selection_reason": "Independent Hyatt FY2024 public SEC full-year KPI release for post-freeze holdout qualification.",
+  "layout_differences": [
+    "rowspan_colspan",
+    "scope_wording",
+    "table_header",
+    "year_layout"
+  ],
+  "request_attempt_id": "request:attempt:3355ef2b2ee395f7041a2b44b7f42cb9c6df540c25b7926ccf2225c6bcc3dd88",
+  "source_repo_relative_path": "fixtures/vnext/layouts/hyatt-2024-sec-holdout-v4/q42024earningsrelease.htm",
+  "source_sha256": "91cab658f7bbd8636d1da3441707389cc081d3b1a2e4db5bf37ca4a26ceec7f9",
+  "recorded_response_repo_relative_path": "fixtures/vnext/layouts/hyatt-2024-sec-holdout-v4/recorded_response.json",
+  "recorded_response_sha256": "97b33c98effe6c1e194ea8c83315dbfd0926b2eb389ad88ff188c4171ae79a7a",
+  "excerpt_repo_relative_path": "fixtures/vnext/layouts/hyatt-2024-sec-holdout-v4/excerpt.json",
+  "excerpt_sha256": "b83502922c29468e1a256ad74ba1c5cc3b9075f1632d79ba5f4d98075db83b87"
+}

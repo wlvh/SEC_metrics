@@ -1,0 +1,25 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_publication.PublicationTest.test_threaded_formal_fixture_restores_commit_authority"
+    ],
+    "duration_seconds": "0.001",
+    "return_code": 1,
+    "tests_run": 1
+  },
+  "expected_failure": "Concurrent publisher tests must restore the exact process-global formal commit authority functions after both workers exit.",
+  "observed_at_utc": "2026-08-07T06:27:38Z",
+  "observed_failure": {
+    "actual": "_publication_commit_authority remained a MagicMock installed by the first worker",
+    "forced_order": "A_ENTER_B_ENTER_A_EXIT_B_EXIT",
+    "failure": "original function identity differed from observed global identity"
+  },
+  "outcome": "FAILED_BEFORE_FIX",
+  "scenario_id": "FF-THREADED-COMMIT-AUTHORITY-001",
+  "schema_version": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a"
+}

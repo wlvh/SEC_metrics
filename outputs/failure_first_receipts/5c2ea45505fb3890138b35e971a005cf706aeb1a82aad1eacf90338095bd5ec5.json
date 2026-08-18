@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-OPERATOR-COLD-LIVE-PREFLIGHT-001",
+  "observed_at_utc": "2026-08-06T13:24:02Z",
+  "expected_failure": "Cold-start status failed and live prepare reached OpenAI before stable SEC identity preflight",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_operator_cli.OperatorCliTest.test_cold_start_publication_status_has_null_active",
+      "tests.vnext.test_operator_cli.OperatorCliTest.test_live_prepare_checks_sec_identity_before_openai",
+      "-v"
+    ],
+    "duration_ms": 200,
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH"
+    ],
+    "error_class": "AssertionError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "COLD_STATUS_AND_SEC_PREFLIGHT_MISSING",
+    "return_code": 1,
+    "combined_output_sha256": "eaa39e676c739c559949dd7cb508ebb0095984a03882e0c5478564984bdd147e",
+    "combined_output_size": 2126
+  },
+  "failure_first_receipt_id": "sha256:5c2ea45505fb3890138b35e971a005cf706aeb1a82aad1eacf90338095bd5ec5"
+}

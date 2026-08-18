@@ -1,0 +1,22 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest tests.vnext.test_publication.PublicationTest.test_pointer_predecessor_must_match_committed_switch_history",
+  "duration_ms": 13810,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "AssertionError: PublicationError not raised after pointer predecessor changed to an uncommitted sibling",
+  "output_sha256": "07e3d14ac0fc6fb143ab090684476400c29b97f87415318672712e9dc5199ccf",
+  "output_size": 823,
+  "receipt_id": "sha256:fc9183a9626e3c96f96b58ebc7c78fb7bcd0a4f597d629dc9082bb766da3fafe",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-06T16:07:10Z",
+  "return_code": 1,
+  "scenario_id": "POINTER_PREDECESSOR_COMMITTED_EDGE_TAMPER",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "test_file_sha256": "6b390224f598124c228046e292e202947d022452f1e0238e4024c9c141ea4475"
+}

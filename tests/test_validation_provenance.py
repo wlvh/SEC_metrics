@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import os
@@ -63,8 +64,15 @@ from validation_provenance import (  # noqa: E402
     fail_validation_snapshot,
     invalidate_validation_snapshot,
     load_source_policy,
+    pin_validation_publication_transaction,
     publish_validation_snapshot,
     verify_validation_snapshot,
+)
+from vnext import publication as publication_module  # noqa: E402
+from vnext.publication import (  # noqa: E402
+    PublicationView,
+    REQUIRED_BUNDLE_FILES,
+    ROOT_MIRROR_RELATIVE_PATHS,
 )
 
 
@@ -108,6 +116,7 @@ class ValidationProvenanceTest(unittest.TestCase):
             "config/settings.json": "{}\n",
             "tests/test_dummy.py": "# fixture\n",
             "requirements/snapshot.md": "# requirement fixture\n",
+            "fixtures/source_fixture.json": "{}\n",
         }
         for path, content in fixtures.items():
             self._write(path, content)
@@ -187,8 +196,113 @@ class ValidationProvenanceTest(unittest.TestCase):
             )
             self._write(REQUEST_ATTEMPT_BODY, "body\n")
             self._write(REQUEST_ATTEMPT_HEADERS, "headers\n")
+            self._write(
+                "outputs/failure_first_receipts/fixture.json",
+                '{"evidence":"failure-first"}\n',
+            )
+            self._write(
+                "artifacts/vnext/qualification/fixture.json",
+                '{"evidence":"qualification"}\n',
+            )
+            self._write(
+                "outputs/publication_fault_receipts/fixture.json",
+                '{"evidence":"fault-matrix"}\n',
+            )
+            self._write(
+                "outputs/vnext_cutover_audits/fixture.json",
+                '{"evidence":"live-cutover-audit"}\n',
+            )
         else:
             self._write("LIGHT_REVIEW_PACKAGE.marker", "light\n")
+
+    def _write_active_publication(self) -> tuple[str, dict[str, object]]:
+        """Persist one minimal hash-bound active bundle and exact mirrors.
+
+        Returns:
+            Active publication ID and the synthetic manifest used to isolate
+            provenance closure behavior from publication semantic validation.
+        """
+        publication_id = "publication_" + "a" * 64
+        bundle_dir = (
+            self.workdir / "outputs" / "publications" / publication_id
+        )
+        bundle_dir.mkdir(parents=True)
+        file_records = []
+        for relative in sorted(REQUIRED_BUNDLE_FILES):
+            mirror_relative = ROOT_MIRROR_RELATIVE_PATHS[relative]
+            mirror = self.workdir / mirror_relative
+            if mirror.exists():
+                content = mirror.read_bytes()
+            else:
+                content = "active:{}\n".format(relative).encode("utf-8")
+                self._write(mirror_relative, content.decode("utf-8"))
+            destination = bundle_dir / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(content)
+            file_records.append(
+                {
+                    "path": relative,
+                    "sha256": hashlib.sha256(content).hexdigest(),
+                    "size": len(content),
+                }
+            )
+        internal_relative = "internal/closure_manifest.json"
+        internal_content = b'{"synthetic":"transitive-closure"}\n'
+        internal_path = bundle_dir / internal_relative
+        internal_path.parent.mkdir()
+        internal_path.write_bytes(internal_content)
+        file_records.append(
+            {
+                "path": internal_relative,
+                "sha256": hashlib.sha256(internal_content).hexdigest(),
+                "size": len(internal_content),
+            }
+        )
+        manifest = {
+            "publication_id": publication_id,
+            "files": file_records,
+            "previous_publication_id": None,
+        }
+        manifest_bytes = (
+            json.dumps(manifest, sort_keys=True, separators=(",", ":"))
+            + "\n"
+        ).encode("utf-8")
+        (bundle_dir / "publication_manifest.json").write_bytes(
+            manifest_bytes
+        )
+        # Exercise the real lock, mirrors, pointer, and committed-edge order.
+        # Deep bundle semantics remain mocked because this fixture isolates
+        # provenance behavior rather than PublicationManifest validation.
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ), mock.patch(
+            "vnext.publication._publication_commit_authority",
+            return_value="FORMAL",
+        ), mock.patch(
+            "vnext.publication._require_existing_active_for_forward_commit",
+        ):
+            publication_module._commit_publication(
+                publication_root=self.workdir,
+                publication_id=publication_id,
+                expected_active_publication_id=None,
+                committed_at_utc="2026-08-06T00:00:00+00:00",
+            )
+        return publication_id, manifest
+
+    def _publish_active_snapshot(
+        self, *, manifest: dict[str, object]
+    ) -> None:
+        """Publish provenance while isolating deep bundle semantics."""
+        source = capture_source_snapshot(workdir=self.workdir)
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ):
+            publish_validation_snapshot(
+                workdir=self.workdir,
+                source_snapshot=source,
+            )
 
     def test_clean_full_snapshot_round_trip(self) -> None:
         head = self._initialize_source_repo()
@@ -204,6 +318,293 @@ class ValidationProvenanceTest(unittest.TestCase):
         result = verify_validation_snapshot(workdir=self.workdir)
         self.assertTrue(result.ok, result.errors)
         self.assertEqual(result.warnings, ())
+
+    def test_active_pointer_bundle_and_mirrors_are_exactly_bound(self) -> None:
+        """Bind only the pointer-selected complete bundle and its mirrors."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION", source_commit=head,
+        )
+        publication_id, manifest = self._write_active_publication()
+        self._publish_active_snapshot(manifest=manifest)
+
+        provenance = json.loads(
+            (self.workdir / PROVENANCE_RELATIVE_PATH).read_text(
+                encoding="utf-8"
+            )
+        )
+        keys = set(provenance["artifact_digests"])
+        bundle_prefix = "outputs/publications/{}/".format(publication_id)
+        expected_bundle = {
+            bundle_prefix + relative
+            for relative in REQUIRED_BUNDLE_FILES
+        } | {bundle_prefix + "publication_manifest.json"}
+        self.assertIn("outputs/active_publication.json", keys)
+        self.assertTrue(expected_bundle.issubset(keys))
+        self.assertIn(
+            bundle_prefix + "internal/closure_manifest.json", keys
+        )
+        self.assertTrue(
+            set(ROOT_MIRROR_RELATIVE_PATHS.values()).issubset(keys)
+        )
+
+        sibling = self.workdir / "outputs" / "publications" / (
+            "publication_" + "b" * 64
+        )
+        sibling.mkdir()
+        (sibling / "unrelated.bin").write_bytes(b"not active\n")
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ):
+            result = verify_validation_snapshot(workdir=self.workdir)
+        self.assertTrue(result.ok, result.errors)
+
+    def test_publish_cycle_never_reopens_pointer_after_internal_switch(
+        self,
+    ) -> None:
+        """Keep provenance reads on one view when active changes mid-cycle."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION", source_commit=head,
+        )
+        _publication_id, manifest = self._write_active_publication()
+        source = capture_source_snapshot(workdir=self.workdir)
+        pointer = self.workdir / "outputs" / "active_publication.json"
+        original_open = PublicationView.open
+        original_read = PublicationView.read_bytes
+        read_count = 0
+
+        def read_then_switch(
+            pinned: PublicationView, *, relative_path: str
+        ) -> bytes:
+            """Move authority only after the pinned bundle starts reading."""
+            nonlocal read_count
+            content = original_read(
+                pinned,
+                relative_path=relative_path,
+            )
+            read_count += 1
+            if read_count == 1:
+                switched = json.loads(pointer.read_text(encoding="utf-8"))
+                switched["publication_id"] = "publication_" + "b" * 64
+                pointer.write_text(
+                    json.dumps(
+                        switched,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+            return content
+
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ), mock.patch.object(
+            PublicationView,
+            "open",
+            side_effect=lambda *, publication_root: original_open(
+                publication_root=publication_root,
+            ),
+        ) as opened, mock.patch.object(
+            PublicationView,
+            "read_bytes",
+            autospec=True,
+            side_effect=read_then_switch,
+        ), self.assertRaisesRegex(
+            ValidationProvenanceError,
+            "ACTIVE_POINTER_CHANGED_DURING_VALIDATION_TRANSACTION",
+        ):
+            publish_validation_snapshot(
+                workdir=self.workdir,
+                source_snapshot=source,
+            )
+        self.assertEqual(1, opened.call_count)
+        self.assertGreater(read_count, 0)
+
+    def test_publish_self_check_opens_active_pointer_once(self) -> None:
+        """Reuse one active transaction through sidecar self-verification."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION", source_commit=head,
+        )
+        _publication_id, manifest = self._write_active_publication()
+        source = capture_source_snapshot(workdir=self.workdir)
+        original_open = PublicationView.open
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ), mock.patch.object(
+            PublicationView,
+            "open",
+            side_effect=lambda *, publication_root: original_open(
+                publication_root=publication_root,
+            ),
+        ) as opened:
+            publish_validation_snapshot(
+                workdir=self.workdir,
+                source_snapshot=source,
+            )
+        self.assertEqual(1, opened.call_count)
+
+    def test_independent_checker_uses_supplied_pinned_transaction(
+        self,
+    ) -> None:
+        """Reject a pointer race without reopening authority in checker."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION", source_commit=head,
+        )
+        _publication_id, manifest = self._write_active_publication()
+        self._publish_active_snapshot(manifest=manifest)
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ):
+            transaction = pin_validation_publication_transaction(
+                workdir=self.workdir,
+            )
+        pointer = self.workdir / "outputs" / "active_publication.json"
+        original_read = PublicationView.read_bytes
+        read_count = 0
+
+        def read_then_switch(
+            pinned: PublicationView, *, relative_path: str
+        ) -> bytes:
+            """Switch pointer after checker starts reading its fixed view."""
+            nonlocal read_count
+            content = original_read(
+                pinned,
+                relative_path=relative_path,
+            )
+            read_count += 1
+            if read_count == 1:
+                switched = json.loads(pointer.read_text(encoding="utf-8"))
+                switched["publication_id"] = "publication_" + "b" * 64
+                pointer.write_text(
+                    json.dumps(
+                        switched,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+            return content
+
+        with mock.patch.object(
+            PublicationView,
+            "open",
+            side_effect=AssertionError("checker reopened active pointer"),
+        ), mock.patch.object(
+            PublicationView,
+            "read_bytes",
+            autospec=True,
+            side_effect=read_then_switch,
+        ):
+            result = verify_validation_snapshot(
+                workdir=self.workdir,
+                publication_transaction=transaction,
+            )
+        self.assertFalse(result.ok)
+        self.assertIn(
+            "ACTIVE_POINTER_CHANGED_DURING_VALIDATION_TRANSACTION",
+            result.errors,
+        )
+        self.assertGreater(read_count, 0)
+
+    def test_checker_cli_forwards_one_pinned_transaction(self) -> None:
+        """Keep the public checker wrapper inside its one opened cycle."""
+        checker_path = TEST_ROOT / "tools" / "check_validation_snapshot.py"
+        spec = importlib.util.spec_from_file_location(
+            "validation_snapshot_checker_fixture",
+            checker_path,
+        )
+        if spec is None or spec.loader is None:
+            self.fail("Validation snapshot checker cannot be loaded")
+        checker = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(checker)
+        transaction = object()
+        verified = types.SimpleNamespace(errors=(), warnings=())
+        with mock.patch.object(
+            checker,
+            "WORKDIR",
+            self.workdir,
+        ), mock.patch.object(
+            checker,
+            "pin_validation_publication_transaction",
+            return_value=transaction,
+        ) as pinned, mock.patch.object(
+            checker,
+            "verify_validation_snapshot",
+            return_value=verified,
+        ) as verify:
+            return_code = checker.main()
+        self.assertEqual(0, return_code)
+        pinned.assert_called_once_with(workdir=self.workdir)
+        verify.assert_called_once_with(
+            workdir=self.workdir,
+            allow_equivalent_source_tree=True,
+            publication_transaction=transaction,
+        )
+
+    def test_active_bundle_tamper_missing_and_extra_fail_closed(self) -> None:
+        """Reject every namespace or byte drift inside the active bundle."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION", source_commit=head,
+        )
+        publication_id, manifest = self._write_active_publication()
+        self._publish_active_snapshot(manifest=manifest)
+        bundle_dir = (
+            self.workdir / "outputs" / "publications" / publication_id
+        )
+        target = bundle_dir / "semantic_audit_receipt.json"
+        original = target.read_bytes()
+
+        target.write_bytes(b"tampered\n")
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ):
+            tampered = verify_validation_snapshot(workdir=self.workdir)
+        self.assertFalse(tampered.ok)
+
+        target.write_bytes(original)
+        target.unlink()
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ):
+            missing = verify_validation_snapshot(workdir=self.workdir)
+        self.assertFalse(missing.ok)
+
+        target.write_bytes(original)
+        (bundle_dir / "unexpected.bin").write_bytes(b"unexpected\n")
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ):
+            extra = verify_validation_snapshot(workdir=self.workdir)
+        self.assertFalse(extra.ok)
+
+    def test_active_root_mirror_drift_fails_closed(self) -> None:
+        """Reject a root compatibility mirror that differs from active."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION", source_commit=head,
+        )
+        _, manifest = self._write_active_publication()
+        self._publish_active_snapshot(manifest=manifest)
+        self._write("outputs/semantic_audit_receipt.json", "drift\n")
+        with mock.patch(
+            "vnext.publication.verify_publication_bundle",
+            return_value=manifest,
+        ):
+            result = verify_validation_snapshot(workdir=self.workdir)
+        self.assertFalse(result.ok)
 
     def test_dirty_source_is_rejected_before_terminal_validation(self) -> None:
         self._initialize_source_repo()
@@ -286,9 +687,24 @@ class ValidationProvenanceTest(unittest.TestCase):
             "PR_Checklist.md",
             policy.publication_governance_files,
         )
-        self.assertEqual(
+        self.assertIn(
+            "evidence/request_attempts", policy.full_artifact_directories
+        )
+        self.assertIn(
+            "outputs/failure_first_receipts",
             policy.full_artifact_directories,
-            ("evidence/request_attempts",),
+        )
+        self.assertIn(
+            "artifacts/vnext/qualification",
+            policy.full_artifact_directories,
+        )
+        self.assertIn(
+            "outputs/publication_fault_receipts",
+            policy.full_artifact_directories,
+        )
+        self.assertIn(
+            "outputs/vnext_cutover_audits",
+            policy.full_artifact_directories,
         )
 
     def test_explanatory_document_cannot_be_sop_authority(self) -> None:
@@ -367,6 +783,35 @@ class ValidationProvenanceTest(unittest.TestCase):
         source = capture_source_snapshot(workdir=self.workdir)
         self.assertEqual(source.source_commit, head)
         with self.assertRaisesRegex(
+            ValidationProvenanceError,
+            "does not identify the captured source commit",
+        ):
+            publish_validation_snapshot(
+                workdir=self.workdir,
+                source_snapshot=source,
+            )
+
+    def test_unbound_legacy_marker_cannot_authorize_old_source_commit(
+        self,
+    ) -> None:
+        """Reject a marker claim without its active exact-digest closure."""
+        head = self._initialize_source_repo()
+        self._write_success_artifacts(
+            mode="FULL_VALIDATION",
+            source_commit="0" * 40,
+        )
+        source = capture_source_snapshot(workdir=self.workdir)
+        self.assertEqual(head, source.source_commit)
+        fake_proof = {
+            "record_type": "LEGACY_BASELINE_IMPORT",
+            "publication_id": "publication_" + "a" * 64,
+            "validation_manifest_sha256": "b" * 64,
+            "validation_manifest_size": 1,
+        }
+        with mock.patch(
+            "validation_provenance._active_legacy_import_proof",
+            return_value=fake_proof,
+        ), self.assertRaisesRegex(
             ValidationProvenanceError,
             "does not identify the captured source commit",
         ):

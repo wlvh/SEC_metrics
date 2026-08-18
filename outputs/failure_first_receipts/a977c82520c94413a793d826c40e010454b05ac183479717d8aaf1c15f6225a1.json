@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scenario_id": "GENERIC_OPERATOR_FORMAL_COMMIT_BYPASS",
+  "observed_at_utc": "2026-08-06T11:23:31.181681Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_operator_cli.OperatorCliTest.test_publish_commit_cannot_bypass_formal_cutover_authority",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 0.096126,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "1695f8b0bb70fd9ef494686c2c51aea5bf676cdd2a695eb365ca9313bef31b72",
+  "stderr_size": 1041,
+  "expected_failure": "tools/vnext_operator.py publish --commit returned success and called commit_publication directly",
+  "outcome": "FAILED_BEFORE_FIX"
+}

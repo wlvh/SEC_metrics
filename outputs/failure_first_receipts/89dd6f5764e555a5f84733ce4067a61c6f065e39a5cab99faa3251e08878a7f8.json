@@ -1,0 +1,22 @@
+{
+  "acceptance_claim": false,
+  "command": "python3 -m unittest tests.vnext.test_operator_cli.OperatorCliTest.test_live_prepare_rejects_unbound_source_before_openai tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_sec_acquisition_receipt_binds_fixed_stages_and_ledger_tail tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_pinned_plan_rejects_caller_self_signed_sec_pass",
+  "duration_ms": 479,
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "interpreter": {
+    "command": "python3",
+    "version": "3.14.3"
+  },
+  "observed_failure": "Expected LIVE_SOURCE_AUTHORITY_INVALID before run_ai_attempt; observed OPERATOR_COMMAND_FAILED after the caller-selected source reached the AI attempt boundary.",
+  "output_sha256": "58c226b3f44d47dd80b5a9b3a08716579499e1b8441a9830daa4533bc865d36a",
+  "output_size": 2520,
+  "receipt_id": "sha256:89dd6f5764e555a5f84733ce4067a61c6f065e39a5cab99faa3251e08878a7f8",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-07T07:14:04Z",
+  "return_code": 1,
+  "scenario_id": "LIVE_SOURCE_CALLER_AUTHORITY_EGRESS",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "test_file_sha256": "773e2d64bd63974a6e35ea0e331c50d451e2b79599c64e42ecbb6c4de360f747"
+}

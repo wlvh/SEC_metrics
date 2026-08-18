@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-PUBLICATION-STALE-POINTER-TIP-001",
+  "observed_at_utc": "2026-08-07T03:05:52Z",
+  "expected_failure": "PublicationView.open must reject exact historical pointer bytes after a newer committed switch because only the unique global switch-chain tip is active authority.",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_publication.PublicationTest.test_historical_pointer_bytes_are_not_current_chain_tip"
+    ],
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "return_code": 1,
+    "duration_ms": 10015
+  },
+  "failure": "AssertionError: PublicationError not raised",
+  "historical_pointer_accepted": true,
+  "formal_state_changed": false,
+  "failure_first_receipt_id": "sha256:e557b197b3d789e63b7f751895bd2e238d7a912ca85b62c790db7dd435543416"
+}

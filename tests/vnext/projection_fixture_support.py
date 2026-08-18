@@ -5,9 +5,11 @@ from __future__ import annotations
 import csv
 import json
 import shutil
+import subprocess
 from pathlib import Path
 from typing import Optional
 
+from scripts.git_workspace import sanitized_git_environment
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import canonical_json_bytes, sha256_file
 
@@ -63,6 +65,90 @@ def _bind_scoped_baseline(*, repo_root: Path, snapshot_dir: Path) -> None:
     path.write_bytes(canonical_json_bytes(value=baseline) + b"\n")
 
 
+def _git(*, repo_root: Path, arguments: list[str]) -> str:
+    """Run one local test-repository Git command with isolated metadata.
+
+    Args:
+        repo_root: Temporary repository owning the fixture authority.
+        arguments: Git arguments excluding the executable name.
+
+    Returns:
+        UTF-8 standard output without trailing whitespace.
+
+    Raises:
+        AssertionError: If the test fixture cannot establish its baseline tree.
+    """
+    completed = subprocess.run(
+        args=["git", *arguments],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+        encoding="utf-8",
+        env=sanitized_git_environment(),
+    )
+    if completed.returncode != 0:
+        raise AssertionError(
+            "Fixture Git command failed: {}".format(
+                completed.stderr.strip() or completed.stdout.strip()
+            )
+        )
+    return completed.stdout.strip()
+
+
+def _bind_scoped_legacy_inventory_to_git(*, repo_root: Path) -> None:
+    """Create a local frozen Git baseline for legacy inventory regressions.
+
+    Args:
+        repo_root: Temporary copied repository used by projector tests.
+
+    Returns:
+        None.
+
+    The production inventory refers to an earlier immutable commit.  The
+    isolated fixture needs the same relationship without borrowing the real
+    repository's object store, so it commits copied source bytes first and
+    then points its Requirement metadata at that local immutable tree.
+    """
+    _git(repo_root=repo_root, arguments=["init", "--quiet"])
+    _git(repo_root=repo_root, arguments=["add", "--all"])
+    _git(
+        repo_root=repo_root,
+        arguments=[
+            "-c", "user.name=SEC Metrics Test",
+            "-c", "user.email=sec-metrics-test@example.invalid",
+            "commit", "--quiet", "-m", "frozen legacy baseline",
+        ],
+    )
+    baseline_commit = _git(
+        repo_root=repo_root, arguments=["rev-parse", "HEAD"],
+    )
+    inventory_path = (
+        repo_root / "requirements" / "ai_first_v3_3_1"
+        / "legacy_path_inventory.json"
+    )
+    inventory = json.loads(inventory_path.read_text(encoding="utf-8"))
+    inventory["baseline_commit"] = baseline_commit
+    inventory["source_files"] = {
+        relative: sha256_file(path=repo_root / relative)
+        for relative in (
+            "config/metric_applicability.yaml",
+            "scripts/sec_pipeline.py",
+        )
+    }
+    inventory_path.write_bytes(canonical_json_bytes(value=inventory) + b"\n")
+
+    baseline_path = (
+        repo_root / "requirements" / "ai_first_v3_3_1"
+        / "baseline_manifest.json"
+    )
+    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
+    baseline["repository_commit"] = baseline_commit
+    baseline["legacy_path_inventory_sha256"] = sha256_file(
+        path=inventory_path,
+    )
+    baseline_path.write_bytes(canonical_json_bytes(value=baseline) + b"\n")
+
+
 def scoped_repository(
     *, workspace: Path, baseline_snapshot_dir: Optional[Path] = None
 ) -> Path:
@@ -77,8 +163,18 @@ def scoped_repository(
     """
     repo_root = workspace / "repo"
     repo_root.mkdir()
-    for relative in ("catalog", "config", "requirements"):
+    for relative in ("catalog", "config", "fixtures", "requirements"):
         shutil.copytree(REPO_ROOT / relative, repo_root / relative)
+    policy = json.loads(
+        (
+            repo_root / "config" / "validation_source_policy.json"
+        ).read_text(encoding="utf-8")
+    )
+    for relative in policy["acceptance_source_files"]:
+        source = REPO_ROOT / relative
+        destination = repo_root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, destination)
     fixture = (
         "tests/fixtures/vnext/companyfacts_b03_crosscheck/"
         "CIK0000078003.json"
@@ -115,4 +211,5 @@ def scoped_repository(
         _bind_scoped_baseline(
             repo_root=repo_root, snapshot_dir=baseline_snapshot_dir,
         )
+    _bind_scoped_legacy_inventory_to_git(repo_root=repo_root)
     return repo_root

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_legacy_cutover"
+  ],
+  "evidence_level": "FAILURE_FIRST",
+  "finished_at_utc": "2026-08-06T09:29:42.686309+00:00",
+  "observed_failures": [
+    "LegacyPathStillActiveError absent",
+    "Stage 04 invoked retired non_fi_metric_rows"
+  ],
+  "return_code": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "started_at_utc": "2026-08-06T09:29:42.588318+00:00",
+  "stderr_excerpt": "EEEEEFEEEEE\n======================================================================\nERROR: test_active_root_rejects_legacy_stage_wrapper (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_active_root_rejects_legacy_stage_wrapper)\nPrevent direct Stage 04 execution from replacing an active mirror.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<repository-root>/tests/vnext/test_legacy_cutover.py\", line 203, in test_active_root_rejects_legacy_stage_wrapper\n    sec_pipeline.LegacyPathStillActiveError,\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'sec_pipeline' has no attribute 'LegacyPathStillActiveError'\n\n======================================================================\nERROR: test_legacy_upsert_rejects_every_migrated_metric (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_legacy_upsert_rejects_every_migrated_metric) (metric_id='B01')\nReject all four migrated metric IDs with one stable error code.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<repository-root>/tests/vnext/test_legacy_cutover.py\", line 150, in test_legacy_upsert_rejects_every_migrated_metric\n    sec_pipeline.LegacyPathStillActiveError,\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAttributeError: module 'sec_pipeline' has no attribute 'LegacyPathStillActiveError'\n\n======================================================================\nERROR: test_legacy_upsert_rejects_every_migrated_metric (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_legacy_upsert_rejects_every_migrated_metric) (metric_id='B03')\nReject all four migrated metric IDs with one stable error code.\n--",
+  "stderr_sha256": "8dbfff13d3a13ced9b36a82ffa7e3d5a9bd277fea7a7046835a43950ad000cab",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "test_target": "tests.vnext.test_legacy_cutover"
+}

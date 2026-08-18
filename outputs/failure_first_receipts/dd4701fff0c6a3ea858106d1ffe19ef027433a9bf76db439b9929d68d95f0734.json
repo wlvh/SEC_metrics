@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-FORMAL-PUBLICATION-FAULT-MATRIX-001",
+  "observed_at_utc": "2026-08-06T10:59:00Z",
+  "expected_failure": "Formal publication fault matrix public module and CLI are absent",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_formal_fault_matrix"
+    ],
+    "duration_ms": 96,
+    "environment_keys": [],
+    "error_class": "ModuleNotFoundError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "11a4eab846adf2fa59a8d14c416a1d300d3107f189eef15438b641a15fbe4a58",
+    "stderr_size": 871,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:dd4701fff0c6a3ea858106d1ffe19ef027433a9bf76db439b9929d68d95f0734"
+}

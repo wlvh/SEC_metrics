@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "evidence_type": "FAILURE_FIRST_TEST",
+  "captured_at_utc": "2026-08-06T10:05:00Z",
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "source_tree": "c023571102669eecdaf38aff7c0cd66488ed3ba6",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_batch_workflow.BatchWorkflowTest.test_financial_company_creates_four_no_source_structural_rows",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 0.114102917,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "910eea85044276a2d2e206f3a0b05b3f5909f84651017acf5c4fd0877dd42937",
+  "stderr_size": 2840,
+  "failure_code": "STRUCTURAL_RUN_REPLAY_REQUIRES_NONEXISTENT_SOURCE",
+  "failure_excerpt": "RunStoreError: Structured calculation target is incomplete",
+  "expected_before_fix": true
+}

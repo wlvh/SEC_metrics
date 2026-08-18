@@ -1,0 +1,34 @@
+{
+  "acceptance_claim": false,
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.test_sec_pipeline_validation.RunbookGeneratorTest.test_vnext_runbook_documents_portable_command_receipts",
+      "tests.test_sec_pipeline_validation.RunbookGeneratorTest.test_vnext_runbook_documents_one_pinned_terminal_process",
+      "tests.test_sec_pipeline_validation.RunbookGeneratorTest.test_vnext_runbook_documents_switch_intent_recovery",
+      "-v"
+    ],
+    "duration_ms": 109,
+    "outcome": "FAILED",
+    "return_code": 1,
+    "stderr_sha256": "c50e88d9c1e1ffdac323c994cc28c39dc68b3634303aff4898a809caa7d6434c",
+    "stderr_size": 73556,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "evidence_tier": "TEST_ONLY_FAILURE_FIRST",
+  "implementation_state": "PRE_FIX",
+  "observed_failure": [
+    "README generator omitted portable runtime token and binary SHA binding semantics.",
+    "README generator omitted the single-process single-pin terminal cycle entrypoint and exact gate order.",
+    "README generator omitted content-addressed publication switch intent fail-closed and recovery semantics."
+  ],
+  "receipt_id": "sha256:cf4507788070c3873b05f006cf5948f48bec0dab1fcc6b9f1f2b53c4e131cfa4",
+  "receipt_type": "FAILURE_FIRST_TEST",
+  "recorded_at_utc": "2026-08-07T03:34:01Z",
+  "scenario_id": "RUNBOOK_FINAL_CUTOVER_GOVERNANCE_GAPS",
+  "schema_version": 1,
+  "source_commit": "a77b9055a53de5e5808649551f03fe567cb2de0a"
+}

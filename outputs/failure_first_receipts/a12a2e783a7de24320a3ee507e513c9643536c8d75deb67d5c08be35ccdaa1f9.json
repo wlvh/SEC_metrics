@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "evidence_type": "FAILURE_FIRST_TEST",
+  "captured_at_utc": "2026-08-06T09:57:23Z",
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "source_tree": "c023571102669eecdaf38aff7c0cd66488ed3ba6",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_batch_workflow.BatchWorkflowTest.test_frozen_legacy_builds_exact_ten_company_input_plan",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 0.097317541,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "7fca96a22d592a25a9d368dbdaab3df04f2beea4471a00a19fc9d7d12f2a3977",
+  "stderr_size": 1038,
+  "failure_code": "TEN_COMPANY_RELEASE_PLAN_ABSENT",
+  "failure_excerpt": "ImportError: cannot import name build_release_input_plan",
+  "expected_before_fix": true
+}

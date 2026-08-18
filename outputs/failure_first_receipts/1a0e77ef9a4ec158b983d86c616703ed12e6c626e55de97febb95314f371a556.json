@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-PUBLICATION-READER-LOCK-HELPER-001",
+  "observed_at_utc": "2026-08-07T07:13:24Z",
+  "evidence_level": "FAILURE_FIRST_TEST",
+  "command": {
+    "argv": [
+      "$PYTHON_3_9",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_publication.PublicationTest.test_reader_waits_for_pointer_edge_transaction"
+    ],
+    "return_code": 1,
+    "duration_ms": 18546
+  },
+  "expected_failure": {
+    "test": "tests.vnext.test_publication.PublicationTest.test_reader_waits_for_pointer_edge_transaction",
+    "assertion": "pointer_written.wait(timeout=5) is true"
+  },
+  "observed_failure": {
+    "exception_class": "AssertionError",
+    "summary": "The writer never reached POINTER_WRITTEN_BEFORE_SWITCH_RECEIPT because the worker thread called the newly main-thread-only formal fixture helper."
+  },
+  "full_suite_observation": {
+    "command": "$PYTHON_3_9 -m unittest discover -s tests/vnext -t . -p test_*.py -v",
+    "tests_run": 371,
+    "failures": 1,
+    "duration_ms": 1949003,
+    "same_test_failed": true
+  },
+  "formal_state_changed": false
+}

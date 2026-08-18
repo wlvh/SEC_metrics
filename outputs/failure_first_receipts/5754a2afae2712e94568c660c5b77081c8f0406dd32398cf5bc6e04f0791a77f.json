@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "scenario_id": "PUBLIC_CUTOVER_TABLE_LEDGER_LOCATOR_CONTRADICTION",
+  "observed_at_utc": "2026-08-06T15:01:01.168071Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 115.57893,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_size": 0,
+  "stderr_sha256": "f7d67224d42dbd4d0625301ec10446c3da14c82ceecc5d508d1b78ee9cbd9cdd",
+  "stderr_size": 2585,
+  "reproduction": {
+    "entrypoint": "vnext.cutover.run_cutover",
+    "provider_boundary": "approved OpenAI Responses adapter with socket replaced by deterministic provider response",
+    "workflow": "real plan -> Runs -> explicit test-only HUMAN APPROVE -> freeze -> Batch -> Projector -> formal publication validation",
+    "retired_producers": "every sec_pipeline.RETIRED_LEGACY_PRODUCER_NAMES member raises immediately",
+    "substituted_prerequisites": [
+      "SEC acquisition",
+      "qualification",
+      "fault matrix"
+    ]
+  },
+  "observed_failure": "PublicationError: Consumed request ledger locator differs from immutable attempt",
+  "root_cause": "table Run preparation requires the ledger locator to equal the frozen direct filing locator, while publication requires that same row locator to equal the content-addressed immutable attempt locator",
+  "forbidden_workaround": "changing frozen B10/B11 evidence repo_relative_path would violate strict baseline compatibility",
+  "expected_fix": "separate immutable request-attempt authority from the frozen evidence projection locator without changing baseline bytes",
+  "outcome": "FAILED_BEFORE_FIX"
+}

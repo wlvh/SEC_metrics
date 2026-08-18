@@ -38,7 +38,7 @@
       }
     }
   ],
-  "review_policy": "human_required_during_poc",
+  "review_policy": "human_optional_system_audited_r5",
   "ai_instructions": [
     "Read every table supplied by ReaderInputManifest.",
     "Return selected, competing, and unresolved claims with exact cell locators.",

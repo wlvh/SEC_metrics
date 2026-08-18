@@ -1,0 +1,36 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON39",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests/vnext",
+      "-t",
+      ".",
+      "-p",
+      "test_*.py",
+      "-q"
+    ],
+    "duration_seconds": "1691.304",
+    "return_code": 1,
+    "tests_run": 369
+  },
+  "expected_failure": "The complete Python 3.9 vNext suite must preserve the same recorded sandbox publication behavior as the isolated public cold-start test.",
+  "isolated_reproduction": {
+    "duration_seconds": "518.119",
+    "return_code": 0,
+    "tests_run": 1
+  },
+  "observed_at_utc": "2026-08-07T05:33:39Z",
+  "observed_failure": {
+    "error_code": "RECORDED_SANDBOX_PUBLICATION_FAILED",
+    "failures": 1,
+    "test": "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_public_recorded_cold_start_review_resume_and_readback"
+  },
+  "outcome": "FAILED_BEFORE_FIX",
+  "scenario_id": "FF-PYTHON39-VNEXT-SUITE-ORDER-001",
+  "schema_version": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a"
+}

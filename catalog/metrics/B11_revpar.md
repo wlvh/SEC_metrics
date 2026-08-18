@@ -23,7 +23,7 @@
     "company_operated",
     "regional_only"
   ],
-  "review_policy": "human_required_during_poc",
+  "review_policy": "human_optional_system_audited_r5",
   "legacy_projection": {
     "unit": "USD",
     "value_multiplier": "1",

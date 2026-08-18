@@ -2,22 +2,26 @@
 
 from __future__ import annotations
 
+import ast
 import csv
 import io
 import re
+import subprocess
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Dict, List, Mapping, Optional, Sequence, Set, Tuple
+
+from git_workspace import git_checkout_metadata_error, sanitized_git_environment
 
 from .calculator import metric_is_applicable
 from .canonical import CanonicalError, arithmetic_context
 from .canonical import atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, decimal_text
-from .canonical import parse_decimal, sha256_file
+from .canonical import parse_decimal, sha256_bytes, sha256_file
 from .canonical import strict_json_file
 from .records import metric_result_contract_hash
 from .records import validate_record
-from .requirements import load_requirement_snapshot
+from .requirements import RequirementError, load_requirement_snapshot
 from .run_store import RunStoreError, load_frozen_run
 from .specs import SpecError, compile_spec_files, parse_spec_document
 from .states import publication_candidate_status
@@ -71,6 +75,7 @@ BATCH_MANIFEST_FIELDS = {
     "metric_spec_hashes",
     "registry_sha256",
     "release_id",
+    "release_input_plan_id",
     "release_plan_sha256",
     "requirement_hashes",
     "runs",
@@ -118,6 +123,489 @@ GOLDEN_FIELDS = (
     "notes",
 )
 REPAIR_FIELDS = ("check_id", "severity", "status", "details")
+LEGACY_INVENTORY_GROUP_FIELDS = (
+    "lodging_production_symbols",
+    "lodging_validation_symbols",
+    "b03_production_symbols",
+    "legacy_write_entry_points",
+    "additional_migrated_production_symbols",
+    "additional_migrated_validation_symbols",
+    "legacy_configuration_keys",
+)
+LEGACY_MIGRATION_STATUSES = (
+    "removed",
+    "ported",
+    "replaced",
+    "obsolete-with-proof",
+)
+LEGACY_PROOF_MODES = {
+    "SYMBOL_ABSENT": "removed",
+    "PORTED_BY_ANCHORS": "ported",
+    "REPLACED_BY_ANCHORS": "replaced",
+    "RETIRED_TOMBSTONE": "replaced",
+    "OBSOLETE_BY_ANCHORS": "obsolete-with-proof",
+}
+LEGACY_RULE_FIELDS = {
+    "kind", "proof_anchors", "proof_mode", "reason", "status",
+}
+LEGACY_OVERRIDE_FIELDS = {
+    "proof_anchors", "proof_mode", "reason", "status",
+}
+MIGRATED_WRITER_INVENTORY_FIELDS = {
+    "additional_migrated_production_symbols",
+    "legacy_write_entry_points",
+}
+FORMAL_CUTOVER_WRITER_ANCHORS = {
+    "scripts/vnext/cutover.py::run_cutover",
+    "scripts/vnext/publication.py::_commit_initial_publication_chain",
+    "scripts/vnext/publication.py::_commit_publication",
+}
+PUBLIC_COMMIT_TOMBSTONE_ANCHOR = (
+    "scripts/vnext/publication.py::commit_publication"
+)
+LEGACY_BASELINE_SOURCE_FILES = (
+    "config/metric_applicability.yaml",
+    "scripts/sec_pipeline.py",
+)
+_GIT_COMMIT = re.compile(r"^[0-9a-f]{40}$")
+_SHA256 = re.compile(r"^[0-9a-f]{64}$")
+
+
+def _python_source_contract(*, path: Path) -> Dict[str, object]:
+    """Read one safe Python file and expose its names and tombstone set.
+
+    Args:
+        path: Repository-owned Python source path.
+
+    Returns:
+        Source digest, every declared/assigned name, and retired symbol names.
+
+    Raises:
+        ProjectionError: When the source is unsafe or cannot be parsed.
+    """
+    if path.is_symlink() or not path.is_file():
+        raise ProjectionError("Legacy migration proof source is unsafe")
+    try:
+        tree = ast.parse(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, SyntaxError) as error:
+        raise ProjectionError(
+            "Legacy migration proof source is invalid"
+        ) from error
+    names = {
+        node.name
+        for node in ast.walk(tree)
+        if isinstance(
+            node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+        )
+    }
+    retired = set()
+    for node in tree.body:
+        if not isinstance(node, (ast.Assign, ast.AnnAssign)):
+            continue
+        targets = (
+            node.targets if isinstance(node, ast.Assign) else [node.target]
+        )
+        for target in targets:
+            if isinstance(target, ast.Name):
+                names.add(target.id)
+                if target.id == "RETIRED_LEGACY_PRODUCER_NAMES":
+                    value = node.value
+                    if not isinstance(value, (ast.Tuple, ast.List, ast.Set)):
+                        raise ProjectionError(
+                            "Retired legacy producer set is not literal"
+                        )
+                    retired = {
+                        element.value
+                        for element in value.elts
+                        if isinstance(element, ast.Constant)
+                        and type(element.value) is str
+                    }
+    retirement_installed = any(
+        isinstance(node, ast.Expr)
+        and isinstance(node.value, ast.Call)
+        and isinstance(node.value.func, ast.Name)
+        and node.value.func.id == "install_retired_legacy_entrypoints"
+        for node in tree.body
+    )
+    return {
+        "names": names,
+        "retired": retired,
+        "retirement_installed": retirement_installed,
+        "sha256": sha256_file(path=path),
+    }
+
+
+def _legacy_anchor_evidence(
+    *, repo_root: Path, anchors: Sequence[str],
+    source_cache: Dict[str, Dict[str, object]]
+) -> List[Dict[str, str]]:
+    """Verify exact ``path::symbol`` anchors and bind their source bytes.
+
+    Args:
+        repo_root: Repository authority root.
+        anchors: Ordered repository-relative Python symbol locators.
+        source_cache: Per-inventory parse cache keyed by relative source path.
+
+    Returns:
+        One source digest record for each proof anchor.
+    """
+    if not anchors or len(anchors) != len(set(anchors)):
+        raise ProjectionError("Legacy migration proof anchors are invalid")
+    evidence = []
+    root = repo_root.resolve()
+    for anchor in anchors:
+        if type(anchor) is not str or anchor.count("::") != 1:
+            raise ProjectionError("Legacy migration proof anchor is invalid")
+        relative, symbol = anchor.split("::", 1)
+        relative_path = Path(relative)
+        if (
+            not relative
+            or not symbol
+            or relative_path.is_absolute()
+            or ".." in relative_path.parts
+            or relative_path.suffix != ".py"
+        ):
+            raise ProjectionError("Legacy migration proof anchor is unsafe")
+        source = (root / relative_path).resolve()
+        try:
+            source.relative_to(root)
+        except ValueError as error:
+            raise ProjectionError(
+                "Legacy migration proof anchor escapes repository"
+            ) from error
+        if relative not in source_cache:
+            source_cache[relative] = _python_source_contract(path=source)
+        contract = source_cache[relative]
+        if symbol not in contract["names"]:
+            raise ProjectionError("Legacy migration proof symbol is absent")
+        evidence.append(
+            {
+                "anchor": anchor,
+                "source_sha256": str(contract["sha256"]),
+            }
+        )
+    return evidence
+
+
+def _frozen_legacy_source_bytes(
+    *, repo_root: Path, baseline_commit: str, relative: str,
+) -> bytes:
+    """Read one immutable legacy source blob from its frozen Git commit.
+
+    Args:
+        repo_root: Repository whose local Git metadata owns the baseline.
+        baseline_commit: Full immutable commit SHA from the Requirement baseline.
+        relative: Fixed repository-relative source path.
+
+    Returns:
+        Exact blob bytes from ``baseline_commit`` rather than current sources.
+
+    Raises:
+        ProjectionError: If Git authority, commit identity, or source blob is
+            unavailable or unsafe.
+    """
+    metadata_error = git_checkout_metadata_error(repo_root=repo_root)
+    if metadata_error:
+        raise ProjectionError("Frozen legacy Git authority is unsafe")
+    if _GIT_COMMIT.fullmatch(baseline_commit) is None:
+        raise ProjectionError("Frozen legacy baseline commit is invalid")
+    try:
+        commit = subprocess.run(
+            [
+                "git", "--no-replace-objects", "-C", str(repo_root),
+                "cat-file", "-e", baseline_commit + "^{commit}",
+            ],
+            check=False,
+            capture_output=True,
+            env=sanitized_git_environment(),
+            timeout=30,
+        )
+        if commit.returncode != 0:
+            raise ProjectionError("Frozen legacy baseline commit is absent")
+        blob = subprocess.run(
+            [
+                "git", "--no-replace-objects", "-C", str(repo_root),
+                "cat-file", "blob", baseline_commit + ":" + relative,
+            ],
+            check=False,
+            capture_output=True,
+            env=sanitized_git_environment(),
+            timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired) as error:
+        raise ProjectionError("Frozen legacy Git read failed") from error
+    if blob.returncode != 0:
+        raise ProjectionError("Frozen legacy baseline source is absent")
+    return blob.stdout
+
+
+def _verify_frozen_legacy_source_inventory(
+    *, repo_root: Path, inventory: Mapping[str, object],
+) -> None:
+    """Bind legacy path inventory entries to the Requirement baseline tree.
+
+    Args:
+        repo_root: Repository containing the immutable Requirement snapshot.
+        inventory: Strict legacy path inventory currently being expanded.
+
+    Returns:
+        None.
+
+    Raises:
+        ProjectionError: If the inventory names a different baseline, changes
+            its fixed source set, or records a digest unlike the frozen blob.
+    """
+    snapshot_dir = repo_root / "requirements" / "ai_first_v3_3_1"
+    try:
+        requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)
+    except RequirementError as error:
+        raise ProjectionError("Legacy Requirement baseline is invalid") from error
+    baseline = requirement["baseline"]
+    baseline_commit = baseline["repository_commit"]
+    source_files = inventory["source_files"]
+    if (
+        type(baseline_commit) is not str
+        or _GIT_COMMIT.fullmatch(baseline_commit) is None
+        or inventory["baseline_commit"] != baseline_commit
+    ):
+        raise ProjectionError("Legacy inventory baseline commit differs")
+    if (
+        not isinstance(source_files, dict)
+        or set(source_files) != set(LEGACY_BASELINE_SOURCE_FILES)
+        or any(
+            type(source_files[relative]) is not str
+            or _SHA256.fullmatch(source_files[relative]) is None
+            for relative in LEGACY_BASELINE_SOURCE_FILES
+        )
+    ):
+        raise ProjectionError("Legacy inventory baseline source set differs")
+    for relative in LEGACY_BASELINE_SOURCE_FILES:
+        frozen_bytes = _frozen_legacy_source_bytes(
+            repo_root=repo_root,
+            baseline_commit=baseline_commit,
+            relative=relative,
+        )
+        if sha256_bytes(content=frozen_bytes) != source_files[relative]:
+            raise ProjectionError("Legacy inventory baseline source differs")
+
+
+def load_legacy_path_inventory(*, repo_root: Path) -> Dict[str, object]:
+    """Load and mechanically expand the frozen legacy migration inventory.
+
+    Args:
+        repo_root: Repository containing the Requirement snapshot and sources.
+
+    Returns:
+        Strict inventory plus one exact migration entry per historical item.
+
+    Raises:
+        ProjectionError: On malformed history, rules, overrides, or proof.
+    """
+    path = (
+        repo_root
+        / "requirements"
+        / "ai_first_v3_3_1"
+        / "legacy_path_inventory.json"
+    )
+    try:
+        parsed = strict_json_file(path=path)
+    except (CanonicalError, OSError) as error:
+        raise ProjectionError("Legacy path inventory is invalid") from error
+    required_fields = {
+        "baseline_commit", "inventory_revision", "schema_version",
+        "source_files", "migration_rules", "migration_overrides",
+        "legacy_configuration", *LEGACY_INVENTORY_GROUP_FIELDS,
+    }
+    if (
+        not isinstance(parsed, dict)
+        or set(parsed) != required_fields
+        or parsed["schema_version"] != 2
+        or type(parsed["baseline_commit"]) is not str
+        or not parsed["baseline_commit"]
+        or type(parsed["inventory_revision"]) is not str
+        or not parsed["inventory_revision"]
+        or type(parsed["source_files"]) is not dict
+        or type(parsed["legacy_configuration"]) is not dict
+        or type(parsed["migration_rules"]) is not dict
+        or type(parsed["migration_overrides"]) is not dict
+        or set(parsed["migration_rules"]) != set(LEGACY_INVENTORY_GROUP_FIELDS)
+    ):
+        raise ProjectionError("Legacy path inventory fields differ")
+    _verify_frozen_legacy_source_inventory(
+        repo_root=repo_root, inventory=parsed,
+    )
+    configuration = parsed["legacy_configuration"]
+    expected_configuration_keys = [
+        "profile_extractor:" + str(configuration["profile_extractor"]),
+        *(
+            "setting:" + str(setting)
+            for setting in configuration["settings"]
+        ),
+        "identity_relative_tolerance:"
+        + str(configuration["identity_relative_tolerance"]),
+    ] if (
+        set(configuration) == {
+            "identity_relative_tolerance", "profile_extractor", "settings",
+        }
+        and type(configuration["profile_extractor"]) is str
+        and configuration["profile_extractor"]
+        and type(configuration["settings"]) is list
+        and all(
+            type(setting) is str and setting
+            for setting in configuration["settings"]
+        )
+        and type(configuration["identity_relative_tolerance"]) is str
+        and configuration["identity_relative_tolerance"]
+    ) else []
+    if parsed["legacy_configuration_keys"] != expected_configuration_keys:
+        raise ProjectionError(
+            "Legacy configuration migration history differs"
+        )
+    history = {}
+    expected_entry_ids = set()
+    for field in LEGACY_INVENTORY_GROUP_FIELDS:
+        symbols = parsed[field]
+        if (
+            type(symbols) is not list
+            or not symbols
+            or any(type(symbol) is not str or not symbol for symbol in symbols)
+            or len(symbols) != len(set(symbols))
+        ):
+            raise ProjectionError("Legacy path inventory history is invalid")
+        history[field] = list(symbols)
+        expected_entry_ids.update(
+            "{}:{}".format(field, symbol) for symbol in symbols
+        )
+        rule = parsed["migration_rules"][field]
+        if not isinstance(rule, dict) or set(rule) != LEGACY_RULE_FIELDS:
+            raise ProjectionError("Legacy migration rule fields differ")
+    overrides = parsed["migration_overrides"]
+    if set(overrides) - expected_entry_ids:
+        raise ProjectionError("Legacy migration override is not inventoried")
+    entries = []
+    source_cache = {}
+    retired_contract = _python_source_contract(
+        path=repo_root / "scripts" / "sec_pipeline.py"
+    )
+    source_cache["scripts/sec_pipeline.py"] = retired_contract
+    for field in LEGACY_INVENTORY_GROUP_FIELDS:
+        base_rule = dict(parsed["migration_rules"][field])
+        for symbol in history[field]:
+            entry_id = "{}:{}".format(field, symbol)
+            rule = dict(base_rule)
+            if entry_id in overrides:
+                override = overrides[entry_id]
+                if (
+                    not isinstance(override, dict)
+                    or not set(override).issubset(LEGACY_OVERRIDE_FIELDS)
+                    or not override
+                ):
+                    raise ProjectionError(
+                        "Legacy migration override fields differ"
+                    )
+                rule.update(override)
+            if (
+                rule["kind"] not in {"CONFIGURATION", "INVARIANT", "PRODUCER"}
+                or rule["status"] not in LEGACY_MIGRATION_STATUSES
+                or rule["proof_mode"] not in LEGACY_PROOF_MODES
+                or LEGACY_PROOF_MODES[rule["proof_mode"]] != rule["status"]
+                or type(rule["reason"]) is not str
+                or not rule["reason"]
+                or type(rule["proof_anchors"]) is not list
+            ):
+                raise ProjectionError("Legacy migration rule is invalid")
+            if field in MIGRATED_WRITER_INVENTORY_FIELDS and (
+                not FORMAL_CUTOVER_WRITER_ANCHORS.issubset(
+                    set(rule["proof_anchors"])
+                )
+                or PUBLIC_COMMIT_TOMBSTONE_ANCHOR
+                in rule["proof_anchors"]
+            ):
+                raise ProjectionError(
+                    "Legacy migration lacks formal Cutover writer anchors"
+                )
+            anchor_evidence = _legacy_anchor_evidence(
+                repo_root=repo_root,
+                anchors=rule["proof_anchors"],
+                source_cache=source_cache,
+            )
+            if (
+                rule["proof_mode"] == "RETIRED_TOMBSTONE"
+                and (
+                    symbol not in retired_contract["retired"]
+                    or not retired_contract["retirement_installed"]
+                )
+            ):
+                raise ProjectionError(
+                    "Legacy producer lacks fail-closed tombstone"
+                )
+            proof = {
+                "entry_id": entry_id,
+                "inventory_field": field,
+                "kind": rule["kind"],
+                "legacy_symbol": symbol,
+                "proof_anchors": list(rule["proof_anchors"]),
+                "proof_mode": rule["proof_mode"],
+                "proof_sources": anchor_evidence,
+                "reason": rule["reason"],
+                "status": rule["status"],
+            }
+            proof["proof_hash"] = content_hash(value=proof)
+            entries.append(proof)
+    result = dict(parsed)
+    result["migration_entries"] = entries
+    return result
+
+
+def legacy_invariant_migration_receipt(
+    *, repo_root: Path, batch_manifest_id: str,
+    compatibility: Mapping[str, object]
+) -> Dict[str, object]:
+    """Bind compatibility checks to every legacy producer/invariant outcome.
+
+    Args:
+        repo_root: Repository authority used to verify inventory proofs.
+        batch_manifest_id: Complete FROZEN Batch identity.
+        compatibility: Mechanically derived CSV parity comparison body.
+
+    Returns:
+        Content-addressed compatibility and migration ledger receipt.
+    """
+    if set(compatibility) != {
+        "evidence_reconciliations", "legacy_input_hashes", "metric_cells",
+        "status",
+    } or compatibility["status"] not in {"PASS", "FAIL"}:
+        raise ProjectionError("Legacy compatibility body is invalid")
+    inventory = load_legacy_path_inventory(repo_root=repo_root)
+    body = {
+        "allowed_statuses": list(LEGACY_MIGRATION_STATUSES),
+        "batch_manifest_id": batch_manifest_id,
+        "evidence_reconciliations": list(
+            compatibility["evidence_reconciliations"]
+        ),
+        "legacy_baseline_commit": inventory["baseline_commit"],
+        "legacy_baseline_source_files": dict(inventory["source_files"]),
+        "legacy_input_hashes": dict(compatibility["legacy_input_hashes"]),
+        "legacy_path_inventory_sha256": sha256_file(
+            path=(
+                repo_root
+                / "requirements"
+                / "ai_first_v3_3_1"
+                / "legacy_path_inventory.json"
+            )
+        ),
+        "metric_cells": list(compatibility["metric_cells"]),
+        "migration_entries": list(inventory["migration_entries"]),
+        "status": compatibility["status"],
+    }
+    receipt = dict(body)
+    receipt.update(
+        {
+            "schema_version": 2,
+            "receipt_id": content_hash(value=body),
+        }
+    )
+    return receipt
 
 
 def projection_file_hashes(
@@ -739,7 +1227,8 @@ def _relative_run_path(*, root: Path, run_dir: Path) -> str:
 
 
 def _batch_manifest_from_paths(
-    *, repo_root: Path, batch_root: Path, run_paths: Sequence[str]
+    *, repo_root: Path, batch_root: Path, run_paths: Sequence[str],
+    release_input_plan_id: Optional[str]
 ) -> Dict[str, object]:
     """Rebuild one batch manifest from verified FROZEN Run locators.
 
@@ -747,6 +1236,8 @@ def _batch_manifest_from_paths(
         repo_root: Repository authority.
         batch_root: Directory against which Run locators are resolved.
         run_paths: Exact relative Run-directory set.
+        release_input_plan_id: Formal source-plan identity, or ``None`` for a
+            recorded/operator batch that has no formal Cutover authority.
 
     Returns:
         Content-addressed complete batch manifest.
@@ -757,6 +1248,11 @@ def _batch_manifest_from_paths(
     """
     if batch_root.is_symlink() or not batch_root.is_dir():
         raise ProjectionError("Batch manifest root is unsafe or missing")
+    if release_input_plan_id is not None and (
+        type(release_input_plan_id) is not str
+        or re.fullmatch(r"sha256:[0-9a-f]{64}", release_input_plan_id) is None
+    ):
+        raise ProjectionError("Batch release input plan identity is invalid")
     if (
         not run_paths
         or len(run_paths) != len(set(run_paths))
@@ -880,6 +1376,7 @@ def _batch_manifest_from_paths(
         "metric_spec_hashes": dict(authority["metric_spec_hashes"]),
         "registry_sha256": authority["registry_sha256"],
         "release_id": authority["release_plan"]["release_id"],
+        "release_input_plan_id": release_input_plan_id,
         "release_plan_sha256": authority["release_plan_sha256"],
         "requirement_hashes": requirement_hashes,
         "runs": run_bindings,
@@ -897,7 +1394,8 @@ def _batch_manifest_from_paths(
 
 
 def write_projection_batch_manifest(
-    *, repo_root: Path, batch_manifest_path: Path, run_dirs: Sequence[Path]
+    *, repo_root: Path, batch_manifest_path: Path, run_dirs: Sequence[Path],
+    release_input_plan_id: Optional[str] = None
 ) -> Dict[str, object]:
     """Persist a content-addressed complete release batch authority.
 
@@ -905,6 +1403,8 @@ def write_projection_batch_manifest(
         repo_root: Repository authority.
         batch_manifest_path: New or identical manifest destination.
         run_dirs: Exact FROZEN Run directories below the manifest parent.
+        release_input_plan_id: Formal source-plan identity. Recorded/operator
+            callers omit it and persist an explicit null authority.
 
     Returns:
         Verified batch manifest.
@@ -925,6 +1425,7 @@ def write_projection_batch_manifest(
         repo_root=repo_root,
         batch_root=batch_manifest_path.parent,
         run_paths=run_paths,
+        release_input_plan_id=release_input_plan_id,
     )
     expected = canonical_json_bytes(value=manifest) + b"\n"
     if batch_manifest_path.exists():
@@ -976,6 +1477,7 @@ def load_projection_batch_manifest(
         repo_root=repo_root,
         batch_root=batch_manifest_path.parent,
         run_paths=[str(run["run_path"]) for run in runs],
+        release_input_plan_id=payload["release_input_plan_id"],
     )
     if dict(payload) != rebuilt:
         raise ProjectionError("Batch manifest differs from repository Runs")
@@ -1487,7 +1989,8 @@ def _evidence_row(
 
 
 def _joined_binding_field(
-    *, bindings: Sequence[Mapping[str, object]], field: str, fallback: object
+    *, bindings: Sequence[Mapping[str, object]], field: str, fallback: object,
+    collapse_equal: bool
 ) -> str:
     """Join one optional source field or retain its frozen baseline value.
 
@@ -1495,6 +1998,8 @@ def _joined_binding_field(
         bindings: Ordered contributing Observation source bindings.
         field: Optional source-binding field name.
         fallback: Frozen legacy value when the source model does not own it.
+        collapse_equal: Whether repeated identical component values represent
+            one metric-level scalar instead of a semicolon aggregation.
 
     Returns:
         Joined source values or the exact baseline value.
@@ -1508,7 +2013,14 @@ def _joined_binding_field(
             "Projection source binding field is only partially present"
         )
     if all(presence):
-        return ";".join(str(binding[field]) for binding in bindings)
+        values = [str(binding[field]) for binding in bindings]
+        if collapse_equal:
+            if len(set(values)) != 1:
+                raise ProjectionError(
+                    "Projection source binding values differ"
+                )
+            return values[0]
+        return ";".join(values)
     return str(fallback)
 
 
@@ -1571,6 +2083,21 @@ def _project_result(
         return row, [], 0
     if baseline_row is None:
         raise ProjectionError("Applicable migrated legacy row is absent")
+    if result["quality"] == "NOT_MEANINGFUL":
+        if (
+            result["value"] is not None
+            or baseline_row["value"] != ""
+            or baseline_row["status"] != "NOT_MEANINGFUL"
+            or baseline_row["company"] != company["display_name"]
+            or baseline_row["cik"] != company["primary_cik"]
+            or baseline_row["metric_id"] != result["metric_id"]
+            or baseline_row["period_start"] != result["period_start"]
+            or baseline_row["period_end"] != result["period_end"]
+        ):
+            raise ProjectionError(
+                "NOT_MEANINGFUL Result differs from frozen compatibility row"
+            )
+        return dict(baseline_row), [], 0
     ordered, contributor_count = _ordered_observations(
         trace=trace,
         observations=indexes["observations"],
@@ -1601,12 +2128,14 @@ def _project_result(
             bindings=contributor_bindings,
             field="form",
             fallback=baseline_row["form"],
+            collapse_equal=True,
         )
     )
     filed_date = _joined_binding_field(
         bindings=contributor_bindings,
         field="filed",
         fallback=baseline_row["filed_date"],
+        collapse_equal=False,
     )
     row = dict(baseline_row)
     row.update(
@@ -1957,19 +2486,16 @@ def _projection_candidate(
             or reconciliation["status"] != "PASS"
             or cell_receipt["status"] != "PASS"
         )
-    receipt_body = {
-        "batch_manifest_id": batch["batch_manifest_id"],
+    compatibility = {
         "evidence_reconciliations": evidence_receipts,
         "legacy_input_hashes": legacy["hashes"],
         "metric_cells": metric_cells,
         "status": "FAIL" if failed else "PASS",
     }
-    receipt = dict(receipt_body)
-    receipt.update(
-        {
-            "schema_version": 1,
-            "receipt_id": content_hash(value=receipt_body),
-        }
+    receipt = legacy_invariant_migration_receipt(
+        repo_root=repo_root,
+        batch_manifest_id=str(batch["batch_manifest_id"]),
+        compatibility=compatibility,
     )
     metric_bytes = _csv_bytes(
         rows=projected_metrics, fieldnames=metric_fields,

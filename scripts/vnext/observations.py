@@ -167,7 +167,7 @@ def reviewed_observation(
     derived_asset_id: str,
     quality: str,
 ) -> Dict[str, object]:
-    """Materialize one AI claim only after mechanical and HUMAN approval.
+    """Materialize one AI claim after mechanical and authorized review approval.
 
     Args:
         metric_id: Metric projected from the reviewed role.
@@ -179,7 +179,7 @@ def reviewed_observation(
         candidate: Immutable Candidate.
         evidence_check: PASS check bound to the Candidate.
         review_unit: Whole-unit binding for the reviewed Candidate/context.
-        decision: Effective APPROVE HUMAN decision.
+        decision: Effective APPROVE HUMAN or D-06-authorized SYSTEM decision.
         source_reference: Exact source chosen for this observation.
         derived_asset_id: Table-grid identity containing the locator.
         quality: Compiled observation quality.
@@ -219,9 +219,9 @@ def reviewed_observation(
         raise ObservationError("ReviewDecision binding is stale") from error
     if (
         decision["decision"] != "APPROVE"
-        or decision["reviewer_type"] != "HUMAN"
+        or decision["reviewer_type"] not in {"HUMAN", "SYSTEM"}
     ):
-        raise ObservationError("AI claim requires an effective HUMAN approval")
+        raise ObservationError("AI claim requires an effective review approval")
     if role not in candidate["selected"]:
         raise ObservationError("Reviewed role is absent from Candidate")
     if role not in evidence_check["normalized_values"]:

@@ -1,0 +1,24 @@
+{
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_operator_cli",
+      "-v"
+    ],
+    "duration_ms": 88,
+    "interpreter": "python3",
+    "return_code": 1,
+    "stderr_sha256": "57242e54c74558d30610a85a84c7c56cedc7b709b383026f601d03ec3b71a5b0",
+    "stderr_size": 920,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "expected_failure": "ImportError: tools.vnext_operator does not exist",
+  "failure_first_receipt_id": "sha256:e348eb4a98cd47b7cd076a5b1e9b2cb95d43aec5dd3e08711f413fa1b06ab58d",
+  "outcome": "FAILED_AS_EXPECTED",
+  "recorded_at_utc": "2026-08-06T09:27:12.126178+00:00",
+  "scenario_id": "OPERATOR_CLI_ABSENT_BEFORE_IMPLEMENTATION",
+  "schema_version": 1
+}

@@ -4,6 +4,14 @@
 
 每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。`config/validation_source_policy.json` 必须把每个权威引用分类为运行/验收 source、snapshot artifact 或非批次治理角色；解释性非权威文档不能作为本表的运行权威。
 
+## R4 测试执行边界
+
+按 [Issue #12 R4 用户授权](https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5313207170)，开发、PR 与 final acceptance 的唯一必跑测试是 `python3 tools/run_fast_tests.py --jobs 4`，随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY` 本地证据。不得把全仓/双解释器套件、隔离 repository/worktree、freeze/replay 或长串行场景列为必跑测试。下文的 qualification、live、staging、rollback/restore 是实际运营发布流程，不由 R4 测试替代，也不得凭快速测试声称完成。
+
+## R5 live 与 review 边界
+
+按 [Issue #12 R5 用户授权](https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5314176033)，live Reader 使用 `DEEPSEEK_API_KEY` 对应的官方 `deepseek-v4-flash` Chat Completions；HUMAN review 可选，缺失时 D-06 只允许明确标注的 SYSTEM approval。Hilton FY2024 是第二真实布局，freeze 后的 Hyatt FY2024 是独立 holdout；两者均已通过 qualification。首次 Cutover 不需要预先存在 active/previous pointer，而是导入 legacy A 后原子创建 B→A chain。
+
 ## 快速入口：只读取现有结果
 
 | 步骤 | 动作 | 权威引用 | 验收 |
@@ -18,12 +26,12 @@
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 确认公司范围、CIK role、指标适用性和有效 SEC 请求身份 | `config/`；`01_SOP_SEC_10公司单年指标计算_直接SEC.md`；`02_指标定义_SEC_10公司单年指标.md`；`CIK变更应对方案.md` | 配置结构有效，范围、身份连续性和口径已由运行负责人确认；`01_SOP...` 的 M0–M7 仅作业务概念说明 |
-| 2 | 从干净工作区按阶段 00-11 顺序执行完整批次 | `README_RUN.md` 的“从干净目录运行阶段 00-11” | 各阶段完成，预期 evidence 与 outputs 已生成；stage 11 exit 0 只代表报告构建完成 |
-| 3 | 单独执行阶段 12 分层验证 | `TESTING.md` 的完整场景、Golden、repair gate 与 provenance 专项 | Golden 与独立最终 gate 满足 full 通过条件，run manifest 已完成，provenance publication/self-check 成功 |
-| 4 | 独立重验终态 | `python3 tools/check_validation_snapshot.py` | terminal manifest、source-input tree 与关键 artifact bytes 仍一致 |
-| 5 | 交付报告、证据和限制 | `interact.md`；`docs/business_user_guide.md` | reviewer 能从 manifest/provenance 追溯到 report、metrics、evidence 和 request ledger |
+| 2 | 以`sec_pipeline.py --workspace-dir <absolute-isolated-root> <stage>`在干净candidate数据根按需执行SEC采集与legacy非迁移阶段 | `README_RUN.md`；`TESTING.md` | 源码repository root与含active pointer的workspace不运行legacy Stage04/09/11；migrated写入全部fail closed；candidate evidence/outputs不冒充active |
+| 3 | 通过vNext operator形成complete staging并准备formal publication；full live path在release planning前固定执行SEC Stage00/01/02/03/05 acquisition/inventory | 本文件“vNext operator与正式Cutover”；`README_RUN.md` | acquisition原样命令、ledger合法tail与inventory receipt已持久化；qualification、live有效 review、strict parity、old-path migration与publication gates全部满足 |
+| 4 | commit后对new/rollback/restore分别执行一次公开terminal cycle | `python3 tools/run_acceptance.py --scope full --execute-live`；`tools/vnext_terminal_cycle.py`；`TESTING.md` | 每轮只启动一个进程并pin一次PublicationView transaction，依序完成Stage10 Golden、Stage11 report、Stage12 active validation、snapshot publish/verify；三轮均通过，最终恢复new publication并生成full receipt |
+| 5 | 交付root mirrors、报告、证据和限制 | `interact.md`；`docs/business_user_guide.md` | reviewer能从active pointer/provenance追溯到bundle、report、metrics、evidence和request ledger；latest失败不覆盖active |
 
-## 专项：vNext recorded shadow（不切流）
+## 专项：vNext operator 与正式 Cutover
 
 <!-- capability-anchor: BEHAVIOR.vnext_freeze_accepts_audit_validation_states -->
 <!-- capability-anchor: BEHAVIOR.vnext_publication_requires_passed_validation -->
@@ -39,13 +47,33 @@ Freeze 保存不可变审计与 replay 事实，不代表 validation 通过；pu
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
-| 1 | 读取 exact Requirement、Decision Register、SU 状态与外部阻塞 | `requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md`；`requirements/ai_first_v3_3_1/decision_register.json` | FSD/Issue/baseline hash 可复核；D-01 或其他未完成项没有被默认批准 |
-| 2 | 按 recorded 层运行 schema、Reader/Evidence、Review/freeze/replay、Calculator、Projector、publication 和 semantic gates | `TESTING.md` 的“vNext recorded shadow” | 无网络 fixture 测试与双解释器结果按真实状态记录；任何 FAIL/NOT_RUN 不写成 PASS |
-| 3 | 需要人工决定时，只复核 run-scoped 完整表格与 rendered ReviewUnit，再通过最小 review CLI 追加不可变 HUMAN decision | `interact.md` 的 vNext review 旅程；`tools/vnext_review.py` | reviewer identity、approved claims、rendered/canonical context 与 supersedes 单链都通过绑定检查 |
-| 4 | 对已有 `PASSED`、`FAILED` 或 `NOT_RUN` receipt 的 OPEN Run 执行 freeze，并从 FROZEN Run 做无 AI replay；只有全部 `PASSED` Runs 满足仓库派生的 company×metric/applicability exact set，才可形成 BatchManifest 并执行 Projector/publication gates | `architecture.md` 的 vNext 状态模型；`TESTING.md` | freeze 前重新读取 Spec/source/review/全部成功 response bytes；任何 AI attempt 必须终态；non-lodging N/A 有持久化 Result/Trace 且 AI=0；失败/未运行、缺公司/缺 N/A、任意 staging 或自签 PASS receipt 均禁止 publish；replay 不开 socket |
-| 5 | 读取 `outputs/acceptance_receipts/` 中的 recorded receipt 与 SU 清单，确认本次没有改变根目录现行结果或 active publication | `TESTING.md`；`requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md` | recorded 状态只能写 `PASSED_RECORDED_ONLY`；live 三轮、staging、Cutover、rollback/full 未实际完成时保持 NOT_RUN/BLOCKED |
+| 1 | 按顺序读取 FSD、immutable R2、exact R3 Addendum、Decision Register、baseline 与 SU 状态 | `requirements/ai_first_v3_3_1/` | R2 仍提供 SU/AC 与详细契约；R3 只逐项 supersede。历史 D-01 pending 可追溯，唯一 effective D-01 为 `APPROVED` |
+| 2 | 用同一 operator 创建、查看并推进 Run；recorded 只替换 transport/source acquisition | `python3 tools/vnext_operator.py --help`；`interact.md` | recorded 时 socket=0、root/active 不变；live 必须显式 `--execute-live`，只读 `DEEPSEEK_API_KEY`，SEC organization 固定 `axaxl` 且 email 只读 `SEC_CONTACT_EMAIL` |
+| 3 | HUMAN 可选地复核 `review.md` 和完整 ReviewUnit，并通过 `review list/show/decide` 追加单链决定 | `tools/vnext_operator.py review`；`tools/vnext_review.py` | 已有 HUMAN 决定优先；缺决定时 D-06 写入可审计 SYSTEM approval，SYSTEM 不得伪装为 HUMAN，Evidence/compatibility publication gates不放宽 |
+| 4 | release input plan先绑定exact source的latest verified request attempt及locator class；finalize/freeze 后做无网络 replay，再由 complete BatchManifest 与 Projector 形成 strict-compatible staging | `architecture.md`；`TESTING.md` | recorded legacy locator必须逐path/hash/headers/size验证并在closure显式绑定tier/class；formal live只允许immutable attempt并拒绝legacy。所有 Run 都是 `PASSED/FROZEN`；十公司×四指标 exact set、N/A、期间、字段/evidence/reconciliation parity 全部通过；WITHHELD 阻止整批发布 |
+| 5 | 先以受控capture录制第二真实布局并完成有效 HUMAN 或 SYSTEM `APPROVE`、全量`PUBLISHED` Result和`PASSED` Run validation receipt，再冻结production semantic tree和pre-holdout inventory，最后才capture并加入独立holdout | `tools/vnext_capture_qualification_fixture.py`；`tools/vnext_qualification.py` | Hilton FY2024 capture/second→`freeze`→新增 Hyatt FY2024 capture/holdout→`status`顺序成立；capture只接受仓库候选ID并经SEC/DeepSeek固定边界保存可回放bytes，两者 company/CIK/accession/source 均独立，`REJECT`/WITHHELD只保留审计而不能签发资格receipt，holdout在freeze前不存在且加入后semantic hash不漂移 |
+| 6 | 只在全部资格和凭据满足后执行 live Cutover；同一命令先执行固定SEC acquisition/inventory，再依次验证 new→rollback→restore | `python3 tools/run_acceptance.py --scope full --execute-live` | 三次live attempt的portable audit closure、十公司staging、verified legacy A→formal B commit，以及每轮单次调用`tools/vnext_terminal_cycle.py`、共用同一pinned view完成五项gate均真实产生并返回0 |
 
-该专项不是当前 00–12 批次的替代入口。只有 D-01、有效 SEC 身份、clean committed source closure、第二真实布局、独立 holdout、live 三轮稳定性、完整 staging parity、旧 producer 退出和真实 rollback/full validation 全部产生证据后，才允许另行执行 Cutover；本 SOP 不提供绕过这些 gate 的命令。
+### Cold-start recorded fixture 与 sandbox publication
+
+运行负责人可先执行 `python3 tools/vnext_operator.py --json fixture list`，再用 `fixture show --fixture-id <id>` 核对 catalog/source/provenance binding。随后以同一组显式 UTC 值运行：
+
+```bash
+python3 tools/vnext_cutover.py --json --fixture-id <id> \
+  --workspace-dir artifacts/vnext/recorded-<workspace> \
+  --legacy-snapshot-dir outputs \
+  --validated-at-utc <UTC> --committed-at-utc <UTC>
+```
+
+HUMAN review 是可选停点：若具名 HUMAN 在最终化前写入 decision，系统使用该决定；否则 D-06 写入固定身份的 SYSTEM approval 并继续 finalization/freeze/replay、complete Batch/Projector，随后在 `<workspace>/recorded-publication` 内 prepare、CAS commit 和 PublicationView read-back。recorded workspace第一层固定为`recorded-*`，默认`recorded-cutover`；live固定使用repository-owned `artifacts/vnext/cutover`，不得传`--workspace-dir`，否则在load/write前以`LIVE_WORKSPACE_OVERRIDE_FORBIDDEN`失败。live core同时exact固定module-owned repository、`outputs` legacy snapshot与publication root；每次有效live调用（包括 HUMAN 或 SYSTEM resume）都fresh执行SEC acquisition，再复用exact pinned semantic plan，本次receipt必须进入current audit/full binding。整个 recorded flow socket=0，正式 active pointer/root mirrors、formal namespace与SEC ledger前后 exact 不变。测试使用的 `TEST_ONLY_EXPLICIT_REVIEW` 不能作为正式 review 或 full evidence；generic `publish --commit` 仍是 fail-closed tombstone。
+
+sandbox publication 的 request closure按证据层级验证：recorded 可接受历史ledger row明确声明、且body/headers的repository path、hash、size全部匹配的唯一`LEGACY_WORKING_LOCATOR`，portable closure必须保留locator tier/class；缺失、歧义或bytes漂移均失败。formal/live仍只允许`IMMUTABLE_ATTEMPT`，legacy class稳定返回`LIVE_SOURCE_ATTEMPT_INCOMPLETE`，不得因recorded可重放就升级为formal证据。
+
+`python3 tools/run_acceptance.py --scope recorded` 的最高状态是 `PASSED_FAST_LOCAL_ONLY`，且不得修改正式 pointer、root mirrors、formal namespace或SEC ledger。generic operator `publish`只能准备inactive recorded bundle；public generic formal receipt/commit API会以`FORMAL_CUTOVER_AUTHORITY_REQUIRED`或`FORMAL_COMMIT_REQUIRES_CUTOVER`失败，不能绕过Cutover orchestrator。source plan后ledger binding漂移以`SOURCE_LEDGER_BINDING_AMBIGUOUS`失败，formal live遇`LEGACY_WORKING_LOCATOR`以`LIVE_SOURCE_ATTEMPT_INCOMPLETE`失败。首次formal Cutover把冻结legacy bytes只读导入为verified predecessor A，再原子建立A→formal B；rollback到A也不会调用旧parser。`--scope full` 未带 `--execute-live` 返回 `LIVE_EXECUTION_NOT_AUTHORIZED`。本轮Hilton/Hyatt qualification与SEC acquisition均已产生；三次live Reader因provider `Insufficient Balance`失败，因此没有staging、active/full、rollback或restore receipts。运行时凭据只可进程注入，active predecessor 不再是 preflight requirement，首次 A→B chain 会自动创建。R4快速本地证据不等于 active Cutover。
+
+recorded acceptance 当前要求 macOS `/usr/bin/sandbox-exec` 对整个子进程树拒绝网络，以literal保护正式pointer/mirrors/sidecar/ledger、pointer lock与latest run status，以subpath保护live Cutover、qualification、request attempts、publication、publication switch intent/receipt、fault与live audit tree；缺失时稳定返回 `OFFLINE_PROCESS_SANDBOX_REQUIRED`，不得降级。runner 还会从 recorded 与 terminal-validation 子进程剥离 live secrets，绑定 clean source/Requirement、本次隔离 semantic/scalability exact artifacts，并在前后重验formal namespace exact tree与pointer lock/latest status bytes。持久receipt用`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$PYTHON39`、`$SANDBOX_EXEC`等portable token替换host路径，并对实际runtime binary保存SHA-256；本机绝对路径不落盘。每个new/rollback/restore terminal cycle只启动一次`tools/vnext_terminal_cycle.py`，在单进程、单次pin中完成Stage10→Stage11→Stage12→snapshot publish→verify。若 recorded 仍产生 root drift，会先恢复原 bytes 但本次 receipt 保持失败；namespace/ledger漂移fail closed且不删除可能的并发合法append。full Cutover 子进程若在非零、`HUMAN_REVIEW_REQUIRED` 或非法返回时意外 commit，会恢复调用前 predecessor（首次无 pointer 时恢复原 root bytes）并保留原 blocker。默认 7200 秒只是单 command timeout 上限，超时仍为 `FAILED`。
+
+publication switch在修改mirror前于独占锁内写`outputs/publication_switch_intents/<sha256>.json`，绑定previous/proposed pointer、上一switch tip、模式及每个mirror的存在性/hash/size。共享锁reader遇pending、多份或tampered intent只会fail closed，不做恢复或清理；独占锁writer/recovery若pointer已是proposed则补齐switch receipt并从proposed bundle重建mirrors，若仍是previous则移除本事务receipt、恢复previous状态，再删除exact intent；其他pointer状态失败。hard crash恢复不运行旧parser，也不改变request ledger。
 
 ## SOP 2：分层验收与失败定位
 

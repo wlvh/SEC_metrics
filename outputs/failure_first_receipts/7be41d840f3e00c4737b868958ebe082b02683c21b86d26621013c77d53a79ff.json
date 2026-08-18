@@ -1,0 +1,9 @@
+{
+  "scenario_id": "legacy_migration_inventory_red",
+  "observed_at_utc": "2026-08-06T09:54:27Z",
+  "command": "PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_legacy_projector.LegacyProjectorTest.test_legacy_migration_inventory_and_receipt_are_exact",
+  "return_code": 1,
+  "failure": "ImportError: cannot import name 'legacy_invariant_migration_receipt' from 'vnext.projector'",
+  "outcome": "EXPECTED_FAILURE_BEFORE_IMPLEMENTATION",
+  "evidence_id": "sha256:f0accf6e02f87f2ca4aba8a59423e7292a61b09c232abbe74e7b7b5962afe15e"
+}

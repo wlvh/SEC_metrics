@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-FIRST-CUTOVER-PREDECESSOR-001",
+  "observed_at_utc": "2026-08-06T10:46:44Z",
+  "expected_failure": "First formal Cutover lacks a committed rollback predecessor",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_first_cutover_commits_safe_predecessor_before_final_pointer",
+      "-v"
+    ],
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "return_code": 1,
+    "duration_ms": 83,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0,
+    "stderr_sha256": "f9c97b4f2242267d3059cc49d35a358836e54a973cd383bcd4eb8b25e717f141",
+    "stderr_size": 1228,
+    "reason": "NONZERO_RETURN_CODE",
+    "error_class": "",
+    "environment_keys": [
+      "PYTHONDONTWRITEBYTECODE"
+    ]
+  }
+}

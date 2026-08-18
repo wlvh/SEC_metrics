@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_repository_root_requires_isolated_legacy_candidate_workspace"
+  ],
+  "evidence_level": "FAILURE_FIRST",
+  "finished_at_utc": "2026-08-06T09:39:34.742410+00:00",
+  "observed_failures": [
+    "default repository root accepted a legacy Stage 04 workspace"
+  ],
+  "return_code": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "started_at_utc": "2026-08-06T09:39:34.586532+00:00",
+  "stderr_excerpt": "F\n======================================================================\nFAIL: test_repository_root_requires_isolated_legacy_candidate_workspace (tests.vnext.test_legacy_cutover.LegacyCutoverBoundaryTest.test_repository_root_requires_isolated_legacy_candidate_workspace)\nBlock legacy stages from writing root even before first Cutover.\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<repository-root>/tests/vnext/test_legacy_cutover.py\", line 236, in test_repository_root_requires_isolated_legacy_candidate_workspace\n    with self.assertRaisesRegex(\n         ~~~~~~~~~~~~~~~~~~~~~~^\n        sec_pipeline.LegacyPathStillActiveError,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        r\"^LEGACY_PATH_STILL_ACTIVE:\",\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ):\n    ^\nAssertionError: LegacyPathStillActiveError not raised\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n",
+  "stderr_sha256": "bcd1fabfb90c91fbd506f1397fe92d32b3f82d5a27c8678bed09f29fa00b2580",
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "test_target": "root legacy-stage isolation guard"
+}

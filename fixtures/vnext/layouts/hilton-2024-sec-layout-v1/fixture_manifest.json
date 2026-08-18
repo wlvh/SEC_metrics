@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "fixture_id": "hilton-2024-sec-layout-v1",
+  "qualification_role": "SECOND_LAYOUT",
+  "company_id": "hilton_worldwide_holdings",
+  "cik": "1585689",
+  "company_traits": [
+    "lodging"
+  ],
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "source_role": "target_primary",
+  "source_media_type": "text/html",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568925000006/q42024earningsrelease.htm",
+  "accession": "0001585689-25-000006",
+  "document_name": "q42024earningsrelease.htm",
+  "disclosure_spec_path": "catalog/disclosures/lodging_kpi_table.md",
+  "selection_reason": "Independent Hilton FY2024 public SEC full-year KPI release for second-layout qualification.",
+  "layout_differences": [
+    "column_order",
+    "rowspan_colspan",
+    "scope_wording",
+    "table_header",
+    "year_layout"
+  ],
+  "request_attempt_id": "request:attempt:358a592f0843fd9f491a4ef2bcf90d0e91d5bcc5232c7380b284460f8b95c4ba",
+  "source_repo_relative_path": "fixtures/vnext/layouts/hilton-2024-sec-layout-v1/source.htm",
+  "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+  "recorded_response_repo_relative_path": "fixtures/vnext/layouts/hilton-2024-sec-layout-v1/recorded_response.json",
+  "recorded_response_sha256": "ff879a5fcb824f0e79976d737cfc1d57932883b2cc259cc486202e26159db82d",
+  "excerpt_repo_relative_path": "fixtures/vnext/layouts/hilton-2024-sec-layout-v1/excerpt.json",
+  "excerpt_sha256": "b03641076c999ef3855a3065877b8f1d7eeeada0ef4f1feeedfab737e198a866"
+}

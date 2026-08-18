@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-REAL-RECORDED-LAYOUT-001",
+  "observed_at_utc": "2026-08-06T10:11:04Z",
+  "expected_failure": "Formal repository recorded response fixture is absent",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_real_recorded_layout",
+      "-v"
+    ],
+    "duration_ms": 102,
+    "environment_keys": [],
+    "error_class": "FileNotFoundError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "83505808e94f97bf13ebf7c886067cef7affb5407f132c1e8291e9c4828478ab",
+    "stderr_size": 1679,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:f72cc18f683ce9636fb91f6952e350fda6ba075063412cd36eef6c7caeab9de1"
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbrl
+  xml:lang="en-US"
+  xmlns="http://www.xbrl.org/2003/instance"
+  xmlns:dei="http://xbrl.sec.gov/dei/2025"
+  xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+  xmlns:link="http://www.xbrl.org/2003/linkbase"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+    <link:schemaRef xlink:href="luv-20251231.xsd" xlink:type="simple"/>
+    <context id="c-1">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000092380</identifier>
+        </entity>
+        <period>
+            <startDate>2025-01-01</startDate>
+            <endDate>2025-12-31</endDate>
+        </period>
+    </context>
+    <context id="c-2">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000092380</identifier>
+        </entity>
+        <period>
+            <instant>2025-06-30</instant>
+        </period>
+    </context>
+    <context id="c-3">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0000092380</identifier>
+        </entity>
+        <period>
+            <instant>2026-02-03</instant>
+        </period>
+    </context>
+    <unit id="usd">
+        <measure>iso4217:USD</measure>
+    </unit>
+    <unit id="shares">
+        <measure>shares</measure>
+    </unit>
+    <dei:EntityCentralIndexKey contextRef="c-1" id="f-32">0000092380</dei:EntityCentralIndexKey>
+    <dei:DocumentFiscalYearFocus contextRef="c-1" id="f-33">2025</dei:DocumentFiscalYearFocus>
+    <dei:DocumentFiscalPeriodFocus contextRef="c-1" id="f-34">FY</dei:DocumentFiscalPeriodFocus>
+    <dei:AmendmentFlag contextRef="c-1" id="f-35">false</dei:AmendmentFlag>
+    <dei:DocumentType contextRef="c-1" id="f-1">10-K/A</dei:DocumentType>
+    <dei:DocumentAnnualReport contextRef="c-1" id="f-2">true</dei:DocumentAnnualReport>
+    <dei:DocumentPeriodEndDate contextRef="c-1" id="f-3">2025-12-31</dei:DocumentPeriodEndDate>
+    <dei:CurrentFiscalYearEndDate contextRef="c-1" id="f-4">--12-31</dei:CurrentFiscalYearEndDate>
+    <dei:DocumentTransitionReport contextRef="c-1" id="f-5">false</dei:DocumentTransitionReport>
+    <dei:EntityFileNumber contextRef="c-1" id="f-6">1-7259</dei:EntityFileNumber>
+    <dei:EntityRegistrantName contextRef="c-1" id="f-7">SOUTHWEST AIRLINES CO.</dei:EntityRegistrantName>
+    <dei:EntityIncorporationStateCountryCode contextRef="c-1" id="f-8">TX</dei:EntityIncorporationStateCountryCode>
+    <dei:EntityTaxIdentificationNumber contextRef="c-1" id="f-9">74-1563240</dei:EntityTaxIdentificationNumber>
+    <dei:EntityAddressAddressLine1 contextRef="c-1" id="f-10">P.O. Box 36611</dei:EntityAddressAddressLine1>
+    <dei:EntityAddressCityOrTown contextRef="c-1" id="f-11">Dallas,</dei:EntityAddressCityOrTown>
+    <dei:EntityAddressStateOrProvince contextRef="c-1" id="f-12">TX</dei:EntityAddressStateOrProvince>
+    <dei:EntityAddressPostalZipCode contextRef="c-1" id="f-13">75235-1611</dei:EntityAddressPostalZipCode>
+    <dei:CityAreaCode contextRef="c-1" id="f-14">214</dei:CityAreaCode>
+    <dei:LocalPhoneNumber contextRef="c-1" id="f-15">792-4000</dei:LocalPhoneNumber>
+    <dei:Security12bTitle contextRef="c-1" id="f-16">Common Stock ($1.00&#160;par value)</dei:Security12bTitle>
+    <dei:TradingSymbol contextRef="c-1" id="f-17">LUV</dei:TradingSymbol>
+    <dei:SecurityExchangeName contextRef="c-1" id="f-18">NYSE</dei:SecurityExchangeName>
+    <dei:EntityWellKnownSeasonedIssuer contextRef="c-1" id="f-19">Yes</dei:EntityWellKnownSeasonedIssuer>
+    <dei:EntityVoluntaryFilers contextRef="c-1" id="f-20">No</dei:EntityVoluntaryFilers>
+    <dei:EntityCurrentReportingStatus contextRef="c-1" id="f-21">Yes</dei:EntityCurrentReportingStatus>
+    <dei:EntityInteractiveDataCurrent contextRef="c-1" id="f-22">Yes</dei:EntityInteractiveDataCurrent>
+    <dei:EntityFilerCategory contextRef="c-1" id="f-23">Large Accelerated Filer</dei:EntityFilerCategory>
+    <dei:EntitySmallBusiness contextRef="c-1" id="f-24">false</dei:EntitySmallBusiness>
+    <dei:EntityEmergingGrowthCompany contextRef="c-1" id="f-25">false</dei:EntityEmergingGrowthCompany>
+    <dei:IcfrAuditorAttestationFlag contextRef="c-1" id="f-26">true</dei:IcfrAuditorAttestationFlag>
+    <dei:DocumentFinStmtErrorCorrectionFlag contextRef="c-1" id="f-27">false</dei:DocumentFinStmtErrorCorrectionFlag>
+    <dei:EntityShellCompany contextRef="c-1" id="f-28">false</dei:EntityShellCompany>
+    <dei:EntityPublicFloat contextRef="c-2" decimals="0" id="f-29" unitRef="usd">16890396912</dei:EntityPublicFloat>
+    <dei:EntityCommonStockSharesOutstanding contextRef="c-3" decimals="INF" id="f-30" unitRef="shares">491317990</dei:EntityCommonStockSharesOutstanding>
+    <dei:DocumentsIncorporatedByReferenceTextBlock contextRef="c-1" id="f-31">&lt;div style="margin-bottom:8pt;margin-top:3pt;text-indent:24.75pt"&gt;&lt;span style="color:#000000;font-family:'Times New Roman',serif;font-size:8pt;font-weight:400;line-height:120%"&gt;Portions of the Definitive Proxy Statement for the Company&#x2019;s Annual Meeting of Shareholders to be held May 07, 2026, are incorporated into Part&#160;III of this Annual Report on Form&#160;10-K.&lt;/span&gt;&lt;/div&gt;</dei:DocumentsIncorporatedByReferenceTextBlock>
+</xbrl>

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-RECORDED-COLD-START-NAMESPACE-REGRESSION-001",
+  "observed_at_utc": "2026-08-07T07:47:41Z",
+  "evidence_level": "FAILURE_FIRST_TEST",
+  "command": {
+    "argv": [
+      "$PYTHON_3_9",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_public_recorded_cold_start_review_resume_and_readback"
+    ],
+    "return_code": 1,
+    "duration_ms": 8
+  },
+  "expected": {
+    "first_status": "HUMAN_REVIEW_REQUIRED",
+    "workspace_tier": "RECORDED"
+  },
+  "observed": {
+    "status": "RECORDED_SANDBOX_WORKSPACE_INVALID",
+    "reason": "The test still placed its recorded workspace below the now-reserved formal artifacts/vnext/cutover namespace."
+  },
+  "production_boundary_changed": false,
+  "formal_state_changed": false
+}

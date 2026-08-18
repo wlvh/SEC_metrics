@@ -1,0 +1,29 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "-v",
+        "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_persisted_receipt_rejects_local_absolute_paths"
+      ],
+      "duration_ms": 2,
+      "interpreter": "python3",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "stderr_sha256": "738466eaef03a8f5814f3e1d4c630567f902692157cf51347afc6409b1a70784",
+      "stderr_size": 1419,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0
+    }
+  ],
+  "evidence_tier": "TEST_ONLY_NOT_ACCEPTANCE",
+  "expected_failure": "A persisted acceptance receipt must contain no host-local absolute path while retaining exact interpreter identity through portable bindings.",
+  "failure_first_receipt_id": "sha256:07b27c452f88bb404725bedf0cc2a50cf6fd6235e6f5158fcd732b8b4ff917ac",
+  "formal_state_changed": false,
+  "observed_at_utc": "2026-08-07T03:00:42Z",
+  "observed_failure": "Four host-local interpreter path strings were persisted in the acceptance receipt.",
+  "scenario_id": "FF-ACCEPTANCE-PORTABLE-RECEIPT-001",
+  "schema_version": 1
+}

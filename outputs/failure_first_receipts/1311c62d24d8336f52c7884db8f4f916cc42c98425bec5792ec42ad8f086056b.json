@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-PY39-FINAL-SUITE-CONTRACT-DRIFT-001",
+  "observed_at_utc": "2026-08-07T09:45:48Z",
+  "expected_failure": "Legacy Cutover tests must use the explicit fixed-root seam and Stage 11 wrapper tests must pass argv; committed resume must bind a fresh acquisition.",
+  "formal_state_changed": false,
+  "full_suite_observation": {
+    "tests_run": 399,
+    "duration_ms": 1976123,
+    "failures": 2,
+    "errors": 5,
+    "return_code": 1
+  },
+  "command": {
+    "argv": [
+      "$PYTHON39",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_cutover.CutoverFailureFirstTest.test_blocked_live_candidate_updates_latest_and_preserves_active",
+      "tests.vnext.test_cutover.CutoverFailureFirstTest.test_first_cutover_imports_legacy_then_commits_one_atomic_chain",
+      "tests.vnext.test_cutover.CutoverFailureFirstTest.test_postcommit_resume_skips_remote_and_second_commit",
+      "tests.vnext.test_cutover.CutoverFailureFirstTest.test_human_and_failed_live_attempts_update_latest_only",
+      "tests.vnext.test_legacy_terminal_cycle.LegacyTerminalCycleTest.test_rollback_legacy_report_stage12_checker_then_restore",
+      "tests.vnext.test_report_read_only.ReportReadOnlyTest.test_public_stage11_wrapper_has_no_active_write_boundary"
+    ],
+    "duration_ms": 8640,
+    "return_code": 1,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0,
+    "stderr_sha256": "7648b06e440d8736b2f9bab11e5da0bee4e6490100f6a43b197e2625a9900e53",
+    "stderr_size": 6585,
+    "outcome": "FAILED"
+  },
+  "outcome": "FAILED_AS_EXPECTED",
+  "failure_first_receipt_id": "sha256:1311c62d24d8336f52c7884db8f4f916cc42c98425bec5792ec42ad8f086056b"
+}

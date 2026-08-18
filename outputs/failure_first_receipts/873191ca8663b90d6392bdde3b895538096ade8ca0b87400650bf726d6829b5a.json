@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-RECORDED-WORKSPACE-AUTHORITY-001",
+  "observed_at_utc": "2026-08-06T16:56:45Z",
+  "expected_failure": "Recorded fixture CLI accepted a formal publication namespace and invoked the shared workflow before sandbox authority validation.",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_cutover_fixture_rejects_formal_workspace_before_any_write"
+      ],
+      "interpreter": "python3",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "observed_error": "expected RECORDED_SANDBOX_WORKSPACE_INVALID; received CUTOVER_FAILED after run_cutover was invoked"
+    },
+    {
+      "argv": [
+        "python3.9",
+        "-m",
+        "unittest",
+        "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_cutover_fixture_rejects_formal_workspace_before_any_write"
+      ],
+      "interpreter": "python3.9",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "observed_error": "expected RECORDED_SANDBOX_WORKSPACE_INVALID; received CUTOVER_FAILED after run_cutover was invoked"
+    }
+  ],
+  "failure_first_receipt_id": "sha256:873191ca8663b90d6392bdde3b895538096ade8ca0b87400650bf726d6829b5a"
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-TEN-COMPANY-PROJECTION-PARITY-001",
+  "observed_at_utc": "2026-08-06T14:33:05Z",
+  "expected_failure": "B03 form must remain a scalar and NOT_MEANINGFUL stub-period rows must preserve frozen strict-compatibility cells",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_legacy_projector.LegacyProjectorTest.test_repeated_component_form_collapses_to_frozen_scalar",
+      "tests.vnext.test_legacy_projector.LegacyProjectorTest.test_not_meaningful_result_preserves_frozen_compatibility_row"
+    ],
+    "duration_ms": 89,
+    "environment_keys": [],
+    "error_class": "TypeError,KeyError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "TEN_COMPANY_STRICT_PARITY_DRIFT_REPRODUCED",
+    "return_code": 1,
+    "stderr_sha256": "9b35edb5ae7119f9f6861c227848b8fe2e08ab1fed56b5be24b805823c9fa003",
+    "stderr_size": 2589,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:00c0501805b4fc12120eb506c84d3948f63aaead5b34b777848e7b733a70fcac"
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-R3-RUN-VALIDATION-ATOMIC-FINALIZE-001",
+  "observed_at_utc": "2026-08-06T09:55:48Z",
+  "expected_failure": "mechanical Run validation and atomic finalization APIs are absent",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_replay.ReplayTest.test_caller_cannot_self_sign_passed_run_validation",
+      "tests.vnext.test_replay.ReplayTest.test_validate_and_freeze_replays_run_before_pass",
+      "tests.vnext.test_replay.ReplayTest.test_atomic_finalization_rejects_stale_decision_without_records"
+    ],
+    "duration_ms": 103,
+    "interpreter": "python3",
+    "return_code": 1,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0,
+    "stderr_sha256": "5fadf5f8d8e60d6fd51ead6d45fa34785615fecc1f18f1b96ecd62e262564a3a",
+    "stderr_size": 2549
+  },
+  "outcome": "FAILED_AS_EXPECTED"
+}

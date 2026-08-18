@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "evidence_type": "FAILURE_FIRST_TEST",
+  "captured_at_utc": "2026-08-06T09:28:52Z",
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a",
+  "source_tree": "c023571102669eecdaf38aff7c0cd66488ed3ba6",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_publication.PublicationTest.test_mid_bundle_write_failure_cleans_temporary_namespace",
+    "-v"
+  ],
+  "return_code": 1,
+  "duration_seconds": 0.090772,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "dff1dd85644a65049f2d8fa7befab09f335c778513dc4c4e3d02538c02943565",
+  "failure_code": "PUBLICATION_FAULT_API_MISSING",
+  "failure_excerpt": "ImportError: cannot import name publication_state_snapshot from vnext.publication",
+  "expected_before_fix": true
+}

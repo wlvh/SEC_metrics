@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "scenario_id": "OLD_RESOLVERS_THROW_PUBLIC_CUTOVER_TEST_FLOW",
+  "evidence_tier": "TEST_ONLY_PUBLIC_FLOW",
+  "human_decision_evidence": "TEST_ONLY_NOT_ACCEPTANCE",
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+      "-v"
+    ],
+    "executed_argv": [
+      "$SANDBOX_EXEC",
+      "-p",
+      "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))",
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+      "-v"
+    ],
+    "interpreter": "$PYTHON_CURRENT",
+    "outcome": "PASSED",
+    "return_code": 0,
+    "duration_ms": 337965,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0,
+    "stderr_sha256": "0c226f94b95fad9de5d07b3fce4587d6b7081ce7bc50913388acb5236c769932",
+    "stderr_size": 337,
+    "reason": "",
+    "error_class": "",
+    "environment_keys": [
+      "OPENAI_API_KEY",
+      "PYTHONDONTWRITEBYTECODE",
+      "PYTHONPATH",
+      "SEC_CONTACT_EMAIL"
+    ],
+    "execution_wrapper": [
+      "$SANDBOX_EXEC",
+      "-p",
+      "(version 1) (allow default) (deny network*) (deny file-write* (literal \"$REPO_ROOT/README_RUN.md\") (literal \"$REPO_ROOT/REPORT_十公司财务指标.md\") (literal \"$REPO_ROOT/artifacts/vnext/latest_run_status.json\") (literal \"$REPO_ROOT/evidence/requests_log.csv\") (literal \"$REPO_ROOT/evidence/requests_log_manifest.json\") (literal \"$REPO_ROOT/outputs/active_publication.json\") (literal \"$REPO_ROOT/outputs/active_publication.json.lock\") (literal \"$REPO_ROOT/outputs/coverage_matrix.csv\") (literal \"$REPO_ROOT/outputs/golden_results.csv\") (literal \"$REPO_ROOT/outputs/legacy_invariant_migration_receipt.json\") (literal \"$REPO_ROOT/outputs/metric_evidence.csv\") (literal \"$REPO_ROOT/outputs/metrics_matrix.csv\") (literal \"$REPO_ROOT/outputs/projection_manifest.json\") (literal \"$REPO_ROOT/outputs/publication_validation_receipt.json\") (literal \"$REPO_ROOT/outputs/repair_validation_results.csv\") (literal \"$REPO_ROOT/outputs/scalability_audit.csv\") (literal \"$REPO_ROOT/outputs/semantic_audit_receipt.json\") (literal \"$REPO_ROOT/outputs/stratified_audit.csv\") (literal \"$REPO_ROOT/outputs/validation_run_manifest.json\") (literal \"$REPO_ROOT/outputs/validation_snapshot_provenance.json\") (literal \"$REPO_ROOT/artifacts/vnext/cutover\") (subpath \"$REPO_ROOT/artifacts/vnext/cutover\") (literal \"$REPO_ROOT/artifacts/vnext/qualification\") (subpath \"$REPO_ROOT/artifacts/vnext/qualification\") (literal \"$REPO_ROOT/evidence/request_attempts\") (subpath \"$REPO_ROOT/evidence/request_attempts\") (literal \"$REPO_ROOT/outputs/publication_fault_receipts\") (subpath \"$REPO_ROOT/outputs/publication_fault_receipts\") (literal \"$REPO_ROOT/outputs/publications\") (subpath \"$REPO_ROOT/outputs/publications\") (literal \"$REPO_ROOT/outputs/publication_switch_intents\") (subpath \"$REPO_ROOT/outputs/publication_switch_intents\") (literal \"$REPO_ROOT/outputs/publication_switch_receipts\") (subpath \"$REPO_ROOT/outputs/publication_switch_receipts\") (literal \"$REPO_ROOT/outputs/vnext_cutover_audits\") (subpath \"$REPO_ROOT/outputs/vnext_cutover_audits\"))"
+    ],
+    "sandbox_profile_sha256": "4cb48bdc392499f094a15266534977ab28b7105f51eecc9df5ef4031efa61e0f"
+  },
+  "active_state_unchanged": true,
+  "runtime_bindings": {
+    "$PYTHON_CURRENT": {
+      "available": true,
+      "executable_name": "python3.14",
+      "sha256": "cbf84109626aa1013bbe408fbb9590bd0f1c1548f038b2221c6b8b87de26ca43"
+    },
+    "$PYTHON39": {
+      "available": true,
+      "executable_name": "python3.9",
+      "sha256": "059d0401d875a36f8a7d4f3612d43831c70a5e82db2b75b6daf7a1d6e0a46c95"
+    },
+    "$SANDBOX_EXEC": {
+      "available": true,
+      "executable_name": "sandbox-exec",
+      "sha256": "d1ee30dbde955aaa75c7f801fdfea4df05b10129454d7982eb6453f771436d42"
+    }
+  },
+  "old_resolver_throws_receipt_id": "sha256:75ec80808a1f77877b3d3ae4a957940b6b3162c0518ab2a5957b4212a6a8114e"
+}

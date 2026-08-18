@@ -16,7 +16,7 @@ from tests.vnext.common import REPO_ROOT, compiled_specs, fixed_clock
 from tests.vnext.common import reader_response
 from tests.vnext.projection_fixture_support import scoped_repository
 from tools.vnext_review import append_human_decision
-from vnext.ai_adapter import build_recorded_adapter
+from vnext.ai_adapter import AttemptPayloads, build_recorded_adapter
 from vnext.calculator import calculate_metric, calculate_observation_metric
 from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes
 from vnext.canonical import sha256_file
@@ -32,6 +32,7 @@ from vnext.replay import ReplayError, replay_frozen_results
 from vnext.review import create_review_decision
 from vnext.run_store import RunStoreError, append_review_decision
 from vnext.run_store import append_run_record, create_run, freeze_run
+from vnext.run_store import validate_and_freeze_run, validate_run
 from vnext.run_store import _structured_concepts
 from vnext.run_store import load_frozen_run
 from vnext.run_store import load_open_run
@@ -169,11 +170,13 @@ def freeze_fixture(
     Returns:
         FROZEN Run manifest.
     """
-    write_validation_receipt(
-        run_dir=run_dir,
-        status="PASSED",
-        checks=[{"check": "RECORDED_REPLAY_FIXTURE", "status": "PASS"}],
-    )
+    _manifest, records, _decisions = load_open_run(run_dir=run_dir)
+    if any(
+        record["record_type"] == "METRIC_RESULT" for record in records
+    ):
+        return validate_and_freeze_run(
+            run_dir=run_dir, repo_root=repo_root,
+        )
     return freeze_run(run_dir=run_dir, repo_root=repo_root)
 
 
@@ -593,6 +596,7 @@ def create_full_release_run(
     run_id: str,
     repo_root: Path = REPO_ROOT,
     request_attempt_id: Optional[str] = None,
+    accession: str = "0000078003-26-100099",
 ) -> Dict[str, object]:
     """Create one replayable Run containing the exact Phase 1 metric set.
 
@@ -601,6 +605,7 @@ def create_full_release_run(
         run_id: Unique Run identity for the scenario.
         repo_root: Repository authority containing source and release Specs.
         request_attempt_id: Optional exact SEC request-ledger identity.
+        accession: Exact fixture filing observation selected for B01/B03.
 
     Returns:
         B01/B03/B10/B11 results left in one OPEN Run.
@@ -609,7 +614,6 @@ def create_full_release_run(
         "tests/fixtures/vnext/companyfacts_b03_crosscheck/"
         "CIK0000078003.json"
     )
-    accession = "0000078003-26-100099"
     b03 = create_structured_b03_run(
         run_dir=run_dir,
         repo_relative_path=relative,
@@ -826,6 +830,99 @@ def rehash_review_decision(
 class ReplayTest(unittest.TestCase):
     """Prove disk revalidation, immutable freeze, and AI-free replay."""
 
+    def test_caller_cannot_self_sign_passed_run_validation(self) -> None:
+        """Reserve PASSED receipts for repository-backed mechanical replay."""
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory) / "run"
+            create_review_run(run_dir=run_dir)
+            approve_and_finalize(run_dir=run_dir)
+
+            with self.assertRaisesRegex(
+                RunStoreError, "mechanical Run validation"
+            ):
+                write_validation_receipt(
+                    run_dir=run_dir,
+                    status="PASSED",
+                    checks=[
+                        {"check": "CALLER_ASSERTION", "status": "PASS"}
+                    ],
+                )
+
+    def test_validate_and_freeze_replays_run_before_pass(self) -> None:
+        """Create PASSED and FROZEN only through the public mechanical gate."""
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory) / "run"
+            create_review_run(run_dir=run_dir)
+            approve_and_finalize(run_dir=run_dir)
+
+            receipt = validate_run(run_dir=run_dir, repo_root=REPO_ROOT)
+            self.assertEqual("PASSED", receipt["status"])
+            self.assertNotIn("CALLER_ASSERTION", str(receipt["checks"]))
+            frozen = validate_and_freeze_run(
+                run_dir=run_dir, repo_root=REPO_ROOT,
+            )
+            self.assertEqual("FROZEN", frozen["status"])
+
+    def test_atomic_finalization_rejects_stale_decision_without_records(
+        self,
+    ) -> None:
+        """Commit no result when the HUMAN tip changes mid-finalize."""
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory) / "run"
+            create_review_run(run_dir=run_dir)
+            approve_review_run(run_dir=run_dir)
+            _manifest, records, decisions = load_open_run(run_dir=run_dir)
+            unit = next(
+                record
+                for record in records
+                if record["record_type"] == "REVIEW_UNIT"
+            )
+            superseding = create_review_decision(
+                review_unit=unit,
+                decision="REJECT",
+                approved_claims={},
+                required_claims=dict(unit["required_claims"]),
+                reviewer_id="human:reviewer:fixture",
+                decided_at_utc="2026-08-06T01:00:00Z",
+                reason="Changed after finalization began.",
+                supersedes_decision_id=str(
+                    decisions[0]["review_decision_id"]
+                ),
+            )
+            from vnext import run_store
+
+            real_append = run_store.append_run_records_atomically
+
+            def append_after_decision_change(**kwargs: object) -> None:
+                """Inject a valid superseding tip before the batch CAS."""
+                append_review_decision(
+                    run_dir=run_dir, decision=superseding,
+                )
+                real_append(**kwargs)
+
+            with mock.patch(
+                "vnext.workflow.append_run_records_atomically",
+                side_effect=append_after_decision_change,
+            ):
+                with self.assertRaisesRegex(
+                    RunStoreError, "finalization input bytes changed"
+                ):
+                    finalize_reviewed_direct_results(
+                        run_dir=run_dir, repo_root=REPO_ROOT,
+                    )
+            _manifest, after, _decisions = load_open_run(run_dir=run_dir)
+            self.assertFalse(
+                any(
+                    record["record_type"]
+                    in {
+                        "VERIFIED_OBSERVATION",
+                        "EXECUTION_TRACE",
+                        "METRIC_RESULT",
+                    }
+                    for record in after
+                )
+            )
+
     def test_freeze_rejects_nonterminal_ai_attempt(self) -> None:
         """Keep STARTED attempt snapshots out of an immutable FROZEN Run."""
         with tempfile.TemporaryDirectory() as directory:
@@ -842,12 +939,6 @@ class ReplayTest(unittest.TestCase):
             started["attempt_id"] = "attempt:started:freeze-fixture"
             started["status"] = "STARTED"
             append_run_record(run_dir=run_dir, record=started)
-            write_validation_receipt(
-                run_dir=run_dir,
-                status="PASSED",
-                checks=[{"check": "TERMINAL_ATTEMPT", "status": "PASS"}],
-            )
-
             with self.assertRaisesRegex(RunStoreError, "terminal"):
                 freeze_run(run_dir=run_dir, repo_root=REPO_ROOT)
 
@@ -894,8 +985,14 @@ class ReplayTest(unittest.TestCase):
             request_bytes = (
                 run_dir / str(completed["request_body_path"])
             ).read_bytes()
+            reader_payload_bytes = (
+                run_dir / str(completed["reader_payload_path"])
+            ).read_bytes()
             task_contract_bytes = (
                 run_dir / str(completed["task_contract_path"])
+            ).read_bytes()
+            output_schema_bytes = (
+                run_dir / str(completed["output_schema_path"])
             ).read_bytes()
             invalid_response = b"not-json"
             forged = copy.deepcopy(completed)
@@ -908,20 +1005,27 @@ class ReplayTest(unittest.TestCase):
                     forged["raw_response_sha256"]
                 )
             )
+            forged["assistant_output_sha256"] = sha256_bytes(
+                content=invalid_response,
+            )
+            forged["assistant_output_path"] = (
+                "attempt_payloads/assistant_output_{}.json".format(
+                    forged["assistant_output_sha256"]
+                )
+            )
             write_attempt_payloads(
                 run_dir=run_dir,
                 attempt=forged,
-                request_bytes=request_bytes,
-                task_contract_bytes=task_contract_bytes,
-                raw_response_bytes=invalid_response,
+                payloads=AttemptPayloads(
+                    request_body_bytes=request_bytes,
+                    reader_payload_bytes=reader_payload_bytes,
+                    task_contract_bytes=task_contract_bytes,
+                    output_schema_bytes=output_schema_bytes,
+                    assistant_output_bytes=invalid_response,
+                    raw_response_bytes=invalid_response,
+                ),
             )
             append_run_record(run_dir=run_dir, record=forged)
-            write_validation_receipt(
-                run_dir=run_dir,
-                status="PASSED",
-                checks=[{"check": "ALL_RESPONSES", "status": "PASS"}],
-            )
-
             with self.assertRaisesRegex(RunStoreError, "response bytes"):
                 freeze_run(run_dir=run_dir, repo_root=REPO_ROOT)
 
@@ -943,12 +1047,6 @@ class ReplayTest(unittest.TestCase):
                 ) + "\n",
                 encoding="utf-8",
             )
-            write_validation_receipt(
-                run_dir=run_dir,
-                status="PASSED",
-                checks=[{"check": "SOURCE_CLOSURE", "status": "PASS"}],
-            )
-
             with self.assertRaisesRegex(RunStoreError, "missing source"):
                 freeze_run(run_dir=run_dir, repo_root=REPO_ROOT)
 
@@ -1030,9 +1128,11 @@ class ReplayTest(unittest.TestCase):
             batch_root.mkdir()
             run_dir = batch_root / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:verified",
+                run_dir=run_dir,
+                run_id="run:projection:verified",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
             batch_path = batch_root / "batch_manifest.json"
             batch = write_projection_batch_manifest(
                 repo_root=repo_root,
@@ -1075,7 +1175,9 @@ class ReplayTest(unittest.TestCase):
             batch_root.mkdir()
             run_dir = batch_root / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:duplicate",
+                run_dir=run_dir,
+                run_id="run:projection:duplicate",
+                repo_root=repo_root,
             )
             _manifest, records, _decisions = load_open_run(run_dir=run_dir)
             original_trace = next(
@@ -1098,15 +1200,17 @@ class ReplayTest(unittest.TestCase):
             target = dict(original_trace["calculation_target"])
             target["scope"] = scope
             target["scope_key"] = content_hash(value=scope)
-            spec = compiled_specs()["B01"]
+            spec = _compiled_specs_at(repo_root=repo_root)["B01"]
             facts = companyfacts_structured_facts(
-                raw_bytes=(REPO_ROOT / str(raw["storage_uri"])).read_bytes(),
+                raw_bytes=(
+                    repo_root / str(raw["storage_uri"])
+                ).read_bytes(),
                 source_reference=source,
                 approved_concepts=_structured_concepts(
                     compiled_spec=spec,
                 ),
                 allowed_ciks=repository_company_ciks(
-                    repo_root=REPO_ROOT,
+                    repo_root=repo_root,
                     company_id=str(source["company_id"]),
                 ),
             )
@@ -1115,7 +1219,7 @@ class ReplayTest(unittest.TestCase):
                     compiled_spec=spec,
                     target=target,
                     company_traits=repository_company_traits(
-                        repo_root=REPO_ROOT,
+                        repo_root=repo_root,
                         company_id=str(source["company_id"]),
                     ),
                     structured_facts=facts,
@@ -1126,7 +1230,7 @@ class ReplayTest(unittest.TestCase):
                 append_run_record(run_dir=run_dir, record=observation)
             append_run_record(run_dir=run_dir, record=duplicate_trace)
             append_run_record(run_dir=run_dir, record=duplicate_result)
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
 
             with self.assertRaisesRegex(
                 ProjectionError, "company metric coordinate is duplicated"
@@ -1146,9 +1250,11 @@ class ReplayTest(unittest.TestCase):
             batch_root.mkdir()
             run_dir = batch_root / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:missing-input",
+                run_dir=run_dir,
+                run_id="run:projection:missing-input",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
             batch_path = batch_root / "batch_manifest.json"
             write_projection_batch_manifest(
                 repo_root=repo_root,
@@ -1173,9 +1279,11 @@ class ReplayTest(unittest.TestCase):
             run_parent.mkdir(parents=True)
             run_dir = run_parent / "run"
             create_full_release_run(
-                run_dir=run_dir, run_id="run:projection:parent-symlink",
+                run_dir=run_dir,
+                run_id="run:projection:parent-symlink",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
             batch_path = batch_root / "batch_manifest.json"
             write_projection_batch_manifest(
                 repo_root=repo_root,
@@ -1208,8 +1316,9 @@ class ReplayTest(unittest.TestCase):
                 ),
                 accession="0000078003-26-100099",
                 run_id="run:projection:b03-dependency",
+                repo_root=repo_root,
             )
-            freeze_fixture(run_dir=run_dir)
+            freeze_fixture(run_dir=run_dir, repo_root=repo_root)
 
             with self.assertRaisesRegex(
                 ProjectionError, "Complete batch company metric exact set"
@@ -1403,7 +1512,11 @@ class ReplayTest(unittest.TestCase):
                     run_dir = Path(directory) / "run"
                     create_review_run(run_dir=run_dir)
                     approve_and_finalize(run_dir=run_dir)
-                    if status != "NOT_RUN":
+                    if status == "PASSED":
+                        validate_run(
+                            run_dir=run_dir, repo_root=REPO_ROOT,
+                        )
+                    elif status == "FAILED":
                         write_validation_receipt(
                             run_dir=run_dir,
                             status=status,
@@ -1786,6 +1899,10 @@ class ReplayTest(unittest.TestCase):
                     "egress_attempted": True,
                     "provider": "forged-provider",
                     "model": "forged-model",
+                    "model_requested": "forged-model",
+                    "model_returned": "forged-model",
+                    "api": "forged-api",
+                    "store": False,
                     "endpoint_host": "attacker.example",
                     "region": "unknown",
                     "retention": "unknown",
@@ -1799,17 +1916,24 @@ class ReplayTest(unittest.TestCase):
                     "filing_egress_policy": "forged",
                 }
             )
-            for field in ("provider", "model", "endpoint_host"):
+            for field in (
+                "provider",
+                "model",
+                "model_requested",
+                "model_returned",
+                "api",
+                "endpoint_host",
+            ):
                 attempt[field] = observation[field]
             rewrite_records(run_dir=run_dir, records=changed)
             with self.assertRaisesRegex(
-                RunStoreError, "lacks approved D-01"
+                RunStoreError, "provider envelope or schema differs"
             ):
                 freeze_fixture(run_dir=run_dir)
 
     def test_freeze_recomputes_attempt_digests_from_exact_bytes(self) -> None:
-        """Reject request-only and coordinated response digest mutations."""
-        for mutation in ("request", "response"):
+        """Reject request, provider-envelope, and assistant digest drift."""
+        for mutation in ("request", "raw_response", "assistant_output"):
             with self.subTest(mutation=mutation), tempfile.TemporaryDirectory(
             ) as directory:
                 run_dir = Path(directory) / "run"
@@ -1826,14 +1950,16 @@ class ReplayTest(unittest.TestCase):
                 )
                 if mutation == "request":
                     attempt["request_body_sha256"] = "0" * 64
-                else:
+                elif mutation == "raw_response":
                     attempt["raw_response_sha256"] = "0" * 64
+                else:
+                    attempt["assistant_output_sha256"] = "0" * 64
                     candidate = next(
                         record
                         for record in changed
                         if record["record_type"] == "OBSERVATION_CANDIDATE"
                     )
-                    candidate["raw_response_sha256"] = "0" * 64
+                    candidate["assistant_output_sha256"] = "0" * 64
                 rewrite_records(run_dir=run_dir, records=changed)
                 with self.assertRaises(RunStoreError):
                     freeze_fixture(run_dir=run_dir)
@@ -2587,7 +2713,8 @@ class ReplayTest(unittest.TestCase):
                 records_text, encoding="utf-8",
             )
             with self.assertRaisesRegex(
-                RunStoreError, "AI attempt is absent|artifact exact set"
+                RunStoreError,
+                "AI attempt is absent|artifact exact set|without attempts",
             ):
                 freeze_fixture(run_dir=run_dir)
 

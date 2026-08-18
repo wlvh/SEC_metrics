@@ -11,14 +11,26 @@ SCRIPTS_DIR = WORKDIR / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from validation_provenance import verify_validation_snapshot  # noqa: E402
+from validation_provenance import (  # noqa: E402
+    ValidationProvenanceError,
+    pin_validation_publication_transaction,
+    verify_validation_snapshot,
+)
 
 
 def main() -> int:
     """Return zero only for a byte-bound source/artifact snapshot."""
+    try:
+        transaction = pin_validation_publication_transaction(
+            workdir=WORKDIR,
+        )
+    except ValidationProvenanceError as error:
+        print("FAIL: {}".format(error))
+        return 1
     result = verify_validation_snapshot(
         workdir=WORKDIR,
         allow_equivalent_source_tree=True,
+        publication_transaction=transaction,
     )
     for warning in result.warnings:
         print("WARNING: {}".format(warning))

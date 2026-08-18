@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_full_rolls_back_when_any_new_terminal_gate_fails",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_formal_binding_rejects_minimal_self_signed_evidence"
+  ],
+  "observed_failures": [
+    "REPORT_FAILURE_LEFT_NEW_ACTIVE",
+    "STAGE12_FAILURE_LEFT_NEW_ACTIVE",
+    "SNAPSHOT_CHECKER_FAILURE_LEFT_NEW_ACTIVE",
+    "MINIMAL_SELF_SIGNED_EVIDENCE_ACCEPTED"
+  ],
+  "return_code": 1,
+  "schema_version": 1
+}

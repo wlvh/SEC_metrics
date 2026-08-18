@@ -1,0 +1,33 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_snapshot_detects_switch_lock_and_latest_drift",
+      "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_sandbox_denies_formal_namespace_and_ledger_writes"
+    ],
+    "duration_seconds": "0.003",
+    "return_code": 1,
+    "tests_run": 2
+  },
+  "expected_failure": "Recorded acceptance must exact-snapshot and sandbox-protect committed switch history, pending switch intent, the publication lock file, and latest-run status.",
+  "observed_at_utc": "2026-08-07T07:34:57Z",
+  "observed_failure": {
+    "authority_files_ignored": [
+      "artifacts/vnext/latest_run_status.json",
+      "outputs/active_publication.json.lock"
+    ],
+    "formal_namespace_trees_ignored": [
+      "outputs/publication_switch_intents",
+      "outputs/publication_switch_receipts"
+    ],
+    "snapshot_before_equaled_after": true,
+    "sandbox_deny_selectors_missing": 4
+  },
+  "outcome": "FAILED_BEFORE_FIX",
+  "scenario_id": "FF-RECORDED-SWITCH-AUTHORITY-GUARD-001",
+  "schema_version": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a"
+}

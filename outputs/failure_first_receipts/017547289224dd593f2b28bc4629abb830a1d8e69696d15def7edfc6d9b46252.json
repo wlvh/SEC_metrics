@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-LIVE-STABILITY-REQUEST-MODEL-001",
+  "observed_at_utc": "2026-08-06T14:20:42Z",
+  "expected_failure": "Cutover must reject request-body or requested/returned model drift across the three live Reader successes",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_cutover.CutoverFailureFirstTest.test_live_stability_rejects_every_substantive_mixed_field"
+    ],
+    "duration_ms": 99,
+    "environment_keys": [],
+    "error_class": "AssertionError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "LIVE_REQUEST_AND_MODEL_DRIFT_NOT_REJECTED",
+    "return_code": 1,
+    "stderr_sha256": "5dd402c212c6858485261396dcef6172244453a67aff62fada9ad37eca725e0b",
+    "stderr_size": 2295,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:017547289224dd593f2b28bc4629abb830a1d8e69696d15def7edfc6d9b46252"
+}

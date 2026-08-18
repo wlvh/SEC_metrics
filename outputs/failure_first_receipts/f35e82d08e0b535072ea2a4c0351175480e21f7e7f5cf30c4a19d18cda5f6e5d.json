@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-SECOND-LAYOUT-BEFORE-FREEZE-001",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_cutover_qualification.CutoverQualificationTest.test_freeze_requires_preexisting_second_layout_receipt"
+  ],
+  "return_code": 1,
+  "observed_failure": "production freeze succeeded without any preexisting second-layout receipt",
+  "status": "FAILED_BEFORE_FIX"
+}

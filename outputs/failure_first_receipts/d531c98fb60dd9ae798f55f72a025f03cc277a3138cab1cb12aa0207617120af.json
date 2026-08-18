@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-OLD-RESOLVER-FORMAL-FLOW-001",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_old_resolver_gate_targets_formal_publication_flow"
+  ],
+  "return_code": 1,
+  "observed_failure": "acceptance targeted the legacy Stage04/09/11 candidate test instead of the formal vNext Run/Batch/Projector/publication flow",
+  "status": "FAILED_BEFORE_FIX"
+}

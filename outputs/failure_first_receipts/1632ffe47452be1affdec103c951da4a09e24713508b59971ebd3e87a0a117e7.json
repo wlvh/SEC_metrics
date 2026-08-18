@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-FORMAL-COMMIT-AUTHORITY-001",
+  "observed_at_utc": "2026-08-06T14:17:06Z",
+  "expected_failure": "Public formal writer and pointer mutation APIs must reject callers outside the Cutover orchestrator",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_formal_publication.FormalPublicationTest.test_public_formal_mutation_apis_require_cutover_orchestrator"
+    ],
+    "duration_ms": 104,
+    "environment_keys": [],
+    "error_class": "AssertionError",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "FORMAL_AUTHORITY_BYPASS_REPRODUCED",
+    "return_code": 1,
+    "stderr_sha256": "4ac9414bceb9a0551b0f355c3e2c25b1d132f13a54875be0d00bad322ddf45e2",
+    "stderr_size": 2450,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:1632ffe47452be1affdec103c951da4a09e24713508b59971ebd3e87a0a117e7"
+}

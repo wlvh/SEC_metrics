@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-R3-SEC-IDENTITY-001",
+  "observed_at_utc": "2026-08-06T09:53:40Z",
+  "expected_failure": "SEC identity still accepts config contact and lacks R3 stable codes",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_sec_identity"
+    ],
+    "duration_ms": 83,
+    "environment_keys": [],
+    "error_class": "",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "a6cb092e27b409620c70dbb597b92ff9ea275e05524d209708f6f615597fdaf4",
+    "stderr_size": 9079,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  }
+}

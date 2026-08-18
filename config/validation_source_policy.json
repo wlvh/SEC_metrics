@@ -6,7 +6,8 @@
     "tools",
     "config",
     "tests",
-    "requirements"
+    "requirements",
+    "fixtures"
   ],
   "acceptance_source_files": [
     "01_SOP_SEC_10公司单年指标计算_直接SEC.md",
@@ -26,7 +27,11 @@
     "REPORT_十公司财务指标.md"
   ],
   "full_artifact_directories": [
-    "evidence/request_attempts"
+    "artifacts/vnext/qualification",
+    "evidence/request_attempts",
+    "outputs/failure_first_receipts",
+    "outputs/publication_fault_receipts",
+    "outputs/vnext_cutover_audits"
   ],
   "publication_governance_files": [
     ".github/pull_request_template.md",

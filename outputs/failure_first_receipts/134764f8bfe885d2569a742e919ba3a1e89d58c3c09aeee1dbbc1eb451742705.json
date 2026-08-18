@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "scenario_id": "PUBLIC_CUTOVER_PROJECTION_MANIFEST_NOT_MATERIALIZED",
+  "observed_at_utc": "2026-08-06T15:15:00.980558Z",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_cutover_orchestrator.CutoverOrchestratorTest.test_public_cutover_ignores_all_retired_resolvers",
+    "-v"
+  ],
+  "return_code": 1,
+  "reported_test_duration_seconds": 122.917,
+  "reproduction": {
+    "entrypoint": "vnext.cutover.run_cutover",
+    "completed_stages": [
+      "release input plan",
+      "structured Run",
+      "three Reader Runs",
+      "explicit test-only HUMAN decisions",
+      "freeze",
+      "BatchManifest",
+      "strict-compatible Projector candidate"
+    ],
+    "retired_producers": "every sec_pipeline.RETIRED_LEGACY_PRODUCER_NAMES member raises immediately",
+    "substituted_prerequisites": [
+      "SEC acquisition",
+      "qualification",
+      "fault matrix"
+    ]
+  },
+  "traceback_chain": [
+    "vnext.cutover.run_cutover",
+    "vnext.publication._write_cutover_publication_validation_receipt",
+    "vnext.publication._write_publication_validation_receipt",
+    "vnext.publication._finalize_staging_view"
+  ],
+  "observed_failure": "PublicationError: Staged ProjectionManifest is unsafe",
+  "root_cause": "the public Cutover orchestrator writes the Projector candidate but never builds and persists projection_manifest.json before formal publication validation",
+  "expected_fix": "run the production ProjectionManifest builder against the same pinned candidate before the formal validation receipt; do not hand-author staging bytes",
+  "outcome": "FAILED_BEFORE_FIX"
+}

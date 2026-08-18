@@ -87,7 +87,7 @@ class CanonicalHashTest(unittest.TestCase):
         changed = {
             "calculator_semantic_version": "3",
             "canonicalizer_semantic_version": "1",
-            "projector_semantic_version": "1",
+            "projector_semantic_version": "2",
             "review_renderer_semantic_version": "1",
             "spec_interpreter_semantic_version": "1",
         }

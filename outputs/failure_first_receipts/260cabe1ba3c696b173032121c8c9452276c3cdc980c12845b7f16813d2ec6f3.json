@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-RECORDED-RUN-WORKSPACE-AUTHORITY-001",
+  "observed_at_utc": "2026-08-07T02:54:32Z",
+  "expected_failure": "Fixture prepare accepted repository paths outside artifacts/vnext and symlink aliases before invoking Run creation.",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_fixture_prepare_rejects_formal_workspace_before_run_write",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_fixture_prepare_rejects_workspace_symlink_before_run_write"
+    ],
+    "interpreter": "python3",
+    "return_code": 1,
+    "outcome": "FAILED"
+  },
+  "failure": "Both negatives reached mocked create_review_run and surfaced OPERATOR_COMMAND_FAILED instead of RECORDED_FIXTURE_WORKSPACE_INVALID.",
+  "failure_first_receipt_id": "sha256:260cabe1ba3c696b173032121c8c9452276c3cdc980c12845b7f16813d2ec6f3"
+}

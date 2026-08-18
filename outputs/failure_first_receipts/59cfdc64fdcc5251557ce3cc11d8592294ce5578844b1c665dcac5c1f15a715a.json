@@ -1,0 +1,35 @@
+{
+  "command": {
+    "argv": [
+      "$PYTHON_CURRENT",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_cutover_fixture_rejects_every_formal_namespace_before_write",
+      "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_snapshot_binds_formal_namespaces_and_sec_ledger",
+      "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_recorded_sandbox_denies_formal_namespace_and_ledger_writes"
+    ],
+    "duration_seconds": "0.040",
+    "return_code": 1,
+    "tests_run": 3
+  },
+  "expected_failure": "Recorded Cutover must reject formal or reserved workspaces before the shared workflow can write, and recorded acceptance must bind and sandbox-protect exact formal namespace and SEC ledger bytes.",
+  "observed_at_utc": "2026-08-07T07:14:32Z",
+  "observed_failure": {
+    "acceptance_snapshot": "formal_namespace_trees was absent",
+    "acceptance_sandbox": "formal subpath and SEC ledger literal denies were absent",
+    "cutover_error_code": "CUTOVER_FAILED",
+    "cutover_runner_called_for_formal_roots": 5,
+    "formal_roots_tested": [
+      "artifacts/vnext/cutover",
+      "artifacts/vnext/qualification",
+      "artifacts/vnext/publications",
+      "artifacts/vnext/live_audit",
+      "artifacts/vnext/runs"
+    ]
+  },
+  "outcome": "FAILED_BEFORE_FIX",
+  "scenario_id": "FF-RECORDED-FORMAL-NAMESPACE-GUARD-001",
+  "schema_version": 1,
+  "source_head": "a77b9055a53de5e5808649551f03fe567cb2de0a"
+}

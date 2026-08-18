@@ -1,6 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "baseline_commit": "c37cecdfe88344d78172dd9dc24bd4c445763901",
+  "inventory_revision": "R2_WITH_R3_CUTOVER_LEDGER",
   "source_files": {
     "scripts/sec_pipeline.py": "32aa84f427f8e43396dc736941dfa805d105f20e177f9a23855720050917fc6f",
     "config/metric_applicability.yaml": "09457bfa3170149f2e86af52d5013605f04c7b13ec4724792993660cc5dbcf94"
@@ -45,6 +46,186 @@
     "repair_lodging_kpis",
     "non_fi_metric_rows"
   ],
+  "additional_migrated_production_symbols": [
+    "custom_da_observation_note",
+    "special_metric_placeholders",
+    "apply_stub_period_metric_semantics",
+    "stub_period_fact_hits",
+    "stub_period_bounds",
+    "stub_period_sidecar_rows",
+    "write_stub_period_sidecar",
+    "optional_b_metric_is_main_applicable",
+    "optional_b_metric_ids",
+    "write_optional_b_sidecars",
+    "prune_non_applicable_optional_b_metrics",
+    "stage_compute_standard_metrics",
+    "stage_build_report",
+    "save_metrics",
+    "save_evidence",
+    "append_evidence",
+    "upsert_metric"
+  ],
+  "additional_migrated_validation_symbols": [
+    "check_marriott_b03_da_composition_positive",
+    "check_da_composition_rejects_accumulated_expected_future_schedule",
+    "check_da_composition_completeness_scan_clean_or_noted",
+    "check_da_custom_line_reconciliation_noted",
+    "check_pfizer_b03_operating_income_reconstruction_ok_approx",
+    "check_direct_operating_income_priority_over_reconstruction",
+    "check_b03_rejects_mixed_accession_period_unit",
+    "check_b03_bridge_fragment_negative_fixture_rejected_or_needs_review",
+    "expected_metrics_matrix_keys",
+    "check_metrics_matrix_applicability_matches_02_04_spec",
+    "check_no_unexpected_optional_b_metrics_in_main_matrix",
+    "check_numeric_ok_requires_evidence",
+    "check_coverage_join",
+    "check_golden_results_all_pass",
+    "check_paramount_stub_period_values_not_main_annual_ok",
+    "check_paramount_stub_period_sidecar_exists"
+  ],
+  "legacy_configuration_keys": [
+    "profile_extractor:LodgingKpiExtractor",
+    "setting:lodging_scope_priority",
+    "setting:revpar_usd_range",
+    "setting:occupancy_percent_range",
+    "identity_relative_tolerance:0.05"
+  ],
+  "migration_rules": {
+    "lodging_production_symbols": {
+      "kind": "PRODUCER",
+      "status": "replaced",
+      "proof_mode": "RETIRED_TOMBSTONE",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::install_retired_legacy_entrypoints",
+        "scripts/vnext/workflow.py::create_review_run",
+        "scripts/vnext/projector.py::write_projection_candidate"
+      ],
+      "reason": "Historical lodging resolver symbols are fail-closed tombstones; reviewed vNext Runs and Projector own migrated output."
+    },
+    "lodging_validation_symbols": {
+      "kind": "INVARIANT",
+      "status": "replaced",
+      "proof_mode": "REPLACED_BY_ANCHORS",
+      "proof_anchors": [
+        "scripts/vnext/evidence.py::check_evidence",
+        "scripts/vnext/constraints.py::evaluate_identity_constraint",
+        "scripts/vnext/projector.py::build_projection_manifest"
+      ],
+      "reason": "Locator, identity, scope, recall and compatibility are enforced by Spec-derived evidence checks and exact projection gates."
+    },
+    "b03_production_symbols": {
+      "kind": "PRODUCER",
+      "status": "replaced",
+      "proof_mode": "RETIRED_TOMBSTONE",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::install_retired_legacy_entrypoints",
+        "scripts/vnext/calculator.py::calculate_metric",
+        "scripts/vnext/projector.py::write_projection_candidate"
+      ],
+      "reason": "B03 role resolution and calculation moved to compiled Spec semantics and Projector compatibility output."
+    },
+    "legacy_write_entry_points": {
+      "kind": "PRODUCER",
+      "status": "replaced",
+      "proof_mode": "REPLACED_BY_ANCHORS",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::assert_legacy_candidate_rows",
+        "scripts/vnext/projector.py::write_projection_candidate",
+        "scripts/vnext/cutover.py::run_cutover",
+        "scripts/vnext/publication.py::_commit_initial_publication_chain",
+        "scripts/vnext/publication.py::_commit_publication"
+      ],
+      "reason": "Legacy stages may build only isolated non-migrated candidates; the single Cutover orchestrator invokes Projector and private formal publication authority primitives."
+    },
+    "additional_migrated_production_symbols": {
+      "kind": "PRODUCER",
+      "status": "replaced",
+      "proof_mode": "REPLACED_BY_ANCHORS",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::assert_legacy_candidate_rows",
+        "scripts/vnext/projector.py::write_projection_candidate",
+        "scripts/vnext/cutover.py::run_cutover",
+        "scripts/vnext/publication.py::_commit_initial_publication_chain",
+        "scripts/vnext/publication.py::_commit_publication"
+      ],
+      "reason": "Former placeholder, stub-period, optional-B, persistence and stage surfaces cannot own migrated rows; the single Cutover orchestrator and private formal publication authority primitives own formal writes."
+    },
+    "additional_migrated_validation_symbols": {
+      "kind": "INVARIANT",
+      "status": "ported",
+      "proof_mode": "PORTED_BY_ANCHORS",
+      "proof_anchors": [
+        "scripts/vnext/run_store.py::load_frozen_run",
+        "scripts/vnext/projector.py::build_projection_manifest",
+        "scripts/vnext/publication.py::_publication_gate_evidence"
+      ],
+      "reason": "Migrated exact-set, evidence, Golden, period and B03 invariants are re-evaluated from FROZEN Runs and one pinned candidate view."
+    },
+    "legacy_configuration_keys": {
+      "kind": "CONFIGURATION",
+      "status": "obsolete-with-proof",
+      "proof_mode": "OBSOLETE_BY_ANCHORS",
+      "proof_anchors": [
+        "scripts/vnext/specs.py::compile_spec_files",
+        "scripts/vnext/workflow.py::create_review_run",
+        "scripts/vnext/projector.py::build_projection_manifest"
+      ],
+      "reason": "Legacy lodging keyword, range and tolerance settings remain historical input only; repository MetricSpec and disclosure catalogs own vNext semantics."
+    }
+  },
+  "migration_overrides": {
+    "b03_production_symbols:select_target_component": {
+      "status": "ported",
+      "proof_mode": "PORTED_BY_ANCHORS",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::select_target_component",
+        "scripts/sec_pipeline.py::resolve_b07_operating_income_component",
+        "scripts/vnext/calculator.py::calculate_metric"
+      ],
+      "reason": "The generic helper remains only for non-migrated B07; B03 moved to the vNext calculator."
+    },
+    "legacy_write_entry_points:apply_lodging_kpi_metrics": {
+      "proof_mode": "RETIRED_TOMBSTONE",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::install_retired_legacy_entrypoints",
+        "scripts/vnext/workflow.py::create_review_run",
+        "scripts/vnext/cutover.py::run_cutover",
+        "scripts/vnext/publication.py::_commit_initial_publication_chain",
+        "scripts/vnext/publication.py::_commit_publication"
+      ]
+    },
+    "legacy_write_entry_points:repair_lodging_kpis": {
+      "proof_mode": "RETIRED_TOMBSTONE",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::install_retired_legacy_entrypoints",
+        "scripts/vnext/workflow.py::create_review_run",
+        "scripts/vnext/cutover.py::run_cutover",
+        "scripts/vnext/publication.py::_commit_initial_publication_chain",
+        "scripts/vnext/publication.py::_commit_publication"
+      ]
+    },
+    "legacy_write_entry_points:non_fi_metric_rows": {
+      "proof_mode": "RETIRED_TOMBSTONE",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::install_retired_legacy_entrypoints",
+        "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
+        "scripts/vnext/projector.py::write_projection_candidate",
+        "scripts/vnext/cutover.py::run_cutover",
+        "scripts/vnext/publication.py::_commit_initial_publication_chain",
+        "scripts/vnext/publication.py::_commit_publication"
+      ]
+    },
+    "additional_migrated_production_symbols:custom_da_observation_note": {
+      "proof_mode": "RETIRED_TOMBSTONE",
+      "proof_anchors": [
+        "scripts/sec_pipeline.py::install_retired_legacy_entrypoints",
+        "scripts/vnext/calculator.py::calculate_metric",
+        "scripts/vnext/cutover.py::run_cutover",
+        "scripts/vnext/publication.py::_commit_initial_publication_chain",
+        "scripts/vnext/publication.py::_commit_publication"
+      ]
+    }
+  },
   "legacy_configuration": {
     "profile_extractor": "LodgingKpiExtractor",
     "settings": [

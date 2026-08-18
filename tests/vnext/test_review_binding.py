@@ -6,13 +6,15 @@ import copy
 import unittest
 from typing import Dict
 
-from tests.vnext.common import compiled_specs, reader_response
+from tests.vnext.common import REPO_ROOT, compiled_specs, reader_response
 from tests.vnext.common import reviewed_fixture
 from vnext.canonical import content_hash
 from vnext.render import build_review_context, render_review_markdown
 from vnext.review import ReviewError, build_review_unit
+from vnext.review import create_system_review_decision
 from vnext.review import create_review_decision, effective_review_decision
 from vnext.review import validate_decision_binding
+from vnext.requirements import load_requirement_snapshot
 
 
 def review_unit_fixture(*, unresolved: bool = False) -> Dict[str, object]:
@@ -88,6 +90,23 @@ class ReviewBindingTest(unittest.TestCase):
                 reason="Scope and period labels reviewed.",
                 supersedes_decision_id=None,
             )
+
+    def test_optional_system_decision_is_auditable(self) -> None:
+        """Keep the no-human path explicitly distinct from HUMAN approval."""
+        unit, required = review_unit_fixture()
+        requirement = load_requirement_snapshot(
+            snapshot_dir=REPO_ROOT / "requirements/ai_first_v3_3_1",
+        )
+        decision = create_system_review_decision(
+            review_unit=unit,
+            required_claims=required,
+            decided_at_utc="2026-08-17T09:21:18Z",
+            requirement=requirement,
+        )
+        self.assertEqual("SYSTEM", decision["reviewer_type"])
+        self.assertEqual("APPROVE", decision["decision"])
+        self.assertEqual(required, decision["approved_claims"])
+        validate_decision_binding(review_unit=unit, decision=decision)
 
     def test_caller_cannot_redefine_the_units_required_claims(self) -> None:
         """Bind required claims to ReviewUnit instead of a caller file."""

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-RECORDED-LEGACY-LOCATOR-CLOSURE-001",
+  "observed_at_utc": "2026-08-06T17:05:09Z",
+  "expected_failure": "Recorded sandbox publication had no tier-aware portable proof for an exact historical LEGACY_WORKING_LOCATOR and therefore failed before commit/read-back.",
+  "evidence_level": "TEST_ONLY_EXPLICIT_REVIEW_NON_FORMAL",
+  "formal_human_acceptance": false,
+  "fixture_binding_id": "sha256:7245ffc4e9a946f466fb63b590f0e638e65cd169216ca7f4d4c9e4677b9a019f",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_public_recorded_cold_start_review_resume_and_readback"
+    ],
+    "duration_ms": 74442,
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "return_code": 1,
+    "public_review_cli": true,
+    "reviewer_id": "TEST_ONLY_EXPLICIT_REVIEW",
+    "failure_code": "RECORDED_SANDBOX_PUBLICATION_FAILED"
+  },
+  "first_blocking_source": {
+    "ledger_row_index": 48,
+    "request_attempt_id": "request:attempt:5a18d9435582ca6858e86ec827919182b58450e816ce71e76b7165c837e325db",
+    "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000018926.json",
+    "content_sha256": "6333978be172790aabf448f36db31c6d792a3e0f321adacb04afe4d6317044d6",
+    "content_length": 3734236,
+    "working_body_locator": "evidence/companyfacts/CIK0000018926.json",
+    "working_headers_locator": "evidence/companyfacts/CIK0000018926.json.headers.json",
+    "missing_immutable_locator": "evidence/request_attempts/63/6333978be172790aabf448f36db31c6d792a3e0f321adacb04afe4d6317044d6/CIK0000018926.json"
+  },
+  "formal_state_changed": false,
+  "failure_first_receipt_id": "sha256:49bf42aa20f0e4e972ed8a89bcef40acc72341dfe6d5e1d81f2fe006933d445e"
+}

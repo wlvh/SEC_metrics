@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-RECORDED-SANDBOX-PUBLICATION-001",
+  "observed_at_utc": "2026-08-06T16:18:32Z",
+  "expected_failure": "Recorded fixture Cutover stops after staging and does not commit/read back an isolated sandbox PublicationView.",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_recorded_cutover_commits_and_reads_back_only_sandbox_view",
+        "-v"
+      ],
+      "duration_ms": 104,
+      "interpreter": "python3",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "stderr_sha256": "8186bbb40ccc928deb124aa77be48e69accace822ee79c7ecdf2ec57c73a6f14",
+      "stderr_size": 1178,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0
+    },
+    {
+      "argv": [
+        "python3.9",
+        "-m",
+        "unittest",
+        "tests.vnext.test_recorded_fixture_operator.RecordedFixtureOperatorTest.test_recorded_cutover_commits_and_reads_back_only_sandbox_view",
+        "-v"
+      ],
+      "duration_ms": 147,
+      "interpreter": "python3.9",
+      "outcome": "FAILED",
+      "return_code": 1,
+      "stderr_sha256": "d6e4fa8028e7f621d2a1197f05c397ec527dc4d7404c4f89063e4b57c55dc610",
+      "stderr_size": 984,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_size": 0
+    }
+  ],
+  "failure_first_receipt_id": "sha256:e9b801e2430a9263dc7d556557d6d71cd7235f9629768f563b37e25766d7335d"
+}

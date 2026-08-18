@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-PUBLICATION-SWITCH-INTENT-RECOVERY-001",
+  "observed_at_utc": "2026-08-07T03:17:30Z",
+  "expected_failure": "A hard crash after pointer replacement must leave a content-addressed recovery intent, readers must fail closed, and the root-derived writer recovery entrypoint must deterministically complete or roll back the switch; an aborted initial A-to-B chain must remove every receipt created by that outer transaction.",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "tests.vnext.test_publication.PublicationTest.test_hard_crash_after_pointer_requires_writer_recovery",
+      "tests.vnext.test_publication.PublicationTest.test_initial_chain_failure_restores_legacy_root_and_supports_rollback"
+    ],
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "return_code": 1,
+    "duration_ms": 15487
+  },
+  "failures": [
+    "PublicationError: Active pointer is not the committed switch history tip",
+    "AssertionError: initial chain left one orphan predecessor switch receipt"
+  ],
+  "hard_crash_reader_accepted": false,
+  "hard_crash_recovery_available": false,
+  "initial_orphan_receipt_count": 1,
+  "formal_state_changed": false,
+  "failure_first_receipt_id": "sha256:95e09f03be9a96e502d7a4f9c7fe9d7eec8085b049b555c554cd4148545dcf8a"
+}

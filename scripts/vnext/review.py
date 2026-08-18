@@ -11,6 +11,17 @@ from .specs import SEMANTIC_SET_PATHS
 
 
 REVIEWER_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9:_-]{2,127}$")
+SYSTEM_REVIEWER_ID = "system:optional-review-v1"
+SYSTEM_REVIEW_REASON = "EVIDENCE_BOUND_AUTO_APPROVE"
+_OPTIONAL_REVIEW_POLICY_FIELDS = {
+    "binds_canonical_and_rendered_context",
+    "binds_selected_competing_unresolved",
+    "decision_target",
+    "human_review_required",
+    "parallel_effective_decisions",
+    "system_approval_policy",
+    "system_reviewer_type",
+}
 
 
 class ReviewError(ValueError):
@@ -115,25 +126,59 @@ def build_review_unit(
     return validate_record(record=record)
 
 
-def create_review_decision(
+def system_review_allowed(*, requirement: Mapping[str, object]) -> bool:
+    """Return whether the effective D-06 permits a SYSTEM decision.
+
+    Args:
+        requirement: Current verified Requirement Snapshot.
+
+    Returns:
+        True only for the user-authorized optional-review policy.
+    """
+    if "effective_decisions" not in requirement:
+        return False
+    decisions = requirement["effective_decisions"]
+    if not isinstance(decisions, dict) or "D-06" not in decisions:
+        return False
+    decision = decisions["D-06"]
+    if not isinstance(decision, dict) or decision["status"] != "APPROVED":
+        return False
+    choice = decision["choice"]
+    return (
+        isinstance(choice, dict)
+        and set(choice) == _OPTIONAL_REVIEW_POLICY_FIELDS
+        and choice["decision_target"] == "WHOLE_REVIEW_UNIT"
+        and choice["binds_selected_competing_unresolved"] is True
+        and choice["binds_canonical_and_rendered_context"] is True
+        and choice["parallel_effective_decisions"] == "FAIL_CLOSED"
+        and choice["human_review_required"] is False
+        and choice["system_reviewer_type"] == "SYSTEM"
+        and choice["system_approval_policy"]
+        == "EVIDENCE_BOUND_AUTO_APPROVE"
+    )
+
+
+def _create_review_decision(
     *,
     review_unit: Mapping[str, object],
     decision: str,
     approved_claims: Mapping[str, object],
     required_claims: Mapping[str, object],
+    reviewer_type: str,
     reviewer_id: str,
     decided_at_utc: str,
     reason: str,
     supersedes_decision_id: Optional[str],
 ) -> Dict[str, object]:
-    """Create an immutable HUMAN decision bound to actual rendered context.
+    """Create an immutable review decision bound to rendered context.
 
     Args:
         review_unit: Unit the human reviewed.
         decision: ``APPROVE`` or ``REJECT``.
         approved_claims: Canonical claims approved as a whole.
         required_claims: Exact Spec-required claims.
-        reviewer_id: Stable opaque human identity; OS/model identity is not
+        reviewer_type: ``HUMAN`` or the authorized ``SYSTEM`` identity.
+        reviewer_id: Stable opaque reviewer identity; OS/model identity is not
             inferred.
         decided_at_utc: Explicit UTC timestamp supplied by the review CLI.
         reason: Human rationale.
@@ -143,7 +188,7 @@ def create_review_decision(
         Strict ``REVIEW_DECISION`` record.
 
     Raises:
-        ReviewError: On non-human/empty identity, mismatched claims, invalid
+        ReviewError: On invalid reviewer identity, mismatched claims, invalid
             choice, or missing rationale.
     """
     validate_record(record=review_unit)
@@ -151,6 +196,8 @@ def create_review_decision(
         raise ReviewError("Review decision requires a PENDING unit")
     if decision not in {"APPROVE", "REJECT"}:
         raise ReviewError("Review decision must be APPROVE or REJECT")
+    if reviewer_type not in {"HUMAN", "SYSTEM"}:
+        raise ReviewError("Review decision reviewer type is invalid")
     if REVIEWER_PATTERN.fullmatch(reviewer_id) is None:
         raise ReviewError("reviewer_id is not a stable opaque identifier")
     try:
@@ -176,7 +223,7 @@ def create_review_decision(
     audit = dict(approval_effect)
     audit.update(
         {
-            "reviewer_type": "HUMAN",
+            "reviewer_type": reviewer_type,
             "reviewer_id": reviewer_id,
             "decided_at_utc": decided_at_utc,
             "reason": reason,
@@ -196,7 +243,7 @@ def create_review_decision(
         "review_renderer_semantic_version": review_unit[
             "review_renderer_semantic_version"
         ],
-        "reviewer_type": "HUMAN",
+        "reviewer_type": reviewer_type,
         "reviewer_id": reviewer_id,
         "decided_at_utc": decided_at_utc,
         "reason": reason,
@@ -208,6 +255,83 @@ def create_review_decision(
         review_unit=review_unit, decision=validated,
     )
     return validated
+
+
+def create_review_decision(
+    *,
+    review_unit: Mapping[str, object],
+    decision: str,
+    approved_claims: Mapping[str, object],
+    required_claims: Mapping[str, object],
+    reviewer_id: str,
+    decided_at_utc: str,
+    reason: str,
+    supersedes_decision_id: Optional[str],
+) -> Dict[str, object]:
+    """Create an immutable HUMAN decision bound to actual rendered context.
+
+    Args:
+        review_unit: Unit the human reviewed.
+        decision: ``APPROVE`` or ``REJECT``.
+        approved_claims: Canonical claims approved as a whole.
+        required_claims: Exact Spec-required claims.
+        reviewer_id: Stable opaque human identity.
+        decided_at_utc: Explicit UTC timestamp supplied by the review CLI.
+        reason: Human rationale.
+        supersedes_decision_id: Prior decision ID or ``None``.
+
+    Returns:
+        Strict HUMAN ``REVIEW_DECISION`` record.
+    """
+    return _create_review_decision(
+        review_unit=review_unit,
+        decision=decision,
+        approved_claims=approved_claims,
+        required_claims=required_claims,
+        reviewer_type="HUMAN",
+        reviewer_id=reviewer_id,
+        decided_at_utc=decided_at_utc,
+        reason=reason,
+        supersedes_decision_id=supersedes_decision_id,
+    )
+
+
+def create_system_review_decision(
+    *,
+    review_unit: Mapping[str, object],
+    required_claims: Mapping[str, object],
+    decided_at_utc: str,
+    requirement: Mapping[str, object],
+) -> Dict[str, object]:
+    """Append the optional-policy SYSTEM approval without impersonating a human.
+
+    Args:
+        review_unit: Pending unit whose Evidence and rendered bytes are bound.
+        required_claims: Exact repository Spec claims for the unit.
+        decided_at_utc: Terminal AI-attempt UTC timestamp reused as audit time.
+        requirement: Current verified Requirement Snapshot owning D-06.
+
+    Returns:
+        Strict SYSTEM ``REVIEW_DECISION`` with the full required claim set.
+
+    Raises:
+        ReviewError: If optional review is not explicitly authorized.
+    """
+    # The SYSTEM record makes the no-human path auditable.  It never claims a
+    # person approved the result and is unavailable unless D-06 opts in.
+    if not system_review_allowed(requirement=requirement):
+        raise ReviewError("SYSTEM review is not authorized by D-06")
+    return _create_review_decision(
+        review_unit=review_unit,
+        decision="APPROVE",
+        approved_claims=required_claims,
+        required_claims=required_claims,
+        reviewer_type="SYSTEM",
+        reviewer_id=SYSTEM_REVIEWER_ID,
+        decided_at_utc=decided_at_utc,
+        reason=SYSTEM_REVIEW_REASON,
+        supersedes_decision_id=None,
+    )
 
 
 def effective_review_decision(

@@ -6,8 +6,9 @@ import json
 from pathlib import Path
 from typing import Dict, List, Mapping, Sequence, Tuple
 
-from .ai_adapter import AIAdapterError, TransportObservation
-from .ai_adapter import approved_transport_policy
+from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
+from .ai_adapter import READER_OUTPUT_JSON_SCHEMA, approved_transport_policy
+from .ai_adapter import build_provider_request_body
 from .ai_adapter import transport_observation_mismatch
 from .canonical import atomic_write_bytes, atomic_write_json, content_hash
 from .canonical import canonical_json_bytes
@@ -27,7 +28,9 @@ from .reader import validate_reader_output
 from .reader_input import build_reader_payload, build_reader_task_contract
 from .reader_input import required_reader_roles
 from .requirements import load_requirement_snapshot
-from .review import effective_review_decision, validate_decision_binding
+from .review import effective_review_decision, system_review_allowed
+from .review import SYSTEM_REVIEWER_ID, SYSTEM_REVIEW_REASON
+from .review import validate_decision_binding
 from .sources import companyfacts_structured_facts, load_raw_blob_bytes
 from .specs import SpecError, compile_spec_files
 from .states import FREEZEABLE_VALIDATION_STATUSES, validate_transition
@@ -64,6 +67,40 @@ RUN_VALIDATION_VIEW_FIELDS = (
     "source_references",
     "spec_file_hashes",
     "target_period",
+)
+_QUALIFICATION_RUN_PREFIX = "run:qualification:"
+_QUALIFICATION_FIXTURE_FIELDS = {
+    "accession",
+    "cik",
+    "company_id",
+    "company_traits",
+    "disclosure_spec_path",
+    "document_name",
+    "excerpt_repo_relative_path",
+    "excerpt_sha256",
+    "fixture_id",
+    "layout_differences",
+    "qualification_role",
+    "recorded_response_repo_relative_path",
+    "recorded_response_sha256",
+    "request_attempt_id",
+    "schema_version",
+    "selection_reason",
+    "source_media_type",
+    "source_repo_relative_path",
+    "source_role",
+    "source_sha256",
+    "source_url",
+    "target_period",
+}
+FORMAL_RUN_VALIDATION_CHECKS = (
+    "REVIEW_BINDINGS",
+    "REVIEW_ASSETS",
+    "REPOSITORY_BINDINGS",
+    "RESULT_EXACT_SET",
+    "RECORD_GRAPH_REPLAY",
+    "EXECUTION_SEMANTICS",
+    "ARTIFACT_EXACT_SET",
 )
 
 
@@ -333,7 +370,11 @@ def _run_validation_artifacts(*, run_dir: Path) -> Dict[str, object]:
     for record in records:
         if record["record_type"] == "AI_EXTRACTION_ATTEMPT":
             expected.add(str(record["request_body_path"]))
+            expected.add(str(record["reader_payload_path"]))
             expected.add(str(record["task_contract_path"]))
+            expected.add(str(record["output_schema_path"]))
+            if record["assistant_output_path"]:
+                expected.add(str(record["assistant_output_path"]))
             if record["raw_response_path"]:
                 expected.add(str(record["raw_response_path"]))
         elif record["record_type"] == "REVIEW_UNIT":
@@ -361,13 +402,13 @@ def _run_validation_artifacts(*, run_dir: Path) -> Dict[str, object]:
     }
 
 
-def write_validation_receipt(
+def _write_validation_receipt(
     *,
     run_dir: Path,
     status: str,
     checks: Sequence[Mapping[str, object]],
 ) -> Dict[str, object]:
-    """Replace NOT_RUN with one terminal Run validation receipt.
+    """Replace NOT_RUN with one internally authorized terminal receipt.
 
     Args:
         run_dir: OPEN Run root.
@@ -414,6 +455,35 @@ def write_validation_receipt(
     return receipt
 
 
+def write_validation_receipt(
+    *,
+    run_dir: Path,
+    status: str,
+    checks: Sequence[Mapping[str, object]],
+) -> Dict[str, object]:
+    """Persist only a caller-described FAILED audit conclusion.
+
+    Args:
+        run_dir: OPEN Run root.
+        status: Must be ``FAILED``; PASSED is mechanically derived only.
+        checks: Ordered failure details retained for audit.
+
+    Returns:
+        Strict FAILED ValidationReceipt.
+
+    Raises:
+        RunStoreError: When a caller attempts to self-sign PASSED or names any
+            non-failure terminal state.
+    """
+    if status != "FAILED":
+        raise RunStoreError(
+            "PASSED requires public mechanical Run validation"
+        )
+    return _write_validation_receipt(
+        run_dir=run_dir, status=status, checks=checks,
+    )
+
+
 def _verify_run_validation_receipt(
     *,
     run_dir: Path,
@@ -444,18 +514,14 @@ def write_attempt_payloads(
     *,
     run_dir: Path,
     attempt: Mapping[str, object],
-    request_bytes: bytes,
-    task_contract_bytes: bytes,
-    raw_response_bytes: object,
+    payloads: AttemptPayloads,
 ) -> None:
     """Persist exact AI request/task/response bytes at declared hash paths.
 
     Args:
         run_dir: OPEN Run root.
         attempt: Terminal AIExtractionAttempt record.
-        request_bytes: Exact outbound request bytes.
-        task_contract_bytes: Exact canonical task-contract bytes.
-        raw_response_bytes: Exact provider bytes or ``None`` before a response.
+        payloads: Exact outbound, Reader, schema, task, and response bytes.
 
     Expected output:
         Each content-addressed path is created once; existing divergent bytes
@@ -467,22 +533,26 @@ def write_attempt_payloads(
     validated = validate_record(record=attempt)
     if validated["record_type"] != "AI_EXTRACTION_ATTEMPT":
         raise RunStoreError("Attempt payload owner is not an AI attempt")
-    if raw_response_bytes is not None and not isinstance(
-        raw_response_bytes, bytes
-    ):
-        raise RunStoreError("Raw AI response payload must be bytes or None")
+    if not isinstance(payloads, AttemptPayloads):
+        raise RunStoreError("Attempt payload bundle type is invalid")
     if (
         validated["transport_observation"]["request_body_bytes"]
-        != len(request_bytes)
+        != len(payloads.request_body_bytes)
     ):
         raise RunStoreError("Attempt observed request byte count differs")
-    payloads = {
-        "request_body_path": request_bytes,
-        "task_contract_path": task_contract_bytes,
+    content_by_field = {
+        "request_body_path": payloads.request_body_bytes,
+        "reader_payload_path": payloads.reader_payload_bytes,
+        "task_contract_path": payloads.task_contract_bytes,
+        "output_schema_path": payloads.output_schema_bytes,
     }
-    if raw_response_bytes is not None:
-        payloads["raw_response_path"] = raw_response_bytes
-    for field in payloads:
+    if payloads.assistant_output_bytes is not None:
+        content_by_field[
+            "assistant_output_path"
+        ] = payloads.assistant_output_bytes
+    if payloads.raw_response_bytes is not None:
+        content_by_field["raw_response_path"] = payloads.raw_response_bytes
+    for field, content in content_by_field.items():
         relative = Path(str(validated[field]))
         if (
             relative.is_absolute()
@@ -491,7 +561,6 @@ def write_attempt_payloads(
         ):
             raise RunStoreError("Attempt payload path is unsafe")
         path = run_dir / relative
-        content = payloads[field]
         if path.exists():
             if path.is_symlink() or not path.is_file():
                 raise RunStoreError("Attempt payload path is unsafe")
@@ -523,6 +592,51 @@ def append_run_record(*, run_dir: Path, record: Mapping[str, object]) -> None:
     records.append(validated)
     atomic_write_bytes(
         path=paths["records"], content=_jsonl_bytes(records=records)
+    )
+
+
+def append_run_records_atomically(
+    *,
+    run_dir: Path,
+    records: Sequence[Mapping[str, object]],
+    expected_records_file_hash: str,
+    expected_review_decisions_file_hash: str,
+) -> None:
+    """Append one complete finalization batch through a byte-level CAS.
+
+    Args:
+        run_dir: OPEN Run root.
+        records: Complete ordered records produced by one finalization.
+        expected_records_file_hash: Records hash observed before calculation.
+        expected_review_decisions_file_hash: Decision hash whose effective tip
+            authorized the calculated batch.
+
+    Expected output:
+        Either the complete validated batch replaces ``records.jsonl`` once,
+        or the prior bytes remain authoritative. A changed record stream or
+        HUMAN decision chain fails before the atomic replacement.
+    """
+    manifest = _read_manifest(run_dir=run_dir)
+    if manifest["status"] != "OPEN":
+        raise RunStoreError("Frozen or failed Run cannot be modified")
+    if not records:
+        raise RunStoreError("Atomic finalization batch cannot be empty")
+    paths = _run_paths(run_dir=run_dir)
+    if (
+        sha256_file(path=paths["records"])
+        != expected_records_file_hash
+        or sha256_file(path=paths["decisions"])
+        != expected_review_decisions_file_hash
+    ):
+        raise RunStoreError("Run finalization input bytes changed")
+    existing = _read_jsonl(path=paths["records"])
+    try:
+        validated = [validate_record(record=record) for record in records]
+    except ValueError as error:
+        raise RunStoreError("Finalization batch record is invalid") from error
+    atomic_write_bytes(
+        path=paths["records"],
+        content=_jsonl_bytes(records=[*existing, *validated]),
     )
 
 
@@ -573,6 +687,17 @@ def append_review_decision(
         raise RunStoreError("Decision file accepts REVIEW_DECISION only")
     paths = _run_paths(run_dir=run_dir)
     records = _read_jsonl(path=paths["records"])
+    if any(
+        record["record_type"] in {
+            "VERIFIED_OBSERVATION",
+            "EXECUTION_TRACE",
+            "METRIC_RESULT",
+        }
+        for record in records
+    ):
+        raise RunStoreError(
+            "Review decision cannot change after finalization"
+        )
     units = [
         record
         for record in records
@@ -728,6 +853,102 @@ def load_run_bound_specs(
         raise RunStoreError("Run Spec closure cannot be compiled") from error
 
 
+def _qualification_fixture_traits(
+    *, repo_root: Path, manifest: Mapping[str, object],
+) -> Tuple[List[str], List[str]]:
+    """Derive traits for one non-production qualification Run from its fixture.
+
+    Args:
+        repo_root: Repository containing the fixed qualification fixture tree.
+        manifest: Persisted Run whose identity must name one safe fixture.
+
+    Returns:
+        Exact fixture-owned traits and its single external CIK.
+
+    Raises:
+        TraitError: When the Run is not a qualification Run or its fixture,
+            company, period, source identity, or bytes do not bind exactly.
+
+    This is the sole registry exception: production Runs still use only the
+    configured company registry.  Qualification issuers are deliberately
+    outside that registry, so their traits must be reconstructed from the
+    source-bound fixture rather than supplied by a caller.
+    """
+    run_id = manifest["run_id"]
+    if type(run_id) is not str or not run_id.startswith(
+        _QUALIFICATION_RUN_PREFIX
+    ):
+        raise TraitError("Run is not a qualification fixture Run")
+    fixture_id = run_id[len(_QUALIFICATION_RUN_PREFIX):]
+    if (
+        not fixture_id
+        or any(
+            character not in "abcdefghijklmnopqrstuvwxyz0123456789_-"
+            for character in fixture_id
+        )
+    ):
+        raise TraitError("Qualification fixture identity is invalid")
+    fixture_root = repo_root / "fixtures/vnext/layouts" / fixture_id
+    fixture_path = fixture_root / "fixture_manifest.json"
+    if (
+        fixture_root.is_symlink()
+        or fixture_path.is_symlink()
+        or not fixture_path.is_file()
+    ):
+        raise TraitError("Qualification fixture is absent or unsafe")
+    fixture = strict_json_file(path=fixture_path)
+    if (
+        not isinstance(fixture, dict)
+        or "source_repo_relative_path" not in fixture
+        or type(fixture["source_repo_relative_path"]) is not str
+    ):
+        raise TraitError("Qualification fixture fields are invalid")
+    source_relative = Path(str(fixture["source_repo_relative_path"]))
+    source_path = repo_root / source_relative
+    if (
+        source_relative.is_absolute()
+        or ".." in source_relative.parts
+        or fixture_root not in source_path.parents
+        or source_path.is_symlink()
+        or not source_path.is_file()
+    ):
+        raise TraitError("Qualification fixture source is absent or unsafe")
+    if (
+        not isinstance(fixture, dict)
+        or set(fixture) != _QUALIFICATION_FIXTURE_FIELDS
+        or fixture["schema_version"] != 1
+        or fixture["fixture_id"] != fixture_id
+        or fixture["qualification_role"]
+        not in {"SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"}
+        or fixture["company_id"] != manifest["company_id"]
+        or fixture["company_traits"] != manifest["company_traits"]
+        or fixture["target_period"] != manifest["target_period"]
+        or fixture["source_repo_relative_path"]
+        != source_path.relative_to(repo_root).as_posix()
+        or fixture["source_sha256"] != sha256_file(path=source_path)
+        or type(fixture["cik"]) is not str
+        or not fixture["cik"].isdigit()
+        or int(fixture["cik"]) <= 0
+    ):
+        raise TraitError("Qualification fixture binding differs from Run")
+    references = manifest["source_references"]
+    if (
+        not isinstance(references, list)
+        or len(references) != 1
+        or references[0]["company_id"] != fixture["company_id"]
+        or references[0]["source_url"] != fixture["source_url"]
+        or references[0]["accession"] != fixture["accession"]
+        or references[0]["document_name"] != fixture["document_name"]
+        or references[0]["source_role"] != fixture["source_role"]
+        or references[0]["request_attempt_id"]
+        != fixture["request_attempt_id"]
+        or references[0]["raw_asset_id"]
+        != "sha256:" + fixture["source_sha256"]
+    ):
+        raise TraitError("Qualification SourceReference differs from fixture")
+    return list(fixture["company_traits"]), [str(int(fixture["cik"]))]
+
+
 def _verify_repository_bindings(
     *,
     repo_root: Path,
@@ -827,10 +1048,17 @@ def _verify_repository_bindings(
         repository_ciks = repository_company_ciks(
             repo_root=repo_root, company_id=str(manifest["company_id"]),
         )
-    except TraitError as error:
-        raise RunStoreError(
-            "Run company traits cannot be derived from repository"
-        ) from error
+    except TraitError:
+        try:
+            repository_traits, repository_ciks = (
+                _qualification_fixture_traits(
+                    repo_root=repo_root, manifest=manifest,
+                )
+            )
+        except TraitError as qualification_error:
+            raise RunStoreError(
+                "Run company traits cannot be derived from repository"
+            ) from qualification_error
     if manifest["company_traits"] != repository_traits:
         raise RunStoreError("Run company traits differ from repository")
     return compiled_by_id, raw_bytes_by_id, repository_ciks, requirement
@@ -857,7 +1085,11 @@ def _load_attempt_payloads(
     expected_paths = set()
     for attempt in attempts.values():
         expected_paths.add(str(attempt["request_body_path"]))
+        expected_paths.add(str(attempt["reader_payload_path"]))
         expected_paths.add(str(attempt["task_contract_path"]))
+        expected_paths.add(str(attempt["output_schema_path"]))
+        if attempt["assistant_output_path"]:
+            expected_paths.add(str(attempt["assistant_output_path"]))
         if attempt["raw_response_path"]:
             expected_paths.add(str(attempt["raw_response_path"]))
     if not expected_paths:
@@ -877,17 +1109,30 @@ def _load_attempt_payloads(
     for attempt_id in attempts:
         attempt = attempts[attempt_id]
         fields = {
-            "request": (
+            "request_body": (
                 "request_body_path",
                 "request_body_sha256",
+            ),
+            "reader_payload": (
+                "reader_payload_path",
+                "reader_payload_sha256",
             ),
             "task_contract": (
                 "task_contract_path",
                 "task_contract_sha256",
             ),
+            "output_schema": (
+                "output_schema_path",
+                "output_schema_sha256",
+            ),
         }
+        if attempt["assistant_output_path"]:
+            fields["assistant_output"] = (
+                "assistant_output_path",
+                "assistant_output_sha256",
+            )
         if attempt["raw_response_path"]:
-            fields["response"] = (
+            fields["raw_response"] = (
                 "raw_response_path",
                 "raw_response_sha256",
             )
@@ -901,7 +1146,7 @@ def _load_attempt_payloads(
             payloads[label] = content
         if (
             attempt["transport_observation"]["request_body_bytes"]
-            != len(payloads["request"])
+            != len(payloads["request_body"])
         ):
             raise RunStoreError("AI attempt observed request size differs")
         loaded[attempt_id] = payloads
@@ -978,6 +1223,10 @@ def _validate_successful_attempt_transport(
             "egress_attempted": False,
             "provider": "recorded",
             "model": "recorded-response-v1",
+            "model_requested": "recorded-response-v1",
+            "model_returned": "none",
+            "api": "recorded",
+            "store": False,
             "endpoint_host": "none",
             "region": "local",
             "retention": "immutable-fixture",
@@ -1238,6 +1487,40 @@ def _replay_structured_result(
             Observation/Trace/Result difference from deterministic replay.
     """
     target = dict(trace["calculation_target"])
+    if not metric_is_applicable(
+        applicability=compiled_spec["compiled"]["applicability"],
+        traits=list(manifest["company_traits"]),
+    ):
+        # Structural inapplicability is proven from repository traits and Spec
+        # before any source lookup; requiring invented source coordinates here
+        # would make a genuine no-source result impossible to replay.
+        if trace["input_observation_ids"]:
+            raise RunStoreError(
+                "Structural result unexpectedly consumes observations"
+            )
+        try:
+            expected_result, expected_trace, expected_observations = (
+                calculate_metric(
+                    compiled_spec=compiled_spec,
+                    target=target,
+                    company_traits=list(manifest["company_traits"]),
+                    structured_facts=[],
+                    verified_observations=[],
+                )
+            )
+        except ValueError as error:
+            raise RunStoreError(
+                "Structural calculator replay cannot be reconstructed"
+            ) from error
+        if expected_observations:
+            raise RunStoreError(
+                "Structural calculator replay produced observations"
+            )
+        if result != expected_result or trace != expected_trace:
+            raise RunStoreError(
+                "Result/Trace differs from structural calculator replay"
+            )
+        return
     source_ids = _structured_source_ids(
         target=target, source_references=source_references,
     )
@@ -1365,7 +1648,8 @@ def _validate_record_graph(
         run_dir: Run root containing exact AI attempt bytes.
         manifest: RUN record with SourceReference bindings.
         records: Strict disk-reloaded records.
-        effective_decisions: Effective HUMAN decisions keyed by effect hash.
+        effective_decisions: Effective HUMAN or authorized SYSTEM decisions
+            keyed by effect hash.
         compiled_specs: Repository-compiled Run-bound Specs by metric ID.
         raw_bytes_by_id: Hash-verified Run raw bytes keyed by asset ID.
         company_ciks: Registry-authorized CIKs for the logical company.
@@ -1375,6 +1659,22 @@ def _validate_record_graph(
         RunStoreError: On duplicate primary IDs, detached trace/evidence,
         missing source/asset binding, or Candidate/ReviewUnit drift.
     """
+    system_decisions = [
+        decision
+        for decision in effective_decisions.values()
+        if decision["reviewer_type"] == "SYSTEM"
+    ]
+    if system_decisions and not system_review_allowed(
+        requirement=requirement,
+    ):
+        raise RunStoreError("SYSTEM review is not authorized by D-06")
+    for decision in system_decisions:
+        if (
+            decision["decision"] != "APPROVE"
+            or decision["reviewer_id"] != SYSTEM_REVIEWER_ID
+            or decision["reason"] != SYSTEM_REVIEW_REASON
+        ):
+            raise RunStoreError("SYSTEM review record differs from D-06")
     primary_fields = {
         "AI_EXTRACTION_ATTEMPT": "attempt_id",
         "DERIVED_ASSET": "derived_asset_id",
@@ -1528,22 +1828,43 @@ def _validate_record_graph(
         if (
             stored["task_contract"]
             != canonical_json_bytes(value=task_contract)
-            or stored["request"] != payload["request_bytes"]
+            or stored["reader_payload"] != payload["request_bytes"]
         ):
             raise RunStoreError("AI request bytes differ from repository Spec")
+        observation = TransportObservation.from_mapping(
+            value=attempt["transport_observation"]
+        )
+        if observation.egress_attempted:
+            policy = approved_transport_policy(requirement=requirement)
+            expected_request, expected_schema = (
+                build_provider_request_body(
+                    policy=policy,
+                    reader_request_bytes=stored["reader_payload"],
+                )
+            )
+        else:
+            expected_request = stored["reader_payload"]
+            expected_schema = canonical_json_bytes(
+                value=READER_OUTPUT_JSON_SCHEMA
+            )
+        if (
+            stored["request_body"] != expected_request
+            or stored["output_schema"] != expected_schema
+        ):
+            raise RunStoreError("AI provider envelope or schema differs")
         _validate_successful_attempt_transport(
             attempt=attempt,
-            request_bytes=stored["request"],
+            request_bytes=stored["request_body"],
             requirement=requirement,
         )
         if attempt["status"] == "SUCCEEDED":
-            if "response" not in stored:
+            if "assistant_output" not in stored:
                 raise RunStoreError(
                     "Successful AI attempt response bytes are absent"
                 )
             try:
                 replayed = validate_reader_output(
-                    response_text=stored["response"].decode("utf-8"),
+                    response_text=stored["assistant_output"].decode("utf-8"),
                     attempt_id=attempt_id,
                     required_roles=required_reader_roles(
                         compiled_spec=disclosure_spec,
@@ -2050,8 +2371,8 @@ def _validate_record_graph(
             raise RunStoreError("Candidate AI attempt is absent")
         attempt = attempts[attempt_id]
         if attempt["status"] != "SUCCEEDED" or attempt[
-            "raw_response_sha256"
-        ] != candidate["raw_response_sha256"]:
+            "assistant_output_sha256"
+        ] != candidate["assistant_output_sha256"]:
             raise RunStoreError("Candidate AI attempt binding differs")
         attempt_context = attempt_contexts[attempt_id]
         reader_manifest = attempt_context["reader_manifest"]
@@ -2253,7 +2574,8 @@ def _validate_review_bindings(
         decisions: Run decisions.
 
     Returns:
-        Effective HUMAN decisions keyed by approval-effect hash.
+        Effective HUMAN or authorized SYSTEM decisions keyed by approval-effect
+        hash.
 
     Raises:
         RunStoreError: On detached, parallel, or stale decisions.
@@ -2293,28 +2615,61 @@ def _validate_review_bindings(
     return effective_decisions
 
 
-def freeze_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
-    """Revalidate disk bytes and atomically freeze one Run.
+def _validate_formal_result_exact_set(
+    *,
+    records: Sequence[Mapping[str, object]],
+    compiled_specs: Mapping[str, Mapping[str, object]],
+) -> None:
+    """Require a non-empty terminal result set after graph replay.
+
+    Args:
+        records: Mechanically replayed Run records.
+        compiled_specs: Exact repository-bound Spec closure used to reject
+            results for unknown metrics in the preceding graph replay.
+
+    Raises:
+        RunStoreError: When an incomplete attempt-only Run could otherwise be
+            caller-labelled PASSED. Per-target and per-review exactness is
+            enforced by the graph replay; batch release exactness is enforced
+            by BatchManifest validation.
+    """
+    if not compiled_specs or not any(
+        record["record_type"] == "METRIC_RESULT"
+        for record in records
+    ):
+        raise RunStoreError("Formal Run result exact set differs")
+
+
+def _mechanically_replay_open_run(
+    *,
+    run_dir: Path,
+    repo_root: Path,
+    require_complete_results: bool,
+) -> Tuple[
+    Dict[str, object], List[Dict[str, object]], List[Dict[str, object]]
+]:
+    """Reapply every repository and record-graph gate to one OPEN Run.
 
     Args:
         run_dir: OPEN Run root.
-        repo_root: Repository used to revalidate raw source and Spec bytes.
+        repo_root: Repository carrying exact Requirement, Spec, and source
+            bytes.
+        require_complete_results: Whether to enforce formal terminal output
+            exactness instead of permitting an audit-only incomplete freeze.
 
     Returns:
-        FROZEN manifest.
-
-    Raises:
-        RunStoreError: On file/hash drift, invalid review chain, unresolved
-            source role, or invalid record graph. A NOT_RUN/FAILED validation
-            receipt and WITHHELD metric results may freeze for audit/replay,
-            but publication rejects them.
+        Reloaded manifest, records, and decisions proven by current bytes.
     """
     manifest = _read_manifest(run_dir=run_dir)
-    validate_transition(
-        object_type="RUN",
-        current_status=str(manifest["status"]),
-        target_status="FROZEN",
-    )
+    try:
+        validate_transition(
+            object_type="RUN",
+            current_status=str(manifest["status"]),
+            target_status="FROZEN",
+        )
+    except ValueError as error:
+        message = "Mechanical validation requires an OPEN Run"
+        raise RunStoreError(message) from error
     paths = _run_paths(run_dir=run_dir)
     records = _read_jsonl(path=paths["records"])
     decisions = _read_jsonl(path=paths["decisions"])
@@ -2340,8 +2695,92 @@ def freeze_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
         company_ciks=company_ciks,
         requirement=requirement,
     )
+    if require_complete_results:
+        _validate_formal_result_exact_set(
+            records=records, compiled_specs=compiled_specs,
+        )
     if manifest["execution_semantics_hash"] != execution_semantics_hash():
         raise RunStoreError("Run semantic runtime changed before freeze")
+    return manifest, records, decisions
+
+
+def validate_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
+    """Mechanically validate one complete OPEN Run and issue PASSED.
+
+    Args:
+        run_dir: Complete OPEN Run root.
+        repo_root: Repository carrying exact frozen authority bytes.
+
+    Returns:
+        Content-bound PASSED ValidationReceipt derived without caller status
+        or caller-authored checks.
+    """
+    manifest, _records, _decisions = _mechanically_replay_open_run(
+        run_dir=run_dir,
+        repo_root=repo_root,
+        require_complete_results=True,
+    )
+    paths = _run_paths(run_dir=run_dir)
+    current_payload = strict_json_file(path=paths["validation"])
+    if not isinstance(current_payload, dict):
+        raise RunStoreError("Run validation root must be an object")
+    current = validate_record(record=current_payload)
+    checks = [
+        {"check": check, "status": "PASS"}
+        for check in FORMAL_RUN_VALIDATION_CHECKS
+    ]
+    if current["status"] == "PASSED":
+        if current["checks"] != checks:
+            raise RunStoreError("PASSED Run validation checks differ")
+        _verify_run_validation_receipt(
+            run_dir=run_dir, manifest=manifest, receipt=current,
+        )
+        return current
+    if current["status"] != "NOT_RUN":
+        raise RunStoreError("Failed Run cannot be re-labelled PASSED")
+    return _write_validation_receipt(
+        run_dir=run_dir, status="PASSED", checks=checks,
+    )
+
+
+def validate_and_freeze_run(
+    *, run_dir: Path, repo_root: Path
+) -> Dict[str, object]:
+    """Validate complete current bytes and atomically freeze their receipt.
+
+    Args:
+        run_dir: Complete OPEN Run root.
+        repo_root: Repository carrying exact frozen authority bytes.
+
+    Returns:
+        FROZEN manifest bound to the mechanically issued PASSED receipt.
+    """
+    validate_run(run_dir=run_dir, repo_root=repo_root)
+    return freeze_run(run_dir=run_dir, repo_root=repo_root)
+
+
+def freeze_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
+    """Revalidate disk bytes and atomically freeze one Run.
+
+    Args:
+        run_dir: OPEN Run root.
+        repo_root: Repository used to revalidate raw source and Spec bytes.
+
+    Returns:
+        FROZEN manifest.
+
+    Raises:
+        RunStoreError: On file/hash drift, invalid review chain, unresolved
+            source role, or invalid record graph. A NOT_RUN/FAILED validation
+            receipt and WITHHELD metric results may freeze for audit/replay,
+            but publication rejects them.
+    """
+    manifest, records, decisions = _mechanically_replay_open_run(
+        run_dir=run_dir,
+        repo_root=repo_root,
+        require_complete_results=False,
+    )
+    paths = _run_paths(run_dir=run_dir)
     validation_payload = strict_json_file(path=paths["validation"])
     if not isinstance(validation_payload, dict):
         raise RunStoreError("Run validation root must be an object")

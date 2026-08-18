@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scenario_id": "FF-R3-OPENAI-CONTRACT-001",
+  "observed_at_utc": "2026-08-06T09:30:24Z",
+  "expected_failure": "OpenAI Responses factory and strict envelope are not implemented",
+  "command": {
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_openai_responses_envelope_is_strict_and_tool_free",
+      "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_openai_key_missing_is_observed_without_egress"
+    ],
+    "duration_ms": 84,
+    "environment_keys": [],
+    "error_class": "",
+    "interpreter": "python3",
+    "outcome": "FAILED",
+    "reason": "NONZERO_RETURN_CODE",
+    "return_code": 1,
+    "stderr_sha256": "ba3342b27e6b27e97772c25003a30370fdb91e608b14bba52a96d28e7c7513c4",
+    "stderr_size": 1933,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_size": 0
+  },
+  "failure_first_receipt_id": "sha256:479cb24fd0da3f4873e4fd0fb78203c14855067173e8c22f106e4a08ab634ee0"
+}
