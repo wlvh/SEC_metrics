@@ -15,6 +15,7 @@ if str(TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(TOOLS_DIR))
 
 from check_vnext_semantics import audit_python_file  # noqa: E402
+from check_vnext_semantics import compile_business_literal_pattern  # noqa: E402
 from check_vnext_semantics import run_audit, scan_secret_token  # noqa: E402
 
 
@@ -38,6 +39,9 @@ class SemanticAuditTest(unittest.TestCase):
         self.assertIn(
             "scripts/sec_pipeline.py", receipt["source_hashes"],
         )
+        self.assertIn(
+            "config/source_strategy_registry.json", receipt["source_hashes"],
+        )
 
     def test_business_literal_in_executable_is_reported(self) -> None:
         """Reject a metric/company parser branch by AST literal."""
@@ -46,10 +50,16 @@ class SemanticAuditTest(unittest.TestCase):
             path = root / "scripts/vnext/example.py"
             path.parent.mkdir(parents=True)
             path.write_text(
-                '"""Example."""\nVALUE = "B03 company parser"\n',
+                '"""Example."""\nVALUE = "occupancy company parser"\n',
                 encoding="utf-8",
             )
-            hits = audit_python_file(path=path, repo_root=root)
+            hits = audit_python_file(
+                path=path,
+                repo_root=root,
+                business_literal_pattern=compile_business_literal_pattern(
+                    repo_root=REPO_ROOT
+                ),
+            )
         self.assertEqual("BUSINESS_LITERAL", hits[0]["type"])
         self.assertFalse(hits[0]["allowed"])
 
@@ -62,7 +72,13 @@ class SemanticAuditTest(unittest.TestCase):
             path.write_text(
                 '"""Bad adapter."""\nimport socket\n', encoding="utf-8",
             )
-            hits = audit_python_file(path=path, repo_root=root)
+            hits = audit_python_file(
+                path=path,
+                repo_root=root,
+                business_literal_pattern=compile_business_literal_pattern(
+                    repo_root=REPO_ROOT
+                ),
+            )
         self.assertIn("AI_FORBIDDEN_IMPORT", [hit["type"] for hit in hits])
 
     def test_fixed_openai_transport_is_narrowly_allowed(self) -> None:
@@ -83,7 +99,33 @@ class SemanticAuditTest(unittest.TestCase):
                 "url=_OPENAI_RESPONSES_URL))\n",
                 encoding="utf-8",
             )
-            hits = audit_python_file(path=path, repo_root=root)
+            hits = audit_python_file(
+                path=path,
+                repo_root=root,
+                business_literal_pattern=compile_business_literal_pattern(
+                    repo_root=REPO_ROOT
+                ),
+            )
+        self.assertEqual([], hits)
+
+    def test_generic_terms_are_not_semantic_literal_hits(self) -> None:
+        """Allow ordinary shared-engine words excluded by the registry."""
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "scripts/vnext/example.py"
+            path.parent.mkdir(parents=True)
+            path.write_text(
+                '"""Shared engine."""\n'
+                'VALUE = "risk value event income current"\n',
+                encoding="utf-8",
+            )
+            hits = audit_python_file(
+                path=path,
+                repo_root=root,
+                business_literal_pattern=compile_business_literal_pattern(
+                    repo_root=REPO_ROOT
+                ),
+            )
         self.assertEqual([], hits)
 
     def test_secret_like_token_scan_reports_hash_not_token(self) -> None:

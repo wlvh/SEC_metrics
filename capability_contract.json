@@ -66,6 +66,16 @@
         "since": "2026-08-19"
       },
       {
+        "anchor_id": "CAPABILITY.issue_15_source_strategy_registry",
+        "type": "capability",
+        "status": "active",
+        "statement": "Issue #15 SourceStrategy registry精确覆盖39个metric ID，每个恰好一条；source_mode只允许structured_only、structured_first_ai_fallback、ai_table、ai_text，不存在ai_event_text。registry只拥有target route与family-level forbidden production literals，不保存ROUTE_INVENTORY_ONLY、SHADOW_ONLY或MIGRATED_PRODUCTION；当前ratchet state只由独立ReleasePlan.cumulative_metric_ids拥有。Issue #15 Requirement closure绑定registry与plan exact bytes，semantic lint从family union派生并排除risk/value/event/income/current等通用词。WB-2不修改root业务outputs，也不单独证明adapter或零provider调用。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_source_strategy_registry.py::SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state",
+        "test_status": "automated_recorded",
+        "since": "2026-08-19"
+      },
+      {
         "anchor_id": "CAPABILITY.vnext_recorded_shadow",
         "type": "capability",
         "status": "active",
@@ -475,7 +485,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #15 D-26新tip保留tools/run_fast_tests.py的七个并发直接边界用例，其中scope用例从exact-base AST机械重算复用型semantic producer callsite closure；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得再禁止Issue #15明列的短小确定性freeze/replay、并发、rollback不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
+        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的八个并发直接边界用例，其中authority/scope/WB-2用例机械验证Requirement、exact-base callsite closure与39指标registry；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得禁止Issue #15明列的短小确定性不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",

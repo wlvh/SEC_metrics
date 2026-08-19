@@ -43,6 +43,10 @@ ISSUE_15_SNAPSHOT_FILES = {
     "source_strategy": "source_strategy_baseline_receipt.json",
     "transfer": "transfer_manifest.json",
 }
+ISSUE_15_RUNTIME_AUTHORITY_FILES = {
+    "config/issue_15_release_plan.json",
+    "config/source_strategy_registry.json",
+}
 ISSUE_15_EFFECTIVE_DECISION_IDS = {
     "D-01",
     "D-03",
@@ -1082,6 +1086,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         "repository_tree",
         "requirement_id",
         "root_business_artifacts",
+        "runtime_authority_files",
         "schema_version",
         "semantic_runtime_versions",
         "semantic_runtime_versions_hash",
@@ -1127,6 +1132,33 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         ):
             raise RequirementError(
                 "Issue #15 snapshot file bytes differ: {}".format(relative)
+            )
+
+    repository_root = snapshot_dir.parents[1]
+    runtime_bindings = baseline["runtime_authority_files"]
+    if (
+        not isinstance(runtime_bindings, dict)
+        or set(runtime_bindings) != ISSUE_15_RUNTIME_AUTHORITY_FILES
+    ):
+        raise RequirementError("Issue #15 runtime authority file set differs")
+    for relative in sorted(ISSUE_15_RUNTIME_AUTHORITY_FILES):
+        binding = runtime_bindings[relative]
+        if not isinstance(binding, dict):
+            raise RequirementError("Issue #15 runtime authority binding is invalid")
+        _require_exact_fields(
+            value=binding,
+            fields={"sha256", "size"},
+            label="Issue #15 runtime authority binding",
+        )
+        path = _bound_repository_file(
+            repository_root=repository_root, relative=relative,
+        )
+        if (
+            binding["sha256"] != sha256_file(path=path)
+            or binding["size"] != path.stat().st_size
+        ):
+            raise RequirementError(
+                "Issue #15 runtime authority bytes differ: {}".format(relative)
             )
 
     parent_dir = snapshot_dir.parent / PARENT_REQUIREMENT_ID
@@ -1297,7 +1329,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     ):
         raise RequirementError("Issue #15 foundation evidence differs")
     _validate_foundation_receipt_bindings(
-        foundation=foundation, repository_root=snapshot_dir.parents[1],
+        foundation=foundation, repository_root=repository_root,
     )
 
     hashes = {
@@ -1312,7 +1344,13 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
             path=paths["legacy_inventory"]
         ),
         "parent_requirement_closure_hash": parent["requirement_closure_hash"],
+        "issue_15_release_plan_sha256": sha256_file(
+            path=repository_root / "config" / "issue_15_release_plan.json"
+        ),
         "semantic_runtime_versions_hash": content_hash(value=SEMANTIC_VERSIONS),
+        "source_strategy_registry_sha256": sha256_file(
+            path=repository_root / "config" / "source_strategy_registry.json"
+        ),
         "source_strategy_baseline_receipt_sha256": sha256_file(
             path=paths["source_strategy"]
         ),

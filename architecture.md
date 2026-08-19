@@ -234,6 +234,13 @@ WB-1 只增加 authority 数据和 loader 分支。Issue #15 owner 随后以同 
 <!-- capability-anchor: CAPABILITY.issue_15_requirement_authority -->
 <!-- capability-anchor: BEHAVIOR.issue_15_repository_monetary_budget_disabled -->
 
+#### 11.0.1 WB-2 SourceStrategy Registry
+
+`config/source_strategy_registry.json` 对 WB-1 冻结的 39 metric exact set 各保存一条 target route，`source_mode` 只允许 `structured_only`、`structured_first_ai_fallback`、`ai_table`、`ai_text`。同一 shape 显式保存 reader family、structured route/fallback、coverage 与 applicability identity；`ai_event_text` 与 `ROUTE_INVENTORY_ONLY` / `SHADOW_ONLY` / `MIGRATED_PRODUCTION` 不能进入 registry。`config/issue_15_release_plan.json::cumulative_metric_ids` 是唯一当前 ratchet state，R0 为空集；plan 绑定 company registry、final metric set、SourceStrategy bytes、WB-1 producer inventory、qualification subset 与frozen legacy key set。旧 `config/vnext_release_plan.json` 仍是 immutable parent runtime 绑定，WB-2 不改写它。
+
+family 拥有 `forbidden_production_literals`，metric 不复制该词表。`tools/check_vnext_semantics.py` 每次从经 Requirement byte-binding 验证的 family union 编译 scanner；`risk` / `value` / `event` / `income` / `current` 被 schema 显式拒绝为禁词，避免把共享引擎普通语言变成假阳性。WB-2 只建立 routing authority，没有执行 adapter、修改 root outputs 或证明 structured-only provider 零调用；后两者属于 WB-2B/WB-3 联合证据。
+<!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->
+
 ### 11.1 当前身份与不可越过的边界
 
 `scripts/vnext/` 是从 Issue #12 继承到 Issue #15 的同一套recorded/live生产实现，不是与正式流程分离的demo。full live Cutover在release planning前固定运行SEC Stage00/01/02/03/05，逐条保存原样命令、return code/duration/stdout-stderr digest，验证request ledger只合法尾部追加并持久化inventory/acquisition receipt；随后编译Spec、运行固定DeepSeek Chat Completions adapter、生成Evidence/ReviewUnit、优先采用HUMAN decision或由D-06写入明确SYSTEM decision、freeze/replay Run、形成complete Batch、投影strict-compatible legacy rows，并通过正式publication/rollback primitives供Stage10/11/12读取pinned `PublicationView`。
@@ -377,7 +384,7 @@ bundle namespace必须只有声明的regular files/directories，不接受symlin
 
 ### 11.7 Acceptance runner 的执行与补偿边界
 
-Issue #15 effective D-26 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的七个并发直接用例，其中 scope 用例从 exact-base AST 重算复用型 semantic producer 的 callsite closure；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，也不再要求金额 budget preflight 测试；短小确定性 single-flight、HTTP 402、UNKNOWN_REMOTE_OUTCOME、freeze/replay、rollback/restore 与 structured-only 零模型调用不变量仍必须执行。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。
+Issue #15 effective D-26 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的八个并发直接用例，其中 authority/scope/WB-2 用例验证 Requirement closure、exact-base callsite closure 与 39 指标 registry；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，也不再要求金额 budget preflight 测试；短小确定性 single-flight、HTTP 402、UNKNOWN_REMOTE_OUTCOME、freeze/replay、rollback/restore 与 structured-only 零模型调用不变量仍必须执行。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。
 
 acceptance 在任何 recorded/full gate 前先捕获 clean source commit/tree/file count，并把 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 hash map 固化为顶层 `authority_binding`。`--output-dir`若等于、包含或位于任一正式单文件/namespace下，会在首次写入或caller executable启动前失败。recorded gate 结束后重读并要求 exact 相等；full 还要求 Cutover formal evidence 回绑相同 authority。semantic/scalability artifacts 只能来自本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/` 的两个 exact files，full 会从 repo-owned path 重新打开并重算 hash，不能接受 caller 自报、旧 root artifact 或已漂移 source。live SEC acquisition receipt 只有一个 strict validator：它要求五条固定命令的 exact schema，把 `$PYTHON_CURRENT` 的 name/binary SHA-256 机械比对当前 `sys.executable`，并按当前 ledger prefix/tail、attempt exact set 与 inventory bytes重建；full binding初次和封口前都调用该validator。receipt写入前会递归把repository、output、current Python与sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$SANDBOX_EXEC`；`runtime_bindings`保存executable name与binary SHA-256，无法归类的host绝对路径只保留path hash。
 

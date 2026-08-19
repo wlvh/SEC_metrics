@@ -187,6 +187,16 @@ def copy_test_repository(*, temp_dir: str) -> Path:
     issue_copy = requirements_dir / "issue_15_v1"
     shutil.copytree(src=PARENT_DIR, dst=parent_copy)
     shutil.copytree(src=ISSUE_15_DIR, dst=issue_copy)
+    baseline = read_json(path=ISSUE_15_DIR / "baseline_manifest.json")
+    for relative in baseline["runtime_authority_files"]:
+        destination = repository_root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src=REPO_ROOT / relative, dst=destination)
+    company_registry = repository_root / "config" / "company_registry.csv"
+    shutil.copy2(
+        src=REPO_ROOT / "config" / "company_registry.csv",
+        dst=company_registry,
+    )
     foundation = read_json(path=ISSUE_15_DIR / "foundation_verification_receipt.json")
     for binding in foundation["receipt_bindings"]:
         relative = Path(binding["path"])
@@ -427,6 +437,11 @@ class Issue15AuthorityTest(unittest.TestCase):
             parent_path = PARENT_DIR / filename
             self.assertEqual(binding["sha256"], sha256_file(path=parent_path))
             self.assertEqual(binding["size"], parent_path.stat().st_size)
+
+        for relative, binding in baseline["runtime_authority_files"].items():
+            runtime_path = REPO_ROOT / relative
+            self.assertEqual(binding["sha256"], sha256_file(path=runtime_path))
+            self.assertEqual(binding["size"], runtime_path.stat().st_size)
 
         matrix_path = REPO_ROOT / "outputs" / "metrics_matrix.csv"
         with matrix_path.open(mode="r", encoding="utf-8", newline="") as file_obj:

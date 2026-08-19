@@ -18,14 +18,15 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Dict, Iterable, List, Sequence
+from typing import Dict, Iterable, List, Pattern, Sequence
+
+SCRIPTS_DIR = Path(__file__).resolve().parents[1] / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPTS_DIR))
+
+from vnext.source_strategy import load_source_strategy_registry  # noqa: E402
 
 
-BUSINESS_LITERAL_PATTERN = re.compile(
-    r"\b(lodging|hotel|occupancy|revpar|adr|marriott|pfizer|"
-    r"systemwide|worldwide|comparable|b01|b03|b10|b11)\b",
-    flags=re.IGNORECASE,
-)
 FORBIDDEN_AI_IMPORTS = {
     "http",
     "requests",
@@ -51,6 +52,8 @@ PINNED_REMOTE_CONSTANT_SETS = (
 )
 PINNED_REMOTE_IMPORTS = {"socket", "urllib"}
 GATE_SOURCE_PATHS = (
+    "config/issue_15_release_plan.json",
+    "config/source_strategy_registry.json",
     "scripts/sec_pipeline.py",
     "tools/check_no_company_literals.py",
     "tools/check_vnext_semantics.py",
@@ -59,6 +62,30 @@ GATE_SOURCE_PATHS = (
 
 class SemanticAuditError(RuntimeError):
     """Report an unreadable source tree or failed semantic audit."""
+
+
+def compile_business_literal_pattern(*, repo_root: Path) -> Pattern[str]:
+    """Compile the exact family-owned forbidden literal union.
+
+    Args:
+        repo_root: Repository root containing the Issue #15 registry.
+
+    Returns:
+        Case-insensitive pattern matching each complete configured phrase.
+
+    Raises:
+        SemanticAuditError: When the validated registry has no literals.
+    """
+    registry = load_source_strategy_registry(repo_root=repo_root)
+    literals = registry["forbidden_production_literals"]
+    if not literals:
+        raise SemanticAuditError("Forbidden production literal set is empty")
+    alternatives = "|".join(
+        re.escape(literal) for literal in sorted(literals, key=len, reverse=True)
+    )
+    return re.compile(
+        r"(?<!\w)(?:{})(?!\w)".format(alternatives), flags=re.IGNORECASE,
+    )
 
 
 def _sha256(*, content: bytes) -> str:
@@ -124,13 +151,14 @@ def _has_pinned_remote_transport(
 
 
 def audit_python_file(
-    *, path: Path, repo_root: Path
+    *, path: Path, repo_root: Path, business_literal_pattern: Pattern[str]
 ) -> List[Dict[str, object]]:
     """Return every classified semantic/security match in one Python file.
 
     Args:
         path: Executable Python file.
         repo_root: Root used for portable receipt paths.
+        business_literal_pattern: Registry-derived forbidden phrase union.
 
     Returns:
         Ordered hit records.
@@ -150,7 +178,7 @@ def audit_python_file(
     hits: List[Dict[str, object]] = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, str):
-            match = BUSINESS_LITERAL_PATTERN.search(node.value)
+            match = business_literal_pattern.search(node.value)
             if match is not None:
                 hits.append(
                     {
@@ -320,8 +348,17 @@ def run_audit(
         )
         for path in sorted(bound_files)
     }
+    business_literal_pattern = compile_business_literal_pattern(
+        repo_root=repo_root
+    )
     for path in audit_files:
-        hits.extend(audit_python_file(path=path, repo_root=repo_root))
+        hits.extend(
+            audit_python_file(
+                path=path,
+                repo_root=repo_root,
+                business_literal_pattern=business_literal_pattern,
+            )
+        )
     if secret_token:
         hits.extend(
             scan_secret_token(roots=secret_roots, secret_token=secret_token,)
