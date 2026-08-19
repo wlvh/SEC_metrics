@@ -978,6 +978,10 @@ class MatrixCoverageExactSetTest(unittest.TestCase):
 
     def test_current_matrix_matches_config_derived_exact_set(self) -> None:
         """The complete matrix satisfies the registry/profile contract."""
+        if (REPO_ROOT / "outputs" / "active_publication.json").is_file():
+            self.skipTest(
+                "active vNext key union is verified by test_zero_ai_release"
+            )
         result = (
             sec_pipeline.check_metrics_matrix_applicability_matches_02_04_spec(
                 metrics=self._metrics(),
@@ -2723,6 +2727,10 @@ class PortableArtifactPathTest(unittest.TestCase):
         self,
     ) -> None:
         """Saved submissions and raw filings independently expose shrinkage."""
+        if (REPO_ROOT / "outputs" / "active_publication.json").is_file():
+            self.skipTest(
+                "legacy events.csv is not an active PublicationView mirror"
+            )
         required_paths = [
             REPO_ROOT / "outputs" / "latest_filings_inventory.csv",
             REPO_ROOT / "outputs" / "events.csv",

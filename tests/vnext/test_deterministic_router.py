@@ -292,6 +292,7 @@ class DeterministicRouterTest(unittest.TestCase):
                     source_set_manifest=manifests["companyfacts"],
                     approved_concepts=["us-gaap:Revenues"],
                     allowed_ciks=["1"],
+                    include_instant=False,
                 )
                 accession = adapt_accession_xbrl(
                     raw_bytes=source_bytes["accession"],

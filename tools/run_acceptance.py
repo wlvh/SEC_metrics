@@ -805,7 +805,7 @@ def external_blockers(*, repo_root: Path) -> List[Dict[str, str]]:
     """
     blockers = []
     requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements/ai_first_v3_3_1"
+        snapshot_dir=repo_root / "requirements/issue_15_v1"
     )
     if "D-01" in requirement["pending_decision_ids"]:
         blockers.append(

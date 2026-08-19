@@ -205,8 +205,16 @@ class ValidationProvenanceTest(unittest.TestCase):
                 '{"evidence":"qualification"}\n',
             )
             self._write(
+                "artifacts/vnext/zero_ai_release/fixture.json",
+                '{"evidence":"zero-ai-workspace"}\n',
+            )
+            self._write(
                 "outputs/publication_fault_receipts/fixture.json",
                 '{"evidence":"fault-matrix"}\n',
+            )
+            self._write(
+                "outputs/zero_ai_release_receipts/fixture.json",
+                '{"evidence":"zero-ai-release"}\n',
             )
             self._write(
                 "outputs/vnext_cutover_audits/fixture.json",

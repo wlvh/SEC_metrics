@@ -23,6 +23,7 @@ from typing import Dict, Set
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import content_hash, sha256_file
 from vnext.publication import PublicationView, ROOT_MIRROR_RELATIVE_PATHS
+from vnext.publication import verify_publication_bundle
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
@@ -57,12 +58,19 @@ def frozen_issue15_artifact_path(*, relative: str) -> Path:
     if not pointer_path.exists():
         return REPO_ROOT / relative
     active = PublicationView.open(publication_root=REPO_ROOT)
-    predecessor_dir = (
-        REPO_ROOT
-        / "outputs"
-        / "publications"
-        / str(active.manifest["previous_publication_id"])
-    )
+    predecessor_id = active.manifest["previous_publication_id"]
+    predecessor_dir = None
+    while predecessor_id is not None:
+        candidate = (
+            REPO_ROOT / "outputs" / "publications" / str(predecessor_id)
+        )
+        manifest = verify_publication_bundle(bundle_dir=candidate)
+        if (candidate / "internal/legacy_baseline_import.json").is_file():
+            predecessor_dir = candidate
+            break
+        predecessor_id = manifest["previous_publication_id"]
+    if predecessor_dir is None:
+        raise AssertionError("Active publication chain lacks legacy A")
     root_to_bundle = {
         root_relative: bundle_relative
         for bundle_relative, root_relative in ROOT_MIRROR_RELATIVE_PATHS.items()

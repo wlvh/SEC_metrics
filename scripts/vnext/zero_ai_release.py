@@ -194,8 +194,16 @@ def _append_publication_note(
         text = original.decode("utf-8")
     except UnicodeDecodeError as error:
         raise ZeroAiReleaseError("Public Markdown is not UTF-8") from error
-    if ZERO_AI_NOTE_START in text or ZERO_AI_NOTE_END in text:
-        raise ZeroAiReleaseError("Predecessor already has a zero-AI note")
+    starts = text.count(ZERO_AI_NOTE_START)
+    ends = text.count(ZERO_AI_NOTE_END)
+    if starts != ends or starts > 1:
+        raise ZeroAiReleaseError("Public zero-AI note is ambiguous")
+    if starts == 1:
+        start = text.index(ZERO_AI_NOTE_START)
+        end = text.index(ZERO_AI_NOTE_END) + len(ZERO_AI_NOTE_END)
+        if text[end:].strip():
+            raise ZeroAiReleaseError("Public zero-AI note is not terminal")
+        text = text[:start]
     block = """
 
 {start}
@@ -270,6 +278,7 @@ def _filing_identity(
 def _source_reference(
     *, repo_root: Path, company_id: str, repo_relative_path: str,
     source_url: str, accession: str, document_name: str, source_role: str,
+    media_type: str,
 ) -> Tuple[Dict[str, object], Dict[str, object]]:
     """Build one immutable-attempt-backed SourceReference.
 
@@ -281,6 +290,7 @@ def _source_reference(
         accession: Filing or pinned inventory identity.
         document_name: SEC document name.
         source_role: Deterministic plan role.
+        media_type: Explicit RawBlob media type.
 
     Returns:
         SourceReference and complete immutable locator binding.
@@ -288,7 +298,7 @@ def _source_reference(
     raw = raw_blob_record(
         repo_root=repo_root,
         repo_relative_path=repo_relative_path,
-        media_type="application/json",
+        media_type=media_type,
     )
     binding = request_attempt_binding(
         repo_root=repo_root,
@@ -350,6 +360,7 @@ def _r1_source_plan(
                 accession=str(source["accession"]),
                 document_name=str(source["document_name"]),
                 source_role="companyfacts",
+                media_type="application/json",
             )
             cik = str(int(registry[company_id]["primary_cik"])).zfill(10)
             inventory_name = "CIK{}.json".format(cik)
@@ -368,6 +379,7 @@ def _r1_source_plan(
                 ),
                 document_name=inventory_name,
                 source_role="sec_submissions_inventory",
+                media_type="application/json",
             )
             form, filed = _filing_identity(
                 inventory_bytes=inventory_bytes,
@@ -761,7 +773,7 @@ def _retirement_receipt(
             )
     retired_scopes.sort(key=lambda row: str(row["producer_id"]))
     if not retired_scopes:
-        raise ZeroAiReleaseError("R1 producer retirement set is empty")
+        raise ZeroAiReleaseError("Zero-AI producer retirement set is empty")
     body = {
         "schema_version": 1,
         "record_type": "PUBLICATION_BOUND_RETIREMENT_RECEIPT",
@@ -810,7 +822,7 @@ def _ledger_binding(
         for reference in plan["source_references"]
     )
     if source_ids != sorted(locator_proofs):
-        raise ZeroAiReleaseError("R1 locator proof exact set differs")
+        raise ZeroAiReleaseError("Zero-AI locator proof exact set differs")
     attempts = sorted(
         {
             str(locator_proofs[source_id]["request_attempt_id"])
@@ -818,21 +830,37 @@ def _ledger_binding(
         }
     )
     source_proofs = []
+    locator_classes = sorted(
+        {
+            str(locator_proofs[source_id]["request_locator_kind"])
+            for source_id in source_ids
+        }
+    )
     for source_id in source_ids:
         proof = locator_proofs[source_id]
-        source_proofs.append(
-            {
-                "source_reference_id": source_id,
-                "request_attempt_id": proof["request_attempt_id"],
-                "locator_class": proof["request_locator_kind"],
-                "body_path": proof["request_repo_relative_path"],
-                "body_sha256": proof["request_body_sha256"],
-                "body_size": proof["request_body_size"],
-                "headers_path": proof["request_headers_repo_relative_path"],
-                "headers_sha256": proof["request_headers_sha256"],
-                "headers_size": proof["request_headers_size"],
+        source_proof = {
+            "source_reference_id": source_id,
+            "request_attempt_id": proof["request_attempt_id"],
+            "locator_class": proof["request_locator_kind"],
+            "body_path": proof["request_repo_relative_path"],
+            "body_sha256": proof["request_body_sha256"],
+            "body_size": proof["request_body_size"],
+            "headers_path": proof["request_headers_repo_relative_path"],
+            "headers_sha256": proof["request_headers_sha256"],
+            "headers_size": proof["request_headers_size"],
+        }
+        if proof["request_locator_kind"] == "IMMUTABLE_GIT_BLOB":
+            required_git = {
+                "git_body_blob_oid",
+                "git_commit",
+                "git_headers_blob_oid",
             }
-        )
+            if not required_git.issubset(proof):
+                raise ZeroAiReleaseError("Git-blob locator proof is incomplete")
+            source_proof.update(
+                {field: proof[field] for field in sorted(required_git)}
+            )
+        source_proofs.append(source_proof)
     log_manifest = request_log_manifest_payload(
         log_path=repo_root / "evidence" / "requests_log.csv"
     )
@@ -840,14 +868,14 @@ def _ledger_binding(
         "schema_version": 1,
         "record_type": "ZERO_AI_REQUEST_LOCATOR_PROVENANCE",
         "release_input_plan_id": plan["release_input_plan_id"],
-        "request_locator_classes": ["IMMUTABLE_ATTEMPT"],
+        "request_locator_classes": locator_classes,
         "source_proofs": source_proofs,
     }
     provenance = _receipt(
         body=proof_body, identity_field="request_locator_proof_id",
     )
     binding = {
-        "request_locator_classes": ["IMMUTABLE_ATTEMPT"],
+        "request_locator_classes": locator_classes,
         "request_locator_proof_id": provenance["request_locator_proof_id"],
         "request_locator_tier": "FULL_VALIDATION",
         "requests_log_prefix_sha256": log_manifest["content_sha256"],
@@ -1148,17 +1176,17 @@ def _read_back_proof(
     """
     view = PublicationView.open(publication_root=repo_root)
     if view.publication_id != expected_publication_id:
-        raise ZeroAiReleaseError("R1 active publication differs")
+        raise ZeroAiReleaseError("Zero-AI active publication differs")
     artifact_hashes = {}
     for relative in sorted(REQUIRED_BUNDLE_FILES):
         content = view.read_bytes(relative_path=relative)
         mirror = repo_root / ROOT_MIRROR_RELATIVE_PATHS[relative]
         if mirror.read_bytes() != content:
-            raise ZeroAiReleaseError("R1 root mirror differs")
+            raise ZeroAiReleaseError("Zero-AI root mirror differs")
         artifact_hashes[relative] = sha256_bytes(content=content)
     state = publication_state_snapshot(publication_root=repo_root)
     if state["active_publication_id"] != expected_publication_id:
-        raise ZeroAiReleaseError("R1 state snapshot differs")
+        raise ZeroAiReleaseError("Zero-AI state snapshot differs")
     body = {
         "schema_version": 1,
         "record_type": "ZERO_AI_IMMUTABLE_READ_BACK_PROOF",

@@ -1303,6 +1303,7 @@ def _structured_facts_from_sources(
                     source_reference=reference,
                     approved_concepts=concepts,
                     allowed_ciks=company_ciks,
+                    include_instant=False,
                 )
             )
         except ValueError as error:

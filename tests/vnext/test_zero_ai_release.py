@@ -1,4 +1,4 @@
-"""Verify the committed Issue #15 zero-AI R1 publication evidence."""
+"""Verify committed Issue #15 zero-AI R1 and cumulative R2 evidence."""
 
 from __future__ import annotations
 
@@ -26,13 +26,27 @@ ZERO_COUNTERS = {
 
 
 class ZeroAiReleaseTest(unittest.TestCase):
-    """Prove R1 is active evidence rather than a recorded-only claim."""
+    """Prove R1 history and the final cumulative R2 active publication."""
+
+    def _active_and_r1(self) -> tuple[PublicationView, PublicationView]:
+        """Return the active R2 view and its verified R1 predecessor."""
+        active = PublicationView.open(publication_root=REPO_ROOT)
+        r1_id = str(active.manifest["previous_publication_id"])
+        r1_dir = REPO_ROOT / "outputs" / "publications" / r1_id
+        r1_manifest = verify_publication_bundle(bundle_dir=r1_dir)
+        return active, PublicationView(
+            publication_id=r1_id,
+            bundle_dir=r1_dir,
+            manifest=r1_manifest,
+        )
 
     def test_r1_active_rollback_restore_and_read_back_are_bound(self) -> None:
         """Verify final B, predecessor A, seven receipt roles, and mirrors."""
-        view = PublicationView.open(publication_root=REPO_ROOT)
+        view, r1_view = self._active_and_r1()
         marker = json.loads(
-            view.read_bytes(relative_path=ZERO_AI_FORMAL_MANIFEST).decode("utf-8")
+            r1_view.read_bytes(relative_path=ZERO_AI_FORMAL_MANIFEST).decode(
+                "utf-8"
+            )
         )
         self.assertEqual("R1", marker["release_stage"])
         self.assertEqual("PASSED", marker["status"])
@@ -92,7 +106,7 @@ class ZeroAiReleaseTest(unittest.TestCase):
 
     def test_r1_public_key_set_and_structural_additions_are_exact(self) -> None:
         """Prove 232 unique keys and only two new structural coordinates."""
-        view = PublicationView.open(publication_root=REPO_ROOT)
+        _active, view = self._active_and_r1()
         marker = json.loads(
             view.read_bytes(relative_path=ZERO_AI_FORMAL_MANIFEST).decode("utf-8")
         )
@@ -129,6 +143,131 @@ class ZeroAiReleaseTest(unittest.TestCase):
                 and not row["value"]
                 for row in additions
             )
+        )
+
+    def test_r2_active_key_union_compatibility_and_retirement_are_bound(
+        self,
+    ) -> None:
+        """Prove 22x10 coordinates, 309 keys, receipts, and zero calls."""
+        view, r1_view = self._active_and_r1()
+        marker = json.loads(
+            view.read_bytes(relative_path=ZERO_AI_FORMAL_MANIFEST).decode("utf-8")
+        )
+        self.assertEqual("R2", marker["release_stage"])
+        self.assertEqual("PASSED", marker["status"])
+        self.assertEqual(ZERO_COUNTERS, marker["counters"])
+        self.assertEqual(22, len(marker["cumulative_metric_ids"]))
+        self.assertEqual(220, marker["result_coordinate_count"])
+        self.assertEqual(141, marker["replaced_legacy_row_count"])
+        self.assertEqual(79, marker["new_public_key_count"])
+        self.assertEqual(309, marker["public_matrix_row_count"])
+        self.assertEqual(r1_view.publication_id, marker["previous_publication_id"])
+        self.assertEqual(
+            ["IMMUTABLE_ATTEMPT", "IMMUTABLE_GIT_BLOB"],
+            marker["source_locator_classes"],
+        )
+
+        rows = list(
+            csv.DictReader(
+                io.StringIO(
+                    view.read_bytes(relative_path="metrics_matrix.csv").decode(
+                        "utf-8"
+                    )
+                )
+            )
+        )
+        legacy_id = str(r1_view.manifest["previous_publication_id"])
+        legacy_rows = list(
+            csv.DictReader(
+                io.StringIO(
+                    (
+                        REPO_ROOT
+                        / "outputs"
+                        / "publications"
+                        / legacy_id
+                        / "metrics_matrix.csv"
+                    ).read_text(encoding="utf-8")
+                )
+            )
+        )
+        legacy_keys = {
+            (row["company"], row["metric_id"]) for row in legacy_rows
+        }
+        additions = [
+            row for row in rows
+            if (row["company"], row["metric_id"]) not in legacy_keys
+        ]
+        self.assertEqual(309, len(rows))
+        self.assertEqual(79, len(additions))
+        self.assertTrue(
+            all(
+                row["status"] == "N_A_STRUCTURAL"
+                and row["source_class"] == "STRUCTURAL"
+                and not row["value"]
+                for row in additions
+            )
+        )
+        keys = sorted(
+            (
+                {"company": row["company"], "metric_id": row["metric_id"]}
+                for row in rows
+            ),
+            key=lambda row: (row["company"], row["metric_id"]),
+        )
+        self.assertEqual(marker["public_key_set_hash"], content_hash(value=keys))
+
+        index = json.loads(
+            (
+                REPO_ROOT
+                / "outputs"
+                / "zero_ai_release_receipts"
+                / "r2"
+                / "index.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual(ZERO_COUNTERS, index["counters"])
+        self.assertEqual(
+            {
+                "active_terminal",
+                "immutable_read_back",
+                "predecessor_r1",
+                "retirement",
+                "strict_compatibility",
+                "successor_publication",
+            },
+            set(index["receipts"]),
+        )
+        for binding in index["receipts"].values():
+            path = REPO_ROOT / binding["path"]
+            self.assertEqual(binding["sha256"], sha256_file(path=path))
+            self.assertEqual(binding["size"], path.stat().st_size)
+
+        graph = json.loads(
+            view.read_bytes(
+                relative_path="internal/deterministic_execution_graph.json"
+            ).decode("utf-8")
+        )
+        self.assertEqual("R2", graph["release_stage"])
+        self.assertEqual(10, len(graph["event_key_parity"]))
+        inventory = json.loads(
+            (
+                REPO_ROOT
+                / "requirements"
+                / "issue_15_v1"
+                / "legacy_semantic_producer_inventory.json"
+            ).read_text(encoding="utf-8")
+        )
+        producer_ids = {row["producer_id"] for row in inventory["producers"]}
+        retirement_binding = index["receipts"]["retirement"]
+        retirement = json.loads(
+            (REPO_ROOT / retirement_binding["path"]).read_text(encoding="utf-8")
+        )
+        self.assertTrue(retirement["retired_producer_scopes"])
+        self.assertTrue(
+            {
+                row["producer_id"]
+                for row in retirement["retired_producer_scopes"]
+            }.issubset(producer_ids)
         )
 
     def test_r1_marker_tamper_fails_closed(self) -> None:

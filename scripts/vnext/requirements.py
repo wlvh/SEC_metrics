@@ -44,6 +44,7 @@ ISSUE_15_SNAPSHOT_FILES = {
     "transfer": "transfer_manifest.json",
 }
 ISSUE_15_RUNTIME_AUTHORITY_FILES = {
+    "catalog/deterministic_metrics.json",
     "catalog/event_routes.json",
     "config/issue_15_release_plan.json",
     "config/source_strategy_registry.json",

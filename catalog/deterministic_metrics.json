@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "record_type": "DETERMINISTIC_METRIC_CATALOG",
+  "metrics": {
+    "A01": {
+      "adapter_id": "accession_xbrl",
+      "source_role": "target_accession_instance",
+      "formula_id": "direct",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "TierOneRiskBasedCapitalToRiskWeightedAssets"
+      ]
+    },
+    "A02": {
+      "adapter_id": "accession_xbrl",
+      "source_role": "target_accession_instance",
+      "formula_id": "direct",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "CommonEquityTier1CapitaltoRiskWeightedAssets"
+      ]
+    },
+    "A05": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "average_denominator_ratio",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "NetIncomeLoss",
+        "Assets"
+      ]
+    },
+    "A06": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "average_denominator_ratio",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "NetIncomeLoss",
+        "StockholdersEquity"
+      ]
+    },
+    "A07": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "difference",
+      "canonical_unit": "USD",
+      "approved_concepts": [
+        "NetIncomeLoss"
+      ]
+    },
+    "A08": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "ratio",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "NoninterestIncome",
+        "InterestIncomeExpenseNet"
+      ]
+    },
+    "A10": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "ratio",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest",
+        "FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss"
+      ]
+    },
+    "B02": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "growth",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "Revenues",
+        "RevenueFromContractWithCustomerExcludingAssessedTax"
+      ]
+    },
+    "B04": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "direct",
+      "canonical_unit": "USD",
+      "approved_concepts": [
+        "NetIncomeLoss",
+        "ProfitLoss"
+      ]
+    },
+    "B05": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "difference",
+      "canonical_unit": "USD",
+      "approved_concepts": [
+        "NetCashProvidedByUsedInOperatingActivities",
+        "PaymentsToAcquireProductiveAssets",
+        "PaymentsToAcquirePropertyPlantAndEquipment"
+      ]
+    },
+    "B07": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "interest_coverage",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "OperatingIncomeLoss",
+        "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+        "OtherNonoperatingIncomeExpense",
+        "InterestExpenseNonoperating",
+        "InterestExpenseDebt",
+        "InterestExpense"
+      ]
+    },
+    "B08": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "ratio",
+      "canonical_unit": "ratio",
+      "approved_concepts": [
+        "AssetsCurrent",
+        "LiabilitiesCurrent"
+      ]
+    },
+    "B09": {
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "formula_id": "direct",
+      "canonical_unit": "USD",
+      "approved_concepts": [
+        "CashAndCashEquivalentsAtCarryingValue"
+      ]
+    },
+    "B12": {
+      "adapter_id": "accession_xbrl",
+      "source_role": "target_accession_instance",
+      "formula_id": "direct",
+      "canonical_unit": "USD",
+      "approved_concepts": [
+        "RevenueRemainingPerformanceObligation"
+      ]
+    }
+  }
+}

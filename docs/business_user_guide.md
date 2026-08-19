@@ -37,7 +37,7 @@ SEC_metrics 为当前 registry 中配置的公司生成最近年度 SEC 申报�
   <!-- capability-anchor: BOUNDARY.sec_only_point_in_time -->
 - 不保证复杂表格、维度债务、治理与风险指标都能自动得到数值；它们可能明确降级。
   <!-- capability-anchor: BOUNDARY.complex_extraction_can_degrade -->
-- 当前没有前端、API、daily scheduler或生产数据库服务；Issue #15 zero-AI R1已有committed active publication，但R2、AI Reader、39指标最终Cutover与full receipt仍不存在。
+- 当前没有前端、API、daily scheduler或生产数据库服务；Issue #15 zero-AI R2已有committed active publication，但WB-4以后、AI Reader、39指标最终Cutover与full receipt仍不存在。
   <!-- capability-anchor: BOUNDARY.not_production_service -->
 - 不替人做投资、信用、报价、监管或外部审计决定。
   <!-- capability-anchor: RESPONSIBILITY.human_reviews_caveats_and_decides -->
@@ -174,7 +174,7 @@ full validation 需要本地 raw evidence、请求日志和 concept inventory �
 
 ## 10. vNext 当前如何复核
 
-vNext 已提供同一套 recorded/live operator、固定DeepSeek/SEC边界、完整表格输入、模型候选留痕、机械 Evidence、整单HUMAN或D-06 SYSTEM Review、freeze/replay、Spec-driven B03、qualification、formal publication/rollback 与 pinned PublicationView consumers。recorded 模式强制离线且不修改正式 active/root outputs；generic publish只能准备inactive recorded bundle，public generic formal receipt/commit入口会fail closed，正式写入只归module-owned orchestrator所有。Issue #15 快速验收并发运行十一个直接边界用例，不运行全仓或双解释器长套件；整体最高仍是 `PASSED_FAST_LOCAL_ONLY`，其中读取R1 formal artifacts的用例也不能把partial active升级为full acceptance。
+vNext 已提供同一套 recorded/live operator与formal publication primitives。recorded模式强制离线且不修改正式active/root outputs；generic formal commit会fail closed。Issue #15快速验收并发运行十一个直接边界用例，整体最高仍是`PASSED_FAST_LOCAL_ONLY`；读取R2 formal artifacts的用例也不能把partial active升级为full acceptance。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
 运行负责人可以不读源码，从 `tools/vnext_operator.py fixture list/show` 发现仓库已经绑定的真实 SEC recorded fixture，再运行 `tools/vnext_cutover.py --fixture-id ...`。首次命令会创建真实 structured/OPEN Runs；既有HUMAN decision优先，否则D-06会以固定可审计SYSTEM身份写入完整approval并继续。之后同一Cutover命令完成freeze/replay、complete Batch、Projector，并在request closure通过后把结果CAS提交到该workspace自己的`recorded-publication`再用PublicationView读回。recorded Cutover只接受`artifacts/vnext/recorded-*`专用workspace；live固定使用repository-owned `artifacts/vnext/cutover`，caller传入任何live `--workspace-dir`都会在读取或写入前以`LIVE_WORKSPACE_OVERRIDE_FORBIDDEN`失败。recorded closure可验证历史ledger中唯一、path/hash/headers/size exact的legacy locator并明确保留tier/class；formal/live仍只允许immutable attempt，resume时还会对当前解释器、固定五命令、ledger tail与inventory bytes重验acquisition receipt。这是socket=0的操作训练与transaction证据；正式active pointer、root CSV/报告、formal namespace及SEC ledger不会变化。自动测试中的`TEST_ONLY_EXPLICIT_REVIEW`不是正式HUMAN签署，sandbox publication也不是live、active或full结果，不能交给业务人员作为新数据入口。
@@ -213,8 +213,9 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 判断展示版本必须同时读取 active pointer 与 latest run status：active 是当前可用的上一成功完整版本；latest 可能失败、withheld 或仍在 staging。status writer 只接收 persisted Run directory 或 publication ID，在 pointer lock 内加载真实状态并验证 active pointer/bundle；不接受调用方自报的状态枚举、boolean、view 或 manifest。bundle storage、pointer/lock、status 和 mirrors 全部从单一 publication root 派生，调用方不能分别定义互相矛盾的路径。`active_is_latest_success` 由两者 publication ID 是否相同派生。FAILED/BLOCKED 不得携带 latest publication ID，不能把旧 active 描述成最新运行成功。
 <!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
 
-当前可采信的 active publication 仅覆盖 Issue #15 zero-AI R1：十公司 B01/B03 的20个Result坐标、18个strict-compatible legacy替换行和2个新增`N_A_STRUCTURAL` key。它已真实完成verified legacy A→formal B、rollback→A、restore→B，三种provider计数均为0；root CSV/报告逐byte来自恢复后的B。R2、AI Reader、39指标最终Cutover和full acceptance尚未完成，历史DeepSeek `Insufficient Balance`失败仍只是后续AI档的失败证据。业务读取必须同时核对active pointer、bundle marker和receipt index，不能把R1写成Issue #15 Done。
+当前可采信的active publication覆盖Issue #15 zero-AI R2：16个DET_ONLY与C01/E01–E05，共22指标/220个Result坐标；141个legacy行strict-compatible，79个新增key均为`N_A_STRUCTURAL`，public matrix共309行。R1的verified A→B→A→B历史仍可回读；R2以完整submissions current/history shard source sets、event-key parity、retirement和immutable read-back receipts提交，real model egress与paid call均为0。WB-4以后、AI Reader、39指标最终Cutover和full acceptance尚未完成。
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
+<!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
 
 ## 11. 最短建议

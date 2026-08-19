@@ -263,12 +263,17 @@ def source_set_manifest(
     )
     inventory = _reference(value=inventory_source_reference)
     _require_raw_bytes(source_reference=inventory, raw_bytes=inventory_bytes)
-    references = [_reference(value=reference) for reference in ordered_source_references]
+    references = [
+        _reference(value=reference)
+        for reference in ordered_source_references
+    ]
     if inventory["company_id"] != company_id or any(
         reference["company_id"] != company_id for reference in references
     ):
         raise DeterministicRouterError("Source-set company binding differs")
-    reference_ids = [str(reference["source_reference_id"]) for reference in references]
+    reference_ids = [
+        str(reference["source_reference_id"]) for reference in references
+    ]
     if len(reference_ids) != len(set(reference_ids)):
         raise DeterministicRouterError("Source-set reference identity is duplicated")
     discovered_accessions = _submissions_accessions(
@@ -276,7 +281,9 @@ def source_set_manifest(
         form_types=forms,
         fiscal_or_date_window=fiscal_or_date_window,
     )
-    planned_accessions = sorted({str(reference["accession"]) for reference in references})
+    planned_accessions = sorted(
+        {str(reference["accession"]) for reference in references}
+    )
     if planned_accessions != discovered_accessions:
         raise DeterministicRouterError(
             "Source-set references differ from submissions discovery"
@@ -380,13 +387,20 @@ def _submissions_accessions(
         raise DeterministicRouterError(
             "SEC submissions inventory is not strict UTF-8 JSON"
         ) from error
+    if not isinstance(payload, dict):
+        raise DeterministicRouterError("SEC submissions inventory is incomplete")
     if (
-        not isinstance(payload, dict)
-        or "filings" not in payload
-        or not isinstance(payload["filings"], dict)
-        or "recent" not in payload["filings"]
-        or not isinstance(payload["filings"]["recent"], dict)
+        "filings" in payload
+        and isinstance(payload["filings"], dict)
+        and "recent" in payload["filings"]
+        and isinstance(payload["filings"]["recent"], dict)
     ):
+        recent = payload["filings"]["recent"]
+    elif all(field in payload for field in ("accessionNumber", "filingDate", "form")):
+        # SEC submissions history shards expose the same parallel arrays at
+        # the root instead of below filings.recent.
+        recent = payload
+    else:
         raise DeterministicRouterError("SEC submissions inventory is incomplete")
     if not isinstance(fiscal_or_date_window, dict) or not {
         "period_start",
@@ -408,7 +422,6 @@ def _submissions_accessions(
         ) from error
     if end_date < start_date:
         raise DeterministicRouterError("Source-set period ends before it starts")
-    recent = payload["filings"]["recent"]
     required = {"accessionNumber", "filingDate", "form"}
     if not required.issubset(recent) or any(
         not isinstance(recent[field], list) for field in required
@@ -610,7 +623,9 @@ def build_multi_source_release_input_plan(
                 or manifest["ordered_source_reference_ids"]
                 != role["source_reference_ids"]
             ):
-                raise DeterministicRouterError("Release source role differs from manifest")
+                raise DeterministicRouterError(
+                    "Release source role differs from manifest"
+                )
             if any(
                 source_id not in reference_index
                 for source_id in role["source_reference_ids"]
@@ -719,7 +734,11 @@ def validate_verified_claim(*, claim: Mapping[str, object]) -> Dict[str, object]
         Isolated validated claim.
     """
     value = _object(value=claim, label="deterministic VerifiedClaim")
-    _exact_fields(value=value, expected=CLAIM_FIELDS, label="deterministic VerifiedClaim")
+    _exact_fields(
+        value=value,
+        expected=CLAIM_FIELDS,
+        label="deterministic VerifiedClaim",
+    )
     if value["record_type"] != "DETERMINISTIC_VERIFIED_CLAIM":
         raise DeterministicRouterError("Deterministic claim record type differs")
     for field in (
@@ -754,6 +773,7 @@ def adapt_companyfacts(
     source_set_manifest: Mapping[str, object],
     approved_concepts: Sequence[str],
     allowed_ciks: Sequence[str],
+    include_instant: bool,
 ) -> List[Dict[str, object]]:
     """Adapt Company Facts bytes into deterministic numeric claims.
 
@@ -763,6 +783,7 @@ def adapt_companyfacts(
         source_set_manifest: Complete singleton source-set proof.
         approved_concepts: Declarative concept candidates.
         allowed_ciks: Registry-authorized CIK set.
+        include_instant: Whether balance-sheet instant facts are allowed.
 
     Returns:
         Ordered deterministic numeric claims.
@@ -774,6 +795,7 @@ def adapt_companyfacts(
         source_reference=reference,
         approved_concepts=approved_concepts,
         allowed_ciks=allowed_ciks,
+        include_instant=include_instant,
     )
     claims = []
     for fact in facts:
@@ -922,7 +944,9 @@ def _adapt_xbrl(
     """Adapt exact XBRL bytes through one generic declarative fact matcher."""
     reference = _reference(value=source_reference)
     _require_raw_bytes(source_reference=reference, raw_bytes=raw_bytes)
-    names = _text_list(value=list(fact_names), label="XBRL fact names", allow_empty=False)
+    names = _text_list(
+        value=list(fact_names), label="XBRL fact names", allow_empty=False,
+    )
     try:
         text = raw_bytes.decode("utf-8")
     except UnicodeDecodeError as error:
@@ -1184,14 +1208,8 @@ def adapt_8k_item_index(
             item_rows = [
                 (
                     code,
-                    primary_by_code[code]
-                    if code in primary_by_code
-                    else "8-K item {} parsed from hdr.sgml".format(code),
-                    (
-                        "HDR_SGML_ITEM_CODE_WITH_PRIMARY_HEADING_BRIEF"
-                        if code in primary_by_code
-                        else "HDR_SGML_ITEM_CODE"
-                    ),
+                    "8-K item {} parsed from hdr.sgml".format(code),
+                    "HDR_SGML_ITEM_CODE",
                 )
                 for code in hdr_codes
             ]
@@ -1201,15 +1219,21 @@ def adapt_8k_item_index(
                 for code, brief in primary_rows
             ]
         for code, brief, brief_source in item_rows:
+            # Legacy event identity is hdr.sgml when its item code is the
+            # authority; primary-document URL is used only for heading
+            # fallback.  The brief may still be enriched from primary bytes.
+            event_reference = (
+                hdr_reference if hdr_codes else reference
+            )
             event_key = {
-                "source_url": reference["source_url"],
-                "accession": reference["accession"],
+                "source_url": event_reference["source_url"],
+                "accession": event_reference["accession"],
                 "item_code": code,
             }
             claims.append(
                 verified_claim(
                     claim_kind="DETERMINISTIC_8K_ITEM_BRIEF",
-                    source_reference=reference,
+                    source_reference=event_reference,
                     source_set_manifest=manifest,
                     locator={"item_code": code, "brief_source": brief_source},
                     value=brief,
@@ -1223,8 +1247,16 @@ def adapt_8k_item_index(
                         "hdr_source_reference_id": hdr_reference[
                             "source_reference_id"
                         ],
+                        "primary_source_reference_id": reference[
+                            "source_reference_id"
+                        ],
+                        "primary_heading_brief": (
+                            primary_by_code[code]
+                            if code in primary_by_code
+                            else ""
+                        ),
                         "item_code": code,
-                        "source_url": reference["source_url"],
+                        "source_url": event_reference["source_url"],
                     },
                 )
             )
@@ -1252,7 +1284,11 @@ def load_event_route_catalog(*, repo_root: Path) -> Dict[str, object]:
     """
     parsed = strict_json_file(path=repo_root / "catalog" / "event_routes.json")
     catalog = _object(value=parsed, label="event route catalog")
-    _exact_fields(value=catalog, expected=EVENT_CATALOG_FIELDS, label="event route catalog")
+    _exact_fields(
+        value=catalog,
+        expected=EVENT_CATALOG_FIELDS,
+        label="event route catalog",
+    )
     if (
         catalog["schema_version"] != 1
         or catalog["record_type"] != "DETERMINISTIC_EVENT_ROUTE_CATALOG"
@@ -1278,13 +1314,20 @@ def load_event_route_catalog(*, repo_root: Path) -> Dict[str, object]:
             label="event direct item codes",
             allow_empty=True,
         )
-        if any(re.fullmatch(r"[0-9]{1,2}\.[0-9]{2}", code) is None for code in direct):
+        if any(
+            re.fullmatch(r"[0-9]{1,2}\.[0-9]{2}", code) is None
+            for code in direct
+        ):
             raise DeterministicRouterError("Event direct item code is invalid")
         if not isinstance(route["keyword_item_rules"], list):
             raise DeterministicRouterError("Event keyword rules must be an array")
         for rule_value in route["keyword_item_rules"]:
             rule = _object(value=rule_value, label="event keyword rule")
-            _exact_fields(value=rule, expected=KEYWORD_RULE_FIELDS, label="event keyword rule")
+            _exact_fields(
+                value=rule,
+                expected=KEYWORD_RULE_FIELDS,
+                label="event keyword rule",
+            )
             _text(value=rule["item_code"], label="keyword item code")
             _text_list(
                 value=rule["aliases"], label="event aliases", allow_empty=False

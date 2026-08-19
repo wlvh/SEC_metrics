@@ -53,6 +53,7 @@ def run_public_acceptance_cli(*, repo_root, arguments):
         Completed process with exact captured stdout and stderr.
     """
     environment = dict(os.environ)
+    environment.pop("DEEPSEEK_API_KEY", None)
     environment.pop("OPENAI_API_KEY", None)
     environment.pop("SEC_CONTACT_EMAIL", None)
     environment["PYTHONDONTWRITEBYTECODE"] = "1"
@@ -405,7 +406,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
             ) as directory, mock.patch.dict(
                 os.environ,
                 {
-                    "OPENAI_API_KEY": "fixture-key",
+                    "DEEPSEEK_API_KEY": "fixture-key",
                     "SEC_CONTACT_EMAIL": identity[1],
                 },
                 clear=True,
@@ -422,9 +423,14 @@ class AcceptanceRunnerTest(unittest.TestCase):
                 config_path.write_text(
                     json.dumps(config), encoding="utf-8",
                 )
+                requirement = run_acceptance.load_requirement_snapshot(
+                    snapshot_dir=(
+                        REPO_ROOT / "requirements" / "issue_15_v1"
+                    )
+                )
                 with mock.patch(
                     "run_acceptance.load_requirement_snapshot",
-                    return_value={"pending_decision_ids": []},
+                    return_value=requirement,
                 ), mock.patch(
                     "run_acceptance.capture_source_snapshot",
                     return_value={},
@@ -589,7 +595,21 @@ class AcceptanceRunnerTest(unittest.TestCase):
             ensure_readme_routes(workdir=workdir)
             generated = readme_path.read_text(encoding="utf-8")
         current = (REPO_ROOT / "README_RUN.md").read_text(encoding="utf-8")
-        self.assertEqual(current, generated)
+        marker = "<!-- zero-ai-formal-publication:start -->"
+        if marker not in current:
+            self.assertEqual(current, generated)
+            return
+        from vnext.publication import PublicationView
+
+        view = PublicationView.open(publication_root=REPO_ROOT)
+        self.assertEqual(
+            current,
+            view.read_bytes(relative_path="README_RUN.md").decode("utf-8"),
+        )
+        self.assertEqual(
+            generated,
+            current.split(marker, maxsplit=1)[0].rstrip() + "\n",
+        )
 
     def test_readme_routes_formal_and_legacy_batches_without_root_writes(
         self,
@@ -1185,10 +1205,10 @@ class AcceptanceRunnerTest(unittest.TestCase):
         with self.assertRaises(AcceptanceError):
             run_acceptance.resolve_python39(explicit_path=true_path)
 
-    def test_public_fake_python39_cannot_mutate_formal_authority(
+    def test_removed_python39_gate_never_executes_caller_binary(
         self,
     ) -> None:
-        """Reject a self-reporting executable before it can rewrite ledger."""
+        """Ignore the retired compatibility option without executing it."""
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "repo"
             ledger = root / "evidence/requests_log.csv"
@@ -1216,7 +1236,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
             payload = json.loads(completed.stdout)
             self.assertNotEqual(0, completed.returncode)
             self.assertEqual(
-                "PYTHON39_INTERPRETER_INVALID", payload["error"]["code"],
+                "SOURCE_REQUIREMENT_CLOSURE_INVALID", payload["status"],
             )
             self.assertEqual(b"immutable-ledger\n", ledger.read_bytes())
             self.assertNotIn("Traceback", completed.stderr)
@@ -2715,7 +2735,7 @@ class AcceptanceRunnerTest(unittest.TestCase):
         blocker_codes = {
             blocker["code"] for blocker in receipt["external_blockers"]
         }
-        self.assertIn("OPENAI_API_KEY_REQUIRED", blocker_codes)
+        self.assertIn("DEEPSEEK_API_KEY_REQUIRED", blocker_codes)
         self.assertNotIn(
             "ACTIVE_PUBLICATION_PREDECESSOR_REQUIRED", blocker_codes,
         )

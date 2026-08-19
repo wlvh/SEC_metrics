@@ -182,6 +182,7 @@ LEDGER_BINDING_FIELDS = {
 }
 REQUEST_LOCATOR_CLASSES = {
     "IMMUTABLE_ATTEMPT",
+    "IMMUTABLE_GIT_BLOB",
     "LEGACY_WORKING_LOCATOR",
 }
 LEGACY_BASELINE_LOCATOR_TIER = "LEGACY_BASELINE_IMPORT"
@@ -4148,7 +4149,13 @@ def _verify_zero_ai_formal_release(
         "real_model_provider_egress_count": 0,
     }:
         raise PublicationError("Zero-AI formal provider counters differ")
-    if receipt["source_locator_classes"] != ["IMMUTABLE_ATTEMPT"]:
+    expected_locator_classes = {
+        "R1": ["IMMUTABLE_ATTEMPT"],
+        "R2": ["IMMUTABLE_ATTEMPT", "IMMUTABLE_GIT_BLOB"],
+    }
+    if receipt["source_locator_classes"] != expected_locator_classes[
+        str(receipt["release_stage"])
+    ]:
         raise PublicationError("Zero-AI source locator class differs")
     if (
         not isinstance(receipt["cumulative_metric_ids"], list)

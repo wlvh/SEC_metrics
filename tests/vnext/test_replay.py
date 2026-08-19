@@ -268,6 +268,7 @@ def create_structured_b01_run(
             repo_root=REPO_ROOT,
             company_id="marriott_international",
         ),
+        include_instant=False,
     )
     if forged_value is not None:
         facts = [
@@ -387,6 +388,7 @@ def create_structured_b03_dependency_run(*, run_dir: Path) -> None:
             compiled_spec=specs["B01"],
         ),
         allowed_ciks=allowed_ciks,
+        include_instant=False,
     )
     _result, _trace, b01_observations = calculate_metric(
         compiled_spec=specs["B01"],
@@ -415,6 +417,7 @@ def create_structured_b03_dependency_run(*, run_dir: Path) -> None:
             compiled_spec=specs["B03"],
         ),
         allowed_ciks=allowed_ciks,
+        include_instant=False,
     )
     result, trace, observations = calculate_metric(
         compiled_spec=specs["B03"],
@@ -529,6 +532,7 @@ def create_structured_b03_run(
             compiled_spec=specs["B01"],
         ),
         allowed_ciks=allowed_ciks,
+        include_instant=False,
     )
     _b01_result, _b01_trace, b01_observations = calculate_metric(
         compiled_spec=specs["B01"],
@@ -544,6 +548,7 @@ def create_structured_b03_run(
             compiled_spec=specs["B03"],
         ),
         allowed_ciks=allowed_ciks,
+        include_instant=False,
     )
     result, trace, observations = calculate_metric(
         compiled_spec=specs["B03"],
@@ -642,6 +647,7 @@ def create_full_release_run(
         allowed_ciks=repository_company_ciks(
             repo_root=repo_root, company_id="pfizer",
         ),
+        include_instant=False,
     )
     b01_result, b01_trace, b01_observations = calculate_metric(
         compiled_spec=specs["B01"],
@@ -1213,6 +1219,7 @@ class ReplayTest(unittest.TestCase):
                     repo_root=repo_root,
                     company_id=str(source["company_id"]),
                 ),
+                include_instant=False,
             )
             duplicate_result, duplicate_trace, duplicate_observations = (
                 calculate_metric(

@@ -330,6 +330,7 @@ def companyfacts_structured_facts(
     source_reference: Mapping[str, object],
     approved_concepts: Sequence[str],
     allowed_ciks: Sequence[str],
+    include_instant: bool,
 ) -> List[Dict[str, object]]:
     """Adapt exact SEC Company Facts bytes into calculator candidates.
 
@@ -338,6 +339,8 @@ def companyfacts_structured_facts(
         source_reference: Run-bound SourceReference for those bytes.
         approved_concepts: Repository-Spec concept names worth materializing.
         allowed_ciks: Registry-authorized CIKs for the logical company.
+        include_instant: Whether facts with one instant date may be emitted;
+            false preserves the annual-duration calculator contract.
 
     Returns:
         Deterministic structured facts carrying portable source bindings.
@@ -442,25 +445,28 @@ def companyfacts_structured_facts(
                         raise SourceError(
                             "Company Facts fact is not an object"
                         )
-                    # The frozen policy only selects annual duration facts;
-                    # instant facts cannot enter this calculator contract.
-                    if (
+                    instant = (
                         "start" not in fact
                         or fact["start"] is None
                         or fact["start"] == ""
-                    ):
+                    )
+                    if instant and not include_instant:
                         continue
                     if "end" not in fact:
                         raise SourceError("Company Facts end is missing")
-                    period_start = _iso_date(
-                        value=fact["start"], field="start",
-                    )
                     period_end = _iso_date(value=fact["end"], field="end")
-                    duration_days = (period_end - period_start).days + 1
-                    if duration_days <= 0:
-                        raise SourceError(
-                            "Company Facts duration must be positive"
+                    if instant:
+                        period_start = period_end
+                        duration_days = 0
+                    else:
+                        period_start = _iso_date(
+                            value=fact["start"], field="start",
                         )
+                        duration_days = (period_end - period_start).days + 1
+                        if duration_days <= 0:
+                            raise SourceError(
+                                "Company Facts duration must be positive"
+                            )
                     accession = _companyfacts_text(
                         fact=fact, field="accn",
                     )

@@ -174,6 +174,14 @@ class SourceRecordTest(unittest.TestCase):
                                     "form": "10-K",
                                     "filed": "2026-02-10",
                                 },
+                                {
+                                    "end": "2024-12-31",
+                                    "val": 50,
+                                    "accn": "0001628280-25-004818",
+                                    "fp": "FY",
+                                    "form": "10-K",
+                                    "filed": "2025-02-11",
+                                },
                             ]
                         }
                     }
@@ -205,17 +213,30 @@ class SourceRecordTest(unittest.TestCase):
             source_reference=source,
             approved_concepts=["us-gaap:Revenues"],
             allowed_ciks=["1048286"],
+            include_instant=False,
         )
         self.assertEqual(1, len(facts))
         self.assertEqual("100", facts[0]["value"])
         self.assertEqual("EUR", facts[0]["unit"])
         self.assertEqual(source["accession"], facts[0]["accession"])
+        all_period_facts = companyfacts_structured_facts(
+            raw_bytes=raw_bytes,
+            source_reference=source,
+            approved_concepts=["us-gaap:Revenues"],
+            allowed_ciks=["1048286"],
+            include_instant=True,
+        )
+        self.assertEqual(2, len(all_period_facts))
+        instant = next(fact for fact in all_period_facts if fact["value"] == "50")
+        self.assertEqual(0, instant["duration_days"])
+        self.assertEqual(instant["period_start"], instant["period_end"])
         with self.assertRaisesRegex(SourceError, "company registry"):
             companyfacts_structured_facts(
                 raw_bytes=raw_bytes,
                 source_reference=source,
                 approved_concepts=["us-gaap:Revenues"],
                 allowed_ciks=["37996"],
+                include_instant=False,
             )
         with self.assertRaisesRegex(SourceError, "bytes differ"):
             companyfacts_structured_facts(
@@ -223,6 +244,7 @@ class SourceRecordTest(unittest.TestCase):
                 source_reference=source,
                 approved_concepts=["us-gaap:Revenues"],
                 allowed_ciks=["1048286"],
+                include_instant=False,
             )
 
 

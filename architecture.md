@@ -1,6 +1,6 @@
 # SEC_metrics 架构说明
 
-本文档描述当前SEC-only单财年批处理、已正式发布的Issue #15 zero-AI ratchet、后续vNext Cutover与full acquisition/inventory编排。它以代码、配置、测试和已落盘产物为事实依据，严格区分R1 active、后续未完成scope与full acceptance，也不把Databricks、前端或数据库方案写成当前能力。
+本文档描述当前SEC-only单财年批处理、已正式发布到R2的Issue #15 zero-AI ratchet、后续vNext Cutover与full acquisition/inventory编排。它严格区分R2 active、后续未完成scope与full acceptance。
 
 本文档不负责：
 
@@ -31,7 +31,7 @@ SEC_metrics 是一个本地 Python CLI 批处理研究项目，面向需要复�
 
 输入包括三份配置、SEC 官方公开端点、前序阶段文件，以及测试 fixture。输出包括原始响应与请求审计、规范化 inventory、指标与证据矩阵、coverage、Golden、repair validation、分层审计、validation run manifest、成功终态的 snapshot provenance sidecar 和中文报告。
 
-当前运行时不是 API、Web 前端、聊天系统、daily scheduler、报价模型或数据库服务。13 个阶段脚本仍可逐阶段运行；vNext 另提供同一 recorded/live operator 与 full Cutover orchestrator。仓库当前 committed active pointer 仅证明Issue #15 zero-AI R1，业务用户读取root CSV/报告时必须按该partial bundle解释，不能把R1写成最终Cutover。
+当前运行时不是 API、Web 前端、聊天系统、daily scheduler、报价模型或数据库服务。仓库当前 committed active pointer 仅证明Issue #15 zero-AI R2的22指标范围，不能把它写成39指标最终Cutover。
 
 ## 2. 架构不变量
 
@@ -224,7 +224,7 @@ flowchart LR
 - `outputs/` 是可发布 snapshot 还是纯可再生产物，仓库尚未冻结长期生命周期策略。
 - 8-K full gate 与生产路径共用 item parser；固定 hdr/primary fixture 只是已支持格式的行为锚点，不是独立的通用 SEC 文档 parser oracle。因此该 gate 能捕获 request/raw/derived 链的集合与交接漂移，但不能单独证明未见格式的解析完整性。
 
-## 11. vNext formal Cutover 实现与 zero-AI R1 active 证据
+## 11. vNext formal Cutover 实现与 zero-AI R2 active 证据
 
 ### 11.0 Issue #15 authority layer（WB-1）
 
@@ -236,7 +236,7 @@ WB-1 只增加 authority 数据和 loader 分支。Issue #15 owner 随后以同 
 
 #### 11.0.1 WB-2 SourceStrategy Registry
 
-`config/source_strategy_registry.json` 对 WB-1 冻结的 39 metric exact set 各保存一条 target route，`source_mode` 只允许 `structured_only`、`structured_first_ai_fallback`、`ai_table`、`ai_text`。同一 shape 显式保存 reader family、structured route/fallback、coverage 与 applicability identity；`ai_event_text` 与 `ROUTE_INVENTORY_ONLY` / `SHADOW_ONLY` / `MIGRATED_PRODUCTION` 不能进入 registry。`config/issue_15_release_plan.json::cumulative_metric_ids` 是唯一当前 ratchet state，R1为B01/B03；plan 绑定 company registry、final metric set、SourceStrategy bytes、WB-1 producer inventory、qualification subset 与frozen legacy key set。旧 `config/vnext_release_plan.json` 仍是 immutable parent runtime 绑定，WB-2 不改写它。
+`config/source_strategy_registry.json` 对 WB-1 冻结的 39 metric exact set 各保存一条 target route；`config/issue_15_release_plan.json::cumulative_metric_ids` 是唯一当前ratchet state，R2为16个DET_ONLY加C01/E01–E05共22项。plan同时绑定company registry、final metric set、SourceStrategy、WB-1 producer inventory、qualification subset与frozen legacy key set。
 
 family 拥有 `forbidden_production_literals`，metric 不复制该词表。`tools/check_vnext_semantics.py` 每次从经 Requirement byte-binding 验证的 family union 编译 scanner；`risk` / `value` / `event` / `income` / `current` 被 schema 显式拒绝为禁词，避免把共享引擎普通语言变成假阳性。WB-2 只建立 routing authority，没有执行 adapter、修改 root outputs 或证明 structured-only provider 零调用；后两者属于 WB-2B/WB-3 联合证据。
 <!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->
@@ -260,10 +260,11 @@ family 拥有 `forbidden_production_literals`，metric 不复制该词表。`too
 `scripts/vnext/` 是从 Issue #12 继承到 Issue #15 的同一套recorded/live生产实现，不是与正式流程分离的demo。full live Cutover在release planning前固定运行SEC Stage00/01/02/03/05，逐条保存原样命令、return code/duration/stdout-stderr digest，验证request ledger只合法尾部追加并持久化inventory/acquisition receipt；随后编译Spec、运行固定DeepSeek Chat Completions adapter、生成Evidence/ReviewUnit、优先采用HUMAN decision或由D-06写入明确SYSTEM decision、freeze/replay Run、形成complete Batch、投影strict-compatible legacy rows，并通过正式publication/rollback primitives供Stage10/11/12读取pinned `PublicationView`。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
-代码边界已经退出 B01/B03/B10/B11 的 legacy writer/resolver：Stage 04、09、11、repair/upsert 的 migrated 写入以及旧专用 resolver 调用都以 `LEGACY_PATH_STILL_ACTIVE` fail closed；Stage 10/11/12 在 active pointer 存在时只读一次 pinned view。Issue #15 R1通过module-owned `zero_ai_release`只读导入verified legacy A，从immutable Company Facts attempts冻结十公司B01/B03 Runs，提交formal B后真实rollback到A并restore到B。最终matrix为232行，20个Result坐标替换18个legacy行并新增2个structural keys；三种provider计数为0。该active范围不包含R2或AI指标。
+R1通过module-owned `zero_ai_release`完成verified legacy A→B→A→B。R2通过`zero_ai_r2`把companyfacts、accession XBRL及完整8-K submissions current/history shard union转换为deterministic claims/observations/results/traces，再CAS提交R2 successor。最终active含22指标、220坐标、141个strict-compatible legacy替换行、79个新增`N_A_STRUCTURAL` keys和309行matrix；real model egress与paid call均为0。8-K raw bytes若没有content-addressed request-attempt locator，只允许使用同一request row、body/header hash及当前commit Git blob三重绑定的`IMMUTABLE_GIT_BLOB`，不发起网络请求。
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
+<!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
 
-Requirement authority 由 exact FSD、immutable R2、exact R3 Addendum、Decision Register、legacy baseline、release plan 与 semantic versions 联合组成。R1无需AI qualification；历史Hilton/Hyatt qualification、SEC acquisition和三次DeepSeek `Insufficient Balance`只属于后续AI路径。尚缺的是R2、WB-4以后、AI指标迁移、39指标最终Cutover与full receipt，不能由R1 active替代。
+Requirement authority 由 exact FSD、immutable R2、exact R3 Addendum、Decision Register、legacy baseline、release plan 与 semantic versions 联合组成。R1/R2无需AI qualification；尚缺的是WB-4以后、AI指标迁移、39指标最终Cutover与full receipt。
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
 
 ### 11.2 核心对象与事实所有权
@@ -377,7 +378,7 @@ Projector 的 candidate/manifest 入口只接收 `repo_root`、`batch_manifest_p
 <!-- capability-anchor: BEHAVIOR.vnext_projector_verified_release -->
 <!-- capability-anchor: BEHAVIOR.vnext_legacy_projection_key_unique -->
 
-AI/recorded通用Publication receipt只能由 `write_publication_validation_receipt()` 的 gate runner 产生；caller不能提供`ledger_binding`。zero-AI ratchet则只允许module-owned `zero_ai_release`从verified Run/claim exact set与current request ledger派生formal binding，generic formal commit入口仍fail closed。两条路径都要求`IMMUTABLE_ATTEMPT`命中content-addressed body/header pair；recorded `LEGACY_WORKING_LOCATOR`不得升级为formal。R1 bundle另外内嵌multi-source plan、20-coordinate index、全部FROZEN Run bytes、request locator provenance、structured-only zero-provider proof和publication-bound retirement receipt；outer marker绑定全部internal/public hashes。后续AI runner仍需执行Projector、semantic/scalability、Golden、repair、stratified与完整publication checks，R1不能豁免这些未来scope门禁。
+AI/recorded通用Publication receipt只能由既有gate runner产生；zero-AI ratchet只允许module-owned orchestrator派生formal binding。R1 bundle内嵌20-coordinate Run closure；R2 bundle内嵌multi-source plan、220-coordinate index、945-record deterministic graph、event-key parity、request/Git locator provenance、zero-provider proof与retirement receipt。outer marker绑定全部internal/public hashes。后续AI runner的完整门禁不能由R2豁免。
 
 formal forward authority 只属于 `tools/vnext_cutover.py` 的单一编排。public `write_cutover_publication_validation_receipt()`、`commit_initial_publication_chain()` 与 `commit_publication()` 都是稳定 fail-closed tombstone，直接调用返回 `FORMAL_CUTOVER_AUTHORITY_REQUIRED`；generic operator `publish --commit` 同样返回 `FORMAL_COMMIT_REQUIRES_CUTOVER`。Cutover 在验证全部前置证据后才调用模块私有 mutation primitive，要求 clean committed source identity并生成 `FULL_VALIDATION/PASSED` candidate。qualification 顺序固定为第二真实布局的有效 HUMAN 或D-06 SYSTEM `APPROVE`、全量`PUBLISHED` Result与`PASSED` Run validation receipt → production semantic freeze → post-freeze独立holdout。未来 AI 档仍要求三次语义稳定 live success，但每个 stability ordinal 受 WB-3 single-flight 与 D-35 最多一次 retry 约束；terminal/UNKNOWN 立即停批。本 PR 的 R1/R2 是零 AI 档，不发起这些调用。缺 qualification、有效review、compatibility或任一 live evidence都停在 active pointer之前；首次A→B会在commit内建立可rollback predecessor。
 
@@ -399,7 +400,7 @@ bundle namespace必须只有声明的regular files/directories，不接受symlin
 
 ### 11.7 Acceptance runner 的执行与补偿边界
 
-Issue #15 effective D-26 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的十一个并发直接用例，其中 authority/scope/WB-2/WB-2B/WB-3/R1 用例验证 Requirement closure、producer closure、39 指标 registry、E01 parity、invocation故障矩阵与formal active read-back；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，也不再要求金额 budget preflight 测试。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI 或Issue #15 full acceptance。
+Issue #15 effective D-26保留十一个fast/local直接用例，其中R2用例重验完整predecessor chain、309-key union、event parity、retirement与zero-provider read-back；整体仍是`PASSED_FAST_LOCAL_ONLY`，不能升级为CI或Issue #15 full acceptance。
 
 acceptance 在任何 recorded/full gate 前先捕获 clean source commit/tree/file count，并把 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 hash map 固化为顶层 `authority_binding`。`--output-dir`若等于、包含或位于任一正式单文件/namespace下，会在首次写入或caller executable启动前失败。recorded gate 结束后重读并要求 exact 相等；full 还要求 Cutover formal evidence 回绑相同 authority。semantic/scalability artifacts 只能来自本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/` 的两个 exact files，full 会从 repo-owned path 重新打开并重算 hash，不能接受 caller 自报、旧 root artifact 或已漂移 source。live SEC acquisition receipt 只有一个 strict validator：它要求五条固定命令的 exact schema，把 `$PYTHON_CURRENT` 的 name/binary SHA-256 机械比对当前 `sys.executable`，并按当前 ledger prefix/tail、attempt exact set 与 inventory bytes重建；full binding初次和封口前都调用该validator。receipt写入前会递归把repository、output、current Python与sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$SANDBOX_EXEC`；`runtime_bindings`保存executable name与binary SHA-256，无法归类的host绝对路径只保留path hash。
 
@@ -419,4 +420,4 @@ live core在任何业务read/write前exact要求module-owned repository、`artif
 
 只有candidate为`PASSED_RECORDED_ONLY`时，CLI边界才调用固定authority `complete_recorded_publication_sandbox()`；core从workspace内部派生唯一`recorded-publication` child。publication closure按tier验证Batch实际消费的request rows：recorded允许唯一且exact验证path/hash/headers/size的`LEGACY_WORKING_LOCATOR`，并把其原bytes与tier/class写入portable closure；formal只允许`IMMUTABLE_ATTEMPT`。随后sandbox prepare以lock/CAS提交其pointer、生成其root mirrors，并立即用PublicationView/read-back hashes重验。调用方不能传第二个publication root。CLI在前后读取repository formal publication state，任何正式active/root漂移以`RECORDED_FORMAL_STATE_CHANGED`失败；sandbox pointer不进入`outputs/active_publication.json`，也不供业务用户读取。自动场景中的`TEST_ONLY_EXPLICIT_REVIEW`仅证明显式review和transaction，不能迁移为formal HUMAN/full receipt；generic `publish --commit`与public formal mutation tombstone保持不变。该路径的socket canary、sandbox CAS/read-back和formal-state不变由recorded scenario覆盖，但不构成live、active或full运行证据；只有对应测试在当前closure真实通过时才能报告recorded scenario PASS。
 
-上述代码能力已经覆盖同一operator、固定live SEC acquisition/inventory、legacy exit、pinned consumers、fault/CAS/rollback primitives与new/rollback/restore终态编排；zero-AI R1 已在clean committed implementation上形成active B及A→B→A→B证据。传统AI live Reader三次仍因provider `Insufficient Balance`失败，R2与最终full Cutover均未完成；只有各后续scope自己的真实receipt及最终full return code 0才可扩大当前partial active声明。
+zero-AI R2已在clean committed implementation上形成active successor，且保留R1 A→B→A→B历史。传统AI live Reader三次仍因provider `Insufficient Balance`失败；WB-4以后与最终full Cutover未完成，只有各后续scope真实receipt及最终full return code 0才可扩大当前partial active声明。

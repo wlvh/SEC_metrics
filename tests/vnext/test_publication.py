@@ -3244,6 +3244,10 @@ class PublicationTest(unittest.TestCase):
                 validated_at_utc="2026-07-31T00:00:00Z",
                 committed_at_utc="2026-08-06T00:00:02Z",
             )
+            self.assertEqual(
+                formal_before,
+                publication_state_snapshot(publication_root=repo_root),
+            )
         self.assertNotEqual(
             first["publication_id"], second["publication_id"],
         )
@@ -3256,10 +3260,6 @@ class PublicationTest(unittest.TestCase):
         )
         self.assertEqual(
             second["readback_hashes"], second["root_mirror_hashes"],
-        )
-        self.assertEqual(
-            formal_before,
-            publication_state_snapshot(publication_root=repo_root),
         )
         parameters = set(
             inspect.signature(

@@ -14,7 +14,7 @@ from tests.vnext.common import REPO_ROOT
 from tests.vnext.test_issue15_authority import copy_test_repository
 from tests.vnext.test_issue15_authority import read_json, write_json
 from vnext.canonical import sha256_file
-from vnext.publication import PublicationView
+from vnext.publication import PublicationView, verify_publication_bundle
 from vnext.source_strategy import ALLOWED_SOURCE_MODES
 from vnext.source_strategy import GENERIC_FORBIDDEN_LITERAL_DENYLIST
 from vnext.source_strategy import SourceStrategyError
@@ -94,7 +94,15 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             "ReleasePlan.cumulative_metric_ids",
             registry["migration_state_authority"],
         )
-        self.assertEqual(["B01", "B03"], plan["cumulative_metric_ids"])
+        self.assertEqual(
+            [
+                "A01", "A02", "A05", "A06", "A07", "A08", "A10",
+                "B01", "B02", "B03", "B04", "B05", "B07", "B08",
+                "B09", "B12", "C01", "E01", "E02", "E03", "E04",
+                "E05",
+            ],
+            plan["cumulative_metric_ids"],
+        )
         self.assertEqual([], plan["qualification_matrix_subset"])
 
     def test_family_literals_are_specific_and_drive_one_union(self) -> None:
@@ -119,13 +127,17 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             # later ratchet publishes additional structural coordinates.
             active = PublicationView.open(publication_root=REPO_ROOT)
             predecessor = active.manifest["previous_publication_id"]
-            matrix_path = (
-                REPO_ROOT
-                / "outputs"
-                / "publications"
-                / str(predecessor)
-                / "metrics_matrix.csv"
-            )
+            while predecessor is not None:
+                bundle = (
+                    REPO_ROOT / "outputs" / "publications" / str(predecessor)
+                )
+                manifest = verify_publication_bundle(bundle_dir=bundle)
+                if (bundle / "internal/legacy_baseline_import.json").is_file():
+                    matrix_path = bundle / "metrics_matrix.csv"
+                    break
+                predecessor = manifest["previous_publication_id"]
+            else:
+                self.fail("Active publication chain lacks legacy A")
         else:
             matrix_path = REPO_ROOT / "outputs" / "metrics_matrix.csv"
         self.assertEqual(
