@@ -1,9 +1,9 @@
 """Run the R4 fast local verification set concurrently.
 
 Purpose:
-    Provide a short feedback loop for Issue #12 after the user-authorized R4
-    policy removed broad repository, isolated-workspace, and freeze/replay
-    scenarios from routine and final acceptance testing.
+    Provide the fast/local feedback loop inherited by Issue #15. Its D-26 tip
+    keeps broad repository and isolated-workspace suites out of the required
+    path while permitting short deterministic invariant tests.
 
 Call relationships:
     Developers and ``tools/run_acceptance.py`` call this script.  Each selected
@@ -35,8 +35,10 @@ FAST_TESTS = (
     "test_optional_system_decision_is_auditable",
     "tests.vnext.test_legacy_projector.LegacyProjectorTest."
     "test_legacy_inventory_binds_frozen_commit_and_source_blobs",
-    "tests.vnext.test_requirement_baseline.RequirementBaselineTest."
-    "test_exact_snapshot_binds_r2_r3_release_and_approved_d01",
+    "tests.vnext.test_issue15_authority.Issue15AuthorityTest."
+    "test_issue15_snapshot_loads_and_preserves_parent_history",
+    "tests.vnext.test_issue15_authority.Issue15AuthorityTest."
+    "test_reusable_producer_scopes_match_exact_base_call_graph",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
     "test_r4_plan_uses_fast_runner_without_full_discovery",
 )

@@ -4,13 +4,22 @@
 
 每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。`config/validation_source_policy.json` 必须把每个权威引用分类为运行/验收 source、snapshot artifact 或非批次治理角色；解释性非权威文档不能作为本表的运行权威。
 
-## R4 测试执行边界
+## Issue #15 D-26 测试执行边界
 
-按 [Issue #12 R4 用户授权](https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5313207170)，开发、PR 与 final acceptance 的唯一必跑测试是 `python3 tools/run_fast_tests.py --jobs 4`，随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY` 本地证据。不得把全仓/双解释器套件、隔离 repository/worktree、freeze/replay 或长串行场景列为必跑测试。下文的 qualification、live、staging、rollback/restore 是实际运营发布流程，不由 R4 测试替代，也不得凭快速测试声称完成。
+`requirements/issue_15_v1/decision_register.json` 的 D-26 新 tip 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级，并继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件。它不再禁止 Issue #15 明列的短小确定性 freeze/replay、并发和 rollback 不变量测试。随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY`；该状态仍不是 CI、live、full acceptance 或 active Cutover。
 
 ## R5 live 与 review 边界
 
 按 [Issue #12 R5 用户授权](https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5314176033)，live Reader 使用 `DEEPSEEK_API_KEY` 对应的官方 `deepseek-v4-flash` Chat Completions；HUMAN review 可选，缺失时 D-06 只允许明确标注的 SYSTEM approval。Hilton FY2024 是第二真实布局，freeze 后的 Hyatt FY2024 是独立 holdout；两者均已通过 qualification。首次 Cutover 不需要预先存在 active/previous pointer，而是导入 legacy A 后原子创建 B→A chain。
+
+## Issue #15 Requirement authority 与后续开发
+
+| 步骤 | 动作 | 权威引用 | 验收 |
+|---|---|---|---|
+| 1 | 读取冻结 Contract 与 transfer/baseline | `requirements/issue_15_v1/CONTRACT.md`；`requirements/issue_15_v1/transfer_manifest.json`；`requirements/issue_15_v1/baseline_manifest.json` | Contract SHA-256 为 `9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec`；parent closure 与 foundation commit/tag/merge binding 一致 |
+| 2 | 加载自包含 Decision 和 WB-1 receipts | `requirements/issue_15_v1/decision_register.json`；`requirements/issue_15_v1/legacy_semantic_producer_inventory.json`；`requirements/issue_15_v1/source_strategy_baseline_receipt.json`；`requirements/issue_15_v1/foundation_verification_receipt.json` | `load_requirement_snapshot(issue_15_v1)` 通过；D-01/D-26 与 D-30–D-38 tips 正确；39 指标 producer/matrix exact set 闭合；最高 foundation 证据仅为 `FAST_LOCAL_ONLY` |
+| 3 | 读取 inherited foundation | `requirements/ai_first_v3_3_1/` | 父目录 exact bytes 不变；其实现、evidence/publication/fail-closed invariants 被继承而不是重写 |
+| 4 | 只实施当前获准的 WB/ratchet | Issue #15 对应章节；`architecture.md`；`TESTING.md` | 不提前实现后续 WB；未获授权不得创建 active publication 或发起真实 SEC/模型调用 |
 
 ## 快速入口：只读取现有结果
 
@@ -47,7 +56,7 @@ Freeze 保存不可变审计与 replay 事实，不代表 validation 通过；pu
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
-| 1 | 按顺序读取 FSD、immutable R2、exact R3 Addendum、Decision Register、baseline 与 SU 状态 | `requirements/ai_first_v3_3_1/` | R2 仍提供 SU/AC 与详细契约；R3 只逐项 supersede。历史 D-01 pending 可追溯，唯一 effective D-01 为 `APPROVED` |
+| 1 | 对现有 inherited operator 读取父 FSD/R2/R3 与历史实现闭包；对任何后续开发先读取 Issue #15 authority | `requirements/issue_15_v1/`；`requirements/ai_first_v3_3_1/` | 新开发只以 Issue #15 / `issue_15_v1` 为入口；WB-1 未把新 D-01/D-26 语义提前接入现有 Reader/Cutover runtime |
 | 2 | 用同一 operator 创建、查看并推进 Run；recorded 只替换 transport/source acquisition | `python3 tools/vnext_operator.py --help`；`interact.md` | recorded 时 socket=0、root/active 不变；live 必须显式 `--execute-live`，只读 `DEEPSEEK_API_KEY`，SEC organization 固定 `axaxl` 且 email 只读 `SEC_CONTACT_EMAIL` |
 | 3 | HUMAN 可选地复核 `review.md` 和完整 ReviewUnit，并通过 `review list/show/decide` 追加单链决定 | `tools/vnext_operator.py review`；`tools/vnext_review.py` | 已有 HUMAN 决定优先；缺决定时 D-06 写入可审计 SYSTEM approval，SYSTEM 不得伪装为 HUMAN，Evidence/compatibility publication gates不放宽 |
 | 4 | release input plan先绑定exact source的latest verified request attempt及locator class；finalize/freeze 后做无网络 replay，再由 complete BatchManifest 与 Projector 形成 strict-compatible staging | `architecture.md`；`TESTING.md` | recorded legacy locator必须逐path/hash/headers/size验证并在closure显式绑定tier/class；formal live只允许immutable attempt并拒绝legacy。所有 Run 都是 `PASSED/FROZEN`；十公司×四指标 exact set、N/A、期间、字段/evidence/reconciliation parity 全部通过；WITHHELD 阻止整批发布 |

@@ -29,12 +29,12 @@ PR body 原则：
 
 ---
 
-### Issue #12 formal Cutover（适用时必填）
+### Issue #15 delivery / Cutover（适用时必填）
 
 <!--
 R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细契约；R3 只覆盖其明确列出的决定。
 代码已实现、recorded 已通过、active 已提交和 full 已通过是四种不同结论。
-缺任一 Done gate 时本 PR 必须 Draft，开头写 Progress on #12，不得写 Closes #12。
+缺任一 Done gate 时本 PR 必须 Draft，第一行写 Progress on #15，不得写 Closes #15。
 -->
 
 - base SHA / head SHA / tree shape：
@@ -236,5 +236,5 @@ root mirrors 组原子性边界：
 - [ ] 若改动 source closure/生成 artifact，terminal artifact 已独立提交或按单 commit 政策 amend 折叠；最终 PR HEAD 与受测 source tree 等价且 snapshot checker PASS
 - [ ] 若修改文档体系，`AGENTS.md` 仍能发现 `SOP.md`，SOP 稳定编号与核心权威入口未被无替代删除
 - [ ] 对漂移文档的处理是就地纠偏，或已明确记录拆分/历史化的替代入口、兼容路径和理由
-- [ ] Issue #12 正文未修改，未新增 Issue 评论
-- [ ] 缺任一 formal Done gate 时 PR 保持 Draft、body 使用 `Progress on #12`，未写 `Closes #12`
+- [ ] Issue #15 冻结正文与冻结评论未修改或删除
+- [ ] 缺任一 Done gate 时 PR 保持 Draft、body 第一行使用 `Progress on #15`，未写 `Closes #15`

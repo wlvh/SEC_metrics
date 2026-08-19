@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "record_type": "ISSUE_15_REQUIREMENT_BASELINE_MANIFEST",
+  "requirement_id": "issue_15_v1",
+  "issue_contract_revision": "ISSUE_15_V1",
+  "created_at_utc": "2026-08-19T04:02:38Z",
+  "issue_number": 15,
+  "issue_url": "https://github.com/wlvh/SEC_metrics/issues/15",
+  "issue_body_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+  "contract_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+  "parent_requirement_id": "ai_first_v3_3_1",
+  "parent_requirement_closure_hash": "sha256:8e888bfab9965e96fc72ec963fa46652ba2dc423b156b8239d8de416c05fc2b7",
+  "parent_requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "repository_identity": {
+    "name_with_owner": "wlvh/SEC_metrics",
+    "remote_url": "https://github.com/wlvh/SEC_metrics.git",
+    "default_branch": "main"
+  },
+  "repository_commit": "4d02db6a474f93eec9e058d780e206b4504ab24d",
+  "repository_tree": "46e47a219f077f5561e373bc3cb69bdfe23ee065",
+  "foundation_source_commit": "f1cc44342e6814522ec2688cf3674f7ec442be8d",
+  "foundation_source_tree": "46e47a219f077f5561e373bc3cb69bdfe23ee065",
+  "foundation_tag": "issue-15-foundation-v1",
+  "foundation_tag_object": "372d9486f4881d9432db3c3ccdca9b737d524bf3",
+  "foundation_tag_peeled_commit": "f1cc44342e6814522ec2688cf3674f7ec442be8d",
+  "foundation_merge_commit": "4d02db6a474f93eec9e058d780e206b4504ab24d",
+  "foundation_merge_tree": "46e47a219f077f5561e373bc3cb69bdfe23ee065",
+  "semantic_runtime_versions": {
+    "calculator_semantic_version": "5",
+    "canonicalizer_semantic_version": "4",
+    "projector_semantic_version": "3",
+    "review_renderer_semantic_version": "3",
+    "spec_interpreter_semantic_version": "2"
+  },
+  "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+  "effective_decision_ids": [
+    "D-01",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06",
+    "D-07",
+    "D-08",
+    "D-24",
+    "D-26",
+    "D-30",
+    "D-31",
+    "D-32",
+    "D-33",
+    "D-34",
+    "D-35",
+    "D-36",
+    "D-37",
+    "D-38"
+  ],
+  "pending_decision_ids": [],
+  "snapshot_files": {
+    "CONTRACT.md": {
+      "sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+      "size": 47898
+    },
+    "transfer_manifest.json": {
+      "sha256": "18f162d48131b3f6d56941dd446ec18089c7a336a50df8cb2c669e3b63711274",
+      "size": 3906
+    },
+    "decision_register.json": {
+      "sha256": "ea21470df26795e885036595fad0269b623fa661538baa06e3de3a84f2729900",
+      "size": 19648
+    },
+    "legacy_semantic_producer_inventory.json": {
+      "sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+      "size": 143195
+    },
+    "source_strategy_baseline_receipt.json": {
+      "sha256": "fcd4e0e975a451834ffac4cefae071770531120ca767f9162d68e9079260198b",
+      "size": 42147
+    },
+    "foundation_verification_receipt.json": {
+      "sha256": "fe6476db361607d6197f2d7145a1717a94d0ad98190dc08d17ece680933a0763",
+      "size": 5136
+    }
+  },
+  "root_business_artifacts": {
+    "README_RUN.md": {
+      "sha256": "08b3482835277a4f9703c56d028f471aaf1876cdc83a0ade8ada11be00362a07",
+      "size": 27898
+    },
+    "REPORT_十公司财务指标.md": {
+      "sha256": "82dc8399e928378a3fb0deb7db5109b59be59bb9152bfec91206dd2430a839d7",
+      "size": 29112
+    },
+    "outputs/coverage_matrix.csv": {
+      "sha256": "c66695007b3ad55c35fe2fc107f0587333efb600eb278ba7408fcd8cc4f4423c",
+      "size": 28112
+    },
+    "outputs/golden_results.csv": {
+      "sha256": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+      "size": 9166
+    },
+    "outputs/metric_evidence.csv": {
+      "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+      "size": 250439
+    },
+    "outputs/metrics_matrix.csv": {
+      "sha256": "0fdb969afe0bbc89c28a1f68d41c706ef2f1afc2c926302a04ee503ec12adb42",
+      "size": 85304
+    },
+    "outputs/repair_validation_results.csv": {
+      "sha256": "ce38a4d549230f5376881c3a975e406d2e218bd84b85bae92302e1cd26d2e2e1",
+      "size": 9470
+    },
+    "outputs/validation_run_manifest.json": {
+      "sha256": "d4b020629de700ee7e63ccef397866f6ad47c7e903c85aa4a69cdb1a34ae920c",
+      "size": 487
+    },
+    "outputs/validation_snapshot_provenance.json": {
+      "sha256": "46e5c299bf21e40a87f92e40455732c45656c7c6dcf5d88f0f629a92799370be",
+      "size": 25921
+    }
+  },
+  "metrics_matrix_sha256": "0fdb969afe0bbc89c28a1f68d41c706ef2f1afc2c926302a04ee503ec12adb42",
+  "source_input_role": "requirements runtime source directory"
+}

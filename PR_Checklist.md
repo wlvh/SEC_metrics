@@ -95,7 +95,7 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 
 当前仓库没有 CI workflow、生产部署、自动调度、UI 或 API。除非真实实现和运行证据增加这些能力，否则 PR body 必须写“不适用/未实现”。vNext formal代码存在也不等于active切换完成。
 
-vNext Cutover声明必须有APPROVED D-01、R3 Addendum hash、有效SEC/OpenAI环境、clean committed isolated checkout、固定SEC Stage00/01/02/03/05 acquisition/inventory receipt及其command/ledger-tail binding，并由final full receipt的`formal_receipts.sec_acquisition`绑定其path/bytes/hash/ID/type/status；release input plan还必须绑定exact source的latest verified immutable request attempt，formal live不得消费`LEGACY_WORKING_LOCATOR`。还必须有第二布局先于freeze、freeze-bound pre-holdout inventory、post-freeze holdout、remote live三轮portable audit closure、具名HUMAN、十公司strict parity、旧producer不可达、verified legacy A与formal B、active/previous publication、fault receipts、每个cycle同一pinned view的rollback→report/Stage12/checker→restore和最终full receipt。public generic formal receipt/commit入口必须fail closed。缺任一项时PR必须Draft，body保持`Progress on #12`，不得写`Closes #12`。
+vNext Cutover声明必须有Issue #15 exact Requirement、effective D-01、有效SEC/provider环境、clean committed checkout、适用的acquisition/inventory receipt及其command/ledger-tail binding，并由final full receipt绑定path/bytes/hash/ID/type/status；release input plan还必须绑定exact source的latest verified immutable request attempt，formal live不得消费`LEGACY_WORKING_LOCATOR`。还必须有适用的family qualification、portable live audit closure、complete staging、旧producer不可达、active/previous publication、fault receipts、rollback/restore和最终full receipt。public generic formal receipt/commit入口必须fail closed。Issue #15任一Done gate未完成时PR必须Draft，正文第一行保持`Progress on #15`，不得写`Closes #15`。
 
 root CSV/报告是active bundle compatibility mirrors；PR body必须说明active与latest分离、mirrors不向任意无PublicationView reader承诺组原子、rollback不启用旧parser、OpenAI不是SEC evidence source。
 
@@ -109,7 +109,7 @@ root CSV/报告是active bundle compatibility mirrors；PR body必须说明activ
 gh pr create --title "<标题>" --body-file PR_BODY.md --head <feature-branch> --base main
 ```
 
-成功后返回真实 PR URL，并明确 draft/ready 状态。Issue #12 formal Cutover缺任一Done gate时只能创建/保持Draft；用户未要求PR时本节完全不执行。不得修改Issue正文或新增Issue评论来补Requirement。
+成功后返回真实 PR URL，并明确 draft/ready 状态。Issue #15缺任一Done gate时只能创建/保持Draft；用户未要求PR时本节完全不执行。冻结 Issue #15 正文及状态评论不得被修改或删除，后续需求变化只进入 Decision records。
 
 ## 10. 最终核对
 

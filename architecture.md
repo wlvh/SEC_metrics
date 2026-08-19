@@ -226,9 +226,16 @@ flowchart LR
 
 ## 11. vNext formal Cutover 实现（尚无 active 证据）
 
+### 11.0 Issue #15 authority layer（WB-1）
+
+`requirements/issue_15_v1/` 是未来开发的首要 Requirement authority。它以 exact `CONTRACT.md`、自包含 Decision history、parent transfer/baseline、39 指标 legacy semantic producer inventory、当前 matrix baseline 和 foundation verification 构成一个可独立验证的 child closure；`scripts/vnext/requirements.py::load_requirement_snapshot` 只支持 `ai_first_v3_3_1` 与 `issue_15_v1` 两个显式 schema，不建设通用多版本平台。
+
+WB-1 只增加 authority 数据和 loader 分支。现有 Reader、Cutover、publication 与已冻结 Run consumer 继续显式加载 immutable parent，直到后续获准 WB 完成对应语义迁移；因此 Issue #15 的 D-01/D-26 新 tip 在本阶段是未来实现契约，不是当前 transport/retry 或测试执行代码已切换的声明。父目录任何 byte drift、13 条历史 Decision 任一 canonical hash 漂移、Contract/receipt hash 漂移、producer/matrix exact set 不闭合都会使 child loader fail closed。
+<!-- capability-anchor: CAPABILITY.issue_15_requirement_authority -->
+
 ### 11.1 当前身份与不可越过的边界
 
-`scripts/vnext/` 是Issue #12的同一套recorded/live生产实现，不是与正式流程分离的demo。full live Cutover在release planning前固定运行SEC Stage00/01/02/03/05，逐条保存原样命令、return code/duration/stdout-stderr digest，验证request ledger只合法尾部追加并持久化inventory/acquisition receipt；随后编译Spec、运行固定DeepSeek Chat Completions adapter、生成Evidence/ReviewUnit、优先采用HUMAN decision或由D-06写入明确SYSTEM decision、freeze/replay Run、形成complete Batch、投影strict-compatible legacy rows，并通过正式publication/rollback primitives供Stage10/11/12读取pinned `PublicationView`。
+`scripts/vnext/` 是从 Issue #12 继承到 Issue #15 的同一套recorded/live生产实现，不是与正式流程分离的demo。full live Cutover在release planning前固定运行SEC Stage00/01/02/03/05，逐条保存原样命令、return code/duration/stdout-stderr digest，验证request ledger只合法尾部追加并持久化inventory/acquisition receipt；随后编译Spec、运行固定DeepSeek Chat Completions adapter、生成Evidence/ReviewUnit、优先采用HUMAN decision或由D-06写入明确SYSTEM decision、freeze/replay Run、形成complete Batch、投影strict-compatible legacy rows，并通过正式publication/rollback primitives供Stage10/11/12读取pinned `PublicationView`。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
 代码边界已经退出 B01/B03/B10/B11 的 legacy writer/resolver：Stage 04、09、11、repair/upsert 的 migrated 写入以及旧专用 resolver 调用都以 `LEGACY_PATH_STILL_ACTIVE` fail closed；Stage 10/11/12 在 active pointer 存在时只读一次 pinned view。当前仓库仍无已提交的 `outputs/active_publication.json`，因此 root CSV/报告仍是业务读取入口；首次Cutover会只读导入verified legacy A，再提交绑定A的B，故不要求预先存在previous publication。
@@ -369,7 +376,7 @@ bundle namespace必须只有声明的regular files/directories，不接受symlin
 
 ### 11.7 Acceptance runner 的执行与补偿边界
 
-Issue #12 R4 将 recorded acceptance 的测试执行收敛为 `tools/run_fast_tests.py --jobs 4` 的六个并发直接边界用例，以及 semantic/scalability/capability 静态 gate；每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或 freeze/replay 场景。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。真实 full live 流程保留其业务性 qualification、freeze、holdout、staging 和 terminal 操作，但它们不是 R4 测试。
+Issue #15 D-26 新 tip 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的七个并发直接用例，其中新增的 scope 用例从 exact-base AST 重算复用型 semantic producer 的 callsite closure；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，但允许后续 WB 所需的短小确定性 freeze/replay、并发和 rollback 不变量测试。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。
 
 acceptance 在任何 recorded/full gate 前先捕获 clean source commit/tree/file count，并把 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 hash map 固化为顶层 `authority_binding`。`--output-dir`若等于、包含或位于任一正式单文件/namespace下，会在首次写入或caller executable启动前失败。recorded gate 结束后重读并要求 exact 相等；full 还要求 Cutover formal evidence 回绑相同 authority。semantic/scalability artifacts 只能来自本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/` 的两个 exact files，full 会从 repo-owned path 重新打开并重算 hash，不能接受 caller 自报、旧 root artifact 或已漂移 source。live SEC acquisition receipt 只有一个 strict validator：它要求五条固定命令的 exact schema，把 `$PYTHON_CURRENT` 的 name/binary SHA-256 机械比对当前 `sys.executable`，并按当前 ledger prefix/tail、attempt exact set 与 inventory bytes重建；full binding初次和封口前都调用该validator。receipt写入前会递归把repository、output、current Python与sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$SANDBOX_EXEC`；`runtime_bindings`保存executable name与binary SHA-256，无法归类的host绝对路径只保留path hash。
 
