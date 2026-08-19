@@ -50,17 +50,20 @@ architecture.md
 ### 开发、复核或执行 vNext Cutover
 
 ```text
-requirements/ai_first_v3_3_1/FSD.md
-→ requirements/ai_first_v3_3_1/ISSUE_CONTRACT.md（immutable R2）
-→ requirements/ai_first_v3_3_1/ISSUE_CONTRACT_R3_ADDENDUM.md（exact R3 snapshot）
-→ requirements/ai_first_v3_3_1/decision_register.json
-→ requirements/ai_first_v3_3_1/IMPLEMENTATION_TODO.md
+requirements/issue_15_v1/CONTRACT.md（Issue #15 exact authority）
+→ requirements/issue_15_v1/transfer_manifest.json
+→ requirements/issue_15_v1/decision_register.json
+→ requirements/issue_15_v1/baseline_manifest.json
+→ requirements/issue_15_v1/legacy_semantic_producer_inventory.json
+→ requirements/issue_15_v1/source_strategy_baseline_receipt.json
+→ requirements/issue_15_v1/foundation_verification_receipt.json
+→ requirements/ai_first_v3_3_1/（immutable inherited foundation）
 → architecture.md「vNext Cutover 实现」
 → TESTING.md「vNext recorded / formal Cutover」
 → SOP.md「vNext operator 与正式 Cutover」
 ```
 
-R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细状态/证据/发布边界，R3 只覆盖其明确列出的决定；两份 exact bytes 都是 Requirement authority。R5 用户授权以 Decision Register 的单链 superseding records 将 D-01 改为 DeepSeek OpenAI-compatible Chat Completions（`deepseek-v4-flash`）并将 D-06 改为 HUMAN optional/SYSTEM audited；历史 D-01 pending 与旧 records 保留可追溯。
+Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快照继续提供不可变 R2/R3、既有实现和历史 Decision 链；新快照原样携带 13 条历史记录，以 D-01/D-26 同 ID 新 tip 和 D-30–D-38 新根记录形成自包含 authority。WB-1 只冻结并验证这次转移，不切换现有 Reader、transport、publication 或业务语义，也不授权真实 SEC/模型调用。
 
 代码已具备同一 recorded/live operator、D-06 optional HUMAN/SYSTEM audited Review、固定 DeepSeek/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。qualification固定按第二布局的有效 HUMAN 或 SYSTEM `APPROVE`、`PUBLISHED` Result 与 `PASSED` Run validation receipt→semantic freeze及pre-holdout inventory→独立且不同公司/CIK的holdout执行；`REJECT`/WITHHELD Run只能保留审计，不能成为资格证据。旧路径 inventory还会回读冻结baseline Git commit中的精确`sec_pipeline.py`与适用性配置blob，不能以当前anchor或伪hash替代历史生产路径。首次formal chain只读导入verified legacy A并提交绑定A的B，因此没有预先存在的 active/previous pointer 不是首次 Cutover blocker。public generic formal mutation入口fail closed；三次live attempt形成portable audit closure；每个terminal cycle只启动一次公开CLI，并以单进程、单次pinned transaction贯穿Stage10 Golden、Stage11 report、Stage12 active validation与snapshot publish/verify。publication switch会先在独占锁内写content-addressed intent；pending/tamper时reader fail closed，writer按exact pointer分支恢复receipt与mirrors或回滚上一状态。full live path还会在release planning前固定执行SEC Stage00/01/02/03/05，并持久化原样命令、request-ledger合法tail与inventory receipt；持久acceptance receipt以portable runtime token和binary SHA-256绑定解释器，不保存本机绝对路径。release input plan绑定exact source的latest verified attempt及locator class，recorded可逐path/hash/headers/size重验唯一`LEGACY_WORKING_LOCATOR`并在portable closure绑定tier/class，formal live只允许`IMMUTABLE_ATTEMPT`并拒绝legacy。当前Hilton/Hyatt qualification 与本次SEC acquisition receipt均已通过；但三次DeepSeek live Reader 以`Insufficient Balance`失败，故尚无十公司formal staging、active publication、rollback/restore或full PASS。因此业务用户仍读取现有root CSV/报告，任何recorded或实现测试PASS都不得写成active/full PASS。
 
@@ -79,7 +82,8 @@ R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细状态/证据/发布边�
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
 - `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
-- `requirements/ai_first_v3_3_1/`：Issue #12 的 exact FSD、immutable R2、exact R3 Addendum、Decision Register、冻结基线、旧路径 inventory、SU 映射与当前阻塞；属于 source-input closure，不是运行结果。
+- `requirements/issue_15_v1/`：Issue #15 的 exact Contract、自包含 Decision Register、parent transfer/baseline、39 指标 legacy semantic producer inventory、matrix baseline 与 foundation verification；是未来开发 authority，WB-1 本身不改变 production semantics。
+- `requirements/ai_first_v3_3_1/`：不可变 inherited foundation；其 exact FSD、R2/R3、历史 Decision、旧基线与 inventory 继续供 parent closure 验证，任何文件不得因 Issue #15 开发被改写。
 
 ### 核心配置
 
@@ -187,7 +191,7 @@ R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细状态/证据/发布边�
 
 ## 6. Review 与测试
 
-- Issue #12 的开发、PR 与 final acceptance 受 R4 用户授权约束：只运行 `python3 tools/run_fast_tests.py --jobs 4` 及其快速静态 gate；不再把全仓/双解释器回归、隔离 repository/worktree、freeze/replay 或长串行套件作为必跑测试。`PASSED_FAST_LOCAL_ONLY` 不是 CI、live 或 Cutover。
+- Issue #15 的 D-26 新 tip 保留 fast/local 主入口 `python3 tools/run_fast_tests.py --jobs 4` 与快速静态 gate；不把全仓/双解释器、隔离 repository/worktree 或长串行套件列为必跑项，但允许并要求 Issue #15 明列的短小确定性 freeze/replay、并发、rollback 不变量测试。`PASSED_FAST_LOCAL_ONLY` 不是 CI、live 或 Cutover。
 - 发现 Bug 时遵循 `TESTING.md`：先补稳定复现，再修实现；跨阶段问题同时补场景级证据。
 - 不用 quick unittest 替代 Golden、repair gate、snapshot checker 或完整场景，也不用 light review 冒充 full validation。
 - 真实运营中会写 `evidence/`、`outputs/` 或报告的命令仍须遵循其受控 authority；它们不是 R4 测试。
@@ -199,6 +203,7 @@ R2 继续提供 SU-00–SU-11、AC-01–AC-28 与详细状态/证据/发布边�
 
 - 只读取现有结果
 - SEC 阶段 00-12 完整批次运行
+- Issue #15 Requirement authority 与后续 ratchet 开发
 - vNext operator 与正式 Cutover
 - 分层验收与失败定位
 - PR 发布（仅用户明确要求时）

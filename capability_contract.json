@@ -1,7 +1,7 @@
 {
   "schema_version": "0.4.0",
   "status": "active",
-  "purpose": "SEC_metrics 当前 SEC-only 单财年批处理、已实现但尚无 active 运行证据的 vNext formal Cutover、限制、责任和用户可见行为的机器可读真相源。",
+  "purpose": "SEC_metrics 当前 SEC-only 单财年批处理、Issue #15 Requirement authority、已实现但尚无 active 运行证据的 inherited vNext formal Cutover、限制、责任和用户可见行为的机器可读真相源。",
   "rules": [
     "Markdown 文档只能引用稳定 anchor_id，不得引用 JSON path、数组下标或 schema 内部路径。",
     "废弃 anchor_id 必须保留登记，且不得复用于不同含义。",
@@ -54,6 +54,16 @@
         "test_anchor": "tests/test_sec_pipeline_validation.py::ReportVerdictTest.test_full_not_evaluated_blocks_go",
         "test_status": "automated_partial",
         "since": "2026-07-21"
+      },
+      {
+        "anchor_id": "CAPABILITY.issue_15_requirement_authority",
+        "type": "capability",
+        "status": "active",
+        "statement": "仓库能显式加载 requirements/issue_15_v1 的 exact Contract、自包含 Decision 单链、parent transfer/baseline、39 指标 legacy semantic producer exact set、matrix baseline 与 foundation verification，并逐字节拒绝 Contract、parent 或 receipt 漂移。该 WB-1 authority 只冻结未来开发输入，不改变现有 Reader、transport、publication 或业务结果。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_issue15_authority.py::Issue15AuthorityTest.test_issue15_snapshot_loads_and_preserves_parent_history",
+        "test_status": "automated_recorded",
+        "since": "2026-08-19"
       },
       {
         "anchor_id": "CAPABILITY.vnext_recorded_shadow",
@@ -135,7 +145,7 @@
         "anchor_id": "BOUNDARY.vnext_cutover_not_complete",
         "type": "capability_boundary",
         "status": "active",
-        "statement": "effective D-01现由R5单链批准为DeepSeek Chat Completions；固定SEC Stage00/01/02/03/05 acquisition/inventory、legacy B01/B03/B10/B11 writer/resolver fail-closed、pinned consumers、qualification、fault/rollback primitives与new/rollback/restore终态编排均已实现。D-06允许HUMAN optional/SYSTEM audited review；首次Cutover会导入legacy A，不要求预先存在 active/previous pointer。Hilton/Hyatt qualification与SEC acquisition receipts已产生，但live三轮均因provider Insufficient Balance失败，因此十公司formal staging、committed active publication、rollback/restore与full receipt仍未产生。R4 recorded测试最高只能PASSED_FAST_LOCAL_ONLY；只有full --execute-live最终真实返回0才能声称Cutover/full acceptance。",
+        "statement": "Issue #15 已接管全部未完成产品责任；现有 inherited implementation 中 effective D-01仍由父R5单链批准为DeepSeek Chat Completions，固定SEC acquisition、legacy四指标writer/resolver fail-closed、pinned consumers、qualification、fault/rollback primitives与new/rollback/restore编排均已实现。WB-1没有把Issue #15的新D-01/D-26语义提前接入该runtime。Hilton/Hyatt qualification与SEC acquisition receipts已产生，但live三轮均因provider Insufficient Balance失败，因此十公司formal staging、committed active publication、rollback/restore与full receipt仍未产生；只有未来获准流程的full --execute-live真实返回0才能声称Cutover/full acceptance。",
         "audience": ["business_user", "operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_authorized_full_with_missing_prerequisite_runs_nothing",
         "test_status": "automated_partial",
@@ -465,7 +475,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #12 R4将开发、PR和final acceptance的必跑测试收敛为tools/run_fast_tests.py的六个并发直接边界用例，每例最多30秒，recorded快速/静态gate每条最多60秒；不得要求全仓/双解释器回归、隔离repository/worktree、freeze/replay或长串行套件。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
+        "statement": "Issue #15 D-26新tip保留tools/run_fast_tests.py的六个并发直接边界用例、每例最多30秒及recorded gate最多60秒；不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得再禁止Issue #15明列的短小确定性freeze/replay、并发、rollback不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",
@@ -753,6 +763,18 @@
       }
     ],
     "documents": [
+      {
+        "anchor_id": "DOC.issue_15_requirement_contract",
+        "type": "document",
+        "status": "active",
+        "statement": "requirements/issue_15_v1/CONTRACT.md 是当前 Issue #15 正文的 exact bytes，也是全部未来 vNext 开发的首要 Requirement authority；父 ai_first_v3_3_1 快照保持不可变 inherited foundation。",
+        "audience": ["operator", "developer", "reviewer"],
+        "document_path": "requirements/issue_15_v1/CONTRACT.md",
+        "language": "zh-CN",
+        "test_anchor": "tests/vnext/test_issue15_authority.py::Issue15AuthorityTest.test_issue15_snapshot_loads_and_preserves_parent_history",
+        "test_status": "automated_recorded",
+        "since": "2026-08-19"
+      },
       {
         "anchor_id": "DOC.business_user_guide",
         "type": "document",
