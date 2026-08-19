@@ -797,11 +797,13 @@ class AcceptanceRunnerTest(unittest.TestCase):
         formal_roots = (
             Path("artifacts/vnext/cutover"),
             Path("artifacts/vnext/qualification"),
+            Path("artifacts/vnext/zero_ai_release"),
             Path("evidence/request_attempts"),
             Path("outputs/publication_fault_receipts"),
             Path("outputs/publications"),
             Path("outputs/publication_switch_intents"),
             Path("outputs/publication_switch_receipts"),
+            Path("outputs/zero_ai_release_receipts"),
             Path("outputs/vnext_cutover_audits"),
         )
         ledger_paths = (
@@ -855,11 +857,13 @@ class AcceptanceRunnerTest(unittest.TestCase):
         for relative in (
             "artifacts/vnext/cutover",
             "artifacts/vnext/qualification",
+            "artifacts/vnext/zero_ai_release",
             "evidence/request_attempts",
             "outputs/publication_fault_receipts",
             "outputs/publications",
             "outputs/publication_switch_intents",
             "outputs/publication_switch_receipts",
+            "outputs/zero_ai_release_receipts",
             "outputs/vnext_cutover_audits",
         ):
             with self.subTest(relative=relative):

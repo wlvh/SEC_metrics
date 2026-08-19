@@ -14,6 +14,7 @@ from tests.vnext.common import REPO_ROOT
 from tests.vnext.test_issue15_authority import copy_test_repository
 from tests.vnext.test_issue15_authority import read_json, write_json
 from vnext.canonical import sha256_file
+from vnext.publication import PublicationView
 from vnext.source_strategy import ALLOWED_SOURCE_MODES
 from vnext.source_strategy import GENERIC_FORBIDDEN_LITERAL_DENYLIST
 from vnext.source_strategy import SourceStrategyError
@@ -93,7 +94,7 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             "ReleasePlan.cumulative_metric_ids",
             registry["migration_state_authority"],
         )
-        self.assertEqual([], plan["cumulative_metric_ids"])
+        self.assertEqual(["B01", "B03"], plan["cumulative_metric_ids"])
         self.assertEqual([], plan["qualification_matrix_subset"])
 
     def test_family_literals_are_specific_and_drive_one_union(self) -> None:
@@ -112,8 +113,24 @@ class SourceStrategyRegistryTest(unittest.TestCase):
         baseline = read_json(
             path=ISSUE_15_DIR / "source_strategy_baseline_receipt.json"
         )
-        matrix_path = REPO_ROOT / "outputs" / "metrics_matrix.csv"
-        self.assertEqual(baseline["matrix_sha256"], sha256_file(path=matrix_path))
+        pointer_path = REPO_ROOT / "outputs" / "active_publication.json"
+        if pointer_path.exists():
+            # WB-2's frozen bytes remain the immutable predecessor after the
+            # later ratchet publishes additional structural coordinates.
+            active = PublicationView.open(publication_root=REPO_ROOT)
+            predecessor = active.manifest["previous_publication_id"]
+            matrix_path = (
+                REPO_ROOT
+                / "outputs"
+                / "publications"
+                / str(predecessor)
+                / "metrics_matrix.csv"
+            )
+        else:
+            matrix_path = REPO_ROOT / "outputs" / "metrics_matrix.csv"
+        self.assertEqual(
+            baseline["matrix_sha256"], sha256_file(path=matrix_path),
+        )
         self.assertEqual(230, baseline["row_count"])
 
     def test_missing_metric_fails_after_outer_hashes_are_rebound(self) -> None:

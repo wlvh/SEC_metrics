@@ -22,6 +22,7 @@ from typing import Dict, Set
 
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import content_hash, sha256_file
+from vnext.publication import PublicationView, ROOT_MIRROR_RELATIVE_PATHS
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
@@ -40,6 +41,35 @@ ISSUE_15_DIR = REPO_ROOT / "requirements" / "issue_15_v1"
 CONTRACT_SHA256 = "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec"
 FOUNDATION_SOURCE_COMMIT = "f1cc44342e6814522ec2688cf3674f7ec442be8d"
 FOUNDATION_MERGE_COMMIT = "4d02db6a474f93eec9e058d780e206b4504ab24d"
+
+
+def frozen_issue15_artifact_path(*, relative: str) -> Path:
+    """Resolve one WB-1 baseline artifact before or after formal activation.
+
+    Args:
+        relative: Repository-relative frozen artifact path.
+
+    Returns:
+        Root path without an active pointer, otherwise the same bytes inside
+        the active successor's verified predecessor A.
+    """
+    pointer_path = REPO_ROOT / "outputs" / "active_publication.json"
+    if not pointer_path.exists():
+        return REPO_ROOT / relative
+    active = PublicationView.open(publication_root=REPO_ROOT)
+    predecessor_dir = (
+        REPO_ROOT
+        / "outputs"
+        / "publications"
+        / str(active.manifest["previous_publication_id"])
+    )
+    root_to_bundle = {
+        root_relative: bundle_relative
+        for bundle_relative, root_relative in ROOT_MIRROR_RELATIVE_PATHS.items()
+    }
+    if relative in root_to_bundle:
+        return predecessor_dir / root_to_bundle[relative]
+    return predecessor_dir / "internal" / "legacy_baseline_support" / relative
 
 
 def read_json(*, path: Path) -> Dict[str, object]:
@@ -443,7 +473,9 @@ class Issue15AuthorityTest(unittest.TestCase):
             self.assertEqual(binding["sha256"], sha256_file(path=runtime_path))
             self.assertEqual(binding["size"], runtime_path.stat().st_size)
 
-        matrix_path = REPO_ROOT / "outputs" / "metrics_matrix.csv"
+        matrix_path = frozen_issue15_artifact_path(
+            relative="outputs/metrics_matrix.csv"
+        )
         with matrix_path.open(mode="r", encoding="utf-8", newline="") as file_obj:
             rows = list(csv.DictReader(f=file_obj))
         metric_ids = sorted({row["metric_id"] for row in rows})
@@ -566,7 +598,7 @@ class Issue15AuthorityTest(unittest.TestCase):
             self.assertTrue(set(command["receipt_paths"]).issubset(bound_paths))
 
         for relative, binding in baseline["root_business_artifacts"].items():
-            path = REPO_ROOT / relative
+            path = frozen_issue15_artifact_path(relative=relative)
             self.assertEqual(binding["sha256"], sha256_file(path=path))
             self.assertEqual(binding["size"], path.stat().st_size)
 

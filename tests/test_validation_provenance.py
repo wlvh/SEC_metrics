@@ -699,11 +699,19 @@ class ValidationProvenanceTest(unittest.TestCase):
             policy.full_artifact_directories,
         )
         self.assertIn(
+            "artifacts/vnext/zero_ai_release",
+            policy.full_artifact_directories,
+        )
+        self.assertIn(
             "outputs/publication_fault_receipts",
             policy.full_artifact_directories,
         )
         self.assertIn(
             "outputs/vnext_cutover_audits",
+            policy.full_artifact_directories,
+        )
+        self.assertIn(
+            "outputs/zero_ai_release_receipts",
             policy.full_artifact_directories,
         )
 

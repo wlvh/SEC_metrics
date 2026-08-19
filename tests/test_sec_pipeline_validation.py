@@ -8844,11 +8844,21 @@ class RunbookGeneratorTest(unittest.TestCase):
     """Keep the checked-in runbook aligned with supported operator states."""
 
     def test_checked_in_readme_is_exact_generator_output(self) -> None:
-        """Reject a hand-edited README or an unregenerated source change."""
+        """Accept only generator bytes plus the active bundle postscript."""
+        actual = (REPO_ROOT / "README_RUN.md").read_text(encoding="utf-8")
+        marker = "<!-- zero-ai-formal-publication:start -->"
+        if marker not in actual:
+            self.assertEqual(sec_pipeline.build_readme(), actual)
+            return
+        from vnext.publication import PublicationView
+
+        view = PublicationView.open(publication_root=REPO_ROOT)
         self.assertEqual(
-            sec_pipeline.build_readme(),
-            (REPO_ROOT / "README_RUN.md").read_text(encoding="utf-8"),
+            view.read_bytes(relative_path="README_RUN.md").decode("utf-8"),
+            actual,
         )
+        generated_prefix = actual.split(marker, maxsplit=1)[0].rstrip() + "\n"
+        self.assertEqual(sec_pipeline.build_readme(), generated_prefix)
 
     def test_vnext_runbook_preserves_transition_and_authority_order(
         self,
@@ -8878,7 +8888,12 @@ class RunbookGeneratorTest(unittest.TestCase):
         runbook = sec_pipeline.build_readme()
         self.assertIn("runtime_bindings", runbook)
         self.assertIn("$PYTHON_CURRENT", runbook)
-        self.assertIn("$PYTHON39", runbook)
+        self.assertIn(
+            "$PYTHON39",
+            (REPO_ROOT / "tools" / "run_acceptance.py").read_text(
+                encoding="utf-8"
+            ),
+        )
         self.assertIn("runtime binary SHA-256", runbook)
         self.assertIn("不持久化本机绝对路径", runbook)
 

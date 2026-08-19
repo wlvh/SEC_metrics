@@ -1,0 +1,1304 @@
+"""Build and publish the Issue #15 zero-AI release ratchet.
+
+Purpose:
+    R1 imports the verified legacy root as predecessor A, freezes the ten
+    B01/B03 structured Runs from immutable SEC attempts, prepares successor B,
+    and executes the required A -> B -> A -> B cold-start transaction.
+
+Call relationships:
+    ``tools/vnext_zero_ai_release.py`` calls :func:`publish_r1`.  Source-plan
+    construction reuses ``batch_workflow`` and ``deterministic_router``;
+    structured execution reuses the existing Run state machine; publication
+    uses the private formal primitives that remain unavailable to generic
+    callers.  Every persistent receipt is built from returned data rather than
+    caller-asserted status.
+"""
+
+from __future__ import annotations
+
+import csv
+import io
+import json
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+from typing import Dict, List, Mapping, Sequence, Tuple
+
+from sec_http import request_log_manifest_payload
+
+from .batch_workflow import build_release_input_plan, request_attempt_binding
+from .canonical import atomic_write_bytes, canonical_json_bytes, content_hash
+from .canonical import parse_utc_timestamp, sha256_bytes, sha256_file
+from .cutover import _freeze_structured_run
+from .deterministic_router import build_multi_source_release_input_plan
+from .deterministic_router import source_role_plan, source_set_manifest
+from .invocation_control import structured_only_result
+from .publication import PublicationView, REQUIRED_BUNDLE_FILES
+from .publication import ROOT_MIRROR_RELATIVE_PATHS, ZERO_AI_FORMAL_MANIFEST
+from .publication import _commit_initial_publication_chain
+from .publication import _commit_publication, _write_prepared_publication_bundle
+from .publication import prepare_issue15_legacy_baseline_predecessor
+from .publication import publication_layout, publication_state_snapshot
+from .publication import rollback_publication, verify_publication_bundle
+from .requirements import load_requirement_snapshot
+from .run_store import load_run_for_status
+from .source_strategy import load_issue15_release_plan
+from .sources import raw_blob_record, source_reference_record
+
+
+R1_METRIC_IDS = ("B01", "B03")
+R1_EXPECTED_COORDINATES = 20
+R1_EXPECTED_LEGACY_ROWS = 18
+R1_EXPECTED_NEW_KEYS = 2
+R1_EXPECTED_PUBLIC_ROWS = 232
+ZERO_COUNTERS = {
+    "mock_transport_invocation_count": 0,
+    "paid_model_provider_call_count": 0,
+    "real_model_provider_egress_count": 0,
+}
+ZERO_AI_NOTE_START = "<!-- zero-ai-formal-publication:start -->"
+ZERO_AI_NOTE_END = "<!-- zero-ai-formal-publication:end -->"
+METRICS_FIELDS = (
+    "company",
+    "cik",
+    "metric_id",
+    "metric_name",
+    "value",
+    "unit",
+    "status",
+    "source_class",
+    "formula",
+    "period_start",
+    "period_end",
+    "fiscal_year",
+    "fiscal_period",
+    "accession",
+    "form",
+    "filed_date",
+    "concept_or_section",
+    "context_or_dimension",
+    "confidence",
+    "notes",
+)
+COVERAGE_FIELDS = (
+    "company",
+    "metric_id",
+    "status",
+    "source_class",
+    "has_numeric_value",
+    "has_evidence",
+    "needs_text_extraction",
+    "needs_review",
+    "reason",
+)
+
+
+class ZeroAiReleaseError(ValueError):
+    """Report a source, result, compatibility, or publication invariant."""
+
+
+def _json_bytes(*, value: object) -> bytes:
+    """Return canonical UTF-8 JSON with one terminal newline.
+
+    Args:
+        value: JSON-compatible value.
+
+    Returns:
+        Stable bytes used by content-addressed receipts.
+    """
+    return canonical_json_bytes(value=value) + b"\n"
+
+
+def _utc_sequence(*, committed_at_utc: str) -> Tuple[str, str, str]:
+    """Return ordered commit, rollback, and restore UTC timestamps.
+
+    Args:
+        committed_at_utc: Explicit initial transaction timestamp.
+
+    Returns:
+        Three ISO 8601 UTC values separated by one second.
+    """
+    parsed = parse_utc_timestamp(value=committed_at_utc)
+    normalized = parsed.astimezone(timezone.utc)
+    return tuple(
+        (normalized + timedelta(seconds=offset))
+        .isoformat(timespec="seconds")
+        .replace("+00:00", "Z")
+        for offset in range(3)
+    )
+
+
+def _csv_rows(*, content: bytes, fields: Sequence[str]) -> List[Dict[str, str]]:
+    """Parse exact UTF-8 CSV bytes and require the expected header.
+
+    Args:
+        content: Candidate CSV bytes.
+        fields: Exact ordered field names.
+
+    Returns:
+        Isolated string rows.
+    """
+    try:
+        reader = csv.DictReader(io.StringIO(content.decode("utf-8")))
+    except UnicodeDecodeError as error:
+        raise ZeroAiReleaseError("Release CSV is not UTF-8") from error
+    if tuple(reader.fieldnames or ()) != tuple(fields):
+        raise ZeroAiReleaseError("Release CSV header differs")
+    rows = [dict(row) for row in reader]
+    if any(set(row) != set(fields) for row in rows):
+        raise ZeroAiReleaseError("Release CSV row fields differ")
+    return rows
+
+
+def _append_csv_rows(
+    *, original: bytes, fields: Sequence[str], rows: Sequence[Mapping[str, str]]
+) -> bytes:
+    """Append rows without rewriting any predecessor byte.
+
+    Args:
+        original: Frozen predecessor CSV bytes.
+        fields: Exact ordered CSV header.
+        rows: New rows using that header.
+
+    Returns:
+        Original byte prefix followed by deterministic UTF-8 rows.
+    """
+    if not original.endswith(b"\n"):
+        raise ZeroAiReleaseError("Frozen CSV lacks a terminal newline")
+    stream = io.StringIO(newline="")
+    writer = csv.DictWriter(
+        stream, fieldnames=list(fields), lineterminator="\n",
+    )
+    for row in rows:
+        if set(row) != set(fields):
+            raise ZeroAiReleaseError("Appended CSV row fields differ")
+        writer.writerow(dict(row))
+    return original + stream.getvalue().encode("utf-8")
+
+
+def _append_publication_note(
+    *, original: bytes, release_stage: str,
+    cumulative_metric_ids: Sequence[str], public_matrix_row_count: int,
+) -> bytes:
+    """Append one generated zero-AI status block to public Markdown.
+
+    Args:
+        original: Predecessor README or report bytes.
+        release_stage: Ratchet stage represented by this bundle.
+        cumulative_metric_ids: Exact active migrated metric set.
+        public_matrix_row_count: Exact candidate matrix row count.
+
+    Returns:
+        UTF-8 Markdown with one non-duplicated generated status block.
+    """
+    try:
+        text = original.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise ZeroAiReleaseError("Public Markdown is not UTF-8") from error
+    if ZERO_AI_NOTE_START in text or ZERO_AI_NOTE_END in text:
+        raise ZeroAiReleaseError("Predecessor already has a zero-AI note")
+    block = """
+
+{start}
+## Issue #15 零 AI 正式发布
+
+- release stage：`{stage}`
+- cumulative migrated metric IDs：`{metrics}`
+- public matrix rows：`{rows}`
+- `real_model_provider_egress_count = 0`
+- `paid_model_provider_call_count = 0`
+- Issue #15 full acceptance：`NOT_RUN`（本 bundle 只证明当前零 AI ratchet）
+- 当前版本必须由 `outputs/active_publication.json` 与对应 immutable bundle
+  联合识别；本段不自报 publication ID。
+{end}
+""".format(
+        start=ZERO_AI_NOTE_START,
+        stage=release_stage,
+        metrics=", ".join(cumulative_metric_ids),
+        rows=public_matrix_row_count,
+        end=ZERO_AI_NOTE_END,
+    )
+    return (text.rstrip() + block).encode("utf-8")
+
+
+def _registry_rows(*, repo_root: Path) -> List[Dict[str, str]]:
+    """Load the exact ten-company registry.
+
+    Args:
+        repo_root: Repository containing company authority.
+
+    Returns:
+        Ordered registry rows.
+    """
+    path = repo_root / "config" / "company_registry.csv"
+    with path.open(mode="r", encoding="utf-8", newline="") as file_obj:
+        rows = [dict(row) for row in csv.DictReader(file_obj)]
+    if len(rows) != 10 or len({row["company_id"] for row in rows}) != 10:
+        raise ZeroAiReleaseError("Company registry exact set differs")
+    return rows
+
+
+def _filing_identity(
+    *, inventory_bytes: bytes, accession: str
+) -> Tuple[str, str]:
+    """Resolve one accession's exact form and filing date.
+
+    Args:
+        inventory_bytes: Pinned SEC submissions JSON bytes.
+        accession: Filing accession selected by the release plan.
+
+    Returns:
+        Form type and ISO filing date.
+    """
+    try:
+        payload = json.loads(inventory_bytes.decode("utf-8"))
+        recent = payload["filings"]["recent"]
+        accessions = recent["accessionNumber"]
+        forms = recent["form"]
+        dates = recent["filingDate"]
+    except (KeyError, TypeError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ZeroAiReleaseError("SEC submissions inventory is invalid") from error
+    matches = [
+        (str(forms[index]), str(dates[index]))
+        for index, candidate in enumerate(accessions)
+        if candidate == accession
+    ]
+    if len(matches) != 1 or any(not value for value in matches[0]):
+        raise ZeroAiReleaseError("Release accession is absent from submissions")
+    return matches[0]
+
+
+def _source_reference(
+    *, repo_root: Path, company_id: str, repo_relative_path: str,
+    source_url: str, accession: str, document_name: str, source_role: str,
+) -> Tuple[Dict[str, object], Dict[str, object]]:
+    """Build one immutable-attempt-backed SourceReference.
+
+    Args:
+        repo_root: Repository containing raw bytes and request ledger.
+        company_id: Logical company identity.
+        repo_relative_path: Existing exact SEC response path.
+        source_url: Exact official SEC URL.
+        accession: Filing or pinned inventory identity.
+        document_name: SEC document name.
+        source_role: Deterministic plan role.
+
+    Returns:
+        SourceReference and complete immutable locator binding.
+    """
+    raw = raw_blob_record(
+        repo_root=repo_root,
+        repo_relative_path=repo_relative_path,
+        media_type="application/json",
+    )
+    binding = request_attempt_binding(
+        repo_root=repo_root,
+        source_url=source_url,
+        content_sha256=str(raw["raw_asset_id"]).split(":", maxsplit=1)[1],
+        accession=accession,
+        document_name=document_name,
+    )
+    if binding["request_locator_kind"] != "IMMUTABLE_ATTEMPT":
+        raise ZeroAiReleaseError("Formal zero-AI source is not immutable")
+    reference = source_reference_record(
+        raw_blob=raw,
+        company_id=company_id,
+        source_url=source_url,
+        accession=accession,
+        document_name=document_name,
+        source_role=source_role,
+        request_attempt_id=str(binding["request_attempt_id"]),
+    )
+    return reference, binding
+
+
+def _r1_source_plan(
+    *, repo_root: Path, legacy_snapshot_dir: Path,
+) -> Tuple[Dict[str, object], List[Dict[str, object]], Dict[str, object]]:
+    """Build the R1 ``sources[]`` plan and transient Run inputs.
+
+    Args:
+        repo_root: Repository authority root.
+        legacy_snapshot_dir: Frozen legacy public snapshot.
+
+    Returns:
+        Multi-source plan, scalar-compatible structured Run inputs, and
+        locator proof indexed by SourceReference identity.
+    """
+    issue_plan = load_issue15_release_plan(repo_root=repo_root)
+    if tuple(issue_plan["cumulative_metric_ids"]) != R1_METRIC_IDS:
+        raise ZeroAiReleaseError("R1 cumulative metric exact set differs")
+    run_plan = build_release_input_plan(
+        repo_root=repo_root, legacy_snapshot_dir=legacy_snapshot_dir,
+    )
+    registry = {
+        row["company_id"]: row for row in _registry_rows(repo_root=repo_root)
+    }
+    references = []
+    manifests = []
+    company_rows = []
+    locator_proofs = {}
+    for company in run_plan["companies"]:
+        company_id = str(company["company_id"])
+        sources = []
+        if company["mode"] == "COMPANYFACTS":
+            source = company["companyfacts_source"]
+            company_reference, company_binding = _source_reference(
+                repo_root=repo_root,
+                company_id=company_id,
+                repo_relative_path=str(source["repo_relative_path"]),
+                source_url=str(source["source_url"]),
+                accession=str(source["accession"]),
+                document_name=str(source["document_name"]),
+                source_role="companyfacts",
+            )
+            cik = str(int(registry[company_id]["primary_cik"])).zfill(10)
+            inventory_name = "CIK{}.json".format(cik)
+            inventory_path = "evidence/submissions/" + inventory_name
+            inventory_url = (
+                "https://data.sec.gov/submissions/" + inventory_name
+            )
+            inventory_bytes = (repo_root / inventory_path).read_bytes()
+            inventory_reference, inventory_binding = _source_reference(
+                repo_root=repo_root,
+                company_id=company_id,
+                repo_relative_path=inventory_path,
+                source_url=inventory_url,
+                accession="SUBMISSIONS-{}".format(
+                    company["target_period"]["fiscal_year"]
+                ),
+                document_name=inventory_name,
+                source_role="sec_submissions_inventory",
+            )
+            form, filed = _filing_identity(
+                inventory_bytes=inventory_bytes,
+                accession=str(source["accession"]),
+            )
+            manifest = source_set_manifest(
+                company_id=company_id,
+                source_role="companyfacts",
+                form_types=[form],
+                fiscal_or_date_window={
+                    "period_start": filed,
+                    "period_end": filed,
+                },
+                discovery_policy="PINNED_SUBMISSIONS_EXACT_FILING_V1",
+                inventory_source_reference=inventory_reference,
+                inventory_bytes=inventory_bytes,
+                ordered_source_references=[company_reference],
+                cutoff_timestamp_or_pinned_submissions_attempt=str(
+                    inventory_reference["request_attempt_id"]
+                ),
+            )
+            references.extend([inventory_reference, company_reference])
+            manifests.append(manifest)
+            sources.append(
+                source_role_plan(
+                    manifest=manifest, source_mode="STRUCTURED_JSON",
+                )
+            )
+            locator_proofs[str(inventory_reference["source_reference_id"])] = {
+                **inventory_binding,
+                "source_reference": inventory_reference,
+            }
+            locator_proofs[str(company_reference["source_reference_id"])] = {
+                **company_binding,
+                "source_reference": company_reference,
+            }
+        elif company["mode"] != "STRUCTURAL_ONLY":
+            raise ZeroAiReleaseError("R1 structured Run mode is invalid")
+        company_rows.append(
+            {
+                "company_id": company_id,
+                "result_metric_ids": list(R1_METRIC_IDS),
+                "sources": sources,
+                "target_period": dict(company["target_period"]),
+            }
+        )
+    multi_source = build_multi_source_release_input_plan(
+        release_plan_id=str(issue_plan["release_plan"]["release_plan_id"]),
+        requirement_id="issue_15_v1",
+        authority_hashes=issue_plan["authority_hashes"],
+        companies=company_rows,
+        source_references=references,
+        source_set_manifests=manifests,
+        event_route_catalog_sha256=sha256_file(
+            path=repo_root / "catalog" / "event_routes.json"
+        ),
+    )
+    return multi_source, list(run_plan["companies"]), locator_proofs
+
+
+def _freeze_r1_runs(
+    *, repo_root: Path, workspace_dir: Path, plan: Mapping[str, object],
+    run_companies: Sequence[Mapping[str, object]],
+) -> Tuple[List[Dict[str, object]], Dict[str, bytes]]:
+    """Freeze and verify the ten structured R1 Runs.
+
+    Args:
+        repo_root: Repository authority root.
+        workspace_dir: Persistent repository-owned R1 workspace.
+        plan: Exact multi-source input plan.
+        run_companies: Repository-derived structured Run inputs.
+
+    Returns:
+        Coordinate bindings and immutable Run files for the publication.
+    """
+    run_root = workspace_dir / "runs"
+    run_root.mkdir(parents=True, exist_ok=True)
+    coordinates = []
+    internal_files = {}
+    for company in run_companies:
+        company_id = str(company["company_id"])
+        run_dir = run_root / company_id
+        _freeze_structured_run(
+            repo_root=repo_root,
+            run_dir=run_dir,
+            company=company,
+            plan_id=str(plan["release_input_plan_id"]),
+            execute_live=True,
+        )
+        manifest, records, decisions = load_run_for_status(
+            run_dir=run_dir, repo_root=repo_root,
+        )
+        if manifest["status"] != "FROZEN" or decisions:
+            raise ZeroAiReleaseError("R1 Run is not deterministic and frozen")
+        results = {
+            str(record["metric_id"]): record
+            for record in records
+            if record["record_type"] == "METRIC_RESULT"
+            and record["metric_id"] in R1_METRIC_IDS
+        }
+        traces = {
+            str(record["trace_id"]): record
+            for record in records
+            if record["record_type"] == "EXECUTION_TRACE"
+        }
+        if set(results) != set(R1_METRIC_IDS):
+            raise ZeroAiReleaseError("R1 Run result exact set differs")
+        for metric_id in R1_METRIC_IDS:
+            result = results[metric_id]
+            trace_id = str(result["trace_id"])
+            if trace_id not in traces:
+                raise ZeroAiReleaseError("R1 Result lacks ExecutionTrace")
+            coordinates.append(
+                {
+                    "company_id": company_id,
+                    "metric_id": metric_id,
+                    "result_id": result["result_id"],
+                    "trace_id": trace_id,
+                    "applicability": result["applicability"],
+                    "publication": result["publication"],
+                    "quality": result["quality"],
+                    "value": result["value"],
+                    "unit": result["unit"],
+                    "run_id": manifest["run_id"],
+                }
+            )
+        for path in sorted(run_dir.rglob("*")):
+            if path.is_symlink() or (path.exists() and not path.is_file()):
+                if path.is_dir():
+                    continue
+                raise ZeroAiReleaseError("R1 Run namespace is unsafe")
+            relative = path.relative_to(run_dir).as_posix()
+            internal_files[
+                "internal/runs/{}/{}".format(company_id, relative)
+            ] = path.read_bytes()
+    coordinates.sort(key=lambda row: (row["company_id"], row["metric_id"]))
+    if len(coordinates) != R1_EXPECTED_COORDINATES:
+        raise ZeroAiReleaseError("R1 coordinate count differs")
+    return coordinates, internal_files
+
+
+def _validate_r1_compatibility(
+    *, metrics_bytes: bytes, coordinates: Sequence[Mapping[str, object]],
+    registry_rows: Sequence[Mapping[str, str]],
+) -> List[Tuple[Mapping[str, str], Mapping[str, object]]]:
+    """Bind every existing B01/B03 row to its frozen vNext Result.
+
+    Args:
+        metrics_bytes: Frozen legacy matrix bytes.
+        coordinates: Exact 20 R1 Result coordinates.
+        registry_rows: Ten-company identity mapping.
+
+    Returns:
+        Existing legacy rows paired with their Result bindings.
+    """
+    rows = _csv_rows(content=metrics_bytes, fields=METRICS_FIELDS)
+    names = {row["company_id"]: row["display_name"] for row in registry_rows}
+    coordinate_index = {
+        (names[str(row["company_id"])], str(row["metric_id"])): row
+        for row in coordinates
+    }
+    existing = [
+        row for row in rows if row["metric_id"] in set(R1_METRIC_IDS)
+    ]
+    if len(existing) != R1_EXPECTED_LEGACY_ROWS:
+        raise ZeroAiReleaseError("R1 frozen legacy row count differs")
+    pairs = []
+    for row in existing:
+        key = (row["company"], row["metric_id"])
+        if key not in coordinate_index:
+            raise ZeroAiReleaseError("R1 legacy row lacks a Result")
+        result = coordinate_index[key]
+        expected_value = row["value"] if row["value"] else None
+        expected_quality = {
+            "OK": "EXACT",
+            "OK_APPROX": "APPROX",
+            "NOT_MEANINGFUL": "NOT_MEANINGFUL",
+        }
+        if row["status"] not in expected_quality or (
+            result["value"] != expected_value
+            or result["quality"] != expected_quality[row["status"]]
+            or result["publication"] != "PUBLISHED"
+            or result["applicability"] != "APPLICABLE"
+        ):
+            raise ZeroAiReleaseError("R1 strict compatibility differs")
+        pairs.append((row, result))
+    return pairs
+
+
+def _r1_structural_rows(
+    *, registry_rows: Sequence[Mapping[str, str]],
+    coordinates: Sequence[Mapping[str, object]],
+    legacy_rows: Sequence[Mapping[str, str]],
+) -> Tuple[List[Dict[str, str]], List[Dict[str, str]]]:
+    """Render the two structurally absent public coordinates.
+
+    Args:
+        registry_rows: Ten-company authority rows.
+        coordinates: Exact 20 R1 Result coordinates.
+        legacy_rows: Frozen 230-row public matrix.
+
+    Returns:
+        New metric rows and matching coverage rows.
+    """
+    registry = {row["company_id"]: row for row in registry_rows}
+    names = {row["company_id"]: row["display_name"] for row in registry_rows}
+    existing = {(row["company"], row["metric_id"]) for row in legacy_rows}
+    templates = {
+        metric_id: next(
+            row for row in legacy_rows if row["metric_id"] == metric_id
+        )
+        for metric_id in R1_METRIC_IDS
+    }
+    metrics = []
+    coverage = []
+    for coordinate in coordinates:
+        company_id = str(coordinate["company_id"])
+        metric_id = str(coordinate["metric_id"])
+        key = (names[company_id], metric_id)
+        if key in existing:
+            continue
+        if (
+            coordinate["applicability"] != "N_A_STRUCTURAL"
+            or coordinate["publication"] != "PUBLISHED"
+            or coordinate["quality"] != "NONE"
+            or coordinate["value"] is not None
+            or coordinate["unit"] is not None
+        ):
+            raise ZeroAiReleaseError("R1 new coordinate is not structural")
+        template = templates[metric_id]
+        reason = "Metric is structurally inapplicable to this company profile."
+        result_target = coordinate
+        period_start = str(result_target["period_start"]) if (
+            "period_start" in result_target
+        ) else ""
+        period_end = str(result_target["period_end"]) if (
+            "period_end" in result_target
+        ) else ""
+        if not period_start or not period_end:
+            raise ZeroAiReleaseError("R1 structural coordinate lacks period")
+        metrics.append(
+            {
+                "company": names[company_id],
+                "cik": str(int(registry[company_id]["primary_cik"])),
+                "metric_id": metric_id,
+                "metric_name": template["metric_name"],
+                "value": "",
+                "unit": "",
+                "status": "N_A_STRUCTURAL",
+                "source_class": "STRUCTURAL",
+                "formula": template["formula"],
+                "period_start": period_start,
+                "period_end": period_end,
+                "fiscal_year": str(result_target["fiscal_year"]),
+                "fiscal_period": "FY",
+                "accession": "",
+                "form": "",
+                "filed_date": "",
+                "concept_or_section": "metric_applicability_v1",
+                "context_or_dimension": "company_traits",
+                "confidence": "1.00",
+                "notes": reason,
+            }
+        )
+        coverage.append(
+            {
+                "company": names[company_id],
+                "metric_id": metric_id,
+                "status": "N_A_STRUCTURAL",
+                "source_class": "STRUCTURAL",
+                "has_numeric_value": "0",
+                "has_evidence": "0",
+                "needs_text_extraction": "0",
+                "needs_review": "0",
+                "reason": reason,
+            }
+        )
+    metrics.sort(key=lambda row: (row["company"], row["metric_id"]))
+    coverage.sort(key=lambda row: (row["company"], row["metric_id"]))
+    if len(metrics) != R1_EXPECTED_NEW_KEYS or len(coverage) != (
+        R1_EXPECTED_NEW_KEYS
+    ):
+        raise ZeroAiReleaseError("R1 structural key count differs")
+    return metrics, coverage
+
+
+def _coordinate_periods(
+    *, coordinates: Sequence[Mapping[str, object]],
+    run_companies: Sequence[Mapping[str, object]],
+) -> List[Dict[str, object]]:
+    """Attach explicit target periods to coordinate receipt rows.
+
+    Args:
+        coordinates: Result bindings from frozen Runs.
+        run_companies: Exact plan companies carrying target periods.
+
+    Returns:
+        Coordinate rows with period fields needed by public projection.
+    """
+    periods = {
+        str(company["company_id"]): company["target_period"]
+        for company in run_companies
+    }
+    output = []
+    for coordinate in coordinates:
+        row = dict(coordinate)
+        target = periods[str(row["company_id"])]
+        row["fiscal_year"] = target["fiscal_year"]
+        row["period_start"] = target["period_start"]
+        row["period_end"] = target["period_end"]
+        output.append(row)
+    return output
+
+
+def _public_key_proof(*, metrics_bytes: bytes) -> Tuple[int, str]:
+    """Return public row count and exact company/metric key-set hash.
+
+    Args:
+        metrics_bytes: Candidate public matrix.
+
+    Returns:
+        Row count and canonical key-set identity.
+    """
+    rows = _csv_rows(content=metrics_bytes, fields=METRICS_FIELDS)
+    keys = sorted(
+        (
+            {"company": row["company"], "metric_id": row["metric_id"]}
+            for row in rows
+        ),
+        key=lambda row: (row["company"], row["metric_id"]),
+    )
+    if len(keys) != len({(row["company"], row["metric_id"]) for row in keys}):
+        raise ZeroAiReleaseError("Public matrix contains duplicate keys")
+    return len(rows), content_hash(value=keys)
+
+
+def _receipt(*, body: Mapping[str, object], identity_field: str) -> Dict[str, object]:
+    """Attach one canonical content identity to a receipt body.
+
+    Args:
+        body: Exact receipt fields excluding identity.
+        identity_field: Content-addressed identity field name.
+
+    Returns:
+        Receipt with its identity.
+    """
+    return {**dict(body), identity_field: content_hash(value=dict(body))}
+
+
+def _retirement_receipt(
+    *, repo_root: Path, cumulative_metric_ids: Sequence[str],
+    publication_stage: str,
+) -> Dict[str, object]:
+    """Bind migrated metric scopes to the WB-1 frozen producer inventory.
+
+    Args:
+        repo_root: Repository containing the immutable Issue #15 inventory.
+        cumulative_metric_ids: Exact metric scopes retired by this release.
+        publication_stage: Ratchet stage that makes retirement effective.
+
+    Returns:
+        Content-addressed publication-bound retirement receipt.
+    """
+    path = (
+        repo_root
+        / "requirements"
+        / "issue_15_v1"
+        / "legacy_semantic_producer_inventory.json"
+    )
+    try:
+        inventory = json.loads(path.read_text(encoding="utf-8"))
+        producers = inventory["producers"]
+    except (KeyError, TypeError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ZeroAiReleaseError("WB-1 producer inventory is invalid") from error
+    metric_ids = set(cumulative_metric_ids)
+    retired_scopes = []
+    for producer in producers:
+        if not isinstance(producer, dict) or not {
+            "producer_id", "kind", "covered_metric_ids",
+        }.issubset(producer):
+            raise ZeroAiReleaseError("WB-1 producer record is invalid")
+        if producer["kind"] != "SEMANTIC_PRODUCER":
+            continue
+        scoped = sorted(metric_ids.intersection(producer["covered_metric_ids"]))
+        if scoped:
+            retired_scopes.append(
+                {
+                    "producer_id": producer["producer_id"],
+                    "retired_metric_ids": scoped,
+                }
+            )
+    retired_scopes.sort(key=lambda row: str(row["producer_id"]))
+    if not retired_scopes:
+        raise ZeroAiReleaseError("R1 producer retirement set is empty")
+    body = {
+        "schema_version": 1,
+        "record_type": "PUBLICATION_BOUND_RETIREMENT_RECEIPT",
+        "status": "PASSED",
+        "publication_stage": publication_stage,
+        "cumulative_metric_ids": sorted(metric_ids),
+        "frozen_inventory_sha256": sha256_file(path=path),
+        "retired_producer_scopes": retired_scopes,
+    }
+    return _receipt(body=body, identity_field="retirement_receipt_id")
+
+
+def _internal_bindings(
+    *, files: Mapping[str, bytes]
+) -> Dict[str, Dict[str, object]]:
+    """Bind every non-marker internal file by bytes and size.
+
+    Args:
+        files: Internal bundle files excluding the zero-AI marker.
+
+    Returns:
+        Sorted path binding mapping.
+    """
+    return {
+        path: {"sha256": sha256_bytes(content=files[path]), "size": len(files[path])}
+        for path in sorted(files)
+    }
+
+
+def _ledger_binding(
+    *, repo_root: Path, plan: Mapping[str, object],
+    locator_proofs: Mapping[str, object],
+) -> Tuple[Dict[str, object], bytes]:
+    """Build the formal immutable request-prefix binding.
+
+    Args:
+        repo_root: Repository containing the complete request ledger.
+        plan: Multi-source release input plan.
+        locator_proofs: Immutable locator proof by SourceReference identity.
+
+    Returns:
+        Publication ledger binding and portable provenance bytes.
+    """
+    source_ids = sorted(
+        str(reference["source_reference_id"])
+        for reference in plan["source_references"]
+    )
+    if source_ids != sorted(locator_proofs):
+        raise ZeroAiReleaseError("R1 locator proof exact set differs")
+    attempts = sorted(
+        {
+            str(locator_proofs[source_id]["request_attempt_id"])
+            for source_id in source_ids
+        }
+    )
+    source_proofs = []
+    for source_id in source_ids:
+        proof = locator_proofs[source_id]
+        source_proofs.append(
+            {
+                "source_reference_id": source_id,
+                "request_attempt_id": proof["request_attempt_id"],
+                "locator_class": proof["request_locator_kind"],
+                "body_path": proof["request_repo_relative_path"],
+                "body_sha256": proof["request_body_sha256"],
+                "body_size": proof["request_body_size"],
+                "headers_path": proof["request_headers_repo_relative_path"],
+                "headers_sha256": proof["request_headers_sha256"],
+                "headers_size": proof["request_headers_size"],
+            }
+        )
+    log_manifest = request_log_manifest_payload(
+        log_path=repo_root / "evidence" / "requests_log.csv"
+    )
+    proof_body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_REQUEST_LOCATOR_PROVENANCE",
+        "release_input_plan_id": plan["release_input_plan_id"],
+        "request_locator_classes": ["IMMUTABLE_ATTEMPT"],
+        "source_proofs": source_proofs,
+    }
+    provenance = _receipt(
+        body=proof_body, identity_field="request_locator_proof_id",
+    )
+    binding = {
+        "request_locator_classes": ["IMMUTABLE_ATTEMPT"],
+        "request_locator_proof_id": provenance["request_locator_proof_id"],
+        "request_locator_tier": "FULL_VALIDATION",
+        "requests_log_prefix_sha256": log_manifest["content_sha256"],
+        "row_count": log_manifest["row_count"],
+        "source_reference_ids": source_ids,
+        "used_request_attempt_ids": attempts,
+    }
+    return binding, _json_bytes(value=provenance)
+
+
+def _prepare_r1_successor(
+    *, repo_root: Path, predecessor: Mapping[str, object],
+    source_commit: str, committed_at_utc: str,
+) -> Tuple[Dict[str, object], Dict[str, object]]:
+    """Prepare the formal R1 successor and its evidence summary.
+
+    Args:
+        repo_root: Formal publication and authority root.
+        predecessor: Verified imported legacy PublicationManifest A.
+        source_commit: Clean committed implementation SHA.
+        committed_at_utc: Explicit R1 validation time.
+
+    Returns:
+        Prepared PublicationManifest B and complete receipt summary.
+    """
+    layout = publication_layout(publication_root=repo_root)
+    predecessor_dir = (
+        Path(layout["publications_dir"]) / str(predecessor["publication_id"])
+    )
+    verified_predecessor = verify_publication_bundle(bundle_dir=predecessor_dir)
+    if verified_predecessor != dict(predecessor):
+        raise ZeroAiReleaseError("R1 predecessor changed after import")
+    public_files = {
+        relative: (predecessor_dir / relative).read_bytes()
+        for relative in sorted(REQUIRED_BUNDLE_FILES)
+    }
+    plan, run_companies, locator_proofs = _r1_source_plan(
+        repo_root=repo_root, legacy_snapshot_dir=repo_root / "outputs",
+    )
+    workspace = repo_root / "artifacts" / "vnext" / "zero_ai_release" / "r1"
+    coordinates, run_files = _freeze_r1_runs(
+        repo_root=repo_root,
+        workspace_dir=workspace,
+        plan=plan,
+        run_companies=run_companies,
+    )
+    coordinates = _coordinate_periods(
+        coordinates=coordinates, run_companies=run_companies,
+    )
+    registry_rows = _registry_rows(repo_root=repo_root)
+    compatibility_pairs = _validate_r1_compatibility(
+        metrics_bytes=public_files["metrics_matrix.csv"],
+        coordinates=coordinates,
+        registry_rows=registry_rows,
+    )
+    legacy_rows = _csv_rows(
+        content=public_files["metrics_matrix.csv"], fields=METRICS_FIELDS,
+    )
+    metric_additions, coverage_additions = _r1_structural_rows(
+        registry_rows=registry_rows,
+        coordinates=coordinates,
+        legacy_rows=legacy_rows,
+    )
+    public_files["metrics_matrix.csv"] = _append_csv_rows(
+        original=public_files["metrics_matrix.csv"],
+        fields=METRICS_FIELDS,
+        rows=metric_additions,
+    )
+    public_files["coverage_matrix.csv"] = _append_csv_rows(
+        original=public_files["coverage_matrix.csv"],
+        fields=COVERAGE_FIELDS,
+        rows=coverage_additions,
+    )
+    row_count, key_hash = _public_key_proof(
+        metrics_bytes=public_files["metrics_matrix.csv"]
+    )
+    if row_count != R1_EXPECTED_PUBLIC_ROWS:
+        raise ZeroAiReleaseError("R1 public matrix row count differs")
+    for markdown_path in ("README_RUN.md", "REPORT_十公司财务指标.md"):
+        public_files[markdown_path] = _append_publication_note(
+            original=public_files[markdown_path],
+            release_stage="R1",
+            cumulative_metric_ids=R1_METRIC_IDS,
+            public_matrix_row_count=row_count,
+        )
+    strict_hash = content_hash(
+        value=[
+            {
+                "legacy_row": row,
+                "result_id": result["result_id"],
+                "trace_id": result["trace_id"],
+            }
+            for row, result in compatibility_pairs
+        ]
+    )
+    coordinate_body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_COORDINATE_INDEX",
+        "release_stage": "R1",
+        "release_input_plan_id": plan["release_input_plan_id"],
+        "coordinates": coordinates,
+    }
+    coordinate_index = _receipt(
+        body=coordinate_body, identity_field="batch_manifest_id",
+    )
+    invocation = structured_only_result(
+        release_input_plan_id=str(plan["release_input_plan_id"]),
+        result_coordinate_count=R1_EXPECTED_COORDINATES,
+    )
+    retirement = _retirement_receipt(
+        repo_root=repo_root,
+        cumulative_metric_ids=R1_METRIC_IDS,
+        publication_stage="R1",
+    )
+    ledger_binding, locator_bytes = _ledger_binding(
+        repo_root=repo_root, plan=plan, locator_proofs=locator_proofs,
+    )
+    internal_files = {
+        **run_files,
+        "internal/release_input_plan.json": _json_bytes(value=plan),
+        "internal/coordinate_index.json": _json_bytes(value=coordinate_index),
+        "internal/request_locator_provenance.json": locator_bytes,
+        "internal/retirement_receipt.json": _json_bytes(value=retirement),
+        "internal/structured_only_invocation.json": _json_bytes(value=invocation),
+    }
+    issue_requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_15_v1"
+    )
+    projection_body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_PROJECTION_MANIFEST",
+        "status": "PUBLISHABLE",
+        "release_stage": "R1",
+        "release_input_plan_id": plan["release_input_plan_id"],
+        "batch_manifest_id": coordinate_index["batch_manifest_id"],
+        "previous_publication_id": predecessor["publication_id"],
+        "cumulative_metric_ids": list(R1_METRIC_IDS),
+        "result_coordinate_count": R1_EXPECTED_COORDINATES,
+        "replaced_legacy_row_count": R1_EXPECTED_LEGACY_ROWS,
+        "new_public_key_count": R1_EXPECTED_NEW_KEYS,
+        "public_matrix_row_count": row_count,
+        "public_key_set_hash": key_hash,
+        "strict_compatibility_hash": strict_hash,
+        "requirement_closure_hash": issue_requirement[
+            "requirement_closure_hash"
+        ],
+    }
+    projection = _receipt(
+        body=projection_body, identity_field="projection_manifest_id",
+    )
+    migration = _receipt(
+        body={
+            "schema_version": 1,
+            "record_type": "ZERO_AI_STRICT_COMPATIBILITY_RECEIPT",
+            "status": "PASSED",
+            "release_stage": "R1",
+            "projection_manifest_id": projection["projection_manifest_id"],
+            "replaced_legacy_row_count": R1_EXPECTED_LEGACY_ROWS,
+            "new_public_key_count": R1_EXPECTED_NEW_KEYS,
+            "removed_metric_ids": [],
+            "removed_public_keys": [],
+            "strict_compatibility_hash": strict_hash,
+            "public_key_set_hash": key_hash,
+            "retirement_receipt_id": retirement["retirement_receipt_id"],
+        },
+        identity_field="strict_compatibility_receipt_id",
+    )
+    validation_body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_PUBLICATION_VALIDATION_RECEIPT",
+        "status": "PASSED",
+        "release_stage": "R1",
+        "projection_manifest_id": projection["projection_manifest_id"],
+        "batch_manifest_id": coordinate_index["batch_manifest_id"],
+        "checks": [
+            "IMMUTABLE_SOURCE_ATTEMPTS",
+            "RESULT_TRACE_EXACT_SET",
+            "STRICT_COMPATIBILITY",
+            "PUBLIC_KEY_UNION",
+            "STRUCTURED_ONLY_ZERO_PROVIDER",
+        ],
+        "counters": dict(ZERO_COUNTERS),
+        "validated_at_utc": committed_at_utc,
+    }
+    validation = _receipt(
+        body=validation_body, identity_field="validation_receipt_id",
+    )
+    public_files["projection_manifest.json"] = _json_bytes(value=projection)
+    public_files["legacy_invariant_migration_receipt.json"] = _json_bytes(
+        value=migration
+    )
+    public_files["publication_validation_receipt.json"] = _json_bytes(
+        value=validation
+    )
+    public_files["validation_run_manifest.json"] = _json_bytes(
+        value={
+            "run_id": str(coordinate_index["batch_manifest_id"]),
+            "source_commit": source_commit,
+            "started_at_utc": committed_at_utc,
+            "mode": "FULL_VALIDATION",
+            "refreshed_artifacts": sorted(
+                [
+                    "coverage_matrix.csv",
+                    "legacy_invariant_migration_receipt.json",
+                    "metrics_matrix.csv",
+                    "projection_manifest.json",
+                    "publication_validation_receipt.json",
+                    "validation_run_manifest.json",
+                ]
+            ),
+            "not_refreshed_artifacts": [
+                "issue_15_full_acceptance.not_run"
+            ],
+            "result": "PASSED",
+        }
+    )
+    public_hashes = {
+        relative: sha256_bytes(content=public_files[relative])
+        for relative in sorted(REQUIRED_BUNDLE_FILES)
+    }
+    marker_body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_FORMAL_RELEASE_RECEIPT",
+        "status": "PASSED",
+        "release_stage": "R1",
+        "release_input_plan_id": plan["release_input_plan_id"],
+        "batch_manifest_id": coordinate_index["batch_manifest_id"],
+        "projection_manifest_id": projection["projection_manifest_id"],
+        "validation_receipt_id": validation["validation_receipt_id"],
+        "previous_publication_id": predecessor["publication_id"],
+        "cumulative_metric_ids": list(R1_METRIC_IDS),
+        "result_coordinate_count": R1_EXPECTED_COORDINATES,
+        "replaced_legacy_row_count": R1_EXPECTED_LEGACY_ROWS,
+        "new_public_key_count": R1_EXPECTED_NEW_KEYS,
+        "public_matrix_row_count": row_count,
+        "public_key_set_hash": key_hash,
+        "strict_compatibility_hash": strict_hash,
+        "requirement_closure_hash": issue_requirement[
+            "requirement_closure_hash"
+        ],
+        "issue15_release_plan_sha256": issue_requirement["hashes"][
+            "issue_15_release_plan_sha256"
+        ],
+        "source_locator_classes": ["IMMUTABLE_ATTEMPT"],
+        "counters": dict(ZERO_COUNTERS),
+        "public_artifact_hashes": public_hashes,
+        "internal_files": _internal_bindings(files=internal_files),
+    }
+    marker = _receipt(
+        body=marker_body, identity_field="zero_ai_release_receipt_id",
+    )
+    files = {
+        **public_files,
+        **internal_files,
+        ZERO_AI_FORMAL_MANIFEST: _json_bytes(value=marker),
+    }
+    parent_requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1"
+    )
+    successor = _write_prepared_publication_bundle(
+        publications_dir=Path(layout["publications_dir"]),
+        files=files,
+        requirement_hashes=parent_requirement["hashes"],
+        batch_manifest_id=str(coordinate_index["batch_manifest_id"]),
+        projection_manifest_id=str(projection["projection_manifest_id"]),
+        validation_receipt_id=str(validation["validation_receipt_id"]),
+        ledger_binding=ledger_binding,
+        previous_publication_id=str(predecessor["publication_id"]),
+    )
+    summary = {
+        "release_stage": "R1",
+        "release_input_plan_id": plan["release_input_plan_id"],
+        "batch_manifest_id": coordinate_index["batch_manifest_id"],
+        "projection_manifest_id": projection["projection_manifest_id"],
+        "validation_receipt_id": validation["validation_receipt_id"],
+        "zero_ai_release_receipt_id": marker["zero_ai_release_receipt_id"],
+        "public_matrix_row_count": row_count,
+        "public_key_set_hash": key_hash,
+        "strict_compatibility_hash": strict_hash,
+        "retirement_receipt_id": retirement["retirement_receipt_id"],
+        "counters": dict(ZERO_COUNTERS),
+        "retirement_receipt": retirement,
+    }
+    return successor, summary
+
+
+def _read_back_proof(
+    *, repo_root: Path, expected_publication_id: str,
+) -> Dict[str, object]:
+    """Read every active file through PublicationView and compare mirrors.
+
+    Args:
+        repo_root: Formal publication root.
+        expected_publication_id: Successor expected to be active.
+
+    Returns:
+        Content-addressed immutable read-back proof.
+    """
+    view = PublicationView.open(publication_root=repo_root)
+    if view.publication_id != expected_publication_id:
+        raise ZeroAiReleaseError("R1 active publication differs")
+    artifact_hashes = {}
+    for relative in sorted(REQUIRED_BUNDLE_FILES):
+        content = view.read_bytes(relative_path=relative)
+        mirror = repo_root / ROOT_MIRROR_RELATIVE_PATHS[relative]
+        if mirror.read_bytes() != content:
+            raise ZeroAiReleaseError("R1 root mirror differs")
+        artifact_hashes[relative] = sha256_bytes(content=content)
+    state = publication_state_snapshot(publication_root=repo_root)
+    if state["active_publication_id"] != expected_publication_id:
+        raise ZeroAiReleaseError("R1 state snapshot differs")
+    body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_IMMUTABLE_READ_BACK_PROOF",
+        "status": "PASSED",
+        "publication_id": expected_publication_id,
+        "artifact_hashes": artifact_hashes,
+        "mirror_hashes": state["mirror_hashes"],
+        "counters": dict(ZERO_COUNTERS),
+    }
+    return _receipt(body=body, identity_field="read_back_proof_id")
+
+
+def _persist_receipt_set(
+    *, repo_root: Path, receipts: Mapping[str, Mapping[str, object]],
+) -> Dict[str, object]:
+    """Persist content-addressed R1 receipts and one stable role index.
+
+    Args:
+        repo_root: Repository output root.
+        receipts: Receipt role to exact object mapping.
+
+    Returns:
+        Stable index binding every receipt path and byte digest.
+    """
+    receipt_dir = repo_root / "outputs" / "zero_ai_release_receipts" / "r1"
+    if receipt_dir.is_symlink() or (
+        receipt_dir.exists() and not receipt_dir.is_dir()
+    ):
+        raise ZeroAiReleaseError("R1 receipt directory is unsafe")
+    receipt_dir.mkdir(parents=True, exist_ok=True)
+    bindings = {}
+    for role in sorted(receipts):
+        content = _json_bytes(value=receipts[role])
+        digest = sha256_bytes(content=content)
+        path = receipt_dir / "{}.json".format(digest)
+        if path.exists() and path.read_bytes() != content:
+            raise ZeroAiReleaseError("R1 content-addressed receipt differs")
+        if not path.exists():
+            atomic_write_bytes(path=path, content=content)
+        bindings[role] = {
+            "path": path.relative_to(repo_root).as_posix(),
+            "sha256": digest,
+            "size": len(content),
+        }
+    index_body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_R1_RECEIPT_INDEX",
+        "status": "PASSED",
+        "receipts": bindings,
+        "counters": dict(ZERO_COUNTERS),
+    }
+    index = _receipt(body=index_body, identity_field="receipt_index_id")
+    atomic_write_bytes(
+        path=receipt_dir / "index.json", content=_json_bytes(value=index),
+    )
+    return index
+
+
+def publish_r1(
+    *, repo_root: Path, source_commit: str, committed_at_utc: str,
+) -> Dict[str, object]:
+    """Execute the formal R1 cold-start publication and rollback drill.
+
+    Args:
+        repo_root: Repository-owned formal publication root.
+        source_commit: Clean committed implementation SHA bound by validation.
+        committed_at_utc: Explicit first switch and validation UTC time.
+
+    Returns:
+        Final active identity, public key proof, counters, and receipt index.
+    """
+    if not isinstance(source_commit, str) or len(source_commit) != 40:
+        raise ZeroAiReleaseError("R1 source commit must be a full SHA")
+    commit_time, rollback_time, restore_time = _utc_sequence(
+        committed_at_utc=committed_at_utc
+    )
+    layout = publication_layout(publication_root=repo_root)
+    if Path(layout["pointer_path"]).exists():
+        raise ZeroAiReleaseError("R1 cold-start requires no active pointer")
+    predecessor = prepare_issue15_legacy_baseline_predecessor(
+        publication_root=repo_root,
+        repo_root=repo_root,
+        legacy_root=repo_root,
+    )
+    successor, summary = _prepare_r1_successor(
+        repo_root=repo_root,
+        predecessor=predecessor,
+        source_commit=source_commit,
+        committed_at_utc=commit_time,
+    )
+    retirement = summary.pop("retirement_receipt")
+    initial = _commit_initial_publication_chain(
+        publication_root=repo_root,
+        legacy_predecessor_publication_id=str(predecessor["publication_id"]),
+        successor_publication_id=str(successor["publication_id"]),
+        committed_at_utc=commit_time,
+    )
+    active_proof = _read_back_proof(
+        repo_root=repo_root,
+        expected_publication_id=str(successor["publication_id"]),
+    )
+    rollback_pointer = rollback_publication(
+        publication_root=repo_root,
+        target_publication_id=str(predecessor["publication_id"]),
+        expected_active_publication_id=str(successor["publication_id"]),
+        committed_at_utc=rollback_time,
+    )
+    rollback_view = PublicationView.open(publication_root=repo_root)
+    if rollback_view.publication_id != predecessor["publication_id"]:
+        raise ZeroAiReleaseError("R1 rollback did not reactivate A")
+    restore_pointer = _commit_publication(
+        publication_root=repo_root,
+        publication_id=str(successor["publication_id"]),
+        expected_active_publication_id=str(predecessor["publication_id"]),
+        committed_at_utc=restore_time,
+    )
+    restore_proof = _read_back_proof(
+        repo_root=repo_root,
+        expected_publication_id=str(successor["publication_id"]),
+    )
+    receipt_index = _persist_receipt_set(
+        repo_root=repo_root,
+        receipts={
+            "predecessor": predecessor,
+            "successor_publication": successor,
+            "active_terminal": initial["active_pointer"],
+            "rollback_terminal": rollback_pointer,
+            "restore_terminal": restore_pointer,
+            "initial_read_back": active_proof,
+            "restore_read_back": restore_proof,
+            "retirement": retirement,
+        },
+    )
+    return {
+        **summary,
+        "predecessor_publication_id": predecessor["publication_id"],
+        "active_publication_id": successor["publication_id"],
+        "receipt_index_id": receipt_index["receipt_index_id"],
+        "receipt_index_path": "outputs/zero_ai_release_receipts/r1/index.json",
+        "committed_at_utc": commit_time,
+        "rolled_back_at_utc": rollback_time,
+        "restored_at_utc": restore_time,
+    }

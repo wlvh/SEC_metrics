@@ -1,0 +1,46 @@
+{
+  "status": "PASSED",
+  "view_id": "run:sha256:6671e529a9f9c60833f02fc897e87f4498157f91128eedc66050674c257094a2",
+  "checks": [
+    {
+      "check": "REVIEW_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "REVIEW_ASSETS",
+      "status": "PASS"
+    },
+    {
+      "check": "REPOSITORY_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "RESULT_EXACT_SET",
+      "status": "PASS"
+    },
+    {
+      "check": "RECORD_GRAPH_REPLAY",
+      "status": "PASS"
+    },
+    {
+      "check": "EXECUTION_SEMANTICS",
+      "status": "PASS"
+    },
+    {
+      "check": "ARTIFACT_EXACT_SET",
+      "status": "PASS"
+    }
+  ],
+  "artifact_hashes": {
+    "records.jsonl": {
+      "sha256": "37dff643e3501a3dfcc1a1a4314a6ac159fd8a16bf5f5d0b7a42ca368ea5be9c",
+      "size": 5884
+    },
+    "review_decisions.jsonl": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    }
+  },
+  "record_type": "VALIDATION_RECEIPT",
+  "validation_receipt_id": "sha256:c74e7d819419fc0f1da50c398c9d39d2355f6277b47e550e64e0b0b5d15e02f8"
+}

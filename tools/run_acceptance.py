@@ -86,11 +86,13 @@ PUBLICATION_AUXILIARY_AUTHORITY_PATHS = (
 FORMAL_NAMESPACE_PATHS = (
     Path("artifacts/vnext/cutover"),
     Path("artifacts/vnext/qualification"),
+    Path("artifacts/vnext/zero_ai_release"),
     Path("evidence/request_attempts"),
     Path("outputs/publication_fault_receipts"),
     Path("outputs/publications"),
     Path("outputs/publication_switch_intents"),
     Path("outputs/publication_switch_receipts"),
+    Path("outputs/zero_ai_release_receipts"),
     Path("outputs/vnext_cutover_audits"),
 )
 RECORDED_GATE_ARTIFACTS = (

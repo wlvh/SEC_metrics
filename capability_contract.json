@@ -1,7 +1,7 @@
 {
   "schema_version": "0.4.0",
   "status": "active",
-  "purpose": "SEC_metrics 当前 SEC-only 单财年批处理、Issue #15 Requirement authority、已实现但尚无 active 运行证据的 inherited vNext formal Cutover、限制、责任和用户可见行为的机器可读真相源。",
+  "purpose": "SEC_metrics 当前 SEC-only 单财年批处理、Issue #15 Requirement authority、已正式发布的零 AI ratchet、尚未完成的后续 Cutover、限制、责任和用户可见行为的机器可读真相源。",
   "rules": [
     "Markdown 文档只能引用稳定 anchor_id，不得引用 JSON path、数组下标或 schema 内部路径。",
     "废弃 anchor_id 必须保留登记，且不得复用于不同含义。",
@@ -96,10 +96,20 @@
         "since": "2026-08-19"
       },
       {
+        "anchor_id": "CAPABILITY.issue_15_zero_ai_r1_active",
+        "type": "capability",
+        "status": "active",
+        "statement": "Issue #15 R1已从verified legacy A正式发布十公司B01/B03 successor B，并真实完成active B、rollback到A、restore到B。20个vNext Result坐标替换18个legacy业务行并新增2个N_A_STRUCTURAL public keys，最终matrix为232行；release-input plan只绑定IMMUTABLE_ATTEMPT，Result/Trace、strict compatibility、retirement、switch与immutable read-back receipts持久化，real model egress、paid model call和mock invocation均为0。该证据不包含R2、AI Reader或Issue #15 full acceptance。",
+        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_zero_ai_release.py::ZeroAiReleaseTest.test_r1_active_rollback_restore_and_read_back_are_bound",
+        "test_status": "automated_formal_active",
+        "since": "2026-08-19"
+      },
+      {
         "anchor_id": "CAPABILITY.vnext_recorded_shadow",
         "type": "capability",
         "status": "active",
-        "statement": "仓库已提供同一recorded/live vNext operator、固定DeepSeek/SEC边界、严格Reader/Evidence、可选HUMAN或明确SYSTEM Review、Run freeze/replay、complete Batch/Projector、第二布局→freeze/pre-holdout inventory→独立holdout资格、失败pre-active qualification chain的审计reset、portable live audit closure、verified legacy A→formal B、public formal mutation fail-closed、PublicationView consumers/rollback与new/rollback/restore终态编排；每个终态cycle只启动一次公开CLI并以单进程单次pin完成Stage10/11/12及snapshot publish/verify。full live core exact固定module-owned repository、artifacts/vnext/cutover、outputs legacy snapshot与formal publication root，fault matrix沿用同一固定root，并在release planning前固定执行SEC Stage00/01/02/03/05；每次有效live调用（包括HUMAN/SYSTEM/committed resume）都fresh执行这些阶段，再复用exact pinned semantic plan，本次acquisition receipt由同一strict validator按当前解释器binary、五条固定命令、ledger prefix/tail、attempt exact set与inventory current bytes重验并单独进入audit/full closure。持久receipt以portable runtime token和binary SHA-256保存执行身份，不含host绝对路径。本轮该live path尚未形成正式 publication，因此这些实现不改变当前root业务结果入口。",
+        "statement": "仓库已提供同一recorded/live vNext operator、固定DeepSeek/SEC边界、严格Reader/Evidence、可选HUMAN或明确SYSTEM Review、Run freeze/replay、complete Batch/Projector、第二布局→freeze/pre-holdout inventory→独立holdout资格、失败pre-active qualification chain的审计reset、portable live audit closure、verified legacy A→formal B、public formal mutation fail-closed、PublicationView consumers/rollback与new/rollback/restore终态编排；每个终态cycle只启动一次公开CLI并以单进程单次pin完成Stage10/11/12及snapshot publish/verify。full live core exact固定module-owned repository、artifacts/vnext/cutover、outputs legacy snapshot与formal publication root。传统AI live path尚未成功，但独立的module-owned零AI R1已形成formal active B；两类证据不得互相替代，root入口必须按active bundle声明的partial ratchet范围解释。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_full_uses_cutover_then_three_validated_pointer_views",
         "test_status": "automated_partial_scenario",
@@ -153,7 +163,7 @@
         "anchor_id": "BOUNDARY.not_production_service",
         "type": "capability_boundary",
         "status": "active",
-        "statement": "当前项目不是前端、API、daily scheduler、报价模型或生产数据库服务；vNext Cutover与full acquisition编排存在，本轮SEC acquisition已执行并通过receipt，但live Reader因provider余额失败，仍没有可供业务采信的committed active publication。",
+        "statement": "当前项目不是前端、API、daily scheduler、报价模型或生产数据库服务；Issue #15 zero-AI R1已有可采信的committed active publication，但R2、AI Reader、39指标最终Cutover与full acceptance尚未完成。",
         "audience": ["business_user", "operator", "reviewer"],
         "test_anchor": null,
         "test_status": "not_automated",
@@ -175,7 +185,7 @@
         "anchor_id": "BOUNDARY.vnext_cutover_not_complete",
         "type": "capability_boundary",
         "status": "active",
-        "statement": "Issue #15 已接管全部未完成产品责任；现有 inherited implementation 中 effective D-01仍由父R5单链批准为DeepSeek Chat Completions，固定SEC acquisition、legacy四指标writer/resolver fail-closed、pinned consumers、qualification、fault/rollback primitives与new/rollback/restore编排均已实现。WB-1没有把Issue #15的新D-01/D-26语义提前接入该runtime。Hilton/Hyatt qualification与SEC acquisition receipts已产生，但live三轮均因provider Insufficient Balance失败，因此十公司formal staging、committed active publication、rollback/restore与full receipt仍未产生；只有未来获准流程的full --execute-live真实返回0才能声称Cutover/full acceptance。",
+        "statement": "Issue #15 zero-AI R1已形成十公司B01/B03 formal active、rollback与restore证据；这不是Issue #15最终Done。R2及WB-4以后、AI Reader迁移、39指标最终Cutover和full acceptance仍未完成，历史DeepSeek Insufficient Balance失败也未变成成功AI证据；只有对应后续scope的真实receipts和最终full命令return code 0才能扩大完成声明。",
         "audience": ["business_user", "operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_authorized_full_with_missing_prerequisite_runs_nothing",
         "test_status": "automated_partial",
@@ -505,7 +515,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的十个并发直接边界用例，其中authority/scope/WB-2/WB-2B/WB-3用例机械验证Requirement、producer closure、39指标registry、E01 parity与invocation故障矩阵；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得禁止Issue #15明列的短小确定性不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
+        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的十一个并发直接边界用例，其中authority/scope/WB-2/WB-2B/WB-3与R1 active read-back用例机械验证Requirement、producer closure、39指标registry、E01 parity、invocation故障矩阵及已提交partial publication；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件。整体证据等级仍为FAST_LOCAL_ONLY，不能由此声称CI或Issue #15 full acceptance。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",
