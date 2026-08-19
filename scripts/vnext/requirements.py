@@ -72,6 +72,12 @@ ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH = (
 ISSUE_15_EXPECTED_SHARED_EXACT_SET_HASH = (
     "sha256:e148bac50da7d86389ac3181d65f8420f77f0db06e0aeb59c898260883d2eb96"
 )
+ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH = (
+    "sha256:878b250692dca379557103ff2bed213aeefb256c7c9ce35c6b2be3e991c9afbe"
+)
+ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH = (
+    "sha256:c2bca333c4dd470f153a1aeb6fb231acb92af14d9f917666e72431fe66b6cc75"
+)
 ISSUE_15_EXPECTED_SEMANTIC_PRODUCER_COUNT = 116
 ISSUE_15_EXPECTED_SHARED_PLUMBING_COUNT = 20
 ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH = (
@@ -917,6 +923,11 @@ def _validate_issue_15_producer_inventory(
         semantic_id_set=semantic_id_set,
         metric_id_set=metric_id_set,
     )
+    if (
+        content_hash(value=producers) != ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH
+        or content_hash(value=semantic) != ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH
+    ):
+        raise RequirementError("Issue #15 complete producer record authority differs")
 
     migration_rules = parent_inventory["migration_rules"]
     if not isinstance(migration_rules, dict):

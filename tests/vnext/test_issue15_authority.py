@@ -10,6 +10,7 @@ closed without modifying the immutable parent fixture.
 from __future__ import annotations
 
 import ast
+import copy
 import csv
 import json
 import shutil
@@ -24,7 +25,9 @@ from vnext.canonical import content_hash, sha256_file
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
+    ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
+    ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH,
     RequirementError,
     load_requirement_snapshot,
 )
@@ -227,6 +230,49 @@ def rebind_inventory(*, issue_copy: Path, inventory: Dict[str, object]) -> None:
     write_json(path=baseline_path, value=baseline)
 
 
+def internally_rebind_inventory_records(
+    *, inventory: Dict[str, object]
+) -> Dict[str, object]:
+    """Return a forged inventory with every internal record hash recomputed.
+
+    Args:
+        inventory: Complete copied child inventory before attacker mutation.
+
+    Returns:
+        Independent mutated object whose counts, coverage, exact-set hashes,
+        and record-set hashes are internally self-consistent.
+    """
+    rebound = copy.deepcopy(inventory)
+    producers = rebound["producers"]
+    semantic = [row for row in producers if row["kind"] == "SEMANTIC_PRODUCER"]
+    shared = [row for row in producers if row["kind"] == "SHARED_PLUMBING"]
+    metric_ids = rebound["metric_id_set"]
+    rebound["semantic_producer_count"] = len(semantic)
+    rebound["shared_plumbing_count"] = len(shared)
+    rebound["producer_exact_set_hash"] = content_hash(
+        value=[row["producer_id"] for row in semantic]
+    )
+    rebound["shared_plumbing_exact_set_hash"] = content_hash(
+        value=[row["producer_id"] for row in shared]
+    )
+    rebound["producer_record_set_hash"] = content_hash(value=producers)
+    rebound["semantic_producer_record_set_hash"] = content_hash(value=semantic)
+    rebound["coverage_by_metric"] = {
+        metric_id: [
+            row["producer_id"]
+            for row in semantic
+            if metric_id in row["covered_metric_ids"]
+        ]
+        for metric_id in metric_ids
+    }
+    rebound["covered_metric_ids"] = [
+        metric_id
+        for metric_id in metric_ids
+        if rebound["coverage_by_metric"][metric_id]
+    ]
+    return rebound
+
+
 class Issue15AuthorityTest(unittest.TestCase):
     """Prove WB-1 bytes, Decision history, and frozen inventories close."""
 
@@ -372,6 +418,13 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(
             ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
             content_hash(value=semantic_producer_ids),
+        )
+        self.assertEqual(
+            ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH, content_hash(value=producers),
+        )
+        self.assertEqual(
+            ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH,
+            content_hash(value=semantic_producers),
         )
         scope_closure = {
             "scope_evidence_by_producer": inventory["scope_evidence_by_producer"],
@@ -733,29 +786,39 @@ class Issue15AuthorityTest(unittest.TestCase):
             )
             producer["active_metric_ids"].remove("A05")
             producer["covered_metric_ids"].remove("A05")
-            semantic = [
-                row
-                for row in inventory["producers"]
-                if row["kind"] == "SEMANTIC_PRODUCER"
-            ]
-            metric_ids = inventory["metric_id_set"]
-            inventory["coverage_by_metric"] = {
-                metric_id: [
-                    row["producer_id"]
-                    for row in semantic
-                    if metric_id in row["covered_metric_ids"]
-                ]
-                for metric_id in metric_ids
-            }
-            inventory["producer_record_set_hash"] = content_hash(
-                value=inventory["producers"]
-            )
-            inventory["semantic_producer_record_set_hash"] = content_hash(
-                value=semantic
-            )
+            inventory = internally_rebind_inventory_records(inventory=inventory)
             rebind_inventory(issue_copy=issue_copy, inventory=inventory)
             with self.assertRaisesRegex(
                 RequirementError, "code-derived producer scope differs",
+            ):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_complete_record_hash_rejects_unmarked_active_to_retired_tamper(
+        self,
+    ) -> None:
+        """Reject self-rebound lifecycle drift outside scope evidence."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            inventory = read_json(
+                path=issue_copy / "legacy_semantic_producer_inventory.json"
+            )
+            producer_id = "scripts/sec_pipeline.py::a04_companyfacts_proxy_note"
+            self.assertNotIn(
+                producer_id, inventory["scope_evidence_by_producer"],
+            )
+            producer = next(
+                row
+                for row in inventory["producers"]
+                if row["producer_id"] == producer_id
+            )
+            producer["active_metric_ids"] = []
+            producer["retired_metric_ids"] = ["A04"]
+            producer["covered_metric_ids"] = ["A04"]
+            producer["lifecycle"] = "RETIRED_TOMBSTONE"
+            inventory = internally_rebind_inventory_records(inventory=inventory)
+            rebind_inventory(issue_copy=issue_copy, inventory=inventory)
+            with self.assertRaisesRegex(
+                RequirementError, "complete producer record authority differs",
             ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
 
