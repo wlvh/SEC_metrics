@@ -59,7 +59,7 @@
         "anchor_id": "CAPABILITY.issue_15_requirement_authority",
         "type": "capability",
         "status": "active",
-        "statement": "仓库能显式加载 requirements/issue_15_v1 的 exact Contract、自包含 Decision 单链、parent transfer/baseline、39 指标 legacy semantic producer exact set、matrix baseline 与 foundation verification，并逐字节拒绝 Contract、parent 或 receipt 漂移。该 WB-1 authority 只冻结未来开发输入，不改变现有 Reader、transport、publication 或业务结果。",
+        "statement": "仓库能显式加载 requirements/issue_15_v1 的 exact Contract、自包含 Decision 单链、post-freeze D-36/D-35/D-26 exact tips、parent transfer/baseline、39 指标 legacy semantic producer exact set、matrix baseline 与 foundation verification，并逐字节拒绝 Contract、parent、tip 或 receipt 漂移。Requirement authority 冻结开发输入，其本身不证明对应 Reader、transport、publication 或业务运行时已实施。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_issue15_authority.py::Issue15AuthorityTest.test_issue15_snapshot_loads_and_preserves_parent_history",
         "test_status": "automated_recorded",
@@ -480,6 +480,16 @@
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",
         "since": "2026-08-17"
+      },
+      {
+        "anchor_id": "BEHAVIOR.issue_15_repository_monetary_budget_disabled",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Issue #15 post-freeze effective D-36禁用仓库金额预算执法，外部API账户余额是唯一花费权威；不存在per-call、batch、owner或remaining monetary hard cap，estimated/actual cost、pricing、token、usage和cache只能作非阻断observability。effective D-35删除金额BUDGET_EXCEEDED，但HTTP 402仍零自动重试并终止execution/batch，payload/context/resource limit仍为独立fail-closed安全类。effective D-26不再要求金额budget preflight测试。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_issue15_authority.py::Issue15AuthorityTest.test_issue15_snapshot_loads_and_preserves_parent_history",
+        "test_status": "automated_recorded",
+        "since": "2026-08-19"
       },
       {
         "anchor_id": "BEHAVIOR.vnext_secret_scan_symlink_fail_closed",

@@ -4,15 +4,18 @@
 
 ## Issue #15 D-26 快速验收执行政策
 
-Issue #15 的自包含 Decision Register 以 D-26 新 tip 继承并替换父 R4 测试政策。必跑快速入口保持：
+Issue #15 的自包含 Decision Register 以 post-freeze D-26 effective tip 继承并替换父 R4 测试政策。必跑快速入口保持：
 
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 ```
 
-它并发执行七个直接、非隔离边界用例，每例硬上限 30 秒；其中两个 Requirement 用例分别验证 Issue #15 authority closure，以及复用型 semantic producer scope 与 exact-base call graph 的机械一致性。recorded acceptance 的任一快速/静态 gate 硬上限 60 秒。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree 或长串行套件列为必跑项；D-26 明列的短小确定性 freeze/replay、并发、rollback 不变量不在禁用范围。receipt 的最高测试状态仍是 `PASSED_FAST_LOCAL_ONLY`，绝不等同 CI、live、full acceptance 或 active Cutover。
+它并发执行七个直接、非隔离边界用例，每例硬上限 30 秒；其中两个 Requirement 用例分别验证 Issue #15 authority closure，以及复用型 semantic producer scope 与 exact-base call graph 的机械一致性。recorded acceptance 的任一快速/静态 gate 硬上限 60 秒。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree 或长串行套件列为必跑项。金额 budget preflight 已从必测集删除；仍必须覆盖 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络和 structured-only 零模型调用。receipt 的最高测试状态仍是 `PASSED_FAST_LOCAL_ONLY`，绝不等同 CI、live、full acceptance 或 active Cutover。
 
 <!-- capability-anchor: BEHAVIOR.r4_fast_concurrent_test_policy -->
+
+effective D-36 不允许仓库金额 hard cap 或 preflight blocker；estimated/actual cost 超过任意值不得因金额门禁阻止 execution。这不放宽非金额安全边界：HTTP 402 仍只调用一次并终止 batch，payload/context/resource 超硬上限仍 fail closed。Requirement 定向负例会在同时重签外层 file binding 后攻击这些 effective tips，避免只测外层 SHA-256。
+<!-- capability-anchor: BEHAVIOR.issue_15_repository_monetary_budget_disabled -->
 
 ## 1. 测试原则
 
@@ -36,14 +39,14 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 - stage 12 full 模式要求 provenance source-input closure clean；closure 内 tracked、staged 或 untracked 改动会在主 gate 前失败。生成的 evidence/outputs 不属于 source closure。
 - vNext 快速测试只使用 recorded response/test double，并在 replay、Reader 或 report input 边界阻断 socket；它不需要 AI 或 SEC 凭据，也不能证明 live 稳定性。
 - `tools/run_acceptance.py --scope recorded` 的离线边界覆盖整个子进程树：当前 macOS 支持路径必须经 `/usr/bin/sandbox-exec` 执行 `(deny network*)`，Python `sitecustomize` audit hook 只作为第二道诊断保护。`sandbox-exec` 缺失时稳定返回 `OFFLINE_PROCESS_SANDBOX_REQUIRED`，不得降级成较弱的同进程 socket monkeypatch；recorded gates 及 full 的 terminal-validation 子进程都会剥离 `DEEPSEEK_API_KEY`、旧`OPENAI_API_KEY`和`SEC_CONTACT_EMAIL`。
-- `requirements/issue_15_v1/` 是未来开发 authority；其 loader 显式验证 exact Contract、parent closure、13 条历史 Decision、D-01/D-26 新 tip、D-30–D-38、producer/matrix/foundation receipts。现有 inherited Reader/Cutover runtime 在后续 WB 实施前继续绑定 immutable parent，不得把 WB-1 Decision bytes 当作已执行 production semantics。
+- `requirements/issue_15_v1/` 是后续开发 authority；其 loader 显式验证 exact Contract、parent closure、13 条历史 Decision、D-01 与 post-freeze D-36/D-35/D-26 effective tips、D-30–D-38 roots、producer/matrix/foundation receipts。现有 inherited Reader/Cutover runtime 在对应 WB 实施前不得被 Requirement-only 证据写成已切换 production semantics。
 
 ## 3. 真实测试与验证层级
 
 | 层级 | 命令 / 入口 | 网络 | 仓库写入 | 通过条件 | 不能替代 |
 |---|---|---:|---:|---|---|
 | R4 快速回归 | `PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4` | 否 | 否；七个子进程只读当前工作树 | 七个直接边界用例并发返回 0，输出标记 `FAST_LOCAL_ONLY` | CI、full evidence、Golden、live/Cutover |
-| Issue #15 authority | `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_issue15_authority -v` | 否 | 只在系统临时目录复制并篡改测试快照，仓库只读 | child/parent closure、18 个 effective tips、13 条历史 hash、230 行/39 metric baseline、producer exact set、复用 helper scope 的 exact-base callsite 派生、foundation 零 egress与负例通过 | WB-2+ runtime、live、active/full |
+| Issue #15 authority | `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_issue15_authority -v` | 否 | 只在系统临时目录复制并篡改测试快照，仓库只读 | child/parent closure、18 个 effective tips、13 条历史 hash、post-freeze D-36/D-35/D-26 exact tips 及金额/resource 负例、230 行/39 metric baseline、producer exact set、复用 helper scope 的 exact-base callsite 派生、foundation 零 egress通过 | WB-2+ runtime、live、active/full |
 | vNext semantic gate | 由 `tools/run_acceptance.py --scope recorded` 把一次性 token 注入 scanner 环境后执行 `tools/check_vnext_semantics.py`；本次 acceptance 不把 token 写入被扫描文件 | 否 | 覆盖 `outputs/semantic_audit_receipt.json` | production/bridge executable 无业务 parser literal，AI adapter 无越权 I/O，并实际遍历 publishable roots；token 阳性匹配及 root/nested file/nested directory/broken/loop symlink fail-closed 由独立单测证明，receipt 绑定 checker 自身、scalability checker 与其 producer bytes | 业务结果 parity、producer canary、强进程沙箱 |
 | R4 acceptance receipt | `PYTHONDONTWRITEBYTECODE=1 python3 tools/run_acceptance.py --scope recorded` | 由 macOS process-tree sandbox 强制为否 | 只在 `outputs/acceptance_receipts/` 下写本次 receipt 与 gate artifacts；正式 pointer/root mirrors、formal namespace与SEC ledger不属于允许写集合 | sandbox 存在；R4 并发快速集、semantic/scalability 与 capability alignment 均真实 return code=0；开始/结束 authority 不变时返回 `PASSED_FAST_LOCAL_ONLY` | CI、full acceptance、stage 00–12、live 三轮、Cutover |
 | vNext operator | `python3 tools/vnext_operator.py --help`；按正式 runbook 使用 fixture list/show、prepare/status/review/finalize/freeze/replay/project/publish/rollback/restore | recorded 否；live 显式授权后是 | 写显式 Run/publication root；recorded 不写正式 active/root mirrors | stable error、JSON、HUMAN优先或D-06 SYSTEM单链、catalog authority、同一 recorded/live 状态机与 pinned read-back 回归通过 | 真实 live、full receipt |

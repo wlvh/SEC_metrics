@@ -6,7 +6,12 @@
 
 ## Issue #15 D-26 测试执行边界
 
-`requirements/issue_15_v1/decision_register.json` 的 D-26 新 tip 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级，并继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件。它不再禁止 Issue #15 明列的短小确定性 freeze/replay、并发和 rollback 不变量测试。随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY`；该状态仍不是 CI、live、full acceptance 或 active Cutover。
+`requirements/issue_15_v1/decision_register.json` 的 effective D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级，并继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件。金额 `budget_preflight_provider_calls_zero` 已从必测集合删除；仍保留 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络与 structured-only 零模型调用的短小确定性测试。随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY`；该状态仍不是 CI、live、full acceptance 或 active Cutover。
+
+## Issue #15 D-36/D-35 金额与资源安全边界
+
+effective D-36 禁用仓库金额预算执法，花费权威是 `EXTERNAL_API_ACCOUNT_BALANCE`；仓库不定义 per-call、batch、owner 或 remaining monetary cap，也不在 provider egress 前以 estimated/actual cost 阻断调用。pricing、token、usage、cache 与 cost 只作非阻断审计。effective D-35 不含金额 `BUDGET_EXCEEDED`；`HTTP_402` 仍零自动重试并立即终止 execution 与 batch。payload/context/resource limit 仍是独立 terminal 安全类，不得重命名为金额门禁。
+<!-- capability-anchor: BEHAVIOR.issue_15_repository_monetary_budget_disabled -->
 
 ## R5 live 与 review 边界
 
@@ -17,7 +22,7 @@
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 读取冻结 Contract 与 transfer/baseline | `requirements/issue_15_v1/CONTRACT.md`；`requirements/issue_15_v1/transfer_manifest.json`；`requirements/issue_15_v1/baseline_manifest.json` | Contract SHA-256 为 `9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec`；parent closure 与 foundation commit/tag/merge binding 一致 |
-| 2 | 加载自包含 Decision 和 WB-1 receipts | `requirements/issue_15_v1/decision_register.json`；`requirements/issue_15_v1/legacy_semantic_producer_inventory.json`；`requirements/issue_15_v1/source_strategy_baseline_receipt.json`；`requirements/issue_15_v1/foundation_verification_receipt.json` | `load_requirement_snapshot(issue_15_v1)` 通过；D-01/D-26 与 D-30–D-38 tips 正确；39 指标 producer/matrix exact set 闭合；最高 foundation 证据仅为 `FAST_LOCAL_ONLY` |
+| 2 | 加载自包含 Decision 和 WB-1 receipts | `requirements/issue_15_v1/decision_register.json`；`requirements/issue_15_v1/legacy_semantic_producer_inventory.json`；`requirements/issue_15_v1/source_strategy_baseline_receipt.json`；`requirements/issue_15_v1/foundation_verification_receipt.json` | `load_requirement_snapshot(issue_15_v1)` 通过；D-01 与 post-freeze D-36/D-35/D-26 effective tips 精确；39 指标 producer/matrix exact set 闭合；最高 foundation 证据仅为 `FAST_LOCAL_ONLY` |
 | 3 | 读取 inherited foundation | `requirements/ai_first_v3_3_1/` | 父目录 exact bytes 不变；其实现、evidence/publication/fail-closed invariants 被继承而不是重写 |
 | 4 | 只实施当前获准的 WB/ratchet | Issue #15 对应章节；`architecture.md`；`TESTING.md` | 不提前实现后续 WB；未获授权不得创建 active publication 或发起真实 SEC/模型调用 |
 

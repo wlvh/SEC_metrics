@@ -230,8 +230,9 @@ flowchart LR
 
 `requirements/issue_15_v1/` 是未来开发的首要 Requirement authority。它以 exact `CONTRACT.md`、自包含 Decision history、parent transfer/baseline、39 指标 legacy semantic producer inventory、当前 matrix baseline 和 foundation verification 构成一个可独立验证的 child closure；`scripts/vnext/requirements.py::load_requirement_snapshot` 只支持 `ai_first_v3_3_1` 与 `issue_15_v1` 两个显式 schema，不建设通用多版本平台。
 
-WB-1 只增加 authority 数据和 loader 分支。现有 Reader、Cutover、publication 与已冻结 Run consumer 继续显式加载 immutable parent，直到后续获准 WB 完成对应语义迁移；因此 Issue #15 的 D-01/D-26 新 tip 在本阶段是未来实现契约，不是当前 transport/retry 或测试执行代码已切换的声明。父目录任何 byte drift、13 条历史 Decision 任一 canonical hash 漂移、Contract/receipt hash 漂移、producer/matrix exact set 不闭合都会使 child loader fail closed。
+WB-1 只增加 authority 数据和 loader 分支。Issue #15 owner 随后以同 ID 链追加 D-36/D-35/D-26 effective tips，在不修改 frozen `CONTRACT.md` 或 inherited parent 任何 byte 的前提下更新 child closure。loader 绑定三个 exact tip hash 与 Issue 评论证据：仓库金额预算执法禁用，外部 API 账户余额是花费权威，cost/token/usage/cache 仅作非阻断 observability；`BUDGET_EXCEEDED` 不再是金额 terminal class，HTTP 402 仍零自动重试并停止 execution/batch，payload/context/resource limit 仍是独立 fail-closed 安全边界。Requirement-only 修订不能单独证明 runtime 已实现这些语义；对应 WB 仍须用 injected/mock transport 负例验证。父目录任何 byte drift、13 条历史 Decision 任一 canonical hash 漂移、Contract/receipt hash 漂移、producer/matrix exact set 不闭合都会使 child loader fail closed。
 <!-- capability-anchor: CAPABILITY.issue_15_requirement_authority -->
+<!-- capability-anchor: BEHAVIOR.issue_15_repository_monetary_budget_disabled -->
 
 ### 11.1 当前身份与不可越过的边界
 
@@ -376,7 +377,7 @@ bundle namespace必须只有声明的regular files/directories，不接受symlin
 
 ### 11.7 Acceptance runner 的执行与补偿边界
 
-Issue #15 D-26 新 tip 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的七个并发直接用例，其中新增的 scope 用例从 exact-base AST 重算复用型 semantic producer 的 callsite closure；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，但允许后续 WB 所需的短小确定性 freeze/replay、并发和 rollback 不变量测试。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。
+Issue #15 effective D-26 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的七个并发直接用例，其中 scope 用例从 exact-base AST 重算复用型 semantic producer 的 callsite closure；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，也不再要求金额 budget preflight 测试；短小确定性 single-flight、HTTP 402、UNKNOWN_REMOTE_OUTCOME、freeze/replay、rollback/restore 与 structured-only 零模型调用不变量仍必须执行。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。
 
 acceptance 在任何 recorded/full gate 前先捕获 clean source commit/tree/file count，并把 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 hash map 固化为顶层 `authority_binding`。`--output-dir`若等于、包含或位于任一正式单文件/namespace下，会在首次写入或caller executable启动前失败。recorded gate 结束后重读并要求 exact 相等；full 还要求 Cutover formal evidence 回绑相同 authority。semantic/scalability artifacts 只能来自本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/` 的两个 exact files，full 会从 repo-owned path 重新打开并重算 hash，不能接受 caller 自报、旧 root artifact 或已漂移 source。live SEC acquisition receipt 只有一个 strict validator：它要求五条固定命令的 exact schema，把 `$PYTHON_CURRENT` 的 name/binary SHA-256 机械比对当前 `sys.executable`，并按当前 ledger prefix/tail、attempt exact set 与 inventory bytes重建；full binding初次和封口前都调用该validator。receipt写入前会递归把repository、output、current Python与sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$SANDBOX_EXEC`；`runtime_bindings`保存executable name与binary SHA-256，无法归类的host绝对路径只保留path hash。
 

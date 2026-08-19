@@ -63,6 +63,20 @@ ISSUE_15_EFFECTIVE_DECISION_IDS = {
     "D-37",
     "D-38",
 }
+ISSUE_15_POST_FREEZE_DECISION_EVIDENCE = (
+    "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535"
+)
+ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
+    "D-26": (
+        "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
+    ),
+    "D-35": (
+        "sha256:6e966a51833c5f1d4fd25e5b8520dfb46414a64e4b868ce4d8181f2b8ac1de04"
+    ),
+    "D-36": (
+        "sha256:468b7ef6528f4d76de56a71bcba4c913e47e858eefdba55129554ddaf845af1e"
+    ),
+}
 ISSUE_15_BASE_PIPELINE_SHA256 = (
     "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438"
 )
@@ -1173,20 +1187,64 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-26"]) != 2
+        or len(chains["D-26"]) != 3
+        or len(chains["D-35"]) != 2
+        or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
-        or decisions["D-26"]["supersedes_decision_id"]
+        or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
+        or decisions["D-26"]["supersedes_decision_id"]
+        != _decision_record_hash(decision=chains["D-26"][1])
+        or decisions["D-35"]["supersedes_decision_id"]
+        != _decision_record_hash(decision=chains["D-35"][0])
+        or decisions["D-36"]["supersedes_decision_id"]
+        != _decision_record_hash(decision=chains["D-36"][0])
     ):
         raise RequirementError("Issue #15 Decision tip binding differs")
     expected_d01_choice = dict(parent["effective_decisions"]["D-01"]["choice"])
     expected_d01_choice["retry_count"] = 0
     d26_choice = decisions["D-26"]["choice"]
+    d35_choice = decisions["D-35"]["choice"]
+    d36_choice = decisions["D-36"]["choice"]
+    effective_tip_hashes = {
+        decision_id: _decision_record_hash(decision=decisions[decision_id])
+        for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+    }
     if (
         decisions["D-01"]["choice"] != expected_d01_choice
         or "freeze_replay" in d26_choice["prohibited_required_test_classes"]
         or not d26_choice["required_short_deterministic_invariants"]
+        or "budget_preflight_provider_calls_zero"
+        in d26_choice["required_short_deterministic_invariants"]
+        or effective_tip_hashes != ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+        or any(
+            decisions[decision_id]["evidence"]
+            != ISSUE_15_POST_FREEZE_DECISION_EVIDENCE
+            for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+        )
+        or "BUDGET_EXCEEDED" in d35_choice["terminal_classes"]
+        or d35_choice["http_402_automatic_retries"] != 0
+        or not d35_choice["http_402_stops_execution"]
+        or not d35_choice["http_402_stops_batch"]
+        or d35_choice["monetary_budget_terminal_classes"] != []
+        or d35_choice["non_monetary_safety_terminal_classes"]
+        != ["PAYLOAD_LIMIT", "CONTEXT_LIMIT", "RESOURCE_LIMIT"]
+        or d35_choice["resource_limit_is_monetary_budget_gate"]
+        or d36_choice["repository_monetary_budget_enforcement"] != "DISABLED"
+        or d36_choice["spending_authority"] != "EXTERNAL_API_ACCOUNT_BALANCE"
+        or d36_choice["per_call_monetary_hard_cap_exists"]
+        or d36_choice["batch_monetary_hard_cap_exists"]
+        or d36_choice["monetary_budget_preflight"]
+        or d36_choice["provider_usage_observability_blocking"]
+        or d36_choice["estimated_or_actual_cost_may_block_provider_call"]
+        or d36_choice["forbidden_monetary_budget_fields"]
+        != [
+            "owner_absolute_total_cap",
+            "owner_absolute_per_request_cap",
+            "remaining_owner_cap",
+            "maximum_authorized_cost",
+        ]
     ):
         raise RequirementError("Issue #15 superseding Decision content differs")
 

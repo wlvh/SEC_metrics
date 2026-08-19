@@ -28,6 +28,8 @@ from vnext.requirements import (
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
     ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH,
+    ISSUE_15_POST_FREEZE_DECISION_EVIDENCE,
+    ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES,
     RequirementError,
     load_requirement_snapshot,
 )
@@ -230,6 +232,27 @@ def rebind_inventory(*, issue_copy: Path, inventory: Dict[str, object]) -> None:
     write_json(path=baseline_path, value=baseline)
 
 
+def rebind_decisions(*, issue_copy: Path, register: Dict[str, object]) -> None:
+    """Write a forged register and update only its snapshot byte binding.
+
+    Args:
+        issue_copy: Copied child Requirement directory.
+        register: Mutated Decision Register under negative test.
+
+    Expected output:
+        Byte-level closure remains self-consistent so effective-tip validation
+        must reject the forged policy rather than the outer file hash.
+    """
+    register_path = issue_copy / "decision_register.json"
+    write_json(path=register_path, value=register)
+    baseline_path = issue_copy / "baseline_manifest.json"
+    baseline = read_json(path=baseline_path)
+    binding = baseline["snapshot_files"]["decision_register.json"]
+    binding["sha256"] = sha256_file(path=register_path)
+    binding["size"] = register_path.stat().st_size
+    write_json(path=baseline_path, value=baseline)
+
+
 def internally_rebind_inventory_records(
     *, inventory: Dict[str, object]
 ) -> Dict[str, object]:
@@ -330,7 +353,9 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-26"]))
+        self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
+        self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
+        self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
         self.assertEqual(
             set(baseline["effective_decision_ids"]),
             set(issue_snapshot["effective_decisions"]),
@@ -344,14 +369,52 @@ class Issue15AuthorityTest(unittest.TestCase):
                 "prohibited_required_test_classes"
             ],
         )
+        self.assertNotIn(
+            "budget_preflight_provider_calls_zero",
+            issue_snapshot["effective_decisions"]["D-26"]["choice"][
+                "required_short_deterministic_invariants"
+            ],
+        )
+        effective_tip_hashes = {
+            decision_id: content_hash(
+                value=issue_snapshot["effective_decisions"][decision_id]
+            )
+            for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+        }
+        self.assertEqual(
+            ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES, effective_tip_hashes,
+        )
+        for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES:
+            self.assertEqual(
+                ISSUE_15_POST_FREEZE_DECISION_EVIDENCE,
+                issue_snapshot["effective_decisions"][decision_id]["evidence"],
+            )
+        d35_choice = issue_snapshot["effective_decisions"]["D-35"]["choice"]
+        d36_choice = issue_snapshot["effective_decisions"]["D-36"]["choice"]
+        self.assertNotIn("BUDGET_EXCEEDED", d35_choice["terminal_classes"])
+        self.assertEqual(0, d35_choice["http_402_automatic_retries"])
+        self.assertTrue(d35_choice["http_402_stops_execution"])
+        self.assertTrue(d35_choice["http_402_stops_batch"])
+        self.assertEqual(
+            ["PAYLOAD_LIMIT", "CONTEXT_LIMIT", "RESOURCE_LIMIT"],
+            d35_choice["non_monetary_safety_terminal_classes"],
+        )
+        self.assertEqual(
+            "DISABLED", d36_choice["repository_monetary_budget_enforcement"],
+        )
+        self.assertEqual(
+            "EXTERNAL_API_ACCOUNT_BALANCE", d36_choice["spending_authority"],
+        )
+        self.assertFalse(d36_choice["monetary_budget_preflight"])
+        self.assertFalse(
+            d36_choice["estimated_or_actual_cost_may_block_provider_call"]
+        )
         for decision_id in [
             "D-30",
             "D-31",
             "D-32",
             "D-33",
             "D-34",
-            "D-35",
-            "D-36",
             "D-37",
             "D-38",
         ]:
@@ -724,6 +787,76 @@ class Issue15AuthorityTest(unittest.TestCase):
             with (issue_copy / "CONTRACT.md").open(mode="ab") as file_obj:
                 file_obj.write(b"\n")
             with self.assertRaises(RequirementError):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_monetary_observability_cannot_become_a_budget_gate(self) -> None:
+        """Reject a self-rebound tip that makes estimated cost blocking."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            register = read_json(path=issue_copy / "decision_register.json")
+            d36 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-36"
+            )
+            d36["choice"]["estimated_or_actual_cost_may_block_provider_call"] = True
+            rebind_decisions(issue_copy=issue_copy, register=register)
+            with self.assertRaisesRegex(
+                RequirementError, "superseding Decision content differs",
+            ):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_budget_exceeded_cannot_return_as_monetary_terminal(self) -> None:
+        """Reject a self-rebound D-35 tip that restores BUDGET_EXCEEDED."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            register = read_json(path=issue_copy / "decision_register.json")
+            d35 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-35"
+            )
+            d35["choice"]["terminal_classes"].append("BUDGET_EXCEEDED")
+            rebind_decisions(issue_copy=issue_copy, register=register)
+            with self.assertRaisesRegex(
+                RequirementError, "superseding Decision content differs",
+            ):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_resource_limit_cannot_be_recast_as_monetary_budget(self) -> None:
+        """Reject a tip that disguises a hard resource limit as spending."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            register = read_json(path=issue_copy / "decision_register.json")
+            d35 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-35"
+            )
+            d35["choice"]["resource_limit_is_monetary_budget_gate"] = True
+            rebind_decisions(issue_copy=issue_copy, register=register)
+            with self.assertRaisesRegex(
+                RequirementError, "superseding Decision content differs",
+            ):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_budget_preflight_invariant_cannot_return(self) -> None:
+        """Reject a self-rebound D-26 tip that restores the removed test."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            register = read_json(path=issue_copy / "decision_register.json")
+            d26 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-26"
+            )
+            d26["choice"]["required_short_deterministic_invariants"].append(
+                "budget_preflight_provider_calls_zero"
+            )
+            rebind_decisions(issue_copy=issue_copy, register=register)
+            with self.assertRaisesRegex(
+                RequirementError, "superseding Decision content differs",
+            ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
 
     def test_missing_foundation_receipt_invalidates_snapshot(self) -> None:
