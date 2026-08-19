@@ -8,6 +8,7 @@ are never consulted.
 
 from __future__ import annotations
 
+import stat
 from pathlib import Path
 from typing import Dict, List, Mapping, Optional, Sequence
 
@@ -22,12 +23,8 @@ ISSUE_15_REQUIREMENT_ID = "issue_15_v1"
 ISSUE_15_CONTRACT_SHA256 = (
     "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec"
 )
-ISSUE_15_FOUNDATION_SOURCE_COMMIT = (
-    "f1cc44342e6814522ec2688cf3674f7ec442be8d"
-)
-ISSUE_15_FOUNDATION_MERGE_COMMIT = (
-    "4d02db6a474f93eec9e058d780e206b4504ab24d"
-)
+ISSUE_15_FOUNDATION_SOURCE_COMMIT = "f1cc44342e6814522ec2688cf3674f7ec442be8d"
+ISSUE_15_FOUNDATION_MERGE_COMMIT = "4d02db6a474f93eec9e058d780e206b4504ab24d"
 ISSUE_15_FOUNDATION_TAG = "issue-15-foundation-v1"
 SNAPSHOT_FILES = {
     "baseline": "baseline_manifest.json",
@@ -47,10 +44,45 @@ ISSUE_15_SNAPSHOT_FILES = {
     "transfer": "transfer_manifest.json",
 }
 ISSUE_15_EFFECTIVE_DECISION_IDS = {
-    "D-01", "D-03", "D-04", "D-05", "D-06", "D-07", "D-08",
-    "D-24", "D-26", "D-30", "D-31", "D-32", "D-33", "D-34",
-    "D-35", "D-36", "D-37", "D-38",
+    "D-01",
+    "D-03",
+    "D-04",
+    "D-05",
+    "D-06",
+    "D-07",
+    "D-08",
+    "D-24",
+    "D-26",
+    "D-30",
+    "D-31",
+    "D-32",
+    "D-33",
+    "D-34",
+    "D-35",
+    "D-36",
+    "D-37",
+    "D-38",
 }
+ISSUE_15_BASE_PIPELINE_SHA256 = (
+    "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438"
+)
+ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH = (
+    "sha256:ce657cb8cc25fd4d665b04ed2c66e027b765d9a36f1090d3eb8e4f9e07f3710a"
+)
+ISSUE_15_EXPECTED_SHARED_EXACT_SET_HASH = (
+    "sha256:e148bac50da7d86389ac3181d65f8420f77f0db06e0aeb59c898260883d2eb96"
+)
+ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH = (
+    "sha256:0a129b0ab7289abfb8f9c6ec030c307a1d7a9386af03b975a2af3e9d6f0509e8"
+)
+ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH = (
+    "sha256:991b27021c44f7443b53ecafce71dbb4c12378bae899ebd82d7455bca392a378"
+)
+ISSUE_15_EXPECTED_SEMANTIC_PRODUCER_COUNT = 116
+ISSUE_15_EXPECTED_SHARED_PLUMBING_COUNT = 20
+ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH = (
+    "sha256:955f0fed5361c663307171addf036b684a007380607c179479c6f6457e4b2483"
+)
 
 
 class RequirementError(ValueError):
@@ -118,9 +150,7 @@ def _validate_decision(*, decision: Mapping[str, object]) -> Dict[str, object]:
             or any(not isinstance(item, str) or not item for item in fields)
             or len(fields) != len(set(fields))
         ):
-            raise RequirementError(
-                "Pending Decision required fields are invalid"
-            )
+            raise RequirementError("Pending Decision required fields are invalid")
         return dict(decision)
     required = {
         "approved_at_utc",
@@ -182,10 +212,7 @@ def _resolve_decisions(
     effective: Dict[str, Dict[str, object]] = {}
     chains: Dict[str, List[Dict[str, object]]] = {}
     for decision_id, records in groups.items():
-        by_hash = {
-            _decision_record_hash(decision=record): record
-            for record in records
-        }
+        by_hash = {_decision_record_hash(decision=record): record for record in records}
         if len(by_hash) != len(records):
             raise RequirementError("Decision chain contains duplicate bytes")
         children: Dict[Optional[str], List[str]] = {}
@@ -205,13 +232,9 @@ def _resolve_decisions(
                 raise RequirementError("Decision chain contains a cycle")
             visited.add(current)
             ordered.append(by_hash[current])
-            next_records = (
-                children[current] if current in children else []
-            )
+            next_records = children[current] if current in children else []
             if len(next_records) > 1:
-                raise RequirementError(
-                    "Parallel effective decisions fail closed"
-                )
+                raise RequirementError("Parallel effective decisions fail closed")
             if not next_records:
                 break
             current = next_records[0]
@@ -257,15 +280,10 @@ def _load_ai_first_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     Raises:
         RequirementError: On unsafe files, changed bytes, or invalid register.
     """
-    paths = {
-        key: snapshot_dir / relative
-        for key, relative in SNAPSHOT_FILES.items()
-    }
+    paths = {key: snapshot_dir / relative for key, relative in SNAPSHOT_FILES.items()}
     for key in paths:
         if paths[key].is_symlink() or not paths[key].is_file():
-            raise RequirementError(
-                "Requirement file is unsafe: {}".format(key)
-            )
+            raise RequirementError("Requirement file is unsafe: {}".format(key))
     baseline = _read_object(path=paths["baseline"])
     register = _read_object(path=paths["decisions"])
     if baseline["fsd_sha256"] != sha256_file(path=paths["fsd"]):
@@ -274,13 +292,9 @@ def _load_ai_first_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("FSD bytes differ from approved v3.3.1")
     if baseline["issue_body_sha256"] != sha256_file(path=paths["issue"]):
         raise RequirementError("Issue Contract bytes differ from baseline")
-    if baseline["r3_addendum_sha256"] != sha256_file(
-        path=paths["r3_addendum"]
-    ):
+    if baseline["r3_addendum_sha256"] != sha256_file(path=paths["r3_addendum"]):
         raise RequirementError("R3 Addendum bytes differ from baseline")
-    if baseline["decision_register_sha256"] != sha256_file(
-        path=paths["decisions"]
-    ):
+    if baseline["decision_register_sha256"] != sha256_file(path=paths["decisions"]):
         raise RequirementError("Decision Register bytes differ from baseline")
     if baseline["legacy_path_inventory_sha256"] != sha256_file(
         path=paths["legacy_inventory"]
@@ -316,8 +330,7 @@ def _load_ai_first_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     if (
         release_plan_path.is_symlink()
         or not release_plan_path.is_file()
-        or baseline["release_plan_sha256"]
-        != sha256_file(path=release_plan_path)
+        or baseline["release_plan_sha256"] != sha256_file(path=release_plan_path)
     ):
         raise RequirementError("Release plan bytes differ from baseline")
     if baseline["semantic_runtime_versions"] != SEMANTIC_VERSIONS:
@@ -331,9 +344,7 @@ def _load_ai_first_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         "fsd_sha256": sha256_file(path=paths["fsd"]),
         "issue_body_sha256": sha256_file(path=paths["issue"]),
         "r3_addendum_sha256": sha256_file(path=paths["r3_addendum"]),
-        "legacy_path_inventory_sha256": sha256_file(
-            path=paths["legacy_inventory"]
-        ),
+        "legacy_path_inventory_sha256": sha256_file(path=paths["legacy_inventory"]),
         "release_plan_sha256": sha256_file(path=release_plan_path),
         "semantic_runtime_versions_hash": semantic_versions_hash,
     }
@@ -387,6 +398,452 @@ def _issue_15_paths(*, snapshot_dir: Path) -> Dict[str, Path]:
     return paths
 
 
+def _bound_repository_file(*, repository_root: Path, relative: str) -> Path:
+    """Return one safe regular repository file without following symlinks.
+
+    Args:
+        repository_root: Root containing the ``requirements`` and ``outputs``
+            directories for the snapshot under verification.
+        relative: POSIX-style repository-relative receipt path.
+
+    Returns:
+        Existing regular file named by the binding.
+
+    Raises:
+        RequirementError: When the locator escapes the repository, traverses
+            a symlink, or does not end at a regular file.
+    """
+    locator = Path(relative)
+    if (
+        not relative
+        or locator.is_absolute()
+        or ".." in locator.parts
+        or "." in locator.parts
+    ):
+        raise RequirementError("Foundation receipt path is unsafe")
+    candidate = repository_root
+    for part in locator.parts:
+        candidate = candidate / part
+        if candidate.is_symlink():
+            raise RequirementError(
+                "Foundation receipt path traverses a symlink: {}".format(relative)
+            )
+    if not candidate.exists() or not stat.S_ISREG(candidate.stat().st_mode):
+        raise RequirementError(
+            "Foundation receipt path is not a regular file: {}".format(relative)
+        )
+    return candidate
+
+
+def _validate_foundation_receipt_bindings(
+    *, foundation: Mapping[str, object], repository_root: Path,
+) -> None:
+    """Verify every foundation receipt binding against committed bytes.
+
+    Args:
+        foundation: Frozen ``foundation_verification_receipt.json`` object.
+        repository_root: Repository root used by the Requirement snapshot.
+
+    Expected output:
+        Each declared receipt is a non-symlink regular file with exact size
+        and SHA-256, and every command receipt locator belongs to that set.
+
+    Raises:
+        RequirementError: On malformed, missing, unsafe, unbound, or changed
+            evidence bytes.
+    """
+    bindings = foundation["receipt_bindings"]
+    commands = foundation["verification_commands"]
+    if not isinstance(bindings, list) or not isinstance(commands, list):
+        raise RequirementError("Foundation receipt bindings are invalid")
+    bound_paths = set()
+    for binding in bindings:
+        if not isinstance(binding, dict):
+            raise RequirementError("Foundation receipt binding is invalid")
+        _require_exact_fields(
+            value=binding,
+            fields={"path", "receipt_id", "sha256", "size"},
+            label="Foundation receipt binding",
+        )
+        relative = binding["path"]
+        if (
+            not isinstance(relative, str)
+            or relative in bound_paths
+            or not isinstance(binding["receipt_id"], str)
+            or not binding["receipt_id"]
+            or not isinstance(binding["sha256"], str)
+            or not isinstance(binding["size"], int)
+            or binding["size"] < 0
+        ):
+            raise RequirementError("Foundation receipt binding value is invalid")
+        path = _bound_repository_file(
+            repository_root=repository_root, relative=relative,
+        )
+        if binding["size"] != path.stat().st_size or binding["sha256"] != sha256_file(
+            path=path
+        ):
+            raise RequirementError(
+                "Foundation receipt bytes differ: {}".format(relative)
+            )
+        bound_paths.add(relative)
+    for command in commands:
+        if not isinstance(command, dict):
+            raise RequirementError("Foundation verification command is invalid")
+        receipt_paths = command["receipt_paths"]
+        if (
+            not isinstance(receipt_paths, list)
+            or not receipt_paths
+            or any(not isinstance(path, str) for path in receipt_paths)
+            or not set(receipt_paths).issubset(bound_paths)
+        ):
+            raise RequirementError(
+                "Foundation command receipt paths are not binding-closed"
+            )
+
+
+def _parent_inventory_identity(*, group: str, symbol: str) -> str:
+    """Return the historical file::symbol identity for one parent member.
+
+    Args:
+        group: Parent inventory migration-rule group.
+        symbol: Exact member stored in that group.
+
+    Returns:
+        Repository-relative file::symbol identity used by child dispositions.
+    """
+    if group == "legacy_configuration_keys":
+        return "config/metric_applicability.yaml::{}".format(symbol)
+    return "scripts/sec_pipeline.py::{}".format(symbol)
+
+
+def _validate_issue_15_producer_inventory(
+    *,
+    inventory: Mapping[str, object],
+    parent_inventory: Mapping[str, object],
+    source_strategy: Mapping[str, object],
+) -> None:
+    """Verify the externally closed Issue #15 producer authority.
+
+    Args:
+        inventory: Child ``legacy_semantic_producer_inventory.json`` object.
+        parent_inventory: Exact parent legacy inventory object.
+        source_strategy: Mechanically generated 39-metric baseline receipt.
+
+    Expected output:
+        The audited base source, semantic/shared exact sets, active/retired
+        scopes, parent groups, per-parent-symbol dispositions, and metric
+        coverage all match independently maintained loader authority.
+
+    Raises:
+        RequirementError: On source drift, self-only closure, missing parent
+            accounting, scope drift, or malformed producer records.
+    """
+    inventory_fields = {
+        "audit_basis",
+        "audit_granularity",
+        "baseline_source_commit",
+        "baseline_source_tree",
+        "coverage_by_metric",
+        "covered_metric_ids",
+        "created_at_utc",
+        "disposition_definitions",
+        "metric_id_set",
+        "metric_id_set_hash",
+        "mutable_legacy_retirement_config_ledger",
+        "parent_inventory_groups",
+        "parent_legacy_inventory_path",
+        "parent_legacy_inventory_sha256",
+        "parent_symbol_dispositions",
+        "producer_exact_set_hash",
+        "producer_kinds",
+        "producer_record_set_hash",
+        "producer_source_files",
+        "producers",
+        "reachability_proof",
+        "record_type",
+        "requirement_id",
+        "retirement_evidence_chain",
+        "schema_version",
+        "scope_evidence_by_producer",
+        "semantic_producer_count",
+        "semantic_producer_record_set_hash",
+        "shared_plumbing_count",
+        "shared_plumbing_exact_set_hash",
+    }
+    _require_exact_fields(
+        value=inventory, fields=inventory_fields, label="Issue #15 producer inventory",
+    )
+    if (
+        inventory["schema_version"] != 2
+        or inventory["record_type"] != "ISSUE_15_LEGACY_SEMANTIC_PRODUCER_INVENTORY"
+        or inventory["requirement_id"] != ISSUE_15_REQUIREMENT_ID
+        or inventory["audit_granularity"] != "FILE_SYMBOL_SEMANTIC_DECISION"
+        or inventory["baseline_source_commit"] != ISSUE_15_FOUNDATION_MERGE_COMMIT
+        or inventory["baseline_source_tree"]
+        != "46e47a219f077f5561e373bc3cb69bdfe23ee065"
+        or inventory["parent_legacy_inventory_path"]
+        != "requirements/ai_first_v3_3_1/legacy_path_inventory.json"
+        or inventory["producer_kinds"] != ["SEMANTIC_PRODUCER", "SHARED_PLUMBING"]
+        or inventory["mutable_legacy_retirement_config_ledger"] is not False
+    ):
+        raise RequirementError("Issue #15 producer authority differs")
+    audit_basis = inventory["audit_basis"]
+    if not isinstance(audit_basis, dict):
+        raise RequirementError("Issue #15 producer audit basis is invalid")
+    _require_exact_fields(
+        value=audit_basis,
+        fields={
+            "exact_base_commit",
+            "exact_base_tree",
+            "semantic_inclusion_rule",
+            "shared_plumbing_rule",
+        },
+        label="Issue #15 producer audit basis",
+    )
+    if (
+        audit_basis["exact_base_commit"] != ISSUE_15_FOUNDATION_MERGE_COMMIT
+        or audit_basis["exact_base_tree"] != "46e47a219f077f5561e373bc3cb69bdfe23ee065"
+        or not audit_basis["semantic_inclusion_rule"]
+        or not audit_basis["shared_plumbing_rule"]
+    ):
+        raise RequirementError("Issue #15 producer audit basis differs")
+    reachability = inventory["reachability_proof"]
+    if not isinstance(reachability, dict):
+        raise RequirementError("Issue #15 reachability proof is invalid")
+    _require_exact_fields(
+        value=reachability,
+        fields={"matrix_write_guard", "role", "statement"},
+        label="Issue #15 reachability proof",
+    )
+    if (
+        reachability["role"] != "SUPPLEMENTAL_DOMINATOR_ONLY"
+        or reachability["matrix_write_guard"]
+        != "scripts/sec_pipeline.py::assert_legacy_candidate_rows"
+        or not reachability["statement"]
+    ):
+        raise RequirementError("Issue #15 reachability proof differs")
+    if (
+        content_hash(value=inventory["scope_evidence_by_producer"])
+        != ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH
+    ):
+        raise RequirementError("Issue #15 producer scope evidence differs")
+
+    source_files = inventory["producer_source_files"]
+    if not isinstance(source_files, dict):
+        raise RequirementError("Issue #15 producer source bindings are invalid")
+    runtime_root = Path(__file__).parents[2]
+    for relative, binding in source_files.items():
+        if not isinstance(relative, str) or not isinstance(binding, dict):
+            raise RequirementError("Issue #15 producer source binding is invalid")
+        _require_exact_fields(
+            value=binding,
+            fields={"sha256", "size"},
+            label="Issue #15 producer source binding",
+        )
+        path = _bound_repository_file(repository_root=runtime_root, relative=relative,)
+        if binding["size"] != path.stat().st_size or binding["sha256"] != sha256_file(
+            path=path
+        ):
+            raise RequirementError(
+                "Issue #15 audited producer source differs: {}".format(relative)
+            )
+    if "scripts/sec_pipeline.py" not in source_files:
+        raise RequirementError("Issue #15 exact-base pipeline binding is missing")
+    pipeline_binding = source_files["scripts/sec_pipeline.py"]
+    if pipeline_binding["sha256"] != ISSUE_15_BASE_PIPELINE_SHA256:
+        raise RequirementError("Issue #15 exact-base pipeline binding differs")
+
+    producers = inventory["producers"]
+    if not isinstance(producers, list) or not producers:
+        raise RequirementError("Issue #15 producer records are invalid")
+    producer_fields = {
+        "active_metric_ids",
+        "covered_metric_ids",
+        "kind",
+        "lifecycle",
+        "parent_inventory_groups",
+        "producer_id",
+        "purpose",
+        "retired_metric_ids",
+    }
+    producer_by_id: Dict[str, Dict[str, object]] = {}
+    metric_ids = source_strategy["metric_id_set"]
+    if not isinstance(metric_ids, list):
+        raise RequirementError("Issue #15 metric identity set is invalid")
+    metric_id_set = set(metric_ids)
+    for producer in producers:
+        if not isinstance(producer, dict):
+            raise RequirementError("Issue #15 producer record is invalid")
+        _require_exact_fields(
+            value=producer, fields=producer_fields, label="Issue #15 producer record",
+        )
+        producer_id = producer["producer_id"]
+        if (
+            not isinstance(producer_id, str)
+            or producer_id in producer_by_id
+            or "::" not in producer_id
+        ):
+            raise RequirementError("Issue #15 producer identity is invalid")
+        active = producer["active_metric_ids"]
+        retired = producer["retired_metric_ids"]
+        covered = producer["covered_metric_ids"]
+        parent_groups = producer["parent_inventory_groups"]
+        if (
+            not isinstance(active, list)
+            or not isinstance(retired, list)
+            or not isinstance(covered, list)
+            or not isinstance(parent_groups, list)
+            or parent_groups != sorted(set(parent_groups))
+            or not isinstance(producer["purpose"], str)
+            or not producer["purpose"]
+            or active != sorted(set(active))
+            or retired != sorted(set(retired))
+            or set(active) & set(retired)
+            or covered != sorted(set(active) | set(retired))
+            or not set(covered).issubset(metric_id_set)
+        ):
+            raise RequirementError("Issue #15 producer metric scope is invalid")
+        source_relative = producer_id.split("::", 1)[0]
+        if source_relative not in source_files:
+            raise RequirementError("Issue #15 producer source is unbound")
+        producer_by_id[producer_id] = producer
+    if [row["producer_id"] for row in producers] != sorted(producer_by_id):
+        raise RequirementError("Issue #15 producer records are not ordered")
+    expected_source_files = {
+        producer_id.split("::", 1)[0] for producer_id in producer_by_id
+    }
+    if set(source_files) != expected_source_files:
+        raise RequirementError("Issue #15 producer source set differs")
+
+    semantic = [row for row in producers if row["kind"] == "SEMANTIC_PRODUCER"]
+    shared = [row for row in producers if row["kind"] == "SHARED_PLUMBING"]
+    if len(semantic) + len(shared) != len(producers):
+        raise RequirementError("Issue #15 producer kind is invalid")
+    semantic_ids = [row["producer_id"] for row in semantic]
+    shared_id_list = [row["producer_id"] for row in shared]
+    semantic_id_set = set(semantic_ids)
+    shared_ids = set(shared_id_list)
+    if (
+        len(semantic) != ISSUE_15_EXPECTED_SEMANTIC_PRODUCER_COUNT
+        or len(shared) != ISSUE_15_EXPECTED_SHARED_PLUMBING_COUNT
+        or content_hash(value=semantic_ids) != ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH
+        or content_hash(value=shared_id_list) != ISSUE_15_EXPECTED_SHARED_EXACT_SET_HASH
+        or content_hash(value=producers) != ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH
+        or content_hash(value=semantic) != ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH
+        or any(
+            row["active_metric_ids"]
+            or row["retired_metric_ids"]
+            or row["covered_metric_ids"]
+            or row["lifecycle"] != "RETAINABLE_SHARED_PLUMBING"
+            for row in shared
+        )
+        or any(
+            row["lifecycle"]
+            != (
+                "ACTIVE_WITH_RETIRED_SCOPE"
+                if row["active_metric_ids"] and row["retired_metric_ids"]
+                else "ACTIVE_CURRENT_RUNTIME"
+                if row["active_metric_ids"]
+                else "RETIRED_TOMBSTONE"
+            )
+            for row in semantic
+        )
+    ):
+        raise RequirementError(
+            "Issue #15 producer exact set or active/retired scope differs"
+        )
+
+    migration_rules = parent_inventory["migration_rules"]
+    if not isinstance(migration_rules, dict):
+        raise RequirementError("Parent inventory migration rules are invalid")
+    expected_groups = {}
+    for group in sorted(migration_rules):
+        members = parent_inventory[group]
+        if (
+            not isinstance(members, list)
+            or any(not isinstance(symbol, str) for symbol in members)
+            or len(members) != len(set(members))
+        ):
+            raise RequirementError("Parent inventory group is invalid")
+        expected_groups[group] = members
+    if inventory["parent_inventory_groups"] != expected_groups:
+        raise RequirementError("Issue #15 parent inventory groups differ")
+    dispositions = inventory["parent_symbol_dispositions"]
+    if not isinstance(dispositions, dict) or set(dispositions) != set(expected_groups):
+        raise RequirementError("Issue #15 parent dispositions are incomplete")
+    derived_groups: Dict[str, set[str]] = {}
+    for group, members in expected_groups.items():
+        group_dispositions = dispositions[group]
+        if not isinstance(group_dispositions, dict) or set(group_dispositions) != set(
+            members
+        ):
+            raise RequirementError(
+                "Issue #15 parent symbol disposition set differs: {}".format(group)
+            )
+        migration_rule = migration_rules[group]
+        if not isinstance(migration_rule, dict):
+            raise RequirementError("Parent inventory migration rule is invalid")
+        kind = migration_rule["kind"]
+        for symbol in members:
+            disposition = group_dispositions[symbol]
+            identity = _parent_inventory_identity(group=group, symbol=symbol,)
+            target = None
+            if kind == "INVARIANT":
+                if disposition != "INVARIANT_NOT_PRODUCER":
+                    raise RequirementError("Parent invariant disposition differs")
+            elif kind == "CONFIGURATION":
+                if disposition != "OBSOLETE_WITH_PROOF":
+                    raise RequirementError("Parent config disposition differs")
+            elif disposition == "INCLUDED_AS_SEMANTIC_PRODUCER":
+                if identity not in semantic_id_set:
+                    raise RequirementError("Parent producer inclusion is invalid")
+                target = identity
+            elif disposition == "RECLASSIFIED_AS_SHARED_PLUMBING":
+                if identity not in shared_ids:
+                    raise RequirementError("Parent shared reclassification is invalid")
+                target = identity
+            elif isinstance(disposition, str) and disposition.startswith(
+                "ALIASED_TO::"
+            ):
+                target = disposition.removeprefix("ALIASED_TO::")
+                if target not in semantic_id_set:
+                    raise RequirementError("Parent producer alias is invalid")
+            else:
+                raise RequirementError("Parent production disposition is invalid")
+            if target is not None:
+                derived_groups.setdefault(target, set()).add(group)
+    for producer_id, producer in producer_by_id.items():
+        if producer["parent_inventory_groups"] != sorted(
+            derived_groups.get(producer_id, set())
+        ):
+            raise RequirementError("Issue #15 producer parent-group derivation differs")
+
+    coverage = {
+        metric_id: [
+            row["producer_id"]
+            for row in semantic
+            if metric_id in row["covered_metric_ids"]
+        ]
+        for metric_id in metric_ids
+    }
+    if (
+        inventory["semantic_producer_count"] != len(semantic)
+        or inventory["shared_plumbing_count"] != len(shared)
+        or inventory["producer_exact_set_hash"] != content_hash(value=semantic_ids)
+        or inventory["shared_plumbing_exact_set_hash"]
+        != content_hash(value=shared_id_list)
+        or inventory["producer_record_set_hash"] != content_hash(value=producers)
+        or inventory["semantic_producer_record_set_hash"]
+        != content_hash(value=semantic)
+        or inventory["metric_id_set"] != metric_ids
+        or inventory["metric_id_set_hash"] != content_hash(value=metric_ids)
+        or inventory["covered_metric_ids"] != metric_ids
+        or inventory["coverage_by_metric"] != coverage
+        or any(not rows for rows in coverage.values())
+    ):
+        raise RequirementError("Issue #15 producer closure differs")
+
+
 def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     """Verify the exact Issue #15 WB-1 authority snapshot.
 
@@ -410,24 +867,39 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     foundation = _read_object(path=paths["foundation_verification"])
 
     baseline_fields = {
-        "contract_sha256", "created_at_utc", "effective_decision_ids",
-        "foundation_merge_commit", "foundation_merge_tree",
-        "foundation_source_commit", "foundation_source_tree",
-        "foundation_tag", "foundation_tag_object",
-        "foundation_tag_peeled_commit", "issue_body_sha256",
-        "issue_contract_revision", "issue_number", "issue_url",
-        "metrics_matrix_sha256", "parent_requirement_closure_hash",
-        "parent_requirement_hashes", "parent_requirement_id",
-        "pending_decision_ids", "record_type", "repository_commit",
-        "repository_identity", "repository_tree", "requirement_id",
-        "root_business_artifacts", "schema_version",
-        "semantic_runtime_versions", "semantic_runtime_versions_hash",
-        "snapshot_files", "source_input_role",
+        "contract_sha256",
+        "created_at_utc",
+        "effective_decision_ids",
+        "foundation_merge_commit",
+        "foundation_merge_tree",
+        "foundation_source_commit",
+        "foundation_source_tree",
+        "foundation_tag",
+        "foundation_tag_object",
+        "foundation_tag_peeled_commit",
+        "issue_body_sha256",
+        "issue_contract_revision",
+        "issue_number",
+        "issue_url",
+        "metrics_matrix_sha256",
+        "parent_requirement_closure_hash",
+        "parent_requirement_hashes",
+        "parent_requirement_id",
+        "pending_decision_ids",
+        "record_type",
+        "repository_commit",
+        "repository_identity",
+        "repository_tree",
+        "requirement_id",
+        "root_business_artifacts",
+        "schema_version",
+        "semantic_runtime_versions",
+        "semantic_runtime_versions_hash",
+        "snapshot_files",
+        "source_input_role",
     }
     _require_exact_fields(
-        value=baseline,
-        fields=baseline_fields,
-        label="Issue #15 baseline",
+        value=baseline, fields=baseline_fields, label="Issue #15 baseline",
     )
     if baseline["requirement_id"] != ISSUE_15_REQUIREMENT_ID:
         raise RequirementError("Issue #15 baseline identity differs")
@@ -456,9 +928,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         if not isinstance(binding, dict):
             raise RequirementError("Issue #15 file binding is invalid")
         _require_exact_fields(
-            value=binding,
-            fields={"sha256", "size"},
-            label="Issue #15 file binding",
+            value=binding, fields={"sha256", "size"}, label="Issue #15 file binding",
         )
         path = snapshot_dir / relative
         if (
@@ -480,20 +950,20 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 parent Requirement binding differs")
     if baseline["semantic_runtime_versions"] != SEMANTIC_VERSIONS:
         raise RequirementError("Issue #15 semantic runtime versions differ")
-    if (
-        baseline["semantic_runtime_versions_hash"]
-        != content_hash(value=SEMANTIC_VERSIONS)
+    if baseline["semantic_runtime_versions_hash"] != content_hash(
+        value=SEMANTIC_VERSIONS
     ):
         raise RequirementError("Issue #15 semantic runtime hash differs")
 
     required_register = {
-        "decisions", "issue_contract_revision", "pending_decisions",
-        "requirement_id", "schema_version",
+        "decisions",
+        "issue_contract_revision",
+        "pending_decisions",
+        "requirement_id",
+        "schema_version",
     }
     _require_exact_fields(
-        value=register,
-        fields=required_register,
-        label="Issue #15 Decision Register",
+        value=register, fields=required_register, label="Issue #15 Decision Register",
     )
     if register["requirement_id"] != ISSUE_15_REQUIREMENT_ID:
         raise RequirementError("Issue #15 Decision Register identity differs")
@@ -504,12 +974,10 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     parent_register = _read_object(path=parent_dir / "decision_register.json")
     parent_decisions = parent_register["decisions"]
     parent_pending = parent_register["pending_decisions"]
-    if not isinstance(parent_decisions, list) or not isinstance(
-        parent_pending, list,
-    ):
+    if not isinstance(parent_decisions, list) or not isinstance(parent_pending, list,):
         raise RequirementError("Parent Decision history is invalid")
     if (
-        register["decisions"][:len(parent_decisions)] != parent_decisions
+        register["decisions"][: len(parent_decisions)] != parent_decisions
         or register["pending_decisions"] != parent_pending
     ):
         raise RequirementError("Issue #15 historical Decision bytes differ")
@@ -556,33 +1024,15 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     if (
         inventory["parent_legacy_inventory_sha256"]
         != parent["hashes"]["legacy_path_inventory_sha256"]
-        or inventory["baseline_source_commit"]
-        != baseline["repository_commit"]
+        or inventory["baseline_source_commit"] != baseline["repository_commit"]
     ):
         raise RequirementError("Issue #15 producer inventory parent differs")
-    producers = inventory["producers"]
-    if not isinstance(producers, list):
-        raise RequirementError("Issue #15 producer inventory is invalid")
-    semantic_producers = [
-        producer
-        for producer in producers
-        if producer["kind"] == "SEMANTIC_PRODUCER"
-    ]
-    semantic_producer_ids = sorted(
-        producer["producer_id"] for producer in semantic_producers
+    parent_inventory = _read_object(path=parent_dir / "legacy_path_inventory.json")
+    _validate_issue_15_producer_inventory(
+        inventory=inventory,
+        parent_inventory=parent_inventory,
+        source_strategy=source_strategy,
     )
-    if (
-        inventory["producer_exact_set_hash"]
-        != content_hash(value=semantic_producer_ids)
-        or inventory["producer_record_set_hash"]
-        != content_hash(value=producers)
-        or inventory["semantic_producer_record_set_hash"]
-        != content_hash(value=semantic_producers)
-        or inventory["covered_metric_ids"]
-        != source_strategy["metric_id_set"]
-        or inventory["mutable_legacy_retirement_config_ledger"] is not False
-    ):
-        raise RequirementError("Issue #15 semantic producer closure differs")
     mode_metrics = sorted(
         metric_id
         for mode in source_strategy["metrics_by_target_source_mode"].values()
@@ -592,19 +1042,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         source_strategy["row_count"] != 230
         or source_strategy["metric_id_count"] != 39
         or mode_metrics != source_strategy["metric_id_set"]
-        or source_strategy["matrix_sha256"]
-        != baseline["metrics_matrix_sha256"]
+        or source_strategy["matrix_sha256"] != baseline["metrics_matrix_sha256"]
     ):
         raise RequirementError("Issue #15 source baseline differs")
     if (
-        foundation["foundation_source_commit"]
-        != ISSUE_15_FOUNDATION_SOURCE_COMMIT
-        or baseline["foundation_source_commit"]
-        != ISSUE_15_FOUNDATION_SOURCE_COMMIT
-        or foundation["foundation_merge_commit"]
-        != ISSUE_15_FOUNDATION_MERGE_COMMIT
-        or baseline["foundation_merge_commit"]
-        != ISSUE_15_FOUNDATION_MERGE_COMMIT
+        foundation["foundation_source_commit"] != ISSUE_15_FOUNDATION_SOURCE_COMMIT
+        or baseline["foundation_source_commit"] != ISSUE_15_FOUNDATION_SOURCE_COMMIT
+        or foundation["foundation_merge_commit"] != ISSUE_15_FOUNDATION_MERGE_COMMIT
+        or baseline["foundation_merge_commit"] != ISSUE_15_FOUNDATION_MERGE_COMMIT
         or foundation["foundation_tag"] != ISSUE_15_FOUNDATION_TAG
         or baseline["foundation_tag"] != ISSUE_15_FOUNDATION_TAG
         or foundation["highest_evidence_level"] != "FAST_LOCAL_ONLY"
@@ -617,6 +1062,9 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         )
     ):
         raise RequirementError("Issue #15 foundation evidence differs")
+    _validate_foundation_receipt_bindings(
+        foundation=foundation, repository_root=snapshot_dir.parents[1],
+    )
 
     hashes = {
         "baseline_sha256": sha256_file(path=paths["baseline"]),
@@ -629,12 +1077,8 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         "legacy_semantic_producer_inventory_sha256": sha256_file(
             path=paths["legacy_inventory"]
         ),
-        "parent_requirement_closure_hash": parent[
-            "requirement_closure_hash"
-        ],
-        "semantic_runtime_versions_hash": content_hash(
-            value=SEMANTIC_VERSIONS
-        ),
+        "parent_requirement_closure_hash": parent["requirement_closure_hash"],
+        "semantic_runtime_versions_hash": content_hash(value=SEMANTIC_VERSIONS),
         "source_strategy_baseline_receipt_sha256": sha256_file(
             path=paths["source_strategy"]
         ),
@@ -646,9 +1090,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         "hashes": hashes,
         "requirement_closure_hash": content_hash(value=hashes),
         "parent_requirement_id": PARENT_REQUIREMENT_ID,
-        "parent_requirement_closure_hash": parent[
-            "requirement_closure_hash"
-        ],
+        "parent_requirement_closure_hash": parent["requirement_closure_hash"],
         "baseline": baseline,
         "effective_decisions": decisions,
         "decision_chains": chains,
