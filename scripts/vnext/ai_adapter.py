@@ -765,13 +765,20 @@ def capture_deepseek_reader_response(
                 detail = error_payload["error"]["message"][:200]
         except (CanonicalError, UnicodeDecodeError, ValueError):
             detail = "provider returned an unreadable error body"
-        raise AIAdapterError(
-            "DEEPSEEK_RATE_LIMIT: " + detail
-            if error.code == 429
-            else "DEEPSEEK_HTTP_ERROR: " + detail
-        ) from error
+        if error.code in {400, 401, 402, 422, 429}:
+            code = "HTTP_{}".format(error.code)
+        elif 500 <= error.code <= 599:
+            code = "RECOVERABLE_5XX"
+        else:
+            code = "DEEPSEEK_HTTP_ERROR"
+        raise AIAdapterError(code + ": " + detail) from error
     except (OSError, TimeoutError, socket.timeout) as error:
-        raise AIAdapterError("DEEPSEEK_TRANSPORT_ERROR") from error
+        code = (
+            "TIMEOUT"
+            if isinstance(error, (TimeoutError, socket.timeout))
+            else "UNKNOWN_REMOTE_OUTCOME"
+        )
+        raise AIAdapterError(code) from error
     response_id, returned_model, output_text = _deepseek_chat_output_text(
         raw_response_bytes=raw,
     )
@@ -1270,11 +1277,14 @@ class _DeepSeekChatCompletionsTransport:
                 model_returned="none",
                 request_body_bytes=len(outbound),
             )
-            code = (
-                "DEEPSEEK_RATE_LIMIT"
-                if error.code == 429
-                else "DEEPSEEK_HTTP_ERROR"
-            )
+            if error.code in {400, 401, 402, 422}:
+                code = "HTTP_{}".format(error.code)
+            elif error.code == 429:
+                code = "HTTP_429"
+            elif 500 <= error.code <= 599:
+                code = "RECOVERABLE_5XX"
+            else:
+                code = "DEEPSEEK_HTTP_ERROR"
             raise TransportAttemptError(
                 code,
                 observation=observation,
@@ -1292,9 +1302,9 @@ class _DeepSeekChatCompletionsTransport:
                 request_body_bytes=len(outbound),
             )
             code = (
-                "DEEPSEEK_TIMEOUT"
+                "TIMEOUT"
                 if isinstance(error, (TimeoutError, socket.timeout))
-                else "DEEPSEEK_TRANSPORT_ERROR"
+                else "UNKNOWN_REMOTE_OUTCOME"
             )
             raise TransportAttemptError(
                 code,
@@ -1545,9 +1555,9 @@ def _load_transport_policy() -> Tuple[TransportPolicy, str]:
     repo_root = _REPOSITORY_ROOT
     if not isinstance(repo_root, Path) or repo_root.is_symlink():
         raise AIAdapterError("D-01 repository root is unsafe")
-    snapshot_dir = repo_root / "requirements" / "ai_first_v3_3_1"
+    snapshot_dir = repo_root / "requirements" / "issue_15_v1"
     current = repo_root
-    for part in ("requirements", "ai_first_v3_3_1"):
+    for part in ("requirements", "issue_15_v1"):
         current /= part
         if current.is_symlink():
             raise AIAdapterError("D-01 Requirement path is unsafe")

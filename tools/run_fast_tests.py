@@ -43,6 +43,7 @@ FAST_TESTS = (
     "test_registry_covers_exact_39_without_migration_state",
     "tests.vnext.test_deterministic_router.DeterministicRouterTest."
     "test_e01_matched_event_key_set_has_exact_legacy_parity",
+    "tests.vnext.test_invocation_control",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
     "test_r4_plan_uses_fast_runner_without_full_discovery",
 )

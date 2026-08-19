@@ -41,6 +41,8 @@ from .canonical import sha256_file, strict_json_file
 from .fault_matrix import FaultMatrixError
 from .fault_matrix import resume_formal_publication_fault_matrix
 from .fault_matrix import run_cutover_publication_fault_matrix
+from .invocation_control import RETRYABLE_ERROR_CLASSES
+from .invocation_control import TERMINAL_ERROR_CLASSES
 from .projector import build_projection_manifest, load_release_plan
 from .projector import write_projection_batch_manifest
 from .projector import write_projection_candidate
@@ -65,6 +67,12 @@ _SEC_CONFIG_PATH = Path("config/sec_config.json")
 _REQUEST_LOG_PATH = Path("evidence/requests_log.csv")
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 _LIVE_STABILITY_TARGET = 3
+_INVOCATION_TERMINAL_ERRORS = TERMINAL_ERROR_CLASSES | {
+    "HTTP_400",
+    "HTTP_401",
+    "HTTP_402",
+    "HTTP_422",
+}
 _LIVE_SEC_STAGE_PATHS = (
     "scripts/00_smoke_test_sec_access.py",
     "scripts/01_resolve_companies.py",
@@ -212,30 +220,29 @@ def _require_sha256_identity(*, value: object, field: str) -> str:
 
 
 def _live_retry_policy() -> Dict[str, object]:
-    """Derive the live retry ceiling from the module-owned effective D-01.
+    """Derive the live retry ceiling from Issue #15 effective D-35.
 
     Returns:
         Decision identity, Requirement closure, and exact approved retry count.
 
     Why:
         A caller-supplied retry limit would create a second transport
-        authority. The immutable repository Decision therefore owns both the
-        count and its audit identity.
+        authority. The Issue #15 error policy therefore owns both the count
+        and its audit identity; D-01 continues to own transport fields.
     """
     requirement = load_requirement_snapshot(
         snapshot_dir=(
-            _REPOSITORY_ROOT / "requirements" / "ai_first_v3_3_1"
+            _REPOSITORY_ROOT / "requirements" / "issue_15_v1"
         ),
     )
-    policy = approved_transport_policy(requirement=requirement)
-    decision = requirement["effective_decisions"]["D-01"]
+    decision = requirement["effective_decisions"]["D-35"]
     return {
-        "decision_id": "D-01",
+        "decision_id": "D-35",
         "decision_record_hash": content_hash(value=decision),
         "requirement_closure_hash": requirement[
             "requirement_closure_hash"
         ],
-        "retry_count": policy.retry_count,
+        "retry_count": decision["choice"]["maximum_retries"],
     }
 
 
@@ -260,7 +267,7 @@ def _validate_live_prerequisites(*, repo_root: Path) -> None:
     error_codes = []
     try:
         requirement = load_requirement_snapshot(
-            snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+            snapshot_dir=repo_root / "requirements" / "issue_15_v1",
         )
         policy = approved_transport_policy(requirement=requirement)
         api_key_name = api_key_environment_name(policy=policy)
@@ -2171,6 +2178,9 @@ def _review_summary(
         "model_returned": attempt["model_returned"],
         "provider_request_id": attempt["provider_request_id"],
         "error_class": attempt["error_class"],
+        "egress_attempted": bool(
+            attempt["transport_observation"]["egress_attempted"]
+        ),
         "transport_observation_hash": content_hash(
             value=attempt["transport_observation"]
         ),
@@ -2240,6 +2250,10 @@ def _failed_review_summary(
     error_class = str(attempt["error_class"])
     if not error_class:
         error_class = failure_status
+    if error_class == "EVIDENCE_REJECTED":
+        error_class = "EVIDENCE_FAILURE"
+    if "SCHEMA" in error_class or error_class.endswith("_RESPONSE_INVALID"):
+        error_class = "SCHEMA_VIOLATION"
     summary = {
         "run_id": manifest["run_id"],
         "run_dir": str(run_dir),
@@ -2251,6 +2265,9 @@ def _failed_review_summary(
         "model_returned": attempt["model_returned"],
         "provider_request_id": attempt["provider_request_id"],
         "error_class": error_class,
+        "egress_attempted": bool(
+            attempt["transport_observation"]["egress_attempted"]
+        ),
         "transport_observation_hash": content_hash(
             value=attempt["transport_observation"]
         ),
@@ -2306,6 +2323,30 @@ def _failed_status_from_records(
         code="FAILED_READER_RUN_INVALID",
         message="Failed Reader Run has no supported terminal failure record.",
     )
+
+
+def _normalized_invocation_error(*, error_class: str) -> str:
+    """Normalize inherited provider errors into effective D-35 classes.
+
+    Args:
+        error_class: Persisted adapter/provider failure class.
+
+    Returns:
+        Effective terminal, retryable, or unknown-outcome class.
+    """
+    if error_class in _INVOCATION_TERMINAL_ERRORS | RETRYABLE_ERROR_CLASSES | {
+        "UNKNOWN_REMOTE_OUTCOME"
+    }:
+        return error_class
+    if error_class.endswith("_TIMEOUT"):
+        return "TIMEOUT"
+    if error_class.endswith("_RATE_LIMIT"):
+        return "HTTP_429"
+    if error_class.endswith("_RESPONSE_INVALID") or "SCHEMA" in error_class:
+        return "SCHEMA_VIOLATION"
+    if error_class == "EVIDENCE_REJECTED":
+        return "EVIDENCE_FAILURE"
+    return error_class
 
 
 def _seal_failed_review_run(
@@ -2775,6 +2816,7 @@ def _live_attempt_receipt_entry(
     for field in (
         "candidate_hash",
         "effective_decision",
+        "egress_attempted",
         "evidence_check_id",
         "failure_status",
         "metric_results",
@@ -3441,9 +3483,9 @@ def _prepare_runs(
         company_successes = []
         for stability_ordinal in range(1, _LIVE_STABILITY_TARGET + 1):
             success = None
-            for attempt_ordinal in range(
-                1, int(retry_policy["retry_count"]) + 2
-            ):
+            # D-35 owns one orchestrator retry; the old ``retry_count + 2``
+            # loop could multiply one failed stability sample into four calls.
+            for attempt_ordinal in range(1, 3):
                 review_dir = runs_root / (
                     "{}-review-{}-attempt-{}".format(
                         company_id,
@@ -3473,6 +3515,83 @@ def _prepare_runs(
                 )
                 attempts.append(summary)
                 if summary["status"] == "FAILED":
+                    error_class = _normalized_invocation_error(
+                        error_class=str(summary["error_class"])
+                    )
+                    summary["error_class"] = error_class
+                    retryable = error_class in RETRYABLE_ERROR_CLASSES
+                    egress_attempted = (
+                        bool(summary["egress_attempted"])
+                        if "egress_attempted" in summary
+                        else retryable
+                    )
+                    if error_class in _INVOCATION_TERMINAL_ERRORS:
+                        receipt = _write_live_stability_receipt(
+                            workspace_dir=workspace_dir,
+                            release_input_plan_id=plan_id,
+                            retry_policy=retry_policy,
+                            cutover_qualification=cutover_qualification,
+                            attempts=attempts,
+                            status="FAILED_TERMINAL",
+                        )
+                        raise CutoverError(
+                            code="LIVE_READER_TERMINAL_FAILURE",
+                            message=(
+                                "Live Reader terminal failure stopped the "
+                                "execution and batch."
+                            ),
+                            details={
+                                "company_id": company_id,
+                                "error_class": error_class,
+                                "stability_ordinal": stability_ordinal,
+                                **receipt,
+                            },
+                        )
+                    if error_class == "UNKNOWN_REMOTE_OUTCOME" or (
+                        egress_attempted and not retryable
+                    ):
+                        receipt = _write_live_stability_receipt(
+                            workspace_dir=workspace_dir,
+                            release_input_plan_id=plan_id,
+                            retry_policy=retry_policy,
+                            cutover_qualification=cutover_qualification,
+                            attempts=attempts,
+                            status="UNKNOWN_REMOTE_OUTCOME",
+                        )
+                        raise CutoverError(
+                            code="UNKNOWN_REMOTE_OUTCOME",
+                            message=(
+                                "Provider egress lacks a safe terminal "
+                                "outcome; automatic retry is forbidden."
+                            ),
+                            details={
+                                "company_id": company_id,
+                                "stability_ordinal": stability_ordinal,
+                                **receipt,
+                            },
+                        )
+                    if not retryable:
+                        receipt = _write_live_stability_receipt(
+                            workspace_dir=workspace_dir,
+                            release_input_plan_id=plan_id,
+                            retry_policy=retry_policy,
+                            cutover_qualification=cutover_qualification,
+                            attempts=attempts,
+                            status="FAILED_TERMINAL",
+                        )
+                        raise CutoverError(
+                            code="LIVE_READER_TERMINAL_FAILURE",
+                            message=(
+                                "Non-retryable Reader failure stopped the "
+                                "execution and batch."
+                            ),
+                            details={
+                                "company_id": company_id,
+                                "error_class": error_class,
+                                "stability_ordinal": stability_ordinal,
+                                **receipt,
+                            },
+                        )
                     continue
                 if summary["status"] not in {
                     "FROZEN", "PENDING_HUMAN_REVIEW"

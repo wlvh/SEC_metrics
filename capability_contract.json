@@ -86,6 +86,16 @@
         "since": "2026-08-19"
       },
       {
+        "anchor_id": "CAPABILITY.issue_15_invocation_control",
+        "type": "capability",
+        "status": "active",
+        "statement": "Issue #15 WB-3已实现release_input_plan_id、ai_invocation_plan_id、execution_id三层身份，exact provider-request identity、成功exact response复用、O_CREAT|O_EXCL single-flight reservation、owner-only egress、immutable egress/attempt/response/execution receipts、usage/token/cache/cost审计、D-35 terminal/retryable分类、HTTP 402停批、ABANDONED_BEFORE_EGRESS与UNKNOWN_REMOTE_OUTCOME。429/timeout/recoverable 5xx最多一次重试；400/401/402/422/schema/evidence/resource不重试。仓库金额cap/preflight不存在，任意estimated/actual cost只观测不阻断，payload/context hard limit仍fail closed。real_model_provider_egress_count、paid_model_provider_call_count、mock_transport_invocation_count分别计数；structured-only全为0。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_invocation_control.py::InvocationControlTest.test_concurrent_exact_request_has_one_mock_invocation",
+        "test_status": "automated_recorded_scenario",
+        "since": "2026-08-19"
+      },
+      {
         "anchor_id": "CAPABILITY.vnext_recorded_shadow",
         "type": "capability",
         "status": "active",
@@ -445,7 +455,7 @@
         "anchor_id": "BEHAVIOR.vnext_remote_transport_repository_authority",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "vNext remote adapter 只从模块固定 repository root 的 FSD、immutable R2、exact R3 Addendum、Decision/baseline/release/semantic closure 读取唯一 effective APPROVED D-01；历史 pending/OpenAI record 可追溯但已被单链 supersede。调用方不能传入 policy、替代 authority root 或 transport；cross-root 在读取 filing bytes 前失败。fixed transport只允许 DeepSeek官方 OpenAI-compatible Chat Completions、deepseek-v4-flash、api.deepseek.com、temperature=0、thinking disabled、JSON output与本地严格Reader schema，且不保存可替换 transport对象。",
+        "statement": "vNext remote adapter 只从模块固定 repository root 的 Issue #15 Requirement closure 读取唯一 effective APPROVED D-01；child closure 内继承 FSD/R2/R3，并绑定 post-freeze Decisions。调用方不能传入 policy、替代 authority root 或 transport；cross-root 在读取 filing bytes 前失败。fixed transport只允许 DeepSeek官方 OpenAI-compatible Chat Completions、deepseek-v4-flash、api.deepseek.com、temperature=0、thinking disabled、JSON output与本地严格Reader schema，且不保存可替换 transport对象。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_remote_workflow_rejects_payload_root_outside_authority",
         "test_status": "automated_recorded_negative",
@@ -455,7 +465,7 @@
         "anchor_id": "BEHAVIOR.vnext_remote_transport_policy_enforced",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "仓库 transport 必须在每次 outbound 前重载并匹配 D-01 policy/closure与8 MiB预算；provider/model/endpoint来自实际 TransportObservation，异常、model/host mismatch、timeout、非法 response或缺 observation均 fail closed。D-01 retry_count=2由 Cutover编排为initial+2个独立 Run/attempt，不在同一 attempt内隐藏重试，也不fallback其他模型或旧resolver。",
+        "statement": "仓库 transport 必须在每次 outbound 前重载并匹配 Issue #15 effective D-01 policy/closure与8 MiB资源上限；provider/model/endpoint来自实际 TransportObservation，异常、model/host mismatch、timeout、非法 response或缺 observation均 fail closed。D-01 transport内部retry为0，WB-3只按effective D-35对429/timeout/recoverable 5xx建立最多一个新attempt；terminal或UNKNOWN立即停execution/batch，不fallback其他模型或旧resolver。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_remote_transport_policy_enforcement_matrix",
         "test_status": "automated_recorded_negative_matrix",
@@ -495,7 +505,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的九个并发直接边界用例，其中authority/scope/WB-2/WB-2B用例机械验证Requirement、exact-base callsite closure、39指标registry和E01 event-key parity；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得禁止Issue #15明列的短小确定性不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
+        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的十个并发直接边界用例，其中authority/scope/WB-2/WB-2B/WB-3用例机械验证Requirement、producer closure、39指标registry、E01 parity与invocation故障矩阵；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得禁止Issue #15明列的短小确定性不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",
@@ -507,8 +517,8 @@
         "status": "active",
         "statement": "Issue #15 post-freeze effective D-36禁用仓库金额预算执法，外部API账户余额是唯一花费权威；不存在per-call、batch、owner或remaining monetary hard cap，estimated/actual cost、pricing、token、usage和cache只能作非阻断observability。effective D-35删除金额BUDGET_EXCEEDED，但HTTP 402仍零自动重试并终止execution/batch，payload/context/resource limit仍为独立fail-closed安全类。effective D-26不再要求金额budget preflight测试。",
         "audience": ["operator", "developer", "reviewer"],
-        "test_anchor": "tests/vnext/test_issue15_authority.py::Issue15AuthorityTest.test_issue15_snapshot_loads_and_preserves_parent_history",
-        "test_status": "automated_recorded",
+        "test_anchor": "tests/vnext/test_invocation_control.py::InvocationControlTest.test_cost_observability_never_blocks_but_resources_do",
+        "test_status": "automated_recorded_scenario",
         "since": "2026-08-19"
       },
       {
