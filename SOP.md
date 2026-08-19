@@ -25,7 +25,8 @@ effective D-36 禁用仓库金额预算执法，花费权威是 `EXTERNAL_API_AC
 | 2 | 加载自包含 Decision 和 WB-1 receipts | `requirements/issue_15_v1/decision_register.json`；`requirements/issue_15_v1/legacy_semantic_producer_inventory.json`；`requirements/issue_15_v1/source_strategy_baseline_receipt.json`；`requirements/issue_15_v1/foundation_verification_receipt.json` | `load_requirement_snapshot(issue_15_v1)` 通过；D-01 与 post-freeze D-36/D-35/D-26 effective tips 精确；39 指标 producer/matrix exact set 闭合；最高 foundation 证据仅为 `FAST_LOCAL_ONLY` |
 | 3 | 读取 inherited foundation | `requirements/ai_first_v3_3_1/` | 父目录 exact bytes 不变；其实现、evidence/publication/fail-closed invariants 被继承而不是重写 |
 | 4 | 加载 WB-2 target routing 与 ratchet state | `config/source_strategy_registry.json`；`config/issue_15_release_plan.json`；`scripts/vnext/source_strategy.py` | 39 metric ID 恰好各有一条；source mode 只有四种；无 `ai_event_text` 与当前迁移状态；只由 `ReleasePlan.cumulative_metric_ids` 持有当前集合；family literal 不含通用词 |
-| 5 | 只实施当前获准的 WB/ratchet | Issue #15 对应章节；`architecture.md`；`TESTING.md` | 不提前实现后续 WB；未获授权不得创建 active publication 或发起真实 SEC/模型调用 |
+| 5 | 验证 WB-2B deterministic source routing | `catalog/event_routes.json`；`scripts/vnext/deterministic_router.py` | 五个 adapter 只消费 exact SourceReference/raw bytes；每个 role 使用 `sources[]`、ID array 与 SourceSetManifest；submissions bytes 反向重算来源集；C01/E03 共用 claim；E02/E04 零值有完整全年 set；E01 matched key set 与 legacy exact parity；provider socket=0 |
+| 6 | 只实施当前获准的 WB/ratchet | Issue #15 对应章节；`architecture.md`；`TESTING.md` | 不提前实现后续 WB；未获授权不得发起真实模型调用 |
 
 ## 快速入口：只读取现有结果
 

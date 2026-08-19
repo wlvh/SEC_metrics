@@ -42,6 +42,7 @@ class SemanticAuditTest(unittest.TestCase):
         self.assertIn(
             "config/source_strategy_registry.json", receipt["source_hashes"],
         )
+        self.assertIn("catalog/event_routes.json", receipt["source_hashes"])
 
     def test_business_literal_in_executable_is_reported(self) -> None:
         """Reject a metric/company parser branch by AST literal."""

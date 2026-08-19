@@ -111,6 +111,9 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 Issue #15 WB-2 另外提供一份可机械加载的 39 指标 SourceStrategy registry，只描述 target route；当前 ratchet set 只能从单独 ReleasePlan 的 `cumulative_metric_ids` 读取。该 registry 完成时 root `outputs/metrics_matrix.csv` 仍与 WB-1 冻结 SHA-256 一致，未执行任何 adapter、SEC/模型调用或 active publication；不能把“route 已登记”读成“指标已迁移”。
 <!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->
 
+WB-2B 的确定性 router 使用同一 `sources[]` 形状表达单源与多源，并以 pinned SEC submissions bytes 和 SourceSetManifest 证明发现集完整。它可在无模型 socket 的情况下生成 deterministic claim/observation/result/trace；C01/E03 共用 Item 5.02 claim，E02/E04 零值仍可追溯全年 8-K 集合，E01 则把声明式 8.01 keyword 匹配与 legacy event key set 直接对比。该能力本身仍不表示 R2 十公司已发布。
+<!-- capability-anchor: CAPABILITY.issue_15_deterministic_source_router -->
+
 正式 CLI 支持 prepare/init、status、review list/show/decide、resume/finalize、freeze/replay、project、publish、rollback、restore 与 acceptance。默认输出稳定错误且不显示 traceback，`--debug` 才显示 traceback，`--json` 提供机器可读结果。HUMAN decision 可选；若未写入，D-06 会以固定且可审计的 SYSTEM identity 写入完整APPROVE claims，绝不把SYSTEM伪装为HUMAN。
 
 第二布局与holdout的真实录制只可通过 `tools/vnext_capture_qualification_fixture.py --fixture-id ...` 进行。该工具从 `fixtures/vnext/qualification_candidates.json` 解析固定业务坐标，经 `SecHttpClient` 保存官方 SEC raw/ledger attempt，再以有效D-01 DeepSeek transport生成完整provider envelope、严格Reader response与model-addressed excerpt；调用方不能传URL、公司、期间、模型或secret，fixture写入后只能由socket-zero qualification replay。

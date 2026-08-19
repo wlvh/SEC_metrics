@@ -52,6 +52,7 @@ PINNED_REMOTE_CONSTANT_SETS = (
 )
 PINNED_REMOTE_IMPORTS = {"socket", "urllib"}
 GATE_SOURCE_PATHS = (
+    "catalog/event_routes.json",
     "config/issue_15_release_plan.json",
     "config/source_strategy_registry.json",
     "scripts/sec_pipeline.py",

@@ -76,6 +76,16 @@
         "since": "2026-08-19"
       },
       {
+        "anchor_id": "CAPABILITY.issue_15_deterministic_source_router",
+        "type": "capability",
+        "status": "active",
+        "statement": "Issue #15 WB-2B已提供companyfacts、accession XBRL、ECD XBRL、auditor fact和8-K item index五个确定性adapter。Multi-source release input plan中每个公司只使用sources[]，每个source role的source_reference_ids始终为array并绑定content-addressed SourceSetManifest；manifest可从pinned SEC submissions bytes重算form/date-window accession exact set。adapter输出一级DETERMINISTIC_VERIFIED_CLAIM，再投影为VerifiedObservation、MetricResult和ExecutionTrace。C01/E03共用Item 5.02 claim set，E02/E04零值绑定完整FY 8-K set，E01声明式aliases与legacy matched event key set exact parity。定向测试以socket-open canary证明model provider egress为0；该层不单独声称R1/R2 active publication。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_deterministic_router.py::DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims",
+        "test_status": "automated_recorded_scenario",
+        "since": "2026-08-19"
+      },
+      {
         "anchor_id": "CAPABILITY.vnext_recorded_shadow",
         "type": "capability",
         "status": "active",
@@ -485,7 +495,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的八个并发直接边界用例，其中authority/scope/WB-2用例机械验证Requirement、exact-base callsite closure与39指标registry；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得禁止Issue #15明列的短小确定性不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
+        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的九个并发直接边界用例，其中authority/scope/WB-2/WB-2B用例机械验证Requirement、exact-base callsite closure、39指标registry和E01 event-key parity；每例最多30秒且recorded gate最多60秒。不得要求全仓/双解释器、隔离repository/worktree或长串行套件，但不得禁止Issue #15明列的短小确定性不变量测试。其证据等级仅为FAST_LOCAL_ONLY，不能声称CI、live、full或active Cutover。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",

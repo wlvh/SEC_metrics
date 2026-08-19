@@ -241,6 +241,13 @@ WB-1 只增加 authority 数据和 loader 分支。Issue #15 owner 随后以同 
 family 拥有 `forbidden_production_literals`，metric 不复制该词表。`tools/check_vnext_semantics.py` 每次从经 Requirement byte-binding 验证的 family union 编译 scanner；`risk` / `value` / `event` / `income` / `current` 被 schema 显式拒绝为禁词，避免把共享引擎普通语言变成假阳性。WB-2 只建立 routing authority，没有执行 adapter、修改 root outputs 或证明 structured-only provider 零调用；后两者属于 WB-2B/WB-3 联合证据。
 <!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->
 
+#### 11.0.2 WB-2B Deterministic Source Router
+
+`scripts/vnext/deterministic_router.py` 为 companyfacts、accession XBRL、ECD XBRL、auditor fact 与 8-K item index 提供五个有界、无模型 adapter。Release input plan 的公司条目只使用 `sources[]`；每个 role 中 `source_reference_ids` 始终是 array，即使只有一个 source，并绑定一个 content-addressed SourceSetManifest。Manifest 保存 company/role/form/window/discovery policy、SEC submissions RawBlob hash、inventory SourceReference、ordered source IDs 与cutoff；构建和replay都从 pinned submissions bytes 重算 in-window accession exact set，因此不能通过删掉一份 8-K 后重签空集。
+
+五个 adapter 产生一级 `DETERMINISTIC_VERIFIED_CLAIM` record，该 record 同时绑定 SourceReference、SourceSetManifest、locator、value/unit 与adapter attributes；通用投影再生成 VerifiedObservation、MetricResult 与 ExecutionTrace。`catalog/event_routes.json` 拥有 C01/E01–E05 的 item/关键词语义。C01/E03 共用同一 Item 5.02 claim set 后各自投影；E02/E04 的零值仍绑定完整 FY 8-K source set；E01 对 1.01/2.01 直接命中，8.01 按 catalog 中 `merger/acquisition/combine/transaction` 与 NFKC+casefold+whitespace normalization 匹配。新 router 的 matched `(source_url, accession, item_code)` exact set 与 legacy matcher 逐项比较；共享 Python 不存在 E01 metric identity branch。
+<!-- capability-anchor: CAPABILITY.issue_15_deterministic_source_router -->
+
 ### 11.1 当前身份与不可越过的边界
 
 `scripts/vnext/` 是从 Issue #12 继承到 Issue #15 的同一套recorded/live生产实现，不是与正式流程分离的demo。full live Cutover在release planning前固定运行SEC Stage00/01/02/03/05，逐条保存原样命令、return code/duration/stdout-stderr digest，验证request ledger只合法尾部追加并持久化inventory/acquisition receipt；随后编译Spec、运行固定DeepSeek Chat Completions adapter、生成Evidence/ReviewUnit、优先采用HUMAN decision或由D-06写入明确SYSTEM decision、freeze/replay Run、形成complete Batch、投影strict-compatible legacy rows，并通过正式publication/rollback primitives供Stage10/11/12读取pinned `PublicationView`。
@@ -384,7 +391,7 @@ bundle namespace必须只有声明的regular files/directories，不接受symlin
 
 ### 11.7 Acceptance runner 的执行与补偿边界
 
-Issue #15 effective D-26 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的八个并发直接用例，其中 authority/scope/WB-2 用例验证 Requirement closure、exact-base callsite closure 与 39 指标 registry；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，也不再要求金额 budget preflight 测试；短小确定性 single-flight、HTTP 402、UNKNOWN_REMOTE_OUTCOME、freeze/replay、rollback/restore 与 structured-only 零模型调用不变量仍必须执行。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。
+Issue #15 effective D-26 继承 fast/local 边界：recorded acceptance 执行 `tools/run_fast_tests.py --jobs 4` 的九个并发直接用例，其中 authority/scope/WB-2/WB-2B 用例验证 Requirement closure、exact-base callsite closure、39 指标 registry 与 E01 event-key parity；随后执行 semantic/scalability/capability 静态 gate。每个直接用例最多30秒，recorded gate每条最多60秒。它不启动 Python 3.9 全量回归、全仓 discover、隔离 repository/worktree 或长串行套件，也不再要求金额 budget preflight 测试；短小确定性 single-flight、HTTP 402、UNKNOWN_REMOTE_OUTCOME、freeze/replay、rollback/restore 与 structured-only 零模型调用不变量仍必须执行。该 receipt 的状态固定为 `PASSED_FAST_LOCAL_ONLY`，仅表示快速本地证据，不能升级为 CI、live、full 或 active Cutover。
 
 acceptance 在任何 recorded/full gate 前先捕获 clean source commit/tree/file count，并把 baseline、Decision Register、FSD、immutable R2、legacy inventory、exact R3 Addendum、release plan 与 semantic runtime 的完整 hash map 固化为顶层 `authority_binding`。`--output-dir`若等于、包含或位于任一正式单文件/namespace下，会在首次写入或caller executable启动前失败。recorded gate 结束后重读并要求 exact 相等；full 还要求 Cutover formal evidence 回绑相同 authority。semantic/scalability artifacts 只能来自本次 `outputs/acceptance_receipts/recorded_gate_runs/<run-id>/` 的两个 exact files，full 会从 repo-owned path 重新打开并重算 hash，不能接受 caller 自报、旧 root artifact 或已漂移 source。live SEC acquisition receipt 只有一个 strict validator：它要求五条固定命令的 exact schema，把 `$PYTHON_CURRENT` 的 name/binary SHA-256 机械比对当前 `sys.executable`，并按当前 ledger prefix/tail、attempt exact set 与 inventory bytes重建；full binding初次和封口前都调用该validator。receipt写入前会递归把repository、output、current Python与sandbox executable替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`、`$SANDBOX_EXEC`；`runtime_bindings`保存executable name与binary SHA-256，无法归类的host绝对路径只保留path hash。
 

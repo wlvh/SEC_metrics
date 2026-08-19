@@ -243,6 +243,21 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "request_attempt_id",
         )
     ),
+    "DETERMINISTIC_VERIFIED_CLAIM": RecordSchema(
+        required=(
+            "record_type",
+            "verified_claim_id",
+            "claim_kind",
+            "company_id",
+            "source_reference_id",
+            "source_role",
+            "source_set_manifest_id",
+            "locator",
+            "value",
+            "unit",
+            "attributes",
+        )
+    ),
     "VALIDATION_RECEIPT": RecordSchema(
         required=(
             "record_type",
@@ -283,6 +298,7 @@ TEXT_FIELDS = {
     "batch_manifest_id",
     "candidate_hash",
     "candidate_status",
+    "claim_kind",
     "company_id",
     "content_manifest_hash",
     "content_type",
@@ -345,6 +361,7 @@ TEXT_FIELDS = {
     "semantic_role",
     "source_reference_id",
     "source_role",
+    "source_set_manifest_id",
     "source_url",
     "spec_closure_hash",
     "spec_semantic_hash",
@@ -359,6 +376,7 @@ TEXT_FIELDS = {
     "transform_semantic_version",
     "validation_file_hash",
     "validation_receipt_id",
+    "verified_claim_id",
     "view_id",
 }
 OPTIONAL_TEXT_FIELDS = {
@@ -400,6 +418,8 @@ MAPPING_FIELDS = {
     "sampling_parameters",
     "scope",
     "selected",
+    "attributes",
+    "locator",
     "source_binding",
     "spec_file_hashes",
     "target_period",
@@ -652,6 +672,23 @@ def _expected_identifier(
             )
         }
         return "source_reference_id", content_hash(value=body)
+    if record_type == "DETERMINISTIC_VERIFIED_CLAIM":
+        body = {
+            key: record[key]
+            for key in (
+                "record_type",
+                "claim_kind",
+                "company_id",
+                "source_reference_id",
+                "source_role",
+                "source_set_manifest_id",
+                "locator",
+                "value",
+                "unit",
+                "attributes",
+            )
+        }
+        return "verified_claim_id", content_hash(value=body)
     if record_type == "DERIVED_ASSET":
         body = {
             key: record[key]
@@ -1219,6 +1256,18 @@ def _validate_record_semantics(
             raise RecordError("Observation value is invalid") from error
         if normalized != record["value"] or not record["unit"]:
             raise RecordError("Observation value/unit is not canonical")
+    if record_type == "DETERMINISTIC_VERIFIED_CLAIM":
+        if (
+            not record["claim_kind"]
+            or not record["company_id"]
+            or not record["source_reference_id"]
+            or not record["source_set_manifest_id"]
+            or not record["source_role"]
+            or not record["unit"]
+            or not record["value"]
+            or not record["locator"]
+        ):
+            raise RecordError("Deterministic claim identity is incomplete")
     if record_type == "EXECUTION_TRACE":
         target = record["calculation_target"]
         required_target = {

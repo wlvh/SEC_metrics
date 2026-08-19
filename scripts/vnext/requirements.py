@@ -44,6 +44,7 @@ ISSUE_15_SNAPSHOT_FILES = {
     "transfer": "transfer_manifest.json",
 }
 ISSUE_15_RUNTIME_AUTHORITY_FILES = {
+    "catalog/event_routes.json",
     "config/issue_15_release_plan.json",
     "config/source_strategy_registry.json",
 }
@@ -1336,6 +1337,9 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         "baseline_sha256": sha256_file(path=paths["baseline"]),
         "contract_sha256": contract_sha256,
         "decision_register_sha256": sha256_file(path=paths["decisions"]),
+        "event_route_catalog_sha256": sha256_file(
+            path=repository_root / "catalog" / "event_routes.json"
+        ),
         "foundation_verification_receipt_sha256": sha256_file(
             path=paths["foundation_verification"]
         ),

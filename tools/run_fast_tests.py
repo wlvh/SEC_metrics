@@ -41,6 +41,8 @@ FAST_TESTS = (
     "test_reusable_producer_scopes_match_exact_base_call_graph",
     "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest."
     "test_registry_covers_exact_39_without_migration_state",
+    "tests.vnext.test_deterministic_router.DeterministicRouterTest."
+    "test_e01_matched_event_key_set_has_exact_legacy_parity",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
     "test_r4_plan_uses_fast_runner_without_full_discovery",
 )
