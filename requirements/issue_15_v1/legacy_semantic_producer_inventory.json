@@ -244,15 +244,12 @@
         "B02",
         "B07"
       ],
-      "retired_metric_ids": [
-        "B03"
-      ],
+      "retired_metric_ids": [],
       "covered_metric_ids": [
         "B02",
-        "B03",
         "B07"
       ],
-      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
       "parent_inventory_groups": [],
       "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
     },
@@ -527,19 +524,12 @@
       "producer_id": "scripts/sec_pipeline.py::candidate_fact_hits",
       "kind": "SEMANTIC_PRODUCER",
       "active_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
         "B02",
         "B04",
         "B05",
@@ -549,24 +539,15 @@
         "B09"
       ],
       "retired_metric_ids": [
-        "B01",
         "B03"
       ],
       "covered_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
-        "B01",
         "B02",
         "B03",
         "B04",
@@ -923,56 +904,31 @@
       "producer_id": "scripts/sec_pipeline.py::derived_metric",
       "kind": "SEMANTIC_PRODUCER",
       "active_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
-        "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
         "B02",
-        "B04",
         "B05",
         "B06",
         "B07",
-        "B08",
-        "B09"
+        "B08"
       ],
-      "retired_metric_ids": [
-        "B01",
-        "B03"
-      ],
+      "retired_metric_ids": [],
       "covered_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
-        "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
-        "B01",
         "B02",
-        "B03",
-        "B04",
         "B05",
         "B06",
         "B07",
-        "B08",
-        "B09"
+        "B08"
       ],
-      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
       "parent_inventory_groups": [],
       "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
     },
@@ -1156,54 +1112,30 @@
       "producer_id": "scripts/sec_pipeline.py::fact_is_annual_duration",
       "kind": "SEMANTIC_PRODUCER",
       "active_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
-        "A10",
-        "A11",
-        "A12",
-        "A13",
         "B02",
         "B04",
         "B05",
-        "B06",
-        "B07",
-        "B08",
-        "B09"
+        "B07"
       ],
       "retired_metric_ids": [
-        "B01",
         "B03"
       ],
       "covered_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
-        "A10",
-        "A11",
-        "A12",
-        "A13",
-        "B01",
         "B02",
         "B03",
         "B04",
         "B05",
-        "B06",
-        "B07",
-        "B08",
-        "B09"
+        "B07"
       ],
       "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
       "parent_inventory_groups": [],
@@ -1213,17 +1145,23 @@
       "producer_id": "scripts/sec_pipeline.py::fact_is_instant",
       "kind": "SEMANTIC_PRODUCER",
       "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
         "A10",
-        "A13",
         "B06",
-        "B08"
+        "B08",
+        "B09"
       ],
       "retired_metric_ids": [],
       "covered_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
         "A10",
-        "A13",
         "B06",
-        "B08"
+        "B08",
+        "B09"
       ],
       "lifecycle": "ACTIVE_CURRENT_RUNTIME",
       "parent_inventory_groups": [],
@@ -1721,56 +1659,15 @@
       "producer_id": "scripts/sec_pipeline.py::metric_from_fact",
       "kind": "SEMANTIC_PRODUCER",
       "active_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
-        "A04",
-        "A05",
-        "A06",
-        "A07",
-        "A08",
-        "A09",
-        "A10",
-        "A11",
-        "A12",
-        "A13",
-        "B02",
         "B04",
-        "B05",
-        "B06",
-        "B07",
-        "B08",
         "B09"
       ],
-      "retired_metric_ids": [
-        "B01",
-        "B03"
-      ],
+      "retired_metric_ids": [],
       "covered_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
-        "A04",
-        "A05",
-        "A06",
-        "A07",
-        "A08",
-        "A09",
-        "A10",
-        "A11",
-        "A12",
-        "A13",
-        "B01",
-        "B02",
-        "B03",
         "B04",
-        "B05",
-        "B06",
-        "B07",
-        "B08",
         "B09"
       ],
-      "lifecycle": "ACTIVE_WITH_RETIRED_SCOPE",
+      "lifecycle": "ACTIVE_CURRENT_RUNTIME",
       "parent_inventory_groups": [],
       "purpose": "Owns a file::symbol extraction, selection, classification, applicability, value, or status decision in the audited base."
     },
@@ -2334,19 +2231,12 @@
       "producer_id": "scripts/sec_pipeline.py::select_component",
       "kind": "SEMANTIC_PRODUCER",
       "active_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
         "B02",
         "B04",
         "B05",
@@ -2356,24 +2246,15 @@
         "B09"
       ],
       "retired_metric_ids": [
-        "B01",
         "B03"
       ],
       "covered_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
-        "B01",
         "B02",
         "B03",
         "B04",
@@ -2391,19 +2272,12 @@
       "producer_id": "scripts/sec_pipeline.py::select_fact",
       "kind": "SEMANTIC_PRODUCER",
       "active_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
         "B02",
         "B04",
         "B05",
@@ -2413,24 +2287,15 @@
         "B09"
       ],
       "retired_metric_ids": [
-        "B01",
         "B03"
       ],
       "covered_metric_ids": [
-        "A01",
-        "A02",
-        "A03",
         "A04",
         "A05",
         "A06",
         "A07",
         "A08",
-        "A09",
         "A10",
-        "A11",
-        "A12",
-        "A13",
-        "B01",
         "B02",
         "B03",
         "B04",
@@ -3019,8 +2884,8 @@
   "shared_plumbing_count": 20,
   "producer_exact_set_hash": "sha256:ce657cb8cc25fd4d665b04ed2c66e027b765d9a36f1090d3eb8e4f9e07f3710a",
   "shared_plumbing_exact_set_hash": "sha256:e148bac50da7d86389ac3181d65f8420f77f0db06e0aeb59c898260883d2eb96",
-  "producer_record_set_hash": "sha256:0a129b0ab7289abfb8f9c6ec030c307a1d7a9386af03b975a2af3e9d6f0509e8",
-  "semantic_producer_record_set_hash": "sha256:991b27021c44f7443b53ecafce71dbb4c12378bae899ebd82d7455bca392a378",
+  "producer_record_set_hash": "sha256:878b250692dca379557103ff2bed213aeefb256c7c9ce35c6b2be3e991c9afbe",
+  "semantic_producer_record_set_hash": "sha256:c2bca333c4dd470f153a1aeb6fb231acb92af14d9f917666e72431fe66b6cc75",
   "metric_id_set": [
     "A01",
     "A02",
@@ -3109,21 +2974,15 @@
       "scripts/sec_pipeline.py::basel_candidate_role",
       "scripts/sec_pipeline.py::basel_ratio_candidate_rows",
       "scripts/sec_pipeline.py::basel_ratio_candidates_from_rows",
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
       "scripts/sec_pipeline.py::concept_has_rwa_ratio_semantics",
       "scripts/sec_pipeline.py::concept_is_basel_threshold_or_requirement",
       "scripts/sec_pipeline.py::concept_matches_basel_metric",
-      "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::dimensions_have_basel_methodology",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::normalized_concept_name",
       "scripts/sec_pipeline.py::repair_basel_capital_ratios",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::selected_basel_ratio_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
       "scripts/sec_pipeline.py::target_10k_for_company"
@@ -3132,39 +2991,27 @@
       "scripts/sec_pipeline.py::basel_candidate_role",
       "scripts/sec_pipeline.py::basel_ratio_candidate_rows",
       "scripts/sec_pipeline.py::basel_ratio_candidates_from_rows",
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
       "scripts/sec_pipeline.py::concept_has_cet1_semantics",
       "scripts/sec_pipeline.py::concept_is_basel_threshold_or_requirement",
       "scripts/sec_pipeline.py::concept_matches_basel_metric",
-      "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::dimensions_have_basel_methodology",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::normalized_concept_name",
       "scripts/sec_pipeline.py::repair_basel_capital_ratios",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::selected_basel_ratio_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
     "A03": [
       "scripts/sec_pipeline.py::apply_fi_mda_table_metrics",
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_mda_table_specs",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::mda_anchor_quote",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::scaled_mda_value",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
       "scripts/sec_pipeline.py::stage_extract_mda_and_risk_text",
       "scripts/sec_pipeline.py::target_10k_for_company"
@@ -3174,13 +3021,12 @@
       "scripts/sec_pipeline.py::apply_fi_mda_table_metrics",
       "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::fact_is_annual_duration",
+      "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::fi_mda_table_specs",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::mda_anchor_quote",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::scaled_mda_value",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
@@ -3194,9 +3040,9 @@
       "scripts/sec_pipeline.py::company_extractors",
       "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::fact_is_annual_duration",
+      "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::prior_10k_for_company",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
@@ -3208,9 +3054,9 @@
       "scripts/sec_pipeline.py::company_extractors",
       "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::fact_is_annual_duration",
+      "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
@@ -3223,7 +3069,6 @@
       "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::prior_10k_for_company",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
@@ -3237,7 +3082,6 @@
       "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::select_target_component",
@@ -3245,15 +3089,9 @@
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
     "A09": [
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
@@ -3261,11 +3099,9 @@
       "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
       "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::select_target_component",
@@ -3274,64 +3110,39 @@
     ],
     "A11": [
       "scripts/sec_pipeline.py::apply_fi_mda_table_metrics",
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_mda_table_specs",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::mda_anchor_quote",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::scaled_mda_value",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
       "scripts/sec_pipeline.py::stage_extract_mda_and_risk_text",
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
     "A12": [
       "scripts/sec_pipeline.py::apply_fi_mda_table_metrics",
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fi_mda_table_specs",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::mda_anchor_quote",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::scaled_mda_value",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
       "scripts/sec_pipeline.py::stage_extract_mda_and_risk_text",
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
     "A13": [
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
-      "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
     "B01": [
-      "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::prior_10k_for_company",
-      "scripts/sec_pipeline.py::select_component",
-      "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
     "B02": [
@@ -3345,7 +3156,6 @@
       "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::prior_10k_for_company",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
@@ -3355,15 +3165,12 @@
       "scripts/sec_pipeline.py::target_10k_for_company"
     ],
     "B03": [
-      "scripts/sec_pipeline.py::annual_duration_ok",
       "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
       "scripts/sec_pipeline.py::compatible_component_hits",
       "scripts/sec_pipeline.py::custom_da_observation_note",
-      "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::has_extractor",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::prior_10k_for_company",
       "scripts/sec_pipeline.py::resolve_da_component",
       "scripts/sec_pipeline.py::resolve_operating_income_component",
@@ -3376,7 +3183,6 @@
       "scripts/sec_pipeline.py::apply_stub_period_metric_semantics",
       "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
@@ -3396,7 +3202,6 @@
       "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
@@ -3415,12 +3220,10 @@
       "scripts/sec_pipeline.py::concept_is_captive_debt_probe",
       "scripts/sec_pipeline.py::derived_metric",
       "scripts/sec_pipeline.py::dimension_pairs",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::instant_component_hits_compatible",
       "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::repair_captive_finance_debt",
       "scripts/sec_pipeline.py::resolve_total_debt_component",
       "scripts/sec_pipeline.py::row_has_captive_finance_signal",
@@ -3441,7 +3244,6 @@
       "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::resolve_b07_operating_income_component",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
@@ -3455,12 +3257,10 @@
       "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
       "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
       "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::fi_metric_rows",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
-      "scripts/sec_pipeline.py::metric_from_fact",
       "scripts/sec_pipeline.py::select_component",
       "scripts/sec_pipeline.py::select_fact",
       "scripts/sec_pipeline.py::stage_compute_standard_metrics",
@@ -3469,8 +3269,7 @@
     "B09": [
       "scripts/sec_pipeline.py::candidate_fact_hits",
       "scripts/sec_pipeline.py::company_extractors",
-      "scripts/sec_pipeline.py::derived_metric",
-      "scripts/sec_pipeline.py::fact_is_annual_duration",
+      "scripts/sec_pipeline.py::fact_is_instant",
       "scripts/sec_pipeline.py::has_extractor",
       "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
       "scripts/sec_pipeline.py::metric_from_fact",
@@ -3752,30 +3551,838 @@
     "active_bundle.legacy_retirement_receipt.json"
   ],
   "scope_evidence_by_producer": {
+    "scripts/sec_pipeline.py::annual_duration_ok": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "predicate.compatible_b07.annual",
+        "predicate.entity_continuity.annual"
+      ],
+      "active_metric_ids": [
+        "B02",
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    "scripts/sec_pipeline.py::apply_stub_period_metric_semantics": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "constant.stub_period_main_metrics"
+      ],
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    "scripts/sec_pipeline.py::candidate_fact_hits": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "selection.a04.duration",
+        "selection.a04.instant",
+        "selection.fi.a05.instant",
+        "selection.fi.a05_a06_a07.duration",
+        "selection.fi.a06.instant",
+        "selection.fi.a07.duration",
+        "selection.fi.a08.duration",
+        "selection.fi.a10.instant",
+        "selection.non_fi.b02.duration",
+        "selection.non_fi.b04.duration",
+        "selection.non_fi.b05.duration",
+        "selection.non_fi.b06.instant",
+        "selection.non_fi.b07.duration",
+        "selection.non_fi.b08.instant",
+        "selection.non_fi.b09.instant",
+        "selection.resolve_b07.b07.duration",
+        "selection.resolve_da.b03.duration",
+        "selection.resolve_debt.b06.instant",
+        "selection.target_instant.b06.instant"
+      ],
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ]
+    },
+    "scripts/sec_pipeline.py::derived_metric": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "direct.derived_metric.a05",
+        "direct.derived_metric.a06",
+        "direct.derived_metric.a07",
+        "direct.derived_metric.a08",
+        "direct.derived_metric.a10",
+        "direct.derived_metric.b02",
+        "direct.derived_metric.b05",
+        "direct.derived_metric.b06",
+        "direct.derived_metric.b07",
+        "direct.derived_metric.b08"
+      ],
+      "active_metric_ids": [
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B05",
+        "B06",
+        "B07",
+        "B08"
+      ],
+      "retired_metric_ids": []
+    },
+    "scripts/sec_pipeline.py::fact_is_annual_duration": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "selection.a04.duration",
+        "selection.fi.a05_a06_a07.duration",
+        "selection.fi.a07.duration",
+        "selection.fi.a08.duration",
+        "selection.non_fi.b02.duration",
+        "selection.non_fi.b04.duration",
+        "selection.non_fi.b05.duration",
+        "selection.non_fi.b07.duration",
+        "selection.resolve_b07.b07.duration",
+        "selection.resolve_da.b03.duration"
+      ],
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ]
+    },
+    "scripts/sec_pipeline.py::fact_is_instant": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "selection.a04.instant",
+        "selection.fi.a05.instant",
+        "selection.fi.a06.instant",
+        "selection.fi.a10.instant",
+        "selection.non_fi.b06.instant",
+        "selection.non_fi.b08.instant",
+        "selection.non_fi.b09.instant",
+        "selection.resolve_debt.b06.instant",
+        "selection.target_instant.b06.instant"
+      ],
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A10",
+        "B06",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": []
+    },
+    "scripts/sec_pipeline.py::metric_from_fact": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "direct.metric_from_fact.b04",
+        "direct.metric_from_fact.b09"
+      ],
+      "active_metric_ids": [
+        "B04",
+        "B09"
+      ],
+      "retired_metric_ids": []
+    },
+    "scripts/sec_pipeline.py::select_component": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "selection.a04.duration",
+        "selection.a04.instant",
+        "selection.fi.a05.instant",
+        "selection.fi.a05_a06_a07.duration",
+        "selection.fi.a06.instant",
+        "selection.fi.a07.duration",
+        "selection.fi.a08.duration",
+        "selection.fi.a10.instant",
+        "selection.non_fi.b02.duration",
+        "selection.non_fi.b04.duration",
+        "selection.non_fi.b05.duration",
+        "selection.non_fi.b06.instant",
+        "selection.non_fi.b07.duration",
+        "selection.non_fi.b08.instant",
+        "selection.non_fi.b09.instant",
+        "selection.resolve_b07.b07.duration",
+        "selection.resolve_da.b03.duration",
+        "selection.resolve_debt.b06.instant",
+        "selection.target_instant.b06.instant"
+      ],
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ]
+    },
+    "scripts/sec_pipeline.py::select_fact": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "selection.a04.duration",
+        "selection.a04.instant",
+        "selection.fi.a05.instant",
+        "selection.fi.a05_a06_a07.duration",
+        "selection.fi.a06.instant",
+        "selection.fi.a07.duration",
+        "selection.fi.a08.duration",
+        "selection.fi.a10.instant",
+        "selection.non_fi.b02.duration",
+        "selection.non_fi.b04.duration",
+        "selection.non_fi.b05.duration",
+        "selection.non_fi.b06.instant",
+        "selection.non_fi.b07.duration",
+        "selection.non_fi.b08.instant",
+        "selection.non_fi.b09.instant",
+        "selection.resolve_b07.b07.duration",
+        "selection.resolve_da.b03.duration",
+        "selection.resolve_debt.b06.instant",
+        "selection.target_instant.b06.instant"
+      ],
+      "active_metric_ids": [
+        "A04",
+        "A05",
+        "A06",
+        "A07",
+        "A08",
+        "A10",
+        "B02",
+        "B04",
+        "B05",
+        "B06",
+        "B07",
+        "B08",
+        "B09"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ]
+    },
     "scripts/sec_pipeline.py::select_target_component": {
-      "active_callers": {
-        "scripts/sec_pipeline.py::a04_companyfacts_proxy_note": [
-          "A04"
-        ],
-        "scripts/sec_pipeline.py::fi_metric_rows": [
-          "A08",
-          "A10"
-        ],
-        "scripts/sec_pipeline.py::resolve_b07_operating_income_component": [
-          "B07"
-        ],
-        "scripts/sec_pipeline.py::resolve_total_debt_component": [
-          "B06"
-        ],
-        "scripts/sec_pipeline.py::target_instant_component_exists": [
-          "B06"
-        ]
-      },
-      "retired_callers": {
-        "scripts/sec_pipeline.py::resolve_da_component": [
-          "B03"
-        ]
-      }
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "selection.a04.duration",
+        "selection.a04.instant",
+        "selection.fi.a08.duration",
+        "selection.fi.a10.instant",
+        "selection.resolve_b07.b07.duration",
+        "selection.resolve_da.b03.duration",
+        "selection.resolve_debt.b06.instant",
+        "selection.target_instant.b06.instant"
+      ],
+      "active_metric_ids": [
+        "A04",
+        "A08",
+        "A10",
+        "B06",
+        "B07"
+      ],
+      "retired_metric_ids": [
+        "B03"
+      ]
+    },
+    "scripts/sec_pipeline.py::stub_period_bounds": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "constant.stub_period_main_metrics"
+      ],
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    "scripts/sec_pipeline.py::stub_period_fact_hits": {
+      "derivation": "UNION_OF_SCOPE_EVIDENCE_GROUPS",
+      "evidence_group_ids": [
+        "constant.stub_period_main_metrics"
+      ],
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": []
     }
-  }
+  },
+  "scope_evidence_groups": [
+    {
+      "evidence_id": "constant.stub_period_main_metrics",
+      "evidence_type": "METRIC_SET_CONSTANT",
+      "caller_id": "scripts/sec_pipeline.py::STUB_PERIOD_MAIN_METRICS",
+      "callee_id": "NOT_APPLICABLE",
+      "call_sites": [
+        "786:27"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B02",
+        "B04",
+        "B05",
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.a05",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5732:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "A05"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.a06",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5774:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "A06"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.a07",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5808:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "A07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.a08",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5608:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "A08"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.a10",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5671:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "A10"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.b02",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5226:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B02"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.b05",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5284:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B05"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.b06",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5346:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.b07",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5403:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.derived_metric.b08",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::derived_metric",
+      "call_sites": [
+        "5446:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B08"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.metric_from_fact.b04",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::metric_from_fact",
+      "call_sites": [
+        "5252:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B04"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "direct.metric_from_fact.b09",
+      "evidence_type": "DIRECT_METRIC_ARGUMENT",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::metric_from_fact",
+      "call_sites": [
+        "5478:20"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B09"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "predicate.compatible_b07.annual",
+      "evidence_type": "DIRECT_PREDICATE_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::compatible_b07_component_hits",
+      "callee_id": "scripts/sec_pipeline.py::annual_duration_ok",
+      "call_sites": [
+        "4408:15"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "predicate.entity_continuity.annual",
+      "evidence_type": "DIRECT_PREDICATE_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::entity_continuity_yoy_result",
+      "callee_id": "scripts/sec_pipeline.py::annual_duration_ok",
+      "call_sites": [
+        "5164:11",
+        "5164:58"
+      ],
+      "period_kind": "NOT_APPLICABLE",
+      "active_metric_ids": [
+        "B02"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.a04.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::a04_companyfacts_proxy_note",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "8052:19"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "A04"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.a04.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::a04_companyfacts_proxy_note",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "8059:13",
+        "8069:19"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "A04"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.fi.a05.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5709:13",
+        "5718:23"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "A05"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.fi.a05_a06_a07.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5702:17"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "A05",
+        "A06",
+        "A07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.fi.a06.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5751:13",
+        "5760:23"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "A06"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.fi.a07.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5795:27"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "A07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.fi.a08.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "5584:25",
+        "5591:26"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "A08"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.fi.a10.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "5643:16",
+        "5652:29"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "A10"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.non_fi.b02.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5203:14",
+        "5212:24"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "B02"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.non_fi.b04.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5245:17"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "B04"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.non_fi.b05.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5264:10",
+        "5271:12"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "B05"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.non_fi.b06.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5303:13"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.non_fi.b07.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5371:15"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.non_fi.b08.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5426:21",
+        "5433:26"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "B08"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.non_fi.b09.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::non_fi_metric_rows",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_sites": [
+        "5471:11"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "B09"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.resolve_b07.b07.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::resolve_b07_operating_income_component",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "4591:13",
+        "4606:13",
+        "4613:13",
+        "4644:12"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [
+        "B07"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.resolve_da.b03.duration",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::resolve_da_component",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "4460:13",
+        "4475:19",
+        "4482:19"
+      ],
+      "period_kind": "duration",
+      "active_metric_ids": [],
+      "retired_metric_ids": [
+        "B03"
+      ]
+    },
+    {
+      "evidence_id": "selection.resolve_debt.b06.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::resolve_total_debt_component",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "4763:14",
+        "4782:18",
+        "4789:21",
+        "4813:17",
+        "4838:22",
+        "4845:25",
+        "4871:14"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": []
+    },
+    {
+      "evidence_id": "selection.target_instant.b06.instant",
+      "evidence_type": "SELECTION_CALLSITES",
+      "caller_id": "scripts/sec_pipeline.py::target_instant_component_exists",
+      "callee_id": "scripts/sec_pipeline.py::select_target_component",
+      "call_sites": [
+        "4735:10"
+      ],
+      "period_kind": "instant",
+      "active_metric_ids": [
+        "B06"
+      ],
+      "retired_metric_ids": []
+    }
+  ],
+  "scope_excluded_callers": {
+    "scripts/sec_pipeline.py::build_golden_candidates": "VALIDATION_ONLY",
+    "scripts/sec_pipeline.py::component_for_golden": "VALIDATION_ONLY",
+    "scripts/sec_pipeline.py::select_target_component": "TRANSITIVE_WRAPPER"
+  },
+  "scope_transitive_edges": [
+    {
+      "caller_id": "scripts/sec_pipeline.py::candidate_fact_hits",
+      "callee_id": "scripts/sec_pipeline.py::fact_is_annual_duration",
+      "call_site": "3938:34",
+      "period_kind_flow": "GUARD::duration"
+    },
+    {
+      "caller_id": "scripts/sec_pipeline.py::candidate_fact_hits",
+      "callee_id": "scripts/sec_pipeline.py::fact_is_instant",
+      "call_site": "3943:34",
+      "period_kind_flow": "GUARD::instant"
+    },
+    {
+      "caller_id": "scripts/sec_pipeline.py::select_fact",
+      "callee_id": "scripts/sec_pipeline.py::candidate_fact_hits",
+      "call_site": "3978:11",
+      "period_kind_flow": "PASSTHROUGH"
+    },
+    {
+      "caller_id": "scripts/sec_pipeline.py::select_component",
+      "callee_id": "scripts/sec_pipeline.py::select_fact",
+      "call_site": "4330:11",
+      "period_kind_flow": "PASSTHROUGH"
+    },
+    {
+      "caller_id": "scripts/sec_pipeline.py::select_target_component",
+      "callee_id": "scripts/sec_pipeline.py::select_component",
+      "call_site": "4359:10",
+      "period_kind_flow": "PASSTHROUGH"
+    }
+  ]
 }

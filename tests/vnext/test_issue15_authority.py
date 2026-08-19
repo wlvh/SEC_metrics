@@ -24,7 +24,7 @@ from vnext.canonical import content_hash, sha256_file
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
-    ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH,
+    ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
     RequirementError,
     load_requirement_snapshot,
 )
@@ -83,29 +83,88 @@ def module_symbols(*, path: Path) -> Set[str]:
     return symbols
 
 
-def direct_callers(*, path: Path, callee: str) -> Set[str]:
-    """Return top-level functions that directly invoke one named function.
+def module_functions(*, path: Path) -> Dict[str, ast.FunctionDef]:
+    """Return top-level function AST nodes keyed by exact symbol name.
 
     Args:
         path: Existing UTF-8 Python source file.
-        callee: Unqualified function name used at a direct call site.
 
     Returns:
-        Exact direct-caller set from the audited source AST.
+        Function definitions used by callsite and transitive-edge checks.
     """
     tree = ast.parse(source=path.read_text(encoding="utf-8"))
-    callers = set()
+    return {node.name: node for node in tree.body if isinstance(node, ast.FunctionDef)}
+
+
+def call_at_site(*, function: ast.FunctionDef, callee: str, call_site: str) -> ast.Call:
+    """Return the unique direct call at one frozen line/column locator.
+
+    Args:
+        function: Caller function AST node.
+        callee: Expected unqualified callee name.
+        call_site: Decimal ``line:column`` source locator.
+
+    Returns:
+        Exact matching call node.
+    """
+    line_text, column_text = call_site.split(":", maxsplit=1)
+    matches = [
+        node
+        for node in ast.walk(function)
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == callee
+        and node.lineno == int(line_text)
+        and node.col_offset == int(column_text)
+    ]
+    if len(matches) != 1:
+        raise AssertionError(
+            "Callsite must resolve exactly once: {}::{}@{}".format(
+                function.name, callee, call_site
+            )
+        )
+    return matches[0]
+
+
+def call_keyword(*, call: ast.Call, keyword: str) -> ast.AST:
+    """Return one required keyword expression from a frozen callsite.
+
+    Args:
+        call: Parsed function call.
+        keyword: Required keyword argument name.
+
+    Returns:
+        AST expression bound to the keyword.
+    """
+    matches = [item.value for item in call.keywords if item.arg == keyword]
+    if len(matches) != 1:
+        raise AssertionError("Call keyword must exist exactly once: " + keyword)
+    return matches[0]
+
+
+def assignment_value(*, path: Path, symbol: str) -> ast.AST:
+    """Return the unique top-level assignment value for one constant.
+
+    Args:
+        path: Existing UTF-8 Python source file.
+        symbol: Required assignment target name.
+
+    Returns:
+        Assigned AST expression.
+    """
+    tree = ast.parse(source=path.read_text(encoding="utf-8"))
+    matches = []
     for node in tree.body:
-        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+        if not isinstance(node, ast.Assign):
             continue
         if any(
-            isinstance(child, ast.Call)
-            and isinstance(child.func, ast.Name)
-            and child.func.id == callee
-            for child in ast.walk(node)
+            isinstance(target, ast.Name) and target.id == symbol
+            for target in node.targets
         ):
-            callers.add(node.name)
-    return callers
+            matches.append(node.value)
+    if len(matches) != 1:
+        raise AssertionError("Assignment must exist exactly once: " + symbol)
+    return matches[0]
 
 
 def copy_test_repository(*, temp_dir: str) -> Path:
@@ -314,9 +373,14 @@ class Issue15AuthorityTest(unittest.TestCase):
             ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
             content_hash(value=semantic_producer_ids),
         )
+        scope_closure = {
+            "scope_evidence_by_producer": inventory["scope_evidence_by_producer"],
+            "scope_evidence_groups": inventory["scope_evidence_groups"],
+            "scope_excluded_callers": inventory["scope_excluded_callers"],
+            "scope_transitive_edges": inventory["scope_transitive_edges"],
+        }
         self.assertEqual(
-            ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH,
-            content_hash(value=semantic_producers),
+            ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH, content_hash(value=scope_closure),
         )
         self.assertEqual(
             ISSUE_15_BASE_PIPELINE_SHA256,
@@ -336,57 +400,6 @@ class Issue15AuthorityTest(unittest.TestCase):
             self.assertEqual(
                 set(members), set(inventory["parent_symbol_dispositions"][group]),
             )
-        select_target = next(
-            producer
-            for producer in semantic_producers
-            if producer["producer_id"]
-            == "scripts/sec_pipeline.py::select_target_component"
-        )
-        self.assertEqual(
-            ["A04", "A08", "A10", "B06", "B07"], select_target["active_metric_ids"],
-        )
-        self.assertEqual(["B03"], select_target["retired_metric_ids"])
-        scope_evidence = inventory["scope_evidence_by_producer"][
-            "scripts/sec_pipeline.py::select_target_component"
-        ]
-        evidenced_callers = {
-            caller.split("::", 1)[1]
-            for caller in (
-                set(scope_evidence["active_callers"])
-                | set(scope_evidence["retired_callers"])
-            )
-        }
-        self.assertEqual(
-            evidenced_callers,
-            direct_callers(
-                path=REPO_ROOT / "scripts" / "sec_pipeline.py",
-                callee="select_target_component",
-            ),
-        )
-        self.assertEqual(
-            select_target["active_metric_ids"],
-            sorted(
-                {
-                    metric_id
-                    for metric_ids_by_caller in scope_evidence[
-                        "active_callers"
-                    ].values()
-                    for metric_id in metric_ids_by_caller
-                }
-            ),
-        )
-        self.assertEqual(
-            select_target["retired_metric_ids"],
-            sorted(
-                {
-                    metric_id
-                    for metric_ids_by_caller in scope_evidence[
-                        "retired_callers"
-                    ].values()
-                    for metric_id in metric_ids_by_caller
-                }
-            ),
-        )
         self.assertEqual(metric_ids, inventory["covered_metric_ids"])
         symbols_by_file: Dict[str, Set[str]] = {}
         for producer in producers:
@@ -425,6 +438,231 @@ class Issue15AuthorityTest(unittest.TestCase):
             path = REPO_ROOT / relative
             self.assertEqual(binding["sha256"], sha256_file(path=path))
             self.assertEqual(binding["size"], path.stat().st_size)
+
+    def test_reusable_producer_scopes_match_exact_base_call_graph(self) -> None:
+        """Derive reusable helper scopes from every audited base callsite."""
+        inventory = read_json(
+            path=ISSUE_15_DIR / "legacy_semantic_producer_inventory.json"
+        )
+        pipeline_path = REPO_ROOT / "scripts" / "sec_pipeline.py"
+        self.assertEqual(
+            ISSUE_15_BASE_PIPELINE_SHA256, sha256_file(path=pipeline_path),
+        )
+        functions = module_functions(path=pipeline_path)
+        groups = inventory["scope_evidence_groups"]
+        group_by_id = {row["evidence_id"]: row for row in groups}
+        selection_evidence = set()
+        direct_metric_evidence = {
+            "derived_metric": set(),
+            "metric_from_fact": set(),
+        }
+        predicate_evidence = set()
+
+        # Exact line/column locators make every evidence group falsifiable
+        # against the source bytes rather than merely self-consistent JSON.
+        for group in groups:
+            evidence_type = group["evidence_type"]
+            if evidence_type == "METRIC_SET_CONSTANT":
+                symbol = group["caller_id"].split("::", 1)[1]
+                value = assignment_value(path=pipeline_path, symbol=symbol)
+                line_text, column_text = group["call_sites"][0].split(":", maxsplit=1)
+                self.assertEqual(int(line_text), value.lineno)
+                self.assertEqual(int(column_text), value.col_offset)
+                self.assertEqual(
+                    set(group["active_metric_ids"]), set(ast.literal_eval(value)),
+                )
+                self.assertEqual([], group["retired_metric_ids"])
+                continue
+
+            caller = group["caller_id"].split("::", 1)[1]
+            callee = group["callee_id"].split("::", 1)[1]
+            observed_metric_ids = set()
+            for call_site in group["call_sites"]:
+                call = call_at_site(
+                    function=functions[caller], callee=callee, call_site=call_site,
+                )
+                identity = (caller, callee, call_site)
+                if evidence_type == "SELECTION_CALLSITES":
+                    period_kind = call_keyword(call=call, keyword="period_kind",)
+                    self.assertIsInstance(period_kind, ast.Constant)
+                    self.assertEqual(group["period_kind"], period_kind.value)
+                    selection_evidence.add(identity)
+                elif evidence_type == "DIRECT_METRIC_ARGUMENT":
+                    metric_id = call_keyword(call=call, keyword="metric_id")
+                    self.assertIsInstance(metric_id, ast.Constant)
+                    observed_metric_ids.add(metric_id.value)
+                    direct_metric_evidence[callee].add(identity)
+                elif evidence_type == "DIRECT_PREDICATE_CALLSITES":
+                    predicate_evidence.add(identity)
+                else:
+                    self.fail("Unknown scope evidence type: " + evidence_type)
+            if evidence_type == "DIRECT_METRIC_ARGUMENT":
+                self.assertEqual(
+                    set(group["active_metric_ids"]), observed_metric_ids,
+                )
+                self.assertEqual([], group["retired_metric_ids"])
+
+        # Every production selector call is either evidence-bearing or an
+        # explicitly classified wrapper/validation-only caller.
+        excluded = inventory["scope_excluded_callers"]
+        actual_selection = set()
+        actual_excluded_callers = set()
+        for caller, function in functions.items():
+            caller_id = "scripts/sec_pipeline.py::" + caller
+            for node in ast.walk(function):
+                if (
+                    not isinstance(node, ast.Call)
+                    or not isinstance(node.func, ast.Name)
+                    or node.func.id
+                    not in {"select_component", "select_target_component"}
+                ):
+                    continue
+                identity = (
+                    caller,
+                    node.func.id,
+                    "{}:{}".format(node.lineno, node.col_offset),
+                )
+                if caller_id in excluded:
+                    actual_excluded_callers.add(caller_id)
+                else:
+                    actual_selection.add(identity)
+        self.assertEqual(selection_evidence, actual_selection)
+        self.assertEqual(set(excluded), actual_excluded_callers)
+
+        # Direct metric projection and duration-predicate helpers have no
+        # unaccounted callsite outside their evidence groups.
+        for callee in sorted(direct_metric_evidence):
+            actual = set()
+            for caller, function in functions.items():
+                for node in ast.walk(function):
+                    if (
+                        isinstance(node, ast.Call)
+                        and isinstance(node.func, ast.Name)
+                        and node.func.id == callee
+                    ):
+                        actual.add(
+                            (
+                                caller,
+                                callee,
+                                "{}:{}".format(node.lineno, node.col_offset),
+                            )
+                        )
+            self.assertEqual(direct_metric_evidence[callee], actual)
+        actual_predicates = set()
+        for caller, function in functions.items():
+            for node in ast.walk(function):
+                if (
+                    isinstance(node, ast.Call)
+                    and isinstance(node.func, ast.Name)
+                    and node.func.id == "annual_duration_ok"
+                ):
+                    actual_predicates.add(
+                        (
+                            caller,
+                            node.func.id,
+                            "{}:{}".format(node.lineno, node.col_offset),
+                        )
+                    )
+        self.assertEqual(predicate_evidence, actual_predicates)
+
+        # Verify the reusable selector chain and its duration/instant guards.
+        edge_identities = set()
+        for edge in inventory["scope_transitive_edges"]:
+            caller = edge["caller_id"].split("::", 1)[1]
+            callee = edge["callee_id"].split("::", 1)[1]
+            call = call_at_site(
+                function=functions[caller], callee=callee, call_site=edge["call_site"],
+            )
+            edge_identities.add((caller, callee, edge["call_site"]))
+            flow = edge["period_kind_flow"]
+            if flow == "PASSTHROUGH":
+                period_kind = call_keyword(call=call, keyword="period_kind")
+                self.assertIsInstance(period_kind, ast.Name)
+                self.assertEqual("period_kind", period_kind.id)
+                continue
+            expected_kind = flow.split("::", 1)[1]
+            parents = {
+                child: parent
+                for parent in ast.walk(functions[caller])
+                for child in ast.iter_child_nodes(parent)
+            }
+            ancestor = parents[call]
+            while not isinstance(ancestor, ast.If):
+                ancestor = parents[ancestor]
+            self.assertIsInstance(ancestor.test, ast.Compare)
+            self.assertIsInstance(ancestor.test.left, ast.Name)
+            self.assertEqual("period_kind", ancestor.test.left.id)
+            self.assertIsInstance(ancestor.test.ops[0], ast.Eq)
+            comparator = ancestor.test.comparators[0]
+            self.assertIsInstance(comparator, ast.Constant)
+            self.assertEqual(expected_kind, comparator.value)
+        expected_edge_callers = {
+            edge["caller_id"].split("::", 1)[1]
+            for edge in inventory["scope_transitive_edges"]
+        }
+        actual_edges = set()
+        edge_callees = {
+            edge["callee_id"].split("::", 1)[1]
+            for edge in inventory["scope_transitive_edges"]
+        }
+        for caller in expected_edge_callers:
+            for node in ast.walk(functions[caller]):
+                if (
+                    isinstance(node, ast.Call)
+                    and isinstance(node.func, ast.Name)
+                    and node.func.id in edge_callees
+                ):
+                    actual_edges.add(
+                        (
+                            caller,
+                            node.func.id,
+                            "{}:{}".format(node.lineno, node.col_offset),
+                        )
+                    )
+        self.assertEqual(edge_identities, actual_edges)
+
+        # The same generic union rule drives every evidence-marked producer;
+        # no function-specific assertion is needed to enforce future changes.
+        producer_by_id = {row["producer_id"]: row for row in inventory["producers"]}
+        referenced_groups = set()
+        for producer_id, evidence in inventory["scope_evidence_by_producer"].items():
+            selected = [
+                group_by_id[group_id] for group_id in evidence["evidence_group_ids"]
+            ]
+            derived_active = sorted(
+                {
+                    metric_id
+                    for group in selected
+                    for metric_id in group["active_metric_ids"]
+                }
+            )
+            derived_retired = sorted(
+                {
+                    metric_id
+                    for group in selected
+                    for metric_id in group["retired_metric_ids"]
+                }
+            )
+            self.assertEqual(derived_active, evidence["active_metric_ids"])
+            self.assertEqual(derived_retired, evidence["retired_metric_ids"])
+            self.assertEqual(
+                derived_active, producer_by_id[producer_id]["active_metric_ids"],
+            )
+            self.assertEqual(
+                derived_retired, producer_by_id[producer_id]["retired_metric_ids"],
+            )
+            referenced_groups.update(evidence["evidence_group_ids"])
+        self.assertEqual(set(group_by_id), referenced_groups)
+
+        fact_is_instant = producer_by_id["scripts/sec_pipeline.py::fact_is_instant"]
+        self.assertEqual(
+            ["A04", "A05", "A06", "A10", "B06", "B08", "B09"],
+            fact_is_instant["active_metric_ids"],
+        )
+        self.assertEqual([], fact_is_instant["retired_metric_ids"])
+        self.assertTrue(
+            {"A04", "A05", "A06", "B09"}.issubset(fact_is_instant["active_metric_ids"])
+        )
 
     def test_issue15_contract_byte_change_invalidates_snapshot(self) -> None:
         """Reject one Contract byte while leaving the copied parent untouched."""
@@ -481,8 +719,8 @@ class Issue15AuthorityTest(unittest.TestCase):
             with self.assertRaises(RequirementError):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
 
-    def test_self_consistent_producer_scope_tamper_invalidates_snapshot(self,) -> None:
-        """Reject forged active scope even after all internal hashes are fixed."""
+    def test_code_derived_instant_scope_rejects_self_consistent_tamper(self,) -> None:
+        """Reject a forged instant scope after all internal hashes are fixed."""
         with tempfile.TemporaryDirectory() as temp_dir:
             issue_copy = copy_test_repository(temp_dir=temp_dir)
             inventory = read_json(
@@ -491,11 +729,10 @@ class Issue15AuthorityTest(unittest.TestCase):
             producer = next(
                 row
                 for row in inventory["producers"]
-                if row["producer_id"]
-                == "scripts/sec_pipeline.py::select_target_component"
+                if row["producer_id"] == "scripts/sec_pipeline.py::fact_is_instant"
             )
-            producer["active_metric_ids"].remove("A04")
-            producer["covered_metric_ids"].remove("A04")
+            producer["active_metric_ids"].remove("A05")
+            producer["covered_metric_ids"].remove("A05")
             semantic = [
                 row
                 for row in inventory["producers"]
@@ -517,7 +754,9 @@ class Issue15AuthorityTest(unittest.TestCase):
                 value=semantic
             )
             rebind_inventory(issue_copy=issue_copy, inventory=inventory)
-            with self.assertRaises(RequirementError):
+            with self.assertRaisesRegex(
+                RequirementError, "code-derived producer scope differs",
+            ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
 
 

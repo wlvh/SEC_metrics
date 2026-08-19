@@ -72,16 +72,10 @@ ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH = (
 ISSUE_15_EXPECTED_SHARED_EXACT_SET_HASH = (
     "sha256:e148bac50da7d86389ac3181d65f8420f77f0db06e0aeb59c898260883d2eb96"
 )
-ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH = (
-    "sha256:0a129b0ab7289abfb8f9c6ec030c307a1d7a9386af03b975a2af3e9d6f0509e8"
-)
-ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH = (
-    "sha256:991b27021c44f7443b53ecafce71dbb4c12378bae899ebd82d7455bca392a378"
-)
 ISSUE_15_EXPECTED_SEMANTIC_PRODUCER_COUNT = 116
 ISSUE_15_EXPECTED_SHARED_PLUMBING_COUNT = 20
 ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH = (
-    "sha256:955f0fed5361c663307171addf036b684a007380607c179479c6f6457e4b2483"
+    "sha256:cdbfa3e6466dd44a1d1ce59f5a3a22c4a343daa795125214b3c65d759acfb3d0"
 )
 
 
@@ -516,6 +510,167 @@ def _parent_inventory_identity(*, group: str, symbol: str) -> str:
     return "scripts/sec_pipeline.py::{}".format(symbol)
 
 
+def _validate_issue_15_scope_evidence(
+    *,
+    inventory: Mapping[str, object],
+    producer_by_id: Mapping[str, Mapping[str, object]],
+    semantic_id_set: set[str],
+    metric_id_set: set[str],
+) -> None:
+    """Match reusable producer scopes to frozen call-graph evidence groups.
+
+    Args:
+        inventory: Child producer inventory containing scope evidence.
+        producer_by_id: Validated producer records keyed by ``file::symbol``.
+        semantic_id_set: Externally closed semantic producer identity set.
+        metric_id_set: Exact 39-metric authority set.
+
+    Expected output:
+        Every evidence-marked producer scope equals the union of its referenced
+        code-audited groups, and every group is used by at least one producer.
+
+    Raises:
+        RequirementError: On malformed evidence, dangling groups, or producer
+            scope that differs from the code-level derivation receipt.
+    """
+    groups = inventory["scope_evidence_groups"]
+    evidence_by_producer = inventory["scope_evidence_by_producer"]
+    if not isinstance(groups, list) or not isinstance(evidence_by_producer, dict):
+        raise RequirementError("Issue #15 producer scope evidence is invalid")
+    group_fields = {
+        "active_metric_ids",
+        "callee_id",
+        "call_sites",
+        "caller_id",
+        "evidence_id",
+        "evidence_type",
+        "period_kind",
+        "retired_metric_ids",
+    }
+    group_by_id: Dict[str, Dict[str, object]] = {}
+    for group in groups:
+        if not isinstance(group, dict):
+            raise RequirementError("Issue #15 scope evidence group is invalid")
+        _require_exact_fields(
+            value=group, fields=group_fields, label="Issue #15 scope evidence group",
+        )
+        evidence_id = group["evidence_id"]
+        active = group["active_metric_ids"]
+        retired = group["retired_metric_ids"]
+        call_sites = group["call_sites"]
+        if (
+            not isinstance(evidence_id, str)
+            or not evidence_id
+            or evidence_id in group_by_id
+            or group["evidence_type"]
+            not in {
+                "DIRECT_METRIC_ARGUMENT",
+                "DIRECT_PREDICATE_CALLSITES",
+                "METRIC_SET_CONSTANT",
+                "SELECTION_CALLSITES",
+            }
+            or group["period_kind"] not in {"duration", "instant", "NOT_APPLICABLE"}
+            or not isinstance(group["caller_id"], str)
+            or not group["caller_id"]
+            or not isinstance(group["callee_id"], str)
+            or not group["callee_id"]
+            or not isinstance(call_sites, list)
+            or not call_sites
+            or call_sites != sorted(set(call_sites))
+            or any(not isinstance(site, str) or ":" not in site for site in call_sites)
+            or not isinstance(active, list)
+            or not isinstance(retired, list)
+            or active != sorted(set(active))
+            or retired != sorted(set(retired))
+            or set(active) & set(retired)
+            or not (set(active) | set(retired)).issubset(metric_id_set)
+        ):
+            raise RequirementError("Issue #15 scope evidence group differs")
+        group_by_id[evidence_id] = group
+    if [row["evidence_id"] for row in groups] != sorted(group_by_id):
+        raise RequirementError("Issue #15 scope evidence groups are not ordered")
+
+    evidence_fields = {
+        "active_metric_ids",
+        "derivation",
+        "evidence_group_ids",
+        "retired_metric_ids",
+    }
+    referenced_groups = set()
+    for producer_id, evidence in evidence_by_producer.items():
+        if producer_id not in semantic_id_set or not isinstance(evidence, dict):
+            raise RequirementError("Issue #15 scoped producer is invalid")
+        _require_exact_fields(
+            value=evidence,
+            fields=evidence_fields,
+            label="Issue #15 producer scope evidence",
+        )
+        evidence_group_ids = evidence["evidence_group_ids"]
+        if (
+            evidence["derivation"] != "UNION_OF_SCOPE_EVIDENCE_GROUPS"
+            or not isinstance(evidence_group_ids, list)
+            or not evidence_group_ids
+            or evidence_group_ids != sorted(set(evidence_group_ids))
+            or not set(evidence_group_ids).issubset(group_by_id)
+        ):
+            raise RequirementError("Issue #15 producer scope derivation differs")
+        selected_groups = [group_by_id[group_id] for group_id in evidence_group_ids]
+        derived_active = sorted(
+            {
+                metric_id
+                for group in selected_groups
+                for metric_id in group["active_metric_ids"]
+            }
+        )
+        derived_retired = sorted(
+            {
+                metric_id
+                for group in selected_groups
+                for metric_id in group["retired_metric_ids"]
+            }
+        )
+        producer = producer_by_id[producer_id]
+        if (
+            evidence["active_metric_ids"] != derived_active
+            or evidence["retired_metric_ids"] != derived_retired
+            or producer["active_metric_ids"] != derived_active
+            or producer["retired_metric_ids"] != derived_retired
+        ):
+            raise RequirementError(
+                "Issue #15 code-derived producer scope differs: {}".format(producer_id)
+            )
+        referenced_groups.update(evidence_group_ids)
+    if referenced_groups != set(group_by_id):
+        raise RequirementError("Issue #15 scope evidence group is unreferenced")
+
+    edges = inventory["scope_transitive_edges"]
+    excluded_callers = inventory["scope_excluded_callers"]
+    if not isinstance(edges, list) or not isinstance(excluded_callers, dict):
+        raise RequirementError("Issue #15 scope call-graph closure is invalid")
+    edge_fields = {"callee_id", "caller_id", "call_site", "period_kind_flow"}
+    edge_identities = set()
+    for edge in edges:
+        if not isinstance(edge, dict):
+            raise RequirementError("Issue #15 scope edge is invalid")
+        _require_exact_fields(
+            value=edge, fields=edge_fields, label="Issue #15 scope edge",
+        )
+        identity = (edge["caller_id"], edge["callee_id"], edge["call_site"])
+        if identity in edge_identities or edge["period_kind_flow"] not in {
+            "GUARD::duration",
+            "GUARD::instant",
+            "PASSTHROUGH",
+        }:
+            raise RequirementError("Issue #15 scope edge differs")
+        edge_identities.add(identity)
+    if any(
+        not isinstance(caller_id, str)
+        or reason not in {"TRANSITIVE_WRAPPER", "VALIDATION_ONLY"}
+        for caller_id, reason in excluded_callers.items()
+    ):
+        raise RequirementError("Issue #15 excluded scope caller differs")
+
+
 def _validate_issue_15_producer_inventory(
     *,
     inventory: Mapping[str, object],
@@ -565,6 +720,9 @@ def _validate_issue_15_producer_inventory(
         "retirement_evidence_chain",
         "schema_version",
         "scope_evidence_by_producer",
+        "scope_evidence_groups",
+        "scope_excluded_callers",
+        "scope_transitive_edges",
         "semantic_producer_count",
         "semantic_producer_record_set_hash",
         "shared_plumbing_count",
@@ -622,10 +780,13 @@ def _validate_issue_15_producer_inventory(
         or not reachability["statement"]
     ):
         raise RequirementError("Issue #15 reachability proof differs")
-    if (
-        content_hash(value=inventory["scope_evidence_by_producer"])
-        != ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH
-    ):
+    scope_closure = {
+        "scope_evidence_by_producer": inventory["scope_evidence_by_producer"],
+        "scope_evidence_groups": inventory["scope_evidence_groups"],
+        "scope_excluded_callers": inventory["scope_excluded_callers"],
+        "scope_transitive_edges": inventory["scope_transitive_edges"],
+    }
+    if content_hash(value=scope_closure) != ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH:
         raise RequirementError("Issue #15 producer scope evidence differs")
 
     source_files = inventory["producer_source_files"]
@@ -728,8 +889,6 @@ def _validate_issue_15_producer_inventory(
         or len(shared) != ISSUE_15_EXPECTED_SHARED_PLUMBING_COUNT
         or content_hash(value=semantic_ids) != ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH
         or content_hash(value=shared_id_list) != ISSUE_15_EXPECTED_SHARED_EXACT_SET_HASH
-        or content_hash(value=producers) != ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH
-        or content_hash(value=semantic) != ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH
         or any(
             row["active_metric_ids"]
             or row["retired_metric_ids"]
@@ -752,6 +911,12 @@ def _validate_issue_15_producer_inventory(
         raise RequirementError(
             "Issue #15 producer exact set or active/retired scope differs"
         )
+    _validate_issue_15_scope_evidence(
+        inventory=inventory,
+        producer_by_id=producer_by_id,
+        semantic_id_set=semantic_id_set,
+        metric_id_set=metric_id_set,
+    )
 
     migration_rules = parent_inventory["migration_rules"]
     if not isinstance(migration_rules, dict):
