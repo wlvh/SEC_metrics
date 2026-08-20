@@ -21,6 +21,8 @@ WB-3生产接线的成功边界必须运行真实Candidate构造和`check_eviden
 
 provider egress机器门为`python3 tools/check_provider_egress.py`：扫描`scripts/**`与`tools/**`全部生产Python，唯一直接opener必须是`ai_adapter.py::_open_provider_request`，其provider transport caller、repository transport caller和remote adapter constructor exact set固定；capture/context-free factory必须含稳定fail-closed码。动态canary同时证明未授权公共入口opener=0，只有受控operator→Workflow→plan→reservation→egress marker后injected opener=1。context负例在payload bytes未超限而UTF-8 byte token上界超限时以`CONTEXT_LIMIT`、transport invocation=0失败。`paid_model_provider_call_count`只统计billing class为`PAID_MODEL_ENDPOINT`的真实provider marker，不是账单确认；receipt保存`PROVIDER_POLICY_BILLING_CLASS_X_EGRESS_MARKER`来源。
 
+PR-3阶段A新增的必跑离线定向证据为：`tests.vnext.test_compact_table_payload`（Marriott、Hilton七组、Hyatt三组的`decode(encode(expanded))`逐字段相等及compact篡改负例）、`tests.vnext.test_scope_contract`（exact enum alias唯一自动规范化、raw locator重取、unknown alias→`REVIEW_REQUIRED`且SYSTEM拒绝）、`tests.vnext.test_table_task_contracts`（SourceStrategy派生的table family、单角色contract、schema/prompt/hash）以及`tools/freeze_table_qualification.py --freeze-commit <sha> --frozen-at-utc <UTC>`。freeze工具只跑本地WB-3 mock回归和已有SEC bytes测量；它必须记录`actual_prompt_tokens=NOT_RUN`、three real egress counts=0、R2 active/root before-after equality。若任一estimated input token超过100000或context/resource硬限，结果只能是`D07_DECISION_REQUIRED`，不得加入selector或继续qualification。
+
 ## 1. 测试原则
 
 - 测行为与契约，不用脆弱的源码字符串或固定数量断言替代真实结果。

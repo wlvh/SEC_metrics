@@ -90,6 +90,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `config/sec_config.json`：SEC User-Agent、请求速率、重试与退避参数。
 - `config/vnext_release_plan.json`：Projector 的仓库级 release identity 与 migrated metric exact set；不能由 Run 结果反推。
 - `config/source_strategy_registry.json`：Issue #15 的 39 指标 target SourceStrategy、reader family 与family-owned production literal truth source；不保存当前迁移状态。
+- `config/table_qualification_matrix.json` / `catalog/table_task_contracts.json`：PR-3阶段A的table-family qualification来源/布局/holdout/limits冻结与单角色table task catalog；它们不启动qualification，不拥有迁移状态。
 - `config/issue_15_release_plan.json`：Issue #15 ratchet 的content-addressed索引，只保存active plan identity与不可变plan路径；`config/release_plans/issue_15_zero_ai_r1.json`、`issue_15_zero_ai_r2.json`分别保存完整parent/delta/cumulative keys/retirement/reader versions/Requirement closure，只有各档`cumulative_metric_ids`拥有迁移集合。
 - `config/company_registry.csv`：逻辑公司、CIK role、行业 profile、财年底与连续性。
 - `config/metric_applicability.yaml`：SIC/profile 规则、extractor 路由与行业参数；当前由 JSON parser 读取，内容必须保持 JSON 兼容。
@@ -110,6 +111,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `scripts/vnext/source_strategy.py`：严格加载39指标registry与Issue #15 ReleasePlan，机械验证exact source-mode mapping、family literal union、迁移状态分离、全部authority hashes及parent→child metric/key/retirement三类no-removal子集门。
 - `scripts/vnext/deterministic_router.py`：以统一 `sources[]`/SourceSetManifest 闭合 companyfacts、accession XBRL、ECD XBRL、auditor fact 和 8-K item index 五个 adapter；它生成非模型 DeterministicVerifiedClaim，再投影为 VerifiedObservation/Result/ExecutionTrace。
 - `scripts/vnext/invocation_control.py`：绑定 release-input/invocation/execution 三层身份；生产adapter在exact provider envelope形成plan后才进入`O_CREAT|O_EXCL` owner-only socket路径。terminal reservation归档后释放，dead owner的egress marker+缺terminal receipt从磁盘封存为UNKNOWN；plan/request/egress/attempt/execution/response均可重算三种调用计数，不包含仓库金额 cap/preflight。
+- `scripts/vnext/table_payload.py` / `scope_contract.py` / `table_task_contracts.py` / `table_qualification_freeze.py`：分别实现expanded grid的可逆compact transport、Spec exact-enum scope v2、单角色table task catalog和无网络qualification freeze；unknown alias不由SYSTEM批准，freeze只绑定未来资格前提，不是live qualification。
 - `scripts/vnext/zero_ai_release.py`：R1 module-owned formal orchestrator；只用 immutable SEC attempts 冻结 B01/B03，从release专属invocation namespace与structured-only route exact set推导零调用，先独立渲染20个完整public rows、再比较18×20字段，生成projection/strict compatibility/retirement receipts，并执行 cold-start new→rollback→restore。
 - `scripts/vnext/zero_ai_r2.py` / `scripts/vnext/public_projection.py`：R2确定性ratchet与共享public renderer；从companyfacts/accession XBRL及submissions shards+immutable acquisition receipts的完整8-K union生成claims/observations/results/traces，在无legacy migrated rows/events输入时机械闭合220坐标并渲染220 rows，随后单独比较141×20字段、event key parity、309-key union与publication-bound retirement。
 - `tools/check_validation_snapshot.py`：独立复核当前 checkout、manifest、provenance sidecar 与关键 artifact bytes。
@@ -119,6 +121,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `tools/check_provider_egress.py`：扫描`scripts/**`与`tools/**`的provider opener、boundary caller、repository transport caller和remote adapter constructor exact set；唯一opener必须由reservation-owner capability到达。
 - `tools/vnext_operator.py` / `tools/vnext_review.py`：同一套 recorded/live operator 与 HUMAN review CLI；支持fixture list/show、prepare/status/review/finalize/replay/project/publish/rollback/restore/acceptance，默认隐藏 traceback 并可输出 JSON。fixture catalog拥有recorded source/response/Spec/company/period authority，拒绝caller业务覆盖。
 - `tools/vnext_capture_qualification_fixture.py`：PR-2期间在SEC/provider构造前稳定返回`AI_QUALIFICATION_EGRESS_NOT_ENABLED`；WB-4+未明确授权并接入完整WB-3 execution/reservation/acceptance以前不得恢复真实capture。
+- `tools/freeze_table_qualification.py`：仅从现有本地SEC bytes、WB-3 mock regression和当前代码生成content-addressed table qualification freeze receipt；不得调用SEC/provider或进入qualification。
 - `tools/vnext_qualification.py` / `tools/vnext_cutover.py`：先验证第二真实布局，再冻结production semantic tree及pre-holdout inventory，最后验证post-freeze holdout；live Cutover在release planning前固定执行SEC acquisition/inventory并持久化命令、ledger tail、inventory receipt与portable all-attempt audit closure。受控`--fixture-id` cold-start走同一Run/Batch/Projector状态机，只接受`artifacts/vnext/recorded-*`专用workspace；live core exact固定module-owned repository、`artifacts/vnext/cutover`、`outputs` legacy snapshot与formal publication root，caller override在load/write前拒绝；formal fault matrix沿用同一固定root。每次有效live调用（包括HUMAN resume）都会fresh执行SEC acquisition，再复用source-exact pinned semantic plan，并把本次receipt单独回绑audit/full closure。receipt按当前解释器binary、五条固定命令、ledger prefix/tail、attempt exact set与inventory current bytes重验；recorded resume只向`<workspace>/recorded-publication`做sandbox CAS/PublicationView read-back，正式active/root与formal namespace保持不变，TEST_ONLY review不构成formal HUMAN证据。
 - `tools/vnext_terminal_cycle.py`：formal new/rollback/restore各调用一次；在单进程中pin一次publication transaction，依序验证Stage10 Golden、Stage11 report、Stage12 active publication、snapshot publish与snapshot verify，并把exact gate set、pointer/mirror hash和零网络/repair/write计数形成content-addressed结果。
 - `tools/vnext_zero_ai_release.py`：repository-owned 零 AI ratchet CLI；不接受 workspace、source、metric、provider 或 publication-root override。
@@ -138,7 +141,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `outputs/validation_run_manifest.json`：最近一次 repair validation 实际刷新/未刷新的证据清单，不是 runtime checkpoint，也不单独证明当前 checkout。
 - `outputs/validation_snapshot_provenance.json`：成功 stage 12 对 source-input tree 与关键 artifact bytes 的绑定。
 - `REPORT_十公司财务指标.md`：当前批次的派生中文报告，不独立定义能力、指标口径或成功状态。
-- `artifacts/vnext/`：Run、review、qualification、immutable publication bundle 与 latest attempt 状态的本地运行域；OPEN/FAILED workspace 和凭据不得提交，也不得替代 root CSV/报告。
+- `artifacts/vnext/`：Run、review、qualification、immutable publication bundle、PR-3 table qualification freeze receipt 与 latest attempt 状态的本地运行域；OPEN/FAILED workspace 和凭据不得提交，也不得替代 root CSV/报告。freeze receipt是离线前提证据，不是qualification/live/publication。
 - `outputs/active_publication.json`：正式 active identity 的唯一 committed pointer。当前 pointer 指向 Issue #15 R2 zero-AI successor；只能按其22指标bundle/receipt范围解释，不能把partial ratchet写成最终Cutover/full PASS。
 
 测试文件和 fixture 的职责统一由 `TESTING.md` 管理，不在此逐项复制。新增、删除或改变上述核心文件职责时，必须同步更新本节。

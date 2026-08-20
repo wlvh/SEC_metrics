@@ -820,6 +820,16 @@
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_publication_layout_is_derived_from_one_root",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
+      },
+      {
+        "anchor_id": "BEHAVIOR.vnext_table_transport_scope_and_freeze",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "PR-3阶段A中expanded table-grid继续是本地Evidence Authority，模型只接收versioned compact transport；decoder必须逐字段恢复全部表，Evidence/attempt同时绑定expanded与compact identity，D-07继续禁止selector。scope contract v2只允许exact enum alias自动规范化，未知alias进入Candidate REVIEW_REQUIRED且SYSTEM不得批准，不新增Observation quality。catalog table task contracts每项只含一个角色并保持全表输入；content-addressed table qualification freeze绑定WB-3回归、11组round trip、task/schema/prompt、R2 active/root、三类零egress计数及protected closure，后续qualification仅在所属family的freeze hash未漂移时可继续。该freeze不等于live qualification、AI迁移、publication或Issue #15完成。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_table_qualification_freeze.py::TableQualificationFreezeTest.test_matrix_and_task_contracts_bind_same_table_families",
+        "test_status": "automated_recorded_negative_matrix",
+        "since": "2026-08-21"
       }
     ],
     "documents": [

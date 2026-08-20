@@ -117,6 +117,9 @@ WB-2B 的确定性 router 使用同一 `sources[]` 形状表达单源与多源�
 WB-3 把模型调用表达为 release-input plan→AI invocation plan→execution→immutable attempts。provider response必须先通过严格schema、task contract、Candidate构造和真实mechanical Evidence，形成绑定Spec/source/DerivedAsset/Candidate/Evidence的acceptance receipt，才可标记SUCCEEDED并成为exact reusable response；resume会重新验证该完整closure，Workflow重算结果也必须与其exact一致。无 reusable response 时只有通过独占 reservation 的 owner 可以打开唯一provider opener。context限制来自版本化provider/model authority；当前`UTF8_BYTE_UPPER_BOUND`是安全上界而非exact token数。operator 可分别观察 real egress、paid-endpoint call 和 mock invocation：paid-endpoint call由billing class与真实egress marker联合推导，不表示provider已确认账单。`UNKNOWN_REMOTE_OUTCOME` 必须人工核对，不会自动重试。仓库不显示或执行金额 cap，cost 只作观测；资源 hard limit 仍在 egress 前拒绝。本 PR 的 zero-AI R1/R2 只产生三种计数为 0 的 structured-only 证据。
 <!-- capability-anchor: CAPABILITY.issue_15_invocation_control -->
 
+PR-3阶段A新增的table transport/scope/task freeze仍是离线开发证据：expanded grid不变，模型传输只可用可逆compact payload；Reader/Evidence/attempt可见六项expanded/compact/decoder/round-trip binding。scope只接受模型的raw claim与exact locator，系统只按Spec exact enum alias规范化；未知alias显示为Candidate `REVIEW_REQUIRED`并只能进入HUMAN review，绝不变成新的quality或SYSTEM auto approval。table task catalog的每个contract只拥有一个role且每次仍输入全文档全部table set。`table_qualification_freeze_receipt`可见11组round-trip、WB-3 mock regression、token/context estimates、R2 root/active equality、protected hashes和本cycle三种real egress计数；它不等于live qualification，尚不得开始capture、qualification、AI迁移、publication或R3。
+<!-- capability-anchor: BEHAVIOR.vnext_table_transport_scope_and_freeze -->
+
 R1的module-owned入口保留A→B→A→B历史。R1/R2的migrated public rows先由Result/Trace/Claims、registry和repository-bound projection catalog完整渲染，legacy rows只在随后独立比较器中作为18×20/141×20字段oracle；approved delta和unexpected delta exact set均为空。R2在R1 B上累计22指标/220坐标，79个新增key均为`N_A_STRUCTURAL`，public matrix为309行；projection independence、event parity、retirement、active/read-back receipts均持久化。既有8-K body/header缺request-attempt locator时，只有request row和当前commit Git blob同时匹配才成为`IMMUTABLE_GIT_BLOB`，不会发起SEC网络。
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
@@ -145,7 +148,7 @@ reviewer 只能针对一个 run-scoped `ReviewUnit` 决策。`review.md` 必须�
 <!-- capability-anchor: BEHAVIOR.vnext_table_grid_resource_budget -->
 <!-- capability-anchor: BEHAVIOR.vnext_review_renderer_resource_budget -->
 
-批准是整个 ReviewUnit 的 HUMAN 或D-06 SYSTEM决定，不是只批准一个数字。CLI 只显式收到 run directory、review unit hash、reviewer ID、decision、UTC time、reason 与 supersedes identity；它不要求 reviewer 复述系统已有的 claims：`REJECT` 自动形成空 approved claims，`APPROVE` 自动采用 ReviewUnit 的全部 required claims。SYSTEM identity与reason必须是D-06固定值；缺字段、非HUMAN/SYSTEM授权身份、两个并行有效决定、底层 append 绕过或 OPEN 期磁盘 mutation 都会在 append/finalize/freeze/replay 的重验边界失败。Candidate、locator、source、Spec、unresolved、canonical context、renderer semantic version 或 rendered bytes 任一改变，旧决定不得继续生效。
+批准是整个ReviewUnit的HUMAN或D-06 SYSTEM决定，不是只批准一个数字。CLI只显式收到run directory、review unit hash、reviewer ID、decision、UTC time、reason与supersedes identity；`REJECT`自动形成空approved claims。v2 scope下SYSTEM只从Evidence exact-enum normalized scope生成APPROVE claims，unknown alias、缺维度、competing/unresolved或contract不满足时必须拒绝SYSTEM；HUMAN可在同一Spec scope contract内做决定。旧v1 record继续按ReviewUnit全部required claims重放。SYSTEM identity与reason必须是D-06固定值；缺字段、非HUMAN/SYSTEM授权身份、两个并行有效决定、底层append绕过或OPEN期磁盘mutation都会在append/finalize/freeze/replay的重验边界失败。Candidate、locator、source、Spec、unresolved、canonical context、renderer semantic version或rendered bytes任一改变，旧决定不得继续生效。
 <!-- capability-anchor: BEHAVIOR.vnext_review_binds_visible_unit -->
 <!-- capability-anchor: BEHAVIOR.vnext_review_decision_semantics_replayed -->
 

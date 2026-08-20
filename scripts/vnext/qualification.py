@@ -22,6 +22,9 @@ from .records import RecordError, validate_record
 from .review import effective_review_decision
 from .run_store import load_run_for_status
 from .table_grid import TableGridError, resolve_cell
+from .table_qualification_freeze import TableQualificationFreezeError
+from .table_qualification_freeze import require_table_qualification_freeze
+from .table_task_contracts import load_table_task_contracts
 
 
 QUALIFICATION_ROOT = Path("artifacts/vnext/qualification")
@@ -2093,6 +2096,17 @@ def validate_cutover_qualifications(*, repo_root: Path) -> Dict[str, object]:
             code="QUALIFICATION_MANIFEST_INVALID",
             message="Qualification manifest fields are not exact",
         )
+    try:
+        table_contracts = load_table_task_contracts(repo_root=repo_root)
+        for family_id in table_contracts["authorized_family_ids"]:
+            require_table_qualification_freeze(
+                repo_root=repo_root, family_id=family_id,
+            )
+    except (TableQualificationFreezeError, ValueError) as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_FREEZE_REQUIRED",
+            message="Table qualification freeze is absent or invalid",
+        ) from error
     freeze = _validate_addressed_receipt(
         repo_root=repo_root,
         reference=manifest["production_freeze_receipt"],

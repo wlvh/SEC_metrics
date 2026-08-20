@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "requirement_id": "issue_15_v1",
+  "families": [
+    {
+      "family_id": "financial_statement",
+      "reader_contract_id": "financial_statement_v1",
+      "development_source": {
+        "source_kind": "IMMUTABLE_ATTEMPT",
+        "company_id": "jpmorgan_chase",
+        "cik": "19617",
+        "accession": "0001628280-26-008131",
+        "document_name": "jpm-20251231.htm",
+        "source_repo_relative_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+      },
+      "second_layout_policy": "REQUIRED",
+      "second_layout_source": {
+        "source_kind": "FUTURE_LIVE_IMMUTABLE_ATTEMPT",
+        "company_id": "bank_of_america_corp",
+        "cik": "70858",
+        "form": "10-K",
+        "fiscal_year": 2025
+      },
+      "post_freeze_holdout_source": {
+        "source_kind": "FUTURE_LIVE_IMMUTABLE_ATTEMPT",
+        "company_id": "citigroup",
+        "cik": "831001",
+        "form": "10-K",
+        "fiscal_year": 2025
+      },
+      "materially_different_criteria": [
+        "different_issuer_cik",
+        "different_primary_document_layout",
+        "different_table_header_or_column_order"
+      ],
+      "expected_claims": [
+        "liquidity_coverage_ratio",
+        "net_interest_margin",
+        "nonperforming_loan_ratio",
+        "assets_under_management",
+        "value_at_risk",
+        "geographic_exposure",
+        "debt_to_equity",
+        "capacity_utilization"
+      ],
+      "expected_locator_range": {
+        "table_selection": "ONE_MODEL_SELECTED_TABLE_FROM_COMPLETE_DOCUMENT_SET",
+        "selected_competing_scope_evidence": "SAME_TARGET_TABLE_ONLY",
+        "row_index_min": 0,
+        "column_index_min": 0
+      },
+      "expected_output_status": "REVIEW_REQUIRED_OR_CANDIDATE",
+      "fresh_samples_required": 1,
+      "negative_cases": [
+        "cross_table_locator",
+        "unknown_scope_alias",
+        "competing_table_locator",
+        "context_limit"
+      ],
+      "review_policy": "HUMAN_OR_D06_SYSTEM_AFTER_EXACT_ALIAS",
+      "token_context_limits": {
+        "max_estimated_input_tokens": 100000,
+        "maximum_context_tokens": 1000000
+      }
+    },
+    {
+      "family_id": "lodging_kpi_table",
+      "reader_contract_id": "lodging_kpi_table_v1",
+      "development_source": {
+        "source_kind": "IMMUTABLE_ATTEMPT",
+        "company_id": "marriott_international",
+        "cik": "1048286",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "source_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+        "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+      },
+      "second_layout_policy": "REQUIRED",
+      "second_layout_source": {
+        "source_kind": "RECORDED_LAYOUT_FIXTURE",
+        "fixture_id": "hilton-2024-sec-layout-v7"
+      },
+      "post_freeze_holdout_source": {
+        "source_kind": "RECORDED_LAYOUT_FIXTURE",
+        "fixture_id": "hyatt-2025-sec-holdout-v2"
+      },
+      "materially_different_criteria": [
+        "different_issuer_cik",
+        "different_primary_document_layout",
+        "rowspan_or_colspan_difference",
+        "scope_wording_difference"
+      ],
+      "expected_claims": [
+        "occupancy",
+        "revpar"
+      ],
+      "expected_locator_range": {
+        "table_selection": "ONE_MODEL_SELECTED_TABLE_FROM_COMPLETE_DOCUMENT_SET",
+        "selected_competing_scope_evidence": "SAME_TARGET_TABLE_ONLY",
+        "row_index_min": 0,
+        "column_index_min": 0
+      },
+      "expected_output_status": "REVIEW_REQUIRED_OR_CANDIDATE",
+      "fresh_samples_required": 3,
+      "negative_cases": [
+        "cross_table_locator",
+        "unknown_scope_alias",
+        "competing_table_locator",
+        "context_limit"
+      ],
+      "review_policy": "HUMAN_OR_D06_SYSTEM_AFTER_EXACT_ALIAS",
+      "token_context_limits": {
+        "max_estimated_input_tokens": 100000,
+        "maximum_context_tokens": 1000000
+      }
+    }
+  ]
+}
