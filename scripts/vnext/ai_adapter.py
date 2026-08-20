@@ -40,6 +40,10 @@ from .reader_input import PreparedReaderRequest
 from .reader_input import READER_SYSTEM_CONTRACT
 from .records import validate_record
 from .requirements import RequirementError, load_requirement_snapshot
+from .scope_contract import scope_contract_hash
+from .table_payload import decode_compact_table_payload
+from .table_payload import expanded_grid_sha256
+from .table_payload import TablePayloadError
 
 
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
@@ -63,6 +67,8 @@ _ACCEPTANCE_VALIDATOR_SEMANTIC_HASH = content_hash(
             "DERIVED_ASSET_IDS_EXACT_BINDING",
             "DISCLOSURE_TASK_CONTRACT_EXACT_BINDING",
             "CANDIDATE_CONTENT_IDENTITY",
+            "COMPACT_TABLE_ROUND_TRIP",
+            "SCOPE_CONTRACT_V2",
             "MECHANICAL_EVIDENCE_PASS",
         ],
     }
@@ -2813,35 +2819,21 @@ def _validate_prepared_request(
         )
     except ValueError as error:
         raise AIAdapterError("Prepared Reader manifest is invalid") from error
-    tables = request_body["untrusted_table_data"]
-    if type(tables) is not list:
-        raise AIAdapterError("Prepared Reader table payload is invalid")
-    table_bindings = []
-    table_fields = {
-        "caption",
-        "caption_raw_text",
-        "column_count",
-        "grid_sha256",
-        "order",
-        "row_count",
-        "rows",
-        "table_id",
-    }
-    for table in tables:
-        if type(table) is not dict or set(table) != table_fields:
-            raise AIAdapterError("Prepared Reader table payload is invalid")
-        table_body = {
-            key: table[key] for key in table if key != "grid_sha256"
+    compact_transport = request_body["untrusted_table_data"]
+    if type(compact_transport) is not dict:
+        raise AIAdapterError("Prepared Reader request binding differs")
+    try:
+        tables = decode_compact_table_payload(transport=compact_transport)
+    except TablePayloadError as error:
+        raise AIAdapterError("Prepared Reader compact payload is invalid") from error
+    table_bindings = [
+        {
+            "table_id": table["table_id"],
+            "grid_sha256": table["grid_sha256"],
+            "order": table["order"],
         }
-        if table["grid_sha256"] != content_hash(value=table_body):
-            raise AIAdapterError("Prepared Reader table digest differs")
-        table_bindings.append(
-            {
-                "table_id": table["table_id"],
-                "grid_sha256": table["grid_sha256"],
-                "order": table["order"],
-            }
-        )
+        for table in tables
+    ]
     if (
         manifest["record_type"] != "READER_INPUT_MANIFEST"
         or manifest["reader_input_manifest_id"]
@@ -2850,6 +2842,20 @@ def _validate_prepared_request(
         != prepared_request.source_reference_ids
         or manifest["derived_asset_id"] != prepared_request.derived_asset_id
         or manifest["tables"] != table_bindings
+        or compact_transport["expanded_derived_asset_id"]
+        != prepared_request.derived_asset_id
+        or compact_transport["expanded_grid_sha256"]
+        != expanded_grid_sha256(tables=tables)
+        or compact_transport["table_payload_serialization_version"]
+        != prepared_request.table_payload_serialization_version
+        or compact_transport["expanded_grid_sha256"]
+        != prepared_request.expanded_grid_sha256
+        or compact_transport["compact_payload_sha256"]
+        != prepared_request.compact_payload_sha256
+        or compact_transport["decoder_semantic_version"]
+        != prepared_request.decoder_semantic_version
+        or compact_transport["round_trip_receipt_id"]
+        != prepared_request.round_trip_receipt_id
         or request_body["task_contract"] != task_contract
         or canonical_json_bytes(value=task_contract) != task_contract_bytes
         or canonical_json_bytes(value=request_body) != request_bytes
@@ -2861,6 +2867,7 @@ def _validate_prepared_request(
         "task_contract": task_contract,
         "task_contract_bytes": task_contract_bytes,
         "task_spec_semantic_hash": spec_hash,
+        "table_transport": compact_transport,
     }
 
 
@@ -2906,6 +2913,7 @@ def run_ai_attempt(
     task_contract_bytes = prepared["task_contract_bytes"]
     task_contract = prepared["task_contract"]
     reader_manifest = prepared["manifest"]
+    table_transport = prepared["table_transport"]
     attempt_id = "attempt:" + uuid.uuid4().hex
     started = _utc_now(clock=clock)
     response: Optional[bytes] = None
@@ -3049,6 +3057,22 @@ def run_ai_attempt(
         ),
         "task_contract_sha256": task_contract_digest,
         "task_spec_semantic_hash": prepared["task_spec_semantic_hash"],
+        "table_payload_serialization_version": table_transport[
+            "table_payload_serialization_version"
+        ],
+        "expanded_derived_asset_id": table_transport[
+            "expanded_derived_asset_id"
+        ],
+        "expanded_grid_sha256": table_transport["expanded_grid_sha256"],
+        "compact_payload_sha256": table_transport[
+            "compact_payload_sha256"
+        ],
+        "decoder_semantic_version": table_transport[
+            "decoder_semantic_version"
+        ],
+        "round_trip_receipt_id": table_transport[
+            "round_trip_receipt_id"
+        ],
         "output_schema_sha256": output_schema_digest,
         "output_schema_path": (
             "attempt_payloads/output_schema_{}.json".format(

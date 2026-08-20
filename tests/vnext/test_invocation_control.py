@@ -40,6 +40,7 @@ from vnext.provider_runtime import estimate_context_tokens
 from vnext.provider_runtime import load_provider_runtime_authority
 from vnext.reader_input import build_reader_input_manifest
 from vnext.reader_input import prepare_reader_request
+from vnext.table_payload import decode_compact_table_payload
 
 
 REQUEST_BODY = b'{"model":"test-model","input":"public filing"}'
@@ -307,7 +308,9 @@ class ProductionReaderTransport:
         manifest = request["reader_input_manifest"]
         asset = {
             "derived_asset_id": manifest["derived_asset_id"],
-            "tables": request["untrusted_table_data"],
+            "tables": decode_compact_table_payload(
+                transport=request["untrusted_table_data"],
+            ),
         }
         response_body = reader_response(
             asset=asset,
@@ -391,7 +394,9 @@ class CanaryDeepSeekOpener:
         manifest = reader_payload["reader_input_manifest"]
         asset = {
             "derived_asset_id": manifest["derived_asset_id"],
-            "tables": reader_payload["untrusted_table_data"],
+            "tables": decode_compact_table_payload(
+                transport=reader_payload["untrusted_table_data"],
+            ),
         }
         assistant = reader_response(asset=asset).decode("utf-8")
         response = {

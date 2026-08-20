@@ -64,7 +64,15 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "started_at_utc",
             "finished_at_utc",
             "error_class",
-        )
+        ),
+        optional=(
+            "table_payload_serialization_version",
+            "expanded_derived_asset_id",
+            "expanded_grid_sha256",
+            "compact_payload_sha256",
+            "decoder_semantic_version",
+            "round_trip_receipt_id",
+        ),
     ),
     "DERIVED_ASSET": RecordSchema(
         required=(
@@ -302,9 +310,13 @@ TEXT_FIELDS = {
     "company_id",
     "content_manifest_hash",
     "content_type",
+    "compact_payload_sha256",
     "decided_at_utc",
     "decision",
+    "decoder_semantic_version",
     "derived_asset_id",
+    "expanded_derived_asset_id",
+    "expanded_grid_sha256",
     "disclosure_group",
     "document_name",
     "endpoint_host",
@@ -353,6 +365,7 @@ TEXT_FIELDS = {
     "review_decisions_file_hash",
     "review_renderer_semantic_version",
     "review_unit_hash",
+    "round_trip_receipt_id",
     "reviewed_spec_semantic_hash",
     "reviewer_id",
     "reviewer_type",
@@ -371,6 +384,7 @@ TEXT_FIELDS = {
     "task_contract_path",
     "task_contract_sha256",
     "task_spec_semantic_hash",
+    "table_payload_serialization_version",
     "trace_id",
     "transform_id",
     "transform_semantic_version",
@@ -1065,6 +1079,37 @@ def _validate_record_semantics(
             r"sha256:[0-9a-f]{64}", str(record["task_spec_semantic_hash"])
         ) is None:
             raise RecordError("Attempt task Spec identity is invalid")
+        compact_fields = {
+            "table_payload_serialization_version",
+            "expanded_derived_asset_id",
+            "expanded_grid_sha256",
+            "compact_payload_sha256",
+            "decoder_semantic_version",
+            "round_trip_receipt_id",
+        }
+        supplied_compact_fields = compact_fields & set(record)
+        if supplied_compact_fields and supplied_compact_fields != compact_fields:
+            raise RecordError("Attempt compact payload binding is incomplete")
+        if supplied_compact_fields:
+            for field in (
+                "table_payload_serialization_version",
+                "expanded_derived_asset_id",
+                "decoder_semantic_version",
+            ):
+                if type(record[field]) is not str or not record[field]:
+                    raise RecordError("Attempt compact payload text is invalid")
+            if re.fullmatch(
+                r"sha256:[0-9a-f]{64}", str(record["expanded_grid_sha256"])
+            ) is None:
+                raise RecordError("Attempt expanded grid identity is invalid")
+            if re.fullmatch(
+                r"[0-9a-f]{64}", str(record["compact_payload_sha256"])
+            ) is None:
+                raise RecordError("Attempt compact payload digest is invalid")
+            if re.fullmatch(
+                r"sha256:[0-9a-f]{64}", str(record["round_trip_receipt_id"])
+            ) is None:
+                raise RecordError("Attempt round-trip receipt is invalid")
         response_digest = str(record["raw_response_sha256"])
         response_path = str(record["raw_response_path"])
         if bool(response_digest) != bool(response_path):

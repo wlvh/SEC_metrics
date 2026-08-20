@@ -8,6 +8,10 @@ from typing import Dict, Mapping, Sequence, Tuple
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes
 from .records import RecordError, validate_record
+from .scope_contract import scope_contract_hash, validate_scope_contract
+from .table_payload import decode_compact_table_payload
+from .table_payload import encode_compact_table_payload
+from .table_payload import TablePayloadError
 
 
 class ReaderInputError(ValueError):
@@ -33,6 +37,11 @@ class PreparedReaderRequest:
         reader_input_manifest_id: Complete table-set manifest identity.
         source_reference_ids: Ordered source identities in the manifest.
         derived_asset_id: Complete table-grid identity in the manifest.
+        table_payload_serialization_version: Compact transport encoder version.
+        expanded_grid_sha256: Full expanded table-set identity.
+        compact_payload_sha256: Exact compact transport bytes identity.
+        decoder_semantic_version: Decoder behavior version.
+        round_trip_receipt_id: Compact-to-expanded verification identity.
     """
 
     request_bytes: bytes
@@ -41,6 +50,11 @@ class PreparedReaderRequest:
     reader_input_manifest_id: str
     source_reference_ids: Tuple[str, ...]
     derived_asset_id: str
+    table_payload_serialization_version: str
+    expanded_grid_sha256: str
+    compact_payload_sha256: str
+    decoder_semantic_version: str
+    round_trip_receipt_id: str
 
 
 @dataclass(frozen=True, init=False)
@@ -354,20 +368,34 @@ def build_reader_payload(
             exists.
 
     Returns:
-        Payload plus exact request-body digest.
+        Payload plus exact request-body digest and compact transport bindings.
     """
     verify_reader_table_set(manifest=manifest, derived_asset=derived_asset)
+    compact_transport = encode_compact_table_payload(
+        derived_asset=derived_asset,
+    )
+    try:
+        decoded_tables = decode_compact_table_payload(
+            transport=compact_transport,
+        )
+    except TablePayloadError as error:
+        raise ReaderInputError("Compact table payload is invalid") from error
+    if decoded_tables != derived_asset["tables"]:
+        raise ReaderInputError(
+            "Compact table payload differs from Evidence grid"
+        )
     body = {
         "system_contract": dict(READER_SYSTEM_CONTRACT),
         "task_contract": dict(task_contract),
         "reader_input_manifest": dict(manifest),
-        "untrusted_table_data": list(derived_asset["tables"]),
+        "untrusted_table_data": compact_transport,
     }
     request_bytes = canonical_json_bytes(value=body)
     return {
         "body": body,
         "request_bytes": request_bytes,
         "request_body_sha256": sha256_bytes(content=request_bytes),
+        "table_transport": compact_transport,
     }
 
 
@@ -403,6 +431,21 @@ def prepare_reader_request(
             str(value) for value in manifest["source_reference_ids"]
         ),
         derived_asset_id=str(manifest["derived_asset_id"]),
+        table_payload_serialization_version=str(
+            payload["table_transport"]["table_payload_serialization_version"]
+        ),
+        expanded_grid_sha256=str(
+            payload["table_transport"]["expanded_grid_sha256"]
+        ),
+        compact_payload_sha256=str(
+            payload["table_transport"]["compact_payload_sha256"]
+        ),
+        decoder_semantic_version=str(
+            payload["table_transport"]["decoder_semantic_version"]
+        ),
+        round_trip_receipt_id=str(
+            payload["table_transport"]["round_trip_receipt_id"]
+        ),
     )
 
 

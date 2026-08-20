@@ -10,7 +10,12 @@ from .constraints import ConstraintError, evaluate_identity_constraint
 from .constraints import parse_numeric_claim
 from .reader_input import ReaderInputError, verify_reader_table_set
 from .records import validate_record
+from .scope_contract import exact_enum_alias, ScopeContractError
+from .scope_contract import scope_satisfies_contract, validate_scope_contract
 from .table_grid import TableGridError, resolve_cell
+from .table_payload import decode_compact_table_payload
+from .table_payload import expanded_grid_sha256
+from .table_payload import TablePayloadError
 
 
 class EvidenceError(ValueError):
@@ -68,7 +73,7 @@ def _verify_payload(
     reader_payload_body: Mapping[str, object],
     derived_asset: Mapping[str, object],
 ) -> None:
-    """Require the actual prompt payload to contain the manifest's full tables.
+    """Require the prompt compact payload to reconstruct every full table.
 
     Args:
         reader_manifest: Exact table-set manifest.
@@ -77,7 +82,7 @@ def _verify_payload(
 
     Raises:
         EvidenceError: On missing fields, substituted manifest, or filtered
-            table bytes.
+        compact transport, or filtered decoded table bytes.
     """
     required = {
         "system_contract",
@@ -95,7 +100,20 @@ def _verify_payload(
         raise EvidenceError("ReaderInputManifest table set differs") from error
     if reader_payload_body["reader_input_manifest"] != reader_manifest:
         raise EvidenceError("Reader payload substituted the manifest")
-    if reader_payload_body["untrusted_table_data"] != derived_asset["tables"]:
+    compact_transport = reader_payload_body["untrusted_table_data"]
+    try:
+        decoded_tables = decode_compact_table_payload(
+            transport=compact_transport,
+        )
+    except TablePayloadError as error:
+        raise EvidenceError("Reader compact payload is invalid") from error
+    if (
+        compact_transport["expanded_derived_asset_id"]
+        != derived_asset["derived_asset_id"]
+        or compact_transport["expanded_grid_sha256"]
+        != expanded_grid_sha256(tables=derived_asset["tables"])
+        or decoded_tables != derived_asset["tables"]
+    ):
         raise EvidenceError("Reader payload filtered or changed tables")
     system_contract = reader_payload_body["system_contract"]
     required_contract = {
