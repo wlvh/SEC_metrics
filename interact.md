@@ -114,7 +114,7 @@ Issue #15 WB-2 另外提供一份可机械加载的 39 指标 SourceStrategy reg
 WB-2B 的确定性 router 使用同一 `sources[]` 形状表达单源与多源，并以pinned SEC submissions current/history shards和SourceSetManifest union证明发现集完整。R2已用该路径正式发布；C01/E03共用Item 5.02 claims，E02/E04零值绑定完整8-K集合，E01 matched key set与legacy逐项相等。
 <!-- capability-anchor: CAPABILITY.issue_15_deterministic_source_router -->
 
-WB-3 把模型调用表达为 release-input plan→AI invocation plan→execution→immutable attempts。相同 exact provider request 已有成功 response 时直接零 transport 复用；无 response 时只有通过独占 reservation 的 owner 可以打开 provider socket。operator 可分别观察 real egress、paid call 和 mock invocation 计数；`UNKNOWN_REMOTE_OUTCOME` 必须人工核对，不会自动重试。仓库不显示或执行金额 cap，cost 只作观测；资源 hard limit 仍在 egress 前拒绝。本 PR 的 zero-AI R1/R2 只产生三种计数为 0 的 structured-only 证据。
+WB-3 把模型调用表达为 release-input plan→AI invocation plan→execution→immutable attempts。provider response必须先通过严格schema、task contract、Candidate构造和真实mechanical Evidence，形成绑定Spec/source/DerivedAsset/Candidate/Evidence的acceptance receipt，才可标记SUCCEEDED并成为exact reusable response；resume会重新验证该完整closure，Workflow重算结果也必须与其exact一致。无 reusable response 时只有通过独占 reservation 的 owner 可以打开 provider socket。operator 可分别观察 real egress、paid call 和 mock invocation 计数；`UNKNOWN_REMOTE_OUTCOME` 必须人工核对，不会自动重试。仓库不显示或执行金额 cap，cost 只作观测；资源 hard limit 仍在 egress 前拒绝。本 PR 的 zero-AI R1/R2 只产生三种计数为 0 的 structured-only 证据。
 <!-- capability-anchor: CAPABILITY.issue_15_invocation_control -->
 
 R1的module-owned入口保留A→B→A→B历史。R2在该B上累计22指标/220坐标，141个legacy替换行strict-compatible，79个新增key均为`N_A_STRUCTURAL`，public matrix为309行；event parity、retirement、active/read-back receipts均持久化。既有8-K body/header缺request-attempt locator时，只有request row和当前commit Git blob同时匹配才成为`IMMUTABLE_GIT_BLOB`，不会发起SEC网络。

@@ -45,6 +45,29 @@ OBSERVABILITY_FIELDS = {
     "estimated_cost",
     "pricing_snapshot_hash",
 }
+ACCEPTANCE_DRAFT_FIELDS = {
+    "candidate_hash",
+    "candidate_record",
+    "derived_asset_id",
+    "evidence_candidate_hash",
+    "evidence_check_id",
+    "evidence_record",
+    "evidence_status",
+    "reader_input_manifest_id",
+    "source_reference_ids",
+    "spec_semantic_hash",
+    "task_contract_hash",
+    "validator_semantic_hash",
+    "validator_semantic_version",
+}
+ACCEPTANCE_RECEIPT_FIELDS = ACCEPTANCE_DRAFT_FIELDS | {
+    "acceptance_receipt_id",
+    "ai_invocation_plan_id",
+    "provider_request_identity",
+    "record_type",
+    "response_body_sha256",
+    "schema_version",
+}
 TRANSPORT_RESULT_FIELDS = {
     "error_class",
     "paid_call",
@@ -89,6 +112,7 @@ INVOCATION_POLICY_FIELDS = {
     "requirement_closure_hash",
 }
 SUCCESS_RESPONSE_FIELDS = {
+    "acceptance_receipt_id",
     "ai_invocation_plan_id",
     "api",
     "attempt_receipt_id",
@@ -498,6 +522,7 @@ def _state_root(*, workspace_dir: Path) -> Path:
     if root.is_symlink() or not root.is_dir():
         raise InvocationControlError("Invocation state root is unsafe")
     for name in (
+        "acceptances",
         "abandoned",
         "attempts",
         "egress",
@@ -822,15 +847,184 @@ def _egress_marker(
     return marker
 
 
+def _validate_acceptance_draft(
+    *, value: object, plan: Mapping[str, object], response_body: bytes,
+) -> Dict[str, object]:
+    """Validate the full Candidate/Evidence closure before success.
+
+    Args:
+        value: Module-owned acceptance result from the production validator.
+        plan: Exact invocation plan whose response was checked.
+        response_body: Exact structured assistant bytes.
+
+    Returns:
+        Isolated acceptance fields safe to persist content-addressably.
+    """
+    draft = _object(value=value, label="acceptance draft")
+    _exact_fields(
+        value=draft,
+        expected=ACCEPTANCE_DRAFT_FIELDS,
+        label="acceptance draft",
+    )
+    for field in (
+        "candidate_hash",
+        "derived_asset_id",
+        "evidence_candidate_hash",
+        "evidence_check_id",
+        "reader_input_manifest_id",
+        "spec_semantic_hash",
+        "task_contract_hash",
+        "validator_semantic_hash",
+    ):
+        _sha256_identity(value=draft[field], label=field)
+    _text(
+        value=draft["validator_semantic_version"],
+        label="validator semantic version",
+    )
+    source_ids = draft["source_reference_ids"]
+    if (
+        not isinstance(source_ids, list)
+        or not source_ids
+        or len(source_ids) != len(set(source_ids))
+    ):
+        raise InvocationControlError(
+            "Acceptance SourceReference identities are invalid"
+        )
+    for source_id in source_ids:
+        _sha256_identity(value=source_id, label="source reference id")
+    candidate = _object(
+        value=draft["candidate_record"], label="accepted Candidate"
+    )
+    evidence = _object(
+        value=draft["evidence_record"], label="accepted Evidence"
+    )
+    try:
+        from .records import validate_record
+
+        validate_record(record=candidate)
+        validate_record(record=evidence)
+    except ValueError as error:
+        raise InvocationControlError(
+            "Accepted Candidate/Evidence record is invalid"
+        ) from error
+    if (
+        draft["evidence_status"] != "PASS"
+        or draft["candidate_hash"] != draft["evidence_candidate_hash"]
+        or candidate["candidate_hash"] != draft["candidate_hash"]
+        or candidate["assistant_output_sha256"]
+        != sha256_bytes(content=response_body)
+        or candidate["source_reference_ids"] != source_ids
+        or candidate["derived_asset_ids"] != [draft["derived_asset_id"]]
+        or evidence["candidate_hash"] != draft["candidate_hash"]
+        or evidence["evidence_check_id"] != draft["evidence_check_id"]
+        or evidence["status"] != draft["evidence_status"]
+        or draft["reader_input_manifest_id"] != plan["source_identity_hash"]
+        or draft["derived_asset_id"]
+        != plan["selected_representation_hash"]
+        or draft["task_contract_hash"] != plan["task_contract_hash"]
+    ):
+        raise InvocationControlError("Acceptance binding differs")
+    return draft
+
+
+def _validate_acceptance_receipt(
+    *, value: object, plan: Mapping[str, object], response_body: bytes,
+) -> Dict[str, object]:
+    """Recompute one persisted full-acceptance identity and bindings."""
+    receipt = _object(value=value, label="acceptance receipt")
+    _exact_fields(
+        value=receipt,
+        expected=ACCEPTANCE_RECEIPT_FIELDS,
+        label="acceptance receipt",
+    )
+    if (
+        receipt["schema_version"] != 1
+        or receipt["record_type"] != "INVOCATION_ACCEPTANCE_RECEIPT"
+        or receipt["ai_invocation_plan_id"]
+        != plan["ai_invocation_plan_id"]
+        or receipt["provider_request_identity"]
+        != plan["provider_request_identity"]
+        or receipt["response_body_sha256"]
+        != sha256_bytes(content=response_body)
+    ):
+        raise InvocationControlError("Acceptance receipt binding differs")
+    draft = {
+        field: receipt[field] for field in ACCEPTANCE_DRAFT_FIELDS
+    }
+    _validate_acceptance_draft(
+        value=draft, plan=plan, response_body=response_body,
+    )
+    body = {
+        field: receipt[field]
+        for field in receipt
+        if field != "acceptance_receipt_id"
+    }
+    if receipt["acceptance_receipt_id"] != content_hash(value=body):
+        raise InvocationControlError("Acceptance receipt identity differs")
+    return receipt
+
+
+def _persist_acceptance_receipt(
+    *, root: Path, plan: Mapping[str, object], response_body: bytes,
+    acceptance_draft: object,
+) -> Dict[str, object]:
+    """Persist full Evidence PASS before any successful attempt receipt."""
+    draft = _validate_acceptance_draft(
+        value=acceptance_draft, plan=plan, response_body=response_body,
+    )
+    body = {
+        "schema_version": 1,
+        "record_type": "INVOCATION_ACCEPTANCE_RECEIPT",
+        "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+        "provider_request_identity": plan["provider_request_identity"],
+        "response_body_sha256": sha256_bytes(content=response_body),
+        **draft,
+    }
+    receipt = {**body, "acceptance_receipt_id": content_hash(value=body)}
+    request_name = _identity_name(
+        identity=str(plan["provider_request_identity"])
+    )
+    _exclusive_write_json(
+        path=root / "acceptances" / request_name / "receipt.json",
+        value=receipt,
+    )
+    return receipt
+
+
+def _load_acceptance_receipt(
+    *, root: Path, plan: Mapping[str, object], response_body: bytes,
+    acceptance_receipt_id: str,
+) -> Dict[str, object]:
+    """Load and revalidate Candidate/Evidence acceptance for exact reuse."""
+    request_name = _identity_name(
+        identity=str(plan["provider_request_identity"])
+    )
+    receipt = _read_json_object(
+        path=root / "acceptances" / request_name / "receipt.json",
+        label="acceptance receipt",
+    )
+    validated = _validate_acceptance_receipt(
+        value=receipt, plan=plan, response_body=response_body,
+    )
+    if validated["acceptance_receipt_id"] != acceptance_receipt_id:
+        raise InvocationControlError("Success acceptance identity differs")
+    return validated
+
+
 def _persist_success_response(
     *, root: Path, plan: Mapping[str, object], result: Mapping[str, object],
-    attempt_receipt_id: str,
+    attempt_receipt_id: str, acceptance_receipt: Mapping[str, object],
 ) -> Dict[str, object]:
-    """Persist one exact reusable provider response and its audit metadata."""
+    """Persist one exact reusable response only after full acceptance."""
     request_name = _identity_name(identity=str(plan["provider_request_identity"]))
     directory = root / "responses" / request_name
     body_path = directory / "response.bin"
     response_bytes = result["response_body"]
+    accepted = _validate_acceptance_receipt(
+        value=acceptance_receipt,
+        plan=plan,
+        response_body=response_bytes,
+    )
     _exclusive_write_bytes(path=body_path, content=response_bytes)
     body = {
         "schema_version": 1,
@@ -848,6 +1042,7 @@ def _persist_success_response(
         "usage": dict(result["usage"]),
         "paid_call": result["paid_call"],
         "attempt_receipt_id": attempt_receipt_id,
+        "acceptance_receipt_id": accepted["acceptance_receipt_id"],
     }
     receipt = dict(body)
     receipt["success_response_receipt_id"] = content_hash(value=body)
@@ -903,7 +1098,17 @@ def _load_success_response(
     ):
         raise InvocationControlError("Success response binding differs")
     _usage(value=receipt["usage"])
-    return {**receipt, "response_body": response_bytes}
+    acceptance = _load_acceptance_receipt(
+        root=root,
+        plan=plan,
+        response_body=response_bytes,
+        acceptance_receipt_id=str(receipt["acceptance_receipt_id"]),
+    )
+    return {
+        **receipt,
+        "acceptance_receipt": acceptance,
+        "response_body": response_bytes,
+    }
 
 
 def load_successful_response(
@@ -1090,7 +1295,7 @@ def execute_invocation(
     clock: Callable[[], str],
     transport: object,
     response_validator: Callable[[bytes], None],
-    evidence_validator: Callable[[bytes], None],
+    evidence_validator: Callable[[bytes], Mapping[str, object]],
 ) -> Dict[str, object]:
     """Execute or reuse one exact request under single-flight control.
 
@@ -1104,7 +1309,8 @@ def execute_invocation(
         clock: Injected UTC clock for egress/terminal audit timestamps.
         transport: Injected object exposing ``transport_kind`` and ``send``.
         response_validator: Injected strict response-schema validator.
-        evidence_validator: Injected post-schema evidence validator.
+        evidence_validator: Injected full Candidate/Evidence validator that
+            returns the exact acceptance closure only when Evidence is PASS.
 
     Returns:
         Immutable execution receipt or reusable/single-flight result.
@@ -1363,6 +1569,7 @@ def execute_invocation(
         if result["paid_call"]:
             counters["paid_model_provider_call_count"] += 1
         classification = _classify(result=result)
+        acceptance_draft: Optional[Mapping[str, object]] = None
         if classification == "SUCCESS":
             try:
                 response_validator(response_body=result["response_body"])
@@ -1371,11 +1578,29 @@ def execute_invocation(
                 result["error_class"] = "SCHEMA_VIOLATION"
             if classification == "SUCCESS":
                 try:
-                    evidence_validator(response_body=result["response_body"])
+                    acceptance_draft = evidence_validator(
+                        response_body=result["response_body"]
+                    )
                 except EvidenceFailureError:
                     classification = "TERMINAL"
                     result["error_class"] = "EVIDENCE_FAILURE"
+        acceptance_receipt: Optional[Dict[str, object]] = None
         if classification == "SUCCESS":
+            try:
+                acceptance_receipt = _persist_acceptance_receipt(
+                    root=root,
+                    plan=validated_plan,
+                    response_body=result["response_body"],
+                    acceptance_draft=acceptance_draft,
+                )
+            except InvocationControlError:
+                classification = "TERMINAL"
+                result["error_class"] = "EVIDENCE_FAILURE"
+        if classification == "SUCCESS":
+            if acceptance_receipt is None:
+                raise InvocationControlError(
+                    "Successful invocation lacks acceptance receipt"
+                )
             attempt = _attempt_receipt(
                 root=root,
                 execution_id=execution_id,
@@ -1412,6 +1637,7 @@ def execute_invocation(
                 plan=validated_plan,
                 result=result,
                 attempt_receipt_id=str(attempt["attempt_receipt_id"]),
+                acceptance_receipt=acceptance_receipt,
             )
             return _terminal_and_release(
                 root=root,
@@ -1511,7 +1737,7 @@ def execute_batch(
     *, workspace_dir: Path, invocations: Sequence[Mapping[str, object]],
     clock: Callable[[], str], transport: object,
     response_validator: Callable[[bytes], None],
-    evidence_validator: Callable[[bytes], None],
+    evidence_validator: Callable[[bytes], Mapping[str, object]],
 ) -> Dict[str, object]:
     """Execute ordered stability ordinals and stop on the first terminal.
 
@@ -1521,7 +1747,7 @@ def execute_batch(
         clock: Injected UTC clock.
         transport: Injected mock or approved real transport.
         response_validator: Strict response validator.
-        evidence_validator: Strict evidence validator.
+        evidence_validator: Full Candidate/Evidence acceptance validator.
 
     Returns:
         Batch status, completed/skipped ordinals, receipts, and counters.

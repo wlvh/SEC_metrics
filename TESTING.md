@@ -17,6 +17,8 @@ PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 effective D-36 不允许仓库金额 hard cap 或 preflight blocker；estimated/actual cost 超过任意值不得因金额门禁阻止 execution。这不放宽非金额安全边界：HTTP 402 仍只调用一次并终止 batch，payload/context/resource 超硬上限仍 fail closed。Requirement 定向负例会在同时重签外层 file binding 后攻击这些 effective tips，避免只测外层 SHA-256。
 <!-- capability-anchor: BEHAVIOR.issue_15_repository_monetary_budget_disabled -->
 
+WB-3生产接线的成功边界必须运行真实Candidate构造和`check_evidence`，不得mock acceptance validator。schema-valid但Evidence失败或task/disclosure mismatch时，唯一injected transport调用形成`EVIDENCE_FAILURE` terminal、释放reservation、停止batch，且acceptance/success/reuse exact set为空；Evidence PASS后首次调用形成content-addressed acceptance，第二次exact operator resume的mock invocation为0并复用同一acceptance identity。reuse负例还会在临时目录篡改持久Candidate后重签外层receipt，要求在transport前fail closed。
+
 ## 1. 测试原则
 
 - 测行为与契约，不用脆弱的源码字符串或固定数量断言替代真实结果。

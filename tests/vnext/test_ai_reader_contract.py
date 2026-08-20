@@ -135,6 +135,27 @@ def live_sec_reader_repository(*, workspace: Path) -> dict:
     repo_root.mkdir()
     for relative in ("catalog", "config", "requirements"):
         shutil.copytree(REPO_ROOT / relative, repo_root / relative)
+    # The Issue #15 loader revalidates inherited foundation evidence. Copy
+    # only those immutable bytes so the scoped fixture remains minimal.
+    foundation_paths = (
+        "outputs/acceptance_receipts/"
+        "2b9bf937edcc1144d40fb9072bf9d205b0a0705cc893c5bf3197c491850852d8"
+        ".json",
+        "outputs/acceptance_receipts/recorded_gate_runs/"
+        "005b7fc1211941cb959335df3f031d28/"
+        "r4_fast_test_policy_"
+        "dc1dc3cd8fc10e26da743be66ede68af079a80cc170560da40f14211100c71cb"
+        ".json",
+        "outputs/acceptance_receipts/recorded_gate_runs/"
+        "005b7fc1211941cb959335df3f031d28/scalability_audit.csv",
+        "outputs/acceptance_receipts/recorded_gate_runs/"
+        "005b7fc1211941cb959335df3f031d28/semantic_audit_receipt.json",
+        "outputs/scalability_audit.csv",
+    )
+    for relative in foundation_paths:
+        destination = repo_root / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(REPO_ROOT / relative, destination)
     source_url = (
         "https://www.sec.gov/Archives/edgar/data/1048286/"
         "000104828625000001/sample.htm"

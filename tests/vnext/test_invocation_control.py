@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import multiprocessing
 import os
@@ -12,10 +13,17 @@ from pathlib import Path
 from typing import List, Mapping, Optional
 from unittest import mock
 
-from tests.vnext.common import REPO_ROOT
+from tests.vnext.common import REPO_ROOT, SAMPLE_HTML, compiled_specs
+from tests.vnext.common import reader_response
+from tests.vnext.common import reviewed_fixture, sample_asset
+from tests.vnext.common import sample_source_reference
+from tests.vnext.test_ai_reader_contract import live_sec_reader_repository
+import tools.vnext_operator as vnext_operator
 from vnext import ai_adapter
-from vnext.canonical import content_hash
+from vnext.batch_workflow import request_attempt_binding
+from vnext.canonical import content_hash, sha256_bytes
 from vnext.cutover import _live_retry_policy, _normalized_invocation_error
+from vnext.cutover import _prepare_review_run
 from vnext.invocation_control import InvocationControlError
 from vnext.invocation_control import EvidenceFailureError, SchemaViolationError
 from vnext.invocation_control import UnknownRemoteOutcomeError
@@ -24,10 +32,14 @@ from vnext.invocation_control import execute_batch, execute_invocation
 from vnext.invocation_control import execution_identity
 from vnext.invocation_control import recover_abandoned_before_egress
 from vnext.invocation_control import structured_only_result
+from vnext.reader_input import build_reader_input_manifest
+from vnext.reader_input import prepare_reader_request
 
 
 REQUEST_BODY = b'{"model":"test-model","input":"public filing"}'
 UTC = "2026-08-19T12:00:00Z"
+GENERIC_RESPONSE_BODY = reader_response(asset=sample_asset())
+GENERIC_RESPONSE_SOURCE_BYTES = SAMPLE_HTML
 
 
 def identity(*, label: str) -> str:
@@ -37,7 +49,7 @@ def identity(*, label: str) -> str:
 
 def transport_result(
     *, status_code: int = 200, error_class: str = "",
-    response_body: bytes = b'{"ok":true}', actual_cost: str = "0",
+    response_body: bytes = GENERIC_RESPONSE_BODY, actual_cost: str = "0",
     paid_call: bool = False,
 ) -> dict:
     """Build one strict injected transport result."""
@@ -64,10 +76,13 @@ def plan(
     estimated_cost: str = "0",
 ) -> dict:
     """Build one exact invocation plan with configurable resource limits."""
+    fixture = reviewed_fixture(response_bytes=GENERIC_RESPONSE_BODY)
     return build_ai_invocation_plan(
         release_input_plan_id=identity(label="release"),
-        source_identity_hash=identity(label="source"),
-        selected_representation_hash=identity(label="representation"),
+        source_identity_hash=str(
+            fixture["manifest"]["reader_input_manifest_id"]
+        ),
+        selected_representation_hash=str(fixture["asset"]["derived_asset_id"]),
         task_contract_hash=identity(label="task"),
         output_schema_hash=identity(label="schema"),
         serialization_version="1",
@@ -100,14 +115,38 @@ def clock() -> str:
 def validate_response(*, response_body: bytes) -> None:
     """Accept the strict test response shape."""
     parsed = json.loads(response_body.decode("utf-8"))
-    if parsed != {"ok": True}:
+    if not isinstance(parsed, dict) or "candidates" not in parsed:
         raise AssertionError("unexpected test response")
 
 
-def validate_evidence(*, response_body: bytes) -> None:
-    """Accept evidence only after the response validator has decoded bytes."""
+def validate_evidence(*, response_body: bytes) -> dict:
+    """Return a complete generic acceptance closure after decoded bytes."""
     if not response_body:
         raise AssertionError("empty test response")
+    fixture = reviewed_fixture(response_bytes=response_body)
+    candidate = fixture["candidate"]
+    evidence = fixture["evidence"]
+    return {
+        "reader_input_manifest_id": fixture["manifest"][
+            "reader_input_manifest_id"
+        ],
+        "derived_asset_id": fixture["asset"]["derived_asset_id"],
+        "source_reference_ids": list(
+            fixture["manifest"]["source_reference_ids"]
+        ),
+        "task_contract_hash": identity(label="task"),
+        "spec_semantic_hash": compiled_specs()["DISCLOSURE"][
+            "spec_semantic_hash"
+        ],
+        "candidate_hash": candidate["candidate_hash"],
+        "candidate_record": candidate,
+        "evidence_check_id": evidence["evidence_check_id"],
+        "evidence_record": evidence,
+        "evidence_candidate_hash": evidence["candidate_hash"],
+        "evidence_status": evidence["status"],
+        "validator_semantic_version": "test-acceptance-v1",
+        "validator_semantic_hash": identity(label="validator"),
+    }
 
 
 def reject_schema(*, response_body: bytes) -> None:
@@ -120,6 +159,39 @@ def reject_evidence(*, response_body: bytes) -> None:
     """Raise the effective terminal evidence class after schema succeeds."""
     if response_body:
         raise EvidenceFailureError("evidence rejected")
+
+
+def production_reader_fixture() -> dict:
+    """Build exact Reader and full mechanical-acceptance test inputs."""
+    asset = sample_asset()
+    source = sample_source_reference(
+        raw_asset_id=str(asset["parent_raw_asset_ids"][0])
+    )
+    manifest = build_reader_input_manifest(
+        derived_asset=asset,
+        source_reference_ids=[str(source["source_reference_id"])],
+    )
+    compiled_spec = compiled_specs()["DISCLOSURE"]
+    prepared_request = prepare_reader_request(
+        manifest=manifest,
+        derived_asset=asset,
+        compiled_spec=compiled_spec,
+    )
+    return {
+        "acceptance_context": (
+            ai_adapter.build_invocation_acceptance_context(
+                compiled_spec=compiled_spec,
+                derived_asset=asset,
+                reader_manifest=manifest,
+                reader_payload_body=json.loads(
+                    prepared_request.request_bytes.decode("utf-8")
+                ),
+                source_references=[source],
+            )
+        ),
+        "asset": asset,
+        "prepared_request": prepared_request,
+    }
 
 
 class MockTransport:
@@ -190,6 +262,143 @@ class ProcessCrashTransport:
         os._exit(73)
 
 
+class ProductionReaderTransport:
+    """Return injected Reader bytes through the repository transport API."""
+
+    def __init__(
+        self, *, policy: object, mutation: str, calls: List[bytes],
+    ) -> None:
+        """Bind exact policy, one response, and an observable call ledger."""
+        self.policy = policy
+        self.mutation = mutation
+        self.calls = calls
+
+    def complete(self, *, prepared_request: object) -> object:
+        """Return the injected response after rebuilding live SEC authority."""
+        rebuilt = ai_adapter._validate_live_prepared_request(
+            prepared_request=prepared_request,
+        )
+        outbound, output_schema = ai_adapter.build_provider_request_body(
+            policy=self.policy,
+            reader_request_bytes=rebuilt.request_bytes,
+        )
+        self.calls.append(outbound)
+        request = json.loads(rebuilt.request_bytes.decode("utf-8"))
+        manifest = request["reader_input_manifest"]
+        asset = {
+            "derived_asset_id": manifest["derived_asset_id"],
+            "tables": request["untrusted_table_data"],
+        }
+        response_body = reader_response(
+            asset=asset,
+            occupancy_raw=(
+                "999.9" if self.mutation == "EVIDENCE_FAILURE" else "69.3%"
+            ),
+        )
+        if self.mutation == "TASK_MISMATCH":
+            parsed = json.loads(response_body.decode("utf-8"))
+            parsed["disclosure_group"] = "other_disclosure_group"
+            response_body = json.dumps(
+                parsed, ensure_ascii=False
+            ).encode("utf-8")
+        elif self.mutation not in {"EVIDENCE_FAILURE", "PASS"}:
+            raise AssertionError("Unknown injected Reader mutation")
+        observation = ai_adapter.TransportObservation(
+            egress_attempted=True,
+            provider=self.policy.provider,
+            model=self.policy.model,
+            model_requested=self.policy.model,
+            model_returned=self.policy.model,
+            api=self.policy.api,
+            store=False,
+            endpoint_host=self.policy.endpoint_host,
+            region=self.policy.region,
+            retention=self.policy.retention,
+            data_use=self.policy.data_use,
+            timeout_seconds=self.policy.timeout_seconds,
+            retry_count=self.policy.retry_count,
+            retries_performed=0,
+            maximum_payload_bytes=self.policy.maximum_payload_bytes,
+            filing_egress_policy=self.policy.filing_egress_policy,
+            request_body_bytes=len(outbound),
+        )
+        return ai_adapter.TransportResult(
+            response_bytes=response_body,
+            provider_request_id="request:injected-production-reader",
+            observation=observation,
+            raw_response_bytes=(
+                b'{"usage":{"prompt_tokens":10,'
+                b'"completion_tokens":2}}'
+            ),
+            outbound_request_bytes=outbound,
+            output_schema_bytes=output_schema,
+        )
+
+
+def cutover_reader_plan_fixture(*, workspace: Path) -> dict:
+    """Build one small immutable SEC source plan for production wiring."""
+    workspace.mkdir(parents=True)
+    fixture = live_sec_reader_repository(workspace=workspace)
+    binding = request_attempt_binding(
+        repo_root=fixture["repo_root"],
+        source_url=str(fixture["source_url"]),
+        content_sha256=sha256_bytes(content=GENERIC_RESPONSE_SOURCE_BYTES),
+        accession=str(fixture["accession"]),
+        document_name=str(fixture["document_name"]),
+    )
+    source = {
+        "accession": fixture["accession"],
+        "content_sha256": sha256_bytes(
+            content=GENERIC_RESPONSE_SOURCE_BYTES
+        ),
+        "document_name": fixture["document_name"],
+        "repo_relative_path": fixture["source_repo_relative_path"],
+        "source_url": fixture["source_url"],
+        **binding,
+    }
+    return {
+        "company": {
+            "company_id": "marriott_international",
+            "target_period": {
+                "fiscal_year": 2025,
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+            },
+            "table_source": source,
+        },
+        "release_input_plan_id": identity(label="cutover-release-plan"),
+        "repo_root": fixture["repo_root"],
+    }
+
+
+def operator_arguments(
+    *, run_dir: Path, fixture: Mapping[str, object],
+) -> object:
+    """Build exact live operator arguments over an immutable source plan."""
+    company = fixture["company"]
+    source = company["table_source"]
+    period = company["target_period"]
+    return argparse.Namespace(
+        accession=source["accession"],
+        company_id=company["company_id"],
+        disclosure_spec_path="catalog/disclosures/lodging_kpi_table.md",
+        document_name=source["document_name"],
+        execute_live=True,
+        fiscal_year=period["fiscal_year"],
+        fixture_id=None,
+        period_end=period["period_end"],
+        period_start=period["period_start"],
+        recorded_response=None,
+        request_attempt_id=source["request_attempt_id"],
+        run_dir=str(run_dir),
+        run_id="run:operator:controlled-evidence-resume",
+        source_media_type="text/html",
+        source_path=source["repo_relative_path"],
+        source_role="target_primary",
+        source_url=source["source_url"],
+    )
+
+
 def crash_after_egress(
     *, workspace_dir: Path, invocation_plan: Mapping[str, object],
     execution_id: str,
@@ -244,19 +453,14 @@ class InvocationControlTest(unittest.TestCase):
                 owner_token="production-owner",
             )
             policy = adapter.policy
-            prepared_mapping = {
-                "manifest": {
-                    "reader_input_manifest_id": identity(label="reader"),
-                    "derived_asset_id": identity(label="grid"),
-                    "source_reference_ids": [identity(label="source-ref")],
-                },
-                "request_bytes": b"{}",
-                "task_contract_bytes": b"{}",
-                "task_contract": {"required_roles": ["value"]},
-                "task_spec_semantic_hash": identity(label="task-spec"),
-            }
+            fixture = production_reader_fixture()
+            prepared_request = fixture["prepared_request"]
+            outbound, output_schema = ai_adapter.build_provider_request_body(
+                policy=policy,
+                reader_request_bytes=prepared_request.request_bytes,
+            )
             transport_result_value = ai_adapter.TransportResult(
-                response_bytes=b'{"ok":true}',
+                response_bytes=reader_response(asset=fixture["asset"]),
                 provider_request_id="mock-production-request",
                 observation=ai_adapter.TransportObservation(
                     egress_attempted=True,
@@ -275,28 +479,20 @@ class InvocationControlTest(unittest.TestCase):
                     retries_performed=0,
                     maximum_payload_bytes=policy.maximum_payload_bytes,
                     filing_egress_policy=policy.filing_egress_policy,
-                    request_body_bytes=2,
+                    request_body_bytes=len(outbound),
                 ),
                 raw_response_bytes=(
                     b'{"usage":{"prompt_tokens":2,'
                     b'"completion_tokens":1}}'
                 ),
+                outbound_request_bytes=outbound,
+                output_schema_bytes=output_schema,
             )
             credential = ai_adapter.api_key_environment_name(policy=policy)
             with mock.patch.object(
                 ai_adapter,
                 "_validate_live_prepared_request",
-                return_value=object(),
-            ), mock.patch.object(
-                ai_adapter,
-                "_validate_prepared_request",
-                return_value=prepared_mapping,
-            ), mock.patch.object(
-                ai_adapter,
-                "_controlled_response_validator",
-            ), mock.patch.object(
-                ai_adapter,
-                "_controlled_evidence_validator",
+                return_value=prepared_request,
             ), mock.patch.object(
                 adapter,
                 "_complete_repository_transport",
@@ -305,14 +501,16 @@ class InvocationControlTest(unittest.TestCase):
                 os.environ, {credential: "test-only-key"}, clear=False,
             ):
                 first = adapter._complete_authorized(
-                    prepared_request=object(),
+                    prepared_request=prepared_request,
                     authorized_at_utc=UTC,
                     invocation_clock=clock,
+                    acceptance_context=fixture["acceptance_context"],
                 )
                 second = adapter._complete_authorized(
-                    prepared_request=object(),
+                    prepared_request=prepared_request,
                     authorized_at_utc=UTC,
                     invocation_clock=clock,
+                    acceptance_context=fixture["acceptance_context"],
                 )
             state = workspace / "invocation_control"
             execution_receipt = json.loads(
@@ -322,7 +520,9 @@ class InvocationControlTest(unittest.TestCase):
             )
             plan_count = len(list((state / "plans").iterdir()))
             reservation_count = len(list((state / "reservations").iterdir()))
-        self.assertEqual(b'{"ok":true}', first.response_bytes)
+        self.assertEqual(
+            reader_response(asset=fixture["asset"]), first.response_bytes,
+        )
         self.assertEqual(first.response_bytes, second.response_bytes)
         self.assertEqual(1, repository_transport.call_count)
         self.assertEqual(1, plan_count)
@@ -333,6 +533,220 @@ class InvocationControlTest(unittest.TestCase):
                 "real_model_provider_egress_count"
             ],
         )
+
+    def test_cutover_evidence_failure_has_no_success_or_reuse(self) -> None:
+        """Stop Cutover after one schema-valid mechanically false response."""
+        calls: List[bytes] = []
+
+        def transport_factory(*, policy: object) -> object:
+            """Inject one Evidence-failing response without a real socket."""
+            return ProductionReaderTransport(
+                policy=policy,
+                mutation="EVIDENCE_FAILURE",
+                calls=calls,
+            )
+
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = cutover_reader_plan_fixture(
+                workspace=Path(directory) / "fixture"
+            )
+            run_dir = Path(directory) / "runs" / "evidence-failure"
+            with mock.patch.object(
+                ai_adapter, "_REPOSITORY_ROOT", fixture["repo_root"],
+            ), mock.patch.object(
+                ai_adapter,
+                "_TRANSPORT_FACTORIES",
+                {"deepseek": transport_factory},
+            ), mock.patch.object(
+                ai_adapter._InvocationControllerTransport,
+                "transport_kind",
+                "MOCK",
+            ), mock.patch.dict(
+                os.environ,
+                {"DEEPSEEK_API_KEY": "injected-only"},
+                clear=False,
+            ):
+                summary = _prepare_review_run(
+                    repo_root=fixture["repo_root"],
+                    run_dir=run_dir,
+                    company=fixture["company"],
+                    plan_id=str(fixture["release_input_plan_id"]),
+                    stability_ordinal=1,
+                    attempt_ordinal=1,
+                    disclosure_spec_path=(
+                        "catalog/disclosures/lodging_kpi_table.md"
+                    ),
+                    execute_live=True,
+                    recorded_response_bytes=None,
+                    recorded_fixture_id=None,
+                )
+            state = run_dir.parent / "invocation_control"
+            executions = [
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (state / "executions").iterdir()
+            ]
+            success_receipts = list(
+                (state / "responses").rglob("receipt.json")
+            )
+            acceptance_receipts = list(
+                (state / "acceptances").rglob("receipt.json")
+            )
+            reservations = list((state / "reservations").iterdir())
+        self.assertEqual("FAILED", summary["status"])
+        self.assertEqual("EVIDENCE_FAILURE", summary["error_class"])
+        self.assertEqual(1, len(calls))
+        self.assertEqual(1, len(executions))
+        self.assertEqual("FAILED_TERMINAL", executions[0]["status"])
+        self.assertTrue(executions[0]["batch_terminal"])
+        self.assertEqual("EVIDENCE_FAILURE", executions[0]["attempts"][0][
+            "error_class"
+        ])
+        self.assertEqual(1, executions[0]["counters"][
+            "mock_transport_invocation_count"
+        ])
+        self.assertEqual([], success_receipts)
+        self.assertEqual([], acceptance_receipts)
+        self.assertEqual([], reservations)
+
+    def test_cutover_success_reuses_exact_accepted_response(self) -> None:
+        """Reuse only the exact response whose real Evidence closure passed."""
+        calls: List[bytes] = []
+
+        def transport_factory(*, policy: object) -> object:
+            """Inject one valid Reader response without a real socket."""
+            return ProductionReaderTransport(
+                policy=policy,
+                mutation="PASS",
+                calls=calls,
+            )
+
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = cutover_reader_plan_fixture(
+                workspace=Path(directory) / "fixture"
+            )
+            runs = Path(directory) / "runs"
+            with mock.patch.object(
+                ai_adapter, "_REPOSITORY_ROOT", fixture["repo_root"],
+            ), mock.patch.object(
+                ai_adapter,
+                "_TRANSPORT_FACTORIES",
+                {"deepseek": transport_factory},
+            ), mock.patch.object(
+                ai_adapter._InvocationControllerTransport,
+                "transport_kind",
+                "MOCK",
+            ), mock.patch.object(
+                vnext_operator, "REPO_ROOT", fixture["repo_root"],
+            ), mock.patch.dict(
+                os.environ,
+                {
+                    "DEEPSEEK_API_KEY": "injected-only",
+                    "SEC_CONTACT_EMAIL": "sec-tests@wlvh.com",
+                },
+                clear=False,
+            ):
+                first = vnext_operator._prepare(
+                    arguments=operator_arguments(
+                        run_dir=runs / "accepted-first", fixture=fixture,
+                    )
+                )
+                second = vnext_operator._prepare(
+                    arguments=operator_arguments(
+                        run_dir=runs / "accepted-resume", fixture=fixture,
+                    )
+                )
+            state = runs / "invocation_control"
+            executions = [
+                json.loads(path.read_text(encoding="utf-8"))
+                for path in (state / "executions").iterdir()
+            ]
+            success_receipt = json.loads(
+                next((state / "responses").rglob("receipt.json")).read_text(
+                    encoding="utf-8"
+                )
+            )
+            acceptance_receipt = json.loads(
+                next((state / "acceptances").rglob("receipt.json")).read_text(
+                    encoding="utf-8"
+                )
+            )
+        self.assertEqual("PENDING_HUMAN_REVIEW", first["status"])
+        self.assertEqual("PENDING_HUMAN_REVIEW", second["status"])
+        self.assertEqual(1, len(calls))
+        self.assertEqual(
+            {"REUSED_SUCCESS", "SUCCEEDED"},
+            {receipt["status"] for receipt in executions},
+        )
+        self.assertEqual(
+            acceptance_receipt["acceptance_receipt_id"],
+            success_receipt["acceptance_receipt_id"],
+        )
+        self.assertEqual(first["candidate_hash"], second["candidate_hash"])
+        self.assertEqual(
+            first["evidence_check_id"], second["evidence_check_id"],
+        )
+
+    def test_cutover_task_mismatch_is_terminal_before_success(self) -> None:
+        """Reject a schema-valid disclosure mismatch without retry or reuse."""
+        calls: List[bytes] = []
+
+        def transport_factory(*, policy: object) -> object:
+            """Inject one task-mismatched response without a real socket."""
+            return ProductionReaderTransport(
+                policy=policy,
+                mutation="TASK_MISMATCH",
+                calls=calls,
+            )
+
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = cutover_reader_plan_fixture(
+                workspace=Path(directory) / "fixture"
+            )
+            run_dir = Path(directory) / "runs" / "task-mismatch"
+            with mock.patch.object(
+                ai_adapter, "_REPOSITORY_ROOT", fixture["repo_root"],
+            ), mock.patch.object(
+                ai_adapter,
+                "_TRANSPORT_FACTORIES",
+                {"deepseek": transport_factory},
+            ), mock.patch.object(
+                ai_adapter._InvocationControllerTransport,
+                "transport_kind",
+                "MOCK",
+            ), mock.patch.dict(
+                os.environ,
+                {"DEEPSEEK_API_KEY": "injected-only"},
+                clear=False,
+            ):
+                summary = _prepare_review_run(
+                    repo_root=fixture["repo_root"],
+                    run_dir=run_dir,
+                    company=fixture["company"],
+                    plan_id=str(fixture["release_input_plan_id"]),
+                    stability_ordinal=1,
+                    attempt_ordinal=1,
+                    disclosure_spec_path=(
+                        "catalog/disclosures/lodging_kpi_table.md"
+                    ),
+                    execute_live=True,
+                    recorded_response_bytes=None,
+                    recorded_fixture_id=None,
+                )
+            state = run_dir.parent / "invocation_control"
+            execution_receipt = json.loads(
+                next((state / "executions").iterdir()).read_text(
+                    encoding="utf-8"
+                )
+            )
+            success_receipts = list(
+                (state / "responses").rglob("receipt.json")
+            )
+        self.assertEqual("FAILED", summary["status"])
+        self.assertEqual("EVIDENCE_FAILURE", summary["error_class"])
+        self.assertEqual(1, len(calls))
+        self.assertEqual("FAILED_TERMINAL", execution_receipt["status"])
+        self.assertEqual(1, len(execution_receipt["attempts"]))
+        self.assertEqual([], success_receipts)
 
     def test_cutover_runtime_uses_issue15_d35_retry_policy(self) -> None:
         """Bind the inherited orchestrator loop to D-35 maximum one retry."""
@@ -544,6 +958,67 @@ class InvocationControlTest(unittest.TestCase):
         self.assertEqual("REUSED_SUCCESS", resumed["status"])
         self.assertEqual(0, second_transport.invocation_count)
         self.assertEqual(0, resumed["counters"]["mock_transport_invocation_count"])
+
+    def test_reuse_revalidates_candidate_and_evidence_acceptance(self) -> None:
+        """Reject a rehashed receipt whose persisted Candidate was changed."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            invocation_plan = plan()
+            execute_invocation(
+                workspace_dir=workspace,
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution(
+                    invocation_plan=invocation_plan,
+                    owner="acceptance-owner-a",
+                    at="2026-08-19T12:03:00Z",
+                ),
+                owner_token="acceptance-owner-a",
+                authorized_at_utc="2026-08-19T12:03:00Z",
+                clock=clock,
+                transport=MockTransport(results=[transport_result()]),
+                response_validator=validate_response,
+                evidence_validator=validate_evidence,
+            )
+            receipt_path = next(
+                (workspace / "invocation_control" / "acceptances").rglob(
+                    "receipt.json"
+                )
+            )
+            receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+            receipt["candidate_record"]["selected"]["occupancy"][
+                "claimed_raw_value"
+            ] = "100"
+            receipt_body = {
+                field: receipt[field]
+                for field in receipt
+                if field != "acceptance_receipt_id"
+            }
+            receipt["acceptance_receipt_id"] = content_hash(
+                value=receipt_body
+            )
+            receipt_path.write_text(
+                json.dumps(receipt, ensure_ascii=False), encoding="utf-8"
+            )
+            unused = MockTransport(results=[AssertionError("called")])
+            with self.assertRaises(InvocationControlError):
+                execute_invocation(
+                    workspace_dir=workspace,
+                    plan=invocation_plan,
+                    request_body=REQUEST_BODY,
+                    execution_id=execution(
+                        invocation_plan=invocation_plan,
+                        owner="acceptance-owner-b",
+                        at="2026-08-19T12:03:01Z",
+                    ),
+                    owner_token="acceptance-owner-b",
+                    authorized_at_utc="2026-08-19T12:03:01Z",
+                    clock=clock,
+                    transport=unused,
+                    response_validator=validate_response,
+                    evidence_validator=validate_evidence,
+                )
+        self.assertEqual(0, unused.invocation_count)
 
     def test_egress_crash_is_unknown_and_never_retried(self) -> None:
         """Persist UNKNOWN_REMOTE_OUTCOME with no terminal attempt receipt."""

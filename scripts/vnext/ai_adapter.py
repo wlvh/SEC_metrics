@@ -18,7 +18,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from types import MappingProxyType
-from typing import Callable, Dict, Mapping, Optional, Tuple
+from typing import Callable, Dict, Mapping, Optional, Sequence, Tuple
 from urllib.error import HTTPError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
@@ -31,6 +31,7 @@ from .invocation_control import UnknownRemoteOutcomeError
 from .invocation_control import build_ai_invocation_plan
 from .invocation_control import execute_invocation, execution_identity
 from .invocation_control import load_successful_response
+from .evidence import check_evidence
 from .reader import validate_reader_output
 from .reader_input import live_reader_authority_fields
 from .reader_input import PreparedReaderRequest
@@ -48,6 +49,21 @@ _DEEPSEEK_API_KEY_ENV = "DEEPSEEK_API_KEY"
 _DEEPSEEK_ENDPOINT_HOST = "api.deepseek.com"
 _DEEPSEEK_CHAT_COMPLETIONS_URL = (
     "https://api.deepseek.com/chat/completions"
+)
+_ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION = "reader-evidence-acceptance-v1"
+_ACCEPTANCE_VALIDATOR_SEMANTIC_HASH = content_hash(
+    value={
+        "semantic_version": _ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION,
+        "ordered_checks": [
+            "STRICT_UTF8_STRUCTURED_SCHEMA",
+            "REQUIRED_ROLES_EXACT_SET",
+            "SOURCE_REFERENCE_IDS_EXACT_BINDING",
+            "DERIVED_ASSET_IDS_EXACT_BINDING",
+            "DISCLOSURE_TASK_CONTRACT_EXACT_BINDING",
+            "CANDIDATE_CONTENT_IDENTITY",
+            "MECHANICAL_EVIDENCE_PASS",
+        ],
+    }
 )
 
 
@@ -342,6 +358,7 @@ class TransportResult:
     raw_response_bytes: Optional[bytes] = None
     outbound_request_bytes: Optional[bytes] = None
     output_schema_bytes: Optional[bytes] = None
+    acceptance_receipt: Optional[Mapping[str, object]] = None
 
     def __post_init__(self) -> None:
         """Reject result types that cannot form an immutable attempt."""
@@ -358,6 +375,10 @@ class TransportResult:
         ):
             if value is not None and not isinstance(value, bytes):
                 raise AIAdapterError("Transport audit payload is invalid")
+        if self.acceptance_receipt is not None and not isinstance(
+            self.acceptance_receipt, Mapping
+        ):
+            raise AIAdapterError("Transport acceptance receipt is invalid")
 
 
 @dataclass(frozen=True)
@@ -370,6 +391,7 @@ class AttemptPayloads:
     output_schema_bytes: bytes
     assistant_output_bytes: Optional[bytes]
     raw_response_bytes: Optional[bytes]
+    acceptance_receipt: Optional[Mapping[str, object]] = None
 
     def __post_init__(self) -> None:
         """Reject any payload shape that cannot be persisted exactly."""
@@ -387,6 +409,84 @@ class AttemptPayloads:
         ):
             if value is not None and not isinstance(value, bytes):
                 raise AIAdapterError("Optional attempt payload is invalid")
+        if self.acceptance_receipt is not None and not isinstance(
+            self.acceptance_receipt, Mapping
+        ):
+            raise AIAdapterError("Attempt acceptance receipt is invalid")
+
+
+@dataclass(frozen=True)
+class InvocationAcceptanceContext:
+    """Carry the exact mechanical inputs needed before reusable success.
+
+    Attributes:
+        compiled_spec: Repository-compiled disclosure Spec closure.
+        derived_asset: Complete table-grid used by the Reader.
+        reader_manifest: Exact ReaderInputManifest.
+        reader_payload_body: Exact decoded Reader request body.
+        source_references: Exact ordered source identities.
+    """
+
+    compiled_spec: Mapping[str, object]
+    derived_asset: Mapping[str, object]
+    reader_manifest: Mapping[str, object]
+    reader_payload_body: Mapping[str, object]
+    source_references: Tuple[Mapping[str, object], ...]
+
+    def __post_init__(self) -> None:
+        """Reject an incomplete or internally divergent acceptance graph."""
+        if (
+            not isinstance(self.compiled_spec, Mapping)
+            or "compiled" not in self.compiled_spec
+            or "spec_semantic_hash" not in self.compiled_spec
+            or not isinstance(self.reader_payload_body, Mapping)
+            or not self.source_references
+        ):
+            raise AIAdapterError("Invocation acceptance context is incomplete")
+        validate_record(record=self.derived_asset)
+        validate_record(record=self.reader_manifest)
+        for source_reference in self.source_references:
+            validate_record(record=source_reference)
+        if (
+            self.reader_manifest["derived_asset_id"]
+            != self.derived_asset["derived_asset_id"]
+            or list(self.reader_manifest["source_reference_ids"])
+            != [
+                source_reference["source_reference_id"]
+                for source_reference in self.source_references
+            ]
+        ):
+            raise AIAdapterError(
+                "Invocation acceptance source binding differs"
+            )
+
+
+def build_invocation_acceptance_context(
+    *, compiled_spec: Mapping[str, object],
+    derived_asset: Mapping[str, object],
+    reader_manifest: Mapping[str, object],
+    reader_payload_body: Mapping[str, object],
+    source_references: Sequence[Mapping[str, object]],
+) -> InvocationAcceptanceContext:
+    """Build one explicit full-Evidence validation input contract.
+
+    Args:
+        compiled_spec: Repository-compiled disclosure Spec closure.
+        derived_asset: Complete table-grid used by the Reader.
+        reader_manifest: Exact ReaderInputManifest.
+        reader_payload_body: Exact decoded Reader request body.
+        source_references: Ordered SourceReferences bound to the manifest.
+
+    Returns:
+        Validated immutable acceptance context for the controlled adapter.
+    """
+    return InvocationAcceptanceContext(
+        compiled_spec=dict(compiled_spec),
+        derived_asset=dict(derived_asset),
+        reader_manifest=dict(reader_manifest),
+        reader_payload_body=dict(reader_payload_body),
+        source_references=tuple(dict(value) for value in source_references),
+    )
 
 
 @dataclass(frozen=True)
@@ -1760,6 +1860,7 @@ class _ApprovedTransportAdapter(AIAdapter):
         self, *, prepared_request: object,
         authorized_at_utc: Optional[str] = None,
         invocation_clock: Optional[Callable[[], str]] = None,
+        acceptance_context: Optional[InvocationAcceptanceContext] = None,
     ) -> TransportResult:
         """Route production egress through WB-3 after live source replay.
 
@@ -1767,6 +1868,7 @@ class _ApprovedTransportAdapter(AIAdapter):
             prepared_request: Factory-produced live source coordinates.
             authorized_at_utc: Execution authorization time from the attempt.
             invocation_clock: UTC text clock for controller receipts.
+            acceptance_context: Exact Candidate/Evidence validation inputs.
 
         Returns:
             Auditable provider result or exact successful response reuse.
@@ -1786,6 +1888,7 @@ class _ApprovedTransportAdapter(AIAdapter):
             prepared_request=prepared_request,
             authorized_at_utc=authorized_at_utc,
             invocation_clock=invocation_clock,
+            acceptance_context=acceptance_context,
         )
 
     def _complete_repository_transport(
@@ -2019,10 +2122,92 @@ def _controlled_response_validator(
         raise SchemaViolationError("Reader response schema rejected") from error
 
 
-def _controlled_evidence_validator(*, response_body: bytes) -> None:
-    """Reject an empty envelope before downstream full evidence checking."""
-    if not response_body:
-        raise EvidenceFailureError("Reader response evidence is empty")
+def _controlled_acceptance_validator(
+    *, response_body: bytes, prepared: Mapping[str, object],
+    execution_id: str, context: InvocationAcceptanceContext,
+) -> Dict[str, object]:
+    """Build Candidate and require real mechanical Evidence before success.
+
+    Args:
+        response_body: Exact structured provider response bytes.
+        prepared: Revalidated Reader request/task/manifest bindings.
+        execution_id: Controller execution identity used only for attempt
+            audit.
+        context: Exact source, DerivedAsset, Spec, and payload closure.
+
+    Returns:
+        Content-addressable acceptance fields consumed by the controller.
+    """
+    if not isinstance(context, InvocationAcceptanceContext):
+        raise EvidenceFailureError("Reader acceptance context is absent")
+    task_contract_hash = "sha256:" + sha256_bytes(
+        content=prepared["task_contract_bytes"]
+    )
+    if (
+        dict(context.reader_manifest) != prepared["manifest"]
+        or context.reader_manifest["derived_asset_id"]
+        != context.derived_asset["derived_asset_id"]
+        or context.compiled_spec["spec_semantic_hash"]
+        != prepared["task_spec_semantic_hash"]
+        or context.reader_payload_body["task_contract"]
+        != prepared["task_contract"]
+        or canonical_json_bytes(value=dict(context.reader_payload_body))
+        != prepared["request_bytes"]
+    ):
+        raise EvidenceFailureError("Reader acceptance inputs differ")
+    try:
+        candidate = validate_reader_output(
+            response_text=response_body.decode("utf-8"),
+            attempt_id="attempt:" + execution_id.split(":", maxsplit=1)[1],
+            required_roles=prepared["task_contract"]["required_roles"],
+            source_reference_ids=prepared["manifest"][
+                "source_reference_ids"
+            ],
+            derived_asset_ids=[prepared["manifest"]["derived_asset_id"]],
+        )
+    except (UnicodeDecodeError, ValueError) as error:
+        raise EvidenceFailureError(
+            "Reader Candidate construction failed"
+        ) from error
+    if candidate["disclosure_group"] != prepared["task_contract"][
+        "disclosure_group"
+    ]:
+        raise EvidenceFailureError("Reader disclosure task contract differs")
+    evidence = check_evidence(
+        candidate=candidate,
+        derived_asset=context.derived_asset,
+        reader_manifest=context.reader_manifest,
+        reader_payload_body=context.reader_payload_body,
+        source_references=context.source_references,
+        identity_constraints=context.compiled_spec["compiled"][
+            "identity_constraints"
+        ],
+    )
+    if evidence["status"] != "PASS":
+        raise EvidenceFailureError(
+            "Mechanical Evidence rejected the Candidate"
+        )
+    return {
+        "reader_input_manifest_id": context.reader_manifest[
+            "reader_input_manifest_id"
+        ],
+        "derived_asset_id": context.derived_asset["derived_asset_id"],
+        "source_reference_ids": list(
+            context.reader_manifest["source_reference_ids"]
+        ),
+        "task_contract_hash": task_contract_hash,
+        "spec_semantic_hash": context.compiled_spec["spec_semantic_hash"],
+        "candidate_hash": candidate["candidate_hash"],
+        "candidate_record": candidate,
+        "evidence_check_id": evidence["evidence_check_id"],
+        "evidence_record": evidence,
+        "evidence_candidate_hash": evidence["candidate_hash"],
+        "evidence_status": evidence["status"],
+        "validator_semantic_version": (
+            _ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION
+        ),
+        "validator_semantic_hash": _ACCEPTANCE_VALIDATOR_SEMANTIC_HASH,
+    }
 
 
 def _failed_controlled_observation(
@@ -2057,11 +2242,14 @@ def _failed_controlled_observation(
 def _execute_controlled_transport(
     *, adapter: _ApprovedTransportAdapter, prepared_request: object,
     authorized_at_utc: str, invocation_clock: Callable[[], str],
+    acceptance_context: Optional[InvocationAcceptanceContext],
 ) -> TransportResult:
     """Execute the exact live provider envelope through WB-3."""
     context = adapter.invocation_context
     if context is None:
         raise AIAdapterError("Invocation controller context is absent")
+    if not isinstance(acceptance_context, InvocationAcceptanceContext):
+        raise AIAdapterError("Invocation acceptance context is absent")
     rebuilt_request = _validate_live_prepared_request(
         prepared_request=prepared_request,
     )
@@ -2142,17 +2330,35 @@ def _execute_controlled_transport(
             prepared=prepared,
             execution_id=execution_id,
         ),
-        evidence_validator=_controlled_evidence_validator,
+        evidence_validator=lambda response_body: (
+            _controlled_acceptance_validator(
+                response_body=response_body,
+                prepared=prepared,
+                execution_id=execution_id,
+                context=acceptance_context,
+            )
+        ),
     )
     if execution["status"] in {"SUCCEEDED", "REUSED_SUCCESS"}:
         reusable = load_successful_response(
             workspace_dir=context.workspace_dir, plan=invocation_plan,
         )
         response_body = reusable["response_body"]
+        acceptance_receipt = reusable["acceptance_receipt"]
         if transport.last_result is not None:
             if transport.last_result.response_bytes != response_body:
                 raise AIAdapterError("Controlled response bytes differ")
-            return transport.last_result
+            return TransportResult(
+                response_bytes=transport.last_result.response_bytes,
+                provider_request_id=transport.last_result.provider_request_id,
+                observation=transport.last_result.observation,
+                raw_response_bytes=transport.last_result.raw_response_bytes,
+                outbound_request_bytes=(
+                    transport.last_result.outbound_request_bytes
+                ),
+                output_schema_bytes=transport.last_result.output_schema_bytes,
+                acceptance_receipt=acceptance_receipt,
+            )
         return TransportResult(
             response_bytes=response_body,
             provider_request_id=str(reusable["provider_request_id"]),
@@ -2162,6 +2368,7 @@ def _execute_controlled_transport(
             raw_response_bytes=None,
             outbound_request_bytes=outbound,
             output_schema_bytes=output_schema,
+            acceptance_receipt=acceptance_receipt,
         )
     attempts = execution["attempts"]
     error_class = (
@@ -2317,6 +2524,79 @@ def validate_adapter_repository_authority(
             "Approved workflow repository authority differs from D-01"
         )
     return "LIVE"
+
+
+def validate_workflow_acceptance_binding(
+    *, adapter: AIAdapter, acceptance_receipt: Optional[Mapping[str, object]],
+    context: InvocationAcceptanceContext,
+    candidate: Mapping[str, object], evidence: Mapping[str, object],
+) -> None:
+    """Require Workflow recomputation to match controller acceptance exactly.
+
+    Args:
+        adapter: Repository-built adapter used for the attempt.
+        acceptance_receipt: Controller receipt returned as explicit data.
+        context: Exact mechanical inputs independently reused by Workflow.
+        candidate: Workflow-recomputed Candidate.
+        evidence: Workflow-recomputed Evidence record.
+
+    Raises:
+        AIAdapterError: On any missing or contradictory immutable terminal.
+    """
+    controlled = (
+        type(adapter) is _ApprovedTransportAdapter
+        and adapter.invocation_context is not None
+    )
+    if not controlled:
+        if acceptance_receipt is not None:
+            raise AIAdapterError(
+                "Non-controlled attempt returned controller acceptance"
+            )
+        return
+    if not isinstance(acceptance_receipt, Mapping):
+        raise AIAdapterError("Controlled attempt acceptance is absent")
+    validate_record(record=candidate)
+    validate_record(record=evidence)
+    task_contract_hash = "sha256:" + sha256_bytes(
+        content=canonical_json_bytes(
+            value=context.reader_payload_body["task_contract"]
+        )
+    )
+    receipt_body = {
+        field: acceptance_receipt[field]
+        for field in acceptance_receipt
+        if field != "acceptance_receipt_id"
+    }
+    expected = {
+        "candidate_hash": candidate["candidate_hash"],
+        "derived_asset_id": context.derived_asset["derived_asset_id"],
+        "evidence_candidate_hash": evidence["candidate_hash"],
+        "evidence_check_id": evidence["evidence_check_id"],
+        "evidence_status": evidence["status"],
+        "reader_input_manifest_id": context.reader_manifest[
+            "reader_input_manifest_id"
+        ],
+        "source_reference_ids": list(
+            context.reader_manifest["source_reference_ids"]
+        ),
+        "spec_semantic_hash": context.compiled_spec["spec_semantic_hash"],
+        "task_contract_hash": task_contract_hash,
+        "validator_semantic_hash": _ACCEPTANCE_VALIDATOR_SEMANTIC_HASH,
+        "validator_semantic_version": (
+            _ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION
+        ),
+    }
+    if (
+        any(acceptance_receipt[field] != expected[field] for field in expected)
+        or evidence["status"] != "PASS"
+        or acceptance_receipt["response_body_sha256"]
+        != candidate["assistant_output_sha256"]
+        or acceptance_receipt["acceptance_receipt_id"]
+        != content_hash(value=receipt_body)
+    ):
+        raise AIAdapterError(
+            "Workflow Candidate/Evidence differs from controller acceptance"
+        )
 
 
 def _utc_now(*, clock: Optional[Callable[[], datetime]] = None) -> str:
@@ -2628,6 +2908,7 @@ def run_ai_attempt(
     *,
     adapter: AIAdapter,
     prepared_request: object,
+    acceptance_context: Optional[InvocationAcceptanceContext] = None,
     clock: Optional[Callable[[], datetime]] = None,
 ) -> Tuple[
     Optional[bytes],
@@ -2641,6 +2922,8 @@ def run_ai_attempt(
         adapter: Recorded or explicitly approved transport.
         prepared_request: Ordinary recorded request or factory-produced live
             request whose SEC source graph is rebuilt before remote egress.
+        acceptance_context: Exact production mechanical-Evidence inputs. The
+            controlled remote adapter requires this before provider egress.
         clock: Optional deterministic UTC test clock.
 
     Returns:
@@ -2674,6 +2957,7 @@ def run_ai_attempt(
     provider_request_id = ""
     error_class = ""
     status = "SUCCEEDED"
+    acceptance_receipt: Optional[Mapping[str, object]] = None
 
     def invocation_clock() -> str:
         """Return the same injected UTC time source for WB-3 receipts."""
@@ -2686,6 +2970,7 @@ def run_ai_attempt(
                 prepared_request=prepared_request,
                 authorized_at_utc=started,
                 invocation_clock=invocation_clock,
+                acceptance_context=acceptance_context,
             )
             if type(adapter) is _ApprovedTransportAdapter
             else adapter_implementation(
@@ -2711,6 +2996,15 @@ def run_ai_attempt(
         )
         provider_request_id = result.provider_request_id
         observation = result.observation
+        acceptance_receipt = result.acceptance_receipt
+        if (
+            type(adapter) is _ApprovedTransportAdapter
+            and adapter.invocation_context is not None
+            and acceptance_receipt is None
+        ):
+            raise AIAdapterError(
+                "Controlled transport lacks full acceptance receipt"
+            )
         candidate = validate_reader_output(
             response_text=response.decode("utf-8"),
             attempt_id=attempt_id,
@@ -2832,5 +3126,6 @@ def run_ai_attempt(
         output_schema_bytes=output_schema,
         assistant_output_bytes=assistant_output,
         raw_response_bytes=raw_response,
+        acceptance_receipt=acceptance_receipt,
     )
     return response, raw_response, validate_record(record=record), payloads
