@@ -631,11 +631,15 @@ _CELL_LOCATOR_SCHEMA = _object_schema(
         "colspan": _POSITIVE_INTEGER_SCHEMA,
     }
 )
-_SCOPE_SCHEMA = _object_schema(
+_SCOPE_CLAIM_SCHEMA = _object_schema(
     properties={
-        "property_population": _STRING_SCHEMA,
-        "operating_scope": _STRING_SCHEMA,
-        "geography": _STRING_SCHEMA,
+        "dimension": _STRING_SCHEMA,
+        "raw_value": _STRING_SCHEMA,
+        "evidence_locator_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": _STRING_SCHEMA,
+        },
     }
 )
 _COMPETING_SCHEMA = _object_schema(
@@ -643,13 +647,19 @@ _COMPETING_SCHEMA = _object_schema(
         "claimed_period": _STRING_SCHEMA,
         "claimed_raw_value": _STRING_SCHEMA,
         "claimed_reported_unit": _STRING_SCHEMA,
-        "claimed_scope": _SCOPE_SCHEMA,
+        "claimed_scope": {"type": "array", "items": _SCOPE_CLAIM_SCHEMA},
         "locator": _CELL_LOCATOR_SCHEMA,
         "rejection_reason_claim": _STRING_SCHEMA,
     }
 )
 _LABEL_LOCATOR_SCHEMA = _object_schema(
     properties={
+        "id": _STRING_SCHEMA,
+        "supports_dimensions": {
+            "type": "array",
+            "minItems": 1,
+            "items": _STRING_SCHEMA,
+        },
         "location_type": {
             "type": "string",
             "enum": ["caption", "cell", "header", "row", "label"],
@@ -657,7 +667,7 @@ _LABEL_LOCATOR_SCHEMA = _object_schema(
         "locator": {
             "anyOf": [_TABLE_LOCATOR_SCHEMA, _CELL_LOCATOR_SCHEMA]
         },
-        "text": _STRING_SCHEMA,
+        "raw_text": _STRING_SCHEMA,
     }
 )
 _CANDIDATE_SCHEMA = _object_schema(
@@ -666,7 +676,7 @@ _CANDIDATE_SCHEMA = _object_schema(
         "claimed_period": _STRING_SCHEMA,
         "claimed_raw_value": _STRING_SCHEMA,
         "claimed_reported_unit": _STRING_SCHEMA,
-        "claimed_scope": _SCOPE_SCHEMA,
+        "claimed_scope": {"type": "array", "items": _SCOPE_CLAIM_SCHEMA},
         "locator": _CELL_LOCATOR_SCHEMA,
         "scope_evidence_locators": {
             "type": "array",
@@ -2061,6 +2071,7 @@ def _controlled_response_validator(
             response_text=response_body.decode("utf-8"),
             attempt_id="attempt:" + execution_id.split(":", maxsplit=1)[1],
             required_roles=prepared["task_contract"]["required_roles"],
+            scope_contract=prepared["task_contract"]["scope_contract"],
             source_reference_ids=prepared["manifest"][
                 "source_reference_ids"
             ],
@@ -2108,6 +2119,7 @@ def _controlled_acceptance_validator(
             response_text=response_body.decode("utf-8"),
             attempt_id="attempt:" + execution_id.split(":", maxsplit=1)[1],
             required_roles=prepared["task_contract"]["required_roles"],
+            scope_contract=prepared["task_contract"]["scope_contract"],
             source_reference_ids=prepared["manifest"][
                 "source_reference_ids"
             ],
@@ -2130,6 +2142,7 @@ def _controlled_acceptance_validator(
         identity_constraints=context.compiled_spec["compiled"][
             "identity_constraints"
         ],
+        scope_contract=context.compiled_spec["compiled"]["scope_contract"],
     )
     if evidence["status"] != "PASS":
         raise EvidenceFailureError(
@@ -2785,6 +2798,8 @@ def _validate_prepared_request(
         "prompt_bundle",
         "required_claims",
         "required_roles",
+        "scope_contract",
+        "scope_contract_hash",
     }
     if (
         not isinstance(task_contract, dict)
@@ -2799,6 +2814,9 @@ def _validate_prepared_request(
         )
         or type(task_contract["disclosure_group"]) is not str
         or not task_contract["disclosure_group"]
+        or type(task_contract["scope_contract_hash"]) is not str
+        or task_contract["scope_contract_hash"]
+        != scope_contract_hash(contract=task_contract["scope_contract"])
     ):
         raise AIAdapterError("Prepared Reader task contract is invalid")
     body_fields = {
@@ -2977,6 +2995,7 @@ def run_ai_attempt(
             response_text=response.decode("utf-8"),
             attempt_id=attempt_id,
             required_roles=task_contract["required_roles"],
+            scope_contract=task_contract["scope_contract"],
             source_reference_ids=reader_manifest["source_reference_ids"],
             derived_asset_ids=[reader_manifest["derived_asset_id"]],
         )

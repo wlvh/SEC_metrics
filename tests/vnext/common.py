@@ -142,11 +142,23 @@ def reader_response(
         UTF-8 strict JSON bytes.
     """
     table_id = "table_000002"
-    scope = {
-        "property_population": "comparable",
-        "operating_scope": "systemwide",
-        "geography": "worldwide",
-    }
+    scope = [
+        {
+            "dimension": "property_population",
+            "raw_value": "Comparable Systemwide Properties",
+            "evidence_locator_ids": ["scope_caption"],
+        },
+        {
+            "dimension": "operating_scope",
+            "raw_value": "Comparable Systemwide Properties",
+            "evidence_locator_ids": ["scope_caption"],
+        },
+        {
+            "dimension": "geography",
+            "raw_value": "Worldwide",
+            "evidence_locator_ids": ["scope_row"],
+        },
+    ]
     units = {
         "occupancy": "percent",
         "revpar": "USD",
@@ -181,16 +193,23 @@ def reader_response(
                 ),
                 "scope_evidence_locators": [
                     {
+                        "id": "scope_caption",
                         "location_type": "caption",
-                        "text": "Comparable Systemwide Properties",
+                        "raw_text": "Comparable Systemwide Properties",
+                        "supports_dimensions": [
+                            "property_population",
+                            "operating_scope",
+                        ],
                         "locator": {
                             "derived_asset_id": asset["derived_asset_id"],
                             "table_id": table_id,
                         },
                     },
                     {
+                        "id": "scope_row",
                         "location_type": "row",
-                        "text": "Worldwide",
+                        "raw_text": "Worldwide",
+                        "supports_dimensions": ["geography"],
                         "locator": cell_locator(
                             asset=asset,
                             table_id=table_id,
@@ -277,6 +296,9 @@ def reviewed_fixture(
         response_text=actual_response.decode("utf-8"),
         attempt_id="attempt:reader:fixture",
         required_roles=["occupancy", "revpar", "adr"],
+        scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+            "scope_contract"
+        ],
         source_reference_ids=[str(source["source_reference_id"])],
         derived_asset_ids=[str(selected_asset["derived_asset_id"])],
     )
@@ -290,6 +312,9 @@ def reviewed_fixture(
         reader_payload_body=payload["body"],
         source_references=[source],
         identity_constraints=constraint,
+        scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+            "scope_contract"
+        ],
     )
     return {
         "asset": selected_asset,

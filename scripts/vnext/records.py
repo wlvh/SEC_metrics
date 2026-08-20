@@ -96,7 +96,12 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "checks",
             "reason_codes",
             "identity_constraints",
-        )
+        ),
+        optional=(
+            "normalized_scope",
+            "unresolved_scope_dimensions",
+            "system_approval_eligible",
+        ),
     ),
     "EXECUTION_TRACE": RecordSchema(
         required=(
@@ -216,7 +221,11 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "review_context_hash",
             "rendered_review_hash",
             "review_renderer_semantic_version",
-        )
+        ),
+        optional=(
+            "normalized_scope",
+            "system_approval_eligible",
+        ),
     ),
     "RUN": RecordSchema(
         required=(
@@ -419,6 +428,7 @@ LIST_FIELDS = {
     "steps",
     "tables",
     "unresolved_competing_claims",
+    "unresolved_scope_dimensions",
 }
 MAPPING_FIELDS = {
     "approved_claims",
@@ -427,6 +437,7 @@ MAPPING_FIELDS = {
     "compiled_spec",
     "ledger_binding",
     "normalized_values",
+    "normalized_scope",
     "requirement_hashes",
     "required_claims",
     "sampling_parameters",
@@ -440,6 +451,7 @@ MAPPING_FIELDS = {
     "transport_observation",
 }
 INTEGER_FIELDS = {"byte_length"}
+BOOLEAN_FIELDS = {"system_approval_eligible"}
 
 METRIC_RESULT_CONTRACT_FIELDS = (
     "company_id",
@@ -525,6 +537,7 @@ def _validate_field_types(*, record: Mapping[str, object]) -> None:
             or (field in LIST_FIELDS and type(value) is list)
             or (field in MAPPING_FIELDS and type(value) is dict)
             or (field in INTEGER_FIELDS and type(value) is int)
+            or (field in BOOLEAN_FIELDS and type(value) is bool)
         )
         if not valid:
             raise RecordError(
@@ -735,36 +748,46 @@ def _expected_identifier(
         }
         return "candidate_hash", content_hash(value=body)
     if record_type == "EVIDENCE_CHECK":
-        body = {
-            key: record[key]
-            for key in (
-                "candidate_hash",
-                "status",
-                "normalized_values",
-                "checks",
-                "reason_codes",
-                "identity_constraints",
-            )
-        }
+        fields = [
+            "candidate_hash",
+            "status",
+            "normalized_values",
+            "checks",
+            "reason_codes",
+            "identity_constraints",
+        ]
+        scope_fields = [
+            "normalized_scope",
+            "unresolved_scope_dimensions",
+            "system_approval_eligible",
+        ]
+        supplied_scope_fields = set(scope_fields) & set(record)
+        if supplied_scope_fields and supplied_scope_fields != set(scope_fields):
+            raise RecordError("Evidence scope binding is incomplete")
+        fields.extend(scope_fields if supplied_scope_fields else [])
+        body = {key: record[key] for key in fields}
         return "evidence_check_id", content_hash(value=body)
     if record_type == "REVIEW_UNIT":
-        body = {
-            key: record[key]
-            for key in (
-                "selected",
-                "competing_candidates",
-                "unresolved_competing_claims",
-                "candidate_hashes",
-                "source_bindings",
-                "spec_semantic_hash",
-                "compiled_spec",
-                "required_claims",
-                "evidence_check_id",
-                "review_context_hash",
-                "rendered_review_hash",
-                "review_renderer_semantic_version",
-            )
-        }
+        fields = [
+            "selected",
+            "competing_candidates",
+            "unresolved_competing_claims",
+            "candidate_hashes",
+            "source_bindings",
+            "spec_semantic_hash",
+            "compiled_spec",
+            "required_claims",
+            "evidence_check_id",
+            "review_context_hash",
+            "rendered_review_hash",
+            "review_renderer_semantic_version",
+        ]
+        scope_fields = ["normalized_scope", "system_approval_eligible"]
+        supplied_scope_fields = set(scope_fields) & set(record)
+        if supplied_scope_fields and supplied_scope_fields != set(scope_fields):
+            raise RecordError("ReviewUnit scope binding is incomplete")
+        fields.extend(scope_fields if supplied_scope_fields else [])
+        body = {key: record[key] for key in fields}
         return "review_unit_hash", content_hash(value=body)
     if record_type == "VERIFIED_OBSERVATION":
         body = {
@@ -896,6 +919,26 @@ def _validate_enums(*, record_type: str, record: Mapping[str, object]) -> None:
         "REJECTED",
     }:
         raise RecordError("Evidence status is invalid")
+    if record_type == "EVIDENCE_CHECK" and "normalized_scope" in record:
+        if (
+            type(record["normalized_scope"]) is not dict
+            or any(
+                type(key) is not str
+                or not key
+                or type(value) is not str
+                or not value
+                for key, value in record["normalized_scope"].items()
+            )
+            or type(record["unresolved_scope_dimensions"]) is not list
+            or any(
+                type(value) is not str or not value
+                for value in record["unresolved_scope_dimensions"]
+            )
+            or len(record["unresolved_scope_dimensions"])
+            != len(set(record["unresolved_scope_dimensions"]))
+            or type(record["system_approval_eligible"]) is not bool
+        ):
+            raise RecordError("Evidence scope binding is invalid")
     if record_type == "REVIEW_DECISION":
         if record["decision"] not in {"APPROVE", "REJECT"}:
             raise RecordError("Review decision is invalid")
@@ -1259,6 +1302,18 @@ def _validate_record_semantics(
             != compiled_spec["required_claims"]
         ):
             raise RecordError("ReviewUnit compiled Spec binding differs")
+        if "normalized_scope" in record and (
+            type(record["normalized_scope"]) is not dict
+            or any(
+                type(key) is not str
+                or not key
+                or type(value) is not str
+                or not value
+                for key, value in record["normalized_scope"].items()
+            )
+            or type(record["system_approval_eligible"]) is not bool
+        ):
+            raise RecordError("ReviewUnit scope binding is invalid")
     if record_type == "RAW_BLOB" and (
         record["byte_length"] < 0
         or not record["media_type"]

@@ -1898,6 +1898,9 @@ def _validate_record_graph(
                     required_roles=required_reader_roles(
                         compiled_spec=disclosure_spec,
                     ),
+                    scope_contract=disclosure_spec["compiled"][
+                        "scope_contract"
+                    ],
                     source_reference_ids=list(
                         reader_manifest["source_reference_ids"]
                     ),
@@ -2153,7 +2156,11 @@ def _validate_record_graph(
                 actual_by_role[str(role)]
                 for role in projection["supporting_roles"]
             )
-        target_scope = dict(unit["required_claims"])
+        target_scope = (
+            dict(decision["approved_claims"])
+            if decision["decision"] == "APPROVE"
+            else dict(unit["required_claims"])
+        )
         target = {
             "company_id": manifest["company_id"],
             "period_start": manifest["target_period"]["period_start"],
@@ -2453,6 +2460,9 @@ def _validate_record_graph(
                 reader_payload_body=reader_payload_body,
                 source_references=source_bindings,
                 identity_constraints=evidence["identity_constraints"],
+                scope_contract=attempt_contexts[
+                    str(candidate["attempt_id"])
+                ]["disclosure_spec"]["compiled"]["scope_contract"],
             )
         except ValueError as error:
             raise RunStoreError("EvidenceCheck cannot be replayed") from error

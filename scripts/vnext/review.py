@@ -7,6 +7,7 @@ from typing import Dict, Mapping, Optional, Sequence
 
 from .canonical import CanonicalError, content_hash, parse_utc_timestamp
 from .records import validate_record
+from .scope_contract import scope_satisfies_contract, validate_scope_contract
 from .specs import SEMANTIC_SET_PATHS
 
 
@@ -26,6 +27,85 @@ _OPTIONAL_REVIEW_POLICY_FIELDS = {
 
 class ReviewError(ValueError):
     """Report invalid review binding, decision chain, or approved claims."""
+
+
+def _approved_claims_satisfy_unit(
+    *, review_unit: Mapping[str, object], approved_claims: Mapping[str, object],
+) -> bool:
+    """Check a reviewed scope without allowing caller-defined normalization.
+
+    Args:
+        review_unit: Exact unit carrying compiled Spec authority.
+        approved_claims: HUMAN or SYSTEM canonical decision claims.
+
+    Returns:
+        True when legacy claims match exactly or v2 scope satisfies its Spec.
+    """
+    if type(approved_claims) is not dict:
+        return False
+    required_claims = review_unit["required_claims"]
+    compiled_spec = review_unit["compiled_spec"]
+    scope_contract = (
+        compiled_spec["scope_contract"]
+        if "scope_contract" in compiled_spec
+        else None
+    )
+    if scope_contract is None:
+        return dict(approved_claims) == required_claims
+    validated_contract = validate_scope_contract(value=scope_contract)
+    allowed_dimensions = set(validated_contract["allowed_dimensions"])
+    required_dimensions = set(validated_contract["required_dimensions"])
+    non_scope_required = {
+        key: required_claims[key]
+        for key in required_claims
+        if key not in allowed_dimensions
+    }
+    non_scope_approved = {
+        key: approved_claims[key]
+        for key in approved_claims
+        if key not in allowed_dimensions
+    }
+    normalized_scope = {
+        key: approved_claims[key]
+        for key in approved_claims
+        if key in allowed_dimensions
+    }
+    if (
+        non_scope_approved != non_scope_required
+        or not required_dimensions.issubset(set(normalized_scope))
+    ):
+        return False
+    return scope_satisfies_contract(
+        contract=validated_contract,
+        normalized_scope=normalized_scope,
+    )
+
+
+def _system_approved_claims(*, review_unit: Mapping[str, object]) -> Dict[str, object]:
+    """Build SYSTEM-approved claims only from Evidence-normalized scope data.
+
+    Args:
+        review_unit: Pending ReviewUnit containing Evidence scope binding.
+
+    Returns:
+        Full canonical approval claims with non-scope Spec facts retained.
+
+    Raises:
+        ReviewError: If the Candidate is not mechanically eligible for SYSTEM.
+    """
+    if (
+        "normalized_scope" not in review_unit
+        or review_unit["system_approval_eligible"] is not True
+    ):
+        raise ReviewError("SYSTEM review requires exact enum scope evidence")
+    approved_claims = dict(review_unit["required_claims"])
+    for dimension, canonical_value in review_unit["normalized_scope"].items():
+        approved_claims[dimension] = canonical_value
+    if not _approved_claims_satisfy_unit(
+        review_unit=review_unit, approved_claims=approved_claims,
+    ):
+        raise ReviewError("SYSTEM review scope does not satisfy contract")
+    return approved_claims
 
 
 def build_review_unit(
@@ -74,6 +154,26 @@ def build_review_unit(
     required_claims = semantic["required_claims"]
     if not isinstance(required_claims, dict) or not required_claims:
         raise ReviewError("ReviewUnit required claims must be non-empty")
+    scope_contract = semantic["scope_contract"]
+    normalized_scope = None
+    system_approval_eligible = None
+    if scope_contract is not None:
+        validate_scope_contract(value=scope_contract)
+        if (
+            "normalized_scope" not in evidence_check
+            or "system_approval_eligible" not in evidence_check
+            or "unresolved_scope_dimensions" not in evidence_check
+        ):
+            raise ReviewError("ReviewUnit Evidence scope binding is absent")
+        normalized_scope = dict(evidence_check["normalized_scope"])
+        system_approval_eligible = bool(
+            evidence_check["system_approval_eligible"]
+        )
+        if system_approval_eligible and not scope_satisfies_contract(
+            contract=scope_contract,
+            normalized_scope=normalized_scope,
+        ):
+            raise ReviewError("ReviewUnit Evidence scope is not approvable")
     validated_sources = []
     for binding in source_bindings:
         validated = validate_record(record=binding)
@@ -104,6 +204,9 @@ def build_review_unit(
         "rendered_review_hash": rendered_review_hash,
         "review_renderer_semantic_version": renderer_semantic_version,
     }
+    if normalized_scope is not None:
+        substantive["normalized_scope"] = normalized_scope
+        substantive["system_approval_eligible"] = system_approval_eligible
     record = {
         "record_type": "REVIEW_UNIT",
         "review_unit_hash": content_hash(value=substantive),
@@ -123,6 +226,9 @@ def build_review_unit(
         "rendered_review_hash": rendered_review_hash,
         "review_renderer_semantic_version": renderer_semantic_version,
     }
+    if normalized_scope is not None:
+        record["normalized_scope"] = normalized_scope
+        record["system_approval_eligible"] = system_approval_eligible
     return validate_record(record=record)
 
 
@@ -208,6 +314,12 @@ def _create_review_decision(
         raise ReviewError("Review decision reason is required")
     if dict(required_claims) != review_unit["required_claims"]:
         raise ReviewError("ReviewUnit required claims differ")
+    if decision == "APPROVE" and not _approved_claims_satisfy_unit(
+        review_unit=review_unit, approved_claims=approved_claims,
+    ):
+        raise ReviewError(
+            "Approved scope does not exactly satisfy the ReviewUnit"
+        )
     approval_effect = {
         "review_unit_hash": review_unit["review_unit_hash"],
         "decision": decision,
@@ -321,10 +433,11 @@ def create_system_review_decision(
     # person approved the result and is unavailable unless D-06 opts in.
     if not system_review_allowed(requirement=requirement):
         raise ReviewError("SYSTEM review is not authorized by D-06")
+    approved_claims = _system_approved_claims(review_unit=review_unit)
     return _create_review_decision(
         review_unit=review_unit,
         decision="APPROVE",
-        approved_claims=required_claims,
+        approved_claims=approved_claims,
         required_claims=required_claims,
         reviewer_type="SYSTEM",
         reviewer_id=SYSTEM_REVIEWER_ID,
@@ -425,9 +538,11 @@ def validate_decision_binding(
             )
     if (
         validated_decision["decision"] == "APPROVE"
-        and validated_decision["approved_claims"]
-        != validated_unit["required_claims"]
+        and not _approved_claims_satisfy_unit(
+            review_unit=validated_unit,
+            approved_claims=validated_decision["approved_claims"],
+        )
     ):
         raise ReviewError(
-            "Approved claims do not exactly satisfy the ReviewUnit"
+            "Approved claims do not satisfy the ReviewUnit"
         )

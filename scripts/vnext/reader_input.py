@@ -256,12 +256,19 @@ def build_reader_task_contract(
         Complete task contract used in request construction and freeze replay.
     """
     semantic = compiled_spec["compiled"]
+    scope_contract = validate_scope_contract(
+        value=semantic["scope_contract"],
+    )
     return {
         "disclosure_group": semantic["disclosure_group"],
         "required_roles": list(
             required_reader_roles(compiled_spec=compiled_spec)
         ),
         "required_claims": semantic["required_claims"],
+        "scope_contract": scope_contract,
+        "scope_contract_hash": scope_contract_hash(
+            contract=scope_contract,
+        ),
         "forbidden_confusions": semantic["forbidden_confusions"],
         "prompt_bundle": compiled_spec["prompt_bundle"],
         "output_schema_version": "1",

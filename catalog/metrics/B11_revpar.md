@@ -17,6 +17,45 @@
     "operating_scope": "systemwide",
     "geography": "worldwide"
   },
+  "scope_contract": {
+    "scope_contract_version": "2",
+    "required_dimensions": [
+      "property_population",
+      "operating_scope",
+      "geography"
+    ],
+    "allowed_dimensions": [
+      "property_population",
+      "operating_scope",
+      "geography"
+    ],
+    "exact_enum_aliases": {
+      "property_population": {
+        "comparable": [
+          "Comparable Systemwide Properties"
+        ]
+      },
+      "operating_scope": {
+        "systemwide": [
+          "Comparable Systemwide Properties"
+        ]
+      },
+      "geography": {
+        "worldwide": [
+          "Worldwide"
+        ]
+      }
+    },
+    "selection_preference": {
+      "dimension_order": [
+        "property_population",
+        "operating_scope",
+        "geography"
+      ],
+      "prefer_complete_required_dimensions": true
+    },
+    "cross_dimension_constraints": []
+  },
   "forbidden_confusions": [
     "prior_year",
     "percentage_change",

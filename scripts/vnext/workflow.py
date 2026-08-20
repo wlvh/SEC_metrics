@@ -31,6 +31,7 @@ from .review import build_review_unit, create_system_review_decision
 from .review import effective_review_decision
 from .observations import reviewed_observation, scope_key
 from .requirements import load_requirement_snapshot
+from .scope_contract import scope_satisfies_contract
 from .run_store import append_review_decision, append_run_record
 from .run_store import append_run_records_atomically
 from .run_store import create_run, load_open_run
@@ -650,6 +651,7 @@ def _create_review_run_with_traits(
         response_text=response.decode("utf-8"),
         attempt_id=str(attempt["attempt_id"]),
         required_roles=roles,
+        scope_contract=semantic["scope_contract"],
         source_reference_ids=[str(source_reference["source_reference_id"])],
         derived_asset_ids=[str(derived_asset["derived_asset_id"])],
     )
@@ -662,6 +664,7 @@ def _create_review_run_with_traits(
         reader_payload_body=reader_payload_body,
         source_references=[source_reference],
         identity_constraints=semantic["identity_constraints"],
+        scope_contract=semantic["scope_contract"],
     )
     validate_workflow_acceptance_binding(
         adapter=adapter,
@@ -846,15 +849,46 @@ def finalize_reviewed_direct_results(
         if metric_id not in compiled_by_id:
             raise WorkflowError("Published role MetricSpec is absent from Run")
         role_metric_specs[role] = compiled_by_id[metric_id]
-    target_scope = dict(unit["required_claims"])
+    target_scope = (
+        dict(decision["approved_claims"])
+        if decision["decision"] == "APPROVE"
+        else dict(unit["required_claims"])
+    )
     for role in role_metric_specs:
-        metric_claims = role_metric_specs[role]["compiled"][
-            "required_claims"
-        ]
-        if dict(metric_claims) != target_scope:
+        metric_semantic = role_metric_specs[role]["compiled"]
+        metric_claims = metric_semantic["required_claims"]
+        scope_contract = metric_semantic["scope_contract"]
+        if scope_contract is None and dict(metric_claims) != target_scope:
             raise WorkflowError(
                 "Reviewed metric required claims differ from ReviewUnit"
             )
+        if scope_contract is not None:
+            allowed_dimensions = set(scope_contract["allowed_dimensions"])
+            non_scope_expected = {
+                key: metric_claims[key]
+                for key in metric_claims
+                if key not in allowed_dimensions
+            }
+            non_scope_target = {
+                key: target_scope[key]
+                for key in target_scope
+                if key not in allowed_dimensions
+            }
+            normalized_scope = {
+                key: target_scope[key]
+                for key in target_scope
+                if key in allowed_dimensions
+            }
+            if (
+                non_scope_target != non_scope_expected
+                or not scope_satisfies_contract(
+                    contract=scope_contract,
+                    normalized_scope=normalized_scope,
+                )
+            ):
+                raise WorkflowError(
+                    "Reviewed metric scope differs from its contract"
+                )
     target = {
         "company_id": manifest["company_id"],
         "period_start": manifest["target_period"]["period_start"],

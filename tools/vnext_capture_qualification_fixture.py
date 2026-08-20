@@ -454,6 +454,7 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
             response_text=transport.response_bytes.decode("utf-8"),
             attempt_id="attempt:qualification-capture:" + fixture_id,
             required_roles=required_reader_roles(compiled_spec=compiled_spec),
+            scope_contract=compiled_spec["compiled"]["scope_contract"],
             source_reference_ids=[
                 str(source_reference["source_reference_id"])
             ],
@@ -470,6 +471,7 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
             identity_constraints=compiled_spec["compiled"][
                 "identity_constraints"
             ],
+            scope_contract=compiled_spec["compiled"]["scope_contract"],
         )
         if evidence["status"] != "PASS":
             raise CaptureError(

@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Dict, Sequence
+from typing import Dict, Mapping, Sequence, Tuple
 
 from .canonical import CanonicalError, content_hash, sha256_bytes
 from .canonical import strict_json_loads
 from .records import validate_record
+from .scope_contract import exact_enum_alias, ScopeContractError
+from .scope_contract import validate_scope_contract
 
 
 ROOT_FIELDS = {
@@ -44,7 +46,14 @@ CELL_LOCATOR_FIELDS = {
     "rowspan",
     "table_id",
 }
-LABEL_LOCATOR_FIELDS = {"location_type", "locator", "text"}
+SCOPE_CLAIM_FIELDS = {"dimension", "evidence_locator_ids", "raw_value"}
+LABEL_LOCATOR_FIELDS = {
+    "id",
+    "location_type",
+    "locator",
+    "raw_text",
+    "supports_dimensions",
+}
 UNRESOLVED_FIELDS = {"description"}
 
 
@@ -115,14 +124,75 @@ def _validate_cell_locator(*, value: object) -> Dict[str, object]:
     return locator
 
 
-def _validate_competing(*, value: object) -> Dict[str, object]:
-    """Validate one competing claim with a replayable locator.
+def _validate_claimed_scope(
+    *, value: object, scope_contract: Mapping[str, object], label: str,
+) -> Tuple[list, bool]:
+    """Validate raw scope claims without normalizing any model-supplied text.
+
+    Args:
+        value: Reader supplied ordered scope claim array.
+        scope_contract: Spec-owned generic scope contract v2.
+        label: Stable caller diagnostic label.
+
+    Returns:
+        Validated raw claims and whether missing/unknown aliases require review.
+    """
+    if type(value) is not list:
+        raise ReaderError("{} scope must be an ordered array".format(label))
+    allowed_dimensions = set(scope_contract["allowed_dimensions"])
+    required_dimensions = set(scope_contract["required_dimensions"])
+    claims = []
+    dimensions = []
+    needs_review = False
+    for item in value:
+        claim = _require_exact_mapping(
+            value=item, fields=SCOPE_CLAIM_FIELDS, label=label + " scope claim",
+        )
+        if (
+            type(claim["dimension"]) is not str
+            or claim["dimension"] not in allowed_dimensions
+            or type(claim["raw_value"]) is not str
+            or not claim["raw_value"]
+            or type(claim["evidence_locator_ids"]) is not list
+            or not claim["evidence_locator_ids"]
+            or any(
+                type(locator_id) is not str or not locator_id
+                for locator_id in claim["evidence_locator_ids"]
+            )
+            or len(claim["evidence_locator_ids"])
+            != len(set(claim["evidence_locator_ids"]))
+        ):
+            raise ReaderError("{} scope claim is invalid".format(label))
+        dimensions.append(claim["dimension"])
+        try:
+            canonical = exact_enum_alias(
+                contract=scope_contract,
+                dimension=claim["dimension"],
+                raw_value=claim["raw_value"],
+            )
+        except ScopeContractError as error:
+            raise ReaderError("{} scope contract is invalid".format(label)) from error
+        if canonical is None:
+            needs_review = True
+        claims.append(claim)
+    if len(dimensions) != len(set(dimensions)):
+        raise ReaderError("{} scope dimensions are duplicated".format(label))
+    if not required_dimensions.issubset(set(dimensions)):
+        needs_review = True
+    return claims, needs_review
+
+
+def _validate_competing(
+    *, value: object, scope_contract: Mapping[str, object],
+) -> Dict[str, object]:
+    """Validate one competing raw claim with a replayable same-table locator.
 
     Args:
         value: Candidate competing claim.
+        scope_contract: Spec-owned generic scope contract v2.
 
     Returns:
-        Isolated claim.
+        Isolated claim containing raw scope facts only.
     """
     claim = _require_exact_mapping(
         value=value, fields=COMPETING_FIELDS, label="competing candidate",
@@ -138,19 +208,25 @@ def _validate_competing(*, value: object) -> Dict[str, object]:
             raise ReaderError(
                 "Competing candidate field is empty: {}".format(key)
             )
-    if not isinstance(claim["claimed_scope"], dict):
-        raise ReaderError("Competing candidate scope must be an object")
+    claim["claimed_scope"], _needs_review = _validate_claimed_scope(
+        value=claim["claimed_scope"],
+        scope_contract=scope_contract,
+        label="Competing candidate",
+    )
     return claim
 
 
-def _validate_label_locator(*, value: object) -> Dict[str, object]:
-    """Validate one local caption/header/row/cell evidence locator.
+def _validate_label_locator(
+    *, value: object, scope_contract: Mapping[str, object],
+) -> Dict[str, object]:
+    """Validate one local raw scope-evidence locator and supported dimensions.
 
     Args:
-        value: Candidate label evidence mapping.
+        value: Candidate scope-evidence mapping.
+        scope_contract: Spec-owned generic scope contract v2.
 
     Returns:
-        Isolated label with a strict table or cell locator.
+        Isolated evidence locator with one exact table or cell locator.
     """
     label = _require_exact_mapping(
         value=value,
@@ -173,19 +249,36 @@ def _validate_label_locator(*, value: object) -> Dict[str, object]:
         label["locator"] = _validate_cell_locator(value=label["locator"])
     else:
         raise ReaderError("Scope evidence location_type is unknown")
-    if not isinstance(label["text"], str) or not label["text"]:
-        raise ReaderError("Scope evidence text is empty")
+    if (
+        type(label["id"]) is not str
+        or not label["id"]
+        or type(label["raw_text"]) is not str
+        or not label["raw_text"]
+        or type(label["supports_dimensions"]) is not list
+        or not label["supports_dimensions"]
+        or any(
+            type(dimension) is not str
+            or dimension not in scope_contract["allowed_dimensions"]
+            for dimension in label["supports_dimensions"]
+        )
+        or len(label["supports_dimensions"])
+        != len(set(label["supports_dimensions"]))
+    ):
+        raise ReaderError("Scope evidence locator fields are invalid")
     return label
 
 
-def _validate_candidate(*, value: object) -> Dict[str, object]:
-    """Validate one selected role and all its replayable alternatives.
+def _validate_candidate(
+    *, value: object, scope_contract: Mapping[str, object],
+) -> Tuple[Dict[str, object], bool]:
+    """Validate one selected role and expose whether it requires review.
 
     Args:
         value: Candidate role mapping.
+        scope_contract: Spec-owned generic scope contract v2.
 
     Returns:
-        Isolated validated candidate.
+        Validated candidate plus a status signal for unresolved scope facts.
     """
     candidate = _require_exact_mapping(
         value=value, fields=CANDIDATE_FIELDS, label="selected candidate",
@@ -200,22 +293,39 @@ def _validate_candidate(*, value: object) -> Dict[str, object]:
             raise ReaderError(
                 "Selected candidate field is empty: {}".format(key)
             )
-    if not isinstance(candidate["claimed_scope"], dict):
-        raise ReaderError("Selected candidate scope must be an object")
+    candidate["claimed_scope"], needs_review = _validate_claimed_scope(
+        value=candidate["claimed_scope"],
+        scope_contract=scope_contract,
+        label="Selected candidate",
+    )
     candidate["locator"] = _validate_cell_locator(value=candidate["locator"])
     if not isinstance(candidate["scope_evidence_locators"], list):
         raise ReaderError("Scope evidence locators must be an ordered array")
     labels = []
     for item in candidate["scope_evidence_locators"]:
-        labels.append(_validate_label_locator(value=item))
+        labels.append(_validate_label_locator(
+            value=item, scope_contract=scope_contract,
+        ))
+    label_ids = [label["id"] for label in labels]
+    if len(label_ids) != len(set(label_ids)):
+        raise ReaderError("Scope evidence locator IDs are duplicated")
+    by_id = {label["id"]: label for label in labels}
+    for scope_claim in candidate["claimed_scope"]:
+        for locator_id in scope_claim["evidence_locator_ids"]:
+            if (
+                locator_id not in by_id
+                or scope_claim["dimension"]
+                not in by_id[locator_id]["supports_dimensions"]
+            ):
+                raise ReaderError("Scope claim evidence binding differs")
     candidate["scope_evidence_locators"] = labels
     if not isinstance(candidate["competing_candidates"], list):
         raise ReaderError("Competing candidates must be an ordered array")
     candidate["competing_candidates"] = [
-        _validate_competing(value=item)
+        _validate_competing(value=item, scope_contract=scope_contract)
         for item in candidate["competing_candidates"]
     ]
-    return candidate
+    return candidate, needs_review
 
 
 def validate_reader_output(
@@ -223,6 +333,7 @@ def validate_reader_output(
     response_text: str,
     attempt_id: str,
     required_roles: Sequence[str],
+    scope_contract: Mapping[str, object],
     source_reference_ids: Sequence[str],
     derived_asset_ids: Sequence[str],
 ) -> Dict[str, object]:
@@ -232,6 +343,7 @@ def validate_reader_output(
         response_text: Raw model JSON response.
         attempt_id: Audit attempt that produced these exact response bytes.
         required_roles: Spec-derived exact role list.
+        scope_contract: Spec-owned generic scope normalization authority.
         source_reference_ids: Source bindings sent to the Reader.
         derived_asset_ids: Derived assets sent to the Reader.
 
@@ -251,6 +363,12 @@ def validate_reader_output(
         or len(required_roles) != len(set(required_roles))
     ):
         raise ReaderError("Required Reader roles must be unique and non-empty")
+    try:
+        validated_scope_contract = validate_scope_contract(
+            value=scope_contract,
+        )
+    except ScopeContractError as error:
+        raise ReaderError("Reader scope contract is invalid") from error
     for label, identifiers in (
         ("SourceReference", source_reference_ids),
         ("DerivedAsset", derived_asset_ids),
@@ -292,9 +410,14 @@ def validate_reader_output(
         raise ReaderError("Reader disclosure_group is empty")
     if not isinstance(parsed["candidates"], list):
         raise ReaderError("Reader candidates must be an ordered array")
-    candidates = [
-        _validate_candidate(value=item) for item in parsed["candidates"]
-    ]
+    candidates = []
+    scope_review_required = False
+    for item in parsed["candidates"]:
+        candidate, needs_review = _validate_candidate(
+            value=item, scope_contract=validated_scope_contract,
+        )
+        candidates.append(candidate)
+        scope_review_required = scope_review_required or needs_review
     roles = [str(candidate["role"]) for candidate in candidates]
     if roles != list(required_roles):
         raise ReaderError("Reader roles are missing, duplicated, or reordered")
@@ -360,7 +483,10 @@ def validate_reader_output(
         ],
         "status": (
             "REVIEW_REQUIRED"
-            if substantive["unresolved_competing_claims"]
+            if (
+                substantive["unresolved_competing_claims"]
+                or scope_review_required
+            )
             else "CANDIDATE"
         ),
     }

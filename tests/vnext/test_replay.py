@@ -2746,6 +2746,9 @@ class ReplayTest(unittest.TestCase):
                 "checks",
                 "reason_codes",
                 "identity_constraints",
+                "normalized_scope",
+                "unresolved_scope_dimensions",
+                "system_approval_eligible",
             )
             forged["evidence_check_id"] = content_hash(
                 value={key: forged[key] for key in evidence_fields}
@@ -2893,6 +2896,8 @@ class ReplayTest(unittest.TestCase):
                 "review_context_hash",
                 "rendered_review_hash",
                 "review_renderer_semantic_version",
+                "normalized_scope",
+                "system_approval_eligible",
             )
             changed["review_unit_hash"] = content_hash(
                 value={key: changed[key] for key in unit_fields}
