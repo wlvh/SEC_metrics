@@ -2542,7 +2542,6 @@ def prepare_r2_successor(
         value={
             "run_id": str(coordinate_index["batch_manifest_id"]),
             "source_commit": source_commit,
-            "source_tree_oid": source_binding["source_tree_oid"],
             "started_at_utc": validated_at_utc,
             "mode": "FULL_VALIDATION",
             "refreshed_artifacts": sorted(

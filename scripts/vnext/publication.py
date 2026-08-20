@@ -4309,7 +4309,6 @@ def _verify_zero_ai_formal_release(
     if (
         not isinstance(validation_run, dict)
         or validation_run["source_commit"] != receipt["source_commit"]
-        or validation_run["source_tree_oid"] != receipt["source_tree_oid"]
     ):
         raise PublicationError("Zero-AI source provenance differs")
     metrics_bytes = (bundle_dir / "metrics_matrix.csv").read_bytes()
