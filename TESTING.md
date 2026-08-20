@@ -19,6 +19,8 @@ effective D-36 不允许仓库金额 hard cap 或 preflight blocker；estimated/
 
 WB-3生产接线的成功边界必须运行真实Candidate构造和`check_evidence`，不得mock acceptance validator。schema-valid但Evidence失败或task/disclosure mismatch时，唯一injected transport调用形成`EVIDENCE_FAILURE` terminal、释放reservation、停止batch，且acceptance/success/reuse exact set为空；Evidence PASS后首次调用形成content-addressed acceptance，第二次exact operator resume的mock invocation为0并复用同一acceptance identity。reuse负例还会在临时目录篡改持久Candidate后重签外层receipt，要求在transport前fail closed。
 
+provider egress机器门为`python3 tools/check_provider_egress.py`：扫描`scripts/**`与`tools/**`全部生产Python，唯一直接opener必须是`ai_adapter.py::_open_provider_request`，其provider transport caller、repository transport caller和remote adapter constructor exact set固定；capture/context-free factory必须含稳定fail-closed码。动态canary同时证明未授权公共入口opener=0，只有受控operator→Workflow→plan→reservation→egress marker后injected opener=1。context负例在payload bytes未超限而UTF-8 byte token上界超限时以`CONTEXT_LIMIT`、transport invocation=0失败。`paid_model_provider_call_count`只统计billing class为`PAID_MODEL_ENDPOINT`的真实provider marker，不是账单确认；receipt保存`PROVIDER_POLICY_BILLING_CLASS_X_EGRESS_MARKER`来源。
+
 ## 1. 测试原则
 
 - 测行为与契约，不用脆弱的源码字符串或固定数量断言替代真实结果。

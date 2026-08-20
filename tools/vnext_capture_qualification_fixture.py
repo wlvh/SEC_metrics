@@ -1,10 +1,9 @@
-"""Capture one real SEC layout and fixed DeepSeek response for qualification.
+"""Fail closed because PR-2 does not authorize AI qualification capture.
 
-The command reads only the repository-owned candidate catalog, obtains the
-primary filing through ``SecHttpClient``, builds the complete table-grid and
-Reader request, invokes the effective D-01 DeepSeek transport once, and writes
-an immutable recorded fixture.  ``vnext_qualification.py`` later replays that
-fixture without network access through the normal Reader/Evidence/Review path.
+Existing helpers remain readable for historical fixture provenance, but the
+public command stops with ``AI_QUALIFICATION_EGRESS_NOT_ENABLED`` before SEC
+or provider construction. A later authorized WB-4+ change must route capture
+through complete WB-3 execution identity before re-enabling it.
 """
 
 from __future__ import annotations
@@ -363,6 +362,14 @@ def capture(*, fixture_id: str) -> Dict[str, object]:
     Raises:
         CaptureError: On unsafe target state or failed source/model validation.
     """
+    del fixture_id
+    raise CaptureError(
+        code="AI_QUALIFICATION_EGRESS_NOT_ENABLED",
+        message="PR-2 does not authorize AI qualification capture",
+    )
+
+    # This historical construction code remains unreachable only so existing
+    # fixture provenance can still be reviewed while WB-4+ is unimplemented.
     candidate = _candidate(fixture_id=fixture_id)
     fixture_root = _FIXTURE_ROOT / fixture_id
     if fixture_root.exists():
@@ -620,7 +627,7 @@ def main(*, argv: Sequence[str]) -> int:
         argv: CLI tokens excluding the executable path.
 
     Returns:
-        Zero only after a real SEC filing and DeepSeek response are persisted.
+        Stable nonzero BLOCKED while PR-2 qualification egress is disabled.
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("--debug", action="store_true")

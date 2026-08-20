@@ -19,6 +19,9 @@ from tests.vnext.common import reviewed_fixture, sample_asset
 from tests.vnext.common import sample_source_reference
 from tests.vnext.test_ai_reader_contract import live_sec_reader_repository
 import tools.vnext_operator as vnext_operator
+import tools.vnext_capture_qualification_fixture as capture_tool
+from tools.check_provider_egress import ALLOWED_OPENER_CALLS
+from tools.check_provider_egress import scan_provider_opener_calls
 from vnext import ai_adapter
 from vnext.batch_workflow import request_attempt_binding
 from vnext.canonical import content_hash, sha256_bytes
@@ -32,6 +35,8 @@ from vnext.invocation_control import execute_batch, execute_invocation
 from vnext.invocation_control import execution_identity
 from vnext.invocation_control import recover_abandoned_before_egress
 from vnext.invocation_control import structured_only_result
+from vnext.provider_runtime import estimate_context_tokens
+from vnext.provider_runtime import load_provider_runtime_authority
 from vnext.reader_input import build_reader_input_manifest
 from vnext.reader_input import prepare_reader_request
 
@@ -50,7 +55,6 @@ def identity(*, label: str) -> str:
 def transport_result(
     *, status_code: int = 200, error_class: str = "",
     response_body: bytes = GENERIC_RESPONSE_BODY, actual_cost: str = "0",
-    paid_call: bool = False,
 ) -> dict:
     """Build one strict injected transport result."""
     return {
@@ -58,7 +62,6 @@ def transport_result(
         "error_class": error_class,
         "response_body": response_body,
         "provider_request_id": "mock-request-1",
-        "paid_call": paid_call,
         "usage": {
             "input_tokens": 10,
             "output_tokens": 2,
@@ -93,6 +96,14 @@ def plan(
         maximum_payload_bytes=maximum_payload_bytes,
         maximum_context_tokens=maximum_context_tokens,
         estimated_context_tokens=estimated_context_tokens,
+        context_authority_hash=identity(label="context-authority"),
+        estimator_id="utf8_byte_upper_bound",
+        estimator_version="1",
+        estimator_method="UTF8_BYTE_UPPER_BOUND",
+        billing_class="PAID_MODEL_ENDPOINT",
+        paid_call_observation_source=(
+            "PROVIDER_POLICY_BILLING_CLASS_X_EGRESS_MARKER"
+        ),
         pricing_snapshot_hash=identity(label="pricing"),
         estimated_cost=estimated_cost,
     )
@@ -273,8 +284,16 @@ class ProductionReaderTransport:
         self.mutation = mutation
         self.calls = calls
 
-    def complete(self, *, prepared_request: object) -> object:
+    def complete(
+        self, *, prepared_request: object, egress_capability: object,
+    ) -> object:
         """Return the injected response after rebuilding live SEC authority."""
+        if egress_capability is not (
+            ai_adapter._RESERVATION_OWNER_EGRESS_CAPABILITY
+        ):
+            raise AssertionError(
+                "Injected transport lacks controller capability"
+            )
         rebuilt = ai_adapter._validate_live_prepared_request(
             prepared_request=prepared_request,
         )
@@ -332,6 +351,66 @@ class ProductionReaderTransport:
             ),
             outbound_request_bytes=outbound,
             output_schema_bytes=output_schema,
+        )
+
+
+class CanaryProviderResponse:
+    """Expose one deterministic provider response as a context manager."""
+
+    def __init__(self, *, response_bytes: bytes) -> None:
+        """Bind exact bytes and one provider request ID header."""
+        self.response_bytes = response_bytes
+        self.headers = {"x-request-id": "request:canary-provider"}
+
+    def __enter__(self) -> "CanaryProviderResponse":
+        """Return this immutable response without side effects."""
+        return self
+
+    def __exit__(self, *args: object) -> None:
+        """Close the injected context without suppressing errors."""
+        del args
+
+    def read(self) -> bytes:
+        """Return the exact injected provider response bytes."""
+        return self.response_bytes
+
+
+class CanaryDeepSeekOpener:
+    """Count the sole provider opener and synthesize valid Reader output."""
+
+    def __init__(self) -> None:
+        """Initialize an empty invocation ledger."""
+        self.calls: List[object] = []
+
+    def open(self, *, fullurl: object, timeout: int) -> object:
+        """Return one strict DeepSeek envelope derived from request bytes."""
+        self.calls.append((fullurl, timeout))
+        envelope = json.loads(fullurl.data.decode("utf-8"))
+        reader_payload = json.loads(envelope["messages"][1]["content"])
+        manifest = reader_payload["reader_input_manifest"]
+        asset = {
+            "derived_asset_id": manifest["derived_asset_id"],
+            "tables": reader_payload["untrusted_table_data"],
+        }
+        assistant = reader_response(asset=asset).decode("utf-8")
+        response = {
+            "id": "response:canary-provider",
+            "model": "deepseek-v4-flash",
+            "choices": [
+                {
+                    "finish_reason": "stop",
+                    "message": {"role": "assistant", "content": assistant},
+                }
+            ],
+            "usage": {
+                "prompt_tokens": 10,
+                "completion_tokens": 2,
+                "prompt_cache_hit_tokens": 0,
+                "prompt_cache_miss_tokens": 10,
+            },
+        }
+        return CanaryProviderResponse(
+            response_bytes=json.dumps(response).encode("utf-8")
         )
 
 
@@ -426,6 +505,14 @@ class InvocationControlTest(unittest.TestCase):
         invocation_plan = plan(estimated_cost="999999999999")
         self.assertTrue(invocation_plan["release_input_plan_id"].startswith("sha256:"))
         self.assertTrue(invocation_plan["ai_invocation_plan_id"].startswith("sha256:"))
+        self.assertEqual(
+            "UTF8_BYTE_UPPER_BOUND",
+            invocation_plan["observability"]["estimator_method"],
+        )
+        self.assertEqual(
+            "PAID_MODEL_ENDPOINT",
+            invocation_plan["billing_policy"]["billing_class"],
+        )
         execution_id = execution(
             invocation_plan=invocation_plan, owner="owner-a", at=UTC,
         )
@@ -440,6 +527,63 @@ class InvocationControlTest(unittest.TestCase):
             "batch_monetary_cap",
         ):
             self.assertNotIn(field, serialized)
+
+    def test_context_authority_uses_honest_utf8_byte_upper_bound(self) -> None:
+        """Bind the DeepSeek context limit and non-exact estimator method."""
+        authority = load_provider_runtime_authority(
+            repo_root=REPO_ROOT,
+            provider="deepseek",
+            model="deepseek-v4-flash",
+            api="chat_completions",
+        )
+        self.assertEqual(1000000, authority["maximum_context_tokens"])
+        self.assertEqual(
+            "UTF8_BYTE_UPPER_BOUND", authority["estimator_method"],
+        )
+        self.assertEqual(
+            len(REQUEST_BODY),
+            estimate_context_tokens(
+                request_body=REQUEST_BODY, authority=authority,
+            ),
+        )
+
+    def test_paid_call_counts_paid_endpoint_markers_not_claimed_bills(
+        self,
+    ) -> None:
+        """Derive paid calls from policy plus real egress marker."""
+        with tempfile.TemporaryDirectory() as directory:
+            invocation_plan = plan()
+            transport = MockTransport(results=[transport_result()])
+            transport.transport_kind = "REAL_MODEL_PROVIDER"
+            result = execute_invocation(
+                workspace_dir=Path(directory),
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution(
+                    invocation_plan=invocation_plan,
+                    owner="paid-endpoint-owner",
+                    at="2026-08-19T12:04:00Z",
+                ),
+                owner_token="paid-endpoint-owner",
+                authorized_at_utc="2026-08-19T12:04:00Z",
+                clock=clock,
+                transport=transport,
+                response_validator=validate_response,
+                evidence_validator=validate_evidence,
+            )
+        self.assertEqual(1, result["counters"][
+            "real_model_provider_egress_count"
+        ])
+        self.assertEqual(1, result["counters"][
+            "paid_model_provider_call_count"
+        ])
+        self.assertEqual(
+            "PROVIDER_POLICY_BILLING_CLASS_X_EGRESS_MARKER",
+            result["attempts"][0]["paid_call_observation_source"],
+        )
+        self.assertTrue(
+            result["attempts"][0]["paid_model_provider_call_observed"]
+        )
 
     def test_production_adapter_routes_repository_transport_through_wb3(
         self,
@@ -533,6 +677,122 @@ class InvocationControlTest(unittest.TestCase):
                 "real_model_provider_egress_count"
             ],
         )
+
+    def test_remote_factories_and_capture_require_wb3(self) -> None:
+        """Keep every public no-context surface before the provider opener."""
+        canary = CanaryDeepSeekOpener()
+        fixture = production_reader_fixture()
+        with mock.patch.object(
+            ai_adapter, "_DEEPSEEK_OPENER", canary,
+        ), mock.patch.object(
+            ai_adapter, "_OPENAI_OPENER", canary,
+        ):
+            with self.assertRaisesRegex(
+                ai_adapter.AIAdapterError,
+                "AI_QUALIFICATION_EGRESS_NOT_ENABLED",
+            ):
+                ai_adapter.capture_deepseek_reader_response(
+                    prepared_request=fixture["prepared_request"]
+                )
+            with self.assertRaisesRegex(
+                ai_adapter.AIAdapterError,
+                "WB3_EXECUTION_CONTEXT_REQUIRED",
+            ):
+                ai_adapter.build_approved_transport_adapter()
+            with self.assertRaises(capture_tool.CaptureError) as captured:
+                capture_tool.capture(fixture_id="disabled-canary")
+            self.assertEqual(
+                "AI_QUALIFICATION_EGRESS_NOT_ENABLED",
+                captured.exception.code,
+            )
+            with tempfile.TemporaryDirectory() as directory:
+                adapter = (
+                    ai_adapter.build_invocation_controlled_transport_adapter(
+                        release_input_plan_id=identity(label="canary-release"),
+                        workspace_dir=Path(directory),
+                        owner_token="canary-owner",
+                    )
+                )
+                with self.assertRaisesRegex(
+                    ai_adapter.AIAdapterError,
+                    "validated live source authority",
+                ):
+                    adapter.complete(request_bytes=b"caller-selected")
+                with self.assertRaisesRegex(
+                    ai_adapter.AIAdapterError,
+                    "controller context is incomplete",
+                ):
+                    adapter._complete_authorized(
+                        prepared_request=fixture["prepared_request"]
+                    )
+        self.assertEqual([], canary.calls)
+
+    def test_controlled_execution_is_only_provider_opener_path(self) -> None:
+        """Reach one opener only after plan, marker, and reservation."""
+        canary = CanaryDeepSeekOpener()
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = cutover_reader_plan_fixture(
+                workspace=Path(directory) / "fixture"
+            )
+            run_dir = Path(directory) / "runs" / "canary-controlled"
+            with mock.patch.object(
+                ai_adapter, "_REPOSITORY_ROOT", fixture["repo_root"],
+            ), mock.patch.object(
+                ai_adapter, "_DEEPSEEK_OPENER", canary,
+            ), mock.patch.object(
+                ai_adapter._InvocationControllerTransport,
+                "transport_kind",
+                "MOCK",
+            ), mock.patch.object(
+                vnext_operator, "REPO_ROOT", fixture["repo_root"],
+            ), mock.patch.dict(
+                os.environ,
+                {
+                    "DEEPSEEK_API_KEY": "injected-only",
+                    "SEC_CONTACT_EMAIL": "sec-tests@wlvh.com",
+                },
+                clear=False,
+            ):
+                result = vnext_operator._prepare(
+                    arguments=operator_arguments(
+                        run_dir=run_dir, fixture=fixture,
+                    )
+                )
+            state = run_dir.parent / "invocation_control"
+            execution_receipt = json.loads(
+                next((state / "executions").iterdir()).read_text(
+                    encoding="utf-8"
+                )
+            )
+            marker = json.loads(
+                next((state / "egress").rglob("*.json")).read_text(
+                    encoding="utf-8"
+                )
+            )
+        self.assertEqual("PENDING_HUMAN_REVIEW", result["status"])
+        self.assertEqual(1, len(canary.calls))
+        self.assertEqual("MOCK", marker["transport_kind"])
+        self.assertFalse(marker["paid_model_provider_call_observed"])
+        self.assertEqual(1, execution_receipt["counters"][
+            "mock_transport_invocation_count"
+        ])
+        self.assertEqual(0, execution_receipt["counters"][
+            "real_model_provider_egress_count"
+        ])
+        self.assertEqual(0, execution_receipt["counters"][
+            "paid_model_provider_call_count"
+        ])
+
+    def test_ast_gate_detects_an_added_provider_urlopen(self) -> None:
+        """Make one additional urllib provider opener violate the exact set."""
+        calls = scan_provider_opener_calls(
+            source_text=(
+                "def bypass():\n"
+                "    return urllib.request.urlopen('https://api.invalid')\n"
+            ),
+            relative_path="scripts/vnext/ai_adapter.py",
+        )
+        self.assertTrue(set(calls) - ALLOWED_OPENER_CALLS)
 
     def test_cutover_evidence_failure_has_no_success_or_reuse(self) -> None:
         """Stop Cutover after one schema-valid mechanically false response."""

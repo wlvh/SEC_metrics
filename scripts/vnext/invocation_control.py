@@ -22,6 +22,7 @@ from .requirements import load_requirement_snapshot
 PLAN_FIELDS = {
     "ai_invocation_plan_id",
     "api",
+    "billing_policy",
     "invocation_policy",
     "model",
     "observability",
@@ -41,6 +42,10 @@ PLAN_FIELDS = {
 }
 RESOURCE_LIMIT_FIELDS = {"maximum_context_tokens", "maximum_payload_bytes"}
 OBSERVABILITY_FIELDS = {
+    "context_authority_hash",
+    "estimator_id",
+    "estimator_method",
+    "estimator_version",
     "estimated_context_tokens",
     "estimated_cost",
     "pricing_snapshot_hash",
@@ -70,7 +75,6 @@ ACCEPTANCE_RECEIPT_FIELDS = ACCEPTANCE_DRAFT_FIELDS | {
 }
 TRANSPORT_RESULT_FIELDS = {
     "error_class",
-    "paid_call",
     "provider_request_id",
     "response_body",
     "status_code",
@@ -111,17 +115,23 @@ INVOCATION_POLICY_FIELDS = {
     "d36_record_hash",
     "requirement_closure_hash",
 }
+BILLING_POLICY_FIELDS = {
+    "billing_class",
+    "paid_call_observation_source",
+}
 SUCCESS_RESPONSE_FIELDS = {
     "acceptance_receipt_id",
     "ai_invocation_plan_id",
     "api",
     "attempt_receipt_id",
     "model",
-    "paid_call",
+    "billing_class",
     "provider",
     "provider_request_body_sha256",
     "provider_request_id",
     "provider_request_identity",
+    "paid_call_observation_source",
+    "paid_model_provider_call_observed",
     "record_type",
     "response_body_path",
     "response_body_sha256",
@@ -295,6 +305,12 @@ def build_ai_invocation_plan(
     maximum_payload_bytes: int,
     maximum_context_tokens: int,
     estimated_context_tokens: int,
+    context_authority_hash: str,
+    estimator_id: str,
+    estimator_version: str,
+    estimator_method: str,
+    billing_class: str,
+    paid_call_observation_source: str,
     pricing_snapshot_hash: str,
     estimated_cost: str,
 ) -> Dict[str, object]:
@@ -313,7 +329,13 @@ def build_ai_invocation_plan(
         request_body: Exact outbound provider request bytes.
         maximum_payload_bytes: Non-monetary hard payload limit.
         maximum_context_tokens: Non-monetary hard context limit.
-        estimated_context_tokens: Deterministic pre-egress token estimate.
+        estimated_context_tokens: Deterministic pre-egress token upper bound.
+        context_authority_hash: Versioned provider/model context authority.
+        estimator_id: Repository context-estimator identity.
+        estimator_version: Explicit estimator semantic version.
+        estimator_method: Honest exact or upper-bound method label.
+        billing_class: Provider-policy endpoint billing classification.
+        paid_call_observation_source: Mechanical paid-call count source.
         pricing_snapshot_hash: Non-blocking pricing observability identity.
         estimated_cost: Non-blocking canonical cost estimate.
 
@@ -327,6 +349,7 @@ def build_ai_invocation_plan(
         ("task contract hash", task_contract_hash),
         ("output schema hash", output_schema_hash),
         ("pricing snapshot hash", pricing_snapshot_hash),
+        ("context authority hash", context_authority_hash),
     ):
         _sha256_identity(value=identity, label=label)
     for label, value in (
@@ -334,6 +357,11 @@ def build_ai_invocation_plan(
         ("provider", provider),
         ("model", model),
         ("api", api),
+        ("estimator id", estimator_id),
+        ("estimator version", estimator_version),
+        ("estimator method", estimator_method),
+        ("billing class", billing_class),
+        ("paid call observation source", paid_call_observation_source),
     ):
         _text(value=value, label=label)
     if not isinstance(request_body, bytes) or not request_body:
@@ -386,7 +414,15 @@ def build_ai_invocation_plan(
             "maximum_payload_bytes": maximum_payload_bytes,
             "maximum_context_tokens": maximum_context_tokens,
         },
+        "billing_policy": {
+            "billing_class": billing_class,
+            "paid_call_observation_source": paid_call_observation_source,
+        },
         "observability": {
+            "context_authority_hash": context_authority_hash,
+            "estimator_id": estimator_id,
+            "estimator_version": estimator_version,
+            "estimator_method": estimator_method,
             "estimated_context_tokens": estimated_context_tokens,
             "pricing_snapshot_hash": pricing_snapshot_hash,
             "estimated_cost": _decimal_observation(
@@ -446,6 +482,16 @@ def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, obje
     )
     if any(type(limits[field]) is not int or limits[field] <= 0 for field in limits):
         raise InvocationControlError("Resource limits are invalid")
+    billing_policy = _object(
+        value=value["billing_policy"], label="billing policy"
+    )
+    _exact_fields(
+        value=billing_policy,
+        expected=BILLING_POLICY_FIELDS,
+        label="billing policy",
+    )
+    for field in BILLING_POLICY_FIELDS:
+        _text(value=billing_policy[field], label=field)
     observability = _object(value=value["observability"], label="observability")
     _exact_fields(
         value=observability,
@@ -461,6 +507,12 @@ def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, obje
         value=observability["pricing_snapshot_hash"],
         label="pricing snapshot hash",
     )
+    _sha256_identity(
+        value=observability["context_authority_hash"],
+        label="context authority hash",
+    )
+    for field in ("estimator_id", "estimator_version", "estimator_method"):
+        _text(value=observability[field], label=field)
     _decimal_observation(
         value=observability["estimated_cost"], label="estimated cost"
     )
@@ -789,8 +841,6 @@ def _transport_result(*, value: object) -> Dict[str, object]:
         raise InvocationControlError("Transport response body must be bytes")
     if not isinstance(result["provider_request_id"], str):
         raise InvocationControlError("Provider request id is invalid")
-    if type(result["paid_call"]) is not bool:
-        raise InvocationControlError("Paid-call observation must be bool")
     result["usage"] = _usage(value=result["usage"])
     return result
 
@@ -827,6 +877,11 @@ def _egress_marker(
     """Persist proof that provider outcome may now be remote."""
     if transport_kind not in {"MOCK", "REAL_MODEL_PROVIDER"}:
         raise InvocationControlError("Transport kind is invalid")
+    billing_policy = plan["billing_policy"]
+    paid_observed = (
+        transport_kind == "REAL_MODEL_PROVIDER"
+        and billing_policy["billing_class"] == "PAID_MODEL_ENDPOINT"
+    )
     body = {
         "schema_version": 1,
         "record_type": "PROVIDER_EGRESS_MARKER",
@@ -838,6 +893,11 @@ def _egress_marker(
             value=egress_started_at_utc, label="egress start time"
         ),
         "transport_kind": transport_kind,
+        "billing_class": billing_policy["billing_class"],
+        "paid_call_observation_source": billing_policy[
+            "paid_call_observation_source"
+        ],
+        "paid_model_provider_call_observed": paid_observed,
     }
     marker = dict(body)
     marker["egress_marker_id"] = content_hash(value=body)
@@ -1014,8 +1074,11 @@ def _load_acceptance_receipt(
 def _persist_success_response(
     *, root: Path, plan: Mapping[str, object], result: Mapping[str, object],
     attempt_receipt_id: str, acceptance_receipt: Mapping[str, object],
+    paid_model_provider_call_observed: bool,
 ) -> Dict[str, object]:
     """Persist one exact reusable response only after full acceptance."""
+    if type(paid_model_provider_call_observed) is not bool:
+        raise InvocationControlError("Paid-call observation must be bool")
     request_name = _identity_name(identity=str(plan["provider_request_identity"]))
     directory = root / "responses" / request_name
     body_path = directory / "response.bin"
@@ -1040,7 +1103,13 @@ def _persist_success_response(
         "response_body_size": len(response_bytes),
         "response_body_path": "responses/{}/response.bin".format(request_name),
         "usage": dict(result["usage"]),
-        "paid_call": result["paid_call"],
+        "billing_class": plan["billing_policy"]["billing_class"],
+        "paid_call_observation_source": plan["billing_policy"][
+            "paid_call_observation_source"
+        ],
+        "paid_model_provider_call_observed": (
+            paid_model_provider_call_observed
+        ),
         "attempt_receipt_id": attempt_receipt_id,
         "acceptance_receipt_id": accepted["acceptance_receipt_id"],
     }
@@ -1068,7 +1137,7 @@ def _load_success_response(
     if (
         receipt["schema_version"] != 1
         or receipt["record_type"] != "SUCCESS_RESPONSE_RECEIPT"
-        or type(receipt["paid_call"]) is not bool
+        or type(receipt["paid_model_provider_call_observed"]) is not bool
     ):
         raise InvocationControlError("Success response receipt fields differ")
     receipt_body = {
@@ -1091,6 +1160,10 @@ def _load_success_response(
         or receipt["provider"] != plan["provider"]
         or receipt["model"] != plan["model"]
         or receipt["api"] != plan["api"]
+        or receipt["billing_class"]
+        != plan["billing_policy"]["billing_class"]
+        or receipt["paid_call_observation_source"]
+        != plan["billing_policy"]["paid_call_observation_source"]
         or receipt["response_body_sha256"] != sha256_bytes(content=response_bytes)
         or receipt["response_body_size"] != len(response_bytes)
         or receipt["response_body_path"]
@@ -1237,12 +1310,18 @@ def _unknown_remote_outcome_from_markers(
         raise InvocationControlError("Unknown outcome requires egress proof")
     counters = _empty_counters()
     for marker in markers:
+        if type(marker["paid_model_provider_call_observed"]) is not bool:
+            raise InvocationControlError("Egress paid-call fact is invalid")
         if marker["transport_kind"] == "MOCK":
             counters["mock_transport_invocation_count"] += 1
+            if marker["paid_model_provider_call_observed"]:
+                raise InvocationControlError("Mock egress cannot be paid")
         elif marker["transport_kind"] == "REAL_MODEL_PROVIDER":
             counters["real_model_provider_egress_count"] += 1
         else:
             raise InvocationControlError("Egress transport kind differs")
+        if marker["paid_model_provider_call_observed"]:
+            counters["paid_model_provider_call_count"] += 1
     receipt = _terminal_and_release(
         root=root,
         reservation_path=reservation_path,
@@ -1531,6 +1610,8 @@ def execute_invocation(
             counters["mock_transport_invocation_count"] += 1
         else:
             counters["real_model_provider_egress_count"] += 1
+        if marker["paid_model_provider_call_observed"]:
+            counters["paid_model_provider_call_count"] += 1
         try:
             raw_result = transport.send(
                 request_body=request_body,
@@ -1566,8 +1647,6 @@ def execute_invocation(
                 },
             )
         result = _transport_result(value=raw_result)
-        if result["paid_call"]:
-            counters["paid_model_provider_call_count"] += 1
         classification = _classify(result=result)
         acceptance_draft: Optional[Mapping[str, object]] = None
         if classification == "SUCCESS":
@@ -1623,7 +1702,13 @@ def execute_invocation(
                         content=result["response_body"]
                     ),
                     "provider_request_id": result["provider_request_id"],
-                    "paid_call": result["paid_call"],
+                    "billing_class": marker["billing_class"],
+                    "paid_call_observation_source": marker[
+                        "paid_call_observation_source"
+                    ],
+                    "paid_model_provider_call_observed": marker[
+                        "paid_model_provider_call_observed"
+                    ],
                     "transport_kind": transport_kind,
                     "usage": dict(result["usage"]),
                     "finished_at_utc": _utc(
@@ -1638,6 +1723,9 @@ def execute_invocation(
                 result=result,
                 attempt_receipt_id=str(attempt["attempt_receipt_id"]),
                 acceptance_receipt=acceptance_receipt,
+                paid_model_provider_call_observed=bool(
+                    marker["paid_model_provider_call_observed"]
+                ),
             )
             return _terminal_and_release(
                 root=root,
@@ -1696,7 +1784,13 @@ def execute_invocation(
                     content=result["response_body"]
                 ),
                 "provider_request_id": result["provider_request_id"],
-                "paid_call": result["paid_call"],
+                "billing_class": marker["billing_class"],
+                "paid_call_observation_source": marker[
+                    "paid_call_observation_source"
+                ],
+                "paid_model_provider_call_observed": marker[
+                    "paid_model_provider_call_observed"
+                ],
                 "transport_kind": transport_kind,
                 "usage": dict(result["usage"]),
                 "finished_at_utc": _utc(

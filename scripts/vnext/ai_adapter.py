@@ -33,6 +33,8 @@ from .invocation_control import execute_invocation, execution_identity
 from .invocation_control import load_successful_response
 from .evidence import check_evidence
 from .reader import validate_reader_output
+from .provider_runtime import estimate_context_tokens
+from .provider_runtime import load_provider_runtime_authority
 from .reader_input import live_reader_authority_fields
 from .reader_input import PreparedReaderRequest
 from .reader_input import READER_SYSTEM_CONTRACT
@@ -79,6 +81,29 @@ class _NoRedirectHandler(HTTPRedirectHandler):
 
 _OPENAI_OPENER = build_opener(_NoRedirectHandler())
 _DEEPSEEK_OPENER = build_opener(_NoRedirectHandler())
+_RESERVATION_OWNER_EGRESS_CAPABILITY = object()
+
+
+def _open_provider_request(
+    *, opener: object, request: Request, timeout_seconds: int,
+    egress_capability: object,
+) -> object:
+    """Open the sole provider socket behind reservation-owner capability.
+
+    Args:
+        opener: Repository-owned no-redirect provider opener.
+        request: Fixed-host provider request.
+        timeout_seconds: Effective D-01 timeout.
+        egress_capability: Private token issued only inside controller send.
+
+    Returns:
+        Provider response context manager from the approved opener.
+    """
+    if egress_capability is not _RESERVATION_OWNER_EGRESS_CAPABILITY:
+        raise AIAdapterError("RESERVATION_OWNER_EGRESS_REQUIRED")
+    if opener is not _OPENAI_OPENER and opener is not _DEEPSEEK_OPENER:
+        raise AIAdapterError("Provider opener is not repository-owned")
+    return opener.open(fullurl=request, timeout=timeout_seconds)
 
 
 class AIAdapterError(RuntimeError):
@@ -815,115 +840,17 @@ def build_provider_request_body(
 def capture_deepseek_reader_response(
     *, prepared_request: PreparedReaderRequest,
 ) -> TransportResult:
-    """Capture one strict Reader response for a real qualification fixture.
-
-    This controlled construction path is intentionally separate from live Run
-    execution: it validates the complete local Reader request, uses the same
-    effective D-01 policy/envelope/endpoint as production, and returns exact
-    provider bytes for a later socket-zero fixture replay.  It never creates a
-    Run, mutates a publication, or accepts caller-selected provider controls.
+    """Fail closed because PR-2 does not authorize AI qualification egress.
 
     Args:
         prepared_request: Factory-built complete Reader request from real SEC
             filing bytes and the repository disclosure Spec.
 
-    Returns:
-        Exact assistant output, provider envelope, and transport observation.
-
     Raises:
-        AIAdapterError: On an invalid request, policy, credential, provider
-            result, or network failure.  No secret value is included.
+        AIAdapterError: Always, before credential or provider construction.
     """
-    prepared = _validate_prepared_request(
-        prepared_request=prepared_request,
-    )
-    policy, _closure_hash = _load_transport_policy()
-    if policy.provider != "deepseek":
-        raise AIAdapterError(
-            "Qualification fixture capture requires the effective DeepSeek "
-            "D-01 policy"
-        )
-    outbound, schema = build_deepseek_chat_completions_body(
-        policy=policy, reader_request_bytes=prepared["request_bytes"],
-    )
-    if len(outbound) > policy.maximum_payload_bytes:
-        raise AIAdapterError("DeepSeek request exceeds D-01 maximum payload")
-    api_key = (
-        os.environ[_DEEPSEEK_API_KEY_ENV]
-        if _DEEPSEEK_API_KEY_ENV in os.environ
-        else ""
-    )
-    if not isinstance(api_key, str) or not api_key.strip():
-        raise AIAdapterError("DEEPSEEK_API_KEY_REQUIRED")
-    request = Request(
-        url=_DEEPSEEK_CHAT_COMPLETIONS_URL,
-        data=outbound,
-        headers={
-            "Authorization": "Bearer " + api_key.strip(),
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    raw = b""
-    provider_request_id = ""
-    try:
-        with _DEEPSEEK_OPENER.open(
-            fullurl=request, timeout=policy.timeout_seconds,
-        ) as response:
-            raw = response.read()
-            provider_request_id = str(
-                response.headers["x-request-id"]
-                if "x-request-id" in response.headers
-                else ""
-            )
-    except HTTPError as error:
-        raw = error.read()
-        detail = "provider rejected the request"
-        try:
-            error_payload = strict_json_loads(text=raw.decode("utf-8"))
-            if (
-                isinstance(error_payload, dict)
-                and "error" in error_payload
-                and isinstance(error_payload["error"], dict)
-                and "message" in error_payload["error"]
-                and isinstance(error_payload["error"]["message"], str)
-                and error_payload["error"]["message"]
-            ):
-                detail = error_payload["error"]["message"][:200]
-        except (CanonicalError, UnicodeDecodeError, ValueError):
-            detail = "provider returned an unreadable error body"
-        if error.code in {400, 401, 402, 422, 429}:
-            code = "HTTP_{}".format(error.code)
-        elif 500 <= error.code <= 599:
-            code = "RECOVERABLE_5XX"
-        else:
-            code = "DEEPSEEK_HTTP_ERROR"
-        raise AIAdapterError(code + ": " + detail) from error
-    except (OSError, TimeoutError, socket.timeout) as error:
-        code = (
-            "TIMEOUT"
-            if isinstance(error, (TimeoutError, socket.timeout))
-            else "UNKNOWN_REMOTE_OUTCOME"
-        )
-        raise AIAdapterError(code) from error
-    response_id, returned_model, output_text = _deepseek_chat_output_text(
-        raw_response_bytes=raw,
-    )
-    if returned_model != policy.model:
-        raise AIAdapterError("DEEPSEEK_MODEL_IDENTITY_MISMATCH")
-    return TransportResult(
-        response_bytes=output_text.encode("utf-8"),
-        provider_request_id=provider_request_id or response_id,
-        observation=_deepseek_observation(
-            policy=policy,
-            egress_attempted=True,
-            model_returned=returned_model,
-            request_body_bytes=len(outbound),
-        ),
-        raw_response_bytes=raw,
-        outbound_request_bytes=outbound,
-        output_schema_bytes=schema,
-    )
+    del prepared_request
+    raise AIAdapterError("AI_QUALIFICATION_EGRESS_NOT_ENABLED")
 
 
 def _openai_observation(
@@ -1124,12 +1051,16 @@ class _OpenAIResponsesTransport:
         build_openai_responses_body(policy=policy, reader_request_bytes=b"{}")
         self.policy = policy
 
-    def complete(self, *, prepared_request: object) -> TransportResult:
+    def complete(
+        self, *, prepared_request: object,
+        egress_capability: object = None,
+    ) -> TransportResult:
         """Rebuild live SEC bytes, then execute one auditable request.
 
         Args:
             prepared_request: Factory-produced live source coordinates. Raw
                 caller bytes are never accepted by the network boundary.
+            egress_capability: Reservation-owner token; callers cannot mint it.
 
         Returns:
             Exact provider result and transport observation.
@@ -1190,9 +1121,11 @@ class _OpenAIResponsesTransport:
         raw = b""
         request_id = ""
         try:
-            with _OPENAI_OPENER.open(
-                fullurl=request,
-                timeout=self.policy.timeout_seconds,
+            with _open_provider_request(
+                opener=_OPENAI_OPENER,
+                request=request,
+                timeout_seconds=self.policy.timeout_seconds,
+                egress_capability=egress_capability,
             ) as response:
                 raw = response.read()
                 request_id = str(
@@ -1314,11 +1247,15 @@ class _DeepSeekChatCompletionsTransport:
         )
         self.policy = policy
 
-    def complete(self, *, prepared_request: object) -> TransportResult:
+    def complete(
+        self, *, prepared_request: object,
+        egress_capability: object = None,
+    ) -> TransportResult:
         """Rebuild live SEC bytes, then execute one auditable DeepSeek request.
 
         Args:
             prepared_request: Factory-produced live source coordinates.
+            egress_capability: Reservation-owner token; callers cannot mint it.
 
         Returns:
             Exact provider result and transport observation.
@@ -1378,9 +1315,11 @@ class _DeepSeekChatCompletionsTransport:
         raw = b""
         request_id = ""
         try:
-            with _DEEPSEEK_OPENER.open(
-                fullurl=request,
-                timeout=self.policy.timeout_seconds,
+            with _open_provider_request(
+                opener=_DEEPSEEK_OPENER,
+                request=request,
+                timeout_seconds=self.policy.timeout_seconds,
+                egress_capability=egress_capability,
             ) as response:
                 raw = response.read()
                 request_id = str(
@@ -1874,9 +1813,7 @@ class _ApprovedTransportAdapter(AIAdapter):
             Auditable provider result or exact successful response reuse.
         """
         if self.invocation_context is None:
-            return self._complete_repository_transport(
-                prepared_request=prepared_request,
-            )
+            raise AIAdapterError("WB3_EXECUTION_CONTEXT_REQUIRED")
         if (
             not isinstance(authorized_at_utc, str)
             or not authorized_at_utc
@@ -1892,13 +1829,14 @@ class _ApprovedTransportAdapter(AIAdapter):
         )
 
     def _complete_repository_transport(
-        self, *, prepared_request: object
+        self, *, prepared_request: object, egress_capability: object,
     ) -> TransportResult:
         """Replay live SEC authority and invoke its approved provider.
 
         Args:
             prepared_request: Factory-produced live source coordinates. This
                 method never accepts caller-selected outbound bytes.
+            egress_capability: Private reservation-owner capability.
 
         Returns:
             Raw response and actual transport facts.
@@ -1908,6 +1846,8 @@ class _ApprovedTransportAdapter(AIAdapter):
                 invoked transport lacking actual observation facts.
             TransportAttemptError: On an observed transport/policy failure.
         """
+        if egress_capability is not _RESERVATION_OWNER_EGRESS_CAPABILITY:
+            raise AIAdapterError("RESERVATION_OWNER_EGRESS_REQUIRED")
         rebuilt_request = _validate_live_prepared_request(
             prepared_request=prepared_request,
         )
@@ -1934,7 +1874,10 @@ class _ApprovedTransportAdapter(AIAdapter):
             )
         transport = _build_repository_transport(policy=current_policy)
         try:
-            result = transport.complete(prepared_request=prepared_request)
+            result = transport.complete(
+                prepared_request=prepared_request,
+                egress_capability=egress_capability,
+            )
         except TransportAttemptError:
             raise
         except (AIAdapterError, OSError, TimeoutError, ValueError) as error:
@@ -2066,6 +2009,7 @@ class _InvocationControllerTransport:
         try:
             result = self.adapter._complete_repository_transport(
                 prepared_request=self.prepared_request,
+                egress_capability=_RESERVATION_OWNER_EGRESS_CAPABILITY,
             )
             self.last_result = result
             self.last_error = None
@@ -2074,7 +2018,6 @@ class _InvocationControllerTransport:
                 "error_class": "",
                 "response_body": result.response_bytes,
                 "provider_request_id": result.provider_request_id,
-                "paid_call": True,
                 "usage": _controller_usage(
                     raw_response_bytes=result.raw_response_bytes,
                 ),
@@ -2096,7 +2039,6 @@ class _InvocationControllerTransport:
                 "error_class": error.error_class,
                 "response_body": response_body,
                 "provider_request_id": error.provider_request_id,
-                "paid_call": error.observation.egress_attempted,
                 "usage": _controller_usage(
                     raw_response_bytes=error.raw_response_bytes,
                 ),
@@ -2264,6 +2206,12 @@ def _execute_controlled_transport(
         policy=current_policy,
         reader_request_bytes=prepared["request_bytes"],
     )
+    runtime_authority = load_provider_runtime_authority(
+        repo_root=_REPOSITORY_ROOT,
+        provider=current_policy.provider,
+        model=current_policy.model,
+        api=current_policy.api,
+    )
     credential_name = api_key_environment_name(policy=current_policy)
     if credential_name not in os.environ or not os.environ[credential_name].strip():
         raise TransportAttemptError(
@@ -2295,8 +2243,22 @@ def _execute_controlled_transport(
         api=current_policy.api,
         request_body=outbound,
         maximum_payload_bytes=current_policy.maximum_payload_bytes,
-        maximum_context_tokens=current_policy.maximum_payload_bytes,
-        estimated_context_tokens=len(outbound),
+        maximum_context_tokens=int(
+            runtime_authority["maximum_context_tokens"]
+        ),
+        estimated_context_tokens=estimate_context_tokens(
+            request_body=outbound, authority=runtime_authority,
+        ),
+        context_authority_hash=str(
+            runtime_authority["context_authority_hash"]
+        ),
+        estimator_id=str(runtime_authority["estimator_id"]),
+        estimator_version=str(runtime_authority["estimator_version"]),
+        estimator_method=str(runtime_authority["estimator_method"]),
+        billing_class=str(runtime_authority["billing_class"]),
+        paid_call_observation_source=str(
+            runtime_authority["paid_call_observation_source"]
+        ),
         pricing_snapshot_hash=content_hash(
             value={
                 "provider": current_policy.provider,
@@ -2422,14 +2384,12 @@ def _execute_controlled_transport(
 
 
 def build_approved_transport_adapter() -> AIAdapter:
-    """Build the only repository-authorized remote transport adapter.
+    """Fail closed because a remote adapter requires complete WB-3 identity.
 
-    Returns:
-        Exact private adapter compiled from effective approved D-01.
+    Raises:
+        AIAdapterError: Always, before provider transport construction.
     """
-    return _ApprovedTransportAdapter(
-        authority=_ADAPTER_AUTHORITY, invocation_context=None,
-    )
+    raise AIAdapterError("WB3_EXECUTION_CONTEXT_REQUIRED")
 
 
 def build_invocation_controlled_transport_adapter(
