@@ -18,6 +18,10 @@ from vnext.publication import PublicationView, verify_publication_bundle
 from vnext.source_strategy import ALLOWED_SOURCE_MODES
 from vnext.source_strategy import GENERIC_FORBIDDEN_LITERAL_DENYLIST
 from vnext.source_strategy import SourceStrategyError
+from vnext.source_strategy import _qualification_subset
+from vnext.source_strategy import _reader_family_versions
+from vnext.source_strategy import _release_authority
+from vnext.source_strategy import _retired_producer_ids
 from vnext.source_strategy import load_issue15_release_plan
 from vnext.source_strategy import load_issue15_release_plans
 from vnext.source_strategy import load_source_strategy_registry
@@ -76,6 +80,31 @@ def rebind_plan_chain(*, repository_root: Path) -> None:
     }
     index["release_plan_index_id"] = content_hash(value=body)
     write_json(path=index_path, value=index)
+
+
+def rederive_r2_semantics(
+    *, repository_root: Path, plan: Dict[str, object],
+) -> None:
+    """Recompute every cumulative-dependent R2 field after mutation."""
+    registry = load_source_strategy_registry(repo_root=repository_root)
+    cumulative = list(plan["cumulative_metric_ids"])
+    plan["retired_legacy_producer_ids"] = _retired_producer_ids(
+        repo_root=repository_root,
+        cumulative_metric_ids=cumulative,
+    )
+    plan["reader_family_versions"] = _reader_family_versions(
+        cumulative_metric_ids=cumulative,
+        registry=registry,
+    )
+    qualification_subset = _qualification_subset(
+        cumulative_metric_ids=cumulative,
+        metrics=registry["metrics"],
+    )
+    plan["authority_hashes"] = _release_authority(
+        repo_root=repository_root,
+        registry=registry,
+        qualification_subset=qualification_subset,
+    )
 
 
 class SourceStrategyRegistryTest(unittest.TestCase):
@@ -151,6 +180,14 @@ class SourceStrategyRegistryTest(unittest.TestCase):
                 set(r2["retired_legacy_producer_ids"])
             )
         )
+        transition = loaded["ratchet_transitions"][1]
+        self.assertEqual([], transition["removed_metric_ids"])
+        self.assertEqual([], transition["removed_vnext_result_keys"])
+        self.assertEqual([], transition["unretired_legacy_producer_ids"])
+        self.assertEqual(
+            r1["release_plan_content_id"],
+            transition["parent_release_plan_content_id"],
+        )
         for plan in (r1, r2):
             self.assertEqual(
                 loaded["requirement_closure_hash"],
@@ -190,6 +227,100 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             rebind_plan_chain(repository_root=repository_root)
             with self.assertRaisesRegex(
                 SourceStrategyError, "identity differs",
+            ):
+                load_issue15_release_plans(repo_root=repository_root)
+
+    def test_release_plan_removed_metric_fails_after_full_rehash(self) -> None:
+        """Reject removed B01 after all child semantic hashes are rebound."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            repository_root = issue_copy.parents[1]
+            path = (
+                repository_root / "config" / "release_plans"
+                / "issue_15_zero_ai_r2.json"
+            )
+            plan = read_json(path=path)
+            plan["cumulative_metric_ids"] = [
+                metric_id
+                for metric_id in plan["cumulative_metric_ids"]
+                if metric_id != "B01"
+            ]
+            plan["cumulative_vnext_result_keys"] = [
+                key for key in plan["cumulative_vnext_result_keys"]
+                if key["metric_id"] != "B01"
+            ]
+            parent = read_json(
+                path=(
+                    repository_root / "config" / "release_plans"
+                    / "issue_15_zero_ai_r1.json"
+                )
+            )
+            plan["added_metric_ids"] = sorted(
+                set(plan["cumulative_metric_ids"])
+                - set(parent["cumulative_metric_ids"])
+            )
+            rederive_r2_semantics(
+                repository_root=repository_root, plan=plan,
+            )
+            write_json(path=path, value=plan)
+            rebind_plan_chain(repository_root=repository_root)
+            with self.assertRaisesRegex(
+                SourceStrategyError, "no-removal gate failed",
+            ):
+                load_issue15_release_plans(repo_root=repository_root)
+
+    def test_release_plan_removed_parent_key_fails_after_rehash(self) -> None:
+        """Reject one removed parent coordinate after content re-signing."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            repository_root = issue_copy.parents[1]
+            path = (
+                repository_root / "config" / "release_plans"
+                / "issue_15_zero_ai_r2.json"
+            )
+            plan = read_json(path=path)
+            removed = False
+            keys = []
+            for key in plan["cumulative_vnext_result_keys"]:
+                if key["metric_id"] == "B01" and not removed:
+                    removed = True
+                    continue
+                keys.append(key)
+            self.assertTrue(removed)
+            plan["cumulative_vnext_result_keys"] = keys
+            write_json(path=path, value=plan)
+            rebind_plan_chain(repository_root=repository_root)
+            with self.assertRaisesRegex(
+                SourceStrategyError, "no-removal gate failed",
+            ):
+                load_issue15_release_plans(repo_root=repository_root)
+
+    def test_release_plan_unretires_parent_producer_after_rehash(self) -> None:
+        """Reject a smaller child retirement set after content re-signing."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            repository_root = issue_copy.parents[1]
+            r1 = read_json(
+                path=(
+                    repository_root / "config" / "release_plans"
+                    / "issue_15_zero_ai_r1.json"
+                )
+            )
+            path = (
+                repository_root / "config" / "release_plans"
+                / "issue_15_zero_ai_r2.json"
+            )
+            plan = read_json(path=path)
+            parent_producer = r1["retired_legacy_producer_ids"][0]
+            plan["retired_legacy_producer_ids"] = [
+                producer_id
+                for producer_id in plan["retired_legacy_producer_ids"]
+                if producer_id != parent_producer
+            ]
+            write_json(path=path, value=plan)
+            rebind_plan_chain(repository_root=repository_root)
+            with self.assertRaisesRegex(
+                SourceStrategyError, "no-removal gate failed",
             ):
                 load_issue15_release_plans(repo_root=repository_root)
 

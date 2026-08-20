@@ -2434,6 +2434,7 @@ def prepare_r2_successor(
     issue_release = load_issue15_release_plan(
         repo_root=repo_root, release_plan_id="issue_15_zero_ai_r2",
     )
+    ratchet_transition = issue_release["ratchet_transitions"][1]
     coordinate_body = {
         "schema_version": 1,
         "record_type": "ZERO_AI_COORDINATE_INDEX",
@@ -2501,8 +2502,19 @@ def prepare_r2_successor(
             "projection_manifest_id": projection["projection_manifest_id"],
             "replaced_legacy_row_count": R2_EXPECTED_LEGACY_ROWS,
             "new_public_key_count": R2_EXPECTED_NEW_KEYS,
-            "removed_metric_ids": [],
+            "parent_release_plan_content_id": ratchet_transition[
+                "parent_release_plan_content_id"
+            ],
+            "removed_metric_ids": ratchet_transition[
+                "removed_metric_ids"
+            ],
             "removed_public_keys": [],
+            "removed_vnext_result_keys": ratchet_transition[
+                "removed_vnext_result_keys"
+            ],
+            "unretired_legacy_producer_ids": ratchet_transition[
+                "unretired_legacy_producer_ids"
+            ],
             "strict_compatibility_hash": candidate["strict_compatibility_hash"],
             "public_key_set_hash": candidate["public_key_set_hash"],
             "retirement_receipt_id": retirement["retirement_receipt_id"],

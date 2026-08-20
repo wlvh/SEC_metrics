@@ -108,7 +108,7 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 仓库已包含同一套recorded/live operator与formal publication primitives。当前active pointer是Issue #15 zero-AI R2业务入口，只覆盖22个累计指标；recorded sandbox仍不能修改或冒充它。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
-Issue #15 WB-2 另外提供一份可机械加载的 39 指标 SourceStrategy registry，只描述 target route；当前 ratchet set 只能从单独 ReleasePlan 的 `cumulative_metric_ids` 读取。该 registry 完成时 root `outputs/metrics_matrix.csv` 仍与 WB-1 冻结 SHA-256 一致，未执行任何 adapter、SEC/模型调用或 active publication；不能把“route 已登记”读成“指标已迁移”。
+Issue #15 WB-2 另外提供一份可机械加载的39指标SourceStrategy registry，只描述target route；当前ratchet set只能从不可变ReleasePlan chain的`cumulative_metric_ids`读取。loader要求parent累计metrics、vNext keys与retired producers分别为child子集，并显式推导removed/unretired exact set为空；同步重签全部hash不能合法化删除。该registry完成时root `outputs/metrics_matrix.csv`仍与WB-1冻结SHA-256一致，未执行任何adapter、SEC/模型调用或active publication；不能把“route已登记”读成“指标已迁移”。
 <!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->
 
 WB-2B 的确定性 router 使用同一 `sources[]` 形状表达单源与多源，并以pinned SEC submissions current/history shards和SourceSetManifest union证明发现集完整。R2已用该路径正式发布；C01/E03共用Item 5.02 claims，E02/E04零值绑定完整8-K集合，E01 matched key set与legacy逐项相等。

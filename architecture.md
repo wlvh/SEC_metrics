@@ -236,7 +236,7 @@ WB-1 只增加 authority 数据和 loader 分支。Issue #15 owner 随后以同 
 
 #### 11.0.1 WB-2 SourceStrategy Registry
 
-`config/source_strategy_registry.json` 对 WB-1 冻结的 39 metric exact set 各保存一条 target route。`config/issue_15_release_plan.json`只是content-addressed active索引；不可变R1/R2 plan分别位于`config/release_plans/`，每档完整保存parent plan/content edge、added delta、cumulative IDs/keys、retired producers、reader family versions、Requirement closure与authority hashes。R2为16个DET_ONLY加C01/E01–E05共22项，ratchet不再只有可覆盖的“当前余额”。
+`config/source_strategy_registry.json` 对 WB-1 冻结的 39 metric exact set 各保存一条 target route。`config/issue_15_release_plan.json`只是content-addressed active索引；不可变R1/R2 plan分别位于`config/release_plans/`，每档完整保存parent plan/content edge、added delta、cumulative IDs/keys、retired producers、reader family versions、Requirement closure与authority hashes。loader先机械计算parent-child的`removed_metric_ids`、`removed_vnext_result_keys`与`unretired_legacy_producer_ids`并要求三个exact set均为空，再验证added delta和当前档完整集合；即使攻击者同步重签plan/content/index/authority hashes，删除也会在语义no-removal gate失败。R2为16个DET_ONLY加C01/E01–E05共22项，ratchet不再只有可覆盖的“当前余额”。
 
 family 拥有 `forbidden_production_literals`，metric 不复制该词表。`tools/check_vnext_semantics.py` 每次从经 Requirement byte-binding 验证的 family union 编译 scanner；`risk` / `value` / `event` / `income` / `current` 被 schema 显式拒绝为禁词，避免把共享引擎普通语言变成假阳性。WB-2 只建立 routing authority，没有执行 adapter、修改 root outputs 或证明 structured-only provider 零调用；后两者属于 WB-2B/WB-3 联合证据。
 <!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->

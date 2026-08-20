@@ -163,6 +163,40 @@ def _nonempty_string(*, value: object, label: str) -> str:
     return value
 
 
+def _result_keys(*, value: object, label: str) -> List[Dict[str, str]]:
+    """Return one unique ordered company/metric coordinate list.
+
+    Args:
+        value: Candidate ReleasePlan coordinate array.
+        label: Stable diagnostic location.
+
+    Returns:
+        Isolated exact-key mappings in declared order.
+    """
+    if not isinstance(value, list):
+        raise SourceStrategyError("{} must be an array".format(label))
+    keys = []
+    identities = []
+    for entry_value in value:
+        entry = _object(value=entry_value, label=label + " entry")
+        _exact_fields(
+            value=entry,
+            expected={"company_id", "metric_id"},
+            label=label + " entry",
+        )
+        company_id = _nonempty_string(
+            value=entry["company_id"], label=label + " company id"
+        )
+        metric_id = _nonempty_string(
+            value=entry["metric_id"], label=label + " metric id"
+        )
+        keys.append({"company_id": company_id, "metric_id": metric_id})
+        identities.append((company_id, metric_id))
+    if len(identities) != len(set(identities)):
+        raise SourceStrategyError("{} contains duplicates".format(label))
+    return keys
+
+
 def _string_list(
     *, value: object, label: str, allow_empty: bool
 ) -> List[str]:
@@ -556,18 +590,17 @@ def _validate_release_plan(
         or not set(cumulative).issubset(set(registry["metric_ids"]))
     ):
         raise SourceStrategyError("ReleasePlan metric sets differ")
-    expected_keys = [
-        {"company_id": company_id, "metric_id": metric_id}
-        for company_id in _company_ids(repo_root=repo_root)
-        for metric_id in cumulative
-    ]
-    if value["cumulative_vnext_result_keys"] != expected_keys:
-        raise SourceStrategyError("ReleasePlan cumulative result keys differ")
-    expected_retired = _retired_producer_ids(
-        repo_root=repo_root, cumulative_metric_ids=cumulative,
+    _result_keys(
+        value=value["cumulative_vnext_result_keys"],
+        label="ReleasePlan cumulative result keys",
     )
-    if value["retired_legacy_producer_ids"] != expected_retired:
-        raise SourceStrategyError("ReleasePlan retired producer set differs")
+    retired = _string_list(
+        value=value["retired_legacy_producer_ids"],
+        label="retired legacy producer ids",
+        allow_empty=True,
+    )
+    if retired != sorted(retired):
+        raise SourceStrategyError("ReleasePlan retired producer order differs")
     expected_versions = _reader_family_versions(
         cumulative_metric_ids=cumulative, registry=registry,
     )
@@ -662,6 +695,7 @@ def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
             raise SourceStrategyError("ReleasePlan index binding differs")
         plans.append(plan)
         paths.append(path)
+    transitions = []
     for ordinal, plan in enumerate(plans):
         parent = plans[ordinal - 1] if ordinal else None
         expected_parent_id = (
@@ -677,6 +711,41 @@ def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
             if parent is not None
             else list(plan["cumulative_metric_ids"])
         )
+        parent_metrics = (
+            set(parent["cumulative_metric_ids"])
+            if parent is not None else set()
+        )
+        child_metrics = set(plan["cumulative_metric_ids"])
+        parent_keys = (
+            {
+                (entry["company_id"], entry["metric_id"])
+                for entry in parent["cumulative_vnext_result_keys"]
+            }
+            if parent is not None else set()
+        )
+        child_keys = {
+            (entry["company_id"], entry["metric_id"])
+            for entry in plan["cumulative_vnext_result_keys"]
+        }
+        parent_retired = (
+            set(parent["retired_legacy_producer_ids"])
+            if parent is not None else set()
+        )
+        child_retired = set(plan["retired_legacy_producer_ids"])
+        removed_metric_ids = sorted(parent_metrics - child_metrics)
+        removed_result_keys = [
+            {"company_id": company_id, "metric_id": metric_id}
+            for company_id, metric_id in sorted(parent_keys - child_keys)
+        ]
+        unretired_producer_ids = sorted(parent_retired - child_retired)
+        if (
+            removed_metric_ids
+            or removed_result_keys
+            or unretired_producer_ids
+        ):
+            raise SourceStrategyError(
+                "ReleasePlan no-removal gate failed"
+            )
         if (
             plan["parent_release_plan_id"] != expected_parent_id
             or plan["parent_release_plan_content_id"]
@@ -684,6 +753,31 @@ def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
             or plan["added_metric_ids"] != expected_added
         ):
             raise SourceStrategyError("ReleasePlan ratchet chain differs")
+        expected_keys = [
+            {"company_id": company_id, "metric_id": metric_id}
+            for company_id in _company_ids(repo_root=repo_root)
+            for metric_id in plan["cumulative_metric_ids"]
+        ]
+        if plan["cumulative_vnext_result_keys"] != expected_keys:
+            raise SourceStrategyError(
+                "ReleasePlan cumulative result keys differ"
+            )
+        expected_retired = _retired_producer_ids(
+            repo_root=repo_root,
+            cumulative_metric_ids=plan["cumulative_metric_ids"],
+        )
+        if plan["retired_legacy_producer_ids"] != expected_retired:
+            raise SourceStrategyError(
+                "ReleasePlan retired producer set differs"
+            )
+        transitions.append({
+            "parent_release_plan_content_id": expected_parent_content,
+            "release_plan_content_id": plan["release_plan_content_id"],
+            "added_metric_ids": list(plan["added_metric_ids"]),
+            "removed_metric_ids": removed_metric_ids,
+            "removed_vnext_result_keys": removed_result_keys,
+            "unretired_legacy_producer_ids": unretired_producer_ids,
+        })
     active = plans[-1]
     if (
         index["active_release_plan_id"] != active["release_plan_id"]
@@ -696,6 +790,7 @@ def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
         "index": index,
         "index_sha256": sha256_file(path=index_path),
         "plans": plans,
+        "ratchet_transitions": transitions,
         "plan_paths": paths,
         "requirement_closure_hash": requirement["requirement_closure_hash"],
         "source_strategy_registry_sha256": registry["registry_sha256"],
@@ -724,6 +819,7 @@ def load_issue15_release_plan(
         "qualification_matrix_subset": plan["qualification_matrix_subset"],
         "release_plan": plan,
         "release_plan_chain": loaded["plans"],
+        "ratchet_transitions": loaded["ratchet_transitions"],
         "release_plan_content_id": plan["release_plan_content_id"],
         "release_plan_sha256": sha256_file(path=path),
         "source_strategy_registry_sha256": loaded[
