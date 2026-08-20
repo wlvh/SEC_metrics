@@ -230,6 +230,19 @@ def copy_test_repository(*, temp_dir: str) -> Path:
         destination = repository_root / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(src=REPO_ROOT / relative, dst=destination)
+    shutil.copy2(
+        src=REPO_ROOT / "config" / "issue_15_release_plan.json",
+        dst=repository_root / "config" / "issue_15_release_plan.json",
+    )
+    shutil.copytree(
+        src=REPO_ROOT / "config" / "release_plans",
+        dst=repository_root / "config" / "release_plans",
+    )
+    trait_catalog = repository_root / "catalog" / "company_traits.yaml"
+    shutil.copy2(
+        src=REPO_ROOT / "catalog" / "company_traits.yaml",
+        dst=trait_catalog,
+    )
     company_registry = repository_root / "config" / "company_registry.csv"
     shutil.copy2(
         src=REPO_ROOT / "config" / "company_registry.csv",

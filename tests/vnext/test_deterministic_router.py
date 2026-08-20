@@ -12,7 +12,7 @@ from unittest import mock
 
 from sec_pipeline import event_rows_for_metric
 from tests.vnext.common import REPO_ROOT
-from vnext.canonical import sha256_file
+from vnext.canonical import content_hash, sha256_file
 from vnext.deterministic_router import DeterministicRouterError
 from vnext.deterministic_router import adapt_8k_item_index
 from vnext.deterministic_router import adapt_accession_xbrl
@@ -140,6 +140,9 @@ def fixture_sources(*, root: Path) -> dict:
     )
     accession_bytes = (
         b'<xbrl xmlns:us-gaap="urn:us-gaap">'
+        b'<context id="FY"><entity><identifier>1</identifier></entity>'
+        b'<period><startDate>2025-01-01</startDate>'
+        b'<endDate>2025-12-31</endDate></period></context>'
         b'<us-gaap:Assets contextRef="FY" unitRef="USD">456</us-gaap:Assets>'
         b"</xbrl>"
     )
@@ -157,6 +160,9 @@ def fixture_sources(*, root: Path) -> dict:
     )
     ecd_bytes = (
         b'<xbrl xmlns:ecd="urn:ecd">'
+        b'<context id="FY"><entity><identifier>1</identifier></entity>'
+        b'<period><startDate>2025-01-01</startDate>'
+        b'<endDate>2025-12-31</endDate></period></context>'
         b'<ecd:PayRatio contextRef="FY" unitRef="pure">42</ecd:PayRatio>'
         b"</xbrl>"
     )
@@ -174,6 +180,9 @@ def fixture_sources(*, root: Path) -> dict:
     )
     auditor_bytes = (
         b'<xbrl xmlns:dei="urn:dei">'
+        b'<context id="FY"><entity><identifier>1</identifier></entity>'
+        b'<period><startDate>2025-01-01</startDate>'
+        b'<endDate>2025-12-31</endDate></period></context>'
         b'<dei:AuditorName contextRef="FY">Example Audit LLP</dei:AuditorName>'
         b"</xbrl>"
     )
@@ -363,6 +372,9 @@ class DeterministicRouterTest(unittest.TestCase):
             ]
             plan = build_multi_source_release_input_plan(
                 release_plan_id="issue_15_zero_ai_r0_registry",
+                release_plan_content_id=content_hash(
+                    value={"release_plan": "issue_15_zero_ai_r0_registry"}
+                ),
                 requirement_id="issue_15_v1",
                 authority_hashes={"source_strategy_registry_sha256": "a" * 64},
                 companies=[

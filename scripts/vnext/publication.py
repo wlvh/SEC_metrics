@@ -240,6 +240,7 @@ SWITCH_INTENT_FIELDS = {
 SWITCH_INTENT_MIRROR_FIELDS = {"sha256", "size"}
 PUBLICATION_ID_PATTERN = re.compile(r"^publication_[0-9a-f]{64}$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+SHA1_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 CONTENT_ID_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
 SWITCH_TEMP_PATTERN = re.compile(
     r"^\.[0-9a-f]{64}\.json\.[0-9a-f]{32}\.tmp$"
@@ -4100,6 +4101,9 @@ def _verify_zero_ai_formal_release(
         "counters",
         "cumulative_metric_ids",
         "internal_files",
+        "invocation_observation_id",
+        "issue15_release_plan_content_id",
+        "issue15_release_plan_id",
         "issue15_release_plan_sha256",
         "new_public_key_count",
         "previous_publication_id",
@@ -4114,7 +4118,9 @@ def _verify_zero_ai_formal_release(
         "requirement_closure_hash",
         "result_coordinate_count",
         "schema_version",
+        "source_commit",
         "source_locator_classes",
+        "source_tree_oid",
         "status",
         "strict_compatibility_hash",
         "validation_receipt_id",
@@ -4140,15 +4146,112 @@ def _verify_zero_ai_formal_release(
         != manifest["validation_receipt_id"]
         or receipt["previous_publication_id"]
         != manifest["previous_publication_id"]
+        or not isinstance(receipt["source_commit"], str)
+        or SHA1_PATTERN.fullmatch(receipt["source_commit"]) is None
+        or not isinstance(receipt["source_tree_oid"], str)
+        or SHA1_PATTERN.fullmatch(receipt["source_tree_oid"]) is None
     ):
         raise PublicationError("Zero-AI formal receipt identity differs")
-    counters = receipt["counters"]
-    if counters != {
+    invocation_path = bundle_dir / "internal/structured_only_invocation.json"
+    release_plan_path = bundle_dir / "internal/issue15_release_plan.json"
+    release_input_path = bundle_dir / "internal/release_input_plan.json"
+    try:
+        invocation = strict_json_file(path=invocation_path)
+        release_plan = strict_json_file(path=release_plan_path)
+        release_input = strict_json_file(path=release_input_path)
+    except CanonicalError as error:
+        raise PublicationError("Zero-AI authority closure is invalid") from error
+    invocation_fields = {
+        "counters",
+        "invocation_observation_id",
+        "observed_ai_invocation_plan_ids",
+        "observed_invocation_files",
+        "observed_provider_request_identities",
+        "record_type",
+        "release_input_plan_id",
+        "result_coordinate_count",
+        "schema_version",
+        "source_mode_by_metric",
+        "status",
+    }
+    if not isinstance(invocation, dict) or set(invocation) != invocation_fields:
+        raise PublicationError("Zero-AI invocation closure fields differ")
+    invocation_body = {
+        field: invocation[field]
+        for field in invocation
+        if field != "invocation_observation_id"
+    }
+    namespaces = {
+        "abandoned",
+        "attempts",
+        "egress",
+        "executions",
+        "plans",
+        "reservation_archive",
+        "reservations",
+        "requests",
+        "responses",
+    }
+    observed_files = invocation["observed_invocation_files"]
+    if (
+        invocation["schema_version"] != 1
+        or invocation["record_type"]
+        != "STRUCTURED_ONLY_INVOCATION_RESULT"
+        or invocation["status"] != "SUCCEEDED_ZERO_PROVIDER"
+        or invocation["invocation_observation_id"]
+        != content_hash(value=invocation_body)
+        or invocation["invocation_observation_id"]
+        != receipt["invocation_observation_id"]
+        or invocation["release_input_plan_id"]
+        != receipt["release_input_plan_id"]
+        or invocation["result_coordinate_count"]
+        != receipt["result_coordinate_count"]
+        or not isinstance(observed_files, dict)
+        or set(observed_files) != namespaces
+        or any(observed_files[namespace] for namespace in namespaces)
+        or invocation["observed_ai_invocation_plan_ids"]
+        or invocation["observed_provider_request_identities"]
+        or not isinstance(invocation["source_mode_by_metric"], dict)
+        or set(invocation["source_mode_by_metric"])
+        != set(receipt["cumulative_metric_ids"])
+        or set(invocation["source_mode_by_metric"].values())
+        != {"structured_only"}
+    ):
+        raise PublicationError("Zero-AI invocation closure differs")
+    derived_counters = {
         "mock_transport_invocation_count": 0,
         "paid_model_provider_call_count": 0,
         "real_model_provider_egress_count": 0,
-    }:
-        raise PublicationError("Zero-AI formal provider counters differ")
+    }
+    if (
+        invocation["counters"] != derived_counters
+        or receipt["counters"] != invocation["counters"]
+    ):
+        raise PublicationError("Zero-AI derived provider counters differ")
+    if not isinstance(release_plan, dict) or not isinstance(release_input, dict):
+        raise PublicationError("Zero-AI ReleasePlan closure is invalid")
+    release_plan_body = {
+        field: release_plan[field]
+        for field in release_plan
+        if field != "release_plan_content_id"
+    }
+    if (
+        release_plan["release_plan_content_id"]
+        != content_hash(value=release_plan_body)
+        or release_plan["release_plan_id"]
+        != receipt["issue15_release_plan_id"]
+        or release_plan["release_plan_content_id"]
+        != receipt["issue15_release_plan_content_id"]
+        or sha256_file(path=release_plan_path)
+        != receipt["issue15_release_plan_sha256"]
+        or release_input["release_plan_id"]
+        != release_plan["release_plan_id"]
+        or release_input["release_plan_content_id"]
+        != release_plan["release_plan_content_id"]
+        or release_input["release_input_plan_id"]
+        != receipt["release_input_plan_id"]
+    ):
+        raise PublicationError("Zero-AI ReleasePlan binding differs")
     expected_locator_classes = {
         "R1": ["IMMUTABLE_ATTEMPT"],
         "R2": ["IMMUTABLE_ATTEMPT", "IMMUTABLE_GIT_BLOB"],
@@ -4197,6 +4300,18 @@ def _verify_zero_ai_formal_release(
         path = bundle_dir / relative
         if artifact_hashes[relative] != sha256_file(path=path):
             raise PublicationError("Zero-AI public artifact hash differs")
+    try:
+        validation_run = strict_json_file(
+            path=bundle_dir / "validation_run_manifest.json"
+        )
+    except CanonicalError as error:
+        raise PublicationError("Zero-AI validation manifest is invalid") from error
+    if (
+        not isinstance(validation_run, dict)
+        or validation_run["source_commit"] != receipt["source_commit"]
+        or validation_run["source_tree_oid"] != receipt["source_tree_oid"]
+    ):
+        raise PublicationError("Zero-AI source provenance differs")
     metrics_bytes = (bundle_dir / "metrics_matrix.csv").read_bytes()
     try:
         rows = list(csv.DictReader(io.StringIO(metrics_bytes.decode("utf-8"))))

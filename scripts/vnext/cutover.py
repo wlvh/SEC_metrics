@@ -29,7 +29,7 @@ from sec_http import validate_sec_identity
 from .ai_adapter import AIAdapterError
 from .ai_adapter import api_key_environment_name, api_key_required_error_code
 from .ai_adapter import approved_transport_policy
-from .ai_adapter import build_approved_transport_adapter
+from .ai_adapter import build_invocation_controlled_transport_adapter
 from .ai_adapter import build_recorded_adapter
 from .batch_workflow import BatchWorkflowError, build_release_input_plan
 from .batch_workflow import create_companyfacts_release_run
@@ -2549,7 +2549,11 @@ def _prepare_review_run(
     if not run_dir.exists():
         source = company["table_source"]
         if execute_live:
-            adapter = build_approved_transport_adapter()
+            adapter = build_invocation_controlled_transport_adapter(
+                release_input_plan_id=plan_id,
+                workspace_dir=run_dir.parent,
+                owner_token=run_dir.name,
+            )
         else:
             if recorded_response_bytes is None or recorded_fixture_id is None:
                 raise CutoverError(
@@ -3483,9 +3487,9 @@ def _prepare_runs(
         company_successes = []
         for stability_ordinal in range(1, _LIVE_STABILITY_TARGET + 1):
             success = None
-            # D-35 owns one orchestrator retry; the old ``retry_count + 2``
-            # loop could multiply one failed stability sample into four calls.
-            for attempt_ordinal in range(1, 3):
+            # WB-3 owns D-35's only retry inside one execution identity, so
+            # each stability ordinal authorizes exactly one outer Run.
+            for attempt_ordinal in range(1, 2):
                 review_dir = runs_root / (
                     "{}-review-{}-attempt-{}".format(
                         company_id,
@@ -3629,8 +3633,8 @@ def _prepare_runs(
                 raise CutoverError(
                     code="LIVE_READER_RETRIES_EXHAUSTED",
                     message=(
-                        "Live Reader exhausted the D-01 retry budget without "
-                        "fallback."
+                        "Live Reader exhausted the WB-3 D-35 retry budget "
+                        "without fallback."
                     ),
                     details={
                         "company_id": company_id,

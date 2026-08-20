@@ -46,7 +46,6 @@ ISSUE_15_SNAPSHOT_FILES = {
 ISSUE_15_RUNTIME_AUTHORITY_FILES = {
     "catalog/deterministic_metrics.json",
     "catalog/event_routes.json",
-    "config/issue_15_release_plan.json",
     "config/source_strategy_registry.json",
 }
 ISSUE_15_EFFECTIVE_DECISION_IDS = {
@@ -1349,9 +1348,6 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
             path=paths["legacy_inventory"]
         ),
         "parent_requirement_closure_hash": parent["requirement_closure_hash"],
-        "issue_15_release_plan_sha256": sha256_file(
-            path=repository_root / "config" / "issue_15_release_plan.json"
-        ),
         "semantic_runtime_versions_hash": content_hash(value=SEMANTIC_VERSIONS),
         "source_strategy_registry_sha256": sha256_file(
             path=repository_root / "config" / "source_strategy_registry.json"

@@ -13,12 +13,13 @@ from typing import Dict
 from tests.vnext.common import REPO_ROOT
 from tests.vnext.test_issue15_authority import copy_test_repository
 from tests.vnext.test_issue15_authority import read_json, write_json
-from vnext.canonical import sha256_file
+from vnext.canonical import content_hash, sha256_file
 from vnext.publication import PublicationView, verify_publication_bundle
 from vnext.source_strategy import ALLOWED_SOURCE_MODES
 from vnext.source_strategy import GENERIC_FORBIDDEN_LITERAL_DENYLIST
 from vnext.source_strategy import SourceStrategyError
 from vnext.source_strategy import load_issue15_release_plan
+from vnext.source_strategy import load_issue15_release_plans
 from vnext.source_strategy import load_source_strategy_registry
 
 
@@ -40,13 +41,6 @@ def rebind_registry(*, issue_copy: Path, registry: Dict[str, object]) -> None:
     registry_path = repository_root / "config" / "source_strategy_registry.json"
     write_json(path=registry_path, value=registry)
 
-    plan_path = repository_root / "config" / "issue_15_release_plan.json"
-    plan = read_json(path=plan_path)
-    plan["authority_hashes"]["source_strategy_registry_sha256"] = sha256_file(
-        path=registry_path
-    )
-    write_json(path=plan_path, value=plan)
-
     baseline_path = issue_copy / "baseline_manifest.json"
     baseline = read_json(path=baseline_path)
     registry_binding = baseline["runtime_authority_files"][
@@ -54,12 +48,34 @@ def rebind_registry(*, issue_copy: Path, registry: Dict[str, object]) -> None:
     ]
     registry_binding["sha256"] = sha256_file(path=registry_path)
     registry_binding["size"] = registry_path.stat().st_size
-    plan_binding = baseline["runtime_authority_files"][
-        "config/issue_15_release_plan.json"
-    ]
-    plan_binding["sha256"] = sha256_file(path=plan_path)
-    plan_binding["size"] = plan_path.stat().st_size
     write_json(path=baseline_path, value=baseline)
+
+
+def rebind_plan_chain(*, repository_root: Path) -> None:
+    """Recompute plan and index content identities after a negative mutation."""
+    index_path = repository_root / "config" / "issue_15_release_plan.json"
+    index = read_json(path=index_path)
+    for entry in index["release_plan_paths"]:
+        plan_path = repository_root / entry["path"]
+        plan = read_json(path=plan_path)
+        body = {
+            field: plan[field]
+            for field in plan if field != "release_plan_content_id"
+        }
+        plan["release_plan_content_id"] = content_hash(value=body)
+        entry["release_plan_content_id"] = plan["release_plan_content_id"]
+        write_json(path=plan_path, value=plan)
+    active = index["release_plan_paths"][-1]
+    index["active_release_plan_id"] = active["release_plan_id"]
+    index["active_release_plan_content_id"] = active[
+        "release_plan_content_id"
+    ]
+    body = {
+        field: index[field]
+        for field in index if field != "release_plan_index_id"
+    }
+    index["release_plan_index_id"] = content_hash(value=body)
+    write_json(path=index_path, value=index)
 
 
 class SourceStrategyRegistryTest(unittest.TestCase):
@@ -68,7 +84,9 @@ class SourceStrategyRegistryTest(unittest.TestCase):
     def test_registry_covers_exact_39_without_migration_state(self) -> None:
         """Load every route and prove only ReleasePlan owns current state."""
         loaded = load_source_strategy_registry(repo_root=REPO_ROOT)
-        plan = load_issue15_release_plan(repo_root=REPO_ROOT)
+        plan = load_issue15_release_plan(
+            repo_root=REPO_ROOT, release_plan_id="issue_15_zero_ai_r2",
+        )
         registry = loaded["registry"]
         metrics = loaded["metrics"]
         self.assertEqual(39, len(metrics))
@@ -104,6 +122,76 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             plan["cumulative_metric_ids"],
         )
         self.assertEqual([], plan["qualification_matrix_subset"])
+
+    def test_release_plan_chain_is_complete_and_monotonic(self) -> None:
+        """Bind immutable R1/R2 parent, delta, keys, families, and closure."""
+        loaded = load_issue15_release_plans(repo_root=REPO_ROOT)
+        r1, r2 = loaded["plans"]
+        self.assertEqual("issue_15_zero_ai_r2", loaded["active_release_plan_id"])
+        self.assertEqual(None, r1["parent_release_plan_id"])
+        self.assertEqual(r1["release_plan_id"], r2["parent_release_plan_id"])
+        self.assertEqual(
+            r1["release_plan_content_id"],
+            r2["parent_release_plan_content_id"],
+        )
+        self.assertEqual(["B01", "B03"], r1["added_metric_ids"])
+        self.assertEqual(20, len(r1["cumulative_vnext_result_keys"]))
+        self.assertEqual(20, len(r2["added_metric_ids"]))
+        self.assertEqual(22, len(r2["cumulative_metric_ids"]))
+        self.assertEqual(220, len(r2["cumulative_vnext_result_keys"]))
+        self.assertEqual(
+            sorted(
+                set(r2["cumulative_metric_ids"])
+                - set(r1["cumulative_metric_ids"])
+            ),
+            r2["added_metric_ids"],
+        )
+        self.assertTrue(
+            set(r1["retired_legacy_producer_ids"]).issubset(
+                set(r2["retired_legacy_producer_ids"])
+            )
+        )
+        for plan in (r1, r2):
+            self.assertEqual(
+                loaded["requirement_closure_hash"],
+                plan["requirement_closure_hash"],
+            )
+
+    def test_release_plan_parent_forgery_fails_after_rehash(self) -> None:
+        """Reject a content-addressed R2 that detaches from immutable R1."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            repository_root = issue_copy.parents[1]
+            path = (
+                repository_root / "config" / "release_plans"
+                / "issue_15_zero_ai_r2.json"
+            )
+            plan = read_json(path=path)
+            plan["parent_release_plan_id"] = "issue_15_zero_ai_r0"
+            write_json(path=path, value=plan)
+            rebind_plan_chain(repository_root=repository_root)
+            with self.assertRaisesRegex(
+                SourceStrategyError, "ratchet chain differs",
+            ):
+                load_issue15_release_plans(repo_root=repository_root)
+
+    def test_release_plan_requirement_forgery_fails_after_rehash(self) -> None:
+        """Reject a plan whose declared Requirement closure is detached."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            repository_root = issue_copy.parents[1]
+            path = (
+                repository_root / "config" / "release_plans"
+                / "issue_15_zero_ai_r1.json"
+            )
+            plan = read_json(path=path)
+            plan["requirement_closure_hash"] = "sha256:" + "0" * 64
+            write_json(path=path, value=plan)
+            rebind_plan_chain(repository_root=repository_root)
+            with self.assertRaisesRegex(
+                SourceStrategyError, "identity differs",
+            ):
+                load_issue15_release_plans(repo_root=repository_root)
 
     def test_family_literals_are_specific_and_drive_one_union(self) -> None:
         """Keep forbidden literals family-owned and exclude common words."""

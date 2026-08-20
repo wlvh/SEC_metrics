@@ -3,12 +3,17 @@
 from __future__ import annotations
 
 import json
+import multiprocessing
+import os
 import tempfile
 import threading
 import unittest
 from pathlib import Path
 from typing import List, Mapping, Optional
+from unittest import mock
 
+from tests.vnext.common import REPO_ROOT
+from vnext import ai_adapter
 from vnext.canonical import content_hash
 from vnext.cutover import _live_retry_policy, _normalized_invocation_error
 from vnext.invocation_control import InvocationControlError
@@ -165,6 +170,45 @@ class InvalidTransport:
     transport_kind = "INVALID"
 
 
+class ProcessCrashTransport:
+    """Terminate the owner process only after the controller marks egress."""
+
+    transport_kind = "MOCK"
+
+    def send(
+        self, *, request_body: bytes, plan: Mapping[str, object],
+        execution_id: str, attempt_ordinal: int,
+    ) -> object:
+        """Exit without a terminal transport outcome or execution receipt."""
+        if (
+            request_body != REQUEST_BODY
+            or not plan["provider_request_identity"]
+            or not execution_id
+            or attempt_ordinal != 1
+        ):
+            raise AssertionError("crash transport input differs")
+        os._exit(73)
+
+
+def crash_after_egress(
+    *, workspace_dir: Path, invocation_plan: Mapping[str, object],
+    execution_id: str,
+) -> None:
+    """Run one child execution that dies inside provider send."""
+    execute_invocation(
+        workspace_dir=workspace_dir,
+        plan=invocation_plan,
+        request_body=REQUEST_BODY,
+        execution_id=execution_id,
+        owner_token="crash-owner",
+        authorized_at_utc=UTC,
+        clock=clock,
+        transport=ProcessCrashTransport(),
+        response_validator=validate_response,
+        evidence_validator=validate_evidence,
+    )
+
+
 class InvocationControlTest(unittest.TestCase):
     """Prove identity, single-flight, retry, stop, and audit invariants."""
 
@@ -187,6 +231,108 @@ class InvocationControlTest(unittest.TestCase):
             "batch_monetary_cap",
         ):
             self.assertNotIn(field, serialized)
+
+    def test_production_adapter_routes_repository_transport_through_wb3(
+        self,
+    ) -> None:
+        """Put the socket-owning transport behind plan/reservation/reuse."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+                release_input_plan_id=identity(label="production-release"),
+                workspace_dir=workspace,
+                owner_token="production-owner",
+            )
+            policy = adapter.policy
+            prepared_mapping = {
+                "manifest": {
+                    "reader_input_manifest_id": identity(label="reader"),
+                    "derived_asset_id": identity(label="grid"),
+                    "source_reference_ids": [identity(label="source-ref")],
+                },
+                "request_bytes": b"{}",
+                "task_contract_bytes": b"{}",
+                "task_contract": {"required_roles": ["value"]},
+                "task_spec_semantic_hash": identity(label="task-spec"),
+            }
+            transport_result_value = ai_adapter.TransportResult(
+                response_bytes=b'{"ok":true}',
+                provider_request_id="mock-production-request",
+                observation=ai_adapter.TransportObservation(
+                    egress_attempted=True,
+                    provider=policy.provider,
+                    model=policy.model,
+                    model_requested=policy.model,
+                    model_returned=policy.model,
+                    api=policy.api,
+                    store=False,
+                    endpoint_host=policy.endpoint_host,
+                    region=policy.region,
+                    retention=policy.retention,
+                    data_use=policy.data_use,
+                    timeout_seconds=policy.timeout_seconds,
+                    retry_count=1,
+                    retries_performed=0,
+                    maximum_payload_bytes=policy.maximum_payload_bytes,
+                    filing_egress_policy=policy.filing_egress_policy,
+                    request_body_bytes=2,
+                ),
+                raw_response_bytes=(
+                    b'{"usage":{"prompt_tokens":2,'
+                    b'"completion_tokens":1}}'
+                ),
+            )
+            credential = ai_adapter.api_key_environment_name(policy=policy)
+            with mock.patch.object(
+                ai_adapter,
+                "_validate_live_prepared_request",
+                return_value=object(),
+            ), mock.patch.object(
+                ai_adapter,
+                "_validate_prepared_request",
+                return_value=prepared_mapping,
+            ), mock.patch.object(
+                ai_adapter,
+                "_controlled_response_validator",
+            ), mock.patch.object(
+                ai_adapter,
+                "_controlled_evidence_validator",
+            ), mock.patch.object(
+                adapter,
+                "_complete_repository_transport",
+                return_value=transport_result_value,
+            ) as repository_transport, mock.patch.dict(
+                os.environ, {credential: "test-only-key"}, clear=False,
+            ):
+                first = adapter._complete_authorized(
+                    prepared_request=object(),
+                    authorized_at_utc=UTC,
+                    invocation_clock=clock,
+                )
+                second = adapter._complete_authorized(
+                    prepared_request=object(),
+                    authorized_at_utc=UTC,
+                    invocation_clock=clock,
+                )
+            state = workspace / "invocation_control"
+            execution_receipt = json.loads(
+                next((state / "executions").iterdir()).read_text(
+                    encoding="utf-8"
+                )
+            )
+            plan_count = len(list((state / "plans").iterdir()))
+            reservation_count = len(list((state / "reservations").iterdir()))
+        self.assertEqual(b'{"ok":true}', first.response_bytes)
+        self.assertEqual(first.response_bytes, second.response_bytes)
+        self.assertEqual(1, repository_transport.call_count)
+        self.assertEqual(1, plan_count)
+        self.assertEqual(0, reservation_count)
+        self.assertEqual(
+            1,
+            execution_receipt["counters"][
+                "real_model_provider_egress_count"
+            ],
+        )
 
     def test_cutover_runtime_uses_issue15_d35_retry_policy(self) -> None:
         """Bind the inherited orchestrator loop to D-35 maximum one retry."""
@@ -257,9 +403,18 @@ class InvocationControlTest(unittest.TestCase):
             {output["status"] for output in outputs},
         )
         counters = [output["counters"] for output in outputs]
-        self.assertEqual(0, sum(row["real_model_provider_egress_count"] for row in counters))
-        self.assertEqual(0, sum(row["paid_model_provider_call_count"] for row in counters))
-        self.assertEqual(1, sum(row["mock_transport_invocation_count"] for row in counters))
+        self.assertEqual(
+            0,
+            sum(row["real_model_provider_egress_count"] for row in counters),
+        )
+        self.assertEqual(
+            0,
+            sum(row["paid_model_provider_call_count"] for row in counters),
+        )
+        self.assertEqual(
+            1,
+            sum(row["mock_transport_invocation_count"] for row in counters),
+        )
 
     def test_http_402_calls_once_and_stops_batch(self) -> None:
         """Stop retries and later stability ordinals after one mock 402."""
@@ -298,6 +453,54 @@ class InvocationControlTest(unittest.TestCase):
         receipt = result["execution_receipts"][0]
         self.assertEqual(1, len(receipt["attempts"]))
         self.assertEqual("HTTP_402", receipt["attempts"][0]["error_class"])
+
+    def test_http_402_releases_reservation_for_new_authorization(self) -> None:
+        """Permit a later authorized execution after one terminal 402."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            invocation_plan = plan()
+            transport = MockTransport(
+                results=[transport_result(status_code=402), transport_result()]
+            )
+            first = execute_invocation(
+                workspace_dir=workspace,
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution(
+                    invocation_plan=invocation_plan,
+                    owner="owner-402-a",
+                    at="2026-08-19T12:02:00Z",
+                ),
+                owner_token="owner-402-a",
+                authorized_at_utc="2026-08-19T12:02:00Z",
+                clock=clock,
+                transport=transport,
+                response_validator=validate_response,
+                evidence_validator=validate_evidence,
+            )
+            second = execute_invocation(
+                workspace_dir=workspace,
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution(
+                    invocation_plan=invocation_plan,
+                    owner="owner-402-b",
+                    at="2026-08-19T12:02:01Z",
+                ),
+                owner_token="owner-402-b",
+                authorized_at_utc="2026-08-19T12:02:01Z",
+                clock=clock,
+                transport=transport,
+                response_validator=validate_response,
+                evidence_validator=validate_evidence,
+            )
+            reservations = list(
+                (workspace / "invocation_control" / "reservations").iterdir()
+            )
+        self.assertEqual("FAILED_TERMINAL", first["status"])
+        self.assertEqual("SUCCEEDED", second["status"])
+        self.assertEqual(2, transport.invocation_count)
+        self.assertEqual([], reservations)
 
     def test_successful_exact_response_resume_has_zero_mock_invocation(self) -> None:
         """Reuse the exact persisted response before reservation or transport."""
@@ -383,6 +586,49 @@ class InvocationControlTest(unittest.TestCase):
         self.assertEqual(result, resumed)
         self.assertEqual(1, transport.invocation_count)
 
+    def test_process_death_after_egress_recovers_unknown_without_call(
+        self,
+    ) -> None:
+        """Derive UNKNOWN_REMOTE_OUTCOME from a dead owner's disk state."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            invocation_plan = plan()
+            execution_id = execution(
+                invocation_plan=invocation_plan,
+                owner="crash-owner",
+                at=UTC,
+            )
+            process = multiprocessing.get_context("spawn").Process(
+                target=crash_after_egress,
+                kwargs={
+                    "workspace_dir": workspace,
+                    "invocation_plan": invocation_plan,
+                    "execution_id": execution_id,
+                },
+            )
+            process.start()
+            process.join(timeout=10)
+            self.assertEqual(73, process.exitcode)
+            transport = MockTransport(results=[AssertionError("called")])
+            recovered = execute_invocation(
+                workspace_dir=workspace,
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution_id,
+                owner_token="crash-owner",
+                authorized_at_utc=UTC,
+                clock=clock,
+                transport=transport,
+                response_validator=validate_response,
+                evidence_validator=validate_evidence,
+            )
+        self.assertEqual("UNKNOWN_REMOTE_OUTCOME", recovered["status"])
+        self.assertEqual([], recovered["attempts"])
+        self.assertEqual(0, transport.invocation_count)
+        self.assertEqual(
+            1, recovered["counters"]["mock_transport_invocation_count"]
+        )
+
     def test_retryable_failure_retries_at_most_once(self) -> None:
         """Retain the first attempt and succeed on the only retry."""
         with tempfile.TemporaryDirectory() as directory:
@@ -414,11 +660,26 @@ class InvocationControlTest(unittest.TestCase):
     def test_terminal_http_schema_and_evidence_never_retry(self) -> None:
         """Stop 400/401/422/schema/evidence classes after one invocation."""
         cases = [
-            ("HTTP_400", transport_result(status_code=400), validate_response, validate_evidence),
-            ("HTTP_401", transport_result(status_code=401), validate_response, validate_evidence),
-            ("HTTP_422", transport_result(status_code=422), validate_response, validate_evidence),
-            ("SCHEMA_VIOLATION", transport_result(), reject_schema, validate_evidence),
-            ("EVIDENCE_FAILURE", transport_result(), validate_response, reject_evidence),
+            (
+                "HTTP_400", transport_result(status_code=400),
+                validate_response, validate_evidence,
+            ),
+            (
+                "HTTP_401", transport_result(status_code=401),
+                validate_response, validate_evidence,
+            ),
+            (
+                "HTTP_422", transport_result(status_code=422),
+                validate_response, validate_evidence,
+            ),
+            (
+                "SCHEMA_VIOLATION", transport_result(),
+                reject_schema, validate_evidence,
+            ),
+            (
+                "EVIDENCE_FAILURE", transport_result(),
+                validate_response, reject_evidence,
+            ),
         ]
         for ordinal, (
             error_class,
@@ -426,7 +687,9 @@ class InvocationControlTest(unittest.TestCase):
             response_validator,
             evidence_validator,
         ) in enumerate(cases, start=1):
-            with self.subTest(error_class=error_class), tempfile.TemporaryDirectory() as directory:
+            with self.subTest(
+                error_class=error_class,
+            ), tempfile.TemporaryDirectory() as directory:
                 invocation_plan = plan()
                 transport = MockTransport(results=[outcome])
                 authorized_at = "2026-08-19T12:01:0{}Z".format(ordinal)
@@ -510,10 +773,14 @@ class InvocationControlTest(unittest.TestCase):
 
     def test_structured_only_and_abandoned_before_egress_are_zero_call(self) -> None:
         """Prove structured bypass and recover a pre-egress orphan."""
-        structured = structured_only_result(
-            release_input_plan_id=identity(label="release"),
-            result_coordinate_count=220,
-        )
+        with tempfile.TemporaryDirectory() as observation_directory:
+            structured = structured_only_result(
+                repo_root=REPO_ROOT,
+                workspace_dir=Path(observation_directory),
+                release_input_plan_id=identity(label="release"),
+                cumulative_metric_ids=("B01", "B03"),
+                result_coordinate_count=20,
+            )
         self.assertEqual(
             {
                 "real_model_provider_egress_count": 0,
@@ -547,6 +814,40 @@ class InvocationControlTest(unittest.TestCase):
                 recovered_at_utc="2026-08-19T12:00:01Z",
             )
         self.assertEqual("ABANDONED_BEFORE_EGRESS", recovery["status"])
+
+    def test_structured_only_proof_rejects_observed_invocation_state(
+        self,
+    ) -> None:
+        """Never replace namespace-derived zero counts with a constant."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            invocation_plan = plan()
+            execute_invocation(
+                workspace_dir=workspace,
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution(
+                    invocation_plan=invocation_plan,
+                    owner="observed-owner",
+                    at=UTC,
+                ),
+                owner_token="observed-owner",
+                authorized_at_utc=UTC,
+                clock=clock,
+                transport=MockTransport(results=[transport_result()]),
+                response_validator=validate_response,
+                evidence_validator=validate_evidence,
+            )
+            with self.assertRaisesRegex(
+                InvocationControlError, "emitted invocation state",
+            ):
+                structured_only_result(
+                    repo_root=REPO_ROOT,
+                    workspace_dir=workspace,
+                    release_input_plan_id=identity(label="release"),
+                    cumulative_metric_ids=("B01", "B03"),
+                    result_coordinate_count=20,
+                )
 
 
 if __name__ == "__main__":

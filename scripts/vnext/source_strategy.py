@@ -8,6 +8,7 @@ their semantic fields are accepted here.
 
 from __future__ import annotations
 
+import csv
 import json
 from pathlib import Path
 from typing import Dict, List, Mapping, Sequence
@@ -60,20 +61,49 @@ METRIC_FIELDS = {
     "structured_route_id",
 }
 RELEASE_PLAN_FIELDS = {
+    "added_metric_ids",
     "authority_hashes",
     "cumulative_metric_ids",
+    "cumulative_vnext_result_keys",
+    "parent_release_plan_content_id",
+    "parent_release_plan_id",
+    "reader_family_versions",
+    "record_type",
+    "release_plan_content_id",
     "release_plan_id",
+    "release_stage",
+    "requirement_id",
+    "requirement_closure_hash",
+    "retired_legacy_producer_ids",
+    "schema_version",
+}
+RELEASE_PLAN_INDEX_FIELDS = {
+    "active_release_plan_content_id",
+    "active_release_plan_id",
+    "record_type",
+    "release_plan_index_id",
+    "release_plan_paths",
     "requirement_id",
     "schema_version",
 }
+RELEASE_PLAN_INDEX_ENTRY_FIELDS = {
+    "path", "release_plan_content_id", "release_plan_id",
+}
 RELEASE_AUTHORITY_FIELDS = {
+    "company_trait_catalog_sha256",
     "company_registry_sha256",
+    "deterministic_metric_catalog_sha256",
+    "event_route_catalog_sha256",
     "final_metric_id_set_hash",
     "frozen_legacy_keyset_hash",
     "producer_inventory_sha256",
     "qualification_matrix_subset_hash",
     "source_strategy_registry_sha256",
 }
+RELEASE_PLAN_IDS = (
+    "issue_15_zero_ai_r1",
+    "issue_15_zero_ai_r2",
+)
 
 
 class SourceStrategyError(ValueError):
@@ -383,91 +413,320 @@ def _qualification_subset(
     return subset
 
 
-def load_issue15_release_plan(*, repo_root: Path) -> Dict[str, object]:
-    """Load the sole Issue #15 migration-state authority.
+def _company_ids(*, repo_root: Path) -> List[str]:
+    """Return the exact sorted company identity set from registry authority."""
+    path = repo_root / "config" / "company_registry.csv"
+    with path.open(mode="r", encoding="utf-8", newline="") as file_obj:
+        rows = [dict(row) for row in csv.DictReader(file_obj)]
+    if any("company_id" not in row for row in rows):
+        raise SourceStrategyError("Company registry identity is incomplete")
+    company_ids = sorted(str(row["company_id"]) for row in rows)
+    if not company_ids or len(company_ids) != len(set(company_ids)):
+        raise SourceStrategyError("Company registry exact set differs")
+    return company_ids
 
-    Args:
-        repo_root: Repository root containing config and Requirement bytes.
 
-    Returns:
-        Exact ReleasePlan plus derived qualification subset and byte identity.
+def _retired_producer_ids(
+    *, repo_root: Path, cumulative_metric_ids: Sequence[str]
+) -> List[str]:
+    """Derive the exact semantic-producer retirement set for one ratchet."""
+    inventory = _json_object(
+        path=(repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
+              / "legacy_semantic_producer_inventory.json"),
+        label="legacy semantic producer inventory",
+    )
+    if "producers" not in inventory or not isinstance(
+        inventory["producers"], list
+    ):
+        raise SourceStrategyError("Legacy producer inventory is invalid")
+    metric_ids = set(cumulative_metric_ids)
+    retired = []
+    for producer in inventory["producers"]:
+        if not isinstance(producer, dict) or not {
+            "covered_metric_ids", "kind", "producer_id",
+        }.issubset(producer):
+            raise SourceStrategyError("Legacy producer record is invalid")
+        if (
+            producer["kind"] == "SEMANTIC_PRODUCER"
+            and metric_ids.intersection(producer["covered_metric_ids"])
+        ):
+            retired.append(str(producer["producer_id"]))
+    retired.sort()
+    if not retired or len(retired) != len(set(retired)):
+        raise SourceStrategyError("Retired producer exact set is invalid")
+    return retired
 
-    Raises:
-        SourceStrategyError: On schema, cumulative-set, authority-hash, or
-            Requirement-binding drift.
-    """
-    registry = load_source_strategy_registry(repo_root=repo_root)
-    plan_path = repo_root / "config" / "issue_15_release_plan.json"
-    plan = _json_object(path=plan_path, label="Issue #15 ReleasePlan")
-    _exact_fields(
-        value=plan, expected=RELEASE_PLAN_FIELDS, label="Issue #15 ReleasePlan"
-    )
-    if plan["schema_version"] != 1:
-        raise SourceStrategyError("Issue #15 ReleasePlan schema differs")
-    if plan["requirement_id"] != ISSUE_15_REQUIREMENT_ID:
-        raise SourceStrategyError("Issue #15 ReleasePlan identity differs")
-    _nonempty_string(value=plan["release_plan_id"], label="release plan id")
-    cumulative = _string_list(
-        value=plan["cumulative_metric_ids"],
-        label="cumulative metric ids",
-        allow_empty=True,
-    )
-    if cumulative != sorted(cumulative):
-        raise SourceStrategyError("Cumulative metric ids must be sorted")
-    if not set(cumulative).issubset(set(registry["metric_ids"])):
-        raise SourceStrategyError("Cumulative metric ids escape the registry")
-    authority = _object(
-        value=plan["authority_hashes"], label="release authority hashes"
-    )
-    _exact_fields(
-        value=authority,
-        expected=RELEASE_AUTHORITY_FIELDS,
-        label="release authority hashes",
-    )
+
+def _reader_family_versions(
+    *, cumulative_metric_ids: Sequence[str], registry: Mapping[str, object]
+) -> Dict[str, str]:
+    """Derive family-version closure for cumulative metric routes."""
+    metrics = _object(value=registry["metrics"], label="metric routes")
+    families = _object(value=registry["families"], label="reader families")
+    family_ids = sorted({
+        str(_object(value=metrics[metric_id], label="metric route")[
+            "reader_family_id"
+        ])
+        for metric_id in cumulative_metric_ids
+    })
+    return {
+        family_id: str(_object(
+            value=families[family_id], label="reader family"
+        )["reader_contract_id"])
+        for family_id in family_ids
+    }
+
+
+def _release_authority(
+    *, repo_root: Path, registry: Mapping[str, object],
+    qualification_subset: Sequence[Mapping[str, str]],
+) -> Dict[str, str]:
+    """Return the complete Contract section-4 authority hash mapping."""
     baseline = _json_object(
-        path=(
-            repo_root
-            / "requirements"
-            / ISSUE_15_REQUIREMENT_ID
-            / "source_strategy_baseline_receipt.json"
-        ),
+        path=(repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
+              / "source_strategy_baseline_receipt.json"),
         label="SourceStrategy baseline receipt",
     )
-    qualification_subset = _qualification_subset(
-        cumulative_metric_ids=cumulative, metrics=registry["metrics"]
-    )
-    expected_authority = {
+    return {
+        "company_trait_catalog_sha256": sha256_file(
+            path=repo_root / "catalog" / "company_traits.yaml"
+        ),
         "company_registry_sha256": sha256_file(
             path=repo_root / "config" / "company_registry.csv"
         ),
-        "final_metric_id_set_hash": content_hash(value=registry["metric_ids"]),
-        "frozen_legacy_keyset_hash": baseline["frozen_legacy_keyset_hash"],
+        "deterministic_metric_catalog_sha256": sha256_file(
+            path=repo_root / "catalog" / "deterministic_metrics.json"
+        ),
+        "event_route_catalog_sha256": sha256_file(
+            path=repo_root / "catalog" / "event_routes.json"
+        ),
+        "final_metric_id_set_hash": content_hash(
+            value=registry["metric_ids"]
+        ),
+        "frozen_legacy_keyset_hash": str(
+            baseline["frozen_legacy_keyset_hash"]
+        ),
         "producer_inventory_sha256": sha256_file(
-            path=(
-                repo_root
-                / "requirements"
-                / ISSUE_15_REQUIREMENT_ID
-                / "legacy_semantic_producer_inventory.json"
-            )
+            path=(repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
+                  / "legacy_semantic_producer_inventory.json")
         ),
         "qualification_matrix_subset_hash": content_hash(
-            value=qualification_subset
+            value=list(qualification_subset)
         ),
-        "source_strategy_registry_sha256": registry["registry_sha256"],
+        "source_strategy_registry_sha256": str(registry["registry_sha256"]),
     }
-    if authority != expected_authority:
+
+
+def _validate_release_plan(
+    *, repo_root: Path, plan: Mapping[str, object],
+    registry: Mapping[str, object], requirement_closure_hash: str,
+) -> Dict[str, object]:
+    """Validate one immutable full-schema ReleasePlan independently."""
+    value = _object(value=plan, label="Issue #15 ReleasePlan")
+    _exact_fields(
+        value=value, expected=RELEASE_PLAN_FIELDS,
+        label="Issue #15 ReleasePlan",
+    )
+    if (
+        value["schema_version"] != 2
+        or value["record_type"] != "ISSUE_15_RELEASE_PLAN"
+        or value["requirement_id"] != ISSUE_15_REQUIREMENT_ID
+        or value["requirement_closure_hash"] != requirement_closure_hash
+    ):
+        raise SourceStrategyError("Issue #15 ReleasePlan identity differs")
+    release_plan_id = _nonempty_string(
+        value=value["release_plan_id"], label="release plan id"
+    )
+    if release_plan_id not in RELEASE_PLAN_IDS:
+        raise SourceStrategyError("ReleasePlan id is not authorized")
+    expected_stage = "R1" if release_plan_id == RELEASE_PLAN_IDS[0] else "R2"
+    if value["release_stage"] != expected_stage:
+        raise SourceStrategyError("ReleasePlan stage differs")
+    added = _string_list(
+        value=value["added_metric_ids"], label="added metric ids",
+        allow_empty=False,
+    )
+    cumulative = _string_list(
+        value=value["cumulative_metric_ids"], label="cumulative metric ids",
+        allow_empty=False,
+    )
+    if (
+        added != sorted(added)
+        or cumulative != sorted(cumulative)
+        or not set(cumulative).issubset(set(registry["metric_ids"]))
+    ):
+        raise SourceStrategyError("ReleasePlan metric sets differ")
+    expected_keys = [
+        {"company_id": company_id, "metric_id": metric_id}
+        for company_id in _company_ids(repo_root=repo_root)
+        for metric_id in cumulative
+    ]
+    if value["cumulative_vnext_result_keys"] != expected_keys:
+        raise SourceStrategyError("ReleasePlan cumulative result keys differ")
+    expected_retired = _retired_producer_ids(
+        repo_root=repo_root, cumulative_metric_ids=cumulative,
+    )
+    if value["retired_legacy_producer_ids"] != expected_retired:
+        raise SourceStrategyError("ReleasePlan retired producer set differs")
+    expected_versions = _reader_family_versions(
+        cumulative_metric_ids=cumulative, registry=registry,
+    )
+    if value["reader_family_versions"] != expected_versions:
+        raise SourceStrategyError("ReleasePlan reader family versions differ")
+    qualification_subset = _qualification_subset(
+        cumulative_metric_ids=cumulative, metrics=registry["metrics"],
+    )
+    authority = _object(
+        value=value["authority_hashes"], label="release authority hashes"
+    )
+    _exact_fields(
+        value=authority, expected=RELEASE_AUTHORITY_FIELDS,
+        label="release authority hashes",
+    )
+    if authority != _release_authority(
+        repo_root=repo_root, registry=registry,
+        qualification_subset=qualification_subset,
+    ):
         raise SourceStrategyError("Issue #15 ReleasePlan authority differs")
+    body = {
+        field: value[field]
+        for field in value if field != "release_plan_content_id"
+    }
+    if value["release_plan_content_id"] != content_hash(value=body):
+        raise SourceStrategyError("ReleasePlan content identity differs")
+    return {
+        **value,
+        "qualification_matrix_subset": qualification_subset,
+    }
+
+
+def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
+    """Load and validate the complete immutable R1-to-R2 plan chain."""
+    registry = load_source_strategy_registry(repo_root=repo_root)
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
     )
-    plan_sha256 = sha256_file(path=plan_path)
-    if requirement["hashes"]["issue_15_release_plan_sha256"] != plan_sha256:
-        raise SourceStrategyError("Issue #15 ReleasePlan binding differs")
+    index_path = repo_root / "config" / "issue_15_release_plan.json"
+    index = _json_object(path=index_path, label="ReleasePlan index")
+    _exact_fields(
+        value=index, expected=RELEASE_PLAN_INDEX_FIELDS,
+        label="ReleasePlan index",
+    )
+    if (
+        index["schema_version"] != 1
+        or index["record_type"] != "ISSUE_15_RELEASE_PLAN_INDEX"
+        or index["requirement_id"] != ISSUE_15_REQUIREMENT_ID
+    ):
+        raise SourceStrategyError("ReleasePlan index identity differs")
+    index_body = {
+        field: index[field]
+        for field in index if field != "release_plan_index_id"
+    }
+    if index["release_plan_index_id"] != content_hash(value=index_body):
+        raise SourceStrategyError("ReleasePlan index content identity differs")
+    entries = index["release_plan_paths"]
+    if not isinstance(entries, list) or len(entries) != len(RELEASE_PLAN_IDS):
+        raise SourceStrategyError("ReleasePlan index exact set differs")
+    plans = []
+    paths = []
+    for entry_value, expected_id in zip(entries, RELEASE_PLAN_IDS):
+        entry = _object(value=entry_value, label="ReleasePlan index entry")
+        _exact_fields(
+            value=entry, expected=RELEASE_PLAN_INDEX_ENTRY_FIELDS,
+            label="ReleasePlan index entry",
+        )
+        if entry["release_plan_id"] != expected_id:
+            raise SourceStrategyError("ReleasePlan index order differs")
+        relative = Path(str(entry["path"]))
+        if (
+            relative.is_absolute()
+            or ".." in relative.parts
+            or relative.parts[:2] != ("config", "release_plans")
+            or relative.suffix != ".json"
+        ):
+            raise SourceStrategyError("ReleasePlan path is unsafe")
+        path = repo_root / relative
+        if path.is_symlink() or not path.is_file():
+            raise SourceStrategyError("ReleasePlan file is unavailable")
+        plan = _validate_release_plan(
+            repo_root=repo_root,
+            plan=_json_object(path=path, label="Issue #15 ReleasePlan"),
+            registry=registry,
+            requirement_closure_hash=str(
+                requirement["requirement_closure_hash"]
+            ),
+        )
+        if plan["release_plan_content_id"] != entry[
+            "release_plan_content_id"
+        ]:
+            raise SourceStrategyError("ReleasePlan index binding differs")
+        plans.append(plan)
+        paths.append(path)
+    for ordinal, plan in enumerate(plans):
+        parent = plans[ordinal - 1] if ordinal else None
+        expected_parent_id = (
+            parent["release_plan_id"] if parent is not None else None
+        )
+        expected_parent_content = (
+            parent["release_plan_content_id"] if parent is not None else None
+        )
+        expected_added = (
+            sorted(set(plan["cumulative_metric_ids"]) - set(
+                parent["cumulative_metric_ids"]
+            ))
+            if parent is not None
+            else list(plan["cumulative_metric_ids"])
+        )
+        if (
+            plan["parent_release_plan_id"] != expected_parent_id
+            or plan["parent_release_plan_content_id"]
+            != expected_parent_content
+            or plan["added_metric_ids"] != expected_added
+        ):
+            raise SourceStrategyError("ReleasePlan ratchet chain differs")
+    active = plans[-1]
+    if (
+        index["active_release_plan_id"] != active["release_plan_id"]
+        or index["active_release_plan_content_id"]
+        != active["release_plan_content_id"]
+    ):
+        raise SourceStrategyError("ReleasePlan active tip differs")
     return {
-        "authority_hashes": authority,
-        "cumulative_metric_ids": cumulative,
-        "qualification_matrix_subset": qualification_subset,
-        "release_plan": plan,
-        "release_plan_sha256": plan_sha256,
+        "active_release_plan_id": active["release_plan_id"],
+        "index": index,
+        "index_sha256": sha256_file(path=index_path),
+        "plans": plans,
+        "plan_paths": paths,
+        "requirement_closure_hash": requirement["requirement_closure_hash"],
         "source_strategy_registry_sha256": registry["registry_sha256"],
+    }
+
+
+def load_issue15_release_plan(
+    *, repo_root: Path, release_plan_id: str
+) -> Dict[str, object]:
+    """Return one named immutable plan from the validated complete chain."""
+    plan_id = _nonempty_string(
+        value=release_plan_id, label="requested release plan id"
+    )
+    loaded = load_issue15_release_plans(repo_root=repo_root)
+    matches = [
+        (plan, path)
+        for plan, path in zip(loaded["plans"], loaded["plan_paths"])
+        if plan["release_plan_id"] == plan_id
+    ]
+    if len(matches) != 1:
+        raise SourceStrategyError("Requested ReleasePlan is unavailable")
+    plan, path = matches[0]
+    return {
+        "authority_hashes": plan["authority_hashes"],
+        "cumulative_metric_ids": plan["cumulative_metric_ids"],
+        "qualification_matrix_subset": plan["qualification_matrix_subset"],
+        "release_plan": plan,
+        "release_plan_chain": loaded["plans"],
+        "release_plan_content_id": plan["release_plan_content_id"],
+        "release_plan_sha256": sha256_file(path=path),
+        "source_strategy_registry_sha256": loaded[
+            "source_strategy_registry_sha256"
+        ],
     }

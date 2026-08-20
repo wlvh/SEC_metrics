@@ -28,10 +28,10 @@ for import_path in (REPO_ROOT, SCRIPTS_DIR, TOOLS_DIR):
         sys.path.insert(0, str(import_path))
 
 from vnext.ai_adapter import (  # noqa: E402
-    build_approved_transport_adapter,
+    build_invocation_controlled_transport_adapter,
     build_recorded_adapter,
 )
-from vnext.canonical import strict_json_file  # noqa: E402
+from vnext.canonical import content_hash, strict_json_file  # noqa: E402
 from vnext.projector import (  # noqa: E402
     write_projection_batch_manifest,
     write_projection_candidate,
@@ -550,7 +550,27 @@ def _prepare(*, arguments: argparse.Namespace) -> Dict[str, object]:
             raise OperatorCliError(
                 code=error.code, message=error.detail,
             ) from error
-        adapter = build_approved_transport_adapter()
+        operator_release_input_plan_id = content_hash(
+            value={
+                "record_type": "OPERATOR_RELEASE_INPUT_PLAN",
+                "run_id": values["run_id"],
+                "company_id": values["company_id"],
+                "target_period": {
+                    "fiscal_year": values["fiscal_year"],
+                    "period_start": values["period_start"],
+                    "period_end": values["period_end"],
+                },
+                "source_url": values["source_url"],
+                "accession": values["accession"],
+                "document_name": values["document_name"],
+                "disclosure_spec_path": values["disclosure_spec_path"],
+            }
+        )
+        adapter = build_invocation_controlled_transport_adapter(
+            release_input_plan_id=operator_release_input_plan_id,
+            workspace_dir=run_dir.parent,
+            owner_token=run_dir.name,
+        )
     result = create_review_run(
         repo_root=REPO_ROOT,
         run_dir=run_dir,

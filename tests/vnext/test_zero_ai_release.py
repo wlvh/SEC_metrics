@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import io
+import inspect
 import json
 import shutil
 import tempfile
@@ -11,6 +12,7 @@ import unittest
 from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT
+from vnext import zero_ai_r2
 from vnext.canonical import content_hash, sha256_file
 from vnext.publication import PublicationError, PublicationView
 from vnext.publication import ROOT_MIRROR_RELATIVE_PATHS
@@ -38,6 +40,22 @@ class ZeroAiReleaseTest(unittest.TestCase):
             publication_id=r1_id,
             bundle_dir=r1_dir,
             manifest=r1_manifest,
+        )
+
+    def test_r2_financial_producer_has_no_legacy_semantic_input(self) -> None:
+        """Ban old rows, evidence, and expected values from financial build."""
+        signature = inspect.signature(zero_ai_r2._deterministic_metric_graph)
+        self.assertEqual(
+            ["context", "company_id", "metric_id"],
+            list(signature.parameters),
+        )
+        source = inspect.getsource(zero_ai_r2._deterministic_metric_graph)
+        for forbidden in (
+            "legacy_row", "legacy_evidence", "value_normalized", "value_raw",
+        ):
+            self.assertNotIn(forbidden, source)
+        self.assertFalse(
+            hasattr(zero_ai_r2, "_selected_component_claims")
         )
 
     def test_r1_active_rollback_restore_and_read_back_are_bound(self) -> None:

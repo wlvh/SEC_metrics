@@ -19,12 +19,14 @@ from __future__ import annotations
 import csv
 import io
 import json
+import subprocess
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Dict, List, Mapping, Sequence, Tuple
 
 from sec_http import request_log_manifest_payload
 
+from git_workspace import sanitized_git_environment
 from .batch_workflow import build_release_input_plan, request_attempt_binding
 from .canonical import atomic_write_bytes, canonical_json_bytes, content_hash
 from .canonical import parse_utc_timestamp, sha256_bytes, sha256_file
@@ -50,11 +52,6 @@ R1_EXPECTED_COORDINATES = 20
 R1_EXPECTED_LEGACY_ROWS = 18
 R1_EXPECTED_NEW_KEYS = 2
 R1_EXPECTED_PUBLIC_ROWS = 232
-ZERO_COUNTERS = {
-    "mock_transport_invocation_count": 0,
-    "paid_model_provider_call_count": 0,
-    "real_model_provider_egress_count": 0,
-}
 ZERO_AI_NOTE_START = "<!-- zero-ai-formal-publication:start -->"
 ZERO_AI_NOTE_END = "<!-- zero-ai-formal-publication:end -->"
 METRICS_FIELDS = (
@@ -94,6 +91,56 @@ COVERAGE_FIELDS = (
 
 class ZeroAiReleaseError(ValueError):
     """Report a source, result, compatibility, or publication invariant."""
+
+
+def _source_commit_binding(
+    *, repo_root: Path, source_commit: str,
+) -> Dict[str, str]:
+    """Bind one reachable source commit and its exact Git tree object."""
+    if (
+        not isinstance(source_commit, str)
+        or len(source_commit) != 40
+        or any(character not in "0123456789abcdef" for character in source_commit)
+    ):
+        raise ZeroAiReleaseError("Source commit must be a full SHA")
+    environment = sanitized_git_environment()
+    resolved = subprocess.run(
+        args=["git", "rev-parse", source_commit + "^{commit}"],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+        env=environment,
+        text=True,
+    )
+    tree = subprocess.run(
+        args=["git", "rev-parse", source_commit + "^{tree}"],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+        env=environment,
+        text=True,
+    )
+    ancestor = subprocess.run(
+        args=["git", "merge-base", "--is-ancestor", source_commit, "HEAD"],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+        env=environment,
+    )
+    resolved_commit = resolved.stdout.strip()
+    source_tree_oid = tree.stdout.strip()
+    if (
+        resolved.returncode != 0
+        or tree.returncode != 0
+        or ancestor.returncode != 0
+        or resolved_commit != source_commit
+        or len(source_tree_oid) != 40
+    ):
+        raise ZeroAiReleaseError("Source commit is not a reachable Git ancestor")
+    return {
+        "source_commit": resolved_commit,
+        "source_tree_oid": source_tree_oid,
+    }
 
 
 def _json_bytes(*, value: object) -> bytes:
@@ -334,7 +381,9 @@ def _r1_source_plan(
         Multi-source plan, scalar-compatible structured Run inputs, and
         locator proof indexed by SourceReference identity.
     """
-    issue_plan = load_issue15_release_plan(repo_root=repo_root)
+    issue_plan = load_issue15_release_plan(
+        repo_root=repo_root, release_plan_id="issue_15_zero_ai_r1",
+    )
     if tuple(issue_plan["cumulative_metric_ids"]) != R1_METRIC_IDS:
         raise ZeroAiReleaseError("R1 cumulative metric exact set differs")
     run_plan = build_release_input_plan(
@@ -428,6 +477,7 @@ def _r1_source_plan(
         )
     multi_source = build_multi_source_release_input_plan(
         release_plan_id=str(issue_plan["release_plan"]["release_plan_id"]),
+        release_plan_content_id=str(issue_plan["release_plan_content_id"]),
         requirement_id="issue_15_v1",
         authority_hashes=issue_plan["authority_hashes"],
         companies=company_rows,
@@ -901,6 +951,9 @@ def _prepare_r1_successor(
     Returns:
         Prepared PublicationManifest B and complete receipt summary.
     """
+    source_binding = _source_commit_binding(
+        repo_root=repo_root, source_commit=source_commit,
+    )
     layout = publication_layout(publication_root=repo_root)
     predecessor_dir = (
         Path(layout["publications_dir"]) / str(predecessor["publication_id"])
@@ -982,13 +1035,19 @@ def _prepare_r1_successor(
         body=coordinate_body, identity_field="batch_manifest_id",
     )
     invocation = structured_only_result(
+        repo_root=repo_root,
+        workspace_dir=workspace,
         release_input_plan_id=str(plan["release_input_plan_id"]),
+        cumulative_metric_ids=R1_METRIC_IDS,
         result_coordinate_count=R1_EXPECTED_COORDINATES,
     )
     retirement = _retirement_receipt(
         repo_root=repo_root,
         cumulative_metric_ids=R1_METRIC_IDS,
         publication_stage="R1",
+    )
+    issue_release = load_issue15_release_plan(
+        repo_root=repo_root, release_plan_id="issue_15_zero_ai_r1",
     )
     ledger_binding, locator_bytes = _ledger_binding(
         repo_root=repo_root, plan=plan, locator_proofs=locator_proofs,
@@ -998,6 +1057,10 @@ def _prepare_r1_successor(
         "internal/release_input_plan.json": _json_bytes(value=plan),
         "internal/coordinate_index.json": _json_bytes(value=coordinate_index),
         "internal/request_locator_provenance.json": locator_bytes,
+        "internal/issue15_release_plan.json": (
+            repo_root / "config" / "release_plans"
+            / "issue_15_zero_ai_r1.json"
+        ).read_bytes(),
         "internal/retirement_receipt.json": _json_bytes(value=retirement),
         "internal/structured_only_invocation.json": _json_bytes(value=invocation),
     }
@@ -1057,7 +1120,7 @@ def _prepare_r1_successor(
             "PUBLIC_KEY_UNION",
             "STRUCTURED_ONLY_ZERO_PROVIDER",
         ],
-        "counters": dict(ZERO_COUNTERS),
+        "counters": dict(invocation["counters"]),
         "validated_at_utc": committed_at_utc,
     }
     validation = _receipt(
@@ -1074,6 +1137,7 @@ def _prepare_r1_successor(
         value={
             "run_id": str(coordinate_index["batch_manifest_id"]),
             "source_commit": source_commit,
+            "source_tree_oid": source_binding["source_tree_oid"],
             "started_at_utc": committed_at_utc,
             "mode": "FULL_VALIDATION",
             "refreshed_artifacts": sorted(
@@ -1101,6 +1165,8 @@ def _prepare_r1_successor(
         "record_type": "ZERO_AI_FORMAL_RELEASE_RECEIPT",
         "status": "PASSED",
         "release_stage": "R1",
+        "source_commit": source_binding["source_commit"],
+        "source_tree_oid": source_binding["source_tree_oid"],
         "release_input_plan_id": plan["release_input_plan_id"],
         "batch_manifest_id": coordinate_index["batch_manifest_id"],
         "projection_manifest_id": projection["projection_manifest_id"],
@@ -1116,11 +1182,20 @@ def _prepare_r1_successor(
         "requirement_closure_hash": issue_requirement[
             "requirement_closure_hash"
         ],
-        "issue15_release_plan_sha256": issue_requirement["hashes"][
-            "issue_15_release_plan_sha256"
+        "issue15_release_plan_id": issue_release["release_plan"][
+            "release_plan_id"
+        ],
+        "issue15_release_plan_content_id": issue_release[
+            "release_plan_content_id"
+        ],
+        "issue15_release_plan_sha256": issue_release[
+            "release_plan_sha256"
         ],
         "source_locator_classes": ["IMMUTABLE_ATTEMPT"],
-        "counters": dict(ZERO_COUNTERS),
+        "invocation_observation_id": invocation[
+            "invocation_observation_id"
+        ],
+        "counters": dict(invocation["counters"]),
         "public_artifact_hashes": public_hashes,
         "internal_files": _internal_bindings(files=internal_files),
     }
@@ -1147,6 +1222,8 @@ def _prepare_r1_successor(
     )
     summary = {
         "release_stage": "R1",
+        "source_commit": source_binding["source_commit"],
+        "source_tree_oid": source_binding["source_tree_oid"],
         "release_input_plan_id": plan["release_input_plan_id"],
         "batch_manifest_id": coordinate_index["batch_manifest_id"],
         "projection_manifest_id": projection["projection_manifest_id"],
@@ -1156,7 +1233,10 @@ def _prepare_r1_successor(
         "public_key_set_hash": key_hash,
         "strict_compatibility_hash": strict_hash,
         "retirement_receipt_id": retirement["retirement_receipt_id"],
-        "counters": dict(ZERO_COUNTERS),
+        "invocation_observation_id": invocation[
+            "invocation_observation_id"
+        ],
+        "counters": dict(invocation["counters"]),
         "retirement_receipt": retirement,
     }
     return successor, summary
@@ -1177,6 +1257,9 @@ def _read_back_proof(
     view = PublicationView.open(publication_root=repo_root)
     if view.publication_id != expected_publication_id:
         raise ZeroAiReleaseError("Zero-AI active publication differs")
+    marker = json.loads(
+        view.read_bytes(relative_path=ZERO_AI_FORMAL_MANIFEST).decode("utf-8")
+    )
     artifact_hashes = {}
     for relative in sorted(REQUIRED_BUNDLE_FILES):
         content = view.read_bytes(relative_path=relative)
@@ -1194,13 +1277,14 @@ def _read_back_proof(
         "publication_id": expected_publication_id,
         "artifact_hashes": artifact_hashes,
         "mirror_hashes": state["mirror_hashes"],
-        "counters": dict(ZERO_COUNTERS),
+        "counters": dict(marker["counters"]),
     }
     return _receipt(body=body, identity_field="read_back_proof_id")
 
 
 def _persist_receipt_set(
     *, repo_root: Path, receipts: Mapping[str, Mapping[str, object]],
+    counters: Mapping[str, object],
 ) -> Dict[str, object]:
     """Persist content-addressed R1 receipts and one stable role index.
 
@@ -1236,7 +1320,7 @@ def _persist_receipt_set(
         "record_type": "ZERO_AI_R1_RECEIPT_INDEX",
         "status": "PASSED",
         "receipts": bindings,
-        "counters": dict(ZERO_COUNTERS),
+        "counters": dict(counters),
     }
     index = _receipt(body=index_body, identity_field="receipt_index_id")
     atomic_write_bytes(
@@ -1309,6 +1393,7 @@ def publish_r1(
     )
     receipt_index = _persist_receipt_set(
         repo_root=repo_root,
+        counters=summary["counters"],
         receipts={
             "predecessor": predecessor,
             "successor_publication": successor,

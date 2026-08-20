@@ -87,7 +87,7 @@ KEYWORD_RULE_FIELDS = {"aliases", "item_code"}
 EVENT_ROUTE_IDS = {"C01", "E01", "E02", "E03", "E04", "E05"}
 MAX_XBRL_FACTS = 250000
 MAX_XBRL_TEXT = 16 * 1024 * 1024
-DETERMINISTIC_ROUTER_SEMANTIC_VERSION = "1"
+DETERMINISTIC_ROUTER_SEMANTIC_VERSION = "2"
 
 
 class DeterministicRouterError(ValueError):
@@ -540,6 +540,7 @@ def validate_source_role_plan(*, role: Mapping[str, object]) -> Dict[str, object
 def build_multi_source_release_input_plan(
     *,
     release_plan_id: str,
+    release_plan_content_id: str,
     requirement_id: str,
     authority_hashes: Mapping[str, object],
     companies: Sequence[Mapping[str, object]],
@@ -551,6 +552,7 @@ def build_multi_source_release_input_plan(
 
     Args:
         release_plan_id: Configured ratchet ReleasePlan identity.
+        release_plan_content_id: Immutable full ReleasePlan content identity.
         requirement_id: Exact Requirement snapshot identity.
         authority_hashes: ReleasePlan authority hash mapping.
         companies: Company rows with exact ``sources`` arrays.
@@ -562,6 +564,9 @@ def build_multi_source_release_input_plan(
         Content-addressed release input plan with no scalar source slots.
     """
     _text(value=release_plan_id, label="release plan id")
+    _sha256_identity(
+        value=release_plan_content_id, label="release plan content id",
+    )
     _text(value=requirement_id, label="Requirement id")
     _sha256_identity(
         value="sha256:" + event_route_catalog_sha256,
@@ -646,6 +651,7 @@ def build_multi_source_release_input_plan(
         "schema_version": 2,
         "record_type": "MULTI_SOURCE_RELEASE_INPUT_PLAN",
         "release_plan_id": release_plan_id,
+        "release_plan_content_id": release_plan_content_id,
         "requirement_id": requirement_id,
         "authority_hashes": dict(authority_hashes),
         "event_route_catalog_sha256": event_route_catalog_sha256,
@@ -824,6 +830,123 @@ def adapt_companyfacts(
     return sorted(claims, key=lambda claim: str(claim["verified_claim_id"]))
 
 
+class _XbrlContextParser(HTMLParser):
+    """Capture period, entity, and explicit dimensions for XBRL contexts."""
+
+    def __init__(self) -> None:
+        """Initialize one empty bounded context index."""
+        super().__init__(convert_charrefs=True)
+        self.active_context: Optional[Dict[str, object]] = None
+        self.active_fields: List[Dict[str, object]] = []
+        self.output: Dict[str, Dict[str, object]] = {}
+
+    @staticmethod
+    def _local_tag(*, tag: str) -> str:
+        """Return one case-folded local XML/HTML tag name."""
+        return tag.rsplit(":", maxsplit=1)[-1].casefold()
+
+    def handle_starttag(
+        self, tag: str, attrs: List[Tuple[str, Optional[str]]]
+    ) -> None:
+        """Open one context field while preserving declared dimension names."""
+        local = self._local_tag(tag=tag)
+        attributes = {name.casefold(): value for name, value in attrs}
+        if local == "context":
+            if self.active_context is not None:
+                raise DeterministicRouterError("XBRL contexts cannot nest")
+            context_id = attributes["id"] if "id" in attributes else None
+            if not context_id or context_id in self.output:
+                raise DeterministicRouterError("XBRL context id is invalid")
+            self.active_context = {
+                "context_ref": context_id,
+                "dimensions": {},
+                "entity_identifier": "",
+                "period_end": "",
+                "period_start": "",
+                "typed_dimension_count": 0,
+            }
+            return
+        if self.active_context is None:
+            return
+        field_by_tag = {
+            "identifier": "entity_identifier",
+            "instant": "instant",
+            "startdate": "period_start",
+            "enddate": "period_end",
+            "explicitmember": "explicit_member",
+        }
+        if local in field_by_tag:
+            field = {
+                "field": field_by_tag[local],
+                "parts": [],
+                "tag": tag,
+            }
+            if local == "explicitmember":
+                dimension = (
+                    attributes["dimension"]
+                    if "dimension" in attributes
+                    else None
+                )
+                if not dimension:
+                    raise DeterministicRouterError(
+                        "XBRL explicit dimension is absent"
+                    )
+                field["dimension"] = dimension
+            self.active_fields.append(field)
+        elif local == "typedmember":
+            self.active_context["typed_dimension_count"] = int(
+                self.active_context["typed_dimension_count"]
+            ) + 1
+
+    def handle_data(self, data: str) -> None:
+        """Accumulate exact visible content for the innermost context field."""
+        if self.active_fields:
+            self.active_fields[-1]["parts"].append(data)
+
+    def handle_endtag(self, tag: str) -> None:
+        """Close one context field or publish one complete context."""
+        local = self._local_tag(tag=tag)
+        if self.active_fields and self.active_fields[-1]["tag"] == tag:
+            field = self.active_fields.pop()
+            text = " ".join("".join(field["parts"]).split())
+            if not text or self.active_context is None:
+                raise DeterministicRouterError("XBRL context field is empty")
+            if field["field"] == "explicit_member":
+                dimensions = self.active_context["dimensions"]
+                dimension = str(field["dimension"])
+                if dimension in dimensions:
+                    raise DeterministicRouterError(
+                        "XBRL context dimension is duplicated"
+                    )
+                dimensions[dimension] = text
+            elif field["field"] == "instant":
+                self.active_context["period_start"] = text
+                self.active_context["period_end"] = text
+            else:
+                self.active_context[str(field["field"])] = text
+        if local != "context":
+            return
+        if self.active_context is None or self.active_fields:
+            raise DeterministicRouterError("XBRL context markup is incomplete")
+        context = dict(self.active_context)
+        if not all(
+            isinstance(context[field], str) and context[field]
+            for field in ("entity_identifier", "period_start", "period_end")
+        ):
+            raise DeterministicRouterError("XBRL context identity is incomplete")
+        context_id = str(context["context_ref"])
+        self.output[context_id] = context
+        self.active_context = None
+
+    def contexts(self) -> Dict[str, Dict[str, object]]:
+        """Return the complete context index after parsing."""
+        if self.active_context is not None or self.active_fields:
+            raise DeterministicRouterError("XBRL context stream is incomplete")
+        if not self.output:
+            raise DeterministicRouterError("XBRL source contains no contexts")
+        return {key: dict(value) for key, value in self.output.items()}
+
+
 class _XbrlFactParser(HTMLParser):
     """Capture bounded XBRL or inline-XBRL facts without script execution."""
 
@@ -951,6 +1074,10 @@ def _adapt_xbrl(
         text = raw_bytes.decode("utf-8")
     except UnicodeDecodeError as error:
         raise DeterministicRouterError("XBRL bytes are not UTF-8") from error
+    context_parser = _XbrlContextParser()
+    context_parser.feed(text)
+    context_parser.close()
+    contexts = context_parser.contexts()
     parser = _XbrlFactParser()
     parser.feed(text)
     parser.close()
@@ -978,6 +1105,9 @@ def _adapt_xbrl(
             if numeric
             else " ".join(fact_text.split())
         )
+        context_ref = str(fact["context_ref"])
+        if context_ref not in contexts:
+            raise DeterministicRouterError("XBRL fact context is absent")
         claims.append(
             verified_claim(
                 claim_kind=(
@@ -994,7 +1124,10 @@ def _adapt_xbrl(
                 },
                 value=value,
                 unit=unit_ref if unit_ref else "text",
-                attributes={"adapter_id": adapter_id},
+                attributes={
+                    "adapter_id": adapter_id,
+                    "context": contexts[context_ref],
+                },
             )
         )
     return sorted(claims, key=lambda claim: str(claim["verified_claim_id"]))

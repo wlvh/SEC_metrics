@@ -11,7 +11,7 @@ from typing import Optional
 
 from scripts.git_workspace import sanitized_git_environment
 from tests.vnext.common import REPO_ROOT
-from vnext.canonical import canonical_json_bytes, sha256_file
+from vnext.canonical import canonical_json_bytes, content_hash, sha256_file
 from vnext.requirements import load_requirement_snapshot
 
 
@@ -66,33 +66,74 @@ def _bind_scoped_baseline(*, repo_root: Path, snapshot_dir: Path) -> None:
     path.write_bytes(canonical_json_bytes(value=baseline) + b"\n")
 
 
-def _bind_issue15_scoped_registry(*, repo_root: Path) -> None:
-    """Rebind Issue #15 ReleasePlan after one-company fixture scoping.
+def _rebind_release_plan_chain(*, repo_root: Path) -> None:
+    """Rebuild immutable R1/R2 identities for one scoped test repository.
 
     Args:
-        repo_root: Temporary repository whose company registry was reduced.
+        repo_root: Temporary repository with finalized child authority bytes.
 
     Expected output:
-        The semantic checker can validate its real Issue #15 authority while
-        projector tests retain their deliberately scoped company set.
+        Both full plans, their parent content edge, and active index are exact.
     """
     registry_path = repo_root / "config" / "company_registry.csv"
-    plan_path = repo_root / "config" / "issue_15_release_plan.json"
-    plan = json.loads(plan_path.read_text(encoding="utf-8"))
-    plan["authority_hashes"]["company_registry_sha256"] = sha256_file(
-        path=registry_path
+    with registry_path.open(encoding="utf-8", newline="") as stream:
+        company_ids = sorted(row["company_id"] for row in csv.DictReader(stream))
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_15_v1"
     )
-    plan_path.write_bytes(canonical_json_bytes(value=plan) + b"\n")
-    baseline_path = (
-        repo_root / "requirements" / "issue_15_v1" / "baseline_manifest.json"
+    producer_path = (
+        repo_root / "requirements" / "issue_15_v1"
+        / "legacy_semantic_producer_inventory.json"
     )
-    baseline = json.loads(baseline_path.read_text(encoding="utf-8"))
-    binding = baseline["runtime_authority_files"][
-        "config/issue_15_release_plan.json"
+    plans = []
+    for plan_id in ("issue_15_zero_ai_r1", "issue_15_zero_ai_r2"):
+        path = repo_root / "config" / "release_plans" / (plan_id + ".json")
+        plan = json.loads(path.read_text(encoding="utf-8"))
+        plan["requirement_closure_hash"] = requirement[
+            "requirement_closure_hash"
+        ]
+        plan["authority_hashes"]["company_registry_sha256"] = sha256_file(
+            path=registry_path
+        )
+        plan["authority_hashes"]["producer_inventory_sha256"] = sha256_file(
+            path=producer_path
+        )
+        plan["cumulative_vnext_result_keys"] = [
+            {"company_id": company_id, "metric_id": metric_id}
+            for company_id in company_ids
+            for metric_id in plan["cumulative_metric_ids"]
+        ]
+        if plans:
+            plan["parent_release_plan_content_id"] = plans[0][
+                "release_plan_content_id"
+            ]
+        body = {
+            field: plan[field]
+            for field in plan
+            if field != "release_plan_content_id"
+        }
+        plan["release_plan_content_id"] = content_hash(value=body)
+        path.write_bytes(canonical_json_bytes(value=plan) + b"\n")
+        plans.append(plan)
+    index_path = repo_root / "config" / "issue_15_release_plan.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["active_release_plan_content_id"] = plans[-1][
+        "release_plan_content_id"
     ]
-    binding["sha256"] = sha256_file(path=plan_path)
-    binding["size"] = plan_path.stat().st_size
-    baseline_path.write_bytes(canonical_json_bytes(value=baseline) + b"\n")
+    for entry, plan in zip(index["release_plan_paths"], plans):
+        entry["release_plan_content_id"] = plan["release_plan_content_id"]
+    body = {
+        field: index[field]
+        for field in index
+        if field != "release_plan_index_id"
+    }
+    index["release_plan_index_id"] = content_hash(value=body)
+    index_path.write_bytes(canonical_json_bytes(value=index) + b"\n")
+
+
+def _bind_issue15_scoped_registry(*, repo_root: Path) -> None:
+    """Rebind Issue #15 plan chain after one-company fixture scoping."""
+    _rebind_release_plan_chain(repo_root=repo_root)
 
 
 def _git(*, repo_root: Path, arguments: list[str]) -> str:
@@ -199,13 +240,6 @@ def _rebind_issue15_parent(*, repo_root: Path) -> None:
         "legacy_path_inventory_sha256"
     ]
     inventory_path.write_bytes(canonical_json_bytes(value=inventory) + b"\n")
-    plan_path = repo_root / "config" / "issue_15_release_plan.json"
-    plan = json.loads(plan_path.read_text(encoding="utf-8"))
-    plan["authority_hashes"]["producer_inventory_sha256"] = sha256_file(
-        path=inventory_path
-    )
-    plan_path.write_bytes(canonical_json_bytes(value=plan) + b"\n")
-
     transfer_path = issue_dir / "transfer_manifest.json"
     transfer = json.loads(transfer_path.read_text(encoding="utf-8"))
     transfer["parent_requirement_closure_hash"] = parent[
@@ -224,11 +258,6 @@ def _rebind_issue15_parent(*, repo_root: Path) -> None:
         "requirement_closure_hash"
     ]
     baseline["parent_requirement_hashes"] = parent["hashes"]
-    plan_binding = baseline["runtime_authority_files"][
-        "config/issue_15_release_plan.json"
-    ]
-    plan_binding["sha256"] = sha256_file(path=plan_path)
-    plan_binding["size"] = plan_path.stat().st_size
     for relative, path in (
         ("legacy_semantic_producer_inventory.json", inventory_path),
         ("transfer_manifest.json", transfer_path),
@@ -237,6 +266,7 @@ def _rebind_issue15_parent(*, repo_root: Path) -> None:
         binding["sha256"] = sha256_file(path=path)
         binding["size"] = path.stat().st_size
     baseline_path.write_bytes(canonical_json_bytes(value=baseline) + b"\n")
+    _rebind_release_plan_chain(repo_root=repo_root)
 
 
 def scoped_repository(

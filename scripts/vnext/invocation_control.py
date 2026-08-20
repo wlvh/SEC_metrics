@@ -250,7 +250,9 @@ def _decimal_observation(*, value: object, label: str) -> str:
     except CanonicalError as error:
         raise InvocationControlError("{} is invalid".format(label)) from error
     if normalized != value or Decimal(normalized) < 0:
-        raise InvocationControlError("{} is not canonical non-negative text".format(label))
+        raise InvocationControlError(
+            "{} is not canonical non-negative text".format(label)
+        )
     return normalized
 
 
@@ -500,7 +502,10 @@ def _state_root(*, workspace_dir: Path) -> Path:
         "attempts",
         "egress",
         "executions",
+        "plans",
+        "reservation_archive",
         "reservations",
+        "requests",
         "responses",
     ):
         path = root / name
@@ -596,6 +601,110 @@ def _reservation_path(*, root: Path, request_identity: str) -> Path:
 def _execution_path(*, root: Path, execution_id: str) -> Path:
     """Return the immutable terminal execution receipt path."""
     return root / "executions" / (_identity_name(identity=execution_id) + ".json")
+
+
+def _persist_invocation_input(
+    *, root: Path, plan: Mapping[str, object], request_body: bytes,
+) -> None:
+    """Persist the exact immutable plan and provider request bytes."""
+    plan_path = (
+        root / "plans"
+        / (_identity_name(identity=str(plan["ai_invocation_plan_id"])) + ".json")
+    )
+    request_path = (
+        root / "requests"
+        / (
+            _identity_name(identity=str(plan["provider_request_identity"]))
+            + ".bin"
+        )
+    )
+    _exclusive_write_json(path=plan_path, value=plan)
+    _exclusive_write_bytes(path=request_path, content=request_body)
+
+
+def _process_is_alive(*, process_id: object) -> bool:
+    """Return whether one positive local reservation-owner PID still exists."""
+    if type(process_id) is not int or process_id <= 0:
+        raise InvocationControlError("Reservation owner process id is invalid")
+    try:
+        os.kill(process_id, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def _archive_reservation(
+    *, root: Path, reservation_path: Path,
+    reservation: Mapping[str, object], terminal_status: str,
+) -> Dict[str, object]:
+    """Archive one completed active reservation and release single-flight.
+
+    Args:
+        root: Validated invocation-control namespace.
+        reservation_path: Active request-identity reservation.
+        reservation: Exact immutable reservation bytes.
+        terminal_status: Execution state that permits release.
+
+    Returns:
+        Immutable reservation lifecycle receipt.
+    """
+    if terminal_status not in {
+        "FAILED_RETRYABLE_FINAL",
+        "FAILED_TERMINAL",
+        "SUCCEEDED",
+        "UNKNOWN_REMOTE_OUTCOME",
+    }:
+        raise InvocationControlError("Reservation terminal status is invalid")
+    execution_id = _text(
+        value=reservation["execution_id"], label="reservation execution id",
+    )
+    request_identity = _text(
+        value=reservation["provider_request_identity"],
+        label="reservation request identity",
+    )
+    body = {
+        "schema_version": 1,
+        "record_type": "SINGLE_FLIGHT_RESERVATION_ARCHIVE",
+        "execution_id": execution_id,
+        "provider_request_identity": request_identity,
+        "reservation_hash": content_hash(value=dict(reservation)),
+        "terminal_status": terminal_status,
+    }
+    receipt = {
+        **body,
+        "reservation_archive_id": content_hash(value=body),
+    }
+    destination = (
+        root / "reservation_archive"
+        / _identity_name(identity=request_identity)
+        / (_identity_name(identity=execution_id) + ".json")
+    )
+    _exclusive_write_json(path=destination, value=receipt)
+    if reservation_path.is_symlink() or not reservation_path.is_file():
+        raise InvocationControlError("Active reservation disappeared")
+    if _read_json_object(
+        path=reservation_path, label="active reservation",
+    ) != dict(reservation):
+        raise InvocationControlError("Active reservation bytes differ")
+    reservation_path.unlink()
+    return receipt
+
+
+def _terminal_and_release(
+    *, root: Path, reservation_path: Path,
+    reservation: Mapping[str, object], body: Mapping[str, object],
+) -> Dict[str, object]:
+    """Persist terminal execution before releasing its exact reservation."""
+    receipt = _terminal_execution(root=root, body=body)
+    _archive_reservation(
+        root=root,
+        reservation_path=reservation_path,
+        reservation=reservation,
+        terminal_status=str(receipt["status"]),
+    )
+    return receipt
 
 
 def _read_json_object(*, path: Path, label: str) -> Dict[str, object]:
@@ -797,6 +906,28 @@ def _load_success_response(
     return {**receipt, "response_body": response_bytes}
 
 
+def load_successful_response(
+    *, workspace_dir: Path, plan: Mapping[str, object],
+) -> Dict[str, object]:
+    """Return one verified exact reusable response after execution.
+
+    Args:
+        workspace_dir: Invocation-control workspace used by execution.
+        plan: Exact AI invocation plan whose response is required.
+
+    Returns:
+        Receipt metadata plus exact response bytes.
+    """
+    validated_plan = validate_ai_invocation_plan(plan=plan)
+    response = _load_success_response(
+        root=_state_root(workspace_dir=workspace_dir),
+        plan=validated_plan,
+    )
+    if response is None:
+        raise InvocationControlError("Successful exact response is absent")
+    return response
+
+
 def _terminal_execution(
     *, root: Path, body: Mapping[str, object]
 ) -> Dict[str, object]:
@@ -856,6 +987,98 @@ def _load_execution_receipt(
     return receipt
 
 
+def _egress_markers_for_execution(
+    *, root: Path, execution_id: str,
+) -> List[Dict[str, object]]:
+    """Load the exact ordered egress marker set for one execution."""
+    directory = root / "egress" / _identity_name(identity=execution_id)
+    if not directory.exists():
+        return []
+    if directory.is_symlink() or not directory.is_dir():
+        raise InvocationControlError("Egress marker directory is unsafe")
+    markers = []
+    for path in sorted(directory.iterdir()):
+        marker = _read_json_object(path=path, label="egress marker")
+        if (
+            marker["record_type"] != "PROVIDER_EGRESS_MARKER"
+            or marker["execution_id"] != execution_id
+            or marker["egress_marker_id"] != content_hash(
+                value={
+                    field: marker[field]
+                    for field in marker
+                    if field != "egress_marker_id"
+                }
+            )
+        ):
+            raise InvocationControlError("Egress marker identity differs")
+        markers.append(marker)
+    ordinals = [int(marker["attempt_ordinal"]) for marker in markers]
+    if ordinals != list(range(1, len(markers) + 1)):
+        raise InvocationControlError("Egress marker sequence differs")
+    return markers
+
+
+def _unknown_remote_outcome_from_markers(
+    *, root: Path, reservation_path: Path,
+    reservation: Mapping[str, object], requested_execution_id: str,
+    clock: Callable[[], str],
+) -> Dict[str, object]:
+    """Persist crash recovery from egress markers without another call."""
+    abandoned_execution_id = str(reservation["execution_id"])
+    markers = _egress_markers_for_execution(
+        root=root, execution_id=abandoned_execution_id,
+    )
+    if not markers:
+        raise InvocationControlError("Unknown outcome requires egress proof")
+    counters = _empty_counters()
+    for marker in markers:
+        if marker["transport_kind"] == "MOCK":
+            counters["mock_transport_invocation_count"] += 1
+        elif marker["transport_kind"] == "REAL_MODEL_PROVIDER":
+            counters["real_model_provider_egress_count"] += 1
+        else:
+            raise InvocationControlError("Egress transport kind differs")
+    receipt = _terminal_and_release(
+        root=root,
+        reservation_path=reservation_path,
+        reservation=reservation,
+        body={
+            "schema_version": 1,
+            "record_type": "AI_EXECUTION_RECEIPT",
+            "execution_id": abandoned_execution_id,
+            "ai_invocation_plan_id": reservation["ai_invocation_plan_id"],
+            "provider_request_identity": reservation[
+                "provider_request_identity"
+            ],
+            "status": "UNKNOWN_REMOTE_OUTCOME",
+            "batch_terminal": True,
+            "attempts": [],
+            "success_response_receipt_id": None,
+            "counters": counters,
+            "authorized_at_utc": reservation["reserved_at_utc"],
+            "finished_at_utc": _utc(value=clock(), label="recovery time"),
+            "unknown_egress_marker_id": markers[-1]["egress_marker_id"],
+        },
+    )
+    if requested_execution_id == abandoned_execution_id:
+        return receipt
+    return {
+        "schema_version": 1,
+        "record_type": "AI_EXECUTION_RESULT",
+        "execution_id": requested_execution_id,
+        "ai_invocation_plan_id": reservation["ai_invocation_plan_id"],
+        "provider_request_identity": reservation[
+            "provider_request_identity"
+        ],
+        "status": "UNKNOWN_REMOTE_OUTCOME",
+        "batch_terminal": True,
+        "attempts": [],
+        "success_response_receipt_id": None,
+        "unknown_execution_receipt_id": receipt["execution_receipt_id"],
+        "counters": counters,
+    }
+
+
 def execute_invocation(
     *,
     workspace_dir: Path,
@@ -896,6 +1119,9 @@ def execute_invocation(
         raise InvocationControlError("Execution identity differs")
     _validate_request_resources(plan=validated_plan, request_body=request_body)
     root = _state_root(workspace_dir=workspace_dir)
+    _persist_invocation_input(
+        root=root, plan=validated_plan, request_body=request_body,
+    )
     execution_path = _execution_path(root=root, execution_id=execution_id)
     if execution_path.exists():
         return _load_execution_receipt(
@@ -933,6 +1159,7 @@ def execute_invocation(
         "ai_invocation_plan_id": validated_plan["ai_invocation_plan_id"],
         "provider_request_identity": validated_plan["provider_request_identity"],
         "owner_token_hash": owner_hash,
+        "owner_process_id": os.getpid(),
         "reserved_at_utc": _utc(
             value=authorized_at_utc, label="reservation time"
         ),
@@ -950,8 +1177,40 @@ def execute_invocation(
             0o600,
         )
     except FileExistsError:
+        try:
+            existing_reservation = _read_json_object(
+                path=reservation_path, label="single-flight reservation",
+            )
+        except InvocationControlError:
+            if reservation_path.exists():
+                raise
+            return execute_invocation(
+                workspace_dir=workspace_dir,
+                plan=validated_plan,
+                request_body=request_body,
+                execution_id=execution_id,
+                owner_token=owner_token,
+                authorized_at_utc=authorized_at_utc,
+                clock=clock,
+                transport=transport,
+                response_validator=response_validator,
+                evidence_validator=evidence_validator,
+            )
+        if (
+            existing_reservation["provider_request_identity"]
+            != validated_plan["provider_request_identity"]
+            or existing_reservation["ai_invocation_plan_id"]
+            != validated_plan["ai_invocation_plan_id"]
+        ):
+            raise InvocationControlError("Single-flight reservation differs")
         reusable = _load_success_response(root=root, plan=validated_plan)
         if reusable is not None:
+            _archive_reservation(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=existing_reservation,
+                terminal_status="SUCCEEDED",
+            )
             return _terminal_execution(
                 root=root,
                 body={
@@ -976,6 +1235,49 @@ def execute_invocation(
                         value=clock(), label="finish time"
                     ),
                 },
+            )
+        abandoned_execution_id = str(existing_reservation["execution_id"])
+        abandoned_execution_path = _execution_path(
+            root=root, execution_id=abandoned_execution_id,
+        )
+        if abandoned_execution_path.exists():
+            abandoned_receipt = _load_execution_receipt(
+                root=root,
+                path=abandoned_execution_path,
+                execution_id=abandoned_execution_id,
+            )
+            _archive_reservation(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=existing_reservation,
+                terminal_status=str(abandoned_receipt["status"]),
+            )
+            return execute_invocation(
+                workspace_dir=workspace_dir,
+                plan=validated_plan,
+                request_body=request_body,
+                execution_id=execution_id,
+                owner_token=owner_token,
+                authorized_at_utc=authorized_at_utc,
+                clock=clock,
+                transport=transport,
+                response_validator=response_validator,
+                evidence_validator=evidence_validator,
+            )
+        if (
+            _egress_markers_for_execution(
+                root=root, execution_id=abandoned_execution_id,
+            )
+            and not _process_is_alive(
+                process_id=existing_reservation["owner_process_id"]
+            )
+        ):
+            return _unknown_remote_outcome_from_markers(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=existing_reservation,
+                requested_execution_id=execution_id,
+                clock=clock,
             )
         return {
             "schema_version": 1,
@@ -1031,8 +1333,10 @@ def execute_invocation(
                 attempt_ordinal=attempt_ordinal,
             )
         except UnknownRemoteOutcomeError:
-            return _terminal_execution(
+            return _terminal_and_release(
                 root=root,
+                reservation_path=reservation_path,
+                reservation=reservation,
                 body={
                     "schema_version": 1,
                     "record_type": "AI_EXECUTION_RECEIPT",
@@ -1094,6 +1398,8 @@ def execute_invocation(
                         content=result["response_body"]
                     ),
                     "provider_request_id": result["provider_request_id"],
+                    "paid_call": result["paid_call"],
+                    "transport_kind": transport_kind,
                     "usage": dict(result["usage"]),
                     "finished_at_utc": _utc(
                         value=clock(), label="attempt finish time"
@@ -1107,8 +1413,10 @@ def execute_invocation(
                 result=result,
                 attempt_receipt_id=str(attempt["attempt_receipt_id"]),
             )
-            return _terminal_execution(
+            return _terminal_and_release(
                 root=root,
+                reservation_path=reservation_path,
+                reservation=reservation,
                 body={
                     "schema_version": 1,
                     "record_type": "AI_EXECUTION_RECEIPT",
@@ -1162,6 +1470,8 @@ def execute_invocation(
                     content=result["response_body"]
                 ),
                 "provider_request_id": result["provider_request_id"],
+                "paid_call": result["paid_call"],
+                "transport_kind": transport_kind,
                 "usage": dict(result["usage"]),
                 "finished_at_utc": _utc(
                     value=clock(), label="attempt finish time"
@@ -1171,8 +1481,10 @@ def execute_invocation(
         attempts.append(attempt)
         if retryable:
             continue
-        return _terminal_execution(
+        return _terminal_and_release(
             root=root,
+            reservation_path=reservation_path,
+            reservation=reservation,
             body={
                 "schema_version": 1,
                 "record_type": "AI_EXECUTION_RECEIPT",
@@ -1279,19 +1591,94 @@ def execute_batch(
 
 
 def structured_only_result(
-    *, release_input_plan_id: str, result_coordinate_count: int
+    *, repo_root: Path, workspace_dir: Path, release_input_plan_id: str,
+    cumulative_metric_ids: Sequence[str], result_coordinate_count: int,
 ) -> Dict[str, object]:
-    """Return machine-readable zero-provider proof for structured-only work."""
+    """Derive zero-provider counts from routes and the exact disk namespace.
+
+    Args:
+        repo_root: Repository containing SourceStrategy authority.
+        workspace_dir: Release-specific invocation observation workspace.
+        release_input_plan_id: Exact release input plan identity.
+        cumulative_metric_ids: Exact structured-only release metric set.
+        result_coordinate_count: Complete deterministic result count.
+
+    Returns:
+        Content-addressed empty invocation closure and derived counters.
+    """
+    from .source_strategy import load_source_strategy_registry
+
     _sha256_identity(value=release_input_plan_id, label="release input plan id")
     if type(result_coordinate_count) is not int or result_coordinate_count < 0:
         raise InvocationControlError("Structured-only result count is invalid")
-    return {
+    if (
+        not isinstance(cumulative_metric_ids, (list, tuple))
+        or not cumulative_metric_ids
+        or any(
+            not isinstance(metric_id, str) or not metric_id
+            for metric_id in cumulative_metric_ids
+        )
+        or len(cumulative_metric_ids) != len(set(cumulative_metric_ids))
+    ):
+        raise InvocationControlError("Structured-only metric set is invalid")
+    registry = load_source_strategy_registry(repo_root=repo_root)
+    metrics = registry["metrics"]
+    if any(metric_id not in metrics for metric_id in cumulative_metric_ids):
+        raise InvocationControlError("Structured-only metric route is absent")
+    source_mode_by_metric = {
+        metric_id: metrics[metric_id]["source_mode"]
+        for metric_id in sorted(cumulative_metric_ids)
+    }
+    if set(source_mode_by_metric.values()) != {"structured_only"}:
+        raise InvocationControlError("Release contains a model-provider route")
+    root = _state_root(workspace_dir=workspace_dir)
+    observed_files = {}
+    for namespace in sorted(
+        path.name for path in root.iterdir() if path.is_dir()
+    ):
+        bindings = []
+        directory = root / namespace
+        for path in sorted(directory.rglob("*")):
+            if path.is_symlink() or (not path.is_file() and not path.is_dir()):
+                raise InvocationControlError(
+                    "Invocation observation namespace is unsafe"
+                )
+            if not path.is_file():
+                continue
+            content = path.read_bytes()
+            bindings.append(
+                {
+                    "path": path.relative_to(root).as_posix(),
+                    "sha256": sha256_bytes(content=content),
+                    "size": len(content),
+                }
+            )
+        observed_files[namespace] = bindings
+    emitted = [
+        binding
+        for bindings in observed_files.values()
+        for binding in bindings
+    ]
+    if emitted:
+        raise InvocationControlError(
+            "Structured-only release emitted invocation state"
+        )
+    counters = _empty_counters()
+    body = {
         "schema_version": 1,
         "record_type": "STRUCTURED_ONLY_INVOCATION_RESULT",
         "release_input_plan_id": release_input_plan_id,
+        "source_mode_by_metric": source_mode_by_metric,
         "result_coordinate_count": result_coordinate_count,
         "status": "SUCCEEDED_ZERO_PROVIDER",
-        "counters": _empty_counters(),
+        "observed_invocation_files": observed_files,
+        "observed_ai_invocation_plan_ids": [],
+        "observed_provider_request_identities": [],
+        "counters": counters,
+    }
+    return {
+        **body,
+        "invocation_observation_id": content_hash(value=body),
     }
 
 

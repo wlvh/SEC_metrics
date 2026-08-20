@@ -17,10 +17,9 @@ Call relationships:
 from __future__ import annotations
 
 import csv
-import io
 import json
 import subprocess
-from datetime import date
+from collections import Counter
 from decimal import Decimal, ROUND_HALF_EVEN, localcontext
 from pathlib import Path
 from typing import Dict, List, Mapping, Sequence, Tuple
@@ -30,8 +29,7 @@ from sec_http import parse_request_log_rows, request_accession
 from sec_http import request_log_attempt_id, validate_request_log_manifest
 
 from .batch_workflow import BatchWorkflowError, _verified_request_locator
-from .batch_workflow import build_release_input_plan
-from .calculator import calculate_observation_metric
+from .calculator import calculate_observation_metric, metric_is_applicable
 from .canonical import atomic_write_bytes, content_hash, decimal_text
 from .canonical import execution_semantics_hash, parse_decimal, sha256_bytes
 from .canonical import sha256_file, strict_json_file
@@ -43,7 +41,6 @@ from .deterministic_router import matched_event_key_set, project_event_result
 from .deterministic_router import normalize_event_text
 from .deterministic_router import source_role_plan, source_set_manifest
 from .deterministic_router import validate_source_set_manifest
-from .deterministic_router import verified_claim
 from .invocation_control import structured_only_result
 from .observations import scope_key, structured_observation
 from .publication import PublicationView, REQUIRED_BUNDLE_FILES
@@ -55,13 +52,14 @@ from .requirements import load_requirement_snapshot
 from .source_strategy import load_issue15_release_plan
 from .specs import compile_spec
 from .sources import raw_blob_record, source_reference_record
-from .traits import repository_company_ciks
-from .zero_ai_release import COVERAGE_FIELDS, METRICS_FIELDS, ZERO_COUNTERS
+from .traits import repository_company_ciks, repository_company_traits
+from .zero_ai_release import COVERAGE_FIELDS, METRICS_FIELDS
 from .zero_ai_release import ZeroAiReleaseError, _append_csv_rows
 from .zero_ai_release import _append_publication_note, _csv_rows
 from .zero_ai_release import _internal_bindings, _json_bytes, _ledger_binding
 from .zero_ai_release import _public_key_proof, _read_back_proof
 from .zero_ai_release import _receipt, _registry_rows, _retirement_receipt
+from .zero_ai_release import _source_commit_binding
 from .zero_ai_release import _source_reference
 
 
@@ -89,10 +87,27 @@ DETERMINISTIC_CATALOG_FIELDS = {
 }
 DETERMINISTIC_ROUTE_FIELDS = {
     "adapter_id",
-    "approved_concepts",
+    "applicability",
+    "branches",
     "canonical_unit",
-    "formula_id",
+    "continuity_policy",
+    "name",
+    "result_period_role",
+    "source_class",
     "source_role",
+    "success_status",
+}
+DETERMINISTIC_BRANCH_FIELDS = {
+    "branch_id", "components", "formula_id", "quality",
+}
+DETERMINISTIC_COMPONENT_FIELDS = {
+    "accession_role",
+    "approved_concepts",
+    "dimension_policy",
+    "period_role",
+    "required_dimensions",
+    "role",
+    "unit",
 }
 FORMULA_IDS = {
     "average_denominator_ratio",
@@ -102,6 +117,101 @@ FORMULA_IDS = {
     "interest_coverage",
     "ratio",
 }
+FORMULA_ARITIES = {
+    "average_denominator_ratio": {3},
+    "difference": {2},
+    "direct": {1},
+    "growth": {2},
+    "interest_coverage": {2, 3},
+    "ratio": {2},
+}
+
+
+def _required_text(*, value: object, label: str) -> str:
+    """Return one required catalog text value.
+
+    Args:
+        value: Candidate catalog value.
+        label: Stable diagnostic field name.
+
+    Returns:
+        Non-empty text.
+    """
+    if not isinstance(value, str) or not value:
+        raise ZeroAiReleaseError(label + " must be non-empty text")
+    return value
+
+
+def _validate_deterministic_component(
+    *, component: object,
+) -> Dict[str, object]:
+    """Validate one catalog-owned fact selection component."""
+    if not isinstance(component, dict) or set(component) != (
+        DETERMINISTIC_COMPONENT_FIELDS
+    ):
+        raise ZeroAiReleaseError("Deterministic component fields differ")
+    value = dict(component)
+    _required_text(value=value["role"], label="Component role")
+    _required_text(value=value["unit"], label="Component unit")
+    if value["accession_role"] not in {"current", "prior"}:
+        raise ZeroAiReleaseError("Component accession role is invalid")
+    if value["period_role"] not in {
+        "current_annual", "current_instant",
+        "prior_annual", "prior_instant",
+    }:
+        raise ZeroAiReleaseError("Component period role is invalid")
+    concepts = value["approved_concepts"]
+    if (
+        not isinstance(concepts, list)
+        or not concepts
+        or any(not isinstance(item, str) or not item for item in concepts)
+        or len(concepts) != len(set(concepts))
+    ):
+        raise ZeroAiReleaseError("Component concept priority is invalid")
+    dimensions = value["required_dimensions"]
+    if (
+        not isinstance(dimensions, dict)
+        or any(
+            not isinstance(axis, str)
+            or not axis
+            or not isinstance(member, str)
+            or not member
+            for axis, member in dimensions.items()
+        )
+    ):
+        raise ZeroAiReleaseError("Component dimensions are invalid")
+    if value["dimension_policy"] not in {"EXACT", "NONE"}:
+        raise ZeroAiReleaseError("Component dimension policy is invalid")
+    if value["dimension_policy"] == "NONE" and dimensions:
+        raise ZeroAiReleaseError("NONE dimension policy cannot name dimensions")
+    return value
+
+
+def _validate_deterministic_branch(*, branch: object) -> Dict[str, object]:
+    """Validate one ordered deterministic calculation branch."""
+    if not isinstance(branch, dict) or set(branch) != (
+        DETERMINISTIC_BRANCH_FIELDS
+    ):
+        raise ZeroAiReleaseError("Deterministic branch fields differ")
+    value = dict(branch)
+    _required_text(value=value["branch_id"], label="Branch id")
+    if value["formula_id"] not in FORMULA_IDS:
+        raise ZeroAiReleaseError("Deterministic branch formula is invalid")
+    if value["quality"] not in {"EXACT", "APPROX"}:
+        raise ZeroAiReleaseError("Deterministic branch quality is invalid")
+    if not isinstance(value["components"], list):
+        raise ZeroAiReleaseError("Deterministic branch components differ")
+    components = [
+        _validate_deterministic_component(component=component)
+        for component in value["components"]
+    ]
+    if len(components) not in FORMULA_ARITIES[value["formula_id"]]:
+        raise ZeroAiReleaseError("Deterministic formula arity differs")
+    roles = [str(component["role"]) for component in components]
+    if len(roles) != len(set(roles)):
+        raise ZeroAiReleaseError("Deterministic component role is duplicated")
+    value["components"] = components
+    return value
 
 
 def _load_deterministic_catalog(*, repo_root: Path) -> Dict[str, object]:
@@ -122,7 +232,7 @@ def _load_deterministic_catalog(*, repo_root: Path) -> Dict[str, object]:
         raise ZeroAiReleaseError("Deterministic metric catalog fields differ")
     catalog = dict(payload)
     if (
-        catalog["schema_version"] != 1
+        catalog["schema_version"] != 2
         or catalog["record_type"] != "DETERMINISTIC_METRIC_CATALOG"
         or not isinstance(catalog["metrics"], dict)
         or set(catalog["metrics"]) != set(R2_DETERMINISTIC_METRIC_IDS)
@@ -134,41 +244,51 @@ def _load_deterministic_catalog(*, repo_root: Path) -> Dict[str, object]:
         ):
             raise ZeroAiReleaseError("Deterministic metric route fields differ")
         route = dict(route_value)
-        if (
-            route["adapter_id"] not in {"companyfacts", "accession_xbrl"}
-            or route["source_role"] not in {
-                "companyfacts", "target_accession_instance",
-            }
-            or route["formula_id"] not in FORMULA_IDS
-            or not isinstance(route["canonical_unit"], str)
-            or not route["canonical_unit"]
-            or not isinstance(route["approved_concepts"], list)
-            or not route["approved_concepts"]
-            or any(
-                not isinstance(concept, str) or not concept
-                for concept in route["approved_concepts"]
+        for field in ("canonical_unit", "name", "source_class"):
+            _required_text(
+                value=route[field], label="Deterministic route " + field,
             )
+        expected_source_role = {
+            "accession_xbrl": "target_accession_instance",
+            "companyfacts": "companyfacts",
+        }
+        applicability = route["applicability"]
+        if (
+            route["adapter_id"] not in expected_source_role
+            or route["source_role"] != expected_source_role[
+                route["adapter_id"]
+            ]
+            or route["result_period_role"] not in {
+                "current_annual", "current_instant",
+            }
+            or route["continuity_policy"] not in {
+                "ALLOW", "REQUIRE_CONTINUOUS",
+            }
+            or route["success_status"] not in {"DIM_XBRL_OK", "OK"}
+            or not isinstance(applicability, dict)
+            or set(applicability) != {"all", "none"}
+            or any(
+                not isinstance(values, list)
+                or any(not isinstance(item, str) or not item for item in values)
+                or len(values) != len(set(values))
+                for values in applicability.values()
+            )
+            or not isinstance(route["branches"], list)
+            or not route["branches"]
         ):
             raise ZeroAiReleaseError(
                 "Deterministic metric route is invalid: " + metric_id
             )
+        branches = [
+            _validate_deterministic_branch(branch=branch)
+            for branch in route["branches"]
+        ]
+        branch_ids = [str(branch["branch_id"]) for branch in branches]
+        if len(branch_ids) != len(set(branch_ids)):
+            raise ZeroAiReleaseError("Deterministic branch id is duplicated")
+        route["branches"] = branches
+        catalog["metrics"][metric_id] = route
     return catalog
-
-
-def _split(*, value: str, separator: str) -> List[str]:
-    """Split one required legacy evidence field without empty members.
-
-    Args:
-        value: Source text.
-        separator: Exact delimiter.
-
-    Returns:
-        Ordered non-empty members.
-    """
-    values = value.split(separator)
-    if not values or any(not member for member in values):
-        raise ZeroAiReleaseError("Legacy evidence component list is invalid")
-    return values
 
 
 def _legacy_publication_context(
@@ -189,7 +309,7 @@ def _legacy_publication_context(
     if (
         marker["release_stage"] != "R1"
         or marker["cumulative_metric_ids"] != ["B01", "B03"]
-        or marker["counters"] != ZERO_COUNTERS
+        or any(marker["counters"].values())
     ):
         raise ZeroAiReleaseError("R2 requires the exact active R1 predecessor")
     predecessor_id = str(view.manifest["previous_publication_id"])
@@ -197,19 +317,14 @@ def _legacy_publication_context(
         repo_root / "outputs" / "publications" / predecessor_id
     )
     metrics_bytes = (predecessor_dir / "metrics_matrix.csv").read_bytes()
-    evidence_bytes = (predecessor_dir / "metric_evidence.csv").read_bytes()
     return {
         "active_view": view,
         "r1_marker": marker,
         "legacy_predecessor_id": predecessor_id,
         "legacy_predecessor_dir": predecessor_dir,
         "legacy_metrics_bytes": metrics_bytes,
-        "legacy_evidence_bytes": evidence_bytes,
         "legacy_metrics": _csv_rows(
             content=metrics_bytes, fields=METRICS_FIELDS,
-        ),
-        "legacy_evidence": list(
-            csv.DictReader(io.StringIO(evidence_bytes.decode("utf-8")))
         ),
     }
 
@@ -302,31 +417,6 @@ def _inventory_for_accession(
     return reference, binding, content
 
 
-def _evidence_source_descriptor(
-    *, evidence_row: Mapping[str, str]
-) -> Dict[str, str]:
-    """Resolve the first exact source component of a frozen evidence row.
-
-    Args:
-        evidence_row: One strict metric-evidence row.
-
-    Returns:
-        Portable source URL/path/hash/accession/document identity.
-    """
-    fields = {
-        "source_url": ";",
-        "repo_relative_path": ";",
-        "content_sha256": ";",
-        "accession": ";",
-        "document_name": ";",
-    }
-    descriptor = {
-        field: _split(value=str(evidence_row[field]), separator=separator)[0]
-        for field, separator in fields.items()
-    }
-    return descriptor
-
-
 def _exact_filing_source_set(
     *, company_id: str, source_role: str, reference: Mapping[str, object],
     inventory_reference: Mapping[str, object], inventory_bytes: bytes,
@@ -384,6 +474,193 @@ def _filing_from_inventory(
             "Filing accession is absent from submissions: " + accession
         )
     return matches[0]
+
+
+def _submission_filing_rows(*, inventory_bytes: bytes) -> List[Dict[str, str]]:
+    """Return strict filing rows from one SEC submissions payload.
+
+    Args:
+        inventory_bytes: Current or historical submissions JSON bytes.
+
+    Returns:
+        Ordered filing identity rows needed by deterministic discovery.
+    """
+    try:
+        payload = json.loads(inventory_bytes.decode("utf-8"))
+        recent = payload["filings"]["recent"] if "filings" in payload else payload
+        required = {
+            "accessionNumber", "filingDate", "form", "primaryDocument",
+            "reportDate",
+        }
+        if not isinstance(recent, dict) or not required.issubset(recent):
+            raise ZeroAiReleaseError("SEC submissions filing fields differ")
+        lengths = {len(recent[field]) for field in required}
+        if len(lengths) != 1:
+            raise ZeroAiReleaseError("SEC submissions columns are misaligned")
+        rows = []
+        for index in range(next(iter(lengths))):
+            row = {
+                "accession": str(recent["accessionNumber"][index]),
+                "filing_date": str(recent["filingDate"][index]),
+                "form": str(recent["form"][index]),
+                "primary_document": str(recent["primaryDocument"][index]),
+                "report_date": str(recent["reportDate"][index]),
+            }
+            rows.append(row)
+        return rows
+    except (KeyError, TypeError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ZeroAiReleaseError("SEC submissions inventory is invalid") from error
+
+
+def _annual_filing_pair(
+    *, repo_root: Path, inventory_bytes: bytes,
+) -> Dict[str, object]:
+    """Discover the latest two original 10-K filings without legacy rows.
+
+    Args:
+        repo_root: Repository containing pinned submissions shards.
+        inventory_bytes: Current SEC submissions inventory.
+
+    Returns:
+        Current original 10-K and an optional prior original 10-K.
+    """
+    rows = _submission_filing_rows(inventory_bytes=inventory_bytes)
+    try:
+        payload = json.loads(inventory_bytes.decode("utf-8"))
+        history = payload["filings"]["files"]
+    except (KeyError, TypeError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise ZeroAiReleaseError("SEC submissions history index is invalid") from error
+    if not isinstance(history, list):
+        raise ZeroAiReleaseError("SEC submissions history index differs")
+    for entry in history:
+        if not isinstance(entry, dict) or "name" not in entry:
+            raise ZeroAiReleaseError("SEC submissions history entry is invalid")
+        name = str(entry["name"])
+        path = repo_root / "evidence" / "submissions" / name
+        if path.name != name or path.is_symlink():
+            raise ZeroAiReleaseError("SEC submissions history shard is unsafe")
+        if not path.is_file():
+            continue
+        rows.extend(_submission_filing_rows(inventory_bytes=path.read_bytes()))
+    originals = {}
+    for row in rows:
+        if row["form"] != "10-K" or any(not value for value in row.values()):
+            continue
+        accession = row["accession"]
+        if accession in originals and originals[accession] != row:
+            raise ZeroAiReleaseError("Original 10-K identity conflicts")
+        originals[accession] = row
+    ordered = sorted(
+        originals.values(),
+        key=lambda row: (
+            row["report_date"], row["filing_date"], row["accession"],
+        ),
+        reverse=True,
+    )
+    if not ordered:
+        raise ZeroAiReleaseError("Original 10-K filing is absent")
+    current = ordered[0]
+    prior_candidates = [
+        row for row in ordered if row["report_date"] < current["report_date"]
+    ]
+    return {
+        "current": dict(current),
+        "prior": dict(prior_candidates[0]) if prior_candidates else None,
+    }
+
+
+def _deterministic_concepts(
+    *, catalog: Mapping[str, object], adapter_id: str,
+) -> List[str]:
+    """Return the ordered unique concept closure for one adapter."""
+    concepts = []
+    for route in catalog["metrics"].values():
+        if route["adapter_id"] != adapter_id:
+            continue
+        for branch in route["branches"]:
+            for component in branch["components"]:
+                for concept in component["approved_concepts"]:
+                    if concept not in concepts:
+                        concepts.append(str(concept))
+    if not concepts:
+        raise ZeroAiReleaseError("Deterministic adapter concept set is empty")
+    return concepts
+
+
+def _period_from_companyfacts_claims(
+    *, claims: Sequence[Mapping[str, object]], filing: Mapping[str, str],
+) -> Dict[str, str]:
+    """Derive one target annual period from catalog-selected SEC facts.
+
+    Args:
+        claims: Claims emitted solely from catalog concept candidates.
+        filing: Submissions-discovered original 10-K identity.
+
+    Returns:
+        Unique highest-coverage annual period ending on the report date.
+    """
+    concept_sets: Dict[Tuple[str, str], set[str]] = {}
+    for claim in claims:
+        locator = claim["locator"]
+        attributes = claim["attributes"]
+        period_start = str(locator["period_start"])
+        period_end = str(locator["period_end"])
+        if (
+            attributes["accession"] != filing["accession"]
+            or attributes["form"] != "10-K"
+            or attributes["fiscal_period"] != "FY"
+            or period_start == period_end
+            or period_end != filing["report_date"]
+        ):
+            continue
+        key = (period_start, period_end)
+        if key not in concept_sets:
+            concept_sets[key] = set()
+        concept_sets[key].add(_claim_concept(claim=claim))
+    if not concept_sets:
+        raise ZeroAiReleaseError("Catalog facts lack an annual target period")
+    coverage = Counter({key: len(value) for key, value in concept_sets.items()})
+    maximum = max(coverage.values())
+    winners = sorted(key for key, count in coverage.items() if count == maximum)
+    if len(winners) != 1:
+        raise ZeroAiReleaseError("Annual target period is ambiguous")
+    period_start, period_end = winners[0]
+    return {"period_start": period_start, "period_end": period_end}
+
+
+def _accession_instance_descriptor(
+    *, repo_root: Path, company_id: str, cik: str,
+    filing: Mapping[str, str],
+) -> Dict[str, str]:
+    """Resolve one submissions-declared 10-K to its local XBRL instance."""
+    accession_digits = filing["accession"].replace("-", "")
+    suffix = "_{}_{}".format(str(int(cik)), accession_digits)
+    directories = [
+        path
+        for path in (repo_root / "evidence" / "accession_materials").iterdir()
+        if path.is_dir() and path.name.endswith(suffix)
+    ]
+    if len(directories) != 1:
+        raise ZeroAiReleaseError(
+            "10-K accession directory is ambiguous: " + company_id
+        )
+    primary = str(filing["primary_document"])
+    if "." not in primary:
+        raise ZeroAiReleaseError("10-K primary document name is invalid")
+    document_name = primary.rsplit(".", maxsplit=1)[0] + "_htm.xml"
+    path = directories[0] / document_name
+    if path.is_symlink() or not path.is_file():
+        raise ZeroAiReleaseError("10-K XBRL instance is absent")
+    return {
+        "accession": filing["accession"],
+        "document_name": document_name,
+        "repo_relative_path": path.relative_to(repo_root).as_posix(),
+        "source_url": (
+            "https://www.sec.gov/Archives/edgar/data/{}/{}/{}".format(
+                str(int(cik)), accession_digits, document_name,
+            )
+        ),
+    }
 
 
 def _event_accessions(
@@ -716,7 +993,9 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
         Plan plus exact adapter contexts and frozen compatibility rows.
     """
     legacy = _legacy_publication_context(repo_root=repo_root)
-    issue_plan = load_issue15_release_plan(repo_root=repo_root)
+    issue_plan = load_issue15_release_plan(
+        repo_root=repo_root, release_plan_id="issue_15_zero_ai_r2",
+    )
     if tuple(issue_plan["cumulative_metric_ids"]) != R2_METRIC_IDS:
         raise ZeroAiReleaseError("R2 cumulative metric exact set differs")
     deterministic_catalog = _load_deterministic_catalog(repo_root=repo_root)
@@ -726,33 +1005,17 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
     display_to_id = {
         row["display_name"]: row["company_id"] for row in registry_rows
     }
-    old_plan = build_release_input_plan(
-        repo_root=repo_root,
-        legacy_snapshot_dir=Path(legacy["legacy_predecessor_dir"]),
-    )
-    targets = {
-        str(company["company_id"]): dict(company["target_period"])
-        for company in old_plan["companies"]
-    }
     legacy_metric_index = {
         (row["company"], row["metric_id"]): row
         for row in legacy["legacy_metrics"]
     }
+    companyfacts_concepts = _deterministic_concepts(
+        catalog=deterministic_catalog, adapter_id="companyfacts",
+    )
+    targets = {}
+    target_periods = {}
+    filings_by_company = {}
     event_targets = {}
-    for registry_row in registry_rows:
-        financial_target = targets[registry_row["company_id"]]
-        event_row = legacy_metric_index[(registry_row["display_name"], "E01")]
-        event_targets[registry_row["company_id"]] = {
-            "fiscal_year": financial_target["fiscal_year"],
-            "period_start": event_row["period_start"],
-            "period_end": event_row["period_end"],
-        }
-    evidence_by_company = {}
-    for row in legacy["legacy_evidence"]:
-        company_id = display_to_id[str(row["company"])]
-        if company_id not in evidence_by_company:
-            evidence_by_company[company_id] = []
-        evidence_by_company[company_id].append(row)
     events_path = repo_root / "outputs" / "events.csv"
     with events_path.open(mode="r", encoding="utf-8", newline="") as file_obj:
         legacy_events = [dict(row) for row in csv.DictReader(file_obj)]
@@ -767,53 +1030,51 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
     company_rows = []
     role_context = {}
     for company_id in [row["company_id"] for row in registry_rows]:
-        target = targets[company_id]
+        registry_row = registry[company_id]
+        padded_cik = str(int(registry_row["primary_cik"])).zfill(10)
+        inventory_path = (
+            repo_root / "evidence" / "submissions"
+            / "CIK{}.json".format(padded_cik)
+        )
+        if inventory_path.is_symlink() or not inventory_path.is_file():
+            raise ZeroAiReleaseError("SEC submissions inventory is absent")
+        discovered_filings = _annual_filing_pair(
+            repo_root=repo_root, inventory_bytes=inventory_path.read_bytes(),
+        )
+        filings_by_company[company_id] = discovered_filings
         inventory, inventory_binding, inventory_bytes = _inventory_reference(
             repo_root=repo_root,
-            registry_row=registry[company_id],
-            fiscal_year=target["fiscal_year"],
+            registry_row=registry_row,
+            fiscal_year=str(
+                discovered_filings["current"]["report_date"]
+            )[:4],
         )
         references.append(inventory)
         proofs[str(inventory["source_reference_id"])] = {
             **inventory_binding,
             "source_reference": inventory,
         }
-        company_evidence = evidence_by_company[company_id]
-        companyfacts_rows = [
-            row for row in company_evidence
-            if str(row["extraction_method"]).startswith("companyfacts_")
-        ]
-        if not companyfacts_rows:
-            raise ZeroAiReleaseError("Company lacks deterministic Company Facts")
-        descriptors = [
-            _evidence_source_descriptor(evidence_row=row)
-            for row in companyfacts_rows
-        ]
-        source_identities = {
-            (
-                descriptor["repo_relative_path"],
-                descriptor["source_url"],
-                descriptor["content_sha256"],
-                descriptor["document_name"],
-            )
-            for descriptor in descriptors
+        document_name = "CIK{}.json".format(padded_cik)
+        descriptor = {
+            "document_name": document_name,
+            "repo_relative_path": "evidence/companyfacts/" + document_name,
+            "source_url": (
+                "https://data.sec.gov/api/xbrl/companyfacts/"
+                + document_name
+            ),
         }
-        if len(source_identities) != 1:
-            raise ZeroAiReleaseError("Company Facts raw source is ambiguous")
-        descriptor = descriptors[0]
-        companyfacts_accessions = sorted(
-            {
-                accession
-                for row in companyfacts_rows
-                for accession in _split(
-                    value=str(row["accession"]), separator=";",
-                )
-            }
-        )
+        raw_companyfacts = (
+            repo_root / descriptor["repo_relative_path"]
+        ).read_bytes()
+        filing_roles = [("current", discovered_filings["current"])]
+        if discovered_filings["prior"] is not None:
+            filing_roles.append(("prior", discovered_filings["prior"]))
         companyfacts_sources = []
         source_roles = []
-        for ordinal, accession in enumerate(companyfacts_accessions, start=1):
-            source_role = "companyfacts_{:02d}".format(ordinal)
+        period_claims = {}
+        for accession_role, filing in filing_roles:
+            accession = str(filing["accession"])
+            source_role = "companyfacts_" + accession_role
             companyfacts, companyfacts_binding = _source_reference(
                 repo_root=repo_root,
                 company_id=company_id,
@@ -830,9 +1091,9 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                 filing_inventory_bytes,
             ) = _inventory_for_accession(
                 repo_root=repo_root,
-                registry_row=registry[company_id],
+                registry_row=registry_row,
                 accession=accession,
-                fiscal_year=target["fiscal_year"],
+                fiscal_year=str(filing["report_date"])[:4],
                 current_reference=inventory,
                 current_bytes=inventory_bytes,
             )
@@ -860,9 +1121,20 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
             }
             companyfacts_sources.append(
                 {
+                    "accession_role": accession_role,
                     "manifest": companyfacts_manifest,
                     "reference": companyfacts,
                 }
+            )
+            period_claims[accession_role] = adapt_companyfacts(
+                raw_bytes=raw_companyfacts,
+                source_reference=companyfacts,
+                source_set_manifest=companyfacts_manifest,
+                approved_concepts=companyfacts_concepts,
+                allowed_ciks=repository_company_ciks(
+                    repo_root=repo_root, company_id=company_id,
+                ),
+                include_instant=True,
             )
             source_roles.append(
                 source_role_plan(
@@ -870,24 +1142,45 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                     source_mode="STRUCTURED_JSON",
                 )
             )
-        role_context[(company_id, "companyfacts")] = {
-            "sources": companyfacts_sources,
-            "raw_bytes": (
-                repo_root / descriptor["repo_relative_path"]
-            ).read_bytes(),
+        current_period = _period_from_companyfacts_claims(
+            claims=period_claims["current"],
+            filing=discovered_filings["current"],
+        )
+        periods = {"current": current_period, "prior": None}
+        if discovered_filings["prior"] is not None:
+            periods["prior"] = _period_from_companyfacts_claims(
+                claims=period_claims["prior"],
+                filing=discovered_filings["prior"],
+            )
+        target_periods[company_id] = periods
+        target = {
+            "fiscal_year": int(current_period["period_start"][:4]),
+            "period_start": current_period["period_start"],
+            "period_end": current_period["period_end"],
         }
-        instance_rows = [
-            row for row in company_evidence
-            if row["metric_id"] in {"A01", "A02", "B12"}
-        ]
-        if instance_rows:
-            instance_descriptors = {
-                tuple(_evidence_source_descriptor(evidence_row=row).items())
-                for row in instance_rows
-            }
-            if len(instance_descriptors) != 1:
-                raise ZeroAiReleaseError("Accession XBRL source is ambiguous")
-            instance_descriptor = dict(next(iter(instance_descriptors)))
+        targets[company_id] = target
+        role_context[(company_id, "companyfacts")] = {
+            "claims_by_accession_role": period_claims,
+            "sources": companyfacts_sources,
+            "raw_bytes": raw_companyfacts,
+        }
+        traits = repository_company_traits(
+            repo_root=repo_root, company_id=company_id,
+        )
+        requires_instance = any(
+            route["adapter_id"] == "accession_xbrl"
+            and metric_is_applicable(
+                applicability=route["applicability"], traits=traits,
+            )
+            for route in deterministic_catalog["metrics"].values()
+        )
+        if requires_instance:
+            instance_descriptor = _accession_instance_descriptor(
+                repo_root=repo_root,
+                company_id=company_id,
+                cik=registry_row["primary_cik"],
+                filing=discovered_filings["current"],
+            )
             instance, instance_binding = _source_reference(
                 repo_root=repo_root,
                 company_id=company_id,
@@ -912,6 +1205,20 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                 "source_reference": instance,
             }
             role_context[(company_id, "target_accession_instance")] = {
+                "claims_by_accession_role": {
+                    "current": adapt_accession_xbrl(
+                        raw_bytes=(
+                            repo_root
+                            / instance_descriptor["repo_relative_path"]
+                        ).read_bytes(),
+                        source_reference=instance,
+                        source_set_manifest=instance_manifest,
+                        fact_names=_deterministic_concepts(
+                            catalog=deterministic_catalog,
+                            adapter_id="accession_xbrl",
+                        ),
+                    )
+                },
                 "manifest": instance_manifest,
                 "references": [instance],
                 "raw_bytes": (
@@ -924,7 +1231,13 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                     source_mode="ACCESSION_XBRL",
                 )
             )
-        event_target = event_targets[company_id]
+        event_row = legacy_metric_index[(registry_row["display_name"], "E01")]
+        event_target = {
+            "fiscal_year": target["fiscal_year"],
+            "period_start": event_row["period_start"],
+            "period_end": event_row["period_end"],
+        }
+        event_targets[company_id] = event_target
         base_inventories = []
         primary_cik = str(int(registry[company_id]["primary_cik"]))
         company_ciks = repository_company_ciks(
@@ -1169,6 +1482,7 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
     }
     plan = build_multi_source_release_input_plan(
         release_plan_id=str(issue_plan["release_plan"]["release_plan_id"]),
+        release_plan_content_id=str(issue_plan["release_plan_content_id"]),
         requirement_id="issue_15_v1",
         authority_hashes=authority,
         companies=company_rows,
@@ -1190,6 +1504,8 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
         "proofs": proofs,
         "role_context": role_context,
         "targets": targets,
+        "target_periods": target_periods,
+        "filings_by_company": filings_by_company,
         "event_targets": event_targets,
         "registry_rows": registry_rows,
         "registry": registry,
@@ -1244,74 +1560,156 @@ def _claim_concept(*, claim: Mapping[str, object]) -> str:
     return qualified.split(":", maxsplit=1)[-1]
 
 
-def _selected_component_claims(
-    *, evidence: Mapping[str, str], claims: Sequence[Mapping[str, object]],
-    adapter_id: str,
-) -> List[Dict[str, object]]:
-    """Select exact raw-value claims for one frozen compatibility row.
+class _BranchUnavailable(ValueError):
+    """Allow one declared deterministic branch to fall through when absent."""
 
-    Args:
-        evidence: Frozen legacy evidence used only as the expected component
-            selector and parity oracle.
-        claims: Adapter output from exact SEC bytes.
-        adapter_id: Company Facts or accession XBRL.
 
-    Returns:
-        One deterministic claim per ordered evidence component.
-    """
-    concepts = _split(value=str(evidence["concept_or_section"]), separator="+")
-    values = _split(value=str(evidence["value_raw"]), separator=";")
-    accessions = _split(value=str(evidence["accession"]), separator=";")
-    if len(concepts) != len(values):
-        raise ZeroAiReleaseError("Evidence concept/value arity differs")
-    if len(accessions) == 1 and len(values) > 1:
-        accessions = accessions * len(values)
-    if len(accessions) != len(values):
-        raise ZeroAiReleaseError("Evidence accession/value arity differs")
-    selected = []
-    for concept, raw_value, accession in zip(concepts, values, accessions):
-        normalized = decimal_text(value=parse_decimal(value=raw_value))
+def _period_for_role(
+    *, periods: Mapping[str, object], period_role: str,
+) -> Tuple[str, str]:
+    """Resolve one catalog period role to exact start/end dates."""
+    accession_role, grain = period_role.split("_", maxsplit=1)
+    if accession_role not in periods or periods[accession_role] is None:
+        raise _BranchUnavailable("Required filing period is absent")
+    period = periods[accession_role]
+    if grain == "annual":
+        return str(period["period_start"]), str(period["period_end"])
+    if grain == "instant":
+        end = str(period["period_end"])
+        return end, end
+    raise ZeroAiReleaseError("Catalog period role is invalid")
+
+
+def _claim_period(*, claim: Mapping[str, object]) -> Tuple[str, str]:
+    """Return one adapter-neutral deterministic claim period."""
+    locator = claim["locator"]
+    if "period_start" in locator and "period_end" in locator:
+        return str(locator["period_start"]), str(locator["period_end"])
+    attributes = claim["attributes"]
+    if "context" not in attributes:
+        raise ZeroAiReleaseError("XBRL claim context is absent")
+    context = attributes["context"]
+    return str(context["period_start"]), str(context["period_end"])
+
+
+def _claim_matches_component(
+    *, claim: Mapping[str, object], component: Mapping[str, object],
+    periods: Mapping[str, object], accession_roles: Mapping[str, str],
+    allowed_ciks: Sequence[str],
+) -> bool:
+    """Match one SEC claim using catalog period, unit, entity, and dimensions."""
+    reference_id = str(claim["source_reference_id"])
+    if (
+        reference_id not in accession_roles
+        or accession_roles[reference_id] != component["accession_role"]
+        or claim["unit"] != component["unit"]
+        or _claim_period(claim=claim) != _period_for_role(
+            periods=periods, period_role=str(component["period_role"]),
+        )
+    ):
+        return False
+    attributes = claim["attributes"]
+    if claim["claim_kind"] == "COMPANYFACTS_NUMERIC_FACT":
+        return (
+            component["dimension_policy"] == "NONE"
+            and attributes["form"] == "10-K"
+            and attributes["fiscal_period"] == "FY"
+        )
+    if "context" not in attributes:
+        return False
+    context = attributes["context"]
+    normalized_ciks = {str(int(cik)) for cik in allowed_ciks}
+    entity = str(context["entity_identifier"])
+    if not entity.isdigit() or str(int(entity)) not in normalized_ciks:
+        return False
+    return (
+        component["dimension_policy"] == "EXACT"
+        and context["dimensions"] == component["required_dimensions"]
+        and context["typed_dimension_count"] == 0
+    )
+
+
+def _select_component_claim(
+    *, component: Mapping[str, object],
+    claims: Sequence[Mapping[str, object]], periods: Mapping[str, object],
+    accession_roles: Mapping[str, str], allowed_ciks: Sequence[str],
+) -> Dict[str, object]:
+    """Select one fact by catalog concept priority without expected values."""
+    for concept in component["approved_concepts"]:
         candidates = [
             dict(claim)
             for claim in claims
-            if _claim_concept(claim=claim).casefold() == concept.casefold()
-            and claim["value"] == normalized
-            and (
-                adapter_id == "accession_xbrl"
-                or claim["attributes"]["accession"] == accession
+            if _claim_concept(claim=claim).casefold() == str(concept).casefold()
+            and _claim_matches_component(
+                claim=claim,
+                component=component,
+                periods=periods,
+                accession_roles=accession_roles,
+                allowed_ciks=allowed_ciks,
             )
         ]
-        candidates.sort(key=lambda claim: str(claim["verified_claim_id"]))
         if not candidates:
+            continue
+        values = {(str(claim["value"]), str(claim["unit"])) for claim in candidates}
+        if len(values) != 1:
             raise ZeroAiReleaseError(
-                "Exact SEC claim is absent: {}:{}".format(concept, raw_value)
+                "Catalog-selected SEC fact is value-ambiguous: " + str(concept)
             )
-        selected.append(candidates[0])
-    return selected
+        candidates.sort(key=lambda claim: str(claim["verified_claim_id"]))
+        return candidates[0]
+    raise _BranchUnavailable(
+        "Catalog concept chain is absent for " + str(component["role"])
+    )
 
 
-def _compiled_direct_spec(
-    *, metric_id: str, metric_name: str, unit: str,
-    legacy_status: str, source_class: str,
+def _select_deterministic_branch(
+    *, route: Mapping[str, object], claims: Sequence[Mapping[str, object]],
+    periods: Mapping[str, object], accession_roles: Mapping[str, str],
+    allowed_ciks: Sequence[str],
+) -> Tuple[Dict[str, object], List[Dict[str, object]], List[Dict[str, str]]]:
+    """Resolve the first complete declared branch and record rejections."""
+    rejected = []
+    for branch in route["branches"]:
+        try:
+            selected = [
+                _select_component_claim(
+                    component=component,
+                    claims=claims,
+                    periods=periods,
+                    accession_roles=accession_roles,
+                    allowed_ciks=allowed_ciks,
+                )
+                for component in branch["components"]
+            ]
+            return dict(branch), selected, rejected
+        except _BranchUnavailable as error:
+            rejected.append(
+                {"branch_id": str(branch["branch_id"]), "reason": str(error)}
+            )
+    raise ZeroAiReleaseError("No deterministic catalog branch is complete")
+
+
+def _compiled_deterministic_spec(
+    *, metric_id: str, route: Mapping[str, object],
 ) -> Dict[str, object]:
-    """Compile one direct projection Spec bound to legacy field semantics."""
+    """Compile one direct projection Spec solely from catalog semantics."""
     front = {
         "metric_id": metric_id,
-        "name": metric_name,
+        "name": route["name"],
         "kind": "direct_numeric",
-        "canonical_unit": unit,
+        "canonical_unit": route["canonical_unit"],
         "unit_policy": "fixed_canonical",
         "source_mode": "structured",
-        "applicability": {"all": [], "none": []},
+        "applicability": route["applicability"],
         "identity_constraints": [],
         "legacy_projection": {
-            "status": legacy_status,
-            "source_class": source_class,
+            "status": route["success_status"],
+            "source_class": route["source_class"],
         },
         "dependencies": [],
     }
     text = "---\n{}\n---\n\n# {}\n".format(
-        json.dumps(front, ensure_ascii=False, indent=2), metric_name,
+        json.dumps(front, ensure_ascii=False, indent=2), route["name"],
     )
     return compile_spec(text=text)
 
@@ -1408,105 +1806,97 @@ def _coordinate(
         "value": result["value"],
         "unit": result["unit"],
         "fiscal_year": period["fiscal_year"],
-        "period_start": period["period_start"],
-        "period_end": period["period_end"],
+        "period_start": result["period_start"],
+        "period_end": result["period_end"],
     }
 
 
 def _deterministic_metric_graph(
     *, context: Mapping[str, object], company_id: str, metric_id: str,
-    legacy_row: Mapping[str, str], evidence: object,
 ) -> Dict[str, object]:
-    """Build one financial deterministic claim/observation/result graph."""
+    """Build one financial graph without legacy rows or expected values."""
     catalog_route = context["deterministic_catalog"]["metrics"][metric_id]
     role = str(catalog_route["source_role"])
     source = context["role_context"][(company_id, role)]
-    if catalog_route["adapter_id"] == "companyfacts":
-        claims = []
-        source_by_reference = {}
+    source_by_reference = {}
+    accession_roles = {}
+    if role == "companyfacts":
         for companyfacts_source in source["sources"]:
             reference = companyfacts_source["reference"]
             manifest = companyfacts_source["manifest"]
-            source_by_reference[str(reference["source_reference_id"])] = (
-                reference, manifest,
-            )
-            claims.extend(
-                adapt_companyfacts(
-                    raw_bytes=source["raw_bytes"],
-                    source_reference=reference,
-                    source_set_manifest=manifest,
-                    approved_concepts=catalog_route["approved_concepts"],
-                    allowed_ciks=repository_company_ciks(
-                        repo_root=context["repo_root"], company_id=company_id,
-                    ),
-                    include_instant=True,
-                )
+            reference_id = str(reference["source_reference_id"])
+            source_by_reference[reference_id] = (reference, manifest)
+            accession_roles[reference_id] = str(
+                companyfacts_source["accession_role"]
             )
     else:
         reference = source["references"][0]
         manifest = source["manifest"]
-        source_by_reference = {
-            str(reference["source_reference_id"]): (reference, manifest)
-        }
-        claims = adapt_accession_xbrl(
-            raw_bytes=source["raw_bytes"],
-            source_reference=reference,
-            source_set_manifest=manifest,
-            fact_names=catalog_route["approved_concepts"],
-        )
+        reference_id = str(reference["source_reference_id"])
+        source_by_reference[reference_id] = (reference, manifest)
+        accession_roles[reference_id] = "current"
+    claims = [
+        dict(claim)
+        for accession_claims in source["claims_by_accession_role"].values()
+        for claim in accession_claims
+    ]
+    periods = context["target_periods"][company_id]
+    period_start, period_end = _period_for_role(
+        periods=periods,
+        period_role=str(catalog_route["result_period_role"]),
+    )
     scope = {
         "coverage": "deterministic_source_set",
         "fiscal_year": context["targets"][company_id]["fiscal_year"],
     }
-    spec = _compiled_direct_spec(
-        metric_id=metric_id,
-        metric_name=str(legacy_row["metric_name"]),
-        unit=(
-            str(legacy_row["unit"])
-            if legacy_row["unit"]
-            else str(catalog_route["canonical_unit"])
-        ),
-        legacy_status=str(legacy_row["status"]),
-        source_class=str(legacy_row["source_class"]),
+    spec = _compiled_deterministic_spec(
+        metric_id=metric_id, route=catalog_route,
     )
-    if evidence is None:
-        start = date.fromisoformat(str(legacy_row["period_start"]))
-        end = date.fromisoformat(str(legacy_row["period_end"]))
-        days = (end - start).days + 1
-        claim = verified_claim(
-            claim_kind="STRUCTURED_PERIOD_CLASSIFICATION",
-            source_reference=reference,
-            source_set_manifest=manifest,
-            locator={
-                "period_start": legacy_row["period_start"],
-                "period_end": legacy_row["period_end"],
-            },
-            value=str(days),
-            unit="days",
-            attributes={"classification": "ANNUAL_DURATION_OUT_OF_RANGE"},
+    traits = repository_company_traits(
+        repo_root=context["repo_root"], company_id=company_id,
+    )
+    registry_row = context["registry"][company_id]
+    if (
+        catalog_route["continuity_policy"] == "REQUIRE_CONTINUOUS"
+        and registry_row["entity_continuity_status"] != "continuous"
+    ):
+        result, trace = _manual_result_trace(
+            metric_id=metric_id,
+            company_id=company_id,
+            period_start=period_start,
+            period_end=period_end,
+            scope=scope,
+            spec_closure_hash=str(spec["spec_closure_hash"]),
+            applicability="APPLICABLE",
+            quality="NOT_MEANINGFUL",
+            reason_code="ENTITY_CONTINUITY_NOT_COMPARABLE",
+            input_observation_ids=[],
+            steps=[{"event": "ENTITY_CONTINUITY_NOT_COMPARABLE"}],
+            accession=context["filings_by_company"][company_id]["current"][
+                "accession"
+            ],
+            entity=str(int(registry_row["primary_cik"])),
         )
-        selected = [claim]
-        computed = Decimal(days)
-        observation_unit = "days"
-    else:
-        selected = _selected_component_claims(
-            evidence=evidence,
-            claims=claims,
-            adapter_id=str(catalog_route["adapter_id"]),
-        )
-        values = [parse_decimal(value=str(claim["value"])) for claim in selected]
-        computed = _formula_value(
-            formula_id=str(catalog_route["formula_id"]), values=values,
-        )
-        observation_unit = (
-            str(legacy_row["unit"])
-            if legacy_row["unit"]
-            else str(catalog_route["canonical_unit"])
-        )
-        normalized = decimal_text(value=computed)
-        expected = str(evidence["value_normalized"])
-        if expected and normalized != expected:
-            raise ZeroAiReleaseError("Deterministic formula differs from evidence")
+        return {
+            "claims": [],
+            "observation": None,
+            "result": result,
+            "trace": trace,
+        }
+    allowed_ciks = repository_company_ciks(
+        repo_root=context["repo_root"], company_id=company_id,
+    )
+    branch, selected, rejected = _select_deterministic_branch(
+        route=catalog_route,
+        claims=claims,
+        periods=periods,
+        accession_roles=accession_roles,
+        allowed_ciks=allowed_ciks,
+    )
+    values = [parse_decimal(value=str(claim["value"])) for claim in selected]
+    computed = _formula_value(
+        formula_id=str(branch["formula_id"]), values=values,
+    )
     selected_reference_id = str(selected[0]["source_reference_id"])
     if selected_reference_id not in source_by_reference:
         raise ZeroAiReleaseError("Selected claim source is outside its role")
@@ -1518,6 +1908,8 @@ def _deterministic_metric_graph(
         "document_name": reference["document_name"],
         "source_role": reference["source_role"],
         "source_set_manifest_id": manifest["source_set_manifest_id"],
+        "selected_branch_id": branch["branch_id"],
+        "rejected_branches": rejected,
         "verified_claim_ids": [claim["verified_claim_id"] for claim in selected],
         "source_reference_ids": sorted(
             {str(claim["source_reference_id"]) for claim in selected}
@@ -1530,40 +1922,41 @@ def _deterministic_metric_graph(
         metric_id=metric_id,
         semantic_role="deterministic_value",
         company_id=company_id,
-        period_start=str(legacy_row["period_start"]),
-        period_end=str(legacy_row["period_end"]),
+        period_start=period_start,
+        period_end=period_end,
         scope=scope,
         value=decimal_text(value=computed),
-        unit=observation_unit,
-        quality=("APPROX" if legacy_row["status"] == "OK_APPROX" else "EXACT"),
+        unit=str(catalog_route["canonical_unit"]),
+        quality=str(branch["quality"]),
         source_binding=source_binding,
     )
-    if legacy_row["value"]:
+    not_meaningful = (
+        branch["formula_id"] == "interest_coverage" and computed <= 0
+    )
+    if not not_meaningful:
         result, trace = calculate_observation_metric(
             compiled_spec=spec,
             target={
                 "company_id": company_id,
-                "period_start": legacy_row["period_start"],
-                "period_end": legacy_row["period_end"],
+                "period_start": period_start,
+                "period_end": period_end,
                 "scope": scope,
                 "scope_key": scope_key(scope=scope),
             },
-            company_traits=[],
+            company_traits=traits,
             observation=observation,
         )
-        if result["value"] != legacy_row["value"]:
-            raise ZeroAiReleaseError("Deterministic Result differs from legacy")
     else:
         result, trace = _manual_result_trace(
             metric_id=metric_id,
             company_id=company_id,
-            period_start=str(legacy_row["period_start"]),
-            period_end=str(legacy_row["period_end"]),
+            period_start=period_start,
+            period_end=period_end,
             scope=scope,
             spec_closure_hash=str(spec["spec_closure_hash"]),
             applicability="APPLICABLE",
             quality="NOT_MEANINGFUL",
-            reason_code="ANNUAL_DURATION_OR_RATIO_NOT_MEANINGFUL",
+            reason_code="RATIO_NUMERATOR_NOT_POSITIVE",
             input_observation_ids=[str(observation["observation_id"])],
             steps=[
                 {
@@ -1572,10 +1965,8 @@ def _deterministic_metric_graph(
                 }
             ],
             accession=reference["accession"],
-            entity=str(int(context["registry"][company_id]["primary_cik"])),
+            entity=str(int(registry_row["primary_cik"])),
         )
-        if legacy_row["status"] != "NOT_MEANINGFUL":
-            raise ZeroAiReleaseError("Null deterministic status differs")
     return {
         "claims": selected,
         "observation": observation,
@@ -1743,14 +2134,6 @@ def build_r2_execution_graph(
     legacy_index = {
         (row["company"], row["metric_id"]): row for row in legacy_rows
     }
-    evidence_index = {}
-    for row in context["legacy_evidence"]:
-        key = (row["company"], row["metric_id"])
-        if row["metric_id"] not in R2_DETERMINISTIC_METRIC_IDS:
-            continue
-        if key in evidence_index:
-            raise ZeroAiReleaseError("Deterministic evidence row is duplicated")
-        evidence_index[key] = row
     r1_coordinates = json.loads(
         context["active_view"].read_bytes(
             relative_path="internal/coordinate_index.json"
@@ -1765,17 +2148,19 @@ def build_r2_execution_graph(
     for registry_row in context["registry_rows"]:
         company_id = registry_row["company_id"]
         display_name = registry_row["display_name"]
+        traits = repository_company_traits(
+            repo_root=repo_root, company_id=company_id,
+        )
         for metric_id in R2_DETERMINISTIC_METRIC_IDS:
             key = (display_name, metric_id)
-            if key in legacy_index and legacy_index[key]["status"] != (
-                "N_A_STRUCTURAL"
+            route = context["deterministic_catalog"]["metrics"][metric_id]
+            if metric_is_applicable(
+                applicability=route["applicability"], traits=traits,
             ):
                 graph = _deterministic_metric_graph(
                     context=context,
                     company_id=company_id,
                     metric_id=metric_id,
-                    legacy_row=legacy_index[key],
-                    evidence=(evidence_index[key] if key in evidence_index else None),
                 )
             else:
                 graph = _structural_graph(
@@ -1783,8 +2168,8 @@ def build_r2_execution_graph(
                     company_id=company_id,
                     metric_id=metric_id,
                 )
-                if key not in legacy_index:
-                    missing_public_key_count += 1
+            if key not in legacy_index:
+                missing_public_key_count += 1
             graph_records.extend(graph["claims"])
             if graph["observation"] is not None:
                 graph_records.append(graph["observation"])
@@ -2022,6 +2407,9 @@ def prepare_r2_successor(
     Returns:
         Prepared PublicationManifest and evidence summary.
     """
+    source_binding = _source_commit_binding(
+        repo_root=repo_root, source_commit=source_commit,
+    )
     context = build_r2_source_plan(repo_root=repo_root)
     graph = build_r2_execution_graph(
         repo_root=repo_root, source_context=context,
@@ -2033,8 +2421,16 @@ def prepare_r2_successor(
         publication_stage="R2",
     )
     invocation = structured_only_result(
+        repo_root=repo_root,
+        workspace_dir=(
+            repo_root / "artifacts" / "vnext" / "zero_ai_release" / "r2"
+        ),
         release_input_plan_id=str(context["plan"]["release_input_plan_id"]),
+        cumulative_metric_ids=R2_METRIC_IDS,
         result_coordinate_count=R2_EXPECTED_COORDINATES,
+    )
+    issue_release = load_issue15_release_plan(
+        repo_root=repo_root, release_plan_id="issue_15_zero_ai_r2",
     )
     coordinate_body = {
         "schema_version": 1,
@@ -2062,6 +2458,10 @@ def prepare_r2_successor(
         "internal/release_input_plan.json": _json_bytes(value=context["plan"]),
         "internal/coordinate_index.json": _json_bytes(value=coordinate_index),
         "internal/deterministic_execution_graph.json": graph_bytes,
+        "internal/issue15_release_plan.json": (
+            repo_root / "config" / "release_plans"
+            / "issue_15_zero_ai_r2.json"
+        ).read_bytes(),
         "internal/request_locator_provenance.json": locator_bytes,
         "internal/retirement_receipt.json": _json_bytes(value=retirement),
         "internal/structured_only_invocation.json": _json_bytes(value=invocation),
@@ -2125,7 +2525,7 @@ def prepare_r2_successor(
                 "PUBLICATION_BOUND_RETIREMENT",
                 "STRUCTURED_ONLY_ZERO_PROVIDER",
             ],
-            "counters": dict(ZERO_COUNTERS),
+            "counters": dict(invocation["counters"]),
             "validated_at_utc": validated_at_utc,
         },
         identity_field="validation_receipt_id",
@@ -2142,6 +2542,7 @@ def prepare_r2_successor(
         value={
             "run_id": str(coordinate_index["batch_manifest_id"]),
             "source_commit": source_commit,
+            "source_tree_oid": source_binding["source_tree_oid"],
             "started_at_utc": validated_at_utc,
             "mode": "FULL_VALIDATION",
             "refreshed_artifacts": sorted(
@@ -2169,6 +2570,8 @@ def prepare_r2_successor(
         "record_type": "ZERO_AI_FORMAL_RELEASE_RECEIPT",
         "status": "PASSED",
         "release_stage": "R2",
+        "source_commit": source_binding["source_commit"],
+        "source_tree_oid": source_binding["source_tree_oid"],
         "release_input_plan_id": context["plan"]["release_input_plan_id"],
         "batch_manifest_id": coordinate_index["batch_manifest_id"],
         "projection_manifest_id": projection["projection_manifest_id"],
@@ -2182,8 +2585,14 @@ def prepare_r2_successor(
         "public_key_set_hash": candidate["public_key_set_hash"],
         "strict_compatibility_hash": candidate["strict_compatibility_hash"],
         "requirement_closure_hash": issue["requirement_closure_hash"],
-        "issue15_release_plan_sha256": issue["hashes"][
-            "issue_15_release_plan_sha256"
+        "issue15_release_plan_id": issue_release["release_plan"][
+            "release_plan_id"
+        ],
+        "issue15_release_plan_content_id": issue_release[
+            "release_plan_content_id"
+        ],
+        "issue15_release_plan_sha256": issue_release[
+            "release_plan_sha256"
         ],
         "source_locator_classes": sorted(
             {
@@ -2191,7 +2600,10 @@ def prepare_r2_successor(
                 for proof in context["proofs"].values()
             }
         ),
-        "counters": dict(ZERO_COUNTERS),
+        "invocation_observation_id": invocation[
+            "invocation_observation_id"
+        ],
+        "counters": dict(invocation["counters"]),
         "public_artifact_hashes": public_hashes,
         "internal_files": _internal_bindings(files=internal_files),
     }
@@ -2219,6 +2631,8 @@ def prepare_r2_successor(
     )
     summary = {
         "release_stage": "R2",
+        "source_commit": source_binding["source_commit"],
+        "source_tree_oid": source_binding["source_tree_oid"],
         "release_input_plan_id": context["plan"]["release_input_plan_id"],
         "batch_manifest_id": coordinate_index["batch_manifest_id"],
         "projection_manifest_id": projection["projection_manifest_id"],
@@ -2231,7 +2645,10 @@ def prepare_r2_successor(
         "public_matrix_row_count": candidate["public_matrix_row_count"],
         "public_key_set_hash": candidate["public_key_set_hash"],
         "strict_compatibility_hash": candidate["strict_compatibility_hash"],
-        "counters": dict(ZERO_COUNTERS),
+        "invocation_observation_id": invocation[
+            "invocation_observation_id"
+        ],
+        "counters": dict(invocation["counters"]),
         "retirement_receipt": retirement,
         "strict_compatibility_receipt": migration,
     }
@@ -2240,6 +2657,7 @@ def prepare_r2_successor(
 
 def _persist_r2_receipts(
     *, repo_root: Path, receipts: Mapping[str, Mapping[str, object]],
+    counters: Mapping[str, object],
 ) -> Dict[str, object]:
     """Persist immutable R2 receipts plus one stable role index."""
     receipt_dir = repo_root / "outputs" / "zero_ai_release_receipts" / "r2"
@@ -2268,7 +2686,7 @@ def _persist_r2_receipts(
             "record_type": "ZERO_AI_R2_RECEIPT_INDEX",
             "status": "PASSED",
             "receipts": bindings,
-            "counters": dict(ZERO_COUNTERS),
+            "counters": dict(counters),
         },
         identity_field="receipt_index_id",
     )
@@ -2314,6 +2732,7 @@ def publish_r2(
     )
     index = _persist_r2_receipts(
         repo_root=repo_root,
+        counters=summary["counters"],
         receipts={
             "predecessor_r1": predecessor.manifest,
             "successor_publication": successor,

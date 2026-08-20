@@ -55,6 +55,8 @@ GATE_SOURCE_PATHS = (
     "catalog/deterministic_metrics.json",
     "catalog/event_routes.json",
     "config/issue_15_release_plan.json",
+    "config/release_plans/issue_15_zero_ai_r1.json",
+    "config/release_plans/issue_15_zero_ai_r2.json",
     "config/source_strategy_registry.json",
     "scripts/sec_pipeline.py",
     "tools/check_no_company_literals.py",
