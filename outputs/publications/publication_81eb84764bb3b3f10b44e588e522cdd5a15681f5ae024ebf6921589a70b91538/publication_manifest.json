@@ -1,0 +1,398 @@
+{
+  "record_type": "PUBLICATION_MANIFEST",
+  "publication_id": "publication_81eb84764bb3b3f10b44e588e522cdd5a15681f5ae024ebf6921589a70b91538",
+  "candidate_status": "PUBLISHABLE",
+  "requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "batch_manifest_id": "sha256:c3faf7702e61d3d2fbbc892949099036686f05bb5f7fc88e41f0a439682739c0",
+  "projection_manifest_id": "sha256:55d0933b22662bfb57f45c5feee0efff1306e51b157be8e36c4fc9ef1bd9ba4d",
+  "validation_receipt_id": "sha256:6bb9064c26368e061cafc1f9f11d0602f2a78dcf77363095dc514949c61838d0",
+  "files": [
+    {
+      "path": "README_RUN.md",
+      "sha256": "b2f7ff67c8c20374eda02f9cc207688b16ba6f23a3e6c2449b725d5402ce4296",
+      "size": 28415
+    },
+    {
+      "path": "REPORT_十公司财务指标.md",
+      "sha256": "fe9a8baf04c128f98e302b47b5eaed58d522e7d02de6ccccfdb92d2bd15f1ad6",
+      "size": 29629
+    },
+    {
+      "path": "coverage_matrix.csv",
+      "sha256": "dc91ab95cd379a1742db64b88129eea6d9464a3a4208b784ac157bb366ef5c7d",
+      "size": 28109
+    },
+    {
+      "path": "golden_results.csv",
+      "sha256": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+      "size": 9166
+    },
+    {
+      "path": "internal/coordinate_index.json",
+      "sha256": "78a3f858ac34e0a5d3c3e21fa1354618db1444f08b9b483d1a859274fe471bfb",
+      "size": 10287
+    },
+    {
+      "path": "internal/issue15_release_plan.json",
+      "sha256": "20445cbf9edeebc6c7183fc8112eb6fbfde3618ca2da8edeb4f1543997ff63ab",
+      "size": 4183
+    },
+    {
+      "path": "internal/public_projection_closure.json",
+      "sha256": "432f01424cbec3caa0853eee4a4340e2815f1bf6c6d83cafa4f831b324fafd6a",
+      "size": 9949
+    },
+    {
+      "path": "internal/release_input_plan.json",
+      "sha256": "04ec2e32b9646608c8523d368bef71874e97f24b79ea87772bd074c5b65e4b1b",
+      "size": 40120
+    },
+    {
+      "path": "internal/request_locator_provenance.json",
+      "sha256": "8cf917ed5d92add6768c5d238f49301a4055bc27aea10975ba26e83715e433ea",
+      "size": 21349
+    },
+    {
+      "path": "internal/retirement_receipt.json",
+      "sha256": "855a40e4bce127259474b05c901b19150cd330230e25a34a231c656e7518a6be",
+      "size": 3780
+    },
+    {
+      "path": "internal/runs/enphase_energy/manifest.json",
+      "sha256": "59bcbe544aa3127682b4b2dc7b6b4cde6b20221c863257a7be19646c6eb8f5c2",
+      "size": 2877
+    },
+    {
+      "path": "internal/runs/enphase_energy/records.jsonl",
+      "sha256": "f65600af3938a373c3dacdf0f9eabdb9664d1fe071cdf3ed8f247ec7c68adf18",
+      "size": 11311
+    },
+    {
+      "path": "internal/runs/enphase_energy/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/enphase_energy/validation.json",
+      "sha256": "d76173bf8cca66df6f39f1cccb33fe7214c87ebd50eb18b9f114f0a6c9ad0212",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/ford_motor_company/manifest.json",
+      "sha256": "dd5c0ef00801f770fa31fa9375c955b8b4adf5b3383339e75a09019b24cb0edd",
+      "size": 2885
+    },
+    {
+      "path": "internal/runs/ford_motor_company/records.jsonl",
+      "sha256": "d5f218a37aff39c1bf25eba2c05e1f2ff242455e5244ff2d2e643a0040c6bdb0",
+      "size": 11371
+    },
+    {
+      "path": "internal/runs/ford_motor_company/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/ford_motor_company/validation.json",
+      "sha256": "7982c1df94170405273727edcee148d69b008c6a8884e13e6073d68e2aab7520",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/jpmorgan_chase/manifest.json",
+      "sha256": "bd13b9b54c94a2d2bbfdaba532cfd6c167898eecc3a287dbe68c0d6b847442ab",
+      "size": 2257
+    },
+    {
+      "path": "internal/runs/jpmorgan_chase/records.jsonl",
+      "sha256": "37dff643e3501a3dfcc1a1a4314a6ac159fd8a16bf5f5d0b7a42ca368ea5be9c",
+      "size": 5884
+    },
+    {
+      "path": "internal/runs/jpmorgan_chase/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/jpmorgan_chase/validation.json",
+      "sha256": "904d3e857af7faa789f1a29b4348fab46e86e12ccaeff0392f85670df2a377df",
+      "size": 1079
+    },
+    {
+      "path": "internal/runs/lumen_technologies/manifest.json",
+      "sha256": "b0aecb3d2c535c40ddf0b7a40567d6028ec39cca24fa3f3e08fbfb8618abd210",
+      "size": 2885
+    },
+    {
+      "path": "internal/runs/lumen_technologies/records.jsonl",
+      "sha256": "b464550bcd9eb356317f25a84e0fc56de1a8193d23ea5d836a0795ee2607b549",
+      "size": 11359
+    },
+    {
+      "path": "internal/runs/lumen_technologies/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/lumen_technologies/validation.json",
+      "sha256": "e70c709fcea8e6f3906622051a10b50e8bc207011cbd1b69cd173cb8df1db812",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/macys/manifest.json",
+      "sha256": "fd5b6aef7a624bb1cb7327094f71940f04e0448e3ab92e9ad2120c888903806f",
+      "size": 2859
+    },
+    {
+      "path": "internal/runs/macys/records.jsonl",
+      "sha256": "cc9c0cd61bbd22ed7883b0c902114ea6e68fb036990fbe129637a9f6f38ae903",
+      "size": 11211
+    },
+    {
+      "path": "internal/runs/macys/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/macys/validation.json",
+      "sha256": "0efd98a06a97ee30c1688a1aafc255fcf58e5950ad7e9c14f7bbc98750c66b50",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/marriott_international/manifest.json",
+      "sha256": "d3c05edba578b8d6f149648a5d2488e402fddad1878e52db927474239b6186ff",
+      "size": 2695
+    },
+    {
+      "path": "internal/runs/marriott_international/records.jsonl",
+      "sha256": "858e4acb15e5a6ebb59b8284e1ee92f2435dc8ab14771ad4a47f525426766d56",
+      "size": 10114
+    },
+    {
+      "path": "internal/runs/marriott_international/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/marriott_international/validation.json",
+      "sha256": "c1d4864b52ee72e52b18b350fbd62d4c77667bf4ecf1e52314b3af8566ca5ac2",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/paramount_skydance_paramount_global/manifest.json",
+      "sha256": "4e95ba741217f4abaf89770ae214b05067edbc4e2838117b6aa045ba2522c7dc",
+      "size": 2919
+    },
+    {
+      "path": "internal/runs/paramount_skydance_paramount_global/records.jsonl",
+      "sha256": "8cc664875cc346da189c1f938e0a1940ac2e9cee586c1d072323f00d0ddd86f9",
+      "size": 11063
+    },
+    {
+      "path": "internal/runs/paramount_skydance_paramount_global/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/paramount_skydance_paramount_global/validation.json",
+      "sha256": "36348a7a35594a6adc37063d9556d505ba1ecdb85d37cf8be73bae233803cb09",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/pfizer/manifest.json",
+      "sha256": "17c0905e3b152270b0dc31a29f4af274d9884fc7cc04a8cbec36b7d10f6404b2",
+      "size": 2861
+    },
+    {
+      "path": "internal/runs/pfizer/records.jsonl",
+      "sha256": "386666ef3ce2b20eff5093bc3fc7286cbb1f4918f2610d50ebca020eb7480a11",
+      "size": 13062
+    },
+    {
+      "path": "internal/runs/pfizer/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/pfizer/validation.json",
+      "sha256": "ae3c7af5d1d51d9794711af933933c2d7642a1d6d4446bde183fe27a4ba4627f",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/salesforce/manifest.json",
+      "sha256": "a0c67f10576795cd4b693744947c9a1c114f3b6dc95cdc2005077b49edb8ea01",
+      "size": 2909
+    },
+    {
+      "path": "internal/runs/salesforce/records.jsonl",
+      "sha256": "69961e516374d7021a41784f2ff389cdc67b711d5eaea38123ceb1bb6be06c3f",
+      "size": 11277
+    },
+    {
+      "path": "internal/runs/salesforce/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/salesforce/validation.json",
+      "sha256": "4e34fcc525305eb4d88ece87438b9c58bebb2368c532b461c65380aae0cff638",
+      "size": 1080
+    },
+    {
+      "path": "internal/runs/southwest_airlines/manifest.json",
+      "sha256": "599ceb1d92aa8ba88d2f4cf2a2252003949e0438023079ea1735ca5871ef0633",
+      "size": 2885
+    },
+    {
+      "path": "internal/runs/southwest_airlines/records.jsonl",
+      "sha256": "6ebcd26844fc3103e8d373221c0f1c3ee2834a46854b5fb3b8ae930da641aa57",
+      "size": 11351
+    },
+    {
+      "path": "internal/runs/southwest_airlines/review_decisions.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    {
+      "path": "internal/runs/southwest_airlines/validation.json",
+      "sha256": "4ec85c9dfee1b95f641afae3ffecfb962fe1efa6a0b4b7325690c2aa52a3607b",
+      "size": 1080
+    },
+    {
+      "path": "internal/structured_only_invocation.json",
+      "sha256": "20851b71c88273fb5ef974dc98e0dc8df9f060a065cb04adfe69187676a61da4",
+      "size": 797
+    },
+    {
+      "path": "internal/zero_ai_release_receipt.json",
+      "sha256": "eaef1603720b2f4248ba2b26f77f9d4da48481bc7a39392dd50edd5e08668b91",
+      "size": 9734
+    },
+    {
+      "path": "legacy_invariant_migration_receipt.json",
+      "sha256": "58f80a2d5ee8a35dc2c8214de25b5d524fcb4ccd22b4454e841998370fd49de6",
+      "size": 2786
+    },
+    {
+      "path": "metric_evidence.csv",
+      "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+      "size": 250439
+    },
+    {
+      "path": "metrics_matrix.csv",
+      "sha256": "1bee32427738eaa855031a625ac517722155db3ab25e77a1b9664890dc784a8d",
+      "size": 85519
+    },
+    {
+      "path": "projection_manifest.json",
+      "sha256": "19266661b576f79504d2425013fe90a3507125eb89369deee8868838d55c92a9",
+      "size": 1056
+    },
+    {
+      "path": "publication_validation_receipt.json",
+      "sha256": "c35e2c63b465935f3ddca308dbf7be2a264c6119f6e913c2125cc2c69953adaa",
+      "size": 740
+    },
+    {
+      "path": "repair_validation_results.csv",
+      "sha256": "ce38a4d549230f5376881c3a975e406d2e218bd84b85bae92302e1cd26d2e2e1",
+      "size": 9470
+    },
+    {
+      "path": "scalability_audit.csv",
+      "sha256": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+      "size": 56
+    },
+    {
+      "path": "semantic_audit_receipt.json",
+      "sha256": "9c19fe4dead84e113cba9124090623e2d96ee62963a6bb1809ae36974830b16e",
+      "size": 5745
+    },
+    {
+      "path": "stratified_audit.csv",
+      "sha256": "9eceea9b741e73910e978889633861f65a1bfa5f4a3a536e64a55dfe1f79f771",
+      "size": 10096
+    },
+    {
+      "path": "validation_run_manifest.json",
+      "sha256": "040d40a972db445df338108e7df88967784d9bfdf55c14f3f631c43b06c6cfd3",
+      "size": 511
+    }
+  ],
+  "ledger_binding": {
+    "request_locator_classes": [
+      "IMMUTABLE_ATTEMPT"
+    ],
+    "request_locator_proof_id": "sha256:18af0a70a04700c14512508fd6cb2dfd11f8c5e3172312f5aa58e4a3c3459fe8",
+    "request_locator_tier": "FULL_VALIDATION",
+    "requests_log_prefix_sha256": "c017df0abf3a8fa83073162f3bebbba077209eb969247166330ab2bd41463782",
+    "row_count": 979,
+    "source_reference_ids": [
+      "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+      "sha256:09218d7b689e3404d0668fae4bac616a71f76b919aa65140384a60906306cd83",
+      "sha256:0ba7a554d933f984a68e5238efc20c0b47743aeace31bb5c4cd3cf204bf0bba9",
+      "sha256:1861c3d78661376920b145d86378fcf8589759f5e22c82b9fdc27b0125296f15",
+      "sha256:23a993ab9a56dd18c2ca7fe5f960279071ca6240d10732c23e5eee35b8321eaf",
+      "sha256:2cedc346581ce54eb97831e4640f319b59a92481802260a35d0cac19de8e8b86",
+      "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "sha256:333eadc460b0b7482c8deaa78eaae60779b8c8af193d0d9ebf3445c34b88b11c",
+      "sha256:374643665da7bbb31076ae94fc32cff5c09973f8bbdfb25db751c646e997808f",
+      "sha256:39b5ea94031e1a99d67efe4e5b7e90cb7b0dde3fc5747e56991827b99ec3bac1",
+      "sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4",
+      "sha256:5afc240629a896ac8db0cd21a795c40083b8bd8744098b31df62f79582d8a2ba",
+      "sha256:62a754c973a5d8cac99ae2ff0ccbc64ac40d722f071d8c6f18f58dd14a01c2d2",
+      "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
+      "sha256:82cfad74f4b320452c6206f53eb330a9b09db95842eeb29ed1cc519578e4bbc2",
+      "sha256:8a46bb21011a361de83885b97305f871e455a47160386cba46423955a8519c1c",
+      "sha256:8e6f03e18bb44469d441be092b07692db03606709dd8f4bd699fff93fe3cf012",
+      "sha256:a38bcf61fcd623d2c2eeeaa6993a7feee12fb4460f52b6a4e2aacfe120c4c5f3",
+      "sha256:b39cfdde0b37e0e20e3072d8d19e00212fa3541a8f80e66550f6182777762514",
+      "sha256:b5ba9cf940f8641f7e104763b829060d16180316fbd11174801db92e6f9b1ec6",
+      "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+      "sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea",
+      "sha256:d74efcf41ad746a9b9e3fb0e1f7ec9c156f3bc23cead6ee7b9024b22828b93e6",
+      "sha256:e04c345641117b9a34ad10c0156a21feae3b6b5a405843fcb8354acd7e34b1d7",
+      "sha256:e0dadbc55dba0e52296d9307f61945ce6f46689193565cfceb13cad4465b75d1",
+      "sha256:eb89e558dd155d24135911a956fb2a96e8594606155cbd7213af599a23f975a9",
+      "sha256:f9549f9a1ed4a0f5e7bc3b4d9a80488afb446170ab1f59321932e25e5cd6adc5"
+    ],
+    "used_request_attempt_ids": [
+      "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b",
+      "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+      "request:attempt:2d141ff33cfa770ab8a490d98a7f79d8fde3f1d3b25a2ea404553b56d6e405b3",
+      "request:attempt:2e6b247503b8170409d96f5e851332a7fb9382fe76d893084fbc8a6b1ab97ff3",
+      "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd",
+      "request:attempt:40440a3fb53049e04b00bc7cfdc5e134e1e8b79f2df479713afe840f958fb36b",
+      "request:attempt:4261197626a72c0da8bc53a49e904f53b7ec02febd372d91b7640a8de611aa0d",
+      "request:attempt:42e771a8cc92220639314576bfc2751e9fb6057ecc332f8d0ae19594b7d17ffc",
+      "request:attempt:5176c0832cd4a1a68fb8d7860959306d772750de3a1317dffe59319fa1a20f5e",
+      "request:attempt:57800221f6ae3b43f3f3bfa02ed52d6138aa8c814146a7379bf869b97e6dcef1",
+      "request:attempt:60713c8c3dd60d9cf9e10670179eb7091f5f88a411ab1646fa6fa3653f46bd30",
+      "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db",
+      "request:attempt:705c80a391f7b18422317a4d785c80c125369031f4690d63e5d687b02f3bfe31",
+      "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745",
+      "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b",
+      "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a",
+      "request:attempt:9250a974f15194addd55b7892f3d9d8ea7ff682888f48e969666f201b12a6e68",
+      "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e",
+      "request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb",
+      "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f",
+      "request:attempt:a6a94b904d18b0f9c0e96f0cd5e667bb1b340536b8f1450f612d74583af72d97",
+      "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+      "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d",
+      "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529",
+      "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026",
+      "request:attempt:d57b50c6024d6fbe290daded3ec75b2369480525f55e46c05d94bb28dc9f4ecb",
+      "request:attempt:e6e256328eb75c4b1db4eafde1643cfd8f432ced9c0d0338747d01c9eb54bd9e"
+    ]
+  },
+  "previous_publication_id": "publication_5668341b23a16895a9e4d3c62657e0d541c80b766b6a2b8d4d98374c5042a6e0"
+}

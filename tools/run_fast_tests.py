@@ -39,6 +39,13 @@ FAST_TESTS = (
     "test_issue15_snapshot_loads_and_preserves_parent_history",
     "tests.vnext.test_issue15_authority.Issue15AuthorityTest."
     "test_reusable_producer_scopes_match_exact_base_call_graph",
+    "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest."
+    "test_registry_covers_exact_39_without_migration_state",
+    "tests.vnext.test_deterministic_router.DeterministicRouterTest."
+    "test_e01_matched_event_key_set_has_exact_legacy_parity",
+    "tests.vnext.test_invocation_control",
+    "tests.vnext.test_zero_ai_release.ZeroAiReleaseTest."
+    "test_r2_active_key_union_compatibility_and_retirement_are_bound",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
     "test_r4_plan_uses_fast_runner_without_full_discovery",
 )

@@ -1025,6 +1025,7 @@ def create_companyfacts_release_run(
                     compiled_spec=specs[metric_id],
                 ),
                 allowed_ciks=allowed_ciks,
+                include_instant=False,
             )
             result, trace, observations = calculate_metric(
                 compiled_spec=specs[metric_id],

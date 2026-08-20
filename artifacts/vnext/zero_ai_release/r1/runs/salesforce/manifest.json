@@ -1,0 +1,51 @@
+{
+  "record_type": "RUN",
+  "status": "FROZEN",
+  "records_file_hash": "69961e516374d7021a41784f2ff389cdc67b711d5eaea38123ceb1bb6be06c3f",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "4e34fcc525305eb4d88ece87438b9c58bebb2368c532b461c65380aae0cff638",
+  "content_manifest_hash": "sha256:7d3a5adab5c1eb792b3acf748f7f955a61c6f1212ac118c01d45370d49233459",
+  "audit_manifest_hash": "sha256:624009e6c57b15f37ccd5999868ecfc4e3b6dea54019167f8d7ae0ce90b2e3ff",
+  "run_id": "run:cutover:70346ef57587e3150164fdec39c375562769619b0ccbc24f82186fe0879a2ced",
+  "company_id": "salesforce",
+  "company_traits": [
+    "non_financial",
+    "subscription_or_contract_revenue"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-02-01",
+    "period_end": "2026-01-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:7e357b7e0f442af5ba845d6a7e47b6fe332ba51b2afb1b2e036f3daeb8fc9a1f",
+      "raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+      "company_id": "salesforce",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001108524.json",
+      "accession": "0001108524-26-000060",
+      "document_name": "CIK0001108524.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/B01_revenue.md": "5942066d0fd57870d437a6619de72393532b10d48d4098f10cd39307622e3520",
+    "catalog/metrics/B03_ebitda_margin.md": "2705cc20f3e7dbd6a5cbb46bb051b2a16e3037d391856878c3ea74b4441a3608",
+    "catalog/metrics/B10_occupancy.md": "bb98f1812e795ced44fc805e67d75af479f4df0c095961733808b9d98646a570",
+    "catalog/metrics/B11_revpar.md": "9206d07414e8d2f6ec45b1b4df8ea202ec3acf5bbecbbbb95bdcc0198077cc3e"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

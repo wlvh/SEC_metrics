@@ -86,11 +86,13 @@ PUBLICATION_AUXILIARY_AUTHORITY_PATHS = (
 FORMAL_NAMESPACE_PATHS = (
     Path("artifacts/vnext/cutover"),
     Path("artifacts/vnext/qualification"),
+    Path("artifacts/vnext/zero_ai_release"),
     Path("evidence/request_attempts"),
     Path("outputs/publication_fault_receipts"),
     Path("outputs/publications"),
     Path("outputs/publication_switch_intents"),
     Path("outputs/publication_switch_receipts"),
+    Path("outputs/zero_ai_release_receipts"),
     Path("outputs/vnext_cutover_audits"),
 )
 RECORDED_GATE_ARTIFACTS = (
@@ -803,7 +805,7 @@ def external_blockers(*, repo_root: Path) -> List[Dict[str, str]]:
     """
     blockers = []
     requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements/ai_first_v3_3_1"
+        snapshot_dir=repo_root / "requirements/issue_15_v1"
     )
     if "D-01" in requirement["pending_decision_ids"]:
         blockers.append(

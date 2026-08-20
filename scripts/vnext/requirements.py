@@ -43,6 +43,13 @@ ISSUE_15_SNAPSHOT_FILES = {
     "source_strategy": "source_strategy_baseline_receipt.json",
     "transfer": "transfer_manifest.json",
 }
+ISSUE_15_RUNTIME_AUTHORITY_FILES = {
+    "catalog/deterministic_metrics.json",
+    "catalog/event_routes.json",
+    "catalog/zero_ai_public_projection.json",
+    "config/provider_model_runtime.json",
+    "config/source_strategy_registry.json",
+}
 ISSUE_15_EFFECTIVE_DECISION_IDS = {
     "D-01",
     "D-03",
@@ -62,6 +69,20 @@ ISSUE_15_EFFECTIVE_DECISION_IDS = {
     "D-36",
     "D-37",
     "D-38",
+}
+ISSUE_15_POST_FREEZE_DECISION_EVIDENCE = (
+    "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535"
+)
+ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
+    "D-26": (
+        "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
+    ),
+    "D-35": (
+        "sha256:6e966a51833c5f1d4fd25e5b8520dfb46414a64e4b868ce4d8181f2b8ac1de04"
+    ),
+    "D-36": (
+        "sha256:468b7ef6528f4d76de56a71bcba4c913e47e858eefdba55129554ddaf845af1e"
+    ),
 }
 ISSUE_15_BASE_PIPELINE_SHA256 = (
     "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438"
@@ -1068,6 +1089,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         "repository_tree",
         "requirement_id",
         "root_business_artifacts",
+        "runtime_authority_files",
         "schema_version",
         "semantic_runtime_versions",
         "semantic_runtime_versions_hash",
@@ -1113,6 +1135,33 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         ):
             raise RequirementError(
                 "Issue #15 snapshot file bytes differ: {}".format(relative)
+            )
+
+    repository_root = snapshot_dir.parents[1]
+    runtime_bindings = baseline["runtime_authority_files"]
+    if (
+        not isinstance(runtime_bindings, dict)
+        or set(runtime_bindings) != ISSUE_15_RUNTIME_AUTHORITY_FILES
+    ):
+        raise RequirementError("Issue #15 runtime authority file set differs")
+    for relative in sorted(ISSUE_15_RUNTIME_AUTHORITY_FILES):
+        binding = runtime_bindings[relative]
+        if not isinstance(binding, dict):
+            raise RequirementError("Issue #15 runtime authority binding is invalid")
+        _require_exact_fields(
+            value=binding,
+            fields={"sha256", "size"},
+            label="Issue #15 runtime authority binding",
+        )
+        path = _bound_repository_file(
+            repository_root=repository_root, relative=relative,
+        )
+        if (
+            binding["sha256"] != sha256_file(path=path)
+            or binding["size"] != path.stat().st_size
+        ):
+            raise RequirementError(
+                "Issue #15 runtime authority bytes differ: {}".format(relative)
             )
 
     parent_dir = snapshot_dir.parent / PARENT_REQUIREMENT_ID
@@ -1173,20 +1222,64 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-26"]) != 2
+        or len(chains["D-26"]) != 3
+        or len(chains["D-35"]) != 2
+        or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
-        or decisions["D-26"]["supersedes_decision_id"]
+        or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
+        or decisions["D-26"]["supersedes_decision_id"]
+        != _decision_record_hash(decision=chains["D-26"][1])
+        or decisions["D-35"]["supersedes_decision_id"]
+        != _decision_record_hash(decision=chains["D-35"][0])
+        or decisions["D-36"]["supersedes_decision_id"]
+        != _decision_record_hash(decision=chains["D-36"][0])
     ):
         raise RequirementError("Issue #15 Decision tip binding differs")
     expected_d01_choice = dict(parent["effective_decisions"]["D-01"]["choice"])
     expected_d01_choice["retry_count"] = 0
     d26_choice = decisions["D-26"]["choice"]
+    d35_choice = decisions["D-35"]["choice"]
+    d36_choice = decisions["D-36"]["choice"]
+    effective_tip_hashes = {
+        decision_id: _decision_record_hash(decision=decisions[decision_id])
+        for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+    }
     if (
         decisions["D-01"]["choice"] != expected_d01_choice
         or "freeze_replay" in d26_choice["prohibited_required_test_classes"]
         or not d26_choice["required_short_deterministic_invariants"]
+        or "budget_preflight_provider_calls_zero"
+        in d26_choice["required_short_deterministic_invariants"]
+        or effective_tip_hashes != ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+        or any(
+            decisions[decision_id]["evidence"]
+            != ISSUE_15_POST_FREEZE_DECISION_EVIDENCE
+            for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+        )
+        or "BUDGET_EXCEEDED" in d35_choice["terminal_classes"]
+        or d35_choice["http_402_automatic_retries"] != 0
+        or not d35_choice["http_402_stops_execution"]
+        or not d35_choice["http_402_stops_batch"]
+        or d35_choice["monetary_budget_terminal_classes"] != []
+        or d35_choice["non_monetary_safety_terminal_classes"]
+        != ["PAYLOAD_LIMIT", "CONTEXT_LIMIT", "RESOURCE_LIMIT"]
+        or d35_choice["resource_limit_is_monetary_budget_gate"]
+        or d36_choice["repository_monetary_budget_enforcement"] != "DISABLED"
+        or d36_choice["spending_authority"] != "EXTERNAL_API_ACCOUNT_BALANCE"
+        or d36_choice["per_call_monetary_hard_cap_exists"]
+        or d36_choice["batch_monetary_hard_cap_exists"]
+        or d36_choice["monetary_budget_preflight"]
+        or d36_choice["provider_usage_observability_blocking"]
+        or d36_choice["estimated_or_actual_cost_may_block_provider_call"]
+        or d36_choice["forbidden_monetary_budget_fields"]
+        != [
+            "owner_absolute_total_cap",
+            "owner_absolute_per_request_cap",
+            "remaining_owner_cap",
+            "maximum_authorized_cost",
+        ]
     ):
         raise RequirementError("Issue #15 superseding Decision content differs")
 
@@ -1239,13 +1332,26 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     ):
         raise RequirementError("Issue #15 foundation evidence differs")
     _validate_foundation_receipt_bindings(
-        foundation=foundation, repository_root=snapshot_dir.parents[1],
+        foundation=foundation, repository_root=repository_root,
     )
 
     hashes = {
         "baseline_sha256": sha256_file(path=paths["baseline"]),
         "contract_sha256": contract_sha256,
         "decision_register_sha256": sha256_file(path=paths["decisions"]),
+        "event_route_catalog_sha256": sha256_file(
+            path=repository_root / "catalog" / "event_routes.json"
+        ),
+        "provider_model_runtime_sha256": sha256_file(
+            path=repository_root / "config" / "provider_model_runtime.json"
+        ),
+        "public_projection_catalog_sha256": sha256_file(
+            path=(
+                repository_root
+                / "catalog"
+                / "zero_ai_public_projection.json"
+            )
+        ),
         "foundation_verification_receipt_sha256": sha256_file(
             path=paths["foundation_verification"]
         ),
@@ -1255,6 +1361,9 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         ),
         "parent_requirement_closure_hash": parent["requirement_closure_hash"],
         "semantic_runtime_versions_hash": content_hash(value=SEMANTIC_VERSIONS),
+        "source_strategy_registry_sha256": sha256_file(
+            path=repository_root / "config" / "source_strategy_registry.json"
+        ),
         "source_strategy_baseline_receipt_sha256": sha256_file(
             path=paths["source_strategy"]
         ),

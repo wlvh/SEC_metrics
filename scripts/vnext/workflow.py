@@ -13,6 +13,8 @@ from pathlib import Path
 from typing import Callable, Dict, Mapping, Optional, Sequence
 
 from .ai_adapter import AIAdapter, run_ai_attempt
+from .ai_adapter import build_invocation_acceptance_context
+from .ai_adapter import validate_workflow_acceptance_binding
 from .ai_adapter import validate_adapter_repository_authority
 from .batch_workflow import BatchWorkflowError
 from .batch_workflow import validate_request_attempt_binding
@@ -615,10 +617,21 @@ def _create_review_run_with_traits(
         if adapter_mode == "LIVE"
         else prepared_request
     )
+    reader_payload_body = strict_json_loads(
+        text=prepared_request.request_bytes.decode("utf-8")
+    )
+    acceptance_context = build_invocation_acceptance_context(
+        compiled_spec=compiled_spec,
+        derived_asset=derived_asset,
+        reader_manifest=reader_manifest,
+        reader_payload_body=reader_payload_body,
+        source_references=[source_reference],
+    )
 
     response, _raw_response, attempt, attempt_payloads = run_ai_attempt(
         adapter=adapter,
         prepared_request=attempt_request,
+        acceptance_context=acceptance_context,
         clock=clock,
     )
     write_attempt_payloads(
@@ -642,17 +655,22 @@ def _create_review_run_with_traits(
     )
     if candidate["disclosure_group"] != semantic["disclosure_group"]:
         raise WorkflowError("Reader disclosure group differs from Spec")
-    append_run_record(run_dir=run_dir, record=candidate)
     evidence = check_evidence(
         candidate=candidate,
         derived_asset=derived_asset,
         reader_manifest=reader_manifest,
-        reader_payload_body=strict_json_loads(
-            text=prepared_request.request_bytes.decode("utf-8")
-        ),
+        reader_payload_body=reader_payload_body,
         source_references=[source_reference],
         identity_constraints=semantic["identity_constraints"],
     )
+    validate_workflow_acceptance_binding(
+        adapter=adapter,
+        acceptance_receipt=attempt_payloads.acceptance_receipt,
+        context=acceptance_context,
+        candidate=candidate,
+        evidence=evidence,
+    )
+    append_run_record(run_dir=run_dir, record=candidate)
     append_run_record(run_dir=run_dir, record=evidence)
     if evidence["status"] != "PASS":
         return {

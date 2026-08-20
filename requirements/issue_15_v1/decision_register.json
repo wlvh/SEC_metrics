@@ -498,6 +498,123 @@
       "approved_at_utc": "2026-08-19T04:02:38Z",
       "supersedes_decision_id": null,
       "evidence": "CONTRACT.md#9-复杂度门禁d-38"
+    },
+    {
+      "decision_id": "D-36",
+      "status": "APPROVED",
+      "choice": {
+        "repository_monetary_budget_enforcement": "DISABLED",
+        "spending_authority": "EXTERNAL_API_ACCOUNT_BALANCE",
+        "per_call_monetary_hard_cap_exists": false,
+        "batch_monetary_hard_cap_exists": false,
+        "forbidden_monetary_budget_fields": [
+          "owner_absolute_total_cap",
+          "owner_absolute_per_request_cap",
+          "remaining_owner_cap",
+          "maximum_authorized_cost"
+        ],
+        "monetary_budget_preflight": false,
+        "provider_usage_observability_fields": [
+          "pricing_snapshot",
+          "estimated_cost",
+          "actual_cost",
+          "input_tokens",
+          "output_tokens",
+          "provider_usage",
+          "cache_usage"
+        ],
+        "provider_usage_observability_blocking": false,
+        "estimated_or_actual_cost_may_block_provider_call": false,
+        "provider_usage_audit_required": true
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-19T10:01:11Z",
+      "supersedes_decision_id": "sha256:62702c731a03962514b6616f41e66f4d0fca110c7ccbb64af3a3d17a40176498",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535"
+    },
+    {
+      "decision_id": "D-35",
+      "status": "APPROVED",
+      "choice": {
+        "retry_owner": "ORCHESTRATOR",
+        "terminal_classes": [
+          "HTTP_400",
+          "HTTP_401",
+          "HTTP_402",
+          "HTTP_422",
+          "SCHEMA_VIOLATION",
+          "EVIDENCE_FAILURE",
+          "PAYLOAD_LIMIT",
+          "CONTEXT_LIMIT",
+          "RESOURCE_LIMIT"
+        ],
+        "retryable_classes": [
+          "HTTP_429",
+          "TIMEOUT",
+          "RECOVERABLE_5XX"
+        ],
+        "maximum_retries": 1,
+        "terminal_stops_execution": true,
+        "terminal_stops_batch": true,
+        "automatic_fallback": false,
+        "abandoned_before_egress_recoverable": true,
+        "unknown_remote_outcome_automatic_retry": false,
+        "http_402_automatic_retries": 0,
+        "http_402_stops_execution": true,
+        "http_402_stops_batch": true,
+        "monetary_budget_terminal_classes": [],
+        "non_monetary_safety_terminal_classes": [
+          "PAYLOAD_LIMIT",
+          "CONTEXT_LIMIT",
+          "RESOURCE_LIMIT"
+        ],
+        "resource_limit_is_monetary_budget_gate": false
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-19T10:01:11Z",
+      "supersedes_decision_id": "sha256:fd53613316e20a2944940eef67e7b2dce6c236851e024944854d48955e19d2f0",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535"
+    },
+    {
+      "decision_id": "D-26",
+      "status": "APPROVED",
+      "choice": {
+        "test_execution_policy": "ISSUE_15_FAST_LOCAL_DIRECT_INVARIANTS",
+        "applies_to": [
+          "development",
+          "pull_request",
+          "final_acceptance"
+        ],
+        "required_fast_command": "python3 tools/run_fast_tests.py --jobs 4",
+        "per_case_timeout_seconds": 30,
+        "recorded_gate_timeout_seconds": 60,
+        "prohibited_required_test_classes": [
+          "broad_repository_regression",
+          "isolated_repository_or_worktree",
+          "long_running_serial_suite"
+        ],
+        "required_short_deterministic_invariants": [
+          "semantic_freeze_rejects_mutation",
+          "frozen_run_replay_network_calls_zero",
+          "rollback_restore_network_calls_zero",
+          "single_flight_reservation_is_mutually_exclusive",
+          "unknown_remote_outcome_is_not_retried",
+          "http_402_stops_batch_after_one_call",
+          "compact_table_round_trip_exact",
+          "public_key_set_union_exact",
+          "new_public_keys_are_structural_na",
+          "structured_only_provider_calls_zero",
+          "closed_world_incomplete_coverage_withheld",
+          "unknown_scope_alias_requires_human",
+          "claim_chain_immutable_readback_exact"
+        ],
+        "evidence_tier": "FAST_LOCAL_ONLY",
+        "may_claim_ci_pass": false
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-19T10:01:11Z",
+      "supersedes_decision_id": "sha256:9dc7cb36a0893f80ac84c385a7cf1723516529c442442a1915c50bb1973133df",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535"
     }
   ],
   "pending_decisions": [

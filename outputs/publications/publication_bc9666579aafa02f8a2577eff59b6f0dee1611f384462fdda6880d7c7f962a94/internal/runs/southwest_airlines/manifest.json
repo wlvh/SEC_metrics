@@ -1,0 +1,50 @@
+{
+  "record_type": "RUN",
+  "status": "FROZEN",
+  "records_file_hash": "d25ea268edccd6a918a8ebead6ca062bd61d3a8e95722b186face497c032b009",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "44ed49cb403c5e6f4db616e0697ffa2199da770bdb16b7e0e0aba1e83ce26482",
+  "content_manifest_hash": "sha256:f24c5352001eee8e7d6c20ddd6f5c3e3bb23a50b9897d4ed3ddff15a3c7e177a",
+  "audit_manifest_hash": "sha256:38c06f36a68e5ca771048080e5c0386bc58a7f142531d964eb72a7c0d903572d",
+  "run_id": "run:cutover:a9b797eea425c1db44542b79363faa03ac07d7b87762bd4a9eaac3a3a70cb7f5",
+  "company_id": "southwest_airlines",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+      "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+      "company_id": "southwest_airlines",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+      "accession": "0000092380-26-000004",
+      "document_name": "CIK0000092380.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/B01_revenue.md": "5942066d0fd57870d437a6619de72393532b10d48d4098f10cd39307622e3520",
+    "catalog/metrics/B03_ebitda_margin.md": "2705cc20f3e7dbd6a5cbb46bb051b2a16e3037d391856878c3ea74b4441a3608",
+    "catalog/metrics/B10_occupancy.md": "bb98f1812e795ced44fc805e67d75af479f4df0c095961733808b9d98646a570",
+    "catalog/metrics/B11_revpar.md": "9206d07414e8d2f6ec45b1b4df8ea202ec3acf5bbecbbbb95bdcc0198077cc3e"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

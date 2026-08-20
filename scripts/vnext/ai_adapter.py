@@ -18,14 +18,23 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 from types import MappingProxyType
-from typing import Callable, Dict, Mapping, Optional, Tuple
+from typing import Callable, Dict, Mapping, Optional, Sequence, Tuple
 from urllib.error import HTTPError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from .canonical import CanonicalError, canonical_json_bytes, content_hash
 from .canonical import sha256_bytes
 from .canonical import strict_json_loads
+from .invocation_control import EvidenceFailureError
+from .invocation_control import SchemaViolationError
+from .invocation_control import UnknownRemoteOutcomeError
+from .invocation_control import build_ai_invocation_plan
+from .invocation_control import execute_invocation, execution_identity
+from .invocation_control import load_successful_response
+from .evidence import check_evidence
 from .reader import validate_reader_output
+from .provider_runtime import estimate_context_tokens
+from .provider_runtime import load_provider_runtime_authority
 from .reader_input import live_reader_authority_fields
 from .reader_input import PreparedReaderRequest
 from .reader_input import READER_SYSTEM_CONTRACT
@@ -43,6 +52,21 @@ _DEEPSEEK_ENDPOINT_HOST = "api.deepseek.com"
 _DEEPSEEK_CHAT_COMPLETIONS_URL = (
     "https://api.deepseek.com/chat/completions"
 )
+_ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION = "reader-evidence-acceptance-v1"
+_ACCEPTANCE_VALIDATOR_SEMANTIC_HASH = content_hash(
+    value={
+        "semantic_version": _ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION,
+        "ordered_checks": [
+            "STRICT_UTF8_STRUCTURED_SCHEMA",
+            "REQUIRED_ROLES_EXACT_SET",
+            "SOURCE_REFERENCE_IDS_EXACT_BINDING",
+            "DERIVED_ASSET_IDS_EXACT_BINDING",
+            "DISCLOSURE_TASK_CONTRACT_EXACT_BINDING",
+            "CANDIDATE_CONTENT_IDENTITY",
+            "MECHANICAL_EVIDENCE_PASS",
+        ],
+    }
+)
 
 
 class _NoRedirectHandler(HTTPRedirectHandler):
@@ -57,6 +81,29 @@ class _NoRedirectHandler(HTTPRedirectHandler):
 
 _OPENAI_OPENER = build_opener(_NoRedirectHandler())
 _DEEPSEEK_OPENER = build_opener(_NoRedirectHandler())
+_RESERVATION_OWNER_EGRESS_CAPABILITY = object()
+
+
+def _open_provider_request(
+    *, opener: object, request: Request, timeout_seconds: int,
+    egress_capability: object,
+) -> object:
+    """Open the sole provider socket behind reservation-owner capability.
+
+    Args:
+        opener: Repository-owned no-redirect provider opener.
+        request: Fixed-host provider request.
+        timeout_seconds: Effective D-01 timeout.
+        egress_capability: Private token issued only inside controller send.
+
+    Returns:
+        Provider response context manager from the approved opener.
+    """
+    if egress_capability is not _RESERVATION_OWNER_EGRESS_CAPABILITY:
+        raise AIAdapterError("RESERVATION_OWNER_EGRESS_REQUIRED")
+    if opener is not _OPENAI_OPENER and opener is not _DEEPSEEK_OPENER:
+        raise AIAdapterError("Provider opener is not repository-owned")
+    return opener.open(fullurl=request, timeout=timeout_seconds)
 
 
 class AIAdapterError(RuntimeError):
@@ -336,6 +383,7 @@ class TransportResult:
     raw_response_bytes: Optional[bytes] = None
     outbound_request_bytes: Optional[bytes] = None
     output_schema_bytes: Optional[bytes] = None
+    acceptance_receipt: Optional[Mapping[str, object]] = None
 
     def __post_init__(self) -> None:
         """Reject result types that cannot form an immutable attempt."""
@@ -352,6 +400,10 @@ class TransportResult:
         ):
             if value is not None and not isinstance(value, bytes):
                 raise AIAdapterError("Transport audit payload is invalid")
+        if self.acceptance_receipt is not None and not isinstance(
+            self.acceptance_receipt, Mapping
+        ):
+            raise AIAdapterError("Transport acceptance receipt is invalid")
 
 
 @dataclass(frozen=True)
@@ -364,6 +416,7 @@ class AttemptPayloads:
     output_schema_bytes: bytes
     assistant_output_bytes: Optional[bytes]
     raw_response_bytes: Optional[bytes]
+    acceptance_receipt: Optional[Mapping[str, object]] = None
 
     def __post_init__(self) -> None:
         """Reject any payload shape that cannot be persisted exactly."""
@@ -381,6 +434,105 @@ class AttemptPayloads:
         ):
             if value is not None and not isinstance(value, bytes):
                 raise AIAdapterError("Optional attempt payload is invalid")
+        if self.acceptance_receipt is not None and not isinstance(
+            self.acceptance_receipt, Mapping
+        ):
+            raise AIAdapterError("Attempt acceptance receipt is invalid")
+
+
+@dataclass(frozen=True)
+class InvocationAcceptanceContext:
+    """Carry the exact mechanical inputs needed before reusable success.
+
+    Attributes:
+        compiled_spec: Repository-compiled disclosure Spec closure.
+        derived_asset: Complete table-grid used by the Reader.
+        reader_manifest: Exact ReaderInputManifest.
+        reader_payload_body: Exact decoded Reader request body.
+        source_references: Exact ordered source identities.
+    """
+
+    compiled_spec: Mapping[str, object]
+    derived_asset: Mapping[str, object]
+    reader_manifest: Mapping[str, object]
+    reader_payload_body: Mapping[str, object]
+    source_references: Tuple[Mapping[str, object], ...]
+
+    def __post_init__(self) -> None:
+        """Reject an incomplete or internally divergent acceptance graph."""
+        if (
+            not isinstance(self.compiled_spec, Mapping)
+            or "compiled" not in self.compiled_spec
+            or "spec_semantic_hash" not in self.compiled_spec
+            or not isinstance(self.reader_payload_body, Mapping)
+            or not self.source_references
+        ):
+            raise AIAdapterError("Invocation acceptance context is incomplete")
+        validate_record(record=self.derived_asset)
+        validate_record(record=self.reader_manifest)
+        for source_reference in self.source_references:
+            validate_record(record=source_reference)
+        if (
+            self.reader_manifest["derived_asset_id"]
+            != self.derived_asset["derived_asset_id"]
+            or list(self.reader_manifest["source_reference_ids"])
+            != [
+                source_reference["source_reference_id"]
+                for source_reference in self.source_references
+            ]
+        ):
+            raise AIAdapterError(
+                "Invocation acceptance source binding differs"
+            )
+
+
+def build_invocation_acceptance_context(
+    *, compiled_spec: Mapping[str, object],
+    derived_asset: Mapping[str, object],
+    reader_manifest: Mapping[str, object],
+    reader_payload_body: Mapping[str, object],
+    source_references: Sequence[Mapping[str, object]],
+) -> InvocationAcceptanceContext:
+    """Build one explicit full-Evidence validation input contract.
+
+    Args:
+        compiled_spec: Repository-compiled disclosure Spec closure.
+        derived_asset: Complete table-grid used by the Reader.
+        reader_manifest: Exact ReaderInputManifest.
+        reader_payload_body: Exact decoded Reader request body.
+        source_references: Ordered SourceReferences bound to the manifest.
+
+    Returns:
+        Validated immutable acceptance context for the controlled adapter.
+    """
+    return InvocationAcceptanceContext(
+        compiled_spec=dict(compiled_spec),
+        derived_asset=dict(derived_asset),
+        reader_manifest=dict(reader_manifest),
+        reader_payload_body=dict(reader_payload_body),
+        source_references=tuple(dict(value) for value in source_references),
+    )
+
+
+@dataclass(frozen=True)
+class InvocationControllerContext:
+    """Bind one approved adapter to release, workspace, and owner identity."""
+
+    release_input_plan_id: str
+    workspace_dir: Path
+    owner_token: str
+
+    def __post_init__(self) -> None:
+        """Reject incomplete controller coordinates before source replay."""
+        if re.fullmatch(
+            pattern=r"sha256:[0-9a-f]{64}",
+            string=self.release_input_plan_id,
+        ) is None:
+            raise AIAdapterError("Release input plan identity is invalid")
+        if not isinstance(self.workspace_dir, Path) or self.workspace_dir.is_symlink():
+            raise AIAdapterError("Invocation workspace is unsafe")
+        if not isinstance(self.owner_token, str) or not self.owner_token:
+            raise AIAdapterError("Invocation owner token is invalid")
 
 
 class TransportAttemptError(AIAdapterError):
@@ -688,108 +840,17 @@ def build_provider_request_body(
 def capture_deepseek_reader_response(
     *, prepared_request: PreparedReaderRequest,
 ) -> TransportResult:
-    """Capture one strict Reader response for a real qualification fixture.
-
-    This controlled construction path is intentionally separate from live Run
-    execution: it validates the complete local Reader request, uses the same
-    effective D-01 policy/envelope/endpoint as production, and returns exact
-    provider bytes for a later socket-zero fixture replay.  It never creates a
-    Run, mutates a publication, or accepts caller-selected provider controls.
+    """Fail closed because PR-2 does not authorize AI qualification egress.
 
     Args:
         prepared_request: Factory-built complete Reader request from real SEC
             filing bytes and the repository disclosure Spec.
 
-    Returns:
-        Exact assistant output, provider envelope, and transport observation.
-
     Raises:
-        AIAdapterError: On an invalid request, policy, credential, provider
-            result, or network failure.  No secret value is included.
+        AIAdapterError: Always, before credential or provider construction.
     """
-    prepared = _validate_prepared_request(
-        prepared_request=prepared_request,
-    )
-    policy, _closure_hash = _load_transport_policy()
-    if policy.provider != "deepseek":
-        raise AIAdapterError(
-            "Qualification fixture capture requires the effective DeepSeek "
-            "D-01 policy"
-        )
-    outbound, schema = build_deepseek_chat_completions_body(
-        policy=policy, reader_request_bytes=prepared["request_bytes"],
-    )
-    if len(outbound) > policy.maximum_payload_bytes:
-        raise AIAdapterError("DeepSeek request exceeds D-01 maximum payload")
-    api_key = (
-        os.environ[_DEEPSEEK_API_KEY_ENV]
-        if _DEEPSEEK_API_KEY_ENV in os.environ
-        else ""
-    )
-    if not isinstance(api_key, str) or not api_key.strip():
-        raise AIAdapterError("DEEPSEEK_API_KEY_REQUIRED")
-    request = Request(
-        url=_DEEPSEEK_CHAT_COMPLETIONS_URL,
-        data=outbound,
-        headers={
-            "Authorization": "Bearer " + api_key.strip(),
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    raw = b""
-    provider_request_id = ""
-    try:
-        with _DEEPSEEK_OPENER.open(
-            fullurl=request, timeout=policy.timeout_seconds,
-        ) as response:
-            raw = response.read()
-            provider_request_id = str(
-                response.headers["x-request-id"]
-                if "x-request-id" in response.headers
-                else ""
-            )
-    except HTTPError as error:
-        raw = error.read()
-        detail = "provider rejected the request"
-        try:
-            error_payload = strict_json_loads(text=raw.decode("utf-8"))
-            if (
-                isinstance(error_payload, dict)
-                and "error" in error_payload
-                and isinstance(error_payload["error"], dict)
-                and "message" in error_payload["error"]
-                and isinstance(error_payload["error"]["message"], str)
-                and error_payload["error"]["message"]
-            ):
-                detail = error_payload["error"]["message"][:200]
-        except (CanonicalError, UnicodeDecodeError, ValueError):
-            detail = "provider returned an unreadable error body"
-        raise AIAdapterError(
-            "DEEPSEEK_RATE_LIMIT: " + detail
-            if error.code == 429
-            else "DEEPSEEK_HTTP_ERROR: " + detail
-        ) from error
-    except (OSError, TimeoutError, socket.timeout) as error:
-        raise AIAdapterError("DEEPSEEK_TRANSPORT_ERROR") from error
-    response_id, returned_model, output_text = _deepseek_chat_output_text(
-        raw_response_bytes=raw,
-    )
-    if returned_model != policy.model:
-        raise AIAdapterError("DEEPSEEK_MODEL_IDENTITY_MISMATCH")
-    return TransportResult(
-        response_bytes=output_text.encode("utf-8"),
-        provider_request_id=provider_request_id or response_id,
-        observation=_deepseek_observation(
-            policy=policy,
-            egress_attempted=True,
-            model_returned=returned_model,
-            request_body_bytes=len(outbound),
-        ),
-        raw_response_bytes=raw,
-        outbound_request_bytes=outbound,
-        output_schema_bytes=schema,
-    )
+    del prepared_request
+    raise AIAdapterError("AI_QUALIFICATION_EGRESS_NOT_ENABLED")
 
 
 def _openai_observation(
@@ -990,12 +1051,16 @@ class _OpenAIResponsesTransport:
         build_openai_responses_body(policy=policy, reader_request_bytes=b"{}")
         self.policy = policy
 
-    def complete(self, *, prepared_request: object) -> TransportResult:
+    def complete(
+        self, *, prepared_request: object,
+        egress_capability: object = None,
+    ) -> TransportResult:
         """Rebuild live SEC bytes, then execute one auditable request.
 
         Args:
             prepared_request: Factory-produced live source coordinates. Raw
                 caller bytes are never accepted by the network boundary.
+            egress_capability: Reservation-owner token; callers cannot mint it.
 
         Returns:
             Exact provider result and transport observation.
@@ -1056,9 +1121,11 @@ class _OpenAIResponsesTransport:
         raw = b""
         request_id = ""
         try:
-            with _OPENAI_OPENER.open(
-                fullurl=request,
-                timeout=self.policy.timeout_seconds,
+            with _open_provider_request(
+                opener=_OPENAI_OPENER,
+                request=request,
+                timeout_seconds=self.policy.timeout_seconds,
+                egress_capability=egress_capability,
             ) as response:
                 raw = response.read()
                 request_id = str(
@@ -1180,11 +1247,15 @@ class _DeepSeekChatCompletionsTransport:
         )
         self.policy = policy
 
-    def complete(self, *, prepared_request: object) -> TransportResult:
+    def complete(
+        self, *, prepared_request: object,
+        egress_capability: object = None,
+    ) -> TransportResult:
         """Rebuild live SEC bytes, then execute one auditable DeepSeek request.
 
         Args:
             prepared_request: Factory-produced live source coordinates.
+            egress_capability: Reservation-owner token; callers cannot mint it.
 
         Returns:
             Exact provider result and transport observation.
@@ -1244,9 +1315,11 @@ class _DeepSeekChatCompletionsTransport:
         raw = b""
         request_id = ""
         try:
-            with _DEEPSEEK_OPENER.open(
-                fullurl=request,
-                timeout=self.policy.timeout_seconds,
+            with _open_provider_request(
+                opener=_DEEPSEEK_OPENER,
+                request=request,
+                timeout_seconds=self.policy.timeout_seconds,
+                egress_capability=egress_capability,
             ) as response:
                 raw = response.read()
                 request_id = str(
@@ -1270,11 +1343,14 @@ class _DeepSeekChatCompletionsTransport:
                 model_returned="none",
                 request_body_bytes=len(outbound),
             )
-            code = (
-                "DEEPSEEK_RATE_LIMIT"
-                if error.code == 429
-                else "DEEPSEEK_HTTP_ERROR"
-            )
+            if error.code in {400, 401, 402, 422}:
+                code = "HTTP_{}".format(error.code)
+            elif error.code == 429:
+                code = "HTTP_429"
+            elif 500 <= error.code <= 599:
+                code = "RECOVERABLE_5XX"
+            else:
+                code = "DEEPSEEK_HTTP_ERROR"
             raise TransportAttemptError(
                 code,
                 observation=observation,
@@ -1292,9 +1368,9 @@ class _DeepSeekChatCompletionsTransport:
                 request_body_bytes=len(outbound),
             )
             code = (
-                "DEEPSEEK_TIMEOUT"
+                "TIMEOUT"
                 if isinstance(error, (TimeoutError, socket.timeout))
-                else "DEEPSEEK_TRANSPORT_ERROR"
+                else "UNKNOWN_REMOTE_OUTCOME"
             )
             raise TransportAttemptError(
                 code,
@@ -1545,9 +1621,9 @@ def _load_transport_policy() -> Tuple[TransportPolicy, str]:
     repo_root = _REPOSITORY_ROOT
     if not isinstance(repo_root, Path) or repo_root.is_symlink():
         raise AIAdapterError("D-01 repository root is unsafe")
-    snapshot_dir = repo_root / "requirements" / "ai_first_v3_3_1"
+    snapshot_dir = repo_root / "requirements" / "issue_15_v1"
     current = repo_root
-    for part in ("requirements", "ai_first_v3_3_1"):
+    for part in ("requirements", "issue_15_v1"):
         current /= part
         if current.is_symlink():
             raise AIAdapterError("D-01 Requirement path is unsafe")
@@ -1677,11 +1753,16 @@ def _build_repository_transport(*, policy: TransportPolicy) -> object:
 class _ApprovedTransportAdapter(AIAdapter):
     """Resolve a fresh repository transport for each approved attempt."""
 
-    def __init__(self, *, authority: object) -> None:
+    def __init__(
+        self, *, authority: object,
+        invocation_context: Optional[InvocationControllerContext],
+    ) -> None:
         """Compile D-01 and verify its repository factory is available.
 
         Args:
             authority: Module-owned construction token.
+            invocation_context: Production WB-3 coordinates or ``None`` for
+                source-bound transport unit validation.
 
         Raises:
             AIAdapterError: When D-01 is unavailable or its provider has no
@@ -1698,6 +1779,7 @@ class _ApprovedTransportAdapter(AIAdapter):
         self.endpoint_host = policy.endpoint_host
         self.requirement_closure_hash = requirement_closure_hash
         self.policy = policy
+        self.invocation_context = invocation_context
 
     def complete(self, *, request_bytes: bytes) -> TransportResult:
         """Reject raw caller bytes at the public remote adapter surface.
@@ -1714,13 +1796,47 @@ class _ApprovedTransportAdapter(AIAdapter):
         )
 
     def _complete_authorized(
-        self, *, prepared_request: object
+        self, *, prepared_request: object,
+        authorized_at_utc: Optional[str] = None,
+        invocation_clock: Optional[Callable[[], str]] = None,
+        acceptance_context: Optional[InvocationAcceptanceContext] = None,
+    ) -> TransportResult:
+        """Route production egress through WB-3 after live source replay.
+
+        Args:
+            prepared_request: Factory-produced live source coordinates.
+            authorized_at_utc: Execution authorization time from the attempt.
+            invocation_clock: UTC text clock for controller receipts.
+            acceptance_context: Exact Candidate/Evidence validation inputs.
+
+        Returns:
+            Auditable provider result or exact successful response reuse.
+        """
+        if self.invocation_context is None:
+            raise AIAdapterError("WB3_EXECUTION_CONTEXT_REQUIRED")
+        if (
+            not isinstance(authorized_at_utc, str)
+            or not authorized_at_utc
+            or invocation_clock is None
+        ):
+            raise AIAdapterError("Invocation controller context is incomplete")
+        return _execute_controlled_transport(
+            adapter=self,
+            prepared_request=prepared_request,
+            authorized_at_utc=authorized_at_utc,
+            invocation_clock=invocation_clock,
+            acceptance_context=acceptance_context,
+        )
+
+    def _complete_repository_transport(
+        self, *, prepared_request: object, egress_capability: object,
     ) -> TransportResult:
         """Replay live SEC authority and invoke its approved provider.
 
         Args:
             prepared_request: Factory-produced live source coordinates. This
                 method never accepts caller-selected outbound bytes.
+            egress_capability: Private reservation-owner capability.
 
         Returns:
             Raw response and actual transport facts.
@@ -1730,6 +1846,8 @@ class _ApprovedTransportAdapter(AIAdapter):
                 invoked transport lacking actual observation facts.
             TransportAttemptError: On an observed transport/policy failure.
         """
+        if egress_capability is not _RESERVATION_OWNER_EGRESS_CAPABILITY:
+            raise AIAdapterError("RESERVATION_OWNER_EGRESS_REQUIRED")
         rebuilt_request = _validate_live_prepared_request(
             prepared_request=prepared_request,
         )
@@ -1756,7 +1874,10 @@ class _ApprovedTransportAdapter(AIAdapter):
             )
         transport = _build_repository_transport(policy=current_policy)
         try:
-            result = transport.complete(prepared_request=prepared_request)
+            result = transport.complete(
+                prepared_request=prepared_request,
+                egress_capability=egress_capability,
+            )
         except TransportAttemptError:
             raise
         except (AIAdapterError, OSError, TimeoutError, ValueError) as error:
@@ -1805,13 +1926,484 @@ class _ApprovedTransportAdapter(AIAdapter):
         return result
 
 
-def build_approved_transport_adapter() -> AIAdapter:
-    """Build the only repository-authorized remote transport adapter.
+def _controller_usage(*, raw_response_bytes: Optional[bytes]) -> Dict[str, object]:
+    """Normalize provider token/cache fields for WB-3 attempt audit."""
+    usage = {}
+    if raw_response_bytes:
+        try:
+            payload = json.loads(raw_response_bytes.decode("utf-8"))
+            if isinstance(payload, dict) and isinstance(payload["usage"], dict):
+                usage = payload["usage"]
+        except (KeyError, UnicodeDecodeError, json.JSONDecodeError):
+            usage = {}
+
+    def count(*, names: Tuple[str, ...]) -> int:
+        """Return the first exact non-negative integer usage field."""
+        for name in names:
+            if name in usage and type(usage[name]) is int and usage[name] >= 0:
+                return int(usage[name])
+        return 0
+
+    details = (
+        usage["input_tokens_details"]
+        if "input_tokens_details" in usage
+        and isinstance(usage["input_tokens_details"], dict)
+        else {}
+    )
+    cache_hit = count(names=("prompt_cache_hit_tokens",))
+    if "cached_tokens" in details and type(details["cached_tokens"]) is int:
+        cache_hit = int(details["cached_tokens"])
+    input_tokens = count(names=("input_tokens", "prompt_tokens"))
+    cache_miss = count(names=("prompt_cache_miss_tokens",))
+    if not cache_miss and input_tokens >= cache_hit:
+        cache_miss = input_tokens - cache_hit
+    return {
+        "input_tokens": input_tokens,
+        "output_tokens": count(
+            names=("output_tokens", "completion_tokens"),
+        ),
+        "cache_hit_input_tokens": cache_hit,
+        "cache_miss_input_tokens": cache_miss,
+        "actual_cost": "0",
+    }
+
+
+def _controller_status_code(*, error_class: str) -> int:
+    """Map one repository transport error into effective D-35 status."""
+    if error_class.startswith("HTTP_") and error_class[5:].isdigit():
+        return int(error_class[5:])
+    if error_class == "RECOVERABLE_5XX":
+        return 500
+    return 0
+
+
+class _InvocationControllerTransport:
+    """Expose the repository socket only to the reservation owner."""
+
+    transport_kind = "REAL_MODEL_PROVIDER"
+
+    def __init__(
+        self, *, adapter: _ApprovedTransportAdapter,
+        prepared_request: object, outbound_request_bytes: bytes,
+    ) -> None:
+        """Bind one exact provider envelope to the live SEC request."""
+        self.adapter = adapter
+        self.prepared_request = prepared_request
+        self.outbound_request_bytes = outbound_request_bytes
+        self.last_result: Optional[TransportResult] = None
+        self.last_error: Optional[TransportAttemptError] = None
+
+    def send(
+        self, *, request_body: bytes, plan: Mapping[str, object],
+        execution_id: str, attempt_ordinal: int,
+    ) -> Dict[str, object]:
+        """Invoke the repository transport after controller reservation."""
+        if (
+            request_body != self.outbound_request_bytes
+            or sha256_bytes(content=request_body)
+            != plan["provider_request_body_sha256"]
+            or not execution_id
+            or attempt_ordinal not in {1, 2}
+        ):
+            raise AIAdapterError("Controlled provider request identity differs")
+        try:
+            result = self.adapter._complete_repository_transport(
+                prepared_request=self.prepared_request,
+                egress_capability=_RESERVATION_OWNER_EGRESS_CAPABILITY,
+            )
+            self.last_result = result
+            self.last_error = None
+            return {
+                "status_code": 200,
+                "error_class": "",
+                "response_body": result.response_bytes,
+                "provider_request_id": result.provider_request_id,
+                "usage": _controller_usage(
+                    raw_response_bytes=result.raw_response_bytes,
+                ),
+            }
+        except TransportAttemptError as error:
+            self.last_error = error
+            self.last_result = None
+            if error.error_class == "UNKNOWN_REMOTE_OUTCOME":
+                raise UnknownRemoteOutcomeError(str(error)) from error
+            response_body = (
+                error.raw_response_bytes
+                if error.raw_response_bytes is not None
+                else b""
+            )
+            return {
+                "status_code": _controller_status_code(
+                    error_class=error.error_class,
+                ),
+                "error_class": error.error_class,
+                "response_body": response_body,
+                "provider_request_id": error.provider_request_id,
+                "usage": _controller_usage(
+                    raw_response_bytes=error.raw_response_bytes,
+                ),
+            }
+
+
+def _controlled_response_validator(
+    *, response_body: bytes, prepared: Mapping[str, object],
+    execution_id: str,
+) -> None:
+    """Classify malformed provider output before execution success."""
+    try:
+        validate_reader_output(
+            response_text=response_body.decode("utf-8"),
+            attempt_id="attempt:" + execution_id.split(":", maxsplit=1)[1],
+            required_roles=prepared["task_contract"]["required_roles"],
+            source_reference_ids=prepared["manifest"][
+                "source_reference_ids"
+            ],
+            derived_asset_ids=[prepared["manifest"]["derived_asset_id"]],
+        )
+    except (UnicodeDecodeError, ValueError) as error:
+        raise SchemaViolationError("Reader response schema rejected") from error
+
+
+def _controlled_acceptance_validator(
+    *, response_body: bytes, prepared: Mapping[str, object],
+    execution_id: str, context: InvocationAcceptanceContext,
+) -> Dict[str, object]:
+    """Build Candidate and require real mechanical Evidence before success.
+
+    Args:
+        response_body: Exact structured provider response bytes.
+        prepared: Revalidated Reader request/task/manifest bindings.
+        execution_id: Controller execution identity used only for attempt
+            audit.
+        context: Exact source, DerivedAsset, Spec, and payload closure.
 
     Returns:
-        Exact private adapter compiled from effective approved D-01.
+        Content-addressable acceptance fields consumed by the controller.
     """
-    return _ApprovedTransportAdapter(authority=_ADAPTER_AUTHORITY)
+    if not isinstance(context, InvocationAcceptanceContext):
+        raise EvidenceFailureError("Reader acceptance context is absent")
+    task_contract_hash = "sha256:" + sha256_bytes(
+        content=prepared["task_contract_bytes"]
+    )
+    if (
+        dict(context.reader_manifest) != prepared["manifest"]
+        or context.reader_manifest["derived_asset_id"]
+        != context.derived_asset["derived_asset_id"]
+        or context.compiled_spec["spec_semantic_hash"]
+        != prepared["task_spec_semantic_hash"]
+        or context.reader_payload_body["task_contract"]
+        != prepared["task_contract"]
+        or canonical_json_bytes(value=dict(context.reader_payload_body))
+        != prepared["request_bytes"]
+    ):
+        raise EvidenceFailureError("Reader acceptance inputs differ")
+    try:
+        candidate = validate_reader_output(
+            response_text=response_body.decode("utf-8"),
+            attempt_id="attempt:" + execution_id.split(":", maxsplit=1)[1],
+            required_roles=prepared["task_contract"]["required_roles"],
+            source_reference_ids=prepared["manifest"][
+                "source_reference_ids"
+            ],
+            derived_asset_ids=[prepared["manifest"]["derived_asset_id"]],
+        )
+    except (UnicodeDecodeError, ValueError) as error:
+        raise EvidenceFailureError(
+            "Reader Candidate construction failed"
+        ) from error
+    if candidate["disclosure_group"] != prepared["task_contract"][
+        "disclosure_group"
+    ]:
+        raise EvidenceFailureError("Reader disclosure task contract differs")
+    evidence = check_evidence(
+        candidate=candidate,
+        derived_asset=context.derived_asset,
+        reader_manifest=context.reader_manifest,
+        reader_payload_body=context.reader_payload_body,
+        source_references=context.source_references,
+        identity_constraints=context.compiled_spec["compiled"][
+            "identity_constraints"
+        ],
+    )
+    if evidence["status"] != "PASS":
+        raise EvidenceFailureError(
+            "Mechanical Evidence rejected the Candidate"
+        )
+    return {
+        "reader_input_manifest_id": context.reader_manifest[
+            "reader_input_manifest_id"
+        ],
+        "derived_asset_id": context.derived_asset["derived_asset_id"],
+        "source_reference_ids": list(
+            context.reader_manifest["source_reference_ids"]
+        ),
+        "task_contract_hash": task_contract_hash,
+        "spec_semantic_hash": context.compiled_spec["spec_semantic_hash"],
+        "candidate_hash": candidate["candidate_hash"],
+        "candidate_record": candidate,
+        "evidence_check_id": evidence["evidence_check_id"],
+        "evidence_record": evidence,
+        "evidence_candidate_hash": evidence["candidate_hash"],
+        "evidence_status": evidence["status"],
+        "validator_semantic_version": (
+            _ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION
+        ),
+        "validator_semantic_hash": _ACCEPTANCE_VALIDATOR_SEMANTIC_HASH,
+    }
+
+
+def _failed_controlled_observation(
+    *, policy: TransportPolicy, outbound: bytes, egress_attempted: bool,
+) -> TransportObservation:
+    """Build observed controller failure facts when no in-process result exists."""
+    if not egress_attempted:
+        return _no_egress_policy_observation(
+            policy=policy, request_bytes=outbound,
+        )
+    return TransportObservation(
+        egress_attempted=True,
+        provider=policy.provider,
+        model=policy.model,
+        model_requested=policy.model,
+        model_returned="none",
+        api=policy.api,
+        store=False,
+        endpoint_host=policy.endpoint_host,
+        region=policy.region,
+        retention=policy.retention,
+        data_use=policy.data_use,
+        timeout_seconds=policy.timeout_seconds,
+        retry_count=1,
+        retries_performed=0,
+        maximum_payload_bytes=policy.maximum_payload_bytes,
+        filing_egress_policy=policy.filing_egress_policy,
+        request_body_bytes=len(outbound),
+    )
+
+
+def _execute_controlled_transport(
+    *, adapter: _ApprovedTransportAdapter, prepared_request: object,
+    authorized_at_utc: str, invocation_clock: Callable[[], str],
+    acceptance_context: Optional[InvocationAcceptanceContext],
+) -> TransportResult:
+    """Execute the exact live provider envelope through WB-3."""
+    context = adapter.invocation_context
+    if context is None:
+        raise AIAdapterError("Invocation controller context is absent")
+    if not isinstance(acceptance_context, InvocationAcceptanceContext):
+        raise AIAdapterError("Invocation acceptance context is absent")
+    rebuilt_request = _validate_live_prepared_request(
+        prepared_request=prepared_request,
+    )
+    prepared = _validate_prepared_request(prepared_request=rebuilt_request)
+    current_policy, current_closure_hash = _load_transport_policy()
+    if (
+        current_policy != adapter.policy
+        or current_closure_hash != adapter.requirement_closure_hash
+    ):
+        raise AIAdapterError("D-01 changed before invocation planning")
+    outbound, output_schema = build_provider_request_body(
+        policy=current_policy,
+        reader_request_bytes=prepared["request_bytes"],
+    )
+    runtime_authority = load_provider_runtime_authority(
+        repo_root=_REPOSITORY_ROOT,
+        provider=current_policy.provider,
+        model=current_policy.model,
+        api=current_policy.api,
+    )
+    credential_name = api_key_environment_name(policy=current_policy)
+    if credential_name not in os.environ or not os.environ[credential_name].strip():
+        raise TransportAttemptError(
+            api_key_required_error_code(policy=current_policy),
+            observation=_no_egress_policy_observation(
+                policy=current_policy, request_bytes=outbound,
+            ),
+            provider_request_id="",
+            raw_response_bytes=None,
+            error_class=api_key_required_error_code(policy=current_policy),
+            outbound_request_bytes=outbound,
+            output_schema_bytes=output_schema,
+        )
+    invocation_plan = build_ai_invocation_plan(
+        release_input_plan_id=context.release_input_plan_id,
+        source_identity_hash=str(
+            prepared["manifest"]["reader_input_manifest_id"]
+        ),
+        selected_representation_hash=str(
+            prepared["manifest"]["derived_asset_id"]
+        ),
+        task_contract_hash="sha256:" + sha256_bytes(
+            content=prepared["task_contract_bytes"],
+        ),
+        output_schema_hash="sha256:" + sha256_bytes(content=output_schema),
+        serialization_version="reader-provider-envelope-v1",
+        provider=current_policy.provider,
+        model=current_policy.model,
+        api=current_policy.api,
+        request_body=outbound,
+        maximum_payload_bytes=current_policy.maximum_payload_bytes,
+        maximum_context_tokens=int(
+            runtime_authority["maximum_context_tokens"]
+        ),
+        estimated_context_tokens=estimate_context_tokens(
+            request_body=outbound, authority=runtime_authority,
+        ),
+        context_authority_hash=str(
+            runtime_authority["context_authority_hash"]
+        ),
+        estimator_id=str(runtime_authority["estimator_id"]),
+        estimator_version=str(runtime_authority["estimator_version"]),
+        estimator_method=str(runtime_authority["estimator_method"]),
+        billing_class=str(runtime_authority["billing_class"]),
+        paid_call_observation_source=str(
+            runtime_authority["paid_call_observation_source"]
+        ),
+        pricing_snapshot_hash=content_hash(
+            value={
+                "provider": current_policy.provider,
+                "model": current_policy.model,
+                "status": "NON_BLOCKING_PRICE_UNAVAILABLE",
+            }
+        ),
+        estimated_cost="0",
+    )
+    execution_id = execution_identity(
+        ai_invocation_plan_id=str(invocation_plan["ai_invocation_plan_id"]),
+        owner_token=context.owner_token,
+        authorized_at_utc=authorized_at_utc,
+    )
+    transport = _InvocationControllerTransport(
+        adapter=adapter,
+        prepared_request=prepared_request,
+        outbound_request_bytes=outbound,
+    )
+    execution = execute_invocation(
+        workspace_dir=context.workspace_dir,
+        plan=invocation_plan,
+        request_body=outbound,
+        execution_id=execution_id,
+        owner_token=context.owner_token,
+        authorized_at_utc=authorized_at_utc,
+        clock=invocation_clock,
+        transport=transport,
+        response_validator=lambda response_body: _controlled_response_validator(
+            response_body=response_body,
+            prepared=prepared,
+            execution_id=execution_id,
+        ),
+        evidence_validator=lambda response_body: (
+            _controlled_acceptance_validator(
+                response_body=response_body,
+                prepared=prepared,
+                execution_id=execution_id,
+                context=acceptance_context,
+            )
+        ),
+    )
+    if execution["status"] in {"SUCCEEDED", "REUSED_SUCCESS"}:
+        reusable = load_successful_response(
+            workspace_dir=context.workspace_dir, plan=invocation_plan,
+        )
+        response_body = reusable["response_body"]
+        acceptance_receipt = reusable["acceptance_receipt"]
+        if transport.last_result is not None:
+            if transport.last_result.response_bytes != response_body:
+                raise AIAdapterError("Controlled response bytes differ")
+            return TransportResult(
+                response_bytes=transport.last_result.response_bytes,
+                provider_request_id=transport.last_result.provider_request_id,
+                observation=transport.last_result.observation,
+                raw_response_bytes=transport.last_result.raw_response_bytes,
+                outbound_request_bytes=(
+                    transport.last_result.outbound_request_bytes
+                ),
+                output_schema_bytes=transport.last_result.output_schema_bytes,
+                acceptance_receipt=acceptance_receipt,
+            )
+        return TransportResult(
+            response_bytes=response_body,
+            provider_request_id=str(reusable["provider_request_id"]),
+            observation=_no_egress_policy_observation(
+                policy=current_policy, request_bytes=outbound,
+            ),
+            raw_response_bytes=None,
+            outbound_request_bytes=outbound,
+            output_schema_bytes=output_schema,
+            acceptance_receipt=acceptance_receipt,
+        )
+    attempts = execution["attempts"]
+    error_class = (
+        str(attempts[-1]["error_class"])
+        if attempts
+        else str(execution["status"])
+    )
+    observed_error = transport.last_error
+    observed_result = transport.last_result
+    observation = (
+        observed_error.observation
+        if observed_error is not None
+        else observed_result.observation
+        if observed_result is not None
+        else _failed_controlled_observation(
+            policy=current_policy,
+            outbound=outbound,
+            egress_attempted=(
+                execution["status"] == "UNKNOWN_REMOTE_OUTCOME"
+            ),
+        )
+    )
+    raise TransportAttemptError(
+        error_class,
+        observation=observation,
+        provider_request_id=(
+            observed_error.provider_request_id
+            if observed_error is not None
+            else observed_result.provider_request_id
+            if observed_result is not None
+            else ""
+        ),
+        raw_response_bytes=(
+            observed_error.raw_response_bytes
+            if observed_error is not None
+            else observed_result.raw_response_bytes
+            if observed_result is not None
+            else None
+        ),
+        error_class=error_class,
+        outbound_request_bytes=outbound,
+        output_schema_bytes=output_schema,
+        assistant_output_bytes=(
+            observed_error.assistant_output_bytes
+            if observed_error is not None
+            else observed_result.response_bytes
+            if observed_result is not None
+            else None
+        ),
+    )
+
+
+def build_approved_transport_adapter() -> AIAdapter:
+    """Fail closed because a remote adapter requires complete WB-3 identity.
+
+    Raises:
+        AIAdapterError: Always, before provider transport construction.
+    """
+    raise AIAdapterError("WB3_EXECUTION_CONTEXT_REQUIRED")
+
+
+def build_invocation_controlled_transport_adapter(
+    *, release_input_plan_id: str, workspace_dir: Path, owner_token: str,
+) -> AIAdapter:
+    """Build the production adapter whose socket is WB-3 owner-only."""
+    return _ApprovedTransportAdapter(
+        authority=_ADAPTER_AUTHORITY,
+        invocation_context=InvocationControllerContext(
+            release_input_plan_id=release_input_plan_id,
+            workspace_dir=workspace_dir,
+            owner_token=owner_token,
+        ),
+    )
 
 
 def _authorized_adapter_implementation(
@@ -1892,6 +2484,79 @@ def validate_adapter_repository_authority(
             "Approved workflow repository authority differs from D-01"
         )
     return "LIVE"
+
+
+def validate_workflow_acceptance_binding(
+    *, adapter: AIAdapter, acceptance_receipt: Optional[Mapping[str, object]],
+    context: InvocationAcceptanceContext,
+    candidate: Mapping[str, object], evidence: Mapping[str, object],
+) -> None:
+    """Require Workflow recomputation to match controller acceptance exactly.
+
+    Args:
+        adapter: Repository-built adapter used for the attempt.
+        acceptance_receipt: Controller receipt returned as explicit data.
+        context: Exact mechanical inputs independently reused by Workflow.
+        candidate: Workflow-recomputed Candidate.
+        evidence: Workflow-recomputed Evidence record.
+
+    Raises:
+        AIAdapterError: On any missing or contradictory immutable terminal.
+    """
+    controlled = (
+        type(adapter) is _ApprovedTransportAdapter
+        and adapter.invocation_context is not None
+    )
+    if not controlled:
+        if acceptance_receipt is not None:
+            raise AIAdapterError(
+                "Non-controlled attempt returned controller acceptance"
+            )
+        return
+    if not isinstance(acceptance_receipt, Mapping):
+        raise AIAdapterError("Controlled attempt acceptance is absent")
+    validate_record(record=candidate)
+    validate_record(record=evidence)
+    task_contract_hash = "sha256:" + sha256_bytes(
+        content=canonical_json_bytes(
+            value=context.reader_payload_body["task_contract"]
+        )
+    )
+    receipt_body = {
+        field: acceptance_receipt[field]
+        for field in acceptance_receipt
+        if field != "acceptance_receipt_id"
+    }
+    expected = {
+        "candidate_hash": candidate["candidate_hash"],
+        "derived_asset_id": context.derived_asset["derived_asset_id"],
+        "evidence_candidate_hash": evidence["candidate_hash"],
+        "evidence_check_id": evidence["evidence_check_id"],
+        "evidence_status": evidence["status"],
+        "reader_input_manifest_id": context.reader_manifest[
+            "reader_input_manifest_id"
+        ],
+        "source_reference_ids": list(
+            context.reader_manifest["source_reference_ids"]
+        ),
+        "spec_semantic_hash": context.compiled_spec["spec_semantic_hash"],
+        "task_contract_hash": task_contract_hash,
+        "validator_semantic_hash": _ACCEPTANCE_VALIDATOR_SEMANTIC_HASH,
+        "validator_semantic_version": (
+            _ACCEPTANCE_VALIDATOR_SEMANTIC_VERSION
+        ),
+    }
+    if (
+        any(acceptance_receipt[field] != expected[field] for field in expected)
+        or evidence["status"] != "PASS"
+        or acceptance_receipt["response_body_sha256"]
+        != candidate["assistant_output_sha256"]
+        or acceptance_receipt["acceptance_receipt_id"]
+        != content_hash(value=receipt_body)
+    ):
+        raise AIAdapterError(
+            "Workflow Candidate/Evidence differs from controller acceptance"
+        )
 
 
 def _utc_now(*, clock: Optional[Callable[[], datetime]] = None) -> str:
@@ -2203,6 +2868,7 @@ def run_ai_attempt(
     *,
     adapter: AIAdapter,
     prepared_request: object,
+    acceptance_context: Optional[InvocationAcceptanceContext] = None,
     clock: Optional[Callable[[], datetime]] = None,
 ) -> Tuple[
     Optional[bytes],
@@ -2216,6 +2882,8 @@ def run_ai_attempt(
         adapter: Recorded or explicitly approved transport.
         prepared_request: Ordinary recorded request or factory-produced live
             request whose SEC source graph is rebuilt before remote egress.
+        acceptance_context: Exact production mechanical-Evidence inputs. The
+            controlled remote adapter requires this before provider egress.
         clock: Optional deterministic UTC test clock.
 
     Returns:
@@ -2249,11 +2917,20 @@ def run_ai_attempt(
     provider_request_id = ""
     error_class = ""
     status = "SUCCEEDED"
+    acceptance_receipt: Optional[Mapping[str, object]] = None
+
+    def invocation_clock() -> str:
+        """Return the same injected UTC time source for WB-3 receipts."""
+        return _utc_now(clock=clock)
+
     try:
         result = (
             adapter_implementation(
                 self=adapter,
                 prepared_request=prepared_request,
+                authorized_at_utc=started,
+                invocation_clock=invocation_clock,
+                acceptance_context=acceptance_context,
             )
             if type(adapter) is _ApprovedTransportAdapter
             else adapter_implementation(
@@ -2279,6 +2956,15 @@ def run_ai_attempt(
         )
         provider_request_id = result.provider_request_id
         observation = result.observation
+        acceptance_receipt = result.acceptance_receipt
+        if (
+            type(adapter) is _ApprovedTransportAdapter
+            and adapter.invocation_context is not None
+            and acceptance_receipt is None
+        ):
+            raise AIAdapterError(
+                "Controlled transport lacks full acceptance receipt"
+            )
         candidate = validate_reader_output(
             response_text=response.decode("utf-8"),
             attempt_id=attempt_id,
@@ -2400,5 +3086,6 @@ def run_ai_attempt(
         output_schema_bytes=output_schema,
         assistant_output_bytes=assistant_output,
         raw_response_bytes=raw_response,
+        acceptance_receipt=acceptance_receipt,
     )
     return response, raw_response, validate_record(record=record), payloads

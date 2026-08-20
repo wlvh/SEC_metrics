@@ -30,6 +30,7 @@ from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
 from .canonical import sha256_bytes, sha256_file, strict_json_file
 from .canonical import strict_json_loads
+from .invocation_control import INVOCATION_STATE_NAMESPACES
 from .projector import LEGACY_BASELINE_SOURCE_FILES
 from .projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
 from .projector import LEGACY_MIGRATION_STATUSES, LEGACY_PROOF_MODES
@@ -61,6 +62,7 @@ LEGACY_BASELINE_IMPORT_MANIFEST = (
 )
 LEGACY_BASELINE_MANIFEST = "internal/legacy_baseline_manifest.json"
 LEGACY_BASELINE_SUPPORT_PREFIX = "internal/legacy_baseline_support/"
+ZERO_AI_FORMAL_MANIFEST = "internal/zero_ai_release_receipt.json"
 LEGACY_BASELINE_REQUIRED_ARTIFACTS = {
     "outputs/golden_results.csv",
     "outputs/metric_evidence.csv",
@@ -181,6 +183,7 @@ LEDGER_BINDING_FIELDS = {
 }
 REQUEST_LOCATOR_CLASSES = {
     "IMMUTABLE_ATTEMPT",
+    "IMMUTABLE_GIT_BLOB",
     "LEGACY_WORKING_LOCATOR",
 }
 LEGACY_BASELINE_LOCATOR_TIER = "LEGACY_BASELINE_IMPORT"
@@ -238,6 +241,7 @@ SWITCH_INTENT_FIELDS = {
 SWITCH_INTENT_MIRROR_FIELDS = {"sha256", "size"}
 PUBLICATION_ID_PATTERN = re.compile(r"^publication_[0-9a-f]{64}$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+SHA1_PATTERN = re.compile(r"^[0-9a-f]{40}$")
 CONTENT_ID_PATTERN = re.compile(r"^sha256:[0-9a-f]{64}$")
 SWITCH_TEMP_PATTERN = re.compile(
     r"^\.[0-9a-f]{64}\.json\.[0-9a-f]{32}\.tmp$"
@@ -1267,6 +1271,135 @@ def prepare_legacy_baseline_predecessor(
             legacy_baseline_import_id=import_id, role="VALIDATION",
         ),
         ledger_binding=empty_ledger,
+        previous_publication_id=None,
+    )
+
+
+def prepare_issue15_legacy_baseline_predecessor(
+    *, publication_root: Path, repo_root: Path, legacy_root: Path,
+) -> Dict[str, object]:
+    """Import the Issue #15 frozen root as the zero-AI predecessor.
+
+    Args:
+        publication_root: Formal immutable bundle storage root.
+        repo_root: Repository containing Issue #15 and parent authorities.
+        legacy_root: Root whose business bytes must match the Issue #15
+            ``root_business_artifacts`` exact set.
+
+    Returns:
+        Prepared legacy PublicationManifest A with no predecessor.
+
+    Why:
+        The inherited parent baseline predates WB-1's refreshed terminal
+        manifest/provenance bytes.  Issue #15 froze their exact successors, so
+        its zero-AI ratchet must import that later verified root without
+        rewriting the immutable parent snapshot.
+    """
+    if legacy_root.is_symlink() or not legacy_root.is_dir():
+        raise PublicationError("Issue #15 legacy baseline root is unsafe")
+    try:
+        issue = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements" / "issue_15_v1"
+        )
+        parent = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1"
+        )
+    except (OSError, RequirementError, ValueError) as error:
+        raise PublicationError(
+            "Issue #15 legacy Requirement authority is invalid"
+        ) from error
+    issue_baseline = issue["baseline"]
+    artifacts = issue_baseline["root_business_artifacts"]
+    if not isinstance(artifacts, dict) or not (
+        LEGACY_BASELINE_REQUIRED_ARTIFACTS.issubset(artifacts)
+    ):
+        raise PublicationError(
+            "Issue #15 frozen root artifact proof is incomplete"
+        )
+    # A portable derived baseline makes the later WB-1 root explicit while
+    # retaining the standard legacy-import verifier and rollback authority.
+    baseline = {
+        "schema_version": 1,
+        "record_type": "ISSUE15_LEGACY_ROOT_BASELINE",
+        "requirement_id": "issue_15_v1",
+        "repository_commit": issue_baseline["repository_commit"],
+        "requirement_closure_hash": issue["requirement_closure_hash"],
+        "issue_requirement_hashes": issue["hashes"],
+        "artifact_digests": artifacts,
+    }
+    baseline_bytes = canonical_json_bytes(value=baseline) + b"\n"
+    baseline_sha256 = sha256_bytes(content=baseline_bytes)
+    root_files = {}
+    root_origins = {}
+    for bundle_relative, root_relative in sorted(
+        ROOT_MIRROR_RELATIVE_PATHS.items()
+    ):
+        content = _optional_legacy_source_file(
+            legacy_root=legacy_root, relative_path=root_relative,
+        )
+        if content is None:
+            content = _legacy_import_metadata_bytes(
+                relative_path=bundle_relative,
+                baseline_manifest_sha256=baseline_sha256,
+                requirement_hashes=parent["hashes"],
+            )
+            root_origins[bundle_relative] = (
+                "SYNTHESIZED_LEGACY_BASELINE_IMPORT"
+            )
+        else:
+            root_origins[bundle_relative] = "FROZEN_ROOT_BYTES"
+        root_files[bundle_relative] = content
+    root_records = {
+        relative: {
+            "origin": root_origins[relative],
+            "root_path": ROOT_MIRROR_RELATIVE_PATHS[relative],
+            "sha256": sha256_bytes(content=root_files[relative]),
+            "size": len(root_files[relative]),
+        }
+        for relative in sorted(root_files)
+    }
+    baseline_records, support_files, support_index = (
+        _baseline_artifact_records(
+            baseline=baseline,
+            legacy_root=legacy_root,
+            root_files=root_files,
+        )
+    )
+    marker_body = {
+        "schema_version": 1,
+        "record_type": "LEGACY_BASELINE_IMPORT",
+        "baseline_manifest_sha256": baseline_sha256,
+        "baseline_repository_commit": baseline["repository_commit"],
+        "requirement_hashes": dict(parent["hashes"]),
+        "root_artifacts": root_records,
+        "baseline_artifacts": baseline_records,
+        "supporting_artifacts": support_index,
+    }
+    import_id = content_hash(value=marker_body)
+    marker = {**marker_body, "legacy_baseline_import_id": import_id}
+    files = {
+        **root_files,
+        **support_files,
+        LEGACY_BASELINE_MANIFEST: baseline_bytes,
+        LEGACY_BASELINE_IMPORT_MANIFEST: (
+            canonical_json_bytes(value=marker) + b"\n"
+        ),
+    }
+    layout = publication_layout(publication_root=publication_root)
+    return _write_prepared_publication_bundle(
+        publications_dir=Path(layout["publications_dir"]),
+        files=files,
+        requirement_hashes=parent["hashes"],
+        batch_manifest_id=_legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="BATCH",
+        ),
+        projection_manifest_id=_legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="PROJECTION",
+        ),
+        validation_receipt_id=_legacy_import_identity(
+            legacy_baseline_import_id=import_id, role="VALIDATION",
+        ),
+        ledger_binding=_empty_legacy_ledger_binding(),
         previous_publication_id=None,
     )
 
@@ -3943,6 +4076,357 @@ def _verify_legacy_baseline_import(
         raise PublicationError("Legacy baseline outer binding differs")
 
 
+def _verify_zero_ai_projection_closure(
+    *, bundle_dir: Path, receipt: Mapping[str, object],
+) -> None:
+    """Verify schema-v2 full-field projection and retirement evidence."""
+    try:
+        projection = strict_json_file(
+            path=bundle_dir / "internal/public_projection_closure.json"
+        )
+        retirement = strict_json_file(
+            path=bundle_dir / "internal/retirement_receipt.json"
+        )
+    except CanonicalError as error:
+        raise PublicationError("Zero-AI projection closure is invalid") from error
+    if not isinstance(projection, dict) or not isinstance(retirement, dict):
+        raise PublicationError("Zero-AI projection closure must be objects")
+    projection_body = {
+        field: projection[field]
+        for field in projection if field != "projection_closure_id"
+    }
+    retirement_body = {
+        field: retirement[field]
+        for field in retirement if field != "retirement_receipt_id"
+    }
+    compatibility = projection["compatibility"]
+    if not isinstance(compatibility, dict):
+        raise PublicationError("Zero-AI compatibility closure is invalid")
+    compatibility_body = {
+        field: compatibility[field]
+        for field in compatibility if field != "strict_compatibility_hash"
+    }
+    expected_keys = 18 if receipt["release_stage"] == "R1" else 141
+    independence = retirement["projection_independence"]
+    if not isinstance(independence, dict):
+        raise PublicationError("Zero-AI projection independence is invalid")
+    independence_body = {
+        field: independence[field]
+        for field in independence
+        if field != "projection_independence_receipt_id"
+    }
+    if (
+        projection["projection_closure_id"]
+        != content_hash(value=projection_body)
+        or projection["projection_closure_id"]
+        != receipt["projection_closure_id"]
+        or compatibility["strict_compatibility_hash"]
+        != content_hash(value=compatibility_body)
+        or compatibility["strict_compatibility_hash"]
+        != receipt["strict_compatibility_hash"]
+        or compatibility["compared_key_count"] != expected_keys
+        or compatibility["compared_field_count"]
+        != expected_keys * len(METRIC_FIELDS)
+        or compatibility["compared_field_exact_set"] != list(METRIC_FIELDS)
+        or compatibility["unexpected_delta_exact_set"]
+        or compatibility["approved_delta_exact_set"]
+        or retirement["retirement_receipt_id"]
+        != content_hash(value=retirement_body)
+        or retirement["projection_closure_id"]
+        != projection["projection_closure_id"]
+        or independence["status"] != "PASSED"
+        or independence["projection_independence_receipt_id"]
+        != content_hash(value=independence_body)
+    ):
+        raise PublicationError("Zero-AI projection evidence differs")
+    if receipt["release_stage"] != "R2":
+        return
+    try:
+        event = strict_json_file(
+            path=bundle_dir / "internal/event_key_compatibility.json"
+        )
+        acquisition = strict_json_file(
+            path=bundle_dir / "internal/acquisition_event_source_sets.json"
+        )
+    except CanonicalError as error:
+        raise PublicationError("R2 event projection closure is invalid") from error
+    if not isinstance(event, dict) or not isinstance(acquisition, dict):
+        raise PublicationError("R2 event projection closure must be objects")
+    event_body = {
+        field: event[field]
+        for field in event if field != "event_compatibility_receipt_id"
+    }
+    acquisition_body = {
+        field: acquisition[field]
+        for field in acquisition
+        if field != "acquisition_source_set_closure_id"
+    }
+    if (
+        event["event_compatibility_receipt_id"]
+        != content_hash(value=event_body)
+        or acquisition["acquisition_source_set_closure_id"]
+        != content_hash(value=acquisition_body)
+        or projection["event_compatibility_receipt_id"]
+        != event["event_compatibility_receipt_id"]
+        or projection["acquisition_source_set_closure_id"]
+        != acquisition["acquisition_source_set_closure_id"]
+        or len(event["comparisons"]) != 10
+    ):
+        raise PublicationError("R2 event projection evidence differs")
+
+
+def _verify_zero_ai_formal_release(
+    *, bundle_dir: Path, manifest: Mapping[str, object], internal_paths: set,
+) -> None:
+    """Verify one Issue #15 zero-AI formal bundle and immutable run closure.
+
+    Args:
+        bundle_dir: Immutable successor bundle directory.
+        manifest: Verified outer PublicationManifest.
+        internal_paths: Exact manifest-listed internal paths.
+
+    Raises:
+        PublicationError: On receipt, counter, key-set, run-file, authority,
+            or outer-manifest drift.
+    """
+    try:
+        payload = strict_json_file(path=bundle_dir / ZERO_AI_FORMAL_MANIFEST)
+    except CanonicalError as error:
+        raise PublicationError("Zero-AI formal receipt is invalid") from error
+    if not isinstance(payload, dict):
+        raise PublicationError("Zero-AI formal receipt must be an object")
+    receipt = dict(payload)
+    required = {
+        "batch_manifest_id",
+        "counters",
+        "cumulative_metric_ids",
+        "internal_files",
+        "invocation_observation_id",
+        "issue15_release_plan_content_id",
+        "issue15_release_plan_id",
+        "issue15_release_plan_sha256",
+        "new_public_key_count",
+        "previous_publication_id",
+        "projection_manifest_id",
+        "public_artifact_hashes",
+        "public_key_set_hash",
+        "public_matrix_row_count",
+        "record_type",
+        "release_input_plan_id",
+        "release_stage",
+        "replaced_legacy_row_count",
+        "requirement_closure_hash",
+        "result_coordinate_count",
+        "schema_version",
+        "source_commit",
+        "source_locator_classes",
+        "source_tree_oid",
+        "status",
+        "strict_compatibility_hash",
+        "validation_receipt_id",
+        "zero_ai_release_receipt_id",
+    }
+    if receipt["schema_version"] == 2:
+        required.add("projection_closure_id")
+    if receipt["schema_version"] not in {1, 2} or set(receipt) != required:
+        raise PublicationError("Zero-AI formal receipt fields differ")
+    body = {
+        field: receipt[field]
+        for field in receipt
+        if field != "zero_ai_release_receipt_id"
+    }
+    if (
+        receipt["record_type"] != "ZERO_AI_FORMAL_RELEASE_RECEIPT"
+        or receipt["status"] != "PASSED"
+        or receipt["release_stage"] not in {"R1", "R2"}
+        or receipt["zero_ai_release_receipt_id"] != content_hash(value=body)
+        or receipt["batch_manifest_id"] != manifest["batch_manifest_id"]
+        or receipt["projection_manifest_id"]
+        != manifest["projection_manifest_id"]
+        or receipt["validation_receipt_id"]
+        != manifest["validation_receipt_id"]
+        or receipt["previous_publication_id"]
+        != manifest["previous_publication_id"]
+        or not isinstance(receipt["source_commit"], str)
+        or SHA1_PATTERN.fullmatch(receipt["source_commit"]) is None
+        or not isinstance(receipt["source_tree_oid"], str)
+        or SHA1_PATTERN.fullmatch(receipt["source_tree_oid"]) is None
+    ):
+        raise PublicationError("Zero-AI formal receipt identity differs")
+    invocation_path = bundle_dir / "internal/structured_only_invocation.json"
+    release_plan_path = bundle_dir / "internal/issue15_release_plan.json"
+    release_input_path = bundle_dir / "internal/release_input_plan.json"
+    try:
+        invocation = strict_json_file(path=invocation_path)
+        release_plan = strict_json_file(path=release_plan_path)
+        release_input = strict_json_file(path=release_input_path)
+    except CanonicalError as error:
+        raise PublicationError("Zero-AI authority closure is invalid") from error
+    invocation_fields = {
+        "counters",
+        "invocation_observation_id",
+        "observed_ai_invocation_plan_ids",
+        "observed_invocation_files",
+        "observed_provider_request_identities",
+        "record_type",
+        "release_input_plan_id",
+        "result_coordinate_count",
+        "schema_version",
+        "source_mode_by_metric",
+        "status",
+    }
+    if not isinstance(invocation, dict) or set(invocation) != invocation_fields:
+        raise PublicationError("Zero-AI invocation closure fields differ")
+    invocation_body = {
+        field: invocation[field]
+        for field in invocation
+        if field != "invocation_observation_id"
+    }
+    namespaces = set(INVOCATION_STATE_NAMESPACES)
+    if receipt["schema_version"] == 1:
+        namespaces.remove("acceptances")
+    observed_files = invocation["observed_invocation_files"]
+    if (
+        invocation["schema_version"] != 1
+        or invocation["record_type"]
+        != "STRUCTURED_ONLY_INVOCATION_RESULT"
+        or invocation["status"] != "SUCCEEDED_ZERO_PROVIDER"
+        or invocation["invocation_observation_id"]
+        != content_hash(value=invocation_body)
+        or invocation["invocation_observation_id"]
+        != receipt["invocation_observation_id"]
+        or invocation["release_input_plan_id"]
+        != receipt["release_input_plan_id"]
+        or invocation["result_coordinate_count"]
+        != receipt["result_coordinate_count"]
+        or not isinstance(observed_files, dict)
+        or set(observed_files) != namespaces
+        or any(observed_files[namespace] for namespace in namespaces)
+        or invocation["observed_ai_invocation_plan_ids"]
+        or invocation["observed_provider_request_identities"]
+        or not isinstance(invocation["source_mode_by_metric"], dict)
+        or set(invocation["source_mode_by_metric"])
+        != set(receipt["cumulative_metric_ids"])
+        or set(invocation["source_mode_by_metric"].values())
+        != {"structured_only"}
+    ):
+        raise PublicationError("Zero-AI invocation closure differs")
+    derived_counters = {
+        "mock_transport_invocation_count": 0,
+        "paid_model_provider_call_count": 0,
+        "real_model_provider_egress_count": 0,
+    }
+    if (
+        invocation["counters"] != derived_counters
+        or receipt["counters"] != invocation["counters"]
+    ):
+        raise PublicationError("Zero-AI derived provider counters differ")
+    if not isinstance(release_plan, dict) or not isinstance(release_input, dict):
+        raise PublicationError("Zero-AI ReleasePlan closure is invalid")
+    release_plan_body = {
+        field: release_plan[field]
+        for field in release_plan
+        if field != "release_plan_content_id"
+    }
+    if (
+        release_plan["release_plan_content_id"]
+        != content_hash(value=release_plan_body)
+        or release_plan["release_plan_id"]
+        != receipt["issue15_release_plan_id"]
+        or release_plan["release_plan_content_id"]
+        != receipt["issue15_release_plan_content_id"]
+        or sha256_file(path=release_plan_path)
+        != receipt["issue15_release_plan_sha256"]
+        or release_input["release_plan_id"]
+        != release_plan["release_plan_id"]
+        or release_input["release_plan_content_id"]
+        != release_plan["release_plan_content_id"]
+        or release_input["release_input_plan_id"]
+        != receipt["release_input_plan_id"]
+    ):
+        raise PublicationError("Zero-AI ReleasePlan binding differs")
+    expected_locator_classes = {
+        "R1": ["IMMUTABLE_ATTEMPT"],
+        "R2": ["IMMUTABLE_ATTEMPT", "IMMUTABLE_GIT_BLOB"],
+    }
+    if receipt["source_locator_classes"] != expected_locator_classes[
+        str(receipt["release_stage"])
+    ]:
+        raise PublicationError("Zero-AI source locator class differs")
+    if (
+        not isinstance(receipt["cumulative_metric_ids"], list)
+        or receipt["cumulative_metric_ids"]
+        != sorted(set(receipt["cumulative_metric_ids"]))
+        or type(receipt["result_coordinate_count"]) is not int
+        or receipt["result_coordinate_count"]
+        != 10 * len(receipt["cumulative_metric_ids"])
+        or type(receipt["public_matrix_row_count"]) is not int
+        or type(receipt["new_public_key_count"]) is not int
+        or type(receipt["replaced_legacy_row_count"]) is not int
+    ):
+        raise PublicationError("Zero-AI release counts are invalid")
+    internal_files = receipt["internal_files"]
+    if not isinstance(internal_files, dict) or internal_paths != {
+        ZERO_AI_FORMAL_MANIFEST, *internal_files,
+    }:
+        raise PublicationError("Zero-AI internal file exact set differs")
+    for relative, binding in internal_files.items():
+        if (
+            not isinstance(binding, dict)
+            or set(binding) != {"sha256", "size"}
+        ):
+            raise PublicationError("Zero-AI internal binding fields differ")
+        path = bundle_dir / _safe_relative(value=relative)
+        if (
+            path.is_symlink()
+            or not path.is_file()
+            or binding["sha256"] != sha256_file(path=path)
+            or binding["size"] != path.stat().st_size
+        ):
+            raise PublicationError("Zero-AI internal bytes differ")
+    if receipt["schema_version"] == 2:
+        _verify_zero_ai_projection_closure(
+            bundle_dir=bundle_dir, receipt=receipt,
+        )
+    artifact_hashes = receipt["public_artifact_hashes"]
+    if not isinstance(artifact_hashes, dict) or set(artifact_hashes) != (
+        REQUIRED_BUNDLE_FILES
+    ):
+        raise PublicationError("Zero-AI public artifact set differs")
+    for relative in REQUIRED_BUNDLE_FILES:
+        path = bundle_dir / relative
+        if artifact_hashes[relative] != sha256_file(path=path):
+            raise PublicationError("Zero-AI public artifact hash differs")
+    try:
+        validation_run = strict_json_file(
+            path=bundle_dir / "validation_run_manifest.json"
+        )
+    except CanonicalError as error:
+        raise PublicationError("Zero-AI validation manifest is invalid") from error
+    if (
+        not isinstance(validation_run, dict)
+        or validation_run["source_commit"] != receipt["source_commit"]
+    ):
+        raise PublicationError("Zero-AI source provenance differs")
+    metrics_bytes = (bundle_dir / "metrics_matrix.csv").read_bytes()
+    try:
+        rows = list(csv.DictReader(io.StringIO(metrics_bytes.decode("utf-8"))))
+    except UnicodeDecodeError as error:
+        raise PublicationError("Zero-AI metrics matrix is not UTF-8") from error
+    keys = sorted(
+        (
+            {"company": row["company"], "metric_id": row["metric_id"]}
+            for row in rows
+        ),
+        key=lambda row: (row["company"], row["metric_id"]),
+    )
+    if (
+        len(rows) != receipt["public_matrix_row_count"]
+        or content_hash(value=keys) != receipt["public_key_set_hash"]
+    ):
+        raise PublicationError("Zero-AI public key set differs")
+
+
 def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
     """Verify manifest identity and exact artifact bytes for one bundle.
 
@@ -3994,11 +4478,13 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
     }
     internal_paths = expected_paths - public_paths
     legacy_import = LEGACY_BASELINE_IMPORT_MANIFEST in internal_paths
+    zero_ai_formal = ZERO_AI_FORMAL_MANIFEST in internal_paths
     if (
         public_paths != REQUIRED_BUNDLE_FILES
         or any(not path.startswith(INTERNAL_PREFIX) for path in internal_paths)
         or (
             not legacy_import
+            and not zero_ai_formal
             and INTERNAL_CLOSURE_MANIFEST not in internal_paths
         )
     ):
@@ -4069,6 +4555,13 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         raise PublicationError("Publication manifest identity differs")
     if legacy_import:
         _verify_legacy_baseline_import(
+            bundle_dir=bundle_dir,
+            manifest=manifest,
+            internal_paths=internal_paths,
+        )
+        return manifest
+    if zero_ai_formal:
+        _verify_zero_ai_formal_release(
             bundle_dir=bundle_dir,
             manifest=manifest,
             internal_paths=internal_paths,
@@ -4930,6 +5423,13 @@ def _publication_commit_authority(*, bundle_dir: Path) -> str:
     """
     if (bundle_dir / LEGACY_BASELINE_IMPORT_MANIFEST).is_file():
         return LEGACY_COMMIT_AUTHORITY
+    if (bundle_dir / ZERO_AI_FORMAL_MANIFEST).is_file():
+        manifest = verify_publication_bundle(bundle_dir=bundle_dir)
+        if manifest["previous_publication_id"] is None:
+            raise PublicationError(
+                "Zero-AI formal successor requires a predecessor"
+            )
+        return FORMAL_COMMIT_AUTHORITY
     try:
         validation = strict_json_file(
             path=bundle_dir / "validation_run_manifest.json"

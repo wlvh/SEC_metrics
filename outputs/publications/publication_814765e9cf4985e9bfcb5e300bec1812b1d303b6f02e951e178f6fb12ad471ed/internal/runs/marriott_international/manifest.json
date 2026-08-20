@@ -1,0 +1,49 @@
+{
+  "record_type": "RUN",
+  "status": "FROZEN",
+  "records_file_hash": "d51411dbed02d2d92c44ae440ced82bc079a13817ec525ccae72970e844f0fd4",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "f275d0e59b65610cdd6db3712951752293921155958e9a9cd332c3c843da3703",
+  "content_manifest_hash": "sha256:1780b026e9e6d99446334710f762d65d55e87b5732e7a2a3caf7466481c67250",
+  "audit_manifest_hash": "sha256:5aca0c036090a846196732902416f98513b5fc57be60c4a1f7d75cb758be1af5",
+  "run_id": "run:cutover:13df677e808796e9299762d5ab66e394b3d3a2cbc057f888923153be066b5ace",
+  "company_id": "marriott_international",
+  "company_traits": [
+    "lodging",
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "accession": "0001048286-26-000007",
+      "document_name": "CIK0001048286.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/B01_revenue.md": "5942066d0fd57870d437a6619de72393532b10d48d4098f10cd39307622e3520",
+    "catalog/metrics/B03_ebitda_margin.md": "2705cc20f3e7dbd6a5cbb46bb051b2a16e3037d391856878c3ea74b4441a3608"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

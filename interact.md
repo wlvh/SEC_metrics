@@ -103,14 +103,27 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 
 当前仓库未登记 UI、API、scheduler、CI、部署状态、专用支持渠道或紧急联系人。
 
-## 8. vNext formal Cutover 的可观察行为（尚无 active 证据）
+## 8. vNext formal Cutover 的可观察行为（zero-AI R2 active）
 
-仓库已包含同一套 recorded/live vNext operator：Requirement/Spec、table-grid Reader input、固定DeepSeek Chat Completions adapter、机械 Evidence、整单 Review、freeze/replay、Spec-driven Calculator、Projector、qualification、formal publication/rollback 与 pinned consumers。recorded 只替换 transport/source acquisition并强制 socket=0；live 必须显式授权，且不能建立第二套业务逻辑。它面向开发者、运行负责人和 reviewer；当前没有 active pointer，所以仍不是业务结果的新入口。
+仓库已包含同一套recorded/live operator与formal publication primitives。当前active pointer是Issue #15 zero-AI R2业务入口，只覆盖22个累计指标；recorded sandbox仍不能修改或冒充它。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
+
+Issue #15 WB-2 另外提供一份可机械加载的39指标SourceStrategy registry，只描述target route；当前ratchet set只能从不可变ReleasePlan chain的`cumulative_metric_ids`读取。loader要求parent累计metrics、vNext keys与retired producers分别为child子集，并显式推导removed/unretired exact set为空；同步重签全部hash不能合法化删除。该registry完成时root `outputs/metrics_matrix.csv`仍与WB-1冻结SHA-256一致，未执行任何adapter、SEC/模型调用或active publication；不能把“route已登记”读成“指标已迁移”。
+<!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->
+
+WB-2B 的确定性 router 使用同一 `sources[]` 形状表达单源与多源，并以pinned SEC submissions current/history shards、仓库immutable acquisition receipts补集和SourceSetManifest union证明发现集完整；不从legacy events反推source set。R2已用该路径正式发布；C01/E03共用Item 5.02 claims，E02/E04零值绑定完整8-K集合，E01 matched key set在Result生成后与legacy逐项相等。
+<!-- capability-anchor: CAPABILITY.issue_15_deterministic_source_router -->
+
+WB-3 把模型调用表达为 release-input plan→AI invocation plan→execution→immutable attempts。provider response必须先通过严格schema、task contract、Candidate构造和真实mechanical Evidence，形成绑定Spec/source/DerivedAsset/Candidate/Evidence的acceptance receipt，才可标记SUCCEEDED并成为exact reusable response；resume会重新验证该完整closure，Workflow重算结果也必须与其exact一致。无 reusable response 时只有通过独占 reservation 的 owner 可以打开唯一provider opener。context限制来自版本化provider/model authority；当前`UTF8_BYTE_UPPER_BOUND`是安全上界而非exact token数。operator 可分别观察 real egress、paid-endpoint call 和 mock invocation：paid-endpoint call由billing class与真实egress marker联合推导，不表示provider已确认账单。`UNKNOWN_REMOTE_OUTCOME` 必须人工核对，不会自动重试。仓库不显示或执行金额 cap，cost 只作观测；资源 hard limit 仍在 egress 前拒绝。本 PR 的 zero-AI R1/R2 只产生三种计数为 0 的 structured-only 证据。
+<!-- capability-anchor: CAPABILITY.issue_15_invocation_control -->
+
+R1的module-owned入口保留A→B→A→B历史。R1/R2的migrated public rows先由Result/Trace/Claims、registry和repository-bound projection catalog完整渲染，legacy rows只在随后独立比较器中作为18×20/141×20字段oracle；approved delta和unexpected delta exact set均为空。R2在R1 B上累计22指标/220坐标，79个新增key均为`N_A_STRUCTURAL`，public matrix为309行；projection independence、event parity、retirement、active/read-back receipts均持久化。既有8-K body/header缺request-attempt locator时，只有request row和当前commit Git blob同时匹配才成为`IMMUTABLE_GIT_BLOB`，不会发起SEC网络。
+<!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
+<!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
 
 正式 CLI 支持 prepare/init、status、review list/show/decide、resume/finalize、freeze/replay、project、publish、rollback、restore 与 acceptance。默认输出稳定错误且不显示 traceback，`--debug` 才显示 traceback，`--json` 提供机器可读结果。HUMAN decision 可选；若未写入，D-06 会以固定且可审计的 SYSTEM identity 写入完整APPROVE claims，绝不把SYSTEM伪装为HUMAN。
 
-第二布局与holdout的真实录制只可通过 `tools/vnext_capture_qualification_fixture.py --fixture-id ...` 进行。该工具从 `fixtures/vnext/qualification_candidates.json` 解析固定业务坐标，经 `SecHttpClient` 保存官方 SEC raw/ledger attempt，再以有效D-01 DeepSeek transport生成完整provider envelope、严格Reader response与model-addressed excerpt；调用方不能传URL、公司、期间、模型或secret，fixture写入后只能由socket-zero qualification replay。
+本PR未授权AI qualification；`tools/vnext_capture_qualification_fixture.py`与底层capture入口均在SEC/provider构造前稳定返回`AI_QUALIFICATION_EGRESS_NOT_ENABLED`。后续只有在WB-4+明确获准且capture也接入完整AIInvocationPlan/execution/reservation/acceptance closure后，才可重新开放第二布局或holdout录制。
 
 冷启动 recorded operator 不要求阅读源码或 tests。`fixture list`/`fixture show --fixture-id ...` 会从仓库 catalog 返回 byte-verified fixture binding、SEC source/provenance identity，以及不含 caller business override 的可复制 prepare/Cutover 命令。运行 `tools/vnext_cutover.py --fixture-id ... --workspace-dir artifacts/vnext/recorded-<workspace>` 时，第一次调用从同一 release plan 创建 structured FROZEN Runs 与适用的OPEN review Run；既有HUMAN decision优先，否则D-06 SYSTEM decision使其继续完成finalization、validation、freeze、无网络 replay、complete BatchManifest、Projector、recorded validation，再只在固定 `<workspace>/recorded-publication` 内执行 pointer CAS、root-mirror materialization 与 pinned PublicationView read-back。
 
@@ -157,16 +170,16 @@ vNext MetricResult 同时暴露 `applicability`、`quality`、`publication` 与 
 若latest Run失败或withheld，`latest_run_status`必须显示失败原因、candidate status、active publication ID、空的latest publication ID以及`active_is_latest_success=false`。单个FROZEN Run也不能代表完整batch；active仍是上一成功版本，不能被描述成“最新运行成功”。首次formal commit先把冻结legacy root bytes严格重验并只读导入为immutable predecessor A，不调用旧parser/resolver/repair；formal B必须绑定A，隔离root完成14项fault matrix并持久化受绑定receipts后，才允许私有initial-chain primitive执行official lock/CAS。每次switch先在exclusive lock内写`outputs/publication_switch_intents/<sha256>.json`；reader在shared lock看到pending、multiple或tampered intent只返回稳定失败，不修改authority。writer recovery在pointer==proposed时完成connected edge并重建proposed mirrors，在pointer==previous时清理本事务edge并恢复previous，其他状态失败；initial A→B失败还必须清除A孤儿edge、pointer和intent。因此mirror/pointer/switch-receipt中途hard crash不得产生可读的成功半成品。rollback只允许切回current pointer记录的committed predecessor，prepared sibling不能借rollback激活；rollback到imported A也只切pointer、从目标bundle重建mirrors并验证legacy import identity，绝不重新启用旧parser或旧producer。
 <!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
 
-Issue #12 R4 的 acceptance 先并发运行 `tools/run_fast_tests.py --jobs 4` 的六个直接边界用例，再封存静态 gate；不再执行全仓/双解释器套件、隔离 repository/worktree 或 freeze/replay 测试。acceptance JSON保留logical/executed argv、return code、duration及stdout/stderr digest，但持久化时把repository/output/runtime locator递归替换为`$REPO_ROOT`、`$ACCEPTANCE_OUTPUT`、`$PYTHON_CURRENT`和`$SANDBOX_EXEC`；`runtime_bindings`用executable name与binary SHA-256证明实际runtime，本机绝对路径不进入可提交receipt。`--output-dir`与正式authority存在equal/ancestor/descendant关系时在首次写入前返回`ACCEPTANCE_OUTPUT_DIR_OVERLAPS_FORMAL_AUTHORITY`。该portable化只改变定位表达，不删除NOT_RUN、error或command语义。
+Issue #15 acceptance并发运行十一个直接边界用例；fast整体仍仅为`FAST_LOCAL_ONLY`，不能升级R2或后续scope证据。
 
 ### 8.4 当前不能执行的承诺
 
-effective D-01已由R5固定为DeepSeek，D-06允许可审计SYSTEM review；固定SEC Stage00/01/02/03/05 acquisition/inventory、legacy migrated producer退出、PublicationView consumers、qualification、fault/rollback primitives和new/rollback/restore终态编排也已实现。第二真实布局/holdout与SEC acquisition receipt均已通过；三次live Reader因provider `Insufficient Balance`失败，故十公司formal staging、committed active publication、rollback/restore与full receipt仍不存在。因此：
+zero-AI R2已形成committed active并保留R1 rollback/restore历史，但WB-4以后、AI Reader、39指标最终Cutover和full receipt仍不存在。因此：
 
 - `tools/run_acceptance.py --scope recorded` 强制离线且不修改 pointer/root mirrors，按 R4 只封存并发快速本地证据，最高状态是 `PASSED_FAST_LOCAL_ONLY`；
 - `--scope full` 未带 `--execute-live` 返回 `LIVE_EXECUTION_NOT_AUTHORIZED`；带授权但凭据或qualification缺失时返回 BLOCKED且不开始 Cutover；首次A→B不要求预先存在previous publication；
 - 只有 `python3 tools/run_acceptance.py --scope full --execute-live` 完成 new→rollback→restore 三次单进程、单次pin terminal cycle并最终返回 0，才是 full PASS；
-- 当前根目录 report/CSV/manifest 继续按第 3–5 节读取；不存在可供业务用户采信的 vNext active publication，也不能写 `Closes #12`。
+- 当前根目录report/CSV/manifest来自R2 successor，只能按22指标partial ratchet解释；不能写Issue #15最终Done或`Closes #15`。
 
 这些限制是当前能力边界，不是 caveat 可豁免项。
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->

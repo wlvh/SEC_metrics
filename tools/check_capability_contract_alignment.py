@@ -52,6 +52,7 @@ ENTRY_STATUSES = {"active", "deprecated"}
 TEST_STATUSES = {
     "automated_partial",
     "automated_partial_scenario",
+    "automated_formal_active",
     "automated_recorded",
     "automated_recorded_negative",
     "automated_recorded_negative_matrix",

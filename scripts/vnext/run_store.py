@@ -1303,6 +1303,7 @@ def _structured_facts_from_sources(
                     source_reference=reference,
                     approved_concepts=concepts,
                     allowed_ciks=company_ciks,
+                    include_instant=False,
                 )
             )
         except ValueError as error:
@@ -1677,6 +1678,7 @@ def _validate_record_graph(
             raise RunStoreError("SYSTEM review record differs from D-06")
     primary_fields = {
         "AI_EXTRACTION_ATTEMPT": "attempt_id",
+        "DETERMINISTIC_VERIFIED_CLAIM": "verified_claim_id",
         "DERIVED_ASSET": "derived_asset_id",
         "EVIDENCE_CHECK": "evidence_check_id",
         "EXECUTION_TRACE": "trace_id",
@@ -1720,6 +1722,33 @@ def _validate_record_graph(
         for record in records
         if record["record_type"] == "VERIFIED_OBSERVATION"
     }
+    deterministic_claims = {
+        str(record["verified_claim_id"]): record
+        for record in records
+        if record["record_type"] == "DETERMINISTIC_VERIFIED_CLAIM"
+    }
+    if any(
+        claim["source_reference_id"] not in source_ids
+        or claim["company_id"] != manifest["company_id"]
+        for claim in deterministic_claims.values()
+    ):
+        raise RunStoreError("Deterministic claim source binding differs")
+    for observation in observations.values():
+        binding = observation["source_binding"]
+        if "matched_verified_claim_ids" not in binding:
+            continue
+        claim_ids = binding["matched_verified_claim_ids"]
+        if (
+            not isinstance(claim_ids, list)
+            or any(
+                not isinstance(claim_id, str)
+                or claim_id not in deterministic_claims
+                for claim_id in claim_ids
+            )
+        ):
+            raise RunStoreError(
+                "Observation deterministic claim binding differs"
+            )
     traces = {
         str(record["trace_id"]): record
         for record in records
@@ -2519,6 +2548,7 @@ def _run_content_and_audit_hashes(
         ``(content_manifest_hash, audit_manifest_hash)``.
     """
     content_types = {
+        "DETERMINISTIC_VERIFIED_CLAIM",
         "DERIVED_ASSET",
         "EXECUTION_TRACE",
         "METRIC_RESULT",

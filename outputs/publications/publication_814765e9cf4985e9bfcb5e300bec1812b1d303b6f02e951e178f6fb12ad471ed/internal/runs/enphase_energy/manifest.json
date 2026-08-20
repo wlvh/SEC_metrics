@@ -1,0 +1,50 @@
+{
+  "record_type": "RUN",
+  "status": "FROZEN",
+  "records_file_hash": "f67dd79146e8523b4e0ba9cc5cc02701790dc714322ef77b2d8ca67c70a82abe",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "6cadc114a903ef59e81afedb75f78bcf19624a3a33076c061d8e58cb8a94d26c",
+  "content_manifest_hash": "sha256:3bda8e2bcad2d00f93ee73bec2acb507eef27f78cdca49bc1725bfbc7c6f2115",
+  "audit_manifest_hash": "sha256:9a5150f7fe3107d8fd9bd153851f422104facac52edd61ed88faae5eef0154d2",
+  "run_id": "run:cutover:98c8e49c3b1f30a7142c203bf0ce38f61193460904f32df9c874c61013ceca0c",
+  "company_id": "enphase_energy",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:374643665da7bbb31076ae94fc32cff5c09973f8bbdfb25db751c646e997808f",
+      "raw_asset_id": "sha256:ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+      "company_id": "enphase_energy",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001463101.json",
+      "accession": "0001463101-26-000013",
+      "document_name": "CIK0001463101.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/B01_revenue.md": "5942066d0fd57870d437a6619de72393532b10d48d4098f10cd39307622e3520",
+    "catalog/metrics/B03_ebitda_margin.md": "2705cc20f3e7dbd6a5cbb46bb051b2a16e3037d391856878c3ea74b4441a3608",
+    "catalog/metrics/B10_occupancy.md": "bb98f1812e795ced44fc805e67d75af479f4df0c095961733808b9d98646a570",
+    "catalog/metrics/B11_revpar.md": "9206d07414e8d2f6ec45b1b4df8ea202ec3acf5bbecbbbb95bdcc0198077cc3e"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}
