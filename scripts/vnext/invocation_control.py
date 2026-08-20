@@ -140,6 +140,18 @@ SUCCESS_RESPONSE_FIELDS = {
     "success_response_receipt_id",
     "usage",
 }
+INVOCATION_STATE_NAMESPACES = (
+    "abandoned",
+    "acceptances",
+    "attempts",
+    "egress",
+    "executions",
+    "plans",
+    "requests",
+    "reservation_archive",
+    "reservations",
+    "responses",
+)
 
 
 class InvocationControlError(ValueError):
@@ -573,18 +585,7 @@ def _state_root(*, workspace_dir: Path) -> Path:
     root.mkdir(exist_ok=True)
     if root.is_symlink() or not root.is_dir():
         raise InvocationControlError("Invocation state root is unsafe")
-    for name in (
-        "acceptances",
-        "abandoned",
-        "attempts",
-        "egress",
-        "executions",
-        "plans",
-        "reservation_archive",
-        "reservations",
-        "requests",
-        "responses",
-    ):
+    for name in INVOCATION_STATE_NAMESPACES:
         path = root / name
         path.mkdir(exist_ok=True)
         if path.is_symlink() or not path.is_dir():
@@ -1953,9 +1954,12 @@ def structured_only_result(
         raise InvocationControlError("Release contains a model-provider route")
     root = _state_root(workspace_dir=workspace_dir)
     observed_files = {}
-    for namespace in sorted(
-        path.name for path in root.iterdir() if path.is_dir()
-    ):
+    namespaces = sorted(path.name for path in root.iterdir() if path.is_dir())
+    if tuple(namespaces) != INVOCATION_STATE_NAMESPACES:
+        raise InvocationControlError(
+            "Invocation observation namespace exact set differs"
+        )
+    for namespace in namespaces:
         bindings = []
         directory = root / namespace
         for path in sorted(directory.rglob("*")):

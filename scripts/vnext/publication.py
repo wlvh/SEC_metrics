@@ -30,6 +30,7 @@ from .canonical import CanonicalError, atomic_write_bytes, atomic_write_json
 from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
 from .canonical import sha256_bytes, sha256_file, strict_json_file
 from .canonical import strict_json_loads
+from .invocation_control import INVOCATION_STATE_NAMESPACES
 from .projector import LEGACY_BASELINE_SOURCE_FILES
 from .projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
 from .projector import LEGACY_MIGRATION_STATUSES, LEGACY_PROOF_MODES
@@ -4281,17 +4282,7 @@ def _verify_zero_ai_formal_release(
         for field in invocation
         if field != "invocation_observation_id"
     }
-    namespaces = {
-        "abandoned",
-        "attempts",
-        "egress",
-        "executions",
-        "plans",
-        "reservation_archive",
-        "reservations",
-        "requests",
-        "responses",
-    }
+    namespaces = set(INVOCATION_STATE_NAMESPACES)
     observed_files = invocation["observed_invocation_files"]
     if (
         invocation["schema_version"] != 1

@@ -35,6 +35,7 @@ from vnext.invocation_control import execute_batch, execute_invocation
 from vnext.invocation_control import execution_identity
 from vnext.invocation_control import recover_abandoned_before_egress
 from vnext.invocation_control import structured_only_result
+from vnext.invocation_control import INVOCATION_STATE_NAMESPACES
 from vnext.provider_runtime import estimate_context_tokens
 from vnext.provider_runtime import load_provider_runtime_authority
 from vnext.reader_input import build_reader_input_manifest
@@ -1523,6 +1524,10 @@ class InvocationControlTest(unittest.TestCase):
                 "mock_transport_invocation_count": 0,
             },
             structured["counters"],
+        )
+        self.assertEqual(
+            set(INVOCATION_STATE_NAMESPACES),
+            set(structured["observed_invocation_files"]),
         )
         with tempfile.TemporaryDirectory() as directory:
             invocation_plan = plan()
