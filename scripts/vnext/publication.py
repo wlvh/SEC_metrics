@@ -4283,6 +4283,8 @@ def _verify_zero_ai_formal_release(
         if field != "invocation_observation_id"
     }
     namespaces = set(INVOCATION_STATE_NAMESPACES)
+    if receipt["schema_version"] == 1:
+        namespaces.remove("acceptances")
     observed_files = invocation["observed_invocation_files"]
     if (
         invocation["schema_version"] != 1
