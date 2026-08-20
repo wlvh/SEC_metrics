@@ -323,7 +323,8 @@ def scoped_repository(
         shutil.copy2(source, repo_root / "scripts" / source.name)
     (repo_root / "tools").mkdir()
     for filename in (
-        "check_no_company_literals.py", "check_vnext_semantics.py",
+        "check_no_company_literals.py", "check_provider_egress.py",
+        "check_vnext_semantics.py", "check_zero_ai_projection.py",
         "run_acceptance.py", "vnext_review.py",
     ):
         shutil.copy2(

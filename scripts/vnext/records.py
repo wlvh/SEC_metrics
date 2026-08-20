@@ -1319,8 +1319,14 @@ def _validate_record_semantics(
                     "{} value is not canonical".format(record_type)
                 )
     if record_type == "METRIC_RESULT":
-        if (record["value"] is None) != (record["unit"] is None):
+        if record["value"] is not None and record["unit"] is None:
             raise RecordError("MetricResult value/unit nullability differs")
+        if record["value"] is None and record["unit"] is not None and (
+            record["quality"] != "NOT_MEANINGFUL"
+            or record["applicability"] != "APPLICABLE"
+            or record["publication"] != "PUBLISHED"
+        ):
+            raise RecordError("MetricResult null-value unit state differs")
         if record["value"] is not None and record["publication"] != (
             "PUBLISHED"
         ):

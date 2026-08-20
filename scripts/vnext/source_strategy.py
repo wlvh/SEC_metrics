@@ -97,6 +97,8 @@ RELEASE_AUTHORITY_FIELDS = {
     "final_metric_id_set_hash",
     "frozen_legacy_keyset_hash",
     "producer_inventory_sha256",
+    "provider_model_runtime_sha256",
+    "public_projection_catalog_sha256",
     "qualification_matrix_subset_hash",
     "source_strategy_registry_sha256",
 }
@@ -543,6 +545,12 @@ def _release_authority(
         "producer_inventory_sha256": sha256_file(
             path=(repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
                   / "legacy_semantic_producer_inventory.json")
+        ),
+        "provider_model_runtime_sha256": sha256_file(
+            path=repo_root / "config" / "provider_model_runtime.json"
+        ),
+        "public_projection_catalog_sha256": sha256_file(
+            path=repo_root / "catalog" / "zero_ai_public_projection.json"
         ),
         "qualification_matrix_subset_hash": content_hash(
             value=list(qualification_subset)

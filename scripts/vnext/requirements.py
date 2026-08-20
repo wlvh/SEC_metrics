@@ -46,6 +46,8 @@ ISSUE_15_SNAPSHOT_FILES = {
 ISSUE_15_RUNTIME_AUTHORITY_FILES = {
     "catalog/deterministic_metrics.json",
     "catalog/event_routes.json",
+    "catalog/zero_ai_public_projection.json",
+    "config/provider_model_runtime.json",
     "config/source_strategy_registry.json",
 }
 ISSUE_15_EFFECTIVE_DECISION_IDS = {
@@ -1339,6 +1341,16 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         "decision_register_sha256": sha256_file(path=paths["decisions"]),
         "event_route_catalog_sha256": sha256_file(
             path=repository_root / "catalog" / "event_routes.json"
+        ),
+        "provider_model_runtime_sha256": sha256_file(
+            path=repository_root / "config" / "provider_model_runtime.json"
+        ),
+        "public_projection_catalog_sha256": sha256_file(
+            path=(
+                repository_root
+                / "catalog"
+                / "zero_ai_public_projection.json"
+            )
         ),
         "foundation_verification_receipt_sha256": sha256_file(
             path=paths["foundation_verification"]

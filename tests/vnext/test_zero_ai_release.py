@@ -10,6 +10,7 @@ import shutil
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT
 from vnext import zero_ai_r2
@@ -18,6 +19,11 @@ from vnext.publication import PublicationError, PublicationView
 from vnext.publication import ROOT_MIRROR_RELATIVE_PATHS
 from vnext.publication import ZERO_AI_FORMAL_MANIFEST
 from vnext.publication import verify_publication_bundle
+from vnext.projection_independence import build_projection_independence_receipt
+from vnext.public_projection import METRICS_FIELDS, assemble_public_rows
+from vnext.public_projection import compare_public_rows, render_public_rows
+from vnext.zero_ai_release import _coordinate_periods, _freeze_r1_runs
+from vnext.zero_ai_release import _r1_source_plan, _registry_rows
 
 
 ZERO_COUNTERS = {
@@ -57,6 +63,183 @@ class ZeroAiReleaseTest(unittest.TestCase):
         self.assertFalse(
             hasattr(zero_ai_r2, "_selected_component_claims")
         )
+
+    def test_r1_public_rows_render_without_legacy_rows(self) -> None:
+        """Render R1 first, then use frozen legacy only as field oracle."""
+        _active, r1_view = self._active_and_r1()
+        legacy_dir = (
+            REPO_ROOT / "outputs" / "publications"
+            / str(r1_view.manifest["previous_publication_id"])
+        )
+        plan, companies, _proofs, projection_claims = _r1_source_plan(
+            repo_root=REPO_ROOT, legacy_snapshot_dir=legacy_dir,
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            coordinates, _files, records = _freeze_r1_runs(
+                repo_root=REPO_ROOT,
+                workspace_dir=Path(directory),
+                plan=plan,
+                run_companies=companies,
+            )
+        coordinates = _coordinate_periods(
+            coordinates=coordinates, run_companies=companies,
+        )
+        rendered = render_public_rows(
+            repo_root=REPO_ROOT,
+            metric_ids=("B01", "B03"),
+            registry_rows=_registry_rows(repo_root=REPO_ROOT),
+            coordinates=coordinates,
+            records=records,
+            source_references=plan["source_references"],
+            filing_inventory=[],
+            projection_claims=projection_claims,
+        )
+        legacy_rows = list(csv.DictReader(
+            io.StringIO((legacy_dir / "metrics_matrix.csv").read_text(
+                encoding="utf-8"
+            ))
+        ))
+        oracle = [
+            row for row in legacy_rows if row["metric_id"] in {"B01", "B03"}
+        ]
+        oracle_keys = {
+            (row["company"], row["metric_id"]) for row in oracle
+        }
+        compatibility = compare_public_rows(
+            rendered_rows=[
+                row for row in rendered["rows"]
+                if (row["company"], row["metric_id"]) in oracle_keys
+            ],
+            frozen_legacy_rows=oracle,
+            approved_deltas=rendered["approved_deltas"],
+            approved_delta_authority_hash=rendered[
+                "approved_delta_authority_hash"
+            ],
+        )
+        self.assertEqual(20, len(rendered["rows"]))
+        self.assertEqual(18, compatibility["compared_key_count"])
+        self.assertEqual(18 * len(METRICS_FIELDS), compatibility[
+            "compared_field_count"
+        ])
+        self.assertEqual([], compatibility["unexpected_delta_exact_set"])
+        self.assertEqual([], compatibility["approved_delta_exact_set"])
+
+    def test_r2_projection_and_producers_survive_legacy_canary(self) -> None:
+        """Generate 220 rows before a separate 141x20 legacy comparison."""
+        _active, r1_view = self._active_and_r1()
+        legacy_id = str(r1_view.manifest["previous_publication_id"])
+        legacy_dir = REPO_ROOT / "outputs" / "publications" / legacy_id
+        legacy_bytes = (legacy_dir / "metrics_matrix.csv").read_bytes()
+        legacy_rows = list(csv.DictReader(
+            io.StringIO(legacy_bytes.decode("utf-8"))
+        ))
+        marker = json.loads(r1_view.read_bytes(
+            relative_path=ZERO_AI_FORMAL_MANIFEST
+        ).decode("utf-8"))
+        predecessor = {
+            "active_view": r1_view,
+            "r1_marker": marker,
+            "legacy_predecessor_id": legacy_id,
+            "legacy_predecessor_dir": legacy_dir,
+            "legacy_metrics_bytes": legacy_bytes,
+            "legacy_metrics": legacy_rows,
+        }
+        with patch(
+            "vnext.zero_ai_r2._legacy_publication_context",
+            return_value=predecessor,
+        ):
+            context = zero_ai_r2.build_r2_source_plan(repo_root=REPO_ROOT)
+        producer_context = dict(context)
+        for field in (
+            "legacy_metrics", "legacy_metrics_bytes", "legacy_events",
+            "legacy_events_sha256",
+        ):
+            producer_context.pop(field)
+        graph = zero_ai_r2.build_r2_execution_graph(
+            repo_root=REPO_ROOT, source_context=producer_context,
+        )
+        rendered = render_public_rows(
+            repo_root=REPO_ROOT,
+            metric_ids=zero_ai_r2.R2_METRIC_IDS,
+            registry_rows=context["registry_rows"],
+            coordinates=graph["coordinates"],
+            records=(
+                zero_ai_r2._r1_projection_records(active_view=r1_view)
+                + [dict(record) for record in graph["records"]]
+            ),
+            source_references=context["plan"]["source_references"],
+            filing_inventory=context["public_filing_inventory"],
+            projection_claims=graph["projection_claims"],
+        )
+        event_compatibility = zero_ai_r2.compare_event_key_parity(
+            source_context=context, graph=graph,
+        )
+        oracle = [
+            row for row in legacy_rows
+            if row["metric_id"] in set(zero_ai_r2.R2_METRIC_IDS)
+        ]
+        oracle_keys = {
+            (row["company"], row["metric_id"]) for row in oracle
+        }
+        compatibility = compare_public_rows(
+            rendered_rows=[
+                row for row in rendered["rows"]
+                if (row["company"], row["metric_id"]) in oracle_keys
+            ],
+            frozen_legacy_rows=oracle,
+            approved_deltas=rendered["approved_deltas"],
+            approved_delta_authority_hash=rendered[
+                "approved_delta_authority_hash"
+            ],
+        )
+        predecessor_rows = list(csv.DictReader(io.StringIO(
+            r1_view.read_bytes(relative_path="metrics_matrix.csv").decode(
+                "utf-8"
+            )
+        )))
+        public_rows = assemble_public_rows(
+            predecessor_rows=predecessor_rows,
+            rendered_rows=rendered["rows"],
+            metric_ids=zero_ai_r2.R2_METRIC_IDS,
+        )
+        new_rows = [
+            row for row in rendered["rows"]
+            if (row["company"], row["metric_id"]) not in oracle_keys
+        ]
+        key_set = sorted(
+            (
+                {"company": row["company"], "metric_id": row["metric_id"]}
+                for row in public_rows
+            ),
+            key=lambda row: (row["company"], row["metric_id"]),
+        )
+        self.assertEqual(220, len(graph["coordinates"]))
+        self.assertEqual(220, len(rendered["rows"]))
+        self.assertEqual(141, compatibility["compared_key_count"])
+        self.assertEqual(141 * len(METRICS_FIELDS), compatibility[
+            "compared_field_count"
+        ])
+        self.assertEqual([], compatibility["unexpected_delta_exact_set"])
+        self.assertEqual([], compatibility["approved_delta_exact_set"])
+        self.assertEqual(79, len(new_rows))
+        self.assertTrue(all(
+            row["status"] == "N_A_STRUCTURAL"
+            and row["source_class"] == "STRUCTURAL"
+            for row in new_rows
+        ))
+        self.assertEqual(309, len(public_rows))
+        self.assertEqual(
+            "sha256:33b2a81ac6507b33a37509189fb8eb7fae87fa25c2f441bc4b4bca6705f56fab",
+            content_hash(value=key_set),
+        )
+        self.assertEqual(
+            "ZERO_AI_EVENT_KEY_COMPATIBILITY_RECEIPT",
+            event_compatibility["record_type"],
+        )
+        independence = build_projection_independence_receipt(
+            repo_root=REPO_ROOT,
+        )
+        self.assertEqual("PASSED", independence["status"])
 
     def test_r1_active_rollback_restore_and_read_back_are_bound(self) -> None:
         """Verify final B, predecessor A, seven receipt roles, and mirrors."""

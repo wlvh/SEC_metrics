@@ -4075,6 +4075,105 @@ def _verify_legacy_baseline_import(
         raise PublicationError("Legacy baseline outer binding differs")
 
 
+def _verify_zero_ai_projection_closure(
+    *, bundle_dir: Path, receipt: Mapping[str, object],
+) -> None:
+    """Verify schema-v2 full-field projection and retirement evidence."""
+    try:
+        projection = strict_json_file(
+            path=bundle_dir / "internal/public_projection_closure.json"
+        )
+        retirement = strict_json_file(
+            path=bundle_dir / "internal/retirement_receipt.json"
+        )
+    except CanonicalError as error:
+        raise PublicationError("Zero-AI projection closure is invalid") from error
+    if not isinstance(projection, dict) or not isinstance(retirement, dict):
+        raise PublicationError("Zero-AI projection closure must be objects")
+    projection_body = {
+        field: projection[field]
+        for field in projection if field != "projection_closure_id"
+    }
+    retirement_body = {
+        field: retirement[field]
+        for field in retirement if field != "retirement_receipt_id"
+    }
+    compatibility = projection["compatibility"]
+    if not isinstance(compatibility, dict):
+        raise PublicationError("Zero-AI compatibility closure is invalid")
+    compatibility_body = {
+        field: compatibility[field]
+        for field in compatibility if field != "strict_compatibility_hash"
+    }
+    expected_keys = 18 if receipt["release_stage"] == "R1" else 141
+    independence = retirement["projection_independence"]
+    if not isinstance(independence, dict):
+        raise PublicationError("Zero-AI projection independence is invalid")
+    independence_body = {
+        field: independence[field]
+        for field in independence
+        if field != "projection_independence_receipt_id"
+    }
+    if (
+        projection["projection_closure_id"]
+        != content_hash(value=projection_body)
+        or projection["projection_closure_id"]
+        != receipt["projection_closure_id"]
+        or compatibility["strict_compatibility_hash"]
+        != content_hash(value=compatibility_body)
+        or compatibility["strict_compatibility_hash"]
+        != receipt["strict_compatibility_hash"]
+        or compatibility["compared_key_count"] != expected_keys
+        or compatibility["compared_field_count"]
+        != expected_keys * len(METRIC_FIELDS)
+        or compatibility["compared_field_exact_set"] != list(METRIC_FIELDS)
+        or compatibility["unexpected_delta_exact_set"]
+        or compatibility["approved_delta_exact_set"]
+        or retirement["retirement_receipt_id"]
+        != content_hash(value=retirement_body)
+        or retirement["projection_closure_id"]
+        != projection["projection_closure_id"]
+        or independence["status"] != "PASSED"
+        or independence["projection_independence_receipt_id"]
+        != content_hash(value=independence_body)
+    ):
+        raise PublicationError("Zero-AI projection evidence differs")
+    if receipt["release_stage"] != "R2":
+        return
+    try:
+        event = strict_json_file(
+            path=bundle_dir / "internal/event_key_compatibility.json"
+        )
+        acquisition = strict_json_file(
+            path=bundle_dir / "internal/acquisition_event_source_sets.json"
+        )
+    except CanonicalError as error:
+        raise PublicationError("R2 event projection closure is invalid") from error
+    if not isinstance(event, dict) or not isinstance(acquisition, dict):
+        raise PublicationError("R2 event projection closure must be objects")
+    event_body = {
+        field: event[field]
+        for field in event if field != "event_compatibility_receipt_id"
+    }
+    acquisition_body = {
+        field: acquisition[field]
+        for field in acquisition
+        if field != "acquisition_source_set_closure_id"
+    }
+    if (
+        event["event_compatibility_receipt_id"]
+        != content_hash(value=event_body)
+        or acquisition["acquisition_source_set_closure_id"]
+        != content_hash(value=acquisition_body)
+        or projection["event_compatibility_receipt_id"]
+        != event["event_compatibility_receipt_id"]
+        or projection["acquisition_source_set_closure_id"]
+        != acquisition["acquisition_source_set_closure_id"]
+        or len(event["comparisons"]) != 10
+    ):
+        raise PublicationError("R2 event projection evidence differs")
+
+
 def _verify_zero_ai_formal_release(
     *, bundle_dir: Path, manifest: Mapping[str, object], internal_paths: set,
 ) -> None:
@@ -4126,7 +4225,9 @@ def _verify_zero_ai_formal_release(
         "validation_receipt_id",
         "zero_ai_release_receipt_id",
     }
-    if set(receipt) != required:
+    if receipt["schema_version"] == 2:
+        required.add("projection_closure_id")
+    if receipt["schema_version"] not in {1, 2} or set(receipt) != required:
         raise PublicationError("Zero-AI formal receipt fields differ")
     body = {
         field: receipt[field]
@@ -4134,8 +4235,7 @@ def _verify_zero_ai_formal_release(
         if field != "zero_ai_release_receipt_id"
     }
     if (
-        receipt["schema_version"] != 1
-        or receipt["record_type"] != "ZERO_AI_FORMAL_RELEASE_RECEIPT"
+        receipt["record_type"] != "ZERO_AI_FORMAL_RELEASE_RECEIPT"
         or receipt["status"] != "PASSED"
         or receipt["release_stage"] not in {"R1", "R2"}
         or receipt["zero_ai_release_receipt_id"] != content_hash(value=body)
@@ -4291,6 +4391,10 @@ def _verify_zero_ai_formal_release(
             or binding["size"] != path.stat().st_size
         ):
             raise PublicationError("Zero-AI internal bytes differ")
+    if receipt["schema_version"] == 2:
+        _verify_zero_ai_projection_closure(
+            bundle_dir=bundle_dir, receipt=receipt,
+        )
     artifact_hashes = receipt["public_artifact_hashes"]
     if not isinstance(artifact_hashes, dict) or set(artifact_hashes) != (
         REQUIRED_BUNDLE_FILES

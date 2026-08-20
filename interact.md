@@ -111,13 +111,13 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 Issue #15 WB-2 另外提供一份可机械加载的39指标SourceStrategy registry，只描述target route；当前ratchet set只能从不可变ReleasePlan chain的`cumulative_metric_ids`读取。loader要求parent累计metrics、vNext keys与retired producers分别为child子集，并显式推导removed/unretired exact set为空；同步重签全部hash不能合法化删除。该registry完成时root `outputs/metrics_matrix.csv`仍与WB-1冻结SHA-256一致，未执行任何adapter、SEC/模型调用或active publication；不能把“route已登记”读成“指标已迁移”。
 <!-- capability-anchor: CAPABILITY.issue_15_source_strategy_registry -->
 
-WB-2B 的确定性 router 使用同一 `sources[]` 形状表达单源与多源，并以pinned SEC submissions current/history shards和SourceSetManifest union证明发现集完整。R2已用该路径正式发布；C01/E03共用Item 5.02 claims，E02/E04零值绑定完整8-K集合，E01 matched key set与legacy逐项相等。
+WB-2B 的确定性 router 使用同一 `sources[]` 形状表达单源与多源，并以pinned SEC submissions current/history shards、仓库immutable acquisition receipts补集和SourceSetManifest union证明发现集完整；不从legacy events反推source set。R2已用该路径正式发布；C01/E03共用Item 5.02 claims，E02/E04零值绑定完整8-K集合，E01 matched key set在Result生成后与legacy逐项相等。
 <!-- capability-anchor: CAPABILITY.issue_15_deterministic_source_router -->
 
 WB-3 把模型调用表达为 release-input plan→AI invocation plan→execution→immutable attempts。provider response必须先通过严格schema、task contract、Candidate构造和真实mechanical Evidence，形成绑定Spec/source/DerivedAsset/Candidate/Evidence的acceptance receipt，才可标记SUCCEEDED并成为exact reusable response；resume会重新验证该完整closure，Workflow重算结果也必须与其exact一致。无 reusable response 时只有通过独占 reservation 的 owner 可以打开唯一provider opener。context限制来自版本化provider/model authority；当前`UTF8_BYTE_UPPER_BOUND`是安全上界而非exact token数。operator 可分别观察 real egress、paid-endpoint call 和 mock invocation：paid-endpoint call由billing class与真实egress marker联合推导，不表示provider已确认账单。`UNKNOWN_REMOTE_OUTCOME` 必须人工核对，不会自动重试。仓库不显示或执行金额 cap，cost 只作观测；资源 hard limit 仍在 egress 前拒绝。本 PR 的 zero-AI R1/R2 只产生三种计数为 0 的 structured-only 证据。
 <!-- capability-anchor: CAPABILITY.issue_15_invocation_control -->
 
-R1的module-owned入口保留A→B→A→B历史。R2在该B上累计22指标/220坐标，141个legacy替换行strict-compatible，79个新增key均为`N_A_STRUCTURAL`，public matrix为309行；event parity、retirement、active/read-back receipts均持久化。既有8-K body/header缺request-attempt locator时，只有request row和当前commit Git blob同时匹配才成为`IMMUTABLE_GIT_BLOB`，不会发起SEC网络。
+R1的module-owned入口保留A→B→A→B历史。R1/R2的migrated public rows先由Result/Trace/Claims、registry和repository-bound projection catalog完整渲染，legacy rows只在随后独立比较器中作为18×20/141×20字段oracle；approved delta和unexpected delta exact set均为空。R2在R1 B上累计22指标/220坐标，79个新增key均为`N_A_STRUCTURAL`，public matrix为309行；projection independence、event parity、retirement、active/read-back receipts均持久化。既有8-K body/header缺request-attempt locator时，只有request row和当前commit Git blob同时匹配才成为`IMMUTABLE_GIT_BLOB`，不会发起SEC网络。
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
 

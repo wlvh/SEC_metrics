@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 import subprocess
 from collections import Counter
 from decimal import Decimal, ROUND_HALF_EVEN, localcontext
@@ -35,6 +36,7 @@ from .calculator import calculate_observation_metric, metric_is_applicable
 from .canonical import atomic_write_bytes, content_hash, decimal_text
 from .canonical import execution_semantics_hash, parse_decimal, sha256_bytes
 from .canonical import sha256_file, strict_json_file
+from .deterministic_router import acquisition_event_source_set_receipt
 from .deterministic_router import adapt_8k_item_index, adapt_accession_xbrl
 from .deterministic_router import adapt_companyfacts
 from .deterministic_router import build_multi_source_release_input_plan
@@ -49,6 +51,12 @@ from .publication import PublicationView, REQUIRED_BUNDLE_FILES
 from .publication import ZERO_AI_FORMAL_MANIFEST, _commit_publication
 from .publication import _write_prepared_publication_bundle
 from .publication import publication_layout
+from .public_projection import event_target_period
+from .public_projection import load_public_projection_catalog
+from .public_projection import projection_xbrl_concepts
+from .public_projection import assemble_public_rows, compare_public_rows
+from .public_projection import csv_bytes, render_coverage_rows
+from .public_projection import render_public_rows
 from .records import metric_result_contract_hash, validate_record
 from .requirements import load_requirement_snapshot
 from .source_strategy import load_issue15_release_plan
@@ -61,6 +69,7 @@ from .zero_ai_release import _append_publication_note, _csv_rows
 from .zero_ai_release import _internal_bindings, _json_bytes, _ledger_binding
 from .zero_ai_release import _public_key_proof, _read_back_proof
 from .zero_ai_release import _receipt, _registry_rows, _retirement_receipt
+from .zero_ai_release import _accession_instance_descriptor
 from .zero_ai_release import _source_commit_binding
 from .zero_ai_release import _source_reference
 
@@ -630,41 +639,6 @@ def _period_from_companyfacts_claims(
     return {"period_start": period_start, "period_end": period_end}
 
 
-def _accession_instance_descriptor(
-    *, repo_root: Path, company_id: str, cik: str,
-    filing: Mapping[str, str],
-) -> Dict[str, str]:
-    """Resolve one submissions-declared 10-K to its local XBRL instance."""
-    accession_digits = filing["accession"].replace("-", "")
-    suffix = "_{}_{}".format(str(int(cik)), accession_digits)
-    directories = [
-        path
-        for path in (repo_root / "evidence" / "accession_materials").iterdir()
-        if path.is_dir() and path.name.endswith(suffix)
-    ]
-    if len(directories) != 1:
-        raise ZeroAiReleaseError(
-            "10-K accession directory is ambiguous: " + company_id
-        )
-    primary = str(filing["primary_document"])
-    if "." not in primary:
-        raise ZeroAiReleaseError("10-K primary document name is invalid")
-    document_name = primary.rsplit(".", maxsplit=1)[0] + "_htm.xml"
-    path = directories[0] / document_name
-    if path.is_symlink() or not path.is_file():
-        raise ZeroAiReleaseError("10-K XBRL instance is absent")
-    return {
-        "accession": filing["accession"],
-        "document_name": document_name,
-        "repo_relative_path": path.relative_to(repo_root).as_posix(),
-        "source_url": (
-            "https://www.sec.gov/Archives/edgar/data/{}/{}/{}".format(
-                str(int(cik)), accession_digits, document_name,
-            )
-        ),
-    }
-
-
 def _event_accessions(
     *, inventory_bytes: bytes, period_start: str, period_end: str,
 ) -> List[str]:
@@ -830,6 +804,60 @@ def _event_documents(
             }
         )
     return documents, references, proofs
+
+
+def _acquired_event_filings(
+    *, repo_root: Path, company_id: str, allowed_ciks: Sequence[str],
+    period_start: str, period_end: str,
+) -> List[Dict[str, str]]:
+    """Discover all in-window 8-Ks from immutable acquisition receipts."""
+    normalized_ciks = {str(int(cik)) for cik in allowed_ciks}
+    filings = []
+    root = repo_root / "evidence" / "accession_materials"
+    for directory in sorted(root.iterdir()):
+        if directory.is_symlink() or not directory.is_dir():
+            raise ZeroAiReleaseError("Event acquisition namespace is unsafe")
+        parts = directory.name.rsplit("_", maxsplit=2)
+        if len(parts) != 3 or not parts[1].isdigit():
+            continue
+        if str(int(parts[1])) not in normalized_ciks:
+            continue
+        headers = sorted(directory.glob("*.hdr.sgml"))
+        if len(headers) != 1 or headers[0].is_symlink():
+            continue
+        try:
+            text = headers[0].read_text(encoding="utf-8")
+        except UnicodeDecodeError as error:
+            raise ZeroAiReleaseError("Event acquisition header is invalid") from error
+        accession_match = re.search(
+            pattern=r"<ACCESSION-NUMBER>\s*([^\r\n]+)", string=text,
+        )
+        form_match = re.search(pattern=r"<TYPE>\s*([^\r\n]+)", string=text)
+        date_match = re.search(
+            pattern=r"<FILING-DATE>\s*([0-9]{8})", string=text,
+        )
+        if accession_match is None or form_match is None or date_match is None:
+            raise ZeroAiReleaseError("Event acquisition header is incomplete")
+        if form_match.group(1).strip() not in {"8-K", "8-K/A"}:
+            continue
+        compact_date = date_match.group(1)
+        filed = "{}-{}-{}".format(
+            compact_date[:4], compact_date[4:6], compact_date[6:],
+        )
+        if not period_start <= filed <= period_end:
+            continue
+        accession = accession_match.group(1).strip()
+        if parts[2] != accession.replace("-", ""):
+            raise ZeroAiReleaseError("Event acquisition accession differs")
+        filings.append({
+            "accession": accession,
+            "cik": str(int(parts[1])),
+            "filing_date": filed,
+        })
+    filings.sort(key=lambda filing: filing["accession"])
+    if len(filings) != len({filing["accession"] for filing in filings}):
+        raise ZeroAiReleaseError("Event acquisition filing is duplicated")
+    return filings
 
 
 def _git_blob_binding(
@@ -1002,14 +1030,16 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
         raise ZeroAiReleaseError("R2 cumulative metric exact set differs")
     deterministic_catalog = _load_deterministic_catalog(repo_root=repo_root)
     event_catalog = load_event_route_catalog(repo_root=repo_root)
+    projection_catalog = load_public_projection_catalog(
+        repo_root=repo_root, expected_metric_ids=R2_METRIC_IDS,
+    )
+    projection_concepts = projection_xbrl_concepts(
+        catalog=projection_catalog,
+    )
     registry_rows = _registry_rows(repo_root=repo_root)
     registry = {row["company_id"]: row for row in registry_rows}
     display_to_id = {
         row["display_name"]: row["company_id"] for row in registry_rows
-    }
-    legacy_metric_index = {
-        (row["company"], row["metric_id"]): row
-        for row in legacy["legacy_metrics"]
     }
     companyfacts_concepts = _deterministic_concepts(
         catalog=deterministic_catalog, adapter_id="companyfacts",
@@ -1026,6 +1056,7 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
         mode="r", encoding="utf-8", newline=""
     ) as file_obj:
         filing_inventory = [dict(row) for row in csv.DictReader(file_obj)]
+    acquisition_filing_dates = []
     references = []
     manifests = []
     proofs = {}
@@ -1175,7 +1206,7 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                 applicability=route["applicability"], traits=traits,
             )
             for route in deterministic_catalog["metrics"].values()
-        )
+        ) or bool(projection_concepts)
         if requires_instance:
             instance_descriptor = _accession_instance_descriptor(
                 repo_root=repo_root,
@@ -1215,10 +1246,12 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                         ).read_bytes(),
                         source_reference=instance,
                         source_set_manifest=instance_manifest,
-                        fact_names=_deterministic_concepts(
-                            catalog=deterministic_catalog,
-                            adapter_id="accession_xbrl",
-                        ),
+                        fact_names=sorted(set(
+                            _deterministic_concepts(
+                                catalog=deterministic_catalog,
+                                adapter_id="accession_xbrl",
+                            ) + projection_concepts
+                        )),
                     )
                 },
                 "manifest": instance_manifest,
@@ -1233,44 +1266,55 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                     source_mode="ACCESSION_XBRL",
                 )
             )
-        event_row = legacy_metric_index[(registry_row["display_name"], "E01")]
-        event_target = {
-            "fiscal_year": target["fiscal_year"],
-            "period_start": event_row["period_start"],
-            "period_end": event_row["period_end"],
-        }
+        event_target = event_target_period(
+            target_period=target,
+            continuity_status=str(
+                registry_row["entity_continuity_status"]
+            ),
+            catalog=projection_catalog,
+        )
         event_targets[company_id] = event_target
         base_inventories = []
         primary_cik = str(int(registry[company_id]["primary_cik"]))
         company_ciks = repository_company_ciks(
             repo_root=repo_root, company_id=company_id,
         )
-        expected_event_rows = [
-            row for row in filing_inventory
-            if row["company"] == registry[company_id]["display_name"]
-            and row["source_role"] == "fy_8k"
-        ]
+        acquired_event_filings = _acquired_event_filings(
+            repo_root=repo_root,
+            company_id=company_id,
+            allowed_ciks=company_ciks,
+            period_start=str(event_target["period_start"]),
+            period_end=str(event_target["period_end"]),
+        )
+        if not acquired_event_filings:
+            raise ZeroAiReleaseError(
+                "Event acquisition source set is empty: " + company_id
+            )
         for event_cik in company_ciks:
-            cik_rows = [
-                row for row in expected_event_rows
-                if str(int(row["cik"])) == str(int(event_cik))
+            cik_filings = [
+                filing for filing in acquired_event_filings
+                if filing["cik"] == str(int(event_cik))
             ]
-            if not cik_rows:
-                raise ZeroAiReleaseError("Event CIK lacks its frozen inventory")
+            if not cik_filings:
+                raise ZeroAiReleaseError(
+                    "Event CIK lacks an acquisition receipt"
+                )
             if len(company_ciks) == 1:
                 cik_window = {
                     "period_start": event_target["period_start"],
                     "period_end": event_target["period_end"],
                 }
             else:
-                years = sorted({row["filingDate"][:4] for row in cik_rows})
+                years = sorted({
+                    filing["filing_date"][:4] for filing in cik_filings
+                })
                 cik_window = {
                     "period_start": years[0] + "-01-01",
                     "period_end": years[-1] + "-12-31",
                 }
             if event_cik == primary_cik:
                 base_inventories.append(
-                    (inventory, inventory_bytes, cik_window, cik_rows)
+                    (inventory, inventory_bytes, cik_window)
                 )
                 continue
             padded = str(int(event_cik)).zfill(10)
@@ -1306,11 +1350,10 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                     event_inventory,
                     event_inventory_path.read_bytes(),
                     cik_window,
-                    cik_rows,
                 )
             )
         inventory_candidates = []
-        for base_reference, base_bytes, cik_window, cik_rows in base_inventories:
+        for base_reference, base_bytes, cik_window in base_inventories:
             inventory_candidates.append(
                 {
                     "name": str(base_reference["document_name"]),
@@ -1319,7 +1362,7 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                     "coverage": "CURRENT_RECENT",
                     "window": cik_window,
                     "expected_accessions": sorted(
-                        row["accession"] for row in cik_rows
+                        filing["accession"] for filing in acquired_event_filings
                     ),
                 }
             )
@@ -1379,7 +1422,8 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                         },
                         "window": cik_window,
                         "expected_accessions": sorted(
-                            row["accession"] for row in cik_rows
+                            filing["accession"]
+                            for filing in acquired_event_filings
                         ),
                     }
                 )
@@ -1436,13 +1480,84 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
                     source_mode="ITEM_CODE_INDEX",
                 )
             )
-        expected_event_accessions = {
-            row["accession"] for row in expected_event_rows
+        acquired_accessions = {
+            filing["accession"] for filing in acquired_event_filings
         }
-        if event_accessions != expected_event_accessions:
+        if event_accessions - acquired_accessions:
             raise ZeroAiReleaseError(
-                "Submissions-derived 8-K set differs from frozen inventory"
+                "Submissions 8-K set is outside acquisition receipts"
             )
+        supplemental_accessions = sorted(acquired_accessions - event_accessions)
+        if supplemental_accessions:
+            documents, event_references, event_proofs = _event_documents(
+                repo_root=repo_root,
+                company_id=company_id,
+                accessions=supplemental_accessions,
+            )
+            acquisition_receipt = acquisition_event_source_set_receipt(
+                filing_documents=documents,
+                company_id=company_id,
+                period_start=str(event_target["period_start"]),
+                period_end=str(event_target["period_end"]),
+            )
+            acquisition_body = {
+                "schema_version": 1,
+                "record_type": "SOURCE_SET_MANIFEST",
+                "company_id": company_id,
+                "source_role": "fy_8k_item_inventory_acquisition",
+                "form_types": ["8-K", "8-K/A"],
+                "fiscal_or_date_window": {
+                    "period_start": event_target["period_start"],
+                    "period_end": event_target["period_end"],
+                },
+                "discovery_policy": (
+                    "IMMUTABLE_ACQUISITION_LEDGER_FISCAL_WINDOW_V1"
+                ),
+                "discovered_accession_set_hash": content_hash(
+                    value=supplemental_accessions
+                ),
+                "sec_submissions_inventory_hash": inventory["raw_asset_id"],
+                "inventory_source_reference_id": inventory[
+                    "source_reference_id"
+                ],
+                "ordered_source_reference_ids": acquisition_receipt[
+                    "ordered_source_reference_ids"
+                ],
+                "cutoff_timestamp_or_pinned_submissions_attempt": (
+                    acquisition_receipt["acquisition_source_set_receipt_id"]
+                ),
+            }
+            acquisition_manifest = validate_source_set_manifest(
+                manifest={
+                    **acquisition_body,
+                    "source_set_manifest_id": content_hash(
+                        value=acquisition_body
+                    ),
+                }
+            )
+            references.extend(event_references)
+            manifests.append(acquisition_manifest)
+            proofs.update(event_proofs)
+            event_sets.append({
+                "manifest": acquisition_manifest,
+                "references": event_references,
+                "documents": documents,
+                "inventory_reference": inventory,
+                "inventory_bytes": inventory_bytes,
+                "inventory_name": "ACQUISITION_LEDGER",
+                "inventory_coverage": "IMMUTABLE_ACQUISITION_RECEIPTS",
+                "acquisition_discovery_receipt": acquisition_receipt,
+            })
+            source_roles.append(source_role_plan(
+                manifest=acquisition_manifest,
+                source_mode="ITEM_CODE_INDEX",
+            ))
+            acquisition_filing_dates.extend(
+                acquisition_receipt["filing_dates"]
+            )
+            event_accessions.update(supplemental_accessions)
+        if event_accessions != acquired_accessions:
+            raise ZeroAiReleaseError("Acquired 8-K source set differs")
         role_context[(company_id, "fy_8k_item_inventory")] = {
             "sets": event_sets,
             "ordered_accessions": sorted(event_accessions),
@@ -1514,9 +1629,17 @@ def build_r2_source_plan(*, repo_root: Path) -> Dict[str, object]:
         "display_to_id": display_to_id,
         "deterministic_catalog": deterministic_catalog,
         "event_catalog": event_catalog,
+        "projection_catalog": projection_catalog,
         "legacy_events": legacy_events,
         "legacy_events_sha256": sha256_file(path=events_path),
         "filing_inventory": filing_inventory,
+        "public_filing_inventory": filing_inventory + [
+            {
+                "accession": filing["accession"],
+                "filingDate": filing["filing_date"],
+            }
+            for filing in acquisition_filing_dates
+        ],
         "filing_inventory_sha256": sha256_file(path=filing_inventory_path),
     }
 
@@ -1721,7 +1844,7 @@ def _manual_result_trace(
     period_end: str, scope: Mapping[str, object], spec_closure_hash: str,
     applicability: str, quality: str, reason_code: str,
     input_observation_ids: Sequence[str], steps: Sequence[Mapping[str, object]],
-    accession: object, entity: object,
+    accession: object, entity: object, unit: object,
 ) -> Tuple[Dict[str, object], Dict[str, object]]:
     """Build a validated null Result and its exact ExecutionTrace.
 
@@ -1739,6 +1862,7 @@ def _manual_result_trace(
         steps: Ordered trace events explaining the null result.
         accession: Optional source accession paired with entity.
         entity: Optional source entity paired with accession.
+        unit: Optional canonical unit retained for a null value.
 
     Returns:
         Strict MetricResult and ExecutionTrace.
@@ -1756,7 +1880,7 @@ def _manual_result_trace(
         "publication": "PUBLISHED",
         "reason_code": reason_code,
         "value": None,
-        "unit": None,
+        "unit": unit,
     }
     trace_body = {
         "metric_id": metric_id,
@@ -1878,9 +2002,11 @@ def _deterministic_metric_graph(
                 "accession"
             ],
             entity=str(int(registry_row["primary_cik"])),
+            unit=None,
         )
         return {
             "claims": [],
+            "projection_claims": [],
             "observation": None,
             "result": result,
             "trace": trace,
@@ -1968,9 +2094,11 @@ def _deterministic_metric_graph(
             ],
             accession=reference["accession"],
             entity=str(int(registry_row["primary_cik"])),
+            unit=catalog_route["canonical_unit"],
         )
     return {
         "claims": selected,
+        "projection_claims": claims,
         "observation": observation,
         "result": result,
         "trace": trace,
@@ -2011,13 +2139,16 @@ def _structural_graph(
         steps=[{"event": "N_A_STRUCTURAL"}],
         accession=None,
         entity=None,
+        unit=None,
     )
-    return {"claims": [], "observation": None, "result": result, "trace": trace}
+    return {
+        "claims": [], "projection_claims": [], "observation": None,
+        "result": result, "trace": trace,
+    }
 
 
 def _event_graphs(
     *, context: Mapping[str, object], company_id: str,
-    legacy_index: Mapping[Tuple[str, str], Mapping[str, str]],
 ) -> Tuple[List[Dict[str, object]], List[Dict[str, object]], Dict[str, object]]:
     """Project six event metrics and prove exact legacy event-key parity."""
     source = context["role_context"][(company_id, "fy_8k_item_inventory")]
@@ -2029,6 +2160,11 @@ def _event_graphs(
                 source_set_manifest=event_set["manifest"],
                 inventory_source_reference=event_set["inventory_reference"],
                 inventory_bytes=event_set["inventory_bytes"],
+                acquisition_discovery_receipt=(
+                    event_set["acquisition_discovery_receipt"]
+                    if "acquisition_discovery_receipt" in event_set
+                    else None
+                ),
             )
         )
     claims.sort(
@@ -2038,13 +2174,7 @@ def _event_graphs(
             str(claim["attributes"]["item_code"]),
         )
     )
-    display_name = context["registry"][company_id]["display_name"]
     target = context["event_targets"][company_id]
-    all_events = [
-        row for row in context["legacy_events"]
-        if row["company"] == display_name
-        and target["period_start"] <= row["filing_date"] <= target["period_end"]
-    ]
     graphs = []
     parity = {}
     for metric_id in R2_EVENT_METRIC_IDS:
@@ -2056,57 +2186,11 @@ def _event_graphs(
             target_period=target,
             catalog=context["event_catalog"],
         )
-        legacy_row = legacy_index[(display_name, metric_id)]
-        if projected["result"]["value"] != legacy_row["value"]:
-            raise ZeroAiReleaseError(
-                "Event Result differs from legacy: {}:{}:{}!={}".format(
-                    company_id,
-                    metric_id,
-                    projected["result"]["value"],
-                    legacy_row["value"],
-                )
-            )
         actual_keys = matched_event_key_set(
             metric_id=metric_id,
             claims=claims,
             catalog=context["event_catalog"],
         )
-        route = context["event_catalog"]["routes"][metric_id]
-        direct_codes = set(route["direct_item_codes"])
-        keyword_rules = {
-            str(rule["item_code"]): [
-                normalize_event_text(value=str(alias))
-                for alias in rule["aliases"]
-            ]
-            for rule in route["keyword_item_rules"]
-        }
-        expected_rows = []
-        for row in all_events:
-            item_code = str(row["item_code"])
-            aliases = (
-                keyword_rules[item_code] if item_code in keyword_rules else []
-            )
-            brief = normalize_event_text(value=str(row["brief"]))
-            if item_code in direct_codes or any(
-                alias in brief for alias in aliases
-            ):
-                expected_rows.append(row)
-        expected_keys = sorted([
-            {
-                "source_url": row["source_url"],
-                "accession": row["accession"],
-                "item_code": row["item_code"],
-            }
-            for row in expected_rows
-        ], key=lambda row: (
-            row["source_url"], row["accession"], row["item_code"],
-        ))
-        if actual_keys != expected_keys:
-            raise ZeroAiReleaseError(
-                "Event key-set parity differs: {}:{}".format(
-                    company_id, metric_id,
-                )
-            )
         parity[metric_id] = {
             "matched_event_keys": actual_keys,
             "matched_event_key_set_hash": content_hash(value=actual_keys),
@@ -2117,6 +2201,75 @@ def _event_graphs(
     ]:
         raise ZeroAiReleaseError("Shared event routes do not reuse exact claims")
     return claims, graphs, parity
+
+
+def compare_event_key_parity(
+    *, source_context: Mapping[str, object],
+    graph: Mapping[str, object],
+) -> Dict[str, object]:
+    """Compare produced event keys with frozen legacy semantics afterward."""
+    comparisons = {}
+    for registry_row in source_context["registry_rows"]:
+        company_id = str(registry_row["company_id"])
+        display_name = str(registry_row["display_name"])
+        target = source_context["event_targets"][company_id]
+        all_events = [
+            row for row in source_context["legacy_events"]
+            if row["company"] == display_name
+            and target["period_start"] <= row["filing_date"]
+            <= target["period_end"]
+        ]
+        comparisons[company_id] = {}
+        for metric_id in R2_EVENT_METRIC_IDS:
+            route = source_context["event_catalog"]["routes"][metric_id]
+            direct_codes = set(route["direct_item_codes"])
+            keyword_rules = {
+                str(rule["item_code"]): [
+                    normalize_event_text(value=str(alias))
+                    for alias in rule["aliases"]
+                ]
+                for rule in route["keyword_item_rules"]
+            }
+            expected_rows = []
+            for row in all_events:
+                item_code = str(row["item_code"])
+                aliases = (
+                    keyword_rules[item_code]
+                    if item_code in keyword_rules else []
+                )
+                brief = normalize_event_text(value=str(row["brief"]))
+                if item_code in direct_codes or any(
+                    alias in brief for alias in aliases
+                ):
+                    expected_rows.append(row)
+            expected_keys = sorted([
+                {
+                    "source_url": row["source_url"],
+                    "accession": row["accession"],
+                    "item_code": row["item_code"],
+                }
+                for row in expected_rows
+            ], key=lambda row: (
+                row["source_url"], row["accession"], row["item_code"],
+            ))
+            actual = graph["event_key_parity"][company_id][metric_id]
+            if actual["matched_event_keys"] != expected_keys:
+                raise ZeroAiReleaseError(
+                    "Event key-set parity differs: {}:{}".format(
+                        company_id, metric_id,
+                    )
+                )
+            comparisons[company_id][metric_id] = dict(actual)
+    body = {
+        "schema_version": 1,
+        "record_type": "ZERO_AI_EVENT_KEY_COMPATIBILITY_RECEIPT",
+        "legacy_events_sha256": source_context["legacy_events_sha256"],
+        "comparisons": comparisons,
+    }
+    return {
+        **body,
+        "event_compatibility_receipt_id": content_hash(value=body),
+    }
 
 
 def build_r2_execution_graph(
@@ -2132,10 +2285,6 @@ def build_r2_execution_graph(
         Content-addressable graph, coordinates, and parity evidence.
     """
     context = {**dict(source_context), "repo_root": repo_root}
-    legacy_rows = context["legacy_metrics"]
-    legacy_index = {
-        (row["company"], row["metric_id"]): row for row in legacy_rows
-    }
     r1_coordinates = json.loads(
         context["active_view"].read_bytes(
             relative_path="internal/coordinate_index.json"
@@ -2146,15 +2295,24 @@ def build_r2_execution_graph(
     coordinates = [dict(row) for row in r1_coordinates]
     graph_records = []
     event_parity = {}
-    missing_public_key_count = 2
+    projection_claims = {}
     for registry_row in context["registry_rows"]:
         company_id = registry_row["company_id"]
-        display_name = registry_row["display_name"]
+        projection_key = (company_id, "target_accession_instance")
+        projection_source = (
+            context["role_context"][projection_key]
+            if projection_key in context["role_context"] else None
+        )
+        if projection_source is not None:
+            for claims in projection_source[
+                "claims_by_accession_role"
+            ].values():
+                for claim in claims:
+                    projection_claims[str(claim["verified_claim_id"])] = claim
         traits = repository_company_traits(
             repo_root=repo_root, company_id=company_id,
         )
         for metric_id in R2_DETERMINISTIC_METRIC_IDS:
-            key = (display_name, metric_id)
             route = context["deterministic_catalog"]["metrics"][metric_id]
             if metric_is_applicable(
                 applicability=route["applicability"], traits=traits,
@@ -2170,9 +2328,9 @@ def build_r2_execution_graph(
                     company_id=company_id,
                     metric_id=metric_id,
                 )
-            if key not in legacy_index:
-                missing_public_key_count += 1
             graph_records.extend(graph["claims"])
+            for claim in graph["projection_claims"]:
+                projection_claims[str(claim["verified_claim_id"])] = claim
             if graph["observation"] is not None:
                 graph_records.append(graph["observation"])
             graph_records.extend([graph["trace"], graph["result"]])
@@ -2186,9 +2344,7 @@ def build_r2_execution_graph(
                 )
             )
         claims, event_graphs, parity = _event_graphs(
-            context=context,
-            company_id=company_id,
-            legacy_index=legacy_index,
+            context=context, company_id=company_id,
         )
         graph_records.extend(claims)
         for metric_id, graph in zip(R2_EVENT_METRIC_IDS, event_graphs):
@@ -2210,7 +2366,6 @@ def build_r2_execution_graph(
         len(coordinates) != R2_EXPECTED_COORDINATES
         or len({(row["company_id"], row["metric_id"]) for row in coordinates})
         != R2_EXPECTED_COORDINATES
-        or missing_public_key_count != R2_EXPECTED_NEW_KEYS
     ):
         raise ZeroAiReleaseError("R2 result coordinate exact set differs")
     graph_body = {
@@ -2221,8 +2376,11 @@ def build_r2_execution_graph(
         "predecessor_publication_id": context["active_view"].publication_id,
         "records": graph_records,
         "event_key_parity": event_parity,
-        "legacy_events_sha256": context["legacy_events_sha256"],
         "filing_inventory_sha256": context["filing_inventory_sha256"],
+        "projection_claims": [
+            projection_claims[claim_id]
+            for claim_id in sorted(projection_claims)
+        ],
     }
     return {
         **graph_body,
@@ -2231,153 +2389,127 @@ def build_r2_execution_graph(
     }
 
 
+def _r1_projection_records(
+    *, active_view: PublicationView,
+) -> List[Dict[str, object]]:
+    """Load R1 Result/Trace/source records from the pinned predecessor."""
+    root = active_view.bundle_dir / "internal" / "runs"
+    if root.is_symlink() or not root.is_dir():
+        raise ZeroAiReleaseError("R1 projection record root is unsafe")
+    records = []
+    for path in sorted(root.glob("*/records.jsonl")):
+        if path.is_symlink() or not path.is_file():
+            raise ZeroAiReleaseError("R1 projection record path is unsafe")
+        try:
+            records.extend(
+                json.loads(line)
+                for line in path.read_text(encoding="utf-8").splitlines()
+                if line
+            )
+        except (UnicodeDecodeError, json.JSONDecodeError) as error:
+            raise ZeroAiReleaseError(
+                "R1 projection records are invalid"
+            ) from error
+    if not records:
+        raise ZeroAiReleaseError("R1 projection records are absent")
+    return records
+
+
 def _r2_public_candidate(
     *, context: Mapping[str, object], graph: Mapping[str, object],
 ) -> Dict[str, object]:
-    """Append the remaining structural keys and prove the exact public union."""
+    """Render all 220 migrated rows before frozen-legacy comparison."""
     view = context["active_view"]
     public_files = {
         relative: view.read_bytes(relative_path=relative)
         for relative in sorted(REQUIRED_BUNDLE_FILES)
     }
-    # R2 changes executable semantics, so its active bundle must carry the
-    # gates generated from this exact source tree rather than R1 gate bytes.
+    # R2 executable semantics require gates from this exact source tree.
     for audit_relative in (
         "scalability_audit.csv", "semantic_audit_receipt.json",
     ):
         public_files[audit_relative] = (
             context["repo_root"] / "outputs" / audit_relative
         ).read_bytes()
-    current_rows = _csv_rows(
+    predecessor_rows = _csv_rows(
         content=public_files["metrics_matrix.csv"], fields=METRICS_FIELDS,
     )
-    current_keys = {(row["company"], row["metric_id"]) for row in current_rows}
-    legacy_index = {
-        (row["company"], row["metric_id"]): row
-        for row in context["legacy_metrics"]
-    }
-    coordinates = {
-        (row["company_id"], row["metric_id"]): row
-        for row in graph["coordinates"]
-    }
-    metric_templates = {
-        metric_id: next(
-            row for row in context["legacy_metrics"]
-            if row["metric_id"] == metric_id
-        )
-        for metric_id in R2_METRIC_IDS
-    }
-    additions = []
-    coverage_additions = []
-    for registry_row in context["registry_rows"]:
-        company_id = registry_row["company_id"]
-        display_name = registry_row["display_name"]
-        for metric_id in R2_METRIC_IDS:
-            key = (display_name, metric_id)
-            if key in current_keys:
-                continue
-            coordinate = coordinates[(company_id, metric_id)]
-            if (
-                coordinate["applicability"] != "N_A_STRUCTURAL"
-                or coordinate["value"] is not None
-                or coordinate["unit"] is not None
-            ):
-                raise ZeroAiReleaseError("R2 added key is not structural")
-            template = metric_templates[metric_id]
-            reason = "Metric is structurally inapplicable to this company profile."
-            additions.append(
-                {
-                    "company": display_name,
-                    "cik": str(int(registry_row["primary_cik"])),
-                    "metric_id": metric_id,
-                    "metric_name": template["metric_name"],
-                    "value": "",
-                    "unit": "",
-                    "status": "N_A_STRUCTURAL",
-                    "source_class": "STRUCTURAL",
-                    "formula": template["formula"],
-                    "period_start": str(coordinate["period_start"]),
-                    "period_end": str(coordinate["period_end"]),
-                    "fiscal_year": str(coordinate["fiscal_year"]),
-                    "fiscal_period": "FY",
-                    "accession": "",
-                    "form": "",
-                    "filed_date": "",
-                    "concept_or_section": "metric_applicability_v1",
-                    "context_or_dimension": "company_traits",
-                    "confidence": "1.00",
-                    "notes": reason,
-                }
-            )
-            coverage_additions.append(
-                {
-                    "company": display_name,
-                    "metric_id": metric_id,
-                    "status": "N_A_STRUCTURAL",
-                    "source_class": "STRUCTURAL",
-                    "has_numeric_value": "0",
-                    "has_evidence": "0",
-                    "needs_text_extraction": "0",
-                    "needs_review": "0",
-                    "reason": reason,
-                }
-            )
-    additions.sort(key=lambda row: (row["company"], row["metric_id"]))
-    coverage_additions.sort(key=lambda row: (row["company"], row["metric_id"]))
-    if len(additions) != R2_EXPECTED_NEW_KEYS - 2:
-        raise ZeroAiReleaseError("R2 incremental structural key count differs")
-    public_files["metrics_matrix.csv"] = _append_csv_rows(
-        original=public_files["metrics_matrix.csv"],
-        fields=METRICS_FIELDS,
-        rows=additions,
+    projection_records = (
+        _r1_projection_records(active_view=view)
+        + [dict(record) for record in graph["records"]]
     )
-    public_files["coverage_matrix.csv"] = _append_csv_rows(
-        original=public_files["coverage_matrix.csv"],
-        fields=COVERAGE_FIELDS,
-        rows=coverage_additions,
+    rendered = render_public_rows(
+        repo_root=context["repo_root"],
+        metric_ids=R2_METRIC_IDS,
+        registry_rows=context["registry_rows"],
+        coordinates=graph["coordinates"],
+        records=projection_records,
+        source_references=context["plan"]["source_references"],
+        filing_inventory=context["public_filing_inventory"],
+        projection_claims=graph["projection_claims"],
+    )
+    legacy_migrated_rows = [
+        row for row in context["legacy_metrics"]
+        if row["metric_id"] in set(R2_METRIC_IDS)
+    ]
+    legacy_migrated_keys = {
+        (row["company"], row["metric_id"]) for row in legacy_migrated_rows
+    }
+    compatibility = compare_public_rows(
+        rendered_rows=[
+            row for row in rendered["rows"]
+            if (row["company"], row["metric_id"]) in legacy_migrated_keys
+        ],
+        frozen_legacy_rows=legacy_migrated_rows,
+        approved_deltas=rendered["approved_deltas"],
+        approved_delta_authority_hash=rendered[
+            "approved_delta_authority_hash"
+        ],
+    )
+    assembled_metrics = assemble_public_rows(
+        predecessor_rows=predecessor_rows,
+        rendered_rows=rendered["rows"],
+        metric_ids=R2_METRIC_IDS,
+    )
+    public_files["metrics_matrix.csv"] = csv_bytes(
+        rows=assembled_metrics, fields=METRICS_FIELDS,
+    )
+    predecessor_coverage = _csv_rows(
+        content=public_files["coverage_matrix.csv"], fields=COVERAGE_FIELDS,
+    )
+    assembled_coverage = assemble_public_rows(
+        predecessor_rows=predecessor_coverage,
+        rendered_rows=render_coverage_rows(rendered_rows=rendered["rows"]),
+        metric_ids=R2_METRIC_IDS,
+    )
+    public_files["coverage_matrix.csv"] = csv_bytes(
+        rows=assembled_coverage, fields=COVERAGE_FIELDS,
     )
     row_count, key_hash = _public_key_proof(
         metrics_bytes=public_files["metrics_matrix.csv"]
     )
-    companies = [row["display_name"] for row in context["registry_rows"]]
-    expected_keys = {
+    legacy_keys = {
         (row["company"], row["metric_id"])
         for row in context["legacy_metrics"]
-    } | {
-        (company, metric_id)
-        for company in companies
-        for metric_id in R2_METRIC_IDS
     }
+    rendered_keys = {
+        (row["company"], row["metric_id"]) for row in rendered["rows"]
+    }
+    expected_keys = legacy_keys | rendered_keys
     candidate_rows = _csv_rows(
         content=public_files["metrics_matrix.csv"], fields=METRICS_FIELDS,
     )
-    actual_keys = {(row["company"], row["metric_id"]) for row in candidate_rows}
+    actual_keys = {
+        (row["company"], row["metric_id"]) for row in candidate_rows
+    }
     if (
         row_count != R2_EXPECTED_PUBLIC_ROWS
         or actual_keys != expected_keys
         or len(actual_keys) != R2_EXPECTED_PUBLIC_ROWS
+        or len(rendered_keys - legacy_keys) != R2_EXPECTED_NEW_KEYS
+        or compatibility["compared_key_count"] != R2_EXPECTED_LEGACY_ROWS
     ):
-        raise ZeroAiReleaseError("R2 public key union differs")
-    compatibility = []
-    display_to_id = context["display_to_id"]
-    for key in sorted(
-        (key for key in legacy_index if key[1] in set(R2_METRIC_IDS))
-    ):
-        row = legacy_index[key]
-        coordinate = coordinates[(display_to_id[key[0]], key[1])]
-        expected_value = row["value"] if row["value"] else None
-        if coordinate["value"] != expected_value:
-            raise ZeroAiReleaseError("R2 strict compatibility value differs")
-        compatibility.append(
-            {
-                "legacy_row": row,
-                "result_id": coordinate["result_id"],
-                "trace_id": coordinate["trace_id"],
-            }
-        )
-    if len(compatibility) != R2_EXPECTED_LEGACY_ROWS:
-        raise ZeroAiReleaseError("R2 replaced legacy row count differs")
-    strict_hash = content_hash(value=compatibility)
+        raise ZeroAiReleaseError("R2 public key or compatibility set differs")
     for markdown_path in ("README_RUN.md", "REPORT_十公司财务指标.md"):
         public_files[markdown_path] = _append_publication_note(
             original=public_files[markdown_path],
@@ -2389,10 +2521,12 @@ def _r2_public_candidate(
         "public_files": public_files,
         "public_matrix_row_count": row_count,
         "public_key_set_hash": key_hash,
-        "strict_compatibility_hash": strict_hash,
+        "strict_compatibility_hash": compatibility[
+            "strict_compatibility_hash"
+        ],
         "compatibility": compatibility,
+        "rendering": rendered,
     }
-
 
 def prepare_r2_successor(
     *, repo_root: Path, publication_root: Path, source_commit: str,
@@ -2416,11 +2550,58 @@ def prepare_r2_successor(
     graph = build_r2_execution_graph(
         repo_root=repo_root, source_context=context,
     )
+    event_compatibility = compare_event_key_parity(
+        source_context=context, graph=graph,
+    )
+    acquisition_receipts = [
+        event_set["acquisition_discovery_receipt"]
+        for company_id in sorted(context["registry"])
+        for event_set in context["role_context"][(
+            company_id, "fy_8k_item_inventory"
+        )]["sets"]
+        if "acquisition_discovery_receipt" in event_set
+    ]
+    acquisition_closure = _receipt(
+        body={
+            "schema_version": 1,
+            "record_type": "ZERO_AI_ACQUISITION_SOURCE_SET_CLOSURE",
+            "receipts": acquisition_receipts,
+        },
+        identity_field="acquisition_source_set_closure_id",
+    )
     candidate = _r2_public_candidate(context=context, graph=graph)
+    projection_closure = _receipt(
+        body={
+            "schema_version": 1,
+            "record_type": "ZERO_AI_PUBLIC_PROJECTION_CLOSURE",
+            "release_stage": "R2",
+            "renderer_semantic_version": candidate["rendering"][
+                "renderer_semantic_version"
+            ],
+            "projection_catalog_sha256": candidate["rendering"][
+                "projection_catalog_sha256"
+            ],
+            "rendered_row_set_hash": candidate["rendering"][
+                "rendered_row_set_hash"
+            ],
+            "row_bindings": candidate["rendering"]["row_bindings"],
+            "compatibility": candidate["compatibility"],
+            "event_compatibility_receipt_id": event_compatibility[
+                "event_compatibility_receipt_id"
+            ],
+            "acquisition_source_set_closure_id": acquisition_closure[
+                "acquisition_source_set_closure_id"
+            ],
+        },
+        identity_field="projection_closure_id",
+    )
     retirement = _retirement_receipt(
         repo_root=repo_root,
         cumulative_metric_ids=R2_METRIC_IDS,
         publication_stage="R2",
+        projection_closure_id=str(
+            projection_closure["projection_closure_id"]
+        ),
     )
     invocation = structured_only_result(
         repo_root=repo_root,
@@ -2461,12 +2642,21 @@ def prepare_r2_successor(
         "internal/release_input_plan.json": _json_bytes(value=context["plan"]),
         "internal/coordinate_index.json": _json_bytes(value=coordinate_index),
         "internal/deterministic_execution_graph.json": graph_bytes,
+        "internal/event_key_compatibility.json": _json_bytes(
+            value=event_compatibility
+        ),
+        "internal/acquisition_event_source_sets.json": _json_bytes(
+            value=acquisition_closure
+        ),
         "internal/issue15_release_plan.json": (
             repo_root / "config" / "release_plans"
             / "issue_15_zero_ai_r2.json"
         ).read_bytes(),
         "internal/request_locator_provenance.json": locator_bytes,
         "internal/retirement_receipt.json": _json_bytes(value=retirement),
+        "internal/public_projection_closure.json": _json_bytes(
+            value=projection_closure
+        ),
         "internal/structured_only_invocation.json": _json_bytes(value=invocation),
     }
     issue = load_requirement_snapshot(
@@ -2488,6 +2678,9 @@ def prepare_r2_successor(
         "public_matrix_row_count": candidate["public_matrix_row_count"],
         "public_key_set_hash": candidate["public_key_set_hash"],
         "strict_compatibility_hash": candidate["strict_compatibility_hash"],
+        "projection_closure_id": projection_closure[
+            "projection_closure_id"
+        ],
         "requirement_closure_hash": issue["requirement_closure_hash"],
     }
     projection = _receipt(
@@ -2515,6 +2708,36 @@ def prepare_r2_successor(
             "unretired_legacy_producer_ids": ratchet_transition[
                 "unretired_legacy_producer_ids"
             ],
+            "projection_closure_id": projection_closure[
+                "projection_closure_id"
+            ],
+            "compared_key_count": candidate["compatibility"][
+                "compared_key_count"
+            ],
+            "compared_field_count": candidate["compatibility"][
+                "compared_field_count"
+            ],
+            "per_field_counts": candidate["compatibility"][
+                "per_field_counts"
+            ],
+            "unexpected_delta_exact_set": candidate["compatibility"][
+                "unexpected_delta_exact_set"
+            ],
+            "approved_delta_exact_set": candidate["compatibility"][
+                "approved_delta_exact_set"
+            ],
+            "approved_delta_authority_hash": candidate["compatibility"][
+                "approved_delta_authority_hash"
+            ],
+            "canonical_comparison_matrix_hash": candidate["compatibility"][
+                "canonical_comparison_matrix_hash"
+            ],
+            "vnext_rendered_row_set_hash": candidate["compatibility"][
+                "vnext_rendered_row_set_hash"
+            ],
+            "frozen_legacy_row_set_hash": candidate["compatibility"][
+                "frozen_legacy_row_set_hash"
+            ],
             "strict_compatibility_hash": candidate["strict_compatibility_hash"],
             "public_key_set_hash": candidate["public_key_set_hash"],
             "retirement_receipt_id": retirement["retirement_receipt_id"],
@@ -2535,6 +2758,7 @@ def prepare_r2_successor(
                 "DETERMINISTIC_RESULT_TRACE_EXACT_SET",
                 "EVENT_KEY_SET_LEGACY_PARITY",
                 "STRICT_COMPATIBILITY",
+                "FIELD_LEVEL_PUBLIC_PROJECTION",
                 "PUBLIC_KEY_UNION",
                 "PUBLICATION_BOUND_RETIREMENT",
                 "STRUCTURED_ONLY_ZERO_PROVIDER",
@@ -2579,7 +2803,7 @@ def prepare_r2_successor(
         for relative in sorted(REQUIRED_BUNDLE_FILES)
     }
     marker_body = {
-        "schema_version": 1,
+        "schema_version": 2,
         "record_type": "ZERO_AI_FORMAL_RELEASE_RECEIPT",
         "status": "PASSED",
         "release_stage": "R2",
@@ -2597,6 +2821,9 @@ def prepare_r2_successor(
         "public_matrix_row_count": candidate["public_matrix_row_count"],
         "public_key_set_hash": candidate["public_key_set_hash"],
         "strict_compatibility_hash": candidate["strict_compatibility_hash"],
+        "projection_closure_id": projection_closure[
+            "projection_closure_id"
+        ],
         "requirement_closure_hash": issue["requirement_closure_hash"],
         "issue15_release_plan_id": issue_release["release_plan"][
             "release_plan_id"

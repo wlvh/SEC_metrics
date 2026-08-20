@@ -824,6 +824,7 @@ def adapt_companyfacts(
                     "filed": fact["filed"],
                     "fiscal_period": fact["fiscal_period"],
                     "form": fact["form"],
+                    "frame": fact["source_binding"]["frame"],
                 },
             )
         )
@@ -1091,6 +1092,16 @@ def _adapt_xbrl(
             not in folded_names
         ):
             continue
+        canonical_names = [
+            name for name in names
+            if name.casefold() == qualified_name.casefold()
+            or name.casefold()
+            == _local_name(qualified_name=qualified_name).casefold()
+        ]
+        if len(canonical_names) != 1:
+            raise DeterministicRouterError(
+                "XBRL fact canonical name is absent or ambiguous"
+            )
         unit_ref = str(fact["unit_ref"])
         fact_text = str(fact["text"])
         if not fact_text:
@@ -1126,7 +1137,9 @@ def _adapt_xbrl(
                 unit=unit_ref if unit_ref else "text",
                 attributes={
                     "adapter_id": adapter_id,
+                    "canonical_name": canonical_names[0],
                     "context": contexts[context_ref],
+                    "lexical_value": fact_text,
                 },
             )
         )
@@ -1265,12 +1278,103 @@ def _primary_item_briefs(*, raw_bytes: bytes) -> List[Tuple[str, str]]:
     return rows
 
 
+def acquisition_event_source_set_receipt(
+    *, filing_documents: Sequence[Mapping[str, object]], company_id: str,
+    period_start: str, period_end: str,
+) -> Dict[str, object]:
+    """Prove one complete repository acquisition-receipt event subset."""
+    accessions = []
+    filing_dates = []
+    reference_ids = []
+    request_attempt_ids = []
+    for document_value in filing_documents:
+        document = _object(
+            value=document_value, label="acquired 8-K document"
+        )
+        hdr = _reference(value=document["hdr_source_reference"])
+        primary = _reference(value=document["primary_source_reference"])
+        hdr_bytes = document["hdr_bytes"]
+        primary_bytes = document["primary_document_bytes"]
+        if not isinstance(hdr_bytes, bytes) or not isinstance(
+            primary_bytes, bytes
+        ):
+            raise DeterministicRouterError("Acquired 8-K bytes are invalid")
+        _require_raw_bytes(source_reference=hdr, raw_bytes=hdr_bytes)
+        _require_raw_bytes(source_reference=primary, raw_bytes=primary_bytes)
+        try:
+            header = hdr_bytes.decode("utf-8")
+        except UnicodeDecodeError as error:
+            raise DeterministicRouterError(
+                "Acquired 8-K header is not UTF-8"
+            ) from error
+        accession_match = re.search(
+            pattern=r"<ACCESSION-NUMBER>\s*([^\r\n]+)", string=header,
+        )
+        form_match = re.search(
+            pattern=r"<TYPE>\s*([^\r\n]+)", string=header,
+        )
+        date_match = re.search(
+            pattern=r"<FILING-DATE>\s*([0-9]{8})", string=header,
+        )
+        if accession_match is None or form_match is None or date_match is None:
+            raise DeterministicRouterError("Acquired 8-K identity is absent")
+        filed = "{}-{}-{}".format(
+            date_match.group(1)[:4], date_match.group(1)[4:6],
+            date_match.group(1)[6:],
+        )
+        accession = accession_match.group(1).strip()
+        if (
+            accession != hdr["accession"]
+            or accession != primary["accession"]
+            or hdr["company_id"] != company_id
+            or primary["company_id"] != company_id
+            or form_match.group(1).strip() not in {"8-K", "8-K/A"}
+            or not period_start <= filed <= period_end
+        ):
+            raise DeterministicRouterError(
+                "Acquired 8-K falls outside its source-set contract"
+            )
+        accessions.append(accession)
+        filing_dates.append({"accession": accession, "filing_date": filed})
+        for reference in (hdr, primary):
+            reference_ids.append(str(reference["source_reference_id"]))
+            request_attempt_ids.append(str(reference["request_attempt_id"]))
+    if (
+        not accessions
+        or accessions != sorted(accessions)
+        or len(accessions) != len(set(accessions))
+        or len(reference_ids) != len(set(reference_ids))
+    ):
+        raise DeterministicRouterError(
+            "Acquired 8-K source-set order or identity differs"
+        )
+    body = {
+        "schema_version": 1,
+        "record_type": "ACQUISITION_EVENT_SOURCE_SET_RECEIPT",
+        "company_id": company_id,
+        "form_types": ["8-K", "8-K/A"],
+        "fiscal_or_date_window": {
+            "period_start": period_start,
+            "period_end": period_end,
+        },
+        "ordered_accessions": accessions,
+        "filing_dates": filing_dates,
+        "ordered_source_reference_ids": reference_ids,
+        "request_attempt_ids": request_attempt_ids,
+    }
+    return {
+        **body,
+        "acquisition_source_set_receipt_id": content_hash(value=body),
+    }
+
+
 def adapt_8k_item_index(
     *,
     filing_documents: Sequence[Mapping[str, object]],
     source_set_manifest: Mapping[str, object],
     inventory_source_reference: Mapping[str, object],
     inventory_bytes: bytes,
+    acquisition_discovery_receipt: Optional[Mapping[str, object]] = None,
 ) -> List[Dict[str, object]]:
     """Adapt a complete fiscal-year 8-K set into neutral item-brief claims.
 
@@ -1280,6 +1384,8 @@ def adapt_8k_item_index(
         source_set_manifest: Fiscal-year source-set proof.
         inventory_source_reference: Pinned SEC submissions observation.
         inventory_bytes: Exact submissions bytes proving the fiscal-year set.
+        acquisition_discovery_receipt: Optional repository acquisition proof
+            for filings absent from the pinned submissions response.
 
     Returns:
         One deterministic claim per unique filing/item code.
@@ -1305,12 +1411,38 @@ def adapt_8k_item_index(
         filing_references.extend(
             [row["hdr_source_reference"], row["primary_source_reference"]]
         )
-    manifest = verify_source_set_completeness(
-        manifest=source_set_manifest,
-        inventory_source_reference=inventory_source_reference,
-        inventory_bytes=inventory_bytes,
-        ordered_source_references=filing_references,
-    )
+    if acquisition_discovery_receipt is None:
+        manifest = verify_source_set_completeness(
+            manifest=source_set_manifest,
+            inventory_source_reference=inventory_source_reference,
+            inventory_bytes=inventory_bytes,
+            ordered_source_references=filing_references,
+        )
+    else:
+        manifest = validate_source_set_manifest(manifest=source_set_manifest)
+        inventory = _reference(value=inventory_source_reference)
+        receipt = acquisition_event_source_set_receipt(
+            filing_documents=rows,
+            company_id=str(manifest["company_id"]),
+            period_start=str(manifest["fiscal_or_date_window"]["period_start"]),
+            period_end=str(manifest["fiscal_or_date_window"]["period_end"]),
+        )
+        if (
+            dict(acquisition_discovery_receipt) != receipt
+            or manifest["discovery_policy"]
+            != "IMMUTABLE_ACQUISITION_LEDGER_FISCAL_WINDOW_V1"
+            or manifest["ordered_source_reference_ids"]
+            != receipt["ordered_source_reference_ids"]
+            or manifest["discovered_accession_set_hash"]
+            != content_hash(value=receipt["ordered_accessions"])
+            or manifest["inventory_source_reference_id"]
+            != inventory["source_reference_id"]
+            or manifest["sec_submissions_inventory_hash"]
+            != inventory["raw_asset_id"]
+        ):
+            raise DeterministicRouterError(
+                "Acquisition event source-set proof differs"
+            )
     claims = []
     for row in rows:
         hdr_reference = _reference(value=row["hdr_source_reference"])

@@ -502,6 +502,12 @@ def companyfacts_structured_facts(
                         "document_name": validated["document_name"],
                         "source_role": validated["source_role"],
                         "entity": cik,
+                        "frame": (
+                            str(fact["frame"])
+                            if "frame" in fact
+                            and isinstance(fact["frame"], str)
+                            else ""
+                        ),
                     }
                     output.append(
                         {
