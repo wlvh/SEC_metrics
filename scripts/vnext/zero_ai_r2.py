@@ -27,6 +27,8 @@ from typing import Dict, List, Mapping, Sequence, Tuple
 from git_workspace import sanitized_git_environment
 from sec_http import parse_request_log_rows, request_accession
 from sec_http import request_log_attempt_id, validate_request_log_manifest
+from validation_provenance import capture_source_snapshot
+from validation_provenance import publish_validation_snapshot
 
 from .batch_workflow import BatchWorkflowError, _verified_request_locator
 from .calculator import calculate_observation_metric, metric_is_applicable
@@ -2543,7 +2545,7 @@ def prepare_r2_successor(
             "run_id": str(coordinate_index["batch_manifest_id"]),
             "source_commit": source_commit,
             "started_at_utc": validated_at_utc,
-            "mode": "FULL_VALIDATION",
+            "mode": "LIGHT_REVIEW_MODE",
             "refreshed_artifacts": sorted(
                 [
                     "coverage_matrix.csv",
@@ -2557,7 +2559,7 @@ def prepare_r2_successor(
             "not_refreshed_artifacts": [
                 "issue_15_full_acceptance.not_run"
             ],
-            "result": "PASSED",
+            "result": "PASSED_WITH_CAVEATS",
         }
     )
     public_hashes = {
@@ -2710,6 +2712,7 @@ def publish_r2(
     """
     if not isinstance(source_commit, str) or len(source_commit) != 40:
         raise ZeroAiReleaseError("R2 source commit must be a full SHA")
+    source_snapshot = capture_source_snapshot(workdir=repo_root)
     predecessor = PublicationView.open(publication_root=repo_root)
     successor, summary = prepare_r2_successor(
         repo_root=repo_root,
@@ -2740,6 +2743,9 @@ def publish_r2(
             "retirement": retirement,
             "strict_compatibility": compatibility,
         },
+    )
+    publish_validation_snapshot(
+        workdir=repo_root, source_snapshot=source_snapshot,
     )
     return {
         **summary,

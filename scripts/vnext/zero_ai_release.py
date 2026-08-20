@@ -1138,7 +1138,7 @@ def _prepare_r1_successor(
             "run_id": str(coordinate_index["batch_manifest_id"]),
             "source_commit": source_commit,
             "started_at_utc": committed_at_utc,
-            "mode": "FULL_VALIDATION",
+            "mode": "LIGHT_REVIEW_MODE",
             "refreshed_artifacts": sorted(
                 [
                     "coverage_matrix.csv",
@@ -1152,7 +1152,7 @@ def _prepare_r1_successor(
             "not_refreshed_artifacts": [
                 "issue_15_full_acceptance.not_run"
             ],
-            "result": "PASSED",
+            "result": "PASSED_WITH_CAVEATS",
         }
     )
     public_hashes = {

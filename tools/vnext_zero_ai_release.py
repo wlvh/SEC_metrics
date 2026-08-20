@@ -31,6 +31,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 from vnext.zero_ai_release import ZeroAiReleaseError, publish_r1  # noqa: E402
 from vnext.zero_ai_r2 import publish_r2  # noqa: E402
 from vnext.publication import PublicationError  # noqa: E402
+from validation_provenance import ValidationProvenanceError  # noqa: E402
 
 
 def _head_sha() -> str:
@@ -83,7 +84,13 @@ def main(*, argv: Sequence[str]) -> int:
             )
         else:
             raise ZeroAiReleaseError("ZERO_AI_COMMAND_UNSUPPORTED")
-    except (OSError, PublicationError, ValueError, ZeroAiReleaseError) as error:
+    except (
+        OSError,
+        PublicationError,
+        ValidationProvenanceError,
+        ValueError,
+        ZeroAiReleaseError,
+    ) as error:
         print(
             json.dumps(
                 {"status": "FAILED", "error_code": str(error)},
