@@ -1,0 +1,491 @@
+{
+  "table_qualification_freeze_receipt_id": "sha256:02ed9ef265ba66a065d3f2e49a0b11c52a78881f005957a06f5bc8f703020f8f",
+  "record_type": "TABLE_QUALIFICATION_FREEZE_RECEIPT",
+  "schema_version": 1,
+  "freeze_commit": "394f5dbcd2a8df04745de9b46329438a43585ca3",
+  "frozen_at_utc": "2026-08-21T01:30:00Z",
+  "qualification_cycle_id": "sha256:ac7f381f8578c5f1b7298b1c4e8d4a4fec2a90985c36a8d4edefbc2e177cd875",
+  "d07_decision_required": true,
+  "identity": {
+    "requirement_closure_hash": "sha256:161da433701e133c6e388356225fb01fa245847450b39a2a8b5335189a69624f",
+    "parent_r2_active_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+    "active_pointer": {
+      "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+      "size": 354
+    },
+    "root_hashes": {
+      "outputs/active_publication.json": {
+        "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+        "size": 354
+      },
+      "outputs/metrics_matrix.csv": {
+        "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+        "size": 105128
+      },
+      "outputs/metric_evidence.csv": {
+        "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "size": 250439
+      },
+      "REPORT_十公司财务指标.md": {
+        "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+        "size": 29729
+      }
+    }
+  },
+  "wb3_protection": {
+    "invocation_control_semantic_hashes": {
+      "requirement_closure_hash": "sha256:161da433701e133c6e388356225fb01fa245847450b39a2a8b5335189a69624f",
+      "d35_record_hash": "sha256:6e966a51833c5f1d4fd25e5b8520dfb46414a64e4b868ce4d8181f2b8ac1de04",
+      "d36_record_hash": "sha256:468b7ef6528f4d76de56a71bcba4c913e47e858eefdba55129554ddaf845af1e"
+    },
+    "provider_opener_identity": {
+      "path": "scripts/vnext/ai_adapter.py",
+      "symbol": "_open_provider_request",
+      "source_sha256": "c628d56be91085b062edd75bdedc8a1736b9c1b94051be2644100801c84f887d"
+    },
+    "regression_receipt": {
+      "schema_version": 1,
+      "tests": {
+        "single_flight": {
+          "test_id": "tests.vnext.test_invocation_control.InvocationControlTest.test_concurrent_exact_request_has_one_mock_invocation",
+          "return_code": 0,
+          "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "4eb4be56e7cbbffb9ef5ba1a70981247dfefef9432a4a68dd9379fb77ccfc581"
+        },
+        "http_402_batch_stop": {
+          "test_id": "tests.vnext.test_invocation_control.InvocationControlTest.test_http_402_calls_once_and_stops_batch",
+          "return_code": 0,
+          "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "1a050b4793cae69281dad416bdc7135536f65ffb6bf0685f27d6a4d744d1fe51"
+        },
+        "unknown_remote_outcome": {
+          "test_id": "tests.vnext.test_invocation_control.InvocationControlTest.test_egress_crash_is_unknown_and_never_retried",
+          "return_code": 0,
+          "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "114ed4d5e79c201bb6d40e24d3920b4144fb1e039830a3588a06c1f32af62988"
+        },
+        "successful_exact_response_reuse": {
+          "test_id": "tests.vnext.test_invocation_control.InvocationControlTest.test_successful_exact_response_resume_has_zero_mock_invocation",
+          "return_code": 0,
+          "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "808a88b7d0ddeb7b26643b7fb2d21d36768588f8dd9d955f3e2df8e04cf2e8ed"
+        }
+      },
+      "wb3_regression_receipt_id": "sha256:dec47585be8d76948e1266e5223836d506406d90fcb56aae3c650266daf2ecd1"
+    }
+  },
+  "wb4_compact_transport": {
+    "table_payload_serialization_version": "2",
+    "encoder_source_sha256": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+    "decoder_source_sha256": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+    "decoder_semantic_version": "1",
+    "expanded_compact_identity_schema_hash": "sha256:c6b59b379cf7a02236d6e0e1bea3ab20803105f6b560f95b54f0094101b41e09",
+    "round_trip_receipts": [
+      {
+        "fixture_id": "marriott-2025-real-layout-v1",
+        "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "expanded_reader_payload_bytes": 3577969,
+        "compact_reader_payload_bytes": 346999,
+        "compression_ratio": "0.09698211",
+        "provider_envelope_estimated_bytes": 390478,
+        "estimated_input_tokens": 390478,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9eca9aeeeed193ab2f00e7ec227428620cd0a29b3e8864fd01864ed89cfb6035",
+        "round_trip_hash": "sha256:73136a335bdb705403ee44a96cf51d1e0afd60295e482d1bf458cbc74bbfdaec",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:0a4bd88b78b0122e7f9f50b2d370724cb73200b4055dc4d1f8e1387455811c54"
+      },
+      {
+        "fixture_id": "hilton-2024-sec-layout-v1",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+        "expanded_reader_payload_bytes": 1507623,
+        "compact_reader_payload_bytes": 128139,
+        "compression_ratio": "0.08499406",
+        "provider_envelope_estimated_bytes": 151564,
+        "estimated_input_tokens": 151564,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9be337d02bc077a3716be05c0b373569b0ca48dfc49d3ebf4c27e5689f143cbf",
+        "round_trip_hash": "sha256:ed507077d2ca2b8f62facc56fb05d87913b21e307675f2e011d8e8a5b7d7461c",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:24b94983b84b52420416a7e6d64ab28dcf4272497afa3181c29713c15b47b60d"
+      },
+      {
+        "fixture_id": "hilton-2024-sec-layout-v2",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+        "expanded_reader_payload_bytes": 1507623,
+        "compact_reader_payload_bytes": 128139,
+        "compression_ratio": "0.08499406",
+        "provider_envelope_estimated_bytes": 151564,
+        "estimated_input_tokens": 151564,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9be337d02bc077a3716be05c0b373569b0ca48dfc49d3ebf4c27e5689f143cbf",
+        "round_trip_hash": "sha256:ed507077d2ca2b8f62facc56fb05d87913b21e307675f2e011d8e8a5b7d7461c",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:daca96099a7bb4f439954f04f5aefe3f9c907e48f3cb29e432b924553f99a2f4"
+      },
+      {
+        "fixture_id": "hilton-2024-sec-layout-v3",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+        "expanded_reader_payload_bytes": 1507623,
+        "compact_reader_payload_bytes": 128139,
+        "compression_ratio": "0.08499406",
+        "provider_envelope_estimated_bytes": 151564,
+        "estimated_input_tokens": 151564,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9be337d02bc077a3716be05c0b373569b0ca48dfc49d3ebf4c27e5689f143cbf",
+        "round_trip_hash": "sha256:ed507077d2ca2b8f62facc56fb05d87913b21e307675f2e011d8e8a5b7d7461c",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:cb127beed707b6b701d753b342a7b877459aaf394729113ac8ae4a383b465812"
+      },
+      {
+        "fixture_id": "hilton-2024-sec-layout-v4",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+        "expanded_reader_payload_bytes": 1507623,
+        "compact_reader_payload_bytes": 128139,
+        "compression_ratio": "0.08499406",
+        "provider_envelope_estimated_bytes": 151564,
+        "estimated_input_tokens": 151564,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9be337d02bc077a3716be05c0b373569b0ca48dfc49d3ebf4c27e5689f143cbf",
+        "round_trip_hash": "sha256:ed507077d2ca2b8f62facc56fb05d87913b21e307675f2e011d8e8a5b7d7461c",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:cb1c53fd73bf69a42289890a6a1a42915cca1a2f0a168bc5aea2d8e27ac30c01"
+      },
+      {
+        "fixture_id": "hilton-2024-sec-layout-v5",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+        "expanded_reader_payload_bytes": 1507623,
+        "compact_reader_payload_bytes": 128139,
+        "compression_ratio": "0.08499406",
+        "provider_envelope_estimated_bytes": 151564,
+        "estimated_input_tokens": 151564,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9be337d02bc077a3716be05c0b373569b0ca48dfc49d3ebf4c27e5689f143cbf",
+        "round_trip_hash": "sha256:ed507077d2ca2b8f62facc56fb05d87913b21e307675f2e011d8e8a5b7d7461c",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:f5f76464ba91579767efaf2ba2d4fe34acbaff42377c5c788b4f7ea24ac4d7a5"
+      },
+      {
+        "fixture_id": "hilton-2024-sec-layout-v6",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+        "expanded_reader_payload_bytes": 1507623,
+        "compact_reader_payload_bytes": 128139,
+        "compression_ratio": "0.08499406",
+        "provider_envelope_estimated_bytes": 151564,
+        "estimated_input_tokens": 151564,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9be337d02bc077a3716be05c0b373569b0ca48dfc49d3ebf4c27e5689f143cbf",
+        "round_trip_hash": "sha256:ed507077d2ca2b8f62facc56fb05d87913b21e307675f2e011d8e8a5b7d7461c",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:a95f979a6e91343286d5fdb2ae6ba293a9f4c267bcecd6b621f67a69374e730e"
+      },
+      {
+        "fixture_id": "hilton-2024-sec-layout-v7",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+        "expanded_reader_payload_bytes": 1507623,
+        "compact_reader_payload_bytes": 128139,
+        "compression_ratio": "0.08499406",
+        "provider_envelope_estimated_bytes": 151564,
+        "estimated_input_tokens": 151564,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:9be337d02bc077a3716be05c0b373569b0ca48dfc49d3ebf4c27e5689f143cbf",
+        "round_trip_hash": "sha256:ed507077d2ca2b8f62facc56fb05d87913b21e307675f2e011d8e8a5b7d7461c",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:a64d5a00ed9144006fa6b157dbcfcf357a5beb1be022c5fbd992882fa0ff11e5"
+      },
+      {
+        "fixture_id": "hyatt-2024-sec-holdout-v4",
+        "source_sha256": "91cab658f7bbd8636d1da3441707389cc081d3b1a2e4db5bf37ca4a26ceec7f9",
+        "expanded_reader_payload_bytes": 1772470,
+        "compact_reader_payload_bytes": 143905,
+        "compression_ratio": "0.08118896",
+        "provider_envelope_estimated_bytes": 169068,
+        "estimated_input_tokens": 169068,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:fc151966aa24e417e5e1ee1fa2da69e921ded67cbfd8b5da5064e2f045b26718",
+        "round_trip_hash": "sha256:3d1b1bbc2626c90e218394bd2e97b8d837725205d23543074ff435b7a32d185e",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:d5a727517fbcacc47ed48431c4529bfd4fb4ace35ccacff2ddea45abd396fbb6"
+      },
+      {
+        "fixture_id": "hyatt-2025-sec-holdout-v1",
+        "source_sha256": "a49b7d51af7f6332d4274006248d1354b4834f612cb2cff3173bb223efe35171",
+        "expanded_reader_payload_bytes": 2116698,
+        "compact_reader_payload_bytes": 173519,
+        "compression_ratio": "0.08197627",
+        "provider_envelope_estimated_bytes": 202419,
+        "estimated_input_tokens": 202419,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:7003dad10d403528fcec36c5ad949201cfda1a3ff85d440a81570750b81ab3c4",
+        "round_trip_hash": "sha256:0d505ecf63dedb6045525f9c894b802493e84694d192a6d4e81e55ae022a5cbb",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:22b01c8bbc87e91ddcfc22f72a1466d0b7dd219a01df7ba46a988a459bc4d615"
+      },
+      {
+        "fixture_id": "hyatt-2025-sec-holdout-v2",
+        "source_sha256": "a49b7d51af7f6332d4274006248d1354b4834f612cb2cff3173bb223efe35171",
+        "expanded_reader_payload_bytes": 2116698,
+        "compact_reader_payload_bytes": 173519,
+        "compression_ratio": "0.08197627",
+        "provider_envelope_estimated_bytes": 202419,
+        "estimated_input_tokens": 202419,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "provider_context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "round_trip_receipt_id": "sha256:7003dad10d403528fcec36c5ad949201cfda1a3ff85d440a81570750b81ab3c4",
+        "round_trip_hash": "sha256:0d505ecf63dedb6045525f9c894b802493e84694d192a6d4e81e55ae022a5cbb",
+        "context_or_resource_limit_exceeded": true,
+        "measurement_id": "sha256:1d8fdccf9ab272d158bb6b3c1328771128b55c46dcfd0f197753af1fa778a742"
+      }
+    ],
+    "d07_full_table_no_prefilter_proof": {
+      "table_grid_source_sha256": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
+      "reader_input_source_sha256": "cd94b338a13e4be4ce03108b8991837c808bcc7af6f970c934a77d94d9e62a78",
+      "all_fixture_count": 11,
+      "selection_parameters": []
+    },
+    "maximum_estimated_input_tokens": 390478
+  },
+  "wb5_scope_contract": {
+    "scope_contract_version": "2",
+    "scope_schema_hash": "sha256:60e1a93cbb49f5280ef4e457a85791fd6c222edd47435c508fb1e73ef81002a8",
+    "exact_enum_alias_closure_hash": "sha256:c100e956d0504689087967c9083dfdcdca497db2f3df4b95da72e306e9fa9e92",
+    "evidence_binding_hash": "c906cbbea07bec82105bc1834fedf3f7622b0b1a4944ce3b39877e1133691815",
+    "review_binding_hash": "258427de4306970bf922fc94c7b32b45c8afd385cbf8767600fd39e263dc5c82"
+  },
+  "wb6_task_contracts": {
+    "catalog_sha256": "335059da89ffc3881f1d90c5057ad75ae4acd159d4f402b58c1965ada47620a9",
+    "authorized_family_ids": [
+      "financial_statement",
+      "lodging_kpi_table"
+    ],
+    "families": {
+      "financial_statement": {
+        "matrix_entry_hash": "sha256:95b971260dc6d4c4e8ce0276ae13172cb9c11f3da39d81b96b9311329a0fc233",
+        "contracts": [
+          {
+            "task_contract_id": "financial_liquidity_coverage_ratio_table_v1",
+            "task_contract_hash": "sha256:7a81c02cd7be88862eaa43cdd1f714cf6c8afaf164577a1c78cc95b8b79528ec",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "financial_net_interest_margin_table_v1",
+            "task_contract_hash": "sha256:d5c4478359d139203bf9a4716d3a2c490457644ec278ee9961f2020f566a1343",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "financial_nonperforming_loan_ratio_table_v1",
+            "task_contract_hash": "sha256:267c5dc9abbedd81348a615c7d3ce1edc2b551222cc0468c1df28f26acd821a7",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "financial_assets_under_management_table_v1",
+            "task_contract_hash": "sha256:c013bb2dd2a4244b6ddfe215228b42bed31d6348b10014fca993c0e44e617672",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "financial_value_at_risk_table_v1",
+            "task_contract_hash": "sha256:5ba7bacf0f9b7411edf892f81af8a6852d4bb21b79ca49af4ce21b34eccc19e9",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "financial_geographic_exposure_table_v1",
+            "task_contract_hash": "sha256:b091f2362674f55aa88ccd863fcffa7712851b6da740ecab95cc405ec0c6977c",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "financial_debt_to_equity_table_v1",
+            "task_contract_hash": "sha256:7fbd2e86092744855c253df3bb6df1dbd78a7c8575ddec5ed7baf9dd632e8978",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "financial_capacity_utilization_table_v1",
+            "task_contract_hash": "sha256:0a5f79e69f318191e40de12e9b984f4696593c570cf362466053c335b8b96fc4",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          }
+        ]
+      },
+      "lodging_kpi_table": {
+        "matrix_entry_hash": "sha256:a77bd0e4257fd106f73ec7b8f7e65f2b2e135fdb4210f7de88d157f7a1996598",
+        "contracts": [
+          {
+            "task_contract_id": "lodging_occupancy_table_v2",
+            "task_contract_hash": "sha256:672ba0315684b490f12d4338d5fca992a2eb748d4c9cbefe42ac07292d52de3c",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          },
+          {
+            "task_contract_id": "lodging_revpar_table_v2",
+            "task_contract_hash": "sha256:fbda7851ef0dabe379e16a180f611c28d0cdf5c9d9f575d5540eaaf29878d121",
+            "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+            "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+          }
+        ]
+      }
+    }
+  },
+  "provider_state": {
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "api": "chat_completions",
+    "provider_ledger_before": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "row_count": 0,
+      "path": "artifacts/vnext/table_qualification_freeze/cycles/ac7f381f8578c5f1b7298b1c4e8d4a4fec2a90985c36a8d4edefbc2e177cd875/provider_ledger.jsonl"
+    },
+    "qualification_cycle_real_model_egress_count": 0,
+    "qualification_cycle_paid_model_call_count": 0,
+    "qualification_cycle_sec_egress_count": 0,
+    "sec_ledger_before": {
+      "sha256": "c017df0abf3a8fa83073162f3bebbba077209eb969247166330ab2bd41463782",
+      "row_count": 979
+    }
+  },
+  "monetary_policy": {
+    "repository_monetary_budget_enforcement": false,
+    "monetary_cost_observability_only": true,
+    "forbidden_monetary_fields_present": []
+  },
+  "protected_closure": {
+    "common_files": {
+      "config/provider_model_runtime.json": {
+        "sha256": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "size": 606
+      },
+      "config/source_strategy_registry.json": {
+        "sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+        "size": 12801
+      },
+      "config/table_qualification_matrix.json": {
+        "sha256": "ccb539df194c10feb80aba15221860666cf6d8856f833c2f47d29abe3c7e642f",
+        "size": 4213
+      },
+      "catalog/table_task_contracts.json": {
+        "sha256": "335059da89ffc3881f1d90c5057ad75ae4acd159d4f402b58c1965ada47620a9",
+        "size": 6344
+      },
+      "scripts/vnext/ai_adapter.py": {
+        "sha256": "8d04c5076bbfe1c35d0218b03ca5cde96dbcffa083f6e1f797cc24671851d066",
+        "size": 118896
+      },
+      "scripts/vnext/evidence.py": {
+        "sha256": "c906cbbea07bec82105bc1834fedf3f7622b0b1a4944ce3b39877e1133691815",
+        "size": 16195
+      },
+      "scripts/vnext/invocation_control.py": {
+        "sha256": "0e7ebfb8a0d36456162991652d7e23a478fe6ff54f833b475f8bba2c0716f7c9",
+        "size": 79444
+      },
+      "scripts/vnext/reader.py": {
+        "sha256": "bfd1ddea013f860a006051340ed236aa7f1f38902ecb161194b3bd9f140b523d",
+        "size": 17442
+      },
+      "scripts/vnext/reader_input.py": {
+        "sha256": "cd94b338a13e4be4ce03108b8991837c808bcc7af6f970c934a77d94d9e62a78",
+        "size": 22860
+      },
+      "scripts/vnext/records.py": {
+        "sha256": "a2cd0ee9f4caaa7cd83e5e9d33dfc1cf9cd6dfcb171c680ca8454c3164bf08e5",
+        "size": 52232
+      },
+      "scripts/vnext/review.py": {
+        "sha256": "258427de4306970bf922fc94c7b32b45c8afd385cbf8767600fd39e263dc5c82",
+        "size": 21241
+      },
+      "scripts/vnext/scope_contract.py": {
+        "sha256": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1",
+        "size": 8887
+      },
+      "scripts/vnext/table_grid.py": {
+        "sha256": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
+        "size": 22343
+      },
+      "scripts/vnext/table_payload.py": {
+        "sha256": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+        "size": 17699
+      },
+      "scripts/vnext/table_qualification_freeze.py": {
+        "sha256": "06577913156000efe4803dacaa750ed7d23860a06d2dc953c5dd82d73476458e",
+        "size": 39163
+      },
+      "scripts/vnext/table_task_contracts.py": {
+        "sha256": "74385b93565c0221fa7aaf26bcbf2a8270fe73d93ca565fba1a837a8a8d79f5d",
+        "size": 8552
+      },
+      "requirements/issue_15_v1/CONTRACT.md": {
+        "sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+        "size": 47898
+      },
+      "requirements/issue_15_v1/decision_register.json": {
+        "sha256": "01702702f92a7b49bbacb3a340aebaee4419078cf3c249742a712e30a0ccb1ff",
+        "size": 24053
+      }
+    },
+    "families": {
+      "financial_statement": {
+        "matrix_entry_hash": "sha256:95b971260dc6d4c4e8ce0276ae13172cb9c11f3da39d81b96b9311329a0fc233",
+        "files": {}
+      },
+      "lodging_kpi_table": {
+        "matrix_entry_hash": "sha256:a77bd0e4257fd106f73ec7b8f7e65f2b2e135fdb4210f7de88d157f7a1996598",
+        "files": {
+          "catalog/disclosures/lodging_kpi_table.md": {
+            "sha256": "9e4919191d461dc5b387d85ec4bdd95693620e2d012b94e8b2441ad95a7440ca",
+            "size": 2540
+          },
+          "catalog/metrics/B10_occupancy.md": {
+            "sha256": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1",
+            "size": 2593
+          },
+          "catalog/metrics/B11_revpar.md": {
+            "sha256": "673b0fe15e86cec11ba6fe318c09b0c09aad79d4c0dd317b846b010c135cf3de",
+            "size": 2488
+          }
+        }
+      }
+    }
+  }
+}
