@@ -33,6 +33,7 @@ from .observations import reviewed_observation, scope_key
 from .qualification import QualificationError
 from .qualification import record_table_qualification_execution
 from .qualification import validate_live_table_qualification_authorization
+from .qualification import validate_table_qualification_run_bindings
 from .requirements import load_run_requirement_snapshot
 from .scope_contract import scope_satisfies_contract
 from .run_store import append_review_decision, append_run_record
@@ -640,8 +641,12 @@ def _create_review_run_with_traits(
                         repo_root=repo_root,
                         authorization=qualification_authorization,
                         task_contract_id=task_contract_id,
+                        run_dir=run_dir,
+                        run_id=run_id,
                         company_id=company_id,
+                        target_period=target_period,
                         source_repo_relative_path=source_repo_relative_path,
+                        source_media_type=source_media_type,
                         source_url=source_url,
                         accession=accession,
                         document_name=document_name,
@@ -949,6 +954,16 @@ def finalize_reviewed_direct_results(
         period mismatch, or incomplete role classification.
     """
     manifest, records, decisions = load_open_run(run_dir=run_dir)
+    if manifest.get("task_contract_bindings"):
+        try:
+            validate_table_qualification_run_bindings(
+                repo_root=repo_root,
+                run_dir=run_dir,
+                manifest=manifest,
+                records=records,
+            )
+        except QualificationError as error:
+            raise WorkflowError(error.code) from error
     units = [
         record for record in records if record["record_type"] == "REVIEW_UNIT"
     ]

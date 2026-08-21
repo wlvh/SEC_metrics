@@ -11,6 +11,7 @@ module never creates a synthetic layout PASS.
 from __future__ import annotations
 
 import csv
+import fcntl
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -23,16 +24,17 @@ from .ai_adapter import approved_transport_policy
 from .ai_adapter import build_invocation_controlled_transport_adapter
 from .batch_workflow import BatchWorkflowError, validate_request_attempt_binding
 from .canonical import atomic_write_bytes, atomic_write_json, canonical_json_bytes
-from .canonical import content_hash, parse_utc_timestamp, sha256_file
+from .canonical import content_hash, parse_utc_timestamp, sha256_bytes, sha256_file
 from .canonical import strict_json_file, strict_json_loads
 from .requirements import load_requirement_snapshot
-from .records import RecordError, validate_record
+from .records import RecordError, validate_record, validate_run_coordinates
 from .review import effective_review_decision
-from .run_store import load_run_for_status
+from .run_store import load_run_for_status, RunStoreError
 from .stage_a_snapshot import StageASnapshotError, validate_stage_a_snapshot
 from .table_grid import TableGridError, resolve_cell
 from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_qualification_freeze import TableQualificationFreezeError
+from .table_qualification_freeze import FREEZE_CYCLE_ROOT
 from .table_qualification_freeze import load_table_qualification_matrix
 from .table_qualification_freeze import require_table_qualification_freeze
 from .table_task_contracts import load_table_task_contracts
@@ -113,16 +115,24 @@ _QUALIFICATION_AUTHORIZATION_FIELDS = {
     "qualification_authorization_id",
     "qualification_cycle_id",
     "qualification_ordinal",
+    "qualification_provider_ledger_before_row_count",
+    "qualification_provider_ledger_before_sha256",
     "qualification_provider_ledger_path",
+    "qualification_terminal_id",
     "qualification_task_plan_id",
     "requirement_closure_hash",
     "source_binding",
     "source_binding_hash",
+    "source_media_type",
     "system_prompt_hash",
     "table_payload_serialization_version",
     "task_contract_id",
     "task_spec_semantic_hash",
+    "target_period",
+    "target_period_hash",
     "wb3_workspace_relative_path",
+    "run_directory_relative_path",
+    "run_id",
 }
 _SOURCE_BINDING_FIELDS = {
     "request_attempt_id",
@@ -137,6 +147,29 @@ _SOURCE_BINDING_FIELDS = {
     "source_role",
     "source_url",
     "source_binding_hash",
+}
+_TARGET_PERIOD_FIELDS = {
+    "fiscal_year",
+    "period_start",
+    "period_end",
+}
+_PROVIDER_LEDGER_ENTRY_FIELDS = {
+    "attempt_id",
+    "family_id",
+    "freeze_receipt_id",
+    "provider_request_id",
+    "qualification_authorization",
+    "qualification_authorization_id",
+    "qualification_cycle_id",
+    "qualification_ordinal",
+    "qualification_provider_ledger_entry_id",
+    "qualification_task_plan_id",
+    "record_type",
+    "request_body_sha256",
+    "run_id",
+    "source_binding_hash",
+    "task_contract_id",
+    "transport_observation",
 }
 
 
@@ -207,6 +240,42 @@ def _text(*, value: object, label: str) -> str:
             message="{} is invalid".format(label),
         )
     return value
+
+
+def _target_period_mapping(*, value: object) -> Dict[str, object]:
+    """Return one exact, valid qualification target-period mapping.
+
+    The matrix owns this coordinate for an immutable development source.  A
+    future caller may repeat it to the executor, but cannot widen or replace
+    it with another fiscal-year range.
+    """
+    if type(value) is not dict or set(value) != _TARGET_PERIOD_FIELDS:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification target period fields are invalid",
+        )
+    try:
+        validate_run_coordinates(
+            target_period=value,
+            company_traits=[],
+        )
+    except RecordError as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification target period is invalid",
+        ) from error
+    return dict(value)
+
+
+def _source_media_type(*, value: object) -> str:
+    """Return the one source media type declared by the qualification matrix."""
+    media_type = _text(value=value, label="qualification source media type")
+    if media_type != "text/html":
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification source media type is unsupported",
+        )
+    return media_type
 
 
 def _source_url_from_declaration(*, declaration: Mapping[str, object]) -> str:
@@ -411,7 +480,38 @@ def _authorization_mapping(
         repo_root=repo_root,
         matrix_entry=matrix_entry,
     )
+    target_period = _target_period_mapping(
+        value=matrix_entry.get("target_period"),
+    )
+    source_media_type = _source_media_type(
+        value=matrix_entry.get("source_media_type"),
+    )
+    ledger_before = freeze.get("provider_ledger_before")
+    if (
+        type(ledger_before) is not dict
+        or set(ledger_before) != {"path", "row_count", "sha256"}
+        or type(ledger_before["row_count"]) is not int
+        or ledger_before["row_count"] < 0
+        or type(ledger_before["sha256"]) is not str
+        or _SHA256_HEX.fullmatch(ledger_before["sha256"]) is None
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger baseline is invalid",
+        )
     policy = approved_transport_policy(requirement=requirement)
+    terminal_body = {
+        "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        "qualification_cycle_id": freeze["qualification_cycle_id"],
+        "family_id": family_id,
+        "task_contract_id": task_contract_id,
+        "qualification_ordinal": qualification_ordinal,
+        "source_binding_hash": source_binding["source_binding_hash"],
+        "target_period": target_period,
+        "source_media_type": source_media_type,
+    }
+    qualification_terminal_id = content_hash(value=terminal_body)
+    terminal_digest = qualification_terminal_id.split(":", maxsplit=1)[1]
     body = {
         "qualification_task_plan_id": plan["qualification_task_plan_id"],
         "qualification_cycle_id": freeze["qualification_cycle_id"],
@@ -426,6 +526,9 @@ def _authorization_mapping(
         "system_prompt_hash": runtime["system_prompt_hash"],
         "source_binding": source_binding,
         "source_binding_hash": source_binding["source_binding_hash"],
+        "target_period": target_period,
+        "target_period_hash": content_hash(value=target_period),
+        "source_media_type": source_media_type,
         "requirement_closure_hash": requirement["requirement_closure_hash"],
         "table_payload_serialization_version": (
             TABLE_PAYLOAD_SERIALIZATION_VERSION
@@ -438,12 +541,20 @@ def _authorization_mapping(
                 cycle_id=str(freeze["qualification_cycle_id"]),
             )
         ),
-        "qualification_provider_ledger_path": (
+        "qualification_provider_ledger_path": ledger_before["path"],
+        "qualification_provider_ledger_before_sha256": ledger_before["sha256"],
+        "qualification_provider_ledger_before_row_count": ledger_before[
+            "row_count"
+        ],
+        "qualification_terminal_id": qualification_terminal_id,
+        "run_id": "run:qualification:table:" + terminal_digest,
+        "run_directory_relative_path": (
             TABLE_QUALIFICATION_CYCLE_ROOT
             / str(freeze["qualification_cycle_id"]).split(
                 ":", maxsplit=1,
             )[1]
-            / "provider_ledger.jsonl"
+            / "runs"
+            / terminal_digest
         ).as_posix(),
     }
     return {
@@ -509,9 +620,11 @@ def _rebuild_authorization_binding(
 
 def validate_live_table_qualification_authorization(
     *, repo_root: Path, authorization: object, task_contract_id: str,
-    company_id: str, source_repo_relative_path: str, source_url: str,
-    accession: str, document_name: str, source_role: str,
-    request_attempt_id: str, adapter: object,
+    run_dir: Path, run_id: str, company_id: str,
+    target_period: Mapping[str, object], source_repo_relative_path: str,
+    source_media_type: str, source_url: str, accession: str,
+    document_name: str, source_role: str, request_attempt_id: str,
+    adapter: object,
 ) -> Dict[str, object]:
     """Rebuild and compare the sole authorization before LIVE table execution."""
     if (
@@ -535,7 +648,10 @@ def validate_live_table_qualification_authorization(
     source = fresh["source_binding"]
     declaration = source["source_declaration"]
     if (
-        company_id != declaration["company_id"]
+        dict(target_period) != fresh["target_period"]
+        or source_media_type != fresh["source_media_type"]
+        or run_id != fresh["run_id"]
+        or company_id != declaration["company_id"]
         or source_repo_relative_path
         != declaration["source_repo_relative_path"]
         or source_url != source["source_url"]
@@ -547,6 +663,14 @@ def validate_live_table_qualification_authorization(
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Workflow source differs from qualification authority",
+        )
+    expected_run_dir = (
+        repo_root / str(fresh["run_directory_relative_path"])
+    ).resolve()
+    if run_dir.resolve() != expected_run_dir:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Workflow Run directory differs from qualification authority",
         )
     policy = getattr(adapter, "policy", None)
     context = getattr(adapter, "invocation_context", None)
@@ -581,16 +705,38 @@ def validate_live_table_qualification_authorization(
 
 
 def _qualification_ledger_path(
-    *, repo_root: Path, relative: object,
+    *, repo_root: Path, binding: Mapping[str, object],
 ) -> Path:
-    """Resolve one module-owned qualification provider ledger safely."""
-    text = _text(value=relative, label="qualification provider ledger path")
+    """Resolve the one freeze-receipt-owned provider ledger for an authority.
+
+    Runtime code may not choose a ``qualification/`` sibling ledger.  The
+    receipt's frozen-before binding supplies the only ledger pathname, and the
+    path must mechanically agree with its qualification cycle.
+    """
+    text = _text(
+        value=binding.get("qualification_provider_ledger_path"),
+        label="qualification provider ledger path",
+    )
+    cycle_id = _text(
+        value=binding.get("qualification_cycle_id"),
+        label="qualification cycle",
+    )
+    if not _SHA256_ID.fullmatch(cycle_id):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger cycle is invalid",
+        )
+    expected = (
+        FREEZE_CYCLE_ROOT
+        / cycle_id.split(":", maxsplit=1)[1]
+        / "provider_ledger.jsonl"
+    )
     path = Path(text)
     if (
         path.is_absolute()
         or ".." in path.parts
-        or not path.is_relative_to(TABLE_QUALIFICATION_CYCLE_ROOT)
-        or path.name != "provider_ledger.jsonl"
+        or path != expected
+        or not path.is_relative_to(FREEZE_CYCLE_ROOT)
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
@@ -599,55 +745,225 @@ def _qualification_ledger_path(
     return repo_root / path
 
 
-def _append_qualification_ledger_entry(
-    *, repo_root: Path, relative: object, entry: Mapping[str, object],
+def _expected_ledger_entry_identifier(*, entry: Mapping[str, object]) -> str:
+    """Recompute one provider-ledger entry identity from exact semantic bytes."""
+    body = {
+        key: entry[key]
+        for key in _PROVIDER_LEDGER_ENTRY_FIELDS
+        if key != "qualification_provider_ledger_entry_id"
+    }
+    return content_hash(value=body)
+
+
+def _require_duplicated_authority_fields(
+    *, value: Mapping[str, object], binding: Mapping[str, object],
+    label: str,
 ) -> None:
-    """Append one content-addressed qualification ledger row atomically."""
-    path = _qualification_ledger_path(repo_root=repo_root, relative=relative)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    if path.exists() and (path.is_symlink() or not path.is_file()):
+    """Require a record's top-level authority facts to equal its nested copy."""
+    for field in (
+        "qualification_authorization_id",
+        "qualification_task_plan_id",
+        "qualification_cycle_id",
+        "freeze_receipt_id",
+        "family_id",
+        "task_contract_id",
+        "qualification_ordinal",
+        "source_binding_hash",
+    ):
+        if value.get(field) != binding.get(field):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="{} authority field differs".format(label),
+            )
+
+
+def validate_table_qualification_provider_ledger_entry(
+    *, entry: object, binding: Optional[Mapping[str, object]] = None,
+    run_id: Optional[str] = None, attempt: Optional[Mapping[str, object]] = None,
+) -> Dict[str, object]:
+    """Strictly validate one first-class qualification provider ledger row.
+
+    The ledger is an evidence authority, not a debug trace.  Its identifier,
+    duplicated top-level facts, nested authorization, request body, provider
+    request ID, and transport observation are therefore all exact bindings.
+    """
+    if type(entry) is not dict or set(entry) != _PROVIDER_LEDGER_ENTRY_FIELDS:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Qualification provider ledger is unsafe",
+            message="Qualification provider ledger entry fields differ",
         )
-    existing = path.read_bytes() if path.exists() else b""
-    if existing and not existing.endswith(b"\n"):
+    value = dict(entry)
+    if value["record_type"] != "TABLE_QUALIFICATION_PROVIDER_LEDGER_ENTRY":
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger entry type differs",
+        )
+    nested = value["qualification_authorization"]
+    if type(nested) is not dict:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger authority is invalid",
+        )
+    _require_duplicated_authority_fields(
+        value=value,
+        binding=nested,
+        label="Qualification provider ledger",
+    )
+    expected_id = _expected_ledger_entry_identifier(entry=value)
+    if value["qualification_provider_ledger_entry_id"] != expected_id:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger identity differs",
+        )
+    if binding is not None:
+        if nested != binding:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification provider ledger authority differs",
+            )
+        _require_duplicated_authority_fields(
+            value=value,
+            binding=binding,
+            label="Qualification provider ledger",
+        )
+    if run_id is not None and value["run_id"] != run_id:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger Run differs",
+        )
+    if attempt is not None and (
+        value["attempt_id"] != attempt.get("attempt_id")
+        or value["request_body_sha256"] != attempt.get("request_body_sha256")
+        or value["provider_request_id"] != attempt.get("provider_request_id")
+        or value["transport_observation"]
+        != attempt.get("transport_observation")
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger attempt differs",
+        )
+    return value
+
+
+def _parse_qualification_ledger(*, content: bytes) -> list[Dict[str, object]]:
+    """Parse strict JSONL ledger bytes while retaining the frozen line prefix."""
+    if content and not content.endswith(b"\n"):
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification provider ledger is malformed",
         )
-    entry_id = _text(
-        value=entry.get("qualification_provider_ledger_entry_id"),
-        label="qualification provider ledger entry",
-    )
-    for line in existing.splitlines():
+    rows = []
+    seen = set()
+    for line in content.splitlines():
         try:
-            prior = strict_json_loads(text=line.decode("utf-8"))
+            parsed = strict_json_loads(text=line.decode("utf-8"))
         except (UnicodeDecodeError, ValueError) as error:
             raise QualificationError(
                 code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
                 message="Qualification provider ledger row is malformed",
             ) from error
-        if (
-            type(prior) is not dict
-            or "qualification_provider_ledger_entry_id" not in prior
-        ):
+        value = validate_table_qualification_provider_ledger_entry(entry=parsed)
+        entry_id = str(value["qualification_provider_ledger_entry_id"])
+        if entry_id in seen:
             raise QualificationError(
                 code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-                message="Qualification provider ledger row is invalid",
+                message="Qualification provider ledger identity is duplicated",
             )
-        if prior["qualification_provider_ledger_entry_id"] == entry_id:
-            if prior != entry:
+        seen.add(entry_id)
+        rows.append(value)
+    return rows
+
+
+def _validate_frozen_ledger_prefix(
+    *, content: bytes, binding: Mapping[str, object],
+) -> None:
+    """Verify the receipt's immutable ledger-before bytes as an exact prefix."""
+    row_count = binding.get("qualification_provider_ledger_before_row_count")
+    expected_sha256 = binding.get("qualification_provider_ledger_before_sha256")
+    if (
+        type(row_count) is not int
+        or row_count < 0
+        or type(expected_sha256) is not str
+        or _SHA256_HEX.fullmatch(expected_sha256) is None
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger baseline is invalid",
+        )
+    lines = content.splitlines(keepends=True)
+    if any(not line.endswith(b"\n") for line in lines) or len(lines) < row_count:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger prefix is malformed",
+        )
+    prefix = b"".join(lines[:row_count])
+    if sha256_bytes(content=prefix) != expected_sha256:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger prefix differs",
+        )
+
+
+def _append_qualification_ledger_entry(
+    *, repo_root: Path, binding: Mapping[str, object], entry: Mapping[str, object],
+) -> None:
+    """Append one exact ledger row with a process-wide exclusive lock.
+
+    Before every append, the frozen ledger-before hash/count is rechecked as a
+    byte prefix.  Different task/ordinal workers can therefore append without
+    racing away from the one receipt-owned ledger.
+    """
+    value = validate_table_qualification_provider_ledger_entry(
+        entry=entry,
+        binding=binding,
+    )
+    path = _qualification_ledger_path(repo_root=repo_root, binding=binding)
+    if path.is_symlink() or not path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger is absent or unsafe",
+        )
+    lock_path = path.with_name(path.name + ".lock")
+    if lock_path.exists() and (lock_path.is_symlink() or not lock_path.is_file()):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger lock is unsafe",
+        )
+    with lock_path.open(mode="a+b") as lock_file:
+        fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+        try:
+            if path.is_symlink() or not path.is_file():
                 raise QualificationError(
                     code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-                    message="Qualification provider ledger entry differs",
+                    message="Qualification provider ledger is absent or unsafe",
                 )
-            return
-    encoded = canonical_json_bytes(value=dict(entry))
-    atomic_write_bytes(
-        path=path,
-        content=existing + (encoded if encoded.endswith(b"\n") else encoded + b"\n"),
-    )
+            existing = path.read_bytes()
+            _validate_frozen_ledger_prefix(content=existing, binding=binding)
+            rows = _parse_qualification_ledger(content=existing)
+            entry_id = str(value["qualification_provider_ledger_entry_id"])
+            for prior in rows:
+                prior_id = str(prior["qualification_provider_ledger_entry_id"])
+                if prior_id == entry_id:
+                    if prior != value:
+                        raise QualificationError(
+                            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                            message="Qualification provider ledger entry differs",
+                        )
+                    return
+                if (
+                    prior["qualification_authorization"].get(
+                        "qualification_terminal_id"
+                    )
+                    == binding["qualification_terminal_id"]
+                ):
+                    raise QualificationError(
+                        code="TABLE_QUALIFICATION_TERMINAL_ALREADY_RECORDED",
+                        message="Qualification ordinal already has terminal evidence",
+                    )
+            encoded = canonical_json_bytes(value=value) + b"\n"
+            atomic_write_bytes(path=path, content=existing + encoded)
+        finally:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
 
 
 def record_table_qualification_execution(
@@ -659,12 +975,20 @@ def record_table_qualification_execution(
         repo_root=repo_root,
         actual=dict(authorization),
     )
+    if run_id != binding["run_id"]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification evidence Run differs from authorization",
+        )
     for field in (
         "attempt_id",
         "task_contract_id",
         "catalog_task_contract_hash",
         "catalog_output_schema_hash",
         "system_prompt_hash",
+        "request_body_sha256",
+        "provider_request_id",
+        "transport_observation",
     ):
         if field not in attempt:
             raise QualificationError(
@@ -678,6 +1002,8 @@ def record_table_qualification_execution(
         or attempt["catalog_output_schema_hash"]
         != binding["output_schema_hash"]
         or attempt["system_prompt_hash"] != binding["system_prompt_hash"]
+        or type(attempt["transport_observation"]) is not dict
+        or attempt["transport_observation"].get("egress_attempted") is not True
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
@@ -704,13 +1030,11 @@ def record_table_qualification_execution(
     }
     ledger_entry = {
         **ledger_body,
-        "qualification_provider_ledger_entry_id": content_hash(
-            value=ledger_body,
-        ),
+        "qualification_provider_ledger_entry_id": content_hash(value=ledger_body),
     }
     _append_qualification_ledger_entry(
         repo_root=repo_root,
-        relative=binding["qualification_provider_ledger_path"],
+        binding=binding,
         entry=ledger_entry,
     )
     evidence_body = {
@@ -739,27 +1063,38 @@ def record_table_qualification_execution(
 
 
 def validate_table_qualification_run_bindings(
-    *, repo_root: Path, manifest: Mapping[str, object],
+    *, repo_root: Path, run_dir: Path, manifest: Mapping[str, object],
     records: Sequence[Mapping[str, object]],
 ) -> None:
-    """Revalidate persisted LIVE qualification authority and evidence."""
+    """Revalidate persisted catalog-LIVE authority and its sole evidence path."""
     authorization = manifest.get("qualification_authorization")
     attempts = [
         record for record in records
         if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
     ]
+    task_bindings = manifest.get("task_contract_bindings")
+    catalog_task = type(task_bindings) is list and bool(task_bindings)
+    remote_attempts = [
+        attempt for attempt in attempts
+        if type(attempt.get("transport_observation")) is dict
+        and attempt["transport_observation"].get("egress_attempted") is True
+    ]
     if authorization is None:
+        if catalog_task and remote_attempts:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
+                message="Remote catalog evidence lacks qualification authorization",
+            )
         if any("qualification_authorization" in attempt for attempt in attempts):
             raise QualificationError(
                 code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
                 message="Attempt has qualification authority without Run binding",
-            )
+        )
         return
     binding = _rebuild_authorization_binding(
         repo_root=repo_root,
         actual=authorization,
     )
-    task_bindings = manifest.get("task_contract_bindings")
     if (
         type(task_bindings) is not list
         or len(task_bindings) != 1
@@ -769,6 +1104,16 @@ def validate_table_qualification_run_bindings(
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Run task binding differs from qualification authority",
+        )
+    if (
+        manifest.get("run_id") != binding["run_id"]
+        or manifest.get("target_period") != binding["target_period"]
+        or run_dir.resolve()
+        != (repo_root / str(binding["run_directory_relative_path"])).resolve()
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Run terminal identity differs from qualification authority",
         )
     references = manifest.get("source_references")
     source = binding["source_binding"]
@@ -787,6 +1132,17 @@ def validate_table_qualification_run_bindings(
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Run source differs from qualification authority",
+        )
+    raw_blobs = [
+        record for record in records if record["record_type"] == "RAW_BLOB"
+    ]
+    if (
+        len(raw_blobs) != 1
+        or raw_blobs[0].get("media_type") != binding["source_media_type"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Run source media differs from qualification authority",
         )
     if not attempts:
         raise QualificationError(
@@ -811,7 +1167,7 @@ def validate_table_qualification_run_bindings(
         evidence_by_attempt[attempt_id] = record
     ledger_path = _qualification_ledger_path(
         repo_root=repo_root,
-        relative=binding["qualification_provider_ledger_path"],
+        binding=binding,
     )
     if ledger_path.is_symlink() or not ledger_path.is_file():
         raise QualificationError(
@@ -819,28 +1175,13 @@ def validate_table_qualification_run_bindings(
             message="Qualification provider ledger is absent",
         )
     ledger_rows = {}
-    try:
-        lines = ledger_path.read_text(encoding="utf-8").splitlines()
-    except UnicodeDecodeError as error:
-        raise QualificationError(
-            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Qualification provider ledger is not UTF-8",
-        ) from error
-    for line in lines:
-        value = strict_json_loads(text=line)
-        if type(value) is not dict:
-            raise QualificationError(
-                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-                message="Qualification provider ledger row is invalid",
-            )
-        entry_id = value.get("qualification_provider_ledger_entry_id")
-        if type(entry_id) is not str or entry_id in ledger_rows:
-            raise QualificationError(
-                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-                message="Qualification provider ledger identity is invalid",
-            )
+    ledger_content = ledger_path.read_bytes()
+    _validate_frozen_ledger_prefix(content=ledger_content, binding=binding)
+    rows = _parse_qualification_ledger(content=ledger_content)
+    for value in rows:
+        entry_id = str(value["qualification_provider_ledger_entry_id"])
         ledger_rows[entry_id] = value
-    for attempt in attempts:
+    for attempt in remote_attempts:
         if attempt.get("qualification_authorization") != binding:
             raise QualificationError(
                 code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
@@ -854,18 +1195,17 @@ def validate_table_qualification_run_bindings(
             )
         entry_id = evidence["provider_ledger_entry_id"]
         entry = ledger_rows.get(entry_id)
-        if (
-            entry is None
-            or entry.get("qualification_authorization") != binding
-            or entry.get("run_id") != manifest["run_id"]
-            or entry.get("attempt_id") != attempt["attempt_id"]
-            or entry.get("request_body_sha256")
-            != attempt["request_body_sha256"]
-        ):
+        if entry is None:
             raise QualificationError(
                 code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
                 message="Qualification provider ledger binding differs",
             )
+        validate_table_qualification_provider_ledger_entry(
+            entry=entry,
+            binding=binding,
+            run_id=str(manifest["run_id"]),
+            attempt=attempt,
+        )
 
 
 def execute_table_qualification_task(
@@ -891,18 +1231,38 @@ def execute_table_qualification_task(
         qualification_ordinal=qualification_ordinal,
     )
     binding = authorization.as_mapping()
+    supplied_period = _target_period_mapping(value=target_period)
+    if supplied_period != binding["target_period"]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification target period differs from frozen task plan",
+        )
     source = binding["source_binding"]
     declaration = source["source_declaration"]
-    digest = binding["qualification_authorization_id"].split(
-        ":", maxsplit=1,
-    )[1]
-    run_dir = (
-        repo_root
-        / TABLE_QUALIFICATION_CYCLE_ROOT
-        / str(binding["qualification_cycle_id"]).split(":", maxsplit=1)[1]
-        / "runs"
-        / digest
-    )
+    run_dir = repo_root / str(binding["run_directory_relative_path"])
+    if run_dir.exists():
+        try:
+            manifest, _records, _decisions = load_run_for_status(
+                run_dir=run_dir,
+                repo_root=repo_root,
+            )
+        except RunStoreError as error:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TERMINAL_INVALID",
+                message="Existing qualification terminal cannot be resumed",
+            ) from error
+        if manifest.get("qualification_authorization") != binding:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TERMINAL_INVALID",
+                message="Existing qualification terminal authority differs",
+            )
+        return {
+            "run_id": binding["run_id"],
+            "status": "RESUMED_EXISTING_QUALIFICATION_RUN",
+            "qualification_terminal_id": binding[
+                "qualification_terminal_id"
+            ],
+        }
     adapter = build_invocation_controlled_transport_adapter(
         release_input_plan_id=str(binding["qualification_task_plan_id"]),
         workspace_dir=repo_root / str(binding["wb3_workspace_relative_path"]),
@@ -913,13 +1273,13 @@ def execute_table_qualification_task(
     return create_table_task_review_run(
         repo_root=repo_root,
         run_dir=run_dir,
-        run_id="run:qualification:table:" + digest,
+        run_id=str(binding["run_id"]),
         company_id=str(declaration["company_id"]),
-        target_period=target_period,
+        target_period=binding["target_period"],
         source_repo_relative_path=str(
             declaration["source_repo_relative_path"],
         ),
-        source_media_type="text/html",
+        source_media_type=str(binding["source_media_type"]),
         source_url=str(source["source_url"]),
         accession=str(declaration["accession"]),
         document_name=str(declaration["document_name"]),

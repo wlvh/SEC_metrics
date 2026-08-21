@@ -1072,6 +1072,7 @@ def _qualification_fixture_traits(
 def _verify_repository_bindings(
     *,
     repo_root: Path,
+    run_dir: Path,
     manifest: Mapping[str, object],
     records: Sequence[Mapping[str, object]],
 ) -> Tuple[
@@ -1199,19 +1200,25 @@ def _verify_repository_bindings(
             ) from qualification_error
     if manifest["company_traits"] != repository_traits:
         raise RunStoreError("Run company traits differ from repository")
-    if "qualification_authorization" in manifest:
+    if (
+        "qualification_authorization" in manifest
+        or manifest.get("task_contract_bindings")
+    ):
         try:
             from .qualification import QualificationError
             from .qualification import validate_table_qualification_run_bindings
 
             validate_table_qualification_run_bindings(
                 repo_root=repo_root,
+                run_dir=run_dir,
                 manifest=manifest,
                 records=records,
             )
         except QualificationError as error:
             raise RunStoreError(
-                "Run qualification authority is invalid"
+                "Run qualification authority is invalid: {}".format(
+                    error.code
+                )
             ) from error
     return compiled_by_id, raw_bytes_by_id, repository_ciks, requirement
 
@@ -2896,7 +2903,10 @@ def _mechanically_replay_open_run(
     _verify_review_assets(run_dir=run_dir, review_units=review_units)
     compiled_specs, raw_bytes_by_id, company_ciks, requirement = (
         _verify_repository_bindings(
-            repo_root=repo_root, manifest=manifest, records=records,
+            repo_root=repo_root,
+            run_dir=run_dir,
+            manifest=manifest,
+            records=records,
         )
     )
     _validate_record_graph(
@@ -3175,7 +3185,10 @@ def load_frozen_run(
     _verify_review_assets(run_dir=run_dir, review_units=review_units)
     compiled_specs, raw_bytes_by_id, company_ciks, requirement = (
         _verify_repository_bindings(
-            repo_root=repo_root, manifest=manifest, records=records,
+            repo_root=repo_root,
+            run_dir=run_dir,
+            manifest=manifest,
+            records=records,
         )
     )
     _validate_record_graph(

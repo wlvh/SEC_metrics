@@ -886,6 +886,26 @@ def _expected_identifier(
             for key in ("status", "view_id", "checks", "artifact_hashes")
         }
         return "validation_receipt_id", content_hash(value=body)
+    if record_type == "TABLE_QUALIFICATION_EVIDENCE":
+        body = {
+            key: record[key]
+            for key in (
+                "record_type",
+                "qualification_authorization",
+                "qualification_authorization_id",
+                "qualification_task_plan_id",
+                "qualification_cycle_id",
+                "freeze_receipt_id",
+                "family_id",
+                "task_contract_id",
+                "qualification_ordinal",
+                "source_binding_hash",
+                "run_id",
+                "attempt_id",
+                "provider_ledger_entry_id",
+            )
+        }
+        return "qualification_evidence_id", content_hash(value=body)
     if record_type == "PUBLICATION_MANIFEST":
         body = {
             key: record[key]
@@ -1279,6 +1299,26 @@ def _validate_record_semantics(
             raise RecordError("Successful attempt response state is invalid")
         if record["status"] == "FAILED" and not record["error_class"]:
             raise RecordError("Failed attempt error class is required")
+    if record_type == "TABLE_QUALIFICATION_EVIDENCE":
+        binding = record["qualification_authorization"]
+        if type(binding) is not dict:
+            raise RecordError("Qualification evidence authority is invalid")
+        for field in (
+            "qualification_authorization_id",
+            "qualification_task_plan_id",
+            "qualification_cycle_id",
+            "freeze_receipt_id",
+            "family_id",
+            "task_contract_id",
+            "qualification_ordinal",
+            "source_binding_hash",
+        ):
+            if record[field] != binding.get(field):
+                raise RecordError(
+                    "Qualification evidence authority field differs: {}".format(
+                        field
+                    )
+                )
     if record_type == "REVIEW_DECISION":
         _utc_timestamp(
             value=str(record["decided_at_utc"]), field="decided_at_utc",

@@ -402,78 +402,48 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertEqual("FROZEN", loaded["status"])
         self.assertEqual(1, len(replay["results"]))
 
-    def test_catalog_remote_transport_uses_issue15_requirement_at_replay(self) -> None:
-        """Replay Issue #15 retry-zero transport and reject parent Run hashes."""
-        issue_requirement = load_requirement_snapshot(
-            snapshot_dir=REPO_ROOT / "requirements" / "issue_15_v1",
-        )
+    def test_unauthorised_catalog_remote_transport_cannot_freeze_or_replay(self) -> None:
+        """Reject a synthetic remote catalog attempt with no qualification evidence."""
         parent_requirement = load_requirement_snapshot(
             snapshot_dir=REPO_ROOT / "requirements" / "ai_first_v3_3_1",
         )
         with tempfile.TemporaryDirectory() as temporary:
-            run_dir = Path(temporary) / "issue15-remote"
+            run_dir = Path(temporary) / "unauthorised-remote-finalize"
             self._create_catalog_task_run(run_dir=run_dir)
-            manifest, records, _decisions = load_open_run(run_dir=run_dir)
-            self.assertEqual(
-                issue_requirement["hashes"],
-                manifest["requirement_hashes"],
+            self._replace_recorded_attempt_with_issue15_remote_observation(
+                run_dir=run_dir,
+            )
+            with self.assertRaisesRegex(
+                WorkflowError,
+                "TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
+            ):
+                finalize_reviewed_direct_results(
+                    run_dir=run_dir,
+                    repo_root=REPO_ROOT,
+                )
+
+        with tempfile.TemporaryDirectory() as temporary:
+            run_dir = Path(temporary) / "unauthorised-remote-freeze"
+            self._create_catalog_task_run(run_dir=run_dir)
+            finalize_reviewed_direct_results(
+                run_dir=run_dir,
+                repo_root=REPO_ROOT,
             )
             self._replace_recorded_attempt_with_issue15_remote_observation(
                 run_dir=run_dir,
             )
-            _manifest, remote_records, _decisions = load_open_run(
-                run_dir=run_dir,
-            )
-            remote_attempt = next(
-                record
-                for record in remote_records
-                if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
-            )
-            self.assertEqual(
-                0,
-                remote_attempt["transport_observation"]["retry_count"],
-            )
-            observed_requirement_hashes = []
-            original_system_review = workflow_module.create_system_review_decision
-
-            def capture_system_review(**kwargs: object) -> dict:
-                """Capture the Requirement closure passed to SYSTEM review."""
-                requirement = kwargs["requirement"]
-                observed_requirement_hashes.append(
-                    requirement["requirement_closure_hash"]
-                )
-                return original_system_review(**kwargs)
-
-            with mock.patch(
-                "vnext.workflow.create_system_review_decision",
-                side_effect=capture_system_review,
+            with self.assertRaisesRegex(
+                RunStoreError,
+                "TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
             ):
-                finalized = finalize_reviewed_direct_results(
+                validate_and_freeze_run(
                     run_dir=run_dir,
                     repo_root=REPO_ROOT,
                 )
-            self.assertEqual(1, len(finalized["result_ids"]))
-            self.assertEqual(
-                [issue_requirement["requirement_closure_hash"]],
-                observed_requirement_hashes,
-            )
-            frozen = validate_and_freeze_run(
-                run_dir=run_dir,
-                repo_root=REPO_ROOT,
-            )
-            replay = replay_frozen_results(
-                run_dir=run_dir,
-                repo_root=REPO_ROOT,
-            )
-        self.assertEqual("FROZEN", frozen["status"])
-        self.assertEqual(1, len(replay["results"]))
 
         with tempfile.TemporaryDirectory() as temporary:
             run_dir = Path(temporary) / "parent-hash-negative"
             self._create_catalog_task_run(run_dir=run_dir)
-            self._replace_recorded_attempt_with_issue15_remote_observation(
-                run_dir=run_dir,
-            )
             finalize_reviewed_direct_results(
                 run_dir=run_dir,
                 repo_root=REPO_ROOT,

@@ -5,6 +5,12 @@
     {
       "family_id": "financial_statement",
       "reader_contract_id": "financial_statement_v1",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_media_type": "text/html",
       "task_contract_ids": [
         "financial_assets_under_management_table_v1",
         "financial_capacity_utilization_table_v1",
@@ -77,6 +83,12 @@
     {
       "family_id": "lodging_kpi_table",
       "reader_contract_id": "lodging_kpi_table_v1",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "source_media_type": "text/html",
       "task_contract_ids": [
         "lodging_occupancy_table_v2",
         "lodging_revpar_table_v2"

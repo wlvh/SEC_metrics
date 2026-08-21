@@ -65,7 +65,9 @@ MATRIX_ENTRY_FIELDS = {
     "review_policy",
     "second_layout_policy",
     "second_layout_source",
+    "source_media_type",
     "task_contract_ids",
+    "target_period",
     "token_context_limits",
 }
 LOCATOR_RANGE_FIELDS = {
@@ -345,8 +347,21 @@ def load_table_qualification_matrix(*, repo_root: Path) -> Dict[str, object]:
             or not entry["negative_cases"]
             or type(entry["review_policy"]) is not str
             or not entry["review_policy"]
+            or type(entry["source_media_type"]) is not str
+            or entry["source_media_type"] != "text/html"
         ):
             raise TableQualificationFreezeError("Matrix entry values are invalid")
+        target_period = entry["target_period"]
+        if (
+            type(target_period) is not dict
+            or set(target_period) != {
+                "fiscal_year", "period_start", "period_end",
+            }
+            or type(target_period["fiscal_year"]) is not int
+            or type(target_period["period_start"]) is not str
+            or type(target_period["period_end"]) is not str
+        ):
+            raise TableQualificationFreezeError("Matrix target period is invalid")
         locator_range = entry["expected_locator_range"]
         limits = entry["token_context_limits"]
         if (
