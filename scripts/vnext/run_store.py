@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List, Mapping, Sequence, Tuple
+from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
 from .ai_adapter import READER_OUTPUT_JSON_SCHEMA, approved_transport_policy
@@ -51,6 +51,7 @@ MANIFEST_FIELDS = {
     "record_type",
     "records_file_hash",
     "review_decisions_file_hash",
+    "qualification_authorization",
     "requirement_hashes",
     "run_id",
     "source_references",
@@ -65,6 +66,7 @@ RUN_VALIDATION_VIEW_FIELDS = (
     "company_traits",
     "execution_semantics_hash",
     "missing_required_source_roles",
+    "qualification_authorization",
     "requirement_hashes",
     "run_id",
     "source_references",
@@ -234,6 +236,7 @@ def create_run(
     spec_file_hashes: Mapping[str, str],
     requirement_hashes: Mapping[str, str],
     task_contract_bindings: Sequence[Mapping[str, object]] = (),
+    qualification_authorization: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Create a new OPEN Run with explicit empty data files.
 
@@ -249,6 +252,8 @@ def create_run(
         requirement_hashes: Exact immutable Requirement Snapshot hashes.
         task_contract_bindings: Explicit catalog task identities for this Run;
             retained historical disclosure Runs use an empty sequence.
+        qualification_authorization: Exact LIVE table qualification authority,
+            or ``None`` for recorded and retained historical Runs.
 
     Returns:
         Initial strict RUN manifest.
@@ -318,6 +323,10 @@ def create_run(
         key=lambda value: str(value["task_contract_id"]),
     ):
         raise RunStoreError("Run task contract bindings are not ordered")
+    if qualification_authorization is not None and not isinstance(
+        qualification_authorization, Mapping,
+    ):
+        raise RunStoreError("Run qualification authorization is invalid")
     validated_references = []
     for reference in source_references:
         validated = validate_record(record=reference)
@@ -347,6 +356,11 @@ def create_run(
         "spec_file_hashes": dict(spec_file_hashes),
         "requirement_hashes": dict(requirement_hashes),
         "task_contract_bindings": normalized_task_bindings,
+        **(
+            {"qualification_authorization": dict(qualification_authorization)}
+            if qualification_authorization is not None
+            else {}
+        ),
         "execution_semantics_hash": execution_semantics_hash(),
     }
     run_dir.mkdir(parents=True)
@@ -1185,6 +1199,20 @@ def _verify_repository_bindings(
             ) from qualification_error
     if manifest["company_traits"] != repository_traits:
         raise RunStoreError("Run company traits differ from repository")
+    if "qualification_authorization" in manifest:
+        try:
+            from .qualification import QualificationError
+            from .qualification import validate_table_qualification_run_bindings
+
+            validate_table_qualification_run_bindings(
+                repo_root=repo_root,
+                manifest=manifest,
+                records=records,
+            )
+        except QualificationError as error:
+            raise RunStoreError(
+                "Run qualification authority is invalid"
+            ) from error
     return compiled_by_id, raw_bytes_by_id, repository_ciks, requirement
 
 

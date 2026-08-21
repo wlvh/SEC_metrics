@@ -76,6 +76,25 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "catalog_task_contract_hash",
             "catalog_output_schema_hash",
             "system_prompt_hash",
+            "qualification_authorization",
+        ),
+    ),
+    "TABLE_QUALIFICATION_EVIDENCE": RecordSchema(
+        required=(
+            "record_type",
+            "qualification_evidence_id",
+            "qualification_authorization",
+            "qualification_authorization_id",
+            "qualification_task_plan_id",
+            "qualification_cycle_id",
+            "freeze_receipt_id",
+            "family_id",
+            "task_contract_id",
+            "qualification_ordinal",
+            "source_binding_hash",
+            "run_id",
+            "attempt_id",
+            "provider_ledger_entry_id",
         ),
     ),
     "DERIVED_ASSET": RecordSchema(
@@ -250,7 +269,7 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "audit_manifest_hash",
             "execution_semantics_hash",
         ),
-        optional=("task_contract_bindings",),
+        optional=("task_contract_bindings", "qualification_authorization"),
     ),
     "SOURCE_REFERENCE": RecordSchema(
         required=(
@@ -349,6 +368,7 @@ TEXT_FIELDS = {
     "period_start",
     "provider",
     "provider_request_id",
+    "provider_ledger_entry_id",
     "publication",
     "publication_id",
     "projection_manifest_id",
@@ -368,6 +388,12 @@ TEXT_FIELDS = {
     "request_attempt_id",
     "request_body_sha256",
     "request_body_path",
+    "qualification_authorization_id",
+    "qualification_cycle_id",
+    "qualification_evidence_id",
+    "qualification_task_plan_id",
+    "freeze_receipt_id",
+    "family_id",
     "output_schema_sha256",
     "output_schema_path",
     "assistant_output_sha256",
@@ -387,6 +413,7 @@ TEXT_FIELDS = {
     "scope_key",
     "semantic_role",
     "source_reference_id",
+    "source_binding_hash",
     "source_role",
     "source_set_manifest_id",
     "source_url",
@@ -448,6 +475,7 @@ MAPPING_FIELDS = {
     "ledger_binding",
     "normalized_values",
     "normalized_scope",
+    "qualification_authorization",
     "requirement_hashes",
     "required_claims",
     "sampling_parameters",
@@ -460,7 +488,7 @@ MAPPING_FIELDS = {
     "target_period",
     "transport_observation",
 }
-INTEGER_FIELDS = {"byte_length"}
+INTEGER_FIELDS = {"byte_length", "qualification_ordinal"}
 BOOLEAN_FIELDS = {"system_approval_eligible"}
 
 METRIC_RESULT_CONTRACT_FIELDS = (

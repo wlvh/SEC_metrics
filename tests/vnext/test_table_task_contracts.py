@@ -12,6 +12,7 @@ from tools.vnext_qualification import QualificationCliError, prepare_layout
 from tests.vnext.common import compiled_specs, fixed_clock, reader_response
 from tests.vnext.common import sample_asset
 from tests.vnext.common import sample_source_reference
+from vnext import ai_adapter
 from vnext import workflow as workflow_module
 from vnext.ai_adapter import AttemptPayloads, TransportObservation
 from vnext.ai_adapter import approved_transport_policy
@@ -39,6 +40,7 @@ from vnext.sources import raw_blob_record
 from vnext.table_grid import build_table_grid
 from vnext.workflow import create_table_task_review_run
 from vnext.workflow import finalize_reviewed_direct_results
+from vnext.workflow import WorkflowError
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -488,6 +490,87 @@ class TableTaskContractsTest(unittest.TestCase):
                     run_dir=run_dir,
                     repo_root=REPO_ROOT,
                 )
+
+    def test_live_catalog_paths_require_qualification_authorization(self) -> None:
+        """Reject every catalog LIVE wrapper before source or transport work."""
+        common = {
+            "repo_root": REPO_ROOT,
+            "company_id": "marriott_international",
+            "target_period": {
+                "fiscal_year": 2025,
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+            },
+            "source_repo_relative_path": "tests/fixtures/vnext/sample_lodging.html",
+            "source_media_type": "text/html",
+            "source_url": "https://www.sec.gov/Archives/sample.htm",
+            "accession": "0001048286-25-000001",
+            "document_name": "sample_lodging.html",
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:fixture",
+            "task_contract_id": "lodging_occupancy_table_v2",
+            "clock": fixed_clock,
+        }
+        with tempfile.TemporaryDirectory() as temporary:
+            adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+                release_input_plan_id="sha256:" + "a" * 64,
+                workspace_dir=Path(temporary) / "unrelated-workspace",
+                owner_token="live-catalog-canary",
+            )
+            transport = mock.Mock(name="provider_opener")
+            with mock.patch.object(
+                workflow_module,
+                "run_ai_attempt",
+                side_effect=AssertionError("transport must not be reached"),
+            ) as run_attempt, mock.patch.object(
+                ai_adapter,
+                "_DEEPSEEK_OPENER",
+                transport,
+            ):
+                wrappers = (
+                    (
+                        "table_wrapper",
+                        lambda run_dir: create_table_task_review_run(
+                            run_dir=run_dir,
+                            run_id="run:live-catalog:table-wrapper",
+                            adapter=adapter,
+                            **common,
+                        ),
+                    ),
+                    (
+                        "generic_wrapper",
+                        lambda run_dir: workflow_module.create_review_run(
+                            run_dir=run_dir,
+                            run_id="run:live-catalog:generic-wrapper",
+                            disclosure_spec_path=(
+                                "catalog/table_task_contracts.json"
+                            ),
+                            adapter=adapter,
+                            **common,
+                        ),
+                    ),
+                    (
+                        "shared_callee",
+                        lambda run_dir: workflow_module._create_review_run_with_traits(
+                            run_dir=run_dir,
+                            run_id="run:live-catalog:shared-callee",
+                            company_traits=["lodging"],
+                            disclosure_spec_path=(
+                                "catalog/table_task_contracts.json"
+                            ),
+                            adapter=adapter,
+                            **common,
+                        ),
+                    ),
+                )
+                for label, invoke in wrappers:
+                    with self.subTest(path=label), self.assertRaisesRegex(
+                        WorkflowError,
+                        "TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
+                    ):
+                        invoke(Path(temporary) / label)
+        self.assertEqual(0, run_attempt.call_count)
+        self.assertEqual(0, transport.call_count)
 
     def test_matrix_task_plan_binds_one_catalog_task_before_workflow(self) -> None:
         """Derive a future ordinal plan without falling back to schema v1."""

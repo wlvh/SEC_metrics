@@ -12,16 +12,26 @@ from __future__ import annotations
 
 import csv
 import re
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Mapping, Sequence
+from typing import Dict, Mapping, Optional, Sequence
 
-from .canonical import atomic_write_json, content_hash, parse_utc_timestamp
-from .canonical import sha256_file
-from .canonical import strict_json_file
+from sec_http import parse_request_log_rows, request_log_attempt_id
+from validation_provenance import ValidationProvenanceError
+
+from .ai_adapter import approved_transport_policy
+from .ai_adapter import build_invocation_controlled_transport_adapter
+from .batch_workflow import BatchWorkflowError, validate_request_attempt_binding
+from .canonical import atomic_write_bytes, atomic_write_json, canonical_json_bytes
+from .canonical import content_hash, parse_utc_timestamp, sha256_file
+from .canonical import strict_json_file, strict_json_loads
+from .requirements import load_requirement_snapshot
 from .records import RecordError, validate_record
 from .review import effective_review_decision
 from .run_store import load_run_for_status
+from .stage_a_snapshot import StageASnapshotError, validate_stage_a_snapshot
 from .table_grid import TableGridError, resolve_cell
+from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_qualification_freeze import TableQualificationFreezeError
 from .table_qualification_freeze import load_table_qualification_matrix
 from .table_qualification_freeze import require_table_qualification_freeze
@@ -37,6 +47,7 @@ LAYOUT_REFERENCE_INDEX = Path(
 )
 LAYOUT_FIXTURE_ROOT = Path("fixtures/vnext/layouts")
 QUALIFICATION_RUN_ROOT = QUALIFICATION_ROOT / "runs"
+TABLE_QUALIFICATION_CYCLE_ROOT = QUALIFICATION_ROOT / "cycles"
 LAYOUT_FIXTURE_FIELDS = frozenset({
     "accession",
     "cik",
@@ -89,6 +100,44 @@ _SEC_ARCHIVE_SOURCE = re.compile(
     r"^https://www\.sec\.gov/Archives/edgar/data/"
     r"([0-9]{1,10})/([0-9]{18})/([^/?#]+)$"
 )
+_QUALIFICATION_AUTHORIZATION_CAPABILITY = object()
+_QUALIFICATION_AUTHORIZATION_FIELDS = {
+    "api",
+    "catalog_task_contract_hash",
+    "family_id",
+    "freeze_receipt_id",
+    "matrix_entry_hash",
+    "model",
+    "output_schema_hash",
+    "provider",
+    "qualification_authorization_id",
+    "qualification_cycle_id",
+    "qualification_ordinal",
+    "qualification_provider_ledger_path",
+    "qualification_task_plan_id",
+    "requirement_closure_hash",
+    "source_binding",
+    "source_binding_hash",
+    "system_prompt_hash",
+    "table_payload_serialization_version",
+    "task_contract_id",
+    "task_spec_semantic_hash",
+    "wb3_workspace_relative_path",
+}
+_SOURCE_BINDING_FIELDS = {
+    "request_attempt_id",
+    "request_body_sha256",
+    "request_body_size",
+    "request_headers_repo_relative_path",
+    "request_headers_sha256",
+    "request_headers_size",
+    "request_locator_kind",
+    "request_repo_relative_path",
+    "source_declaration",
+    "source_role",
+    "source_url",
+    "source_binding_hash",
+}
 
 
 class QualificationError(RuntimeError):
@@ -103,6 +152,784 @@ class QualificationError(RuntimeError):
         """
         super().__init__("{}: {}".format(code, message))
         self.code = code
+
+
+@dataclass(frozen=True, init=False)
+class TableQualificationAuthorization:
+    """Carry one module-issued, repository-revalidated LIVE task authority.
+
+    The object deliberately cannot be constructed with a public constructor.
+    Its private marker is only a first boundary: every use also rebuilds the
+    same binding from the current matrix, freeze, Stage-A snapshot, source,
+    task catalog, Requirement, and provider policy.
+    """
+
+    _binding: Dict[str, object]
+    _capability: object
+
+    def __init__(
+        self, *, binding: Mapping[str, object], capability: object,
+    ) -> None:
+        """Create an opaque authorization only for this module's issuer."""
+        if capability is not _QUALIFICATION_AUTHORIZATION_CAPABILITY:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
+                message="Table qualification authorization is module-owned",
+            )
+        object.__setattr__(self, "_binding", _copy_authorization_binding(
+            value=binding,
+        ))
+        object.__setattr__(self, "_capability", capability)
+
+    def as_mapping(self) -> Dict[str, object]:
+        """Return an isolated copy suitable for persisted audit records."""
+        return _copy_authorization_binding(value=self._binding)
+
+
+def _copy_authorization_binding(*, value: Mapping[str, object]) -> Dict[str, object]:
+    """Copy one nested authorization mapping without sharing mutable state."""
+    copied = dict(value)
+    source = copied.get("source_binding")
+    if isinstance(source, Mapping):
+        copied_source = dict(source)
+        declaration = copied_source.get("source_declaration")
+        if isinstance(declaration, Mapping):
+            copied_source["source_declaration"] = dict(declaration)
+        copied["source_binding"] = copied_source
+    return copied
+
+
+def _text(*, value: object, label: str) -> str:
+    """Return one non-empty string or raise a stable authorization error."""
+    if type(value) is not str or not value:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="{} is invalid".format(label),
+        )
+    return value
+
+
+def _source_url_from_declaration(*, declaration: Mapping[str, object]) -> str:
+    """Derive the only allowed SEC Archives URL from matrix source identity."""
+    cik = _text(value=declaration["cik"], label="source CIK")
+    accession = _text(value=declaration["accession"], label="source accession")
+    document_name = _text(
+        value=declaration["document_name"], label="source document",
+    )
+    if not cik.isdigit() or not _ACCESSION.fullmatch(accession):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix source filing identity is invalid",
+        )
+    return (
+        "https://www.sec.gov/Archives/edgar/data/{}/{}{}".format(
+            str(int(cik)),
+            accession.replace("-", ""),
+            "/" + document_name,
+        )
+    )
+
+
+def _matrix_source_binding(
+    *, repo_root: Path, matrix_entry: Mapping[str, object],
+) -> Dict[str, object]:
+    """Rebuild one matrix-owned immutable SEC source and ledger binding."""
+    declaration = matrix_entry.get("development_source")
+    required = {
+        "accession",
+        "cik",
+        "company_id",
+        "document_name",
+        "source_kind",
+        "source_repo_relative_path",
+        "source_sha256",
+    }
+    if type(declaration) is not dict or set(declaration) != required:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source fields are invalid",
+        )
+    source = dict(declaration)
+    if source["source_kind"] != "IMMUTABLE_ATTEMPT":
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source is not immutable",
+        )
+    for label, field in (
+        ("source company", "company_id"),
+        ("source path", "source_repo_relative_path"),
+        ("source digest", "source_sha256"),
+    ):
+        _text(value=source[field], label=label)
+    relative = Path(str(source["source_repo_relative_path"]))
+    if relative.is_absolute() or ".." in relative.parts:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source path is unsafe",
+        )
+    source_path = repo_root / relative
+    if source_path.is_symlink() or not source_path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source bytes are absent",
+        )
+    if sha256_file(path=source_path) != source["source_sha256"]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source bytes differ",
+        )
+    source_url = _source_url_from_declaration(declaration=source)
+    try:
+        rows = parse_request_log_rows(
+            text=(repo_root / "evidence/requests_log.csv").read_text(
+                encoding="utf-8",
+            )
+        )
+    except (OSError, UnicodeDecodeError, ValueError) as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Request ledger is unavailable",
+        ) from error
+    matches = [
+        (index, row)
+        for index, row in enumerate(rows)
+        if row["source_url"] == source_url
+        and row["content_sha256"] == source["source_sha256"]
+        and row["accession"] == source["accession"]
+        and row["document_name"] == source["document_name"]
+        and row["repo_relative_path"]
+        == source["source_repo_relative_path"]
+        and row["headers_repo_relative_path"].startswith(
+            "evidence/request_attempts/"
+        )
+    ]
+    if len(matches) != 1:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source ledger binding is ambiguous",
+        )
+    index, row = matches[0]
+    request_attempt_id = request_log_attempt_id(row_index=index, row=row)
+    try:
+        proof = validate_request_attempt_binding(
+            repo_root=repo_root,
+            source_url=source_url,
+            content_sha256=str(source["source_sha256"]),
+            accession=str(source["accession"]),
+            document_name=str(source["document_name"]),
+            request_attempt_id=request_attempt_id,
+            require_immutable=True,
+        )
+    except BatchWorkflowError as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source ledger proof differs",
+        ) from error
+    if proof["request_repo_relative_path"] != source[
+        "source_repo_relative_path"
+    ]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Matrix development source locator differs",
+        )
+    body = {
+        "source_declaration": source,
+        "source_url": source_url,
+        "source_role": "target_primary",
+        **proof,
+    }
+    return {
+        **body,
+        "source_binding_hash": content_hash(value=body),
+    }
+
+
+def _qualification_workspace_relative_path(*, cycle_id: str) -> str:
+    """Derive the only WB-3 workspace allowed for one qualification cycle."""
+    if not _SHA256_ID.fullmatch(cycle_id):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification cycle identity is invalid",
+        )
+    return (
+        TABLE_QUALIFICATION_CYCLE_ROOT
+        / cycle_id.split(":", maxsplit=1)[1]
+        / "invocation_control"
+    ).as_posix()
+
+
+def _authorization_mapping(
+    *, repo_root: Path, family_id: str, task_contract_id: str,
+    qualification_ordinal: int,
+) -> Dict[str, object]:
+    """Mechanically rebuild every current authority field for one LIVE task."""
+    plan = table_qualification_task_plan(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract_id=task_contract_id,
+        qualification_ordinal=qualification_ordinal,
+    )
+    try:
+        freeze = require_table_qualification_freeze(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
+        snapshot = validate_stage_a_snapshot(repo_root=repo_root)
+        contracts = load_table_task_contracts(repo_root=repo_root)
+        runtime = resolve_table_task_contract(
+            repo_root=repo_root,
+            task_contract_id=task_contract_id,
+        )
+        requirement = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements/issue_15_v1",
+        )
+    except (StageASnapshotError, TableQualificationFreezeError,
+            TableTaskContractError, ValidationProvenanceError, ValueError) as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Current qualification authority cannot be rebuilt",
+        ) from error
+    if (
+        plan["freeze_receipt_id"] != freeze["receipt_id"]
+        or snapshot["freeze_receipt_id"] != freeze["receipt_id"]
+        or runtime["reader_family_id"] != family_id
+        or contracts["requirement_closure_hash"]
+        != requirement["requirement_closure_hash"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification authority closure differs",
+        )
+    matrix = load_table_qualification_matrix(repo_root=repo_root)
+    matrix_entry = matrix["entries"].get(family_id)
+    if type(matrix_entry) is not dict:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification matrix family is absent",
+        )
+    source_binding = _matrix_source_binding(
+        repo_root=repo_root,
+        matrix_entry=matrix_entry,
+    )
+    policy = approved_transport_policy(requirement=requirement)
+    body = {
+        "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        "qualification_cycle_id": freeze["qualification_cycle_id"],
+        "freeze_receipt_id": freeze["receipt_id"],
+        "family_id": family_id,
+        "task_contract_id": task_contract_id,
+        "qualification_ordinal": qualification_ordinal,
+        "matrix_entry_hash": plan["matrix_entry_hash"],
+        "catalog_task_contract_hash": runtime["catalog_task_contract_hash"],
+        "task_spec_semantic_hash": runtime["task_spec_semantic_hash"],
+        "output_schema_hash": runtime["output_schema_hash"],
+        "system_prompt_hash": runtime["system_prompt_hash"],
+        "source_binding": source_binding,
+        "source_binding_hash": source_binding["source_binding_hash"],
+        "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "table_payload_serialization_version": (
+            TABLE_PAYLOAD_SERIALIZATION_VERSION
+        ),
+        "provider": policy.provider,
+        "model": policy.model,
+        "api": policy.api,
+        "wb3_workspace_relative_path": (
+            _qualification_workspace_relative_path(
+                cycle_id=str(freeze["qualification_cycle_id"]),
+            )
+        ),
+        "qualification_provider_ledger_path": (
+            TABLE_QUALIFICATION_CYCLE_ROOT
+            / str(freeze["qualification_cycle_id"]).split(
+                ":", maxsplit=1,
+            )[1]
+            / "provider_ledger.jsonl"
+        ).as_posix(),
+    }
+    return {
+        **body,
+        "qualification_authorization_id": content_hash(value=body),
+    }
+
+
+def issue_table_qualification_authorization(
+    *, repo_root: Path, family_id: str, task_contract_id: str,
+    qualification_ordinal: int,
+) -> TableQualificationAuthorization:
+    """Issue one opaque authorization only after all current gates revalidate.
+
+    This is intentionally the sole constructor for an authorization consumed
+    by a LIVE catalog Workflow.  The current Stage-A D-07 state therefore
+    rejects here before any source parsing, reservation, or transport call.
+    """
+    binding = _authorization_mapping(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract_id=task_contract_id,
+        qualification_ordinal=qualification_ordinal,
+    )
+    return TableQualificationAuthorization(
+        binding=binding,
+        capability=_QUALIFICATION_AUTHORIZATION_CAPABILITY,
+    )
+
+
+def _rebuild_authorization_binding(
+    *, repo_root: Path, actual: object,
+) -> Dict[str, object]:
+    """Rebuild a persisted authorization without trusting copied fields."""
+    if type(actual) is not dict or set(actual) != _QUALIFICATION_AUTHORIZATION_FIELDS:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification authorization fields differ",
+        )
+    family_id = _text(value=actual["family_id"], label="authorization family")
+    task_contract_id = _text(
+        value=actual["task_contract_id"], label="authorization task",
+    )
+    ordinal = actual["qualification_ordinal"]
+    if type(ordinal) is not int:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification authorization ordinal is invalid",
+        )
+    fresh = _authorization_mapping(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract_id=task_contract_id,
+        qualification_ordinal=ordinal,
+    )
+    if actual != fresh:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification authorization differs from repository",
+        )
+    return fresh
+
+
+def validate_live_table_qualification_authorization(
+    *, repo_root: Path, authorization: object, task_contract_id: str,
+    company_id: str, source_repo_relative_path: str, source_url: str,
+    accession: str, document_name: str, source_role: str,
+    request_attempt_id: str, adapter: object,
+) -> Dict[str, object]:
+    """Rebuild and compare the sole authorization before LIVE table execution."""
+    if (
+        type(authorization) is not TableQualificationAuthorization
+        or authorization._capability is not _QUALIFICATION_AUTHORIZATION_CAPABILITY
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
+            message="LIVE catalog task lacks qualification authorization",
+        )
+    actual = authorization.as_mapping()
+    if actual["task_contract_id"] != task_contract_id:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification task differs from Workflow task",
+        )
+    fresh = _rebuild_authorization_binding(
+        repo_root=repo_root,
+        actual=actual,
+    )
+    source = fresh["source_binding"]
+    declaration = source["source_declaration"]
+    if (
+        company_id != declaration["company_id"]
+        or source_repo_relative_path
+        != declaration["source_repo_relative_path"]
+        or source_url != source["source_url"]
+        or accession != declaration["accession"]
+        or document_name != declaration["document_name"]
+        or source_role != source["source_role"]
+        or request_attempt_id != source["request_attempt_id"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Workflow source differs from qualification authority",
+        )
+    policy = getattr(adapter, "policy", None)
+    context = getattr(adapter, "invocation_context", None)
+    if (
+        policy is None
+        or getattr(policy, "provider", None) != fresh["provider"]
+        or getattr(policy, "model", None) != fresh["model"]
+        or getattr(policy, "api", None) != fresh["api"]
+        or context is None
+        or getattr(context, "release_input_plan_id", None)
+        != fresh["qualification_task_plan_id"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="WB-3 context differs from qualification authority",
+        )
+    workspace = getattr(context, "workspace_dir", None)
+    if not isinstance(workspace, Path):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="WB-3 qualification workspace is invalid",
+        )
+    expected_workspace = (
+        repo_root / str(fresh["wb3_workspace_relative_path"])
+    ).resolve()
+    if workspace.resolve() != expected_workspace:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="WB-3 workspace differs from qualification cycle",
+        )
+    return fresh
+
+
+def _qualification_ledger_path(
+    *, repo_root: Path, relative: object,
+) -> Path:
+    """Resolve one module-owned qualification provider ledger safely."""
+    text = _text(value=relative, label="qualification provider ledger path")
+    path = Path(text)
+    if (
+        path.is_absolute()
+        or ".." in path.parts
+        or not path.is_relative_to(TABLE_QUALIFICATION_CYCLE_ROOT)
+        or path.name != "provider_ledger.jsonl"
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger path is unsafe",
+        )
+    return repo_root / path
+
+
+def _append_qualification_ledger_entry(
+    *, repo_root: Path, relative: object, entry: Mapping[str, object],
+) -> None:
+    """Append one content-addressed qualification ledger row atomically."""
+    path = _qualification_ledger_path(repo_root=repo_root, relative=relative)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists() and (path.is_symlink() or not path.is_file()):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger is unsafe",
+        )
+    existing = path.read_bytes() if path.exists() else b""
+    if existing and not existing.endswith(b"\n"):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger is malformed",
+        )
+    entry_id = _text(
+        value=entry.get("qualification_provider_ledger_entry_id"),
+        label="qualification provider ledger entry",
+    )
+    for line in existing.splitlines():
+        try:
+            prior = strict_json_loads(text=line.decode("utf-8"))
+        except (UnicodeDecodeError, ValueError) as error:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification provider ledger row is malformed",
+            ) from error
+        if (
+            type(prior) is not dict
+            or "qualification_provider_ledger_entry_id" not in prior
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification provider ledger row is invalid",
+            )
+        if prior["qualification_provider_ledger_entry_id"] == entry_id:
+            if prior != entry:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                    message="Qualification provider ledger entry differs",
+                )
+            return
+    encoded = canonical_json_bytes(value=dict(entry))
+    atomic_write_bytes(
+        path=path,
+        content=existing + (encoded if encoded.endswith(b"\n") else encoded + b"\n"),
+    )
+
+
+def record_table_qualification_execution(
+    *, repo_root: Path, authorization: Mapping[str, object], run_id: str,
+    attempt: Mapping[str, object],
+) -> Dict[str, object]:
+    """Persist first-class qualification evidence for one LIVE attempt."""
+    binding = _rebuild_authorization_binding(
+        repo_root=repo_root,
+        actual=dict(authorization),
+    )
+    for field in (
+        "attempt_id",
+        "task_contract_id",
+        "catalog_task_contract_hash",
+        "catalog_output_schema_hash",
+        "system_prompt_hash",
+    ):
+        if field not in attempt:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification attempt binding is absent",
+            )
+    if (
+        attempt["task_contract_id"] != binding["task_contract_id"]
+        or attempt["catalog_task_contract_hash"]
+        != binding["catalog_task_contract_hash"]
+        or attempt["catalog_output_schema_hash"]
+        != binding["output_schema_hash"]
+        or attempt["system_prompt_hash"] != binding["system_prompt_hash"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification attempt binding differs",
+        )
+    ledger_body = {
+        "record_type": "TABLE_QUALIFICATION_PROVIDER_LEDGER_ENTRY",
+        "qualification_authorization": binding,
+        "qualification_authorization_id": binding[
+            "qualification_authorization_id"
+        ],
+        "qualification_task_plan_id": binding["qualification_task_plan_id"],
+        "qualification_cycle_id": binding["qualification_cycle_id"],
+        "freeze_receipt_id": binding["freeze_receipt_id"],
+        "family_id": binding["family_id"],
+        "task_contract_id": binding["task_contract_id"],
+        "qualification_ordinal": binding["qualification_ordinal"],
+        "source_binding_hash": binding["source_binding_hash"],
+        "run_id": run_id,
+        "attempt_id": attempt["attempt_id"],
+        "request_body_sha256": attempt["request_body_sha256"],
+        "provider_request_id": attempt["provider_request_id"],
+        "transport_observation": attempt["transport_observation"],
+    }
+    ledger_entry = {
+        **ledger_body,
+        "qualification_provider_ledger_entry_id": content_hash(
+            value=ledger_body,
+        ),
+    }
+    _append_qualification_ledger_entry(
+        repo_root=repo_root,
+        relative=binding["qualification_provider_ledger_path"],
+        entry=ledger_entry,
+    )
+    evidence_body = {
+        "record_type": "TABLE_QUALIFICATION_EVIDENCE",
+        "qualification_authorization": binding,
+        "qualification_authorization_id": binding[
+            "qualification_authorization_id"
+        ],
+        "qualification_task_plan_id": binding["qualification_task_plan_id"],
+        "qualification_cycle_id": binding["qualification_cycle_id"],
+        "freeze_receipt_id": binding["freeze_receipt_id"],
+        "family_id": binding["family_id"],
+        "task_contract_id": binding["task_contract_id"],
+        "qualification_ordinal": binding["qualification_ordinal"],
+        "source_binding_hash": binding["source_binding_hash"],
+        "run_id": run_id,
+        "attempt_id": attempt["attempt_id"],
+        "provider_ledger_entry_id": ledger_entry[
+            "qualification_provider_ledger_entry_id"
+        ],
+    }
+    return {
+        **evidence_body,
+        "qualification_evidence_id": content_hash(value=evidence_body),
+    }
+
+
+def validate_table_qualification_run_bindings(
+    *, repo_root: Path, manifest: Mapping[str, object],
+    records: Sequence[Mapping[str, object]],
+) -> None:
+    """Revalidate persisted LIVE qualification authority and evidence."""
+    authorization = manifest.get("qualification_authorization")
+    attempts = [
+        record for record in records
+        if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+    ]
+    if authorization is None:
+        if any("qualification_authorization" in attempt for attempt in attempts):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Attempt has qualification authority without Run binding",
+            )
+        return
+    binding = _rebuild_authorization_binding(
+        repo_root=repo_root,
+        actual=authorization,
+    )
+    task_bindings = manifest.get("task_contract_bindings")
+    if (
+        type(task_bindings) is not list
+        or len(task_bindings) != 1
+        or task_bindings[0].get("task_contract_id")
+        != binding["task_contract_id"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Run task binding differs from qualification authority",
+        )
+    references = manifest.get("source_references")
+    source = binding["source_binding"]
+    declaration = source["source_declaration"]
+    if (
+        type(references) is not list
+        or len(references) != 1
+        or references[0].get("company_id") != declaration["company_id"]
+        or references[0].get("source_url") != source["source_url"]
+        or references[0].get("accession") != declaration["accession"]
+        or references[0].get("document_name") != declaration["document_name"]
+        or references[0].get("source_role") != source["source_role"]
+        or references[0].get("request_attempt_id")
+        != source["request_attempt_id"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Run source differs from qualification authority",
+        )
+    if not attempts:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification Run has no AI attempt",
+        )
+    evidence_by_attempt = {}
+    for record in records:
+        if record["record_type"] != "TABLE_QUALIFICATION_EVIDENCE":
+            continue
+        if record["qualification_authorization"] != binding:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification evidence authority differs",
+            )
+        attempt_id = record["attempt_id"]
+        if attempt_id in evidence_by_attempt:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification evidence attempt is duplicated",
+            )
+        evidence_by_attempt[attempt_id] = record
+    ledger_path = _qualification_ledger_path(
+        repo_root=repo_root,
+        relative=binding["qualification_provider_ledger_path"],
+    )
+    if ledger_path.is_symlink() or not ledger_path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger is absent",
+        )
+    ledger_rows = {}
+    try:
+        lines = ledger_path.read_text(encoding="utf-8").splitlines()
+    except UnicodeDecodeError as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger is not UTF-8",
+        ) from error
+    for line in lines:
+        value = strict_json_loads(text=line)
+        if type(value) is not dict:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification provider ledger row is invalid",
+            )
+        entry_id = value.get("qualification_provider_ledger_entry_id")
+        if type(entry_id) is not str or entry_id in ledger_rows:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification provider ledger identity is invalid",
+            )
+        ledger_rows[entry_id] = value
+    for attempt in attempts:
+        if attempt.get("qualification_authorization") != binding:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification attempt authority differs",
+            )
+        evidence = evidence_by_attempt.get(attempt["attempt_id"])
+        if evidence is None:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification attempt evidence is absent",
+            )
+        entry_id = evidence["provider_ledger_entry_id"]
+        entry = ledger_rows.get(entry_id)
+        if (
+            entry is None
+            or entry.get("qualification_authorization") != binding
+            or entry.get("run_id") != manifest["run_id"]
+            or entry.get("attempt_id") != attempt["attempt_id"]
+            or entry.get("request_body_sha256")
+            != attempt["request_body_sha256"]
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification provider ledger binding differs",
+            )
+
+
+def execute_table_qualification_task(
+    *, repo_root: Path, family_id: str, task_contract_id: str,
+    qualification_ordinal: int, target_period: Mapping[str, object],
+    owner_token: str, clock: Optional[object] = None,
+) -> Dict[str, object]:
+    """Run the sole future LIVE table-qualification executor.
+
+    The executor derives source, workspace, plan, and authorization from the
+    repository.  It deliberately accepts no adapter, source locator, freeze
+    ID, cycle ID, or workspace override from callers.
+    """
+    if type(owner_token) is not str or not owner_token:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification execution owner is invalid",
+        )
+    authorization = issue_table_qualification_authorization(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract_id=task_contract_id,
+        qualification_ordinal=qualification_ordinal,
+    )
+    binding = authorization.as_mapping()
+    source = binding["source_binding"]
+    declaration = source["source_declaration"]
+    digest = binding["qualification_authorization_id"].split(
+        ":", maxsplit=1,
+    )[1]
+    run_dir = (
+        repo_root
+        / TABLE_QUALIFICATION_CYCLE_ROOT
+        / str(binding["qualification_cycle_id"]).split(":", maxsplit=1)[1]
+        / "runs"
+        / digest
+    )
+    adapter = build_invocation_controlled_transport_adapter(
+        release_input_plan_id=str(binding["qualification_task_plan_id"]),
+        workspace_dir=repo_root / str(binding["wb3_workspace_relative_path"]),
+        owner_token=owner_token,
+    )
+    from .workflow import create_table_task_review_run
+
+    return create_table_task_review_run(
+        repo_root=repo_root,
+        run_dir=run_dir,
+        run_id="run:qualification:table:" + digest,
+        company_id=str(declaration["company_id"]),
+        target_period=target_period,
+        source_repo_relative_path=str(
+            declaration["source_repo_relative_path"],
+        ),
+        source_media_type="text/html",
+        source_url=str(source["source_url"]),
+        accession=str(declaration["accession"]),
+        document_name=str(declaration["document_name"]),
+        source_role=str(source["source_role"]),
+        request_attempt_id=str(source["request_attempt_id"]),
+        task_contract_id=task_contract_id,
+        adapter=adapter,
+        clock=clock,
+        qualification_authorization=authorization,
+    )
 
 
 def table_qualification_task_plan(

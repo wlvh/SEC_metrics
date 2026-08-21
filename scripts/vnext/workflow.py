@@ -30,6 +30,9 @@ from .render import build_review_context, render_review_markdown
 from .review import build_review_unit, create_system_review_decision
 from .review import effective_review_decision
 from .observations import reviewed_observation, scope_key
+from .qualification import QualificationError
+from .qualification import record_table_qualification_execution
+from .qualification import validate_live_table_qualification_authorization
 from .requirements import load_run_requirement_snapshot
 from .scope_contract import scope_satisfies_contract
 from .run_store import append_review_decision, append_run_record
@@ -145,6 +148,7 @@ def create_review_run(
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
     task_contract_id: Optional[str] = None,
+    qualification_authorization: Optional[object] = None,
 ) -> Dict[str, object]:
     """Create one registry-authorized OPEN Run through HUMAN review.
 
@@ -166,6 +170,8 @@ def create_review_run(
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
         task_contract_id: Explicit catalog single-table task, or ``None`` for
             the retained historical disclosure workflow.
+        qualification_authorization: Opaque current qualification authority
+            required only for a LIVE catalog task.
 
     Returns:
         Run, attempt, Candidate, Evidence, and ReviewUnit identities.
@@ -196,6 +202,7 @@ def create_review_run(
         adapter=adapter,
         clock=clock,
         task_contract_id=task_contract_id,
+        qualification_authorization=qualification_authorization,
     )
 
 
@@ -216,6 +223,7 @@ def create_table_task_review_run(
     task_contract_id: str,
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
+    qualification_authorization: Optional[object] = None,
 ) -> Dict[str, object]:
     """Create one formal single-table catalog task Run.
 
@@ -235,6 +243,7 @@ def create_table_task_review_run(
         task_contract_id: Explicit matrix-authorized catalog single-table task.
         adapter: Recorded or repository-approved AI transport.
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
+        qualification_authorization: Opaque authority required for LIVE use.
 
     Returns:
         Run, attempt, Candidate, Evidence, and ReviewUnit identities.
@@ -271,6 +280,7 @@ def create_table_task_review_run(
         adapter=adapter,
         clock=clock,
         task_contract_id=task_contract_id,
+        qualification_authorization=qualification_authorization,
     )
 
 
@@ -565,6 +575,7 @@ def _create_review_run_with_traits(
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
     task_contract_id: Optional[str],
+    qualification_authorization: Optional[object] = None,
 ) -> Dict[str, object]:
     """Create one OPEN Run from already repository-resolved company traits.
 
@@ -587,6 +598,8 @@ def _create_review_run_with_traits(
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
         task_contract_id: Explicit catalog task identity, or ``None`` only for
             the retained historical disclosure-group path.
+        qualification_authorization: Opaque current repository authorization
+            required before a LIVE catalog task can read source bytes.
 
     Returns:
         Run, attempt, Candidate, Evidence, and ReviewUnit identities. Rejection
@@ -598,6 +611,7 @@ def _create_review_run_with_traits(
         adapter=adapter, repo_root=repo_root,
     )
     task_run_bindings = []
+    qualification_binding = None
     if task_contract_id is None:
         compiled_spec, spec_paths, metric_specs = _load_disclosure_plan(
             repo_root=repo_root,
@@ -619,6 +633,25 @@ def _create_review_run_with_traits(
             task_plan["runtime_task_contract"]["metric_spec_paths"]
         )
         task_run_bindings = [task_plan["run_binding"]]
+        if adapter_mode == "LIVE":
+            try:
+                qualification_binding = (
+                    validate_live_table_qualification_authorization(
+                        repo_root=repo_root,
+                        authorization=qualification_authorization,
+                        task_contract_id=task_contract_id,
+                        company_id=company_id,
+                        source_repo_relative_path=source_repo_relative_path,
+                        source_url=source_url,
+                        accession=accession,
+                        document_name=document_name,
+                        source_role=source_role,
+                        request_attempt_id=request_attempt_id,
+                        adapter=adapter,
+                    )
+                )
+            except QualificationError as error:
+                raise WorkflowError(error.code) from error
     if (
         not isinstance(company_traits, list)
         or not company_traits
@@ -684,6 +717,7 @@ def _create_review_run_with_traits(
             spec_file_hashes=spec_file_hashes,
             requirement_hashes=requirement["hashes"],
             task_contract_bindings=task_run_bindings,
+            qualification_authorization=qualification_binding,
         )
         for record in records:
             append_run_record(run_dir=run_dir, record=record)
@@ -732,6 +766,7 @@ def _create_review_run_with_traits(
         spec_file_hashes=spec_file_hashes,
         requirement_hashes=requirement["hashes"],
         task_contract_bindings=task_run_bindings,
+        qualification_authorization=qualification_binding,
     )
     append_run_record(run_dir=run_dir, record=raw_blob)
     append_run_record(run_dir=run_dir, record=source_reference)
@@ -792,12 +827,28 @@ def _create_review_run_with_traits(
         acceptance_context=acceptance_context,
         clock=clock,
     )
+    if qualification_binding is not None:
+        attempt = {
+            **attempt,
+            "qualification_authorization": qualification_binding,
+        }
     write_attempt_payloads(
         run_dir=run_dir,
         attempt=attempt,
         payloads=attempt_payloads,
     )
     append_run_record(run_dir=run_dir, record=attempt)
+    if qualification_binding is not None:
+        try:
+            qualification_evidence = record_table_qualification_execution(
+                repo_root=repo_root,
+                authorization=qualification_binding,
+                run_id=run_id,
+                attempt=attempt,
+            )
+        except QualificationError as error:
+            raise WorkflowError(error.code) from error
+        append_run_record(run_dir=run_dir, record=qualification_evidence)
     if response is None:
         return {
             "run_id": run_id,
