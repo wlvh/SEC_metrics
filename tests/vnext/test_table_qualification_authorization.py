@@ -718,6 +718,12 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         repo_root / binding["qualification_provider_ledger_path"]
                     ).read_text(encoding="utf-8").splitlines()
                 ]
+                ledger_entry = next(
+                    row
+                    for row in ledger_rows
+                    if row["qualification_authorization_id"]
+                    == binding["qualification_authorization_id"]
+                )
                 self.assertEqual("PENDING_HUMAN_REVIEW", created["status"])
                 self.assertEqual(1, len(calls))
                 self.assertEqual(1, len(finalized["result_ids"]))
@@ -725,10 +731,13 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 self.assertEqual(1, len(replay["results"]))
                 self.assertEqual(binding, manifest["qualification_authorization"])
                 self.assertEqual(binding, evidence["qualification_authorization"])
-                self.assertEqual(binding, ledger_rows[0]["qualification_authorization"])
+                self.assertEqual(
+                    binding,
+                    ledger_entry["qualification_authorization"],
+                )
                 self.assertEqual(
                     evidence["provider_ledger_entry_id"],
-                    ledger_rows[0]["qualification_provider_ledger_entry_id"],
+                    ledger_entry["qualification_provider_ledger_entry_id"],
                 )
 
                 source = binding["source_binding"]

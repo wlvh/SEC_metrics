@@ -10,6 +10,7 @@ bytes or invokes a model provider.
 from __future__ import annotations
 
 import ast
+import copy
 import csv
 import inspect
 import json
@@ -163,6 +164,18 @@ QUALIFICATION_SHARED_DATA_PATHS = (
     Path("tools/check_validation_snapshot.py"),
     Path("tools/create_stage_a_validation_snapshot.py"),
 )
+MEASUREMENT_ENGINE_PATHS = (
+    Path("scripts/vnext/ai_adapter.py"),
+    Path("scripts/vnext/canonical.py"),
+    Path("scripts/vnext/provider_runtime.py"),
+    Path("scripts/vnext/reader_input.py"),
+    Path("scripts/vnext/table_grid.py"),
+    Path("scripts/vnext/table_payload.py"),
+    Path("scripts/vnext/table_qualification_freeze.py"),
+    Path("scripts/vnext/table_task_contracts.py"),
+    Path("config/provider_model_runtime.json"),
+)
+_MEASUREMENT_CACHE: Dict[str, Dict[str, object]] = {}
 
 
 class TableQualificationFreezeError(RuntimeError):
@@ -707,6 +720,82 @@ def _measurement_receipts(
             for item in all_measurements
         ),
     }
+
+
+def _measurement_input_cache_key(
+    *, repo_root: Path, matrix: Mapping[str, object],
+    task_contracts: Mapping[str, object], requirement: Mapping[str, object],
+) -> str:
+    """Bind reusable local measurements to every byte that can affect them.
+
+    The cache is process-local only; it never becomes receipt authority.  Each
+    caller first rehashes the matrix, catalog/runtime closure, D-07 record, all
+    complete source bytes, and the measurement engine.  A changed input gets a
+    new key and necessarily rebuilds the full expanded-grid measurement.
+    """
+    round_trip_sources = [
+        {
+            "fixture_id": fixture_id,
+            "declared_sha256": declared_sha256,
+            "actual_sha256": sha256_file(path=source_path),
+        }
+        for fixture_id, source_path, declared_sha256 in _round_trip_sources(
+            repo_root=repo_root,
+        )
+    ]
+    development_sources = []
+    for family_id, entry in sorted(matrix["entries"].items()):
+        source = entry["development_source"]
+        if source["source_kind"] != "IMMUTABLE_ATTEMPT":
+            continue
+        relative = Path(str(source["source_repo_relative_path"]))
+        development_sources.append({
+            "family_id": family_id,
+            "declared_sha256": source["source_sha256"],
+            "actual_sha256": sha256_file(path=repo_root / relative),
+            "path": relative.as_posix(),
+        })
+    decisions = requirement.get("effective_decisions")
+    if type(decisions) is not dict or type(decisions.get("D-07")) is not dict:
+        raise TableQualificationFreezeError("Effective D-07 authority is absent")
+    engine_files = {
+        relative.as_posix(): sha256_file(path=repo_root / relative)
+        for relative in MEASUREMENT_ENGINE_PATHS
+    }
+    return content_hash(value={
+        "matrix": matrix["matrix_sha256"],
+        "task_catalog": task_contracts["catalog_sha256"],
+        "task_contracts": task_contracts["contracts"],
+        "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "effective_d07_record_hash": content_hash(
+            value=decisions["D-07"],
+        ),
+        "round_trip_sources": round_trip_sources,
+        "development_sources": development_sources,
+        "measurement_engine_files": engine_files,
+    })
+
+
+def _current_measurement_receipts(
+    *, repo_root: Path, matrix: Mapping[str, object],
+    task_contracts: Mapping[str, object], requirement: Mapping[str, object],
+) -> Dict[str, object]:
+    """Return a current-input-bound WB-4 measurement, rebuilding on any drift."""
+    cache_key = _measurement_input_cache_key(
+        repo_root=repo_root,
+        matrix=matrix,
+        task_contracts=task_contracts,
+        requirement=requirement,
+    )
+    cached = _MEASUREMENT_CACHE.get(cache_key)
+    if cached is None:
+        cached = _measurement_receipts(
+            repo_root=repo_root,
+            matrix=matrix,
+            task_contracts=task_contracts,
+        )
+        _MEASUREMENT_CACHE[cache_key] = copy.deepcopy(cached)
+    return copy.deepcopy(cached)
 
 
 def _d07_authority(
@@ -1422,13 +1511,14 @@ def build_table_qualification_freeze_receipt(
             )
         ):
             raise TableQualificationFreezeError("Matrix task binding differs")
-    measurements = _measurement_receipts(
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    measurements = _current_measurement_receipts(
         repo_root=repo_root,
         matrix=matrix,
         task_contracts=task_contracts,
-    )
-    requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements/issue_15_v1",
+        requirement=requirement,
     )
     d07_authority = _d07_authority(
         requirement=requirement,
@@ -1767,10 +1857,11 @@ def validate_table_qualification_freeze(
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
-    measurements = _measurement_receipts(
+    measurements = _current_measurement_receipts(
         repo_root=repo_root,
         matrix=matrix,
         task_contracts=task_contracts,
+        requirement=requirement,
     )
     expected_d07 = _d07_authority(
         requirement=requirement,
