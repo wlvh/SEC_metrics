@@ -3,9 +3,13 @@
 from __future__ import annotations
 
 import copy
+import subprocess
 import unittest
 from pathlib import Path
+from unittest import mock
 
+from vnext.table_qualification_freeze import _run_wb3_test_receipts
+from vnext.table_qualification_freeze import build_table_qualification_freeze_receipt
 from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_qualification_freeze import _protected_closure
 from vnext.table_qualification_freeze import _protected_closure_drift
@@ -181,6 +185,66 @@ class TableQualificationFreezeTest(unittest.TestCase):
             row["actual_incremental_tokens"] == "NOT_RUN"
             for row in split_rows
         ))
+
+    def test_wb3_regression_receipt_ignores_runner_elapsed_time(self) -> None:
+        """Keep semantically equal regression outcomes content-addressed alike."""
+        first_outputs = [
+            subprocess.CompletedProcess(
+                args=[],
+                returncode=0,
+                stdout="",
+                stderr="Ran 1 test in 0.001s\n",
+            )
+            for _ in range(4)
+        ]
+        second_outputs = [
+            subprocess.CompletedProcess(
+                args=[],
+                returncode=0,
+                stdout="different harmless output\n",
+                stderr="Ran 1 test in 9.999s\n",
+            )
+            for _ in range(4)
+        ]
+        with mock.patch(
+            "vnext.table_qualification_freeze.subprocess.run",
+            side_effect=first_outputs + second_outputs,
+        ):
+            first = _run_wb3_test_receipts(repo_root=REPO_ROOT)
+            second = _run_wb3_test_receipts(repo_root=REPO_ROOT)
+        self.assertEqual(2, first["schema_version"])
+        self.assertEqual(
+            first["wb3_regression_receipt_id"],
+            second["wb3_regression_receipt_id"],
+        )
+        for row in first["tests"].values():
+            self.assertEqual(
+                {"test_id", "return_code", "test_source_sha256", "outcome"},
+                set(row),
+            )
+            self.assertEqual("PASSED", row["outcome"])
+
+    def test_full_freeze_receipt_rebuild_is_deterministic(self) -> None:
+        """Rebuild the complete freeze twice from identical source and clock."""
+        freeze_commit = subprocess.check_output(
+            ["git", "rev-parse", "HEAD"],
+            cwd=REPO_ROOT,
+            text=True,
+        ).strip()
+        first = build_table_qualification_freeze_receipt(
+            repo_root=REPO_ROOT,
+            freeze_commit=freeze_commit,
+            frozen_at_utc="2026-08-21T09:00:00Z",
+        )
+        second = build_table_qualification_freeze_receipt(
+            repo_root=REPO_ROOT,
+            freeze_commit=freeze_commit,
+            frozen_at_utc="2026-08-21T09:00:00Z",
+        )
+        self.assertEqual(
+            first["table_qualification_freeze_receipt_id"],
+            second["table_qualification_freeze_receipt_id"],
+        )
 
     @staticmethod
     def _closure() -> dict:

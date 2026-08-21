@@ -25,6 +25,8 @@ PR-3阶段A新增的必跑离线定向证据为：`tests.vnext.test_compact_tabl
 
 `tests.vnext.test_table_qualification_authorization` 还逐项篡改 active publication ID、pointer bytes、matrix/evidence/report root bytes，以及一个closure外production source file；每项要求所有依赖family的authorization在opener前失败且三种真实egress仍为0。
 
+`tests.vnext.test_table_qualification_freeze` 对WB-3 regression receipt提供两类确定性证据：不同unittest elapsed/stdout/stderr模拟输出得到同一nested receipt ID；同一clean source tree、freeze commit和UTC timestamp连续构造两次完整freeze也得到相同table qualification freeze receipt ID。
+
 ## 1. 测试原则
 
 - 测行为与契约，不用脆弱的源码字符串或固定数量断言替代真实结果。

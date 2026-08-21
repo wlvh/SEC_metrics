@@ -785,11 +785,47 @@ def _run_wb3_test_receipts(*, repo_root: Path) -> Dict[str, object]:
             "test_source_sha256": sha256_file(
                 path=repo_root / "tests/vnext/test_invocation_control.py",
             ),
-            "stdout_sha256": sha256_bytes(content=completed.stdout.encode("utf-8")),
-            "stderr_sha256": sha256_bytes(content=completed.stderr.encode("utf-8")),
+            "outcome": "PASSED",
         }
-    body = {"schema_version": 1, "tests": rows}
+    body = {"schema_version": 2, "tests": rows}
     return {**body, "wb3_regression_receipt_id": content_hash(value=body)}
+
+
+def _validate_wb3_test_receipt(
+    *, repo_root: Path, value: object,
+) -> None:
+    """Validate stable WB-3 regression evidence without timing-output hashes."""
+    if type(value) is not dict or set(value) != {
+        "schema_version", "tests", "wb3_regression_receipt_id",
+    } or value["schema_version"] != 2:
+        raise TableQualificationFreezeError("WB-3 regression receipt is invalid")
+    tests = value["tests"]
+    if type(tests) is not dict or set(tests) != set(WB3_TESTS):
+        raise TableQualificationFreezeError("WB-3 regression test set differs")
+    source_hash = sha256_file(
+        path=repo_root / "tests/vnext/test_invocation_control.py",
+    )
+    for label, test_id in WB3_TESTS.items():
+        row = tests[label]
+        if type(row) is not dict or set(row) != {
+            "test_id", "return_code", "test_source_sha256", "outcome",
+        } or (
+            row["test_id"] != test_id
+            or row["return_code"] != 0
+            or row["test_source_sha256"] != source_hash
+            or row["outcome"] != "PASSED"
+        ):
+            raise TableQualificationFreezeError(
+                "WB-3 regression test outcome differs"
+            )
+    body = {
+        "schema_version": value["schema_version"],
+        "tests": tests,
+    }
+    if value["wb3_regression_receipt_id"] != content_hash(value=body):
+        raise TableQualificationFreezeError(
+            "WB-3 regression receipt identity differs"
+        )
 
 
 def _root_state(*, repo_root: Path) -> Dict[str, object]:
@@ -1570,6 +1606,15 @@ def validate_table_qualification_freeze(
         != receipt["qualification_cycle_id"]
     ):
         raise TableQualificationFreezeError("Freeze receipt identity differs")
+    wb3_protection = receipt["wb3_protection"]
+    if type(wb3_protection) is not dict or "regression_receipt" not in (
+        wb3_protection
+    ):
+        raise TableQualificationFreezeError("WB-3 freeze protection is invalid")
+    _validate_wb3_test_receipt(
+        repo_root=repo_root,
+        value=wb3_protection["regression_receipt"],
+    )
     protected = receipt["protected_closure"]
     task_contracts = load_table_task_contracts(repo_root=repo_root)
     matrix = load_table_qualification_matrix(repo_root=repo_root)
