@@ -437,12 +437,12 @@ def _authorization_mapping(
         family_id=family_id,
         task_contract_id=task_contract_id,
         qualification_ordinal=qualification_ordinal,
+        include_freeze_status=True,
     )
     try:
-        freeze = require_table_qualification_freeze(
-            repo_root=repo_root,
-            family_id=family_id,
-        )
+        freeze = plan["_freeze_status"]
+        if type(freeze) is not dict:
+            raise ValueError("Qualification freeze status is invalid")
         snapshot = validate_stage_a_snapshot(repo_root=repo_root)
         contracts = load_table_task_contracts(repo_root=repo_root)
         runtime = resolve_table_task_contract(
@@ -960,7 +960,12 @@ def _append_qualification_ledger_entry(
                         code="TABLE_QUALIFICATION_TERMINAL_ALREADY_RECORDED",
                         message="Qualification ordinal already has terminal evidence",
                     )
-            encoded = canonical_json_bytes(value=value) + b"\n"
+            encoded = canonical_json_bytes(value=value)
+            if not encoded.endswith(b"\n"):
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                    message="Qualification provider ledger serialization is invalid",
+                )
             atomic_write_bytes(path=path, content=existing + encoded)
         finally:
             fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
@@ -1298,6 +1303,7 @@ def table_qualification_task_plan(
     family_id: str,
     task_contract_id: str,
     qualification_ordinal: int,
+    include_freeze_status: bool = False,
 ) -> Dict[str, object]:
     """Resolve one future qualification ordinal to one catalog table task.
 
@@ -1307,6 +1313,9 @@ def table_qualification_task_plan(
         task_contract_id: Explicit matrix-listed single-table task identity.
         qualification_ordinal: One-based fresh-sample ordinal owned by this
             family/task qualification plan.
+        include_freeze_status: Internal authorization issuer opt-in for the
+            exact already-revalidated freeze status; public callers receive
+            only the portable task-plan identity.
 
     Returns:
         A task plan whose matrix entry, runtime contract, output schema, and
@@ -1385,7 +1394,10 @@ def table_qualification_task_plan(
         "system_prompt_hash": runtime["system_prompt_hash"],
         "freeze_receipt_id": freeze["receipt_id"],
     }
-    return {**body, "qualification_task_plan_id": content_hash(value=body)}
+    plan = {**body, "qualification_task_plan_id": content_hash(value=body)}
+    if include_freeze_status:
+        return {**plan, "_freeze_status": freeze}
+    return plan
 
 
 def _portable_file(*, repo_root: Path, relative: str, label: str) -> Path:

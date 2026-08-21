@@ -119,7 +119,7 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             # The split receipt intentionally measures complete task envelopes.
             # Its test-only catalog values must therefore be iterated through
             # the real estimator rather than guessed from a production row.
-            for _iteration in range(3):
+            for _iteration in range(16):
                 contracts = load_table_task_contracts(repo_root=worktree)
                 measurements = _measurement_receipts(
                     repo_root=worktree,
@@ -153,6 +153,10 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
                 atomic_write_json(path=catalog_path, value=catalog)
                 if not changed:
                     break
+            else:
+                raise AssertionError(
+                    "Synthetic split-cost measurement did not reach a fixed point"
+                )
             _run_git(
                 workdir=worktree,
                 arguments=[
@@ -179,6 +183,19 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             )
             if receipt["d07_decision_required"] is not False:
                 raise AssertionError("Synthetic measurement authority still blocks D-07")
+            atomic_write_json(
+                path=worktree / "config/table_qualification_freeze.json",
+                value={
+                    "schema_version": 1,
+                    "qualification_cycle_id": receipt[
+                        "qualification_cycle_id"
+                    ],
+                    "receipt_id": receipt[
+                        "table_qualification_freeze_receipt_id"
+                    ],
+                    "receipt_path": receipt["receipt_path"],
+                },
+            )
             _run_git(
                 workdir=worktree,
                 arguments=[
