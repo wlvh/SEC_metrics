@@ -194,6 +194,116 @@ def _verify_local_labels(
     return raw_text_by_id
 
 
+def _scope_token_character(*, value: str) -> bool:
+    """Return whether one Unicode character belongs to a scope literal token.
+
+    Args:
+        value: One already decoded Unicode character.
+
+    Returns:
+        ``True`` only for alphanumeric or underscore token characters.
+
+    Why:
+        Scope evidence may place distinct raw literals in one header.  The
+        evidence proof must distinguish a whole literal from an accidental
+        substring without converting its value into a canonical enum.
+    """
+    return value.isalnum() or value == "_"
+
+
+def _bounded_raw_value_match(*, raw_text: str, raw_value: str) -> bool:
+    """Prove one raw scope value occurs once in a reread locator string.
+
+    Args:
+        raw_text: Exact UTF-8-decoded locator text reread from Evidence.
+        raw_value: Reader-declared raw scope literal before enum resolution.
+
+    Returns:
+        ``True`` when exactly one whole-literal proof exists.
+
+    Why:
+        D-31 permits one locator to support multiple dimensions.  A complete
+        cell equality check incorrectly rejects ``99% one-day VaR`` for its
+        distinct ``99%`` and ``one day`` claims.  This proof first accepts one
+        exact bounded occurrence.  For a space-separated raw value, it also
+        accepts one consecutive exact-token occurrence separated only by
+        non-token characters (for example ``one day`` over ``one-day``).
+        That second branch does not normalize a scope value: each token must
+        still be byte-for-byte equal, and the sole canonicalization remains
+        the MetricSpec exact-enum alias table.
+    """
+    exact_matches = []
+    start = 0
+    while True:
+        found = raw_text.find(raw_value, start)
+        if found < 0:
+            break
+        end = found + len(raw_value)
+        before = raw_text[found - 1] if found else ""
+        after = raw_text[end] if end < len(raw_text) else ""
+        if (
+            (not before or not _scope_token_character(value=before))
+            and (not after or not _scope_token_character(value=after))
+        ):
+            exact_matches.append((found, end))
+        start = found + len(raw_value)
+    if len(exact_matches) == 1:
+        return True
+    if exact_matches:
+        return False
+
+    # A hyphen is a source punctuation boundary, not a canonicalization rule.
+    # This narrow fallback only proves a whitespace-delimited raw claim whose
+    # individual UTF-8 tokens appear once, consecutively, at strict bounds.
+    tokens = raw_value.split(" ")
+    if (
+        len(tokens) < 2
+        or any(
+            not token
+            or any(not _scope_token_character(value=character)
+                   for character in token)
+            for token in tokens
+        )
+    ):
+        return False
+    token_matches = []
+    first = tokens[0]
+    token_start = 0
+    while True:
+        found = raw_text.find(first, token_start)
+        if found < 0:
+            break
+        before = raw_text[found - 1] if found else ""
+        cursor = found + len(first)
+        if before and _scope_token_character(value=before):
+            token_start = found + len(first)
+            continue
+        valid = True
+        for token in tokens[1:]:
+            separator_start = cursor
+            while (
+                cursor < len(raw_text)
+                and not _scope_token_character(value=raw_text[cursor])
+            ):
+                cursor += 1
+            if cursor == separator_start or not raw_text.startswith(
+                token, cursor,
+            ):
+                valid = False
+                break
+            cursor += len(token)
+            if (
+                cursor < len(raw_text)
+                and _scope_token_character(value=raw_text[cursor])
+            ):
+                valid = False
+                break
+        if valid:
+            token_matches.append((found, cursor))
+        token_start = found + len(first)
+    return len(token_matches) == 1
+
+
 def _normalize_scope(
     *, claim: Mapping[str, object], scope_contract: Mapping[str, object],
     derived_asset: Mapping[str, object],
@@ -209,8 +319,8 @@ def _normalize_scope(
         Canonical scope dimensions and ordered unresolved dimension IDs.
 
     Raises:
-        ConstraintError: If a raw claim is not exactly supported by each named
-        local locator.
+        ConstraintError: If a raw claim lacks one exact bounded local-locator
+        proof.
     """
     raw_text_by_id = _verify_local_labels(
         claim=claim, derived_asset=derived_asset,
@@ -221,7 +331,10 @@ def _normalize_scope(
         dimension = str(scope_claim["dimension"])
         raw_value = str(scope_claim["raw_value"])
         for locator_id in scope_claim["evidence_locator_ids"]:
-            if raw_text_by_id[str(locator_id)] != raw_value:
+            if not _bounded_raw_value_match(
+                raw_text=raw_text_by_id[str(locator_id)],
+                raw_value=raw_value,
+            ):
                 raise ConstraintError("SCOPE_RAW_VALUE_LOCATOR_MISMATCH")
         canonical = exact_enum_alias(
             contract=scope_contract,

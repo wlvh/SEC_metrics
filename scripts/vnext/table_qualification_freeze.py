@@ -30,12 +30,13 @@ from .reader_input import READER_SYSTEM_CONTRACT
 from .reader_input import build_reader_input_manifest, build_reader_payload
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
-from .specs import compile_spec_file
+from .specs import parse_spec_document, SpecError
 from .table_grid import build_table_grid
 from .table_payload import compact_payload_receipt
 from .table_payload import DECODER_SEMANTIC_VERSION
 from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_task_contracts import load_table_task_contracts
+from .table_task_contracts import resolve_table_task_contract
 
 
 MATRIX_PATH = Path("config/table_qualification_matrix.json")
@@ -394,31 +395,26 @@ def _round_trip_sources(
 
 
 def _measurement_task_contract(
-    *, contracts: Sequence[Mapping[str, object]],
+    *, repo_root: Path, contracts: Sequence[Mapping[str, object]],
 ) -> Dict[str, object]:
-    """Build a deterministic single-role lodging task for payload measurement.
+    """Build one deterministic catalog task for transport measurement.
 
     Args:
+        repo_root: Repository root owning catalog task authority.
         contracts: Validated table task contracts.
 
     Returns:
-        Minimal task contract whose words cannot filter supplied tables.
+        Complete catalog task whose words cannot filter supplied tables.
     """
-    matches = [
-        contract
-        for contract in contracts
-        if contract["task_contract_id"] == "lodging_occupancy_table_v2"
-    ]
-    if len(matches) != 1:
-        raise TableQualificationFreezeError("Lodging measurement task is absent")
-    contract = matches[0]
-    return {
-        "task_contract_id": contract["task_contract_id"],
-        "required_roles": contract["required_roles"],
-        "scope_contract_version": contract["scope_contract_version"],
-        "system_prompt": contract["system_prompt"],
-        "output_schema_version": contract["output_schema_version"],
-    }
+    if not contracts:
+        raise TableQualificationFreezeError("Table measurement task is absent")
+    contract_id = sorted(
+        str(contract["task_contract_id"]) for contract in contracts
+    )[0]
+    return resolve_table_task_contract(
+        repo_root=repo_root,
+        task_contract_id=contract_id,
+    )
 
 
 def _measurement_receipts(
@@ -443,7 +439,10 @@ def _measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
-    task_contract = _measurement_task_contract(contracts=contracts)
+    task_contract = _measurement_task_contract(
+        repo_root=repo_root,
+        contracts=contracts,
+    )
     measurements = []
     decision_required = False
     for fixture_id, source_path, expected_sha256 in _round_trip_sources(
@@ -617,12 +616,14 @@ def _request_ledger_binding(*, repo_root: Path) -> Dict[str, object]:
 
 def _protected_closure(
     *, repo_root: Path, matrix: Mapping[str, object],
+    task_contracts: Mapping[str, object],
 ) -> Dict[str, object]:
     """Bind common and family-specific bytes that invalidate qualification.
 
     Args:
         repo_root: Repository authority root.
         matrix: Validated matrix entry mapping.
+        task_contracts: Exact catalog contracts derived from SourceStrategy.
 
     Returns:
         Common protected files plus per-family dependent file/hash sets.
@@ -630,6 +631,7 @@ def _protected_closure(
     common_paths = [
         Path("config/provider_model_runtime.json"),
         Path("config/source_strategy_registry.json"),
+        Path("config/source_strategy_fallback_representation.json"),
         Path("config/table_qualification_matrix.json"),
         Path("catalog/table_task_contracts.json"),
         Path("scripts/vnext/ai_adapter.py"),
@@ -640,28 +642,57 @@ def _protected_closure(
         Path("scripts/vnext/records.py"),
         Path("scripts/vnext/review.py"),
         Path("scripts/vnext/scope_contract.py"),
+        Path("scripts/vnext/stage_a_snapshot.py"),
         Path("scripts/vnext/table_grid.py"),
         Path("scripts/vnext/table_payload.py"),
         Path("scripts/vnext/table_qualification_freeze.py"),
         Path("scripts/vnext/table_task_contracts.py"),
         Path("requirements/issue_15_v1/CONTRACT.md"),
         Path("requirements/issue_15_v1/decision_register.json"),
+        Path("tools/check_validation_snapshot.py"),
+        Path("tools/create_stage_a_validation_snapshot.py"),
     ]
     common = {
         path.as_posix(): _file_binding(repo_root=repo_root, relative=path)
         for path in common_paths
     }
-    family_paths = {
-        "financial_statement": [],
-        "lodging_kpi_table": [
-            Path("catalog/disclosures/lodging_kpi_table.md"),
-            Path("catalog/metrics/B10_occupancy.md"),
-            Path("catalog/metrics/B11_revpar.md"),
-        ],
-    }
+    disclosure_paths = {}
+    disclosure_root = repo_root / "catalog" / "disclosures"
+    if disclosure_root.is_symlink() or not disclosure_root.is_dir():
+        raise TableQualificationFreezeError("Disclosure catalog is unsafe")
+    for path in sorted(disclosure_root.glob("*.md")):
+        if path.is_symlink() or not path.is_file():
+            raise TableQualificationFreezeError("Disclosure catalog entry is unsafe")
+        try:
+            front, _body = parse_spec_document(
+                text=path.read_text(encoding="utf-8"),
+            )
+        except (UnicodeDecodeError, SpecError) as error:
+            raise TableQualificationFreezeError("Disclosure catalog is invalid") from error
+        if front["kind"] != "disclosure_group":
+            continue
+        family_id = front["disclosure_group"]
+        if type(family_id) is not str or not family_id:
+            raise TableQualificationFreezeError("Disclosure family identity is invalid")
+        if family_id in disclosure_paths:
+            raise TableQualificationFreezeError("Disclosure family is duplicated")
+        disclosure_paths[family_id] = path.relative_to(repo_root)
     families = {}
     for family_id in sorted(matrix["entries"]):
-        paths = family_paths[family_id]
+        family_contracts = [
+            contract
+            for contract in task_contracts["contracts"]
+            if contract["reader_family_id"] == family_id
+        ]
+        paths = {
+            Path(metric["path"])
+            for contract in family_contracts
+            for metric in contract["metric_specs"]
+        }
+        if family_id in disclosure_paths:
+            paths.add(disclosure_paths[family_id])
+        if not paths:
+            raise TableQualificationFreezeError("Family semantic closure is empty")
         families[family_id] = {
             "matrix_entry_hash": content_hash(
                 value=matrix["entries"][family_id],
@@ -670,10 +701,56 @@ def _protected_closure(
                 path.as_posix(): _file_binding(
                     repo_root=repo_root, relative=path,
                 )
-                for path in paths
+                for path in sorted(paths)
             },
         }
     return {"common_files": common, "families": families}
+
+
+def _family_scope_closure(
+    *, task_contracts: Mapping[str, object],
+) -> Dict[str, object]:
+    """Bind each family to its actual MetricSpec scope alias closure.
+
+    Args:
+        task_contracts: Exact contracts already derived from SourceStrategy.
+
+    Returns:
+        Per-family task/MetricSpec/scope identity mappings.
+
+    Why:
+        A single lodging disclosure scope cannot authorize financial table
+        tasks.  Each selected task owns its own MetricSpec scope authority.
+    """
+    families = {}
+    for family_id in task_contracts["authorized_family_ids"]:
+        rows = []
+        for contract in task_contracts["contracts"]:
+            if contract["reader_family_id"] != family_id:
+                continue
+            metric_specs = contract["metric_specs"]
+            if len(metric_specs) != 1:
+                raise TableQualificationFreezeError("Task MetricSpec set is invalid")
+            metric = metric_specs[0]
+            scope_contract = metric["compiled"]["scope_contract"]
+            rows.append({
+                "task_contract_id": contract["task_contract_id"],
+                "metric_id": metric["metric_id"],
+                "metric_spec_path": metric["path"],
+                "metric_spec_semantic_hash": metric["spec_semantic_hash"],
+                "scope_contract_hash": scope_contract_hash(
+                    contract=scope_contract,
+                ),
+                "exact_enum_alias_closure_hash": content_hash(
+                    value=validate_scope_contract(value=scope_contract)[
+                        "exact_enum_aliases"
+                    ],
+                ),
+            })
+        if not rows:
+            raise TableQualificationFreezeError("Family scope closure is empty")
+        families[family_id] = {"tasks": rows}
+    return families
 
 
 def _freeze_commit(*, repo_root: Path, freeze_commit: str) -> str:
@@ -776,10 +853,9 @@ def build_table_qualification_freeze_receipt(
             / "provider_ledger.jsonl"
         ).as_posix(),
     }
-    scope_contract = compile_spec_file(
-        path=repo_root / "catalog/disclosures/lodging_kpi_table.md",
-        dependency_specs={},
-    )["compiled"]["scope_contract"]
+    family_scope_closure = _family_scope_closure(
+        task_contracts=task_contracts,
+    )
     body = {
         "record_type": "TABLE_QUALIFICATION_FREEZE_RECEIPT",
         "schema_version": 1,
@@ -844,12 +920,7 @@ def build_table_qualification_freeze_receipt(
         },
         "wb5_scope_contract": {
             "scope_contract_version": "2",
-            "scope_schema_hash": scope_contract_hash(contract=scope_contract),
-            "exact_enum_alias_closure_hash": content_hash(
-                value=validate_scope_contract(value=scope_contract)[
-                    "exact_enum_aliases"
-                ],
-            ),
+            "families": family_scope_closure,
             "evidence_binding_hash": sha256_file(
                 path=repo_root / "scripts/vnext/evidence.py",
             ),
@@ -859,6 +930,11 @@ def build_table_qualification_freeze_receipt(
         },
         "wb6_task_contracts": {
             "catalog_sha256": task_contracts["catalog_sha256"],
+            "fallback_representation_sha256": task_contracts[
+                "fallback_representation_sha256"
+            ],
+            "expected_table_metric_ids": task_contracts["table_metric_ids"],
+            "expected_table_family_ids": task_contracts["table_family_ids"],
             "authorized_family_ids": task_contracts["authorized_family_ids"],
             "families": {
                 family_id: {
@@ -874,6 +950,20 @@ def build_table_qualification_freeze_receipt(
                                 "output_schema_hash",
                                 "system_prompt_hash",
                             )
+                        }
+                        | {
+                            "metric_specs": [
+                                {
+                                    key: metric[key]
+                                    for key in (
+                                        "metric_id",
+                                        "path",
+                                        "spec_semantic_hash",
+                                        "spec_closure_hash",
+                                    )
+                                }
+                                for metric in contract["metric_specs"]
+                            ]
                         }
                         for contract in task_contracts["contracts"]
                         if contract["reader_family_id"] == family_id
@@ -898,7 +988,9 @@ def build_table_qualification_freeze_receipt(
             "forbidden_monetary_fields_present": [],
         },
         "protected_closure": _protected_closure(
-            repo_root=repo_root, matrix=matrix,
+            repo_root=repo_root,
+            matrix=matrix,
+            task_contracts=task_contracts,
         ),
     }
     receipt_id = content_hash(value=body)

@@ -44,6 +44,7 @@ from .scope_contract import scope_contract_hash
 from .table_payload import decode_compact_table_payload
 from .table_payload import expanded_grid_sha256
 from .table_payload import TablePayloadError
+from .table_task_contracts import RUNTIME_TASK_CONTRACT_FIELDS
 
 
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
@@ -703,6 +704,42 @@ READER_OUTPUT_JSON_SCHEMA = _object_schema(
 )
 
 
+def _catalog_system_prompt(*, reader_request_bytes: bytes) -> str:
+    """Extract a catalog task's exact prompt text from the Reader payload.
+
+    Args:
+        reader_request_bytes: Canonical complete Reader request body.
+
+    Returns:
+        The selected catalog system prompt, or empty text for legacy recorded
+        task payloads.
+
+    Why:
+        A catalog prompt hash is meaningful only when its exact words are in
+        the provider envelope.  This function adds no selector: it reads the
+        already bound task object carried by every complete Reader payload.
+    """
+    try:
+        request = strict_json_loads(text=reader_request_bytes.decode("utf-8"))
+    except (UnicodeDecodeError, CanonicalError) as error:
+        raise AIAdapterError("Reader request is not strict UTF-8 JSON") from error
+    if not isinstance(request, dict) or "task_contract" not in request:
+        # Transport construction probes the fixed envelope with ``{}`` before
+        # any Reader request exists.  It has no task prompt to bind yet.
+        return ""
+    task = request["task_contract"]
+    if not isinstance(task, dict):
+        raise AIAdapterError("Reader task contract is invalid")
+    if set(task) != RUNTIME_TASK_CONTRACT_FIELDS:
+        return ""
+    prompt = task["system_prompt"]
+    if type(prompt) is not str or not prompt:
+        raise AIAdapterError("Catalog task system prompt is invalid")
+    if task["system_prompt_hash"] != content_hash(value=prompt):
+        raise AIAdapterError("Catalog task system prompt hash differs")
+    return prompt
+
+
 def build_openai_responses_body(
     *, policy: TransportPolicy, reader_request_bytes: bytes
 ) -> Tuple[bytes, bytes]:
@@ -733,6 +770,9 @@ def build_openai_responses_body(
     except (UnicodeDecodeError, CanonicalError) as error:
         raise AIAdapterError("Reader request is not strict UTF-8 JSON") from error
     schema_bytes = canonical_json_bytes(value=READER_OUTPUT_JSON_SCHEMA)
+    system_prompt = _catalog_system_prompt(
+        reader_request_bytes=reader_request_bytes,
+    )
     body = {
         "model": policy.model,
         "store": False,
@@ -758,6 +798,8 @@ def build_openai_responses_body(
         "parallel_tool_calls": False,
         "truncation": "disabled",
     }
+    if system_prompt:
+        body["instructions"] = system_prompt
     return canonical_json_bytes(value=body), schema_bytes
 
 
@@ -794,6 +836,9 @@ def build_deepseek_chat_completions_body(
     system_contract = canonical_json_bytes(
         value=READER_SYSTEM_CONTRACT,
     ).decode("utf-8")
+    task_prompt = _catalog_system_prompt(
+        reader_request_bytes=reader_request_bytes,
+    )
     output_schema = schema_bytes.decode("utf-8")
     body = {
         "model": policy.model,
@@ -806,7 +851,12 @@ def build_deepseek_chat_completions_body(
                     "System contract: " + system_contract + ". Output "
                     "schema: " + output_schema + ". Use canonical unit "
                     "words required by the task, never currency or percent "
-                    "symbols. Every selected and scope-evidence locator must "
+                    "symbols. "
+                    + (
+                        "Catalog task instructions: " + task_prompt + ". "
+                        if task_prompt else ""
+                    )
+                    + "Every selected and scope-evidence locator must "
                     "use exactly the derived_asset_id and table_id named by "
                     "table_locator. claimed_period must use the filing year "
                     "as FY<year>, never a semantic requirement token."
@@ -2102,12 +2152,17 @@ def _controlled_acceptance_validator(
     task_contract_hash = "sha256:" + sha256_bytes(
         content=prepared["task_contract_bytes"]
     )
+    context_task = context.reader_payload_body["task_contract"]
+    context_spec_hash = (
+        context_task["task_spec_semantic_hash"]
+        if set(context_task) == RUNTIME_TASK_CONTRACT_FIELDS
+        else context.compiled_spec["spec_semantic_hash"]
+    )
     if (
         dict(context.reader_manifest) != prepared["manifest"]
         or context.reader_manifest["derived_asset_id"]
         != context.derived_asset["derived_asset_id"]
-        or context.compiled_spec["spec_semantic_hash"]
-        != prepared["task_spec_semantic_hash"]
+        or context_spec_hash != prepared["task_spec_semantic_hash"]
         or context.reader_payload_body["task_contract"]
         != prepared["task_contract"]
         or canonical_json_bytes(value=dict(context.reader_payload_body))
@@ -2133,16 +2188,19 @@ def _controlled_acceptance_validator(
         "disclosure_group"
     ]:
         raise EvidenceFailureError("Reader disclosure task contract differs")
+    identity_constraints = (
+        prepared["task_contract"]["identity_constraints"]
+        if set(prepared["task_contract"]) == RUNTIME_TASK_CONTRACT_FIELDS
+        else context.compiled_spec["compiled"]["identity_constraints"]
+    )
     evidence = check_evidence(
         candidate=candidate,
         derived_asset=context.derived_asset,
         reader_manifest=context.reader_manifest,
         reader_payload_body=context.reader_payload_body,
         source_references=context.source_references,
-        identity_constraints=context.compiled_spec["compiled"][
-            "identity_constraints"
-        ],
-        scope_contract=context.compiled_spec["compiled"]["scope_contract"],
+        identity_constraints=identity_constraints,
+        scope_contract=prepared["task_contract"]["scope_contract"],
     )
     if evidence["status"] != "PASS":
         raise EvidenceFailureError(
@@ -2157,7 +2215,7 @@ def _controlled_acceptance_validator(
             context.reader_manifest["source_reference_ids"]
         ),
         "task_contract_hash": task_contract_hash,
-        "spec_semantic_hash": context.compiled_spec["spec_semantic_hash"],
+        "spec_semantic_hash": prepared["task_spec_semantic_hash"],
         "candidate_hash": candidate["candidate_hash"],
         "candidate_record": candidate,
         "evidence_check_id": evidence["evidence_check_id"],
@@ -2546,6 +2604,12 @@ def validate_workflow_acceptance_binding(
         for field in acceptance_receipt
         if field != "acceptance_receipt_id"
     }
+    context_task = context.reader_payload_body["task_contract"]
+    context_spec_hash = (
+        context_task["task_spec_semantic_hash"]
+        if set(context_task) == RUNTIME_TASK_CONTRACT_FIELDS
+        else context.compiled_spec["spec_semantic_hash"]
+    )
     expected = {
         "candidate_hash": candidate["candidate_hash"],
         "derived_asset_id": context.derived_asset["derived_asset_id"],
@@ -2558,7 +2622,7 @@ def validate_workflow_acceptance_binding(
         "source_reference_ids": list(
             context.reader_manifest["source_reference_ids"]
         ),
-        "spec_semantic_hash": context.compiled_spec["spec_semantic_hash"],
+        "spec_semantic_hash": context_spec_hash,
         "task_contract_hash": task_contract_hash,
         "validator_semantic_hash": _ACCEPTANCE_VALIDATOR_SEMANTIC_HASH,
         "validator_semantic_version": (
@@ -2631,10 +2695,18 @@ def _validate_live_prepared_request(
             "Live source repository authority is unavailable"
         ) from error
     relative_spec = Path(str(fields["disclosure_spec_path"]))
+    task_contract_id = fields["prepared_request"].task_contract_id
     if (
         relative_spec.is_absolute()
         or ".." in relative_spec.parts
-        or relative_spec.parts[:2] != ("catalog", "disclosures")
+        or (
+            task_contract_id
+            and relative_spec.as_posix() != "catalog/table_task_contracts.json"
+        )
+        or (
+            not task_contract_id
+            and relative_spec.parts[:2] != ("catalog", "disclosures")
+        )
     ):
         raise AIAdapterError("Live Reader disclosure Spec is invalid")
     current = authority_root
@@ -2713,13 +2785,17 @@ def _validate_live_prepared_request(
                 str(source_reference["source_reference_id"])
             ],
         )
-        compiled_spec = compile_spec_file(
-            path=current, dependency_specs={},
+        compiled_spec = (
+            None
+            if task_contract_id
+            else compile_spec_file(path=current, dependency_specs={})
         )
         rebuilt = prepare_reader_request(
             manifest=reader_manifest,
             derived_asset=derived_asset,
             compiled_spec=compiled_spec,
+            repo_root=authority_root,
+            task_contract_id=task_contract_id if task_contract_id else None,
         )
     except (
         BatchWorkflowError,
@@ -2791,7 +2867,7 @@ def _validate_prepared_request(
         request_body = strict_json_loads(text=request_bytes.decode("utf-8"))
     except (UnicodeDecodeError, CanonicalError, ValueError) as error:
         raise AIAdapterError("Prepared Reader request is invalid") from error
-    task_fields = {
+    legacy_task_fields = {
         "disclosure_group",
         "forbidden_confusions",
         "output_schema_version",
@@ -2801,9 +2877,16 @@ def _validate_prepared_request(
         "scope_contract",
         "scope_contract_hash",
     }
+    catalog_task = (
+        isinstance(task_contract, dict)
+        and set(task_contract) == RUNTIME_TASK_CONTRACT_FIELDS
+    )
     if (
         not isinstance(task_contract, dict)
-        or set(task_contract) != task_fields
+        or (
+            set(task_contract) != legacy_task_fields
+            and not catalog_task
+        )
         or not isinstance(task_contract["required_roles"], list)
         or not task_contract["required_roles"]
         or len(task_contract["required_roles"])
@@ -2819,6 +2902,31 @@ def _validate_prepared_request(
         != scope_contract_hash(contract=task_contract["scope_contract"])
     ):
         raise AIAdapterError("Prepared Reader task contract is invalid")
+    if catalog_task:
+        if (
+            task_contract["representation"] != "table"
+            or task_contract["output_schema_version"] != "2"
+            or len(task_contract["metric_ids"]) != 1
+            or len(task_contract["metric_spec_paths"]) != 1
+            or len(task_contract["metric_spec_semantic_hashes"]) != 1
+            or len(task_contract["metric_spec_closure_hashes"]) != 1
+            or type(task_contract["task_contract_id"]) is not str
+            or not task_contract["task_contract_id"]
+            or type(task_contract["system_prompt"]) is not str
+            or not task_contract["system_prompt"]
+            or task_contract["system_prompt_hash"]
+            != content_hash(value=task_contract["system_prompt"])
+            or task_contract["task_spec_semantic_hash"] != spec_hash
+            or prepared_request.task_contract_id
+            != task_contract["task_contract_id"]
+            or prepared_request.catalog_task_contract_hash
+            != task_contract["catalog_task_contract_hash"]
+            or prepared_request.output_schema_hash
+            != task_contract["output_schema_hash"]
+            or prepared_request.system_prompt_hash
+            != task_contract["system_prompt_hash"]
+        ):
+            raise AIAdapterError("Prepared catalog task contract is invalid")
     body_fields = {
         "reader_input_manifest",
         "system_contract",
@@ -3122,6 +3230,17 @@ def run_ai_attempt(
         "finished_at_utc": finished,
         "error_class": error_class,
     }
+    if set(task_contract) == RUNTIME_TASK_CONTRACT_FIELDS:
+        record.update({
+            "task_contract_id": task_contract["task_contract_id"],
+            "catalog_task_contract_hash": task_contract[
+                "catalog_task_contract_hash"
+            ],
+            "catalog_output_schema_hash": task_contract[
+                "output_schema_hash"
+            ],
+            "system_prompt_hash": task_contract["system_prompt_hash"],
+        })
     payloads = AttemptPayloads(
         request_body_bytes=outbound_request,
         reader_payload_bytes=request_bytes,

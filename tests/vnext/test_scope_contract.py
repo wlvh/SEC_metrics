@@ -8,10 +8,13 @@ import unittest
 from pathlib import Path
 
 from tests.vnext.common import compiled_specs, reader_response, reviewed_fixture
-from tests.vnext.common import sample_asset
+from tests.vnext.common import cell_locator, SAMPLE_HTML, sample_asset
+from tests.vnext.common import sample_source_reference
 from vnext.canonical import content_hash
-from vnext.evidence import check_evidence
+from vnext.evidence import _bounded_raw_value_match, check_evidence
 from vnext.reader import validate_reader_output
+from vnext.reader_input import build_reader_input_manifest
+from vnext.reader_input import build_reader_payload
 from vnext.render import build_review_context, render_review_markdown
 from vnext.review import build_review_unit, create_system_review_decision
 from vnext.review import ReviewError
@@ -159,6 +162,104 @@ class ScopeContractTest(unittest.TestCase):
             "SCOPE_LABEL_TEXT_MISMATCH",
             fixture["evidence"]["reason_codes"],
         )
+
+    def test_one_locator_can_prove_two_exact_scope_literals(self) -> None:
+        """Accept D-31's shared ``99% one-day VaR`` locator example."""
+        asset = sample_asset(
+            html_bytes=SAMPLE_HTML.replace(
+                b"Worldwide", b"99% one-day VaR",
+            ),
+        )
+        response = json.loads(reader_response(asset=asset).decode("utf-8"))
+        contract = {
+            "scope_contract_version": "2",
+            "required_dimensions": ["confidence_level", "holding_period"],
+            "allowed_dimensions": ["confidence_level", "holding_period"],
+            "exact_enum_aliases": {
+                "confidence_level": {"ninety_nine_percent": ["99%"]},
+                "holding_period": {"one_day": ["one day"]},
+            },
+            "selection_preference": {
+                "dimension_order": ["confidence_level", "holding_period"],
+                "prefer_complete_required_dimensions": True,
+            },
+            "cross_dimension_constraints": [],
+        }
+        for candidate in response["candidates"]:
+            candidate["claimed_scope"] = [
+                {
+                    "dimension": "confidence_level",
+                    "raw_value": "99%",
+                    "evidence_locator_ids": ["scope-1"],
+                },
+                {
+                    "dimension": "holding_period",
+                    "raw_value": "one day",
+                    "evidence_locator_ids": ["scope-1"],
+                },
+            ]
+            candidate["scope_evidence_locators"] = [
+                {
+                    "id": "scope-1",
+                    "supports_dimensions": [
+                        "confidence_level", "holding_period",
+                    ],
+                    "location_type": "header",
+                    "locator": cell_locator(
+                        asset=asset,
+                        table_id="table_000002",
+                        row_index=2,
+                        column_index=0,
+                    ),
+                    "raw_text": "99% one-day VaR",
+                }
+            ]
+        source = sample_source_reference()
+        manifest = build_reader_input_manifest(
+            derived_asset=asset,
+            source_reference_ids=[source["source_reference_id"]],
+        )
+        payload = build_reader_payload(
+            manifest=manifest,
+            derived_asset=asset,
+            task_contract={"scope_test": "shared_locator"},
+        )
+        candidate = validate_reader_output(
+            response_text=json.dumps(response),
+            attempt_id="attempt:scope:shared-locator",
+            required_roles=["occupancy", "revpar", "adr"],
+            scope_contract=contract,
+            source_reference_ids=manifest["source_reference_ids"],
+            derived_asset_ids=[asset["derived_asset_id"]],
+        )
+        evidence = check_evidence(
+            candidate=candidate,
+            derived_asset=asset,
+            reader_manifest=manifest,
+            reader_payload_body=payload["body"],
+            source_references=[source],
+            identity_constraints=[],
+            scope_contract=contract,
+        )
+        self.assertEqual("PASS", evidence["status"])
+        self.assertEqual(
+            {
+                "confidence_level": "ninety_nine_percent",
+                "holding_period": "one_day",
+            },
+            evidence["normalized_scope"],
+        )
+
+    def test_shared_locator_proof_rejects_ambiguous_or_embedded_literals(self) -> None:
+        """Keep the D-31 multi-dimension proof exact and unambiguous."""
+        self.assertFalse(_bounded_raw_value_match(
+            raw_text="99% one-day VaR; 99% one-day VaR",
+            raw_value="99%",
+        ))
+        self.assertFalse(_bounded_raw_value_match(
+            raw_text="199% one-day VaR",
+            raw_value="99%",
+        ))
 
 
 if __name__ == "__main__":

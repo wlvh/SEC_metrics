@@ -265,6 +265,8 @@ def live_prepared_fixture(
         manifest=manifest,
         derived_asset=asset,
         compiled_spec=compiled_specs()["DISCLOSURE"],
+        repo_root=repo_root,
+        task_contract_id="lodging_occupancy_table_v2",
     )
     return prepare_live_reader_request(
         prepared_request=ordinary,
@@ -272,7 +274,7 @@ def live_prepared_fixture(
         source_reference=source,
         derived_asset=asset,
         reader_manifest=manifest,
-        disclosure_spec_path="catalog/disclosures/lodging_kpi_table.md",
+        disclosure_spec_path="catalog/table_task_contracts.json",
         immutable_source_repo_relative_path=str(
             fixture["source_repo_relative_path"]
         ),

@@ -825,10 +825,10 @@
         "anchor_id": "BEHAVIOR.vnext_table_transport_scope_and_freeze",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "PR-3阶段A中expanded table-grid继续是本地Evidence Authority，模型只接收versioned compact transport；decoder必须逐字段恢复全部表，Evidence/attempt同时绑定expanded与compact identity，D-07继续禁止selector。scope contract v2只允许exact enum alias自动规范化，未知alias进入Candidate REVIEW_REQUIRED且SYSTEM不得批准，不新增Observation quality。catalog table task contracts每项只含一个角色并保持全表输入；content-addressed table qualification freeze绑定WB-3回归、11组round trip、task/schema/prompt、R2 active/root、三类零egress计数及protected closure，后续qualification仅在所属family的freeze hash未漂移时可继续。该freeze不等于live qualification、AI迁移、publication或Issue #15完成。",
+        "statement": "PR-3阶段A中expanded table-grid继续是本地Evidence Authority，模型只接收versioned compact transport；decoder必须逐字段恢复全部表，Evidence/attempt同时绑定expanded与compact identity，D-07继续禁止selector。scope contract v2只允许exact enum alias自动规范化；一个locator可用唯一边界严格的literal/token-sequence proof支持多个raw dimension，未知alias进入Candidate REVIEW_REQUIRED且SYSTEM不得批准，不新增Observation quality。SourceStrategy SHA-256绑定的fallback representation schema机械派生table metric/family exact set；catalog table task contracts每项只含一个角色、MetricSpec scope/schema/prompt authority，并实际进入prepared request、provider envelope和attempt audit且保持全表输入。content-addressed table qualification freeze按family绑定task到MetricSpec的protected closure、WB-3回归、11组round trip、R2 active/root和三类零egress；历史R2 provenance/root bytes无漂移时，独立Stage-A current-source overlay才可使snapshot checker验证新source tree。上述freeze/overlay不等于live qualification、AI迁移、publication或Issue #15完成。",
         "audience": ["operator", "developer", "reviewer"],
-        "test_anchor": "tests/vnext/test_table_qualification_freeze.py::TableQualificationFreezeTest.test_matrix_and_task_contracts_bind_same_table_families",
-        "test_status": "automated_recorded_negative_matrix",
+        "test_anchor": "tests/vnext/test_table_task_contracts.py::TableTaskContractsTest.test_catalog_task_is_the_actual_prepared_request_and_attempt_authority",
+        "test_status": "automated_partial",
         "since": "2026-08-21"
       }
     ],

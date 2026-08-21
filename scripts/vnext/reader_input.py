@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Mapping, Sequence, Tuple
+from typing import Dict, Mapping, Optional, Sequence, Tuple
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes
 from .records import RecordError, validate_record
@@ -12,6 +12,8 @@ from .scope_contract import scope_contract_hash, validate_scope_contract
 from .table_payload import decode_compact_table_payload
 from .table_payload import encode_compact_table_payload
 from .table_payload import TablePayloadError
+from .table_task_contracts import resolve_table_task_contract
+from .table_task_contracts import TableTaskContractError
 
 
 class ReaderInputError(ValueError):
@@ -42,6 +44,10 @@ class PreparedReaderRequest:
         compact_payload_sha256: Exact compact transport bytes identity.
         decoder_semantic_version: Decoder behavior version.
         round_trip_receipt_id: Compact-to-expanded verification identity.
+        task_contract_id: Catalog identity for a v2 single-table task.
+        catalog_task_contract_hash: Exact selected catalog contract hash.
+        output_schema_hash: Catalog-owned v2 output schema identity.
+        system_prompt_hash: Catalog-owned system prompt identity.
     """
 
     request_bytes: bytes
@@ -55,6 +61,10 @@ class PreparedReaderRequest:
     compact_payload_sha256: str
     decoder_semantic_version: str
     round_trip_receipt_id: str
+    task_contract_id: str = ""
+    catalog_task_contract_hash: str = ""
+    output_schema_hash: str = ""
+    system_prompt_hash: str = ""
 
 
 @dataclass(frozen=True, init=False)
@@ -76,7 +86,7 @@ class LivePreparedReaderRequest:
         document_name: Filing primary-document identity.
         source_role: Exact source role, ``target_primary`` for live Reader.
         request_attempt_id: Immutable append-only SEC ledger attempt.
-        disclosure_spec_path: Repository disclosure Spec locator.
+        disclosure_spec_path: Legacy disclosure Spec or catalog task authority.
         raw_asset_id: Exact filing body identity.
         source_reference_id: Exact SourceReference identity.
         derived_asset_id: Complete rebuilt table-grid identity.
@@ -130,7 +140,7 @@ class LivePreparedReaderRequest:
             document_name: Filing document identity.
             source_role: Exact live source role.
             request_attempt_id: Immutable ledger attempt identity.
-            disclosure_spec_path: Repository disclosure Spec locator.
+            disclosure_spec_path: Legacy disclosure Spec or catalog task authority.
             raw_asset_id: Exact filing body identity.
             source_reference_id: Exact SourceReference identity.
             derived_asset_id: Exact complete table-grid identity.
@@ -245,16 +255,38 @@ def required_reader_roles(
 
 
 def build_reader_task_contract(
-    *, compiled_spec: Mapping[str, object]
+    *, compiled_spec: Optional[Mapping[str, object]] = None,
+    repo_root: Optional[Path] = None,
+    task_contract_id: Optional[str] = None,
 ) -> Dict[str, object]:
-    """Build the exact hash-visible Reader task contract from one Spec.
+    """Build one legacy or catalog-owned Reader task contract.
 
     Args:
-        compiled_spec: Repository-compiled disclosure-group Spec wrapper.
+        compiled_spec: Repository-compiled disclosure-group Spec wrapper for
+            a legacy recorded path, or ``None`` for a catalog table task.
+        repo_root: Repository root required for a catalog task selection.
+        task_contract_id: Explicit single-table catalog contract, or ``None``
+            only for legacy recorded compatibility paths.
 
     Returns:
-        Complete task contract used in request construction and freeze replay.
+        Complete task contract used in request construction and replay.
+
+    Raises:
+        ReaderInputError: When a selected catalog contract cannot be rebuilt
+        from its MetricSpec and SourceStrategy authority.
     """
+    if task_contract_id is not None:
+        if repo_root is None:
+            raise ReaderInputError("Catalog Reader task requires repository root")
+        try:
+            return resolve_table_task_contract(
+                repo_root=repo_root,
+                task_contract_id=task_contract_id,
+            )
+        except TableTaskContractError as error:
+            raise ReaderInputError("Catalog Reader task is invalid") from error
+    if compiled_spec is None:
+        raise ReaderInputError("Legacy Reader task requires compiled Spec")
     semantic = compiled_spec["compiled"]
     scope_contract = validate_scope_contract(
         value=semantic["scope_contract"],
@@ -410,20 +442,29 @@ def prepare_reader_request(
     *,
     manifest: Mapping[str, object],
     derived_asset: Mapping[str, object],
-    compiled_spec: Mapping[str, object],
+    compiled_spec: Optional[Mapping[str, object]] = None,
+    repo_root: Optional[Path] = None,
+    task_contract_id: Optional[str] = None,
 ) -> PreparedReaderRequest:
     """Build the only complete input accepted by the AI attempt boundary.
 
     Args:
         manifest: Exact ReaderInputManifest for the complete table set.
         derived_asset: Complete table-grid named by ``manifest``.
-        compiled_spec: Repository-compiled disclosure-group Spec.
+        compiled_spec: Repository-compiled disclosure-group Spec for a legacy
+            path, or ``None`` for a catalog-selected task.
+        repo_root: Repository root required for a catalog task selection.
+        task_contract_id: Explicit catalog single-table task identity.
 
     Returns:
         Request bytes plus the exact task, Spec, and Reader identities needed
         to validate a response without a caller-supplied callback.
     """
-    task_contract = build_reader_task_contract(compiled_spec=compiled_spec)
+    task_contract = build_reader_task_contract(
+        compiled_spec=compiled_spec,
+        repo_root=repo_root,
+        task_contract_id=task_contract_id,
+    )
     payload = build_reader_payload(
         manifest=manifest,
         derived_asset=derived_asset,
@@ -432,7 +473,11 @@ def prepare_reader_request(
     return PreparedReaderRequest(
         request_bytes=payload["request_bytes"],
         task_contract_bytes=canonical_json_bytes(value=task_contract),
-        task_spec_semantic_hash=str(compiled_spec["spec_semantic_hash"]),
+        task_spec_semantic_hash=str(
+            task_contract["task_spec_semantic_hash"]
+            if task_contract_id is not None
+            else compiled_spec["spec_semantic_hash"]
+        ),
         reader_input_manifest_id=str(manifest["reader_input_manifest_id"]),
         source_reference_ids=tuple(
             str(value) for value in manifest["source_reference_ids"]
@@ -452,6 +497,26 @@ def prepare_reader_request(
         ),
         round_trip_receipt_id=str(
             payload["table_transport"]["round_trip_receipt_id"]
+        ),
+        task_contract_id=str(
+            task_contract["task_contract_id"]
+            if task_contract_id is not None
+            else ""
+        ),
+        catalog_task_contract_hash=str(
+            task_contract["catalog_task_contract_hash"]
+            if task_contract_id is not None
+            else ""
+        ),
+        output_schema_hash=str(
+            task_contract["output_schema_hash"]
+            if task_contract_id is not None
+            else ""
+        ),
+        system_prompt_hash=str(
+            task_contract["system_prompt_hash"]
+            if task_contract_id is not None
+            else ""
         ),
     )
 
@@ -474,7 +539,7 @@ def prepare_live_reader_request(
         source_reference: Exact SEC filing/source identity record.
         derived_asset: Complete table-grid rebuilt from ``raw_blob``.
         reader_manifest: Exact table-set manifest for ``derived_asset``.
-        disclosure_spec_path: Repository disclosure Spec used for the task.
+        disclosure_spec_path: Legacy disclosure Spec or catalog task authority.
         immutable_source_repo_relative_path: Ledger-proven response body path.
 
     Returns:
@@ -514,7 +579,14 @@ def prepare_live_reader_request(
         or type(disclosure_spec_path) is not str
         or relative_spec.is_absolute()
         or ".." in relative_spec.parts
-        or relative_spec.parts[:2] != ("catalog", "disclosures")
+        or (
+            prepared_request.task_contract_id
+            and relative_spec.as_posix() != "catalog/table_task_contracts.json"
+        )
+        or (
+            not prepared_request.task_contract_id
+            and relative_spec.parts[:2] != ("catalog", "disclosures")
+        )
         or type(immutable_source_repo_relative_path) is not str
         or immutable_relative.is_absolute()
         or ".." in immutable_relative.parts

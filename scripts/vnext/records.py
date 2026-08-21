@@ -72,6 +72,10 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "compact_payload_sha256",
             "decoder_semantic_version",
             "round_trip_receipt_id",
+            "task_contract_id",
+            "catalog_task_contract_hash",
+            "catalog_output_schema_hash",
+            "system_prompt_hash",
         ),
     ),
     "DERIVED_ASSET": RecordSchema(
@@ -391,8 +395,12 @@ TEXT_FIELDS = {
     "status",
     "storage_uri",
     "task_contract_path",
+    "task_contract_id",
     "task_contract_sha256",
+    "catalog_task_contract_hash",
+    "catalog_output_schema_hash",
     "task_spec_semantic_hash",
+    "system_prompt_hash",
     "table_payload_serialization_version",
     "trace_id",
     "transform_id",
@@ -1153,6 +1161,33 @@ def _validate_record_semantics(
                 r"sha256:[0-9a-f]{64}", str(record["round_trip_receipt_id"])
             ) is None:
                 raise RecordError("Attempt round-trip receipt is invalid")
+        catalog_task_fields = {
+            "task_contract_id",
+            "catalog_task_contract_hash",
+            "catalog_output_schema_hash",
+            "system_prompt_hash",
+        }
+        supplied_catalog_task_fields = catalog_task_fields & set(record)
+        if (
+            supplied_catalog_task_fields
+            and supplied_catalog_task_fields != catalog_task_fields
+        ):
+            raise RecordError("Attempt catalog task binding is incomplete")
+        if supplied_catalog_task_fields:
+            if (
+                type(record["task_contract_id"]) is not str
+                or not record["task_contract_id"]
+            ):
+                raise RecordError("Attempt catalog task ID is invalid")
+            for field in (
+                "catalog_task_contract_hash",
+                "catalog_output_schema_hash",
+                "system_prompt_hash",
+            ):
+                if re.fullmatch(
+                    r"sha256:[0-9a-f]{64}", str(record[field])
+                ) is None:
+                    raise RecordError("Attempt catalog task hash is invalid")
         response_digest = str(record["raw_response_sha256"])
         response_path = str(record["raw_response_path"])
         if bool(response_digest) != bool(response_path):

@@ -261,7 +261,7 @@ R2新增的14个财务deterministic指标由`catalog/deterministic_metrics.json`
 
 #### 11.0.4 PR-3 阶段 A：WB-4/5/6 table qualification freeze
 
-`scripts/vnext/table_grid.py`继续保存完整 expanded grid，作为唯一本地 Evidence Authority；`scripts/vnext/table_payload.py`只为模型传输生成 versioned compact payload。compact encoder保留全部表、document order、caption、scope text与origin cell，省略仅能由origin span重建的non-origin展开cell及仅能由矩形shape重建的synthetic blank cell；decoder在不搜索或选择表格的前提下恢复逐字段相等的expanded grid。Reader payload、adapter与Evidence同时绑定`table_payload_serialization_version`、`expanded_derived_asset_id`、`expanded_grid_sha256`、`compact_payload_sha256`、`decoder_semantic_version`和`round_trip_receipt_id`；review renderer始终直接读取expanded grid。D-07仍要求完整文档表集和原始顺序，compact测量超过100000估算input token或context/resource上限时只产生`D07_DECISION_REQUIRED`，不引入selector。
+`scripts/vnext/table_grid.py`继续保存完整 expanded grid，作为唯一本地 Evidence Authority；`scripts/vnext/table_payload.py`只为模型传输生成 versioned compact payload。compact encoder保留全部表、document order、caption、scope text与origin cell，省略仅能由origin span重建的non-origin展开cell及仅能由矩形shape重建的synthetic blank cell；decoder在不搜索或选择表格的前提下恢复逐字段相等的expanded grid。Reader payload、adapter与Evidence同时绑定`table_payload_serialization_version`、`expanded_derived_asset_id`、`expanded_grid_sha256`、`compact_payload_sha256`、`decoder_semantic_version`和`round_trip_receipt_id`；review renderer始终直接读取expanded grid。D-31允许一个scope locator支持多个dimension：Evidence先逐字节重取完整locator raw text，再以唯一、边界严格的literal/token-sequence proof证明每个raw value，最后仅由MetricSpec exact-enum alias产生canonical值。D-07仍要求完整文档表集和原始顺序，compact测量超过100000估算input token或context/resource上限时只产生`D07_DECISION_REQUIRED`，不引入selector。
 
 scope contract v2由MetricSpec拥有：模型只能返回`dimension/raw_value/evidence_locator_ids`及exact raw scope-evidence locator；Evidence从expanded grid重取raw text后，只使用Spec的exact enum alias生成canonical scope。未知alias或缺维度使Candidate为`REVIEW_REQUIRED`，但不新增VerifiedObservation quality enum；SYSTEM approval仅在全部alias已解析、normalized scope满足contract且无unresolved/competing事实时可用，HUMAN仍可在同一contract内决定canonical scope。ReviewUnit、ReviewDecision、reviewed observation和scope key均绑定该事实链，历史VerifiedObservation schema不增加claim kind。
 
@@ -277,7 +277,7 @@ R1通过module-owned `zero_ai_release`完成verified legacy A→B→A→B。R2�
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
 
-Requirement authority 由 exact FSD、immutable R2、exact R3 Addendum、Decision Register、legacy baseline、release plan 与 semantic versions 联合组成。R1/R2无需AI qualification；尚缺的是WB-4以后、AI指标迁移、39指标最终Cutover与full receipt。
+`config/source_strategy_fallback_representation.json`以base SourceStrategy SHA-256和structured-first metric exact set绑定table/text fallback representation；`table_task_contracts.py`据此而非catalog反推table family/metric集合，并以catalog→MetricSpec→scope/schema/prompt closure构造单角色runtime task。该task进入prepared Reader request、provider envelope、response validator和attempt audit；历史lodging disclosure group只保留既有replay。freeze的family protected closure从实际task MetricSpec路径派生，不为金融family保留空集。Stage-A对source closure的改动不覆盖R2 provenance：`stage_a_snapshot.py`先要求历史checker只报告source drift，再绑定当前clean source tree、freeze receipt和R2 root bytes；`check_validation_snapshot.py`只有该双层closure都通过才返回零。Requirement authority 由 exact FSD、immutable R2、exact R3 Addendum、Decision Register、legacy baseline、release plan 与 semantic versions 联合组成。R1/R2无需AI qualification；尚缺的是WB-4以后、AI指标迁移、39指标最终Cutover与full receipt。
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
 
 ### 11.2 核心对象与事实所有权

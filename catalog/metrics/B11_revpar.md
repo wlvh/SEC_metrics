@@ -94,4 +94,6 @@
 
 # RevPAR
 
-与 Occupancy、ADR 同属一次 disclosure-group extraction；不得拆成独立 Reader 调用。
+历史 disclosure-group replay 仍保留 Occupancy/RevPAR/ADR 三角色语义；PR-3
+新的 table task contract 已将 RevPAR 拆为单角色请求，是否重新合并只能由后续
+qualification 证明同一 source、period、target table 与 review contract 均兼容。
