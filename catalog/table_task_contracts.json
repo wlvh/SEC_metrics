@@ -13,7 +13,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "LCR target table is independently qualified.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
       "actual_incremental_tokens": "NOT_RUN"
     },
     {
@@ -27,7 +28,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "NIM target table is independently qualified.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
       "actual_incremental_tokens": "NOT_RUN"
     },
     {
@@ -41,7 +43,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "Fallback NPL table is not merged with another target.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
       "actual_incremental_tokens": "NOT_RUN"
     },
     {
@@ -55,6 +58,7 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "AUM target table is independently qualified.",
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
       "estimated_incremental_tokens": 0,
       "actual_incremental_tokens": "NOT_RUN"
     },
@@ -69,7 +73,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "VaR scope and target table require an independent contract.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
       "actual_incremental_tokens": "NOT_RUN"
     },
     {
@@ -83,7 +88,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "Fallback geographic table is not merged with another target.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
       "actual_incremental_tokens": "NOT_RUN"
     },
     {
@@ -97,7 +103,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "Fallback debt table is not merged with another target.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
       "actual_incremental_tokens": "NOT_RUN"
     },
     {
@@ -111,7 +118,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "Capacity utilization target table is independently qualified.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
       "actual_incremental_tokens": "NOT_RUN"
     },
     {
@@ -125,6 +133,7 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "Occupancy remains separately qualified under the new scope and transport contracts.",
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
       "estimated_incremental_tokens": 0,
       "actual_incremental_tokens": "NOT_RUN"
     },
@@ -139,7 +148,8 @@
       "output_schema_version": "2",
       "system_prompt": "Return raw claims and exact locators from one selected table only.",
       "split_reason": "RevPAR remains separately qualified under the new scope and transport contracts.",
-      "estimated_incremental_tokens": 0,
+      "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
+      "estimated_incremental_tokens": 392438,
       "actual_incremental_tokens": "NOT_RUN"
     }
   ]

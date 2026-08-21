@@ -15,7 +15,8 @@ from typing import Dict, List, Mapping
 from .canonical import content_hash, sha256_file, strict_json_file
 from .scope_contract import scope_contract_hash, SCOPE_CONTRACT_VERSION
 from .source_strategy import load_source_strategy_registry
-from .specs import compile_spec_file, parse_spec_document, SpecError
+from .specs import compile_spec_file, parse_spec_document, SEMANTIC_SET_PATHS
+from .specs import SpecError
 
 
 TABLE_TASK_CATALOG_PATH = Path("catalog/table_task_contracts.json")
@@ -39,10 +40,13 @@ TABLE_TASK_CONTRACT_FIELDS = {
     "representation",
     "required_roles",
     "scope_contract_version",
+    "split_baseline_kind",
     "split_reason",
     "system_prompt",
     "task_contract_id",
 }
+SPLIT_BASELINE_KINDS = {"FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD"}
+RESOURCE_LIMIT_ESTIMATE = "NOT_AVAILABLE_RESOURCE_LIMIT"
 OUTPUT_SCHEMA_IDENTITY = {
     "schema_version": "2",
     "root_fields": [
@@ -86,6 +90,39 @@ RUNTIME_TASK_CONTRACT_FIELDS = {
     "system_prompt_hash",
     "task_contract_id",
     "task_spec_semantic_hash",
+}
+TASK_RUN_BINDING_FIELDS = {
+    "catalog_task_contract_hash",
+    "metric_spec_closure_hashes",
+    "metric_spec_paths",
+    "metric_spec_semantic_hashes",
+    "output_schema_hash",
+    "system_prompt_hash",
+    "task_contract_id",
+    "task_spec_semantic_hash",
+}
+TASK_EXECUTION_SEMANTIC_FIELDS = {
+    "applicability",
+    "catalog_task_contract_hash",
+    "disclosure_group",
+    "forbidden_confusions",
+    "identity_constraints",
+    "kind",
+    "legacy_projection",
+    "metric_id",
+    "metric_spec_closure_hashes",
+    "metric_spec_paths",
+    "metric_spec_semantic_hashes",
+    "output_schema_hash",
+    "output_schema_version",
+    "reader_contract_id",
+    "reader_family_id",
+    "required_claims",
+    "required_roles",
+    "scope_contract",
+    "scope_contract_hash",
+    "system_prompt_hash",
+    "task_contract_id",
 }
 
 
@@ -301,6 +338,162 @@ def _contract_metric_specs(
     return bindings
 
 
+def _table_task_semantic(
+    *, runtime: Mapping[str, object], metric_semantic: Mapping[str, object],
+) -> Dict[str, object]:
+    """Build the executable single-table semantic object for one task.
+
+    Args:
+        runtime: Rebuilt catalog task contract without caller-controlled data.
+        metric_semantic: Exact compiled direct MetricSpec for the one task role.
+
+    Returns:
+        A review/replay semantic object whose hash is the task Spec identity.
+
+    Why:
+        A catalog task is not a disclosure-group document.  Giving it its own
+        immutable semantic object prevents the formal Workflow and replay from
+        silently substituting the old multi-role disclosure contract.
+    """
+    roles = list(runtime["required_roles"])
+    metric_ids = list(runtime["metric_ids"])
+    if len(roles) != 1 or len(metric_ids) != 1:
+        raise TableTaskContractError("Task execution roles are not single")
+    semantic = {
+        "task_contract_id": runtime["task_contract_id"],
+        "catalog_task_contract_hash": runtime[
+            "catalog_task_contract_hash"
+        ],
+        "reader_family_id": runtime["reader_family_id"],
+        "reader_contract_id": runtime["reader_contract_id"],
+        "metric_id": metric_semantic["metric_id"],
+        "metric_spec_paths": list(runtime["metric_spec_paths"]),
+        "metric_spec_semantic_hashes": list(
+            runtime["metric_spec_semantic_hashes"]
+        ),
+        "metric_spec_closure_hashes": list(
+            runtime["metric_spec_closure_hashes"]
+        ),
+        "kind": "single_table_task",
+        "disclosure_group": runtime["disclosure_group"],
+        "required_roles": roles,
+        "required_claims": dict(runtime["required_claims"]),
+        "scope_contract": dict(runtime["scope_contract"]),
+        "scope_contract_hash": runtime["scope_contract_hash"],
+        "identity_constraints": list(runtime["identity_constraints"]),
+        "forbidden_confusions": list(runtime["forbidden_confusions"]),
+        "applicability": dict(metric_semantic["applicability"]),
+        "output_schema_version": runtime["output_schema_version"],
+        "output_schema_hash": runtime["output_schema_hash"],
+        "system_prompt_hash": runtime["system_prompt_hash"],
+        "legacy_projection": {
+            "roles": roles,
+            "supporting_roles": [],
+            "role_metric_ids": {roles[0]: metric_ids[0]},
+            "supporting_role_units": {},
+        },
+    }
+    if set(semantic) != TASK_EXECUTION_SEMANTIC_FIELDS:
+        raise TableTaskContractError("Task execution semantic fields differ")
+    return semantic
+
+
+def table_task_run_binding(
+    *, runtime: Mapping[str, object],
+) -> Dict[str, object]:
+    """Return the exact task identity persisted in a formal Run manifest.
+
+    Args:
+        runtime: Fully rebuilt catalog runtime task contract.
+
+    Returns:
+        Immutable task identity fields needed before a Run can replay.
+    """
+    binding = {
+        field: runtime[field]
+        for field in TASK_RUN_BINDING_FIELDS
+    }
+    if set(binding) != TASK_RUN_BINDING_FIELDS:
+        raise TableTaskContractError("Task Run binding fields differ")
+    return binding
+
+
+def table_task_execution_plan(
+    *, repo_root: Path, task_contract_id: str,
+) -> Dict[str, object]:
+    """Rebuild one catalog task for Workflow, Run freeze, and replay.
+
+    Args:
+        repo_root: Repository root owning catalog, MetricSpec, and strategy.
+        task_contract_id: Explicit single-table task selected by a plan.
+
+    Returns:
+        Runtime payload task, executable task Spec, direct MetricSpec, and
+        manifest binding for the same catalog task identity.
+
+    Raises:
+        TableTaskContractError: If any catalog, MetricSpec, or synthetic task
+        semantic identity does not reconstruct exactly.
+    """
+    runtime = resolve_table_task_contract(
+        repo_root=repo_root,
+        task_contract_id=task_contract_id,
+    )
+    metric_paths = list(runtime["metric_spec_paths"])
+    if len(metric_paths) != 1:
+        raise TableTaskContractError("Task execution MetricSpec set is invalid")
+    metric_path = repo_root / Path(metric_paths[0])
+    if metric_path.is_symlink() or not metric_path.is_file():
+        raise TableTaskContractError("Task execution MetricSpec is unsafe")
+    try:
+        metric_spec = compile_spec_file(
+            path=metric_path,
+            dependency_specs={},
+        )
+    except SpecError as error:
+        raise TableTaskContractError("Task execution MetricSpec is invalid") from error
+    if (
+        metric_spec["spec_semantic_hash"]
+        != runtime["metric_spec_semantic_hashes"][0]
+        or metric_spec["spec_closure_hash"]
+        != runtime["metric_spec_closure_hashes"][0]
+        or metric_spec["compiled"]["metric_id"] != runtime["metric_ids"][0]
+    ):
+        raise TableTaskContractError("Task execution MetricSpec differs")
+    semantic = _table_task_semantic(
+        runtime=runtime,
+        metric_semantic=metric_spec["compiled"],
+    )
+    semantic_hash = content_hash(
+        value=semantic,
+        set_paths=SEMANTIC_SET_PATHS,
+    )
+    if runtime["task_spec_semantic_hash"] != semantic_hash:
+        raise TableTaskContractError("Task execution Spec identity differs")
+    task_spec = {
+        "compiled": semantic,
+        "spec_semantic_hash": semantic_hash,
+        "spec_closure_hash": content_hash(
+            value={
+                "catalog_task_contract_hash": runtime[
+                    "catalog_task_contract_hash"
+                ],
+                "metric_spec_closure_hashes": runtime[
+                    "metric_spec_closure_hashes"
+                ],
+            },
+        ),
+    }
+    return {
+        "runtime_task_contract": runtime,
+        "task_spec": task_spec,
+        "metric_specs": {
+            str(metric_spec["compiled"]["metric_id"]): metric_spec,
+        },
+        "run_binding": table_task_run_binding(runtime=runtime),
+    }
+
+
 def load_table_task_contracts(*, repo_root: Path) -> Dict[str, object]:
     """Load all catalog single-table contracts against SourceStrategy routes.
 
@@ -373,8 +566,13 @@ def load_table_task_contracts(*, repo_root: Path) -> Dict[str, object]:
             raise TableTaskContractError("Task output schema version differs")
         _text(value=contract["system_prompt"], label="task system_prompt")
         _text(value=contract["split_reason"], label="task split_reason")
-        if type(contract["estimated_incremental_tokens"]) is not int or (
-            contract["estimated_incremental_tokens"] < 0
+        if contract["split_baseline_kind"] not in SPLIT_BASELINE_KINDS:
+            raise TableTaskContractError("Task split baseline kind is invalid")
+        if not (
+            type(contract["estimated_incremental_tokens"]) is int
+            and contract["estimated_incremental_tokens"] >= 0
+            or contract["estimated_incremental_tokens"]
+            == RESOURCE_LIMIT_ESTIMATE
         ):
             raise TableTaskContractError("Task estimated incremental tokens invalid")
         actual_tokens = contract["actual_incremental_tokens"]
@@ -484,17 +682,11 @@ def resolve_table_task_contract(
         "output_schema_hash": contract["output_schema_hash"],
     }
     runtime["task_spec_semantic_hash"] = content_hash(
-        value={
-            "catalog_task_contract_hash": runtime[
-                "catalog_task_contract_hash"
-            ],
-            "metric_spec_closure_hashes": runtime[
-                "metric_spec_closure_hashes"
-            ],
-            "metric_spec_semantic_hashes": runtime[
-                "metric_spec_semantic_hashes"
-            ],
-        },
+        value=_table_task_semantic(
+            runtime=runtime,
+            metric_semantic=metric,
+        ),
+        set_paths=SEMANTIC_SET_PATHS,
     )
     if set(runtime) != RUNTIME_TASK_CONTRACT_FIELDS:
         raise TableTaskContractError("Runtime task contract fields differ")

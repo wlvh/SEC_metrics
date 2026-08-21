@@ -5,6 +5,16 @@
     {
       "family_id": "financial_statement",
       "reader_contract_id": "financial_statement_v1",
+      "task_contract_ids": [
+        "financial_assets_under_management_table_v1",
+        "financial_capacity_utilization_table_v1",
+        "financial_debt_to_equity_table_v1",
+        "financial_geographic_exposure_table_v1",
+        "financial_liquidity_coverage_ratio_table_v1",
+        "financial_net_interest_margin_table_v1",
+        "financial_nonperforming_loan_ratio_table_v1",
+        "financial_value_at_risk_table_v1"
+      ],
       "development_source": {
         "source_kind": "IMMUTABLE_ATTEMPT",
         "company_id": "jpmorgan_chase",
@@ -67,6 +77,10 @@
     {
       "family_id": "lodging_kpi_table",
       "reader_contract_id": "lodging_kpi_table_v1",
+      "task_contract_ids": [
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2"
+      ],
       "development_source": {
         "source_kind": "IMMUTABLE_ATTEMPT",
         "company_id": "marriott_international",

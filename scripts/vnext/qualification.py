@@ -23,8 +23,11 @@ from .review import effective_review_decision
 from .run_store import load_run_for_status
 from .table_grid import TableGridError, resolve_cell
 from .table_qualification_freeze import TableQualificationFreezeError
+from .table_qualification_freeze import load_table_qualification_matrix
 from .table_qualification_freeze import require_table_qualification_freeze
 from .table_task_contracts import load_table_task_contracts
+from .table_task_contracts import resolve_table_task_contract
+from .table_task_contracts import TableTaskContractError
 
 
 QUALIFICATION_ROOT = Path("artifacts/vnext/qualification")
@@ -100,6 +103,102 @@ class QualificationError(RuntimeError):
         """
         super().__init__("{}: {}".format(code, message))
         self.code = code
+
+
+def table_qualification_task_plan(
+    *,
+    repo_root: Path,
+    family_id: str,
+    task_contract_id: str,
+    qualification_ordinal: int,
+) -> Dict[str, object]:
+    """Resolve one future qualification ordinal to one catalog table task.
+
+    Args:
+        repo_root: Repository holding the frozen matrix and task catalog.
+        family_id: Matrix-derived table family identity.
+        task_contract_id: Explicit matrix-listed single-table task identity.
+        qualification_ordinal: One-based fresh-sample ordinal owned by this
+            family/task qualification plan.
+
+    Returns:
+        A task plan whose matrix entry, runtime contract, output schema, and
+        prompt all name the same catalog task.
+
+    Raises:
+        QualificationError: Before any future source/provider action when the
+        freeze is invalid, D-07 still requires a decision, or the requested
+        task is not owned by the requested family.
+
+    Why:
+        Qualification may schedule ordinals, but it may not use a disclosure
+        group as an implicit multi-role request.  This joins the frozen matrix
+        entry to the one concrete catalog task before Workflow is reached.
+    """
+    if type(qualification_ordinal) is not int or qualification_ordinal < 1:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Qualification ordinal is invalid",
+        )
+    try:
+        freeze = require_table_qualification_freeze(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
+        matrix = load_table_qualification_matrix(repo_root=repo_root)
+        contracts = load_table_task_contracts(repo_root=repo_root)
+        runtime = resolve_table_task_contract(
+            repo_root=repo_root,
+            task_contract_id=task_contract_id,
+        )
+    except TableQualificationFreezeError as error:
+        code = (
+            "D07_DECISION_REQUIRED"
+            if str(error) == "D07_DECISION_REQUIRED"
+            else "TABLE_QUALIFICATION_TASK_PLAN_INVALID"
+        )
+        raise QualificationError(
+            code=code,
+            message="Frozen table task plan cannot be rebuilt",
+        ) from error
+    except TableTaskContractError as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Frozen table task plan cannot be rebuilt",
+        ) from error
+    if family_id not in matrix["entries"]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Table family is absent from the qualification matrix",
+        )
+    entry = matrix["entries"][family_id]
+    if (
+        task_contract_id not in entry["task_contract_ids"]
+        or runtime["reader_family_id"] != family_id
+        or runtime["reader_contract_id"] != entry["reader_contract_id"]
+        or family_id not in contracts["authorized_family_ids"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Matrix task does not bind the requested table family",
+        )
+    if qualification_ordinal > entry["fresh_samples_required"]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Qualification ordinal exceeds the frozen sample policy",
+        )
+    body = {
+        "family_id": family_id,
+        "task_contract_id": task_contract_id,
+        "qualification_ordinal": qualification_ordinal,
+        "matrix_entry_hash": content_hash(value=entry),
+        "task_contract_hash": runtime["catalog_task_contract_hash"],
+        "task_spec_semantic_hash": runtime["task_spec_semantic_hash"],
+        "output_schema_hash": runtime["output_schema_hash"],
+        "system_prompt_hash": runtime["system_prompt_hash"],
+        "freeze_receipt_id": freeze["receipt_id"],
+    }
+    return {**body, "qualification_task_plan_id": content_hash(value=body)}
 
 
 def _portable_file(*, repo_root: Path, relative: str, label: str) -> Path:

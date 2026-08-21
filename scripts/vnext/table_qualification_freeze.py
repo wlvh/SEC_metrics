@@ -9,6 +9,7 @@ bytes or invokes a model provider.
 
 from __future__ import annotations
 
+import ast
 import csv
 import inspect
 import json
@@ -16,7 +17,7 @@ import subprocess
 import sys
 from decimal import Decimal, ROUND_HALF_EVEN
 from pathlib import Path
-from typing import Dict, List, Mapping, Sequence, Tuple
+from typing import Dict, List, Mapping, Sequence, Set, Tuple
 
 from .ai_adapter import _open_provider_request, approved_transport_policy
 from .ai_adapter import build_provider_request_body
@@ -30,13 +31,14 @@ from .reader_input import READER_SYSTEM_CONTRACT
 from .reader_input import build_reader_input_manifest, build_reader_payload
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
-from .specs import parse_spec_document, SpecError
-from .table_grid import build_table_grid
+from .table_grid import build_table_grid, TableGridError
 from .table_payload import compact_payload_receipt
 from .table_payload import DECODER_SEMANTIC_VERSION
 from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_task_contracts import load_table_task_contracts
+from .table_task_contracts import RESOURCE_LIMIT_ESTIMATE
 from .table_task_contracts import resolve_table_task_contract
+from .table_task_contracts import table_task_execution_plan
 
 
 MATRIX_PATH = Path("config/table_qualification_matrix.json")
@@ -63,6 +65,7 @@ MATRIX_ENTRY_FIELDS = {
     "review_policy",
     "second_layout_policy",
     "second_layout_source",
+    "task_contract_ids",
     "token_context_limits",
 }
 LOCATOR_RANGE_FIELDS = {
@@ -126,6 +129,38 @@ WB3_TESTS = {
         "test_successful_exact_response_resume_has_zero_mock_invocation"
     ),
 }
+QUALIFICATION_ENGINE_ROOTS = (
+    Path("scripts/vnext/ai_adapter.py"),
+    Path("scripts/vnext/evidence.py"),
+    Path("scripts/vnext/invocation_control.py"),
+    Path("scripts/vnext/provider_runtime.py"),
+    Path("scripts/vnext/qualification.py"),
+    Path("scripts/vnext/reader.py"),
+    Path("scripts/vnext/reader_input.py"),
+    Path("scripts/vnext/records.py"),
+    Path("scripts/vnext/review.py"),
+    Path("scripts/vnext/run_store.py"),
+    Path("scripts/vnext/source_strategy.py"),
+    Path("scripts/vnext/specs.py"),
+    Path("scripts/vnext/stage_a_snapshot.py"),
+    Path("scripts/vnext/table_grid.py"),
+    Path("scripts/vnext/table_payload.py"),
+    Path("scripts/vnext/table_qualification_freeze.py"),
+    Path("scripts/vnext/table_task_contracts.py"),
+    Path("scripts/vnext/workflow.py"),
+    Path("tools/vnext_qualification.py"),
+)
+QUALIFICATION_SHARED_DATA_PATHS = (
+    Path("config/company_registry.csv"),
+    Path("config/issue_15_release_plan.json"),
+    Path("config/provider_model_runtime.json"),
+    Path("config/release_plans/issue_15_zero_ai_r1.json"),
+    Path("config/release_plans/issue_15_zero_ai_r2.json"),
+    Path("requirements/issue_15_v1/CONTRACT.md"),
+    Path("requirements/issue_15_v1/decision_register.json"),
+    Path("tools/check_validation_snapshot.py"),
+    Path("tools/create_stage_a_validation_snapshot.py"),
+)
 
 
 class TableQualificationFreezeError(RuntimeError):
@@ -294,6 +329,16 @@ def load_table_qualification_matrix(*, repo_root: Path) -> Dict[str, object]:
                 type(item) is not str or not item
                 for item in entry["expected_claims"]
             )
+            or type(entry["task_contract_ids"]) is not list
+            or not entry["task_contract_ids"]
+            or any(
+                type(item) is not str or not item
+                for item in entry["task_contract_ids"]
+            )
+            or len(entry["task_contract_ids"])
+            != len(set(entry["task_contract_ids"]))
+            or entry["task_contract_ids"]
+            != sorted(entry["task_contract_ids"])
             or type(entry["materially_different_criteria"]) is not list
             or len(entry["materially_different_criteria"]) < 2
             or type(entry["negative_cases"]) is not list
@@ -394,40 +439,144 @@ def _round_trip_sources(
     return sources
 
 
-def _measurement_task_contract(
-    *, repo_root: Path, contracts: Sequence[Mapping[str, object]],
+def _measure_reader_envelope(
+    *,
+    source_id: str,
+    source_path: Path,
+    source_sha256: str,
+    task_contract: Mapping[str, object],
+    token_limit: int,
+    policy: object,
+    runtime: Mapping[str, object],
 ) -> Dict[str, object]:
-    """Build one deterministic catalog task for transport measurement.
+    """Measure one complete local table source and one fixed task envelope.
 
     Args:
-        repo_root: Repository root owning catalog task authority.
-        contracts: Validated table task contracts.
+        source_id: Stable fixture or development-source identity.
+        source_path: Existing local source file; no remote acquisition occurs.
+        source_sha256: Declared raw source digest without the ``sha256:`` tag.
+        task_contract: One explicit catalog runtime task contract.
+        token_limit: Family's non-monetary input/context hard limit.
+        policy: Effective provider transport policy used only to form bytes.
+        runtime: Local token-estimator authority.
 
     Returns:
-        Complete catalog task whose words cannot filter supplied tables.
+        One content-addressed offline measurement receipt.
+
+    Why:
+        Every request repeats the full compact table set.  Measuring the exact
+        task envelope rather than a generic payload makes D-07 and split cost
+        evidence reproducible without creating a provider request.
     """
-    if not contracts:
-        raise TableQualificationFreezeError("Table measurement task is absent")
-    contract_id = sorted(
-        str(contract["task_contract_id"]) for contract in contracts
-    )[0]
-    return resolve_table_task_contract(
-        repo_root=repo_root,
-        task_contract_id=contract_id,
+    if source_path.is_symlink() or not source_path.is_file():
+        raise TableQualificationFreezeError("Measurement source is absent or unsafe")
+    source_bytes = source_path.read_bytes()
+    if sha256_bytes(content=source_bytes) != source_sha256:
+        raise TableQualificationFreezeError("Measurement source hash differs")
+    try:
+        asset = build_table_grid(
+            html_bytes=source_bytes,
+            parent_raw_asset_ids=["sha256:" + source_sha256],
+            storage_uri=(
+                "artifacts/vnext/table_qualification_freeze/{}.json".format(
+                    source_id
+                )
+            ),
+        )
+    except TableGridError as error:
+        # The complete expanded grid is authoritative.  A resource refusal
+        # must remain visible rather than being bypassed by a table selector,
+        # partial parser, or synthetic compact estimate.
+        body = {
+            "source_id": source_id,
+            "source_sha256": source_sha256,
+            "task_contract_id": task_contract["task_contract_id"],
+            "expanded_reader_payload_bytes": RESOURCE_LIMIT_ESTIMATE,
+            "compact_reader_payload_bytes": RESOURCE_LIMIT_ESTIMATE,
+            "compression_ratio": RESOURCE_LIMIT_ESTIMATE,
+            "provider_envelope_estimated_bytes": RESOURCE_LIMIT_ESTIMATE,
+            "estimated_input_tokens": RESOURCE_LIMIT_ESTIMATE,
+            "actual_prompt_tokens": "NOT_RUN",
+            "estimator_id": runtime["estimator_id"],
+            "estimator_version": runtime["estimator_version"],
+            "provider_context_authority_hash": runtime["context_authority_hash"],
+            "round_trip_receipt_id": RESOURCE_LIMIT_ESTIMATE,
+            "round_trip_hash": RESOURCE_LIMIT_ESTIMATE,
+            "context_or_resource_limit_exceeded": True,
+            "resource_limit_reason": str(error),
+        }
+        return {**body, "measurement_id": content_hash(value=body)}
+    manifest = build_reader_input_manifest(
+        derived_asset=asset,
+        source_reference_ids=["source:" + source_sha256],
     )
+    compact_payload = build_reader_payload(
+        manifest=manifest,
+        derived_asset=asset,
+        task_contract=task_contract,
+    )
+    expanded_body = {
+        "system_contract": dict(READER_SYSTEM_CONTRACT),
+        "task_contract": dict(task_contract),
+        "reader_input_manifest": dict(manifest),
+        "untrusted_table_data": list(asset["tables"]),
+    }
+    expanded_bytes = canonical_json_bytes(value=expanded_body)
+    provider_envelope, _output_schema = build_provider_request_body(
+        policy=policy,
+        reader_request_bytes=compact_payload["request_bytes"],
+    )
+    estimated_tokens = estimate_context_tokens(
+        request_body=provider_envelope,
+        authority=runtime,
+    )
+    compact_transport = compact_payload["table_transport"]
+    round_trip = compact_payload_receipt(transport=compact_transport)
+    compression = (
+        Decimal(len(compact_payload["request_bytes"]))
+        / Decimal(len(expanded_bytes))
+    ).quantize(Decimal("0.00000001"), rounding=ROUND_HALF_EVEN)
+    over_limit = (
+        estimated_tokens > token_limit
+        or estimated_tokens > runtime["maximum_context_tokens"]
+        or len(provider_envelope) > policy.maximum_payload_bytes
+    )
+    body = {
+        "source_id": source_id,
+        "source_sha256": source_sha256,
+        "task_contract_id": task_contract["task_contract_id"],
+        "expanded_reader_payload_bytes": len(expanded_bytes),
+        "compact_reader_payload_bytes": len(compact_payload["request_bytes"]),
+        "compression_ratio": format(compression, "f"),
+        "provider_envelope_estimated_bytes": len(provider_envelope),
+        "estimated_input_tokens": estimated_tokens,
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimator_id": runtime["estimator_id"],
+        "estimator_version": runtime["estimator_version"],
+        "provider_context_authority_hash": runtime["context_authority_hash"],
+        "round_trip_receipt_id": round_trip["round_trip_receipt_id"],
+        "round_trip_hash": content_hash(value=round_trip),
+        "context_or_resource_limit_exceeded": over_limit,
+    }
+    return {**body, "measurement_id": content_hash(value=body)}
 
 
 def _measurement_receipts(
-    *, repo_root: Path, contracts: Sequence[Mapping[str, object]],
-) -> Tuple[List[Dict[str, object]], bool]:
-    """Measure compact transport on all frozen sources without provider egress.
+    *,
+    repo_root: Path,
+    matrix: Mapping[str, object],
+    task_contracts: Mapping[str, object],
+) -> Dict[str, object]:
+    """Measure WB-4 fixtures and every local family/task request offline.
 
     Args:
         repo_root: Repository authority root.
-        contracts: Validated static table task contracts.
+        matrix: Validated frozen family matrix.
+        task_contracts: Validated catalog contracts grouped by family.
 
     Returns:
-        Eleven measurements and whether D-07 decision is required.
+        Eleven WB-4 receipts, every local development-source/task envelope,
+        family maxima, overall maximum, and a D-07 decision flag.
     """
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
@@ -439,84 +588,172 @@ def _measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
-    task_contract = _measurement_task_contract(
+    round_trip_sources = _round_trip_sources(repo_root=repo_root)
+    first_source_sha256 = round_trip_sources[0][2]
+    matching_entries = [
+        entry
+        for entry in matrix["entries"].values()
+        if entry["development_source"]["source_kind"] == "IMMUTABLE_ATTEMPT"
+        and entry["development_source"]["source_sha256"]
+        == first_source_sha256
+    ]
+    if len(matching_entries) != 1:
+        raise TableQualificationFreezeError("WB-4 family task is ambiguous")
+    round_trip_entry = matching_entries[0]
+    round_trip_task = resolve_table_task_contract(
         repo_root=repo_root,
-        contracts=contracts,
+        task_contract_id=round_trip_entry["task_contract_ids"][0],
     )
-    measurements = []
-    decision_required = False
-    for fixture_id, source_path, expected_sha256 in _round_trip_sources(
-        repo_root=repo_root,
-    ):
-        if source_path.is_symlink() or not source_path.is_file():
-            raise TableQualificationFreezeError("WB-4 source is absent or unsafe")
-        source_bytes = source_path.read_bytes()
-        if sha256_bytes(content=source_bytes) != expected_sha256:
-            raise TableQualificationFreezeError("WB-4 source hash differs")
-        asset = build_table_grid(
-            html_bytes=source_bytes,
-            parent_raw_asset_ids=["sha256:" + expected_sha256],
-            storage_uri="artifacts/vnext/table_qualification_freeze/{}.json".format(
-                fixture_id
-            ),
-        )
-        manifest = build_reader_input_manifest(
-            derived_asset=asset,
-            source_reference_ids=["source:" + expected_sha256],
-        )
-        compact_payload = build_reader_payload(
-            manifest=manifest,
-            derived_asset=asset,
-            task_contract=task_contract,
-        )
-        expanded_body = {
-            "system_contract": dict(READER_SYSTEM_CONTRACT),
-            "task_contract": dict(task_contract),
-            "reader_input_manifest": dict(manifest),
-            "untrusted_table_data": list(asset["tables"]),
-        }
-        expanded_bytes = canonical_json_bytes(value=expanded_body)
-        provider_envelope, _output_schema = build_provider_request_body(
+    round_trip_receipts = []
+    for fixture_id, source_path, expected_sha256 in round_trip_sources:
+        round_trip_receipts.append(_measure_reader_envelope(
+            source_id=fixture_id,
+            source_path=source_path,
+            source_sha256=expected_sha256,
+            task_contract=round_trip_task,
+            token_limit=round_trip_entry["token_context_limits"][
+                "max_estimated_input_tokens"
+            ],
             policy=policy,
-            reader_request_bytes=compact_payload["request_bytes"],
+            runtime=runtime,
+        ))
+    if len(round_trip_receipts) != 11:
+        raise TableQualificationFreezeError("WB-4 measurement set is not eleven")
+    task_measurements = []
+    for family_id in sorted(matrix["entries"]):
+        entry = matrix["entries"][family_id]
+        development = entry["development_source"]
+        if development["source_kind"] != "IMMUTABLE_ATTEMPT":
+            continue
+        source_path = repo_root / Path(
+            str(development["source_repo_relative_path"])
         )
-        estimated_tokens = estimate_context_tokens(
-            request_body=provider_envelope,
-            authority=runtime,
+        for task_contract_id in entry["task_contract_ids"]:
+            task_contract = resolve_table_task_contract(
+                repo_root=repo_root,
+                task_contract_id=task_contract_id,
+            )
+            measurement = _measure_reader_envelope(
+                source_id="{}:{}".format(family_id, task_contract_id),
+                source_path=source_path,
+                source_sha256=str(development["source_sha256"]),
+                task_contract=task_contract,
+                token_limit=entry["token_context_limits"][
+                    "max_estimated_input_tokens"
+                ],
+                policy=policy,
+                runtime=runtime,
+            )
+            task_measurements.append({
+                "family_id": family_id,
+                "development_source_repo_relative_path": development[
+                    "source_repo_relative_path"
+                ],
+                **measurement,
+            })
+    expected_task_ids = {
+        str(contract["task_contract_id"])
+        for contract in task_contracts["contracts"]
+    }
+    if {item["task_contract_id"] for item in task_measurements} != expected_task_ids:
+        raise TableQualificationFreezeError("Development task measurement set differs")
+    family_maxima = {}
+    for family_id in matrix["entries"]:
+        estimates = [
+            item["estimated_input_tokens"]
+            for item in task_measurements
+            if item["family_id"] == family_id
+        ]
+        if any(estimate == RESOURCE_LIMIT_ESTIMATE for estimate in estimates):
+            family_maxima[family_id] = RESOURCE_LIMIT_ESTIMATE
+        else:
+            family_maxima[family_id] = max(estimates)
+    all_measurements = round_trip_receipts + task_measurements
+    known_estimates = [
+        item["estimated_input_tokens"]
+        for item in all_measurements
+        if item["estimated_input_tokens"] != RESOURCE_LIMIT_ESTIMATE
+    ]
+    maximum = (
+        RESOURCE_LIMIT_ESTIMATE
+        if any(
+            item["estimated_input_tokens"] == RESOURCE_LIMIT_ESTIMATE
+            for item in all_measurements
         )
-        compact_transport = compact_payload["table_transport"]
-        round_trip = compact_payload_receipt(transport=compact_transport)
-        compression = (
-            Decimal(len(compact_payload["request_bytes"]))
-            / Decimal(len(expanded_bytes))
-        ).quantize(Decimal("0.00000001"), rounding=ROUND_HALF_EVEN)
-        over_limit = (
-            estimated_tokens > 100000
-            or estimated_tokens > runtime["maximum_context_tokens"]
-            or len(provider_envelope) > policy.maximum_payload_bytes
+        else max(known_estimates)
+    )
+    return {
+        "round_trip_receipts": round_trip_receipts,
+        "qualification_task_measurements": task_measurements,
+        "family_maximum_estimated_input_tokens": family_maxima,
+        "maximum_estimated_input_tokens": maximum,
+        "maximum_successfully_estimated_input_tokens": max(known_estimates),
+        "d07_decision_required": any(
+            item["context_or_resource_limit_exceeded"]
+            for item in all_measurements
+        ),
+    }
+
+
+def _split_cost_receipts(
+    *,
+    task_contracts: Mapping[str, object],
+    task_measurements: Sequence[Mapping[str, object]],
+) -> List[Dict[str, object]]:
+    """Bind declared split cost estimates to offline full-payload envelopes.
+
+    Args:
+        task_contracts: Validated catalog contracts.
+        task_measurements: One development-source envelope estimate per task.
+
+    Returns:
+        Ordered split receipt rows with an explicit non-merged baseline.
+    """
+    measurements_by_id = {
+        str(item["task_contract_id"]): item
+        for item in task_measurements
+    }
+    rows = []
+    for family_id in sorted({
+        str(contract["reader_family_id"])
+        for contract in task_contracts["contracts"]
+    }):
+        contracts = sorted(
+            (
+                contract
+                for contract in task_contracts["contracts"]
+                if contract["reader_family_id"] == family_id
+            ),
+            key=lambda contract: str(contract["task_contract_id"]),
         )
-        decision_required = decision_required or over_limit
-        measurement_body = {
-            "fixture_id": fixture_id,
-            "source_sha256": expected_sha256,
-            "expanded_reader_payload_bytes": len(expanded_bytes),
-            "compact_reader_payload_bytes": len(compact_payload["request_bytes"]),
-            "compression_ratio": format(compression, "f"),
-            "provider_envelope_estimated_bytes": len(provider_envelope),
-            "estimated_input_tokens": estimated_tokens,
-            "actual_prompt_tokens": "NOT_RUN",
-            "estimator_id": runtime["estimator_id"],
-            "estimator_version": runtime["estimator_version"],
-            "provider_context_authority_hash": runtime["context_authority_hash"],
-            "round_trip_receipt_id": round_trip["round_trip_receipt_id"],
-            "round_trip_hash": content_hash(value=round_trip),
-            "context_or_resource_limit_exceeded": over_limit,
-        }
-        measurements.append({
-            **measurement_body,
-            "measurement_id": content_hash(value=measurement_body),
-        })
-    return measurements, decision_required
+        for ordinal, contract in enumerate(contracts):
+            task_contract_id = str(contract["task_contract_id"])
+            if task_contract_id not in measurements_by_id:
+                raise TableQualificationFreezeError("Split measurement is absent")
+            measurement = measurements_by_id[task_contract_id]
+            expected_incremental = (
+                0
+                if ordinal == 0
+                else measurement["estimated_input_tokens"]
+            )
+            if contract["estimated_incremental_tokens"] != expected_incremental:
+                raise TableQualificationFreezeError(
+                    "Split estimated incremental tokens differ"
+                )
+            body = {
+                "family_id": family_id,
+                "task_contract_id": task_contract_id,
+                "split_reason": contract["split_reason"],
+                "baseline_kind": contract["split_baseline_kind"],
+                "baseline_task_contract_id": contracts[0]["task_contract_id"],
+                "estimated_incremental_tokens": expected_incremental,
+                "actual_incremental_tokens": contract[
+                    "actual_incremental_tokens"
+                ],
+                "offline_measurement_id": measurement["measurement_id"],
+            }
+            rows.append({**body, "split_receipt_id": content_hash(value=body)})
+    return rows
 
 
 def _run_wb3_test_receipts(*, repo_root: Path) -> Dict[str, object]:
@@ -614,11 +851,187 @@ def _request_ledger_binding(*, repo_root: Path) -> Dict[str, object]:
     return {"sha256": sha256_file(path=path), "row_count": row_count}
 
 
+def _local_import_targets(
+    *, repo_root: Path, relative: Path,
+) -> Set[Path]:
+    """Resolve local Python imports made by one protected engine module.
+
+    Args:
+        repo_root: Repository authority root.
+        relative: Repository-relative Python module path.
+
+    Returns:
+        Existing local module paths referenced by direct imports.
+
+    Why:
+        Qualification semantics are a transmission path, not a hand-picked
+        list.  Parsing direct local imports lets the protected closure expand
+        whenever the Workflow, replay, provider, or Spec engine gains a new
+        repository dependency.
+    """
+    path = _regular_file(repo_root=repo_root, relative=relative, label="engine")
+    try:
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    except (SyntaxError, UnicodeDecodeError) as error:
+        raise TableQualificationFreezeError("Qualification engine is invalid") from error
+    targets = set()
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.ImportFrom) or node.module is None:
+            continue
+        module = node.module
+        candidate = None
+        if (
+            node.level == 1
+            and relative.parts[:2] == ("scripts", "vnext")
+        ):
+            candidate = Path("scripts/vnext") / (
+                module.replace(".", "/") + ".py"
+            )
+        elif node.level == 0 and module.startswith("vnext."):
+            candidate = Path("scripts") / (module.replace(".", "/") + ".py")
+        elif node.level == 0 and module.startswith("scripts."):
+            candidate = Path(module.replace(".", "/") + ".py")
+        elif node.level == 0 and "." not in module:
+            candidate = Path("scripts") / (module + ".py")
+        if candidate is None:
+            continue
+        target = repo_root / candidate
+        if target.exists():
+            targets.add(candidate)
+    return targets
+
+
+def _requirement_closure_paths(*, repo_root: Path) -> Set[Path]:
+    """Return the immutable Requirement bytes read by table qualification.
+
+    Args:
+        repo_root: Repository authority root.
+
+    Returns:
+        All regular Requirement files from the Issue #15 and inherited roots.
+    """
+    paths = set()
+    for relative_root in (
+        Path("requirements/issue_15_v1"),
+        Path("requirements/ai_first_v3_3_1"),
+    ):
+        root = repo_root / relative_root
+        if root.is_symlink() or not root.is_dir():
+            raise TableQualificationFreezeError("Requirement closure is unsafe")
+        for path in sorted(root.rglob("*")):
+            if path.is_symlink():
+                raise TableQualificationFreezeError("Requirement closure has symlink")
+            if path.is_file():
+                paths.add(path.relative_to(repo_root))
+    if not paths:
+        raise TableQualificationFreezeError("Requirement closure is empty")
+    return paths
+
+
+def _shared_engine_closure(*, repo_root: Path) -> Dict[str, object]:
+    """Derive the shared executable qualification dependency closure.
+
+    Args:
+        repo_root: Repository authority root.
+
+    Returns:
+        Portable file bindings for every transitive shared engine dependency.
+    """
+    pending = list(QUALIFICATION_ENGINE_ROOTS)
+    paths = set(QUALIFICATION_SHARED_DATA_PATHS)
+    paths.update(_requirement_closure_paths(repo_root=repo_root))
+    while pending:
+        relative = pending.pop()
+        if relative in paths:
+            continue
+        paths.add(relative)
+        for imported in _local_import_targets(
+            repo_root=repo_root,
+            relative=relative,
+        ):
+            if imported not in paths:
+                pending.append(imported)
+    return {
+        path.as_posix(): _file_binding(repo_root=repo_root, relative=path)
+        for path in sorted(paths)
+    }
+
+
+def _family_semantic_closure(
+    *, repo_root: Path, family_id: str, matrix_entry: Mapping[str, object],
+    task_contracts: Mapping[str, object],
+) -> Dict[str, object]:
+    """Derive one family's task, MetricSpec, and matrix dependency closure.
+
+    Args:
+        repo_root: Repository authority root.
+        family_id: Authorized table family identity.
+        matrix_entry: Exact validated matrix entry for the family.
+        task_contracts: Exact catalog contracts derived from SourceStrategy.
+
+    Returns:
+        Family-local semantic hashes and source-file bindings only.
+
+    Why:
+        Matrix and catalog files contain several families.  Binding their whole
+        file bytes as shared state would invalidate unrelated qualification;
+        binding the validated per-family fragments preserves dependency-based
+        invalidation without trusting a manually copied fragment.
+    """
+    contracts = [
+        contract
+        for contract in task_contracts["contracts"]
+        if contract["reader_family_id"] == family_id
+    ]
+    if not contracts:
+        raise TableQualificationFreezeError("Family task contract closure is empty")
+    task_contracts_by_id = {}
+    paths = set()
+    for contract in contracts:
+        task_contract_id = str(contract["task_contract_id"])
+        try:
+            plan = table_task_execution_plan(
+                repo_root=repo_root,
+                task_contract_id=task_contract_id,
+            )
+        except TableTaskContractError as error:
+            raise TableQualificationFreezeError("Family task cannot be rebuilt") from error
+        runtime = plan["runtime_task_contract"]
+        if runtime["reader_family_id"] != family_id:
+            raise TableQualificationFreezeError("Family task route differs")
+        task_contracts_by_id[task_contract_id] = {
+            "catalog_task_contract_hash": runtime[
+                "catalog_task_contract_hash"
+            ],
+            "task_spec_semantic_hash": runtime["task_spec_semantic_hash"],
+            "output_schema_hash": runtime["output_schema_hash"],
+            "system_prompt_hash": runtime["system_prompt_hash"],
+            "metric_spec_paths": list(runtime["metric_spec_paths"]),
+            "metric_spec_semantic_hashes": list(
+                runtime["metric_spec_semantic_hashes"]
+            ),
+            "metric_spec_closure_hashes": list(
+                runtime["metric_spec_closure_hashes"]
+            ),
+        }
+        paths.update(Path(path) for path in runtime["metric_spec_paths"])
+    if set(task_contracts_by_id) != set(matrix_entry["task_contract_ids"]):
+        raise TableQualificationFreezeError("Family matrix task set differs")
+    return {
+        "matrix_entry_hash": content_hash(value=dict(matrix_entry)),
+        "task_contracts": task_contracts_by_id,
+        "semantic_files": {
+            path.as_posix(): _file_binding(repo_root=repo_root, relative=path)
+            for path in sorted(paths)
+        },
+    }
+
+
 def _protected_closure(
     *, repo_root: Path, matrix: Mapping[str, object],
     task_contracts: Mapping[str, object],
 ) -> Dict[str, object]:
-    """Bind common and family-specific bytes that invalidate qualification.
+    """Bind shared engine and family-local semantic qualification closures.
 
     Args:
         repo_root: Repository authority root.
@@ -626,85 +1039,107 @@ def _protected_closure(
         task_contracts: Exact catalog contracts derived from SourceStrategy.
 
     Returns:
-        Common protected files plus per-family dependent file/hash sets.
+        Shared transitive engine files plus per-family semantic fragments.
     """
-    common_paths = [
-        Path("config/provider_model_runtime.json"),
-        Path("config/source_strategy_registry.json"),
-        Path("config/source_strategy_fallback_representation.json"),
-        Path("config/table_qualification_matrix.json"),
-        Path("catalog/table_task_contracts.json"),
-        Path("scripts/vnext/ai_adapter.py"),
-        Path("scripts/vnext/evidence.py"),
-        Path("scripts/vnext/invocation_control.py"),
-        Path("scripts/vnext/reader.py"),
-        Path("scripts/vnext/reader_input.py"),
-        Path("scripts/vnext/records.py"),
-        Path("scripts/vnext/review.py"),
-        Path("scripts/vnext/scope_contract.py"),
-        Path("scripts/vnext/stage_a_snapshot.py"),
-        Path("scripts/vnext/table_grid.py"),
-        Path("scripts/vnext/table_payload.py"),
-        Path("scripts/vnext/table_qualification_freeze.py"),
-        Path("scripts/vnext/table_task_contracts.py"),
-        Path("requirements/issue_15_v1/CONTRACT.md"),
-        Path("requirements/issue_15_v1/decision_register.json"),
-        Path("tools/check_validation_snapshot.py"),
-        Path("tools/create_stage_a_validation_snapshot.py"),
-    ]
-    common = {
-        path.as_posix(): _file_binding(repo_root=repo_root, relative=path)
-        for path in common_paths
+    families = {
+        family_id: _family_semantic_closure(
+            repo_root=repo_root,
+            family_id=family_id,
+            matrix_entry=matrix["entries"][family_id],
+            task_contracts=task_contracts,
+        )
+        for family_id in sorted(matrix["entries"])
     }
-    disclosure_paths = {}
-    disclosure_root = repo_root / "catalog" / "disclosures"
-    if disclosure_root.is_symlink() or not disclosure_root.is_dir():
-        raise TableQualificationFreezeError("Disclosure catalog is unsafe")
-    for path in sorted(disclosure_root.glob("*.md")):
-        if path.is_symlink() or not path.is_file():
-            raise TableQualificationFreezeError("Disclosure catalog entry is unsafe")
-        try:
-            front, _body = parse_spec_document(
-                text=path.read_text(encoding="utf-8"),
-            )
-        except (UnicodeDecodeError, SpecError) as error:
-            raise TableQualificationFreezeError("Disclosure catalog is invalid") from error
-        if front["kind"] != "disclosure_group":
-            continue
-        family_id = front["disclosure_group"]
-        if type(family_id) is not str or not family_id:
-            raise TableQualificationFreezeError("Disclosure family identity is invalid")
-        if family_id in disclosure_paths:
-            raise TableQualificationFreezeError("Disclosure family is duplicated")
-        disclosure_paths[family_id] = path.relative_to(repo_root)
-    families = {}
-    for family_id in sorted(matrix["entries"]):
-        family_contracts = [
-            contract
-            for contract in task_contracts["contracts"]
-            if contract["reader_family_id"] == family_id
-        ]
-        paths = {
-            Path(metric["path"])
-            for contract in family_contracts
-            for metric in contract["metric_specs"]
-        }
-        if family_id in disclosure_paths:
-            paths.add(disclosure_paths[family_id])
-        if not paths:
-            raise TableQualificationFreezeError("Family semantic closure is empty")
-        families[family_id] = {
-            "matrix_entry_hash": content_hash(
-                value=matrix["entries"][family_id],
-            ),
-            "files": {
-                path.as_posix(): _file_binding(
-                    repo_root=repo_root, relative=path,
+    return {
+        "shared_engine_files": _shared_engine_closure(repo_root=repo_root),
+        "families": families,
+    }
+
+
+def _protected_closure_drift(
+    *, frozen: Mapping[str, object], current: Mapping[str, object],
+) -> Dict[str, List[str]]:
+    """Return dependency-scoped drift labels between two protected closures.
+
+    Args:
+        frozen: Receipt-owned protected closure.
+        current: Freshly derived protected closure from current source bytes.
+
+    Returns:
+        Family ID to sorted drift labels; shared engine drift is propagated to
+        every authorized family, while task/matrix/MetricSpec drift is local.
+    """
+    required = {"families", "shared_engine_files"}
+    if set(frozen) != required or set(current) != required:
+        raise TableQualificationFreezeError("Protected closure fields differ")
+    frozen_families = frozen["families"]
+    current_families = current["families"]
+    if (
+        not isinstance(frozen_families, dict)
+        or not isinstance(current_families, dict)
+        or set(frozen_families) != set(current_families)
+    ):
+        raise TableQualificationFreezeError("Protected family set differs")
+    frozen_shared = frozen["shared_engine_files"]
+    current_shared = current["shared_engine_files"]
+    if not isinstance(frozen_shared, dict) or not isinstance(current_shared, dict):
+        raise TableQualificationFreezeError("Shared engine closure is invalid")
+    missing = object()
+    shared_drift = []
+    for relative in sorted(set(frozen_shared) | set(current_shared)):
+        frozen_value = (
+            frozen_shared[relative]
+            if relative in frozen_shared
+            else missing
+        )
+        current_value = (
+            current_shared[relative]
+            if relative in current_shared
+            else missing
+        )
+        if frozen_value != current_value:
+            shared_drift.append("shared_engine:" + relative)
+    drift_by_family = {}
+    for family_id in sorted(frozen_families):
+        frozen_family = frozen_families[family_id]
+        current_family = current_families[family_id]
+        if (
+            not isinstance(frozen_family, dict)
+            or not isinstance(current_family, dict)
+            or set(frozen_family)
+            != {"matrix_entry_hash", "semantic_files", "task_contracts"}
+            or set(current_family) != set(frozen_family)
+        ):
+            raise TableQualificationFreezeError("Family protected closure is invalid")
+        drift = list(shared_drift)
+        if frozen_family["matrix_entry_hash"] != current_family[
+            "matrix_entry_hash"
+        ]:
+            drift.append("family_matrix_entry")
+        for label in ("task_contracts", "semantic_files"):
+            frozen_values = frozen_family[label]
+            current_values = current_family[label]
+            if (
+                not isinstance(frozen_values, dict)
+                or not isinstance(current_values, dict)
+            ):
+                raise TableQualificationFreezeError("Family closure mapping invalid")
+            for key in sorted(set(frozen_values) | set(current_values)):
+                frozen_value = (
+                    frozen_values[key]
+                    if key in frozen_values
+                    else missing
                 )
-                for path in sorted(paths)
-            },
-        }
-    return {"common_files": common, "families": families}
+                current_value = (
+                    current_values[key]
+                    if key in current_values
+                    else missing
+                )
+                if frozen_value != current_value:
+                    drift.append("{}:{}".format(label, key))
+        if drift:
+            drift_by_family[family_id] = sorted(drift)
+    return drift_by_family
 
 
 def _family_scope_closure(
@@ -818,6 +1253,11 @@ def build_table_qualification_freeze_receipt(
         if (
             entry["reader_contract_id"]
             != matching_contracts[0]["reader_contract_id"]
+            or entry["task_contract_ids"]
+            != sorted(
+                str(contract["task_contract_id"])
+                for contract in matching_contracts
+            )
             or sorted(entry["expected_claims"])
             != sorted(
                 role
@@ -826,9 +1266,15 @@ def build_table_qualification_freeze_receipt(
             )
         ):
             raise TableQualificationFreezeError("Matrix task binding differs")
-    measurements, decision_required = _measurement_receipts(
+    measurements = _measurement_receipts(
         repo_root=repo_root,
-        contracts=task_contracts["contracts"],
+        matrix=matrix,
+        task_contracts=task_contracts,
+    )
+    decision_required = measurements["d07_decision_required"]
+    split_cost_receipts = _split_cost_receipts(
+        task_contracts=task_contracts,
+        task_measurements=measurements["qualification_task_measurements"],
     )
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
@@ -903,7 +1349,13 @@ def build_table_qualification_freeze_receipt(
                     "round_trip_receipt_id",
                 ]
             ),
-            "round_trip_receipts": measurements,
+            "round_trip_receipts": measurements["round_trip_receipts"],
+            "qualification_task_measurements": measurements[
+                "qualification_task_measurements"
+            ],
+            "family_maximum_estimated_input_tokens": measurements[
+                "family_maximum_estimated_input_tokens"
+            ],
             "d07_full_table_no_prefilter_proof": {
                 "table_grid_source_sha256": sha256_file(
                     path=repo_root / "scripts/vnext/table_grid.py",
@@ -911,12 +1363,18 @@ def build_table_qualification_freeze_receipt(
                 "reader_input_source_sha256": sha256_file(
                     path=repo_root / "scripts/vnext/reader_input.py",
                 ),
-                "all_fixture_count": len(measurements),
+                "all_fixture_count": len(measurements["round_trip_receipts"]),
+                "qualification_task_measurement_count": len(
+                    measurements["qualification_task_measurements"]
+                ),
                 "selection_parameters": [],
             },
-            "maximum_estimated_input_tokens": max(
-                item["estimated_input_tokens"] for item in measurements
-            ),
+            "maximum_estimated_input_tokens": measurements[
+                "maximum_estimated_input_tokens"
+            ],
+            "maximum_successfully_estimated_input_tokens": measurements[
+                "maximum_successfully_estimated_input_tokens"
+            ],
         },
         "wb5_scope_contract": {
             "scope_contract_version": "2",
@@ -971,6 +1429,7 @@ def build_table_qualification_freeze_receipt(
                 }
                 for family_id in task_contracts["authorized_family_ids"]
             },
+            "split_cost_receipts": split_cost_receipts,
         },
         "provider_state": {
             "provider": policy.provider,
@@ -1075,27 +1534,24 @@ def validate_table_qualification_freeze(
     ):
         raise TableQualificationFreezeError("Freeze receipt identity differs")
     protected = receipt["protected_closure"]
-    common_drift = []
-    for relative, binding in protected["common_files"].items():
-        current = _file_binding(repo_root=repo_root, relative=Path(relative))
-        if current != binding:
-            common_drift.append(relative)
-    invalidated = []
-    drift_by_family = {}
-    for family_id, family in protected["families"].items():
-        drift = list(common_drift)
-        for relative, binding in family["files"].items():
-            current = _file_binding(repo_root=repo_root, relative=Path(relative))
-            if current != binding:
-                drift.append(relative)
-        if drift:
-            invalidated.append(family_id)
-            drift_by_family[family_id] = sorted(drift)
+    task_contracts = load_table_task_contracts(repo_root=repo_root)
+    matrix = load_table_qualification_matrix(repo_root=repo_root)
+    if sorted(matrix["entries"]) != task_contracts["authorized_family_ids"]:
+        raise TableQualificationFreezeError("Matrix family set differs from tasks")
+    current = _protected_closure(
+        repo_root=repo_root,
+        matrix=matrix,
+        task_contracts=task_contracts,
+    )
+    drift_by_family = _protected_closure_drift(
+        frozen=protected,
+        current=current,
+    )
     return {
         "receipt_id": receipt_id,
         "qualification_cycle_id": receipt["qualification_cycle_id"],
         "d07_decision_required": receipt["d07_decision_required"],
-        "invalidated_family_ids": sorted(invalidated),
+        "invalidated_family_ids": sorted(drift_by_family),
         "drift_by_family": drift_by_family,
     }
 

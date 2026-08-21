@@ -36,6 +36,7 @@ from .run_store import append_review_decision, append_run_record
 from .run_store import append_run_records_atomically
 from .run_store import create_run, load_open_run
 from .run_store import load_run_bound_specs
+from .run_store import load_run_bound_task_specs
 from .run_store import RunStoreError
 from .run_store import write_review_assets
 from .run_store import write_attempt_payloads
@@ -45,6 +46,9 @@ from .sources import validate_public_sec_filing_identity
 from .specs import SpecError, compile_spec_file, compile_spec_files
 from .specs import parse_spec_document
 from .table_grid import build_table_grid
+from .table_task_contracts import TABLE_TASK_CATALOG_PATH
+from .table_task_contracts import table_task_execution_plan
+from .table_task_contracts import TableTaskContractError
 from .traits import TraitError, repository_company_ciks
 from .traits import repository_company_traits
 
@@ -137,6 +141,7 @@ def create_review_run(
     disclosure_spec_path: str,
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
+    task_contract_id: Optional[str] = None,
 ) -> Dict[str, object]:
     """Create one registry-authorized OPEN Run through HUMAN review.
 
@@ -156,6 +161,8 @@ def create_review_run(
         disclosure_spec_path: Repository-relative disclosure Spec locator.
         adapter: Recorded or repository-approved AI transport.
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
+        task_contract_id: Explicit catalog single-table task, or ``None`` for
+            the retained historical disclosure workflow.
 
     Returns:
         Run, attempt, Candidate, Evidence, and ReviewUnit identities.
@@ -185,6 +192,82 @@ def create_review_run(
         disclosure_spec_path=disclosure_spec_path,
         adapter=adapter,
         clock=clock,
+        task_contract_id=task_contract_id,
+    )
+
+
+def create_table_task_review_run(
+    *,
+    repo_root: Path,
+    run_dir: Path,
+    run_id: str,
+    company_id: str,
+    target_period: Mapping[str, object],
+    source_repo_relative_path: str,
+    source_media_type: str,
+    source_url: str,
+    accession: str,
+    document_name: str,
+    source_role: str,
+    request_attempt_id: str,
+    task_contract_id: str,
+    adapter: AIAdapter,
+    clock: Optional[Callable[[], datetime]],
+) -> Dict[str, object]:
+    """Create one formal single-table catalog task Run.
+
+    Args:
+        repo_root: Repository containing task, MetricSpec, and source bytes.
+        run_dir: New Run-scoped directory.
+        run_id: Opaque Run identity.
+        company_id: Registry logical company identity.
+        target_period: Explicit Run period mapping.
+        source_repo_relative_path: Existing immutable or recorded source path.
+        source_media_type: Exact source media type.
+        source_url: Exact source URL.
+        accession: Exact filing accession.
+        document_name: Exact source document identity.
+        source_role: Source role for the Run.
+        request_attempt_id: Existing immutable SEC ledger attempt identity.
+        task_contract_id: Explicit matrix-authorized catalog single-table task.
+        adapter: Recorded or repository-approved AI transport.
+        clock: Explicit UTC clock or ``None`` for real UTC audit time.
+
+    Returns:
+        Run, attempt, Candidate, Evidence, and ReviewUnit identities.
+
+    Why:
+        This is the production Workflow entrypoint for WB-6 tasks.  It never
+        derives a task from a metric, company, table ID, or response role; the
+        caller must name a catalog contract that is recorded in the Run.
+    """
+    try:
+        company_traits = repository_company_traits(
+            repo_root=repo_root,
+            company_id=company_id,
+        )
+    except TraitError as error:
+        raise WorkflowError(
+            "Repository company traits are invalid"
+        ) from error
+    return _create_review_run_with_traits(
+        repo_root=repo_root,
+        run_dir=run_dir,
+        run_id=run_id,
+        company_id=company_id,
+        company_traits=company_traits,
+        target_period=target_period,
+        source_repo_relative_path=source_repo_relative_path,
+        source_media_type=source_media_type,
+        source_url=source_url,
+        accession=accession,
+        document_name=document_name,
+        source_role=source_role,
+        request_attempt_id=request_attempt_id,
+        disclosure_spec_path=TABLE_TASK_CATALOG_PATH.as_posix(),
+        adapter=adapter,
+        clock=clock,
+        task_contract_id=task_contract_id,
     )
 
 
@@ -317,6 +400,7 @@ def create_layout_qualification_run(
         disclosure_spec_path=str(manifest["disclosure_spec_path"]),
         adapter=adapter,
         clock=clock,
+        task_contract_id=None,
     )
 
 
@@ -433,6 +517,7 @@ def _create_review_run_with_traits(
     disclosure_spec_path: str,
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
+    task_contract_id: Optional[str],
 ) -> Dict[str, object]:
     """Create one OPEN Run from already repository-resolved company traits.
 
@@ -453,6 +538,8 @@ def _create_review_run_with_traits(
         disclosure_spec_path: Repository-relative disclosure Spec locator.
         adapter: Recorded or repository-approved AI transport.
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
+        task_contract_id: Explicit catalog task identity, or ``None`` only for
+            the retained historical disclosure-group path.
 
     Returns:
         Run, attempt, Candidate, Evidence, and ReviewUnit identities. Rejection
@@ -463,10 +550,28 @@ def _create_review_run_with_traits(
     adapter_mode = validate_adapter_repository_authority(
         adapter=adapter, repo_root=repo_root,
     )
-    compiled_spec, spec_paths, metric_specs = _load_disclosure_plan(
-        repo_root=repo_root,
-        disclosure_spec_path=disclosure_spec_path,
-    )
+    task_run_bindings = []
+    if task_contract_id is None:
+        compiled_spec, spec_paths, metric_specs = _load_disclosure_plan(
+            repo_root=repo_root,
+            disclosure_spec_path=disclosure_spec_path,
+        )
+    else:
+        if disclosure_spec_path != TABLE_TASK_CATALOG_PATH.as_posix():
+            raise WorkflowError("Catalog task path differs from authority")
+        try:
+            task_plan = table_task_execution_plan(
+                repo_root=repo_root,
+                task_contract_id=task_contract_id,
+            )
+        except TableTaskContractError as error:
+            raise WorkflowError("Catalog task execution plan is invalid") from error
+        compiled_spec = task_plan["task_spec"]
+        metric_specs = task_plan["metric_specs"]
+        spec_paths = list(
+            task_plan["runtime_task_contract"]["metric_spec_paths"]
+        )
+        task_run_bindings = [task_plan["run_binding"]]
     if (
         not isinstance(company_traits, list)
         or not company_traits
@@ -530,6 +635,7 @@ def _create_review_run_with_traits(
             missing_required_source_roles=[],
             spec_file_hashes=spec_file_hashes,
             requirement_hashes=requirement["hashes"],
+            task_contract_bindings=task_run_bindings,
         )
         for record in records:
             append_run_record(run_dir=run_dir, record=record)
@@ -577,6 +683,7 @@ def _create_review_run_with_traits(
         missing_required_source_roles=[],
         spec_file_hashes=spec_file_hashes,
         requirement_hashes=requirement["hashes"],
+        task_contract_bindings=task_run_bindings,
     )
     append_run_record(run_dir=run_dir, record=raw_blob)
     append_run_record(run_dir=run_dir, record=source_reference)
@@ -601,7 +708,9 @@ def _create_review_run_with_traits(
     prepared_request = prepare_reader_request(
         manifest=reader_manifest,
         derived_asset=derived_asset,
-        compiled_spec=compiled_spec,
+        compiled_spec=compiled_spec if task_contract_id is None else None,
+        repo_root=repo_root if task_contract_id is not None else None,
+        task_contract_id=task_contract_id,
     )
     attempt_request = (
         prepare_live_reader_request(
@@ -832,8 +941,19 @@ def finalize_reviewed_direct_results(
         for wrapper in compiled_by_id.values()
         if wrapper["spec_semantic_hash"] == unit["spec_semantic_hash"]
     ]
+    try:
+        task_specs_by_hash = load_run_bound_task_specs(
+            repo_root=repo_root,
+            manifest=manifest,
+        )
+    except RunStoreError as error:
+        raise WorkflowError("Run-bound catalog task is invalid") from error
+    if unit["spec_semantic_hash"] in task_specs_by_hash:
+        disclosure_matches.append(task_specs_by_hash[
+            str(unit["spec_semantic_hash"])
+        ])
     if len(disclosure_matches) != 1:
-        raise WorkflowError("Reviewed disclosure Spec is not authoritative")
+        raise WorkflowError("Reviewed task Spec is not authoritative")
     disclosure_spec = disclosure_matches[0]
     if disclosure_spec["compiled"] != unit["compiled_spec"]:
         raise WorkflowError("Reviewed disclosure Spec differs from repository")

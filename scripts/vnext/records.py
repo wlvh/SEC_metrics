@@ -249,7 +249,8 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "content_manifest_hash",
             "audit_manifest_hash",
             "execution_semantics_hash",
-        )
+        ),
+        optional=("task_contract_bindings",),
     ),
     "SOURCE_REFERENCE": RecordSchema(
         required=(
@@ -435,6 +436,7 @@ LIST_FIELDS = {
     "source_references",
     "steps",
     "tables",
+    "task_contract_bindings",
     "unresolved_competing_claims",
     "unresolved_scope_dimensions",
 }
