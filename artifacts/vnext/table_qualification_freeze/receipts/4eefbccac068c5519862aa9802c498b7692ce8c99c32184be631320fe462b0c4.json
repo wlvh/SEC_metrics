@@ -1,10 +1,10 @@
 {
-  "table_qualification_freeze_receipt_id": "sha256:c62ad6ea2f14b9d3e058b31238656c0539f28a0827e4502713a59bbfd0137d4f",
+  "table_qualification_freeze_receipt_id": "sha256:4eefbccac068c5519862aa9802c498b7692ce8c99c32184be631320fe462b0c4",
   "record_type": "TABLE_QUALIFICATION_FREEZE_RECEIPT",
   "schema_version": 1,
-  "freeze_commit": "398d43df7f1f18cddbf991cd6beda6625efad69c",
-  "frozen_at_utc": "2026-08-21T04:45:00Z",
-  "qualification_cycle_id": "sha256:f9962337ee7503ae8dd96a50e5bd17404fe6285b12ac5d77a66b645b84743ad0",
+  "freeze_commit": "ea859ec3e6fe8640b6d3395a06a73f1d3129810c",
+  "frozen_at_utc": "2026-08-21T05:00:00Z",
+  "qualification_cycle_id": "sha256:c0ef2bf1cba1ba7b14a6fe5de8e443f953af0d552e3c38ab470690e711207cd2",
   "d07_decision_required": true,
   "identity": {
     "requirement_closure_hash": "sha256:161da433701e133c6e388356225fb01fa245847450b39a2a8b5335189a69624f",
@@ -51,31 +51,31 @@
           "return_code": 0,
           "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
           "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "2756c5a30f2f713a624b4781c2fb9e0b81c730762573695f8430fa7641d68f1f"
+          "stderr_sha256": "1f072824b6a03461a1f40b4bd530c39cdc9ab6329df762762b3a710c8e4748f4"
         },
         "http_402_batch_stop": {
           "test_id": "tests.vnext.test_invocation_control.InvocationControlTest.test_http_402_calls_once_and_stops_batch",
           "return_code": 0,
           "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
           "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "a1ed1151c9b3b1eb519493b2c0289d19d9ed21892463d5974d564c440f923aed"
+          "stderr_sha256": "311cc368f3ed111f9b3b27b5ed17b71fe7c0486ac0d03a1d316b569269034c1b"
         },
         "unknown_remote_outcome": {
           "test_id": "tests.vnext.test_invocation_control.InvocationControlTest.test_egress_crash_is_unknown_and_never_retried",
           "return_code": 0,
           "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
           "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "acbd765747ccab60612503f0c55b64c76368c113a505ed66976f079179d85364"
+          "stderr_sha256": "fa47c684c8cb1ce797a9e0b995835847fe8d22ddbed7757c22967a4e800414d7"
         },
         "successful_exact_response_reuse": {
           "test_id": "tests.vnext.test_invocation_control.InvocationControlTest.test_successful_exact_response_resume_has_zero_mock_invocation",
           "return_code": 0,
           "test_source_sha256": "32f6a4d530fb74c86e81f212f344889c29607c390fb8cf6908a9bee1f8babf29",
           "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-          "stderr_sha256": "fcc960c8e32157fde8d645332aa8801dfb92da8fb31a7210d9f05e78bd673e90"
+          "stderr_sha256": "05fa568ea35f44471e4ef18ee06193cd91bc98b54df67720d07d55b75627b995"
         }
       },
-      "wb3_regression_receipt_id": "sha256:6cc7423a9f2c4778cf8c62a3787690aa022ff4a7eb29eff96fad510c3a4d7a89"
+      "wb3_regression_receipt_id": "sha256:5f79751c18c40b27f2dc6bebca12af99eeb1556c6bd35dd56d8dd48d528c2c76"
     }
   },
   "wb4_compact_transport": {
@@ -559,7 +559,7 @@
     "provider_ledger_before": {
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "row_count": 0,
-      "path": "artifacts/vnext/table_qualification_freeze/cycles/f9962337ee7503ae8dd96a50e5bd17404fe6285b12ac5d77a66b645b84743ad0/provider_ledger.jsonl"
+      "path": "artifacts/vnext/table_qualification_freeze/cycles/c0ef2bf1cba1ba7b14a6fe5de8e443f953af0d552e3c38ab470690e711207cd2/provider_ledger.jsonl"
     },
     "qualification_cycle_real_model_egress_count": 0,
     "qualification_cycle_paid_model_call_count": 0,
@@ -629,8 +629,8 @@
         "size": 8887
       },
       "scripts/vnext/stage_a_snapshot.py": {
-        "sha256": "4b5c047eb770dca227415ea549c6e6b32dcd9d6d541d4cd1bc8eb7ae49fc8e19",
-        "size": 14123
+        "sha256": "3c29b64621bcc33e0292cf71ecd4bf64cdaabf9b277edcfe280554a45b066dd6",
+        "size": 14270
       },
       "scripts/vnext/table_grid.py": {
         "sha256": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
