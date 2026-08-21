@@ -8,6 +8,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+from tools.vnext_qualification import QualificationCliError, prepare_layout
 from tests.vnext.common import compiled_specs, fixed_clock, reader_response
 from tests.vnext.common import sample_asset
 from tests.vnext.common import sample_source_reference
@@ -288,6 +289,12 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertEqual(1, plan["qualification_ordinal"])
         self.assertTrue(plan["task_spec_semantic_hash"].startswith("sha256:"))
         self.assertTrue(plan["qualification_task_plan_id"].startswith("sha256:"))
+
+    def test_legacy_qualification_prepare_stops_at_d07(self) -> None:
+        """Prevent the historical fixture CLI from falling back to schema v1."""
+        with self.assertRaises(QualificationCliError) as raised:
+            prepare_layout(fixture_id="hilton-2024-sec-layout-v1")
+        self.assertEqual("D07_DECISION_REQUIRED", raised.exception.code)
 
 
 if __name__ == "__main__":

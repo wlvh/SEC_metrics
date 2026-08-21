@@ -47,8 +47,11 @@ from .specs import SpecError, compile_spec_file, compile_spec_files
 from .specs import parse_spec_document
 from .table_grid import build_table_grid
 from .table_task_contracts import TABLE_TASK_CATALOG_PATH
+from .table_task_contracts import load_table_task_contracts
 from .table_task_contracts import table_task_execution_plan
 from .table_task_contracts import TableTaskContractError
+from .table_qualification_freeze import require_table_qualification_freeze
+from .table_qualification_freeze import TableQualificationFreezeError
 from .traits import TraitError, repository_company_ciks
 from .traits import repository_company_traits
 
@@ -292,6 +295,50 @@ def create_layout_qualification_run(
 
     Returns:
         The same Run/Candidate/Evidence/ReviewUnit result as production.
+    """
+    try:
+        task_contracts = load_table_task_contracts(repo_root=repo_root)
+        for family_id in task_contracts["authorized_family_ids"]:
+            require_table_qualification_freeze(
+                repo_root=repo_root,
+                family_id=family_id,
+            )
+    except (TableQualificationFreezeError, TableTaskContractError) as error:
+        raise WorkflowError(
+            "Table qualification requires a valid catalog task plan"
+        ) from error
+    # A historical fixture only names a disclosure group, so it cannot choose
+    # a catalog single-table task without reintroducing the v1 multi-role path.
+    raise WorkflowError(
+        "Table qualification requires explicit catalog task identity"
+    )
+
+
+def _create_legacy_layout_qualification_run(
+    *,
+    repo_root: Path,
+    run_dir: Path,
+    run_id: str,
+    fixture_id: str,
+    adapter: AIAdapter,
+    clock: Optional[Callable[[], datetime]],
+) -> Dict[str, object]:
+    """Retain the historical fixture parser behind the catalog-task barrier.
+
+    Args:
+        repo_root: Repository containing the fixed fixture authority.
+        run_dir: New qualification Run directory.
+        run_id: Opaque Run identity.
+        fixture_id: Safe directory identity below ``fixtures/vnext/layouts``.
+        adapter: Repository-created recorded adapter; live transport is barred.
+        clock: Explicit UTC clock or ``None`` for real UTC audit time.
+
+    Returns:
+        The historical fixture Run result for non-table legacy migrations.
+
+    Why:
+        Keeping parsing code separate makes the public table-qualification
+        entrypoint fail closed instead of quietly using its schema-v1 request.
     """
     if (
         not fixture_id
