@@ -30,7 +30,7 @@ from .render import build_review_context, render_review_markdown
 from .review import build_review_unit, create_system_review_decision
 from .review import effective_review_decision
 from .observations import reviewed_observation, scope_key
-from .requirements import load_requirement_snapshot
+from .requirements import load_run_requirement_snapshot
 from .scope_contract import scope_satisfies_contract
 from .run_store import append_review_decision, append_run_record
 from .run_store import append_run_records_atomically
@@ -634,8 +634,9 @@ def _create_review_run_with_traits(
         relative: sha256_file(path=repo_root / relative)
         for relative in spec_paths
     }
-    requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+    requirement = load_run_requirement_snapshot(
+        repo_root=repo_root,
+        task_contract_bindings=task_run_bindings,
     )
     if not required_traits.issubset(supplied_traits) or (
         forbidden_traits & supplied_traits
@@ -919,8 +920,14 @@ def finalize_reviewed_direct_results(
                 "SYSTEM review requires one terminal AI attempt"
             )
         try:
-            requirement = load_requirement_snapshot(
-                snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+            task_contract_bindings = (
+                manifest["task_contract_bindings"]
+                if "task_contract_bindings" in manifest
+                else []
+            )
+            requirement = load_run_requirement_snapshot(
+                repo_root=repo_root,
+                task_contract_bindings=task_contract_bindings,
             )
             system_decision = create_system_review_decision(
                 review_unit=unit,

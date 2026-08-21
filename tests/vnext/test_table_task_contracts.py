@@ -12,9 +12,15 @@ from tools.vnext_qualification import QualificationCliError, prepare_layout
 from tests.vnext.common import compiled_specs, fixed_clock, reader_response
 from tests.vnext.common import sample_asset
 from tests.vnext.common import sample_source_reference
+from vnext import workflow as workflow_module
+from vnext.ai_adapter import AttemptPayloads, TransportObservation
+from vnext.ai_adapter import approved_transport_policy
 from vnext.ai_adapter import build_deepseek_chat_completions_body
+from vnext.ai_adapter import build_provider_request_body
 from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
 from vnext.ai_adapter import TransportPolicy
+from vnext.canonical import atomic_write_bytes, atomic_write_json, sha256_bytes
+from vnext.requirements import load_requirement_snapshot
 from vnext.source_strategy import load_source_strategy_registry
 from vnext.table_task_contracts import _table_route_sets
 from vnext.table_task_contracts import TableTaskContractError
@@ -27,6 +33,8 @@ from vnext.replay import replay_frozen_results
 from vnext.review import create_review_decision
 from vnext.run_store import append_review_decision, load_frozen_run
 from vnext.run_store import load_open_run, validate_and_freeze_run
+from vnext.run_store import write_attempt_payloads
+from vnext.run_store import RunStoreError
 from vnext.sources import raw_blob_record
 from vnext.table_grid import build_table_grid
 from vnext.workflow import create_table_task_review_run
@@ -38,6 +46,167 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 
 class TableTaskContractsTest(unittest.TestCase):
     """Verify no table contract depends on a runtime metric/table selector."""
+
+    @staticmethod
+    def _create_catalog_task_run(*, run_dir: Path) -> dict:
+        """Create one single-role recorded catalog Run with exact source bytes.
+
+        Args:
+            run_dir: New temporary Run directory.
+
+        Returns:
+            Workflow result at the pending-review boundary.
+        """
+        source_relative = "tests/fixtures/vnext/sample_lodging.html"
+        raw_blob = raw_blob_record(
+            repo_root=REPO_ROOT,
+            repo_relative_path=source_relative,
+            media_type="text/html",
+        )
+        asset = build_table_grid(
+            html_bytes=(REPO_ROOT / source_relative).read_bytes(),
+            parent_raw_asset_ids=[str(raw_blob["raw_asset_id"])],
+            storage_uri="artifacts/vnext/derived/{}.json".format(
+                str(raw_blob["raw_asset_id"]).split(":", maxsplit=1)[1]
+            ),
+        )
+        response = json.loads(reader_response(asset=asset).decode("utf-8"))
+        response["candidates"] = [response["candidates"][0]]
+        return create_table_task_review_run(
+            repo_root=REPO_ROOT,
+            run_dir=run_dir,
+            run_id="run:catalog-task:occupancy",
+            company_id="marriott_international",
+            target_period={
+                "fiscal_year": 2025,
+                "period_start": "2025-01-01",
+                "period_end": "2025-12-31",
+            },
+            source_repo_relative_path=source_relative,
+            source_media_type="text/html",
+            source_url="https://www.sec.gov/Archives/sample.htm",
+            accession="0001048286-25-000001",
+            document_name="sample_lodging.html",
+            source_role="target_primary",
+            request_attempt_id="request:attempt:fixture",
+            task_contract_id="lodging_occupancy_table_v2",
+            adapter=build_recorded_adapter(
+                response_bytes=json.dumps(response).encode("utf-8"),
+                fixture_id="catalog-task-formal-run",
+            ),
+            clock=fixed_clock,
+        )
+
+    @staticmethod
+    def _replace_recorded_attempt_with_issue15_remote_observation(
+        *, run_dir: Path,
+    ) -> None:
+        """Replace test-only recorded transport bytes with Issue #15 D-01 data.
+
+        Args:
+            run_dir: OPEN temporary catalog Run whose response remains local.
+
+        Why:
+            The test must exercise the remote replay branch without opening a
+            socket.  It forms the exact provider envelope and observation from
+            Issue #15 D-01, then persists them as immutable fixture bytes.
+        """
+        _manifest, records, _decisions = load_open_run(run_dir=run_dir)
+        attempt = next(
+            record
+            for record in records
+            if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+        )
+        requirement = load_requirement_snapshot(
+            snapshot_dir=REPO_ROOT / "requirements" / "issue_15_v1",
+        )
+        policy = approved_transport_policy(requirement=requirement)
+        reader_payload = (run_dir / attempt["reader_payload_path"]).read_bytes()
+        task_contract = (run_dir / attempt["task_contract_path"]).read_bytes()
+        assistant_output = (
+            run_dir / attempt["assistant_output_path"]
+        ).read_bytes()
+        raw_response = (run_dir / attempt["raw_response_path"]).read_bytes()
+        provider_envelope, output_schema = build_provider_request_body(
+            policy=policy,
+            reader_request_bytes=reader_payload,
+        )
+        observation = TransportObservation(
+            egress_attempted=True,
+            provider=policy.provider,
+            model=policy.model,
+            model_requested=policy.model,
+            model_returned=policy.model,
+            api=policy.api,
+            store=False,
+            endpoint_host=policy.endpoint_host,
+            region=policy.region,
+            retention=policy.retention,
+            data_use=policy.data_use,
+            timeout_seconds=policy.timeout_seconds,
+            retry_count=policy.retry_count,
+            retries_performed=0,
+            maximum_payload_bytes=policy.maximum_payload_bytes,
+            filing_egress_policy=policy.filing_egress_policy,
+            request_body_bytes=len(provider_envelope),
+        )
+        changed = dict(attempt)
+        request_digest = sha256_bytes(content=provider_envelope)
+        schema_digest = sha256_bytes(content=output_schema)
+        changed.update({
+            "provider": observation.provider,
+            "model": observation.model,
+            "model_requested": observation.model_requested,
+            "model_returned": observation.model_returned,
+            "api": observation.api,
+            "endpoint_host": observation.endpoint_host,
+            "transport_observation": observation.as_mapping(),
+            "request_body_sha256": request_digest,
+            "request_body_path": (
+                "attempt_payloads/request_{}.bin".format(request_digest)
+            ),
+            "output_schema_sha256": schema_digest,
+            "output_schema_path": (
+                "attempt_payloads/output_schema_{}.json".format(
+                    schema_digest
+                )
+            ),
+            "provider_request_id": "request:synthetic-issue15",
+        })
+        for field in ("request_body_path", "output_schema_path"):
+            previous = run_dir / attempt[field]
+            current = run_dir / changed[field]
+            if previous != current:
+                previous.unlink()
+        write_attempt_payloads(
+            run_dir=run_dir,
+            attempt=changed,
+            payloads=AttemptPayloads(
+                request_body_bytes=provider_envelope,
+                reader_payload_bytes=reader_payload,
+                task_contract_bytes=task_contract,
+                output_schema_bytes=output_schema,
+                assistant_output_bytes=assistant_output,
+                raw_response_bytes=raw_response,
+            ),
+        )
+        rewritten = [
+            changed
+            if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+            else record
+            for record in records
+        ]
+        records_bytes = (
+            "\n".join(
+                json.dumps(record, ensure_ascii=False, sort_keys=True)
+                for record in rewritten
+            )
+            + "\n"
+        ).encode("utf-8")
+        atomic_write_bytes(
+            path=run_dir / "records.jsonl",
+            content=records_bytes,
+        )
 
     def test_all_table_routes_are_single_role_catalog_contracts(self) -> None:
         """Derive the exact table-authorized family and metric sets offline."""
@@ -176,47 +345,9 @@ class TableTaskContractsTest(unittest.TestCase):
 
     def test_catalog_task_runs_through_formal_freeze_and_replay(self) -> None:
         """Freeze and replay one schema-v2 single-role catalog task offline."""
-        source_relative = "tests/fixtures/vnext/sample_lodging.html"
-        raw_blob = raw_blob_record(
-            repo_root=REPO_ROOT,
-            repo_relative_path=source_relative,
-            media_type="text/html",
-        )
-        asset = build_table_grid(
-            html_bytes=(REPO_ROOT / source_relative).read_bytes(),
-            parent_raw_asset_ids=[str(raw_blob["raw_asset_id"])],
-            storage_uri="artifacts/vnext/derived/{}.json".format(
-                str(raw_blob["raw_asset_id"]).split(":", maxsplit=1)[1]
-            ),
-        )
-        response = json.loads(reader_response(asset=asset).decode("utf-8"))
-        response["candidates"] = [response["candidates"][0]]
         with tempfile.TemporaryDirectory() as temporary:
             run_dir = Path(temporary) / "catalog-task-run"
-            created = create_table_task_review_run(
-                repo_root=REPO_ROOT,
-                run_dir=run_dir,
-                run_id="run:catalog-task:occupancy",
-                company_id="marriott_international",
-                target_period={
-                    "fiscal_year": 2025,
-                    "period_start": "2025-01-01",
-                    "period_end": "2025-12-31",
-                },
-                source_repo_relative_path=source_relative,
-                source_media_type="text/html",
-                source_url="https://www.sec.gov/Archives/sample.htm",
-                accession="0001048286-25-000001",
-                document_name="sample_lodging.html",
-                source_role="target_primary",
-                request_attempt_id="request:attempt:fixture",
-                task_contract_id="lodging_occupancy_table_v2",
-                adapter=build_recorded_adapter(
-                    response_bytes=json.dumps(response).encode("utf-8"),
-                    fixture_id="catalog-task-formal-run",
-                ),
-                clock=fixed_clock,
-            )
+            created = self._create_catalog_task_run(run_dir=run_dir)
             self.assertEqual("PENDING_HUMAN_REVIEW", created["status"])
             manifest, records, _decisions = load_open_run(run_dir=run_dir)
             self.assertEqual(1, len(manifest["task_contract_bindings"]))
@@ -268,6 +399,95 @@ class TableTaskContractsTest(unittest.TestCase):
             )
         self.assertEqual("FROZEN", loaded["status"])
         self.assertEqual(1, len(replay["results"]))
+
+    def test_catalog_remote_transport_uses_issue15_requirement_at_replay(self) -> None:
+        """Replay Issue #15 retry-zero transport and reject parent Run hashes."""
+        issue_requirement = load_requirement_snapshot(
+            snapshot_dir=REPO_ROOT / "requirements" / "issue_15_v1",
+        )
+        parent_requirement = load_requirement_snapshot(
+            snapshot_dir=REPO_ROOT / "requirements" / "ai_first_v3_3_1",
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            run_dir = Path(temporary) / "issue15-remote"
+            self._create_catalog_task_run(run_dir=run_dir)
+            manifest, records, _decisions = load_open_run(run_dir=run_dir)
+            self.assertEqual(
+                issue_requirement["hashes"],
+                manifest["requirement_hashes"],
+            )
+            self._replace_recorded_attempt_with_issue15_remote_observation(
+                run_dir=run_dir,
+            )
+            _manifest, remote_records, _decisions = load_open_run(
+                run_dir=run_dir,
+            )
+            remote_attempt = next(
+                record
+                for record in remote_records
+                if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+            )
+            self.assertEqual(
+                0,
+                remote_attempt["transport_observation"]["retry_count"],
+            )
+            observed_requirement_hashes = []
+            original_system_review = workflow_module.create_system_review_decision
+
+            def capture_system_review(**kwargs: object) -> dict:
+                """Capture the Requirement closure passed to SYSTEM review."""
+                requirement = kwargs["requirement"]
+                observed_requirement_hashes.append(
+                    requirement["requirement_closure_hash"]
+                )
+                return original_system_review(**kwargs)
+
+            with mock.patch(
+                "vnext.workflow.create_system_review_decision",
+                side_effect=capture_system_review,
+            ):
+                finalized = finalize_reviewed_direct_results(
+                    run_dir=run_dir,
+                    repo_root=REPO_ROOT,
+                )
+            self.assertEqual(1, len(finalized["result_ids"]))
+            self.assertEqual(
+                [issue_requirement["requirement_closure_hash"]],
+                observed_requirement_hashes,
+            )
+            frozen = validate_and_freeze_run(
+                run_dir=run_dir,
+                repo_root=REPO_ROOT,
+            )
+            replay = replay_frozen_results(
+                run_dir=run_dir,
+                repo_root=REPO_ROOT,
+            )
+        self.assertEqual("FROZEN", frozen["status"])
+        self.assertEqual(1, len(replay["results"]))
+
+        with tempfile.TemporaryDirectory() as temporary:
+            run_dir = Path(temporary) / "parent-hash-negative"
+            self._create_catalog_task_run(run_dir=run_dir)
+            self._replace_recorded_attempt_with_issue15_remote_observation(
+                run_dir=run_dir,
+            )
+            finalize_reviewed_direct_results(
+                run_dir=run_dir,
+                repo_root=REPO_ROOT,
+            )
+            manifest_path = run_dir / "manifest.json"
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            manifest["requirement_hashes"] = parent_requirement["hashes"]
+            atomic_write_json(path=manifest_path, value=manifest)
+            with self.assertRaisesRegex(
+                RunStoreError,
+                "Catalog task Run Requirement hashes differ from Issue #15",
+            ):
+                validate_and_freeze_run(
+                    run_dir=run_dir,
+                    repo_root=REPO_ROOT,
+                )
 
     def test_matrix_task_plan_binds_one_catalog_task_before_workflow(self) -> None:
         """Derive a future ordinal plan without falling back to schema v1."""

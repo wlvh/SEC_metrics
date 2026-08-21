@@ -26,7 +26,7 @@ from .render import RenderError, build_review_context
 from .render import render_review_markdown
 from .reader import validate_reader_output
 from .reader_input import build_reader_payload, build_reader_task_contract
-from .requirements import load_requirement_snapshot
+from .requirements import load_run_requirement_snapshot
 from .review import effective_review_decision, system_review_allowed
 from .review import SYSTEM_REVIEWER_ID, SYSTEM_REVIEW_REASON
 from .review import validate_decision_binding
@@ -1105,13 +1105,23 @@ def _verify_repository_bindings(
             raise RunStoreError("ReviewUnit Spec is absent from repository")
         if compiled_by_hash[spec_hash] != unit["compiled_spec"]:
             raise RunStoreError("ReviewUnit Spec differs from repository")
+    task_contract_bindings = (
+        manifest["task_contract_bindings"]
+        if "task_contract_bindings" in manifest
+        else []
+    )
     try:
-        requirement = load_requirement_snapshot(
-            snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1"
+        requirement = load_run_requirement_snapshot(
+            repo_root=repo_root,
+            task_contract_bindings=task_contract_bindings,
         )
     except ValueError as error:
         raise RunStoreError("Run Requirement Snapshot is invalid") from error
     if manifest["requirement_hashes"] != requirement["hashes"]:
+        if task_contract_bindings:
+            raise RunStoreError(
+                "Catalog task Run Requirement hashes differ from Issue #15"
+            )
         raise RunStoreError("Run Requirement Snapshot hashes changed")
     raw_blobs = [
         record for record in records if record["record_type"] == "RAW_BLOB"
