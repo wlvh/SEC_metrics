@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import concurrent.futures
 import json
 import os
 import subprocess
@@ -18,13 +19,16 @@ from tests.vnext.common import cell_locator
 from vnext import ai_adapter, qualification, workflow
 from vnext.ai_adapter import TransportObservation, TransportResult
 from vnext.ai_adapter import build_provider_request_body
-from vnext.canonical import atomic_write_json, content_hash
+from vnext.canonical import atomic_write_bytes, atomic_write_json, content_hash
 from vnext.replay import replay_frozen_results
-from vnext.run_store import load_frozen_run, validate_and_freeze_run
+from vnext.run_store import load_frozen_run, RunStoreError, validate_and_freeze_run
 from vnext.stage_a_snapshot import write_stage_a_snapshot
 from vnext.table_grid import build_table_grid
+from vnext.table_qualification_freeze import _measurement_receipts
+from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_qualification_freeze import validate_table_qualification_freeze
 from vnext.table_qualification_freeze import write_table_qualification_freeze_receipt
+from vnext.table_task_contracts import load_table_task_contracts
 from vnext.workflow import finalize_reviewed_direct_results
 
 
@@ -57,10 +61,9 @@ def _run_git(*, workdir: Path, arguments: list[str], stdin: bytes = b"") -> str:
 def synthetic_no_d07_repository() -> Iterator[Path]:
     """Build a clean, committed test-only authority without D-07 blocking.
 
-    The helper retains the current matrix/task/root/source bindings and changes
-    only the test copy's content-addressed receipt flag.  It does not mock the
-    qualification gate; the real freeze and Stage-A validators consume the
-    synthetic repository artifacts exactly as production code would.
+    This changes only a disposable worktree's matrix-owned development
+    measurement inputs, then invokes the real freeze builder.  In particular,
+    it never flips a receipt boolean or mocks the qualification gate.
     """
     with tempfile.TemporaryDirectory() as directory:
         parent = Path(directory)
@@ -94,6 +97,77 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
                     ],
                 )
             (worktree / "outputs/active_publication.json.lock").touch()
+            matrix_path = worktree / "config/table_qualification_matrix.json"
+            matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
+            entries = {
+                entry["family_id"]: entry
+                for entry in matrix["families"]
+            }
+            # The production financial source reaches the local complete-grid
+            # resource stop.  The test-only authority reuses the already local
+            # complete Marriott source merely to exercise the no-D-07 success
+            # branch through the normal measurement builder.
+            entries["financial_statement"]["development_source"] = copy.deepcopy(
+                entries["lodging_kpi_table"]["development_source"]
+            )
+            for entry in entries.values():
+                entry["token_context_limits"][
+                    "max_estimated_input_tokens"
+                ] = 1_000_000
+            atomic_write_json(path=matrix_path, value=matrix)
+            catalog_path = worktree / "catalog/table_task_contracts.json"
+            # The split receipt intentionally measures complete task envelopes.
+            # Its test-only catalog values must therefore be iterated through
+            # the real estimator rather than guessed from a production row.
+            for _iteration in range(3):
+                contracts = load_table_task_contracts(repo_root=worktree)
+                measurements = _measurement_receipts(
+                    repo_root=worktree,
+                    matrix=load_table_qualification_matrix(repo_root=worktree),
+                    task_contracts=contracts,
+                )
+                estimates = {
+                    row["task_contract_id"]: row["estimated_input_tokens"]
+                    for row in measurements["qualification_task_measurements"]
+                }
+                catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+                by_family = {}
+                for contract in catalog["contracts"]:
+                    by_family.setdefault(
+                        contract["reader_family_id"],
+                        [],
+                    ).append(contract)
+                changed = False
+                for contracts_for_family in by_family.values():
+                    for ordinal, contract in enumerate(sorted(
+                        contracts_for_family,
+                        key=lambda item: item["task_contract_id"],
+                    )):
+                        expected = (
+                            0 if ordinal == 0
+                            else estimates[contract["task_contract_id"]]
+                        )
+                        if contract["estimated_incremental_tokens"] != expected:
+                            contract["estimated_incremental_tokens"] = expected
+                            changed = True
+                atomic_write_json(path=catalog_path, value=catalog)
+                if not changed:
+                    break
+            _run_git(
+                workdir=worktree,
+                arguments=[
+                    "add", "--", "config/table_qualification_matrix.json",
+                    "catalog/table_task_contracts.json",
+                ],
+            )
+            _run_git(
+                workdir=worktree,
+                arguments=[
+                    "-c", "user.name=synthetic", "-c",
+                    "user.email=synthetic@example.invalid", "commit", "-m",
+                    "synthetic no-d07 measurement authority",
+                ],
+            )
             freeze_commit = _run_git(
                 workdir=worktree,
                 arguments=["rev-parse", "HEAD"],
@@ -103,43 +177,8 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
                 freeze_commit=freeze_commit,
                 frozen_at_utc="2026-08-21T08:30:00Z",
             )
-            body = {
-                key: value
-                for key, value in receipt.items()
-                if key not in {
-                    "table_qualification_freeze_receipt_id",
-                    "receipt_path",
-                }
-            }
-            body["d07_decision_required"] = False
-            synthetic = {
-                "table_qualification_freeze_receipt_id": content_hash(
-                    value=body,
-                ),
-                **body,
-            }
-            receipt_path = (
-                "artifacts/vnext/table_qualification_freeze/receipts/{}.json"
-                .format(
-                    synthetic["table_qualification_freeze_receipt_id"].split(
-                        ":", maxsplit=1,
-                    )[1]
-                )
-            )
-            atomic_write_json(path=worktree / receipt_path, value=synthetic)
-            atomic_write_json(
-                path=worktree / "config/table_qualification_freeze.json",
-                value={
-                    "schema_version": 1,
-                    "qualification_cycle_id": synthetic[
-                        "qualification_cycle_id"
-                    ],
-                    "receipt_id": synthetic[
-                        "table_qualification_freeze_receipt_id"
-                    ],
-                    "receipt_path": receipt_path,
-                },
-            )
+            if receipt["d07_decision_required"] is not False:
+                raise AssertionError("Synthetic measurement authority still blocks D-07")
             _run_git(
                 workdir=worktree,
                 arguments=[
@@ -269,6 +308,101 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     qualification_ordinal=1,
                 )
                 binding = authorization.as_mapping()
+                concurrent_bindings = [
+                    qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_revpar_table_v2",
+                        qualification_ordinal=1,
+                    ).as_mapping(),
+                    qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id="financial_statement",
+                        task_contract_id=(
+                            "financial_assets_under_management_table_v1"
+                        ),
+                        qualification_ordinal=1,
+                    ).as_mapping(),
+                ]
+
+                def ledger_entry(
+                    *, value: Dict[str, object], ordinal: int,
+                ) -> Dict[str, object]:
+                    """Build one strict no-network row for append-lock coverage."""
+                    body = {
+                        "record_type": (
+                            "TABLE_QUALIFICATION_PROVIDER_LEDGER_ENTRY"
+                        ),
+                        "qualification_authorization": value,
+                        "qualification_authorization_id": value[
+                            "qualification_authorization_id"
+                        ],
+                        "qualification_task_plan_id": value[
+                            "qualification_task_plan_id"
+                        ],
+                        "qualification_cycle_id": value[
+                            "qualification_cycle_id"
+                        ],
+                        "freeze_receipt_id": value["freeze_receipt_id"],
+                        "family_id": value["family_id"],
+                        "task_contract_id": value["task_contract_id"],
+                        "qualification_ordinal": value[
+                            "qualification_ordinal"
+                        ],
+                        "source_binding_hash": value["source_binding_hash"],
+                        "run_id": value["run_id"],
+                        "attempt_id": "attempt:concurrent:{}".format(ordinal),
+                        "request_body_sha256": "{:064x}".format(ordinal),
+                        "provider_request_id": "request:concurrent:{}".format(
+                            ordinal
+                        ),
+                        "transport_observation": {
+                            "egress_attempted": True,
+                            "test_only": "concurrent-lock",
+                        },
+                    }
+                    return {
+                        **body,
+                        "qualification_provider_ledger_entry_id": content_hash(
+                            value=body,
+                        ),
+                    }
+
+                concurrent_entries = [
+                    ledger_entry(value=value, ordinal=index)
+                    for index, value in enumerate(concurrent_bindings, start=1)
+                ]
+                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+                    futures = [
+                        pool.submit(
+                            qualification._append_qualification_ledger_entry,
+                            repo_root=repo_root,
+                            binding=value,
+                            entry=entry,
+                        )
+                        for value, entry in zip(
+                            concurrent_bindings,
+                            concurrent_entries,
+                        )
+                    ]
+                    for future in futures:
+                        future.result()
+                concurrent_rows = [
+                    json.loads(line)
+                    for line in (
+                        repo_root / binding["qualification_provider_ledger_path"]
+                    ).read_text(encoding="utf-8").splitlines()
+                ]
+                self.assertEqual(
+                    {
+                        entry["qualification_provider_ledger_entry_id"]
+                        for entry in concurrent_entries
+                    },
+                    {
+                        row["qualification_provider_ledger_entry_id"]
+                        for row in concurrent_rows
+                    },
+                )
                 adapter = ai_adapter.build_invocation_controlled_transport_adapter(
                     release_input_plan_id=binding["qualification_task_plan_id"],
                     workspace_dir=(
@@ -345,21 +479,204 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         owner_token="synthetic-owner",
                         clock=clock,
                     )
-                digest = binding["qualification_authorization_id"].split(
-                    ":", maxsplit=1,
-                )[1]
-                run_dir = (
-                    repo_root
-                    / "artifacts/vnext/qualification/cycles"
-                    / binding["qualification_cycle_id"].split(
-                        ":", maxsplit=1,
-                    )[1]
-                    / "runs"
-                    / digest
-                )
+                run_dir = repo_root / binding["run_directory_relative_path"]
                 finalized = finalize_reviewed_direct_results(
                     run_dir=run_dir,
                     repo_root=repo_root,
+                )
+                records_path = run_dir / "records.jsonl"
+                ledger_path = (
+                    repo_root / binding["qualification_provider_ledger_path"]
+                )
+                original_records = records_path.read_bytes()
+                original_ledger = ledger_path.read_bytes()
+
+                def write_records(value: list[Dict[str, object]]) -> None:
+                    """Persist test-only canonical-enough JSONL mutation bytes."""
+                    atomic_write_bytes(
+                        path=records_path,
+                        content=(
+                            "\n".join(
+                                json.dumps(
+                                    record,
+                                    ensure_ascii=False,
+                                    sort_keys=True,
+                                )
+                                for record in value
+                            )
+                            + "\n"
+                        ).encode("utf-8"),
+                    )
+
+                def refresh_evidence_link(
+                    *, value: list[Dict[str, object]], entry: Dict[str, object],
+                ) -> None:
+                    """Keep link/ID syntactically valid for deeper ledger checks."""
+                    evidence_value = next(
+                        record
+                        for record in value
+                        if record["record_type"]
+                        == "TABLE_QUALIFICATION_EVIDENCE"
+                    )
+                    evidence_value["provider_ledger_entry_id"] = entry[
+                        "qualification_provider_ledger_entry_id"
+                    ]
+                    evidence_body = {
+                        key: item
+                        for key, item in evidence_value.items()
+                        if key != "qualification_evidence_id"
+                    }
+                    evidence_value["qualification_evidence_id"] = content_hash(
+                        value=evidence_body,
+                    )
+
+                def mutate_ledger(
+                    *, mutation: str,
+                    apply: object,
+                    refresh_link: bool = True,
+                ) -> None:
+                    """Require every ledger/evidence mutation to fail formal freeze."""
+                    values = [
+                        json.loads(line)
+                        for line in original_records.decode("utf-8").splitlines()
+                    ]
+                    rows = [
+                        json.loads(line)
+                        for line in original_ledger.decode("utf-8").splitlines()
+                    ]
+                    target = next(
+                        row
+                        for row in rows
+                        if row["qualification_authorization_id"]
+                        == binding["qualification_authorization_id"]
+                    )
+                    apply(target)
+                    if mutation != "ledger_entry_id":
+                        target["qualification_provider_ledger_entry_id"] = (
+                            qualification._expected_ledger_entry_identifier(
+                                entry=target,
+                            )
+                        )
+                    if refresh_link:
+                        refresh_evidence_link(value=values, entry=target)
+                    write_records(values)
+                    atomic_write_bytes(
+                        path=ledger_path,
+                        content=(
+                            "\n".join(
+                                json.dumps(
+                                    row,
+                                    ensure_ascii=False,
+                                    sort_keys=True,
+                                )
+                                for row in rows
+                            )
+                            + "\n"
+                        ).encode("utf-8"),
+                    )
+                    try:
+                        with self.subTest(formal_mutation=mutation), self.assertRaises(
+                            RunStoreError,
+                        ):
+                            validate_and_freeze_run(
+                                run_dir=run_dir,
+                                repo_root=repo_root,
+                            )
+                    finally:
+                        atomic_write_bytes(
+                            path=records_path,
+                            content=original_records,
+                        )
+                        atomic_write_bytes(
+                            path=ledger_path,
+                            content=original_ledger,
+                        )
+
+                evidence_values = [
+                    json.loads(line)
+                    for line in original_records.decode("utf-8").splitlines()
+                ]
+                evidence_mutation = next(
+                    value
+                    for value in evidence_values
+                    if value["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+                )
+                evidence_mutation["qualification_evidence_id"] = (
+                    "sha256:" + "0" * 64
+                )
+                write_records(evidence_values)
+                with self.assertRaises(RunStoreError):
+                    validate_and_freeze_run(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                atomic_write_bytes(path=records_path, content=original_records)
+                mutate_ledger(
+                    mutation="ledger_entry_id",
+                    apply=lambda value: value.update({
+                        "qualification_provider_ledger_entry_id": (
+                            "sha256:" + "1" * 64
+                        ),
+                    }),
+                    refresh_link=False,
+                )
+                mutate_ledger(
+                    mutation="provider_request_id",
+                    apply=lambda value: value.update({
+                        "provider_request_id": "request:tampered-provider",
+                    }),
+                )
+                mutate_ledger(
+                    mutation="transport_observation",
+                    apply=lambda value: value["transport_observation"].update({
+                        "timeout_seconds": 999,
+                    }),
+                )
+
+                def mutate_authority_field(
+                    value: Dict[str, object], field: str, replacement: object,
+                ) -> None:
+                    """Change one duplicated ledger authority fact coherently."""
+                    value[field] = replacement
+                    value["qualification_authorization"][field] = replacement
+
+                mutate_ledger(
+                    mutation="family",
+                    apply=lambda value: mutate_authority_field(
+                        value,
+                        "family_id",
+                        "financial_statement",
+                    ),
+                )
+                mutate_ledger(
+                    mutation="task",
+                    apply=lambda value: mutate_authority_field(
+                        value,
+                        "task_contract_id",
+                        "lodging_revpar_table_v2",
+                    ),
+                )
+                mutate_ledger(
+                    mutation="ordinal",
+                    apply=lambda value: mutate_authority_field(
+                        value,
+                        "qualification_ordinal",
+                        2,
+                    ),
+                )
+                mutate_ledger(
+                    mutation="source_binding",
+                    apply=lambda value: mutate_authority_field(
+                        value,
+                        "source_binding_hash",
+                        "sha256:" + "2" * 64,
+                    ),
+                )
+                mutate_ledger(
+                    mutation="request_body_hash",
+                    apply=lambda value: value.update({
+                        "request_body_sha256": "3" * 64,
+                    }),
                 )
                 frozen = validate_and_freeze_run(
                     run_dir=run_dir,
@@ -401,15 +718,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 common = {
                     "repo_root": repo_root,
                     "company_id": "marriott_international",
-                    "target_period": {
-                        "fiscal_year": 2025,
-                        "period_start": "2025-01-01",
-                        "period_end": "2025-12-31",
-                    },
+                    "target_period": binding["target_period"],
                     "source_repo_relative_path": source["source_declaration"][
                         "source_repo_relative_path"
                     ],
-                    "source_media_type": "text/html",
+                    "source_media_type": binding["source_media_type"],
                     "source_url": source["source_url"],
                     "accession": source["source_declaration"]["accession"],
                     "document_name": source["source_declaration"][
@@ -429,6 +742,17 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     "qualification_cycle_id": "sha256:" + "1" * 64,
                     "system_prompt_hash": "sha256:" + "2" * 64,
                     "output_schema_hash": "sha256:" + "3" * 64,
+                    "target_period": {
+                        "fiscal_year": 2024,
+                        "period_start": "2024-01-01",
+                        "period_end": "2024-12-31",
+                    },
+                    "source_media_type": "application/json",
+                    "run_id": "run:qualification:table:" + "5" * 64,
+                    "run_directory_relative_path": (
+                        "artifacts/vnext/qualification/cycles/"
+                        + "6" * 64 + "/runs/" + "7" * 64
+                    ),
                 }
                 with mock.patch.object(
                     workflow,
@@ -453,9 +777,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             workflow.WorkflowError,
                         ):
                             workflow.create_table_task_review_run(
-                                run_dir=(
-                                    repo_root / "synthetic-mutations" / field
-                                ),
+                                run_dir=repo_root / "synthetic-mutations" / field,
                                 run_id="run:synthetic-mutation:" + field,
                                 qualification_authorization=forged_authorization,
                                 **common,

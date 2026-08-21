@@ -605,16 +605,15 @@ def _measurement_receipts(
     )
     round_trip_sources = _round_trip_sources(repo_root=repo_root)
     first_source_sha256 = round_trip_sources[0][2]
-    matching_entries = [
-        entry
-        for entry in matrix["entries"].values()
-        if entry["development_source"]["source_kind"] == "IMMUTABLE_ATTEMPT"
-        and entry["development_source"]["source_sha256"]
-        == first_source_sha256
-    ]
-    if len(matching_entries) != 1:
-        raise TableQualificationFreezeError("WB-4 family task is ambiguous")
-    round_trip_entry = matching_entries[0]
+    round_trip_entry = matrix["entries"].get("lodging_kpi_table")
+    if (
+        type(round_trip_entry) is not dict
+        or round_trip_entry["development_source"]["source_kind"]
+        != "IMMUTABLE_ATTEMPT"
+        or round_trip_entry["development_source"]["source_sha256"]
+        != first_source_sha256
+    ):
+        raise TableQualificationFreezeError("WB-4 lodging source binding differs")
     round_trip_task = resolve_table_task_contract(
         repo_root=repo_root,
         task_contract_id=round_trip_entry["task_contract_ids"][0],
@@ -706,6 +705,75 @@ def _measurement_receipts(
         "d07_decision_required": any(
             item["context_or_resource_limit_exceeded"]
             for item in all_measurements
+        ),
+    }
+
+
+def _d07_authority(
+    *, requirement: Mapping[str, object], matrix: Mapping[str, object],
+    measurements: Mapping[str, object],
+) -> Dict[str, object]:
+    """Derive D-07 state from current authority and current offline evidence.
+
+    A freeze receipt records this derivation for audit, but it is never the
+    authority for the boolean itself.  Revalidation reruns the same complete
+    full-table measurement against the current matrix and estimator authority.
+    """
+    decisions = requirement.get("effective_decisions")
+    if type(decisions) is not dict or type(decisions.get("D-07")) is not dict:
+        raise TableQualificationFreezeError("Effective D-07 authority is absent")
+    decision = dict(decisions["D-07"])
+    choice = decision.get("choice")
+    if (
+        decision.get("decision_id") != "D-07"
+        or decision.get("status") != "APPROVED"
+        or type(choice) is not dict
+        or set(choice) != {
+            "reader_table_set",
+            "semantic_prefilter",
+            "oversized_payload_policy",
+        }
+        or choice["reader_table_set"]
+        != "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER"
+        or choice["semantic_prefilter"] is not False
+        or type(choice["oversized_payload_policy"]) is not str
+    ):
+        raise TableQualificationFreezeError("Effective D-07 authority is invalid")
+    measurement_fields = (
+        "round_trip_receipts",
+        "qualification_task_measurements",
+        "family_maximum_estimated_input_tokens",
+        "maximum_estimated_input_tokens",
+        "maximum_successfully_estimated_input_tokens",
+    )
+    if any(field not in measurements for field in measurement_fields) or type(
+        measurements.get("d07_decision_required")
+    ) is not bool:
+        raise TableQualificationFreezeError("D-07 measurements are invalid")
+    estimator_hashes = sorted({
+        str(item["provider_context_authority_hash"])
+        for item in (
+            list(measurements["round_trip_receipts"])
+            + list(measurements["qualification_task_measurements"])
+        )
+    })
+    if not estimator_hashes:
+        raise TableQualificationFreezeError("D-07 estimator authority is absent")
+    measurement_body = {
+        field: measurements[field]
+        for field in measurement_fields
+    }
+    measurement_requires_decision = measurements["d07_decision_required"]
+    return {
+        "effective_d07_record_hash": content_hash(value=decision),
+        "effective_d07_choice": choice,
+        "matrix_sha256": matrix["matrix_sha256"],
+        "estimator_authority_hashes": estimator_hashes,
+        "measurement_receipts_hash": content_hash(value=measurement_body),
+        "measurement_requires_decision": measurement_requires_decision,
+        "d07_decision_required": (
+            measurement_requires_decision
+            and choice["oversized_payload_policy"] == "BLOCK_LIVE_CUTOVER"
         ),
     }
 
@@ -1359,13 +1427,18 @@ def build_table_qualification_freeze_receipt(
         matrix=matrix,
         task_contracts=task_contracts,
     )
-    decision_required = measurements["d07_decision_required"]
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    d07_authority = _d07_authority(
+        requirement=requirement,
+        matrix=matrix,
+        measurements=measurements,
+    )
+    decision_required = d07_authority["d07_decision_required"]
     split_cost_receipts = _split_cost_receipts(
         task_contracts=task_contracts,
         task_measurements=measurements["qualification_task_measurements"],
-    )
-    requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
     policy = approved_transport_policy(requirement=requirement)
     root_state = _root_state(repo_root=repo_root)
@@ -1392,7 +1465,7 @@ def build_table_qualification_freeze_receipt(
     )
     body = {
         "record_type": "TABLE_QUALIFICATION_FREEZE_RECEIPT",
-        "schema_version": 1,
+        "schema_version": 2,
         "freeze_commit": commit,
         "frozen_at_utc": frozen_at_utc,
         "qualification_cycle_id": cycle_id,
@@ -1463,6 +1536,7 @@ def build_table_qualification_freeze_receipt(
             "maximum_successfully_estimated_input_tokens": measurements[
                 "maximum_successfully_estimated_input_tokens"
             ],
+            "d07_authority": d07_authority,
         },
         "wb5_scope_contract": {
             "scope_contract_version": "2",
@@ -1582,6 +1656,57 @@ def write_table_qualification_freeze_receipt(
     return {**receipt, "receipt_path": receipt_relative.as_posix()}
 
 
+def _provider_ledger_before_binding(
+    *, repo_root: Path, receipt: Mapping[str, object],
+) -> Dict[str, object]:
+    """Verify and return the receipt-owned provider-ledger before prefix.
+
+    Qualification may append later rows, so validation deliberately compares
+    only the frozen row-count prefix.  This prevents either a parallel runtime
+    ledger or a rewritten historical prefix from becoming evidence authority.
+    """
+    state = receipt.get("provider_state")
+    if type(state) is not dict or type(state.get("provider_ledger_before")) is not dict:
+        raise TableQualificationFreezeError("Qualification provider ledger binding is invalid")
+    binding = dict(state["provider_ledger_before"])
+    if (
+        set(binding) != {"path", "row_count", "sha256"}
+        or type(binding["path"]) is not str
+        or type(binding["row_count"]) is not int
+        or binding["row_count"] < 0
+        or type(binding["sha256"]) is not str
+        or len(binding["sha256"]) != 64
+        or any(
+            character not in "0123456789abcdef"
+            for character in binding["sha256"]
+        )
+    ):
+        raise TableQualificationFreezeError("Qualification provider ledger binding is invalid")
+    cycle_id = receipt.get("qualification_cycle_id")
+    if type(cycle_id) is not str or not cycle_id.startswith("sha256:"):
+        raise TableQualificationFreezeError("Qualification cycle identity is invalid")
+    expected = (
+        FREEZE_CYCLE_ROOT
+        / cycle_id.split(":", maxsplit=1)[1]
+        / "provider_ledger.jsonl"
+    ).as_posix()
+    if binding["path"] != expected:
+        raise TableQualificationFreezeError("Qualification provider ledger path differs")
+    path = repo_root / Path(binding["path"])
+    if path.is_symlink() or not path.is_file():
+        raise TableQualificationFreezeError("Qualification provider ledger is absent")
+    content = path.read_bytes()
+    lines = content.splitlines(keepends=True)
+    if (
+        any(not line.endswith(b"\n") for line in lines)
+        or len(lines) < binding["row_count"]
+    ):
+        raise TableQualificationFreezeError("Qualification provider ledger prefix is invalid")
+    if sha256_bytes(content=b"".join(lines[:binding["row_count"]])) != binding["sha256"]:
+        raise TableQualificationFreezeError("Qualification provider ledger prefix differs")
+    return binding
+
+
 def validate_table_qualification_freeze(
     *, repo_root: Path,
 ) -> Dict[str, object]:
@@ -1606,7 +1731,7 @@ def validate_table_qualification_freeze(
         relative=receipt_relative,
         label="table qualification freeze receipt",
     )
-    if set(receipt) != RECEIPT_FIELDS:
+    if set(receipt) != RECEIPT_FIELDS or receipt["schema_version"] != 2:
         raise TableQualificationFreezeError("Freeze receipt fields are invalid")
     receipt_id = receipt["table_qualification_freeze_receipt_id"]
     body = {
@@ -1630,11 +1755,45 @@ def validate_table_qualification_freeze(
         repo_root=repo_root,
         value=wb3_protection["regression_receipt"],
     )
+    provider_ledger_before = _provider_ledger_before_binding(
+        repo_root=repo_root,
+        receipt=receipt,
+    )
     protected = receipt["protected_closure"]
     task_contracts = load_table_task_contracts(repo_root=repo_root)
     matrix = load_table_qualification_matrix(repo_root=repo_root)
     if sorted(matrix["entries"]) != task_contracts["authorized_family_ids"]:
         raise TableQualificationFreezeError("Matrix family set differs from tasks")
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    measurements = _measurement_receipts(
+        repo_root=repo_root,
+        matrix=matrix,
+        task_contracts=task_contracts,
+    )
+    expected_d07 = _d07_authority(
+        requirement=requirement,
+        matrix=matrix,
+        measurements=measurements,
+    )
+    wb4 = receipt["wb4_compact_transport"]
+    if (
+        type(wb4) is not dict
+        or wb4.get("d07_authority") != expected_d07
+        or receipt["d07_decision_required"]
+        != expected_d07["d07_decision_required"]
+    ):
+        raise TableQualificationFreezeError("D-07 qualification authority differs")
+    for field in (
+        "round_trip_receipts",
+        "qualification_task_measurements",
+        "family_maximum_estimated_input_tokens",
+        "maximum_estimated_input_tokens",
+        "maximum_successfully_estimated_input_tokens",
+    ):
+        if wb4.get(field) != measurements[field]:
+            raise TableQualificationFreezeError("D-07 measurement evidence differs")
     current = _protected_closure(
         repo_root=repo_root,
         matrix=matrix,
@@ -1659,6 +1818,7 @@ def validate_table_qualification_freeze(
         "receipt_id": receipt_id,
         "qualification_cycle_id": receipt["qualification_cycle_id"],
         "d07_decision_required": receipt["d07_decision_required"],
+        "provider_ledger_before": provider_ledger_before,
         "invalidated_family_ids": sorted(drift_by_family),
         "drift_by_family": drift_by_family,
     }

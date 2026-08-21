@@ -8,9 +8,12 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
+from vnext import table_qualification_freeze as freeze_module
+from vnext.canonical import content_hash
 from vnext.table_qualification_freeze import _run_wb3_test_receipts
 from vnext.table_qualification_freeze import build_table_qualification_freeze_receipt
 from vnext.table_qualification_freeze import load_table_qualification_matrix
+from vnext.table_qualification_freeze import validate_table_qualification_freeze
 from vnext.table_qualification_freeze import _protected_closure
 from vnext.table_qualification_freeze import _protected_closure_drift
 from vnext.table_qualification_freeze import _measurement_receipts
@@ -245,6 +248,49 @@ class TableQualificationFreezeTest(unittest.TestCase):
             first["table_qualification_freeze_receipt_id"],
             second["table_qualification_freeze_receipt_id"],
         )
+
+    def test_validator_rejects_a_self_declared_false_d07_receipt(self) -> None:
+        """Rebuild D-07 from current measurements instead of trusting receipt text."""
+        original = freeze_module._json_object
+
+        def tampered_json_object(**kwargs: object) -> dict:
+            """Return a self-consistent but false D-07 receipt to the reader."""
+            value = original(**kwargs)
+            if kwargs["label"] == "table qualification freeze receipt":
+                body = {
+                    key: item
+                    for key, item in value.items()
+                    if key != "table_qualification_freeze_receipt_id"
+                }
+                body["d07_decision_required"] = False
+                return {
+                    "table_qualification_freeze_receipt_id": content_hash(
+                        value=body,
+                    ),
+                    **body,
+                }
+            if kwargs["label"] == "table qualification freeze pointer":
+                receipt = tampered_json_object(
+                    repo_root=kwargs["repo_root"],
+                    relative=Path(str(value["receipt_path"])),
+                    label="table qualification freeze receipt",
+                )
+                return {
+                    **value,
+                    "receipt_id": receipt[
+                        "table_qualification_freeze_receipt_id"
+                    ],
+                }
+            return value
+
+        with mock.patch(
+            "vnext.table_qualification_freeze._json_object",
+            side_effect=tampered_json_object,
+        ), self.assertRaisesRegex(
+            freeze_module.TableQualificationFreezeError,
+            "D-07 qualification authority differs",
+        ):
+            validate_table_qualification_freeze(repo_root=REPO_ROOT)
 
     @staticmethod
     def _closure() -> dict:
