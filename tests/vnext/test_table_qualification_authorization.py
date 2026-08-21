@@ -491,6 +491,25 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 "REPORT_十公司财务指标.md",
             )
             expected_families = {"financial_statement", "lodging_kpi_table"}
+            active_path = repo_root / "outputs/active_publication.json"
+            active_original = active_path.read_bytes()
+            active_path.write_bytes(active_original.replace(
+                b"publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+                b"publication_000000000000000000000000000000000000000000000000000000000000",
+                1,
+            ))
+            active_status = validate_table_qualification_freeze(
+                repo_root=repo_root,
+            )
+            self.assertEqual(
+                expected_families,
+                set(active_status["invalidated_family_ids"]),
+            )
+            self.assertTrue(all(
+                "r2_root:active_publication_id" in labels
+                for labels in active_status["drift_by_family"].values()
+            ))
+            active_path.write_bytes(active_original)
             for relative in root_paths:
                 path = repo_root / relative
                 original = path.read_bytes()
@@ -504,6 +523,23 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     any(label.startswith("r2_root:") for label in labels)
                     for labels in status["drift_by_family"].values()
                 ))
+                for family_id, task_contract_id in (
+                    ("lodging_kpi_table", "lodging_occupancy_table_v2"),
+                    (
+                        "financial_statement",
+                        "financial_assets_under_management_table_v1",
+                    ),
+                ):
+                    with self.subTest(
+                        root_drift=relative,
+                        qualification_family=family_id,
+                    ), self.assertRaises(qualification.QualificationError):
+                        qualification.issue_table_qualification_authorization(
+                            repo_root=repo_root,
+                            family_id=family_id,
+                            task_contract_id=task_contract_id,
+                            qualification_ordinal=1,
+                        )
                 path.write_bytes(original)
 
             source_path = repo_root / "scripts/vnext/public_projection.py"

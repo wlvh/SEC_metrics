@@ -832,6 +832,43 @@ def _root_state(*, repo_root: Path) -> Dict[str, object]:
     }
 
 
+def _root_state_drift(
+    *, frozen_identity: object, current_root: object,
+) -> List[str]:
+    """Return stable labels for R2 root drift bound by one freeze receipt.
+
+    Root business artifacts deliberately stay outside the source-code import
+    closure.  They therefore need an independent runtime comparison rather
+    than relying on a freeze receipt's self-hash or hand-picked Python files.
+    """
+    if type(frozen_identity) is not dict or set(frozen_identity) != {
+        "requirement_closure_hash",
+        "parent_r2_active_publication_id",
+        "active_pointer",
+        "root_hashes",
+    }:
+        return ["r2_root:receipt_identity_invalid"]
+    if type(current_root) is not dict:
+        return ["r2_root:current_state_invalid"]
+    drift = []
+    if (
+        current_root.get("active_publication_id")
+        != frozen_identity["parent_r2_active_publication_id"]
+    ):
+        drift.append("r2_root:active_publication_id")
+    if current_root.get("active_pointer") != frozen_identity["active_pointer"]:
+        drift.append("r2_root:active_pointer")
+    frozen_hashes = frozen_identity["root_hashes"]
+    current_hashes = current_root.get("root_hashes")
+    if type(frozen_hashes) is not dict or type(current_hashes) is not dict:
+        drift.append("r2_root:root_hashes")
+    else:
+        for path in sorted(set(frozen_hashes) | set(current_hashes)):
+            if frozen_hashes.get(path) != current_hashes.get(path):
+                drift.append("r2_root:" + path)
+    return drift
+
+
 def _request_ledger_binding(*, repo_root: Path) -> Dict[str, object]:
     """Return the pre-freeze SEC ledger bytes without adding a request row.
 
@@ -1547,6 +1584,17 @@ def validate_table_qualification_freeze(
         frozen=protected,
         current=current,
     )
+    try:
+        root_drift = _root_state_drift(
+            frozen_identity=receipt["identity"],
+            current_root=_root_state(repo_root=repo_root),
+        )
+    except TableQualificationFreezeError:
+        root_drift = ["r2_root:current_state_unreadable"]
+    if root_drift:
+        for family_id in task_contracts["authorized_family_ids"]:
+            existing = drift_by_family.get(family_id, [])
+            drift_by_family[family_id] = sorted(set(existing) | set(root_drift))
     return {
         "receipt_id": receipt_id,
         "qualification_cycle_id": receipt["qualification_cycle_id"],
@@ -1569,10 +1617,10 @@ def require_table_qualification_freeze(
         Validated freeze status for an unaffected authorized family.
     """
     status = validate_table_qualification_freeze(repo_root=repo_root)
-    if status["d07_decision_required"] is True:
-        raise TableQualificationFreezeError("D07_DECISION_REQUIRED")
     if family_id in status["invalidated_family_ids"]:
         raise TableQualificationFreezeError(
             "TABLE_QUALIFICATION_FREEZE_INVALIDATED:{}".format(family_id)
         )
+    if status["d07_decision_required"] is True:
+        raise TableQualificationFreezeError("D07_DECISION_REQUIRED")
     return status
