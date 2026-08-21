@@ -134,12 +134,14 @@ def _root_state(*, repo_root: Path) -> Dict[str, object]:
         "company" not in row or "metric_id" not in row for row in rows
     ):
         raise StageASnapshotError("Root public matrix keys are invalid")
-    keys = sorted(
+    keys = [
         {"company": row["company"], "metric_id": row["metric_id"]}
         for row in rows
-    )
-    if len(keys) != len(rows):
+    ]
+    identities = [(row["company"], row["metric_id"]) for row in keys]
+    if len(identities) != len(set(identities)):
         raise StageASnapshotError("Root public matrix keys are duplicated")
+    keys.sort(key=lambda row: (row["company"], row["metric_id"]))
     hashes = {}
     for relative in ROOT_PATHS:
         path = _regular_file(
