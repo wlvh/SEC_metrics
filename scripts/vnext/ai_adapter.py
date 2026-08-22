@@ -2250,7 +2250,7 @@ def _failed_controlled_observation(
         retention=policy.retention,
         data_use=policy.data_use,
         timeout_seconds=policy.timeout_seconds,
-        retry_count=1,
+        retry_count=policy.retry_count,
         retries_performed=0,
         maximum_payload_bytes=policy.maximum_payload_bytes,
         filing_egress_policy=policy.filing_egress_policy,

@@ -171,6 +171,16 @@ _PROVIDER_LEDGER_ENTRY_FIELDS = {
     "task_contract_id",
     "transport_observation",
 }
+_TERMINAL_RECOVERY_STATES = {
+    "NEW",
+    "OPEN_BEFORE_EGRESS",
+    "EXACT_SUCCESS_NOT_MATERIALIZED",
+    "UNKNOWN_REMOTE_OUTCOME",
+    "COMPLETE_OPEN_PENDING_REVIEW",
+    "FROZEN",
+    "FAILED_TERMINAL",
+    "DIVERGENT",
+}
 
 
 class QualificationError(RuntimeError):
@@ -1213,6 +1223,452 @@ def validate_table_qualification_run_bindings(
         )
 
 
+def _ledger_rows_for_terminal(
+    *, repo_root: Path, binding: Mapping[str, object],
+) -> list[Dict[str, object]]:
+    """Return the receipt-owned ledger rows for one deterministic terminal."""
+    path = _qualification_ledger_path(repo_root=repo_root, binding=binding)
+    if path.is_symlink() or not path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification provider ledger is absent",
+        )
+    content = path.read_bytes()
+    _validate_frozen_ledger_prefix(content=content, binding=binding)
+    return [
+        row for row in _parse_qualification_ledger(content=content)
+        if row["qualification_authorization"].get(
+            "qualification_terminal_id"
+        ) == binding["qualification_terminal_id"]
+    ]
+
+
+def _attempt_payloads_are_complete(*, run_dir: Path, attempt: Mapping[str, object]) -> bool:
+    """Report whether every declared content-addressed payload exists exactly."""
+    fields = (
+        "request_body_path",
+        "reader_payload_path",
+        "task_contract_path",
+        "output_schema_path",
+        "assistant_output_path",
+        "raw_response_path",
+    )
+    for field in fields:
+        relative = attempt.get(field)
+        if relative == "":
+            continue
+        if type(relative) is not str:
+            return False
+        path = run_dir / relative
+        if path.is_symlink() or not path.is_file():
+            return False
+    return True
+
+
+def _table_qualification_recovery_state(
+    *, repo_root: Path, run_dir: Path, manifest: Mapping[str, object],
+    records: Sequence[Mapping[str, object]], binding: Mapping[str, object],
+) -> str:
+    """Classify a deterministic table terminal without making an egress call."""
+    status = manifest.get("status")
+    if status == "FROZEN":
+        return "FROZEN"
+    if status == "FAILED":
+        return "FAILED_TERMINAL"
+    if status != "OPEN":
+        return "DIVERGENT"
+    attempts = [
+        record for record in records
+        if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+    ]
+    evidence = [
+        record for record in records
+        if record["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+    ]
+    candidates = [
+        record for record in records
+        if record["record_type"] == "OBSERVATION_CANDIDATE"
+    ]
+    checks = [
+        record for record in records if record["record_type"] == "EVIDENCE_CHECK"
+    ]
+    units = [
+        record for record in records if record["record_type"] == "REVIEW_UNIT"
+    ]
+    ledger_rows = _ledger_rows_for_terminal(repo_root=repo_root, binding=binding)
+    if len(attempts) > 1 or len(evidence) > 1 or len(ledger_rows) > 1:
+        return "DIVERGENT"
+    if not attempts:
+        checkpoint = run_dir / "qualification_recovery.json"
+        if checkpoint.exists():
+            return (
+                "EXACT_SUCCESS_NOT_MATERIALIZED"
+                if not checkpoint.is_symlink() and checkpoint.is_file()
+                else "DIVERGENT"
+            )
+        return "DIVERGENT" if ledger_rows or evidence else "OPEN_BEFORE_EGRESS"
+    attempt = attempts[0]
+    observation = attempt.get("transport_observation")
+    if type(observation) is not dict:
+        return "DIVERGENT"
+    if (
+        observation.get("egress_attempted") is True
+        and attempt.get("status") == "FAILED"
+        and attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
+    ):
+        return "UNKNOWN_REMOTE_OUTCOME"
+    if observation.get("egress_attempted") is not True:
+        return "DIVERGENT"
+    if attempt.get("qualification_authorization") != binding:
+        return "DIVERGENT"
+    if (
+        not _attempt_payloads_are_complete(run_dir=run_dir, attempt=attempt)
+        or len(ledger_rows) != 1
+        or len(evidence) != 1
+        or evidence[0].get("attempt_id") != attempt.get("attempt_id")
+    ):
+        return "EXACT_SUCCESS_NOT_MATERIALIZED"
+    if len(candidates) == 1 and len(checks) == 1 and len(units) == 1:
+        return "COMPLETE_OPEN_PENDING_REVIEW"
+    if len(candidates) > 1 or len(checks) > 1 or len(units) > 1:
+        return "DIVERGENT"
+    return "EXACT_SUCCESS_NOT_MATERIALIZED"
+
+
+def _expected_evidence_identifier(*, evidence: Mapping[str, object]) -> str:
+    """Recompute one TABLE_QUALIFICATION_EVIDENCE content identity."""
+    fields = (
+        "record_type",
+        "qualification_authorization",
+        "qualification_authorization_id",
+        "qualification_task_plan_id",
+        "qualification_cycle_id",
+        "freeze_receipt_id",
+        "family_id",
+        "task_contract_id",
+        "qualification_ordinal",
+        "source_binding_hash",
+        "run_id",
+        "attempt_id",
+        "provider_ledger_entry_id",
+    )
+    return content_hash(value={field: evidence[field] for field in fields})
+
+
+def _validate_table_qualification_evidence(
+    *, evidence: object, binding: Optional[Mapping[str, object]] = None,
+    run_id: Optional[str] = None, attempt: Optional[Mapping[str, object]] = None,
+) -> Dict[str, object]:
+    """Validate semantic evidence identity and every duplicated authority fact."""
+    try:
+        value = validate_record(record=evidence)
+    except (RecordError, ValueError) as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification evidence record is invalid",
+        ) from error
+    if value["record_type"] != "TABLE_QUALIFICATION_EVIDENCE":
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification evidence type differs",
+        )
+    if value["qualification_evidence_id"] != _expected_evidence_identifier(
+        evidence=value,
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification evidence identity differs",
+        )
+    nested = value["qualification_authorization"]
+    if type(nested) is not dict:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification evidence authority is invalid",
+        )
+    _require_duplicated_authority_fields(
+        value=value,
+        binding=nested,
+        label="Qualification evidence",
+    )
+    if binding is not None:
+        if nested != binding:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification evidence authority differs",
+            )
+        _require_duplicated_authority_fields(
+            value=value,
+            binding=binding,
+            label="Qualification evidence",
+        )
+    if run_id is not None and value["run_id"] != run_id:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification evidence Run differs",
+        )
+    if attempt is not None and value["attempt_id"] != attempt.get("attempt_id"):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification evidence attempt differs",
+        )
+    return dict(value)
+
+
+def _read_cycle_run_records(*, run_dir: Path) -> tuple[Dict[str, object], list[Dict[str, object]]]:
+    """Read one cycle Run without recursively invoking FROZEN replay gates."""
+    manifest_path = run_dir / "manifest.json"
+    records_path = run_dir / "records.jsonl"
+    if (
+        run_dir.is_symlink()
+        or not run_dir.is_dir()
+        or manifest_path.is_symlink()
+        or not manifest_path.is_file()
+        or records_path.is_symlink()
+        or not records_path.is_file()
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle Run is unsafe",
+        )
+    try:
+        manifest = validate_record(record=strict_json_file(path=manifest_path))
+    except (RecordError, ValueError) as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle Run manifest is invalid",
+        ) from error
+    if manifest["record_type"] != "RUN":
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle Run manifest type differs",
+        )
+    content = records_path.read_bytes()
+    if content and not content.endswith(b"\n"):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle Run records are malformed",
+        )
+    records = []
+    for line in content.splitlines():
+        try:
+            value = strict_json_loads(text=line.decode("utf-8"))
+            records.append(validate_record(record=value))
+        except (UnicodeDecodeError, RecordError, ValueError) as error:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle Run record is invalid",
+            ) from error
+    return dict(manifest), [dict(record) for record in records]
+
+
+def validate_table_qualification_cycle_exact_set(
+    *, repo_root: Path, binding: Mapping[str, object],
+) -> None:
+    """Require a one-to-one remote-attempt, ledger, and evidence set per cycle.
+
+    Per-Run validation proves that a remote attempt can find a ledger row.  It
+    cannot prove the inverse: an extra ledger/evidence row can otherwise hide
+    in the shared cycle namespace.  This gate derives all three sets from
+    repository-owned Run directories and rejects any non-bijective closure.
+    """
+    cycle_id = _text(
+        value=binding.get("qualification_cycle_id"), label="qualification cycle",
+    )
+    if _SHA256_ID.fullmatch(cycle_id) is None:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle identity is invalid",
+        )
+    run_root = (
+        repo_root / TABLE_QUALIFICATION_CYCLE_ROOT
+        / cycle_id.split(":", maxsplit=1)[1] / "runs"
+    )
+    if run_root.is_symlink() or not run_root.is_dir():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle Run root is absent or unsafe",
+        )
+    attempts_by_terminal: Dict[str, tuple[Dict[str, object], Dict[str, object]]] = {}
+    evidence_by_terminal: Dict[str, Dict[str, object]] = {}
+    for run_dir in sorted(run_root.iterdir(), key=lambda path: path.name):
+        if run_dir.is_symlink() or not run_dir.is_dir():
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle Run entry is unsafe",
+            )
+        manifest, records = _read_cycle_run_records(run_dir=run_dir)
+        authorization = manifest.get("qualification_authorization")
+        if authorization is None:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle Run lacks authority",
+            )
+        current = _rebuild_authorization_binding(
+            repo_root=repo_root,
+            actual=authorization,
+        )
+        if current["qualification_cycle_id"] != cycle_id or (
+            run_dir.resolve()
+            != (repo_root / str(current["run_directory_relative_path"])).resolve()
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle Run identity differs",
+            )
+        terminal_id = str(current["qualification_terminal_id"])
+        if terminal_id in attempts_by_terminal or terminal_id in evidence_by_terminal:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle terminal is duplicated",
+            )
+        remote_attempts = [
+            record for record in records
+            if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+            and type(record.get("transport_observation")) is dict
+            and record["transport_observation"].get("egress_attempted") is True
+        ]
+        evidences = [
+            record for record in records
+            if record["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+        ]
+        if len(remote_attempts) > 1 or len(evidences) > 1:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle terminal has duplicate evidence",
+            )
+        if bool(remote_attempts) != bool(evidences):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle Run closure is incomplete",
+            )
+        if not remote_attempts:
+            continue
+        attempt = remote_attempts[0]
+        if attempt.get("qualification_authorization") != current:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle attempt authority differs",
+            )
+        try:
+            observation = TransportObservation.from_mapping(
+                value=attempt["transport_observation"],
+            )
+            requirement = load_requirement_snapshot(
+                snapshot_dir=repo_root / "requirements/issue_15_v1",
+            )
+            policy = approved_transport_policy(requirement=requirement)
+        except (AIAdapterError, OSError, ValueError, TypeError) as error:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle transport observation is invalid",
+            ) from error
+        request_bytes = (run_dir / str(attempt["request_body_path"])).read_bytes()
+        if attempt.get("status") == "SUCCEEDED":
+            transport_mismatch = transport_observation_mismatch(
+                policy=policy,
+                observation=observation,
+                request_bytes=request_bytes,
+            )
+        else:
+            transport_mismatch = next(
+                (
+                    field for field, expected in (
+                        ("provider", policy.provider),
+                        ("model", policy.model),
+                        ("model_requested", policy.model),
+                        ("api", policy.api),
+                        ("endpoint_host", policy.endpoint_host),
+                        ("region", policy.region),
+                        ("retention", policy.retention),
+                        ("data_use", policy.data_use),
+                        ("timeout_seconds", policy.timeout_seconds),
+                        ("retry_count", policy.retry_count),
+                        ("maximum_payload_bytes", policy.maximum_payload_bytes),
+                        ("filing_egress_policy", policy.filing_egress_policy),
+                        ("request_body_bytes", len(request_bytes)),
+                    )
+                    if getattr(observation, field) != expected
+                ),
+                None,
+            )
+            if (
+                not observation.egress_attempted
+                or observation.store
+                or observation.model_returned not in {policy.model, "none"}
+            ):
+                transport_mismatch = transport_mismatch or "failed_observation"
+        if (
+            attempt.get("provider") != current["provider"]
+            or attempt.get("model") != current["model"]
+            or attempt.get("api") != current["api"]
+            or transport_mismatch is not None
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle transport differs from authority",
+            )
+        evidence = _validate_table_qualification_evidence(
+            evidence=evidences[0],
+            binding=current,
+            run_id=str(manifest["run_id"]),
+            attempt=attempt,
+        )
+        attempts_by_terminal[terminal_id] = (current, attempt)
+        evidence_by_terminal[terminal_id] = evidence
+    ledger_path = _qualification_ledger_path(repo_root=repo_root, binding=binding)
+    if ledger_path.is_symlink() or not ledger_path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle ledger is absent or unsafe",
+        )
+    ledger_content = ledger_path.read_bytes()
+    _validate_frozen_ledger_prefix(content=ledger_content, binding=binding)
+    ledger_by_terminal: Dict[str, Dict[str, object]] = {}
+    for row in _parse_qualification_ledger(content=ledger_content):
+        nested = row["qualification_authorization"]
+        rebuilt = _rebuild_authorization_binding(
+            repo_root=repo_root,
+            actual=nested,
+        )
+        if rebuilt["qualification_cycle_id"] != cycle_id:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification ledger cycle differs",
+            )
+        terminal_id = str(rebuilt["qualification_terminal_id"])
+        if terminal_id in ledger_by_terminal:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification ledger terminal is duplicated",
+            )
+        ledger_by_terminal[terminal_id] = row
+    if set(attempts_by_terminal) != set(ledger_by_terminal) or (
+        set(attempts_by_terminal) != set(evidence_by_terminal)
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle remote evidence exact set differs",
+        )
+    for terminal_id, (current, attempt) in attempts_by_terminal.items():
+        ledger = ledger_by_terminal[terminal_id]
+        evidence = evidence_by_terminal[terminal_id]
+        validate_table_qualification_provider_ledger_entry(
+            entry=ledger,
+            binding=current,
+            run_id=str(current["run_id"]),
+            attempt=attempt,
+        )
+        if (
+            evidence["provider_ledger_entry_id"]
+            != ledger["qualification_provider_ledger_entry_id"]
+            or evidence["attempt_id"] != attempt["attempt_id"]
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle evidence linkage differs",
+            )
+
+
 def execute_table_qualification_task(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int, target_period: Mapping[str, object],
@@ -1245,9 +1701,10 @@ def execute_table_qualification_task(
     source = binding["source_binding"]
     declaration = source["source_declaration"]
     run_dir = repo_root / str(binding["run_directory_relative_path"])
+    existing_state = "NEW"
     if run_dir.exists():
         try:
-            manifest, _records, _decisions = load_run_for_status(
+            manifest, records, _decisions = load_run_for_status(
                 run_dir=run_dir,
                 repo_root=repo_root,
             )
@@ -1261,13 +1718,50 @@ def execute_table_qualification_task(
                 code="TABLE_QUALIFICATION_TERMINAL_INVALID",
                 message="Existing qualification terminal authority differs",
             )
-        return {
-            "run_id": binding["run_id"],
-            "status": "RESUMED_EXISTING_QUALIFICATION_RUN",
-            "qualification_terminal_id": binding[
-                "qualification_terminal_id"
-            ],
-        }
+        existing_state = _table_qualification_recovery_state(
+            repo_root=repo_root,
+            run_dir=run_dir,
+            manifest=manifest,
+            records=records,
+            binding=binding,
+        )
+        if existing_state == "DIVERGENT":
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+                message="Existing qualification terminal closure differs",
+            )
+        if existing_state == "UNKNOWN_REMOTE_OUTCOME":
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_UNKNOWN_REMOTE_OUTCOME",
+                message="Qualification terminal has an unknown remote outcome",
+            )
+        if existing_state in {"FROZEN", "FAILED_TERMINAL", "COMPLETE_OPEN_PENDING_REVIEW"}:
+            evidence_ids = sorted(
+                str(record["qualification_evidence_id"])
+                for record in records
+                if record["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+            )
+            return {
+                "run_id": binding["run_id"],
+                "status": existing_state,
+                "qualification_terminal_id": binding[
+                    "qualification_terminal_id"
+                ],
+                "qualification_evidence_ids": evidence_ids,
+            }
+    # A receipt-owned ledger row is a pre-egress terminal gate, not an
+    # append-time duplicate check.  A matching row with no complete Run is
+    # necessarily a divergent closure and must never cause another socket
+    # invocation.
+    terminal_rows = _ledger_rows_for_terminal(
+        repo_root=repo_root,
+        binding=binding,
+    )
+    if terminal_rows and existing_state in {"NEW", "OPEN_BEFORE_EGRESS"}:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+            message="Qualification terminal ledger exists without a Run closure",
+        )
     adapter = build_invocation_controlled_transport_adapter(
         release_input_plan_id=str(binding["qualification_task_plan_id"]),
         workspace_dir=repo_root / str(binding["wb3_workspace_relative_path"]),
@@ -1275,7 +1769,7 @@ def execute_table_qualification_task(
     )
     from .workflow import create_table_task_review_run
 
-    return create_table_task_review_run(
+    result = create_table_task_review_run(
         repo_root=repo_root,
         run_dir=run_dir,
         run_id=str(binding["run_id"]),
@@ -1294,7 +1788,26 @@ def execute_table_qualification_task(
         adapter=adapter,
         clock=clock,
         qualification_authorization=authorization,
+        resume_existing=(existing_state != "NEW"),
     )
+    if result.get("status") == "UNKNOWN_REMOTE_OUTCOME":
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_UNKNOWN_REMOTE_OUTCOME",
+            message="Qualification terminal has an unknown remote outcome",
+        )
+    if existing_state != "NEW":
+        recovered_state = result.pop("terminal_recovery_state", "")
+        return {
+            **result,
+            "recovery_state": (
+                recovered_state if recovered_state else existing_state
+            ),
+            "qualification_terminal_id": binding[
+                "qualification_terminal_id"
+            ],
+        }
+    result.pop("terminal_recovery_state", None)
+    return result
 
 
 def table_qualification_task_plan(

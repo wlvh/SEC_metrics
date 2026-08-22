@@ -17,11 +17,13 @@ from unittest import mock
 
 from tests.vnext.common import cell_locator
 from vnext import ai_adapter, qualification, workflow
-from vnext.ai_adapter import TransportObservation, TransportResult
+from vnext.ai_adapter import TransportAttemptError, TransportObservation
+from vnext.ai_adapter import TransportResult
 from vnext.ai_adapter import build_provider_request_body
 from vnext.canonical import atomic_write_bytes, atomic_write_json, content_hash
 from vnext.replay import replay_frozen_results
-from vnext.run_store import load_frozen_run, RunStoreError, validate_and_freeze_run
+from vnext.run_store import load_frozen_run, load_run_for_status, RunStoreError
+from vnext.run_store import validate_and_freeze_run
 from vnext.stage_a_snapshot import write_stage_a_snapshot
 from vnext.table_grid import build_table_grid
 from vnext.table_qualification_freeze import _measurement_receipts
@@ -225,6 +227,47 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             )
 
 
+@contextmanager
+def cloned_synthetic_no_d07_repositories(*, count: int) -> Iterator[list[Path]]:
+    """Share one built authority while isolating each crash scenario's WB-3 state."""
+    if type(count) is not int or count < 1:
+        raise AssertionError("Synthetic clone count is invalid")
+    with synthetic_no_d07_repository() as authority_root:
+        _run_git(
+            workdir=authority_root,
+            arguments=[
+                "add", "--",
+                "artifacts/vnext/table_qualification_freeze/stage_a_validation",
+            ],
+        )
+        _run_git(
+            workdir=authority_root,
+            arguments=[
+                "-c", "user.name=synthetic", "-c",
+                "user.email=synthetic@example.invalid", "commit", "-m",
+                "synthetic stage-a overlay",
+            ],
+        )
+        clones = []
+        try:
+            for ordinal in range(count):
+                clone = authority_root.parent / "clone-{}".format(ordinal)
+                _run_git(
+                    workdir=authority_root,
+                    arguments=["worktree", "add", "--detach", str(clone), "HEAD"],
+                )
+                clones.append(clone)
+            yield clones
+        finally:
+            for clone in reversed(clones):
+                subprocess.run(
+                    ["git", "worktree", "remove", "--force", str(clone)],
+                    cwd=authority_root,
+                    capture_output=True,
+                    check=False,
+                )
+
+
 def _occupancy_response(*, repo_root: Path) -> bytes:
     """Build one valid single-role response against Marriott's full grid."""
     asset = build_table_grid(
@@ -300,6 +343,156 @@ def _occupancy_response(*, repo_root: Path) -> bytes:
     ).encode("utf-8")
 
 
+def _revpar_response(*, repo_root: Path) -> bytes:
+    """Build one valid Marriott single-role RevPAR response."""
+    asset = build_table_grid(
+        html_bytes=(repo_root / MARRIOTT_SOURCE).read_bytes(),
+        parent_raw_asset_ids=[MARRIOTT_RAW_ID],
+        storage_uri="synthetic/derived.json",
+    )
+
+    def locator(*, row: int, column: int) -> Dict[str, object]:
+        return cell_locator(
+            asset=asset,
+            table_id="table_000011",
+            row_index=row,
+            column_index=column,
+        )
+
+    return json.dumps(
+        {
+            "disclosure_group": "lodging_kpi_table",
+            "table_locator": {
+                "derived_asset_id": asset["derived_asset_id"],
+                "table_id": "table_000011",
+            },
+            "candidates": [
+                {
+                    "role": "revpar",
+                    "claimed_raw_value": "128.80",
+                    "claimed_period": "FY2025",
+                    "claimed_reported_unit": "USD",
+                    "claimed_scope": [
+                        {
+                            "dimension": "property_population",
+                            "raw_value": "Comparable Systemwide Properties",
+                            "evidence_locator_ids": ["population"],
+                        },
+                        {
+                            "dimension": "operating_scope",
+                            "raw_value": "Comparable Systemwide Properties",
+                            "evidence_locator_ids": ["population"],
+                        },
+                        {
+                            "dimension": "geography",
+                            "raw_value": "Worldwide",
+                            "evidence_locator_ids": ["geography"],
+                        },
+                    ],
+                    "locator": locator(row=26, column=4),
+                    "scope_evidence_locators": [
+                        {
+                            "id": "population",
+                            "supports_dimensions": [
+                                "property_population", "operating_scope",
+                            ],
+                            "location_type": "label",
+                            "locator": locator(row=18, column=0),
+                            "raw_text": "Comparable Systemwide Properties",
+                        },
+                        {
+                            "id": "geography",
+                            "supports_dimensions": ["geography"],
+                            "location_type": "row",
+                            "locator": locator(row=26, column=0),
+                            "raw_text": "\nWorldwide (2)",
+                        },
+                    ],
+                    "competing_candidates": [],
+                },
+            ],
+            "unresolved_competing_claims": [],
+        },
+        ensure_ascii=False,
+    ).encode("utf-8")
+
+
+@contextmanager
+def mocked_live_table_transport(
+    *, repo_root: Path, binding: Dict[str, object], response_bytes: bytes,
+    calls: list[bytes], provider_request_id: str,
+) -> Iterator[None]:
+    """Patch only the socket edge while exercising the real auth chain."""
+    with mock.patch.object(
+        ai_adapter,
+        "_REPOSITORY_ROOT",
+        repo_root,
+    ), mock.patch.dict(
+        os.environ,
+        {"DEEPSEEK_API_KEY": "synthetic-only"},
+        clear=False,
+    ):
+        adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+            release_input_plan_id=binding["qualification_task_plan_id"],
+            workspace_dir=repo_root / binding["wb3_workspace_relative_path"],
+            owner_token="synthetic-owner",
+        )
+
+        def transport(
+            *, prepared_request: object, egress_capability: object,
+        ) -> TransportResult:
+            """Return a schema-valid test response after a real reservation."""
+            outbound, schema = build_provider_request_body(
+                policy=adapter.policy,
+                reader_request_bytes=prepared_request.prepared_request.request_bytes,
+            )
+            calls.append(outbound)
+            policy = adapter.policy
+            return TransportResult(
+                response_bytes=response_bytes,
+                provider_request_id=provider_request_id,
+                observation=TransportObservation(
+                    egress_attempted=True,
+                    provider=policy.provider,
+                    model=policy.model,
+                    model_requested=policy.model,
+                    model_returned=policy.model,
+                    api=policy.api,
+                    store=False,
+                    endpoint_host=policy.endpoint_host,
+                    region=policy.region,
+                    retention=policy.retention,
+                    data_use=policy.data_use,
+                    timeout_seconds=policy.timeout_seconds,
+                    retry_count=policy.retry_count,
+                    retries_performed=0,
+                    maximum_payload_bytes=policy.maximum_payload_bytes,
+                    filing_egress_policy=policy.filing_egress_policy,
+                    request_body_bytes=len(outbound),
+                ),
+                raw_response_bytes=(
+                    b'{"usage":{"prompt_tokens":10,"completion_tokens":2}}'
+                ),
+                outbound_request_bytes=outbound,
+                output_schema_bytes=schema,
+            )
+
+        with mock.patch.object(
+            ai_adapter._InvocationControllerTransport,
+            "transport_kind",
+            "MOCK",
+        ), mock.patch.object(
+            adapter,
+            "_complete_repository_transport",
+            side_effect=transport,
+        ), mock.patch.object(
+            qualification,
+            "build_invocation_controlled_transport_adapter",
+            return_value=adapter,
+        ):
+            yield
+
+
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
 
@@ -325,101 +518,6 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     qualification_ordinal=1,
                 )
                 binding = authorization.as_mapping()
-                concurrent_bindings = [
-                    qualification.issue_table_qualification_authorization(
-                        repo_root=repo_root,
-                        family_id="lodging_kpi_table",
-                        task_contract_id="lodging_revpar_table_v2",
-                        qualification_ordinal=1,
-                    ).as_mapping(),
-                    qualification.issue_table_qualification_authorization(
-                        repo_root=repo_root,
-                        family_id="financial_statement",
-                        task_contract_id=(
-                            "financial_assets_under_management_table_v1"
-                        ),
-                        qualification_ordinal=1,
-                    ).as_mapping(),
-                ]
-
-                def ledger_entry(
-                    *, value: Dict[str, object], ordinal: int,
-                ) -> Dict[str, object]:
-                    """Build one strict no-network row for append-lock coverage."""
-                    body = {
-                        "record_type": (
-                            "TABLE_QUALIFICATION_PROVIDER_LEDGER_ENTRY"
-                        ),
-                        "qualification_authorization": value,
-                        "qualification_authorization_id": value[
-                            "qualification_authorization_id"
-                        ],
-                        "qualification_task_plan_id": value[
-                            "qualification_task_plan_id"
-                        ],
-                        "qualification_cycle_id": value[
-                            "qualification_cycle_id"
-                        ],
-                        "freeze_receipt_id": value["freeze_receipt_id"],
-                        "family_id": value["family_id"],
-                        "task_contract_id": value["task_contract_id"],
-                        "qualification_ordinal": value[
-                            "qualification_ordinal"
-                        ],
-                        "source_binding_hash": value["source_binding_hash"],
-                        "run_id": value["run_id"],
-                        "attempt_id": "attempt:concurrent:{}".format(ordinal),
-                        "request_body_sha256": "{:064x}".format(ordinal),
-                        "provider_request_id": "request:concurrent:{}".format(
-                            ordinal
-                        ),
-                        "transport_observation": {
-                            "egress_attempted": True,
-                            "test_only": "concurrent-lock",
-                        },
-                    }
-                    return {
-                        **body,
-                        "qualification_provider_ledger_entry_id": content_hash(
-                            value=body,
-                        ),
-                    }
-
-                concurrent_entries = [
-                    ledger_entry(value=value, ordinal=index)
-                    for index, value in enumerate(concurrent_bindings, start=1)
-                ]
-                with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-                    futures = [
-                        pool.submit(
-                            qualification._append_qualification_ledger_entry,
-                            repo_root=repo_root,
-                            binding=value,
-                            entry=entry,
-                        )
-                        for value, entry in zip(
-                            concurrent_bindings,
-                            concurrent_entries,
-                        )
-                    ]
-                    for future in futures:
-                        future.result()
-                concurrent_rows = [
-                    json.loads(line)
-                    for line in (
-                        repo_root / binding["qualification_provider_ledger_path"]
-                    ).read_text(encoding="utf-8").splitlines()
-                ]
-                self.assertEqual(
-                    {
-                        entry["qualification_provider_ledger_entry_id"]
-                        for entry in concurrent_entries
-                    },
-                    {
-                        row["qualification_provider_ledger_entry_id"]
-                        for row in concurrent_rows
-                    },
-                )
                 adapter = ai_adapter.build_invocation_controlled_transport_adapter(
                     release_input_plan_id=binding["qualification_task_plan_id"],
                     workspace_dir=(
@@ -905,6 +1003,537 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         task_contract_id=task_contract_id,
                         qualification_ordinal=1,
                     )
+
+    def test_interrupted_exact_success_materializes_without_second_transport(
+        self,
+    ) -> None:
+        """Recover every durable crash boundary without a second transport."""
+        phases = (
+            "AFTER_CREATE_RUN",
+            "AFTER_EXACT_SUCCESS",
+            "AFTER_ATTEMPT_PAYLOAD",
+            "AFTER_ATTEMPT_RECORD",
+            "AFTER_LEDGER",
+            "AFTER_QUALIFICATION_EVIDENCE",
+        )
+
+        class InjectedCrash(RuntimeError):
+            """Stop a test execution after one durable recovery boundary."""
+
+        with cloned_synthetic_no_d07_repositories(count=len(phases)) as roots:
+            for index, (phase, repo_root) in enumerate(zip(phases, roots)):
+                with self.subTest(phase=phase):
+                    clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+                    (repo_root / "outputs/active_publication.json.lock").touch()
+                    binding = qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_occupancy_table_v2",
+                        qualification_ordinal=1,
+                    ).as_mapping()
+                    calls: list[bytes] = []
+                    response = _occupancy_response(repo_root=repo_root)
+
+                    def crash_here(observed: str) -> None:
+                        if observed == phase:
+                            raise InjectedCrash(observed)
+
+                    common = {
+                        "repo_root": repo_root,
+                        "family_id": "lodging_kpi_table",
+                        "task_contract_id": "lodging_occupancy_table_v2",
+                        "qualification_ordinal": 1,
+                        "target_period": binding["target_period"],
+                        "owner_token": "synthetic-owner",
+                        "clock": clock,
+                    }
+                    request_id = "request:recovery-{}".format(index)
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        response_bytes=response,
+                        calls=calls,
+                        provider_request_id=request_id,
+                    ), mock.patch.object(
+                        workflow,
+                        "_TABLE_QUALIFICATION_RECOVERY_HOOK",
+                        side_effect=crash_here,
+                    ):
+                        with self.assertRaises(InjectedCrash):
+                            qualification.execute_table_qualification_task(**common)
+                    run_dir = repo_root / binding["run_directory_relative_path"]
+                    checkpoint = run_dir / "qualification_recovery.json"
+                    self.assertEqual(
+                        phase != "AFTER_CREATE_RUN", checkpoint.is_file(),
+                    )
+                    if phase == "AFTER_EXACT_SUCCESS":
+                        # Simulate the narrow process-loss window in which
+                        # WB-3 has retained the accepted response but the
+                        # Run-local materialization checkpoint is absent.
+                        checkpoint.unlink()
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        response_bytes=response,
+                        calls=calls,
+                        provider_request_id=request_id,
+                    ):
+                        resumed = qualification.execute_table_qualification_task(
+                            **common,
+                        )
+                    expected_state = (
+                        "OPEN_BEFORE_EGRESS"
+                        if phase == "AFTER_CREATE_RUN"
+                        else "EXACT_SUCCESS_NOT_MATERIALIZED"
+                    )
+                    self.assertEqual(expected_state, resumed["recovery_state"])
+                    self.assertEqual(1, len(calls))
+                    self.assertFalse(checkpoint.exists())
+                    manifest, records, _decisions = load_run_for_status(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                    qualification.validate_table_qualification_run_bindings(
+                        repo_root=repo_root,
+                        run_dir=run_dir,
+                        manifest=manifest,
+                        records=records,
+                    )
+                    records_before = (run_dir / "records.jsonl").read_bytes()
+                    ledger_path = repo_root / binding[
+                        "qualification_provider_ledger_path"
+                    ]
+                    ledger_before = ledger_path.read_bytes()
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        response_bytes=response,
+                        calls=calls,
+                        provider_request_id=request_id,
+                    ):
+                        third = qualification.execute_table_qualification_task(
+                            **common,
+                        )
+                    self.assertEqual("COMPLETE_OPEN_PENDING_REVIEW", third["status"])
+                    self.assertEqual(
+                        records_before, (run_dir / "records.jsonl").read_bytes(),
+                    )
+                    self.assertEqual(ledger_before, ledger_path.read_bytes())
+                    self.assertEqual(1, len(calls))
+
+    def test_cycle_exact_set_uses_complete_concurrent_authorized_terminals(
+        self,
+    ) -> None:
+        """Concurrent ledger appends must be owned by complete Run closures."""
+        with synthetic_no_d07_repository() as repo_root:
+            clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+            issued = [
+                qualification.issue_table_qualification_authorization(
+                    repo_root=repo_root,
+                    family_id="lodging_kpi_table",
+                    task_contract_id=task_contract_id,
+                    qualification_ordinal=1,
+                )
+                for task_contract_id in (
+                    "lodging_occupancy_table_v2",
+                    "lodging_revpar_table_v2",
+                )
+            ]
+            bindings = [value.as_mapping() for value in issued]
+            responses = [
+                _occupancy_response(repo_root=repo_root),
+                _revpar_response(repo_root=repo_root),
+            ]
+            calls: list[bytes] = []
+            with mock.patch.object(
+                ai_adapter,
+                "_REPOSITORY_ROOT",
+                repo_root,
+            ), mock.patch.dict(
+                os.environ,
+                {"DEEPSEEK_API_KEY": "synthetic-only"},
+                clear=False,
+            ):
+                adapters = [
+                    ai_adapter.build_invocation_controlled_transport_adapter(
+                        release_input_plan_id=binding[
+                            "qualification_task_plan_id"
+                        ],
+                        workspace_dir=(
+                            repo_root / binding["wb3_workspace_relative_path"]
+                        ),
+                        owner_token="synthetic-owner",
+                    )
+                    for binding in bindings
+                ]
+
+                def transport_for(
+                    *, adapter: object, response: bytes, request_id: str,
+                ) -> object:
+                    def transport(
+                        *, prepared_request: object, egress_capability: object,
+                    ) -> TransportResult:
+                        outbound, schema = build_provider_request_body(
+                            policy=adapter.policy,
+                            reader_request_bytes=(
+                                prepared_request.prepared_request.request_bytes
+                            ),
+                        )
+                        calls.append(outbound)
+                        policy = adapter.policy
+                        return TransportResult(
+                            response_bytes=response,
+                            provider_request_id=request_id,
+                            observation=TransportObservation(
+                                egress_attempted=True,
+                                provider=policy.provider,
+                                model=policy.model,
+                                model_requested=policy.model,
+                                model_returned=policy.model,
+                                api=policy.api,
+                                store=False,
+                                endpoint_host=policy.endpoint_host,
+                                region=policy.region,
+                                retention=policy.retention,
+                                data_use=policy.data_use,
+                                timeout_seconds=policy.timeout_seconds,
+                                retry_count=policy.retry_count,
+                                retries_performed=0,
+                                maximum_payload_bytes=(
+                                    policy.maximum_payload_bytes
+                                ),
+                                filing_egress_policy=(
+                                    policy.filing_egress_policy
+                                ),
+                                request_body_bytes=len(outbound),
+                            ),
+                            raw_response_bytes=(
+                                b'{"usage":{"prompt_tokens":10,'
+                                b'"completion_tokens":2}}'
+                            ),
+                            outbound_request_bytes=outbound,
+                            output_schema_bytes=schema,
+                        )
+                    return transport
+
+                side_effects = [
+                    transport_for(
+                        adapter=adapter,
+                        response=response,
+                        request_id="request:concurrent:{}".format(index),
+                    )
+                    for index, (adapter, response) in enumerate(
+                        zip(adapters, responses), start=1,
+                    )
+                ]
+
+                def create(index: int) -> Dict[str, object]:
+                    binding = bindings[index]
+                    source = binding["source_binding"]
+                    declaration = source["source_declaration"]
+                    return workflow.create_table_task_review_run(
+                        repo_root=repo_root,
+                        run_dir=(
+                            repo_root / binding["run_directory_relative_path"]
+                        ),
+                        run_id=binding["run_id"],
+                        company_id=declaration["company_id"],
+                        target_period=binding["target_period"],
+                        source_repo_relative_path=(
+                            declaration["source_repo_relative_path"]
+                        ),
+                        source_media_type=binding["source_media_type"],
+                        source_url=source["source_url"],
+                        accession=declaration["accession"],
+                        document_name=declaration["document_name"],
+                        source_role=source["source_role"],
+                        request_attempt_id=source["request_attempt_id"],
+                        task_contract_id=binding["task_contract_id"],
+                        adapter=adapters[index],
+                        clock=clock,
+                        qualification_authorization=issued[index],
+                    )
+
+                with mock.patch.object(
+                    ai_adapter._InvocationControllerTransport,
+                    "transport_kind",
+                    "MOCK",
+                ), mock.patch.object(
+                    adapters[0],
+                    "_complete_repository_transport",
+                    side_effect=side_effects[0],
+                ), mock.patch.object(
+                    adapters[1],
+                    "_complete_repository_transport",
+                    side_effect=side_effects[1],
+                ), concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+                    created = [future.result() for future in (
+                        pool.submit(create, index) for index in range(2)
+                    )]
+            self.assertEqual(
+                ["PENDING_HUMAN_REVIEW", "PENDING_HUMAN_REVIEW"],
+                sorted(value["status"] for value in created),
+            )
+            self.assertEqual(2, len(calls))
+            ledger_path = repo_root / bindings[0][
+                "qualification_provider_ledger_path"
+            ]
+            rows = [
+                json.loads(line) for line in ledger_path.read_text(
+                    encoding="utf-8",
+                ).splitlines()
+            ]
+            self.assertEqual(2, len(rows))
+            for binding in bindings:
+                run_dir = repo_root / binding["run_directory_relative_path"]
+                manifest, records, _decisions = load_run_for_status(
+                    run_dir=run_dir,
+                    repo_root=repo_root,
+                )
+                qualification.validate_table_qualification_run_bindings(
+                    repo_root=repo_root,
+                    run_dir=run_dir,
+                    manifest=manifest,
+                    records=records,
+                )
+            ledger_before = ledger_path.read_bytes()
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+                futures = [
+                    pool.submit(
+                        qualification._append_qualification_ledger_entry,
+                        repo_root=repo_root,
+                        binding=binding,
+                        entry=next(
+                            row for row in rows
+                            if row["qualification_authorization_id"]
+                            == binding["qualification_authorization_id"]
+                        ),
+                    )
+                    for binding in bindings
+                ]
+                for future in futures:
+                    future.result()
+            self.assertEqual(ledger_before, ledger_path.read_bytes())
+            divergent = copy.deepcopy(rows[0])
+            divergent["provider_request_id"] = "request:divergent"
+            divergent["qualification_provider_ledger_entry_id"] = (
+                qualification._expected_ledger_entry_identifier(entry=divergent)
+            )
+            with self.assertRaises(qualification.QualificationError):
+                qualification._append_qualification_ledger_entry(
+                    repo_root=repo_root,
+                    binding=bindings[0],
+                    entry=divergent,
+                )
+            second_run_dir = repo_root / bindings[1][
+                "run_directory_relative_path"
+            ]
+            hidden_run_dir = repo_root / "synthetic-hidden-terminal"
+            second_run_dir.rename(hidden_run_dir)
+            try:
+                first_run_dir = repo_root / bindings[0][
+                    "run_directory_relative_path"
+                ]
+                first_manifest, first_records, _decisions = load_run_for_status(
+                    run_dir=first_run_dir,
+                    repo_root=repo_root,
+                )
+                with self.assertRaises(qualification.QualificationError):
+                    qualification.validate_table_qualification_run_bindings(
+                        repo_root=repo_root,
+                        run_dir=first_run_dir,
+                        manifest=first_manifest,
+                        records=first_records,
+                    )
+            finally:
+                hidden_run_dir.rename(second_run_dir)
+            second_records_path = second_run_dir / "records.jsonl"
+            first_records_path = (
+                repo_root / bindings[0]["run_directory_relative_path"]
+                / "records.jsonl"
+            )
+            original_second_records = second_records_path.read_bytes()
+            original_first_records = first_records_path.read_bytes()
+            second_records = [
+                json.loads(line)
+                for line in original_second_records.decode("utf-8").splitlines()
+            ]
+            second_evidence = next(
+                record for record in second_records
+                if record["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+            )
+            try:
+                # Real evidence is moved, never invented: the second terminal
+                # becomes evidence-less while the first has an orphan extra.
+                atomic_write_bytes(
+                    path=second_records_path,
+                    content=(
+                        "\n".join(json.dumps(
+                            record,
+                            ensure_ascii=False,
+                            sort_keys=True,
+                        ) for record in second_records if record is not second_evidence)
+                        + "\n"
+                    ).encode("utf-8"),
+                )
+                atomic_write_bytes(
+                    path=first_records_path,
+                    content=(
+                        original_first_records
+                        + json.dumps(
+                            second_evidence,
+                            ensure_ascii=False,
+                            sort_keys=True,
+                        ).encode("utf-8")
+                        + b"\n"
+                    ),
+                )
+                first_manifest, first_records, _decisions = load_run_for_status(
+                    run_dir=(
+                        repo_root / bindings[0]["run_directory_relative_path"]
+                    ),
+                    repo_root=repo_root,
+                )
+                with self.assertRaises(qualification.QualificationError):
+                    qualification.validate_table_qualification_run_bindings(
+                        repo_root=repo_root,
+                        run_dir=(
+                            repo_root / bindings[0][
+                                "run_directory_relative_path"
+                            ]
+                        ),
+                        manifest=first_manifest,
+                        records=first_records,
+                    )
+            finally:
+                atomic_write_bytes(
+                    path=second_records_path,
+                    content=original_second_records,
+                )
+                atomic_write_bytes(
+                    path=first_records_path,
+                    content=original_first_records,
+                )
+
+    def test_unknown_remote_outcome_is_terminal_and_never_reinvokes(
+        self,
+    ) -> None:
+        """An egress marker without terminal response cannot be retried."""
+        with synthetic_no_d07_repository() as repo_root:
+            clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+            authorization = qualification.issue_table_qualification_authorization(
+                repo_root=repo_root,
+                family_id="lodging_kpi_table",
+                task_contract_id="lodging_occupancy_table_v2",
+                qualification_ordinal=1,
+            )
+            binding = authorization.as_mapping()
+            calls: list[bytes] = []
+            with mock.patch.object(
+                ai_adapter,
+                "_REPOSITORY_ROOT",
+                repo_root,
+            ), mock.patch.dict(
+                os.environ,
+                {"DEEPSEEK_API_KEY": "synthetic-only"},
+                clear=False,
+            ):
+                adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+                    release_input_plan_id=binding["qualification_task_plan_id"],
+                    workspace_dir=(
+                        repo_root / binding["wb3_workspace_relative_path"]
+                    ),
+                    owner_token="synthetic-owner",
+                )
+
+                def unknown_transport(
+                    *, prepared_request: object, egress_capability: object,
+                ) -> TransportResult:
+                    outbound, schema = build_provider_request_body(
+                        policy=adapter.policy,
+                        reader_request_bytes=(
+                            prepared_request.prepared_request.request_bytes
+                        ),
+                    )
+                    calls.append(outbound)
+                    policy = adapter.policy
+                    raise TransportAttemptError(
+                        "synthetic unknown remote outcome",
+                        observation=TransportObservation(
+                            egress_attempted=True,
+                            provider=policy.provider,
+                            model=policy.model,
+                            model_requested=policy.model,
+                            model_returned="none",
+                            api=policy.api,
+                            store=False,
+                            endpoint_host=policy.endpoint_host,
+                            region=policy.region,
+                            retention=policy.retention,
+                            data_use=policy.data_use,
+                            timeout_seconds=policy.timeout_seconds,
+                            retry_count=policy.retry_count,
+                            retries_performed=0,
+                            maximum_payload_bytes=policy.maximum_payload_bytes,
+                            filing_egress_policy=policy.filing_egress_policy,
+                            request_body_bytes=len(outbound),
+                        ),
+                        provider_request_id="request:unknown",
+                        raw_response_bytes=None,
+                        error_class="UNKNOWN_REMOTE_OUTCOME",
+                        outbound_request_bytes=outbound,
+                        output_schema_bytes=schema,
+                    )
+
+                common = {
+                    "repo_root": repo_root,
+                    "family_id": "lodging_kpi_table",
+                    "task_contract_id": "lodging_occupancy_table_v2",
+                    "qualification_ordinal": 1,
+                    "target_period": binding["target_period"],
+                    "owner_token": "synthetic-owner",
+                    "clock": clock,
+                }
+                with mock.patch.object(
+                    ai_adapter._InvocationControllerTransport,
+                    "transport_kind",
+                    "MOCK",
+                ), mock.patch.object(
+                    adapter,
+                    "_complete_repository_transport",
+                    side_effect=unknown_transport,
+                ), mock.patch.object(
+                    qualification,
+                    "build_invocation_controlled_transport_adapter",
+                    return_value=adapter,
+                ):
+                    with self.assertRaises(qualification.QualificationError) as error:
+                        qualification.execute_table_qualification_task(**common)
+                self.assertEqual("TABLE_QUALIFICATION_UNKNOWN_REMOTE_OUTCOME", error.exception.code)
+                self.assertEqual(1, len(calls))
+                run_dir = repo_root / binding["run_directory_relative_path"]
+                manifest, records, _decisions = load_run_for_status(
+                    run_dir=run_dir,
+                    repo_root=repo_root,
+                )
+                qualification.validate_table_qualification_run_bindings(
+                    repo_root=repo_root,
+                    run_dir=run_dir,
+                    manifest=manifest,
+                    records=records,
+                )
+                with mock.patch.object(
+                    qualification,
+                    "build_invocation_controlled_transport_adapter",
+                    side_effect=AssertionError("provider path reached"),
+                ):
+                    with self.assertRaises(qualification.QualificationError) as resumed:
+                        qualification.execute_table_qualification_task(**common)
+                self.assertEqual(
+                    "TABLE_QUALIFICATION_UNKNOWN_REMOTE_OUTCOME",
+                    resumed.exception.code,
+                )
+                self.assertEqual(1, len(calls))
 
 
 if __name__ == "__main__":

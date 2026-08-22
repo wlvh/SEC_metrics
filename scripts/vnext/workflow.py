@@ -8,11 +8,14 @@ creates a HUMAN decision; those remain explicit later transitions.
 
 from __future__ import annotations
 
+import base64
 from datetime import datetime
 from pathlib import Path
 from typing import Callable, Dict, Mapping, Optional, Sequence
 
-from .ai_adapter import AIAdapter, run_ai_attempt
+from .ai_adapter import AIAdapter, AIAdapterError, AttemptPayloads
+from .ai_adapter import TransportObservation
+from .ai_adapter import run_ai_attempt
 from .ai_adapter import build_invocation_acceptance_context
 from .ai_adapter import validate_workflow_acceptance_binding
 from .ai_adapter import validate_adapter_repository_authority
@@ -20,7 +23,8 @@ from .batch_workflow import BatchWorkflowError
 from .batch_workflow import validate_request_attempt_binding
 from .calculator import calculate_metric, calculate_observation_metric
 from .calculator import withheld_metric_result
-from .canonical import sha256_file, strict_json_file, strict_json_loads
+from .canonical import atomic_write_json, content_hash, sha256_file
+from .canonical import strict_json_file, strict_json_loads
 from .evidence import check_evidence
 from .reader import validate_reader_output
 from .reader_input import build_reader_input_manifest, prepare_reader_request
@@ -58,6 +62,7 @@ from .table_qualification_freeze import require_table_qualification_freeze
 from .table_qualification_freeze import TableQualificationFreezeError
 from .traits import TraitError, repository_company_ciks
 from .traits import repository_company_traits
+from .records import validate_record
 
 
 class WorkflowError(RuntimeError):
@@ -66,6 +71,270 @@ class WorkflowError(RuntimeError):
 
 class LiveSourceAuthorityError(WorkflowError):
     """Report a live source not proven by immutable public SEC authority."""
+
+
+# This hook is deliberately module-private and is only patched by the focused
+# crash-recovery tests.  Production callers cannot select a recovery phase or
+# turn a normal qualification Run into a partial one.
+_TABLE_QUALIFICATION_RECOVERY_HOOK: Optional[Callable[[str], None]] = None
+_TABLE_QUALIFICATION_RECOVERY_FILE = "qualification_recovery.json"
+_TABLE_QUALIFICATION_RECOVERY_FIELDS = {
+    "attempt",
+    "checkpoint_id",
+    "payloads",
+    "qualification_authorization",
+    "record_type",
+    "run_id",
+    "schema_version",
+}
+
+
+def _recovery_checkpoint_path(*, run_dir: Path) -> Path:
+    """Return the transient, run-owned recovery checkpoint path."""
+    return run_dir / _TABLE_QUALIFICATION_RECOVERY_FILE
+
+
+def _recovery_payload_mapping(*, payloads: AttemptPayloads) -> Dict[str, object]:
+    """Encode exact attempt bytes without relying on host-local paths."""
+    def encode(value: Optional[bytes]) -> Optional[str]:
+        return (
+            base64.b64encode(value).decode("ascii")
+            if value is not None
+            else None
+        )
+
+    return {
+        "request_body_b64": encode(payloads.request_body_bytes),
+        "reader_payload_b64": encode(payloads.reader_payload_bytes),
+        "task_contract_b64": encode(payloads.task_contract_bytes),
+        "output_schema_b64": encode(payloads.output_schema_bytes),
+        "assistant_output_b64": encode(payloads.assistant_output_bytes),
+        "raw_response_b64": encode(payloads.raw_response_bytes),
+        "acceptance_receipt": (
+            dict(payloads.acceptance_receipt)
+            if payloads.acceptance_receipt is not None
+            else None
+        ),
+    }
+
+
+def _payloads_from_recovery_mapping(*, value: object) -> AttemptPayloads:
+    """Decode and validate one exact transient recovery payload bundle."""
+    fields = {
+        "request_body_b64",
+        "reader_payload_b64",
+        "task_contract_b64",
+        "output_schema_b64",
+        "assistant_output_b64",
+        "raw_response_b64",
+        "acceptance_receipt",
+    }
+    if type(value) is not dict or set(value) != fields:
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+
+    def decode(name: str, *, required: bool) -> Optional[bytes]:
+        encoded = value[name]
+        if encoded is None:
+            if required:
+                raise WorkflowError(
+                    "TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID"
+                )
+            return None
+        if type(encoded) is not str:
+            raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+        try:
+            return base64.b64decode(encoded.encode("ascii"), validate=True)
+        except (UnicodeEncodeError, ValueError) as error:
+            raise WorkflowError(
+                "TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID"
+            ) from error
+
+    acceptance = value["acceptance_receipt"]
+    if acceptance is not None and type(acceptance) is not dict:
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+    try:
+        return AttemptPayloads(
+            request_body_bytes=decode("request_body_b64", required=True),
+            reader_payload_bytes=decode("reader_payload_b64", required=True),
+            task_contract_bytes=decode("task_contract_b64", required=True),
+            output_schema_bytes=decode("output_schema_b64", required=True),
+            assistant_output_bytes=decode(
+                "assistant_output_b64", required=False,
+            ),
+            raw_response_bytes=decode("raw_response_b64", required=False),
+            acceptance_receipt=(
+                dict(acceptance) if acceptance is not None else None
+            ),
+        )
+    except (TypeError, ValueError) as error:
+        raise WorkflowError(
+            "TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID"
+        ) from error
+
+
+def _write_table_qualification_recovery_checkpoint(
+    *, run_dir: Path, run_id: str, qualification_authorization: Mapping[str, object],
+    attempt: Mapping[str, object], payloads: AttemptPayloads,
+) -> None:
+    """Durably retain one exact-success materialization bundle.
+
+    The checkpoint is written after WB-3 has accepted the exact response and
+    before any Run-owned payload bytes are written.  It is intentionally
+    transient: a complete OPEN Run removes it before review, so a FROZEN Run
+    still has the regular exact artifact set only.
+    """
+    validated_attempt = validate_record(record=dict(attempt))
+    if validated_attempt["record_type"] != "AI_EXTRACTION_ATTEMPT":
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+    body = {
+        "schema_version": 1,
+        "record_type": "TABLE_QUALIFICATION_RECOVERY_CHECKPOINT",
+        "run_id": run_id,
+        "qualification_authorization": dict(qualification_authorization),
+        "attempt": validated_attempt,
+        "payloads": _recovery_payload_mapping(payloads=payloads),
+    }
+    value = {**body, "checkpoint_id": content_hash(value=body)}
+    path = _recovery_checkpoint_path(run_dir=run_dir)
+    if path.exists():
+        if path.is_symlink() or not path.is_file():
+            raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+        current = strict_json_file(path=path)
+        if current != value:
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+        return
+    atomic_write_json(path=path, value=value)
+
+
+def _load_table_qualification_recovery_checkpoint(
+    *, run_dir: Path, run_id: str,
+    qualification_authorization: Mapping[str, object],
+) -> Optional[tuple[Dict[str, object], AttemptPayloads]]:
+    """Reload one authenticated transient exact-success bundle, if present."""
+    path = _recovery_checkpoint_path(run_dir=run_dir)
+    if not path.exists():
+        return None
+    if path.is_symlink() or not path.is_file():
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+    value = strict_json_file(path=path)
+    if type(value) is not dict or set(value) != _TABLE_QUALIFICATION_RECOVERY_FIELDS:
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+    body = {key: value[key] for key in value if key != "checkpoint_id"}
+    if value["checkpoint_id"] != content_hash(value=body):
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+    if (
+        value["schema_version"] != 1
+        or value["record_type"] != "TABLE_QUALIFICATION_RECOVERY_CHECKPOINT"
+        or value["run_id"] != run_id
+        or value["qualification_authorization"]
+        != qualification_authorization
+    ):
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+    try:
+        attempt = validate_record(record=value["attempt"])
+    except ValueError as error:
+        raise WorkflowError(
+            "TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID"
+        ) from error
+    if attempt["record_type"] != "AI_EXTRACTION_ATTEMPT":
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+    return dict(attempt), _payloads_from_recovery_mapping(
+        value=value["payloads"],
+    )
+
+
+def _remove_table_qualification_recovery_checkpoint(*, run_dir: Path) -> None:
+    """Remove only a validated transient checkpoint after full materialization."""
+    path = _recovery_checkpoint_path(run_dir=run_dir)
+    if not path.exists():
+        return
+    if path.is_symlink() or not path.is_file():
+        raise WorkflowError("TABLE_QUALIFICATION_RECOVERY_CHECKPOINT_INVALID")
+    path.unlink()
+
+
+def _checkpoint_recovery_phase(*, phase: str) -> None:
+    """Invoke a test-only crash injection after a durable stage boundary."""
+    hook = _TABLE_QUALIFICATION_RECOVERY_HOOK
+    if hook is not None:
+        hook(phase)
+
+
+def _ensure_open_run_record(
+    *, run_dir: Path, existing_records: list[Dict[str, object]],
+    record: Mapping[str, object],
+) -> None:
+    """Append an expected recovery record once, or reject any divergence."""
+    expected = validate_record(record=dict(record))
+    same_type = [
+        value for value in existing_records
+        if value["record_type"] == expected["record_type"]
+    ]
+    if not same_type:
+        append_run_record(run_dir=run_dir, record=expected)
+        existing_records.append(expected)
+        return
+    if len(same_type) != 1 or same_type[0] != expected:
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+
+
+def _restore_reused_remote_attempt(
+    *, attempt: Mapping[str, object], adapter: AIAdapter,
+) -> Dict[str, object]:
+    """Restore the historical egress fact when WB-3 returns an exact reuse.
+
+    A controlled adapter intentionally exposes reusable success as a fresh
+    no-egress observation.  For a previously interrupted qualification
+    terminal, the durable WB-3 response proves one earlier remote egress; the
+    Run record must preserve that fact so the qualification ledger/evidence
+    closure remains one-to-one rather than silently turning it into recorded
+    evidence.
+    """
+    observation = attempt.get("transport_observation")
+    if type(observation) is not dict:
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+    try:
+        current = TransportObservation.from_mapping(value=observation)
+    except AIAdapterError as error:
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT") from error
+    if current.egress_attempted:
+        return dict(attempt)
+    policy = getattr(adapter, "policy", None)
+    if policy is None:
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+    restored = TransportObservation(
+        egress_attempted=True,
+        provider=policy.provider,
+        model=policy.model,
+        model_requested=policy.model,
+        model_returned=policy.model,
+        api=policy.api,
+        store=False,
+        endpoint_host=policy.endpoint_host,
+        region=policy.region,
+        retention=policy.retention,
+        data_use=policy.data_use,
+        timeout_seconds=policy.timeout_seconds,
+        retry_count=policy.retry_count,
+        retries_performed=0,
+        maximum_payload_bytes=policy.maximum_payload_bytes,
+        filing_egress_policy=policy.filing_egress_policy,
+        request_body_bytes=current.request_body_bytes,
+    )
+    value = {
+        **attempt,
+        "provider": restored.provider,
+        "model": restored.model,
+        "model_requested": restored.model_requested,
+        "model_returned": restored.model_returned,
+        "api": restored.api,
+        "endpoint_host": restored.endpoint_host,
+        "transport_observation": restored.as_mapping(),
+    }
+    try:
+        return dict(validate_record(record=value))
+    except ValueError as error:
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT") from error
 
 
 def _validate_live_source_authority(
@@ -225,6 +494,7 @@ def create_table_task_review_run(
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
     qualification_authorization: Optional[object] = None,
+    resume_existing: bool = False,
 ) -> Dict[str, object]:
     """Create one formal single-table catalog task Run.
 
@@ -245,6 +515,8 @@ def create_table_task_review_run(
         adapter: Recorded or repository-approved AI transport.
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
         qualification_authorization: Opaque authority required for LIVE use.
+        resume_existing: Internal executor-only opt-in to materialize an
+            interrupted deterministic LIVE qualification Run in place.
 
     Returns:
         Run, attempt, Candidate, Evidence, and ReviewUnit identities.
@@ -282,6 +554,7 @@ def create_table_task_review_run(
         clock=clock,
         task_contract_id=task_contract_id,
         qualification_authorization=qualification_authorization,
+        resume_existing=resume_existing,
     )
 
 
@@ -577,6 +850,7 @@ def _create_review_run_with_traits(
     clock: Optional[Callable[[], datetime]],
     task_contract_id: Optional[str],
     qualification_authorization: Optional[object] = None,
+    resume_existing: bool = False,
 ) -> Dict[str, object]:
     """Create one OPEN Run from already repository-resolved company traits.
 
@@ -601,6 +875,9 @@ def _create_review_run_with_traits(
             the retained historical disclosure-group path.
         qualification_authorization: Opaque current repository authorization
             required before a LIVE catalog task can read source bytes.
+        resume_existing: Internal deterministic-terminal recovery mode.  It
+            is accepted only for a LIVE catalog task carrying the same
+            module-revalidated qualification authorization.
 
     Returns:
         Run, attempt, Candidate, Evidence, and ReviewUnit identities. Rejection
@@ -611,6 +888,8 @@ def _create_review_run_with_traits(
     adapter_mode = validate_adapter_repository_authority(
         adapter=adapter, repo_root=repo_root,
     )
+    if type(resume_existing) is not bool:
+        raise WorkflowError("Qualification recovery mode is invalid")
     task_run_bindings = []
     qualification_binding = None
     if task_contract_id is None:
@@ -657,6 +936,12 @@ def _create_review_run_with_traits(
                 )
             except QualificationError as error:
                 raise WorkflowError(error.code) from error
+    if resume_existing and (
+        task_contract_id is None
+        or adapter_mode != "LIVE"
+        or qualification_binding is None
+    ):
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
     if (
         not isinstance(company_traits, list)
         or not company_traits
@@ -760,21 +1045,55 @@ def _create_review_run_with_traits(
         source_role=source_role,
         request_attempt_id=request_attempt_id,
     )
-    create_run(
-        run_dir=run_dir,
-        run_id=run_id,
-        company_id=company_id,
-        company_traits=company_traits,
-        target_period=target_period,
-        source_references=[source_reference],
-        missing_required_source_roles=[],
-        spec_file_hashes=spec_file_hashes,
-        requirement_hashes=requirement["hashes"],
-        task_contract_bindings=task_run_bindings,
-        qualification_authorization=qualification_binding,
+    existing_records: list[Dict[str, object]] = []
+    if run_dir.exists():
+        if not resume_existing:
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+        try:
+            existing_manifest, existing_records, _decisions = load_open_run(
+                run_dir=run_dir,
+            )
+        except RunStoreError as error:
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT") from error
+        expected_manifest = {
+            "run_id": run_id,
+            "company_id": company_id,
+            "company_traits": list(company_traits),
+            "target_period": dict(target_period),
+            "source_references": [source_reference],
+            "missing_required_source_roles": [],
+            "spec_file_hashes": spec_file_hashes,
+            "requirement_hashes": requirement["hashes"],
+            "task_contract_bindings": task_run_bindings,
+            "qualification_authorization": qualification_binding,
+        }
+        if any(
+            existing_manifest.get(field) != expected
+            for field, expected in expected_manifest.items()
+        ):
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+    else:
+        create_run(
+            run_dir=run_dir,
+            run_id=run_id,
+            company_id=company_id,
+            company_traits=company_traits,
+            target_period=target_period,
+            source_references=[source_reference],
+            missing_required_source_roles=[],
+            spec_file_hashes=spec_file_hashes,
+            requirement_hashes=requirement["hashes"],
+            task_contract_bindings=task_run_bindings,
+            qualification_authorization=qualification_binding,
+        )
+    _ensure_open_run_record(
+        run_dir=run_dir, existing_records=existing_records, record=raw_blob,
     )
-    append_run_record(run_dir=run_dir, record=raw_blob)
-    append_run_record(run_dir=run_dir, record=source_reference)
+    _ensure_open_run_record(
+        run_dir=run_dir,
+        existing_records=existing_records,
+        record=source_reference,
+    )
     # Re-read through the RawBlob verifier so review input cannot race away
     # from the exact source identity created above.
     raw_bytes = load_raw_blob_bytes(repo_root=repo_root, raw_blob=raw_blob)
@@ -787,12 +1106,20 @@ def _create_review_run_with_traits(
             )
         ),
     )
-    append_run_record(run_dir=run_dir, record=derived_asset)
+    _ensure_open_run_record(
+        run_dir=run_dir,
+        existing_records=existing_records,
+        record=derived_asset,
+    )
     reader_manifest = build_reader_input_manifest(
         derived_asset=derived_asset,
         source_reference_ids=[str(source_reference["source_reference_id"])],
     )
-    append_run_record(run_dir=run_dir, record=reader_manifest)
+    _ensure_open_run_record(
+        run_dir=run_dir,
+        existing_records=existing_records,
+        record=reader_manifest,
+    )
     prepared_request = prepare_reader_request(
         manifest=reader_manifest,
         derived_asset=derived_asset,
@@ -826,23 +1153,85 @@ def _create_review_run_with_traits(
         source_references=[source_reference],
     )
 
-    response, _raw_response, attempt, attempt_payloads = run_ai_attempt(
-        adapter=adapter,
-        prepared_request=attempt_request,
-        acceptance_context=acceptance_context,
-        clock=clock,
+    _checkpoint_recovery_phase(phase="AFTER_CREATE_RUN")
+    existing_attempts = [
+        record for record in existing_records
+        if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+    ]
+    if len(existing_attempts) > 1:
+        raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+    reused_wb3_success = False
+    checkpoint = (
+        _load_table_qualification_recovery_checkpoint(
+            run_dir=run_dir,
+            run_id=run_id,
+            qualification_authorization=qualification_binding,
+        )
+        if qualification_binding is not None
+        else None
     )
-    if qualification_binding is not None:
-        attempt = {
-            **attempt,
-            "qualification_authorization": qualification_binding,
-        }
+    if checkpoint is not None:
+        checkpoint_attempt, attempt_payloads = checkpoint
+        if existing_attempts and existing_attempts[0] != checkpoint_attempt:
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+        attempt = checkpoint_attempt
+        response = attempt_payloads.assistant_output_bytes
+    else:
+        response, _raw_response, attempt, attempt_payloads = run_ai_attempt(
+            adapter=adapter,
+            prepared_request=attempt_request,
+            acceptance_context=acceptance_context,
+            clock=clock,
+        )
+        if qualification_binding is not None:
+            attempt = {
+                **attempt,
+                "qualification_authorization": qualification_binding,
+            }
+            if response is not None:
+                reused_wb3_success = (
+                    type(attempt.get("transport_observation")) is dict
+                    and attempt["transport_observation"].get(
+                        "egress_attempted"
+                    ) is False
+                )
+                attempt = _restore_reused_remote_attempt(
+                    attempt=attempt,
+                    adapter=adapter,
+                )
+        if existing_attempts:
+            # WB-3 may already have retained an exact success while a process
+            # died after appending the attempt.  Re-entering the controller is
+            # a response reuse, never a second socket invocation; its fresh
+            # bundle must still match the originally persisted attempt bytes.
+            attempt = existing_attempts[0]
+            response = attempt_payloads.assistant_output_bytes
+        if qualification_binding is not None and response is not None:
+            _write_table_qualification_recovery_checkpoint(
+                run_dir=run_dir,
+                run_id=run_id,
+                qualification_authorization=qualification_binding,
+                attempt=attempt,
+                payloads=attempt_payloads,
+            )
+    _checkpoint_recovery_phase(phase="AFTER_EXACT_SUCCESS")
     write_attempt_payloads(
         run_dir=run_dir,
         attempt=attempt,
         payloads=attempt_payloads,
     )
-    append_run_record(run_dir=run_dir, record=attempt)
+    _checkpoint_recovery_phase(phase="AFTER_ATTEMPT_PAYLOAD")
+    _ensure_open_run_record(
+        run_dir=run_dir, existing_records=existing_records, record=attempt,
+    )
+    _checkpoint_recovery_phase(phase="AFTER_ATTEMPT_RECORD")
+    unknown_remote_outcome = (
+        qualification_binding is not None
+        and type(attempt.get("transport_observation")) is dict
+        and attempt["transport_observation"].get("egress_attempted") is True
+        and attempt.get("status") == "FAILED"
+        and attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
+    )
     if qualification_binding is not None:
         try:
             qualification_evidence = record_table_qualification_execution(
@@ -853,7 +1242,19 @@ def _create_review_run_with_traits(
             )
         except QualificationError as error:
             raise WorkflowError(error.code) from error
-        append_run_record(run_dir=run_dir, record=qualification_evidence)
+        _checkpoint_recovery_phase(phase="AFTER_LEDGER")
+        _ensure_open_run_record(
+            run_dir=run_dir,
+            existing_records=existing_records,
+            record=qualification_evidence,
+        )
+        _checkpoint_recovery_phase(phase="AFTER_QUALIFICATION_EVIDENCE")
+    if unknown_remote_outcome:
+        return {
+            "run_id": run_id,
+            "status": "UNKNOWN_REMOTE_OUTCOME",
+            "attempt_id": attempt["attempt_id"],
+        }
     if response is None:
         return {
             "run_id": run_id,
@@ -886,8 +1287,12 @@ def _create_review_run_with_traits(
         candidate=candidate,
         evidence=evidence,
     )
-    append_run_record(run_dir=run_dir, record=candidate)
-    append_run_record(run_dir=run_dir, record=evidence)
+    _ensure_open_run_record(
+        run_dir=run_dir, existing_records=existing_records, record=candidate,
+    )
+    _ensure_open_run_record(
+        run_dir=run_dir, existing_records=existing_records, record=evidence,
+    )
     if evidence["status"] != "PASS":
         return {
             "run_id": run_id,
@@ -918,13 +1323,41 @@ def _create_review_run_with_traits(
             rendered["review_renderer_semantic_version"]
         ),
     )
-    append_run_record(run_dir=run_dir, record=review_unit)
-    write_review_assets(
+    _ensure_open_run_record(
         run_dir=run_dir,
-        review_unit=review_unit,
-        review_context_bytes=context["review_context_bytes"],
-        rendered_review_bytes=rendered["bytes"],
+        existing_records=existing_records,
+        record=review_unit,
     )
+    review_dir = run_dir / "review" / str(review_unit["review_unit_hash"])
+    if review_dir.exists():
+        expected_assets = {
+            "review_context.json": context["review_context_bytes"],
+            "review.md": rendered["bytes"],
+        }
+        if (
+            review_dir.is_symlink()
+            or not review_dir.is_dir()
+            or {
+                path.name for path in review_dir.iterdir()
+                if path.is_file() and not path.is_symlink()
+            } != set(expected_assets)
+            or any(
+                (review_dir / name).is_symlink()
+                or not (review_dir / name).is_file()
+                or (review_dir / name).read_bytes() != content
+                for name, content in expected_assets.items()
+            )
+        ):
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+    else:
+        write_review_assets(
+            run_dir=run_dir,
+            review_unit=review_unit,
+            review_context_bytes=context["review_context_bytes"],
+            rendered_review_bytes=rendered["bytes"],
+        )
+    if qualification_binding is not None:
+        _remove_table_qualification_recovery_checkpoint(run_dir=run_dir)
     return {
         "run_id": run_id,
         "status": "PENDING_HUMAN_REVIEW",
@@ -932,6 +1365,11 @@ def _create_review_run_with_traits(
         "candidate_hash": candidate["candidate_hash"],
         "evidence_check_id": evidence["evidence_check_id"],
         "review_unit_hash": review_unit["review_unit_hash"],
+        "terminal_recovery_state": (
+            "EXACT_SUCCESS_NOT_MATERIALIZED"
+            if reused_wb3_success
+            else ""
+        ),
     }
 
 

@@ -1550,20 +1550,42 @@ def execute_invocation(
                 response_validator=response_validator,
                 evidence_validator=evidence_validator,
             )
-        if (
-            _egress_markers_for_execution(
-                root=root, execution_id=abandoned_execution_id,
-            )
-            and not _process_is_alive(
-                process_id=existing_reservation["owner_process_id"]
-            )
-        ):
+        abandoned_markers = _egress_markers_for_execution(
+            root=root, execution_id=abandoned_execution_id,
+        )
+        abandoned_owner_is_dead = not _process_is_alive(
+            process_id=existing_reservation["owner_process_id"]
+        )
+        if abandoned_markers and abandoned_owner_is_dead:
             return _unknown_remote_outcome_from_markers(
                 root=root,
                 reservation_path=reservation_path,
                 reservation=existing_reservation,
                 requested_execution_id=execution_id,
                 clock=clock,
+            )
+        if not abandoned_markers and abandoned_owner_is_dead:
+            # A dead reservation with no egress marker is the one recovery
+            # case in which retrying the exact plan is safe.  The helper
+            # persists an abandonment receipt and verifies the marker absence
+            # again immediately before replacing the reservation.
+            recover_abandoned_before_egress(
+                workspace_dir=workspace_dir,
+                request_identity=str(validated_plan["provider_request_identity"]),
+                expected_execution_id=abandoned_execution_id,
+                recovered_at_utc=_utc(value=clock(), label="recovery time"),
+            )
+            return execute_invocation(
+                workspace_dir=workspace_dir,
+                plan=validated_plan,
+                request_body=request_body,
+                execution_id=execution_id,
+                owner_token=owner_token,
+                authorized_at_utc=authorized_at_utc,
+                clock=clock,
+                transport=transport,
+                response_validator=response_validator,
+                evidence_validator=evidence_validator,
             )
         return {
             "schema_version": 1,
