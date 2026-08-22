@@ -1015,6 +1015,10 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             "AFTER_ATTEMPT_RECORD",
             "AFTER_LEDGER",
             "AFTER_QUALIFICATION_EVIDENCE",
+            "AFTER_CANDIDATE_EVIDENCE",
+            "AFTER_REVIEW_UNIT",
+            "AFTER_REVIEW_ASSETS",
+            "AFTER_CHECKPOINT_REMOVAL",
         )
 
         class InjectedCrash(RuntimeError):
@@ -1063,9 +1067,6 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             qualification.execute_table_qualification_task(**common)
                     run_dir = repo_root / binding["run_directory_relative_path"]
                     checkpoint = run_dir / "qualification_recovery.json"
-                    self.assertEqual(
-                        phase != "AFTER_CREATE_RUN", checkpoint.is_file(),
-                    )
                     if phase == "AFTER_EXACT_SUCCESS":
                         # Simulate the narrow process-loss window in which
                         # WB-3 has retained the accepted response but the
@@ -1084,14 +1085,30 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     expected_state = (
                         "OPEN_BEFORE_EGRESS"
                         if phase == "AFTER_CREATE_RUN"
+                        else "COMPLETE_OPEN_PENDING_REVIEW"
+                        if phase == "AFTER_CHECKPOINT_REMOVAL"
                         else "EXACT_SUCCESS_NOT_MATERIALIZED"
                     )
-                    self.assertEqual(expected_state, resumed["recovery_state"])
+                    if phase == "AFTER_CHECKPOINT_REMOVAL":
+                        self.assertEqual(expected_state, resumed["status"])
+                    else:
+                        self.assertEqual(expected_state, resumed["recovery_state"])
                     self.assertEqual(1, len(calls))
                     self.assertFalse(checkpoint.exists())
                     manifest, records, _decisions = load_run_for_status(
                         run_dir=run_dir,
                         repo_root=repo_root,
+                    )
+                    review_unit = next(
+                        record for record in records
+                        if record["record_type"] == "REVIEW_UNIT"
+                    )
+                    review_dir = run_dir / "review" / review_unit[
+                        "review_unit_hash"
+                    ]
+                    self.assertEqual(
+                        {"review_context.json", "review.md"},
+                        {path.name for path in review_dir.iterdir()},
                     )
                     qualification.validate_table_qualification_run_bindings(
                         repo_root=repo_root,
@@ -1099,6 +1116,16 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         manifest=manifest,
                         records=records,
                     )
+                    finalized = finalize_reviewed_direct_results(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                    self.assertTrue(finalized["result_ids"])
+                    frozen = validate_and_freeze_run(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                    self.assertEqual("FROZEN", frozen["status"])
                     records_before = (run_dir / "records.jsonl").read_bytes()
                     ledger_path = repo_root / binding[
                         "qualification_provider_ledger_path"
@@ -1114,12 +1141,319 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         third = qualification.execute_table_qualification_task(
                             **common,
                         )
-                    self.assertEqual("COMPLETE_OPEN_PENDING_REVIEW", third["status"])
+                    self.assertEqual("FROZEN", third["status"])
                     self.assertEqual(
                         records_before, (run_dir / "records.jsonl").read_bytes(),
                     )
                     self.assertEqual(ledger_before, ledger_path.read_bytes())
                     self.assertEqual(1, len(calls))
+
+    def test_cycle_blocks_other_terminal_until_wb3_success_materializes(
+        self,
+    ) -> None:
+        """A WB-3 success outside Run records blocks every cycle finalization."""
+        scenarios = ("checkpoint_present", "checkpoint_deleted")
+
+        class InjectedCrash(RuntimeError):
+            """Stop after WB-3 success but before any Run attempt record."""
+
+        with cloned_synthetic_no_d07_repositories(
+            count=len(scenarios),
+        ) as roots:
+            for mode, repo_root in zip(scenarios, roots):
+                with self.subTest(checkpoint_mode=mode):
+                    (repo_root / "outputs/active_publication.json.lock").touch()
+                    clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+                    authorization_a = (
+                        qualification.issue_table_qualification_authorization(
+                            repo_root=repo_root,
+                            family_id="lodging_kpi_table",
+                            task_contract_id="lodging_occupancy_table_v2",
+                            qualification_ordinal=1,
+                        )
+                    )
+                    binding_a = authorization_a.as_mapping()
+                    authorization_b = (
+                        qualification.issue_table_qualification_authorization(
+                            repo_root=repo_root,
+                            family_id="lodging_kpi_table",
+                            task_contract_id="lodging_revpar_table_v2",
+                            qualification_ordinal=1,
+                        )
+                    )
+                    binding_b = authorization_b.as_mapping()
+                    calls_a: list[bytes] = []
+                    calls_b: list[bytes] = []
+                    common_a = {
+                        "repo_root": repo_root,
+                        "family_id": "lodging_kpi_table",
+                        "task_contract_id": "lodging_occupancy_table_v2",
+                        "qualification_ordinal": 1,
+                        "target_period": binding_a["target_period"],
+                        "owner_token": "synthetic-owner",
+                        "clock": clock,
+                    }
+                    common_b = {
+                        "repo_root": repo_root,
+                        "family_id": "lodging_kpi_table",
+                        "task_contract_id": "lodging_revpar_table_v2",
+                        "qualification_ordinal": 1,
+                        "target_period": binding_b["target_period"],
+                        "owner_token": "synthetic-owner",
+                        "clock": clock,
+                    }
+
+                    def crash_after_success(phase: str) -> None:
+                        if phase == "AFTER_EXACT_SUCCESS":
+                            raise InjectedCrash(phase)
+
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding_a,
+                        response_bytes=_occupancy_response(repo_root=repo_root),
+                        calls=calls_a,
+                        provider_request_id="request:pending-a",
+                    ), mock.patch.object(
+                        workflow,
+                        "_TABLE_QUALIFICATION_RECOVERY_HOOK",
+                        side_effect=crash_after_success,
+                    ):
+                        with self.assertRaises(InjectedCrash):
+                            qualification.execute_table_qualification_task(
+                                **common_a,
+                            )
+                    run_a = repo_root / binding_a["run_directory_relative_path"]
+                    checkpoint_a = run_a / "qualification_recovery.json"
+                    self.assertTrue(checkpoint_a.is_file())
+                    if mode == "checkpoint_deleted":
+                        checkpoint_a.unlink()
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding_b,
+                        response_bytes=_revpar_response(repo_root=repo_root),
+                        calls=calls_b,
+                        provider_request_id="request:pending-b",
+                    ):
+                        created_b = qualification.execute_table_qualification_task(
+                            **common_b,
+                        )
+                    self.assertEqual("PENDING_HUMAN_REVIEW", created_b["status"])
+                    run_b = repo_root / binding_b["run_directory_relative_path"]
+                    with self.assertRaisesRegex(
+                        workflow.WorkflowError,
+                        "TABLE_QUALIFICATION_CYCLE_PENDING_MATERIALIZATION",
+                    ):
+                        finalize_reviewed_direct_results(
+                            run_dir=run_b,
+                            repo_root=repo_root,
+                        )
+                    self.assertEqual(1, len(calls_a))
+                    self.assertEqual(1, len(calls_b))
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding_a,
+                        response_bytes=_occupancy_response(repo_root=repo_root),
+                        calls=calls_a,
+                        provider_request_id="request:pending-a",
+                    ):
+                        resumed_a = qualification.execute_table_qualification_task(
+                            **common_a,
+                        )
+                    self.assertEqual(
+                        "EXACT_SUCCESS_NOT_MATERIALIZED",
+                        resumed_a["recovery_state"],
+                    )
+                    self.assertEqual(1, len(calls_a))
+                    for run_dir in (run_a, run_b):
+                        finalized = finalize_reviewed_direct_results(
+                            run_dir=run_dir,
+                            repo_root=repo_root,
+                        )
+                        self.assertTrue(finalized["result_ids"])
+                        frozen = validate_and_freeze_run(
+                            run_dir=run_dir,
+                            repo_root=repo_root,
+                        )
+                        self.assertEqual("FROZEN", frozen["status"])
+
+    def test_remote_terminal_failures_are_stable_without_second_transport(
+        self,
+    ) -> None:
+        """HTTP/schema terminal outcomes never re-enter success materialization."""
+        scenarios = (
+            ("http_400", "HTTP_400", 400),
+            ("http_402", "HTTP_402", 402),
+            ("schema_violation", "SCHEMA_VIOLATION", 200),
+        )
+        with cloned_synthetic_no_d07_repositories(
+            count=len(scenarios),
+        ) as roots:
+            for (name, error_class, status_code), repo_root in zip(
+                scenarios, roots,
+            ):
+                with self.subTest(terminal=name):
+                    (repo_root / "outputs/active_publication.json.lock").touch()
+                    clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+                    authorization = qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_occupancy_table_v2",
+                        qualification_ordinal=1,
+                    )
+                    binding = authorization.as_mapping()
+                    calls: list[bytes] = []
+                    with mock.patch.object(
+                        ai_adapter,
+                        "_REPOSITORY_ROOT",
+                        repo_root,
+                    ), mock.patch.dict(
+                        os.environ,
+                        {"DEEPSEEK_API_KEY": "synthetic-only"},
+                        clear=False,
+                    ):
+                        adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+                            release_input_plan_id=binding[
+                                "qualification_task_plan_id"
+                            ],
+                            workspace_dir=(
+                                repo_root / binding[
+                                    "wb3_workspace_relative_path"
+                                ]
+                            ),
+                            owner_token="synthetic-owner",
+                        )
+
+                        def terminal_transport(
+                            *, prepared_request: object,
+                            egress_capability: object,
+                        ) -> TransportResult:
+                            outbound, schema = build_provider_request_body(
+                                policy=adapter.policy,
+                                reader_request_bytes=(
+                                    prepared_request.prepared_request.request_bytes
+                                ),
+                            )
+                            calls.append(outbound)
+                            policy = adapter.policy
+                            observation = TransportObservation(
+                                egress_attempted=True,
+                                provider=policy.provider,
+                                model=policy.model,
+                                model_requested=policy.model,
+                                model_returned=(
+                                    policy.model
+                                    if error_class == "SCHEMA_VIOLATION"
+                                    else "none"
+                                ),
+                                api=policy.api,
+                                store=False,
+                                endpoint_host=policy.endpoint_host,
+                                region=policy.region,
+                                retention=policy.retention,
+                                data_use=policy.data_use,
+                                timeout_seconds=policy.timeout_seconds,
+                                retry_count=policy.retry_count,
+                                retries_performed=0,
+                                maximum_payload_bytes=(
+                                    policy.maximum_payload_bytes
+                                ),
+                                filing_egress_policy=(
+                                    policy.filing_egress_policy
+                                ),
+                                request_body_bytes=len(outbound),
+                            )
+                            if error_class == "SCHEMA_VIOLATION":
+                                return TransportResult(
+                                    response_bytes=b"{}",
+                                    provider_request_id=(
+                                        "request:" + name
+                                    ),
+                                    observation=observation,
+                                    raw_response_bytes=b"{}",
+                                    outbound_request_bytes=outbound,
+                                    output_schema_bytes=schema,
+                                )
+                            raise TransportAttemptError(
+                                "synthetic terminal failure",
+                                observation=observation,
+                                provider_request_id="request:" + name,
+                                raw_response_bytes=None,
+                                error_class=error_class,
+                                outbound_request_bytes=outbound,
+                                output_schema_bytes=schema,
+                            )
+
+                        common = {
+                            "repo_root": repo_root,
+                            "family_id": "lodging_kpi_table",
+                            "task_contract_id": "lodging_occupancy_table_v2",
+                            "qualification_ordinal": 1,
+                            "target_period": binding["target_period"],
+                            "owner_token": "synthetic-owner",
+                            "clock": clock,
+                        }
+                        with mock.patch.object(
+                            ai_adapter._InvocationControllerTransport,
+                            "transport_kind",
+                            "MOCK",
+                        ), mock.patch.object(
+                            adapter,
+                            "_complete_repository_transport",
+                            side_effect=terminal_transport,
+                        ), mock.patch.object(
+                            qualification,
+                            "build_invocation_controlled_transport_adapter",
+                            return_value=adapter,
+                        ):
+                            initial = qualification.execute_table_qualification_task(
+                                **common,
+                            )
+                    self.assertEqual("FAILED_TERMINAL", initial["status"])
+                    self.assertEqual(1, len(calls))
+                    run_dir = repo_root / binding["run_directory_relative_path"]
+                    manifest, records, _decisions = load_run_for_status(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                    attempts = [
+                        record for record in records
+                        if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+                    ]
+                    evidence = [
+                        record for record in records
+                        if record["record_type"]
+                        == "TABLE_QUALIFICATION_EVIDENCE"
+                    ]
+                    self.assertEqual(1, len(attempts))
+                    self.assertEqual("FAILED", attempts[0]["status"])
+                    self.assertEqual(error_class, attempts[0]["error_class"])
+                    self.assertEqual(1, len(evidence))
+                    qualification.validate_table_qualification_run_bindings(
+                        repo_root=repo_root,
+                        run_dir=run_dir,
+                        manifest=manifest,
+                        records=records,
+                    )
+                    records_before = (run_dir / "records.jsonl").read_bytes()
+                    ledger_path = repo_root / binding[
+                        "qualification_provider_ledger_path"
+                    ]
+                    ledger_before = ledger_path.read_bytes()
+                    with mock.patch.object(
+                        qualification,
+                        "build_invocation_controlled_transport_adapter",
+                        side_effect=AssertionError("transport path reached"),
+                    ):
+                        for _ in range(2):
+                            resumed = qualification.execute_table_qualification_task(
+                                **common,
+                            )
+                            self.assertEqual("FAILED_TERMINAL", resumed["status"])
+                    self.assertEqual(1, len(calls))
+                    self.assertEqual(
+                        records_before, (run_dir / "records.jsonl").read_bytes(),
+                    )
+                    self.assertEqual(ledger_before, ledger_path.read_bytes())
 
     def test_cycle_exact_set_uses_complete_concurrent_authorized_terminals(
         self,
@@ -1449,6 +1783,9 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             )
             binding = authorization.as_mapping()
             calls: list[bytes] = []
+
+            class InjectedCrash(RuntimeError):
+                """Stop after WB-3 has persisted UNKNOWN but before Run writes."""
             with mock.patch.object(
                 ai_adapter,
                 "_REPOSITORY_ROOT",
@@ -1514,6 +1851,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     "owner_token": "synthetic-owner",
                     "clock": clock,
                 }
+
+                def crash_after_wb3(phase: str) -> None:
+                    if phase == "AFTER_EXACT_SUCCESS":
+                        raise InjectedCrash(phase)
+
                 with mock.patch.object(
                     ai_adapter._InvocationControllerTransport,
                     "transport_kind",
@@ -1526,12 +1868,41 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     qualification,
                     "build_invocation_controlled_transport_adapter",
                     return_value=adapter,
+                ), mock.patch.object(
+                    workflow,
+                    "_TABLE_QUALIFICATION_RECOVERY_HOOK",
+                    side_effect=crash_after_wb3,
+                ):
+                    with self.assertRaises(InjectedCrash):
+                        qualification.execute_table_qualification_task(**common)
+                self.assertEqual(1, len(calls))
+                run_dir = repo_root / binding["run_directory_relative_path"]
+                with self.assertRaises(qualification.QualificationError) as pending:
+                    qualification.validate_table_qualification_cycle_exact_set(
+                        repo_root=repo_root,
+                        binding=binding,
+                    )
+                self.assertEqual(
+                    "TABLE_QUALIFICATION_CYCLE_PENDING_MATERIALIZATION",
+                    pending.exception.code,
+                )
+                with mock.patch.object(
+                    ai_adapter._InvocationControllerTransport,
+                    "transport_kind",
+                    "MOCK",
+                ), mock.patch.object(
+                    adapter,
+                    "_complete_repository_transport",
+                    side_effect=AssertionError("transport reinvoked"),
+                ), mock.patch.object(
+                    qualification,
+                    "build_invocation_controlled_transport_adapter",
+                    return_value=adapter,
                 ):
                     with self.assertRaises(qualification.QualificationError) as error:
                         qualification.execute_table_qualification_task(**common)
                 self.assertEqual("TABLE_QUALIFICATION_UNKNOWN_REMOTE_OUTCOME", error.exception.code)
                 self.assertEqual(1, len(calls))
-                run_dir = repo_root / binding["run_directory_relative_path"]
                 manifest, records, _decisions = load_run_for_status(
                     run_dir=run_dir,
                     repo_root=repo_root,

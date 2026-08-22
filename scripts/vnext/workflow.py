@@ -1232,6 +1232,13 @@ def _create_review_run_with_traits(
         and attempt.get("status") == "FAILED"
         and attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
     )
+    remote_failure_terminal = (
+        qualification_binding is not None
+        and type(attempt.get("transport_observation")) is dict
+        and attempt["transport_observation"].get("egress_attempted") is True
+        and attempt.get("status") == "FAILED"
+        and not unknown_remote_outcome
+    )
     if qualification_binding is not None:
         try:
             qualification_evidence = record_table_qualification_execution(
@@ -1258,7 +1265,11 @@ def _create_review_run_with_traits(
     if response is None:
         return {
             "run_id": run_id,
-            "status": "FAILED_ATTEMPT",
+            "status": (
+                "REMOTE_FAILURE_TERMINAL"
+                if remote_failure_terminal
+                else "FAILED_ATTEMPT"
+            ),
             "attempt_id": attempt["attempt_id"],
         }
     candidate = validate_reader_output(
@@ -1293,6 +1304,7 @@ def _create_review_run_with_traits(
     _ensure_open_run_record(
         run_dir=run_dir, existing_records=existing_records, record=evidence,
     )
+    _checkpoint_recovery_phase(phase="AFTER_CANDIDATE_EVIDENCE")
     if evidence["status"] != "PASS":
         return {
             "run_id": run_id,
@@ -1328,6 +1340,7 @@ def _create_review_run_with_traits(
         existing_records=existing_records,
         record=review_unit,
     )
+    _checkpoint_recovery_phase(phase="AFTER_REVIEW_UNIT")
     review_dir = run_dir / "review" / str(review_unit["review_unit_hash"])
     if review_dir.exists():
         expected_assets = {
@@ -1356,8 +1369,10 @@ def _create_review_run_with_traits(
             review_context_bytes=context["review_context_bytes"],
             rendered_review_bytes=rendered["bytes"],
         )
+    _checkpoint_recovery_phase(phase="AFTER_REVIEW_ASSETS")
     if qualification_binding is not None:
         _remove_table_qualification_recovery_checkpoint(run_dir=run_dir)
+        _checkpoint_recovery_phase(phase="AFTER_CHECKPOINT_REMOVAL")
     return {
         "run_id": run_id,
         "status": "PENDING_HUMAN_REVIEW",

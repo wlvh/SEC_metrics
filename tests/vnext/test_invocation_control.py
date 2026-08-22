@@ -33,6 +33,7 @@ from vnext.invocation_control import UnknownRemoteOutcomeError
 from vnext.invocation_control import build_ai_invocation_plan
 from vnext.invocation_control import execute_batch, execute_invocation
 from vnext.invocation_control import execution_identity
+from vnext.invocation_control import qualification_remote_egress_terminals
 from vnext.invocation_control import recover_abandoned_before_egress
 from vnext.invocation_control import structured_only_result
 from vnext.invocation_control import INVOCATION_STATE_NAMESPACES
@@ -1350,6 +1351,14 @@ class InvocationControlTest(unittest.TestCase):
             process.start()
             process.join(timeout=10)
             self.assertEqual(73, process.exitcode)
+            pending = qualification_remote_egress_terminals(
+                workspace_dir=workspace,
+                qualification_task_plan_ids=[
+                    invocation_plan["release_input_plan_id"]
+                ],
+            )
+            self.assertEqual(1, len(pending))
+            self.assertEqual("PENDING_REMOTE_OUTCOME", pending[0]["status"])
             transport = MockTransport(results=[AssertionError("called")])
             recovered = execute_invocation(
                 workspace_dir=workspace,

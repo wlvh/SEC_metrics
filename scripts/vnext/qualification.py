@@ -27,6 +27,8 @@ from .ai_adapter import build_invocation_controlled_transport_adapter
 from .batch_workflow import BatchWorkflowError, validate_request_attempt_binding
 from .canonical import atomic_write_bytes, atomic_write_json, canonical_json_bytes
 from .canonical import content_hash, parse_utc_timestamp, sha256_bytes, sha256_file
+from .invocation_control import InvocationControlError
+from .invocation_control import qualification_remote_egress_terminals
 from .canonical import strict_json_file, strict_json_loads
 from .requirements import load_requirement_snapshot
 from .records import RecordError, validate_record, validate_run_coordinates
@@ -1249,25 +1251,117 @@ def _ledger_rows_for_terminal(
     ]
 
 
-def _attempt_payloads_are_complete(*, run_dir: Path, attempt: Mapping[str, object]) -> bool:
-    """Report whether every declared content-addressed payload exists exactly."""
+def _attempt_payloads_match(*, run_dir: Path, attempt: Mapping[str, object]) -> bool:
+    """Require every declared attempt payload to exist with its declared hash."""
     fields = (
-        "request_body_path",
-        "reader_payload_path",
-        "task_contract_path",
-        "output_schema_path",
-        "assistant_output_path",
-        "raw_response_path",
+        ("request_body_path", "request_body_sha256"),
+        ("reader_payload_path", "reader_payload_sha256"),
+        ("task_contract_path", "task_contract_sha256"),
+        ("output_schema_path", "output_schema_sha256"),
+        ("assistant_output_path", "assistant_output_sha256"),
+        ("raw_response_path", "raw_response_sha256"),
     )
-    for field in fields:
-        relative = attempt.get(field)
-        if relative == "":
-            continue
-        if type(relative) is not str:
+    for path_field, hash_field in fields:
+        relative = attempt.get(path_field)
+        expected = attempt.get(hash_field)
+        if relative == "" or expected == "":
+            if relative == "" and expected == "":
+                continue
+            return False
+        if type(relative) is not str or type(expected) is not str:
             return False
         path = run_dir / relative
-        if path.is_symlink() or not path.is_file():
+        if (
+            path.is_symlink()
+            or not path.is_file()
+            or sha256_file(path=path) != expected
+        ):
             return False
+    return True
+
+
+def _review_tail_is_complete(
+    *, repo_root: Path, run_dir: Path, manifest: Mapping[str, object],
+    attempt: Mapping[str, object], candidate: Mapping[str, object],
+    evidence_check: Mapping[str, object], review_unit: Mapping[str, object],
+    binding: Mapping[str, object],
+) -> bool:
+    """Verify the final review-tail handoff before declaring an OPEN Run complete."""
+    checkpoint = run_dir / "qualification_recovery.json"
+    if checkpoint.exists():
+        if checkpoint.is_symlink() or not checkpoint.is_file():
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+                message="Qualification recovery checkpoint is unsafe",
+            )
+        return False
+    if (
+        candidate.get("attempt_id") != attempt.get("attempt_id")
+        or evidence_check.get("candidate_hash") != candidate.get("candidate_hash")
+        or review_unit.get("evidence_check_id")
+        != evidence_check.get("evidence_check_id")
+        or review_unit.get("selected") != candidate.get("selected")
+        or review_unit.get("competing_candidates")
+        != candidate.get("competing_candidates")
+        or review_unit.get("unresolved_competing_claims")
+        != candidate.get("unresolved_competing_claims")
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+            message="Qualification review-tail record binding differs",
+        )
+    expected_candidate_hashes = [
+        content_hash(value=candidate["selected"][role])
+        for role in sorted(candidate["selected"])
+    ]
+    if review_unit.get("candidate_hashes") != expected_candidate_hashes:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+            message="Qualification ReviewUnit candidate hashes differ",
+        )
+    source_ids = [
+        source.get("source_reference_id")
+        for source in review_unit.get("source_bindings", [])
+    ]
+    if source_ids != candidate.get("source_reference_ids") or source_ids != [
+        source.get("source_reference_id")
+        for source in manifest.get("source_references", [])
+    ]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+            message="Qualification ReviewUnit source binding differs",
+        )
+    review_dir = run_dir / "review" / str(review_unit["review_unit_hash"])
+    expected_assets = {
+        "review_context.json": review_unit["review_context_hash"],
+        "review.md": review_unit["rendered_review_hash"],
+    }
+    if not review_dir.exists():
+        return False
+    if review_dir.is_symlink() or not review_dir.is_dir():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+            message="Qualification review assets are unsafe",
+        )
+    actual_names = set()
+    for path in review_dir.iterdir():
+        if path.is_symlink() or not path.is_file():
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
+                message="Qualification review asset entry is unsafe",
+            )
+        actual_names.add(path.name)
+    if actual_names != set(expected_assets):
+        return False
+    if any(
+        sha256_file(path=review_dir / name) != expected
+        for name, expected in expected_assets.items()
+    ):
+        return False
+    validate_table_qualification_cycle_exact_set(
+        repo_root=repo_root,
+        binding=binding,
+    )
     return True
 
 
@@ -1317,25 +1411,37 @@ def _table_qualification_recovery_state(
     observation = attempt.get("transport_observation")
     if type(observation) is not dict:
         return "DIVERGENT"
-    if (
-        observation.get("egress_attempted") is True
-        and attempt.get("status") == "FAILED"
-        and attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
-    ):
-        return "UNKNOWN_REMOTE_OUTCOME"
+    if attempt.get("status") == "FAILED":
+        if (
+            observation.get("egress_attempted") is True
+            and attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
+        ):
+            return "UNKNOWN_REMOTE_OUTCOME"
+        return "FAILED_TERMINAL"
     if observation.get("egress_attempted") is not True:
         return "DIVERGENT"
     if attempt.get("qualification_authorization") != binding:
         return "DIVERGENT"
     if (
-        not _attempt_payloads_are_complete(run_dir=run_dir, attempt=attempt)
+        not _attempt_payloads_match(run_dir=run_dir, attempt=attempt)
         or len(ledger_rows) != 1
         or len(evidence) != 1
         or evidence[0].get("attempt_id") != attempt.get("attempt_id")
     ):
         return "EXACT_SUCCESS_NOT_MATERIALIZED"
     if len(candidates) == 1 and len(checks) == 1 and len(units) == 1:
-        return "COMPLETE_OPEN_PENDING_REVIEW"
+        if _review_tail_is_complete(
+            repo_root=repo_root,
+            run_dir=run_dir,
+            manifest=manifest,
+            attempt=attempt,
+            candidate=candidates[0],
+            evidence_check=checks[0],
+            review_unit=units[0],
+            binding=binding,
+        ):
+            return "COMPLETE_OPEN_PENDING_REVIEW"
+        return "EXACT_SUCCESS_NOT_MATERIALIZED"
     if len(candidates) > 1 or len(checks) > 1 or len(units) > 1:
         return "DIVERGENT"
     return "EXACT_SUCCESS_NOT_MATERIALIZED"
@@ -1496,6 +1602,7 @@ def validate_table_qualification_cycle_exact_set(
         )
     attempts_by_terminal: Dict[str, tuple[Dict[str, object], Dict[str, object]]] = {}
     evidence_by_terminal: Dict[str, Dict[str, object]] = {}
+    bindings_by_task_plan: Dict[str, Dict[str, object]] = {}
     seen_run_ids = set()
     seen_attempt_ids = set()
     seen_evidence_ids = set()
@@ -1532,6 +1639,14 @@ def validate_table_qualification_cycle_exact_set(
             )
         seen_run_ids.add(run_id)
         terminal_id = str(current["qualification_terminal_id"])
+        task_plan_id = str(current["qualification_task_plan_id"])
+        prior_binding = bindings_by_task_plan.get(task_plan_id)
+        if prior_binding is not None and prior_binding != current:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification task plan authority is duplicated",
+            )
+        bindings_by_task_plan[task_plan_id] = current
         if terminal_id in attempts_by_terminal or terminal_id in evidence_by_terminal:
             raise QualificationError(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
@@ -1687,9 +1802,72 @@ def validate_table_qualification_cycle_exact_set(
             code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
             message="Qualification cycle remote evidence exact set differs",
         )
+    workspaces = {
+        str(value["wb3_workspace_relative_path"])
+        for value in bindings_by_task_plan.values()
+    }
+    if workspaces != {str(binding["wb3_workspace_relative_path"])}:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification cycle WB-3 workspace differs",
+        )
+    try:
+        wb3_terminals = qualification_remote_egress_terminals(
+            workspace_dir=repo_root / str(binding["wb3_workspace_relative_path"]),
+            qualification_task_plan_ids=sorted(bindings_by_task_plan),
+        )
+    except InvocationControlError as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification WB-3 egress authority is invalid",
+        ) from error
+    wb3_by_terminal: Dict[str, Dict[str, object]] = {}
+    for terminal in wb3_terminals:
+        current = bindings_by_task_plan.get(
+            str(terminal["qualification_task_plan_id"]),
+        )
+        if current is None:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification WB-3 task plan is unknown",
+            )
+        terminal_id = str(current["qualification_terminal_id"])
+        if terminal_id in wb3_by_terminal:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification WB-3 terminal is duplicated",
+            )
+        wb3_by_terminal[terminal_id] = terminal
+    if set(wb3_by_terminal) != set(attempts_by_terminal):
+        if set(wb3_by_terminal).difference(attempts_by_terminal):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_PENDING_MATERIALIZATION",
+                message="WB-3 remote egress lacks complete Run materialization",
+            )
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Run remote attempt lacks WB-3 egress authority",
+        )
     for terminal_id, (current, attempt) in attempts_by_terminal.items():
         ledger = ledger_by_terminal[terminal_id]
         evidence = evidence_by_terminal[terminal_id]
+        wb3 = wb3_by_terminal[terminal_id]
+        if (
+            attempt["request_body_sha256"]
+            != wb3["provider_request_body_sha256"]
+            or attempt["provider"] != wb3["provider"]
+            or attempt["model"] != wb3["model"]
+            or attempt["api"] != wb3["api"]
+            or (
+                wb3["provider_request_ids"]
+                and attempt["provider_request_id"]
+                not in wb3["provider_request_ids"]
+            )
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Run attempt differs from WB-3 terminal",
+            )
         validate_table_qualification_provider_ledger_entry(
             entry=ledger,
             binding=current,
@@ -1833,6 +2011,15 @@ def execute_table_qualification_task(
             code="TABLE_QUALIFICATION_UNKNOWN_REMOTE_OUTCOME",
             message="Qualification terminal has an unknown remote outcome",
         )
+    if result.get("status") == "REMOTE_FAILURE_TERMINAL":
+        return {
+            "run_id": binding["run_id"],
+            "status": "FAILED_TERMINAL",
+            "attempt_id": result["attempt_id"],
+            "qualification_terminal_id": binding[
+                "qualification_terminal_id"
+            ],
+        }
     if existing_state != "NEW":
         recovered_state = result.pop("terminal_recovery_state", "")
         return {

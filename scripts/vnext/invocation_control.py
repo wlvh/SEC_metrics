@@ -1207,6 +1207,279 @@ def load_successful_response(
     return response
 
 
+def qualification_remote_egress_terminals(
+    *, workspace_dir: Path, qualification_task_plan_ids: Sequence[str],
+) -> List[Dict[str, object]]:
+    """Return every actual WB-3 remote terminal for qualification task plans.
+
+    This is intentionally a read-only reconstruction of the invocation-control
+    namespace.  A Run may crash after WB-3 writes its marker/execution/success
+    evidence but before it materializes an ``AI_EXTRACTION_ATTEMPT``.  Callers
+    that derive their cycle closure only from Run records would otherwise miss
+    a real remote egress.  ``ABANDONED_BEFORE_EGRESS`` receipts are checked but
+    do not enter the returned set because they have no marker.
+
+    Args:
+        workspace_dir: Receipt-bound WB-3 workspace for one qualification
+            cycle.
+        qualification_task_plan_ids: Exact current
+            ``qualification_task_plan_id`` values reconstructed from the
+            cycle's Run authorities.
+
+    Returns:
+        One strict mapping per terminal execution with at least one egress
+        marker, ordered by task plan and execution identity.
+
+    Raises:
+        InvocationControlError: On unsafe namespace entries, a receipt/marker
+        mismatch, or a terminal that cannot be tied to its exact plan.
+    """
+    allowed = set(qualification_task_plan_ids)
+    if not allowed:
+        raise InvocationControlError(
+            "Qualification task plan identities are invalid"
+        )
+    try:
+        for value in allowed:
+            _sha256_identity(
+                value=value, label="qualification task plan identity",
+            )
+    except InvocationControlError as error:
+        raise InvocationControlError(
+            "Qualification task plan identities are invalid"
+        ) from error
+    if workspace_dir.is_symlink():
+        raise InvocationControlError("Qualification workspace is unsafe")
+    root = workspace_dir / "invocation_control"
+    if not root.exists():
+        return []
+    if root.is_symlink() or not root.is_dir():
+        raise InvocationControlError("Qualification invocation state is unsafe")
+    for namespace in INVOCATION_STATE_NAMESPACES:
+        path = root / namespace
+        if path.is_symlink() or not path.is_dir():
+            raise InvocationControlError(
+                "Qualification invocation namespace is unsafe"
+            )
+
+    plans: Dict[str, Dict[str, object]] = {}
+    for path in sorted((root / "plans").iterdir(), key=lambda item: item.name):
+        if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+            raise InvocationControlError("Qualification invocation plan is unsafe")
+        plan = validate_ai_invocation_plan(
+            plan=_read_json_object(path=path, label="invocation plan"),
+        )
+        plan_id = str(plan["ai_invocation_plan_id"])
+        if path.stem != _identity_name(identity=plan_id):
+            raise InvocationControlError("Invocation plan path differs")
+        if plan["release_input_plan_id"] not in allowed:
+            continue
+        if plan_id in plans:
+            raise InvocationControlError("Qualification invocation plan duplicates")
+        plans[plan_id] = plan
+
+    terminal_rows = []
+    execution_ids_with_egress = set()
+    for path in sorted(
+        (root / "executions").iterdir(), key=lambda item: item.name,
+    ):
+        if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+            raise InvocationControlError("Qualification execution receipt is unsafe")
+        preview = _read_json_object(path=path, label="execution receipt")
+        execution_id = _text(
+            value=preview.get("execution_id"), label="execution id",
+        )
+        if path.stem != _identity_name(identity=execution_id):
+            raise InvocationControlError("Execution receipt path differs")
+        receipt = _load_execution_receipt(
+            root=root,
+            path=path,
+            execution_id=execution_id,
+        )
+        plan = plans.get(str(receipt["ai_invocation_plan_id"]))
+        if plan is None:
+            continue
+        markers = _egress_markers_for_execution(
+            root=root,
+            execution_id=execution_id,
+        )
+        status = _text(value=receipt["status"], label="execution status")
+        if not markers:
+            if status == "UNKNOWN_REMOTE_OUTCOME":
+                raise InvocationControlError("Unknown outcome lacks egress marker")
+            if status not in {
+                "REUSED_SUCCESS",
+                "SUCCEEDED",
+                "FAILED_TERMINAL",
+                "FAILED_RETRYABLE_FINAL",
+            }:
+                raise InvocationControlError("Execution status is invalid")
+            continue
+        execution_ids_with_egress.add(execution_id)
+        if status not in {
+            "SUCCEEDED",
+            "FAILED_TERMINAL",
+            "FAILED_RETRYABLE_FINAL",
+            "UNKNOWN_REMOTE_OUTCOME",
+        }:
+            raise InvocationControlError("Egress execution status is invalid")
+        marker_ids = []
+        for marker in markers:
+            if (
+                marker["ai_invocation_plan_id"]
+                != receipt["ai_invocation_plan_id"]
+                or marker["provider_request_identity"]
+                != receipt["provider_request_identity"]
+                or marker["execution_id"] != execution_id
+                or marker["transport_kind"]
+                not in {"MOCK", "REAL_MODEL_PROVIDER"}
+                or type(marker["paid_model_provider_call_observed"]) is not bool
+            ):
+                raise InvocationControlError("Egress marker differs from execution")
+            marker_ids.append(str(marker["egress_marker_id"]))
+        receipt_marker_ids = [
+            str(item["egress_marker_id"])
+            for item in receipt["attempts"]
+        ]
+        if status == "UNKNOWN_REMOTE_OUTCOME":
+            unknown_marker = _text(
+                value=receipt.get("unknown_egress_marker_id"),
+                label="unknown egress marker",
+            )
+            if unknown_marker != marker_ids[-1] or receipt_marker_ids:
+                raise InvocationControlError("Unknown outcome marker differs")
+        elif receipt_marker_ids != marker_ids:
+            raise InvocationControlError("Execution attempt markers differ")
+        if status == "SUCCEEDED":
+            success = _load_success_response(root=root, plan=plan)
+            if (
+                success is None
+                or receipt["success_response_receipt_id"]
+                != success["success_response_receipt_id"]
+            ):
+                raise InvocationControlError("Success response receipt differs")
+        elif receipt["success_response_receipt_id"] is not None:
+            raise InvocationControlError("Failed execution claims success response")
+        body = {
+            "record_type": "QUALIFICATION_WB3_REMOTE_EGRESS_TERMINAL",
+            "qualification_task_plan_id": plan["release_input_plan_id"],
+            "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+            "provider_request_identity": plan["provider_request_identity"],
+            "provider_request_body_sha256": plan[
+                "provider_request_body_sha256"
+            ],
+            "provider": plan["provider"],
+            "model": plan["model"],
+            "api": plan["api"],
+            "execution_id": execution_id,
+            "execution_receipt_id": receipt["execution_receipt_id"],
+            "status": status,
+            "egress_marker_ids": marker_ids,
+            "transport_kinds": [marker["transport_kind"] for marker in markers],
+            "paid_model_provider_call_observed": [
+                marker["paid_model_provider_call_observed"]
+                for marker in markers
+            ],
+            "provider_request_ids": [
+                item["provider_request_id"] for item in receipt["attempts"]
+            ],
+        }
+        terminal_rows.append({
+            **body,
+            "qualification_wb3_remote_egress_terminal_id": content_hash(
+                value=body,
+            ),
+        })
+
+    for directory in sorted(
+        (root / "egress").iterdir(), key=lambda item: item.name,
+    ):
+        if directory.is_symlink() or not directory.is_dir():
+            raise InvocationControlError("Qualification egress directory is unsafe")
+        marker_paths = sorted(directory.iterdir(), key=lambda item: item.name)
+        if not marker_paths:
+            raise InvocationControlError("Qualification egress directory is empty")
+        preview = _read_json_object(
+            path=marker_paths[0], label="egress marker",
+        )
+        execution_id = _text(
+            value=preview.get("execution_id"), label="egress execution id",
+        )
+        if directory.name != _identity_name(identity=execution_id):
+            raise InvocationControlError("Egress marker directory differs")
+        markers = _egress_markers_for_execution(
+            root=root, execution_id=execution_id,
+        )
+        plan = plans.get(str(markers[0]["ai_invocation_plan_id"]))
+        if plan is None:
+            continue
+        if execution_id in execution_ids_with_egress:
+            continue
+        if any(
+            marker["ai_invocation_plan_id"]
+            != plan["ai_invocation_plan_id"]
+            or marker["provider_request_identity"]
+            != plan["provider_request_identity"]
+            for marker in markers
+        ):
+            raise InvocationControlError("Unsealed egress marker differs from plan")
+        body = {
+            "record_type": "QUALIFICATION_WB3_REMOTE_EGRESS_TERMINAL",
+            "qualification_task_plan_id": plan["release_input_plan_id"],
+            "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+            "provider_request_identity": plan["provider_request_identity"],
+            "provider_request_body_sha256": plan[
+                "provider_request_body_sha256"
+            ],
+            "provider": plan["provider"],
+            "model": plan["model"],
+            "api": plan["api"],
+            "execution_id": execution_id,
+            "execution_receipt_id": None,
+            "status": "PENDING_REMOTE_OUTCOME",
+            "egress_marker_ids": [
+                marker["egress_marker_id"] for marker in markers
+            ],
+            "transport_kinds": [marker["transport_kind"] for marker in markers],
+            "paid_model_provider_call_observed": [
+                marker["paid_model_provider_call_observed"]
+                for marker in markers
+            ],
+            "provider_request_ids": [],
+        }
+        terminal_rows.append({
+            **body,
+            "qualification_wb3_remote_egress_terminal_id": content_hash(
+                value=body,
+            ),
+        })
+
+    for path in sorted(
+        (root / "abandoned").iterdir(), key=lambda item: item.name,
+    ):
+        if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+            raise InvocationControlError("Abandoned invocation receipt is unsafe")
+        value = _read_json_object(path=path, label="abandoned invocation receipt")
+        if value.get("record_type") != "ABANDONED_BEFORE_EGRESS_RECEIPT":
+            continue
+        execution_id = _text(
+            value=value.get("execution_id"), label="abandoned execution id",
+        )
+        if _egress_markers_for_execution(
+            root=root, execution_id=execution_id,
+        ):
+            raise InvocationControlError(
+                "Abandoned-before-egress receipt has egress marker"
+            )
+    return sorted(
+        terminal_rows,
+        key=lambda value: (
+            str(value["qualification_task_plan_id"]),
+            str(value["execution_id"]),
+        ),
+    )
+
+
 def _terminal_execution(
     *, root: Path, body: Mapping[str, object]
 ) -> Dict[str, object]:
