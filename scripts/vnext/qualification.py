@@ -1814,7 +1814,6 @@ def validate_table_qualification_cycle_exact_set(
     try:
         wb3_terminals = qualification_remote_egress_terminals(
             workspace_dir=repo_root / str(binding["wb3_workspace_relative_path"]),
-            qualification_task_plan_ids=sorted(bindings_by_task_plan),
         )
     except InvocationControlError as error:
         raise QualificationError(
@@ -1828,8 +1827,8 @@ def validate_table_qualification_cycle_exact_set(
         )
         if current is None:
             raise QualificationError(
-                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
-                message="Qualification WB-3 task plan is unknown",
+                code="TABLE_QUALIFICATION_CYCLE_PENDING_MATERIALIZATION",
+                message="WB-3 remote egress has no materialized qualification Run",
             )
         terminal_id = str(current["qualification_terminal_id"])
         if terminal_id in wb3_by_terminal:

@@ -1208,7 +1208,7 @@ def load_successful_response(
 
 
 def qualification_remote_egress_terminals(
-    *, workspace_dir: Path, qualification_task_plan_ids: Sequence[str],
+    *, workspace_dir: Path,
 ) -> List[Dict[str, object]]:
     """Return every actual WB-3 remote terminal for qualification task plans.
 
@@ -1222,9 +1222,6 @@ def qualification_remote_egress_terminals(
     Args:
         workspace_dir: Receipt-bound WB-3 workspace for one qualification
             cycle.
-        qualification_task_plan_ids: Exact current
-            ``qualification_task_plan_id`` values reconstructed from the
-            cycle's Run authorities.
 
     Returns:
         One strict mapping per terminal execution with at least one egress
@@ -1233,21 +1230,16 @@ def qualification_remote_egress_terminals(
     Raises:
         InvocationControlError: On unsafe namespace entries, a receipt/marker
         mismatch, or a terminal that cannot be tied to its exact plan.
+
+    The workspace is derived solely from the frozen qualification cycle.  It
+    is therefore not safe to begin this reconstruction with a set supplied by
+    materialized Run directories: a process can die after WB-3 persists an
+    egress marker but before that Run writes its first attempt record.  Scan
+    every invocation plan and egress marker in the cycle-owned workspace;
+    ``qualification.validate_table_qualification_cycle_exact_set`` later
+    proves every returned task-plan identity has a matching reconstructed Run
+    authorization.
     """
-    allowed = set(qualification_task_plan_ids)
-    if not allowed:
-        raise InvocationControlError(
-            "Qualification task plan identities are invalid"
-        )
-    try:
-        for value in allowed:
-            _sha256_identity(
-                value=value, label="qualification task plan identity",
-            )
-    except InvocationControlError as error:
-        raise InvocationControlError(
-            "Qualification task plan identities are invalid"
-        ) from error
     if workspace_dir.is_symlink():
         raise InvocationControlError("Qualification workspace is unsafe")
     root = workspace_dir / "invocation_control"
@@ -1255,6 +1247,10 @@ def qualification_remote_egress_terminals(
         return []
     if root.is_symlink() or not root.is_dir():
         raise InvocationControlError("Qualification invocation state is unsafe")
+    if {path.name for path in root.iterdir()} != set(INVOCATION_STATE_NAMESPACES):
+        raise InvocationControlError(
+            "Qualification invocation namespace exact set differs"
+        )
     for namespace in INVOCATION_STATE_NAMESPACES:
         path = root / namespace
         if path.is_symlink() or not path.is_dir():
@@ -1263,6 +1259,7 @@ def qualification_remote_egress_terminals(
             )
 
     plans: Dict[str, Dict[str, object]] = {}
+    plan_ids_by_task_plan: Dict[str, str] = {}
     for path in sorted((root / "plans").iterdir(), key=lambda item: item.name):
         if path.is_symlink() or not path.is_file() or path.suffix != ".json":
             raise InvocationControlError("Qualification invocation plan is unsafe")
@@ -1272,11 +1269,19 @@ def qualification_remote_egress_terminals(
         plan_id = str(plan["ai_invocation_plan_id"])
         if path.stem != _identity_name(identity=plan_id):
             raise InvocationControlError("Invocation plan path differs")
-        if plan["release_input_plan_id"] not in allowed:
-            continue
+        task_plan_id = _sha256_identity(
+            value=plan["release_input_plan_id"],
+            label="qualification task plan identity",
+        )
         if plan_id in plans:
             raise InvocationControlError("Qualification invocation plan duplicates")
+        prior_plan_id = plan_ids_by_task_plan.get(task_plan_id)
+        if prior_plan_id is not None and prior_plan_id != plan_id:
+            raise InvocationControlError(
+                "Qualification task plan has multiple invocation plans"
+            )
         plans[plan_id] = plan
+        plan_ids_by_task_plan[task_plan_id] = plan_id
 
     terminal_rows = []
     execution_ids_with_egress = set()
@@ -1298,7 +1303,9 @@ def qualification_remote_egress_terminals(
         )
         plan = plans.get(str(receipt["ai_invocation_plan_id"]))
         if plan is None:
-            continue
+            raise InvocationControlError(
+                "Qualification execution has no invocation plan"
+            )
         markers = _egress_markers_for_execution(
             root=root,
             execution_id=execution_id,
@@ -1412,7 +1419,9 @@ def qualification_remote_egress_terminals(
         )
         plan = plans.get(str(markers[0]["ai_invocation_plan_id"]))
         if plan is None:
-            continue
+            raise InvocationControlError(
+                "Qualification egress marker has no invocation plan"
+            )
         if execution_id in execution_ids_with_egress:
             continue
         if any(

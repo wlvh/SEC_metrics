@@ -1353,9 +1353,6 @@ class InvocationControlTest(unittest.TestCase):
             self.assertEqual(73, process.exitcode)
             pending = qualification_remote_egress_terminals(
                 workspace_dir=workspace,
-                qualification_task_plan_ids=[
-                    invocation_plan["release_input_plan_id"]
-                ],
             )
             self.assertEqual(1, len(pending))
             self.assertEqual("PENDING_REMOTE_OUTCOME", pending[0]["status"])
