@@ -1434,6 +1434,38 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         manifest=manifest,
                         records=records,
                     )
+                    wb3_terminals = qualification.qualification_remote_egress_terminals(
+                        workspace_dir=(
+                            repo_root / binding["wb3_workspace_relative_path"]
+                        ),
+                    )
+                    self.assertEqual(1, len(wb3_terminals))
+                    self.assertEqual("FAILED_TERMINAL", wb3_terminals[0]["status"])
+                    self.assertTrue(wb3_terminals[0]["batch_terminal"])
+                    mismatched_terminal = {
+                        **wb3_terminals[0],
+                        "status": "SUCCEEDED",
+                        "batch_terminal": False,
+                    }
+                    mismatched_terminal[
+                        "qualification_wb3_remote_egress_terminal_id"
+                    ] = content_hash(value={
+                        field: mismatched_terminal[field]
+                        for field in mismatched_terminal
+                        if field != "qualification_wb3_remote_egress_terminal_id"
+                    })
+                    with mock.patch.object(
+                        qualification,
+                        "qualification_remote_egress_terminals",
+                        return_value=[mismatched_terminal],
+                    ), self.assertRaisesRegex(
+                        qualification.QualificationError,
+                        "Run attempt differs from WB-3 terminal",
+                    ):
+                        qualification.validate_table_qualification_cycle_exact_set(
+                            repo_root=repo_root,
+                            binding=binding,
+                        )
                     records_before = (run_dir / "records.jsonl").read_bytes()
                     ledger_path = repo_root / binding[
                         "qualification_provider_ledger_path"

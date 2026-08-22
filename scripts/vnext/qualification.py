@@ -1822,6 +1822,19 @@ def validate_table_qualification_cycle_exact_set(
         ) from error
     wb3_by_terminal: Dict[str, Dict[str, object]] = {}
     for terminal in wb3_terminals:
+        terminal_id_value = terminal.get(
+            "qualification_wb3_remote_egress_terminal_id"
+        )
+        terminal_body = {
+            field: terminal[field]
+            for field in terminal
+            if field != "qualification_wb3_remote_egress_terminal_id"
+        }
+        if terminal_id_value != content_hash(value=terminal_body):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification WB-3 terminal identity differs",
+            )
         current = bindings_by_task_plan.get(
             str(terminal["qualification_task_plan_id"]),
         )
@@ -1851,6 +1864,15 @@ def validate_table_qualification_cycle_exact_set(
         ledger = ledger_by_terminal[terminal_id]
         evidence = evidence_by_terminal[terminal_id]
         wb3 = wb3_by_terminal[terminal_id]
+        if attempt["status"] == "SUCCEEDED":
+            expected_wb3_statuses = {"SUCCEEDED"}
+            expected_batch_terminal = False
+        elif attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME":
+            expected_wb3_statuses = {"UNKNOWN_REMOTE_OUTCOME"}
+            expected_batch_terminal = True
+        else:
+            expected_wb3_statuses = {"FAILED_TERMINAL"}
+            expected_batch_terminal = True
         if (
             attempt["request_body_sha256"]
             != wb3["provider_request_body_sha256"]
@@ -1862,6 +1884,8 @@ def validate_table_qualification_cycle_exact_set(
                 and attempt["provider_request_id"]
                 not in wb3["provider_request_ids"]
             )
+            or wb3["status"] not in expected_wb3_statuses
+            or wb3["batch_terminal"] is not expected_batch_terminal
         ):
             raise QualificationError(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",

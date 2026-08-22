@@ -1330,6 +1330,8 @@ def qualification_remote_egress_terminals(
             "UNKNOWN_REMOTE_OUTCOME",
         }:
             raise InvocationControlError("Egress execution status is invalid")
+        if type(receipt.get("batch_terminal")) is not bool:
+            raise InvocationControlError("Execution batch-terminal fact is invalid")
         marker_ids = []
         for marker in markers:
             if (
@@ -1381,6 +1383,7 @@ def qualification_remote_egress_terminals(
             "execution_id": execution_id,
             "execution_receipt_id": receipt["execution_receipt_id"],
             "status": status,
+            "batch_terminal": receipt["batch_terminal"],
             "egress_marker_ids": marker_ids,
             "transport_kinds": [marker["transport_kind"] for marker in markers],
             "paid_model_provider_call_observed": [
@@ -1446,6 +1449,7 @@ def qualification_remote_egress_terminals(
             "execution_id": execution_id,
             "execution_receipt_id": None,
             "status": "PENDING_REMOTE_OUTCOME",
+            "batch_terminal": None,
             "egress_marker_ids": [
                 marker["egress_marker_id"] for marker in markers
             ],
