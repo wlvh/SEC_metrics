@@ -20,7 +20,9 @@ from typing import Dict, Mapping, Optional, Sequence
 from sec_http import parse_request_log_rows, request_log_attempt_id
 from validation_provenance import ValidationProvenanceError
 
-from .ai_adapter import approved_transport_policy
+from .ai_adapter import AIAdapterError, approved_transport_policy
+from .ai_adapter import TransportObservation
+from .ai_adapter import transport_observation_mismatch
 from .ai_adapter import build_invocation_controlled_transport_adapter
 from .batch_workflow import BatchWorkflowError, validate_request_attempt_binding
 from .canonical import atomic_write_bytes, atomic_write_json, canonical_json_bytes
@@ -1221,6 +1223,10 @@ def validate_table_qualification_run_bindings(
             run_id=str(manifest["run_id"]),
             attempt=attempt,
         )
+    validate_table_qualification_cycle_exact_set(
+        repo_root=repo_root,
+        binding=binding,
+    )
 
 
 def _ledger_rows_for_terminal(
@@ -1490,6 +1496,9 @@ def validate_table_qualification_cycle_exact_set(
         )
     attempts_by_terminal: Dict[str, tuple[Dict[str, object], Dict[str, object]]] = {}
     evidence_by_terminal: Dict[str, Dict[str, object]] = {}
+    seen_run_ids = set()
+    seen_attempt_ids = set()
+    seen_evidence_ids = set()
     for run_dir in sorted(run_root.iterdir(), key=lambda path: path.name):
         if run_dir.is_symlink() or not run_dir.is_dir():
             raise QualificationError(
@@ -1515,6 +1524,13 @@ def validate_table_qualification_cycle_exact_set(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
                 message="Qualification cycle Run identity differs",
             )
+        run_id = str(manifest["run_id"])
+        if run_id in seen_run_ids:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle Run identity is duplicated",
+            )
+        seen_run_ids.add(run_id)
         terminal_id = str(current["qualification_terminal_id"])
         if terminal_id in attempts_by_terminal or terminal_id in evidence_by_terminal:
             raise QualificationError(
@@ -1549,6 +1565,13 @@ def validate_table_qualification_cycle_exact_set(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
                 message="Qualification cycle attempt authority differs",
             )
+        attempt_id = str(attempt["attempt_id"])
+        if attempt_id in seen_attempt_ids:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle attempt identity is duplicated",
+            )
+        seen_attempt_ids.add(attempt_id)
         try:
             observation = TransportObservation.from_mapping(
                 value=attempt["transport_observation"],
@@ -1613,6 +1636,13 @@ def validate_table_qualification_cycle_exact_set(
             run_id=str(manifest["run_id"]),
             attempt=attempt,
         )
+        evidence_id = str(evidence["qualification_evidence_id"])
+        if evidence_id in seen_evidence_ids:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification cycle evidence identity is duplicated",
+            )
+        seen_evidence_ids.add(evidence_id)
         attempts_by_terminal[terminal_id] = (current, attempt)
         evidence_by_terminal[terminal_id] = evidence
     ledger_path = _qualification_ledger_path(repo_root=repo_root, binding=binding)
@@ -1624,6 +1654,7 @@ def validate_table_qualification_cycle_exact_set(
     ledger_content = ledger_path.read_bytes()
     _validate_frozen_ledger_prefix(content=ledger_content, binding=binding)
     ledger_by_terminal: Dict[str, Dict[str, object]] = {}
+    seen_ledger_entry_ids = set()
     for row in _parse_qualification_ledger(content=ledger_content):
         nested = row["qualification_authorization"]
         rebuilt = _rebuild_authorization_binding(
@@ -1636,6 +1667,13 @@ def validate_table_qualification_cycle_exact_set(
                 message="Qualification ledger cycle differs",
             )
         terminal_id = str(rebuilt["qualification_terminal_id"])
+        ledger_entry_id = str(row["qualification_provider_ledger_entry_id"])
+        if ledger_entry_id in seen_ledger_entry_ids:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification ledger entry identity is duplicated",
+            )
+        seen_ledger_entry_ids.add(ledger_entry_id)
         if terminal_id in ledger_by_terminal:
             raise QualificationError(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",

@@ -1284,6 +1284,15 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 ).splitlines()
             ]
             self.assertEqual(2, len(rows))
+            self.assertEqual(
+                2,
+                len({
+                    row["qualification_provider_ledger_entry_id"]
+                    for row in rows
+                }),
+            )
+            cycle_attempt_ids = set()
+            cycle_evidence_ids = set()
             for binding in bindings:
                 run_dir = repo_root / binding["run_directory_relative_path"]
                 manifest, records, _decisions = load_run_for_status(
@@ -1296,6 +1305,17 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     manifest=manifest,
                     records=records,
                 )
+                cycle_attempt_ids.update(
+                    record["attempt_id"] for record in records
+                    if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+                    and record["transport_observation"]["egress_attempted"]
+                )
+                cycle_evidence_ids.update(
+                    record["qualification_evidence_id"] for record in records
+                    if record["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+                )
+            self.assertEqual(2, len(cycle_attempt_ids))
+            self.assertEqual(2, len(cycle_evidence_ids))
             ledger_before = ledger_path.read_bytes()
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
                 futures = [
