@@ -2434,7 +2434,9 @@ def _execute_controlled_transport(
         error_class,
         observation=observation,
         provider_request_id=(
-            observed_error.provider_request_id
+            ""
+            if execution["status"] == "UNKNOWN_REMOTE_OUTCOME"
+            else observed_error.provider_request_id
             if observed_error is not None
             else observed_result.provider_request_id
             if observed_result is not None

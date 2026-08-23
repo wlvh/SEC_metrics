@@ -2443,6 +2443,17 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     manifest=manifest,
                     records=records,
                 )
+                unknown_attempt = next(
+                    record for record in records
+                    if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+                )
+                self.assertEqual("", unknown_attempt["provider_request_id"])
+                unknown_terminal = qualification.qualification_remote_egress_terminals(
+                    workspace_dir=(
+                        repo_root / binding["wb3_workspace_relative_path"]
+                    ),
+                )[0]
+                self.assertEqual([], unknown_terminal["provider_request_ids"])
                 with mock.patch.object(
                     qualification,
                     "build_invocation_controlled_transport_adapter",
