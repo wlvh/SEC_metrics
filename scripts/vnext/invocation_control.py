@@ -1640,6 +1640,12 @@ def qualification_remote_egress_terminals(
                 marker["paid_model_provider_call_observed"]
                 for marker in markers
             ],
+            "attempt_statuses": [
+                item["status"] for item in receipt["attempts"]
+            ],
+            "attempt_error_classes": [
+                item["error_class"] for item in receipt["attempts"]
+            ],
             "provider_request_ids": [
                 item["provider_request_id"] for item in receipt["attempts"]
             ],
@@ -1708,6 +1714,8 @@ def qualification_remote_egress_terminals(
                 marker["paid_model_provider_call_observed"]
                 for marker in markers
             ],
+            "attempt_statuses": [],
+            "attempt_error_classes": [],
             "provider_request_ids": [],
         }
         terminal_rows.append({

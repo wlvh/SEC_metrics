@@ -172,6 +172,74 @@ def _payloads_from_recovery_mapping(*, value: object) -> AttemptPayloads:
         ) from error
 
 
+def _payloads_from_persisted_attempt(
+    *, run_dir: Path, attempt: Mapping[str, object],
+) -> AttemptPayloads:
+    """Reload an exact failed remote attempt without re-entering WB-3.
+
+    A remote terminal may crash after its immutable Run attempt record but
+    before ledger/evidence materialization.  Its declared payload files are
+    already the durable source of truth; reconstructing this bundle avoids a
+    second provider call while the missing terminal closure is appended.
+    """
+    def load(
+        *, path_field: str, hash_field: str, required: bool,
+    ) -> Optional[bytes]:
+        relative = attempt.get(path_field)
+        expected = attempt.get(hash_field)
+        if relative == "" and expected == "":
+            if required:
+                raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+            return None
+        if type(relative) is not str or type(expected) is not str:
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+        locator = Path(relative)
+        if locator.is_absolute() or ".." in locator.parts:
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+        path = run_dir / locator
+        if (
+            path.is_symlink()
+            or not path.is_file()
+            or sha256_file(path=path) != expected
+        ):
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+        return path.read_bytes()
+
+    return AttemptPayloads(
+        request_body_bytes=load(
+            path_field="request_body_path",
+            hash_field="request_body_sha256",
+            required=True,
+        ),
+        reader_payload_bytes=load(
+            path_field="reader_payload_path",
+            hash_field="reader_payload_sha256",
+            required=True,
+        ),
+        task_contract_bytes=load(
+            path_field="task_contract_path",
+            hash_field="task_contract_sha256",
+            required=True,
+        ),
+        output_schema_bytes=load(
+            path_field="output_schema_path",
+            hash_field="output_schema_sha256",
+            required=True,
+        ),
+        assistant_output_bytes=load(
+            path_field="assistant_output_path",
+            hash_field="assistant_output_sha256",
+            required=False,
+        ),
+        raw_response_bytes=load(
+            path_field="raw_response_path",
+            hash_field="raw_response_sha256",
+            required=False,
+        ),
+        acceptance_receipt=None,
+    )
+
+
 def _write_table_qualification_recovery_checkpoint(
     *, run_dir: Path, run_id: str, qualification_authorization: Mapping[str, object],
     attempt: Mapping[str, object], payloads: AttemptPayloads,
@@ -1175,7 +1243,23 @@ def _create_review_run_with_traits(
         if existing_attempts and existing_attempts[0] != checkpoint_attempt:
             raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
         attempt = checkpoint_attempt
-        response = attempt_payloads.assistant_output_bytes
+        response = (
+            attempt_payloads.assistant_output_bytes
+            if attempt["status"] == "SUCCEEDED"
+            else None
+        )
+    elif (
+        qualification_binding is not None
+        and existing_attempts
+        and existing_attempts[0]["status"] == "FAILED"
+    ):
+        attempt = existing_attempts[0]
+        if attempt.get("qualification_authorization") != qualification_binding:
+            raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+        attempt_payloads = _payloads_from_persisted_attempt(
+            run_dir=run_dir, attempt=attempt,
+        )
+        response = None
     else:
         response, _raw_response, attempt, attempt_payloads = run_ai_attempt(
             adapter=adapter,
@@ -1206,7 +1290,12 @@ def _create_review_run_with_traits(
             # bundle must still match the originally persisted attempt bytes.
             attempt = existing_attempts[0]
             response = attempt_payloads.assistant_output_bytes
-        if qualification_binding is not None and response is not None:
+        if (
+            qualification_binding is not None
+            and type(attempt.get("transport_observation")) is dict
+            and attempt["transport_observation"].get("egress_attempted")
+            is True
+        ):
             _write_table_qualification_recovery_checkpoint(
                 run_dir=run_dir,
                 run_id=run_id,
@@ -1214,6 +1303,25 @@ def _create_review_run_with_traits(
                 attempt=attempt,
                 payloads=attempt_payloads,
             )
+    remote_egress = (
+        qualification_binding is not None
+        and type(attempt.get("transport_observation")) is dict
+        and attempt["transport_observation"].get("egress_attempted") is True
+    )
+    if (
+        qualification_binding is not None
+        and attempt.get("status") == "FAILED"
+        and not remote_egress
+    ):
+        # Local credential/preflight failures have not opened a socket and do
+        # not own a remote terminal.  Do not append an immutable attempt that
+        # would prevent the same deterministic ordinal from retrying after the
+        # local condition is repaired.
+        return {
+            "run_id": run_id,
+            "status": "PRE_EGRESS_FAILURE",
+            "attempt_id": attempt["attempt_id"],
+        }
     _checkpoint_recovery_phase(phase="AFTER_EXACT_SUCCESS")
     write_attempt_payloads(
         run_dir=run_dir,
@@ -1226,20 +1334,16 @@ def _create_review_run_with_traits(
     )
     _checkpoint_recovery_phase(phase="AFTER_ATTEMPT_RECORD")
     unknown_remote_outcome = (
-        qualification_binding is not None
-        and type(attempt.get("transport_observation")) is dict
-        and attempt["transport_observation"].get("egress_attempted") is True
+        remote_egress
         and attempt.get("status") == "FAILED"
         and attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
     )
     remote_failure_terminal = (
-        qualification_binding is not None
-        and type(attempt.get("transport_observation")) is dict
-        and attempt["transport_observation"].get("egress_attempted") is True
+        remote_egress
         and attempt.get("status") == "FAILED"
         and not unknown_remote_outcome
     )
-    if qualification_binding is not None:
+    if qualification_binding is not None and remote_egress:
         try:
             qualification_evidence = record_table_qualification_execution(
                 repo_root=repo_root,
@@ -1257,12 +1361,21 @@ def _create_review_run_with_traits(
         )
         _checkpoint_recovery_phase(phase="AFTER_QUALIFICATION_EVIDENCE")
     if unknown_remote_outcome:
+        _remove_table_qualification_recovery_checkpoint(run_dir=run_dir)
+        _checkpoint_recovery_phase(
+            phase="AFTER_REMOTE_TERMINAL_CHECKPOINT_REMOVAL"
+        )
         return {
             "run_id": run_id,
             "status": "UNKNOWN_REMOTE_OUTCOME",
             "attempt_id": attempt["attempt_id"],
         }
     if response is None:
+        if remote_failure_terminal:
+            _remove_table_qualification_recovery_checkpoint(run_dir=run_dir)
+            _checkpoint_recovery_phase(
+                phase="AFTER_REMOTE_TERMINAL_CHECKPOINT_REMOVAL"
+            )
         return {
             "run_id": run_id,
             "status": (

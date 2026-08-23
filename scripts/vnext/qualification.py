@@ -179,10 +179,13 @@ _TERMINAL_RECOVERY_STATES = {
     "NEW",
     "OPEN_BEFORE_EGRESS",
     "EXACT_SUCCESS_NOT_MATERIALIZED",
+    "REMOTE_TERMINAL_NOT_MATERIALIZED",
+    "UNKNOWN_REMOTE_OUTCOME_NOT_MATERIALIZED",
     "UNKNOWN_REMOTE_OUTCOME",
     "COMPLETE_OPEN_PENDING_REVIEW",
     "FROZEN",
     "FAILED_TERMINAL",
+    "PRE_EGRESS_FAILURE",
     "DIVERGENT",
 }
 
@@ -1401,23 +1404,61 @@ def _table_qualification_recovery_state(
     if not attempts:
         checkpoint = run_dir / "qualification_recovery.json"
         if checkpoint.exists():
-            return (
-                "EXACT_SUCCESS_NOT_MATERIALIZED"
-                if not checkpoint.is_symlink() and checkpoint.is_file()
-                else "DIVERGENT"
-            )
+            if checkpoint.is_symlink() or not checkpoint.is_file():
+                return "DIVERGENT"
+            try:
+                checkpoint_value = strict_json_file(path=checkpoint)
+                checkpoint_attempt = checkpoint_value["attempt"]
+                observation = checkpoint_attempt["transport_observation"]
+            except (AttributeError, KeyError, TypeError, ValueError):
+                return "DIVERGENT"
+            if (
+                checkpoint_attempt.get("status") == "FAILED"
+                and type(observation) is dict
+                and observation.get("egress_attempted") is True
+            ):
+                return (
+                    "UNKNOWN_REMOTE_OUTCOME_NOT_MATERIALIZED"
+                    if checkpoint_attempt.get("error_class")
+                    == "UNKNOWN_REMOTE_OUTCOME"
+                    else "REMOTE_TERMINAL_NOT_MATERIALIZED"
+                )
+            return "EXACT_SUCCESS_NOT_MATERIALIZED"
         return "DIVERGENT" if ledger_rows or evidence else "OPEN_BEFORE_EGRESS"
     attempt = attempts[0]
     observation = attempt.get("transport_observation")
     if type(observation) is not dict:
         return "DIVERGENT"
     if attempt.get("status") == "FAILED":
+        if observation.get("egress_attempted") is not True:
+            return "PRE_EGRESS_FAILURE"
+        unknown = attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
         if (
-            observation.get("egress_attempted") is True
-            and attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME"
+            attempt.get("qualification_authorization") != binding
+            or not _attempt_payloads_match(run_dir=run_dir, attempt=attempt)
+            or len(ledger_rows) != 1
+            or len(evidence) != 1
+            or evidence[0].get("attempt_id") != attempt.get("attempt_id")
         ):
-            return "UNKNOWN_REMOTE_OUTCOME"
-        return "FAILED_TERMINAL"
+            return (
+                "UNKNOWN_REMOTE_OUTCOME_NOT_MATERIALIZED"
+                if unknown
+                else "REMOTE_TERMINAL_NOT_MATERIALIZED"
+            )
+        try:
+            validate_table_qualification_cycle_exact_set(
+                repo_root=repo_root,
+                binding=binding,
+            )
+        except QualificationError as error:
+            if error.code == "TABLE_QUALIFICATION_CYCLE_PENDING_MATERIALIZATION":
+                return (
+                    "UNKNOWN_REMOTE_OUTCOME_NOT_MATERIALIZED"
+                    if unknown
+                    else "REMOTE_TERMINAL_NOT_MATERIALIZED"
+                )
+            return "DIVERGENT"
+        return "UNKNOWN_REMOTE_OUTCOME" if unknown else "FAILED_TERMINAL"
     if observation.get("egress_attempted") is not True:
         return "DIVERGENT"
     if attempt.get("qualification_authorization") != binding:
@@ -1864,15 +1905,55 @@ def validate_table_qualification_cycle_exact_set(
         ledger = ledger_by_terminal[terminal_id]
         evidence = evidence_by_terminal[terminal_id]
         wb3 = wb3_by_terminal[terminal_id]
+        marker_ids = wb3.get("egress_marker_ids")
+        provider_request_ids = wb3.get("provider_request_ids")
+        attempt_statuses = wb3.get("attempt_statuses")
+        attempt_error_classes = wb3.get("attempt_error_classes")
+        if (
+            not isinstance(marker_ids, list)
+            or not isinstance(provider_request_ids, list)
+            or not isinstance(attempt_statuses, list)
+            or not isinstance(attempt_error_classes, list)
+            or any(type(value) is not str for value in marker_ids)
+            or any(type(value) is not str for value in provider_request_ids)
+            or any(type(value) is not str for value in attempt_statuses)
+            or any(type(value) is not str for value in attempt_error_classes)
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification WB-3 attempt sequence is invalid",
+            )
+        retryable_error = attempt.get("error_class") in {
+            "HTTP_429", "TIMEOUT", "RECOVERABLE_5XX",
+        } or (
+            type(attempt.get("error_class")) is str
+            and attempt["error_class"].startswith("HTTP_5")
+        )
         if attempt["status"] == "SUCCEEDED":
             expected_wb3_statuses = {"SUCCEEDED"}
             expected_batch_terminal = False
+            expected_attempt_statuses = (
+                ["SUCCEEDED"]
+                if len(marker_ids) == 1
+                else ["FAILED_RETRYABLE", "SUCCEEDED"]
+            )
         elif attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME":
             expected_wb3_statuses = {"UNKNOWN_REMOTE_OUTCOME"}
             expected_batch_terminal = True
+            expected_attempt_statuses = []
+        elif retryable_error:
+            expected_wb3_statuses = {"FAILED_RETRYABLE_FINAL"}
+            expected_batch_terminal = True
+            expected_attempt_statuses = [
+                "FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL",
+            ]
         else:
             expected_wb3_statuses = {"FAILED_TERMINAL"}
             expected_batch_terminal = True
+            expected_attempt_statuses = ["FAILED_TERMINAL"]
+        expected_attempt_error = (
+            "" if attempt["status"] == "SUCCEEDED" else attempt["error_class"]
+        )
         if (
             attempt["request_body_sha256"]
             != wb3["provider_request_body_sha256"]
@@ -1880,12 +1961,22 @@ def validate_table_qualification_cycle_exact_set(
             or attempt["model"] != wb3["model"]
             or attempt["api"] != wb3["api"]
             or (
-                wb3["provider_request_ids"]
+                provider_request_ids
                 and attempt["provider_request_id"]
-                not in wb3["provider_request_ids"]
+                not in provider_request_ids
             )
             or wb3["status"] not in expected_wb3_statuses
             or wb3["batch_terminal"] is not expected_batch_terminal
+            or attempt_statuses != expected_attempt_statuses
+            or len(marker_ids) != len(attempt_statuses) + (
+                1 if wb3["status"] == "UNKNOWN_REMOTE_OUTCOME" else 0
+            )
+            or len(provider_request_ids) != len(attempt_statuses)
+            or (
+                bool(attempt_error_classes)
+                and attempt_error_classes[-1] != expected_attempt_error
+            )
+            or len(attempt_error_classes) != len(attempt_statuses)
         ):
             raise QualificationError(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
@@ -2038,6 +2129,15 @@ def execute_table_qualification_task(
         return {
             "run_id": binding["run_id"],
             "status": "FAILED_TERMINAL",
+            "attempt_id": result["attempt_id"],
+            "qualification_terminal_id": binding[
+                "qualification_terminal_id"
+            ],
+        }
+    if result.get("status") == "PRE_EGRESS_FAILURE":
+        return {
+            "run_id": binding["run_id"],
+            "status": "PRE_EGRESS_FAILURE",
             "attempt_id": result["attempt_id"],
             "qualification_terminal_id": binding[
                 "qualification_terminal_id"

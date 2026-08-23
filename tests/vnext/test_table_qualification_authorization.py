@@ -493,6 +493,92 @@ def mocked_live_table_transport(
             yield
 
 
+@contextmanager
+def mocked_live_table_failure_transport(
+    *, repo_root: Path, binding: Dict[str, object],
+    outcomes: Sequence[tuple[str, int]], calls: list[bytes],
+    request_label: str,
+) -> Iterator[None]:
+    """Exercise the full LIVE/WB-3 path with exact injected failures only."""
+    with mock.patch.object(
+        ai_adapter,
+        "_REPOSITORY_ROOT",
+        repo_root,
+    ), mock.patch.dict(
+        os.environ,
+        {"DEEPSEEK_API_KEY": "synthetic-only"},
+        clear=False,
+    ):
+        adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+            release_input_plan_id=binding["qualification_task_plan_id"],
+            workspace_dir=repo_root / binding["wb3_workspace_relative_path"],
+            owner_token="synthetic-owner",
+        )
+        remaining = list(outcomes)
+
+        def transport(
+            *, prepared_request: object, egress_capability: object,
+        ) -> TransportResult:
+            """Return one named failure after the real reservation marker."""
+            if not remaining:
+                raise AssertionError("provider transport reinvoked")
+            error_class, status_code = remaining.pop(0)
+            outbound, schema = build_provider_request_body(
+                policy=adapter.policy,
+                reader_request_bytes=prepared_request.prepared_request.request_bytes,
+            )
+            calls.append(outbound)
+            policy = adapter.policy
+            observation = TransportObservation(
+                egress_attempted=True,
+                provider=policy.provider,
+                model=policy.model,
+                model_requested=policy.model,
+                model_returned="none",
+                api=policy.api,
+                store=False,
+                endpoint_host=policy.endpoint_host,
+                region=policy.region,
+                retention=policy.retention,
+                data_use=policy.data_use,
+                timeout_seconds=policy.timeout_seconds,
+                retry_count=policy.retry_count,
+                # D-35 creates the second WB-3 attempt; it is not a D-01
+                # transport-internal retry, so the per-observation count
+                # remains zero under the frozen D-01 policy.
+                retries_performed=0,
+                maximum_payload_bytes=policy.maximum_payload_bytes,
+                filing_egress_policy=policy.filing_egress_policy,
+                request_body_bytes=len(outbound),
+            )
+            raise TransportAttemptError(
+                "synthetic qualification failure",
+                observation=observation,
+                provider_request_id="request:{}:{}".format(
+                    request_label, len(calls),
+                ),
+                raw_response_bytes=None,
+                error_class=error_class,
+                outbound_request_bytes=outbound,
+                output_schema_bytes=schema,
+            )
+
+        with mock.patch.object(
+            ai_adapter._InvocationControllerTransport,
+            "transport_kind",
+            "MOCK",
+        ), mock.patch.object(
+            adapter,
+            "_complete_repository_transport",
+            side_effect=transport,
+        ), mock.patch.object(
+            qualification,
+            "build_invocation_controlled_transport_adapter",
+            return_value=adapter,
+        ):
+            yield
+
+
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
 
@@ -1571,6 +1657,310 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     self.assertEqual(
                         records_before, (run_dir / "records.jsonl").read_bytes(),
                     )
+                    self.assertEqual(ledger_before, ledger_path.read_bytes())
+
+    def test_interrupted_remote_terminals_materialize_without_second_transport(
+        self,
+    ) -> None:
+        """Recover failed/UNKNOWN terminal closure at every Run write boundary."""
+        phases = (
+            "AFTER_ATTEMPT_PAYLOAD",
+            "AFTER_ATTEMPT_RECORD",
+            "AFTER_LEDGER",
+            "AFTER_QUALIFICATION_EVIDENCE",
+        )
+        scenarios = (
+            ("http_400", (("HTTP_400", 400),), "FAILED_TERMINAL", 1),
+            ("http_402", (("HTTP_402", 402),), "FAILED_TERMINAL", 1),
+            (
+                "unknown",
+                (("UNKNOWN_REMOTE_OUTCOME", 0),),
+                "UNKNOWN_REMOTE_OUTCOME",
+                1,
+            ),
+            (
+                "retry_exhausted",
+                (("HTTP_429", 429), ("HTTP_429", 429)),
+                "FAILED_TERMINAL",
+                2,
+            ),
+        )
+
+        class InjectedCrash(RuntimeError):
+            """Stop after one durable Run materialization boundary."""
+
+        with cloned_synthetic_no_d07_repositories(
+            count=len(phases) * len(scenarios),
+        ) as roots:
+            for index, ((name, outcomes, expected, call_count), phase) in enumerate(
+                (
+                    (scenario, phase)
+                    for scenario in scenarios
+                    for phase in phases
+                )
+            ):
+                repo_root = roots[index]
+                with self.subTest(terminal=name, phase=phase):
+                    (repo_root / "outputs/active_publication.json.lock").touch()
+                    clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+                    binding = qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_occupancy_table_v2",
+                        qualification_ordinal=1,
+                    ).as_mapping()
+                    common = {
+                        "repo_root": repo_root,
+                        "family_id": "lodging_kpi_table",
+                        "task_contract_id": "lodging_occupancy_table_v2",
+                        "qualification_ordinal": 1,
+                        "target_period": binding["target_period"],
+                        "owner_token": "synthetic-owner",
+                        "clock": clock,
+                    }
+                    calls: list[bytes] = []
+
+                    def crash_here(observed: str) -> None:
+                        if observed == phase:
+                            raise InjectedCrash(observed)
+
+                    with mocked_live_table_failure_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        outcomes=outcomes,
+                        calls=calls,
+                        request_label="{}:{}".format(name, phase),
+                    ), mock.patch.object(
+                        workflow,
+                        "_TABLE_QUALIFICATION_RECOVERY_HOOK",
+                        side_effect=crash_here,
+                    ):
+                        with self.assertRaises(InjectedCrash):
+                            qualification.execute_table_qualification_task(
+                                **common,
+                            )
+                    self.assertEqual(call_count, len(calls))
+
+                    with mocked_live_table_failure_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        outcomes=(),
+                        calls=calls,
+                        request_label="resume:" + name,
+                    ):
+                        if expected == "UNKNOWN_REMOTE_OUTCOME":
+                            with self.assertRaises(
+                                qualification.QualificationError,
+                            ) as resumed_error:
+                                qualification.execute_table_qualification_task(
+                                    **common,
+                                )
+                            self.assertEqual(
+                                "TABLE_QUALIFICATION_UNKNOWN_REMOTE_OUTCOME",
+                                resumed_error.exception.code,
+                            )
+                        else:
+                            resumed = qualification.execute_table_qualification_task(
+                                **common,
+                            )
+                            self.assertEqual(expected, resumed["status"])
+                    self.assertEqual(call_count, len(calls))
+                    run_dir = repo_root / binding["run_directory_relative_path"]
+                    manifest, records, _decisions = load_run_for_status(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                    qualification.validate_table_qualification_run_bindings(
+                        repo_root=repo_root,
+                        run_dir=run_dir,
+                        manifest=manifest,
+                        records=records,
+                    )
+                    attempts = [
+                        record for record in records
+                        if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+                    ]
+                    evidence = [
+                        record for record in records
+                        if record["record_type"]
+                        == "TABLE_QUALIFICATION_EVIDENCE"
+                    ]
+                    self.assertEqual(1, len(attempts))
+                    self.assertEqual(1, len(evidence))
+                    records_before = (run_dir / "records.jsonl").read_bytes()
+                    ledger_path = repo_root / binding[
+                        "qualification_provider_ledger_path"
+                    ]
+                    ledger_before = ledger_path.read_bytes()
+                    with mock.patch.object(
+                        qualification,
+                        "build_invocation_controlled_transport_adapter",
+                        side_effect=AssertionError("provider path reached"),
+                    ):
+                        if expected == "UNKNOWN_REMOTE_OUTCOME":
+                            with self.assertRaises(
+                                qualification.QualificationError,
+                            ):
+                                qualification.execute_table_qualification_task(
+                                    **common,
+                                )
+                        else:
+                            third = qualification.execute_table_qualification_task(
+                                **common,
+                            )
+                            self.assertEqual(expected, third["status"])
+                    self.assertEqual(records_before, (run_dir / "records.jsonl").read_bytes())
+                    self.assertEqual(ledger_before, ledger_path.read_bytes())
+                    self.assertEqual(call_count, len(calls))
+
+    def test_pre_egress_failure_leaves_ordinal_recoverable(self) -> None:
+        """A local credential/preflight error creates no remote terminal closure."""
+        with synthetic_no_d07_repository() as repo_root:
+            (repo_root / "outputs/active_publication.json.lock").touch()
+            clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+            binding = qualification.issue_table_qualification_authorization(
+                repo_root=repo_root,
+                family_id="lodging_kpi_table",
+                task_contract_id="lodging_occupancy_table_v2",
+                qualification_ordinal=1,
+            ).as_mapping()
+            common = {
+                "repo_root": repo_root,
+                "family_id": "lodging_kpi_table",
+                "task_contract_id": "lodging_occupancy_table_v2",
+                "qualification_ordinal": 1,
+                "target_period": binding["target_period"],
+                "owner_token": "synthetic-owner",
+                "clock": clock,
+            }
+            with mock.patch.object(
+                ai_adapter,
+                "_REPOSITORY_ROOT",
+                repo_root,
+            ), mock.patch.dict(os.environ, {}, clear=True):
+                pre_egress = qualification.execute_table_qualification_task(
+                    **common,
+                )
+            self.assertEqual("PRE_EGRESS_FAILURE", pre_egress["status"])
+            run_dir = repo_root / binding["run_directory_relative_path"]
+            _manifest, records, _decisions = load_run_for_status(
+                run_dir=run_dir,
+                repo_root=repo_root,
+            )
+            self.assertEqual([], [
+                record for record in records
+                if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+            ])
+            self.assertEqual([], [
+                record for record in records
+                if record["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+            ])
+            ledger_path = repo_root / binding["qualification_provider_ledger_path"]
+            self.assertEqual(b"", ledger_path.read_bytes())
+            calls: list[bytes] = []
+            with mocked_live_table_transport(
+                repo_root=repo_root,
+                binding=binding,
+                response_bytes=_occupancy_response(repo_root=repo_root),
+                calls=calls,
+                provider_request_id="request:repaired-pre-egress",
+            ):
+                repaired = qualification.execute_table_qualification_task(
+                    **common,
+                )
+            self.assertEqual("PENDING_HUMAN_REVIEW", repaired["status"])
+            self.assertEqual(1, len(calls))
+
+    def test_exhausted_retryable_terminals_bind_cycle_evidence(self) -> None:
+        """D-35 retry exhaustion remains one fully bound qualification terminal."""
+        scenarios = (
+            ("http_429", "HTTP_429", 429),
+            ("timeout", "TIMEOUT", 0),
+            ("recoverable_5xx", "RECOVERABLE_5XX", 500),
+        )
+        with cloned_synthetic_no_d07_repositories(
+            count=len(scenarios),
+        ) as roots:
+            for (name, error_class, status_code), repo_root in zip(
+                scenarios, roots,
+            ):
+                with self.subTest(terminal=name):
+                    (repo_root / "outputs/active_publication.json.lock").touch()
+                    clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+                    binding = qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_occupancy_table_v2",
+                        qualification_ordinal=1,
+                    ).as_mapping()
+                    common = {
+                        "repo_root": repo_root,
+                        "family_id": "lodging_kpi_table",
+                        "task_contract_id": "lodging_occupancy_table_v2",
+                        "qualification_ordinal": 1,
+                        "target_period": binding["target_period"],
+                        "owner_token": "synthetic-owner",
+                        "clock": clock,
+                    }
+                    calls: list[bytes] = []
+                    with mocked_live_table_failure_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        outcomes=((error_class, status_code),) * 2,
+                        calls=calls,
+                        request_label="retry:" + name,
+                    ):
+                        initial = qualification.execute_table_qualification_task(
+                            **common,
+                        )
+                    self.assertEqual("FAILED_TERMINAL", initial["status"])
+                    self.assertEqual(2, len(calls))
+                    run_dir = repo_root / binding["run_directory_relative_path"]
+                    manifest, records, _decisions = load_run_for_status(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                    qualification.validate_table_qualification_run_bindings(
+                        repo_root=repo_root,
+                        run_dir=run_dir,
+                        manifest=manifest,
+                        records=records,
+                    )
+                    terminals = qualification.qualification_remote_egress_terminals(
+                        workspace_dir=(
+                            repo_root / binding["wb3_workspace_relative_path"]
+                        ),
+                    )
+                    self.assertEqual(1, len(terminals))
+                    terminal = terminals[0]
+                    self.assertEqual("FAILED_RETRYABLE_FINAL", terminal["status"])
+                    self.assertTrue(terminal["batch_terminal"])
+                    self.assertEqual(2, len(terminal["egress_marker_ids"]))
+                    self.assertEqual(2, len(terminal["provider_request_ids"]))
+                    self.assertEqual(
+                        ["FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL"],
+                        terminal["attempt_statuses"],
+                    )
+                    self.assertEqual(
+                        [error_class, error_class],
+                        terminal["attempt_error_classes"],
+                    )
+                    records_before = (run_dir / "records.jsonl").read_bytes()
+                    ledger_path = repo_root / binding[
+                        "qualification_provider_ledger_path"
+                    ]
+                    ledger_before = ledger_path.read_bytes()
+                    with mock.patch.object(
+                        qualification,
+                        "build_invocation_controlled_transport_adapter",
+                        side_effect=AssertionError("provider path reached"),
+                    ):
+                        repeated = qualification.execute_table_qualification_task(
+                            **common,
+                        )
+                    self.assertEqual("FAILED_TERMINAL", repeated["status"])
+                    self.assertEqual(2, len(calls))
+                    self.assertEqual(records_before, (run_dir / "records.jsonl").read_bytes())
                     self.assertEqual(ledger_before, ledger_path.read_bytes())
 
     def test_cycle_exact_set_uses_complete_concurrent_authorized_terminals(
