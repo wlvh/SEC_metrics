@@ -22,7 +22,7 @@ import tools.vnext_operator as vnext_operator
 import tools.vnext_capture_qualification_fixture as capture_tool
 from tools.check_provider_egress import ALLOWED_OPENER_CALLS
 from tools.check_provider_egress import scan_provider_opener_calls
-from vnext import ai_adapter
+from vnext import ai_adapter, invocation_control
 from vnext.batch_workflow import request_attempt_binding
 from vnext.canonical import content_hash, sha256_bytes
 from vnext.cutover import _live_retry_policy, _normalized_invocation_error
@@ -1225,6 +1225,107 @@ class InvocationControlTest(unittest.TestCase):
         self.assertEqual("REUSED_SUCCESS", resumed["status"])
         self.assertEqual(0, second_transport.invocation_count)
         self.assertEqual(0, resumed["counters"]["mock_transport_invocation_count"])
+
+    def test_persisted_success_recovers_before_execution_seal(self) -> None:
+        """Seal a marker-owned success before either same or new-ID reuse."""
+        phases = (
+            "AFTER_SUCCESS_RESPONSE_PERSISTED",
+            "AFTER_EXECUTION_SEALED",
+        )
+
+        class InjectedCrash(RuntimeError):
+            """Stop after one durable WB-3 terminal boundary."""
+
+        for phase in phases:
+            with self.subTest(phase=phase), tempfile.TemporaryDirectory() as directory:
+                workspace = Path(directory)
+                invocation_plan = plan()
+                original_execution_id = execution(
+                    invocation_plan=invocation_plan,
+                    owner="seal-owner-a",
+                    at=UTC,
+                )
+                first_transport = MockTransport(results=[transport_result()])
+
+                def crash_here(observed: str) -> None:
+                    if observed == phase:
+                        raise InjectedCrash(observed)
+
+                with mock.patch.object(
+                    invocation_control,
+                    "_INVOCATION_TERMINAL_RECOVERY_HOOK",
+                    side_effect=crash_here,
+                ), self.assertRaises(InjectedCrash):
+                    execute_invocation(
+                        workspace_dir=workspace,
+                        plan=invocation_plan,
+                        request_body=REQUEST_BODY,
+                        execution_id=original_execution_id,
+                        owner_token="seal-owner-a",
+                        authorized_at_utc=UTC,
+                        clock=clock,
+                        transport=first_transport,
+                        response_validator=validate_response,
+                        evidence_validator=validate_evidence,
+                    )
+                self.assertEqual(1, first_transport.invocation_count)
+
+                with mock.patch.object(
+                    invocation_control,
+                    "_process_is_alive",
+                    return_value=False,
+                ):
+                    original = execute_invocation(
+                        workspace_dir=workspace,
+                        plan=invocation_plan,
+                        request_body=REQUEST_BODY,
+                        execution_id=original_execution_id,
+                        owner_token="seal-owner-a",
+                        authorized_at_utc=UTC,
+                        clock=clock,
+                        transport=MockTransport(results=[AssertionError("called")]),
+                        response_validator=validate_response,
+                        evidence_validator=validate_evidence,
+                    )
+                self.assertEqual("SUCCEEDED", original["status"])
+                self.assertEqual(["SUCCEEDED"], [
+                    attempt["status"] for attempt in original["attempts"]
+                ])
+                state = workspace / "invocation_control"
+                self.assertEqual([], list((state / "reservations").iterdir()))
+                self.assertEqual(1, len(list((state / "egress").rglob("*.json"))))
+                self.assertEqual(1, len(list((state / "attempts").rglob("*.json"))))
+                terminals = qualification_remote_egress_terminals(
+                    workspace_dir=workspace,
+                )
+                self.assertEqual(1, len(terminals))
+                self.assertEqual("SUCCEEDED", terminals[0]["status"])
+
+                reused_transport = MockTransport(results=[AssertionError("called")])
+                reused = execute_invocation(
+                    workspace_dir=workspace,
+                    plan=invocation_plan,
+                    request_body=REQUEST_BODY,
+                    execution_id=execution(
+                        invocation_plan=invocation_plan,
+                        owner="seal-owner-b",
+                        at="2026-08-19T12:00:01Z",
+                    ),
+                    owner_token="seal-owner-b",
+                    authorized_at_utc="2026-08-19T12:00:01Z",
+                    clock=clock,
+                    transport=reused_transport,
+                    response_validator=validate_response,
+                    evidence_validator=validate_evidence,
+                )
+                self.assertEqual("REUSED_SUCCESS", reused["status"])
+                self.assertEqual(0, reused_transport.invocation_count)
+                self.assertEqual(
+                    ["SUCCEEDED"],
+                    [item["status"] for item in qualification_remote_egress_terminals(
+                        workspace_dir=workspace,
+                    )],
+                )
 
     def test_reuse_revalidates_candidate_and_evidence_acceptance(self) -> None:
         """Reject a rehashed receipt whose persisted Candidate was changed."""

@@ -12,11 +12,11 @@ import unittest
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterator
+from typing import Dict, Iterator, Sequence
 from unittest import mock
 
 from tests.vnext.common import cell_locator
-from vnext import ai_adapter, qualification, workflow
+from vnext import ai_adapter, invocation_control, qualification, workflow
 from vnext.ai_adapter import TransportAttemptError, TransportObservation
 from vnext.ai_adapter import TransportResult
 from vnext.ai_adapter import build_provider_request_body
@@ -1147,6 +1147,92 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     )
                     self.assertEqual(ledger_before, ledger_path.read_bytes())
                     self.assertEqual(1, len(calls))
+
+    def test_wb3_seal_recovery_materializes_authorized_success(self) -> None:
+        """Recover a persisted WB-3 success before its execution seal exists."""
+        phases = (
+            "AFTER_SUCCESS_RESPONSE_PERSISTED",
+            "AFTER_EXECUTION_SEALED",
+        )
+
+        class InjectedCrash(RuntimeError):
+            """Stop at a durable invocation-control seal boundary."""
+
+        with cloned_synthetic_no_d07_repositories(count=len(phases)) as roots:
+            for phase, repo_root in zip(phases, roots):
+                with self.subTest(phase=phase):
+                    (repo_root / "outputs/active_publication.json.lock").touch()
+                    clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
+                    binding = qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_occupancy_table_v2",
+                        qualification_ordinal=1,
+                    ).as_mapping()
+                    common = {
+                        "repo_root": repo_root,
+                        "family_id": "lodging_kpi_table",
+                        "task_contract_id": "lodging_occupancy_table_v2",
+                        "qualification_ordinal": 1,
+                        "target_period": binding["target_period"],
+                        "owner_token": "synthetic-owner",
+                        "clock": clock,
+                    }
+                    calls: list[bytes] = []
+
+                    def crash_here(observed: str) -> None:
+                        if observed == phase:
+                            raise InjectedCrash(observed)
+
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        response_bytes=_occupancy_response(repo_root=repo_root),
+                        calls=calls,
+                        provider_request_id="request:seal:" + phase,
+                    ), mock.patch.object(
+                        invocation_control,
+                        "_INVOCATION_TERMINAL_RECOVERY_HOOK",
+                        side_effect=crash_here,
+                    ), self.assertRaises(InjectedCrash):
+                        qualification.execute_table_qualification_task(**common)
+                    self.assertEqual(1, len(calls))
+
+                    with mocked_live_table_transport(
+                        repo_root=repo_root,
+                        binding=binding,
+                        response_bytes=_occupancy_response(repo_root=repo_root),
+                        calls=calls,
+                        provider_request_id="request:seal:" + phase,
+                    ), mock.patch.object(
+                        invocation_control,
+                        "_process_is_alive",
+                        return_value=False,
+                    ):
+                        resumed = qualification.execute_table_qualification_task(
+                            **common,
+                        )
+                    self.assertEqual("PENDING_HUMAN_REVIEW", resumed["status"])
+                    self.assertEqual(1, len(calls))
+                    run_dir = repo_root / binding["run_directory_relative_path"]
+                    manifest, records, _decisions = load_run_for_status(
+                        run_dir=run_dir,
+                        repo_root=repo_root,
+                    )
+                    qualification.validate_table_qualification_run_bindings(
+                        repo_root=repo_root,
+                        run_dir=run_dir,
+                        manifest=manifest,
+                        records=records,
+                    )
+                    terminals = qualification.qualification_remote_egress_terminals(
+                        workspace_dir=(
+                            repo_root / binding["wb3_workspace_relative_path"]
+                        ),
+                    )
+                    self.assertEqual(["SUCCEEDED"], [
+                        terminal["status"] for terminal in terminals
+                    ])
 
     def test_cycle_blocks_other_terminal_until_wb3_success_materializes(
         self,
