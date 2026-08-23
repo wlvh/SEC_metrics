@@ -1,0 +1,109 @@
+{
+  "decision_register_modified": false,
+  "financial_expanded_grid_resource": {
+    "accurate_failure_point": {
+      "expanded_cells_before_failure": 99975,
+      "max_total_cells": 100000,
+      "remaining_total_cells": 25,
+      "resource": "total expanded cells",
+      "table_order": 587
+    },
+    "development_source": {
+      "accession": "0001628280-26-008131",
+      "cik": "19617",
+      "company_id": "jpmorgan_chase",
+      "document_name": "jpm-20251231.htm",
+      "source_kind": "IMMUTABLE_ATTEMPT",
+      "source_repo_relative_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    },
+    "expanded_grid_status": "NOT_AVAILABLE_RESOURCE_LIMIT",
+    "full_grid_constraint": "All document tables and cells remain local Evidence Authority; no selector, prefilter, slice router, partial parser, or production resource-limit change was made.",
+    "implementation_choice_made": false,
+    "owner_options": [
+      {
+        "description": "Replace the development source with a filing whose complete expanded grid fits current policy.",
+        "option_id": "A",
+        "requires_owner_decision": true
+      },
+      {
+        "description": "Measure memory/time and then raise or redesign the local full-grid resource envelope without omitting tables or cells.",
+        "option_id": "B",
+        "requires_owner_decision": true
+      },
+      {
+        "description": "Change live-ready family policy or family-scoped gate with explicit qualification semantics.",
+        "option_id": "C",
+        "requires_owner_decision": true
+      },
+      {
+        "description": "Keep the current global stop.",
+        "option_id": "D",
+        "requires_owner_decision": true
+      }
+    ],
+    "source_bytes": 12927325,
+    "source_cell_count": 60348,
+    "source_row_count": 5641,
+    "table_count": 679
+  },
+  "generated_at_utc": "2026-08-21T10:34:58Z",
+  "generated_from_freeze_receipt_id": "sha256:0f99565f5851545e9ba632a8fab618b1989d40183581e719ba7c93d31dce70ac",
+  "generated_from_freeze_receipt_sha256": "ecf6beb0ff9ca3eb62555c4e636b3ff7d47b8fce60c0e29c869b7d27fbe6a55c",
+  "owner_decision_packet_id": "sha256:3c2b983ead05d205a43020f9ddf8c290d938538fd3cf45123293f0d6549b1313",
+  "qualification_cycle_id": "sha256:a12095a7760967ebb208bc47e7a8de447ef2d78eed1f1f345d5de51b1d75bb2d",
+  "record_type": "TABLE_QUALIFICATION_OWNER_DECISION_PACKET",
+  "schema_version": 1,
+  "token_estimator_and_d07_authority": {
+    "api": "chat_completions",
+    "contract_precondition": "CONTRACT.md D-07 requires real prompt_tokens evidence before a new D-07 tip may introduce a selector; this packet creates no tip and selects no estimator policy.",
+    "current_global_d07_decision_required": true,
+    "current_mechanical_rule": "d07_decision_required = any(measurement.context_or_resource_limit_exceeded for all authorized task measurements)",
+    "estimator_id": "utf8_byte_upper_bound",
+    "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+    "estimator_version": "1",
+    "family_scoped_readiness_question": "Whether current any(...) global D-07 blocking remains global or becomes family-scoped is an owner policy choice; no implementation choice was made.",
+    "financial_family_measurement": "NOT_AVAILABLE_RESOURCE_LIMIT",
+    "implementation_choice_made": false,
+    "lodging_task_measurements": [
+      {
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimated_input_tokens": 392447,
+        "provider_envelope_estimated_bytes": 392447,
+        "task_contract_id": "lodging_occupancy_table_v2"
+      },
+      {
+        "actual_prompt_tokens": "NOT_RUN",
+        "estimated_input_tokens": 392438,
+        "provider_envelope_estimated_bytes": 392438,
+        "task_contract_id": "lodging_revpar_table_v2"
+      }
+    ],
+    "matrix_max_estimated_input_tokens": 100000,
+    "maximum_context_tokens": 1000000,
+    "model": "deepseek-v4-flash",
+    "owner_options": [
+      {
+        "description": "Create a D-07 tip that names the oversized estimator authority.",
+        "option_id": "A",
+        "requires_owner_decision": true
+      },
+      {
+        "description": "Change the matrix threshold and bind it to an explicitly selected estimator.",
+        "option_id": "B",
+        "requires_owner_decision": true
+      },
+      {
+        "description": "Authorize one qualification-plan-controlled measurement ordinal to obtain actual_prompt_tokens.",
+        "option_id": "C",
+        "requires_owner_decision": true
+      },
+      {
+        "description": "Keep the current stop.",
+        "option_id": "D",
+        "requires_owner_decision": true
+      }
+    ],
+    "provider": "deepseek"
+  }
+}

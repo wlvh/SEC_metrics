@@ -64,7 +64,38 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "started_at_utc",
             "finished_at_utc",
             "error_class",
-        )
+        ),
+        optional=(
+            "table_payload_serialization_version",
+            "expanded_derived_asset_id",
+            "expanded_grid_sha256",
+            "compact_payload_sha256",
+            "decoder_semantic_version",
+            "round_trip_receipt_id",
+            "task_contract_id",
+            "catalog_task_contract_hash",
+            "catalog_output_schema_hash",
+            "system_prompt_hash",
+            "qualification_authorization",
+        ),
+    ),
+    "TABLE_QUALIFICATION_EVIDENCE": RecordSchema(
+        required=(
+            "record_type",
+            "qualification_evidence_id",
+            "qualification_authorization",
+            "qualification_authorization_id",
+            "qualification_task_plan_id",
+            "qualification_cycle_id",
+            "freeze_receipt_id",
+            "family_id",
+            "task_contract_id",
+            "qualification_ordinal",
+            "source_binding_hash",
+            "run_id",
+            "attempt_id",
+            "provider_ledger_entry_id",
+        ),
     ),
     "DERIVED_ASSET": RecordSchema(
         required=(
@@ -88,7 +119,12 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "checks",
             "reason_codes",
             "identity_constraints",
-        )
+        ),
+        optional=(
+            "normalized_scope",
+            "unresolved_scope_dimensions",
+            "system_approval_eligible",
+        ),
     ),
     "EXECUTION_TRACE": RecordSchema(
         required=(
@@ -208,7 +244,11 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "review_context_hash",
             "rendered_review_hash",
             "review_renderer_semantic_version",
-        )
+        ),
+        optional=(
+            "normalized_scope",
+            "system_approval_eligible",
+        ),
     ),
     "RUN": RecordSchema(
         required=(
@@ -228,7 +268,8 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "content_manifest_hash",
             "audit_manifest_hash",
             "execution_semantics_hash",
-        )
+        ),
+        optional=("task_contract_bindings", "qualification_authorization"),
     ),
     "SOURCE_REFERENCE": RecordSchema(
         required=(
@@ -302,9 +343,13 @@ TEXT_FIELDS = {
     "company_id",
     "content_manifest_hash",
     "content_type",
+    "compact_payload_sha256",
     "decided_at_utc",
     "decision",
+    "decoder_semantic_version",
     "derived_asset_id",
+    "expanded_derived_asset_id",
+    "expanded_grid_sha256",
     "disclosure_group",
     "document_name",
     "endpoint_host",
@@ -323,6 +368,7 @@ TEXT_FIELDS = {
     "period_start",
     "provider",
     "provider_request_id",
+    "provider_ledger_entry_id",
     "publication",
     "publication_id",
     "projection_manifest_id",
@@ -342,6 +388,12 @@ TEXT_FIELDS = {
     "request_attempt_id",
     "request_body_sha256",
     "request_body_path",
+    "qualification_authorization_id",
+    "qualification_cycle_id",
+    "qualification_evidence_id",
+    "qualification_task_plan_id",
+    "freeze_receipt_id",
+    "family_id",
     "output_schema_sha256",
     "output_schema_path",
     "assistant_output_sha256",
@@ -353,6 +405,7 @@ TEXT_FIELDS = {
     "review_decisions_file_hash",
     "review_renderer_semantic_version",
     "review_unit_hash",
+    "round_trip_receipt_id",
     "reviewed_spec_semantic_hash",
     "reviewer_id",
     "reviewer_type",
@@ -360,6 +413,7 @@ TEXT_FIELDS = {
     "scope_key",
     "semantic_role",
     "source_reference_id",
+    "source_binding_hash",
     "source_role",
     "source_set_manifest_id",
     "source_url",
@@ -369,8 +423,13 @@ TEXT_FIELDS = {
     "status",
     "storage_uri",
     "task_contract_path",
+    "task_contract_id",
     "task_contract_sha256",
+    "catalog_task_contract_hash",
+    "catalog_output_schema_hash",
     "task_spec_semantic_hash",
+    "system_prompt_hash",
+    "table_payload_serialization_version",
     "trace_id",
     "transform_id",
     "transform_semantic_version",
@@ -404,7 +463,9 @@ LIST_FIELDS = {
     "source_references",
     "steps",
     "tables",
+    "task_contract_bindings",
     "unresolved_competing_claims",
+    "unresolved_scope_dimensions",
 }
 MAPPING_FIELDS = {
     "approved_claims",
@@ -413,6 +474,8 @@ MAPPING_FIELDS = {
     "compiled_spec",
     "ledger_binding",
     "normalized_values",
+    "normalized_scope",
+    "qualification_authorization",
     "requirement_hashes",
     "required_claims",
     "sampling_parameters",
@@ -425,7 +488,8 @@ MAPPING_FIELDS = {
     "target_period",
     "transport_observation",
 }
-INTEGER_FIELDS = {"byte_length"}
+INTEGER_FIELDS = {"byte_length", "qualification_ordinal"}
+BOOLEAN_FIELDS = {"system_approval_eligible"}
 
 METRIC_RESULT_CONTRACT_FIELDS = (
     "company_id",
@@ -511,6 +575,7 @@ def _validate_field_types(*, record: Mapping[str, object]) -> None:
             or (field in LIST_FIELDS and type(value) is list)
             or (field in MAPPING_FIELDS and type(value) is dict)
             or (field in INTEGER_FIELDS and type(value) is int)
+            or (field in BOOLEAN_FIELDS and type(value) is bool)
         )
         if not valid:
             raise RecordError(
@@ -721,36 +786,46 @@ def _expected_identifier(
         }
         return "candidate_hash", content_hash(value=body)
     if record_type == "EVIDENCE_CHECK":
-        body = {
-            key: record[key]
-            for key in (
-                "candidate_hash",
-                "status",
-                "normalized_values",
-                "checks",
-                "reason_codes",
-                "identity_constraints",
-            )
-        }
+        fields = [
+            "candidate_hash",
+            "status",
+            "normalized_values",
+            "checks",
+            "reason_codes",
+            "identity_constraints",
+        ]
+        scope_fields = [
+            "normalized_scope",
+            "unresolved_scope_dimensions",
+            "system_approval_eligible",
+        ]
+        supplied_scope_fields = set(scope_fields) & set(record)
+        if supplied_scope_fields and supplied_scope_fields != set(scope_fields):
+            raise RecordError("Evidence scope binding is incomplete")
+        fields.extend(scope_fields if supplied_scope_fields else [])
+        body = {key: record[key] for key in fields}
         return "evidence_check_id", content_hash(value=body)
     if record_type == "REVIEW_UNIT":
-        body = {
-            key: record[key]
-            for key in (
-                "selected",
-                "competing_candidates",
-                "unresolved_competing_claims",
-                "candidate_hashes",
-                "source_bindings",
-                "spec_semantic_hash",
-                "compiled_spec",
-                "required_claims",
-                "evidence_check_id",
-                "review_context_hash",
-                "rendered_review_hash",
-                "review_renderer_semantic_version",
-            )
-        }
+        fields = [
+            "selected",
+            "competing_candidates",
+            "unresolved_competing_claims",
+            "candidate_hashes",
+            "source_bindings",
+            "spec_semantic_hash",
+            "compiled_spec",
+            "required_claims",
+            "evidence_check_id",
+            "review_context_hash",
+            "rendered_review_hash",
+            "review_renderer_semantic_version",
+        ]
+        scope_fields = ["normalized_scope", "system_approval_eligible"]
+        supplied_scope_fields = set(scope_fields) & set(record)
+        if supplied_scope_fields and supplied_scope_fields != set(scope_fields):
+            raise RecordError("ReviewUnit scope binding is incomplete")
+        fields.extend(scope_fields if supplied_scope_fields else [])
+        body = {key: record[key] for key in fields}
         return "review_unit_hash", content_hash(value=body)
     if record_type == "VERIFIED_OBSERVATION":
         body = {
@@ -811,6 +886,26 @@ def _expected_identifier(
             for key in ("status", "view_id", "checks", "artifact_hashes")
         }
         return "validation_receipt_id", content_hash(value=body)
+    if record_type == "TABLE_QUALIFICATION_EVIDENCE":
+        body = {
+            key: record[key]
+            for key in (
+                "record_type",
+                "qualification_authorization",
+                "qualification_authorization_id",
+                "qualification_task_plan_id",
+                "qualification_cycle_id",
+                "freeze_receipt_id",
+                "family_id",
+                "task_contract_id",
+                "qualification_ordinal",
+                "source_binding_hash",
+                "run_id",
+                "attempt_id",
+                "provider_ledger_entry_id",
+            )
+        }
+        return "qualification_evidence_id", content_hash(value=body)
     if record_type == "PUBLICATION_MANIFEST":
         body = {
             key: record[key]
@@ -882,6 +977,26 @@ def _validate_enums(*, record_type: str, record: Mapping[str, object]) -> None:
         "REJECTED",
     }:
         raise RecordError("Evidence status is invalid")
+    if record_type == "EVIDENCE_CHECK" and "normalized_scope" in record:
+        if (
+            type(record["normalized_scope"]) is not dict
+            or any(
+                type(key) is not str
+                or not key
+                or type(value) is not str
+                or not value
+                for key, value in record["normalized_scope"].items()
+            )
+            or type(record["unresolved_scope_dimensions"]) is not list
+            or any(
+                type(value) is not str or not value
+                for value in record["unresolved_scope_dimensions"]
+            )
+            or len(record["unresolved_scope_dimensions"])
+            != len(set(record["unresolved_scope_dimensions"]))
+            or type(record["system_approval_eligible"]) is not bool
+        ):
+            raise RecordError("Evidence scope binding is invalid")
     if record_type == "REVIEW_DECISION":
         if record["decision"] not in {"APPROVE", "REJECT"}:
             raise RecordError("Review decision is invalid")
@@ -1065,6 +1180,64 @@ def _validate_record_semantics(
             r"sha256:[0-9a-f]{64}", str(record["task_spec_semantic_hash"])
         ) is None:
             raise RecordError("Attempt task Spec identity is invalid")
+        compact_fields = {
+            "table_payload_serialization_version",
+            "expanded_derived_asset_id",
+            "expanded_grid_sha256",
+            "compact_payload_sha256",
+            "decoder_semantic_version",
+            "round_trip_receipt_id",
+        }
+        supplied_compact_fields = compact_fields & set(record)
+        if supplied_compact_fields and supplied_compact_fields != compact_fields:
+            raise RecordError("Attempt compact payload binding is incomplete")
+        if supplied_compact_fields:
+            for field in (
+                "table_payload_serialization_version",
+                "expanded_derived_asset_id",
+                "decoder_semantic_version",
+            ):
+                if type(record[field]) is not str or not record[field]:
+                    raise RecordError("Attempt compact payload text is invalid")
+            if re.fullmatch(
+                r"sha256:[0-9a-f]{64}", str(record["expanded_grid_sha256"])
+            ) is None:
+                raise RecordError("Attempt expanded grid identity is invalid")
+            if re.fullmatch(
+                r"[0-9a-f]{64}", str(record["compact_payload_sha256"])
+            ) is None:
+                raise RecordError("Attempt compact payload digest is invalid")
+            if re.fullmatch(
+                r"sha256:[0-9a-f]{64}", str(record["round_trip_receipt_id"])
+            ) is None:
+                raise RecordError("Attempt round-trip receipt is invalid")
+        catalog_task_fields = {
+            "task_contract_id",
+            "catalog_task_contract_hash",
+            "catalog_output_schema_hash",
+            "system_prompt_hash",
+        }
+        supplied_catalog_task_fields = catalog_task_fields & set(record)
+        if (
+            supplied_catalog_task_fields
+            and supplied_catalog_task_fields != catalog_task_fields
+        ):
+            raise RecordError("Attempt catalog task binding is incomplete")
+        if supplied_catalog_task_fields:
+            if (
+                type(record["task_contract_id"]) is not str
+                or not record["task_contract_id"]
+            ):
+                raise RecordError("Attempt catalog task ID is invalid")
+            for field in (
+                "catalog_task_contract_hash",
+                "catalog_output_schema_hash",
+                "system_prompt_hash",
+            ):
+                if re.fullmatch(
+                    r"sha256:[0-9a-f]{64}", str(record[field])
+                ) is None:
+                    raise RecordError("Attempt catalog task hash is invalid")
         response_digest = str(record["raw_response_sha256"])
         response_path = str(record["raw_response_path"])
         if bool(response_digest) != bool(response_path):
@@ -1126,6 +1299,26 @@ def _validate_record_semantics(
             raise RecordError("Successful attempt response state is invalid")
         if record["status"] == "FAILED" and not record["error_class"]:
             raise RecordError("Failed attempt error class is required")
+    if record_type == "TABLE_QUALIFICATION_EVIDENCE":
+        binding = record["qualification_authorization"]
+        if type(binding) is not dict:
+            raise RecordError("Qualification evidence authority is invalid")
+        for field in (
+            "qualification_authorization_id",
+            "qualification_task_plan_id",
+            "qualification_cycle_id",
+            "freeze_receipt_id",
+            "family_id",
+            "task_contract_id",
+            "qualification_ordinal",
+            "source_binding_hash",
+        ):
+            if record[field] != binding.get(field):
+                raise RecordError(
+                    "Qualification evidence authority field differs: {}".format(
+                        field
+                    )
+                )
     if record_type == "REVIEW_DECISION":
         _utc_timestamp(
             value=str(record["decided_at_utc"]), field="decided_at_utc",
@@ -1214,6 +1407,18 @@ def _validate_record_semantics(
             != compiled_spec["required_claims"]
         ):
             raise RecordError("ReviewUnit compiled Spec binding differs")
+        if "normalized_scope" in record and (
+            type(record["normalized_scope"]) is not dict
+            or any(
+                type(key) is not str
+                or not key
+                or type(value) is not str
+                or not value
+                for key, value in record["normalized_scope"].items()
+            )
+            or type(record["system_approval_eligible"]) is not bool
+        ):
+            raise RecordError("ReviewUnit scope binding is invalid")
     if record_type == "RAW_BLOB" and (
         record["byte_length"] < 0
         or not record["media_type"]

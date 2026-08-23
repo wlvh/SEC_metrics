@@ -7,6 +7,8 @@ from typing import Dict, Mapping, Optional, Sequence, Set, Tuple
 
 from .canonical import CanonicalError, content_hash, execution_semantics_hash
 from .canonical import parse_decimal, strict_json_loads
+from .scope_contract import ScopeContractError, scope_satisfies_contract
+from .scope_contract import validate_scope_contract
 
 
 FRONT_MATTER_SEPARATOR = "---"
@@ -32,6 +34,7 @@ SPEC_FIELDS = {
     "required_claims",
     "review_policy",
     "selection_policy",
+    "scope_contract",
     "source_mode",
     "top_level_guards",
     "unit_policy",
@@ -698,6 +701,9 @@ def compile_spec(
         "required_claims": front["required_claims"]
         if "required_claims" in front
         else {},
+        "scope_contract": front["scope_contract"]
+        if "scope_contract" in front
+        else None,
         "forbidden_confusions": front["forbidden_confusions"]
         if "forbidden_confusions" in front
         else [],
@@ -735,6 +741,27 @@ def compile_spec(
         raise SpecError("MetricSpec unit_policy is unknown")
     if not isinstance(compiled["required_claims"], dict):
         raise SpecError("required_claims must be an object")
+    if compiled["scope_contract"] is not None:
+        try:
+            compiled["scope_contract"] = validate_scope_contract(
+                value=compiled["scope_contract"],
+            )
+        except ScopeContractError as error:
+            raise SpecError("MetricSpec scope contract is invalid") from error
+        required_scope = {
+            dimension: compiled["required_claims"][dimension]
+            for dimension in compiled["required_claims"]
+            if dimension in compiled["scope_contract"]["allowed_dimensions"]
+        }
+        if not scope_satisfies_contract(
+            contract=compiled["scope_contract"],
+            normalized_scope=required_scope,
+        ):
+            raise SpecError(
+                "MetricSpec required claims do not satisfy scope contract"
+            )
+    elif compiled["source_mode"] == "ai_table":
+        raise SpecError("AI table MetricSpec requires scope contract v2")
     if not isinstance(compiled["forbidden_confusions"], list):
         raise SpecError("forbidden_confusions must be an ordered array")
     if len(compiled["forbidden_confusions"]) != len(

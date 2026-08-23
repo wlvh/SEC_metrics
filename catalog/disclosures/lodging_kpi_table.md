@@ -17,6 +17,45 @@
     "operating_scope": "systemwide",
     "geography": "worldwide"
   },
+  "scope_contract": {
+    "scope_contract_version": "2",
+    "required_dimensions": [
+      "property_population",
+      "operating_scope",
+      "geography"
+    ],
+    "allowed_dimensions": [
+      "property_population",
+      "operating_scope",
+      "geography"
+    ],
+    "exact_enum_aliases": {
+      "property_population": {
+        "comparable": [
+          "Comparable Systemwide Properties"
+        ]
+      },
+      "operating_scope": {
+        "systemwide": [
+          "Comparable Systemwide Properties"
+        ]
+      },
+      "geography": {
+        "worldwide": [
+          "Worldwide"
+        ]
+      }
+    },
+    "selection_preference": {
+      "dimension_order": [
+        "property_population",
+        "operating_scope",
+        "geography"
+      ],
+      "prefer_complete_required_dimensions": true
+    },
+    "cross_dimension_constraints": []
+  },
   "forbidden_confusions": [
     "prior_year",
     "percentage_change",
@@ -61,5 +100,9 @@
 ---
 
 # Lodging KPI disclosure group
+
+该 disclosure group 仅保留既有冻结 Run/replay 的三角色历史语义。PR-3 新
+table Reader task 由 `catalog/table_task_contracts.json` 明确选择单角色 contract，
+不再把本文件的历史合并角色当作未来 provider request authority。
 
 Reader 收到目标文档的全部 table-grid。上述业务词只存在于 catalog，不得进入通用 transform、Checker、renderer 或 Projector 的控制分支。

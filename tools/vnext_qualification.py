@@ -35,6 +35,14 @@ from vnext.qualification import write_layout_qualification_receipt  # noqa: E402
 from vnext.qualification import write_production_freeze_receipt  # noqa: E402
 from vnext.run_store import load_run_for_status  # noqa: E402
 from vnext.run_store import RunStoreError, validate_and_freeze_run  # noqa: E402
+from vnext.table_qualification_freeze import (  # noqa: E402
+    require_table_qualification_freeze,
+)
+from vnext.table_qualification_freeze import (  # noqa: E402
+    TableQualificationFreezeError,
+)
+from vnext.table_task_contracts import load_table_task_contracts  # noqa: E402
+from vnext.table_task_contracts import TableTaskContractError  # noqa: E402
 from vnext.workflow import create_layout_qualification_run  # noqa: E402
 from vnext.workflow import finalize_reviewed_direct_results  # noqa: E402
 from vnext.workflow import WorkflowError  # noqa: E402
@@ -111,6 +119,43 @@ def _fixture_manifest(*, fixture_id: str) -> Dict[str, object]:
     return manifest
 
 
+def _require_catalog_table_qualification_path() -> None:
+    """Fail closed before legacy fixture preparation can use schema v1.
+
+    Raises:
+        QualificationCliError: Always for an authorized table family: D-07 is
+        surfaced before qualification while active; after a future D-07
+        decision the legacy fixture command still lacks an explicit catalog
+        task ID and remains blocked.
+    """
+    try:
+        task_contracts = load_table_task_contracts(repo_root=REPO_ROOT)
+        for family_id in task_contracts["authorized_family_ids"]:
+            require_table_qualification_freeze(
+                repo_root=REPO_ROOT,
+                family_id=family_id,
+            )
+    except TableQualificationFreezeError as error:
+        code = (
+            "D07_DECISION_REQUIRED"
+            if str(error) == "D07_DECISION_REQUIRED"
+            else "TABLE_QUALIFICATION_FREEZE_INVALID"
+        )
+        raise QualificationCliError(
+            code=code,
+            message="Table qualification cannot start from legacy fixture",
+        ) from error
+    except TableTaskContractError as error:
+        raise QualificationCliError(
+            code="TABLE_QUALIFICATION_FREEZE_INVALID",
+            message="Table task catalog cannot be rebuilt",
+        ) from error
+    raise QualificationCliError(
+        code="TABLE_TASK_CONTRACT_REQUIRED",
+        message="Legacy fixture prepare lacks an explicit catalog task ID",
+    )
+
+
 def prepare_layout(*, fixture_id: str) -> Dict[str, object]:
     """Create or resume one socket-zero layout Run through freeze/receipt.
 
@@ -120,6 +165,7 @@ def prepare_layout(*, fixture_id: str) -> Dict[str, object]:
     Returns:
         FROZEN Run and content-addressed qualification receipt identities.
     """
+    _require_catalog_table_qualification_path()
     fixture = _fixture_manifest(fixture_id=fixture_id)
     run_dir = REPO_ROOT / QUALIFICATION_ROOT / "runs" / fixture_id
     if not run_dir.exists():

@@ -62,6 +62,9 @@ class EvidenceCheckerTest(unittest.TestCase):
             ).decode("utf-8"),
             attempt_id="attempt:reader:wrong-claim",
             required_roles=["occupancy", "revpar", "adr"],
+            scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+                "scope_contract"
+            ],
             source_reference_ids=[str(source["source_reference_id"])],
             derived_asset_ids=[str(asset["derived_asset_id"])],
         )
@@ -73,6 +76,9 @@ class EvidenceCheckerTest(unittest.TestCase):
             source_references=[source],
             identity_constraints=compiled_specs()["DISCLOSURE"]["compiled"][
                 "identity_constraints"
+            ],
+            scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+                "scope_contract"
             ],
         )
         self.assertEqual("REJECTED", evidence["status"])
@@ -87,7 +93,7 @@ class EvidenceCheckerTest(unittest.TestCase):
         asset = sample_asset()
         parsed = json.loads(reader_response(asset=asset))
         parsed["candidates"][0]["scope_evidence_locators"][1][
-            "text"
+            "raw_text"
         ] = "Worldwide systemwide invented"
         fixture = reviewed_fixture(
             asset=asset, response_bytes=json.dumps(parsed).encode("utf-8"),

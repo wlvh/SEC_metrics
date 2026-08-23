@@ -110,6 +110,43 @@ class RequirementError(ValueError):
     """Report missing, changed, ambiguous, or malformed requirement bytes."""
 
 
+def load_run_requirement_snapshot(
+    *, repo_root: Path, task_contract_bindings: object,
+) -> Dict[str, object]:
+    """Load the Requirement authority mechanically selected by one Run type.
+
+    Args:
+        repo_root: Repository owning both supported immutable snapshots.
+        task_contract_bindings: Run manifest's explicit catalog-task bindings.
+
+    Returns:
+        Issue #15 authority for catalog table-task Runs; otherwise the retained
+        parent authority for historical disclosure Runs.
+
+    Raises:
+        RequirementError: When the Run binding shape is invalid or its selected
+        snapshot cannot be loaded from the repository.
+
+    Why:
+        A catalog task is governed by Issue #15's effective decisions, while a
+        historical disclosure Run remains replayable under its inherited
+        parent.  Choosing from the persisted task-binding shape avoids letting
+        a later caller select a policy at creation, review, or replay time.
+    """
+    if type(task_contract_bindings) is not list:
+        raise RequirementError("Run task contract bindings are invalid")
+    requirement_id = (
+        ISSUE_15_REQUIREMENT_ID
+        if task_contract_bindings
+        else PARENT_REQUIREMENT_ID
+    )
+    snapshot_dir = repo_root / "requirements" / requirement_id
+    requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)
+    if requirement["requirement_id"] != requirement_id:
+        raise RequirementError("Run Requirement authority identity differs")
+    return requirement
+
+
 def _read_object(*, path: Path) -> Dict[str, object]:
     """Read a strict JSON object from one Requirement file.
 

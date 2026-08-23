@@ -7,7 +7,7 @@ import inspect
 import json
 import unittest
 
-from tests.vnext.common import reader_response, sample_asset
+from tests.vnext.common import compiled_specs, reader_response, sample_asset
 from vnext.reader import ReaderError, validate_reader_output
 from vnext.reader_input import ReaderInputError, build_reader_input_manifest
 from vnext.reader_input import build_reader_payload, verify_reader_table_set
@@ -61,6 +61,9 @@ class ReaderInputManifestTest(unittest.TestCase):
             response_text=response,
             attempt_id="attempt:reader:fixture",
             required_roles=["occupancy", "revpar", "adr"],
+            scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+                "scope_contract"
+            ],
             source_reference_ids=self.source_ids,
             derived_asset_ids=[self.asset["derived_asset_id"]],
         )
@@ -74,6 +77,9 @@ class ReaderInputManifestTest(unittest.TestCase):
                 response_text=json.dumps(parsed),
                 attempt_id="attempt:reader:fixture",
                 required_roles=["occupancy", "revpar", "adr"],
+                scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+                    "scope_contract"
+                ],
                 source_reference_ids=self.source_ids,
                 derived_asset_ids=[self.asset["derived_asset_id"]],
             )
@@ -84,6 +90,9 @@ class ReaderInputManifestTest(unittest.TestCase):
                 response_text=json.dumps(parsed),
                 attempt_id="attempt:reader:fixture",
                 required_roles=["occupancy", "revpar", "adr"],
+                scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+                    "scope_contract"
+                ],
                 source_reference_ids=self.source_ids,
                 derived_asset_ids=[self.asset["derived_asset_id"]],
             )
@@ -108,6 +117,9 @@ class ReaderInputManifestTest(unittest.TestCase):
                 response_text=json.dumps(parsed),
                 attempt_id="attempt:reader:fixture",
                 required_roles=["occupancy", "revpar", "adr"],
+                scope_contract=compiled_specs()["DISCLOSURE"]["compiled"][
+                    "scope_contract"
+                ],
                 source_reference_ids=self.source_ids,
                 derived_asset_ids=[self.asset["derived_asset_id"]],
             )

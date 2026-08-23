@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List, Mapping, Sequence, Tuple
+from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
 from .ai_adapter import READER_OUTPUT_JSON_SCHEMA, approved_transport_policy
@@ -26,8 +26,7 @@ from .render import RenderError, build_review_context
 from .render import render_review_markdown
 from .reader import validate_reader_output
 from .reader_input import build_reader_payload, build_reader_task_contract
-from .reader_input import required_reader_roles
-from .requirements import load_requirement_snapshot
+from .requirements import load_run_requirement_snapshot
 from .review import effective_review_decision, system_review_allowed
 from .review import SYSTEM_REVIEWER_ID, SYSTEM_REVIEW_REASON
 from .review import validate_decision_binding
@@ -35,6 +34,9 @@ from .sources import companyfacts_structured_facts, load_raw_blob_bytes
 from .specs import SpecError, compile_spec_files
 from .states import FREEZEABLE_VALIDATION_STATUSES, validate_transition
 from .table_grid import TableGridError, build_table_grid
+from .table_task_contracts import table_task_execution_plan
+from .table_task_contracts import table_task_run_binding
+from .table_task_contracts import TableTaskContractError
 from .traits import TraitError, repository_company_ciks
 from .traits import repository_company_traits
 
@@ -49,12 +51,14 @@ MANIFEST_FIELDS = {
     "record_type",
     "records_file_hash",
     "review_decisions_file_hash",
+    "qualification_authorization",
     "requirement_hashes",
     "run_id",
     "source_references",
     "spec_file_hashes",
     "status",
     "target_period",
+    "task_contract_bindings",
     "validation_file_hash",
 }
 RUN_VALIDATION_VIEW_FIELDS = (
@@ -62,11 +66,13 @@ RUN_VALIDATION_VIEW_FIELDS = (
     "company_traits",
     "execution_semantics_hash",
     "missing_required_source_roles",
+    "qualification_authorization",
     "requirement_hashes",
     "run_id",
     "source_references",
     "spec_file_hashes",
     "target_period",
+    "task_contract_bindings",
 )
 _QUALIFICATION_RUN_PREFIX = "run:qualification:"
 _QUALIFICATION_FIXTURE_FIELDS = {
@@ -194,7 +200,11 @@ def _run_validation_view_id(*, manifest: Mapping[str, object]) -> str:
         Content-addressed view ID stable across the OPEN-to-FROZEN update.
     """
     return "run:" + content_hash(
-        value={field: manifest[field] for field in RUN_VALIDATION_VIEW_FIELDS}
+        value={
+            field: manifest[field]
+            for field in RUN_VALIDATION_VIEW_FIELDS
+            if field in manifest
+        }
     )
 
 
@@ -225,6 +235,8 @@ def create_run(
     missing_required_source_roles: Sequence[str],
     spec_file_hashes: Mapping[str, str],
     requirement_hashes: Mapping[str, str],
+    task_contract_bindings: Sequence[Mapping[str, object]] = (),
+    qualification_authorization: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Create a new OPEN Run with explicit empty data files.
 
@@ -238,6 +250,10 @@ def create_run(
         missing_required_source_roles: Explicit missing roles.
         spec_file_hashes: Spec path/hash mapping.
         requirement_hashes: Exact immutable Requirement Snapshot hashes.
+        task_contract_bindings: Explicit catalog task identities for this Run;
+            retained historical disclosure Runs use an empty sequence.
+        qualification_authorization: Exact LIVE table qualification authority,
+            or ``None`` for recorded and retained historical Runs.
 
     Returns:
         Initial strict RUN manifest.
@@ -288,6 +304,29 @@ def create_run(
             for key in hashes
         ):
             raise RunStoreError("{} hashes are invalid".format(label))
+    normalized_task_bindings = []
+    binding_ids = set()
+    for binding in task_contract_bindings:
+        if not isinstance(binding, Mapping):
+            raise RunStoreError("Run task contract binding is invalid")
+        try:
+            normalized = table_task_run_binding(runtime=binding)
+        except (KeyError, TableTaskContractError) as error:
+            raise RunStoreError("Run task contract binding is invalid") from error
+        task_contract_id = str(normalized["task_contract_id"])
+        if task_contract_id in binding_ids:
+            raise RunStoreError("Run task contract identity is duplicated")
+        binding_ids.add(task_contract_id)
+        normalized_task_bindings.append(normalized)
+    if normalized_task_bindings != sorted(
+        normalized_task_bindings,
+        key=lambda value: str(value["task_contract_id"]),
+    ):
+        raise RunStoreError("Run task contract bindings are not ordered")
+    if qualification_authorization is not None and not isinstance(
+        qualification_authorization, Mapping,
+    ):
+        raise RunStoreError("Run qualification authorization is invalid")
     validated_references = []
     for reference in source_references:
         validated = validate_record(record=reference)
@@ -316,6 +355,12 @@ def create_run(
         "missing_required_source_roles": list(missing_required_source_roles),
         "spec_file_hashes": dict(spec_file_hashes),
         "requirement_hashes": dict(requirement_hashes),
+        "task_contract_bindings": normalized_task_bindings,
+        **(
+            {"qualification_authorization": dict(qualification_authorization)}
+            if qualification_authorization is not None
+            else {}
+        ),
         "execution_semantics_hash": execution_semantics_hash(),
     }
     run_dir.mkdir(parents=True)
@@ -853,6 +898,81 @@ def load_run_bound_specs(
         raise RunStoreError("Run Spec closure cannot be compiled") from error
 
 
+def _run_table_task_plans(
+    *, repo_root: Path, manifest: Mapping[str, object],
+) -> Dict[str, Dict[str, object]]:
+    """Rebuild every catalog task declared by one formal Run manifest.
+
+    Args:
+        repo_root: Repository authority used for catalog/MetricSpec replay.
+        manifest: Reloaded Run manifest carrying optional task bindings.
+
+    Returns:
+        Task-contract ID to fully rebuilt execution-plan mapping.
+
+    Why:
+        The attempt record alone cannot choose an unreviewed catalog revision.
+        Persisting and revalidating the complete task binding makes the Run
+        manifest, request bytes, response validation, and replay share one
+        single-table authority.
+    """
+    bindings = (
+        manifest["task_contract_bindings"]
+        if "task_contract_bindings" in manifest
+        else []
+    )
+    if not isinstance(bindings, list):
+        raise RunStoreError("Run task contract bindings are invalid")
+    plans = {}
+    previous_id = ""
+    for binding in bindings:
+        if not isinstance(binding, Mapping):
+            raise RunStoreError("Run task contract binding is invalid")
+        if "task_contract_id" not in binding:
+            raise RunStoreError("Run task contract ID is absent")
+        task_contract_id = binding["task_contract_id"]
+        if type(task_contract_id) is not str or not task_contract_id:
+            raise RunStoreError("Run task contract ID is invalid")
+        if previous_id and task_contract_id <= previous_id:
+            raise RunStoreError("Run task contract bindings are not ordered")
+        previous_id = task_contract_id
+        if task_contract_id in plans:
+            raise RunStoreError("Run task contract identity is duplicated")
+        try:
+            plan = table_task_execution_plan(
+                repo_root=repo_root,
+                task_contract_id=task_contract_id,
+            )
+        except TableTaskContractError as error:
+            raise RunStoreError("Run catalog task cannot be rebuilt") from error
+        if dict(binding) != plan["run_binding"]:
+            raise RunStoreError("Run catalog task binding differs")
+        plans[task_contract_id] = plan
+    return plans
+
+
+def load_run_bound_task_specs(
+    *, repo_root: Path, manifest: Mapping[str, object],
+) -> Dict[str, Dict[str, object]]:
+    """Return catalog task Specs whose identities are bound by one Run.
+
+    Args:
+        repo_root: Repository authority used to rebuild catalog tasks.
+        manifest: Reloaded Run manifest.
+
+    Returns:
+        Task semantic hash to executable single-table Spec wrapper.
+    """
+    plans = _run_table_task_plans(repo_root=repo_root, manifest=manifest)
+    specs = {
+        str(plan["task_spec"]["spec_semantic_hash"]): plan["task_spec"]
+        for plan in plans.values()
+    }
+    if len(specs) != len(plans):
+        raise RunStoreError("Run task Spec semantic identity is duplicated")
+    return specs
+
+
 def _qualification_fixture_traits(
     *, repo_root: Path, manifest: Mapping[str, object],
 ) -> Tuple[List[str], List[str]]:
@@ -952,6 +1072,7 @@ def _qualification_fixture_traits(
 def _verify_repository_bindings(
     *,
     repo_root: Path,
+    run_dir: Path,
     manifest: Mapping[str, object],
     records: Sequence[Mapping[str, object]],
 ) -> Tuple[
@@ -981,6 +1102,14 @@ def _verify_repository_bindings(
         str(wrapper["spec_semantic_hash"]): wrapper["compiled"]
         for wrapper in compiled_by_id.values()
     }
+    task_specs_by_hash = load_run_bound_task_specs(
+        repo_root=repo_root,
+        manifest=manifest,
+    )
+    for spec_hash, wrapper in task_specs_by_hash.items():
+        if spec_hash in compiled_by_hash:
+            raise RunStoreError("Run task Spec identity is duplicated")
+        compiled_by_hash[spec_hash] = wrapper["compiled"]
     for unit in (
         record for record in records if record["record_type"] == "REVIEW_UNIT"
     ):
@@ -991,13 +1120,23 @@ def _verify_repository_bindings(
             raise RunStoreError("ReviewUnit Spec is absent from repository")
         if compiled_by_hash[spec_hash] != unit["compiled_spec"]:
             raise RunStoreError("ReviewUnit Spec differs from repository")
+    task_contract_bindings = (
+        manifest["task_contract_bindings"]
+        if "task_contract_bindings" in manifest
+        else []
+    )
     try:
-        requirement = load_requirement_snapshot(
-            snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1"
+        requirement = load_run_requirement_snapshot(
+            repo_root=repo_root,
+            task_contract_bindings=task_contract_bindings,
         )
     except ValueError as error:
         raise RunStoreError("Run Requirement Snapshot is invalid") from error
     if manifest["requirement_hashes"] != requirement["hashes"]:
+        if task_contract_bindings:
+            raise RunStoreError(
+                "Catalog task Run Requirement hashes differ from Issue #15"
+            )
         raise RunStoreError("Run Requirement Snapshot hashes changed")
     raw_blobs = [
         record for record in records if record["record_type"] == "RAW_BLOB"
@@ -1061,6 +1200,26 @@ def _verify_repository_bindings(
             ) from qualification_error
     if manifest["company_traits"] != repository_traits:
         raise RunStoreError("Run company traits differ from repository")
+    if (
+        "qualification_authorization" in manifest
+        or manifest.get("task_contract_bindings")
+    ):
+        try:
+            from .qualification import QualificationError
+            from .qualification import validate_table_qualification_run_bindings
+
+            validate_table_qualification_run_bindings(
+                repo_root=repo_root,
+                run_dir=run_dir,
+                manifest=manifest,
+                records=records,
+            )
+        except QualificationError as error:
+            raise RunStoreError(
+                "Run qualification authority is invalid: {}".format(
+                    error.code
+                )
+            ) from error
     return compiled_by_id, raw_bytes_by_id, repository_ciks, requirement
 
 
@@ -1634,6 +1793,7 @@ def _expected_numeric_result_quality(
 
 def _validate_record_graph(
     *,
+    repo_root: Path,
     run_dir: Path,
     manifest: Mapping[str, object],
     records: Sequence[Mapping[str, object]],
@@ -1646,6 +1806,7 @@ def _validate_record_graph(
     """Validate cross-record identities used by calculation and review.
 
     Args:
+        repo_root: Repository authority used to rebuild catalog task plans.
         run_dir: Run root containing exact AI attempt bytes.
         manifest: RUN record with SourceReference bindings.
         records: Strict disk-reloaded records.
@@ -1804,19 +1965,20 @@ def _validate_record_graph(
         for record in records
         if record["record_type"] == "REVIEW_UNIT"
     }
+    table_task_plans = _run_table_task_plans(
+        repo_root=repo_root,
+        manifest=manifest,
+    )
     specs_by_semantic_hash = {
         str(wrapper["spec_semantic_hash"]): wrapper
         for wrapper in compiled_specs.values()
     }
-    disclosure_specs = {}
-    for wrapper in compiled_specs.values():
-        semantic = wrapper["compiled"]
-        if semantic["kind"] != "disclosure_group":
-            continue
-        disclosure_group = str(semantic["disclosure_group"])
-        if disclosure_group in disclosure_specs:
-            raise RunStoreError("Run disclosure-group Spec is duplicated")
-        disclosure_specs[disclosure_group] = wrapper
+    for plan in table_task_plans.values():
+        task_spec = plan["task_spec"]
+        task_hash = str(task_spec["spec_semantic_hash"])
+        if task_hash in specs_by_semantic_hash:
+            raise RunStoreError("Run task Spec identity is duplicated")
+        specs_by_semantic_hash[task_hash] = task_spec
     reader_manifests = [
         record
         for record in records
@@ -1830,14 +1992,40 @@ def _validate_record_graph(
     replayed_attempt_candidates = {}
     for attempt_id in attempts:
         # Every attempt, including a failed one, must bind independently
-        # reproducible request bytes to one repository-owned disclosure Spec.
+        # reproducible request bytes to one repository-owned task authority.
         attempt = attempts[attempt_id]
-        spec_hash = str(attempt["task_spec_semantic_hash"])
-        if spec_hash not in specs_by_semantic_hash:
-            raise RunStoreError("AI attempt task Spec is absent")
-        disclosure_spec = specs_by_semantic_hash[spec_hash]
-        if disclosure_spec["compiled"]["kind"] != "disclosure_group":
-            raise RunStoreError("AI attempt task Spec is not a disclosure")
+        catalog_task_id = (
+            attempt["task_contract_id"]
+            if "task_contract_id" in attempt
+            else ""
+        )
+        if catalog_task_id:
+            if catalog_task_id not in table_task_plans:
+                raise RunStoreError("AI attempt catalog task is absent from Run")
+            plan = table_task_plans[catalog_task_id]
+            task_contract = plan["runtime_task_contract"]
+            task_spec = plan["task_spec"]
+            if (
+                attempt["task_spec_semantic_hash"]
+                != task_spec["spec_semantic_hash"]
+                or attempt["catalog_task_contract_hash"]
+                != task_contract["catalog_task_contract_hash"]
+                or attempt["catalog_output_schema_hash"]
+                != task_contract["output_schema_hash"]
+                or attempt["system_prompt_hash"]
+                != task_contract["system_prompt_hash"]
+            ):
+                raise RunStoreError("AI attempt catalog task binding differs")
+        else:
+            spec_hash = str(attempt["task_spec_semantic_hash"])
+            if spec_hash not in specs_by_semantic_hash:
+                raise RunStoreError("AI attempt task Spec is absent")
+            task_spec = specs_by_semantic_hash[spec_hash]
+            if task_spec["compiled"]["kind"] != "disclosure_group":
+                raise RunStoreError("AI attempt task Spec is not a disclosure")
+            task_contract = build_reader_task_contract(
+                compiled_spec=task_spec,
+            )
         reader_id = str(attempt["reader_input_manifest_hash"])
         if reader_id not in reader_manifests_by_id:
             raise RunStoreError("AI attempt ReaderInputManifest is absent")
@@ -1845,9 +2033,6 @@ def _validate_record_graph(
         derived_id = str(reader_manifest["derived_asset_id"])
         if derived_id not in derived_assets:
             raise RunStoreError("AI attempt DerivedAsset is absent")
-        task_contract = build_reader_task_contract(
-            compiled_spec=disclosure_spec,
-        )
         payload = build_reader_payload(
             manifest=reader_manifest,
             derived_asset=derived_assets[derived_id],
@@ -1895,9 +2080,8 @@ def _validate_record_graph(
                 replayed = validate_reader_output(
                     response_text=stored["assistant_output"].decode("utf-8"),
                     attempt_id=attempt_id,
-                    required_roles=required_reader_roles(
-                        compiled_spec=disclosure_spec,
-                    ),
+                    required_roles=task_contract["required_roles"],
+                    scope_contract=task_contract["scope_contract"],
                     source_reference_ids=list(
                         reader_manifest["source_reference_ids"]
                     ),
@@ -1909,15 +2093,16 @@ def _validate_record_graph(
                 raise RunStoreError(
                     "Successful AI response bytes cannot be replayed"
                 ) from error
-            if replayed["disclosure_group"] != disclosure_spec[
-                "compiled"
-            ]["disclosure_group"]:
+            if replayed["disclosure_group"] != task_contract[
+                "disclosure_group"
+            ]:
                 raise RunStoreError(
                     "Successful AI response bytes name another disclosure"
                 )
             replayed_attempt_candidates[attempt_id] = replayed
         attempt_contexts[attempt_id] = {
-            "disclosure_spec": disclosure_spec,
+            "task_contract": task_contract,
+            "task_spec": task_spec,
             "payload": payload,
             "reader_manifest": reader_manifest,
         }
@@ -2153,7 +2338,11 @@ def _validate_record_graph(
                 actual_by_role[str(role)]
                 for role in projection["supporting_roles"]
             )
-        target_scope = dict(unit["required_claims"])
+        target_scope = (
+            dict(decision["approved_claims"])
+            if decision["decision"] == "APPROVE"
+            else dict(unit["required_claims"])
+        )
         target = {
             "company_id": manifest["company_id"],
             "period_start": manifest["target_period"]["period_start"],
@@ -2412,12 +2601,11 @@ def _validate_record_graph(
             != reader_manifest["source_reference_ids"]
         ):
             raise RunStoreError("Candidate ReaderInputManifest differs")
-        disclosure_group = str(candidate["disclosure_group"])
-        if disclosure_group not in disclosure_specs:
-            raise RunStoreError("Candidate disclosure Spec is absent")
-        disclosure_spec = attempt_context["disclosure_spec"]
-        if disclosure_spec != disclosure_specs[disclosure_group]:
-            raise RunStoreError("Candidate disclosure task Spec differs")
+        task_spec = attempt_context["task_spec"]
+        if candidate["disclosure_group"] != task_spec["compiled"][
+            "disclosure_group"
+        ]:
+            raise RunStoreError("Candidate task Spec differs")
         payload = attempt_context["payload"]
         replayed_candidate = replayed_attempt_candidates[attempt_id]
         if replayed_candidate != candidate:
@@ -2453,6 +2641,9 @@ def _validate_record_graph(
                 reader_payload_body=reader_payload_body,
                 source_references=source_bindings,
                 identity_constraints=evidence["identity_constraints"],
+                scope_contract=attempt_contexts[
+                    str(candidate["attempt_id"])
+                ]["task_contract"]["scope_contract"],
             )
         except ValueError as error:
             raise RunStoreError("EvidenceCheck cannot be replayed") from error
@@ -2712,10 +2903,14 @@ def _mechanically_replay_open_run(
     _verify_review_assets(run_dir=run_dir, review_units=review_units)
     compiled_specs, raw_bytes_by_id, company_ciks, requirement = (
         _verify_repository_bindings(
-            repo_root=repo_root, manifest=manifest, records=records,
+            repo_root=repo_root,
+            run_dir=run_dir,
+            manifest=manifest,
+            records=records,
         )
     )
     _validate_record_graph(
+        repo_root=repo_root,
         run_dir=run_dir,
         manifest=manifest,
         records=records,
@@ -2990,10 +3185,14 @@ def load_frozen_run(
     _verify_review_assets(run_dir=run_dir, review_units=review_units)
     compiled_specs, raw_bytes_by_id, company_ciks, requirement = (
         _verify_repository_bindings(
-            repo_root=repo_root, manifest=manifest, records=records,
+            repo_root=repo_root,
+            run_dir=run_dir,
+            manifest=manifest,
+            records=records,
         )
     )
     _validate_record_graph(
+        repo_root=repo_root,
         run_dir=run_dir,
         manifest=manifest,
         records=records,
