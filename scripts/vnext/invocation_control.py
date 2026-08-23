@@ -1609,6 +1609,25 @@ def qualification_remote_egress_terminals(
                 raise InvocationControlError("Unknown outcome marker differs")
         elif receipt_marker_ids != marker_ids:
             raise InvocationControlError("Execution attempt markers differ")
+        attempt_statuses = [item["status"] for item in receipt["attempts"]]
+        attempt_error_classes = [
+            item["error_class"] for item in receipt["attempts"]
+        ]
+        if (
+            status == "SUCCEEDED"
+            and attempt_statuses
+            not in (["SUCCEEDED"], ["FAILED_RETRYABLE", "SUCCEEDED"])
+        ) or (
+            status == "FAILED_TERMINAL"
+            and attempt_statuses != ["FAILED_TERMINAL"]
+        ) or (
+            status == "FAILED_RETRYABLE_FINAL"
+            and attempt_statuses
+            != ["FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL"]
+        ) or (
+            status == "UNKNOWN_REMOTE_OUTCOME" and attempt_statuses
+        ):
+            raise InvocationControlError("Execution terminal attempt sequence differs")
         if status == "SUCCEEDED":
             success = _load_success_response(root=root, plan=plan)
             if (
@@ -1641,10 +1660,10 @@ def qualification_remote_egress_terminals(
                 for marker in markers
             ],
             "attempt_statuses": [
-                item["status"] for item in receipt["attempts"]
+                item for item in attempt_statuses
             ],
             "attempt_error_classes": [
-                item["error_class"] for item in receipt["attempts"]
+                item for item in attempt_error_classes
             ],
             "provider_request_ids": [
                 item["provider_request_id"] for item in receipt["attempts"]

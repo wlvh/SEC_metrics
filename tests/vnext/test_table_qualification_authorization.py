@@ -1945,6 +1945,28 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         [error_class, error_class],
                         terminal["attempt_error_classes"],
                     )
+                    mismatched_terminal = {
+                        **terminal,
+                        "provider_request_ids": list(reversed(
+                            terminal["provider_request_ids"]
+                        )),
+                    }
+                    mismatched_terminal[
+                        "qualification_wb3_remote_egress_terminal_id"
+                    ] = content_hash(value={
+                        field: mismatched_terminal[field]
+                        for field in mismatched_terminal
+                        if field != "qualification_wb3_remote_egress_terminal_id"
+                    })
+                    with mock.patch.object(
+                        qualification,
+                        "qualification_remote_egress_terminals",
+                        return_value=[mismatched_terminal],
+                    ), self.assertRaises(qualification.QualificationError):
+                        qualification.validate_table_qualification_cycle_exact_set(
+                            repo_root=repo_root,
+                            binding=binding,
+                        )
                     records_before = (run_dir / "records.jsonl").read_bytes()
                     ledger_path = repo_root / binding[
                         "qualification_provider_ledger_path"

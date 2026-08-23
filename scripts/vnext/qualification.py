@@ -1923,12 +1923,6 @@ def validate_table_qualification_cycle_exact_set(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
                 message="Qualification WB-3 attempt sequence is invalid",
             )
-        retryable_error = attempt.get("error_class") in {
-            "HTTP_429", "TIMEOUT", "RECOVERABLE_5XX",
-        } or (
-            type(attempt.get("error_class")) is str
-            and attempt["error_class"].startswith("HTTP_5")
-        )
         if attempt["status"] == "SUCCEEDED":
             expected_wb3_statuses = {"SUCCEEDED"}
             expected_batch_terminal = False
@@ -1941,7 +1935,7 @@ def validate_table_qualification_cycle_exact_set(
             expected_wb3_statuses = {"UNKNOWN_REMOTE_OUTCOME"}
             expected_batch_terminal = True
             expected_attempt_statuses = []
-        elif retryable_error:
+        elif wb3["status"] == "FAILED_RETRYABLE_FINAL":
             expected_wb3_statuses = {"FAILED_RETRYABLE_FINAL"}
             expected_batch_terminal = True
             expected_attempt_statuses = [
@@ -1963,7 +1957,11 @@ def validate_table_qualification_cycle_exact_set(
             or (
                 provider_request_ids
                 and attempt["provider_request_id"]
-                not in provider_request_ids
+                != provider_request_ids[-1]
+            )
+            or (
+                not provider_request_ids
+                and attempt["provider_request_id"] != ""
             )
             or wb3["status"] not in expected_wb3_statuses
             or wb3["batch_terminal"] is not expected_batch_terminal
