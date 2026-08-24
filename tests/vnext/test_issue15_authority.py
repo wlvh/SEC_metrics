@@ -26,11 +26,12 @@ from vnext.publication import PublicationView, ROOT_MIRROR_RELATIVE_PATHS
 from vnext.publication import verify_publication_bundle
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
+    ISSUE_15_D07_EFFECTIVE_CHOICE,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
     ISSUE_15_EXPECTED_SEMANTIC_RECORD_SET_HASH,
-    ISSUE_15_POST_FREEZE_DECISION_EVIDENCE,
+    ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID,
     ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES,
     RequirementError,
     load_requirement_snapshot,
@@ -414,6 +415,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
+        self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -423,6 +425,21 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual(
             0, issue_snapshot["effective_decisions"]["D-01"]["choice"]["retry_count"],
+        )
+        d07_chain = issue_snapshot["decision_chains"]["D-07"]
+        self.assertEqual(
+            content_hash(value=d07_chain[0]),
+            d07_chain[1]["supersedes_decision_id"],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_EFFECTIVE_CHOICE,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"],
+        )
+        self.assertEqual(
+            200000,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "max_estimated_input_tokens"
+            ],
         )
         self.assertNotIn(
             "freeze_replay",
@@ -447,7 +464,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES:
             self.assertEqual(
-                ISSUE_15_POST_FREEZE_DECISION_EVIDENCE,
+                ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID[decision_id],
                 issue_snapshot["effective_decisions"][decision_id]["evidence"],
             )
         d35_choice = issue_snapshot["effective_decisions"]["D-35"]["choice"]
@@ -855,6 +872,45 @@ class Issue15AuthorityTest(unittest.TestCase):
             with (issue_copy / "CONTRACT.md").open(mode="ab") as file_obj:
                 file_obj.write(b"\n")
             with self.assertRaises(RequirementError):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_tip_cannot_supersede_another_decision_id(self) -> None:
+        """Reject a D-07 tip whose parent hash belongs to the D-01 chain."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            register = read_json(path=issue_copy / "decision_register.json")
+            d07 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-07"
+            )
+            d01 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-01"
+            )
+            d07["supersedes_decision_id"] = content_hash(value=d01)
+            rebind_decisions(issue_copy=issue_copy, register=register)
+            with self.assertRaisesRegex(
+                RequirementError, "Decision chain has a detached parent",
+            ):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_effective_threshold_is_exact(self) -> None:
+        """Reject a self-rebound D-07 tip with a different token threshold."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            register = read_json(path=issue_copy / "decision_register.json")
+            d07 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-07"
+            )
+            d07["choice"]["max_estimated_input_tokens"] = 199999
+            rebind_decisions(issue_copy=issue_copy, register=register)
+            with self.assertRaisesRegex(
+                RequirementError, "superseding Decision content differs",
+            ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
 
     def test_monetary_observability_cannot_become_a_budget_gate(self) -> None:

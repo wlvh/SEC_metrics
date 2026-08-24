@@ -615,6 +615,34 @@
       "approved_at_utc": "2026-08-19T10:01:11Z",
       "supersedes_decision_id": "sha256:9dc7cb36a0893f80ac84c385a7cf1723516529c442442a1915c50bb1973133df",
       "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535"
+    },
+    {
+      "decision_id": "D-07",
+      "status": "APPROVED",
+      "choice": {
+        "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
+        "semantic_prefilter": false,
+        "selector_authorized": false,
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "max_estimated_input_tokens": 200000,
+        "threshold_comparison": {
+          "passes": "estimated_input_tokens <= 200000",
+          "blocks": "estimated_input_tokens > 200000"
+        },
+        "threshold_scope": "PER_FAMILY_PER_REQUEST",
+        "oversized_payload_policy": "BLOCK_LIVE_QUALIFICATION_FOR_AFFECTED_FAMILY",
+        "shared_dependency_drift_policy": "INVALIDATE_ALL_DEPENDENT_FAMILIES",
+        "family_local_drift_policy": "INVALIDATE_OWNER_FAMILY_ONLY",
+        "lossless_context_minimization_precedes_semantic_selection": true,
+        "actual_prompt_tokens_authority": "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED",
+        "live_measurement_authorized": false,
+        "live_qualification_authorized": false
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-24T04:17:57Z",
+      "supersedes_decision_id": "sha256:35b1643bc675c82b7e63cce40e614f51eed19e14536677ce8bba9d790b7abd4f",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5390663414"
     }
   ],
   "pending_decisions": [

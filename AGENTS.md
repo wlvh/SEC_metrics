@@ -63,7 +63,7 @@ requirements/issue_15_v1/CONTRACT.md（Issue #15 exact authority）
 → SOP.md「vNext operator 与正式 Cutover」
 ```
 
-Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快照继续提供不可变 R2/R3、既有实现和历史 Decision 链；新快照原样携带 13 条历史记录，以 D-01/D-26 同 ID 新 tip 和 D-30–D-38 新根记录形成自包含 authority。Issue #15 owner 在冻结后以同 ID D-36/D-35/D-26 新 tip 禁用仓库金额预算门禁：外部 API 账户余额是花费权威，仓库不存在 per-call/batch/owner monetary cap 或金额 preflight blocker；cost/token/usage/cache 只可作非阻断 observability。`HTTP_402` 仍零自动重试并终止 execution 与 batch，payload/context/resource limit 仍是独立非金额 fail-closed 安全类。WB-1 只冻结并验证这次转移，不切换现有 Reader、transport、publication 或业务语义，也不授权真实 SEC/模型调用。
+Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快照继续提供不可变 R2/R3、既有实现和历史 Decision 链；新快照原样携带 13 条历史记录，以 D-01/D-26 同 ID 新 tip 和 D-30–D-38 新根记录形成自包含 authority。Issue #15 owner 在冻结后以同 ID D-36/D-35/D-26 新 tip 禁用仓库金额预算门禁：外部 API 账户余额是花费权威，仓库不存在 per-call/batch/owner monetary cap 或金额 preflight blocker；cost/token/usage/cache 只可作非阻断 observability。随后同 ID D-07 新 tip 保留全部文档表、原始顺序与无 selector/prefilter，把 `utf8_byte_upper_bound` v1 的 inclusive estimated-input threshold 提高到 200000，并批准 family-scoped readiness：shared closure drift 失效全部依赖 family，family-local context/resource/authority failure 只阻断 owner family。该 tip 不授权 actual-token measurement、live qualification、SEC 或模型 egress。`HTTP_402` 仍零自动重试并终止 execution 与 batch，payload/context/resource limit 仍是独立非金额 fail-closed 安全类。WB-1 只冻结并验证这次转移，不切换现有 Reader、transport、publication 或业务语义，也不授权真实 SEC/模型调用。
 
 代码已具备同一 recorded/live operator、D-06 optional HUMAN/SYSTEM audited Review、固定 DeepSeek/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。Issue #15 R1 已只读导入 verified legacy A，以 immutable SEC attempts 冻结十公司 B01/B03 successor B，并真实完成 A→B、rollback→A、restore→B。R2 又以 commit-bound immutable SEC blobs、完整submissions current/history shards和request-ledger绑定的acquisition receipt补集累计加入其余14个DET_ONLY与C01/E01–E05。两档public rows均先从Result/Trace/Claims/catalog独立渲染，再以legacy作18×20/141×20字段oracle；最终active含22指标、220个Result坐标、79个新增structural keys和309行public matrix，approved/unexpected delta均为空。R1/R2的real-model egress与paid call均为0，projection/retirement/read-back/key-set receipts已持久化。该事实仍不证明WB-4以后、AI Reader、39指标最终Cutover或full acceptance；历史DeepSeek `Insufficient Balance`失败仍是后续AI档证据。
 
@@ -82,7 +82,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
 - `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
-- `requirements/issue_15_v1/`：Issue #15 的 exact Contract、自包含 Decision Register、post-freeze D-36/D-35/D-26 tips、parent transfer/baseline、39 指标 legacy semantic producer inventory、matrix baseline 与 foundation verification；是后续开发 authority，冻结 Contract 和 inherited parent bytes 均不因新 tip 被改写。
+- `requirements/issue_15_v1/`：Issue #15 的 exact Contract、自包含 Decision Register、post-freeze D-36/D-35/D-26/D-07 tips、parent transfer/baseline、39 指标 legacy semantic producer inventory、matrix baseline 与 foundation verification；是后续开发 authority，冻结 Contract 和 inherited parent bytes 均不因新 tip 被改写。
 - `requirements/ai_first_v3_3_1/`：不可变 inherited foundation；其 exact FSD、R2/R3、历史 Decision、旧基线与 inventory 继续供 parent closure 验证，任何文件不得因 Issue #15 开发被改写。
 
 ### 核心配置
