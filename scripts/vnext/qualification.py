@@ -460,7 +460,10 @@ def _authorization_mapping(
         freeze = plan["_freeze_status"]
         if type(freeze) is not dict:
             raise ValueError("Qualification freeze status is invalid")
-        snapshot = validate_stage_a_snapshot(repo_root=repo_root)
+        snapshot = validate_stage_a_snapshot(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
         contracts = load_table_task_contracts(repo_root=repo_root)
         runtime = resolve_table_task_contract(
             repo_root=repo_root,
