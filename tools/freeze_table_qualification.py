@@ -59,11 +59,7 @@ def main(*, argv: Sequence[str]) -> int:
         return 2
     print(json.dumps(
         {
-            "status": (
-                "D07_DECISION_REQUIRED"
-                if receipt["d07_decision_required"]
-                else "FROZEN"
-            ),
+            "status": "FROZEN",
             "receipt_id": receipt["table_qualification_freeze_receipt_id"],
             "receipt_path": receipt["receipt_path"],
             "authorized_family_ids": receipt["wb6_task_contracts"][
@@ -72,6 +68,8 @@ def main(*, argv: Sequence[str]) -> int:
             "maximum_estimated_input_tokens": receipt[
                 "wb4_compact_transport"
             ]["maximum_estimated_input_tokens"],
+            "readiness_by_family": receipt["readiness_by_family"],
+            "live_ready_family_ids": receipt["live_ready_family_ids"],
             "real_model_provider_egress_count": receipt["provider_state"][
                 "qualification_cycle_real_model_egress_count"
             ],

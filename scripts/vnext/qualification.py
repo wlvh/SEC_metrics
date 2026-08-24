@@ -2182,8 +2182,8 @@ def table_qualification_task_plan(
 
     Raises:
         QualificationError: Before any future source/provider action when the
-        freeze is invalid, D-07 still requires a decision, or the requested
-        task is not owned by the requested family.
+        freeze is invalid, the requested family is not live-ready, or the
+        requested task is not owned by that family.
 
     Why:
         Qualification may schedule ordinals, but it may not use a disclosure
@@ -2207,11 +2207,13 @@ def table_qualification_task_plan(
             task_contract_id=task_contract_id,
         )
     except TableQualificationFreezeError as error:
-        code = (
-            "D07_DECISION_REQUIRED"
-            if str(error) == "D07_DECISION_REQUIRED"
-            else "TABLE_QUALIFICATION_TASK_PLAN_INVALID"
-        )
+        message = str(error)
+        if message.startswith("TABLE_QUALIFICATION_FAMILY_NOT_READY:"):
+            code = "TABLE_QUALIFICATION_FAMILY_NOT_READY"
+        elif message == "D07_DECISION_REQUIRED":
+            code = "D07_DECISION_REQUIRED"
+        else:
+            code = "TABLE_QUALIFICATION_TASK_PLAN_INVALID"
         raise QualificationError(
             code=code,
             message="Frozen table task plan cannot be rebuilt",

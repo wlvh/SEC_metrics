@@ -30,6 +30,7 @@ from .provider_runtime import estimate_context_tokens
 from .provider_runtime import load_provider_runtime_authority
 from .reader_input import READER_SYSTEM_CONTRACT
 from .reader_input import build_reader_input_manifest, build_reader_payload
+from .requirements import ISSUE_15_D07_EFFECTIVE_CHOICE
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
 from .table_grid import build_table_grid, TableGridError
@@ -106,6 +107,8 @@ RECEIPT_FIELDS = {
     "protected_closure",
     "provider_state",
     "qualification_cycle_id",
+    "live_ready_family_ids",
+    "readiness_by_family",
     "record_type",
     "schema_version",
     "table_qualification_freeze_receipt_id",
@@ -114,6 +117,33 @@ RECEIPT_FIELDS = {
     "wb5_scope_contract",
     "wb6_task_contracts",
 }
+FAMILY_READINESS_FIELDS = {
+    "blocking_reason_codes",
+    "context_gate",
+    "live_ready",
+    "protected_closure_gate",
+    "resource_gate",
+}
+CONTEXT_GATE_FIELDS = {
+    "blocking_measurement_ids",
+    "max_estimated_input_tokens",
+    "maximum_observed_estimated_input_tokens",
+    "status",
+    "threshold_comparison",
+}
+RESOURCE_GATE_FIELDS = {"blocking_measurement_ids", "status"}
+PROTECTED_CLOSURE_GATE_FIELDS = {
+    "drift_labels",
+    "family_local_drift",
+    "shared_dependency_drift",
+    "status",
+}
+ESTIMATED_CONTEXT_LIMIT = "ESTIMATED_CONTEXT_LIMIT"
+PROVIDER_CONTEXT_LIMIT = "PROVIDER_CONTEXT_LIMIT"
+PROVIDER_PAYLOAD_LIMIT = "PROVIDER_PAYLOAD_LIMIT"
+EXPANDED_GRID_RESOURCE_LIMIT = "EXPANDED_GRID_RESOURCE_LIMIT"
+SHARED_PROTECTED_CLOSURE_DRIFT = "SHARED_PROTECTED_CLOSURE_DRIFT"
+FAMILY_LOCAL_AUTHORITY_DRIFT = "FAMILY_LOCAL_AUTHORITY_DRIFT"
 WB3_TESTS = {
     "single_flight": (
         "tests.vnext.test_invocation_control.InvocationControlTest."
@@ -467,6 +497,31 @@ def _round_trip_sources(
     return sources
 
 
+def _context_blocking_reason_codes(
+    *, estimated_input_tokens: int, max_estimated_input_tokens: int,
+    maximum_context_tokens: int, provider_envelope_bytes: int,
+    maximum_payload_bytes: int,
+) -> List[str]:
+    """Return deterministic inclusive-threshold context/payload blockers."""
+    values = (
+        estimated_input_tokens,
+        max_estimated_input_tokens,
+        maximum_context_tokens,
+        provider_envelope_bytes,
+        maximum_payload_bytes,
+    )
+    if any(type(value) is not int or value < 0 for value in values):
+        raise TableQualificationFreezeError("Context gate inputs are invalid")
+    reason_codes = []
+    if estimated_input_tokens > max_estimated_input_tokens:
+        reason_codes.append(ESTIMATED_CONTEXT_LIMIT)
+    if estimated_input_tokens > maximum_context_tokens:
+        reason_codes.append(PROVIDER_CONTEXT_LIMIT)
+    if provider_envelope_bytes > maximum_payload_bytes:
+        reason_codes.append(PROVIDER_PAYLOAD_LIMIT)
+    return reason_codes
+
+
 def _measure_reader_envelope(
     *,
     source_id: str,
@@ -531,6 +586,7 @@ def _measure_reader_envelope(
             "round_trip_receipt_id": RESOURCE_LIMIT_ESTIMATE,
             "round_trip_hash": RESOURCE_LIMIT_ESTIMATE,
             "context_or_resource_limit_exceeded": True,
+            "blocking_reason_codes": [EXPANDED_GRID_RESOURCE_LIMIT],
             "resource_limit_reason": str(error),
         }
         return {**body, "measurement_id": content_hash(value=body)}
@@ -564,10 +620,12 @@ def _measure_reader_envelope(
         Decimal(len(compact_payload["request_bytes"]))
         / Decimal(len(expanded_bytes))
     ).quantize(Decimal("0.00000001"), rounding=ROUND_HALF_EVEN)
-    over_limit = (
-        estimated_tokens > token_limit
-        or estimated_tokens > runtime["maximum_context_tokens"]
-        or len(provider_envelope) > policy.maximum_payload_bytes
+    blocking_reason_codes = _context_blocking_reason_codes(
+        estimated_input_tokens=estimated_tokens,
+        max_estimated_input_tokens=token_limit,
+        maximum_context_tokens=runtime["maximum_context_tokens"],
+        provider_envelope_bytes=len(provider_envelope),
+        maximum_payload_bytes=policy.maximum_payload_bytes,
     )
     body = {
         "source_id": source_id,
@@ -584,7 +642,8 @@ def _measure_reader_envelope(
         "provider_context_authority_hash": runtime["context_authority_hash"],
         "round_trip_receipt_id": round_trip["round_trip_receipt_id"],
         "round_trip_hash": content_hash(value=round_trip),
-        "context_or_resource_limit_exceeded": over_limit,
+        "context_or_resource_limit_exceeded": bool(blocking_reason_codes),
+        "blocking_reason_codes": blocking_reason_codes,
     }
     return {**body, "measurement_id": content_hash(value=body)}
 
@@ -709,13 +768,19 @@ def _measurement_receipts(
         )
         else max(known_estimates)
     )
+    blocking_family_ids = sorted({
+        str(item["family_id"])
+        for item in task_measurements
+        if item["blocking_reason_codes"]
+    })
     return {
         "round_trip_receipts": round_trip_receipts,
         "qualification_task_measurements": task_measurements,
         "family_maximum_estimated_input_tokens": family_maxima,
         "maximum_estimated_input_tokens": maximum,
         "maximum_successfully_estimated_input_tokens": max(known_estimates),
-        "d07_decision_required": any(
+        "blocking_family_ids": blocking_family_ids,
+        "any_measurement_blocked": any(
             item["context_or_resource_limit_exceeded"]
             for item in all_measurements
         ),
@@ -817,34 +882,74 @@ def _d07_authority(
         decision.get("decision_id") != "D-07"
         or decision.get("status") != "APPROVED"
         or type(choice) is not dict
-        or set(choice) != {
-            "reader_table_set",
-            "semantic_prefilter",
-            "oversized_payload_policy",
-        }
-        or choice["reader_table_set"]
-        != "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER"
-        or choice["semantic_prefilter"] is not False
-        or type(choice["oversized_payload_policy"]) is not str
+        or choice != ISSUE_15_D07_EFFECTIVE_CHOICE
     ):
         raise TableQualificationFreezeError("Effective D-07 authority is invalid")
+    if any(
+        entry["token_context_limits"]["max_estimated_input_tokens"]
+        != choice["max_estimated_input_tokens"]
+        for entry in matrix["entries"].values()
+    ):
+        raise TableQualificationFreezeError("D-07 matrix threshold differs")
     measurement_fields = (
         "round_trip_receipts",
         "qualification_task_measurements",
         "family_maximum_estimated_input_tokens",
         "maximum_estimated_input_tokens",
         "maximum_successfully_estimated_input_tokens",
+        "blocking_family_ids",
+        "any_measurement_blocked",
     )
     if any(field not in measurements for field in measurement_fields) or type(
-        measurements.get("d07_decision_required")
-    ) is not bool:
+        measurements.get("any_measurement_blocked")
+    ) is not bool or type(measurements.get("blocking_family_ids")) is not list:
         raise TableQualificationFreezeError("D-07 measurements are invalid")
+    measurement_rows = (
+        list(measurements["round_trip_receipts"])
+        + list(measurements["qualification_task_measurements"])
+    )
+    allowed_reason_codes = {
+        ESTIMATED_CONTEXT_LIMIT,
+        PROVIDER_CONTEXT_LIMIT,
+        PROVIDER_PAYLOAD_LIMIT,
+        EXPANDED_GRID_RESOURCE_LIMIT,
+    }
+    for item in measurement_rows:
+        reasons = item.get("blocking_reason_codes")
+        estimate = item.get("estimated_input_tokens")
+        if (
+            type(reasons) is not list
+            or reasons != sorted(set(reasons))
+            or not set(reasons).issubset(allowed_reason_codes)
+            or item.get("context_or_resource_limit_exceeded")
+            != bool(reasons)
+            or item.get("estimator_id") != choice["estimator_id"]
+            or item.get("estimator_version") != choice["estimator_version"]
+            or (
+                estimate == RESOURCE_LIMIT_ESTIMATE
+                and reasons != [EXPANDED_GRID_RESOURCE_LIMIT]
+            )
+            or (
+                type(estimate) is int
+                and (estimate > choice["max_estimated_input_tokens"])
+                != (ESTIMATED_CONTEXT_LIMIT in reasons)
+            )
+        ):
+            raise TableQualificationFreezeError("D-07 measurement row is invalid")
+    derived_blocking_families = sorted({
+        str(item["family_id"])
+        for item in measurements["qualification_task_measurements"]
+        if item["blocking_reason_codes"]
+    })
+    if (
+        measurements["blocking_family_ids"] != derived_blocking_families
+        or measurements["any_measurement_blocked"]
+        != any(item["blocking_reason_codes"] for item in measurement_rows)
+    ):
+        raise TableQualificationFreezeError("D-07 measurement summary differs")
     estimator_hashes = sorted({
         str(item["provider_context_authority_hash"])
-        for item in (
-            list(measurements["round_trip_receipts"])
-            + list(measurements["qualification_task_measurements"])
-        )
+        for item in measurement_rows
     })
     if not estimator_hashes:
         raise TableQualificationFreezeError("D-07 estimator authority is absent")
@@ -852,19 +957,168 @@ def _d07_authority(
         field: measurements[field]
         for field in measurement_fields
     }
-    measurement_requires_decision = measurements["d07_decision_required"]
     return {
         "effective_d07_record_hash": content_hash(value=decision),
         "effective_d07_choice": choice,
         "matrix_sha256": matrix["matrix_sha256"],
         "estimator_authority_hashes": estimator_hashes,
         "measurement_receipts_hash": content_hash(value=measurement_body),
-        "measurement_requires_decision": measurement_requires_decision,
-        "d07_decision_required": (
-            measurement_requires_decision
-            and choice["oversized_payload_policy"] == "BLOCK_LIVE_CUTOVER"
-        ),
+        "measurement_has_any_blocker": measurements[
+            "any_measurement_blocked"
+        ],
+        "blocking_family_ids": derived_blocking_families,
+        "d07_decision_required": False,
     }
+
+
+def _readiness_by_family(
+    *, matrix: Mapping[str, object], measurements: Mapping[str, object],
+    drift_by_family: Mapping[str, Sequence[str]],
+) -> Dict[str, Dict[str, object]]:
+    """Derive independent context/resource/closure gates for each family.
+
+    Shared dependency drift is already propagated by
+    :func:`_protected_closure_drift`; this function preserves that propagation
+    while preventing one family's local measurement or authority failure from
+    becoming a global execution gate.
+    """
+    family_ids = set(matrix["entries"])
+    if not set(drift_by_family).issubset(family_ids):
+        raise TableQualificationFreezeError("Readiness drift family set differs")
+    rows = measurements.get("qualification_task_measurements")
+    if type(rows) is not list:
+        raise TableQualificationFreezeError("Readiness measurements are invalid")
+    readiness = {}
+    context_codes = {
+        ESTIMATED_CONTEXT_LIMIT,
+        PROVIDER_CONTEXT_LIMIT,
+        PROVIDER_PAYLOAD_LIMIT,
+    }
+    for family_id in sorted(family_ids):
+        family_rows = [
+            item for item in rows if item.get("family_id") == family_id
+        ]
+        if not family_rows:
+            raise TableQualificationFreezeError(
+                "Family readiness measurement set is empty"
+            )
+        threshold = matrix["entries"][family_id]["token_context_limits"][
+            "max_estimated_input_tokens"
+        ]
+        resource_rows = [
+            item for item in family_rows
+            if EXPANDED_GRID_RESOURCE_LIMIT in item["blocking_reason_codes"]
+        ]
+        context_rows = [
+            item for item in family_rows
+            if context_codes & set(item["blocking_reason_codes"])
+        ]
+        known_estimates = [
+            item["estimated_input_tokens"]
+            for item in family_rows
+            if type(item["estimated_input_tokens"]) is int
+        ]
+        if context_rows:
+            context_status = "BLOCKED"
+        elif known_estimates:
+            context_status = "PASSED"
+        elif resource_rows:
+            context_status = "NOT_EVALUATED_RESOURCE_LIMIT"
+        else:
+            raise TableQualificationFreezeError(
+                "Family context readiness cannot be derived"
+            )
+        resource_status = "BLOCKED" if resource_rows else "PASSED"
+        drift_labels = sorted(set(drift_by_family.get(family_id, [])))
+        if any(type(label) is not str or not label for label in drift_labels):
+            raise TableQualificationFreezeError(
+                "Family readiness drift labels are invalid"
+            )
+        shared_drift = any(
+            label.startswith("shared_engine:")
+            or label.startswith("r2_root:")
+            for label in drift_labels
+        )
+        family_local_drift = any(
+            not (
+                label.startswith("shared_engine:")
+                or label.startswith("r2_root:")
+            )
+            for label in drift_labels
+        )
+        protected_status = "BLOCKED" if drift_labels else "PASSED"
+        reason_codes = {
+            reason
+            for item in family_rows
+            for reason in item["blocking_reason_codes"]
+        }
+        if shared_drift:
+            reason_codes.add(SHARED_PROTECTED_CLOSURE_DRIFT)
+        if family_local_drift:
+            reason_codes.add(FAMILY_LOCAL_AUTHORITY_DRIFT)
+        live_ready = (
+            context_status == "PASSED"
+            and resource_status == "PASSED"
+            and protected_status == "PASSED"
+        )
+        readiness[family_id] = {
+            "context_gate": {
+                "status": context_status,
+                "max_estimated_input_tokens": threshold,
+                "threshold_comparison": (
+                    "estimated_input_tokens <= {}".format(threshold)
+                ),
+                "maximum_observed_estimated_input_tokens": (
+                    max(known_estimates)
+                    if known_estimates else RESOURCE_LIMIT_ESTIMATE
+                ),
+                "blocking_measurement_ids": sorted(
+                    str(item["measurement_id"])
+                    for item in context_rows
+                ),
+            },
+            "resource_gate": {
+                "status": resource_status,
+                "blocking_measurement_ids": sorted(
+                    str(item["measurement_id"])
+                    for item in resource_rows
+                ),
+            },
+            "protected_closure_gate": {
+                "status": protected_status,
+                "drift_labels": drift_labels,
+                "shared_dependency_drift": shared_drift,
+                "family_local_drift": family_local_drift,
+            },
+            "live_ready": live_ready,
+            "blocking_reason_codes": sorted(reason_codes),
+        }
+    return readiness
+
+
+def _validate_readiness_shape(*, readiness: object) -> None:
+    """Reject malformed persisted or current family readiness mappings."""
+    if type(readiness) is not dict or not readiness:
+        raise TableQualificationFreezeError("Family readiness is invalid")
+    for family_id, value in readiness.items():
+        if (
+            type(family_id) is not str
+            or not family_id
+            or type(value) is not dict
+            or set(value) != FAMILY_READINESS_FIELDS
+            or type(value["context_gate"]) is not dict
+            or set(value["context_gate"]) != CONTEXT_GATE_FIELDS
+            or type(value["resource_gate"]) is not dict
+            or set(value["resource_gate"]) != RESOURCE_GATE_FIELDS
+            or type(value["protected_closure_gate"]) is not dict
+            or set(value["protected_closure_gate"])
+            != PROTECTED_CLOSURE_GATE_FIELDS
+            or type(value["live_ready"]) is not bool
+            or type(value["blocking_reason_codes"]) is not list
+        ):
+            raise TableQualificationFreezeError(
+                "Family readiness fields are invalid"
+            )
 
 
 def _split_cost_receipts(
@@ -1526,6 +1780,16 @@ def build_table_qualification_freeze_receipt(
         measurements=measurements,
     )
     decision_required = d07_authority["d07_decision_required"]
+    readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family={},
+    )
+    live_ready_family_ids = sorted(
+        family_id
+        for family_id, value in readiness.items()
+        if value["live_ready"]
+    )
     split_cost_receipts = _split_cost_receipts(
         task_contracts=task_contracts,
         task_measurements=measurements["qualification_task_measurements"],
@@ -1555,11 +1819,13 @@ def build_table_qualification_freeze_receipt(
     )
     body = {
         "record_type": "TABLE_QUALIFICATION_FREEZE_RECEIPT",
-        "schema_version": 2,
+        "schema_version": 3,
         "freeze_commit": commit,
         "frozen_at_utc": frozen_at_utc,
         "qualification_cycle_id": cycle_id,
         "d07_decision_required": decision_required,
+        "readiness_by_family": readiness,
+        "live_ready_family_ids": live_ready_family_ids,
         "identity": {
             "requirement_closure_hash": task_contracts[
                 "requirement_closure_hash"
@@ -1625,6 +1891,10 @@ def build_table_qualification_freeze_receipt(
             ],
             "maximum_successfully_estimated_input_tokens": measurements[
                 "maximum_successfully_estimated_input_tokens"
+            ],
+            "blocking_family_ids": measurements["blocking_family_ids"],
+            "any_measurement_blocked": measurements[
+                "any_measurement_blocked"
             ],
             "d07_authority": d07_authority,
         },
@@ -1821,7 +2091,7 @@ def validate_table_qualification_freeze(
         relative=receipt_relative,
         label="table qualification freeze receipt",
     )
-    if set(receipt) != RECEIPT_FIELDS or receipt["schema_version"] != 2:
+    if set(receipt) != RECEIPT_FIELDS or receipt["schema_version"] != 3:
         raise TableQualificationFreezeError("Freeze receipt fields are invalid")
     receipt_id = receipt["table_qualification_freeze_receipt_id"]
     body = {
@@ -1882,9 +2152,28 @@ def validate_table_qualification_freeze(
         "family_maximum_estimated_input_tokens",
         "maximum_estimated_input_tokens",
         "maximum_successfully_estimated_input_tokens",
+        "blocking_family_ids",
+        "any_measurement_blocked",
     ):
         if wb4.get(field) != measurements[field]:
-            raise TableQualificationFreezeError("D-07 measurement evidence differs")
+            raise TableQualificationFreezeError(
+                "D-07 measurement evidence differs:{}".format(field)
+            )
+    expected_frozen_readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family={},
+    )
+    _validate_readiness_shape(readiness=receipt["readiness_by_family"])
+    if receipt["readiness_by_family"] != expected_frozen_readiness:
+        raise TableQualificationFreezeError("Frozen family readiness differs")
+    expected_frozen_live = sorted(
+        family_id
+        for family_id, value in expected_frozen_readiness.items()
+        if value["live_ready"]
+    )
+    if receipt["live_ready_family_ids"] != expected_frozen_live:
+        raise TableQualificationFreezeError("Frozen live-ready family set differs")
     current = _protected_closure(
         repo_root=repo_root,
         matrix=matrix,
@@ -1905,10 +2194,28 @@ def validate_table_qualification_freeze(
         for family_id in task_contracts["authorized_family_ids"]:
             existing = drift_by_family.get(family_id, [])
             drift_by_family[family_id] = sorted(set(existing) | set(root_drift))
+    readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family=drift_by_family,
+    )
+    _validate_readiness_shape(readiness=readiness)
+    live_ready_family_ids = sorted(
+        family_id
+        for family_id, value in readiness.items()
+        if value["live_ready"]
+    )
     return {
         "receipt_id": receipt_id,
         "qualification_cycle_id": receipt["qualification_cycle_id"],
         "d07_decision_required": receipt["d07_decision_required"],
+        "readiness_by_family": readiness,
+        "live_ready_family_ids": live_ready_family_ids,
+        "blocked_family_ids": sorted(
+            family_id
+            for family_id, value in readiness.items()
+            if not value["live_ready"]
+        ),
         "provider_ledger_before": provider_ledger_before,
         "invalidated_family_ids": sorted(drift_by_family),
         "drift_by_family": drift_by_family,
@@ -1918,7 +2225,7 @@ def validate_table_qualification_freeze(
 def require_table_qualification_freeze(
     *, repo_root: Path, family_id: str,
 ) -> Dict[str, object]:
-    """Fail closed before future qualification when its family drifted.
+    """Fail closed from only the requested family's three readiness gates.
 
     Args:
         repo_root: Repository authority root.
@@ -1928,10 +2235,16 @@ def require_table_qualification_freeze(
         Validated freeze status for an unaffected authorized family.
     """
     status = validate_table_qualification_freeze(repo_root=repo_root)
-    if family_id in status["invalidated_family_ids"]:
+    readiness = status["readiness_by_family"].get(family_id)
+    if type(readiness) is not dict:
         raise TableQualificationFreezeError(
-            "TABLE_QUALIFICATION_FREEZE_INVALIDATED:{}".format(family_id)
+            "TABLE_QUALIFICATION_FAMILY_UNKNOWN:{}".format(family_id)
         )
-    if status["d07_decision_required"] is True:
-        raise TableQualificationFreezeError("D07_DECISION_REQUIRED")
+    if readiness["live_ready"] is not True:
+        reasons = ",".join(readiness["blocking_reason_codes"])
+        raise TableQualificationFreezeError(
+            "TABLE_QUALIFICATION_FAMILY_NOT_READY:{}:{}".format(
+                family_id, reasons,
+            )
+        )
     return status

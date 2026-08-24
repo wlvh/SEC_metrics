@@ -17,6 +17,7 @@ from unittest import mock
 
 from tests.vnext.common import cell_locator
 from vnext import ai_adapter, invocation_control, qualification, workflow
+from vnext import table_qualification_freeze as freeze_module
 from vnext.ai_adapter import TransportAttemptError, TransportObservation
 from vnext.ai_adapter import TransportResult
 from vnext.ai_adapter import build_provider_request_body
@@ -27,6 +28,7 @@ from vnext.run_store import validate_and_freeze_run
 from vnext.stage_a_snapshot import write_stage_a_snapshot
 from vnext.table_grid import build_table_grid
 from vnext.table_qualification_freeze import _measurement_receipts
+from vnext.table_qualification_freeze import _readiness_by_family
 from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_qualification_freeze import validate_table_qualification_freeze
 from vnext.table_qualification_freeze import write_table_qualification_freeze_receipt
@@ -43,6 +45,42 @@ MARRIOTT_SOURCE = (
 MARRIOTT_RAW_ID = (
     "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
 )
+
+
+def _synthetic_family_gate_status(
+    *, lodging_reasons: Sequence[str], financial_reasons: Sequence[str],
+) -> Dict[str, object]:
+    """Return a deterministic current-freeze status for pre-source gate tests."""
+    matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
+    rows = []
+    for family_id, reasons in (
+        ("financial_statement", list(financial_reasons)),
+        ("lodging_kpi_table", list(lodging_reasons)),
+    ):
+        if "EXPANDED_GRID_RESOURCE_LIMIT" in reasons:
+            estimate: object = "NOT_AVAILABLE_RESOURCE_LIMIT"
+        elif "ESTIMATED_CONTEXT_LIMIT" in reasons:
+            estimate = 200001
+        else:
+            estimate = 200000
+        rows.append({
+            "family_id": family_id,
+            "blocking_reason_codes": reasons,
+            "estimated_input_tokens": estimate,
+            "measurement_id": "sha256:" + (
+                "3" * 64 if family_id == "financial_statement"
+                else "4" * 64
+            ),
+        })
+    readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements={"qualification_task_measurements": rows},
+        drift_by_family={},
+    )
+    return {
+        "receipt_id": "sha256:" + "5" * 64,
+        "readiness_by_family": readiness,
+    }
 
 
 def _run_git(*, workdir: Path, arguments: list[str], stdin: bytes = b"") -> str:
@@ -63,9 +101,10 @@ def _run_git(*, workdir: Path, arguments: list[str], stdin: bytes = b"") -> str:
 def synthetic_no_d07_repository() -> Iterator[Path]:
     """Build a clean, committed test-only authority without D-07 blocking.
 
-    This changes only a disposable worktree's matrix-owned development
-    measurement inputs, then invokes the real freeze builder.  In particular,
-    it never flips a receipt boolean or mocks the qualification gate.
+    This changes a disposable worktree's matrix-owned development source and
+    uses a deterministic estimator test double pinned exactly to the approved
+    inclusive 200000 boundary.  The real freeze/readiness builder still owns
+    the gate; no receipt boolean is flipped and no provider is contacted.
     """
     with tempfile.TemporaryDirectory() as directory:
         parent = Path(directory)
@@ -74,6 +113,14 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             workdir=REPO_ROOT,
             arguments=["worktree", "add", "--detach", str(worktree), "HEAD"],
         )
+        estimator_patch = mock.patch.object(
+            freeze_module,
+            "estimate_context_tokens",
+            side_effect=lambda request_body, authority: min(
+                len(request_body), 200000,
+            ),
+        )
+        estimator_patch.start()
         try:
             patch = subprocess.run(
                 ["git", "diff", "--binary"],
@@ -112,10 +159,6 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             entries["financial_statement"]["development_source"] = copy.deepcopy(
                 entries["lodging_kpi_table"]["development_source"]
             )
-            for entry in entries.values():
-                entry["token_context_limits"][
-                    "max_estimated_input_tokens"
-                ] = 1_000_000
             atomic_write_json(path=matrix_path, value=matrix)
             catalog_path = worktree / "catalog/table_task_contracts.json"
             # The split receipt intentionally measures complete task envelopes.
@@ -219,6 +262,7 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             )
             yield worktree
         finally:
+            estimator_patch.stop()
             subprocess.run(
                 ["git", "worktree", "remove", "--force", str(worktree)],
                 cwd=REPO_ROOT,
@@ -581,6 +625,80 @@ def mocked_live_table_failure_transport(
 
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
+
+    def test_lodging_plan_forms_when_financial_resource_gate_blocks(self) -> None:
+        """Allow lodging planning without opening source/provider for financial."""
+        status = _synthetic_family_gate_status(
+            lodging_reasons=[],
+            financial_reasons=["EXPANDED_GRID_RESOURCE_LIMIT"],
+        )
+        with mock.patch.object(
+            freeze_module,
+            "validate_table_qualification_freeze",
+            return_value=status,
+        ), mock.patch.object(
+            qualification, "_matrix_source_binding",
+        ) as source_opener, mock.patch.object(
+            ai_adapter, "_open_provider_request",
+        ) as provider_opener:
+            plan = qualification.table_qualification_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="lodging_kpi_table",
+                task_contract_id="lodging_occupancy_table_v2",
+                qualification_ordinal=1,
+            )
+            self.assertEqual("lodging_kpi_table", plan["family_id"])
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+            ):
+                qualification.table_qualification_task_plan(
+                    repo_root=REPO_ROOT,
+                    family_id="financial_statement",
+                    task_contract_id=(
+                        "financial_assets_under_management_table_v1"
+                    ),
+                    qualification_ordinal=1,
+                )
+        source_opener.assert_not_called()
+        provider_opener.assert_not_called()
+
+    def test_financial_plan_forms_when_lodging_context_gate_blocks(self) -> None:
+        """Allow financial planning without opening source/provider for lodging."""
+        status = _synthetic_family_gate_status(
+            lodging_reasons=["ESTIMATED_CONTEXT_LIMIT"],
+            financial_reasons=[],
+        )
+        with mock.patch.object(
+            freeze_module,
+            "validate_table_qualification_freeze",
+            return_value=status,
+        ), mock.patch.object(
+            qualification, "_matrix_source_binding",
+        ) as source_opener, mock.patch.object(
+            ai_adapter, "_open_provider_request",
+        ) as provider_opener:
+            plan = qualification.table_qualification_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id=(
+                    "financial_assets_under_management_table_v1"
+                ),
+                qualification_ordinal=1,
+            )
+            self.assertEqual("financial_statement", plan["family_id"])
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+            ):
+                qualification.table_qualification_task_plan(
+                    repo_root=REPO_ROOT,
+                    family_id="lodging_kpi_table",
+                    task_contract_id="lodging_occupancy_table_v2",
+                    qualification_ordinal=1,
+                )
+        source_opener.assert_not_called()
+        provider_opener.assert_not_called()
 
     def test_synthetic_authority_binds_canary_and_rejects_drift(self) -> None:
         """Exercise auth, evidence, replay, root drift, and source drift."""
