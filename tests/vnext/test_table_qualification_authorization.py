@@ -726,6 +726,10 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             ),
             "lodging_kpi_table": "lodging_occupancy_table_v2",
         }
+        issue_authorization = (
+            qualification.issue_table_qualification_authorization
+        )
+        task_plan = qualification.table_qualification_task_plan
         with synthetic_no_d07_repository() as repo_root:
             matrix_path = repo_root / "config/table_qualification_matrix.json"
             original = matrix_path.read_bytes()
@@ -766,19 +770,17 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             ai_adapter,
                             "_open_provider_request",
                         ) as provider_opener:
-                            plan = qualification.table_qualification_task_plan(
+                            plan = task_plan(
                                 repo_root=repo_root,
                                 family_id=ready_family,
                                 task_contract_id=ready_task,
                                 qualification_ordinal=1,
                             )
-                            authorization = (
-                                qualification.issue_table_qualification_authorization(
-                                    repo_root=repo_root,
-                                    family_id=ready_family,
-                                    task_contract_id=ready_task,
-                                    qualification_ordinal=1,
-                                )
+                            authorization = issue_authorization(
+                                repo_root=repo_root,
+                                family_id=ready_family,
+                                task_contract_id=ready_task,
+                                qualification_ordinal=1,
                             )
                         self.assertEqual(ready_family, plan["family_id"])
                         self.assertEqual(
@@ -797,20 +799,24 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                                 qualification.QualificationError,
                                 "TABLE_QUALIFICATION_FAMILY_NOT_READY",
                             ):
-                                qualification.table_qualification_task_plan(
+                                task_plan(
                                     repo_root=repo_root,
                                     family_id=drift_family,
-                                    task_contract_id=blocked_tasks[drift_family],
+                                    task_contract_id=(
+                                        blocked_tasks[drift_family]
+                                    ),
                                     qualification_ordinal=1,
                                 )
                             with self.assertRaisesRegex(
                                 qualification.QualificationError,
                                 "TABLE_QUALIFICATION_FAMILY_NOT_READY",
                             ):
-                                qualification.issue_table_qualification_authorization(
+                                issue_authorization(
                                     repo_root=repo_root,
                                     family_id=drift_family,
-                                    task_contract_id=blocked_tasks[drift_family],
+                                    task_contract_id=(
+                                        blocked_tasks[drift_family]
+                                    ),
                                     qualification_ordinal=1,
                                 )
                         source_opener.assert_not_called()
@@ -835,40 +841,45 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             ),
             ("lodging_kpi_table", "lodging_occupancy_table_v2"),
         )
+        issue_authorization = (
+            qualification.issue_table_qualification_authorization
+        )
+        task_plan = qualification.table_qualification_task_plan
         with synthetic_no_d07_repository() as repo_root:
             for relative in shared_paths:
                 path = repo_root / relative
                 original = path.read_bytes()
                 path.write_bytes(original + b"\n# synthetic shared drift\n")
                 try:
-                    with self.subTest(shared_drift=relative), mock.patch.object(
-                        qualification,
-                        "_matrix_source_binding",
-                    ) as source_opener, mock.patch.object(
-                        ai_adapter,
-                        "_open_provider_request",
-                    ) as provider_opener:
-                        for family_id, task_contract_id in families:
-                            with self.assertRaises(
-                                qualification.QualificationError,
-                            ):
-                                qualification.table_qualification_task_plan(
-                                    repo_root=repo_root,
-                                    family_id=family_id,
-                                    task_contract_id=task_contract_id,
-                                    qualification_ordinal=1,
-                                )
-                            with self.assertRaises(
-                                qualification.QualificationError,
-                            ):
-                                qualification.issue_table_qualification_authorization(
-                                    repo_root=repo_root,
-                                    family_id=family_id,
-                                    task_contract_id=task_contract_id,
-                                    qualification_ordinal=1,
-                                )
-                        source_opener.assert_not_called()
-                        provider_opener.assert_not_called()
+                    with self.subTest(shared_drift=relative):
+                        with mock.patch.object(
+                            qualification,
+                            "_matrix_source_binding",
+                        ) as source_opener, mock.patch.object(
+                            ai_adapter,
+                            "_open_provider_request",
+                        ) as provider_opener:
+                            for family_id, task_contract_id in families:
+                                with self.assertRaises(
+                                    qualification.QualificationError,
+                                ):
+                                    task_plan(
+                                        repo_root=repo_root,
+                                        family_id=family_id,
+                                        task_contract_id=task_contract_id,
+                                        qualification_ordinal=1,
+                                    )
+                                with self.assertRaises(
+                                    qualification.QualificationError,
+                                ):
+                                    issue_authorization(
+                                        repo_root=repo_root,
+                                        family_id=family_id,
+                                        task_contract_id=task_contract_id,
+                                        qualification_ordinal=1,
+                                    )
+                            source_opener.assert_not_called()
+                            provider_opener.assert_not_called()
                 finally:
                     atomic_write_bytes(path=path, content=original)
 
@@ -1370,6 +1381,9 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             try:
                 with self.assertRaises(ValidationProvenanceError):
                     validate_stage_a_snapshot(repo_root=repo_root)
+                issue_authorization = (
+                    qualification.issue_table_qualification_authorization
+                )
                 for family_id, task_contract_id in (
                     ("lodging_kpi_table", "lodging_occupancy_table_v2"),
                     (
@@ -1378,13 +1392,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     ),
                 ):
                     with self.subTest(unrelated_source_drift_family=family_id):
-                        authorization = (
-                            qualification.issue_table_qualification_authorization(
-                                repo_root=repo_root,
-                                family_id=family_id,
-                                task_contract_id=task_contract_id,
-                                qualification_ordinal=1,
-                            )
+                        authorization = issue_authorization(
+                            repo_root=repo_root,
+                            family_id=family_id,
+                            task_contract_id=task_contract_id,
+                            qualification_ordinal=1,
                         )
                         self.assertEqual(
                             family_id,

@@ -1005,14 +1005,23 @@ def _frozen_readiness_matrix(
     record and binds the complete original matrix hash in D-07 evidence.
     """
     if type(matrix_sha256) is not str or not matrix_sha256:
-        raise TableQualificationFreezeError("Frozen D-07 matrix identity is invalid")
+        raise TableQualificationFreezeError(
+            "Frozen D-07 matrix identity is invalid"
+        )
     entries = {}
     for family_id, value in readiness.items():
-        if type(value) is not dict or type(value.get("context_gate")) is not dict:
-            raise TableQualificationFreezeError("Frozen family readiness is invalid")
+        if (
+            type(value) is not dict
+            or type(value.get("context_gate")) is not dict
+        ):
+            raise TableQualificationFreezeError(
+                "Frozen family readiness is invalid"
+            )
         threshold = value["context_gate"].get("max_estimated_input_tokens")
         if type(threshold) is not int or threshold < 1:
-            raise TableQualificationFreezeError("Frozen family threshold is invalid")
+            raise TableQualificationFreezeError(
+                "Frozen family threshold is invalid"
+            )
         entries[family_id] = {
             "token_context_limits": {
                 "max_estimated_input_tokens": threshold,
@@ -1025,7 +1034,7 @@ def _validate_frozen_d07_evidence(
     *, requirement: Mapping[str, object], wb4: Mapping[str, object],
     readiness: Mapping[str, object],
 ) -> Dict[str, object]:
-    """Validate immutable D-07 evidence without consulting current local slices."""
+    """Validate frozen D-07 evidence without current family-local slices."""
     persisted = wb4.get("d07_authority")
     if type(persisted) is not dict or set(persisted) != D07_AUTHORITY_FIELDS:
         raise TableQualificationFreezeError("Frozen D-07 authority is invalid")
@@ -1054,7 +1063,9 @@ def _measurement_rows_by_family(
     """Group exact development-task measurements by their owning family."""
     rows = measurements.get("qualification_task_measurements")
     if type(rows) is not list:
-        raise TableQualificationFreezeError("D-07 task measurements are invalid")
+        raise TableQualificationFreezeError(
+            "D-07 task measurements are invalid"
+        )
     grouped = {family_id: [] for family_id in family_ids}
     for row in rows:
         if type(row) is not dict or row.get("family_id") not in grouped:
@@ -1063,18 +1074,22 @@ def _measurement_rows_by_family(
             )
         grouped[str(row["family_id"])].append(dict(row))
     if any(not family_rows for family_rows in grouped.values()):
-        raise TableQualificationFreezeError("D-07 family measurement is absent")
+        raise TableQualificationFreezeError(
+            "D-07 family measurement is absent"
+        )
     return grouped
 
 
 def _measurement_estimator_hashes(
     *, measurements: Mapping[str, object],
 ) -> List[str]:
-    """Derive the shared estimator authority exact set from measurement rows."""
+    """Derive shared estimator authority from exact measurement rows."""
     round_trips = measurements.get("round_trip_receipts")
     tasks = measurements.get("qualification_task_measurements")
     if type(round_trips) is not list or type(tasks) is not list:
-        raise TableQualificationFreezeError("D-07 measurement rows are invalid")
+        raise TableQualificationFreezeError(
+            "D-07 measurement rows are invalid"
+        )
     hashes = sorted({
         str(row.get("provider_context_authority_hash"))
         for row in round_trips + tasks
@@ -2371,7 +2386,9 @@ def validate_table_qualification_freeze(
         receipt["d07_decision_required"]
         != frozen_d07["d07_decision_required"]
     ):
-        raise TableQualificationFreezeError("Frozen D-07 decision state differs")
+        raise TableQualificationFreezeError(
+            "Frozen D-07 decision state differs"
+        )
     frozen_matrix = _frozen_readiness_matrix(
         readiness=receipt["readiness_by_family"],
         matrix_sha256=frozen_d07["matrix_sha256"],

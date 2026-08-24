@@ -212,7 +212,10 @@ def _freeze_receipt_binding(
         raise StageASnapshotError("Table qualification freeze is invalid") from error
     if family_id is not None:
         readiness = freeze["readiness_by_family"].get(family_id)
-        if type(readiness) is not dict or readiness.get("live_ready") is not True:
+        if (
+            type(readiness) is not dict
+            or readiness.get("live_ready") is not True
+        ):
             raise StageASnapshotError(
                 "Requested family qualification freeze is not ready"
             )
@@ -236,7 +239,10 @@ def _freeze_receipt_binding(
 
 
 def _current_git_commit(*, repo_root: Path) -> str:
-    """Return current commit identity without imposing whole-tree cleanliness."""
+    """Return current commit identity.
+
+    Whole-tree cleanliness is deliberately not imposed at this boundary.
+    """
     completed = subprocess.run(
         args=["git", "rev-parse", "HEAD"],
         cwd=str(repo_root),
@@ -245,7 +251,10 @@ def _current_git_commit(*, repo_root: Path) -> str:
         encoding="utf-8",
     )
     commit = completed.stdout.strip()
-    if completed.returncode != 0 or re.fullmatch(r"[0-9a-f]{40}", commit) is None:
+    if (
+        completed.returncode != 0
+        or re.fullmatch(r"[0-9a-f]{40}", commit) is None
+    ):
         raise StageASnapshotError("Stage-A current Git commit is unavailable")
     return commit
 
@@ -411,12 +420,15 @@ def validate_stage_a_snapshot(
         source = capture_source_snapshot(workdir=repo_root)
         if (
             source.checkout_status != "GIT_CLEAN"
-            or source.tree_sha256 != expected_source["source_input_tree_sha256"]
+            or source.tree_sha256
+            != expected_source["source_input_tree_sha256"]
             or source.file_count != expected_source["source_file_count"]
         ):
             raise StageASnapshotError("Stage-A source tree differs")
         source_commit = source.source_commit
-        equivalent_tree = source.source_commit != expected_source["source_commit"]
+        equivalent_tree = (
+            source.source_commit != expected_source["source_commit"]
+        )
     else:
         # The freeze validator owns execution dependency scoping.  Requiring
         # the all-repository Stage-A tree here would undo that classification
