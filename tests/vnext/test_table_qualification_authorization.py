@@ -16,7 +16,9 @@ from typing import Dict, Iterator, Sequence
 from unittest import mock
 
 from tests.vnext.common import cell_locator
+from validation_provenance import ValidationProvenanceError
 from vnext import ai_adapter, invocation_control, qualification, workflow
+from vnext import table_qualification_freeze as freeze_module
 from vnext.ai_adapter import TransportAttemptError, TransportObservation
 from vnext.ai_adapter import TransportResult
 from vnext.ai_adapter import build_provider_request_body
@@ -24,13 +26,16 @@ from vnext.canonical import atomic_write_bytes, atomic_write_json, content_hash
 from vnext.replay import replay_frozen_results
 from vnext.run_store import load_frozen_run, load_run_for_status, RunStoreError
 from vnext.run_store import validate_and_freeze_run
+from vnext.stage_a_snapshot import validate_stage_a_snapshot
 from vnext.stage_a_snapshot import write_stage_a_snapshot
 from vnext.table_grid import build_table_grid
 from vnext.table_qualification_freeze import _measurement_receipts
+from vnext.table_qualification_freeze import _readiness_by_family
 from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_qualification_freeze import validate_table_qualification_freeze
 from vnext.table_qualification_freeze import write_table_qualification_freeze_receipt
 from vnext.table_task_contracts import load_table_task_contracts
+from vnext.table_task_contracts import table_task_execution_plan
 from vnext.workflow import finalize_reviewed_direct_results
 
 
@@ -43,6 +48,42 @@ MARRIOTT_SOURCE = (
 MARRIOTT_RAW_ID = (
     "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
 )
+
+
+def _synthetic_family_gate_status(
+    *, lodging_reasons: Sequence[str], financial_reasons: Sequence[str],
+) -> Dict[str, object]:
+    """Return deterministic current-freeze status for gate tests."""
+    matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
+    rows = []
+    for family_id, reasons in (
+        ("financial_statement", list(financial_reasons)),
+        ("lodging_kpi_table", list(lodging_reasons)),
+    ):
+        if "EXPANDED_GRID_RESOURCE_LIMIT" in reasons:
+            estimate: object = "NOT_AVAILABLE_RESOURCE_LIMIT"
+        elif "ESTIMATED_CONTEXT_LIMIT" in reasons:
+            estimate = 200001
+        else:
+            estimate = 200000
+        rows.append({
+            "family_id": family_id,
+            "blocking_reason_codes": reasons,
+            "estimated_input_tokens": estimate,
+            "measurement_id": "sha256:" + (
+                "3" * 64 if family_id == "financial_statement"
+                else "4" * 64
+            ),
+        })
+    readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements={"qualification_task_measurements": rows},
+        drift_by_family={},
+    )
+    return {
+        "receipt_id": "sha256:" + "5" * 64,
+        "readiness_by_family": readiness,
+    }
 
 
 def _run_git(*, workdir: Path, arguments: list[str], stdin: bytes = b"") -> str:
@@ -63,9 +104,10 @@ def _run_git(*, workdir: Path, arguments: list[str], stdin: bytes = b"") -> str:
 def synthetic_no_d07_repository() -> Iterator[Path]:
     """Build a clean, committed test-only authority without D-07 blocking.
 
-    This changes only a disposable worktree's matrix-owned development
-    measurement inputs, then invokes the real freeze builder.  In particular,
-    it never flips a receipt boolean or mocks the qualification gate.
+    This changes a disposable worktree's matrix-owned development source and
+    uses a deterministic estimator test double pinned exactly to the approved
+    inclusive 200000 boundary.  The real freeze/readiness builder still owns
+    the gate; no receipt boolean is flipped and no provider is contacted.
     """
     with tempfile.TemporaryDirectory() as directory:
         parent = Path(directory)
@@ -74,6 +116,14 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             workdir=REPO_ROOT,
             arguments=["worktree", "add", "--detach", str(worktree), "HEAD"],
         )
+        estimator_patch = mock.patch.object(
+            freeze_module,
+            "estimate_context_tokens",
+            side_effect=lambda request_body, authority: min(
+                len(request_body), 200000,
+            ),
+        )
+        estimator_patch.start()
         try:
             patch = subprocess.run(
                 ["git", "diff", "--binary"],
@@ -106,16 +156,29 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
                 for entry in matrix["families"]
             }
             # The production financial source reaches the local complete-grid
-            # resource stop.  The test-only authority reuses the already local
-            # complete Marriott source merely to exercise the no-D-07 success
-            # branch through the normal measurement builder.
-            entries["financial_statement"]["development_source"] = copy.deepcopy(
-                entries["lodging_kpi_table"]["development_source"]
+            # resource stop.  Use a distinct, already-local layout source so a
+            # later byte fault belongs to one family rather than both families.
+            financial_source = copy.deepcopy(
+                entries["financial_statement"]["development_source"]
             )
-            for entry in entries.values():
-                entry["token_context_limits"][
-                    "max_estimated_input_tokens"
-                ] = 1_000_000
+            financial_source.update({
+                "cik": "1046311",
+                "accession": "0001046311-26-000006",
+                "document_name": "exhibit991earningspressrel.htm",
+                "source_repo_relative_path": (
+                    "evidence/request_attempts/4e/"
+                    "4ec31787712bff704482c50ed9c0df571870b790330eabbb"
+                    "6712770f35581a9b/"
+                    "exhibit991earningspressrel.htm"
+                ),
+                "source_sha256": (
+                    "4ec31787712bff704482c50ed9c0df571870b790330eabbb"
+                    "6712770f35581a9b"
+                ),
+            })
+            entries["financial_statement"][
+                "development_source"
+            ] = financial_source
             atomic_write_json(path=matrix_path, value=matrix)
             catalog_path = worktree / "catalog/table_task_contracts.json"
             # The split receipt intentionally measures complete task envelopes.
@@ -219,6 +282,7 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             )
             yield worktree
         finally:
+            estimator_patch.stop()
             subprocess.run(
                 ["git", "worktree", "remove", "--force", str(worktree)],
                 cwd=REPO_ROOT,
@@ -581,6 +645,623 @@ def mocked_live_table_failure_transport(
 
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
+
+    def test_lodging_plan_forms_when_financial_resource_gate_blocks(
+        self,
+    ) -> None:
+        """Allow lodging plan while financial is resource-blocked."""
+        status = _synthetic_family_gate_status(
+            lodging_reasons=[],
+            financial_reasons=["EXPANDED_GRID_RESOURCE_LIMIT"],
+        )
+        with mock.patch.object(
+            freeze_module,
+            "validate_table_qualification_freeze",
+            return_value=status,
+        ), mock.patch.object(
+            qualification, "_matrix_source_binding",
+        ) as source_opener, mock.patch.object(
+            ai_adapter, "_open_provider_request",
+        ) as provider_opener:
+            plan = qualification.table_qualification_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="lodging_kpi_table",
+                task_contract_id="lodging_occupancy_table_v2",
+                qualification_ordinal=1,
+            )
+            self.assertEqual("lodging_kpi_table", plan["family_id"])
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+            ):
+                qualification.table_qualification_task_plan(
+                    repo_root=REPO_ROOT,
+                    family_id="financial_statement",
+                    task_contract_id=(
+                        "financial_assets_under_management_table_v1"
+                    ),
+                    qualification_ordinal=1,
+                )
+        source_opener.assert_not_called()
+        provider_opener.assert_not_called()
+
+    def test_financial_plan_forms_when_lodging_context_gate_blocks(
+        self,
+    ) -> None:
+        """Allow financial plan while lodging is context-blocked."""
+        status = _synthetic_family_gate_status(
+            lodging_reasons=["ESTIMATED_CONTEXT_LIMIT"],
+            financial_reasons=[],
+        )
+        with mock.patch.object(
+            freeze_module,
+            "validate_table_qualification_freeze",
+            return_value=status,
+        ), mock.patch.object(
+            qualification, "_matrix_source_binding",
+        ) as source_opener, mock.patch.object(
+            ai_adapter, "_open_provider_request",
+        ) as provider_opener:
+            plan = qualification.table_qualification_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id=(
+                    "financial_assets_under_management_table_v1"
+                ),
+                qualification_ordinal=1,
+            )
+            self.assertEqual("financial_statement", plan["family_id"])
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+            ):
+                qualification.table_qualification_task_plan(
+                    repo_root=REPO_ROOT,
+                    family_id="lodging_kpi_table",
+                    task_contract_id="lodging_occupancy_table_v2",
+                    qualification_ordinal=1,
+                )
+        source_opener.assert_not_called()
+        provider_opener.assert_not_called()
+
+    def test_public_paths_preserve_family_scoped_local_drift(self) -> None:
+        """Carry family scope through real freeze, plan, and authorization."""
+        cases = (
+            (
+                "lodging_kpi_table",
+                "financial_statement",
+                "financial_assets_under_management_table_v1",
+            ),
+            (
+                "financial_statement",
+                "lodging_kpi_table",
+                "lodging_occupancy_table_v2",
+            ),
+        )
+        blocked_tasks = {
+            "financial_statement": (
+                "financial_assets_under_management_table_v1"
+            ),
+            "lodging_kpi_table": "lodging_occupancy_table_v2",
+        }
+        issue_authorization = (
+            qualification.issue_table_qualification_authorization
+        )
+        task_plan = qualification.table_qualification_task_plan
+        with synthetic_no_d07_repository() as repo_root:
+            matrix_path = repo_root / "config/table_qualification_matrix.json"
+            original = matrix_path.read_bytes()
+            try:
+                for drift_family, ready_family, ready_task in cases:
+                    matrix = json.loads(original.decode("utf-8"))
+                    for entry in matrix["families"]:
+                        if entry["family_id"] == drift_family:
+                            entry["fresh_samples_required"] += 1
+                    atomic_write_json(path=matrix_path, value=matrix)
+                    with self.subTest(
+                        drift_family=drift_family,
+                        ready_family=ready_family,
+                    ):
+                        status = validate_table_qualification_freeze(
+                            repo_root=repo_root,
+                        )
+                        self.assertEqual(
+                            [ready_family],
+                            status["live_ready_family_ids"],
+                        )
+                        self.assertEqual(
+                            [drift_family],
+                            status["invalidated_family_ids"],
+                        )
+                        self.assertTrue(
+                            status["readiness_by_family"][ready_family][
+                                "live_ready"
+                            ]
+                        )
+                        self.assertIn(
+                            "FAMILY_LOCAL_AUTHORITY_DRIFT",
+                            status["readiness_by_family"][drift_family][
+                                "blocking_reason_codes"
+                            ],
+                        )
+                        with mock.patch.object(
+                            ai_adapter,
+                            "_open_provider_request",
+                        ) as provider_opener:
+                            plan = task_plan(
+                                repo_root=repo_root,
+                                family_id=ready_family,
+                                task_contract_id=ready_task,
+                                qualification_ordinal=1,
+                            )
+                            authorization = issue_authorization(
+                                repo_root=repo_root,
+                                family_id=ready_family,
+                                task_contract_id=ready_task,
+                                qualification_ordinal=1,
+                            )
+                        self.assertEqual(ready_family, plan["family_id"])
+                        self.assertEqual(
+                            ready_family,
+                            authorization.as_mapping()["family_id"],
+                        )
+                        provider_opener.assert_not_called()
+                        with mock.patch.object(
+                            qualification,
+                            "_matrix_source_binding",
+                        ) as source_opener, mock.patch.object(
+                            ai_adapter,
+                            "_open_provider_request",
+                        ) as blocked_provider:
+                            with self.assertRaisesRegex(
+                                qualification.QualificationError,
+                                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                            ):
+                                task_plan(
+                                    repo_root=repo_root,
+                                    family_id=drift_family,
+                                    task_contract_id=(
+                                        blocked_tasks[drift_family]
+                                    ),
+                                    qualification_ordinal=1,
+                                )
+                            with self.assertRaisesRegex(
+                                qualification.QualificationError,
+                                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                            ):
+                                issue_authorization(
+                                    repo_root=repo_root,
+                                    family_id=drift_family,
+                                    task_contract_id=(
+                                        blocked_tasks[drift_family]
+                                    ),
+                                    qualification_ordinal=1,
+                                )
+                        source_opener.assert_not_called()
+                        blocked_provider.assert_not_called()
+                    atomic_write_bytes(path=matrix_path, content=original)
+            finally:
+                atomic_write_bytes(path=matrix_path, content=original)
+
+    def _assert_local_failure_isolated(
+        self, *, repo_root: Path, failed_family: str, ready_family: str,
+        ready_task: str, expected_reason: str,
+    ) -> None:
+        """Exercise one non-rebuildable local fault through public gates."""
+        blocked_tasks = {
+            "financial_statement": (
+                "financial_assets_under_management_table_v1"
+            ),
+            "lodging_kpi_table": "lodging_occupancy_table_v2",
+        }
+        failed_status = validate_table_qualification_freeze(
+            repo_root=repo_root,
+            family_id=failed_family,
+        )
+        self.assertEqual([], failed_status["live_ready_family_ids"])
+        self.assertEqual(
+            [failed_family], failed_status["invalidated_family_ids"],
+        )
+        self.assertIn(
+            "FAMILY_LOCAL_AUTHORITY_DRIFT",
+            failed_status["readiness_by_family"][failed_family][
+                "blocking_reason_codes"
+            ],
+        )
+        self.assertIn(
+            expected_reason,
+            failed_status["readiness_by_family"][failed_family][
+                "blocking_reason_codes"
+            ],
+        )
+        ready_status = validate_table_qualification_freeze(
+            repo_root=repo_root,
+            family_id=ready_family,
+        )
+        self.assertEqual([ready_family], ready_status["live_ready_family_ids"])
+        issue_authorization = (
+            qualification.issue_table_qualification_authorization
+        )
+        plan = qualification.table_qualification_task_plan(
+            repo_root=repo_root,
+            family_id=ready_family,
+            task_contract_id=ready_task,
+            qualification_ordinal=1,
+        )
+        authorization = issue_authorization(
+            repo_root=repo_root,
+            family_id=ready_family,
+            task_contract_id=ready_task,
+            qualification_ordinal=1,
+        )
+        execution_plan = table_task_execution_plan(
+            repo_root=repo_root,
+            task_contract_id=ready_task,
+            family_id=ready_family,
+        )
+        self.assertEqual(ready_family, plan["family_id"])
+        self.assertEqual(
+            ready_family, authorization.as_mapping()["family_id"],
+        )
+        self.assertEqual(
+            ready_family,
+            execution_plan["runtime_task_contract"]["reader_family_id"],
+        )
+        with mock.patch.object(
+            qualification,
+            "_matrix_source_binding",
+        ) as source_opener, mock.patch.object(
+            ai_adapter,
+            "_open_provider_request",
+        ) as provider_opener:
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+            ):
+                qualification.table_qualification_task_plan(
+                    repo_root=repo_root,
+                    family_id=failed_family,
+                    task_contract_id=blocked_tasks[failed_family],
+                    qualification_ordinal=1,
+                )
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+            ):
+                issue_authorization(
+                    repo_root=repo_root,
+                    family_id=failed_family,
+                    task_contract_id=blocked_tasks[failed_family],
+                    qualification_ordinal=1,
+                )
+        source_opener.assert_not_called()
+        provider_opener.assert_not_called()
+
+    def test_public_paths_contain_nonrebuildable_family_local_failures(
+        self,
+    ) -> None:
+        """Keep source/task/MetricSpec damage inside its owner family."""
+        with synthetic_no_d07_repository() as repo_root:
+            matrix_path = repo_root / "config/table_qualification_matrix.json"
+            matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
+            entries = {
+                entry["family_id"]: entry
+                for entry in matrix["families"]
+            }
+            cases = (
+                (
+                    "lodging_kpi_table",
+                    "financial_statement",
+                    "financial_assets_under_management_table_v1",
+                ),
+                (
+                    "financial_statement",
+                    "lodging_kpi_table",
+                    "lodging_occupancy_table_v2",
+                ),
+            )
+            for failed_family, ready_family, ready_task in cases:
+                source_path = repo_root / entries[failed_family][
+                    "development_source"
+                ]["source_repo_relative_path"]
+                original = source_path.read_bytes()
+                source_path.write_bytes(original + b"\n")
+                try:
+                    with self.subTest(source_bytes=failed_family):
+                        self._assert_local_failure_isolated(
+                            repo_root=repo_root,
+                            failed_family=failed_family,
+                            ready_family=ready_family,
+                            ready_task=ready_task,
+                            expected_reason="LOCAL_SOURCE_BYTES_MISMATCH",
+                        )
+                finally:
+                    source_path.write_bytes(original)
+
+            lodging_source = repo_root / entries["lodging_kpi_table"][
+                "development_source"
+            ]["source_repo_relative_path"]
+            missing_source = lodging_source.with_name(
+                lodging_source.name + ".synthetic-missing"
+            )
+            lodging_source.replace(missing_source)
+            try:
+                with self.subTest(source_missing="lodging_kpi_table"):
+                    self._assert_local_failure_isolated(
+                        repo_root=repo_root,
+                        failed_family="lodging_kpi_table",
+                        ready_family="financial_statement",
+                        ready_task=(
+                            "financial_assets_under_management_table_v1"
+                        ),
+                        expected_reason="LOCAL_SOURCE_MISSING",
+                    )
+            finally:
+                missing_source.replace(lodging_source)
+
+            catalog_path = repo_root / "catalog/table_task_contracts.json"
+            catalog_original = catalog_path.read_bytes()
+            catalog = json.loads(catalog_original.decode("utf-8"))
+            catalog["contracts"] = [
+                contract
+                for contract in catalog["contracts"]
+                if contract["task_contract_id"]
+                != "lodging_occupancy_table_v2"
+            ]
+            atomic_write_json(path=catalog_path, value=catalog)
+            try:
+                with self.subTest(task_contract_missing="lodging_kpi_table"):
+                    self._assert_local_failure_isolated(
+                        repo_root=repo_root,
+                        failed_family="lodging_kpi_table",
+                        ready_family="financial_statement",
+                        ready_task=(
+                            "financial_assets_under_management_table_v1"
+                        ),
+                        expected_reason="LOCAL_TASK_AUTHORITY_INVALID",
+                    )
+            finally:
+                atomic_write_bytes(
+                    path=catalog_path,
+                    content=catalog_original,
+                )
+
+            financial_contracts = load_table_task_contracts(
+                repo_root=repo_root,
+                family_id="financial_statement",
+            )
+            metric_path = repo_root / financial_contracts["contracts"][0][
+                "metric_specs"
+            ][0]["path"]
+            metric_original = metric_path.read_bytes()
+            metric_path.write_bytes(b"invalid MetricSpec\n")
+            try:
+                with self.subTest(metric_spec_invalid="financial_statement"):
+                    self._assert_local_failure_isolated(
+                        repo_root=repo_root,
+                        failed_family="financial_statement",
+                        ready_family="lodging_kpi_table",
+                        ready_task="lodging_occupancy_table_v2",
+                        expected_reason="LOCAL_METRIC_SPEC_INVALID",
+                    )
+            finally:
+                metric_path.write_bytes(metric_original)
+
+    def _assert_shared_round_trip_input_blocks_all(
+        self, *, repo_root: Path,
+    ) -> None:
+        """Require every family public gate to reject current WB-4 drift."""
+        families = (
+            (
+                "financial_statement",
+                "financial_assets_under_management_table_v1",
+            ),
+            ("lodging_kpi_table", "lodging_occupancy_table_v2"),
+        )
+        with mock.patch.object(
+            qualification,
+            "_matrix_source_binding",
+        ) as source_opener, mock.patch.object(
+            ai_adapter,
+            "_open_provider_request",
+        ) as provider_opener:
+            for family_id, task_contract_id in families:
+                status = validate_table_qualification_freeze(
+                    repo_root=repo_root,
+                    family_id=family_id,
+                )
+                self.assertEqual([], status["live_ready_family_ids"])
+                self.assertIn(
+                    "shared_measurement:round_trip_source_set",
+                    status["drift_by_family"][family_id],
+                )
+                self.assertIn(
+                    "SHARED_PROTECTED_CLOSURE_DRIFT",
+                    status["readiness_by_family"][family_id][
+                        "blocking_reason_codes"
+                    ],
+                )
+                with self.assertRaisesRegex(
+                    qualification.QualificationError,
+                    "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                ):
+                    qualification.table_qualification_task_plan(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                        task_contract_id=task_contract_id,
+                        qualification_ordinal=1,
+                    )
+                with self.assertRaisesRegex(
+                    qualification.QualificationError,
+                    "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                ):
+                    qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                        task_contract_id=task_contract_id,
+                        qualification_ordinal=1,
+                    )
+        source_opener.assert_not_called()
+        provider_opener.assert_not_called()
+
+    def test_public_paths_bind_shared_round_trip_current_inputs(
+        self,
+    ) -> None:
+        """Block mutate/remove/manifest drift and recover after restoration."""
+        with synthetic_no_d07_repository() as repo_root:
+            hilton_v1 = (
+                repo_root
+                / "fixtures/vnext/layouts/hilton-2024-sec-layout-v1/source.htm"
+            )
+            original_v1 = hilton_v1.read_bytes()
+            hilton_v1.write_bytes(original_v1 + b"\n")
+            try:
+                with self.subTest(round_trip_source_mutated="hilton-v1"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                hilton_v1.write_bytes(original_v1)
+
+            missing_v1 = hilton_v1.with_name(
+                hilton_v1.name + ".synthetic-missing"
+            )
+            hilton_v1.replace(missing_v1)
+            try:
+                with self.subTest(round_trip_source_missing="hilton-v1"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                missing_v1.replace(hilton_v1)
+
+            hilton_v7 = (
+                repo_root
+                / "fixtures/vnext/layouts/hilton-2024-sec-layout-v7/"
+                "q42024earningsrelease.htm"
+            )
+            original_v7 = hilton_v7.read_bytes()
+            hilton_v7.write_bytes(original_v7 + b"\n")
+            try:
+                with self.subTest(required_second_layout_mutated="hilton-v7"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                hilton_v7.write_bytes(original_v7)
+
+            manifest_path = (
+                repo_root
+                / "fixtures/vnext/layouts/hilton-2024-sec-layout-v1/"
+                "fixture_manifest.json"
+            )
+            manifest_original = manifest_path.read_bytes()
+            manifest = json.loads(manifest_original.decode("utf-8"))
+            manifest["selection_reason"] += " Synthetic authority drift."
+            atomic_write_json(path=manifest_path, value=manifest)
+            try:
+                with self.subTest(round_trip_manifest_drift="hilton-v1"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                atomic_write_bytes(
+                    path=manifest_path,
+                    content=manifest_original,
+                )
+
+            for family_id, task_contract_id in (
+                (
+                    "financial_statement",
+                    "financial_assets_under_management_table_v1",
+                ),
+                ("lodging_kpi_table", "lodging_occupancy_table_v2"),
+            ):
+                with self.subTest(restored_family=family_id):
+                    status = validate_table_qualification_freeze(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                    )
+                    self.assertEqual(
+                        [family_id], status["live_ready_family_ids"],
+                    )
+                    plan = qualification.table_qualification_task_plan(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                        task_contract_id=task_contract_id,
+                        qualification_ordinal=1,
+                    )
+                    authorization = (
+                        qualification.issue_table_qualification_authorization(
+                            repo_root=repo_root,
+                            family_id=family_id,
+                            task_contract_id=task_contract_id,
+                            qualification_ordinal=1,
+                        )
+                    )
+                    self.assertEqual(family_id, plan["family_id"])
+                    self.assertEqual(
+                        family_id,
+                        authorization.as_mapping()["family_id"],
+                    )
+
+    def test_public_paths_block_shared_serializer_evidence_and_wb3_drift(
+        self,
+    ) -> None:
+        """Keep every shared drift gate ahead of source/provider openers."""
+        shared_paths = (
+            "scripts/vnext/table_payload.py",
+            "scripts/vnext/evidence.py",
+            "tests/vnext/test_invocation_control.py",
+        )
+        families = (
+            (
+                "financial_statement",
+                "financial_assets_under_management_table_v1",
+            ),
+            ("lodging_kpi_table", "lodging_occupancy_table_v2"),
+        )
+        issue_authorization = (
+            qualification.issue_table_qualification_authorization
+        )
+        task_plan = qualification.table_qualification_task_plan
+        with synthetic_no_d07_repository() as repo_root:
+            for relative in shared_paths:
+                path = repo_root / relative
+                original = path.read_bytes()
+                path.write_bytes(original + b"\n# synthetic shared drift\n")
+                try:
+                    with self.subTest(shared_drift=relative):
+                        with mock.patch.object(
+                            qualification,
+                            "_matrix_source_binding",
+                        ) as source_opener, mock.patch.object(
+                            ai_adapter,
+                            "_open_provider_request",
+                        ) as provider_opener:
+                            for family_id, task_contract_id in families:
+                                with self.assertRaises(
+                                    qualification.QualificationError,
+                                ):
+                                    task_plan(
+                                        repo_root=repo_root,
+                                        family_id=family_id,
+                                        task_contract_id=task_contract_id,
+                                        qualification_ordinal=1,
+                                    )
+                                with self.assertRaises(
+                                    qualification.QualificationError,
+                                ):
+                                    issue_authorization(
+                                        repo_root=repo_root,
+                                        family_id=family_id,
+                                        task_contract_id=task_contract_id,
+                                        qualification_ordinal=1,
+                                    )
+                            source_opener.assert_not_called()
+                            provider_opener.assert_not_called()
+                finally:
+                    atomic_write_bytes(path=path, content=original)
 
     def test_synthetic_authority_binds_canary_and_rejects_drift(self) -> None:
         """Exercise auth, evidence, replay, root drift, and source drift."""
@@ -1075,20 +1756,34 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 path.write_bytes(original)
 
             source_path = repo_root / "scripts/vnext/public_projection.py"
-            source_path.write_bytes(source_path.read_bytes() + b"\n")
-            for family_id, task_contract_id in (
-                ("lodging_kpi_table", "lodging_occupancy_table_v2"),
-                ("financial_statement", "financial_assets_under_management_table_v1"),
-            ):
-                with self.subTest(source_drift_family=family_id), self.assertRaises(
-                    qualification.QualificationError,
+            source_original = source_path.read_bytes()
+            source_path.write_bytes(source_original + b"\n")
+            try:
+                with self.assertRaises(ValidationProvenanceError):
+                    validate_stage_a_snapshot(repo_root=repo_root)
+                issue_authorization = (
+                    qualification.issue_table_qualification_authorization
+                )
+                for family_id, task_contract_id in (
+                    ("lodging_kpi_table", "lodging_occupancy_table_v2"),
+                    (
+                        "financial_statement",
+                        "financial_assets_under_management_table_v1",
+                    ),
                 ):
-                    qualification.issue_table_qualification_authorization(
-                        repo_root=repo_root,
-                        family_id=family_id,
-                        task_contract_id=task_contract_id,
-                        qualification_ordinal=1,
-                    )
+                    with self.subTest(unrelated_source_drift_family=family_id):
+                        authorization = issue_authorization(
+                            repo_root=repo_root,
+                            family_id=family_id,
+                            task_contract_id=task_contract_id,
+                            qualification_ordinal=1,
+                        )
+                        self.assertEqual(
+                            family_id,
+                            authorization.as_mapping()["family_id"],
+                        )
+            finally:
+                source_path.write_bytes(source_original)
 
     def test_interrupted_exact_success_materializes_without_second_transport(
         self,

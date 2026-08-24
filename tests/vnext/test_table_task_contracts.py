@@ -38,7 +38,6 @@ from vnext.run_store import write_attempt_payloads
 from vnext.run_store import RunStoreError
 from vnext.sources import raw_blob_record
 from vnext.table_grid import build_table_grid
-from vnext.table_qualification_freeze import TableQualificationFreezeError
 from vnext.workflow import create_table_task_review_run
 from vnext.workflow import finalize_reviewed_direct_results
 from vnext.workflow import WorkflowError
@@ -564,14 +563,11 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertTrue(plan["task_spec_semantic_hash"].startswith("sha256:"))
         self.assertTrue(plan["qualification_task_plan_id"].startswith("sha256:"))
 
-    def test_legacy_qualification_prepare_stops_at_d07(self) -> None:
-        """Prevent the historical fixture CLI from falling back to schema v1."""
-        with mock.patch(
-            "tools.vnext_qualification.require_table_qualification_freeze",
-            side_effect=TableQualificationFreezeError("D07_DECISION_REQUIRED"),
-        ), self.assertRaises(QualificationCliError) as raised:
+    def test_legacy_qualification_prepare_requires_catalog_task(self) -> None:
+        """Reject schema-v1 fixture input before choosing any family gate."""
+        with self.assertRaises(QualificationCliError) as raised:
             prepare_layout(fixture_id="hilton-2024-sec-layout-v1")
-        self.assertEqual("D07_DECISION_REQUIRED", raised.exception.code)
+        self.assertEqual("TABLE_TASK_CONTRACT_REQUIRED", raised.exception.code)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,335 @@
+{
+  "schema_version": 3,
+  "record_type": "TABLE_QUALIFICATION_OWNER_DECISION_PACKET",
+  "generated_at_utc": "2026-08-24T12:46:41Z",
+  "decision_register_modified": true,
+  "owner_approved_decisions_implemented": true,
+  "undecided_product_choice_made": false,
+  "supersedes_owner_decision_packet_ids": [
+    "sha256:04f4980c8864be0f77a0739028e58d06056548709888eeb31f3c1d2e59499805",
+    "sha256:06dd640f8cbe9f78c88f7bb44ef2245e9da7630d85676af26100a9975d19e808",
+    "sha256:2920b0c9f96930112799dfd08832bd1293e475f613882fb77b001427edc128ba",
+    "sha256:3c2b983ead05d205a43020f9ddf8c290d938538fd3cf45123293f0d6549b1313",
+    "sha256:77a7688233e119f8f7b6b620a589873f8c428c8750c68a1c116f93e38f6ed3e1",
+    "sha256:8678e0d7f66254804072605b873f6bd70e718e8ba7537193eb9e331f8cad016a",
+    "sha256:ad5b0a605ee0da510bdd9b7c622ea43d2add2a4b7032b0fca055ce5aa3a6d008",
+    "sha256:c1ebdd08ede37860fe7541407ec2bfecae0d750b06111b01073a64f74d2647fd",
+    "sha256:d2582c0a1434a235c3b65cfe31ab201cfed42a5359ddba70650146b6f157d767"
+  ],
+  "authority": {
+    "requirement_closure_hash": "sha256:fcd308ed51fe3b7cd6d4dcc82ba373d31832f0f1f522c3b8b765e766693a5822",
+    "effective_d07_record_hash": "sha256:bc9830fc98a331ea54625b499665c3e2ef71a478194a9f066a31ac5c56de1ec8",
+    "effective_d07_supersedes_record_hash": "sha256:35b1643bc675c82b7e63cce40e614f51eed19e14536677ce8bba9d790b7abd4f",
+    "owner_decision_comment_url": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5390663414",
+    "owner_decision_evidence_matches_d07": true
+  },
+  "freeze_binding": {
+    "freeze_receipt_id": "sha256:25db6eace34fccd128327dd0fa88f5f13e28e996ca9f7ecc76f97585f6b0e12b",
+    "freeze_receipt_sha256": "6defb4e5c8c2229e9b2ebdfdedff0b60e18659a82084aaa120f7db39cce584bb",
+    "qualification_cycle_id": "sha256:9dccd0fba188e7b8bfbfb6c3e675a4ad0a1c6bedb390c01ae95064d8bd605638",
+    "semantic_freeze_commit": "39df9512b44eff76ea06ea29498effba082fb371",
+    "matrix_sha256": "6093cae42beb111f4ed3c6d984e87c2d83fac5d4b3d1b00f8e11ed35dd4cd0fe",
+    "catalog_sha256": "b41d7e522afafee4ee6a20bdf5e989bb8c56b310741dae7b915abe7abdc369e0",
+    "stage_a_snapshot_id": "sha256:dcd2cb04925738858afe285e3c3ba0fa3608fc9004e54ab8a86d49b4a3ed4453"
+  },
+  "OWNER_APPROVED": {
+    "estimated_input_threshold": {
+      "estimator_id": "utf8_byte_upper_bound",
+      "estimator_version": "1",
+      "old_max_estimated_input_tokens": 100000,
+      "new_max_estimated_input_tokens": 200000,
+      "inclusive": true,
+      "scope": "PER_FAMILY_PER_REQUEST"
+    },
+    "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
+    "semantic_prefilter": false,
+    "selector_authorized": false,
+    "family_scoped_readiness": true,
+    "shared_dependency_drift_policy": "INVALIDATE_ALL_DEPENDENT_FAMILIES",
+    "family_local_drift_policy": "INVALIDATE_OWNER_FAMILY_ONLY",
+    "live_measurement_authorized": false,
+    "live_qualification_authorized": false
+  },
+  "STILL_UNDECIDED": [
+    {
+      "decision": "adopt_any_lossless_serializer_candidate",
+      "selected_value": null
+    },
+    {
+      "decision": "authorize_actual_token_live_measurement",
+      "selected_value": null
+    },
+    {
+      "decision": "financial_raise_cap_or_per_table_shard",
+      "selected_value": null
+    },
+    {
+      "decision": "replace_financial_development_source",
+      "selected_value": null
+    },
+    {
+      "decision": "authorize_or_require_selector",
+      "selected_value": null
+    }
+  ],
+  "current_readiness": {
+    "readiness_by_family": {
+      "financial_statement": {
+        "context_gate": {
+          "status": "NOT_EVALUATED_RESOURCE_LIMIT",
+          "max_estimated_input_tokens": 200000,
+          "threshold_comparison": "estimated_input_tokens <= 200000",
+          "maximum_observed_estimated_input_tokens": "NOT_AVAILABLE_RESOURCE_LIMIT",
+          "blocking_measurement_ids": []
+        },
+        "resource_gate": {
+          "status": "BLOCKED",
+          "blocking_measurement_ids": [
+            "sha256:2751e57a51f1554798712171f61a19bd5d691d06bd5346b7935f0e9041fa9bb6",
+            "sha256:827d2f1edc78b194c3308d9220a13e8791e573321c53dfb61b9eb383ca01a130",
+            "sha256:8d1198b24dc4a246b5d6518ca52e499248eb84e768439750eda0769031a6a2b3",
+            "sha256:9f07a80a8244c84c1474c573f14c091c6969cf9c1a0479e3a06301bd89182040",
+            "sha256:a68b288a8e927de4a5008b5ac79fbe71e4680fa6d89bfabaec55e29b9382a2cc",
+            "sha256:b40e439a733b46c337eac857d6293b6c9b8f2aa9e9040ff61dda97882bacef13",
+            "sha256:bfc620a095223f1029f2b7547401ba8635422ac08f021d2842ed466e2f796b49",
+            "sha256:c36cd1eddab4a1bc1502ee442e80de3c273d8ab1df726efe9e0d34cb59a57c95"
+          ]
+        },
+        "protected_closure_gate": {
+          "status": "PASSED",
+          "drift_labels": [],
+          "shared_dependency_drift": false,
+          "family_local_drift": false
+        },
+        "live_ready": false,
+        "blocking_reason_codes": [
+          "EXPANDED_GRID_RESOURCE_LIMIT"
+        ]
+      },
+      "lodging_kpi_table": {
+        "context_gate": {
+          "status": "BLOCKED",
+          "max_estimated_input_tokens": 200000,
+          "threshold_comparison": "estimated_input_tokens <= 200000",
+          "maximum_observed_estimated_input_tokens": 392447,
+          "blocking_measurement_ids": [
+            "sha256:685ae591c44e302257e26166c608a59f94dfc93af3f15d3cdc58703065362182",
+            "sha256:f8c3a6c7b6661e167c876d7ceb81e2aba08724dd8035e5e758e615232852c129"
+          ]
+        },
+        "resource_gate": {
+          "status": "PASSED",
+          "blocking_measurement_ids": []
+        },
+        "protected_closure_gate": {
+          "status": "PASSED",
+          "drift_labels": [],
+          "shared_dependency_drift": false,
+          "family_local_drift": false
+        },
+        "live_ready": false,
+        "blocking_reason_codes": [
+          "ESTIMATED_CONTEXT_LIMIT"
+        ]
+      }
+    },
+    "live_ready_family_ids": [],
+    "actual_prompt_tokens": "NOT_RUN",
+    "lodging_summary": "BLOCKED_BY_392447_GT_200000",
+    "financial_summary": "BLOCKED_BY_EXPANDED_GRID_RESOURCE_LIMIT"
+  },
+  "investigation_bindings": {
+    "context_minimization": {
+      "receipt_id": "sha256:2dd551a5613cf6980644ae8f9a99c9231456c736ae29969f613d4c8cedd1e3a1",
+      "receipt_path": "artifacts/vnext/table_stage_b_investigation/context_minimization/2dd551a5613cf6980644ae8f9a99c9231456c736ae29969f613d4c8cedd1e3a1.json",
+      "receipt_file_sha256": "4be7fc93e05472f7a1b6ab008391e80f88f61748458752e9a1f019ce3dfed126",
+      "record_type": "TABLE_STAGE_B_CONTEXT_MINIMIZATION_RECEIPT",
+      "status": "DECISION_NEUTRAL_OFFLINE_EVIDENCE"
+    },
+    "financial_grid_census": {
+      "receipt_id": "sha256:ea3d796f256a43ac5a6079de753d7d5456fc6d7485bb794ef4c9e27276ca6f2c",
+      "receipt_path": "artifacts/vnext/table_stage_b_investigation/financial_grid_census/ea3d796f256a43ac5a6079de753d7d5456fc6d7485bb794ef4c9e27276ca6f2c.json",
+      "receipt_file_sha256": "1e6e4e1331ad5296fd851fe1825ecd82f3e24903e68818344538e488fafaced6",
+      "record_type": "TABLE_STAGE_B_FINANCIAL_GRID_CENSUS_RECEIPT",
+      "status": "DECISION_NEUTRAL_OFFLINE_EVIDENCE"
+    }
+  },
+  "context_candidate_comparison": [
+    {
+      "candidate_id": "CANDIDATE-1",
+      "maximum_estimated_input_tokens": 286407,
+      "maximum_below_or_equal_200000": false,
+      "machine_reversible": true,
+      "model_final_visible_semantic_text_byte_equal": false,
+      "model_readability_risk": "MEDIUM_REQUIRES_REAL_QUALIFICATION"
+    },
+    {
+      "candidate_id": "CANDIDATE-2",
+      "maximum_estimated_input_tokens": 337587,
+      "maximum_below_or_equal_200000": false,
+      "machine_reversible": true,
+      "model_final_visible_semantic_text_byte_equal": true,
+      "model_readability_risk": "LOW_TO_MEDIUM_REQUIRES_QUALIFICATION"
+    },
+    {
+      "candidate_id": "CANDIDATE-3",
+      "maximum_estimated_input_tokens": 337056,
+      "maximum_below_or_equal_200000": false,
+      "machine_reversible": true,
+      "model_final_visible_semantic_text_byte_equal": false,
+      "model_readability_risk": "HIGH_REQUIRES_REAL_QUALIFICATION"
+    },
+    {
+      "candidate_id": "CANDIDATE-4",
+      "maximum_estimated_input_tokens": 386572,
+      "maximum_below_or_equal_200000": false,
+      "machine_reversible": true,
+      "model_final_visible_semantic_text_byte_equal": true,
+      "model_readability_risk": "MEDIUM_REQUIRES_REAL_QUALIFICATION"
+    },
+    {
+      "candidate_id": "CANDIDATE-5",
+      "maximum_estimated_input_tokens": 392671,
+      "maximum_below_or_equal_200000": false,
+      "machine_reversible": true,
+      "model_final_visible_semantic_text_byte_equal": true,
+      "model_readability_risk": "ROLE_INTERFERENCE_REQUIRES_QUALIFICATION"
+    }
+  ],
+  "financial_grid_census_summary": {
+    "exact_total_rectangular_expanded_cell_count": 124761,
+    "synthetic_blank_ratio": "0.01334552",
+    "span_duplicate_ratio": "0.50294563",
+    "full_materialization_benchmark": {
+      "outcome": "NOT_RUN_RESOURCE_SAFETY",
+      "peak_rss_bytes": "NOT_RUN",
+      "wall_time_seconds": "NOT_RUN",
+      "reason": "This PR does not authorize raising production limits or constructing the complete giant expanded dict/list object."
+    },
+    "option_matrix": [
+      {
+        "option_id": "OPTION-A",
+        "title": "Raise max_total_cells",
+        "implementation_selected": false,
+        "minimum_safe_value_for_this_exact_source": 124761,
+        "margin_1_5x": 187142,
+        "margin_2x": 249522,
+        "estimated_memory_interval": {
+          "estimated_lower_bytes": 56947869,
+          "estimated_upper_bytes": 152764317,
+          "formula": "canonical_derived_asset_bytes + expanded_cells*(256..1024) + table_count*2048 + expanded_row_count*256",
+          "scope": "64-bit CPython dict/list materialization planning interval",
+          "allocator_fragmentation_included": false
+        },
+        "estimated_time": {
+          "complexity": "O(html_bytes + source_cells + expanded_cells)",
+          "exact_expanded_coordinate_visits": 124761,
+          "wall_time_seconds": "NOT_ESTIMATED_NO_SAFE_FULL_BENCHMARK"
+        },
+        "other_resource_guardrails_retained": {
+          "max_html_bytes": 67108864,
+          "max_tables": 2048,
+          "max_rows_per_table": 4096,
+          "max_columns_per_table": 256,
+          "max_span_attribute_chars": 32,
+          "max_entity_reference_chars": 64,
+          "max_cells_per_table": 25000,
+          "max_cell_text_chars": 1048576,
+          "max_table_text_chars": 16777216,
+          "max_total_table_text_chars": 33554432,
+          "max_expanded_text_chars": 67108864,
+          "max_rendered_review_bytes": 67108864,
+          "max_rendered_line_bytes": 8192
+        },
+        "risks": [
+          "larger worst-case allocation in the current all-at-once model",
+          "memory estimate is planning evidence, not measured peak RSS",
+          "future sources may exceed this exact-source minimum"
+        ]
+      },
+      {
+        "option_id": "OPTION-B",
+        "title": "Per-table immutable shard plus ordered manifest",
+        "implementation_selected": false,
+        "required_hash_and_replay_contracts": [
+          "each table shard binds table_id/order/grid_sha256/source hash",
+          "ordered manifest binds exact complete table ID/hash sequence",
+          "replay rejects missing/extra/reordered/tampered shards",
+          "Evidence locator resolves through manifest without table search"
+        ],
+        "application_cache_required": false,
+        "minimum_change_surface": {
+          "files": [
+            "scripts/vnext/table_grid.py",
+            "scripts/vnext/records.py",
+            "scripts/vnext/reader_input.py",
+            "scripts/vnext/table_payload.py",
+            "scripts/vnext/evidence.py",
+            "scripts/vnext/replay.py",
+            "scripts/vnext/table_qualification_freeze.py"
+          ],
+          "records_or_schemas": [
+            "per-table immutable shard",
+            "ordered complete-table manifest",
+            "shard-aware DerivedAsset/Reader/Evidence bindings"
+          ]
+        },
+        "estimated_engineering_complexity": "HIGH_MULTI_BOUNDARY_CHANGE",
+        "risks": [
+          "new integrity and recovery states across Reader/Evidence/replay",
+          "qualification invalidation for every dependent table family",
+          "incorrect lazy boundary could become an unauthorized selector"
+        ]
+      },
+      {
+        "option_id": "OPTION-C",
+        "title": "Use a smaller development source",
+        "implementation_selected": false,
+        "qualification_fixture_only": true,
+        "solves_jpm_final_production_processing": false,
+        "must_not_claim_product_problem_solved": true,
+        "risks": [
+          "qualification may no longer exercise the production-scale case",
+          "JPM still fails the unchanged production max_total_cells gate"
+        ]
+      }
+    ],
+    "selected_option": null
+  },
+  "unchanged_active_root": {
+    "active_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+    "public_matrix_row_count": 309,
+    "public_key_set_hash": "sha256:33b2a81ac6507b33a37509189fb8eb7fae87fa25c2f441bc4b4bca6705f56fab",
+    "root_hashes": {
+      "outputs/active_publication.json": {
+        "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+        "size": 354
+      },
+      "outputs/metrics_matrix.csv": {
+        "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+        "size": 105128
+      },
+      "outputs/metric_evidence.csv": {
+        "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "size": 250439
+      },
+      "REPORT_十公司财务指标.md": {
+        "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+        "size": 29729
+      }
+    },
+    "before_after_byte_equal": true
+  },
+  "egress_counts": {
+    "real_model_provider_egress_count": 0,
+    "paid_model_provider_call_count": 0,
+    "real_sec_egress_count": 0
+  },
+  "completion_boundary": {
+    "any_family_qualified": false,
+    "issue_15_complete": false,
+    "r3_r4_r5_started": false,
+    "active_publication_changed": false
+  },
+  "owner_decision_packet_id": "sha256:8c76607402809294cfa0c451b978b40ee35b9cff2cc7e48fea405c239ff3a5b6"
+}

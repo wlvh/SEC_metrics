@@ -18,7 +18,7 @@ import subprocess
 import sys
 from decimal import Decimal, ROUND_HALF_EVEN
 from pathlib import Path
-from typing import Dict, List, Mapping, Sequence, Set, Tuple
+from typing import Dict, List, Mapping, Optional, Sequence, Set, Tuple
 
 from .ai_adapter import _open_provider_request, approved_transport_policy
 from .ai_adapter import build_provider_request_body
@@ -30,6 +30,7 @@ from .provider_runtime import estimate_context_tokens
 from .provider_runtime import load_provider_runtime_authority
 from .reader_input import READER_SYSTEM_CONTRACT
 from .reader_input import build_reader_input_manifest, build_reader_payload
+from .requirements import ISSUE_15_D07_EFFECTIVE_CHOICE
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
 from .table_grid import build_table_grid, TableGridError
@@ -39,6 +40,8 @@ from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_task_contracts import load_table_task_contracts
 from .table_task_contracts import RESOURCE_LIMIT_ESTIMATE
 from .table_task_contracts import resolve_table_task_contract
+from .table_task_contracts import TableTaskContractFamilyError
+from .table_task_contracts import TableTaskContractError
 from .table_task_contracts import table_task_execution_plan
 
 
@@ -106,6 +109,8 @@ RECEIPT_FIELDS = {
     "protected_closure",
     "provider_state",
     "qualification_cycle_id",
+    "live_ready_family_ids",
+    "readiness_by_family",
     "record_type",
     "schema_version",
     "table_qualification_freeze_receipt_id",
@@ -114,6 +119,57 @@ RECEIPT_FIELDS = {
     "wb5_scope_contract",
     "wb6_task_contracts",
 }
+FAMILY_READINESS_FIELDS = {
+    "blocking_reason_codes",
+    "context_gate",
+    "live_ready",
+    "protected_closure_gate",
+    "resource_gate",
+}
+CONTEXT_GATE_FIELDS = {
+    "blocking_measurement_ids",
+    "max_estimated_input_tokens",
+    "maximum_observed_estimated_input_tokens",
+    "status",
+    "threshold_comparison",
+}
+RESOURCE_GATE_FIELDS = {"blocking_measurement_ids", "status"}
+PROTECTED_CLOSURE_GATE_FIELDS = {
+    "drift_labels",
+    "family_local_drift",
+    "shared_dependency_drift",
+    "status",
+}
+ESTIMATED_CONTEXT_LIMIT = "ESTIMATED_CONTEXT_LIMIT"
+PROVIDER_CONTEXT_LIMIT = "PROVIDER_CONTEXT_LIMIT"
+PROVIDER_PAYLOAD_LIMIT = "PROVIDER_PAYLOAD_LIMIT"
+EXPANDED_GRID_RESOURCE_LIMIT = "EXPANDED_GRID_RESOURCE_LIMIT"
+SHARED_PROTECTED_CLOSURE_DRIFT = "SHARED_PROTECTED_CLOSURE_DRIFT"
+FAMILY_LOCAL_AUTHORITY_DRIFT = "FAMILY_LOCAL_AUTHORITY_DRIFT"
+MEASUREMENT_FIELDS = (
+    "round_trip_receipts",
+    "qualification_task_measurements",
+    "family_maximum_estimated_input_tokens",
+    "maximum_estimated_input_tokens",
+    "maximum_successfully_estimated_input_tokens",
+    "blocking_family_ids",
+    "any_measurement_blocked",
+)
+D07_AUTHORITY_FIELDS = {
+    "blocking_family_ids",
+    "d07_decision_required",
+    "effective_d07_choice",
+    "effective_d07_record_hash",
+    "estimator_authority_hashes",
+    "matrix_sha256",
+    "measurement_has_any_blocker",
+    "measurement_receipts_hash",
+}
+SHARED_DRIFT_PREFIXES = (
+    "r2_root:",
+    "shared_engine:",
+    "shared_measurement:",
+)
 WB3_TESTS = {
     "single_flight": (
         "tests.vnext.test_invocation_control.InvocationControlTest."
@@ -180,6 +236,17 @@ _MEASUREMENT_CACHE: Dict[str, Dict[str, object]] = {}
 
 class TableQualificationFreezeError(RuntimeError):
     """Report an unsafe or incomplete table qualification freeze."""
+
+
+class TableQualificationFamilyError(TableQualificationFreezeError):
+    """Report one family-local matrix/source authority failure."""
+
+    def __init__(
+        self, *, family_id: str, reason_code: str, message: str,
+    ) -> None:
+        super().__init__(message)
+        self.family_id = family_id
+        self.reason_code = reason_code
 
 
 def _regular_file(*, repo_root: Path, relative: Path, label: str) -> Path:
@@ -289,24 +356,37 @@ def _source_binding(
         )
         if manifest["fixture_id"] != fixture_id:
             raise TableQualificationFreezeError("{} fixture differs".format(label))
+        source_relative = Path(str(manifest["source_repo_relative_path"]))
+        source_path = _regular_file(
+            repo_root=repo_root,
+            relative=source_relative,
+            label=label + " fixture source",
+        )
+        declared_sha256 = manifest.get("source_sha256")
+        if (
+            type(declared_sha256) is not str
+            or sha256_file(path=source_path) != declared_sha256
+        ):
+            raise TableQualificationFreezeError(
+                "{} fixture source bytes differ".format(label)
+            )
         source["fixture_manifest_sha256"] = sha256_file(
             path=repo_root / manifest_relative,
         )
-        source["fixture_source_sha256"] = manifest["source_sha256"]
+        source["fixture_source_repo_relative_path"] = (
+            source_relative.as_posix()
+        )
+        source["fixture_source_sha256"] = declared_sha256
+        source["fixture_source_size"] = source_path.stat().st_size
     else:
         raise TableQualificationFreezeError("{} source kind is unsupported".format(label))
     return source
 
 
-def load_table_qualification_matrix(*, repo_root: Path) -> Dict[str, object]:
-    """Load the complete table-family qualification matrix without egress.
-
-    Args:
-        repo_root: Repository authority root.
-
-    Returns:
-        Exact matrix entries keyed by family ID and the matrix file hash.
-    """
+def _matrix_family_index(
+    *, repo_root: Path,
+) -> Tuple[Dict[str, Dict[str, object]], str]:
+    """Parse shared matrix structure without local source dereference."""
     payload = _json_object(
         repo_root=repo_root,
         relative=MATRIX_PATH,
@@ -319,98 +399,169 @@ def load_table_qualification_matrix(*, repo_root: Path) -> Dict[str, object]:
         or type(payload["families"]) is not list
         or not payload["families"]
     ):
-        raise TableQualificationFreezeError("Table qualification matrix invalid")
+        raise TableQualificationFreezeError(
+            "Table qualification matrix invalid"
+        )
     entries = {}
     for value in payload["families"]:
-        if type(value) is not dict or set(value) != MATRIX_ENTRY_FIELDS:
-            raise TableQualificationFreezeError("Matrix entry fields are not exact")
-        entry = dict(value)
-        family_id = entry["family_id"]
-        if type(family_id) is not str or not family_id or family_id in entries:
-            raise TableQualificationFreezeError("Matrix family identity is invalid")
-        if (
-            type(entry["reader_contract_id"]) is not str
-            or not entry["reader_contract_id"]
-            or entry["second_layout_policy"] != "REQUIRED"
-            or entry["expected_output_status"]
-            != "REVIEW_REQUIRED_OR_CANDIDATE"
-            or type(entry["fresh_samples_required"]) is not int
-            or entry["fresh_samples_required"] < 1
-            or type(entry["expected_claims"]) is not list
-            or not entry["expected_claims"]
-            or len(entry["expected_claims"])
-            != len(set(entry["expected_claims"]))
-            or any(
-                type(item) is not str or not item
-                for item in entry["expected_claims"]
+        if type(value) is not dict:
+            raise TableQualificationFreezeError(
+                "Matrix family index is invalid"
             )
-            or type(entry["task_contract_ids"]) is not list
-            or not entry["task_contract_ids"]
-            or any(
-                type(item) is not str or not item
-                for item in entry["task_contract_ids"]
+        family_id = value.get("family_id")
+        if (
+            type(family_id) is not str
+            or not family_id
+            or family_id in entries
+        ):
+            raise TableQualificationFreezeError(
+                "Matrix family identity is invalid"
             )
-            or len(entry["task_contract_ids"])
-            != len(set(entry["task_contract_ids"]))
-            or entry["task_contract_ids"]
-            != sorted(entry["task_contract_ids"])
-            or type(entry["materially_different_criteria"]) is not list
-            or len(entry["materially_different_criteria"]) < 2
-            or type(entry["negative_cases"]) is not list
-            or not entry["negative_cases"]
-            or type(entry["review_policy"]) is not str
-            or not entry["review_policy"]
-            or type(entry["source_media_type"]) is not str
-            or entry["source_media_type"] != "text/html"
-        ):
-            raise TableQualificationFreezeError("Matrix entry values are invalid")
-        target_period = entry["target_period"]
-        if (
-            type(target_period) is not dict
-            or set(target_period) != {
-                "fiscal_year", "period_start", "period_end",
-            }
-            or type(target_period["fiscal_year"]) is not int
-            or type(target_period["period_start"]) is not str
-            or type(target_period["period_end"]) is not str
-        ):
-            raise TableQualificationFreezeError("Matrix target period is invalid")
-        locator_range = entry["expected_locator_range"]
-        limits = entry["token_context_limits"]
-        if (
-            type(locator_range) is not dict
-            or set(locator_range) != LOCATOR_RANGE_FIELDS
-            or locator_range["row_index_min"] != 0
-            or locator_range["column_index_min"] != 0
-            or locator_range["table_selection"]
-            != "ONE_MODEL_SELECTED_TABLE_FROM_COMPLETE_DOCUMENT_SET"
-            or locator_range["selected_competing_scope_evidence"]
-            != "SAME_TARGET_TABLE_ONLY"
-            or type(limits) is not dict
-            or set(limits) != TOKEN_LIMIT_FIELDS
-            or any(type(limits[field]) is not int or limits[field] < 1
-                   for field in limits)
-        ):
-            raise TableQualificationFreezeError("Matrix limits are invalid")
-        entry["development_source"] = _source_binding(
-            repo_root=repo_root,
-            value=entry["development_source"],
-            label=family_id + " development",
+        entries[family_id] = dict(value)
+    return entries, sha256_file(path=repo_root / MATRIX_PATH)
+
+
+def _matrix_family_reason(*, message: str) -> str:
+    """Map one requested-family matrix failure to a stable reason code."""
+    if "bytes differ" in message:
+        return "LOCAL_SOURCE_BYTES_MISMATCH"
+    if "source is absent or unsafe" in message:
+        return "LOCAL_SOURCE_MISSING"
+    if "source" in message or "fixture" in message:
+        return "LOCAL_SOURCE_AUTHORITY_INVALID"
+    return "LOCAL_MATRIX_AUTHORITY_INVALID"
+
+
+def _validate_matrix_family_entry(
+    *, repo_root: Path, family_id: str, value: Mapping[str, object],
+) -> Dict[str, object]:
+    """Validate and dereference exactly one family-local matrix row."""
+    if set(value) != MATRIX_ENTRY_FIELDS:
+        raise TableQualificationFreezeError(
+            "Matrix entry fields are not exact"
         )
-        entry["second_layout_source"] = _source_binding(
-            repo_root=repo_root,
-            value=entry["second_layout_source"],
-            label=family_id + " second layout",
+    entry = dict(value)
+    if entry["family_id"] != family_id:
+        raise TableQualificationFreezeError("Matrix family identity differs")
+    if (
+        type(entry["reader_contract_id"]) is not str
+        or not entry["reader_contract_id"]
+        or entry["second_layout_policy"] != "REQUIRED"
+        or entry["expected_output_status"]
+        != "REVIEW_REQUIRED_OR_CANDIDATE"
+        or type(entry["fresh_samples_required"]) is not int
+        or entry["fresh_samples_required"] < 1
+        or type(entry["expected_claims"]) is not list
+        or not entry["expected_claims"]
+        or len(entry["expected_claims"])
+        != len(set(entry["expected_claims"]))
+        or any(
+            type(item) is not str or not item
+            for item in entry["expected_claims"]
         )
-        entry["post_freeze_holdout_source"] = _source_binding(
-            repo_root=repo_root,
-            value=entry["post_freeze_holdout_source"],
-            label=family_id + " holdout",
+        or type(entry["task_contract_ids"]) is not list
+        or not entry["task_contract_ids"]
+        or any(
+            type(item) is not str or not item
+            for item in entry["task_contract_ids"]
         )
-        entries[family_id] = entry
+        or len(entry["task_contract_ids"])
+        != len(set(entry["task_contract_ids"]))
+        or entry["task_contract_ids"]
+        != sorted(entry["task_contract_ids"])
+        or type(entry["materially_different_criteria"]) is not list
+        or len(entry["materially_different_criteria"]) < 2
+        or type(entry["negative_cases"]) is not list
+        or not entry["negative_cases"]
+        or type(entry["review_policy"]) is not str
+        or not entry["review_policy"]
+        or type(entry["source_media_type"]) is not str
+        or entry["source_media_type"] != "text/html"
+    ):
+        raise TableQualificationFreezeError("Matrix entry values are invalid")
+    target_period = entry["target_period"]
+    if (
+        type(target_period) is not dict
+        or set(target_period) != {
+            "fiscal_year", "period_start", "period_end",
+        }
+        or type(target_period["fiscal_year"]) is not int
+        or type(target_period["period_start"]) is not str
+        or type(target_period["period_end"]) is not str
+    ):
+        raise TableQualificationFreezeError("Matrix target period is invalid")
+    locator_range = entry["expected_locator_range"]
+    limits = entry["token_context_limits"]
+    if (
+        type(locator_range) is not dict
+        or set(locator_range) != LOCATOR_RANGE_FIELDS
+        or locator_range["row_index_min"] != 0
+        or locator_range["column_index_min"] != 0
+        or locator_range["table_selection"]
+        != "ONE_MODEL_SELECTED_TABLE_FROM_COMPLETE_DOCUMENT_SET"
+        or locator_range["selected_competing_scope_evidence"]
+        != "SAME_TARGET_TABLE_ONLY"
+        or type(limits) is not dict
+        or set(limits) != TOKEN_LIMIT_FIELDS
+        or any(
+            type(limits[field]) is not int or limits[field] < 1
+            for field in limits
+        )
+    ):
+        raise TableQualificationFreezeError("Matrix limits are invalid")
+    entry["development_source"] = _source_binding(
+        repo_root=repo_root,
+        value=entry["development_source"],
+        label=family_id + " development",
+    )
+    entry["second_layout_source"] = _source_binding(
+        repo_root=repo_root,
+        value=entry["second_layout_source"],
+        label=family_id + " second layout",
+    )
+    entry["post_freeze_holdout_source"] = _source_binding(
+        repo_root=repo_root,
+        value=entry["post_freeze_holdout_source"],
+        label=family_id + " holdout",
+    )
+    return entry
+
+
+def load_table_qualification_matrix(
+    *, repo_root: Path, family_id: Optional[str] = None,
+) -> Dict[str, object]:
+    """Load all matrix families or only one requested fault domain.
+
+    Args:
+        repo_root: Repository authority root.
+
+    Returns:
+        Validated matrix entries keyed by family ID and the full file hash.
+    """
+    indexed, matrix_sha256 = _matrix_family_index(repo_root=repo_root)
+    selected = sorted(indexed) if family_id is None else [family_id]
+    if any(value not in indexed for value in selected):
+        raise TableQualificationFreezeError("Matrix family is absent")
+    entries = {}
+    for selected_family in selected:
+        try:
+            entries[selected_family] = _validate_matrix_family_entry(
+                repo_root=repo_root,
+                family_id=selected_family,
+                value=indexed[selected_family],
+            )
+        except TableQualificationFreezeError as error:
+            if family_id is None:
+                raise
+            raise TableQualificationFamilyError(
+                family_id=selected_family,
+                reason_code=_matrix_family_reason(message=str(error)),
+                message=str(error),
+            ) from error
     return {
         "entries": entries,
-        "matrix_sha256": sha256_file(path=repo_root / MATRIX_PATH),
+        "family_ids": sorted(indexed),
+        "matrix_sha256": matrix_sha256,
     }
 
 
@@ -425,18 +576,74 @@ def _round_trip_sources(
     Returns:
         Eleven fixture IDs with paths and declared raw SHA-256 values.
     """
+    closure = _round_trip_input_closure(repo_root=repo_root)
+    return [
+        (
+            str(row["source_id"]),
+            repo_root / str(row["source_repo_relative_path"]),
+            str(row["declared_source_sha256"]),
+        )
+        for row in closure["sources"]
+    ]
+
+
+def _round_trip_input_row(
+    *, repo_root: Path, order: int, source_id: object,
+    authority_kind: str, authority_relative: Path,
+    source_relative_value: object, declared_sha256: object,
+) -> Dict[str, object]:
+    """Bind one WB-4 authority file and its current source bytes."""
+    if type(source_id) is not str or not source_id:
+        raise TableQualificationFreezeError(
+            "WB-4 round-trip source identity is invalid"
+        )
+    if type(declared_sha256) is not str or len(declared_sha256) != 64:
+        raise TableQualificationFreezeError(
+            "WB-4 round-trip source SHA is invalid"
+        )
+    source_relative = Path(str(source_relative_value))
+    source_path = _regular_file(
+        repo_root=repo_root,
+        relative=source_relative,
+        label="WB-4 round-trip source",
+    )
+    actual_sha256 = sha256_file(path=source_path)
+    if actual_sha256 != declared_sha256:
+        raise TableQualificationFreezeError(
+            "WB-4 round-trip source bytes differ"
+        )
+    return {
+        "order": order,
+        "source_id": source_id,
+        "authority_kind": authority_kind,
+        "authority_repo_relative_path": authority_relative.as_posix(),
+        "authority_binding": _file_binding(
+            repo_root=repo_root,
+            relative=authority_relative,
+        ),
+        "source_repo_relative_path": source_relative.as_posix(),
+        "declared_source_sha256": declared_sha256,
+        "actual_source_sha256": actual_sha256,
+        "source_size": source_path.stat().st_size,
+    }
+
+
+def _round_trip_input_closure(*, repo_root: Path) -> Dict[str, object]:
+    """Bind the ordered eleven-source WB-4 current-input exact set."""
     marriott = _json_object(
         repo_root=repo_root,
         relative=MARRIOTT_PROVENANCE_PATH,
         label="Marriott provenance",
     )
-    sources = [
-        (
-            str(marriott["fixture_id"]),
-            repo_root / str(marriott["source_repo_relative_path"]),
-            str(marriott["source_sha256"]),
-        )
-    ]
+    rows = [_round_trip_input_row(
+        repo_root=repo_root,
+        order=0,
+        source_id=marriott.get("fixture_id"),
+        authority_kind="MARRIOTT_PROVENANCE",
+        authority_relative=MARRIOTT_PROVENANCE_PATH,
+        source_relative_value=marriott.get("source_repo_relative_path"),
+        declared_sha256=marriott.get("source_sha256"),
+    )]
     fixture_root = repo_root / LAYOUT_FIXTURE_ROOT
     if fixture_root.is_symlink() or not fixture_root.is_dir():
         raise TableQualificationFreezeError("Layout fixture root is unsafe")
@@ -455,16 +662,57 @@ def _round_trip_sources(
             or fixture_id.startswith("hyatt-")
         ):
             continue
-        sources.append(
-            (
-                fixture_id,
-                repo_root / str(manifest["source_repo_relative_path"]),
-                str(manifest["source_sha256"]),
-            )
-        )
-    if len(sources) != 11:
+        rows.append(_round_trip_input_row(
+            repo_root=repo_root,
+            order=len(rows),
+            source_id=fixture_id,
+            authority_kind="LAYOUT_FIXTURE_MANIFEST",
+            authority_relative=manifest_relative,
+            source_relative_value=manifest.get(
+                "source_repo_relative_path"
+            ),
+            declared_sha256=manifest.get("source_sha256"),
+        ))
+    if (
+        len(rows) != 11
+        or len({row["source_id"] for row in rows}) != 11
+        or [row["order"] for row in rows] != list(range(11))
+    ):
         raise TableQualificationFreezeError("WB-4 source set is not eleven")
-    return sources
+    body = {
+        "schema_version": 1,
+        "source_count": len(rows),
+        "sources": rows,
+    }
+    return {
+        **body,
+        "exact_source_set_hash": content_hash(value=body),
+    }
+
+
+def _context_blocking_reason_codes(
+    *, estimated_input_tokens: int, max_estimated_input_tokens: int,
+    maximum_context_tokens: int, provider_envelope_bytes: int,
+    maximum_payload_bytes: int,
+) -> List[str]:
+    """Return deterministic inclusive-threshold context/payload blockers."""
+    values = (
+        estimated_input_tokens,
+        max_estimated_input_tokens,
+        maximum_context_tokens,
+        provider_envelope_bytes,
+        maximum_payload_bytes,
+    )
+    if any(type(value) is not int or value < 0 for value in values):
+        raise TableQualificationFreezeError("Context gate inputs are invalid")
+    reason_codes = []
+    if estimated_input_tokens > max_estimated_input_tokens:
+        reason_codes.append(ESTIMATED_CONTEXT_LIMIT)
+    if estimated_input_tokens > maximum_context_tokens:
+        reason_codes.append(PROVIDER_CONTEXT_LIMIT)
+    if provider_envelope_bytes > maximum_payload_bytes:
+        reason_codes.append(PROVIDER_PAYLOAD_LIMIT)
+    return reason_codes
 
 
 def _measure_reader_envelope(
@@ -531,6 +779,7 @@ def _measure_reader_envelope(
             "round_trip_receipt_id": RESOURCE_LIMIT_ESTIMATE,
             "round_trip_hash": RESOURCE_LIMIT_ESTIMATE,
             "context_or_resource_limit_exceeded": True,
+            "blocking_reason_codes": [EXPANDED_GRID_RESOURCE_LIMIT],
             "resource_limit_reason": str(error),
         }
         return {**body, "measurement_id": content_hash(value=body)}
@@ -564,10 +813,12 @@ def _measure_reader_envelope(
         Decimal(len(compact_payload["request_bytes"]))
         / Decimal(len(expanded_bytes))
     ).quantize(Decimal("0.00000001"), rounding=ROUND_HALF_EVEN)
-    over_limit = (
-        estimated_tokens > token_limit
-        or estimated_tokens > runtime["maximum_context_tokens"]
-        or len(provider_envelope) > policy.maximum_payload_bytes
+    blocking_reason_codes = _context_blocking_reason_codes(
+        estimated_input_tokens=estimated_tokens,
+        max_estimated_input_tokens=token_limit,
+        maximum_context_tokens=runtime["maximum_context_tokens"],
+        provider_envelope_bytes=len(provider_envelope),
+        maximum_payload_bytes=policy.maximum_payload_bytes,
     )
     body = {
         "source_id": source_id,
@@ -584,7 +835,8 @@ def _measure_reader_envelope(
         "provider_context_authority_hash": runtime["context_authority_hash"],
         "round_trip_receipt_id": round_trip["round_trip_receipt_id"],
         "round_trip_hash": content_hash(value=round_trip),
-        "context_or_resource_limit_exceeded": over_limit,
+        "context_or_resource_limit_exceeded": bool(blocking_reason_codes),
+        "blocking_reason_codes": blocking_reason_codes,
     }
     return {**body, "measurement_id": content_hash(value=body)}
 
@@ -617,16 +869,9 @@ def _measurement_receipts(
         api=policy.api,
     )
     round_trip_sources = _round_trip_sources(repo_root=repo_root)
-    first_source_sha256 = round_trip_sources[0][2]
     round_trip_entry = matrix["entries"].get("lodging_kpi_table")
-    if (
-        type(round_trip_entry) is not dict
-        or round_trip_entry["development_source"]["source_kind"]
-        != "IMMUTABLE_ATTEMPT"
-        or round_trip_entry["development_source"]["source_sha256"]
-        != first_source_sha256
-    ):
-        raise TableQualificationFreezeError("WB-4 lodging source binding differs")
+    if type(round_trip_entry) is not dict:
+        raise TableQualificationFreezeError("WB-4 lodging family is absent")
     round_trip_task = resolve_table_task_contract(
         repo_root=repo_root,
         task_contract_id=round_trip_entry["task_contract_ids"][0],
@@ -709,13 +954,19 @@ def _measurement_receipts(
         )
         else max(known_estimates)
     )
+    blocking_family_ids = sorted({
+        str(item["family_id"])
+        for item in task_measurements
+        if item["blocking_reason_codes"]
+    })
     return {
         "round_trip_receipts": round_trip_receipts,
         "qualification_task_measurements": task_measurements,
         "family_maximum_estimated_input_tokens": family_maxima,
         "maximum_estimated_input_tokens": maximum,
         "maximum_successfully_estimated_input_tokens": max(known_estimates),
-        "d07_decision_required": any(
+        "blocking_family_ids": blocking_family_ids,
+        "any_measurement_blocked": any(
             item["context_or_resource_limit_exceeded"]
             for item in all_measurements
         ),
@@ -798,6 +1049,132 @@ def _current_measurement_receipts(
     return copy.deepcopy(cached)
 
 
+def _family_measurement_receipts(
+    *, repo_root: Path, family_id: str, matrix: Mapping[str, object],
+    task_contracts: Mapping[str, object], requirement: Mapping[str, object],
+) -> Dict[str, object]:
+    """Measure only one requested family's local development envelopes."""
+    entry = matrix["entries"].get(family_id)
+    if type(entry) is not dict:
+        raise TableQualificationFamilyError(
+            family_id=family_id,
+            reason_code="LOCAL_MATRIX_AUTHORITY_INVALID",
+            message="Requested family matrix entry is absent",
+        )
+    development = entry["development_source"]
+    if development["source_kind"] != "IMMUTABLE_ATTEMPT":
+        raise TableQualificationFamilyError(
+            family_id=family_id,
+            reason_code="LOCAL_MEASUREMENT_AUTHORITY_INVALID",
+            message="Requested family development source is not measurable",
+        )
+    source_path = repo_root / Path(
+        str(development["source_repo_relative_path"])
+    )
+    decisions = requirement.get("effective_decisions")
+    if type(decisions) is not dict or type(decisions.get("D-07")) is not dict:
+        raise TableQualificationFreezeError(
+            "Effective D-07 authority is absent"
+        )
+    cache_key = content_hash(value={
+        "measurement_scope": "ONE_TABLE_FAMILY",
+        "family_id": family_id,
+        "matrix_entry": entry,
+        "task_contracts": task_contracts["contracts"],
+        "requirement_closure_hash": requirement[
+            "requirement_closure_hash"
+        ],
+        "effective_d07_record_hash": content_hash(
+            value=decisions["D-07"],
+        ),
+        "development_source_actual_sha256": sha256_file(
+            path=source_path
+        ),
+        "measurement_engine_files": {
+            relative.as_posix(): sha256_file(path=repo_root / relative)
+            for relative in MEASUREMENT_ENGINE_PATHS
+        },
+    })
+    cached = _MEASUREMENT_CACHE.get(cache_key)
+    if cached is not None:
+        return copy.deepcopy(cached)
+    policy = approved_transport_policy(requirement=requirement)
+    runtime = load_provider_runtime_authority(
+        repo_root=repo_root,
+        provider=policy.provider,
+        model=policy.model,
+        api=policy.api,
+    )
+    rows = []
+    for task_contract_id in entry["task_contract_ids"]:
+        task_contract = resolve_table_task_contract(
+            repo_root=repo_root,
+            task_contract_id=task_contract_id,
+            family_id=family_id,
+        )
+        measurement = _measure_reader_envelope(
+            source_id="{}:{}".format(family_id, task_contract_id),
+            source_path=source_path,
+            source_sha256=str(development["source_sha256"]),
+            task_contract=task_contract,
+            token_limit=entry["token_context_limits"][
+                "max_estimated_input_tokens"
+            ],
+            policy=policy,
+            runtime=runtime,
+        )
+        rows.append({
+            "family_id": family_id,
+            "development_source_repo_relative_path": development[
+                "source_repo_relative_path"
+            ],
+            **measurement,
+        })
+    expected_ids = {
+        str(contract["task_contract_id"])
+        for contract in task_contracts["contracts"]
+    }
+    if {row["task_contract_id"] for row in rows} != expected_ids:
+        raise TableQualificationFamilyError(
+            family_id=family_id,
+            reason_code="LOCAL_MEASUREMENT_AUTHORITY_INVALID",
+            message="Requested family measurement task set differs",
+        )
+    estimates = [row["estimated_input_tokens"] for row in rows]
+    maximum = (
+        RESOURCE_LIMIT_ESTIMATE
+        if RESOURCE_LIMIT_ESTIMATE in estimates
+        else max(estimates)
+    )
+    result = {
+        "qualification_task_measurements": rows,
+        "family_maximum_estimated_input_tokens": {
+            family_id: maximum,
+        },
+    }
+    _MEASUREMENT_CACHE[cache_key] = copy.deepcopy(result)
+    return result
+
+
+def _current_estimator_authority_hash(
+    *, repo_root: Path, requirement: Mapping[str, object],
+) -> str:
+    """Rebuild the shared estimator authority without any family source."""
+    policy = approved_transport_policy(requirement=requirement)
+    runtime = load_provider_runtime_authority(
+        repo_root=repo_root,
+        provider=policy.provider,
+        model=policy.model,
+        api=policy.api,
+    )
+    value = runtime.get("context_authority_hash")
+    if type(value) is not str or not value.startswith("sha256:"):
+        raise TableQualificationFreezeError(
+            "D-07 estimator authority is invalid"
+        )
+    return value
+
+
 def _d07_authority(
     *, requirement: Mapping[str, object], matrix: Mapping[str, object],
     measurements: Mapping[str, object],
@@ -817,54 +1194,471 @@ def _d07_authority(
         decision.get("decision_id") != "D-07"
         or decision.get("status") != "APPROVED"
         or type(choice) is not dict
-        or set(choice) != {
-            "reader_table_set",
-            "semantic_prefilter",
-            "oversized_payload_policy",
-        }
-        or choice["reader_table_set"]
-        != "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER"
-        or choice["semantic_prefilter"] is not False
-        or type(choice["oversized_payload_policy"]) is not str
+        or choice != ISSUE_15_D07_EFFECTIVE_CHOICE
     ):
         raise TableQualificationFreezeError("Effective D-07 authority is invalid")
-    measurement_fields = (
-        "round_trip_receipts",
-        "qualification_task_measurements",
-        "family_maximum_estimated_input_tokens",
-        "maximum_estimated_input_tokens",
-        "maximum_successfully_estimated_input_tokens",
-    )
-    if any(field not in measurements for field in measurement_fields) or type(
-        measurements.get("d07_decision_required")
-    ) is not bool:
+    if any(
+        entry["token_context_limits"]["max_estimated_input_tokens"]
+        != choice["max_estimated_input_tokens"]
+        for entry in matrix["entries"].values()
+    ):
+        raise TableQualificationFreezeError("D-07 matrix threshold differs")
+    if any(field not in measurements for field in MEASUREMENT_FIELDS) or type(
+        measurements.get("any_measurement_blocked")
+    ) is not bool or type(measurements.get("blocking_family_ids")) is not list:
         raise TableQualificationFreezeError("D-07 measurements are invalid")
+    measurement_rows = (
+        list(measurements["round_trip_receipts"])
+        + list(measurements["qualification_task_measurements"])
+    )
+    allowed_reason_codes = {
+        ESTIMATED_CONTEXT_LIMIT,
+        PROVIDER_CONTEXT_LIMIT,
+        PROVIDER_PAYLOAD_LIMIT,
+        EXPANDED_GRID_RESOURCE_LIMIT,
+    }
+    for item in measurement_rows:
+        reasons = item.get("blocking_reason_codes")
+        estimate = item.get("estimated_input_tokens")
+        if (
+            type(reasons) is not list
+            or reasons != sorted(set(reasons))
+            or not set(reasons).issubset(allowed_reason_codes)
+            or item.get("context_or_resource_limit_exceeded")
+            != bool(reasons)
+            or item.get("estimator_id") != choice["estimator_id"]
+            or item.get("estimator_version") != choice["estimator_version"]
+            or (
+                estimate == RESOURCE_LIMIT_ESTIMATE
+                and reasons != [EXPANDED_GRID_RESOURCE_LIMIT]
+            )
+            or (
+                type(estimate) is int
+                and (estimate > choice["max_estimated_input_tokens"])
+                != (ESTIMATED_CONTEXT_LIMIT in reasons)
+            )
+        ):
+            raise TableQualificationFreezeError(
+                "D-07 measurement row is invalid"
+            )
+    derived_blocking_families = sorted({
+        str(item["family_id"])
+        for item in measurements["qualification_task_measurements"]
+        if item["blocking_reason_codes"]
+    })
+    if (
+        measurements["blocking_family_ids"] != derived_blocking_families
+        or measurements["any_measurement_blocked"]
+        != any(item["blocking_reason_codes"] for item in measurement_rows)
+    ):
+        raise TableQualificationFreezeError("D-07 measurement summary differs")
     estimator_hashes = sorted({
         str(item["provider_context_authority_hash"])
-        for item in (
-            list(measurements["round_trip_receipts"])
-            + list(measurements["qualification_task_measurements"])
-        )
+        for item in measurement_rows
     })
     if not estimator_hashes:
         raise TableQualificationFreezeError("D-07 estimator authority is absent")
     measurement_body = {
         field: measurements[field]
-        for field in measurement_fields
+        for field in MEASUREMENT_FIELDS
     }
-    measurement_requires_decision = measurements["d07_decision_required"]
     return {
         "effective_d07_record_hash": content_hash(value=decision),
         "effective_d07_choice": choice,
         "matrix_sha256": matrix["matrix_sha256"],
         "estimator_authority_hashes": estimator_hashes,
         "measurement_receipts_hash": content_hash(value=measurement_body),
-        "measurement_requires_decision": measurement_requires_decision,
-        "d07_decision_required": (
-            measurement_requires_decision
-            and choice["oversized_payload_policy"] == "BLOCK_LIVE_CUTOVER"
-        ),
+        "measurement_has_any_blocker": measurements[
+            "any_measurement_blocked"
+        ],
+        "blocking_family_ids": derived_blocking_families,
+        "d07_decision_required": False,
     }
+
+
+def _measurement_body(*, value: Mapping[str, object]) -> Dict[str, object]:
+    """Return the exact persisted/current measurement fields.
+
+    Aggregate summaries remain receipt evidence, but they are not execution
+    gates shared by otherwise independent table families.  Callers compare the
+    family-addressable rows below and use the aggregate fields only to validate
+    the frozen receipt's internal identity.
+    """
+    if any(field not in value for field in MEASUREMENT_FIELDS):
+        raise TableQualificationFreezeError("D-07 measurements are incomplete")
+    return {field: copy.deepcopy(value[field]) for field in MEASUREMENT_FIELDS}
+
+
+def _frozen_readiness_matrix(
+    *, readiness: Mapping[str, object], matrix_sha256: object,
+) -> Dict[str, object]:
+    """Reconstruct only the frozen per-family thresholds needed by D-07.
+
+    The matrix file contains multiple families.  Using the current whole-file
+    hash here would turn a local matrix edit back into a global receipt gate.
+    The receipt already persists each family's threshold in its readiness
+    record and binds the complete original matrix hash in D-07 evidence.
+    """
+    if type(matrix_sha256) is not str or not matrix_sha256:
+        raise TableQualificationFreezeError(
+            "Frozen D-07 matrix identity is invalid"
+        )
+    entries = {}
+    for family_id, value in readiness.items():
+        if (
+            type(value) is not dict
+            or type(value.get("context_gate")) is not dict
+        ):
+            raise TableQualificationFreezeError(
+                "Frozen family readiness is invalid"
+            )
+        threshold = value["context_gate"].get("max_estimated_input_tokens")
+        if type(threshold) is not int or threshold < 1:
+            raise TableQualificationFreezeError(
+                "Frozen family threshold is invalid"
+            )
+        entries[family_id] = {
+            "token_context_limits": {
+                "max_estimated_input_tokens": threshold,
+            },
+        }
+    return {"entries": entries, "matrix_sha256": matrix_sha256}
+
+
+def _validate_frozen_d07_evidence(
+    *, requirement: Mapping[str, object], wb4: Mapping[str, object],
+    readiness: Mapping[str, object],
+) -> Dict[str, object]:
+    """Validate frozen D-07 evidence without current family-local slices."""
+    persisted = wb4.get("d07_authority")
+    if type(persisted) is not dict or set(persisted) != D07_AUTHORITY_FIELDS:
+        raise TableQualificationFreezeError("Frozen D-07 authority is invalid")
+    frozen_measurements = _measurement_body(value=wb4)
+    expected = _d07_authority(
+        requirement=requirement,
+        matrix=_frozen_readiness_matrix(
+            readiness=readiness,
+            matrix_sha256=persisted["matrix_sha256"],
+        ),
+        measurements=frozen_measurements,
+    )
+    if persisted != expected:
+        raise TableQualificationFreezeError("Frozen D-07 authority differs")
+    return frozen_measurements
+
+
+def _is_shared_drift_label(*, label: str) -> bool:
+    """Return whether one drift label invalidates every dependent family."""
+    return label.startswith(SHARED_DRIFT_PREFIXES)
+
+
+def _measurement_rows_by_family(
+    *, measurements: Mapping[str, object], family_ids: Sequence[str],
+) -> Dict[str, List[Dict[str, object]]]:
+    """Group exact development-task measurements by their owning family."""
+    rows = measurements.get("qualification_task_measurements")
+    if type(rows) is not list:
+        raise TableQualificationFreezeError(
+            "D-07 task measurements are invalid"
+        )
+    grouped = {family_id: [] for family_id in family_ids}
+    for row in rows:
+        if type(row) is not dict or row.get("family_id") not in grouped:
+            raise TableQualificationFreezeError(
+                "D-07 task measurement family is invalid"
+            )
+        grouped[str(row["family_id"])].append(dict(row))
+    if any(not family_rows for family_rows in grouped.values()):
+        raise TableQualificationFreezeError(
+            "D-07 family measurement is absent"
+        )
+    return grouped
+
+
+def _measurement_estimator_hashes(
+    *, measurements: Mapping[str, object],
+) -> List[str]:
+    """Derive shared estimator authority from exact measurement rows."""
+    round_trips = measurements.get("round_trip_receipts")
+    tasks = measurements.get("qualification_task_measurements")
+    if type(round_trips) is not list or type(tasks) is not list:
+        raise TableQualificationFreezeError(
+            "D-07 measurement rows are invalid"
+        )
+    hashes = sorted({
+        str(row.get("provider_context_authority_hash"))
+        for row in round_trips + tasks
+        if type(row) is dict
+    })
+    if not hashes or any(not value.startswith("sha256:") for value in hashes):
+        raise TableQualificationFreezeError(
+            "D-07 estimator authority is invalid"
+        )
+    return hashes
+
+
+def _measurement_drift_by_family(
+    *, frozen: Mapping[str, object], current: Mapping[str, object],
+    current_matrix: Mapping[str, object],
+    frozen_d07: Mapping[str, object],
+    protected_drift: Mapping[str, Sequence[str]],
+) -> Dict[str, List[str]]:
+    """Classify current measurement drift before deriving family readiness.
+
+    Development-source/task envelopes belong to their table family.  The
+    eleven compact round-trip envelopes use the lodging task, so a concurrent
+    lodging-local authority change owns their envelope drift; unexplained
+    round-trip or estimator drift remains shared and invalidates every family.
+    Aggregate maximum/any fields are derived summaries and never become a
+    cross-family execution gate.
+    """
+    family_ids = sorted(current_matrix["entries"])
+    frozen_rows = _measurement_rows_by_family(
+        measurements=frozen,
+        family_ids=family_ids,
+    )
+    current_rows = _measurement_rows_by_family(
+        measurements=current,
+        family_ids=family_ids,
+    )
+    drift = {
+        family_id: list(protected_drift.get(family_id, []))
+        for family_id in family_ids
+        if protected_drift.get(family_id)
+    }
+
+    def add(*, family_id: str, label: str) -> None:
+        drift[family_id] = sorted(set(drift.get(family_id, [])) | {label})
+
+    for family_id in family_ids:
+        if frozen_rows[family_id] != current_rows[family_id]:
+            add(
+                family_id=family_id,
+                label="family_measurements:qualification_task_measurements",
+            )
+        frozen_maxima = frozen.get("family_maximum_estimated_input_tokens")
+        current_maxima = current.get("family_maximum_estimated_input_tokens")
+        if (
+            type(frozen_maxima) is not dict
+            or type(current_maxima) is not dict
+            or frozen_maxima.get(family_id) != current_maxima.get(family_id)
+        ):
+            add(
+                family_id=family_id,
+                label="family_measurements:maximum_estimated_input_tokens",
+            )
+        threshold = current_matrix["entries"][family_id][
+            "token_context_limits"
+        ]["max_estimated_input_tokens"]
+        if threshold != frozen_d07["effective_d07_choice"][
+            "max_estimated_input_tokens"
+        ]:
+            add(family_id=family_id, label="family_d07_threshold")
+
+    if frozen.get("round_trip_receipts") != current.get("round_trip_receipts"):
+        task_owner = {}
+        for rows in (frozen_rows, current_rows):
+            for family_id, family_rows in rows.items():
+                for row in family_rows:
+                    task_owner[str(row.get("task_contract_id"))] = family_id
+        round_trip_task_ids = {
+            str(row.get("task_contract_id"))
+            for rows in (
+                frozen.get("round_trip_receipts"),
+                current.get("round_trip_receipts"),
+            )
+            if type(rows) is list
+            for row in rows
+            if type(row) is dict
+        }
+        owners = {task_owner[task_id] for task_id in round_trip_task_ids
+                  if task_id in task_owner}
+        local_owners = {
+            family_id
+            for family_id in owners
+            if any(
+                not _is_shared_drift_label(label=label)
+                for label in protected_drift.get(family_id, [])
+            )
+        }
+        if len(owners) == 1 and owners == local_owners:
+            add(
+                family_id=next(iter(owners)),
+                label="family_measurements:round_trip_envelopes",
+            )
+        else:
+            for family_id in family_ids:
+                add(
+                    family_id=family_id,
+                    label="shared_measurement:round_trip_receipts",
+                )
+
+    current_estimator_hashes = _measurement_estimator_hashes(
+        measurements=current,
+    )
+    if current_estimator_hashes != frozen_d07["estimator_authority_hashes"]:
+        for family_id in family_ids:
+            add(
+                family_id=family_id,
+                label="shared_measurement:estimator_authority",
+            )
+    return drift
+
+
+def _readiness_by_family(
+    *, matrix: Mapping[str, object], measurements: Mapping[str, object],
+    drift_by_family: Mapping[str, Sequence[str]],
+) -> Dict[str, Dict[str, object]]:
+    """Derive independent context/resource/closure gates for each family.
+
+    Shared dependency drift is already propagated by
+    :func:`_protected_closure_drift`; this function preserves that propagation
+    while preventing one family's local measurement or authority failure from
+    becoming a global execution gate.
+    """
+    family_ids = set(matrix["entries"])
+    if not set(drift_by_family).issubset(family_ids):
+        raise TableQualificationFreezeError(
+            "Readiness drift family set differs"
+        )
+    rows = measurements.get("qualification_task_measurements")
+    if type(rows) is not list:
+        raise TableQualificationFreezeError(
+            "Readiness measurements are invalid"
+        )
+    readiness = {}
+    context_codes = {
+        ESTIMATED_CONTEXT_LIMIT,
+        PROVIDER_CONTEXT_LIMIT,
+        PROVIDER_PAYLOAD_LIMIT,
+    }
+    for family_id in sorted(family_ids):
+        family_rows = [
+            item for item in rows if item.get("family_id") == family_id
+        ]
+        if not family_rows:
+            raise TableQualificationFreezeError(
+                "Family readiness measurement set is empty"
+            )
+        threshold = matrix["entries"][family_id]["token_context_limits"][
+            "max_estimated_input_tokens"
+        ]
+        resource_rows = [
+            item for item in family_rows
+            if EXPANDED_GRID_RESOURCE_LIMIT in item["blocking_reason_codes"]
+        ]
+        context_rows = [
+            item for item in family_rows
+            if context_codes & set(item["blocking_reason_codes"])
+        ]
+        known_estimates = [
+            item["estimated_input_tokens"]
+            for item in family_rows
+            if type(item["estimated_input_tokens"]) is int
+        ]
+        if context_rows:
+            context_status = "BLOCKED"
+        elif known_estimates:
+            context_status = "PASSED"
+        elif resource_rows:
+            context_status = "NOT_EVALUATED_RESOURCE_LIMIT"
+        else:
+            raise TableQualificationFreezeError(
+                "Family context readiness cannot be derived"
+            )
+        resource_status = "BLOCKED" if resource_rows else "PASSED"
+        drift_labels = sorted(set(drift_by_family.get(family_id, [])))
+        if any(type(label) is not str or not label for label in drift_labels):
+            raise TableQualificationFreezeError(
+                "Family readiness drift labels are invalid"
+            )
+        shared_drift = any(
+            _is_shared_drift_label(label=label)
+            for label in drift_labels
+        )
+        family_local_drift = any(
+            not _is_shared_drift_label(label=label)
+            for label in drift_labels
+        )
+        protected_status = "BLOCKED" if drift_labels else "PASSED"
+        reason_codes = {
+            reason
+            for item in family_rows
+            for reason in item["blocking_reason_codes"]
+        }
+        if shared_drift:
+            reason_codes.add(SHARED_PROTECTED_CLOSURE_DRIFT)
+        if family_local_drift:
+            reason_codes.add(FAMILY_LOCAL_AUTHORITY_DRIFT)
+        reason_codes.update(
+            label.split(":", maxsplit=1)[1]
+            for label in drift_labels
+            if label.startswith("family_failure:")
+            and len(label.split(":", maxsplit=1)) == 2
+        )
+        live_ready = (
+            context_status == "PASSED"
+            and resource_status == "PASSED"
+            and protected_status == "PASSED"
+        )
+        readiness[family_id] = {
+            "context_gate": {
+                "status": context_status,
+                "max_estimated_input_tokens": threshold,
+                "threshold_comparison": (
+                    "estimated_input_tokens <= {}".format(threshold)
+                ),
+                "maximum_observed_estimated_input_tokens": (
+                    max(known_estimates)
+                    if known_estimates else RESOURCE_LIMIT_ESTIMATE
+                ),
+                "blocking_measurement_ids": sorted(
+                    str(item["measurement_id"])
+                    for item in context_rows
+                ),
+            },
+            "resource_gate": {
+                "status": resource_status,
+                "blocking_measurement_ids": sorted(
+                    str(item["measurement_id"])
+                    for item in resource_rows
+                ),
+            },
+            "protected_closure_gate": {
+                "status": protected_status,
+                "drift_labels": drift_labels,
+                "shared_dependency_drift": shared_drift,
+                "family_local_drift": family_local_drift,
+            },
+            "live_ready": live_ready,
+            "blocking_reason_codes": sorted(reason_codes),
+        }
+    return readiness
+
+
+def _validate_readiness_shape(*, readiness: object) -> None:
+    """Reject malformed persisted or current family readiness mappings."""
+    if type(readiness) is not dict or not readiness:
+        raise TableQualificationFreezeError("Family readiness is invalid")
+    for family_id, value in readiness.items():
+        if (
+            type(family_id) is not str
+            or not family_id
+            or type(value) is not dict
+            or set(value) != FAMILY_READINESS_FIELDS
+            or type(value["context_gate"]) is not dict
+            or set(value["context_gate"]) != CONTEXT_GATE_FIELDS
+            or type(value["resource_gate"]) is not dict
+            or set(value["resource_gate"]) != RESOURCE_GATE_FIELDS
+            or type(value["protected_closure_gate"]) is not dict
+            or set(value["protected_closure_gate"])
+            != PROTECTED_CLOSURE_GATE_FIELDS
+            or type(value["live_ready"]) is not bool
+            or type(value["blocking_reason_codes"]) is not list
+        ):
+            raise TableQualificationFreezeError(
+                "Family readiness fields are invalid"
+            )
 
 
 def _split_cost_receipts(
@@ -1238,9 +2032,18 @@ def _family_semantic_closure(
             plan = table_task_execution_plan(
                 repo_root=repo_root,
                 task_contract_id=task_contract_id,
+                family_id=family_id,
             )
+        except TableTaskContractFamilyError as error:
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code=error.reason_code,
+                message=str(error),
+            ) from error
         except TableTaskContractError as error:
-            raise TableQualificationFreezeError("Family task cannot be rebuilt") from error
+            raise TableQualificationFreezeError(
+                "Family task cannot be rebuilt"
+            ) from error
         runtime = plan["runtime_task_contract"]
         if runtime["reader_family_id"] != family_id:
             raise TableQualificationFreezeError("Family task route differs")
@@ -1284,7 +2087,7 @@ def _protected_closure(
         task_contracts: Exact catalog contracts derived from SourceStrategy.
 
     Returns:
-        Shared transitive engine files plus per-family semantic fragments.
+        Shared engine/WB-4 input closures plus per-family semantic fragments.
     """
     families = {
         family_id: _family_semantic_closure(
@@ -1297,6 +2100,9 @@ def _protected_closure(
     }
     return {
         "shared_engine_files": _shared_engine_closure(repo_root=repo_root),
+        "shared_measurement_inputs": _round_trip_input_closure(
+            repo_root=repo_root,
+        ),
         "families": families,
     }
 
@@ -1311,10 +2117,14 @@ def _protected_closure_drift(
         current: Freshly derived protected closure from current source bytes.
 
     Returns:
-        Family ID to sorted drift labels; shared engine drift is propagated to
-        every authorized family, while task/matrix/MetricSpec drift is local.
+        Family ID to sorted drift labels. Shared engine/WB-4 input drift
+        propagates globally; task/matrix/MetricSpec drift remains local.
     """
-    required = {"families", "shared_engine_files"}
+    required = {
+        "families",
+        "shared_engine_files",
+        "shared_measurement_inputs",
+    }
     if set(frozen) != required or set(current) != required:
         raise TableQualificationFreezeError("Protected closure fields differ")
     frozen_families = frozen["families"]
@@ -1344,6 +2154,13 @@ def _protected_closure_drift(
         )
         if frozen_value != current_value:
             shared_drift.append("shared_engine:" + relative)
+    if (
+        frozen["shared_measurement_inputs"]
+        != current["shared_measurement_inputs"]
+    ):
+        shared_drift.append(
+            "shared_measurement:round_trip_source_set"
+        )
     drift_by_family = {}
     for family_id in sorted(frozen_families):
         frozen_family = frozen_families[family_id]
@@ -1526,6 +2343,16 @@ def build_table_qualification_freeze_receipt(
         measurements=measurements,
     )
     decision_required = d07_authority["d07_decision_required"]
+    readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family={},
+    )
+    live_ready_family_ids = sorted(
+        family_id
+        for family_id, value in readiness.items()
+        if value["live_ready"]
+    )
     split_cost_receipts = _split_cost_receipts(
         task_contracts=task_contracts,
         task_measurements=measurements["qualification_task_measurements"],
@@ -1555,11 +2382,13 @@ def build_table_qualification_freeze_receipt(
     )
     body = {
         "record_type": "TABLE_QUALIFICATION_FREEZE_RECEIPT",
-        "schema_version": 2,
+        "schema_version": 3,
         "freeze_commit": commit,
         "frozen_at_utc": frozen_at_utc,
         "qualification_cycle_id": cycle_id,
         "d07_decision_required": decision_required,
+        "readiness_by_family": readiness,
+        "live_ready_family_ids": live_ready_family_ids,
         "identity": {
             "requirement_closure_hash": task_contracts[
                 "requirement_closure_hash"
@@ -1625,6 +2454,10 @@ def build_table_qualification_freeze_receipt(
             ],
             "maximum_successfully_estimated_input_tokens": measurements[
                 "maximum_successfully_estimated_input_tokens"
+            ],
+            "blocking_family_ids": measurements["blocking_family_ids"],
+            "any_measurement_blocked": measurements[
+                "any_measurement_blocked"
             ],
             "d07_authority": d07_authority,
         },
@@ -1797,8 +2630,258 @@ def _provider_ledger_before_binding(
     return binding
 
 
+def _frozen_family_measurements(
+    *, frozen: Mapping[str, object], family_id: str,
+) -> Dict[str, object]:
+    """Project immutable all-family evidence to one family fault domain."""
+    rows = frozen.get("qualification_task_measurements")
+    maxima = frozen.get("family_maximum_estimated_input_tokens")
+    if type(rows) is not list or type(maxima) is not dict:
+        raise TableQualificationFreezeError(
+            "Frozen family measurement evidence is invalid"
+        )
+    family_rows = [
+        copy.deepcopy(row)
+        for row in rows
+        if type(row) is dict and row.get("family_id") == family_id
+    ]
+    if not family_rows or family_id not in maxima:
+        raise TableQualificationFreezeError(
+            "Frozen family measurement evidence is absent"
+        )
+    return {
+        "qualification_task_measurements": family_rows,
+        "family_maximum_estimated_input_tokens": {
+            family_id: maxima[family_id],
+        },
+    }
+
+
+def _family_status_result(
+    *, receipt: Mapping[str, object], receipt_id: str, family_id: str,
+    matrix: Mapping[str, object], measurements: Mapping[str, object],
+    drift_labels: Sequence[str], provider_ledger_before: Mapping[str, object],
+) -> Dict[str, object]:
+    """Build one public result from one family-local fault domain."""
+    drift_by_family = (
+        {family_id: sorted(set(drift_labels))}
+        if drift_labels else {}
+    )
+    readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family=drift_by_family,
+    )
+    _validate_readiness_shape(readiness=readiness)
+    ready = readiness[family_id]["live_ready"] is True
+    return {
+        "receipt_id": receipt_id,
+        "qualification_cycle_id": receipt["qualification_cycle_id"],
+        "d07_decision_required": receipt["d07_decision_required"],
+        "readiness_by_family": readiness,
+        "live_ready_family_ids": [family_id] if ready else [],
+        "blocked_family_ids": [] if ready else [family_id],
+        "provider_ledger_before": dict(provider_ledger_before),
+        "invalidated_family_ids": [family_id] if drift_labels else [],
+        "drift_by_family": drift_by_family,
+    }
+
+
+def _validate_requested_family(
+    *, repo_root: Path, receipt: Mapping[str, object], receipt_id: str,
+    family_id: str, requirement: Mapping[str, object],
+    frozen_measurements: Mapping[str, object],
+    frozen_d07: Mapping[str, object],
+    provider_ledger_before: Mapping[str, object],
+) -> Dict[str, object]:
+    """Rebuild shared authority plus exactly one family-local fault domain."""
+    frozen_readiness = receipt["readiness_by_family"]
+    protected = receipt["protected_closure"]
+    if (
+        family_id not in frozen_readiness
+        or type(protected) is not dict
+        or type(protected.get("families")) is not dict
+        or type(protected.get("shared_measurement_inputs")) is not dict
+        or family_id not in protected["families"]
+    ):
+        raise TableQualificationFreezeError(
+            "TABLE_QUALIFICATION_FAMILY_UNKNOWN:{}".format(family_id)
+        )
+    frozen_matrix_all = _frozen_readiness_matrix(
+        readiness=frozen_readiness,
+        matrix_sha256=frozen_d07["matrix_sha256"],
+    )
+    frozen_matrix = {
+        "entries": {
+            family_id: frozen_matrix_all["entries"][family_id],
+        },
+        "matrix_sha256": frozen_matrix_all["matrix_sha256"],
+    }
+    frozen_family_measurements = _frozen_family_measurements(
+        frozen=frozen_measurements,
+        family_id=family_id,
+    )
+    frozen_subset = {
+        "shared_engine_files": protected["shared_engine_files"],
+        "shared_measurement_inputs": protected[
+            "shared_measurement_inputs"
+        ],
+        "families": {
+            family_id: protected["families"][family_id],
+        },
+    }
+    current_shared = _shared_engine_closure(repo_root=repo_root)
+    input_drift = []
+    try:
+        current_measurement_inputs = _round_trip_input_closure(
+            repo_root=repo_root,
+        )
+    except TableQualificationFreezeError:
+        current_measurement_inputs = protected[
+            "shared_measurement_inputs"
+        ]
+        input_drift.append(
+            "shared_measurement:round_trip_source_set"
+        )
+    shared_only_current = {
+        "shared_engine_files": current_shared,
+        "shared_measurement_inputs": current_measurement_inputs,
+        "families": {
+            family_id: protected["families"][family_id],
+        },
+    }
+    drift = _protected_closure_drift(
+        frozen=frozen_subset,
+        current=shared_only_current,
+    ).get(family_id, [])
+    try:
+        root_drift = _root_state_drift(
+            frozen_identity=receipt["identity"],
+            current_root=_root_state(repo_root=repo_root),
+        )
+    except TableQualificationFreezeError:
+        root_drift = ["r2_root:current_state_unreadable"]
+    drift = sorted(
+        set(drift) | set(root_drift) | set(input_drift)
+    )
+    estimator_hash = _current_estimator_authority_hash(
+        repo_root=repo_root,
+        requirement=requirement,
+    )
+    if [estimator_hash] != frozen_d07["estimator_authority_hashes"]:
+        drift = sorted(
+            set(drift) | {"shared_measurement:estimator_authority"}
+        )
+    if drift:
+        return _family_status_result(
+            receipt=receipt,
+            receipt_id=receipt_id,
+            family_id=family_id,
+            matrix=frozen_matrix,
+            measurements=frozen_family_measurements,
+            drift_labels=drift,
+            provider_ledger_before=provider_ledger_before,
+        )
+    try:
+        matrix = load_table_qualification_matrix(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
+        task_contracts = load_table_task_contracts(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
+        entry = matrix["entries"][family_id]
+        if (
+            task_contracts["authorized_family_ids"] != [family_id]
+            or set(entry["task_contract_ids"])
+            != {
+                contract["task_contract_id"]
+                for contract in task_contracts["contracts"]
+            }
+        ):
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code="LOCAL_TASK_AUTHORITY_INVALID",
+                message="Requested matrix/task binding differs",
+            )
+        current_family_closure = _family_semantic_closure(
+            repo_root=repo_root,
+            family_id=family_id,
+            matrix_entry=entry,
+            task_contracts=task_contracts,
+        )
+        current_measurements = _family_measurement_receipts(
+            repo_root=repo_root,
+            family_id=family_id,
+            matrix=matrix,
+            task_contracts=task_contracts,
+            requirement=requirement,
+        )
+    except (TableQualificationFamilyError,
+            TableTaskContractFamilyError) as error:
+        return _family_status_result(
+            receipt=receipt,
+            receipt_id=receipt_id,
+            family_id=family_id,
+            matrix=frozen_matrix,
+            measurements=frozen_family_measurements,
+            drift_labels=["family_failure:" + error.reason_code],
+            provider_ledger_before=provider_ledger_before,
+        )
+    except TableTaskContractError as error:
+        raise TableQualificationFreezeError(
+            "Shared table task authority is invalid"
+        ) from error
+    current_subset = {
+        "shared_engine_files": current_shared,
+        "shared_measurement_inputs": current_measurement_inputs,
+        "families": {family_id: current_family_closure},
+    }
+    drift = _protected_closure_drift(
+        frozen=frozen_subset,
+        current=current_subset,
+    ).get(family_id, [])
+    frozen_rows = frozen_family_measurements[
+        "qualification_task_measurements"
+    ]
+    current_rows = current_measurements[
+        "qualification_task_measurements"
+    ]
+    if frozen_rows != current_rows:
+        drift.append(
+            "family_measurements:qualification_task_measurements"
+        )
+    if (
+        frozen_family_measurements[
+            "family_maximum_estimated_input_tokens"
+        ][family_id]
+        != current_measurements[
+            "family_maximum_estimated_input_tokens"
+        ][family_id]
+    ):
+        drift.append(
+            "family_measurements:maximum_estimated_input_tokens"
+        )
+    if matrix["entries"][family_id]["token_context_limits"][
+        "max_estimated_input_tokens"
+    ] != frozen_d07["effective_d07_choice"][
+        "max_estimated_input_tokens"
+    ]:
+        drift.append("family_d07_threshold")
+    return _family_status_result(
+        receipt=receipt,
+        receipt_id=receipt_id,
+        family_id=family_id,
+        matrix=matrix,
+        measurements=current_measurements,
+        drift_labels=drift,
+        provider_ledger_before=provider_ledger_before,
+    )
+
+
 def validate_table_qualification_freeze(
-    *, repo_root: Path,
+    *, repo_root: Path, family_id: Optional[str] = None,
 ) -> Dict[str, object]:
     """Revalidate the configured freeze and return only affected family IDs.
 
@@ -1821,7 +2904,7 @@ def validate_table_qualification_freeze(
         relative=receipt_relative,
         label="table qualification freeze receipt",
     )
-    if set(receipt) != RECEIPT_FIELDS or receipt["schema_version"] != 2:
+    if set(receipt) != RECEIPT_FIELDS or receipt["schema_version"] != 3:
         raise TableQualificationFreezeError("Freeze receipt fields are invalid")
     receipt_id = receipt["table_qualification_freeze_receipt_id"]
     body = {
@@ -1849,42 +2932,70 @@ def validate_table_qualification_freeze(
         repo_root=repo_root,
         receipt=receipt,
     )
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    wb4 = receipt["wb4_compact_transport"]
+    if type(wb4) is not dict:
+        raise TableQualificationFreezeError("WB-4 freeze evidence is invalid")
+    _validate_readiness_shape(readiness=receipt["readiness_by_family"])
+    frozen_measurements = _validate_frozen_d07_evidence(
+        requirement=requirement,
+        wb4=wb4,
+        readiness=receipt["readiness_by_family"],
+    )
+    frozen_d07 = wb4["d07_authority"]
+    if (
+        receipt["d07_decision_required"]
+        != frozen_d07["d07_decision_required"]
+    ):
+        raise TableQualificationFreezeError(
+            "Frozen D-07 decision state differs"
+        )
+    frozen_matrix = _frozen_readiness_matrix(
+        readiness=receipt["readiness_by_family"],
+        matrix_sha256=frozen_d07["matrix_sha256"],
+    )
+    expected_frozen_readiness = _readiness_by_family(
+        matrix=frozen_matrix,
+        measurements=frozen_measurements,
+        drift_by_family={},
+    )
+    if receipt["readiness_by_family"] != expected_frozen_readiness:
+        raise TableQualificationFreezeError("Frozen family readiness differs")
+    expected_frozen_live = sorted(
+        family_id
+        for family_id, value in expected_frozen_readiness.items()
+        if value["live_ready"]
+    )
+    if receipt["live_ready_family_ids"] != expected_frozen_live:
+        raise TableQualificationFreezeError(
+            "Frozen live-ready family set differs"
+        )
+    if family_id is not None:
+        return _validate_requested_family(
+            repo_root=repo_root,
+            receipt=receipt,
+            receipt_id=receipt_id,
+            family_id=family_id,
+            requirement=requirement,
+            frozen_measurements=frozen_measurements,
+            frozen_d07=frozen_d07,
+            provider_ledger_before=provider_ledger_before,
+        )
     protected = receipt["protected_closure"]
     task_contracts = load_table_task_contracts(repo_root=repo_root)
     matrix = load_table_qualification_matrix(repo_root=repo_root)
     if sorted(matrix["entries"]) != task_contracts["authorized_family_ids"]:
-        raise TableQualificationFreezeError("Matrix family set differs from tasks")
-    requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements/issue_15_v1",
-    )
+        raise TableQualificationFreezeError(
+            "Matrix family set differs from tasks"
+        )
     measurements = _current_measurement_receipts(
         repo_root=repo_root,
         matrix=matrix,
         task_contracts=task_contracts,
         requirement=requirement,
     )
-    expected_d07 = _d07_authority(
-        requirement=requirement,
-        matrix=matrix,
-        measurements=measurements,
-    )
-    wb4 = receipt["wb4_compact_transport"]
-    if (
-        type(wb4) is not dict
-        or wb4.get("d07_authority") != expected_d07
-        or receipt["d07_decision_required"]
-        != expected_d07["d07_decision_required"]
-    ):
-        raise TableQualificationFreezeError("D-07 qualification authority differs")
-    for field in (
-        "round_trip_receipts",
-        "qualification_task_measurements",
-        "family_maximum_estimated_input_tokens",
-        "maximum_estimated_input_tokens",
-        "maximum_successfully_estimated_input_tokens",
-    ):
-        if wb4.get(field) != measurements[field]:
-            raise TableQualificationFreezeError("D-07 measurement evidence differs")
     current = _protected_closure(
         repo_root=repo_root,
         matrix=matrix,
@@ -1905,10 +3016,35 @@ def validate_table_qualification_freeze(
         for family_id in task_contracts["authorized_family_ids"]:
             existing = drift_by_family.get(family_id, [])
             drift_by_family[family_id] = sorted(set(existing) | set(root_drift))
+    drift_by_family = _measurement_drift_by_family(
+        frozen=frozen_measurements,
+        current=measurements,
+        current_matrix=matrix,
+        frozen_d07=frozen_d07,
+        protected_drift=drift_by_family,
+    )
+    readiness = _readiness_by_family(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family=drift_by_family,
+    )
+    _validate_readiness_shape(readiness=readiness)
+    live_ready_family_ids = sorted(
+        family_id
+        for family_id, value in readiness.items()
+        if value["live_ready"]
+    )
     return {
         "receipt_id": receipt_id,
         "qualification_cycle_id": receipt["qualification_cycle_id"],
         "d07_decision_required": receipt["d07_decision_required"],
+        "readiness_by_family": readiness,
+        "live_ready_family_ids": live_ready_family_ids,
+        "blocked_family_ids": sorted(
+            family_id
+            for family_id, value in readiness.items()
+            if not value["live_ready"]
+        ),
         "provider_ledger_before": provider_ledger_before,
         "invalidated_family_ids": sorted(drift_by_family),
         "drift_by_family": drift_by_family,
@@ -1918,7 +3054,7 @@ def validate_table_qualification_freeze(
 def require_table_qualification_freeze(
     *, repo_root: Path, family_id: str,
 ) -> Dict[str, object]:
-    """Fail closed before future qualification when its family drifted.
+    """Fail closed from only the requested family's three readiness gates.
 
     Args:
         repo_root: Repository authority root.
@@ -1927,11 +3063,20 @@ def require_table_qualification_freeze(
     Returns:
         Validated freeze status for an unaffected authorized family.
     """
-    status = validate_table_qualification_freeze(repo_root=repo_root)
-    if family_id in status["invalidated_family_ids"]:
+    status = validate_table_qualification_freeze(
+        repo_root=repo_root,
+        family_id=family_id,
+    )
+    readiness = status["readiness_by_family"].get(family_id)
+    if type(readiness) is not dict:
         raise TableQualificationFreezeError(
-            "TABLE_QUALIFICATION_FREEZE_INVALIDATED:{}".format(family_id)
+            "TABLE_QUALIFICATION_FAMILY_UNKNOWN:{}".format(family_id)
         )
-    if status["d07_decision_required"] is True:
-        raise TableQualificationFreezeError("D07_DECISION_REQUIRED")
+    if readiness["live_ready"] is not True:
+        reasons = ",".join(readiness["blocking_reason_codes"])
+        raise TableQualificationFreezeError(
+            "TABLE_QUALIFICATION_FAMILY_NOT_READY:{}:{}".format(
+                family_id, reasons,
+            )
+        )
     return status

@@ -16,8 +16,10 @@ from __future__ import annotations
 
 import csv
 import json
+import re
+import subprocess
 from pathlib import Path
-from typing import Dict, List, Mapping
+from typing import Dict, List, Mapping, Optional
 
 from validation_provenance import capture_source_snapshot
 from validation_provenance import pin_validation_publication_transaction
@@ -193,7 +195,9 @@ def _historical_source_errors(*, repo_root: Path) -> List[str]:
     return errors
 
 
-def _freeze_receipt_binding(*, repo_root: Path) -> Dict[str, str]:
+def _freeze_receipt_binding(
+    *, repo_root: Path, family_id: Optional[str] = None,
+) -> Dict[str, str]:
     """Return the configured current freeze receipt's immutable binding.
 
     Args:
@@ -203,9 +207,21 @@ def _freeze_receipt_binding(*, repo_root: Path) -> Dict[str, str]:
         Freeze receipt ID and exact receipt file SHA-256.
     """
     try:
-        freeze = validate_table_qualification_freeze(repo_root=repo_root)
+        freeze = validate_table_qualification_freeze(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
     except TableQualificationFreezeError as error:
         raise StageASnapshotError("Table qualification freeze is invalid") from error
+    if family_id is not None:
+        readiness = freeze["readiness_by_family"].get(family_id)
+        if (
+            type(readiness) is not dict
+            or readiness.get("live_ready") is not True
+        ):
+            raise StageASnapshotError(
+                "Requested family qualification freeze is not ready"
+            )
     pointer = _json_object(
         repo_root=repo_root,
         relative=FREEZE_POINTER_PATH,
@@ -223,6 +239,27 @@ def _freeze_receipt_binding(*, repo_root: Path) -> Dict[str, str]:
         "freeze_receipt_id": str(freeze["receipt_id"]),
         "freeze_receipt_sha256": sha256_file(path=receipt_path),
     }
+
+
+def _current_git_commit(*, repo_root: Path) -> str:
+    """Return current commit identity.
+
+    Whole-tree cleanliness is deliberately not imposed at this boundary.
+    """
+    completed = subprocess.run(
+        args=["git", "rev-parse", "HEAD"],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+        encoding="utf-8",
+    )
+    commit = completed.stdout.strip()
+    if (
+        completed.returncode != 0
+        or re.fullmatch(r"[0-9a-f]{40}", commit) is None
+    ):
+        raise StageASnapshotError("Stage-A current Git commit is unavailable")
+    return commit
 
 
 def _snapshot_path(*, repo_root: Path, freeze_receipt_id: str) -> Path:
@@ -328,16 +365,29 @@ def write_stage_a_snapshot(
     return {**receipt, "snapshot_path": relative.as_posix()}
 
 
-def validate_stage_a_snapshot(*, repo_root: Path) -> Dict[str, object]:
-    """Validate the current-source overlay and unchanged historical R2 state.
+def validate_stage_a_snapshot(
+    *, repo_root: Path, family_id: Optional[str] = None,
+) -> Dict[str, object]:
+    """Validate the Stage-A overlay globally or for one execution family.
 
     Args:
         repo_root: Repository authority root.
+        family_id: Optional execution-family scope.  When absent, preserve the
+            complete source-input tree check used by the offline snapshot
+            checker.  When present, the table freeze has already revalidated
+            the shared protected closure plus this family's local closure, so
+            an unrelated family's local source drift is not promoted to a
+            global authorization blocker.
 
     Returns:
         Overlay identity and a warning when only an artifact commit changed.
     """
-    freeze = _freeze_receipt_binding(repo_root=repo_root)
+    if family_id is not None and (type(family_id) is not str or not family_id):
+        raise StageASnapshotError("Stage-A family identity is invalid")
+    freeze = _freeze_receipt_binding(
+        repo_root=repo_root,
+        family_id=family_id,
+    )
     relative = _snapshot_path(
         repo_root=repo_root,
         freeze_receipt_id=freeze["freeze_receipt_id"],
@@ -361,16 +411,33 @@ def validate_stage_a_snapshot(*, repo_root: Path) -> Dict[str, object]:
         or receipt["freeze_receipt_sha256"] != freeze["freeze_receipt_sha256"]
     ):
         raise StageASnapshotError("Stage-A snapshot freeze binding differs")
-    source = capture_source_snapshot(workdir=repo_root)
     expected_source = receipt["source_snapshot"]
-    if (
-        type(expected_source) is not dict
-        or expected_source["checkout_status"] != "GIT_CLEAN"
-        or source.checkout_status != "GIT_CLEAN"
-        or source.tree_sha256 != expected_source["source_input_tree_sha256"]
-        or source.file_count != expected_source["source_file_count"]
-    ):
-        raise StageASnapshotError("Stage-A source tree differs")
+    if type(expected_source) is not dict or set(expected_source) != {
+        "checkout_status",
+        "source_commit",
+        "source_file_count",
+        "source_input_tree_sha256",
+    } or expected_source["checkout_status"] != "GIT_CLEAN":
+        raise StageASnapshotError("Stage-A source snapshot is invalid")
+    if family_id is None:
+        source = capture_source_snapshot(workdir=repo_root)
+        if (
+            source.checkout_status != "GIT_CLEAN"
+            or source.tree_sha256
+            != expected_source["source_input_tree_sha256"]
+            or source.file_count != expected_source["source_file_count"]
+        ):
+            raise StageASnapshotError("Stage-A source tree differs")
+        source_commit = source.source_commit
+        equivalent_tree = (
+            source.source_commit != expected_source["source_commit"]
+        )
+    else:
+        # The freeze validator owns execution dependency scoping.  Requiring
+        # the all-repository Stage-A tree here would undo that classification
+        # before the requested family reaches its authorization gate.
+        source_commit = _current_git_commit(repo_root=repo_root)
+        equivalent_tree = source_commit != expected_source["source_commit"]
     historical = {
         relative.as_posix(): sha256_file(
             path=_regular_file(
@@ -389,12 +456,16 @@ def validate_stage_a_snapshot(*, repo_root: Path) -> Dict[str, object]:
         or _root_state(repo_root=repo_root) != receipt["root_state"]
     ):
         raise StageASnapshotError("Stage-A historical R2 state differs")
-    _historical_source_errors(repo_root=repo_root)
+    if family_id is None:
+        _historical_source_errors(repo_root=repo_root)
     return {
         "stage_a_snapshot_id": receipt["stage_a_snapshot_id"],
-        "source_commit": source.source_commit,
-        "source_commit_equivalent_tree": (
-            source.source_commit != expected_source["source_commit"]
+        "source_commit": source_commit,
+        "source_commit_equivalent_tree": equivalent_tree,
+        "source_validation_scope": (
+            "COMPLETE_SOURCE_INPUT_TREE"
+            if family_id is None
+            else "SHARED_AND_REQUESTED_FAMILY_PROTECTED_CLOSURE"
         ),
         "freeze_receipt_id": freeze["freeze_receipt_id"],
     }

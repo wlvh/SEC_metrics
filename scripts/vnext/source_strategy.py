@@ -2,8 +2,8 @@
 
 The registry owns target source routing and reader-family literals for all 39
 metrics. The separate ReleasePlan is the only owner of current migration
-state. Both files are byte-bound by the Issue #15 Requirement closure before
-their semantic fields are accepted here.
+state. Published R1/R2 plans retain their exact historical Requirement
+closure; a later same-ID Decision tip does not rewrite those content IDs.
 """
 
 from __future__ import annotations
@@ -106,6 +106,16 @@ RELEASE_PLAN_IDS = (
     "issue_15_zero_ai_r1",
     "issue_15_zero_ai_r2",
 )
+RELEASED_PLAN_REQUIREMENT_CLOSURES = {
+    "issue_15_zero_ai_r1": (
+        "sha256:161da433701e133c6e388356225fb01f"
+        "a245847450b39a2a8b5335189a69624f"
+    ),
+    "issue_15_zero_ai_r2": (
+        "sha256:161da433701e133c6e388356225fb01f"
+        "a245847450b39a2a8b5335189a69624f"
+    ),
+}
 
 
 class SourceStrategyError(ValueError):
@@ -561,7 +571,7 @@ def _release_authority(
 
 def _validate_release_plan(
     *, repo_root: Path, plan: Mapping[str, object],
-    registry: Mapping[str, object], requirement_closure_hash: str,
+    registry: Mapping[str, object], expected_requirement_closure_hash: str,
 ) -> Dict[str, object]:
     """Validate one immutable full-schema ReleasePlan independently."""
     value = _object(value=plan, label="Issue #15 ReleasePlan")
@@ -573,7 +583,8 @@ def _validate_release_plan(
         value["schema_version"] != 2
         or value["record_type"] != "ISSUE_15_RELEASE_PLAN"
         or value["requirement_id"] != ISSUE_15_REQUIREMENT_ID
-        or value["requirement_closure_hash"] != requirement_closure_hash
+        or value["requirement_closure_hash"]
+        != expected_requirement_closure_hash
     ):
         raise SourceStrategyError("Issue #15 ReleasePlan identity differs")
     release_plan_id = _nonempty_string(
@@ -693,8 +704,8 @@ def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
             repo_root=repo_root,
             plan=_json_object(path=path, label="Issue #15 ReleasePlan"),
             registry=registry,
-            requirement_closure_hash=str(
-                requirement["requirement_closure_hash"]
+            expected_requirement_closure_hash=(
+                RELEASED_PLAN_REQUIREMENT_CLOSURES[expected_id]
             ),
         )
         if plan["release_plan_content_id"] != entry[
@@ -800,7 +811,10 @@ def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
         "plans": plans,
         "ratchet_transitions": transitions,
         "plan_paths": paths,
-        "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "requirement_closure_hash": active["requirement_closure_hash"],
+        "current_requirement_closure_hash": requirement[
+            "requirement_closure_hash"
+        ],
         "source_strategy_registry_sha256": registry["registry_sha256"],
     }
 

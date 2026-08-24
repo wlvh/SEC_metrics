@@ -70,10 +70,55 @@ ISSUE_15_EFFECTIVE_DECISION_IDS = {
     "D-37",
     "D-38",
 }
-ISSUE_15_POST_FREEZE_DECISION_EVIDENCE = (
-    "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535"
-)
+ISSUE_15_D07_EFFECTIVE_CHOICE = {
+    "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
+    "semantic_prefilter": False,
+    "selector_authorized": False,
+    "estimator_id": "utf8_byte_upper_bound",
+    "estimator_version": "1",
+    "max_estimated_input_tokens": 200000,
+    "threshold_comparison": {
+        "passes": "estimated_input_tokens <= 200000",
+        "blocks": "estimated_input_tokens > 200000",
+    },
+    "threshold_scope": "PER_FAMILY_PER_REQUEST",
+    "oversized_payload_policy": (
+        "BLOCK_LIVE_QUALIFICATION_FOR_AFFECTED_FAMILY"
+    ),
+    "shared_dependency_drift_policy": (
+        "INVALIDATE_ALL_DEPENDENT_FAMILIES"
+    ),
+    "family_local_drift_policy": "INVALIDATE_OWNER_FAMILY_ONLY",
+    "lossless_context_minimization_precedes_semantic_selection": True,
+    "actual_prompt_tokens_authority": (
+        "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED"
+    ),
+    "live_measurement_authorized": False,
+    "live_qualification_authorized": False,
+}
+ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
+    "D-07": (
+        "https://github.com/wlvh/SEC_metrics/issues/15"
+        "#issuecomment-5390663414"
+    ),
+    "D-26": (
+        "https://github.com/wlvh/SEC_metrics/issues/15"
+        "#issuecomment-5340538535"
+    ),
+    "D-35": (
+        "https://github.com/wlvh/SEC_metrics/issues/15"
+        "#issuecomment-5340538535"
+    ),
+    "D-36": (
+        "https://github.com/wlvh/SEC_metrics/issues/15"
+        "#issuecomment-5340538535"
+    ),
+}
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
+    "D-07": (
+        "sha256:bc9830fc98a331ea54625b499665c3e2"
+        "ef71a478194a9f066a31ac5c56de1ec8"
+    ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
     ),
@@ -1259,11 +1304,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
+        or len(chains["D-07"]) != 2
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
+        or decisions["D-07"]["supersedes_decision_id"]
+        != _decision_record_hash(decision=chains["D-07"][0])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]
@@ -1276,6 +1324,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 Decision tip binding differs")
     expected_d01_choice = dict(parent["effective_decisions"]["D-01"]["choice"])
     expected_d01_choice["retry_count"] = 0
+    d07_choice = decisions["D-07"]["choice"]
     d26_choice = decisions["D-26"]["choice"]
     d35_choice = decisions["D-35"]["choice"]
     d36_choice = decisions["D-36"]["choice"]
@@ -1285,6 +1334,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     }
     if (
         decisions["D-01"]["choice"] != expected_d01_choice
+        or d07_choice != ISSUE_15_D07_EFFECTIVE_CHOICE
         or "freeze_replay" in d26_choice["prohibited_required_test_classes"]
         or not d26_choice["required_short_deterministic_invariants"]
         or "budget_preflight_provider_calls_zero"
@@ -1292,7 +1342,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         or effective_tip_hashes != ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
         or any(
             decisions[decision_id]["evidence"]
-            != ISSUE_15_POST_FREEZE_DECISION_EVIDENCE
+            != ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID[decision_id]
             for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
         )
         or "BUDGET_EXCEEDED" in d35_choice["terminal_classes"]
