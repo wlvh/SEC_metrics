@@ -27,6 +27,8 @@ PR-3阶段A新增的必跑离线定向证据为：`tests.vnext.test_compact_tabl
 
 `tests.vnext.test_table_qualification_freeze` 对WB-3 regression receipt提供两类确定性证据：不同unittest elapsed/stdout/stderr模拟输出得到同一nested receipt ID；同一clean source tree、freeze commit和UTC timestamp连续构造两次完整freeze也得到相同table qualification freeze receipt ID。
 
+Stage-B lodging context调查运行`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_table_stage_b_context_minimization -v`及连续两次`PYTHONDONTWRITEBYTECODE=1 python3 tools/investigate_table_context_minimization.py`。测试要求Marriott current 392447/392438 exact envelope、Hilton/Hyatt distinct hash×两个task、provider与compact分解byte sum、重复字符串exact set、五候选逐字段/semantic machine round-trip、production serializer hash、root equality及三类egress=0全部闭合；任何dictionary/indirection只能标为需要真实qualification，不能把round-trip写成模型准确率证据。当前五候选maximum为286407/337587/337056/386572/392671，全部仍高于200000。
+
 ## 1. 测试原则
 
 - 测行为与契约，不用脆弱的源码字符串或固定数量断言替代真实结果。

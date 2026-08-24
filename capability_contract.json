@@ -830,6 +830,16 @@
         "test_anchor": "tests/vnext/test_table_qualification_authorization.py::TableQualificationAuthorizationTest.test_synthetic_authority_binds_canary_and_rejects_drift",
         "test_status": "automated_partial",
         "since": "2026-08-21"
+      },
+      {
+        "anchor_id": "BEHAVIOR.vnext_table_stage_b_context_investigation",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Stage-B context minimization工具只从既有source bytes构造content-addressed decision-neutral receipts，逐字节分解current envelope并对五个research-only候选做机器round-trip；它不被Reader/Workflow导入，不改production serializer/task catalog，不调用SEC/provider。机器可逆不证明模型准确率或可读性，dictionary/indirection及其他候选仍需另行qualification；当前五候选maximum均高于200000。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_table_stage_b_context_minimization.py::TableStageBContextMinimizationTest.test_candidates_do_not_claim_model_accuracy",
+        "test_status": "automated_recorded_real_bytes",
+        "since": "2026-08-24"
       }
     ],
     "documents": [
