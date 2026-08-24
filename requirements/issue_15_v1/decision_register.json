@@ -643,6 +643,50 @@
       "approved_at_utc": "2026-08-24T04:17:57Z",
       "supersedes_decision_id": "sha256:35b1643bc675c82b7e63cce40e614f51eed19e14536677ce8bba9d790b7abd4f",
       "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5390663414"
+    },
+    {
+      "decision_id": "D-07",
+      "status": "APPROVED",
+      "choice": {
+        "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
+        "semantic_prefilter": false,
+        "selector_authorized": false,
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "max_estimated_input_tokens": 200000,
+        "threshold_comparison": {
+          "passes": "estimated_input_tokens <= 200000",
+          "blocks": "estimated_input_tokens > 200000"
+        },
+        "threshold_scope": "PER_FAMILY_PER_REQUEST",
+        "oversized_payload_policy": "BLOCK_LIVE_QUALIFICATION_FOR_AFFECTED_FAMILY",
+        "shared_dependency_drift_policy": "INVALIDATE_ALL_DEPENDENT_FAMILIES",
+        "family_local_drift_policy": "INVALIDATE_OWNER_FAMILY_ONLY",
+        "lossless_context_minimization_precedes_semantic_selection": true,
+        "actual_prompt_tokens_authority": "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED",
+        "live_measurement_authorized": false,
+        "live_qualification_authorized": false,
+        "measurement_exception": {
+          "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+          "family_id": "lodging_kpi_table",
+          "task_contract_id": "lodging_occupancy_table_v2",
+          "source_company_id": "marriott_international",
+          "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "serializer_version": "2",
+          "allowed_successful_provider_egress_count": 1,
+          "automatic_retry_count": 0,
+          "qualification_ordinal_credit": false,
+          "publication_eligible": false,
+          "qualification_evidence_eligible": false,
+          "response_reuse_for_qualification": false,
+          "consumes_authorization_after_any_egress_marker": true,
+          "execution_requires_external_exact_head_authorization": true
+        }
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-24T17:47:55Z",
+      "supersedes_decision_id": "sha256:bc9830fc98a331ea54625b499665c3e2ef71a478194a9f066a31ac5c56de1ec8",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5399126863"
     }
   ],
   "pending_decisions": [
