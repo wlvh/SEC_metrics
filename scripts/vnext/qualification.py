@@ -464,10 +464,14 @@ def _authorization_mapping(
             repo_root=repo_root,
             family_id=family_id,
         )
-        contracts = load_table_task_contracts(repo_root=repo_root)
+        contracts = load_table_task_contracts(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
         runtime = resolve_table_task_contract(
             repo_root=repo_root,
             task_contract_id=task_contract_id,
+            family_id=family_id,
         )
         requirement = load_requirement_snapshot(
             snapshot_dir=repo_root / "requirements/issue_15_v1",
@@ -489,7 +493,10 @@ def _authorization_mapping(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification authority closure differs",
         )
-    matrix = load_table_qualification_matrix(repo_root=repo_root)
+    matrix = load_table_qualification_matrix(
+        repo_root=repo_root,
+        family_id=family_id,
+    )
     matrix_entry = matrix["entries"].get(family_id)
     if type(matrix_entry) is not dict:
         raise QualificationError(
@@ -2203,11 +2210,18 @@ def table_qualification_task_plan(
             repo_root=repo_root,
             family_id=family_id,
         )
-        matrix = load_table_qualification_matrix(repo_root=repo_root)
-        contracts = load_table_task_contracts(repo_root=repo_root)
+        matrix = load_table_qualification_matrix(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
+        contracts = load_table_task_contracts(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
         runtime = resolve_table_task_contract(
             repo_root=repo_root,
             task_contract_id=task_contract_id,
+            family_id=family_id,
         )
     except TableQualificationFreezeError as error:
         message = str(error)

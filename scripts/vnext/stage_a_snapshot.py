@@ -207,7 +207,10 @@ def _freeze_receipt_binding(
         Freeze receipt ID and exact receipt file SHA-256.
     """
     try:
-        freeze = validate_table_qualification_freeze(repo_root=repo_root)
+        freeze = validate_table_qualification_freeze(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
     except TableQualificationFreezeError as error:
         raise StageASnapshotError("Table qualification freeze is invalid") from error
     if family_id is not None:

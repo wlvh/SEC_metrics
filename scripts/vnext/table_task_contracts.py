@@ -10,7 +10,7 @@ target table through the normal locator contract.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Dict, List, Mapping
+from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .canonical import content_hash, sha256_file, strict_json_file
 from .scope_contract import scope_contract_hash, SCOPE_CONTRACT_VERSION
@@ -128,6 +128,17 @@ TASK_EXECUTION_SEMANTIC_FIELDS = {
 
 class TableTaskContractError(ValueError):
     """Report a malformed, non-single-table, or route-divergent contract."""
+
+
+class TableTaskContractFamilyError(TableTaskContractError):
+    """Report task or MetricSpec failure owned by one table family."""
+
+    def __init__(
+        self, *, family_id: str, reason_code: str, message: str,
+    ) -> None:
+        super().__init__(message)
+        self.family_id = family_id
+        self.reason_code = reason_code
 
 
 def _table_route_sets(
@@ -285,6 +296,34 @@ def _metric_spec_paths(*, repo_root: Path) -> Dict[str, Path]:
     return paths
 
 
+def _metric_spec_paths_for_ids(
+    *, repo_root: Path, metric_ids: Sequence[str],
+) -> Dict[str, Path]:
+    """Locate only one family's MetricSpecs without parsing sibling files."""
+    root = repo_root / "catalog" / "metrics"
+    if root.is_symlink() or not root.is_dir():
+        raise TableTaskContractError("MetricSpec catalog is unsafe")
+    paths = {}
+    for metric_id in sorted(metric_ids):
+        if (
+            type(metric_id) is not str
+            or len(metric_id) != 3
+            or not metric_id[0].isalpha()
+            or not metric_id[1:].isdigit()
+        ):
+            raise TableTaskContractError("MetricSpec metric ID is invalid")
+        matches = sorted(root.glob(metric_id + "_*.md"))
+        if len(matches) != 1:
+            raise TableTaskContractError(
+                "Task MetricSpec is absent or ambiguous"
+            )
+        path = matches[0]
+        if path.is_symlink() or not path.is_file():
+            raise TableTaskContractError("Task MetricSpec is unsafe")
+        paths[metric_id] = path
+    return paths
+
+
 def _contract_metric_specs(
     *, repo_root: Path, contract: Mapping[str, object], routes: Mapping[str, object],
     metric_paths: Mapping[str, Path],
@@ -420,6 +459,7 @@ def table_task_run_binding(
 
 def table_task_execution_plan(
     *, repo_root: Path, task_contract_id: str,
+    family_id: Optional[str] = None,
 ) -> Dict[str, object]:
     """Rebuild one catalog task for Workflow, Run freeze, and replay.
 
@@ -438,6 +478,7 @@ def table_task_execution_plan(
     runtime = resolve_table_task_contract(
         repo_root=repo_root,
         task_contract_id=task_contract_id,
+        family_id=family_id,
     )
     metric_paths = list(runtime["metric_spec_paths"])
     if len(metric_paths) != 1:
@@ -494,20 +535,13 @@ def table_task_execution_plan(
     }
 
 
-def load_table_task_contracts(*, repo_root: Path) -> Dict[str, object]:
-    """Load all catalog single-table contracts against SourceStrategy routes.
-
-    Args:
-        repo_root: Repository root owning Issue #15 source authority.
-
-    Returns:
-        Validated contracts, their hashes, authorized family IDs, and the
-        exact metric set whose AI representation is a table.
-
-    Raises:
-        TableTaskContractError: If a contract omits an ai_table metric,
-        includes ai_text, merges roles, or diverges from SourceStrategy.
-    """
+def _task_catalog_shared_authority(
+    *, repo_root: Path,
+) -> Tuple[
+    Mapping[str, object], Mapping[str, object],
+    Dict[str, List[Mapping[str, object]]], Path,
+]:
+    """Load shared strategy/catalog structure without compiling local Specs."""
     registry = load_source_strategy_registry(repo_root=repo_root)
     path = repo_root / TABLE_TASK_CATALOG_PATH
     if path.is_symlink() or not path.is_file():
@@ -521,31 +555,77 @@ def load_table_task_contracts(*, repo_root: Path) -> Dict[str, object]:
         or type(payload["contracts"]) is not list
         or not payload["contracts"]
     ):
-        raise TableTaskContractError("Table task contract catalog is invalid")
+        raise TableTaskContractError(
+            "Table task contract catalog is invalid"
+        )
+    route_sets = _table_route_sets(repo_root=repo_root, registry=registry)
+    expected_families = set(route_sets["table_family_ids"])
+    raw_by_family = {family_id: [] for family_id in expected_families}
+    task_owners = {}
+    for value in payload["contracts"]:
+        if type(value) is not dict:
+            raise TableTaskContractError(
+                "Table task contract family index is invalid"
+            )
+        family_id = value.get("reader_family_id")
+        if type(family_id) is not str or family_id not in expected_families:
+            raise TableTaskContractError(
+                "Table task contract family index differs"
+            )
+        task_contract_id = value.get("task_contract_id")
+        if type(task_contract_id) is str and task_contract_id:
+            owner = task_owners.get(task_contract_id)
+            if owner is not None and owner != family_id:
+                raise TableTaskContractError(
+                    "Table task contract ID crosses families"
+                )
+            task_owners[task_contract_id] = family_id
+        raw_by_family[family_id].append(value)
+    return registry, route_sets, raw_by_family, path
+
+
+def _task_family_reason(*, message: str) -> str:
+    """Map one family-local task rebuild failure to a stable reason code."""
+    if "MetricSpec" in message or "Spec" in message:
+        return "LOCAL_METRIC_SPEC_INVALID"
+    return "LOCAL_TASK_AUTHORITY_INVALID"
+
+
+def _validate_task_family(
+    *, repo_root: Path, family_id: str,
+    values: Sequence[Mapping[str, object]], registry: Mapping[str, object],
+    route_sets: Mapping[str, object], metric_paths: Mapping[str, Path],
+) -> Tuple[List[Dict[str, object]], List[str]]:
+    """Validate one family's contracts and compile only its MetricSpecs."""
     routes = registry["metrics"]
     families = registry["families"]
-    route_sets = _table_route_sets(repo_root=repo_root, registry=registry)
-    expected_table_metric_ids = route_sets["table_metric_ids"]
-    expected_table_family_ids = route_sets["table_family_ids"]
-    metric_paths = _metric_spec_paths(repo_root=repo_root)
+    expected_metric_ids = sorted(
+        metric_id
+        for metric_id in route_sets["table_metric_ids"]
+        if routes[metric_id]["reader_family_id"] == family_id
+    )
     contracts = []
     contract_ids = set()
     contract_metric_ids = []
-    for value in payload["contracts"]:
-        if type(value) is not dict or set(value) != TABLE_TASK_CONTRACT_FIELDS:
-            raise TableTaskContractError("Table task contract fields are not exact")
+    for value in values:
+        if set(value) != TABLE_TASK_CONTRACT_FIELDS:
+            raise TableTaskContractError(
+                "Table task contract fields are not exact"
+            )
         contract = dict(value)
         contract_id = _text(
-            value=contract["task_contract_id"], label="task_contract_id",
+            value=contract["task_contract_id"],
+            label="task_contract_id",
         )
         if contract_id in contract_ids:
-            raise TableTaskContractError("Table task contract ID is duplicated")
+            raise TableTaskContractError(
+                "Table task contract ID is duplicated"
+            )
         contract_ids.add(contract_id)
-        family_id = _text(
-            value=contract["reader_family_id"], label="reader_family_id",
-        )
-        if family_id not in families:
-            raise TableTaskContractError("Table task contract family is absent")
+        if contract["reader_family_id"] != family_id:
+            raise TableTaskContractError(
+                "Table task contract family differs"
+            )
         if contract["reader_contract_id"] != families[family_id][
             "reader_contract_id"
         ]:
@@ -567,29 +647,31 @@ def load_table_task_contracts(*, repo_root: Path) -> Dict[str, object]:
         _text(value=contract["system_prompt"], label="task system_prompt")
         _text(value=contract["split_reason"], label="task split_reason")
         if contract["split_baseline_kind"] not in SPLIT_BASELINE_KINDS:
-            raise TableTaskContractError("Task split baseline kind is invalid")
+            raise TableTaskContractError(
+                "Task split baseline kind is invalid"
+            )
         if not (
             type(contract["estimated_incremental_tokens"]) is int
             and contract["estimated_incremental_tokens"] >= 0
             or contract["estimated_incremental_tokens"]
             == RESOURCE_LIMIT_ESTIMATE
         ):
-            raise TableTaskContractError("Task estimated incremental tokens invalid")
+            raise TableTaskContractError(
+                "Task estimated incremental tokens invalid"
+            )
         actual_tokens = contract["actual_incremental_tokens"]
         if not (
             actual_tokens == "NOT_RUN"
             or type(actual_tokens) is int and actual_tokens >= 0
         ):
-            raise TableTaskContractError("Task actual incremental tokens invalid")
+            raise TableTaskContractError(
+                "Task actual incremental tokens invalid"
+            )
         for metric_id in metric_ids:
-            if metric_id not in routes:
-                raise TableTaskContractError("Task metric is absent from registry")
-            route = routes[metric_id]
-            if (
-                route["reader_family_id"] != family_id
-                or metric_id not in expected_table_metric_ids
-            ):
-                raise TableTaskContractError("Task metric route is not table AI")
+            if metric_id not in expected_metric_ids:
+                raise TableTaskContractError(
+                    "Task metric route is not table AI"
+                )
             contract_metric_ids.append(metric_id)
         metric_specs = _contract_metric_specs(
             repo_root=repo_root,
@@ -602,18 +684,92 @@ def load_table_task_contracts(*, repo_root: Path) -> Dict[str, object]:
             "metric_specs": metric_specs,
         })
     if len(contract_metric_ids) != len(set(contract_metric_ids)):
-        raise TableTaskContractError("Task metrics are assigned more than once")
-    if sorted(contract_metric_ids) != expected_table_metric_ids:
+        raise TableTaskContractError(
+            "Task metrics are assigned more than once"
+        )
+    if sorted(contract_metric_ids) != expected_metric_ids:
         raise TableTaskContractError("Table task metric exact set differs")
-    authorized_family_ids = sorted({item["reader_family_id"] for item in contracts})
-    if authorized_family_ids != expected_table_family_ids:
-        raise TableTaskContractError("Table task family exact set differs")
+    return contracts, expected_metric_ids
+
+
+def load_table_task_contracts(
+    *, repo_root: Path, family_id: Optional[str] = None,
+) -> Dict[str, object]:
+    """Load all task contracts or one requested family fault domain.
+
+    Args:
+        repo_root: Repository root owning Issue #15 source authority.
+
+    Returns:
+        Validated contracts, hashes, selected family IDs, and metric set.
+
+    Raises:
+        TableTaskContractError: If a contract omits an ai_table metric,
+        includes ai_text, merges roles, or diverges from SourceStrategy.
+    """
+    registry, route_sets, raw_by_family, path = (
+        _task_catalog_shared_authority(repo_root=repo_root)
+    )
+    expected_family_ids = list(route_sets["table_family_ids"])
+    if family_id is not None and family_id not in expected_family_ids:
+        raise TableTaskContractError("Table task family is absent")
+    selected_family_ids = (
+        expected_family_ids if family_id is None else [family_id]
+    )
+    contracts = []
+    selected_metric_ids = []
+    for selected_family in selected_family_ids:
+        expected_metrics = [
+            metric_id
+            for metric_id in route_sets["table_metric_ids"]
+            if registry["metrics"][metric_id]["reader_family_id"]
+            == selected_family
+        ]
+        try:
+            metric_paths = (
+                _metric_spec_paths(repo_root=repo_root)
+                if family_id is None
+                else _metric_spec_paths_for_ids(
+                    repo_root=repo_root,
+                    metric_ids=expected_metrics,
+                )
+            )
+            family_contracts, family_metric_ids = _validate_task_family(
+                repo_root=repo_root,
+                family_id=selected_family,
+                values=raw_by_family[selected_family],
+                registry=registry,
+                route_sets=route_sets,
+                metric_paths=metric_paths,
+            )
+        except TableTaskContractError as error:
+            if family_id is None:
+                raise
+            raise TableTaskContractFamilyError(
+                family_id=selected_family,
+                reason_code=_task_family_reason(message=str(error)),
+                message=str(error),
+            ) from error
+        contracts.extend(family_contracts)
+        selected_metric_ids.extend(family_metric_ids)
+    authorized_family_ids = sorted({
+        item["reader_family_id"] for item in contracts
+    })
+    if authorized_family_ids != selected_family_ids:
+        error = TableTaskContractError("Table task family exact set differs")
+        if family_id is None:
+            raise error
+        raise TableTaskContractFamilyError(
+            family_id=family_id,
+            reason_code="LOCAL_TASK_AUTHORITY_INVALID",
+            message=str(error),
+        ) from error
     return {
         "catalog_sha256": sha256_file(path=path),
         "contracts": contracts,
         "authorized_family_ids": authorized_family_ids,
-        "table_metric_ids": expected_table_metric_ids,
-        "table_family_ids": expected_table_family_ids,
+        "table_metric_ids": sorted(selected_metric_ids),
+        "table_family_ids": selected_family_ids,
         "fallback_representation_by_metric": route_sets[
             "fallback_representation_by_metric"
         ],
@@ -624,35 +780,37 @@ def load_table_task_contracts(*, repo_root: Path) -> Dict[str, object]:
     }
 
 
-def resolve_table_task_contract(
+def table_task_contract_family_id(
     *, repo_root: Path, task_contract_id: str,
-) -> Dict[str, object]:
-    """Build one runtime Reader task from a catalog single-table contract.
-
-    Args:
-        repo_root: Repository root containing SourceStrategy and MetricSpecs.
-        task_contract_id: Explicit catalog task identity selected by the caller.
-
-    Returns:
-        Exact runtime task contract for Reader, adapter, audit, and replay.
-
-    Why:
-        There is no runtime selector/planner here.  The caller names one
-        catalog contract, and this factory mechanically joins its catalog,
-        SourceStrategy, MetricSpec, scope, schema, and prompt identities.
-    """
-    contracts = load_table_task_contracts(repo_root=repo_root)["contracts"]
-    matches = [
-        contract
-        for contract in contracts
-        if contract["task_contract_id"] == task_contract_id
+) -> str:
+    """Resolve one task ID to its family without rebuilding sibling tasks."""
+    if type(task_contract_id) is not str or not task_contract_id:
+        raise TableTaskContractError("Table task contract ID is invalid")
+    _registry, _routes, raw_by_family, _path = (
+        _task_catalog_shared_authority(repo_root=repo_root)
+    )
+    owners = [
+        family_id
+        for family_id, values in raw_by_family.items()
+        for value in values
+        if value.get("task_contract_id") == task_contract_id
     ]
-    if len(matches) != 1:
-        raise TableTaskContractError("Table task contract is absent")
-    contract = matches[0]
+    if len(owners) != 1:
+        raise TableTaskContractError(
+            "Table task contract identity is absent or duplicated"
+        )
+    return owners[0]
+
+
+def _runtime_task_contract(
+    *, contract: Mapping[str, object],
+) -> Dict[str, object]:
+    """Build one runtime task from an already family-scoped contract."""
     metric_specs = contract["metric_specs"]
     if len(metric_specs) != 1:
-        raise TableTaskContractError("Table task MetricSpec set is not single")
+        raise TableTaskContractError(
+            "Table task MetricSpec set is not single"
+        )
     metric = metric_specs[0]["compiled"]
     scope_contract = metric["scope_contract"]
     runtime = {
@@ -673,7 +831,9 @@ def resolve_table_task_contract(
         "required_roles": list(contract["required_roles"]),
         "required_claims": dict(metric["required_claims"]),
         "scope_contract": scope_contract,
-        "scope_contract_hash": scope_contract_hash(contract=scope_contract),
+        "scope_contract_hash": scope_contract_hash(
+            contract=scope_contract
+        ),
         "identity_constraints": list(metric["identity_constraints"]),
         "forbidden_confusions": list(metric["forbidden_confusions"]),
         "system_prompt": contract["system_prompt"],
@@ -691,3 +851,44 @@ def resolve_table_task_contract(
     if set(runtime) != RUNTIME_TASK_CONTRACT_FIELDS:
         raise TableTaskContractError("Runtime task contract fields differ")
     return runtime
+
+
+def resolve_table_task_contract(
+    *, repo_root: Path, task_contract_id: str,
+    family_id: Optional[str] = None,
+) -> Dict[str, object]:
+    """Build one runtime Reader task from a catalog single-table contract.
+
+    Args:
+        repo_root: Repository root containing SourceStrategy and MetricSpecs.
+        task_contract_id: Explicit catalog task identity selected by the
+            caller.
+
+    Returns:
+        Exact runtime task contract for Reader, adapter, audit, and replay.
+
+    Why:
+        There is no runtime selector/planner here.  The caller names one
+        catalog contract, and this factory mechanically joins its catalog,
+        SourceStrategy, MetricSpec, scope, schema, and prompt identities.
+    """
+    selected_family = (
+        table_task_contract_family_id(
+            repo_root=repo_root,
+            task_contract_id=task_contract_id,
+        )
+        if family_id is None
+        else family_id
+    )
+    contracts = load_table_task_contracts(
+        repo_root=repo_root,
+        family_id=selected_family,
+    )["contracts"]
+    matches = [
+        contract
+        for contract in contracts
+        if contract["task_contract_id"] == task_contract_id
+    ]
+    if len(matches) != 1:
+        raise TableTaskContractError("Table task contract is absent")
+    return _runtime_task_contract(contract=matches[0])
