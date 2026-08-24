@@ -46,6 +46,9 @@ FAST_TESTS = (
     "tests.vnext.test_invocation_control",
     "tests.vnext.test_table_context_measurement.TableContextMeasurementTest."
     "test_mock_matrix_enforces_one_egress_and_no_downstream_credit",
+    "tests.vnext.test_table_stage_c_financial_materialization."
+    "TableStageCFinancialMaterializationTest."
+    "test_current_receipt_is_census_bound_and_resource_safe",
     "tests.vnext.test_zero_ai_release.ZeroAiReleaseTest."
     "test_r2_active_key_union_compatibility_and_retirement_are_bound",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."

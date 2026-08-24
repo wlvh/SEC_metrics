@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "record_type": "TABLE_STAGE_C_FINANCIAL_MATERIALIZATION_BENCHMARK",
+  "status": "NOT_RUN_RSS_GUARD_UNAVAILABLE",
+  "source": {
+    "repo_relative_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "size": 12927325
+  },
+  "stage_b_census_binding": {
+    "receipt_id": "sha256:ea3d796f256a43ac5a6079de753d7d5456fc6d7485bb794ef4c9e27276ca6f2c",
+    "exact_table_count": 679,
+    "exact_total_rectangular_expanded_cell_count": 124761
+  },
+  "runtime_identity": {
+    "python_executable_name": "python3.14",
+    "python_implementation": "CPython",
+    "python_version": "3.14.7",
+    "platform_system": "Darwin",
+    "platform_release": "25.4.0",
+    "platform_machine": "arm64"
+  },
+  "production_source_code_hashes": {
+    "scripts/vnext/table_grid.py": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
+    "scripts/vnext/resource_limits.py": "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04",
+    "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+    "tools/benchmark_jpm_full_materialization.py": "b62ec42472d592b8aa71710c7d4ff5623d1a317bf5d85d31d81d906c6279dc83"
+  },
+  "test_only_override": {
+    "field": "max_total_cells",
+    "value": 187142,
+    "scope": "BENCHMARK_CHILD_PROCESS_ONLY"
+  },
+  "production_resource_policy": {
+    "max_total_cells": 100000,
+    "resource_limits_sha256_before": "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04",
+    "resource_limits_sha256_after": "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04",
+    "unchanged": true
+  },
+  "safety_ceilings": {
+    "hard_address_space_and_peak_rss_ceiling_bytes": 536870912,
+    "hard_wall_time_ceiling_seconds": 120,
+    "guard_status": "RSS_HARD_LIMIT_SETUP_FAILED"
+  },
+  "no_network_proof": {
+    "sandbox_executable": "/usr/bin/sandbox-exec",
+    "profile_sha256": "sha256:0a5222386587bf836d30a070bd759c0194f999bf5503ba76c6c0f8cb84b19db2",
+    "policy": "DENY_NETWORK_STAR_PROCESS_TREE",
+    "benchmark_child_started": false,
+    "real_model_provider_egress_count": 0,
+    "paid_model_provider_call_count": 0,
+    "real_SEC_egress_count": 0
+  },
+  "materialization": {
+    "completed": false,
+    "final_expanded_cells": null,
+    "table_count": null,
+    "canonical_json_bytes": null,
+    "canonical_json_sha256": null,
+    "derived_asset_id": null,
+    "canonical_serialization_completed": false,
+    "table_grid_hashes": [],
+    "table_grid_hash_exact_set_hash": null
+  },
+  "root_business_artifacts_before": {
+    "outputs/active_publication.json": {
+      "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+      "size": 354
+    },
+    "outputs/metrics_matrix.csv": {
+      "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+      "size": 105128
+    },
+    "outputs/metric_evidence.csv": {
+      "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+      "size": 250439
+    },
+    "REPORT_十公司财务指标.md": {
+      "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+      "size": 29729
+    }
+  },
+  "root_business_artifacts_after": {
+    "outputs/active_publication.json": {
+      "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+      "size": 354
+    },
+    "outputs/metrics_matrix.csv": {
+      "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+      "size": 105128
+    },
+    "outputs/metric_evidence.csv": {
+      "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+      "size": 250439
+    },
+    "REPORT_十公司财务指标.md": {
+      "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+      "size": 29729
+    }
+  },
+  "root_business_artifacts_byte_equal": true,
+  "benchmark_receipt_id": "sha256:7129778529da4e8b402ad693433531f36c52cd99f4c1b71e20735bb33196b3c3"
+}
