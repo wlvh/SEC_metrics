@@ -279,6 +279,9 @@ schema-v3 owner packet只在current freeze、Stage-A overlay、Requirement、con
 <!-- capability-anchor: BEHAVIOR.vnext_table_stage_b_owner_packet -->
 <!-- capability-anchor: BEHAVIOR.vnext_table_transport_scope_and_freeze -->
 
+Stage C-A的`scripts/vnext/table_context_measurement.py`建立独立于qualification的窄执行边界。offline plan从latest same-ID D-07 exception、PR-19 exact freeze/cycle/Stage-A/owner packet、matrix-owned Marriott immutable attempt、`lodging_occupancy_table_v2`、serializer v2、current prompt/schema/provider envelope及其protected source closure重建，392447只在该exact measurement plan中越过普通200000门。真实capability必须由`AUTHORIZE_ONE_TOKEN_MEASUREMENT`与当前clean exact HEAD共同签发；authorization在每次使用前重建HEAD/tree、protected closure、family/task/source/prompt/schema/request/provider identity。`ai_adapter.py`仍拥有唯一socket opener，新measurement transport只能由opaque authorization factory构造，并在socket open立即前回调写一次永久marker；credential/source等marker前失败不消费，marker后成功、HTTP 402、其他terminal或UNKNOWN都永久消费且绝不重试。terminal只写`TABLE_CONTEXT_MEASUREMENT_EVIDENCE`与raw provider response：usage缺prompt/input token时为`FAILED_USAGE_UNAVAILABLE`，不会猜值；该类型不进入通用record schema，不产生Run、Candidate、EvidenceCheck、ReviewUnit、VerifiedObservation、qualification receipt或publication candidate。Stage C-A只以mock覆盖这条路径，real/paid/SEC egress保持0/0/0，真实执行仍待独立exact-head授权。
+<!-- capability-anchor: BEHAVIOR.vnext_table_stage_c_token_measurement -->
+
 ### 11.1 当前身份与不可越过的边界
 
 `scripts/vnext/` 是从 Issue #12 继承到 Issue #15 的同一套recorded/live生产实现，不是与正式流程分离的demo。full live Cutover在release planning前固定运行SEC Stage00/01/02/03/05，逐条保存原样命令、return code/duration/stdout-stderr digest，验证request ledger只合法尾部追加并持久化inventory/acquisition receipt；随后编译Spec、运行固定DeepSeek Chat Completions adapter、生成Evidence/ReviewUnit、优先采用HUMAN decision或由D-06写入明确SYSTEM decision、freeze/replay Run、形成complete Batch、投影strict-compatible legacy rows，并通过正式publication/rollback primitives供Stage10/11/12读取pinned `PublicationView`。

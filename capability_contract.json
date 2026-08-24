@@ -860,6 +860,16 @@
         "test_anchor": "tests/vnext/test_table_stage_b_owner_packet.py::TableStageBOwnerPacketTest.test_undecided_options_remain_null",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-24"
+      },
+      {
+        "anchor_id": "BEHAVIOR.vnext_table_stage_c_token_measurement",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Stage C-A实现了一个独立于qualification的one-shot lodging token-measurement边界：plan从latest same-ID D-07 exception、exact PR-19 freeze/cycle/Stage-A/owner packet、Marriott immutable request attempt、lodging occupancy task、serializer v2、current prompt/schema/provider envelope与protected runtime closure机械重建；只有收到AUTHORIZE_ONE_TOKEN_MEASUREMENT并绑定当前clean exact HEAD时才签发opaque authorization。marker只在provider socket/mock egress立即前写入；marker前失败不消费且不会自动继续，任一marker后无论成功、HTTP 402、其他HTTP或UNKNOWN均永久消费且retry=0。独立TABLE_CONTEXT_MEASUREMENT_EVIDENCE只记录raw provider usage与三种egress计数，缺authoritative prompt/input tokens稳定为FAILED_USAGE_UNAVAILABLE；它永远qualification_credit=false、publication_eligible=false，不创建Run/Candidate/EvidenceCheck/ReviewUnit/VerifiedObservation或publication candidate。Stage C-A只运行mock，真实measurement仍未授权、未执行。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_table_context_measurement.py::TableContextMeasurementTest.test_mock_matrix_enforces_one_egress_and_no_downstream_credit",
+        "test_status": "automated_partial",
+        "since": "2026-08-25"
       }
     ],
     "documents": [

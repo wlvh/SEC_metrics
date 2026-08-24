@@ -39,6 +39,8 @@ Stage-B lodging context调查运行`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts
 
 Stage-B financial grid调查运行`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_table_stage_b_financial_grid_census -v`及连续两次`PYTHONDONTWRITEBYTECODE=1 python3 tools/investigate_jpm_financial_grid.py`。测试锁定exact JPM 12927325 bytes、679 tables、60348 origins/source cells、124761 rectangular cells、62748 span duplicates、1665 synthetic blanks、0.01334552/0.50294563 ratios及table_000588的99975→100050 gate crossing；完整expanded object必须保持未物化，benchmark为`NOT_RUN_RESOURCE_SAFETY`，OPTION-A/B/C均未选择，production parser/resource/root与三类egress不变。
 
+Stage C-A token measurement只运行`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_table_context_measurement -v`和`PYTHONDONTWRITEBYTECODE=1 python3 tools/vnext_table_context_measurement.py plan`。mock矩阵必须覆盖exact authorization→一次调用、第二次零调用拒绝、HTTP 402一次后停止、UNKNOWN不重试、缺usage→`FAILED_USAGE_UNAVAILABLE`、marker前失败不消费但不自动继续，以及family/task/source/request/prompt/schema/head篡改在opener前失败。独立measurement evidence必须被通用record/qualification/replay/publication边界拒绝；普通392447>200000 qualification门保持。Stage C-A禁止运行`execute`，三种真实egress必须为0/0/0。
+
 新freeze/Stage-A/packet生成后运行`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_table_stage_b_owner_packet -v`。测试从current pointer回读并按packet自己的UTC重建同一ID，要求旧packet仍存在；`OWNER_APPROVED`只含200k/full-table/family scope/shared drift，`STILL_UNDECIDED`五项均为null；context/census exact IDs、lodging/financial blockers、空live-ready set、NOT_RUN actual tokens、R2 active/309 rows/root equality与0/0/0 egress全部闭合，不得出现qualification/Issue completion claim。
 
 ## 1. 测试原则

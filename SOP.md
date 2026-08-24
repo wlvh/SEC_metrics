@@ -32,6 +32,8 @@ effective D-36 禁用仓库金额预算执法，花费权威是 `EXTERNAL_API_AC
 | 8 | 对未决的lossless context minimization只生成离线可复算证据 | `tools/investigate_table_context_minimization.py` | exact source×task/provider-envelope分解与五候选逐字段round-trip闭合；连续运行receipt ID相同；不改production serializer/task contract，不把机器可逆写成模型准确率已验证，三类egress为0 |
 | 9 | 对JPM expanded-grid策略只生成完整流式census与option matrix | `tools/investigate_jpm_financial_grid.py` | exact HTML/table/source/expanded/blank/span/nesting/size与100000首次触发点闭合；连续运行receipt ID相同；A/B/C均未选择，不改resource limits、不筛表/分片/换source，三类egress为0 |
 | 10 | authority/matrix/readiness变化后重建freeze、Stage-A overlay与owner packet | `tools/freeze_table_qualification.py`；`tools/create_stage_a_validation_snapshot.py`；`tools/create_table_qualification_owner_decision_packet.py` | source commit先冻结；旧objects保留；pointer只指向新content-addressed objects；packet分开OWNER_APPROVED/STILL_UNDECIDED并绑定两份调查receipt、空live-ready set、NOT_RUN actual tokens、R2 root equality与0/0/0 egress |
+| 11 | Stage C-A只实现并离线验证one-shot lodging token measurement | `scripts/vnext/table_context_measurement.py`；`tools/vnext_table_context_measurement.py plan`；latest same-ID D-07 tip | plan exact绑定Marriott immutable attempt、lodging occupancy task、serializer v2、prompt/schema/provider request及protected closure；mock证明marker前不消费、marker后永久消费、最多一次且零重试、measurement evidence无qualification/publication credit；普通200000门不变；不得运行`execute`，real model/paid/SEC=0/0/0 |
+| 12 | Stage C-B仅在独立exact-head授权后执行一次 | `tools/vnext_table_context_measurement.py execute`；外部`AUTHORIZE_ONE_TOKEN_MEASUREMENT` | 授权必须逐字绑定当前clean HEAD；任一marker后永久停止。本轮未获授权，必须停在Stage C-A |
 
 ## 快速入口：只读取现有结果
 

@@ -41,11 +41,19 @@ ALLOWED_REPOSITORY_TRANSPORT_CALLERS = {
         "scripts/vnext/ai_adapter.py",
         "_InvocationControllerTransport.send",
     ),
+    (
+        "scripts/vnext/ai_adapter.py",
+        "_TableContextMeasurementTransport.send",
+    ),
 }
 ALLOWED_REMOTE_ADAPTER_CONSTRUCTORS = {
     (
         "scripts/vnext/ai_adapter.py",
         "build_invocation_controlled_transport_adapter",
+    ),
+    (
+        "scripts/vnext/ai_adapter.py",
+        "build_table_context_measurement_transport",
     ),
 }
 ALLOWED_EGRESS_CAPABILITY_REFERENCES = {
@@ -57,6 +65,10 @@ ALLOWED_EGRESS_CAPABILITY_REFERENCES = {
     (
         "scripts/vnext/ai_adapter.py",
         "_InvocationControllerTransport.send",
+    ),
+    (
+        "scripts/vnext/ai_adapter.py",
+        "_TableContextMeasurementTransport.send",
     ),
 }
 FAIL_CLOSED_CONSTANTS = {
