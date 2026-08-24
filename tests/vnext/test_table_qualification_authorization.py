@@ -50,7 +50,7 @@ MARRIOTT_RAW_ID = (
 def _synthetic_family_gate_status(
     *, lodging_reasons: Sequence[str], financial_reasons: Sequence[str],
 ) -> Dict[str, object]:
-    """Return a deterministic current-freeze status for pre-source gate tests."""
+    """Return deterministic current-freeze status for gate tests."""
     matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
     rows = []
     for family_id, reasons in (
@@ -626,8 +626,10 @@ def mocked_live_table_failure_transport(
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
 
-    def test_lodging_plan_forms_when_financial_resource_gate_blocks(self) -> None:
-        """Allow lodging planning without opening source/provider for financial."""
+    def test_lodging_plan_forms_when_financial_resource_gate_blocks(
+        self,
+    ) -> None:
+        """Allow lodging plan while financial is resource-blocked."""
         status = _synthetic_family_gate_status(
             lodging_reasons=[],
             financial_reasons=["EXPANDED_GRID_RESOURCE_LIMIT"],
@@ -663,8 +665,10 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
         source_opener.assert_not_called()
         provider_opener.assert_not_called()
 
-    def test_financial_plan_forms_when_lodging_context_gate_blocks(self) -> None:
-        """Allow financial planning without opening source/provider for lodging."""
+    def test_financial_plan_forms_when_lodging_context_gate_blocks(
+        self,
+    ) -> None:
+        """Allow financial plan while lodging is context-blocked."""
         status = _synthetic_family_gate_status(
             lodging_reasons=["ESTIMATED_CONTEXT_LIMIT"],
             financial_reasons=[],

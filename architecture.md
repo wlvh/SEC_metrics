@@ -269,6 +269,12 @@ scope contract v2由MetricSpec拥有：模型只能返回`dimension/raw_value/ev
 
 `tools/investigate_table_context_minimization.py`是与production Reader隔离的Stage-B研究工具。它从现有Marriott、Hilton、Hyatt四个distinct source hash及两个single-role task机械重建完整DeepSeek envelope，分别归因system/schema/task/manifest/table bytes，再对raw/normalized、重复字符串与坐标编码做exact census。CANDIDATE-1–4只存在于工具内的decoder；CANDIDATE-5只在四个source的既有response都证明occupancy/RevPAR共表后构造research-only合并task估算。receipt连续两次重建同ID，五个maximum依次为286407/337587/337056/386572/392671，均未过200000；这证明仍有无损压缩空间，但不证明模型准确率或可读性，尤其dictionary/indirection必须另行live qualification。工具不改变`table_payload.py`、task catalog、root/active或三类egress。
 <!-- capability-anchor: BEHAVIOR.vnext_table_stage_b_context_investigation -->
+
+`tools/investigate_jpm_financial_grid.py`复用production `_AllTablesParser`取得60348个raw origins，但以每行non-overlap span intervals继续完整计数，不建立124761个expanded cell dict的全量对象。它得到679表、62748个span duplicate coordinates、1665个synthetic blanks；blank/span ratios分别为0.01334552/0.50294563，table_000588使累计99975→100050首次越过production 100000门。逐行cell只为canonical-size核算短暂构造；完整DerivedAsset估计22174365 bytes，64-bit CPython planning interval为56947869–152764317 bytes。OPTION-A/B/C都保持`implementation_selected=false`，benchmark因未授权raise cap/full allocation而记录`NOT_RUN_RESOURCE_SAFETY`；工具不改parser/resource limits、不实施shard/lazy/source replacement，也不作最终推荐。
+<!-- capability-anchor: BEHAVIOR.vnext_table_stage_b_financial_census -->
+
+schema-v3 owner packet只在current freeze、Stage-A overlay、Requirement、context receipt与census receipt全部逐byte/content-ID重验后生成。`OWNER_APPROVED`固定记录已实施的200000 inclusive threshold、全表/原序/no-prefilter、family-scoped readiness与shared-global/local-owner drift policy；`STILL_UNDECIDED`的serializer、actual-token live measurement、financial cap-vs-shard、development source和selector值全部为null。packet同时绑定`live_ready_family_ids=[]`、`actual_prompt_tokens=NOT_RUN`、R2 active/309 rows/key-set/root hashes和0/0/0 egress；它不把Stage-B写成任何family已qualification或Issue #15完成。
+<!-- capability-anchor: BEHAVIOR.vnext_table_stage_b_owner_packet -->
 <!-- capability-anchor: BEHAVIOR.vnext_table_transport_scope_and_freeze -->
 
 ### 11.1 当前身份与不可越过的边界
@@ -277,6 +283,7 @@ scope contract v2由MetricSpec拥有：模型只能返回`dimension/raw_value/ev
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
 R1通过module-owned `zero_ai_release`完成verified legacy A→B→A→B。R2通过`zero_ai_r2`把companyfacts、accession XBRL及完整8-K submissions+acquisition receipt union转换为deterministic claims/observations/results/traces，再独立渲染public rows并CAS提交R2 successor。最终active含22指标、220坐标、141×20个strict-equal legacy字段、79个新增`N_A_STRUCTURAL` keys和309行matrix；real model egress与paid call均为0。8-K raw bytes若没有content-addressed request-attempt locator，只允许使用同一request row、body/header hash及当前commit Git blob三重绑定的`IMMUTABLE_GIT_BLOB`，不发起网络请求。
+R1/R2 ReleasePlan是已发布content-addressed authority，继续绑定发布时的Requirement closure `sha256:161da433701e133c6e388356225fb01fa245847450b39a2a8b5335189a69624f`；post-publication same-ID D-07 tip使current closure成为`sha256:fcd308ed51fe3b7cd6d4dcc82ba373d31832f0f1f522c3b8b765e766693a5822`，但不得重签历史plan/active bundle。`source_strategy`分别返回historical active-plan closure与current Requirement closure，并以plan ID→frozen closure exact mapping拒绝完整重签后的任意closure伪造；未来新增plan需代码显式登记当时current closure。
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
 

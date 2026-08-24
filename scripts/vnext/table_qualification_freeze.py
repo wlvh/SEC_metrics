@@ -935,7 +935,9 @@ def _d07_authority(
                 != (ESTIMATED_CONTEXT_LIMIT in reasons)
             )
         ):
-            raise TableQualificationFreezeError("D-07 measurement row is invalid")
+            raise TableQualificationFreezeError(
+                "D-07 measurement row is invalid"
+            )
     derived_blocking_families = sorted({
         str(item["family_id"])
         for item in measurements["qualification_task_measurements"]
@@ -984,10 +986,14 @@ def _readiness_by_family(
     """
     family_ids = set(matrix["entries"])
     if not set(drift_by_family).issubset(family_ids):
-        raise TableQualificationFreezeError("Readiness drift family set differs")
+        raise TableQualificationFreezeError(
+            "Readiness drift family set differs"
+        )
     rows = measurements.get("qualification_task_measurements")
     if type(rows) is not list:
-        raise TableQualificationFreezeError("Readiness measurements are invalid")
+        raise TableQualificationFreezeError(
+            "Readiness measurements are invalid"
+        )
     readiness = {}
     context_codes = {
         ESTIMATED_CONTEXT_LIMIT,
@@ -2173,7 +2179,9 @@ def validate_table_qualification_freeze(
         if value["live_ready"]
     )
     if receipt["live_ready_family_ids"] != expected_frozen_live:
-        raise TableQualificationFreezeError("Frozen live-ready family set differs")
+        raise TableQualificationFreezeError(
+            "Frozen live-ready family set differs"
+        )
     current = _protected_closure(
         repo_root=repo_root,
         matrix=matrix,

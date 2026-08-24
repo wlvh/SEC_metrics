@@ -98,7 +98,9 @@ class TableQualificationFreezeTest(unittest.TestCase):
             ),
         )
 
-    def test_family_context_and_resource_blockers_are_independent(self) -> None:
+    def test_family_context_and_resource_blockers_are_independent(
+        self,
+    ) -> None:
         """Keep one ready family usable when the other family is blocked."""
         matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
         lodging_ready = self._synthetic_measurements(
@@ -134,7 +136,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
 
     def test_shared_dependency_drift_blocks_both_families(self) -> None:
-        """Propagate serializer/Evidence/WB-3 drift to every dependent family."""
+        """Propagate shared engine drift to every dependent family."""
         matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
         measurements = self._synthetic_measurements(
             lodging_reasons=[], financial_reasons=[],
@@ -396,7 +398,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
 
     def test_validator_rejects_self_declared_family_readiness(self) -> None:
-        """Rebuild family gates instead of trusting a receipt's live-ready flag."""
+        """Rebuild family gates instead of trusting live-ready text."""
         original = freeze_module._json_object
 
         def tampered_json_object(**kwargs: object) -> dict:

@@ -17,6 +17,7 @@ from vnext.canonical import content_hash, sha256_file
 from vnext.publication import PublicationView, verify_publication_bundle
 from vnext.source_strategy import ALLOWED_SOURCE_MODES
 from vnext.source_strategy import GENERIC_FORBIDDEN_LITERAL_DENYLIST
+from vnext.source_strategy import RELEASED_PLAN_REQUIREMENT_CLOSURES
 from vnext.source_strategy import SourceStrategyError
 from vnext.source_strategy import _qualification_subset
 from vnext.source_strategy import _reader_family_versions
@@ -25,6 +26,7 @@ from vnext.source_strategy import _retired_producer_ids
 from vnext.source_strategy import load_issue15_release_plan
 from vnext.source_strategy import load_issue15_release_plans
 from vnext.source_strategy import load_source_strategy_registry
+from vnext.requirements import load_requirement_snapshot
 
 
 ISSUE_15_DIR = REPO_ROOT / "requirements" / "issue_15_v1"
@@ -190,9 +192,22 @@ class SourceStrategyRegistryTest(unittest.TestCase):
         )
         for plan in (r1, r2):
             self.assertEqual(
-                loaded["requirement_closure_hash"],
+                RELEASED_PLAN_REQUIREMENT_CLOSURES[plan["release_plan_id"]],
                 plan["requirement_closure_hash"],
             )
+        self.assertEqual(
+            r2["requirement_closure_hash"],
+            loaded["requirement_closure_hash"],
+        )
+        current = load_requirement_snapshot(snapshot_dir=ISSUE_15_DIR)
+        self.assertEqual(
+            current["requirement_closure_hash"],
+            loaded["current_requirement_closure_hash"],
+        )
+        self.assertNotEqual(
+            loaded["requirement_closure_hash"],
+            loaded["current_requirement_closure_hash"],
+        )
 
     def test_release_plan_parent_forgery_fails_after_rehash(self) -> None:
         """Reject a content-addressed R2 that detaches from immutable R1."""
