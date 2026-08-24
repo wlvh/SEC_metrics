@@ -356,10 +356,28 @@ def _source_binding(
         )
         if manifest["fixture_id"] != fixture_id:
             raise TableQualificationFreezeError("{} fixture differs".format(label))
+        source_relative = Path(str(manifest["source_repo_relative_path"]))
+        source_path = _regular_file(
+            repo_root=repo_root,
+            relative=source_relative,
+            label=label + " fixture source",
+        )
+        declared_sha256 = manifest.get("source_sha256")
+        if (
+            type(declared_sha256) is not str
+            or sha256_file(path=source_path) != declared_sha256
+        ):
+            raise TableQualificationFreezeError(
+                "{} fixture source bytes differ".format(label)
+            )
         source["fixture_manifest_sha256"] = sha256_file(
             path=repo_root / manifest_relative,
         )
-        source["fixture_source_sha256"] = manifest["source_sha256"]
+        source["fixture_source_repo_relative_path"] = (
+            source_relative.as_posix()
+        )
+        source["fixture_source_sha256"] = declared_sha256
+        source["fixture_source_size"] = source_path.stat().st_size
     else:
         raise TableQualificationFreezeError("{} source kind is unsupported".format(label))
     return source
@@ -558,18 +576,74 @@ def _round_trip_sources(
     Returns:
         Eleven fixture IDs with paths and declared raw SHA-256 values.
     """
+    closure = _round_trip_input_closure(repo_root=repo_root)
+    return [
+        (
+            str(row["source_id"]),
+            repo_root / str(row["source_repo_relative_path"]),
+            str(row["declared_source_sha256"]),
+        )
+        for row in closure["sources"]
+    ]
+
+
+def _round_trip_input_row(
+    *, repo_root: Path, order: int, source_id: object,
+    authority_kind: str, authority_relative: Path,
+    source_relative_value: object, declared_sha256: object,
+) -> Dict[str, object]:
+    """Bind one WB-4 authority file and its current source bytes."""
+    if type(source_id) is not str or not source_id:
+        raise TableQualificationFreezeError(
+            "WB-4 round-trip source identity is invalid"
+        )
+    if type(declared_sha256) is not str or len(declared_sha256) != 64:
+        raise TableQualificationFreezeError(
+            "WB-4 round-trip source SHA is invalid"
+        )
+    source_relative = Path(str(source_relative_value))
+    source_path = _regular_file(
+        repo_root=repo_root,
+        relative=source_relative,
+        label="WB-4 round-trip source",
+    )
+    actual_sha256 = sha256_file(path=source_path)
+    if actual_sha256 != declared_sha256:
+        raise TableQualificationFreezeError(
+            "WB-4 round-trip source bytes differ"
+        )
+    return {
+        "order": order,
+        "source_id": source_id,
+        "authority_kind": authority_kind,
+        "authority_repo_relative_path": authority_relative.as_posix(),
+        "authority_binding": _file_binding(
+            repo_root=repo_root,
+            relative=authority_relative,
+        ),
+        "source_repo_relative_path": source_relative.as_posix(),
+        "declared_source_sha256": declared_sha256,
+        "actual_source_sha256": actual_sha256,
+        "source_size": source_path.stat().st_size,
+    }
+
+
+def _round_trip_input_closure(*, repo_root: Path) -> Dict[str, object]:
+    """Bind the ordered eleven-source WB-4 current-input exact set."""
     marriott = _json_object(
         repo_root=repo_root,
         relative=MARRIOTT_PROVENANCE_PATH,
         label="Marriott provenance",
     )
-    sources = [
-        (
-            str(marriott["fixture_id"]),
-            repo_root / str(marriott["source_repo_relative_path"]),
-            str(marriott["source_sha256"]),
-        )
-    ]
+    rows = [_round_trip_input_row(
+        repo_root=repo_root,
+        order=0,
+        source_id=marriott.get("fixture_id"),
+        authority_kind="MARRIOTT_PROVENANCE",
+        authority_relative=MARRIOTT_PROVENANCE_PATH,
+        source_relative_value=marriott.get("source_repo_relative_path"),
+        declared_sha256=marriott.get("source_sha256"),
+    )]
     fixture_root = repo_root / LAYOUT_FIXTURE_ROOT
     if fixture_root.is_symlink() or not fixture_root.is_dir():
         raise TableQualificationFreezeError("Layout fixture root is unsafe")
@@ -588,16 +662,32 @@ def _round_trip_sources(
             or fixture_id.startswith("hyatt-")
         ):
             continue
-        sources.append(
-            (
-                fixture_id,
-                repo_root / str(manifest["source_repo_relative_path"]),
-                str(manifest["source_sha256"]),
-            )
-        )
-    if len(sources) != 11:
+        rows.append(_round_trip_input_row(
+            repo_root=repo_root,
+            order=len(rows),
+            source_id=fixture_id,
+            authority_kind="LAYOUT_FIXTURE_MANIFEST",
+            authority_relative=manifest_relative,
+            source_relative_value=manifest.get(
+                "source_repo_relative_path"
+            ),
+            declared_sha256=manifest.get("source_sha256"),
+        ))
+    if (
+        len(rows) != 11
+        or len({row["source_id"] for row in rows}) != 11
+        or [row["order"] for row in rows] != list(range(11))
+    ):
         raise TableQualificationFreezeError("WB-4 source set is not eleven")
-    return sources
+    body = {
+        "schema_version": 1,
+        "source_count": len(rows),
+        "sources": rows,
+    }
+    return {
+        **body,
+        "exact_source_set_hash": content_hash(value=body),
+    }
 
 
 def _context_blocking_reason_codes(
@@ -1997,7 +2087,7 @@ def _protected_closure(
         task_contracts: Exact catalog contracts derived from SourceStrategy.
 
     Returns:
-        Shared transitive engine files plus per-family semantic fragments.
+        Shared engine/WB-4 input closures plus per-family semantic fragments.
     """
     families = {
         family_id: _family_semantic_closure(
@@ -2010,6 +2100,9 @@ def _protected_closure(
     }
     return {
         "shared_engine_files": _shared_engine_closure(repo_root=repo_root),
+        "shared_measurement_inputs": _round_trip_input_closure(
+            repo_root=repo_root,
+        ),
         "families": families,
     }
 
@@ -2024,10 +2117,14 @@ def _protected_closure_drift(
         current: Freshly derived protected closure from current source bytes.
 
     Returns:
-        Family ID to sorted drift labels; shared engine drift is propagated to
-        every authorized family, while task/matrix/MetricSpec drift is local.
+        Family ID to sorted drift labels. Shared engine/WB-4 input drift
+        propagates globally; task/matrix/MetricSpec drift remains local.
     """
-    required = {"families", "shared_engine_files"}
+    required = {
+        "families",
+        "shared_engine_files",
+        "shared_measurement_inputs",
+    }
     if set(frozen) != required or set(current) != required:
         raise TableQualificationFreezeError("Protected closure fields differ")
     frozen_families = frozen["families"]
@@ -2057,6 +2154,13 @@ def _protected_closure_drift(
         )
         if frozen_value != current_value:
             shared_drift.append("shared_engine:" + relative)
+    if (
+        frozen["shared_measurement_inputs"]
+        != current["shared_measurement_inputs"]
+    ):
+        shared_drift.append(
+            "shared_measurement:round_trip_source_set"
+        )
     drift_by_family = {}
     for family_id in sorted(frozen_families):
         frozen_family = frozen_families[family_id]
@@ -2597,6 +2701,7 @@ def _validate_requested_family(
         family_id not in frozen_readiness
         or type(protected) is not dict
         or type(protected.get("families")) is not dict
+        or type(protected.get("shared_measurement_inputs")) is not dict
         or family_id not in protected["families"]
     ):
         raise TableQualificationFreezeError(
@@ -2618,13 +2723,29 @@ def _validate_requested_family(
     )
     frozen_subset = {
         "shared_engine_files": protected["shared_engine_files"],
+        "shared_measurement_inputs": protected[
+            "shared_measurement_inputs"
+        ],
         "families": {
             family_id: protected["families"][family_id],
         },
     }
     current_shared = _shared_engine_closure(repo_root=repo_root)
+    input_drift = []
+    try:
+        current_measurement_inputs = _round_trip_input_closure(
+            repo_root=repo_root,
+        )
+    except TableQualificationFreezeError:
+        current_measurement_inputs = protected[
+            "shared_measurement_inputs"
+        ]
+        input_drift.append(
+            "shared_measurement:round_trip_source_set"
+        )
     shared_only_current = {
         "shared_engine_files": current_shared,
+        "shared_measurement_inputs": current_measurement_inputs,
         "families": {
             family_id: protected["families"][family_id],
         },
@@ -2640,7 +2761,9 @@ def _validate_requested_family(
         )
     except TableQualificationFreezeError:
         root_drift = ["r2_root:current_state_unreadable"]
-    drift = sorted(set(drift) | set(root_drift))
+    drift = sorted(
+        set(drift) | set(root_drift) | set(input_drift)
+    )
     estimator_hash = _current_estimator_authority_hash(
         repo_root=repo_root,
         requirement=requirement,
@@ -2712,6 +2835,7 @@ def _validate_requested_family(
         ) from error
     current_subset = {
         "shared_engine_files": current_shared,
+        "shared_measurement_inputs": current_measurement_inputs,
         "families": {family_id: current_family_closure},
     }
     drift = _protected_closure_drift(

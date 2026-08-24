@@ -1047,6 +1047,164 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             finally:
                 metric_path.write_bytes(metric_original)
 
+    def _assert_shared_round_trip_input_blocks_all(
+        self, *, repo_root: Path,
+    ) -> None:
+        """Require every family public gate to reject current WB-4 drift."""
+        families = (
+            (
+                "financial_statement",
+                "financial_assets_under_management_table_v1",
+            ),
+            ("lodging_kpi_table", "lodging_occupancy_table_v2"),
+        )
+        with mock.patch.object(
+            qualification,
+            "_matrix_source_binding",
+        ) as source_opener, mock.patch.object(
+            ai_adapter,
+            "_open_provider_request",
+        ) as provider_opener:
+            for family_id, task_contract_id in families:
+                status = validate_table_qualification_freeze(
+                    repo_root=repo_root,
+                    family_id=family_id,
+                )
+                self.assertEqual([], status["live_ready_family_ids"])
+                self.assertIn(
+                    "shared_measurement:round_trip_source_set",
+                    status["drift_by_family"][family_id],
+                )
+                self.assertIn(
+                    "SHARED_PROTECTED_CLOSURE_DRIFT",
+                    status["readiness_by_family"][family_id][
+                        "blocking_reason_codes"
+                    ],
+                )
+                with self.assertRaisesRegex(
+                    qualification.QualificationError,
+                    "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                ):
+                    qualification.table_qualification_task_plan(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                        task_contract_id=task_contract_id,
+                        qualification_ordinal=1,
+                    )
+                with self.assertRaisesRegex(
+                    qualification.QualificationError,
+                    "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                ):
+                    qualification.issue_table_qualification_authorization(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                        task_contract_id=task_contract_id,
+                        qualification_ordinal=1,
+                    )
+        source_opener.assert_not_called()
+        provider_opener.assert_not_called()
+
+    def test_public_paths_bind_shared_round_trip_current_inputs(
+        self,
+    ) -> None:
+        """Block mutate/remove/manifest drift and recover after restoration."""
+        with synthetic_no_d07_repository() as repo_root:
+            hilton_v1 = (
+                repo_root
+                / "fixtures/vnext/layouts/hilton-2024-sec-layout-v1/source.htm"
+            )
+            original_v1 = hilton_v1.read_bytes()
+            hilton_v1.write_bytes(original_v1 + b"\n")
+            try:
+                with self.subTest(round_trip_source_mutated="hilton-v1"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                hilton_v1.write_bytes(original_v1)
+
+            missing_v1 = hilton_v1.with_name(
+                hilton_v1.name + ".synthetic-missing"
+            )
+            hilton_v1.replace(missing_v1)
+            try:
+                with self.subTest(round_trip_source_missing="hilton-v1"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                missing_v1.replace(hilton_v1)
+
+            hilton_v7 = (
+                repo_root
+                / "fixtures/vnext/layouts/hilton-2024-sec-layout-v7/"
+                "q42024earningsrelease.htm"
+            )
+            original_v7 = hilton_v7.read_bytes()
+            hilton_v7.write_bytes(original_v7 + b"\n")
+            try:
+                with self.subTest(required_second_layout_mutated="hilton-v7"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                hilton_v7.write_bytes(original_v7)
+
+            manifest_path = (
+                repo_root
+                / "fixtures/vnext/layouts/hilton-2024-sec-layout-v1/"
+                "fixture_manifest.json"
+            )
+            manifest_original = manifest_path.read_bytes()
+            manifest = json.loads(manifest_original.decode("utf-8"))
+            manifest["selection_reason"] += " Synthetic authority drift."
+            atomic_write_json(path=manifest_path, value=manifest)
+            try:
+                with self.subTest(round_trip_manifest_drift="hilton-v1"):
+                    self._assert_shared_round_trip_input_blocks_all(
+                        repo_root=repo_root,
+                    )
+            finally:
+                atomic_write_bytes(
+                    path=manifest_path,
+                    content=manifest_original,
+                )
+
+            for family_id, task_contract_id in (
+                (
+                    "financial_statement",
+                    "financial_assets_under_management_table_v1",
+                ),
+                ("lodging_kpi_table", "lodging_occupancy_table_v2"),
+            ):
+                with self.subTest(restored_family=family_id):
+                    status = validate_table_qualification_freeze(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                    )
+                    self.assertEqual(
+                        [family_id], status["live_ready_family_ids"],
+                    )
+                    plan = qualification.table_qualification_task_plan(
+                        repo_root=repo_root,
+                        family_id=family_id,
+                        task_contract_id=task_contract_id,
+                        qualification_ordinal=1,
+                    )
+                    authorization = (
+                        qualification.issue_table_qualification_authorization(
+                            repo_root=repo_root,
+                            family_id=family_id,
+                            task_contract_id=task_contract_id,
+                            qualification_ordinal=1,
+                        )
+                    )
+                    self.assertEqual(family_id, plan["family_id"])
+                    self.assertEqual(
+                        family_id,
+                        authorization.as_mapping()["family_id"],
+                    )
+
     def test_public_paths_block_shared_serializer_evidence_and_wb3_drift(
         self,
     ) -> None:

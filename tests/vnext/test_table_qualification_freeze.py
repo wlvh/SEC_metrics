@@ -15,6 +15,7 @@ from vnext.table_qualification_freeze import _d07_authority
 from vnext.table_qualification_freeze import _run_wb3_test_receipts
 from vnext.table_qualification_freeze import _context_blocking_reason_codes
 from vnext.table_qualification_freeze import _readiness_by_family
+from vnext.table_qualification_freeze import _round_trip_input_closure
 from vnext.table_qualification_freeze import build_table_qualification_freeze_receipt
 from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_qualification_freeze import validate_table_qualification_freeze
@@ -188,6 +189,34 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 }
                 self.assertTrue(expected_paths)
                 self.assertTrue(expected_paths.issubset(actual_paths))
+
+    def test_shared_round_trip_input_closure_is_exact_and_global(self) -> None:
+        """Bind all eleven current sources and propagate one input drift."""
+        closure = self._closure()
+        inputs = closure["shared_measurement_inputs"]
+        self.assertEqual(11, inputs["source_count"])
+        self.assertEqual(
+            list(range(11)),
+            [row["order"] for row in inputs["sources"]],
+        )
+        self.assertEqual(
+            inputs,
+            _round_trip_input_closure(repo_root=REPO_ROOT),
+        )
+        current = copy.deepcopy(closure)
+        current["shared_measurement_inputs"]["sources"][1][
+            "actual_source_sha256"
+        ] = "0" * 64
+        drift = _protected_closure_drift(
+            frozen=closure,
+            current=current,
+        )
+        self.assertEqual(set(closure["families"]), set(drift))
+        for labels in drift.values():
+            self.assertIn(
+                "shared_measurement:round_trip_source_set",
+                labels,
+            )
 
     def test_shared_engine_drift_invalidates_every_table_family(self) -> None:
         """Propagate a Workflow/replay semantic mutation to every family."""

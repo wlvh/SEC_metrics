@@ -27,6 +27,8 @@ family-scoped gate的验收必须走真实public composition而不是只调用`_
 
 failure containment还必须覆盖无法重建的local authority，而不只是合法diff：`test_public_paths_contain_nonrebuildable_family_local_failures`使用distinct、ledger-bound synthetic development sources，双向制造source SHA mismatch，并覆盖lodging source missing、lodging task缺失和financial MetricSpec无法解析。测试不得mock freeze validator；故障owner必须持久返回`FAMILY_LOCAL_AUTHORITY_DRIFT`及`LOCAL_SOURCE_BYTES_MISMATCH`/`LOCAL_SOURCE_MISSING`/`LOCAL_TASK_AUTHORITY_INVALID`/`LOCAL_METRIC_SPEC_INVALID`，未受影响family必须继续形成plan与opaque authorization，owner family仍在source/provider opener前停止。
 
+requested-family fast path还必须重验shared WB-4 current-input exact set：`test_public_paths_bind_shared_round_trip_current_inputs`在synthetic-ready authority上分别修改/移除Hilton-v1 source、修改lodging required Hilton-v7 second-layout source及修改Hilton-v1 manifest，要求两个family都以`shared_measurement:round_trip_source_set`在source/provider opener前阻断；恢复exact bytes后两个family必须重新形成plan和authorization。该gate只重哈希Marriott provenance、10份Hilton/Hyatt manifest及有序11份source bytes，不得重新加载sibling development/task/MetricSpec。`test_shared_round_trip_input_closure_is_exact_and_global`另验证11行顺序、actual/declared SHA、authority binding和shared传播。
+
 `tests.vnext.test_table_qualification_authorization` 还逐项篡改 active publication ID、pointer bytes及matrix/evidence/report root bytes，要求所有依赖family的authorization在opener前失败且三种真实egress仍为0；对明确位于qualification closure外的`public_projection.py` drift，则要求无family scope的Stage-A checker继续失败、两个family authorization不被该无关source越权阻断。
 
 `tests.vnext.test_table_qualification_freeze` 对WB-3 regression receipt提供两类确定性证据：不同unittest elapsed/stdout/stderr模拟输出得到同一nested receipt ID；同一clean source tree、freeze commit和UTC timestamp连续构造两次完整freeze也得到相同table qualification freeze receipt ID。
