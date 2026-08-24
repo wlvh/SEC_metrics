@@ -25,7 +25,7 @@ PR-3阶段A新增的必跑离线定向证据为：`tests.vnext.test_compact_tabl
 
 family-scoped gate的验收必须走真实public composition而不是只调用`_readiness_by_family`：`test_public_paths_preserve_family_scoped_local_drift`在两个family均synthetic-ready时分别制造lodging-local与financial-local合法matrix drift，不mock `validate_table_qualification_freeze`，要求未受影响family同时形成plan和opaque authorization，owner family则在source/provider opener前以`TABLE_QUALIFICATION_FAMILY_NOT_READY`停止。`test_public_paths_block_shared_serializer_evidence_and_wb3_drift`分别改变serializer、Evidence和WB-3 regression source，要求两个family的plan/authorization都在opener前失败。Stage-A全树比较继续由无`family_id`的snapshot checker负责；authorization必须以requested `family_id`验证shared closure与该family local closure，不能让另一family local dirty path先触发全局source-tree异常。
 
-`tests.vnext.test_table_qualification_authorization` 还逐项篡改 active publication ID、pointer bytes、matrix/evidence/report root bytes，以及一个closure外production source file；每项要求所有依赖family的authorization在opener前失败且三种真实egress仍为0。
+`tests.vnext.test_table_qualification_authorization` 还逐项篡改 active publication ID、pointer bytes及matrix/evidence/report root bytes，要求所有依赖family的authorization在opener前失败且三种真实egress仍为0；对明确位于qualification closure外的`public_projection.py` drift，则要求无family scope的Stage-A checker继续失败、两个family authorization不被该无关source越权阻断。
 
 `tests.vnext.test_table_qualification_freeze` 对WB-3 regression receipt提供两类确定性证据：不同unittest elapsed/stdout/stderr模拟输出得到同一nested receipt ID；同一clean source tree、freeze commit和UTC timestamp连续构造两次完整freeze也得到相同table qualification freeze receipt ID。
 
