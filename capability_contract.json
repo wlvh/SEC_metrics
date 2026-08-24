@@ -880,6 +880,16 @@
         "test_anchor": "tests/vnext/test_table_stage_c_financial_materialization.py::TableStageCFinancialMaterializationTest.test_current_receipt_is_census_bound_and_resource_safe",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
+      },
+      {
+        "anchor_id": "BEHAVIOR.vnext_table_stage_c_a_packet",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Stage C-A content-addressed decision packet将OWNER_APPROVED、IMPLEMENTED_NOT_EXECUTED、MEASURED_OFFLINE、STILL_UNAUTHORIZED与BLOCKERS严格分区：token measurement只保存exact plan ID且authorization_id=NOT_ISSUED，JPM guard terminal保持NOT_RUN/null，active publication与309-row root逐byte不变，Stage-C real model/paid/SEC计数为0/0/0。packet同时是新的current-source validation overlay：只有历史R2 snapshot除source drift外完全通过、当前clean source tree与packet候选tree exact相同、latest Requirement/D-07、measurement plan、benchmark chain和root state全部重建一致时，snapshot checker才返回0；PR #19 freeze/Stage-A snapshot/owner packet原字节保留。该packet明确保留真实measurement、qualification、R3/R4、resource policy、sharding/serializer/selector和publication未授权，并报告JPM_RSS_GUARD_UNAVAILABLE blocker。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_table_stage_c_a_packet.py::TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries",
+        "test_status": "automated_recorded_real_bytes",
+        "since": "2026-08-25"
       }
     ],
     "documents": [

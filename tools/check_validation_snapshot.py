@@ -21,6 +21,10 @@ from vnext.stage_a_snapshot import (  # noqa: E402
     StageASnapshotError,
     validate_stage_a_snapshot,
 )
+from vnext.stage_c_packet import (  # noqa: E402
+    StageCAPacketError,
+    validate_stage_c_a_packet,
+)
 
 
 def main() -> int:
@@ -46,8 +50,28 @@ def main() -> int:
         # the new clean tree and every historical R2 byte still match.
         if set(result.errors) == SOURCE_ONLY_ERRORS:
             try:
+                stage_c = validate_stage_c_a_packet(repo_root=WORKDIR)
+            except StageCAPacketError as stage_c_error:
+                stage_c_failure = stage_c_error
+            else:
+                if stage_c["source_commit_equivalent_tree"]:
+                    print(
+                        "WARNING: Stage-C packet base commit differs but its "
+                        "complete source-input tree is equivalent"
+                    )
+                print(
+                    "PASS: historical R2 provenance and current Stage C-A "
+                    "decision-evidence overlay verified"
+                )
+                return 0
+            try:
                 stage_a = validate_stage_a_snapshot(repo_root=WORKDIR)
             except StageASnapshotError as error:
+                print(
+                    "FAIL: Stage-C validation overlay: {}".format(
+                        stage_c_failure
+                    )
+                )
                 print("FAIL: Stage-A validation overlay: {}".format(error))
             else:
                 if stage_a["source_commit_equivalent_tree"]:
