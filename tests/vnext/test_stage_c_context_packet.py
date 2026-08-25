@@ -5,6 +5,8 @@ from __future__ import annotations
 import unittest
 
 from tests.vnext.common import REPO_ROOT
+from vnext.canonical import content_hash, strict_json_file
+from vnext.stage_c_context_packet import PACKET_POINTER
 from vnext.stage_c_context_packet import (
     build_stage_c_context_attestation_packet,
 )
@@ -104,6 +106,83 @@ class StageCContextPacketTest(unittest.TestCase):
         self.assertEqual(
             self.packet,
             build_stage_c_context_attestation_packet(repo_root=REPO_ROOT),
+        )
+
+
+class StageCContextPacketFastTest(unittest.TestCase):
+    """Read current and historical addressed packets under the 30s fast cap."""
+
+    @staticmethod
+    def _addressed(*, pointer_path: str, id_field: str) -> dict:
+        """Load a pointer target and recompute its canonical identity."""
+        pointer = strict_json_file(path=REPO_ROOT / pointer_path)
+        packet = strict_json_file(path=REPO_ROOT / pointer["packet_path"])
+        body = {
+            key: value for key, value in packet.items() if key != id_field
+        }
+        if packet[id_field] != content_hash(value=body):
+            raise AssertionError("Packet identity differs")
+        if pointer[id_field] != packet[id_field]:
+            raise AssertionError("Packet pointer differs")
+        return packet
+
+    def test_current_packet_persists_no_credit_and_zero_current_egress(
+        self,
+    ) -> None:
+        """Keep current boundaries inspectable without full authority rebuild."""
+        packet = self._addressed(
+            pointer_path=PACKET_POINTER.as_posix(),
+            id_field="stage_c_context_packet_id",
+        )
+        self.assertFalse(
+            packet["measurement_state"][
+                "historical_measurement_response_qualification_credit"
+            ]
+        )
+        self.assertFalse(
+            packet["qualification_state"]["live_qualification_authorized"]
+        )
+        self.assertEqual([], packet["readiness"]["live_ready_family_ids"])
+        self.assertEqual({0}, set(packet["current_pr_egress_counts"].values()))
+
+    def test_historical_stage_c_b_packet_remains_content_addressed(self) -> None:
+        """Preserve the consumed 1/1/0 terminal without current-source claims."""
+        packet = self._addressed(
+            pointer_path=(
+                "artifacts/vnext/table_stage_c_evidence/"
+                "current_stage_c_b_packet.json"
+            ),
+            id_field="stage_c_b_packet_id",
+        )
+        terminal = packet["measurement_terminal"]
+        semantics = packet["measurement_semantics"]
+        self.assertEqual(160937, terminal["actual_prompt_tokens"])
+        self.assertEqual(
+            {
+                "real_model_provider_egress_count": 1,
+                "paid_model_provider_call_count": 1,
+                "real_SEC_egress_count": 0,
+            },
+            terminal["egress_counts"],
+        )
+        self.assertTrue(semantics["authorization_permanently_consumed"])
+        self.assertFalse(semantics["response_reuse_for_qualification"])
+
+    def test_current_packet_persists_sibling_and_financial_blockers(self) -> None:
+        """Keep task/family/F3 blockers visible in the lightweight read path."""
+        packet = self._addressed(
+            pointer_path=PACKET_POINTER.as_posix(),
+            id_field="stage_c_context_packet_id",
+        )
+        self.assertEqual(
+            "EXACT_CONTEXT_EVIDENCE_REQUIRED",
+            packet["context_feasibility"]["sibling_request"]["status"],
+        )
+        self.assertFalse(
+            packet["context_feasibility"]["family_overall_live_ready"]
+        )
+        self.assertEqual(
+            "F3_NEED_MORE_EVIDENCE", packet["financial_state"]["decision"]
         )
 
 

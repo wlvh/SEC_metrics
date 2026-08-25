@@ -10,7 +10,7 @@ Issue #15 的自包含 Decision Register 以 post-freeze D-26 effective tip 继�
 PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4
 ```
 
-它并发执行十九个直接、非隔离边界用例，每例硬上限 30 秒；Requirement/WB-2/WB-2B/WB-3/R1及Stage-C用例覆盖 authority closure、producer scope、39指标registry、E01 parity、invocation故障矩阵、one-shot measurement mock、JPM guard terminal、Stage C-A/C-B历史packet、exact context attestation、usage terminal、sibling no-bound evidence、post-attestation packet与formal active read-back。recorded acceptance 的任一快速/静态 gate 硬上限 60 秒。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree 或长串行套件列为必跑项。金额 budget preflight 已从必测集删除；仍必须覆盖 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络和 structured-only 零模型调用。receipt 的最高测试状态仍是 `PASSED_FAST_LOCAL_ONLY`，绝不等同 CI 或Issue #15 full acceptance。
+它并发执行十九个直接、非隔离边界用例，每例硬上限 30 秒；Requirement/WB-2/WB-2B/WB-3/R1及Stage-C用例覆盖 authority closure、producer scope、39指标registry、E01 parity、invocation故障矩阵、JPM guard terminal、Stage C-A/C-B历史packet content identity、consumed measurement/no-credit边界、exact context attestation、usage terminal、sibling no-bound evidence、post-attestation packet与formal active read-back。recorded acceptance 的任一快速/静态 gate 硬上限 60 秒。不得把全仓 discover、Python 3.9 双跑、临时 Git repository/worktree 或长串行套件列为必跑项。金额 budget preflight 已从必测集删除；仍必须覆盖 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络和 structured-only 零模型调用。receipt 的最高测试状态仍是 `PASSED_FAST_LOCAL_ONLY`，绝不等同 CI 或Issue #15 full acceptance。
 
 <!-- capability-anchor: BEHAVIOR.r4_fast_concurrent_test_policy -->
 

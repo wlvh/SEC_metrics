@@ -44,15 +44,15 @@ FAST_TESTS = (
     "tests.vnext.test_deterministic_router.DeterministicRouterTest."
     "test_e01_matched_event_key_set_has_exact_legacy_parity",
     "tests.vnext.test_invocation_control",
-    "tests.vnext.test_table_context_measurement.TableContextMeasurementTest."
-    "test_mock_matrix_enforces_one_egress_and_no_downstream_credit",
+    "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
+    "test_current_packet_persists_no_credit_and_zero_current_egress",
     "tests.vnext.test_table_stage_c_financial_materialization."
     "TableStageCFinancialMaterializationTest."
     "test_current_receipt_is_census_bound_and_resource_safe",
     "tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest."
     "test_packet_sections_preserve_stage_c_a_claim_boundaries",
-    "tests.vnext.test_table_stage_c_b_packet.TableStageCBPacketTest."
-    "test_packet_binds_review_authorization_and_terminal",
+    "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
+    "test_historical_stage_c_b_packet_remains_content_addressed",
     "tests.vnext.test_table_context_attestation.TableContextAttestationTest."
     "test_exact_occupancy_request_passes_above_estimated_bound",
     "tests.vnext.test_table_context_qualification_guard."
@@ -60,8 +60,8 @@ FAST_TESTS = (
     "test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
     "tests.vnext.test_table_context_comparison.TableContextComparisonTest."
     "test_no_sound_cross_task_token_bound_is_claimed",
-    "tests.vnext.test_stage_c_context_packet.StageCContextPacketTest."
-    "test_measurement_never_becomes_qualification",
+    "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
+    "test_current_packet_persists_sibling_and_financial_blockers",
     "tests.vnext.test_zero_ai_release.ZeroAiReleaseTest."
     "test_r2_active_key_union_compatibility_and_retirement_are_bound",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
