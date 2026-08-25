@@ -285,13 +285,35 @@ def main(*, argv: Sequence[str]) -> int:
                 target_period=binding["target_period"],
                 owner_token=arguments.owner_token,
             )
+            terminal_status = result.get("status")
+            if terminal_status in {"FAILED_TERMINAL", "PRE_EGRESS_FAILURE"}:
+                raise QualificationCliError(
+                    code=(
+                        "TABLE_QUALIFICATION_FAILED_TERMINAL"
+                        if terminal_status == "FAILED_TERMINAL"
+                        else "TABLE_QUALIFICATION_PRE_EGRESS_FAILURE"
+                    ),
+                    message=(
+                        "Qualification execution failed terminally"
+                        if terminal_status == "FAILED_TERMINAL"
+                        else "Qualification stopped before provider egress"
+                    ),
+                    details={
+                        "execution_status": terminal_status,
+                        "run_id": result["run_id"],
+                        "qualification_terminal_id": binding[
+                            "qualification_terminal_id"
+                        ],
+                        "qualification_task_plan_id": binding[
+                            "qualification_task_plan_id"
+                        ],
+                    },
+                )
             run_dir = REPO_ROOT / binding["run_directory_relative_path"]
             manifest, records, _decisions = load_run_for_status(
                 run_dir=run_dir, repo_root=REPO_ROOT,
             )
-            if manifest["status"] == "OPEN" and result.get("status") not in {
-                "FAILED_TERMINAL", "PRE_EGRESS_FAILURE",
-            }:
+            if manifest["status"] == "OPEN":
                 if not any(
                     record["record_type"] == "METRIC_RESULT"
                     for record in records

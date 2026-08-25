@@ -152,6 +152,65 @@ class CutoverQualificationTest(unittest.TestCase):
         )["error_code"])
         self.assertIn("Traceback", stderr)
 
+    def test_table_execute_surfaces_remote_failure_as_nonzero(self) -> None:
+        """Stop the CLI on a persisted failed terminal before phase advance."""
+        binding = {
+            "target_period": {
+                "fiscal_year": 2024,
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+            },
+            "qualification_terminal_id": "sha256:" + "a" * 64,
+            "qualification_task_plan_id": "sha256:" + "b" * 64,
+        }
+
+        class Authorization:
+            """Return the exact fake binding needed by the CLI boundary."""
+
+            def as_mapping(self) -> dict:
+                """Return an isolated binding copy."""
+                return dict(binding)
+
+        result = {
+            "run_id": "run:qualification:failed",
+            "status": "FAILED_TERMINAL",
+            "attempt_id": "attempt:failed",
+        }
+        with mock.patch(
+            "tools.vnext_qualification.issue_table_qualification_authorization",
+            return_value=Authorization(),
+        ), mock.patch(
+            "tools.vnext_qualification.execute_table_qualification_task",
+            return_value=result,
+        ), mock.patch(
+            "tools.vnext_qualification.load_run_for_status",
+            side_effect=AssertionError("failed terminal advanced to Run reload"),
+        ):
+            return_code, stdout, stderr = run_qualification_cli(
+                "table-execute",
+                "--family-id", "lodging_kpi_table",
+                "--task-contract-id", "lodging_occupancy_table_v2",
+                "--phase", "SECOND_LAYOUT",
+                "--ordinal", "1",
+                "--owner-token", "test-owner",
+            )
+        self.assertEqual(2, return_code)
+        self.assertEqual("", stderr)
+        payload = json.loads(stdout)
+        self.assertEqual("BLOCKED", payload["status"])
+        self.assertEqual(
+            "TABLE_QUALIFICATION_FAILED_TERMINAL",
+            payload["error_code"],
+        )
+        self.assertEqual(
+            "FAILED_TERMINAL",
+            payload["details"]["execution_status"],
+        )
+        self.assertEqual(
+            binding["qualification_task_plan_id"],
+            payload["details"]["qualification_task_plan_id"],
+        )
+
     def test_qualification_system_review_is_explicit(
         self,
     ) -> None:

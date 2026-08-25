@@ -1497,20 +1497,35 @@ def qualification_remote_egress_terminals(
         return []
     if root.is_symlink() or not root.is_dir():
         raise InvocationControlError("Qualification invocation state is unsafe")
-    if {path.name for path in root.iterdir()} != set(INVOCATION_STATE_NAMESPACES):
+    observed_names = {path.name for path in root.iterdir()}
+    if (
+        not observed_names
+        or not observed_names.issubset(set(INVOCATION_STATE_NAMESPACES))
+    ):
         raise InvocationControlError(
             "Qualification invocation namespace exact set differs"
         )
-    for namespace in INVOCATION_STATE_NAMESPACES:
+    for namespace in observed_names:
         path = root / namespace
         if path.is_symlink() or not path.is_dir():
             raise InvocationControlError(
                 "Qualification invocation namespace is unsafe"
             )
 
+    def namespace_entries(*, name: str) -> List[Path]:
+        """Return portable entries; Git cannot retain known empty directories."""
+        path = root / name
+        if not path.exists():
+            return []
+        if path.is_symlink() or not path.is_dir():
+            raise InvocationControlError(
+                "Qualification invocation namespace is unsafe"
+            )
+        return sorted(path.iterdir(), key=lambda item: item.name)
+
     plans: Dict[str, Dict[str, object]] = {}
     plan_ids_by_task_plan: Dict[str, str] = {}
-    for path in sorted((root / "plans").iterdir(), key=lambda item: item.name):
+    for path in namespace_entries(name="plans"):
         if path.is_symlink() or not path.is_file() or path.suffix != ".json":
             raise InvocationControlError("Qualification invocation plan is unsafe")
         plan = validate_ai_invocation_plan(
@@ -1535,9 +1550,7 @@ def qualification_remote_egress_terminals(
 
     terminal_rows = []
     execution_ids_with_egress = set()
-    for path in sorted(
-        (root / "executions").iterdir(), key=lambda item: item.name,
-    ):
+    for path in namespace_entries(name="executions"):
         if path.is_symlink() or not path.is_file() or path.suffix != ".json":
             raise InvocationControlError("Qualification execution receipt is unsafe")
         preview = _read_json_object(path=path, label="execution receipt")
@@ -1679,9 +1692,7 @@ def qualification_remote_egress_terminals(
             ),
         })
 
-    for directory in sorted(
-        (root / "egress").iterdir(), key=lambda item: item.name,
-    ):
+    for directory in namespace_entries(name="egress"):
         if directory.is_symlink() or not directory.is_dir():
             raise InvocationControlError("Qualification egress directory is unsafe")
         marker_paths = sorted(directory.iterdir(), key=lambda item: item.name)
@@ -1748,9 +1759,7 @@ def qualification_remote_egress_terminals(
             ),
         })
 
-    for path in sorted(
-        (root / "abandoned").iterdir(), key=lambda item: item.name,
-    ):
+    for path in namespace_entries(name="abandoned"):
         if path.is_symlink() or not path.is_file() or path.suffix != ".json":
             raise InvocationControlError("Abandoned invocation receipt is unsafe")
         value = _read_json_object(path=path, label="abandoned invocation receipt")
