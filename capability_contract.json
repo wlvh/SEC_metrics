@@ -865,7 +865,7 @@
         "anchor_id": "BEHAVIOR.vnext_table_stage_c_token_measurement",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Stage C-A实现了一个独立于qualification的one-shot lodging token-measurement边界：plan从latest same-ID D-07 exception、exact PR-19 freeze/cycle/Stage-A/owner packet、Marriott immutable request attempt、lodging occupancy task、serializer v2、current prompt/schema/provider envelope与protected runtime closure机械重建；只有收到AUTHORIZE_ONE_TOKEN_MEASUREMENT并绑定当前clean exact HEAD时才签发opaque authorization。marker是专用互斥claim而非幂等artifact：只有实际完成O_CREAT|O_EXCL创建、file fsync及parent-directory fsync的唯一sender可继续，任何FileExistsError均在opener前稳定返回AUTHORIZATION_CONSUMED；双进程、同authorization、同execution、同clock且callback前barrier对齐的回归要求总opener严格等于1。marker前失败不消费且不会自动继续，任一marker后无论成功、HTTP 402、其他HTTP或UNKNOWN均永久消费且retry=0。独立TABLE_CONTEXT_MEASUREMENT_EVIDENCE只记录raw provider usage与三种egress计数，缺authoritative prompt/input tokens稳定为FAILED_USAGE_UNAVAILABLE；它永远qualification_credit=false、publication_eligible=false，不创建Run/Candidate/EvidenceCheck/ReviewUnit/VerifiedObservation或publication candidate。Stage C-A只运行mock，真实measurement仍未授权、未执行。",
+        "statement": "Stage C-A实现了一个独立于qualification的one-shot lodging token-measurement边界：plan从latest same-ID D-07 exception、exact PR-19 freeze/cycle/Stage-A/owner packet、Marriott immutable request attempt、lodging occupancy task、serializer v2、current prompt/schema/provider envelope与protected runtime closure机械重建；只有收到AUTHORIZE_ONE_TOKEN_MEASUREMENT并绑定当前clean exact HEAD时才签发opaque authorization。marker是专用互斥claim而非幂等artifact：只有实际完成O_CREAT|O_EXCL创建、file fsync及parent-directory fsync的唯一sender可继续，任何FileExistsError均在opener前稳定返回AUTHORIZATION_CONSUMED；双进程、同authorization、同execution、同clock且callback前barrier对齐的回归要求总opener严格等于1。marker前失败不消费且不会自动继续，任一marker后无论成功、HTTP 402、其他HTTP或UNKNOWN均永久消费且retry=0。独立TABLE_CONTEXT_MEASUREMENT_EVIDENCE只记录raw provider usage与三种egress计数，缺authoritative prompt/input tokens稳定为FAILED_USAGE_UNAVAILABLE；它永远qualification_credit=false、publication_eligible=false，不创建Run/Candidate/EvidenceCheck/ReviewUnit/VerifiedObservation或publication candidate。Stage C-A只运行mock并以0/0/0结束；真实执行必须另有独立exact-head授权。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_table_context_measurement.py::TableContextMeasurementTest.test_mock_matrix_enforces_one_egress_and_no_downstream_credit",
         "test_status": "automated_partial",
@@ -888,6 +888,16 @@
         "statement": "Stage C-A content-addressed decision packet将OWNER_APPROVED、IMPLEMENTED_NOT_EXECUTED、MEASURED_OFFLINE、STILL_UNAUTHORIZED与BLOCKERS严格分区：token measurement只保存exact plan ID且authorization_id=NOT_ISSUED，JPM guard terminal保持NOT_RUN/null，active publication与309-row root逐byte不变，Stage-C real model/paid/SEC计数为0/0/0。packet绑定review 5014458726及其reviewed head，并把B1并发marker修复记录为O_EXCL fail-closed + file/directory fsync、two-process one-opener mock已通过但仍待独立复审；remaining blocker只保留JPM_RSS_GUARD_UNAVAILABLE。packet同时是新的current-source validation overlay：只有历史R2 snapshot除source drift外完全通过、当前clean source tree与packet候选tree exact相同、latest Requirement/D-07、measurement plan、benchmark chain和root state全部重建一致时，snapshot checker才返回0；PR #19 freeze/Stage-A snapshot/owner packet原字节保留。该packet明确保留真实measurement、qualification、R3/R4、resource policy、sharding/serializer/selector和publication未授权。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_table_stage_c_a_packet.py::TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries",
+        "test_status": "automated_recorded_real_bytes",
+        "since": "2026-08-25"
+      },
+      {
+        "anchor_id": "BEHAVIOR.vnext_table_stage_c_b_packet",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Stage C-B只在独立review 5014622571绑定exact head 451dd693175bea6c1196a09989c60017e96d63e7、tree、plan/cycle/authorization与UTC时间后执行唯一一次真实DeepSeek request；永久marker先于socket创建且authorization随后不可复用。terminal为HTTP 200/SUCCEEDED，provider-reported usage为160937 prompt、576 completion、161513 total、0 cache hit和160937 cache miss，retry=false，real model/paid/SEC计数为1/1/0。content-addressed packet只离线重算reviewed Git object ancestry、authorized protected bytes、plan/cycle/authorization、唯一marker/evidence/raw response及usage hash，不构造transport或再次egress；Stage C-A 0/0/0 packet原样保留为pre-egress历史对象。measurement继续qualification_credit=false、publication_eligible=false，普通392447>200000门仍阻断；active R2/309-row root不变，JPM仍为NOT_RUN_RSS_GUARD_UNAVAILABLE与F3_NEED_MORE_EVIDENCE，qualification、R3/R4、production cap/sharding/serializer/selector和publication均未授权。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_table_stage_c_b_packet.py::TableStageCBPacketTest.test_packet_binds_review_authorization_and_terminal",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
       }

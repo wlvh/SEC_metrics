@@ -2,13 +2,11 @@
 
 from __future__ import annotations
 
-import subprocess
 import unittest
 
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import content_hash, strict_json_file
 from vnext.stage_c_packet import PACKET_POINTER
-from vnext.stage_c_packet import validate_stage_c_a_packet
 
 
 class TableStageCAPacketTest(unittest.TestCase):
@@ -16,8 +14,7 @@ class TableStageCAPacketTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        """Validate the complete committed source/packet overlay once."""
-        cls.summary = validate_stage_c_a_packet(repo_root=REPO_ROOT)
+        """Load the preserved pre-egress packet as historical evidence."""
         cls.pointer = strict_json_file(path=REPO_ROOT / PACKET_POINTER)
         cls.packet = strict_json_file(
             path=REPO_ROOT / cls.pointer["packet_path"],
@@ -27,7 +24,7 @@ class TableStageCAPacketTest(unittest.TestCase):
         """Report implementation and blocker without claiming live evidence."""
         self.assertEqual(
             self.pointer["stage_c_a_packet_id"],
-            self.summary["stage_c_a_packet_id"],
+            self.packet["stage_c_a_packet_id"],
         )
         body = {
             key: self.packet[key]
@@ -121,17 +118,18 @@ class TableStageCAPacketTest(unittest.TestCase):
             set(self.packet["STILL_UNAUTHORIZED"]),
         )
 
-    def test_validation_snapshot_uses_stage_c_overlay(self) -> None:
-        """Keep historical R2 bytes immutable while validating current source."""
-        completed = subprocess.run(
-            ["python3", "tools/check_validation_snapshot.py"],
-            cwd=str(REPO_ROOT),
-            check=False,
-            capture_output=True,
-            text=True,
+    def test_packet_remains_the_historical_pre_egress_terminal(self) -> None:
+        """Do not rewrite Stage C-A zeroes after the Stage C-B execution."""
+        self.assertEqual(
+            "NOT_ISSUED",
+            self.packet["measurement_authorization"]["authorization_id"],
         )
-        self.assertEqual(0, completed.returncode, completed.stdout + completed.stderr)
-        self.assertIn("current Stage C-A decision-evidence overlay", completed.stdout)
+        self.assertEqual(
+            "NOT_RUN",
+            self.packet["IMPLEMENTED_NOT_EXECUTED"][
+                "measurement_evidence_status"
+            ],
+        )
 
 
 if __name__ == "__main__":

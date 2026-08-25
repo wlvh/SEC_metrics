@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "record_type": "ISSUE_15_STAGE_C_B_MEASUREMENT_PACKET",
+  "stage_c_b_status": "TOKEN_MEASUREMENT_COMPLETED_FINANCIAL_EVIDENCE_BLOCKED",
+  "authority": {
+    "issue_number": 15,
+    "pull_request_number": 20,
+    "approval_review": {
+      "review_id": 5014622571,
+      "state": "COMMENTED",
+      "reviewed_head": "451dd693175bea6c1196a09989c60017e96d63e7",
+      "reviewed_tree": "78af0116b23e72afe02707aa7209e81d904c83f1",
+      "submitted_at": "2026-08-25T03:17:49Z",
+      "review_url": "https://github.com/wlvh/SEC_metrics/pull/20#pullrequestreview-5014622571",
+      "code_verdict": "APPROVE_STAGE_C_MEASUREMENT_PATH",
+      "token_measurement_authorization": "AUTHORIZE_ONE_TOKEN_MEASUREMENT",
+      "financial_decision": "F3_NEED_MORE_EVIDENCE"
+    },
+    "authorized_at_utc": "2026-08-25T03:16:33Z",
+    "measurement_plan_id": "sha256:89d90019e929566df8e3d7a93c4c8a360067cdc0e3977fa9e4a8ece00a9dbceb",
+    "measurement_cycle_id": "sha256:17700ed40fa679c95815956da55a14d8062c2a8e022bb779e48958a328c1c1d2",
+    "authorization_id": "sha256:0878cfe58623f07ad3e706afb03af0ed96c6de9752c5caf0c904e26e60d2524d",
+    "historical_stage_c_a_packet_id": "sha256:b0e643ab4ec3afb75f64bc959f8e0dd975c853bbfabd1d94eb25b878931195ea"
+  },
+  "measurement_terminal": {
+    "measurement_plan_id": "sha256:89d90019e929566df8e3d7a93c4c8a360067cdc0e3977fa9e4a8ece00a9dbceb",
+    "measurement_plan_path": "artifacts/vnext/table_stage_c_evidence/token_measurement/plans/89d90019e929566df8e3d7a93c4c8a360067cdc0e3977fa9e4a8ece00a9dbceb.json",
+    "measurement_cycle_id": "sha256:17700ed40fa679c95815956da55a14d8062c2a8e022bb779e48958a328c1c1d2",
+    "authorization_id": "sha256:0878cfe58623f07ad3e706afb03af0ed96c6de9752c5caf0c904e26e60d2524d",
+    "execution_id": "sha256:ad0513d15596eb6874401e9028df7dcca4503edd5946fd721e97459a440ceb36",
+    "egress_marker_id": "sha256:b7c68c07a7ccaa9726cbcfc763b1785efb5e96444d6b1690c03a9761ea2f6577",
+    "egress_marker_path": "artifacts/vnext/table_stage_c_evidence/token_measurement/executions/17700ed40fa679c95815956da55a14d8062c2a8e022bb779e48958a328c1c1d2/provider_egress_marker.json",
+    "egress_started_at_utc": "2026-08-25T03:37:25.303539+00:00",
+    "measurement_evidence_id": "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c2b366c419436253b9ebb56f56dbf9795",
+    "measurement_evidence_path": "artifacts/vnext/table_stage_c_evidence/token_measurement/executions/17700ed40fa679c95815956da55a14d8062c2a8e022bb779e48958a328c1c1d2/evidence/bd5c4e1e1fb302ce539c2ae7aa88b67c2b366c419436253b9ebb56f56dbf9795.json",
+    "provider_request_body_sha256": "5ffa7b16d54ff9e3c2bdbc10d468f84b9aaae2ac029b5fc63e459d895eb8109a",
+    "provider_request_id": "5343e681-e502-4463-9358-82fe538c5b58",
+    "provider_response_sha256": "sha256:0d3c4da8f917ed31cbbf2c1e545caec11bb78d136b42ae9488d2cff0bfa153c0",
+    "provider_response_path": "artifacts/vnext/table_stage_c_evidence/token_measurement/executions/17700ed40fa679c95815956da55a14d8062c2a8e022bb779e48958a328c1c1d2/provider_responses/0d3c4da8f917ed31cbbf2c1e545caec11bb78d136b42ae9488d2cff0bfa153c0.bin",
+    "usage_raw_field_hash": "sha256:f1adad9585a16d5cef00cd1a7493164e63ea0c88acdafed5d57a3f3af3ce88f3",
+    "status": "COMPLETED",
+    "http_status": 200,
+    "transport_terminal_status": "SUCCEEDED",
+    "actual_prompt_tokens": 160937,
+    "actual_completion_tokens": 576,
+    "actual_total_tokens": 161513,
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 160937,
+    "estimated_input_tokens": 392447,
+    "bytes_per_actual_prompt_token": "2.43851321",
+    "retry_performed": false,
+    "egress_counts": {
+      "real_model_provider_egress_count": 1,
+      "paid_model_provider_call_count": 1,
+      "real_SEC_egress_count": 0
+    }
+  },
+  "measurement_semantics": {
+    "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+    "family_id": "lodging_kpi_table",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "source_company_id": "marriott_international",
+    "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "serializer_version": "2",
+    "ordinary_qualification_max_estimated_input_tokens": 200000,
+    "ordinary_qualification_remains_blocked": true,
+    "qualification_credit": false,
+    "qualification_evidence_eligible": false,
+    "publication_eligible": false,
+    "response_reuse_for_qualification": false,
+    "authorization_permanently_consumed": true,
+    "additional_measurement_egress_authorized": false
+  },
+  "financial_evidence": {
+    "financial_decision": "F3_NEED_MORE_EVIDENCE",
+    "benchmark_receipt_id": "sha256:7129778529da4e8b402ad693433531f36c52cd99f4c1b71e20735bb33196b3c3",
+    "benchmark_run_receipt_id": "sha256:769a848b5099596c9ea04210b8cc7e69facdd010d6739f16d1edbcb90baf32be",
+    "status": "NOT_RUN_RSS_GUARD_UNAVAILABLE",
+    "completion_result": false,
+    "peak_rss_bytes": null,
+    "wall_time_seconds": null,
+    "canonical_json_bytes": null,
+    "derived_asset_id": null,
+    "blocking_reason": "RSS_HARD_LIMIT_SETUP_FAILED"
+  },
+  "active_root_state": {
+    "active_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+    "root_hashes": {
+      "outputs/active_publication.json": {
+        "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+        "size": 354
+      },
+      "outputs/metrics_matrix.csv": {
+        "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+        "size": 105128
+      },
+      "outputs/metric_evidence.csv": {
+        "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "size": 250439
+      },
+      "REPORT_十公司财务指标.md": {
+        "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+        "size": 29729
+      }
+    },
+    "public_matrix_row_count": 309,
+    "public_key_set_hash": "sha256:33b2a81ac6507b33a37509189fb8eb7fae87fa25c2f441bc4b4bca6705f56fab"
+  },
+  "source_snapshot": {
+    "candidate_status": "STAGED_SOURCE_CANDIDATE",
+    "candidate_base_commit": "451dd693175bea6c1196a09989c60017e96d63e7",
+    "source_input_tree_sha256": "c9320be9f9f8d54b0ece51cb28598c42e4d515479abf3ab81800fe6b13047e35",
+    "source_file_count": 296,
+    "staged_source_paths": [
+      "AGENTS.md",
+      "SOP.md",
+      "TESTING.md",
+      "architecture.md",
+      "capability_contract.json",
+      "interact.md",
+      "scripts/vnext/stage_c_b_packet.py",
+      "tests/vnext/test_table_stage_c_a_packet.py",
+      "tests/vnext/test_table_stage_c_b_packet.py",
+      "tools/check_validation_snapshot.py",
+      "tools/create_stage_c_b_packet.py",
+      "tools/run_fast_tests.py"
+    ],
+    "staged_source_path_set_hash": "sha256:8c251c696b151b7a68964952da44bb2c15ffca4420497db23817b230a04a3182"
+  },
+  "STILL_UNAUTHORIZED": [
+    "ADDITIONAL_REAL_TOKEN_MEASUREMENT",
+    "LIVE_QUALIFICATION",
+    "R3",
+    "R4",
+    "PRODUCTION_MAX_TOTAL_CELLS_CHANGE",
+    "SHARDING",
+    "SERIALIZER_CANDIDATE",
+    "SELECTOR",
+    "PUBLICATION"
+  ],
+  "BLOCKERS": [
+    "JPM_RSS_GUARD_UNAVAILABLE"
+  ],
+  "stage_c_b_packet_id": "sha256:1ac26194714313ab4f047c81652e1f05ae71cbf3c303c576251205336731dc9f"
+}

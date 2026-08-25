@@ -51,6 +51,8 @@ FAST_TESTS = (
     "test_current_receipt_is_census_bound_and_resource_safe",
     "tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest."
     "test_packet_sections_preserve_stage_c_a_claim_boundaries",
+    "tests.vnext.test_table_stage_c_b_packet.TableStageCBPacketTest."
+    "test_packet_binds_review_authorization_and_terminal",
     "tests.vnext.test_zero_ai_release.ZeroAiReleaseTest."
     "test_r2_active_key_union_compatibility_and_retirement_are_bound",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
