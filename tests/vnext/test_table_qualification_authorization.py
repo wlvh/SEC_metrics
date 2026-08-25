@@ -1852,10 +1852,6 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 )
                 for family_id, task_contract_id in (
                     ("lodging_kpi_table", "lodging_occupancy_table_v2"),
-                    (
-                        "financial_statement",
-                        "financial_assets_under_management_table_v1",
-                    ),
                 ):
                     with self.subTest(unrelated_source_drift_family=family_id):
                         authorization = issue_authorization(
@@ -1868,6 +1864,18 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             family_id,
                             authorization.as_mapping()["family_id"],
                         )
+                with self.assertRaisesRegex(
+                    qualification.QualificationError,
+                    "TABLE_QUALIFICATION_NOT_AUTHORIZED",
+                ):
+                    issue_authorization(
+                        repo_root=repo_root,
+                        family_id="financial_statement",
+                        task_contract_id=(
+                            "financial_assets_under_management_table_v1"
+                        ),
+                        qualification_ordinal=1,
+                    )
             finally:
                 source_path.write_bytes(source_original)
 

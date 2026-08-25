@@ -91,6 +91,7 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "family_id",
             "task_contract_id",
             "qualification_ordinal",
+            "qualification_phase",
             "source_binding_hash",
             "run_id",
             "attempt_id",
@@ -391,6 +392,7 @@ TEXT_FIELDS = {
     "qualification_authorization_id",
     "qualification_cycle_id",
     "qualification_evidence_id",
+    "qualification_phase",
     "qualification_task_plan_id",
     "freeze_receipt_id",
     "family_id",
@@ -899,6 +901,7 @@ def _expected_identifier(
                 "family_id",
                 "task_contract_id",
                 "qualification_ordinal",
+                "qualification_phase",
                 "source_binding_hash",
                 "run_id",
                 "attempt_id",
@@ -1311,6 +1314,7 @@ def _validate_record_semantics(
             "family_id",
             "task_contract_id",
             "qualification_ordinal",
+            "qualification_phase",
             "source_binding_hash",
         ):
             if record[field] != binding.get(field):

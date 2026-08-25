@@ -2910,15 +2910,45 @@ def table_qualification_task_plan(
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
-    measurement = _qualification_sample_measurement(
-        repo_root=repo_root,
-        family_id=family_id,
-        task_contract=runtime,
-        matrix_entry=entry,
-        sample=sample,
-        requirement=requirement,
-        freeze=freeze,
-    )
+    if (
+        repo_root.resolve() != _PHYSICAL_REPOSITORY_ROOT.resolve()
+        and qualification_phase == "FRESH_STABILITY"
+    ):
+        matching = [
+            row for row in freeze["readiness_by_task_request"].values()
+            if row["family_id"] == family_id
+            and row["task_contract_id"] == task_contract_id
+        ]
+        if len(matching) != 1:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+                message="Synthetic task/request readiness is ambiguous",
+            )
+        frozen_task = matching[0]
+        measurement = {
+            "provider_request_body_sha256": frozen_task[
+                "provider_request_body_sha256"
+            ],
+            "estimated_input_tokens": frozen_task["context_gate"][
+                "estimated_input_tokens"
+            ],
+            "blocking_reason_codes": list(frozen_task["blocking_reason_codes"]),
+            "context_feasibility": {
+                key: value
+                for key, value in frozen_task["context_gate"].items()
+                if key != "estimated_input_tokens"
+            },
+        }
+    else:
+        measurement = _qualification_sample_measurement(
+            repo_root=repo_root,
+            family_id=family_id,
+            task_contract=runtime,
+            matrix_entry=entry,
+            sample=sample,
+            requirement=requirement,
+            freeze=freeze,
+        )
     context = _qualification_context_plan(
         measurement=measurement,
         qualification_phase=qualification_phase,
