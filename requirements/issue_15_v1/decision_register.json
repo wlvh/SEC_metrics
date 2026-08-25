@@ -687,6 +687,108 @@
       "approved_at_utc": "2026-08-24T17:47:55Z",
       "supersedes_decision_id": "sha256:bc9830fc98a331ea54625b499665c3e2ef71a478194a9f066a31ac5c56de1ec8",
       "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5399126863"
+    },
+    {
+      "decision_id": "D-07",
+      "status": "APPROVED",
+      "choice": {
+        "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
+        "semantic_prefilter": false,
+        "selector_authorized": false,
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "max_estimated_input_tokens": 200000,
+        "threshold_comparison": {
+          "passes": "estimated_input_tokens <= 200000",
+          "blocks": "estimated_input_tokens > 200000"
+        },
+        "threshold_scope": "PER_FAMILY_PER_REQUEST",
+        "oversized_payload_policy": "BLOCK_LIVE_QUALIFICATION_FOR_AFFECTED_FAMILY",
+        "shared_dependency_drift_policy": "INVALIDATE_ALL_DEPENDENT_FAMILIES",
+        "family_local_drift_policy": "INVALIDATE_OWNER_FAMILY_ONLY",
+        "lossless_context_minimization_precedes_semantic_selection": true,
+        "actual_prompt_tokens_authority": "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED",
+        "live_measurement_authorized": false,
+        "live_qualification_authorized": false,
+        "measurement_exception": {
+          "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+          "family_id": "lodging_kpi_table",
+          "task_contract_id": "lodging_occupancy_table_v2",
+          "source_company_id": "marriott_international",
+          "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "serializer_version": "2",
+          "allowed_successful_provider_egress_count": 1,
+          "automatic_retry_count": 0,
+          "qualification_ordinal_credit": false,
+          "publication_eligible": false,
+          "qualification_evidence_eligible": false,
+          "response_reuse_for_qualification": false,
+          "consumes_authorization_after_any_egress_marker": true,
+          "execution_requires_external_exact_head_authorization": true
+        },
+        "context_feasibility_policy": {
+          "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
+          "accepted_measurement_evidence_id": "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c2b366c419436253b9ebb56f56dbf9795",
+          "accepted_provider": "deepseek",
+          "accepted_model": "deepseek-v4-flash",
+          "accepted_api": "chat_completions",
+          "accepted_actual_prompt_tokens": 160937,
+          "context_budget_tokens": 200000,
+          "context_headroom_tokens": 39063,
+          "default_path": {
+            "condition": "estimated_input_tokens <= 200000",
+            "result": "PASS",
+            "evidence_basis": "ESTIMATED_BOUND"
+          },
+          "exact_attestation_path": {
+            "estimated_condition": "estimated_input_tokens > 200000",
+            "actual_condition": "attested_actual_prompt_tokens <= 200000",
+            "required_exact_equalities": [
+              "provider_request_body_sha256",
+              "family_id",
+              "task_contract_id",
+              "source_identity",
+              "source_repo_relative_path",
+              "source_sha256",
+              "serializer_identity",
+              "serializer_hash",
+              "task_contract_hash",
+              "prompt_hash",
+              "output_schema_hash",
+              "provider",
+              "model",
+              "api",
+              "requirement_closure_hash",
+              "protected_closure_hash"
+            ],
+            "result": "PASS",
+            "evidence_basis": "PROVIDER_REPORTED_EXACT_BINDING"
+          },
+          "non_exact_equivalence_forbidden": [
+            "APPROXIMATE_RATIO",
+            "SIMILAR_BYTE_LENGTH",
+            "SAME_FAMILY",
+            "SAME_SOURCE",
+            "SAME_SERIALIZER_VERSION",
+            "SHARED_TABLE_PAYLOAD"
+          ],
+          "attestation_scope": "ONE_EXACT_TASK_REQUEST",
+          "attestation_semantics": "CONTEXT_FEASIBILITY_ONLY",
+          "measurement_authorization_permanently_consumed": true,
+          "additional_measurement_authorized": false,
+          "measurement_response_qualification_credit": false,
+          "measurement_response_reuse_for_qualification": false,
+          "qualification_requires_separate_authorization": true,
+          "qualification_requires_new_provider_execution": true,
+          "future_qualification_usage_required": true,
+          "future_qualification_actual_prompt_tokens_max": 200000,
+          "future_qualification_usage_failure_policy": "TERMINAL_NO_RETRY_STOP_LATER_ORDINALS"
+        }
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-25T04:52:55Z",
+      "supersedes_decision_id": "sha256:200bb6feae25c5683260e2dd8a758f1ab3f0480b8694bb802ca44fd80835554f",
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5405401715"
     }
   ],
   "pending_decisions": [

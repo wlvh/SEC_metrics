@@ -26,6 +26,7 @@ from vnext.publication import PublicationView, ROOT_MIRROR_RELATIVE_PATHS
 from vnext.publication import verify_publication_bundle
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
+    ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
     ISSUE_15_D07_EFFECTIVE_CHOICE,
     ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
@@ -416,7 +417,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -443,6 +444,10 @@ class Issue15AuthorityTest(unittest.TestCase):
             d07_chain[2]["supersedes_decision_id"],
         )
         self.assertEqual(
+            content_hash(value=d07_chain[2]),
+            d07_chain[3]["supersedes_decision_id"],
+        )
+        self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
             issue_snapshot["effective_decisions"]["D-07"]["choice"],
         )
@@ -456,6 +461,12 @@ class Issue15AuthorityTest(unittest.TestCase):
             ISSUE_15_D07_MEASUREMENT_EXCEPTION,
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "measurement_exception"
+            ],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "context_feasibility_policy"
             ],
         )
         self.assertFalse(
@@ -963,7 +974,8 @@ class Issue15AuthorityTest(unittest.TestCase):
             "execution_requires_external_exact_head_authorization": False,
         }
         for field, replacement in mutations.items():
-            with self.subTest(field=field), tempfile.TemporaryDirectory() as temp_dir:
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
                 issue_copy = copy_test_repository(temp_dir=temp_dir)
                 register = read_json(path=issue_copy / "decision_register.json")
                 d07 = next(
@@ -972,6 +984,67 @@ class Issue15AuthorityTest(unittest.TestCase):
                     if row["decision_id"] == "D-07"
                 )
                 d07["choice"]["measurement_exception"][field] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_context_feasibility_policy_is_exact(self) -> None:
+        """Reject widened, approximate, reusable, or family-wide admission."""
+        mutations = {
+            "accepted_measurement_evidence_id": "sha256:" + "0" * 64,
+            "accepted_actual_prompt_tokens": 200001,
+            "context_budget_tokens": 392447,
+            "attestation_scope": "ENTIRE_FAMILY",
+            "measurement_response_qualification_credit": True,
+            "measurement_response_reuse_for_qualification": True,
+            "qualification_requires_separate_authorization": False,
+            "additional_measurement_authorized": True,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                d07["choice"]["context_feasibility_policy"][field] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_exact_attestation_requires_every_request_binding(self) -> None:
+        """Reject removal of task, prompt, schema, or closure equality."""
+        required = ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY[
+            "exact_attestation_path"
+        ]["required_exact_equalities"]
+        for missing in (
+            "task_contract_hash",
+            "prompt_hash",
+            "output_schema_hash",
+            "requirement_closure_hash",
+            "protected_closure_hash",
+        ):
+            with self.subTest(missing=missing), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                exact = d07["choice"]["context_feasibility_policy"][
+                    "exact_attestation_path"
+                ]
+                exact["required_exact_equalities"] = [
+                    field for field in required if field != missing
+                ]
                 rebind_decisions(issue_copy=issue_copy, register=register)
                 with self.assertRaisesRegex(
                     RequirementError, "superseding Decision content differs",
