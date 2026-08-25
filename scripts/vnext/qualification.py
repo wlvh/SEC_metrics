@@ -1069,6 +1069,39 @@ def issue_table_qualification_authorization(
                     code="TABLE_QUALIFICATION_HOLDOUT_REQUIRED",
                     message="Every task needs a FROZEN post-freeze holdout Run",
                 )
+            if qualification_ordinal > 1:
+                prior_ordinals = tuple(range(1, qualification_ordinal))
+                prior_fresh = _table_phase_terminal_rows(
+                    repo_root=repo_root,
+                    qualification_cycle_id=str(
+                        freeze["qualification_cycle_id"]
+                    ),
+                    family_id=family_id,
+                    qualification_phase="FRESH_STABILITY",
+                    qualification_ordinals=prior_ordinals,
+                )
+                expected_prior = {
+                    (task_id, ordinal)
+                    for ordinal in prior_ordinals
+                    for task_id in expected_tasks
+                }
+                actual_prior = {
+                    (
+                        str(row["task_contract_id"]),
+                        int(row["qualification_ordinal"]),
+                    )
+                    for row in prior_fresh
+                }
+                if (
+                    actual_prior != expected_prior
+                    or len(prior_fresh) != len(expected_prior)
+                ):
+                    raise QualificationError(
+                        code="TABLE_QUALIFICATION_PRIOR_ORDINAL_REQUIRED",
+                        message=(
+                            "Every task needs a FROZEN prior fresh ordinal"
+                        ),
+                    )
     binding = _authorization_mapping(
         repo_root=repo_root,
         family_id=family_id,
@@ -3104,8 +3137,14 @@ def production_semantic_tree(*, repo_root: Path) -> Dict[str, object]:
 def _table_phase_terminal_rows(
     *, repo_root: Path, qualification_cycle_id: str, family_id: str,
     qualification_phase: str,
+    qualification_ordinals: Optional[Sequence[int]] = None,
 ) -> list[Dict[str, object]]:
     """Revalidate all FROZEN task Runs for one family/sample phase."""
+    ordinal_filter = (
+        None
+        if qualification_ordinals is None
+        else frozenset(qualification_ordinals)
+    )
     run_root = (
         repo_root
         / TABLE_QUALIFICATION_CYCLE_ROOT
@@ -3129,6 +3168,11 @@ def _table_phase_terminal_rows(
             type(binding) is not dict
             or binding.get("family_id") != family_id
             or binding.get("qualification_phase") != qualification_phase
+        ):
+            continue
+        if (
+            ordinal_filter is not None
+            and binding.get("qualification_ordinal") not in ordinal_filter
         ):
             continue
         if manifest.get("status") != "FROZEN":

@@ -139,6 +139,101 @@ class TableQualificationSamplesTest(unittest.TestCase):
                         qualification_ordinal=ordinal,
                     )
 
+    def test_fresh_ordinal_two_requires_every_task_ordinal_one_frozen(
+        self,
+    ) -> None:
+        """Fail before adapter construction when the global barrier is absent."""
+        tasks = [
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2",
+        ]
+        requirement = {
+            "effective_decisions": {
+                "D-07": {
+                    "choice": {
+                        "live_qualification_authorized": True,
+                        "live_qualification_scope": {
+                            "authorized_family_ids": ["lodging_kpi_table"],
+                            "authorized_task_contract_ids": tasks,
+                            "financial_qualification_authorized": False,
+                        },
+                    },
+                },
+            },
+        }
+        freeze = {"qualification_cycle_id": "sha256:" + "a" * 64}
+        holdout = [{"task_contract_id": task_id} for task_id in tasks]
+        with mock.patch.object(
+            qualification_module,
+            "load_requirement_snapshot",
+            return_value=requirement,
+        ), mock.patch.object(
+            qualification_module,
+            "require_table_qualification_freeze",
+            return_value=freeze,
+        ), mock.patch.object(
+            qualification_module,
+            "validate_table_production_semantic_freeze",
+        ), mock.patch.object(
+            qualification_module,
+            "_table_phase_terminal_rows",
+            side_effect=(holdout, []),
+        ), mock.patch.object(
+            qualification_module,
+            "build_table_qualification_transport_adapter",
+        ) as opener:
+            with self.assertRaises(QualificationError) as raised:
+                qualification_module.execute_table_qualification_task(
+                    repo_root=REPO_ROOT,
+                    family_id="lodging_kpi_table",
+                    task_contract_id="lodging_occupancy_table_v2",
+                    qualification_phase="FRESH_STABILITY",
+                    qualification_ordinal=2,
+                    target_period={},
+                    owner_token="sequence-regression",
+                )
+        self.assertEqual(
+            "TABLE_QUALIFICATION_PRIOR_ORDINAL_REQUIRED",
+            raised.exception.code,
+        )
+        opener.assert_not_called()
+
+    def test_prior_fresh_open_run_is_not_a_frozen_prerequisite(self) -> None:
+        """Treat an existing but non-FROZEN prior Run as a sequence blocker."""
+        cycle_id = "sha256:" + "a" * 64
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            run_dir = (
+                root / qualification_module.TABLE_QUALIFICATION_CYCLE_ROOT
+                / cycle_id.split(":", maxsplit=1)[1] / "runs" / "open-run"
+            )
+            run_dir.mkdir(parents=True)
+            manifest = {
+                "status": "OPEN",
+                "qualification_authorization": {
+                    "family_id": "lodging_kpi_table",
+                    "qualification_phase": "FRESH_STABILITY",
+                    "qualification_ordinal": 1,
+                },
+            }
+            with mock.patch.object(
+                qualification_module,
+                "load_run_for_status",
+                return_value=(manifest, [], []),
+            ):
+                with self.assertRaises(QualificationError) as raised:
+                    qualification_module._table_phase_terminal_rows(
+                        repo_root=root,
+                        qualification_cycle_id=cycle_id,
+                        family_id="lodging_kpi_table",
+                        qualification_phase="FRESH_STABILITY",
+                        qualification_ordinals=(1,),
+                    )
+        self.assertEqual(
+            "TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            raised.exception.code,
+        )
+
     def test_production_freeze_binds_second_layout_and_ledger_prefix(self) -> None:
         """Require two FROZEN tasks and reject later semantic-tree drift."""
         cycle_id = "sha256:" + "a" * 64
