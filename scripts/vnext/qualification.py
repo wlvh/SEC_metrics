@@ -1174,6 +1174,36 @@ def qualification_authorized_company_traits(
     return list(binding["company_traits"])
 
 
+def qualification_authorized_company_ciks(
+    *, repo_root: Path, authorization: object, company_id: str,
+) -> list[str]:
+    """Return the exact SEC CIK owned by one opaque qualification source."""
+    if (
+        type(authorization) is not TableQualificationAuthorization
+        or authorization._capability is not _QUALIFICATION_AUTHORIZATION_CAPABILITY
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
+            message="Qualification CIKs require opaque authorization",
+        )
+    binding = _rebuild_authorization_binding(
+        repo_root=repo_root, actual=authorization.as_mapping(),
+    )
+    declaration = binding["source_binding"]["source_declaration"]
+    cik = declaration.get("cik")
+    if (
+        declaration.get("company_id") != company_id
+        or type(cik) is not str
+        or not cik.isdigit()
+        or int(cik) <= 0
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification CIK differs from source authority",
+        )
+    return [str(int(cik))]
+
+
 def validate_live_table_qualification_authorization(
     *, repo_root: Path, authorization: object, task_contract_id: str,
     run_dir: Path, run_id: str, company_id: str,

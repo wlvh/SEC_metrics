@@ -10,7 +10,9 @@ from unittest import mock
 from tests.vnext.common import REPO_ROOT
 from vnext import ai_adapter
 from vnext import qualification as qualification_module
+from vnext import workflow as workflow_module
 from vnext.canonical import strict_json_file
+from vnext.sources import raw_blob_record
 from vnext.qualification import _qualification_sample_authority
 from vnext.qualification import _qualification_sample_measurement
 from vnext.qualification import QualificationError
@@ -233,6 +235,73 @@ class TableQualificationSamplesTest(unittest.TestCase):
             "TABLE_QUALIFICATION_SEQUENCE_INVALID",
             raised.exception.code,
         )
+
+    def test_layout_source_uses_opaque_qualification_cik_authority(
+        self,
+    ) -> None:
+        """Permit the exact external SEC fixture without expanding registry."""
+        fixture = qualification_module._matrix_fixture_source_binding(
+            repo_root=REPO_ROOT,
+            fixture_id="hilton-2024-sec-layout-v7",
+        )
+        source = {
+            key: value for key, value in fixture.items()
+            if key in qualification_module._SOURCE_BINDING_FIELDS
+        }
+        binding = {"source_binding": source}
+        authorization = qualification_module.TableQualificationAuthorization(
+            binding=binding,
+            capability=(
+                qualification_module._QUALIFICATION_AUTHORIZATION_CAPABILITY
+            ),
+        )
+        declaration = source["source_declaration"]
+        with mock.patch.object(
+            qualification_module,
+            "_rebuild_authorization_binding",
+            return_value=binding,
+        ):
+            allowed_ciks = (
+                qualification_module.qualification_authorized_company_ciks(
+                    repo_root=REPO_ROOT,
+                    authorization=authorization,
+                    company_id=str(declaration["company_id"]),
+                )
+            )
+        raw = raw_blob_record(
+            repo_root=REPO_ROOT,
+            repo_relative_path=str(declaration["source_repo_relative_path"]),
+            media_type=str(fixture["source_media_type"]),
+        )
+        with mock.patch.object(
+            workflow_module,
+            "repository_company_ciks",
+            side_effect=AssertionError("production registry fallback reached"),
+        ):
+            proof = workflow_module._validate_live_source_authority(
+                repo_root=REPO_ROOT,
+                company_id=str(declaration["company_id"]),
+                raw_blob=raw,
+                source_url=str(source["source_url"]),
+                accession=str(declaration["accession"]),
+                document_name=str(declaration["document_name"]),
+                source_role=str(source["source_role"]),
+                request_attempt_id=str(source["request_attempt_id"]),
+                allowed_ciks=allowed_ciks,
+            )
+        self.assertEqual(source["request_attempt_id"], proof["request_attempt_id"])
+        with self.assertRaises(workflow_module.LiveSourceAuthorityError):
+            workflow_module._validate_live_source_authority(
+                repo_root=REPO_ROOT,
+                company_id=str(declaration["company_id"]),
+                raw_blob=raw,
+                source_url=str(source["source_url"]),
+                accession=str(declaration["accession"]),
+                document_name=str(declaration["document_name"]),
+                source_role=str(source["source_role"]),
+                request_attempt_id=str(source["request_attempt_id"]),
+                allowed_ciks=["1"],
+            )
 
     def test_production_freeze_binds_second_layout_and_ledger_prefix(self) -> None:
         """Require two FROZEN tasks and reject later semantic-tree drift."""

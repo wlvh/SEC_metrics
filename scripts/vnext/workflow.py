@@ -37,6 +37,7 @@ from .observations import reviewed_observation, scope_key
 from .qualification import QualificationError
 from .qualification import record_table_qualification_execution
 from .qualification import validate_live_table_qualification_authorization
+from .qualification import qualification_authorized_company_ciks
 from .qualification import qualification_authorized_company_traits
 from .qualification import validate_table_qualification_run_bindings
 from .requirements import load_run_requirement_snapshot
@@ -413,8 +414,9 @@ def _validate_live_source_authority(
     document_name: str,
     source_role: str,
     request_attempt_id: str,
+    allowed_ciks: Optional[Sequence[str]] = None,
 ) -> Dict[str, object]:
-    """Rebuild the registry, filing, ledger, body, and header proof pre-egress.
+    """Rebuild the company, filing, ledger, body, and header proof pre-egress.
 
     Args:
         repo_root: Fixed repository containing registry and SEC audit authority.
@@ -425,6 +427,8 @@ def _validate_live_source_authority(
         document_name: Claimed filing document identity.
         source_role: Claimed Run source role.
         request_attempt_id: Pinned immutable request-ledger row identity.
+        allowed_ciks: Optional CIKs rebuilt from opaque qualification authority;
+            normal production Runs continue to use the company registry.
 
     Returns:
         Exact immutable body/header locator proof for transport replay.
@@ -434,15 +438,20 @@ def _validate_live_source_authority(
         SEC source proof cannot be rebuilt from current repository bytes.
     """
     try:
+        cik_authority = (
+            repository_company_ciks(
+                repo_root=repo_root, company_id=company_id,
+            )
+            if allowed_ciks is None
+            else list(allowed_ciks)
+        )
         validate_public_sec_filing_identity(
             raw_blob=raw_blob,
             source_url=source_url,
             accession=accession,
             document_name=document_name,
             source_role=source_role,
-            allowed_ciks=repository_company_ciks(
-                repo_root=repo_root, company_id=company_id,
-            ),
+            allowed_ciks=cik_authority,
         )
         binding = validate_request_attempt_binding(
             repo_root=repo_root,
@@ -1089,6 +1098,18 @@ def _create_review_run_with_traits(
     )
     live_source_binding = None
     if adapter_mode == "LIVE":
+        qualification_ciks = None
+        if qualification_binding is not None:
+            try:
+                qualification_ciks = qualification_authorized_company_ciks(
+                    repo_root=repo_root,
+                    authorization=qualification_authorization,
+                    company_id=company_id,
+                )
+            except QualificationError as error:
+                raise WorkflowError(
+                    "Qualification source CIK authority is invalid"
+                ) from error
         live_source_binding = _validate_live_source_authority(
             repo_root=repo_root,
             company_id=company_id,
@@ -1098,6 +1119,7 @@ def _create_review_run_with_traits(
             document_name=document_name,
             source_role=source_role,
             request_attempt_id=request_attempt_id,
+            allowed_ciks=qualification_ciks,
         )
     source_reference = source_reference_record(
         raw_blob=raw_blob,
