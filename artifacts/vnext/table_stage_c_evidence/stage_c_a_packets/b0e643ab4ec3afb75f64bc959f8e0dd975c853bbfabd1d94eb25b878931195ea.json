@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "record_type": "ISSUE_15_STAGE_C_A_DECISION_EVIDENCE_PACKET",
+  "stage_c_a_status": "BLOCKED_OFFLINE_BENCHMARK_NOT_RUN",
+  "authority": {
+    "issue_number": 15,
+    "owner_decision_comment_url": "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5399126863",
+    "requirement_closure_hash": "sha256:a5b0467d0df529a4c094107ee0430ea862d77e80f5a359ca6d407a806fb0367c",
+    "effective_d07_record_hash": "sha256:200bb6feae25c5683260e2dd8a758f1ab3f0480b8694bb802ca44fd80835554f",
+    "historical_stage_c_baseline": {
+      "table_qualification_freeze_receipt_id": "sha256:9c8ca60dc6fb97fcc693618694a96d009e110efc0ea2d28366022d2d8c0824b6",
+      "qualification_cycle_id": "sha256:df8deeac28b35fff526c5f0b66d7866f695c392a94d17cb05c45e5d81b42781c",
+      "stage_a_snapshot_id": "sha256:bf2d375dc966f2503582ab1d13c464fd9775cac213d4903884b3fbd437fb2888",
+      "owner_decision_packet_id": "sha256:09a9cc1933fc5d60efa00a183583e20dd59283b4397bfdb6b0cfcb4afd1b85a7",
+      "historical_requirement_closure_hash": "sha256:fcd308ed51fe3b7cd6d4dcc82ba373d31832f0f1f522c3b8b765e766693a5822",
+      "historical_effective_d07_record_hash": "sha256:bc9830fc98a331ea54625b499665c3e2ef71a478194a9f066a31ac5c56de1ec8"
+    },
+    "rework_review": {
+      "review_id": 5014458726,
+      "state": "COMMENTED",
+      "reviewed_head": "fb6144e240d5b3b16ba080731b805e06cf936abb",
+      "review_url": "https://github.com/wlvh/SEC_metrics/pull/20#pullrequestreview-5014458726",
+      "code_verdict": "REWORK_REQUIRED",
+      "blocking_finding": "B1_CONCURRENT_MARKER_CLAIM"
+    }
+  },
+  "OWNER_APPROVED": {
+    "exact_lodging_token_measurement_path_implementation": true,
+    "jpm_test_only_full_materialization_benchmark": true,
+    "repository_monetary_caps": "DISABLED",
+    "spending_control": "EXTERNAL_API_ACCOUNT_BALANCE",
+    "safety_limit": "EXACTLY_ONE_PROVIDER_EGRESS_ZERO_RETRY"
+  },
+  "IMPLEMENTED_NOT_EXECUTED": {
+    "lodging_actual_token_measurement_executor": true,
+    "concurrent_marker_claim": "O_EXCL_FAIL_CLOSED_FILE_AND_DIRECTORY_FSYNC",
+    "concurrent_sender_regression": "PASSED_MOCK_TWO_PROCESS_ONE_OPENER",
+    "reviewed_b1_status": "RESOLVED_PENDING_INDEPENDENT_REREVIEW",
+    "reviewer_receipt_recommendation_status": "PENDING_OWNER_DECISION",
+    "external_exact_head_authorization_received": false,
+    "opaque_execution_authorization_issued": false,
+    "provider_egress_executed": false,
+    "measurement_evidence_status": "NOT_RUN"
+  },
+  "MEASURED_OFFLINE": {
+    "benchmark_receipt_id": "sha256:7129778529da4e8b402ad693433531f36c52cd99f4c1b71e20735bb33196b3c3",
+    "benchmark_run_receipt_id": "sha256:769a848b5099596c9ea04210b8cc7e69facdd010d6739f16d1edbcb90baf32be",
+    "status": "NOT_RUN_RSS_GUARD_UNAVAILABLE",
+    "completion_result": false,
+    "peak_rss_bytes": null,
+    "wall_time_seconds": null,
+    "canonical_json_bytes": null,
+    "derived_asset_id": null,
+    "blocking_reason": "RSS_HARD_LIMIT_SETUP_FAILED"
+  },
+  "STILL_UNAUTHORIZED": [
+    "REAL_TOKEN_MEASUREMENT",
+    "LIVE_QUALIFICATION",
+    "R3",
+    "R4",
+    "PRODUCTION_MAX_TOTAL_CELLS_CHANGE",
+    "SHARDING",
+    "SERIALIZER_CANDIDATE",
+    "SELECTOR",
+    "PUBLICATION"
+  ],
+  "measurement_authorization": {
+    "measurement_plan_id": "sha256:89d90019e929566df8e3d7a93c4c8a360067cdc0e3977fa9e4a8ece00a9dbceb",
+    "measurement_plan_path": "artifacts/vnext/table_stage_c_evidence/token_measurement/plans/89d90019e929566df8e3d7a93c4c8a360067cdc0e3977fa9e4a8ece00a9dbceb.json",
+    "authorization_id": "NOT_ISSUED",
+    "repository_head_binding": "REQUIRED_AT_EXTERNAL_AUTHORIZATION",
+    "estimated_input_tokens": 392447,
+    "ordinary_qualification_max_estimated_input_tokens": 200000
+  },
+  "active_root_state": {
+    "active_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+    "root_hashes": {
+      "outputs/active_publication.json": {
+        "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+        "size": 354
+      },
+      "outputs/metrics_matrix.csv": {
+        "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+        "size": 105128
+      },
+      "outputs/metric_evidence.csv": {
+        "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "size": 250439
+      },
+      "REPORT_十公司财务指标.md": {
+        "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+        "size": 29729
+      }
+    },
+    "public_matrix_row_count": 309,
+    "public_key_set_hash": "sha256:33b2a81ac6507b33a37509189fb8eb7fae87fa25c2f441bc4b4bca6705f56fab",
+    "root_business_artifacts_before": {
+      "outputs/active_publication.json": {
+        "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+        "size": 354
+      },
+      "outputs/metrics_matrix.csv": {
+        "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+        "size": 105128
+      },
+      "outputs/metric_evidence.csv": {
+        "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "size": 250439
+      },
+      "REPORT_十公司财务指标.md": {
+        "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+        "size": 29729
+      }
+    },
+    "root_business_artifacts_after": {
+      "outputs/active_publication.json": {
+        "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+        "size": 354
+      },
+      "outputs/metrics_matrix.csv": {
+        "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+        "size": 105128
+      },
+      "outputs/metric_evidence.csv": {
+        "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "size": 250439
+      },
+      "REPORT_十公司财务指标.md": {
+        "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+        "size": 29729
+      }
+    },
+    "root_business_artifacts_byte_equal": true
+  },
+  "egress_counts": {
+    "real_model_provider_egress_count": 0,
+    "paid_model_provider_call_count": 0,
+    "real_SEC_egress_count": 0
+  },
+  "implementation_source_hashes": {
+    "scripts/vnext/table_context_measurement.py": "1318be41735c3684e9eed84bc94e06e9eee26590c2f5627bffe3697fe97a2702",
+    "scripts/vnext/ai_adapter.py": "6951273a8130cbc6fe2a0832ccb360e5c789d77b51a29e71c08e0007b6006b8e",
+    "tools/vnext_table_context_measurement.py": "443d6a6393366ff92a4513814abe5f196a9d76efa519ce6f0f3ac99fc351c897",
+    "tests/vnext/test_table_context_measurement.py": "a2649ff070a64fee3743e535ee955225626b87ad5aa7ab91a8083479f635dfc1",
+    "tools/benchmark_jpm_full_materialization.py": "b62ec42472d592b8aa71710c7d4ff5623d1a317bf5d85d31d81d906c6279dc83",
+    "tests/vnext/test_table_stage_c_financial_materialization.py": "56504f178abadfe9223127673b2df6acbfce7996865ed45a93075ba0a9f4b0be",
+    "tools/check_provider_egress.py": "65d1b22d491d5d991d2ea4878cbd95aed51b9a4589f12906d86ae42e9968a1c8"
+  },
+  "source_snapshot": {
+    "candidate_status": "CLEAN_SOURCE_BASE",
+    "candidate_base_commit": "ddd1c517a084e6e75aaeced1014bbf4690bb3cb5",
+    "source_input_tree_sha256": "3ea2ee7cf8797a882d658f567eefcc1b700fbb14aa8cbe09f135526abdd50e4a",
+    "source_file_count": 293,
+    "staged_source_paths": [],
+    "staged_source_path_set_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  "BLOCKERS": [
+    "JPM_RSS_GUARD_UNAVAILABLE"
+  ],
+  "stage_c_a_packet_id": "sha256:b0e643ab4ec3afb75f64bc959f8e0dd975c853bbfabd1d94eb25b878931195ea"
+}
