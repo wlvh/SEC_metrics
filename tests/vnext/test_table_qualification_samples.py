@@ -12,7 +12,14 @@ from vnext import ai_adapter
 from vnext import qualification as qualification_module
 from vnext import workflow as workflow_module
 from vnext.canonical import strict_json_file
+from vnext.reader_input import build_reader_input_manifest
+from vnext.reader_input import prepare_live_reader_request
+from vnext.reader_input import prepare_reader_request
+from vnext.sources import load_raw_blob_bytes
 from vnext.sources import raw_blob_record
+from vnext.sources import source_reference_record
+from vnext.table_grid import build_table_grid
+from vnext.traits import repository_company_ciks
 from vnext.qualification import _qualification_sample_authority
 from vnext.qualification import _qualification_sample_measurement
 from vnext.qualification import QualificationError
@@ -302,6 +309,88 @@ class TableQualificationSamplesTest(unittest.TestCase):
                 request_attempt_id=str(source["request_attempt_id"]),
                 allowed_ciks=["1"],
             )
+
+    def test_adapter_replays_matrix_owned_layout_cik_without_registry_row(
+        self,
+    ) -> None:
+        """Replay the exact Hilton fixture while preserving ten-company registry."""
+        fixture = qualification_module._matrix_fixture_source_binding(
+            repo_root=REPO_ROOT,
+            fixture_id="hilton-2024-sec-layout-v7",
+        )
+        source = {
+            key: value for key, value in fixture.items()
+            if key in qualification_module._SOURCE_BINDING_FIELDS
+        }
+        declaration = source["source_declaration"]
+        registry_text = (REPO_ROOT / "config/company_registry.csv").read_text(
+            encoding="utf-8",
+        )
+        self.assertNotIn(str(declaration["company_id"]), registry_text)
+        self.assertEqual(
+            ["1585689"],
+            repository_company_ciks(
+                repo_root=REPO_ROOT,
+                company_id=str(declaration["company_id"]),
+            ),
+        )
+        holdout = qualification_module._matrix_fixture_source_binding(
+            repo_root=REPO_ROOT,
+            fixture_id="hyatt-2025-sec-holdout-v2",
+        )
+        self.assertEqual(
+            ["1468174"],
+            repository_company_ciks(
+                repo_root=REPO_ROOT,
+                company_id=str(
+                    holdout["source_declaration"]["company_id"]
+                ),
+            ),
+        )
+        raw = raw_blob_record(
+            repo_root=REPO_ROOT,
+            repo_relative_path=str(declaration["source_repo_relative_path"]),
+            media_type=str(fixture["source_media_type"]),
+        )
+        reference = source_reference_record(
+            raw_blob=raw,
+            company_id=str(declaration["company_id"]),
+            source_url=str(source["source_url"]),
+            accession=str(declaration["accession"]),
+            document_name=str(declaration["document_name"]),
+            source_role=str(source["source_role"]),
+            request_attempt_id=str(source["request_attempt_id"]),
+        )
+        asset = build_table_grid(
+            html_bytes=load_raw_blob_bytes(repo_root=REPO_ROOT, raw_blob=raw),
+            parent_raw_asset_ids=[str(raw["raw_asset_id"])],
+            storage_uri="artifacts/vnext/derived/test-hilton.json",
+        )
+        manifest = build_reader_input_manifest(
+            derived_asset=asset,
+            source_reference_ids=[str(reference["source_reference_id"])],
+        )
+        prepared = prepare_reader_request(
+            manifest=manifest,
+            derived_asset=asset,
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
+        )
+        live = prepare_live_reader_request(
+            prepared_request=prepared,
+            raw_blob=raw,
+            source_reference=reference,
+            derived_asset=asset,
+            reader_manifest=manifest,
+            disclosure_spec_path="catalog/table_task_contracts.json",
+            immutable_source_repo_relative_path=str(
+                declaration["source_repo_relative_path"]
+            ),
+        )
+        rebuilt = ai_adapter._validate_live_prepared_request(
+            prepared_request=live,
+        )
+        self.assertEqual(prepared, rebuilt)
 
     def test_production_freeze_binds_second_layout_and_ledger_prefix(self) -> None:
         """Require two FROZEN tasks and reject later semantic-tree drift."""

@@ -8,6 +8,7 @@ fails when the catalog/profile exact set drifts.
 from __future__ import annotations
 
 import csv
+import re
 from pathlib import Path
 from typing import Dict, List
 
@@ -16,6 +17,94 @@ from .canonical import strict_json_file
 
 class TraitError(ValueError):
     """Report registry, profile, or generated trait-catalog drift."""
+
+
+_QUALIFICATION_FIXTURE_ID = re.compile(r"^[a-z0-9_-]+$")
+_SEC_ARCHIVE_FILING = re.compile(
+    r"^https://www\.sec\.gov/Archives/edgar/data/"
+    r"([0-9]{1,10})/([0-9]{18})/([^/?#]+)$"
+)
+
+
+def _qualification_fixture_ciks(
+    *, repo_root: Path, company_id: str,
+) -> List[str]:
+    """Resolve a non-production layout company's CIK from the frozen matrix."""
+    matrix_path = repo_root / "config" / "table_qualification_matrix.json"
+    if not matrix_path.exists():
+        return []
+    if matrix_path.is_symlink() or not matrix_path.is_file():
+        raise TraitError("Qualification matrix must be a regular file")
+    try:
+        matrix = strict_json_file(path=matrix_path)
+    except (OSError, ValueError, TypeError) as error:
+        raise TraitError("Qualification matrix is invalid") from error
+    families = matrix.get("families") if isinstance(matrix, dict) else None
+    if not isinstance(families, list):
+        raise TraitError("Qualification matrix family index is invalid")
+    ciks = []
+    for family in families:
+        if not isinstance(family, dict):
+            raise TraitError("Qualification matrix family is invalid")
+        for field in ("second_layout_source", "post_freeze_holdout_source"):
+            source = family.get(field)
+            if not isinstance(source, dict):
+                raise TraitError("Qualification layout source is invalid")
+            if source.get("source_kind") != "RECORDED_LAYOUT_FIXTURE":
+                continue
+            fixture_id = source.get("fixture_id")
+            if (
+                type(fixture_id) is not str
+                or _QUALIFICATION_FIXTURE_ID.fullmatch(fixture_id) is None
+            ):
+                raise TraitError("Qualification fixture identity is invalid")
+            manifest_path = (
+                repo_root / "fixtures" / "vnext" / "layouts"
+                / fixture_id / "fixture_manifest.json"
+            )
+            if manifest_path.is_symlink() or not manifest_path.is_file():
+                raise TraitError("Qualification fixture manifest is unsafe")
+            try:
+                manifest = strict_json_file(path=manifest_path)
+            except (OSError, ValueError, TypeError) as error:
+                raise TraitError(
+                    "Qualification fixture manifest is invalid"
+                ) from error
+            if not isinstance(manifest, dict):
+                raise TraitError("Qualification fixture manifest is invalid")
+            if manifest.get("company_id") != company_id:
+                continue
+            cik = manifest.get("cik")
+            accession = manifest.get("accession")
+            document_name = manifest.get("document_name")
+            match = _SEC_ARCHIVE_FILING.fullmatch(
+                str(manifest.get("source_url", ""))
+            )
+            if (
+                manifest.get("fixture_id") != fixture_id
+                or type(cik) is not str
+                or not cik.isdigit()
+                or int(cik) <= 0
+                or type(accession) is not str
+                or type(document_name) is not str
+                or match is None
+            ):
+                raise TraitError("Qualification fixture CIK authority is invalid")
+            compact = match.group(2)
+            url_accession = "{}-{}-{}".format(
+                compact[:10], compact[10:12], compact[12:],
+            )
+            if (
+                str(int(match.group(1))) != str(int(cik))
+                or accession != url_accession
+                or document_name != match.group(3)
+            ):
+                raise TraitError("Qualification fixture filing identity differs")
+            ciks.append(str(int(cik)))
+    unique = list(dict.fromkeys(ciks))
+    if len(unique) > 1:
+        raise TraitError("Qualification fixture company CIK is ambiguous")
+    return unique
 
 
 def derive_company_traits(
@@ -135,8 +224,8 @@ def repository_company_ciks(*, repo_root: Path, company_id: str) -> List[str]:
         Ordered, unique, unpadded decimal CIK strings from the role mapping.
 
     Raises:
-        TraitError: On an unsafe registry, missing company, malformed role,
-            duplicate CIK, or primary-CIK disagreement.
+        TraitError: On an unsafe registry, missing company or qualification
+            fixture, malformed role, duplicate CIK, or identity disagreement.
     """
     path = repo_root / "config" / "company_registry.csv"
     if path.is_symlink() or not path.is_file():
@@ -149,6 +238,13 @@ def repository_company_ciks(*, repo_root: Path, company_id: str) -> List[str]:
         ):
             raise TraitError("Company registry lacks CIK identity fields")
         matches = [row for row in reader if row["company_id"] == company_id]
+    if not matches:
+        qualification_ciks = _qualification_fixture_ciks(
+            repo_root=repo_root, company_id=company_id,
+        )
+        if qualification_ciks:
+            return qualification_ciks
+        raise TraitError("Company registry identity is absent or duplicated")
     if len(matches) != 1:
         raise TraitError("Company registry identity is absent or duplicated")
     row = matches[0]
