@@ -186,6 +186,51 @@ class TableContextAttestationTest(unittest.TestCase):
         )
         self.assertEqual(160937, result["attested_actual_prompt_tokens"])
 
+    def test_exact_revpar_request_passes_only_its_measured_binding(self) -> None:
+        """Admit the sibling task from its own usage terminal, never a ratio."""
+        attestation = validate_table_context_feasibility_attestation(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
+        self.assertEqual(160928, attestation["actual_prompt_tokens"])
+        self.assertEqual(200000, attestation["context_budget_tokens"])
+        self.assertEqual(39072, attestation["context_headroom_tokens"])
+        self.assertIsNone(attestation["source_stage_c_b_packet_id"])
+        self.assertIsNone(attestation["source_stage_c_b_packet_path"])
+        self.assertFalse(attestation["qualification_credit"])
+        self.assertFalse(
+            attestation["qualification_response_reuse_eligible"]
+        )
+        binding = current_exact_request_binding(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
+        result = evaluate_context_feasibility(
+            repo_root=REPO_ROOT,
+            estimated_input_tokens=392438,
+            max_estimated_input_tokens=200000,
+            request_binding=binding,
+        )
+        self.assertEqual("PASSED", result["status"])
+        self.assertEqual(
+            "PROVIDER_REPORTED_EXACT_BINDING", result["evidence_basis"],
+        )
+        self.assertEqual(attestation["attestation_id"], result["attestation_id"])
+        self.assertEqual(160928, result["attested_actual_prompt_tokens"])
+
+        changed = copy.deepcopy(binding)
+        changed["provider_request_body_sha256"] = "0" * 64
+        blocked = evaluate_context_feasibility(
+            repo_root=REPO_ROOT,
+            estimated_input_tokens=392438,
+            max_estimated_input_tokens=200000,
+            request_binding=changed,
+        )
+        self.assertEqual("BLOCKED", blocked["status"])
+        self.assertIn(
+            "provider_request_body_sha256", blocked["drift_fields"],
+        )
+
     def test_every_exact_binding_drift_blocks_before_egress(self) -> None:
         """Reject source/task/prompt/schema/transport/request mutations."""
         attestation = self.attestation
@@ -239,7 +284,13 @@ class TableContextAttestationTest(unittest.TestCase):
                 request_binding=binding,
             )
             self.assertEqual("BLOCKED", result["status"])
-            self.assertIn(field, result["drift_fields"])
+            if field == "task_contract_id":
+                self.assertIn(
+                    "provider_request_body_sha256", result["drift_fields"],
+                )
+                self.assertIn("task_contract_hash", result["drift_fields"])
+            else:
+                self.assertIn(field, result["drift_fields"])
 
     def test_default_estimated_bound_does_not_need_attestation(self) -> None:
         """Preserve the ordinary inclusive 200000 path unchanged."""

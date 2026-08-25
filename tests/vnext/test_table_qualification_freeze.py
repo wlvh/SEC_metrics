@@ -24,6 +24,7 @@ from vnext.table_qualification_freeze import _protected_closure
 from vnext.table_qualification_freeze import _protected_closure_drift
 from vnext.table_qualification_freeze import _measurement_receipts
 from vnext.table_qualification_freeze import _split_cost_receipts
+from vnext.table_context_attestation import current_exact_request_binding
 from vnext.table_task_contracts import load_table_task_contracts
 
 
@@ -75,6 +76,27 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 self.assertEqual(
                     1000000,
                     entry["token_context_limits"]["maximum_context_tokens"],
+                )
+
+    def test_each_lodging_task_uses_its_current_attested_closure(self) -> None:
+        """Do not reuse one task's protected hash for its sibling request."""
+        matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
+        task_ids = matrix["entries"]["lodging_kpi_table"]["task_contract_ids"]
+        self.assertEqual(2, len(task_ids))
+        for task_id in task_ids:
+            with self.subTest(task_contract_id=task_id):
+                expected = current_exact_request_binding(
+                    repo_root=REPO_ROOT,
+                    task_contract_id=task_id,
+                )
+                actual = freeze_module._attested_request_authority(
+                    repo_root=REPO_ROOT,
+                    task_contract_id=task_id,
+                )
+                self.assertIsNotNone(actual)
+                self.assertEqual(
+                    expected["protected_closure_hash"],
+                    actual["protected_closure_hash"],
                 )
 
     def test_estimated_context_threshold_is_inclusive(self) -> None:

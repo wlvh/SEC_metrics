@@ -782,21 +782,22 @@ def _context_feasibility(
 
 
 def _attested_request_authority(
-    *, repo_root: Path,
+    *, repo_root: Path, task_contract_id: str,
 ) -> Optional[Dict[str, str]]:
-    """Return freshly validated request authority or no exact proof."""
+    """Return one task's freshly validated current request authority."""
     try:
         from .table_context_attestation import (
-            validate_table_context_feasibility_attestation,
+            current_exact_request_binding,
         )
-        attestation = validate_table_context_feasibility_attestation(
+        binding = current_exact_request_binding(
             repo_root=repo_root,
+            task_contract_id=task_contract_id,
         )
     except (OSError, RuntimeError, ValueError):
         return None
     return {
         "protected_closure_hash": str(
-            attestation["protected_closure_hash"]
+            binding["protected_closure_hash"]
         ),
     }
 
@@ -1075,11 +1076,6 @@ def _measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
-    # Default-bound requests remain independently evaluable.  An oversized
-    # request receives a structured blocker when the exact proof is absent.
-    attested_request_authority = _attested_request_authority(
-        repo_root=repo_root,
-    )
     round_trip_sources = _round_trip_sources(repo_root=repo_root)
     round_trip_entry = matrix["entries"].get("lodging_kpi_table")
     if type(round_trip_entry) is not dict:
@@ -1122,6 +1118,10 @@ def _measurement_receipts(
             if family_id == "lodging_kpi_table" else None
         )
         for task_contract_id in entry["task_contract_ids"]:
+            attested_request_authority = _attested_request_authority(
+                repo_root=repo_root,
+                task_contract_id=str(task_contract_id),
+            )
             task_contract = resolve_table_task_contract(
                 repo_root=repo_root,
                 task_contract_id=task_contract_id,
@@ -1340,9 +1340,6 @@ def _family_measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
-    attested_request_authority = _attested_request_authority(
-        repo_root=repo_root,
-    )
     development_source_reference_id = (
         _lodging_source_reference_id(
             repo_root=repo_root,
@@ -1352,6 +1349,10 @@ def _family_measurement_receipts(
     )
     rows = []
     for task_contract_id in entry["task_contract_ids"]:
+        attested_request_authority = _attested_request_authority(
+            repo_root=repo_root,
+            task_contract_id=str(task_contract_id),
+        )
         task_contract = resolve_table_task_contract(
             repo_root=repo_root,
             task_contract_id=task_contract_id,
