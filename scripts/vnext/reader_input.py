@@ -91,6 +91,8 @@ class LivePreparedReaderRequest:
         source_reference_id: Exact SourceReference identity.
         derived_asset_id: Complete rebuilt table-grid identity.
         reader_input_manifest_id: Complete table-set manifest identity.
+        qualification_authorization: Optional opaque qualification authority;
+            it is never serialized into the provider request.
     """
 
     prepared_request: PreparedReaderRequest
@@ -107,6 +109,7 @@ class LivePreparedReaderRequest:
     source_reference_id: str
     derived_asset_id: str
     reader_input_manifest_id: str
+    qualification_authorization: Optional[object]
     _factory_authority: object
 
     def __init__(
@@ -126,6 +129,7 @@ class LivePreparedReaderRequest:
         source_reference_id: str,
         derived_asset_id: str,
         reader_input_manifest_id: str,
+        qualification_authorization: Optional[object],
         factory_authority: object,
     ) -> None:
         """Create one wrapper only for the module-owned live factory.
@@ -145,11 +149,20 @@ class LivePreparedReaderRequest:
             source_reference_id: Exact SourceReference identity.
             derived_asset_id: Exact complete table-grid identity.
             reader_input_manifest_id: Exact table-set manifest identity.
+            qualification_authorization: Optional module-issued qualification
+                authority for an external immutable layout source.
             factory_authority: Private module construction token.
         """
         if factory_authority is not _LIVE_PREPARED_AUTHORITY:
             raise ReaderInputError(
                 "Live Reader request requires factory authority"
+            )
+        if (
+            qualification_authorization is not None
+            and not prepared_request.task_contract_id
+        ):
+            raise ReaderInputError(
+                "Qualification authority requires a catalog task"
             )
         for field_name, value in (
             ("company_id", company_id),
@@ -189,6 +202,9 @@ class LivePreparedReaderRequest:
         object.__setattr__(self, "derived_asset_id", derived_asset_id)
         object.__setattr__(
             self, "reader_input_manifest_id", reader_input_manifest_id
+        )
+        object.__setattr__(
+            self, "qualification_authorization", qualification_authorization,
         )
         object.__setattr__(self, "_factory_authority", factory_authority)
 
@@ -530,6 +546,7 @@ def prepare_live_reader_request(
     reader_manifest: Mapping[str, object],
     disclosure_spec_path: str,
     immutable_source_repo_relative_path: str,
+    qualification_authorization: Optional[object] = None,
 ) -> LivePreparedReaderRequest:
     """Bind a complete request to the already validated live source graph.
 
@@ -541,6 +558,8 @@ def prepare_live_reader_request(
         reader_manifest: Exact table-set manifest for ``derived_asset``.
         disclosure_spec_path: Legacy disclosure Spec or catalog task authority.
         immutable_source_repo_relative_path: Ledger-proven response body path.
+        qualification_authorization: Optional opaque authority for a live
+            qualification source outside the production company registry.
 
     Returns:
         Factory-marked coordinates that the transport boundary must rebuild.
@@ -609,6 +628,7 @@ def prepare_live_reader_request(
         source_reference_id=str(source["source_reference_id"]),
         derived_asset_id=str(asset["derived_asset_id"]),
         reader_input_manifest_id=str(manifest["reader_input_manifest_id"]),
+        qualification_authorization=qualification_authorization,
         factory_authority=_LIVE_PREPARED_AUTHORITY,
     )
 
@@ -653,5 +673,8 @@ def live_reader_authority_fields(
         "derived_asset_id": prepared_request.derived_asset_id,
         "reader_input_manifest_id": (
             prepared_request.reader_input_manifest_id
+        ),
+        "qualification_authorization": (
+            prepared_request.qualification_authorization
         ),
     }

@@ -3024,6 +3024,8 @@ def _validate_live_prepared_request(
     from .batch_workflow import validate_request_attempt_binding
     from .reader_input import build_reader_input_manifest
     from .reader_input import prepare_reader_request
+    from .qualification import QualificationError
+    from .qualification import qualification_authorized_source_ciks
     from .sources import load_raw_blob_bytes, raw_blob_record
     from .sources import SourceError, source_reference_record
     from .sources import validate_public_sec_filing_identity
@@ -3037,16 +3039,35 @@ def _validate_live_prepared_request(
             repo_relative_path=str(fields["source_repo_relative_path"]),
             media_type=str(fields["source_media_type"]),
         )
+        qualification_authorization = fields["qualification_authorization"]
+        allowed_ciks = (
+            repository_company_ciks(
+                repo_root=authority_root,
+                company_id=str(fields["company_id"]),
+            )
+            if qualification_authorization is None
+            else qualification_authorized_source_ciks(
+                repo_root=authority_root,
+                authorization=qualification_authorization,
+                task_contract_id=str(task_contract_id),
+                company_id=str(fields["company_id"]),
+                source_repo_relative_path=str(
+                    fields["source_repo_relative_path"]
+                ),
+                source_url=str(fields["source_url"]),
+                accession=str(fields["accession"]),
+                document_name=str(fields["document_name"]),
+                source_role=str(fields["source_role"]),
+                request_attempt_id=str(fields["request_attempt_id"]),
+            )
+        )
         validate_public_sec_filing_identity(
             raw_blob=raw_blob,
             source_url=str(fields["source_url"]),
             accession=str(fields["accession"]),
             document_name=str(fields["document_name"]),
             source_role=str(fields["source_role"]),
-            allowed_ciks=repository_company_ciks(
-                repo_root=authority_root,
-                company_id=str(fields["company_id"]),
-            ),
+            allowed_ciks=allowed_ciks,
         )
         binding = validate_request_attempt_binding(
             repo_root=authority_root,
@@ -3100,6 +3121,7 @@ def _validate_live_prepared_request(
         )
     except (
         BatchWorkflowError,
+        QualificationError,
         SourceError,
         SpecError,
         TableGridError,

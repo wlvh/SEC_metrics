@@ -12,7 +12,12 @@ from vnext import ai_adapter
 from vnext import qualification as qualification_module
 from vnext import workflow as workflow_module
 from vnext.canonical import strict_json_file
-from vnext.sources import raw_blob_record
+from vnext.reader_input import build_reader_input_manifest
+from vnext.reader_input import prepare_live_reader_request
+from vnext.reader_input import prepare_reader_request
+from vnext.sources import load_raw_blob_bytes, raw_blob_record
+from vnext.sources import source_reference_record
+from vnext.table_grid import build_table_grid
 from vnext.qualification import _qualification_sample_authority
 from vnext.qualification import _qualification_sample_measurement
 from vnext.qualification import QualificationError
@@ -248,7 +253,10 @@ class TableQualificationSamplesTest(unittest.TestCase):
             key: value for key, value in fixture.items()
             if key in qualification_module._SOURCE_BINDING_FIELDS
         }
-        binding = {"source_binding": source}
+        binding = {
+            "source_binding": source,
+            "task_contract_id": "lodging_occupancy_table_v2",
+        }
         authorization = qualification_module.TableQualificationAuthorization(
             binding=binding,
             capability=(
@@ -262,10 +270,19 @@ class TableQualificationSamplesTest(unittest.TestCase):
             return_value=binding,
         ):
             allowed_ciks = (
-                qualification_module.qualification_authorized_company_ciks(
+                qualification_module.qualification_authorized_source_ciks(
                     repo_root=REPO_ROOT,
                     authorization=authorization,
+                    task_contract_id="lodging_occupancy_table_v2",
                     company_id=str(declaration["company_id"]),
+                    source_repo_relative_path=str(
+                        declaration["source_repo_relative_path"]
+                    ),
+                    source_url=str(source["source_url"]),
+                    accession=str(declaration["accession"]),
+                    document_name=str(declaration["document_name"]),
+                    source_role=str(source["source_role"]),
+                    request_attempt_id=str(source["request_attempt_id"]),
                 )
             )
         raw = raw_blob_record(
@@ -290,6 +307,54 @@ class TableQualificationSamplesTest(unittest.TestCase):
                 allowed_ciks=allowed_ciks,
             )
         self.assertEqual(source["request_attempt_id"], proof["request_attempt_id"])
+        source_reference = source_reference_record(
+            raw_blob=raw,
+            company_id=str(declaration["company_id"]),
+            source_url=str(source["source_url"]),
+            accession=str(declaration["accession"]),
+            document_name=str(declaration["document_name"]),
+            source_role=str(source["source_role"]),
+            request_attempt_id=str(source["request_attempt_id"]),
+        )
+        derived_asset = build_table_grid(
+            html_bytes=load_raw_blob_bytes(repo_root=REPO_ROOT, raw_blob=raw),
+            parent_raw_asset_ids=[str(raw["raw_asset_id"])],
+            storage_uri="artifacts/vnext/derived/test-hilton.json",
+        )
+        reader_manifest = build_reader_input_manifest(
+            derived_asset=derived_asset,
+            source_reference_ids=[str(source_reference["source_reference_id"])],
+        )
+        prepared = prepare_reader_request(
+            manifest=reader_manifest,
+            derived_asset=derived_asset,
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
+        )
+        live = prepare_live_reader_request(
+            prepared_request=prepared,
+            raw_blob=raw,
+            source_reference=source_reference,
+            derived_asset=derived_asset,
+            reader_manifest=reader_manifest,
+            disclosure_spec_path="catalog/table_task_contracts.json",
+            immutable_source_repo_relative_path=str(
+                declaration["source_repo_relative_path"]
+            ),
+            qualification_authorization=authorization,
+        )
+        with mock.patch.object(
+            qualification_module,
+            "_rebuild_authorization_binding",
+            return_value=binding,
+        ), mock.patch(
+            "vnext.traits.repository_company_ciks",
+            side_effect=AssertionError("adapter registry fallback reached"),
+        ):
+            rebuilt = ai_adapter._validate_live_prepared_request(
+                prepared_request=live,
+            )
+        self.assertEqual(prepared, rebuilt)
         with self.assertRaises(workflow_module.LiveSourceAuthorityError):
             workflow_module._validate_live_source_authority(
                 repo_root=REPO_ROOT,
