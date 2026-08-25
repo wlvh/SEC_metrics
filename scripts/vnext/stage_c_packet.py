@@ -34,6 +34,17 @@ BENCHMARK_POINTER = (
 OWNER_DECISION_URL = (
     "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5399126863"
 )
+REWORK_REVIEW = {
+    "review_id": 5014458726,
+    "state": "COMMENTED",
+    "reviewed_head": "fb6144e240d5b3b16ba080731b805e06cf936abb",
+    "review_url": (
+        "https://github.com/wlvh/SEC_metrics/pull/20"
+        "#pullrequestreview-5014458726"
+    ),
+    "code_verdict": "REWORK_REQUIRED",
+    "blocking_finding": "B1_CONCURRENT_MARKER_CLAIM",
+}
 EXPECTED_REQUIREMENT_CLOSURE = (
     "sha256:a5b0467d0df529a4c094107ee0430ea862d77e80f5a359ca6d407a806fb0367c"
 )
@@ -86,7 +97,7 @@ def _git(*, repo_root: Path, arguments: Sequence[str]) -> str:
 
 
 def _candidate_source_snapshot(*, repo_root: Path) -> Dict[str, object]:
-    """Hash a fully staged source candidate before its artifact-only commit."""
+    """Hash a staged candidate or clean source base before artifact commit."""
     policy = load_source_policy(workdir=repo_root)
     paths = provenance_git_paths(workdir=repo_root, policy=policy)
     unstaged = _git(
@@ -104,9 +115,9 @@ def _candidate_source_snapshot(*, repo_root: Path) -> Dict[str, object]:
         repo_root=repo_root,
         arguments=["diff", "--cached", "--name-only", "--", *policy.source_paths],
     ).splitlines()
-    if unstaged or untracked or not staged:
+    if unstaged or untracked:
         raise StageCAPacketError(
-            "Stage C-A source candidate must be fully staged with no untracked source"
+            "Stage C-A source candidate has unstaged or untracked source"
         )
     tree_hash, file_count = provenance_tree(
         workdir=repo_root, paths=paths,
@@ -116,7 +127,11 @@ def _candidate_source_snapshot(*, repo_root: Path) -> Dict[str, object]:
         raise StageCAPacketError("Stage C-A base commit is invalid")
     staged_rows = sorted(set(staged))
     return {
-        "candidate_status": "STAGED_SOURCE_CANDIDATE",
+        "candidate_status": (
+            "STAGED_SOURCE_CANDIDATE"
+            if staged_rows
+            else "CLEAN_SOURCE_BASE"
+        ),
         "candidate_base_commit": head,
         "source_input_tree_sha256": tree_hash,
         "source_file_count": file_count,
@@ -304,6 +319,7 @@ def _packet_body(
             "historical_stage_c_baseline": plan[
                 "historical_stage_c_baseline"
             ],
+            "rework_review": dict(REWORK_REVIEW),
         },
         "OWNER_APPROVED": {
             "exact_lodging_token_measurement_path_implementation": True,
@@ -314,6 +330,14 @@ def _packet_body(
         },
         "IMPLEMENTED_NOT_EXECUTED": {
             "lodging_actual_token_measurement_executor": True,
+            "concurrent_marker_claim": (
+                "O_EXCL_FAIL_CLOSED_FILE_AND_DIRECTORY_FSYNC"
+            ),
+            "concurrent_sender_regression": (
+                "PASSED_MOCK_TWO_PROCESS_ONE_OPENER"
+            ),
+            "reviewed_b1_status": "RESOLVED_PENDING_INDEPENDENT_REREVIEW",
+            "reviewer_receipt_recommendation_status": "PENDING_OWNER_DECISION",
             "external_exact_head_authorization_received": False,
             "opaque_execution_authorization_issued": False,
             "provider_egress_executed": False,

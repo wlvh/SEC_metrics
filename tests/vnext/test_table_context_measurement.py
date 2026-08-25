@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import multiprocessing
 import subprocess
 import tempfile
 import unittest
@@ -86,6 +87,67 @@ class _MockMeasurementTransport:
             "provider_request_id": "mock-request-1",
             "transport_terminal_status": self.terminal_status,
         }
+
+
+class _ConcurrentMockTransport:
+    """Align two senders immediately before the one-shot marker callback."""
+
+    transport_kind = "MOCK"
+
+    def __init__(self, *, barrier: object, opener_reached: object) -> None:
+        self.barrier = barrier
+        self.opener_reached = opener_reached
+
+    def send(
+        self,
+        *,
+        request_body: bytes,
+        authorization_id: str,
+        execution_id: str,
+        attempt_ordinal: int,
+        before_egress: Callable[[], None],
+    ) -> Dict[str, object]:
+        """Reach the opener counter only after winning the marker claim."""
+        if (
+            not request_body
+            or not authorization_id
+            or not execution_id
+            or attempt_ordinal != 1
+        ):
+            raise ValueError("concurrent mock request identity differs")
+        self.barrier.wait(timeout=10)
+        before_egress()
+        with self.opener_reached.get_lock():
+            self.opener_reached.value += 1
+        return {
+            "http_status": 200,
+            "error_class": "",
+            "provider_response_bytes": _usage_response(),
+            "provider_request_id": "mock-concurrent-request",
+            "transport_terminal_status": "SUCCEEDED",
+        }
+
+
+def _run_concurrent_sender(
+    *, authorization: object, workspace: str, barrier: object,
+    opener_reached: object, outcomes: object,
+) -> None:
+    """Execute one forked sender and return only its stable terminal code."""
+    transport = _ConcurrentMockTransport(
+        barrier=barrier, opener_reached=opener_reached,
+    )
+    try:
+        result = _execute_with_transport(
+            repo_root=REPO_ROOT,
+            authorization=authorization,
+            workspace_root=Path(workspace),
+            transport=transport,
+            clock=lambda: "2026-08-25T00:00:01+00:00",
+        )
+    except TableContextMeasurementError as error:
+        outcomes.put(error.code)
+    else:
+        outcomes.put(str(result["status"]))
 
 
 def _usage_response(*, include_prompt: bool = True) -> bytes:
@@ -328,6 +390,38 @@ class TableContextMeasurementTest(unittest.TestCase):
                     "TABLE_CONTEXT_MEASUREMENT_EVIDENCE",
                 },
                 record_types,
+            )
+
+            context = multiprocessing.get_context("fork")
+            barrier = context.Barrier(2)
+            opener_reached = context.Value("i", 0)
+            outcomes = context.Queue()
+            concurrent_workspace = Path(temp_dir) / "concurrent"
+            processes = [
+                context.Process(
+                    target=_run_concurrent_sender,
+                    kwargs={
+                        "authorization": self.authorization,
+                        "workspace": str(concurrent_workspace),
+                        "barrier": barrier,
+                        "opener_reached": opener_reached,
+                        "outcomes": outcomes,
+                    },
+                )
+                for _ in range(2)
+            ]
+            for process in processes:
+                process.start()
+            for process in processes:
+                process.join(timeout=15)
+            self.assertEqual([0, 0], [process.exitcode for process in processes])
+            self.assertEqual(1, opener_reached.value)
+            self.assertEqual(
+                [
+                    "COMPLETED",
+                    "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+                ],
+                sorted(outcomes.get(timeout=2) for _ in range(2)),
             )
 
     def test_external_authorization_must_bind_current_head(self) -> None:

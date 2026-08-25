@@ -82,6 +82,9 @@ _CURRENT_D07_HASH = (
     "b3f0480b8694bb802ca44fd80835554f"
 )
 _AUTHORIZATION_CAPABILITY = object()
+_AUTHORIZATION_CONSUMED_CODE = (
+    "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED"
+)
 _GIT_OID = re.compile(r"^[0-9a-f]{40}$")
 _ACCESSION = re.compile(r"^[0-9]{10}-[0-9]{2}-[0-9]{6}$")
 _AUTHORIZATION_FIELDS = {
@@ -998,6 +1001,60 @@ def _exclusive_write_bytes(*, path: Path, content: bytes) -> None:
         os.close(descriptor)
 
 
+def _claim_egress_marker(*, path: Path, content: bytes) -> None:
+    """Create the one-shot marker as a mutually exclusive durable claim.
+
+    Unlike an ordinary content-addressed artifact, an existing marker is never
+    an idempotent success.  It proves that another sender already consumed the
+    authorization, even when both senders computed byte-identical content.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.parent.is_symlink() or not path.parent.is_dir():
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+            message="Measurement marker parent is unsafe",
+        )
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    if hasattr(os, "O_NOFOLLOW"):
+        flags |= os.O_NOFOLLOW
+    try:
+        descriptor = os.open(path, flags, 0o600)
+    except FileExistsError as error:
+        raise TableContextMeasurementError(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message="Another sender already claimed the one-shot marker",
+        ) from error
+    try:
+        offset = 0
+        while offset < len(content):
+            written = os.write(descriptor, content[offset:])
+            if written <= 0:
+                raise OSError("marker claim write stopped")
+            offset += written
+        os.fsync(descriptor)
+    except OSError as error:
+        raise TableContextMeasurementError(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message="Marker claim exists but file durability is uncertain",
+        ) from error
+    finally:
+        os.close(descriptor)
+    directory_flags = os.O_RDONLY
+    if hasattr(os, "O_DIRECTORY"):
+        directory_flags |= os.O_DIRECTORY
+    try:
+        directory_descriptor = os.open(path.parent, directory_flags)
+        try:
+            os.fsync(directory_descriptor)
+        finally:
+            os.close(directory_descriptor)
+    except OSError as error:
+        raise TableContextMeasurementError(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message="Marker claim exists but directory durability is uncertain",
+        ) from error
+
+
 def _marker_path(
     *, workspace_root: Path, binding: Mapping[str, object],
 ) -> Path:
@@ -1036,7 +1093,7 @@ def _write_egress_marker(
         "egress_started_at_utc": started_at_utc,
     }
     marker = {**body, "egress_marker_id": content_hash(value=body)}
-    _exclusive_write_bytes(
+    _claim_egress_marker(
         path=_marker_path(workspace_root=workspace_root, binding=binding),
         content=canonical_json_bytes(value=marker),
     )
@@ -1359,6 +1416,15 @@ def _execute_with_transport(
         )
         result = _validate_transport_result(value=raw_result)
     except UnknownRemoteOutcomeError:
+        unknown = True
+    except TableContextMeasurementError as error:
+        if error.code == _AUTHORIZATION_CONSUMED_CODE:
+            raise
+        if marker is None:
+            raise TableContextMeasurementError(
+                code="TABLE_CONTEXT_MEASUREMENT_PRE_EGRESS_FAILED",
+                message="Pre-egress validation failed; explicit rerun required",
+            ) from error
         unknown = True
     except Exception as error:
         if marker is None:

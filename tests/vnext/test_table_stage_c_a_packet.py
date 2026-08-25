@@ -51,6 +51,22 @@ class TableStageCAPacketTest(unittest.TestCase):
         )
         implemented = self.packet["IMPLEMENTED_NOT_EXECUTED"]
         self.assertTrue(implemented["lodging_actual_token_measurement_executor"])
+        self.assertEqual(
+            "O_EXCL_FAIL_CLOSED_FILE_AND_DIRECTORY_FSYNC",
+            implemented["concurrent_marker_claim"],
+        )
+        self.assertEqual(
+            "PASSED_MOCK_TWO_PROCESS_ONE_OPENER",
+            implemented["concurrent_sender_regression"],
+        )
+        self.assertEqual(
+            "RESOLVED_PENDING_INDEPENDENT_REREVIEW",
+            implemented["reviewed_b1_status"],
+        )
+        self.assertEqual(
+            "PENDING_OWNER_DECISION",
+            implemented["reviewer_receipt_recommendation_status"],
+        )
         self.assertFalse(implemented["external_exact_head_authorization_received"])
         self.assertFalse(implemented["opaque_execution_authorization_issued"])
         self.assertFalse(implemented["provider_egress_executed"])
@@ -61,6 +77,13 @@ class TableStageCAPacketTest(unittest.TestCase):
             200000,
             authorization["ordinary_qualification_max_estimated_input_tokens"],
         )
+        review = self.packet["authority"]["rework_review"]
+        self.assertEqual(5014458726, review["review_id"])
+        self.assertEqual(
+            "fb6144e240d5b3b16ba080731b805e06cf936abb",
+            review["reviewed_head"],
+        )
+        self.assertEqual("REWORK_REQUIRED", review["code_verdict"])
 
     def test_benchmark_active_root_and_egress_are_honest(self) -> None:
         """Expose null benchmark values, unchanged R2 bytes, and exact zeroes."""
