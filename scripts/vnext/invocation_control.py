@@ -1665,6 +1665,9 @@ def qualification_remote_egress_terminals(
             "attempt_error_classes": [
                 item for item in attempt_error_classes
             ],
+            "attempt_usages": [
+                dict(item["usage"]) for item in receipt["attempts"]
+            ],
             "provider_request_ids": [
                 item["provider_request_id"] for item in receipt["attempts"]
             ],
@@ -1735,6 +1738,7 @@ def qualification_remote_egress_terminals(
             ],
             "attempt_statuses": [],
             "attempt_error_classes": [],
+            "attempt_usages": [],
             "provider_request_ids": [],
         }
         terminal_rows.append({

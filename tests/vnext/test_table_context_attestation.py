@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import unittest
 
@@ -14,6 +15,7 @@ from vnext.table_context_attestation import (
     build_table_context_feasibility_attestation,
 )
 from vnext.table_context_attestation import exact_request_binding
+from vnext.table_context_attestation import evaluate_context_feasibility
 from vnext.table_context_attestation import (
     validate_table_context_feasibility_attestation,
 )
@@ -22,11 +24,16 @@ from vnext.table_context_attestation import (
 class TableContextAttestationTest(unittest.TestCase):
     """Prove exact derivation without provider, paid, or SEC egress."""
 
-    def test_attestation_is_mechanically_derived_from_stage_c_b(self) -> None:
-        """Bind the full request, raw usage, terminal IDs, and no-credit flags."""
-        attestation = validate_table_context_feasibility_attestation(
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Validate the immutable attestation once for focused field tests."""
+        cls.attestation = validate_table_context_feasibility_attestation(
             repo_root=REPO_ROOT,
         )
+
+    def test_attestation_is_mechanically_derived_from_stage_c_b(self) -> None:
+        """Bind the full request, raw usage, terminal IDs, and no-credit flags."""
+        attestation = self.attestation
         evidence = json.loads(
             (REPO_ROOT / attestation["measurement_evidence_path"]).read_text(
                 encoding="utf-8"
@@ -116,9 +123,7 @@ class TableContextAttestationTest(unittest.TestCase):
 
     def test_exact_binding_projection_matches_d07_policy(self) -> None:
         """Expose exactly the fields that D-07 requires future requests to match."""
-        attestation = validate_table_context_feasibility_attestation(
-            repo_root=REPO_ROOT,
-        )
+        attestation = self.attestation
         binding = exact_request_binding(attestation=attestation)
         self.assertEqual(set(EXACT_REQUEST_BINDING_FIELDS), set(binding))
         self.assertEqual(
@@ -137,6 +142,81 @@ class TableContextAttestationTest(unittest.TestCase):
                 "measurement_response_qualification_reuse"
             ],
         )
+
+    def test_exact_occupancy_request_passes_above_estimated_bound(self) -> None:
+        """Admit only the measured request via provider-reported exact binding."""
+        attestation = self.attestation
+        result = evaluate_context_feasibility(
+            repo_root=REPO_ROOT,
+            estimated_input_tokens=392447,
+            max_estimated_input_tokens=200000,
+            request_binding=exact_request_binding(attestation=attestation),
+        )
+        self.assertEqual("PASSED", result["status"])
+        self.assertEqual(
+            "PROVIDER_REPORTED_EXACT_BINDING", result["evidence_basis"]
+        )
+        self.assertEqual(160937, result["attested_actual_prompt_tokens"])
+
+    def test_every_exact_binding_drift_blocks_before_egress(self) -> None:
+        """Reject source/task/prompt/schema/transport/request mutations."""
+        attestation = self.attestation
+        baseline = exact_request_binding(attestation=attestation)
+        mutations = {
+            "source_sha256": "0" * 64,
+            "task_contract_hash": "sha256:" + "0" * 64,
+            "prompt_hash": "sha256:" + "0" * 64,
+            "output_schema_hash": "sha256:" + "0" * 64,
+            "serializer_identity": "table_payload_serialization_v3",
+            "serializer_hash": "0" * 64,
+            "provider": "other-provider",
+            "model": "other-model",
+            "api": "responses",
+            "provider_request_body_sha256": "0" * 64,
+            "requirement_closure_hash": "sha256:" + "0" * 64,
+            "protected_closure_hash": "sha256:" + "0" * 64,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field):
+                changed = copy.deepcopy(baseline)
+                changed[field] = replacement
+                result = evaluate_context_feasibility(
+                    repo_root=REPO_ROOT,
+                    estimated_input_tokens=392447,
+                    max_estimated_input_tokens=200000,
+                    request_binding=changed,
+                )
+                self.assertEqual("BLOCKED", result["status"])
+                self.assertIn(field, result["drift_fields"])
+
+    def test_unrelated_and_revpar_requests_cannot_borrow_attestation(self) -> None:
+        """Keep the alternative scoped to one occupancy task/request."""
+        attestation = self.attestation
+        for field, replacement in (
+            ("family_id", "unrelated_table_family"),
+            ("task_contract_id", "lodging_revpar_table_v2"),
+        ):
+            binding = exact_request_binding(attestation=attestation)
+            binding[field] = replacement
+            result = evaluate_context_feasibility(
+                repo_root=REPO_ROOT,
+                estimated_input_tokens=392438,
+                max_estimated_input_tokens=200000,
+                request_binding=binding,
+            )
+            self.assertEqual("BLOCKED", result["status"])
+            self.assertIn(field, result["drift_fields"])
+
+    def test_default_estimated_bound_does_not_need_attestation(self) -> None:
+        """Preserve the ordinary inclusive 200000 path unchanged."""
+        result = evaluate_context_feasibility(
+            repo_root=REPO_ROOT,
+            estimated_input_tokens=200000,
+            max_estimated_input_tokens=200000,
+            request_binding=None,
+        )
+        self.assertEqual("PASSED", result["status"])
+        self.assertEqual("ESTIMATED_BOUND", result["evidence_basis"])
 
 
 if __name__ == "__main__":

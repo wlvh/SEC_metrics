@@ -21,9 +21,10 @@ from sec_http import parse_request_log_rows, request_log_attempt_id
 from validation_provenance import ValidationProvenanceError
 
 from .ai_adapter import AIAdapterError, approved_transport_policy
+from .ai_adapter import _qualification_usage_error
 from .ai_adapter import TransportObservation
 from .ai_adapter import transport_observation_mismatch
-from .ai_adapter import build_invocation_controlled_transport_adapter
+from .ai_adapter import build_table_qualification_transport_adapter
 from .batch_workflow import BatchWorkflowError, validate_request_attempt_binding
 from .canonical import atomic_write_bytes, atomic_write_json, canonical_json_bytes
 from .canonical import content_hash, parse_utc_timestamp, sha256_bytes, sha256_file
@@ -36,6 +37,9 @@ from .review import effective_review_decision
 from .run_store import load_run_for_status, RunStoreError
 from .stage_a_snapshot import StageASnapshotError, validate_stage_a_snapshot
 from .table_grid import TableGridError, resolve_cell
+from .table_context_attestation import (
+    validate_table_context_feasibility_attestation,
+)
 from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_qualification_freeze import TableQualificationFreezeError
 from .table_qualification_freeze import FREEZE_CYCLE_ROOT
@@ -110,6 +114,7 @@ _QUALIFICATION_AUTHORIZATION_CAPABILITY = object()
 _QUALIFICATION_AUTHORIZATION_FIELDS = {
     "api",
     "catalog_task_contract_hash",
+    "context_feasibility_binding",
     "family_id",
     "freeze_receipt_id",
     "matrix_entry_hash",
@@ -122,6 +127,7 @@ _QUALIFICATION_AUTHORIZATION_FIELDS = {
     "qualification_provider_ledger_before_row_count",
     "qualification_provider_ledger_before_sha256",
     "qualification_provider_ledger_path",
+    "qualification_usage_policy",
     "qualification_terminal_id",
     "qualification_task_plan_id",
     "requirement_closure_hash",
@@ -527,6 +533,86 @@ def _authorization_mapping(
             message="Qualification provider ledger baseline is invalid",
         )
     policy = approved_transport_policy(requirement=requirement)
+    task_request_rows = [
+        value
+        for value in freeze["readiness_by_task_request"].values()
+        if value["family_id"] == family_id
+        and value["task_contract_id"] == task_contract_id
+    ]
+    if len(task_request_rows) != 1:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification task/request readiness is ambiguous",
+        )
+    task_request = task_request_rows[0]
+    context_gate = task_request["context_gate"]
+    if (
+        task_request["live_ready"] is not True
+        or context_gate["status"] != "PASSED"
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification task/request context is not ready",
+        )
+    attestation = None
+    if context_gate["evidence_basis"] == "PROVIDER_REPORTED_EXACT_BINDING":
+        attestation = validate_table_context_feasibility_attestation(
+            repo_root=repo_root,
+        )
+        if (
+            context_gate["attestation_id"] != attestation["attestation_id"]
+            or task_request["provider_request_body_sha256"]
+            != attestation["exact_provider_request_body_sha256"]
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification context attestation differs",
+            )
+    context_feasibility_binding = {
+        "task_request_id": task_request["task_request_id"],
+        "provider_request_body_sha256": task_request[
+            "provider_request_body_sha256"
+        ],
+        "evidence_basis": context_gate["evidence_basis"],
+        "context_feasibility_attestation_id": context_gate[
+            "attestation_id"
+        ],
+        "context_budget_tokens": context_gate["context_budget_tokens"],
+        "measurement_response_reuse_for_qualification": False,
+        "qualification_response_origin_policy": (
+            "NEW_PROVIDER_EXECUTION_ONLY"
+        ),
+    }
+    qualification_usage_policy = {
+        "record_type": "TABLE_QUALIFICATION_PROVIDER_USAGE_POLICY",
+        "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        "provider_request_body_sha256": task_request[
+            "provider_request_body_sha256"
+        ],
+        "context_feasibility_attestation_id": context_gate[
+            "attestation_id"
+        ],
+        "source_measurement_evidence_id": (
+            attestation["source_measurement_evidence_id"]
+            if attestation is not None else None
+        ),
+        "source_measurement_raw_response_id": (
+            attestation["raw_provider_response_id"]
+            if attestation is not None else None
+        ),
+        "actual_prompt_tokens_max": context_gate[
+            "context_budget_tokens"
+        ],
+        "required_usage_fields": [
+            "PROMPT_OR_INPUT_TOKENS",
+            "COMPLETION_OR_OUTPUT_TOKENS",
+            "TOTAL_TOKENS",
+        ],
+        "terminal_error_class": "CONTEXT_LIMIT",
+        "automatic_retry_count": 0,
+        "future_ordinal_on_failure": "STOP",
+        "measurement_response_reuse_for_qualification": False,
+    }
     terminal_body = {
         "qualification_task_plan_id": plan["qualification_task_plan_id"],
         "qualification_cycle_id": freeze["qualification_cycle_id"],
@@ -548,6 +634,7 @@ def _authorization_mapping(
         "qualification_ordinal": qualification_ordinal,
         "matrix_entry_hash": plan["matrix_entry_hash"],
         "catalog_task_contract_hash": runtime["catalog_task_contract_hash"],
+        "context_feasibility_binding": context_feasibility_binding,
         "task_spec_semantic_hash": runtime["task_spec_semantic_hash"],
         "output_schema_hash": runtime["output_schema_hash"],
         "system_prompt_hash": runtime["system_prompt_hash"],
@@ -573,6 +660,7 @@ def _authorization_mapping(
         "qualification_provider_ledger_before_row_count": ledger_before[
             "row_count"
         ],
+        "qualification_usage_policy": qualification_usage_policy,
         "qualification_terminal_id": qualification_terminal_id,
         "run_id": "run:qualification:table:" + terminal_digest,
         "run_directory_relative_path": (
@@ -600,6 +688,15 @@ def issue_table_qualification_authorization(
     by a LIVE catalog Workflow.  The current Stage-A D-07 state therefore
     rejects here before any source parsing, reservation, or transport call.
     """
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    d07 = requirement["effective_decisions"]["D-07"]["choice"]
+    if d07.get("live_qualification_authorized") is not True:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_NOT_AUTHORIZED",
+            message="D-07 does not authorize live qualification",
+        )
     binding = _authorization_mapping(
         repo_root=repo_root,
         family_id=family_id,
@@ -709,6 +806,8 @@ def validate_live_table_qualification_authorization(
         or context is None
         or getattr(context, "release_input_plan_id", None)
         != fresh["qualification_task_plan_id"]
+        or dict(getattr(context, "qualification_usage_policy", {}) or {})
+        != fresh["qualification_usage_policy"]
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
@@ -1012,6 +1111,7 @@ def record_table_qualification_execution(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification evidence Run differs from authorization",
         )
+    _require_new_qualification_execution(attempt=attempt)
     for field in (
         "attempt_id",
         "task_contract_id",
@@ -1034,13 +1134,64 @@ def record_table_qualification_execution(
         or attempt["catalog_output_schema_hash"]
         != binding["output_schema_hash"]
         or attempt["system_prompt_hash"] != binding["system_prompt_hash"]
-        or type(attempt["transport_observation"]) is not dict
-        or attempt["transport_observation"].get("egress_attempted") is not True
+        or attempt["request_body_sha256"]
+        != binding["qualification_usage_policy"][
+            "provider_request_body_sha256"
+        ]
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification attempt binding differs",
         )
+    usage_terminal = (
+        attempt.get("status") == "SUCCEEDED"
+        or attempt.get("error_class") == "CONTEXT_LIMIT"
+    )
+    if usage_terminal:
+        raw_relative = Path(str(attempt.get("raw_response_path", "")))
+        raw_path = repo_root / str(binding["run_directory_relative_path"]) / (
+            raw_relative
+        )
+        raw_available = not (
+            not raw_relative.parts
+            or raw_relative.is_absolute()
+            or ".." in raw_relative.parts
+            or raw_path.is_symlink()
+            or not raw_path.is_file()
+            or sha256_file(path=raw_path)
+            != attempt.get("raw_response_sha256")
+        )
+        if not raw_available and not _wb3_success_usage_proof(
+            repo_root=repo_root,
+            binding=binding,
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_PROVIDER_USAGE_INVALID",
+                message="Qualification raw provider response is unavailable",
+            )
+        usage_error = (
+            _qualification_usage_error(
+                raw_response_bytes=raw_path.read_bytes(),
+                policy=binding["qualification_usage_policy"],
+            )
+            if raw_available else "CONTEXT_LIMIT"
+        )
+        if (
+            attempt.get("status") == "SUCCEEDED"
+            and usage_error
+            and not _wb3_success_usage_proof(
+                repo_root=repo_root,
+                binding=binding,
+            )
+        ) or (
+            attempt.get("status") == "FAILED"
+            and attempt.get("error_class") == "CONTEXT_LIMIT"
+            and usage_error != "CONTEXT_LIMIT"
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_PROVIDER_USAGE_INVALID",
+                message="Qualification provider usage terminal differs",
+            )
     ledger_body = {
         "record_type": "TABLE_QUALIFICATION_PROVIDER_LEDGER_ENTRY",
         "qualification_authorization": binding,
@@ -1092,6 +1243,66 @@ def record_table_qualification_execution(
         **evidence_body,
         "qualification_evidence_id": content_hash(value=evidence_body),
     }
+
+
+def _wb3_success_usage_proof(
+    *, repo_root: Path, binding: Mapping[str, object],
+) -> bool:
+    """Verify controller-enforced usage for a recovered exact success."""
+    try:
+        terminals = qualification_remote_egress_terminals(
+            workspace_dir=(
+                repo_root / str(binding["wb3_workspace_relative_path"])
+            ),
+        )
+    except InvocationControlError:
+        return False
+    matches = [
+        terminal for terminal in terminals
+        if terminal["qualification_task_plan_id"]
+        == binding["qualification_task_plan_id"]
+    ]
+    if len(matches) != 1:
+        return False
+    terminal = matches[0]
+    usages = terminal.get("attempt_usages")
+    statuses = terminal.get("attempt_statuses")
+    if (
+        terminal.get("status") != "SUCCEEDED"
+        or terminal.get("batch_terminal") is not False
+        or type(usages) is not list
+        or type(statuses) is not list
+        or len(usages) != len(statuses)
+        or not usages
+        or statuses[-1] != "SUCCEEDED"
+        or type(usages[-1]) is not dict
+    ):
+        return False
+    prompt = usages[-1].get("input_tokens")
+    return (
+        type(prompt) is int
+        and prompt <= binding["qualification_usage_policy"][
+            "actual_prompt_tokens_max"
+        ]
+    )
+
+
+def _require_new_qualification_execution(
+    *, attempt: Mapping[str, object],
+) -> None:
+    """Reject measurement or generic reusable-success materialization."""
+    observation = attempt.get("transport_observation")
+    if (
+        attempt.get("record_type") != "AI_EXTRACTION_ATTEMPT"
+        or type(observation) is not dict
+        or observation.get("egress_attempted") is not True
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_RESPONSE_REUSE_FORBIDDEN",
+            message=(
+                "Qualification evidence requires a new provider execution"
+            ),
+        )
 
 
 def validate_table_qualification_run_bindings(
@@ -1919,19 +2130,35 @@ def validate_table_qualification_cycle_exact_set(
         provider_request_ids = wb3.get("provider_request_ids")
         attempt_statuses = wb3.get("attempt_statuses")
         attempt_error_classes = wb3.get("attempt_error_classes")
+        attempt_usages = wb3.get("attempt_usages")
         if (
             not isinstance(marker_ids, list)
             or not isinstance(provider_request_ids, list)
             or not isinstance(attempt_statuses, list)
             or not isinstance(attempt_error_classes, list)
+            or not isinstance(attempt_usages, list)
             or any(type(value) is not str for value in marker_ids)
             or any(type(value) is not str for value in provider_request_ids)
             or any(type(value) is not str for value in attempt_statuses)
             or any(type(value) is not str for value in attempt_error_classes)
+            or len(attempt_usages) != len(attempt_statuses)
+            or any(type(value) is not dict for value in attempt_usages)
         ):
             raise QualificationError(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
                 message="Qualification WB-3 attempt sequence is invalid",
+            )
+        if attempt["status"] == "SUCCEEDED" and (
+            not attempt_usages
+            or type(attempt_usages[-1].get("input_tokens")) is not int
+            or attempt_usages[-1]["input_tokens"]
+            > current["qualification_usage_policy"][
+                "actual_prompt_tokens_max"
+            ]
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification WB-3 provider usage differs",
             )
         if attempt["status"] == "SUCCEEDED":
             expected_wb3_statuses = {"SUCCEEDED"}
@@ -2030,6 +2257,36 @@ def execute_table_qualification_task(
         qualification_ordinal=qualification_ordinal,
     )
     binding = authorization.as_mapping()
+    if qualification_ordinal > 1:
+        prior_plan_ids = {
+            str(table_qualification_task_plan(
+                repo_root=repo_root,
+                family_id=family_id,
+                task_contract_id=task_contract_id,
+                qualification_ordinal=prior_ordinal,
+            )["qualification_task_plan_id"])
+            for prior_ordinal in range(1, qualification_ordinal)
+        }
+        prior_terminals = qualification_remote_egress_terminals(
+            workspace_dir=(
+                repo_root / str(binding["wb3_workspace_relative_path"])
+            ),
+        )
+        if any(
+            terminal["qualification_task_plan_id"] in prior_plan_ids
+            and (
+                terminal["batch_terminal"] is True
+                or terminal["status"] in {
+                    "UNKNOWN_REMOTE_OUTCOME",
+                    "PENDING_REMOTE_OUTCOME",
+                }
+            )
+            for terminal in prior_terminals
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+                message="A prior qualification ordinal stopped the task",
+            )
     supplied_period = _target_period_mapping(value=target_period)
     if supplied_period != binding["target_period"]:
         raise QualificationError(
@@ -2100,10 +2357,11 @@ def execute_table_qualification_task(
             code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
             message="Qualification terminal ledger exists without a Run closure",
         )
-    adapter = build_invocation_controlled_transport_adapter(
+    adapter = build_table_qualification_transport_adapter(
         release_input_plan_id=str(binding["qualification_task_plan_id"]),
         workspace_dir=repo_root / str(binding["wb3_workspace_relative_path"]),
         owner_token=owner_token,
+        qualification_usage_policy=binding["qualification_usage_policy"],
     )
     from .workflow import create_table_task_review_run
 
@@ -2209,6 +2467,7 @@ def table_qualification_task_plan(
         freeze = require_table_qualification_freeze(
             repo_root=repo_root,
             family_id=family_id,
+            task_contract_id=task_contract_id,
         )
         matrix = load_table_qualification_matrix(
             repo_root=repo_root,
@@ -2225,7 +2484,11 @@ def table_qualification_task_plan(
         )
     except TableQualificationFreezeError as error:
         message = str(error)
-        if message.startswith("TABLE_QUALIFICATION_FAMILY_NOT_READY:"):
+        if message.startswith(
+            "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY:"
+        ):
+            code = "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY"
+        elif message.startswith("TABLE_QUALIFICATION_FAMILY_NOT_READY:"):
             code = "TABLE_QUALIFICATION_FAMILY_NOT_READY"
         elif message == "D07_DECISION_REQUIRED":
             code = "D07_DECISION_REQUIRED"

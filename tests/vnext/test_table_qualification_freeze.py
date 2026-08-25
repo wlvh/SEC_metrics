@@ -15,6 +15,7 @@ from vnext.table_qualification_freeze import _d07_authority
 from vnext.table_qualification_freeze import _run_wb3_test_receipts
 from vnext.table_qualification_freeze import _context_blocking_reason_codes
 from vnext.table_qualification_freeze import _readiness_by_family
+from vnext.table_qualification_freeze import _readiness_by_task_request
 from vnext.table_qualification_freeze import _round_trip_input_closure
 from vnext.table_qualification_freeze import build_table_qualification_freeze_receipt
 from vnext.table_qualification_freeze import load_table_qualification_matrix
@@ -324,8 +325,35 @@ class TableQualificationFreezeTest(unittest.TestCase):
             ],
         )
         self.assertEqual(
-            ["ESTIMATED_CONTEXT_LIMIT"],
+            [
+                "ESTIMATED_CONTEXT_LIMIT",
+                "EXACT_CONTEXT_BINDING_MISMATCH",
+            ],
             readiness["lodging_kpi_table"]["blocking_reason_codes"],
+        )
+        task_readiness = _readiness_by_task_request(
+            matrix=matrix,
+            measurements=measurements,
+            drift_by_family={},
+        )
+        occupancy = next(
+            value for value in task_readiness.values()
+            if value["task_contract_id"]
+            == "lodging_occupancy_table_v2"
+        )
+        revpar = next(
+            value for value in task_readiness.values()
+            if value["task_contract_id"] == "lodging_revpar_table_v2"
+        )
+        self.assertTrue(occupancy["live_ready"])
+        self.assertEqual(
+            "PROVIDER_REPORTED_EXACT_BINDING",
+            occupancy["context_gate"]["evidence_basis"],
+        )
+        self.assertFalse(revpar["live_ready"])
+        self.assertEqual(
+            "EXACT_CONTEXT_BINDING_MISMATCH",
+            revpar["context_gate"]["blocking_reason_code"],
         )
         self.assertEqual(
             ["EXPANDED_GRID_RESOURCE_LIMIT"],
@@ -478,6 +506,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
     ) -> dict:
         """Build minimal deterministic per-family rows for readiness tests."""
         rows = []
+        matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
         for family_id, reasons in (
             ("financial_statement", financial_reasons),
             ("lodging_kpi_table", lodging_reasons),
@@ -488,15 +517,53 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 estimate = 200001
             else:
                 estimate = 200000
-            rows.append({
-                "family_id": family_id,
-                "blocking_reason_codes": list(reasons),
-                "estimated_input_tokens": estimate,
-                "measurement_id": "sha256:" + (
-                    "1" * 64 if family_id == "financial_statement"
-                    else "2" * 64
-                ),
-            })
+            context_status = (
+                "NOT_EVALUATED_RESOURCE_LIMIT"
+                if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
+                else "BLOCKED"
+                if "ESTIMATED_CONTEXT_LIMIT" in reasons
+                else "PASSED"
+            )
+            for task_contract_id in matrix["entries"][family_id][
+                "task_contract_ids"
+            ]:
+                identity = content_hash(value={
+                    "family_id": family_id,
+                    "task_contract_id": task_contract_id,
+                })
+                rows.append({
+                    "family_id": family_id,
+                    "task_contract_id": task_contract_id,
+                    "task_request_id": identity,
+                    "source_sha256": "a" * 64,
+                    "provider_request_body_sha256": (
+                        "NOT_AVAILABLE_RESOURCE_LIMIT"
+                        if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
+                        else "b" * 64
+                    ),
+                    "blocking_reason_codes": list(reasons),
+                    "estimated_input_tokens": estimate,
+                    "measurement_id": content_hash(value={
+                        "task_request_id": identity,
+                        "reasons": reasons,
+                    }),
+                    "context_feasibility": {
+                        "status": context_status,
+                        "evidence_basis": (
+                            "ESTIMATED_BOUND"
+                            if context_status == "PASSED" else None
+                        ),
+                        "attestation_id": None,
+                        "attested_actual_prompt_tokens": None,
+                        "context_budget_tokens": 200000,
+                        "exact_binding_match": False,
+                        "drift_fields": [],
+                        "blocking_reason_code": (
+                            "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+                            if context_status == "BLOCKED" else None
+                        ),
+                    },
+                })
         return {"qualification_task_measurements": rows}
 
     def _assert_only_local_family_blocked(self, *, family_id: str) -> None:

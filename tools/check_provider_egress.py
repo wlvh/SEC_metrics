@@ -53,6 +53,10 @@ ALLOWED_REMOTE_ADAPTER_CONSTRUCTORS = {
     ),
     (
         "scripts/vnext/ai_adapter.py",
+        "build_table_qualification_transport_adapter",
+    ),
+    (
+        "scripts/vnext/ai_adapter.py",
         "build_table_context_measurement_transport",
     ),
 }

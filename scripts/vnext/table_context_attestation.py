@@ -1,6 +1,6 @@
 """Derive and verify one exact-request table context attestation offline.
 
-The attestation admits only the Marriott lodging-occupancy provider request
+The attestation admits only the approved exact lodging provider request
 whose Stage C-B response reported 160,937 prompt tokens.  It is derived from
 the immutable measurement plan, marker, response, evidence, and terminal
 packet.  The module rebuilds the provider request from current repository
@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import copy
 from pathlib import Path
-from typing import Dict, Mapping, Tuple
+from typing import Dict, Mapping, Optional, Tuple
 
 from .ai_adapter import approved_transport_policy, build_provider_request_body
 from .canonical import atomic_write_json, content_hash, sha256_bytes
@@ -417,7 +417,7 @@ def _rebuild_exact_request(
 def build_table_context_feasibility_attestation(
     *, repo_root: Path,
 ) -> Dict[str, object]:
-    """Mechanically derive the exact occupancy context attestation offline."""
+    """Mechanically derive the exact lodging context attestation offline."""
     _pointer, packet, plan, evidence, marker, usage = _stage_c_b_records(
         repo_root=repo_root,
     )
@@ -605,4 +605,100 @@ def exact_request_binding(
             ]
         )
         for field in EXACT_REQUEST_BINDING_FIELDS
+    }
+
+
+def evaluate_context_feasibility(
+    *, repo_root: Path, estimated_input_tokens: int,
+    max_estimated_input_tokens: int,
+    request_binding: Optional[Mapping[str, object]],
+) -> Dict[str, object]:
+    """Apply D-07's estimated bound or exact-attestation alternative.
+
+    The alternative compares every field, including the complete provider
+    request digest and current Requirement/protected closures.  It never uses
+    byte similarity, a family/source match, or a historical bytes/token ratio.
+    """
+    if (
+        type(estimated_input_tokens) is not int
+        or estimated_input_tokens < 0
+        or type(max_estimated_input_tokens) is not int
+        or max_estimated_input_tokens < 1
+    ):
+        _fail("Context feasibility inputs are invalid")
+    policy = ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
+    if max_estimated_input_tokens != policy["context_budget_tokens"]:
+        _fail("Context feasibility budget differs from D-07")
+    if estimated_input_tokens <= max_estimated_input_tokens:
+        return {
+            "status": "PASSED",
+            "evidence_basis": "ESTIMATED_BOUND",
+            "attestation_id": None,
+            "attested_actual_prompt_tokens": None,
+            "context_budget_tokens": max_estimated_input_tokens,
+            "exact_binding_match": False,
+            "drift_fields": [],
+            "blocking_reason_code": None,
+        }
+    if type(request_binding) is not dict or set(request_binding) != set(
+        EXACT_REQUEST_BINDING_FIELDS
+    ):
+        return {
+            "status": "BLOCKED",
+            "evidence_basis": None,
+            "attestation_id": None,
+            "attested_actual_prompt_tokens": None,
+            "context_budget_tokens": max_estimated_input_tokens,
+            "exact_binding_match": False,
+            "drift_fields": list(EXACT_REQUEST_BINDING_FIELDS),
+            "blocking_reason_code": "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+        }
+    try:
+        attestation = validate_table_context_feasibility_attestation(
+            repo_root=repo_root,
+        )
+    except TableContextAttestationError:
+        return {
+            "status": "BLOCKED",
+            "evidence_basis": None,
+            "attestation_id": None,
+            "attested_actual_prompt_tokens": None,
+            "context_budget_tokens": max_estimated_input_tokens,
+            "exact_binding_match": False,
+            "drift_fields": list(EXACT_REQUEST_BINDING_FIELDS),
+            "blocking_reason_code": "EXACT_CONTEXT_ATTESTATION_INVALID",
+        }
+    expected = exact_request_binding(attestation=attestation)
+    drift_fields = [
+        field
+        for field in EXACT_REQUEST_BINDING_FIELDS
+        if request_binding[field] != expected[field]
+    ]
+    actual = attestation["actual_prompt_tokens"]
+    if drift_fields or type(actual) is not int or actual > (
+        max_estimated_input_tokens
+    ):
+        return {
+            "status": "BLOCKED",
+            "evidence_basis": None,
+            "attestation_id": attestation["attestation_id"],
+            "attested_actual_prompt_tokens": actual,
+            "context_budget_tokens": max_estimated_input_tokens,
+            "exact_binding_match": False,
+            "drift_fields": drift_fields,
+            "blocking_reason_code": (
+                "EXACT_CONTEXT_BINDING_MISMATCH"
+                if drift_fields
+                else "ATTESTED_PROVIDER_CONTEXT_LIMIT"
+            ),
+        }
+    return {
+        "status": "PASSED",
+        "evidence_basis": "PROVIDER_REPORTED_EXACT_BINDING",
+        "attestation_id": attestation["attestation_id"],
+        "attested_actual_prompt_tokens": actual,
+        "context_budget_tokens": max_estimated_input_tokens,
+        "exact_binding_match": True,
+        "drift_fields": [],
+        "blocking_reason_code": None,
     }
