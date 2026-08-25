@@ -469,20 +469,22 @@ def validate_sibling_request_context_analysis(
         key: value for key, value in analysis.items() if key != "analysis_id"
     }
     expected = build_sibling_request_context_analysis(repo_root=repo_root)
-    if analysis != expected and analysis.get("analysis_id") == (
+    historical_id = (
         "sha256:f1bbcfb692cd77b7c470704cf881237a7"
         "a11e76ca527fef0ae38bdeb235b31fa"
-    ):
-        # The additive RevPAR measurement authorization supersedes only the
-        # authority header of this historical no-bound analysis.  Preserve the
-        # old content-addressed object and demand that every request/comparison
-        # byte still equals a current offline rebuild.
-        expected["authority"] = copy.deepcopy(analysis["authority"])
-        expected_body = {
-            key: value for key, value in expected.items()
-            if key != "analysis_id"
-        }
-        expected["analysis_id"] = content_hash(value=expected_body)
+    )
+    if analysis.get("analysis_id") == historical_id:
+        # This object records why cross-task inference was unsound before the
+        # separately authorized measurement.  Keep it immutable, while still
+        # rebuilding both provider requests and their byte-level comparison.
+        if (
+            expected.get("requests") != analysis.get("requests")
+            or expected.get("exact_request_comparison")
+            != analysis.get("exact_request_comparison")
+            or expected.get("egress_counts") != analysis.get("egress_counts")
+        ):
+            _fail("Historical sibling request comparison bytes differ")
+        expected = copy.deepcopy(dict(analysis))
     if (
         analysis.get("analysis_id") != content_hash(value=body)
         or pointer.get("analysis_id") != analysis.get("analysis_id")

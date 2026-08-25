@@ -60,8 +60,8 @@ FAST_TESTS = (
     "tests.vnext.test_table_context_qualification_guard."
     "TableContextQualificationGuardTest."
     "test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
-    "tests.vnext.test_table_context_comparison.TableContextComparisonTest."
-    "test_no_sound_cross_task_token_bound_is_claimed",
+    "tests.vnext.test_table_context_attestation.TableContextAttestationTest."
+    "test_exact_revpar_request_passes_only_its_measured_binding",
     "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
     "test_current_packet_persists_sibling_and_financial_blockers",
     "tests.vnext.test_zero_ai_release.ZeroAiReleaseTest."
