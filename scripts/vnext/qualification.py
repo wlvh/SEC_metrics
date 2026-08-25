@@ -527,7 +527,7 @@ def _qualification_sample_authority(
                 )
                 company_traits = sorted({
                     str(trait)
-                    for metric in task_plan["metric_specs"]
+                    for metric in task_plan["metric_specs"].values()
                     for trait in metric["compiled"]["applicability"]["all"]
                 })
             except (KeyError, TableTaskContractError, TypeError) as nested:
