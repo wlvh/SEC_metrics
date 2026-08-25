@@ -45,6 +45,7 @@ from .table_context_attestation import current_exact_request_binding
 from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_qualification_freeze import TableQualificationFreezeError
 from .table_qualification_freeze import FREEZE_CYCLE_ROOT
+from .table_qualification_freeze import FREEZE_RECEIPT_ROOT
 from .table_qualification_freeze import load_table_qualification_matrix
 from .table_qualification_freeze import _measure_reader_envelope
 from .table_qualification_freeze import require_table_qualification_freeze
@@ -621,6 +622,30 @@ def _qualification_sample_measurement(
         model=policy.model,
         api=policy.api,
     )
+    protected_closure = freeze.get("protected_closure")
+    if type(protected_closure) is not dict:
+        receipt_id = str(freeze.get("receipt_id", ""))
+        if not _SHA256_ID.fullmatch(receipt_id):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification freeze receipt identity is invalid",
+            )
+        receipt = strict_json_file(path=(
+            repo_root
+            / FREEZE_RECEIPT_ROOT
+            / (receipt_id.split(":", maxsplit=1)[1] + ".json")
+        ))
+        if (
+            type(receipt) is not dict
+            or receipt.get("table_qualification_freeze_receipt_id")
+            != receipt_id
+            or type(receipt.get("protected_closure")) is not dict
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification freeze protected closure is invalid",
+            )
+        protected_closure = receipt["protected_closure"]
     return _measure_reader_envelope(
         repo_root=repo_root,
         source_id="{}:{}:{}".format(
@@ -651,7 +676,7 @@ def _qualification_sample_measurement(
                 task_contract_id=str(task_contract["task_contract_id"]),
             )["protected_closure_hash"])
             if sample["qualification_phase"] == "FRESH_STABILITY"
-            else content_hash(value=freeze["protected_closure"])
+            else content_hash(value=protected_closure)
         ),
     )
 
