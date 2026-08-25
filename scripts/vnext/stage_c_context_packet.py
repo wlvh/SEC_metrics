@@ -421,6 +421,37 @@ def validate_stage_c_context_attestation_packet(
         id_field="stage_c_context_packet_id",
         label="Stage-C context packet",
     )
+    historical_id = (
+        "sha256:4dd0c536cb5cb746e5746c76ed69c337"
+        "b98780d3d6d7a310d1c1bee5b3a8e64c"
+    )
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    revpar_exception = requirement["effective_decisions"]["D-07"][
+        "choice"
+    ].get("revpar_measurement_exception")
+    if packet.get("stage_c_context_packet_id") == historical_id and (
+        type(revpar_exception) is dict
+        and revpar_exception.get("task_contract_id")
+        == "lodging_revpar_table_v2"
+    ):
+        attestation = validate_table_context_feasibility_attestation(
+            repo_root=repo_root,
+        )
+        comparison = validate_sibling_request_context_analysis(
+            repo_root=repo_root,
+        )
+        authority = packet.get("authority", {})
+        if (
+            pointer["stage_c_context_packet_id"] != historical_id
+            or authority.get("context_feasibility_attestation_id")
+            != attestation["attestation_id"]
+            or authority.get("sibling_request_context_analysis_id")
+            != comparison["analysis_id"]
+        ):
+            _fail("Historical Stage-C packet dependency differs")
+        return copy.deepcopy(packet)
     if (
         pointer["stage_c_context_packet_id"]
         != packet["stage_c_context_packet_id"]

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Plan or explicitly execute the one-shot Stage-C token measurement."""
+"""Plan or explicitly execute the authorized one-shot table measurement."""
 
 from __future__ import annotations
 
@@ -43,6 +43,8 @@ def main(*, argv: Sequence[str]) -> int:
     execute = subparsers.add_parser("execute")
     execute.add_argument("--authorization", required=True)
     execute.add_argument("--authorized-head", required=True)
+    execute.add_argument("--authorized-request-sha256", required=True)
+    execute.add_argument("--review-comment-url", required=True)
     execute.add_argument("--authorized-at-utc", required=True)
     arguments = parser.parse_args(list(argv))
     try:
@@ -55,6 +57,10 @@ def main(*, argv: Sequence[str]) -> int:
                 repo_root=REPO_ROOT,
                 external_authorization_statement=arguments.authorization,
                 authorized_repository_head=arguments.authorized_head,
+                authorized_provider_request_body_sha256=(
+                    arguments.authorized_request_sha256
+                ),
+                external_review_comment_url=arguments.review_comment_url,
                 authorized_at_utc=arguments.authorized_at_utc,
             )
             result = execute_table_context_measurement(
@@ -75,4 +81,3 @@ def main(*, argv: Sequence[str]) -> int:
 
 if __name__ == "__main__":
     sys.exit(main(argv=sys.argv[1:]))
-

@@ -26,10 +26,19 @@ def main(*, argv: list[str]) -> int:
     """Run the deterministic no-network attestation workflow."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--validate", action="store_true")
+    parser.add_argument(
+        "--task-contract-id",
+        choices=(
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2",
+        ),
+        default="lodging_occupancy_table_v2",
+    )
     arguments = parser.parse_args(argv)
     if arguments.validate:
         attestation = validate_table_context_feasibility_attestation(
             repo_root=REPO_ROOT,
+            task_contract_id=arguments.task_contract_id,
         )
         result = {
             "attestation_id": attestation["attestation_id"],
@@ -46,6 +55,7 @@ def main(*, argv: list[str]) -> int:
     else:
         result = write_table_context_feasibility_attestation(
             repo_root=REPO_ROOT,
+            task_contract_id=arguments.task_contract_id,
         )
     print(json.dumps(result, sort_keys=True))
     return 0

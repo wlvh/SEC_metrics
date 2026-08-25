@@ -17,6 +17,7 @@ from vnext.qualification import QualificationError
 from vnext.qualification import table_qualification_task_plan
 from vnext.records import RecordError, validate_record
 from vnext.table_context_measurement import _execute_with_transport
+from vnext.table_context_measurement import build_table_context_measurement_plan
 from vnext.table_context_measurement import EXTERNAL_AUTHORIZATION_STATEMENT
 from vnext.table_context_measurement import issue_table_context_measurement_authorization
 from vnext.table_context_measurement import TableContextMeasurementError
@@ -180,10 +181,18 @@ class TableContextMeasurementTest(unittest.TestCase):
             capture_output=True,
             text=True,
         ).stdout.strip()
+        cls.request_sha256 = (
+            "1dbe25dd3886bc7ab5e559c7f790bf40cc3471a3550553435450acfe92e72b0b"
+        )
+        cls.review_comment_url = (
+            "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-1"
+        )
         cls.authorization = issue_table_context_measurement_authorization(
             repo_root=REPO_ROOT,
             external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
             authorized_repository_head=cls.head,
+            authorized_provider_request_body_sha256=cls.request_sha256,
+            external_review_comment_url=cls.review_comment_url,
             authorized_at_utc="2026-08-25T00:00:00+00:00",
         )
 
@@ -201,6 +210,29 @@ class TableContextMeasurementTest(unittest.TestCase):
             transport=transport,
             clock=_clock(),
         )
+
+    def test_plan_is_exact_revpar_request_without_ratio_substitution(self) -> None:
+        """Bind current catalog task, source, serializer, and provider bytes."""
+        plan = build_table_context_measurement_plan(repo_root=REPO_ROOT)
+        self.assertEqual("lodging_kpi_table", plan["family_id"])
+        self.assertEqual(
+            "lodging_revpar_table_v2", plan["task_contract_id"],
+        )
+        self.assertEqual(
+            "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+            plan["source_sha256"],
+        )
+        self.assertEqual("2", plan["table_payload_serialization_version"])
+        self.assertEqual(392438, plan["estimated_input_tokens"])
+        self.assertEqual(
+            self.request_sha256, plan["provider_request_body_sha256"],
+        )
+        self.assertEqual(200000, plan[
+            "ordinary_qualification_max_estimated_input_tokens"
+        ])
+        self.assertTrue(plan["ordinary_qualification_remains_blocked"])
+        self.assertFalse(plan["qualification_evidence_eligible"])
+        self.assertFalse(plan["response_reuse_for_qualification"])
 
     def test_mock_matrix_enforces_one_egress_and_no_downstream_credit(self) -> None:
         """Cover success, terminal failures, tamper, and ordinary 200k blocking."""
@@ -223,6 +255,15 @@ class TableContextMeasurementTest(unittest.TestCase):
             self.assertEqual(0, success["real_model_provider_egress_count"])
             self.assertEqual(0, success["paid_model_provider_call_count"])
             self.assertEqual(0, success["real_SEC_egress_count"])
+            self.assertEqual("lodging_kpi_table", success["family_id"])
+            self.assertEqual(
+                "lodging_revpar_table_v2", success["task_contract_id"],
+            )
+            self.assertEqual(self.head, success["authorized_repository_head"])
+            self.assertEqual(
+                self.review_comment_url,
+                success["external_review_comment_url"],
+            )
             second_success_transport = _MockMeasurementTransport(
                 response=_usage_response(),
             )
@@ -375,7 +416,7 @@ class TableContextMeasurementTest(unittest.TestCase):
                 table_qualification_task_plan(
                     repo_root=REPO_ROOT,
                     family_id="lodging_kpi_table",
-                    task_contract_id="lodging_occupancy_table_v2",
+                    task_contract_id="lodging_revpar_table_v2",
                     qualification_ordinal=1,
                 )
 
@@ -434,6 +475,8 @@ class TableContextMeasurementTest(unittest.TestCase):
                 repo_root=REPO_ROOT,
                 external_authorization_statement="NOT_AUTHORIZED",
                 authorized_repository_head=self.head,
+                authorized_provider_request_body_sha256=self.request_sha256,
+                external_review_comment_url=self.review_comment_url,
                 authorized_at_utc="2026-08-25T00:00:00+00:00",
             )
         with self.assertRaisesRegex(
@@ -444,6 +487,32 @@ class TableContextMeasurementTest(unittest.TestCase):
                 repo_root=REPO_ROOT,
                 external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
                 authorized_repository_head="0" * 40,
+                authorized_provider_request_body_sha256=self.request_sha256,
+                external_review_comment_url=self.review_comment_url,
+                authorized_at_utc="2026-08-25T00:00:00+00:00",
+            )
+        with self.assertRaisesRegex(
+            TableContextMeasurementError,
+            "TABLE_CONTEXT_MEASUREMENT_REQUEST_MISMATCH",
+        ):
+            issue_table_context_measurement_authorization(
+                repo_root=REPO_ROOT,
+                external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
+                authorized_repository_head=self.head,
+                authorized_provider_request_body_sha256="0" * 64,
+                external_review_comment_url=self.review_comment_url,
+                authorized_at_utc="2026-08-25T00:00:00+00:00",
+            )
+        with self.assertRaisesRegex(
+            TableContextMeasurementError,
+            "TABLE_CONTEXT_MEASUREMENT_EXTERNAL_AUTHORIZATION_REQUIRED",
+        ):
+            issue_table_context_measurement_authorization(
+                repo_root=REPO_ROOT,
+                external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
+                authorized_repository_head=self.head,
+                authorized_provider_request_body_sha256=self.request_sha256,
+                external_review_comment_url="https://example.com/not-a-review",
                 authorized_at_utc="2026-08-25T00:00:00+00:00",
             )
 

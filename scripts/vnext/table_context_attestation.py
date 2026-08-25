@@ -1,10 +1,11 @@
-"""Derive and verify one exact-request table context attestation offline.
+"""Derive and verify exact-request table context attestations offline.
 
-The attestation admits only the approved exact lodging provider request
-whose Stage C-B response reported 160,937 prompt tokens.  It is derived from
-the immutable measurement plan, marker, response, evidence, and terminal
-packet.  The module rebuilds the provider request from current repository
-authority but never constructs a transport or opens a network connection.
+The historical attestation remains immutable.  The same record type can also
+attest the separately authorized sibling measurement without adding a
+packet layer.  Each attestation is derived from one immutable plan, marker,
+raw response, and evidence object.  The module rebuilds the provider request
+from repository authority but never constructs a transport or opens a network
+connection.
 """
 
 from __future__ import annotations
@@ -19,10 +20,14 @@ from .canonical import sha256_file, strict_json_file
 from .reader_input import build_reader_input_manifest, prepare_reader_request
 from .requirements import ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
 from .sources import source_reference_record
 from .table_context_measurement import _source_binding, _usage_observation
+from .table_context_measurement import build_table_context_measurement_plan
+from .table_context_measurement import MEASUREMENT_EXECUTION_ROOT
+from .table_context_measurement import MEASUREMENT_PLAN_ROOT
 from .table_context_measurement import TableContextMeasurementError
 from .table_context_measurement import validate_table_context_measurement_evidence
 from .table_grid import build_table_grid
@@ -124,6 +129,24 @@ EXACT_REQUEST_BINDING_FIELDS = (
     "requirement_closure_hash",
     "protected_closure_hash",
 )
+OCCUPANCY_ATTESTATION_ID = (
+    "sha256:dc8cb1d152cc42b5b438e4db33fe0360"
+    "6766b8d7ec1b4bc11bd92273cbbd9e60"
+)
+OCCUPANCY_ATTESTATION_REQUIREMENT_CLOSURE_HASH = (
+    "sha256:bfb1c137dea2e993b90ffc1db58f445e"
+    "ec518c0b41743d54fb976e02815111f7"
+)
+OCCUPANCY_ATTESTATION_PROTECTED_CLOSURE_HASH = (
+    "sha256:4054326dc82aa17d60cf8ff994cc8b1c"
+    "5d2d17652fc132c4bd0639fe7d381686"
+)
+_OCCUPANCY_ADDITIVE_SUCCESSOR_PATHS = {
+    "requirements/issue_15_v1/baseline_manifest.json",
+    "requirements/issue_15_v1/decision_register.json",
+    "scripts/vnext/requirements.py",
+    "scripts/vnext/table_context_measurement.py",
+}
 
 
 class TableContextAttestationError(RuntimeError):
@@ -305,19 +328,25 @@ def _stage_c_b_records(
 def _rebuild_exact_request(
     *, repo_root: Path, requirement: Mapping[str, object],
     measurement_plan: Mapping[str, object],
+    measurement_exception: Mapping[str, object],
 ) -> Dict[str, object]:
-    """Rebuild the attested provider request without any transport object."""
+    """Rebuild one attested provider request without any transport object."""
     d07 = requirement["effective_decisions"]["D-07"]
     choice = d07["choice"]
-    exception = choice.get("measurement_exception")
+    occupancy_exception = choice.get("measurement_exception")
+    revpar_exception = choice.get("revpar_measurement_exception")
     policy = choice.get("context_feasibility_policy")
     if (
-        exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
+        occupancy_exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
+        or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
         or policy != ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
         or choice.get("live_measurement_authorized") is not False
         or choice.get("live_qualification_authorized") is not False
     ):
         _fail("Effective D-07 context authority differs")
+    exception = dict(measurement_exception)
+    if exception not in (occupancy_exception, revpar_exception):
+        _fail("Measurement exception is not authorized by effective D-07")
     family_id = str(measurement_plan["family_id"])
     task_id = str(measurement_plan["task_contract_id"])
     if (
@@ -414,13 +443,69 @@ def _rebuild_exact_request(
     }
 
 
-def build_table_context_feasibility_attestation(
+def _pointer_occupancy_attestation(
     *, repo_root: Path,
 ) -> Dict[str, object]:
-    """Mechanically derive the exact lodging context attestation offline."""
-    _pointer, packet, plan, evidence, marker, usage = _stage_c_b_records(
+    """Load the immutable historical attestation selected by its old pointer."""
+    pointer = _content_record(
+        repo_root=repo_root,
+        relative=ATTESTATION_POINTER,
+        id_field="pointer_id",
+        label="Context attestation pointer",
+    )
+    if set(pointer) != POINTER_FIELDS or pointer["record_type"] != (
+        ATTESTATION_POINTER_TYPE
+    ):
+        _fail("Context attestation pointer fields differ")
+    attestation = _content_record(
+        repo_root=repo_root,
+        relative=pointer["attestation_path"],
+        id_field="attestation_id",
+        label="Historical context attestation",
+    )
+    if (
+        set(attestation) != ATTESTATION_FIELDS
+        or attestation["record_type"] != ATTESTATION_RECORD_TYPE
+        or pointer["attestation_id"] != attestation["attestation_id"]
+        or pointer["source_measurement_evidence_id"]
+        != attestation["source_measurement_evidence_id"]
+    ):
+        _fail("Historical attestation fields or pointer binding differ")
+    return attestation
+
+
+def _validate_preserved_occupancy_attestation(
+    *, repo_root: Path,
+) -> Tuple[Dict[str, object], Dict[str, object]]:
+    """Revalidate the accepted historical bytes under the additive successor.
+
+    The new D-07 tip adds only the separately authorized sibling measurement.
+    It does not rewrite the accepted attestation.  We therefore require the
+    historical attestation identity, rebuild the exact historical provider
+    request, and permit drift only in the four authority/executor files that
+    implement this additive successor.  Every request-semantic field still
+    has to match byte-for-byte.
+    """
+    attestation = _pointer_occupancy_attestation(repo_root=repo_root)
+    if (
+        attestation["attestation_id"] != OCCUPANCY_ATTESTATION_ID
+        or attestation["requirement_closure_hash"]
+        != OCCUPANCY_ATTESTATION_REQUIREMENT_CLOSURE_HASH
+        or attestation["protected_closure_hash"]
+        != OCCUPANCY_ATTESTATION_PROTECTED_CLOSURE_HASH
+        or attestation["task_contract_id"]
+        != ISSUE_15_D07_MEASUREMENT_EXCEPTION["task_contract_id"]
+    ):
+        _fail("Accepted historical attestation identity differs")
+    _pointer, _packet, plan, evidence, _marker, _usage = _stage_c_b_records(
         repo_root=repo_root,
     )
+    if (
+        plan["measurement_plan_id"] != attestation["measurement_plan_id"]
+        or evidence["measurement_evidence_id"]
+        != attestation["source_measurement_evidence_id"]
+    ):
+        _fail("Historical measurement chain differs from attestation")
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
@@ -428,6 +513,168 @@ def build_table_context_feasibility_attestation(
         repo_root=repo_root,
         requirement=requirement,
         measurement_plan=plan,
+        measurement_exception=ISSUE_15_D07_MEASUREMENT_EXCEPTION,
+    )
+    exact_fields = {
+        "exact_provider_request_body_sha256",
+        "exact_provider_request_body_bytes",
+        "family_id",
+        "task_contract_id",
+        "source_identity",
+        "source_id",
+        "source_binding_hash",
+        "source_repo_relative_path",
+        "source_sha256",
+        "serializer_identity",
+        "serializer_version",
+        "serializer_hash",
+        "task_contract_hash",
+        "task_spec_semantic_hash",
+        "prompt_hash",
+        "output_schema_hash",
+        "provider_output_schema_sha256",
+        "provider",
+        "model",
+        "api",
+    }
+    if any(current[field] != attestation[field] for field in exact_fields):
+        _fail("Current historical request differs from accepted attestation")
+    previous_files = attestation["protected_closure"].get("files")
+    current_files = current["protected_closure"].get("files")
+    if type(previous_files) is not dict or type(current_files) is not dict:
+        _fail("Historical protected closure is invalid")
+    changed = {
+        relative
+        for relative in set(previous_files) | set(current_files)
+        if previous_files.get(relative) != current_files.get(relative)
+    }
+    if changed != _OCCUPANCY_ADDITIVE_SUCCESSOR_PATHS:
+        _fail("Additive successor changed unrelated protected files")
+    return attestation, current
+
+
+def _revpar_terminal_records(
+    *, repo_root: Path,
+) -> Tuple[
+    Dict[str, object], Dict[str, object], Dict[str, object], bytes, str, str, str,
+]:
+    """Discover the unique current plan/marker/evidence/raw terminal."""
+    plan = build_table_context_measurement_plan(repo_root=repo_root)
+    digest = str(plan["measurement_plan_id"]).split(":", maxsplit=1)[1]
+    plan_relative = MEASUREMENT_PLAN_ROOT / (digest + ".json")
+    persisted_plan = _content_record(
+        repo_root=repo_root,
+        relative=plan_relative,
+        id_field="measurement_plan_id",
+        label="Current measurement plan",
+    )
+    if persisted_plan != plan:
+        _fail("Persisted measurement plan differs from current plan")
+    matches = []
+    execution_root = repo_root / MEASUREMENT_EXECUTION_ROOT
+    if execution_root.is_dir() and not execution_root.is_symlink():
+        for evidence_path in sorted(execution_root.glob("*/evidence/*.json")):
+            if evidence_path.is_symlink() or not evidence_path.is_file():
+                _fail("Measurement evidence namespace contains an unsafe entry")
+            value = strict_json_file(path=evidence_path)
+            if type(value) is dict and value.get("measurement_plan_id") == (
+                plan["measurement_plan_id"]
+            ):
+                matches.append((evidence_path, dict(value)))
+    if len(matches) != 1:
+        _fail("Exactly one current measurement terminal is required")
+    evidence_path, evidence = matches[0]
+    try:
+        validate_table_context_measurement_evidence(evidence=evidence)
+    except TableContextMeasurementError as error:
+        raise TableContextAttestationError(
+            "Current measurement evidence is invalid"
+        ) from error
+    cycle_dir = evidence_path.parent.parent
+    marker_path = cycle_dir / "provider_egress_marker.json"
+    marker_relative = marker_path.relative_to(repo_root).as_posix()
+    marker = _content_record(
+        repo_root=repo_root,
+        relative=marker_relative,
+        id_field="egress_marker_id",
+        label="Current egress marker",
+    )
+    response_id = evidence.get("provider_response_sha256")
+    if not isinstance(response_id, str) or not response_id.startswith("sha256:"):
+        _fail("Current raw provider response identity is absent")
+    response_relative = (
+        cycle_dir.relative_to(repo_root)
+        / "provider_responses"
+        / (response_id.split(":", maxsplit=1)[1] + ".bin")
+    )
+    response_path = repo_root / response_relative
+    if response_path.is_symlink() or not response_path.is_file():
+        _fail("Current raw provider response is absent or unsafe")
+    raw = response_path.read_bytes()
+    usage = _usage_observation(provider_response=raw)
+    equalities = (
+        evidence.get("schema_version") == 2,
+        evidence.get("status") == "COMPLETED",
+        evidence.get("task_contract_id")
+        == ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION["task_contract_id"],
+        evidence.get("family_id")
+        == ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION["family_id"],
+        evidence.get("measurement_cycle_id")
+        == marker.get("measurement_cycle_id"),
+        evidence.get("authorization_id") == marker.get("authorization_id"),
+        evidence.get("execution_id") == marker.get("execution_id"),
+        evidence.get("measurement_plan_id") == marker.get("measurement_plan_id"),
+        evidence.get("provider_request_body_sha256")
+        == marker.get("provider_request_body_sha256"),
+        evidence.get("authorized_repository_head")
+        == marker.get("authorized_repository_head"),
+        evidence.get("authorized_repository_tree")
+        == marker.get("authorized_repository_tree"),
+        evidence.get("external_review_comment_url")
+        == marker.get("external_review_comment_url"),
+        evidence.get("provider_response_sha256")
+        == "sha256:" + sha256_bytes(content=raw),
+        usage.get("actual_prompt_tokens") == evidence.get("actual_prompt_tokens"),
+        usage.get("actual_completion_tokens")
+        == evidence.get("actual_completion_tokens"),
+        usage.get("actual_total_tokens") == evidence.get("actual_total_tokens"),
+        usage.get("usage_raw_field_hash") == evidence.get("usage_raw_field_hash"),
+    )
+    if not all(equalities):
+        _fail("Current plan, marker, raw response, and evidence differ")
+    return (
+        plan,
+        evidence,
+        marker,
+        raw,
+        plan_relative.as_posix(),
+        evidence_path.relative_to(repo_root).as_posix(),
+        response_relative.as_posix(),
+    )
+
+
+def build_table_context_feasibility_attestation(
+    *, repo_root: Path,
+) -> Dict[str, object]:
+    """Return the immutable historical attestation after exact revalidation."""
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    if requirement["effective_decisions"]["D-07"]["choice"].get(
+        "revpar_measurement_exception"
+    ) == ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION:
+        attestation, _current = _validate_preserved_occupancy_attestation(
+            repo_root=repo_root,
+        )
+        return copy.deepcopy(attestation)
+    _pointer, packet, plan, evidence, marker, usage = _stage_c_b_records(
+        repo_root=repo_root,
+    )
+    current = _rebuild_exact_request(
+        repo_root=repo_root,
+        requirement=requirement,
+        measurement_plan=plan,
+        measurement_exception=ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     )
     plan_equalities = {
         "exact_provider_request_body_sha256": "provider_request_body_sha256",
@@ -515,13 +762,126 @@ def build_table_context_feasibility_attestation(
     return {**body, "attestation_id": content_hash(value=body)}
 
 
-def write_table_context_feasibility_attestation(
+def build_revpar_context_feasibility_attestation(
     *, repo_root: Path,
 ) -> Dict[str, object]:
-    """Persist one immutable attestation and update only its current pointer."""
-    attestation = build_table_context_feasibility_attestation(
-        repo_root=repo_root,
+    """Derive the current attestation from its unique one-shot terminal."""
+    (
+        plan,
+        evidence,
+        marker,
+        raw,
+        plan_path,
+        evidence_path,
+        raw_path,
+    ) = _revpar_terminal_records(repo_root=repo_root)
+    actual_prompt_tokens = evidence["actual_prompt_tokens"]
+    context_budget = ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION[
+        "context_budget_tokens"
+    ]
+    if type(actual_prompt_tokens) is not int:
+        _fail(
+            "OWNER_DECISION_REQUIRED: current task provider usage is absent"
+        )
+    if actual_prompt_tokens > context_budget:
+        _fail(
+            "OWNER_DECISION_REQUIRED: current actual prompt tokens exceed 200000"
+        )
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
+    current = _rebuild_exact_request(
+        repo_root=repo_root,
+        requirement=requirement,
+        measurement_plan=plan,
+        measurement_exception=ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
+    )
+    plan_equalities = {
+        "exact_provider_request_body_sha256": "provider_request_body_sha256",
+        "exact_provider_request_body_bytes": "provider_request_body_bytes",
+        "family_id": "family_id",
+        "task_contract_id": "task_contract_id",
+        "source_sha256": "source_sha256",
+        "serializer_version": "table_payload_serialization_version",
+        "task_contract_hash": "catalog_task_contract_hash",
+        "task_spec_semantic_hash": "task_spec_semantic_hash",
+        "prompt_hash": "system_prompt_hash",
+        "output_schema_hash": "output_schema_hash",
+        "provider_output_schema_sha256": "provider_output_schema_sha256",
+        "provider": "provider",
+        "model": "model",
+        "api": "api",
+        "requirement_closure_hash": "requirement_closure_hash",
+        "protected_closure_hash": "protected_closure_hash",
+    }
+    if any(
+        current[current_field] != plan[plan_field]
+        for current_field, plan_field in plan_equalities.items()
+    ):
+        _fail("Current request differs from measured exact plan")
+    usage = _usage_observation(provider_response=raw)
+    body = {
+        "schema_version": 1,
+        "record_type": ATTESTATION_RECORD_TYPE,
+        "source_measurement_evidence_id": evidence["measurement_evidence_id"],
+        "measurement_evidence_path": evidence_path,
+        "measurement_plan_id": plan["measurement_plan_id"],
+        "measurement_plan_path": plan_path,
+        "measurement_cycle_id": evidence["measurement_cycle_id"],
+        "measurement_execution_id": evidence["execution_id"],
+        "measurement_egress_marker_id": marker["egress_marker_id"],
+        "measurement_authorization_id": evidence["authorization_id"],
+        "raw_provider_response_id": evidence["provider_response_sha256"],
+        "raw_provider_response_path": raw_path,
+        "source_stage_c_b_packet_id": None,
+        "source_stage_c_b_packet_path": None,
+        "measurement_requirement_closure_hash": plan[
+            "requirement_closure_hash"
+        ],
+        "measurement_protected_closure_hash": plan[
+            "protected_closure_hash"
+        ],
+        **current,
+        "actual_prompt_tokens": actual_prompt_tokens,
+        "actual_completion_tokens": evidence["actual_completion_tokens"],
+        "actual_total_tokens": evidence["actual_total_tokens"],
+        "prompt_cache_hit_tokens": evidence["prompt_cache_hit_tokens"],
+        "prompt_cache_miss_tokens": evidence["prompt_cache_miss_tokens"],
+        "usage_raw_field_hash": usage["usage_raw_field_hash"],
+        "context_budget_tokens": context_budget,
+        "context_headroom_tokens": context_budget - actual_prompt_tokens,
+        "qualification_credit": False,
+        "qualification_response_reuse_eligible": False,
+        "measurement_authorization_consumed": True,
+        "invalidation_policy": {
+            "validation_phase": "BEFORE_PROVIDER_EGRESS",
+            "required_exact_binding_fields": list(EXACT_REQUEST_BINDING_FIELDS),
+            "any_required_binding_drift": "INVALIDATE_ATTESTATION",
+            "approximate_or_family_equivalence": "FORBIDDEN",
+            "attestation_scope": "ONE_EXACT_TASK_REQUEST",
+            "attestation_semantics": "CONTEXT_FEASIBILITY_ONLY",
+            "measurement_response_qualification_reuse": "FORBIDDEN",
+            "qualification_execution_requires_separate_authorization": True,
+        },
+    }
+    return {**body, "attestation_id": content_hash(value=body)}
+
+
+def write_table_context_feasibility_attestation(
+    *, repo_root: Path,
+    task_contract_id: str = "lodging_occupancy_table_v2",
+) -> Dict[str, object]:
+    """Persist one immutable attestation without adding a packet layer."""
+    if task_contract_id == "lodging_occupancy_table_v2":
+        attestation = build_table_context_feasibility_attestation(
+            repo_root=repo_root,
+        )
+    elif task_contract_id == "lodging_revpar_table_v2":
+        attestation = build_revpar_context_feasibility_attestation(
+            repo_root=repo_root,
+        )
+    else:
+        _fail("Unsupported context attestation task")
     digest = str(attestation["attestation_id"]).split(":", maxsplit=1)[1]
     relative = ATTESTATION_ROOT / (digest + ".json")
     path = repo_root / relative
@@ -530,21 +890,27 @@ def write_table_context_feasibility_attestation(
             _fail("Context attestation content-address collision")
     else:
         atomic_write_json(path=path, value=attestation)
-    pointer_body = {
-        "schema_version": 1,
-        "record_type": ATTESTATION_POINTER_TYPE,
-        "attestation_id": attestation["attestation_id"],
-        "attestation_path": relative.as_posix(),
-        "source_measurement_evidence_id": attestation[
-            "source_measurement_evidence_id"
-        ],
-    }
-    pointer = {**pointer_body, "pointer_id": content_hash(value=pointer_body)}
-    atomic_write_json(path=repo_root / ATTESTATION_POINTER, value=pointer)
+    if task_contract_id == "lodging_occupancy_table_v2":
+        pointer_body = {
+            "schema_version": 1,
+            "record_type": ATTESTATION_POINTER_TYPE,
+            "attestation_id": attestation["attestation_id"],
+            "attestation_path": relative.as_posix(),
+            "source_measurement_evidence_id": attestation[
+                "source_measurement_evidence_id"
+            ],
+        }
+        pointer = {
+            **pointer_body, "pointer_id": content_hash(value=pointer_body),
+        }
+        atomic_write_json(path=repo_root / ATTESTATION_POINTER, value=pointer)
+        pointer_id = pointer["pointer_id"]
+    else:
+        pointer_id = None
     return {
         "attestation_id": attestation["attestation_id"],
         "attestation_path": relative.as_posix(),
-        "pointer_id": pointer["pointer_id"],
+        "pointer_id": pointer_id,
         "source_measurement_evidence_id": attestation[
             "source_measurement_evidence_id"
         ],
@@ -559,33 +925,28 @@ def write_table_context_feasibility_attestation(
 
 def validate_table_context_feasibility_attestation(
     *, repo_root: Path,
+    task_contract_id: str = "lodging_occupancy_table_v2",
 ) -> Dict[str, object]:
-    """Rebuild and byte-validate the configured exact-request attestation."""
-    pointer = _content_record(
+    """Rebuild and byte-validate one exact-request attestation."""
+    if task_contract_id == "lodging_occupancy_table_v2":
+        attestation, _current = _validate_preserved_occupancy_attestation(
+            repo_root=repo_root,
+        )
+        return copy.deepcopy(attestation)
+    if task_contract_id != "lodging_revpar_table_v2":
+        _fail("Unsupported context attestation task")
+    expected = build_revpar_context_feasibility_attestation(
         repo_root=repo_root,
-        relative=ATTESTATION_POINTER,
-        id_field="pointer_id",
-        label="Context attestation pointer",
     )
-    if set(pointer) != POINTER_FIELDS or pointer["record_type"] != (
-        ATTESTATION_POINTER_TYPE
-    ):
-        _fail("Context attestation pointer fields differ")
+    digest = str(expected["attestation_id"]).split(":", maxsplit=1)[1]
     attestation = _content_record(
         repo_root=repo_root,
-        relative=pointer["attestation_path"],
+        relative=ATTESTATION_ROOT / (digest + ".json"),
         id_field="attestation_id",
-        label="Context attestation",
+        label="Current context attestation",
     )
-    if (
-        set(attestation) != ATTESTATION_FIELDS
-        or attestation["record_type"] != ATTESTATION_RECORD_TYPE
-        or pointer["attestation_id"] != attestation["attestation_id"]
-        or pointer["source_measurement_evidence_id"]
-        != attestation["source_measurement_evidence_id"]
-    ):
-        _fail("Context attestation fields or pointer binding differ")
-    expected = build_table_context_feasibility_attestation(repo_root=repo_root)
+    if set(attestation) != ATTESTATION_FIELDS:
+        _fail("Current context attestation fields differ")
     if attestation != expected:
         _fail("Context attestation differs from current exact authority")
     return copy.deepcopy(attestation)
@@ -606,6 +967,31 @@ def exact_request_binding(
         )
         for field in EXACT_REQUEST_BINDING_FIELDS
     }
+
+
+def current_exact_request_binding(
+    *, repo_root: Path, task_contract_id: str,
+) -> Dict[str, object]:
+    """Project the current exact request bound to one accepted attestation."""
+    if task_contract_id == "lodging_occupancy_table_v2":
+        _attestation, current = _validate_preserved_occupancy_attestation(
+            repo_root=repo_root,
+        )
+        return {
+            field: copy.deepcopy(
+                current[
+                    "exact_provider_request_body_sha256"
+                    if field == "provider_request_body_sha256"
+                    else field
+                ]
+            )
+            for field in EXACT_REQUEST_BINDING_FIELDS
+        }
+    attestation = validate_table_context_feasibility_attestation(
+        repo_root=repo_root,
+        task_contract_id=task_contract_id,
+    )
+    return exact_request_binding(attestation=attestation)
 
 
 def evaluate_context_feasibility(
@@ -653,10 +1039,33 @@ def evaluate_context_feasibility(
             "drift_fields": list(EXACT_REQUEST_BINDING_FIELDS),
             "blocking_reason_code": "EXACT_CONTEXT_ATTESTATION_REQUIRED",
         }
+    task_contract_id = request_binding["task_contract_id"]
     try:
-        attestation = validate_table_context_feasibility_attestation(
-            repo_root=repo_root,
-        )
+        if task_contract_id == "lodging_occupancy_table_v2":
+            attestation, current = _validate_preserved_occupancy_attestation(
+                repo_root=repo_root,
+            )
+            expected = {
+                field: copy.deepcopy(
+                    current[
+                        "exact_provider_request_body_sha256"
+                        if field == "provider_request_body_sha256"
+                        else field
+                    ]
+                )
+                for field in EXACT_REQUEST_BINDING_FIELDS
+            }
+        elif task_contract_id == "lodging_revpar_table_v2":
+            attestation = validate_table_context_feasibility_attestation(
+                repo_root=repo_root,
+                task_contract_id=task_contract_id,
+            )
+            expected = exact_request_binding(attestation=attestation)
+        else:
+            attestation = validate_table_context_feasibility_attestation(
+                repo_root=repo_root,
+            )
+            expected = exact_request_binding(attestation=attestation)
     except TableContextAttestationError:
         return {
             "status": "BLOCKED",
@@ -666,9 +1075,12 @@ def evaluate_context_feasibility(
             "context_budget_tokens": max_estimated_input_tokens,
             "exact_binding_match": False,
             "drift_fields": list(EXACT_REQUEST_BINDING_FIELDS),
-            "blocking_reason_code": "EXACT_CONTEXT_ATTESTATION_INVALID",
+            "blocking_reason_code": (
+                "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+                if task_contract_id == "lodging_revpar_table_v2"
+                else "EXACT_CONTEXT_ATTESTATION_INVALID"
+            ),
         }
-    expected = exact_request_binding(attestation=attestation)
     drift_fields = [
         field
         for field in EXACT_REQUEST_BINDING_FIELDS

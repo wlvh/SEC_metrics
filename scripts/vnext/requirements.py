@@ -88,6 +88,27 @@ ISSUE_15_D07_MEASUREMENT_EXCEPTION = {
     "consumes_authorization_after_any_egress_marker": True,
     "execution_requires_external_exact_head_authorization": True,
 }
+ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION = {
+    "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+    "family_id": "lodging_kpi_table",
+    "task_contract_id": "lodging_revpar_table_v2",
+    "source_company_id": "marriott_international",
+    "source_sha256": (
+        "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+    ),
+    "serializer_version": "2",
+    "allowed_successful_provider_egress_count": 1,
+    "automatic_retry_count": 0,
+    "qualification_ordinal_credit": False,
+    "publication_eligible": False,
+    "qualification_evidence_eligible": False,
+    "response_reuse_for_qualification": False,
+    "consumes_authorization_after_any_egress_marker": True,
+    "execution_requires_external_exact_head_authorization": True,
+    "provider_reported_prompt_tokens_required": True,
+    "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
+    "context_budget_tokens": 200000,
+}
 ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY = {
     "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
     "accepted_measurement_evidence_id": (
@@ -178,11 +199,14 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
     "live_qualification_authorized": False,
     "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     "context_feasibility_policy": ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
+    "revpar_measurement_exception": (
+        ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+    ),
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
-        "#issuecomment-5405401715"
+        "#issuecomment-5409390114"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -199,8 +223,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:f7d4a3c6753fb92e003e6acbad1772e5"
-        "6236ee98ed0bce8ef419a012cd9ac3c0"
+        "sha256:df75bb151460f24d2c3173d81f3259d5"
+        "cdcea98786d77e0189cb1e5b1bf6aeee"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1387,14 +1411,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 4
+        or len(chains["D-07"]) != 5
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][2])
+        != _decision_record_hash(decision=chains["D-07"][3])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

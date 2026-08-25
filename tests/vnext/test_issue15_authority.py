@@ -29,6 +29,7 @@ from vnext.requirements import (
     ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
     ISSUE_15_D07_EFFECTIVE_CHOICE,
     ISSUE_15_D07_MEASUREMENT_EXCEPTION,
+    ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -417,7 +418,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(5, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -448,6 +449,10 @@ class Issue15AuthorityTest(unittest.TestCase):
             d07_chain[3]["supersedes_decision_id"],
         )
         self.assertEqual(
+            content_hash(value=d07_chain[3]),
+            d07_chain[4]["supersedes_decision_id"],
+        )
+        self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
             issue_snapshot["effective_decisions"]["D-07"]["choice"],
         )
@@ -467,6 +472,12 @@ class Issue15AuthorityTest(unittest.TestCase):
             ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "context_feasibility_policy"
+            ],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "revpar_measurement_exception"
             ],
         )
         self.assertFalse(
@@ -1012,6 +1023,45 @@ class Issue15AuthorityTest(unittest.TestCase):
                     if row["decision_id"] == "D-07"
                 )
                 d07["choice"]["context_feasibility_policy"][field] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_revpar_measurement_exception_is_exact(self) -> None:
+        """Reject target substitution, retries, missing usage, or credit reuse."""
+        mutations = {
+            "family_id": "financial_statement",
+            "task_contract_id": "lodging_occupancy_table_v2",
+            "source_company_id": "other-company",
+            "source_sha256": "0" * 64,
+            "serializer_version": "3",
+            "allowed_successful_provider_egress_count": 2,
+            "automatic_retry_count": 1,
+            "qualification_ordinal_credit": True,
+            "qualification_evidence_eligible": True,
+            "publication_eligible": True,
+            "response_reuse_for_qualification": True,
+            "consumes_authorization_after_any_egress_marker": False,
+            "execution_requires_external_exact_head_authorization": False,
+            "provider_reported_prompt_tokens_required": False,
+            "usage_unavailable_status": "ESTIMATOR_FALLBACK",
+            "context_budget_tokens": 200001,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                d07["choice"]["revpar_measurement_exception"][field] = (
+                    replacement
+                )
                 rebind_decisions(issue_copy=issue_copy, register=register)
                 with self.assertRaisesRegex(
                     RequirementError, "superseding Decision content differs",

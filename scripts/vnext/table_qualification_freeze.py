@@ -2502,6 +2502,7 @@ def _family_semantic_closure(
         paths.update(Path(path) for path in runtime["metric_spec_paths"])
     if family_id == "lodging_kpi_table":
         from .table_context_attestation import ATTESTATION_POINTER
+        from .table_context_attestation import ATTESTATION_ROOT
 
         pointer = _json_object(
             repo_root=repo_root,
@@ -2521,6 +2522,33 @@ def _family_semantic_closure(
             )
         paths.add(ATTESTATION_POINTER)
         paths.add(attestation_path)
+        revpar_attestations = []
+        attestation_root = repo_root / ATTESTATION_ROOT
+        if attestation_root.is_symlink() or not attestation_root.is_dir():
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                message="Context attestation namespace is unsafe",
+            )
+        for candidate in sorted(attestation_root.glob("*.json")):
+            if candidate.is_symlink() or not candidate.is_file():
+                raise TableQualificationFamilyError(
+                    family_id=family_id,
+                    reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                    message="Context attestation entry is unsafe",
+                )
+            value = strict_json_file(path=candidate)
+            if type(value) is dict and value.get("task_contract_id") == (
+                "lodging_revpar_table_v2"
+            ):
+                revpar_attestations.append(candidate.relative_to(repo_root))
+        if len(revpar_attestations) > 1:
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                message="Multiple current-task context attestations exist",
+            )
+        paths.update(revpar_attestations)
     if set(task_contracts_by_id) != set(matrix_entry["task_contract_ids"]):
         raise TableQualificationFreezeError("Family matrix task set differs")
     return {

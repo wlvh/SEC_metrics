@@ -184,7 +184,7 @@ vNext 已提供同一套 recorded/live operator与formal publication primitives�
 
 第二布局与holdout不是把网页下载后手工拼成 fixture：运行负责人只能从 `fixtures/vnext/qualification_candidates.json` 选固定ID，并用 `tools/vnext_capture_qualification_fixture.py` 统一请求官方 SEC、写入ledger/raw bytes、调用固定DeepSeek并保存provider envelope、Reader response与回放excerpt。该工具不接受URL、公司、期间、模型或secret覆盖；录制完成后，qualification 本身仍是 socket=0 回放。
 
-当前开发证据中只有一个exact lodging task/request获得context feasibility attestation：它的Stage C-B actual prompt为160937，低于200000 budget；这不代表measurement response可以复用为qualification，也不代表整个lodging family ready。另一个required sibling request没有matching attestation或严格跨task token上界，仍为`EXACT_CONTEXT_EVIDENCE_REQUIRED`；financial仍为`F3_NEED_MORE_EVIDENCE`，live qualification、R3和publication都未授权。业务人员不得把该attestation或Stage-C packet当成新的指标结果。
+当前已接受的occupancy exact context attestation仍绑定Stage C-B actual prompt 160937与200000 budget，历史authorization/response不可复用。Owner另以same-ID D-07 additive successor授权exactly-one Marriott RevPAR usage measurement，但它在独立review绑定exact HEAD/request SHA并真实返回authoritative usage以前仍不是context proof；不得用occupancy ratio或相似bytes替代。若RevPAR actual prompt不超过200000，它会用同一内部attestation record type形成第二个task/request proof，随后才可能重建lodging family readiness；measurement response本身仍不计qualification ordinal。业务人员不得把任一measurement/attestation当成新指标结果，live qualification、R3与publication仍需后续真实证据。
 
 但它尚未成为业务结果入口。业务人员当前仍从第 4 节所列 root manifest、snapshot checker、report 和 CSV 开始，不应在 `artifacts/vnext/` 中自行挑选一个 OPEN/FROZEN Run 当成正式结果。
 
