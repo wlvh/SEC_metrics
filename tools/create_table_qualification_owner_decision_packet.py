@@ -27,6 +27,12 @@ from vnext.canonical import strict_json_file  # noqa: E402
 from vnext.requirements import load_requirement_snapshot  # noqa: E402
 from vnext.stage_a_snapshot import StageASnapshotError  # noqa: E402
 from vnext.stage_a_snapshot import validate_stage_a_snapshot  # noqa: E402
+from vnext.table_context_attestation import (  # noqa: E402
+    validate_table_context_feasibility_attestation,
+)
+from vnext.table_context_comparison import (  # noqa: E402
+    validate_sibling_request_context_analysis,
+)
 from vnext.table_qualification_freeze import (  # noqa: E402
     TableQualificationFreezeError,
 )
@@ -43,7 +49,7 @@ PACKET_POINTER = Path(
     "current_owner_decision_packet.json"
 )
 OWNER_DECISION_URL = (
-    "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5390663414"
+    "https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5405401715"
 )
 CONTEXT_RECEIPT_ID = (
     "sha256:2dd551a5613cf6980644ae8f9a99c9231456c736ae29969f613d4c8cedd1e3a1"
@@ -88,7 +94,7 @@ def _packet_history(
         if value["owner_decision_packet_id"] != content_hash(value=body):
             raise ValueError("Owner decision packet history identity differs")
         if (
-            value.get("schema_version") == 3
+            value.get("schema_version") == 4
             and value.get("generated_at_utc") == generated_at_utc
         ):
             continue
@@ -119,6 +125,8 @@ def _freeze_receipt(*, repo_root: Path) -> Dict[str, object]:
         != status["qualification_cycle_id"]
         or receipt.get("readiness_by_family")
         != status["readiness_by_family"]
+        or receipt.get("readiness_by_task_request")
+        != status["readiness_by_task_request"]
         or receipt.get("live_ready_family_ids")
         != status["live_ready_family_ids"]
     ):
@@ -211,21 +219,62 @@ def build_owner_decision_packet(
         expected_id=CENSUS_RECEIPT_ID,
         expected_record_type="TABLE_STAGE_B_FINANCIAL_GRID_CENSUS_RECEIPT",
     )
+    attestation = validate_table_context_feasibility_attestation(
+        repo_root=repo_root,
+    )
+    sibling_analysis = validate_sibling_request_context_analysis(
+        repo_root=repo_root,
+    )
     d07 = requirement["effective_decisions"]["D-07"]
     d07_hash = content_hash(value=d07)
     readiness = receipt["readiness_by_family"]
+    task_readiness = receipt["readiness_by_task_request"]
     lodging = readiness["lodging_kpi_table"]
     financial = readiness["financial_statement"]
+    attested_task_id = str(attestation["task_contract_id"])
+    sibling_task_id = str(
+        sibling_analysis["authority"]["sibling_task_contract_id"]
+    )
+    attested_rows = [
+        value for value in task_readiness.values()
+        if value["task_contract_id"] == attested_task_id
+    ]
+    sibling_rows = [
+        value for value in task_readiness.values()
+        if value["task_contract_id"] == sibling_task_id
+    ]
+    if len(attested_rows) != 1 or len(sibling_rows) != 1:
+        raise ValueError("Current task/request readiness set differs")
+    attested_request = attested_rows[0]
+    sibling_request = sibling_rows[0]
+    sibling_status = next(
+        value for key, value in sibling_analysis.items()
+        if key.endswith("_CONTEXT_STATUS")
+    )
     if (
         receipt["d07_decision_required"] is not False
         or receipt["live_ready_family_ids"] != []
         or lodging["context_gate"]["maximum_observed_estimated_input_tokens"]
         != 392447
-        or lodging["blocking_reason_codes"] != ["ESTIMATED_CONTEXT_LIMIT"]
+        or lodging["blocking_reason_codes"]
+        != [
+            "ESTIMATED_CONTEXT_LIMIT",
+            "EXACT_CONTEXT_BINDING_MISMATCH",
+        ]
         or financial["blocking_reason_codes"]
         != ["EXPANDED_GRID_RESOURCE_LIMIT"]
+        or attested_request["context_gate"]["status"] != "PASSED"
+        or attested_request["context_gate"]["evidence_basis"]
+        != "PROVIDER_REPORTED_EXACT_BINDING"
+        or attested_request["live_ready"] is not True
+        or sibling_request["context_gate"]["status"] != "BLOCKED"
+        or sibling_request["live_ready"] is not False
+        or lodging["live_ready"] is not False
+        or sibling_status != "EXACT_CONTEXT_EVIDENCE_REQUIRED"
+        or sibling_analysis["reason"]
+        != "NO_SOUND_CROSS_TASK_TOKEN_BOUND"
     ):
-        raise ValueError("Current family readiness differs from Stage-B facts")
+        raise ValueError("Current exact context readiness differs")
     provider = receipt["provider_state"]
     if (
         provider["qualification_cycle_real_model_egress_count"] != 0
@@ -252,7 +301,7 @@ def build_owner_decision_packet(
     )
     freeze_path = repo_root / str(pointer["receipt_path"])
     body = {
-        "schema_version": 3,
+        "schema_version": 4,
         "record_type": "TABLE_QUALIFICATION_OWNER_DECISION_PACKET",
         "generated_at_utc": generated_at_utc,
         "decision_register_modified": True,
@@ -310,6 +359,15 @@ def build_owner_decision_packet(
             ),
             "live_measurement_authorized": False,
             "live_qualification_authorized": False,
+            "context_feasibility_default_path": (
+                "estimated_input_tokens <= 200000"
+            ),
+            "context_feasibility_exact_path": (
+                "PROVIDER_REPORTED_EXACT_BINDING"
+            ),
+            "context_attestation_scope": "ONE_EXACT_TASK_REQUEST",
+            "measurement_response_qualification_credit": False,
+            "measurement_response_reuse_for_qualification": False,
         },
         "STILL_UNDECIDED": [
             {
@@ -317,7 +375,7 @@ def build_owner_decision_packet(
                 "selected_value": None,
             },
             {
-                "decision": "authorize_actual_token_live_measurement",
+                "decision": "obtain_sibling_exact_context_evidence",
                 "selected_value": None,
             },
             {
@@ -335,10 +393,44 @@ def build_owner_decision_packet(
         ],
         "current_readiness": {
             "readiness_by_family": readiness,
+            "readiness_by_task_request": task_readiness,
             "live_ready_family_ids": receipt["live_ready_family_ids"],
-            "actual_prompt_tokens": "NOT_RUN",
-            "lodging_summary": "BLOCKED_BY_392447_GT_200000",
+            "attested_request": {
+                "task_contract_id": attested_task_id,
+                "provider_request_body_sha256": attestation[
+                    "exact_provider_request_body_sha256"
+                ],
+                "context_status": "FEASIBLE",
+                "evidence_basis": "PROVIDER_REPORTED_EXACT_BINDING",
+                "actual_prompt_tokens": attestation[
+                    "actual_prompt_tokens"
+                ],
+                "qualification_credit": False,
+                "qualification_response_reuse_eligible": False,
+            },
+            "sibling_request": {
+                "task_contract_id": sibling_task_id,
+                "provider_request_body_sha256": sibling_analysis[
+                    "requests"
+                ]["UNATTESTED_SIBLING_REQUEST"][
+                    "provider_request_body_sha256"
+                ],
+                "context_status": sibling_status,
+                "reason": sibling_analysis["reason"],
+            },
+            "lodging_summary": (
+                "ATTESTED_REQUEST_FEASIBLE_SIBLING_REQUEST_BLOCKED"
+            ),
             "financial_summary": "BLOCKED_BY_EXPANDED_GRID_RESOURCE_LIMIT",
+            "financial_decision": "F3_NEED_MORE_EVIDENCE",
+        },
+        "measurement_state": {
+            "source_measurement_evidence_id": attestation[
+                "source_measurement_evidence_id"
+            ],
+            "measurement_authorization_permanently_consumed": True,
+            "additional_measurement_authorized": False,
+            "qualification_authorized": False,
         },
         "investigation_bindings": {
             "context_minimization": _investigation_binding(
@@ -351,6 +443,19 @@ def build_owner_decision_packet(
                 relative=CENSUS_RECEIPT_PATH,
                 receipt=census,
             ),
+            "context_feasibility_attestation": {
+                "attestation_id": attestation["attestation_id"],
+                "source_measurement_evidence_id": attestation[
+                    "source_measurement_evidence_id"
+                ],
+                "record_type": attestation["record_type"],
+            },
+            "sibling_request_context_analysis": {
+                "analysis_id": sibling_analysis["analysis_id"],
+                "record_type": sibling_analysis["record_type"],
+                "status": sibling_status,
+                "reason": sibling_analysis["reason"],
+            },
         },
         "context_candidate_comparison": context[
             "candidate_comparison_table"

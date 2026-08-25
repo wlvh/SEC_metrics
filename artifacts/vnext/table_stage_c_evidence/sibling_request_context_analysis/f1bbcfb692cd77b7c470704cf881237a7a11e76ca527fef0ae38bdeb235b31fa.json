@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "record_type": "LODGING_EXACT_REQUEST_CONTEXT_COMPARISON",
+  "analysis_status": "DECISION_NEUTRAL_OFFLINE_COMPLETE",
+  "authority": {
+    "requirement_closure_hash": "sha256:bfb1c137dea2e993b90ffc1db58f445eec518c0b41743d54fb976e02815111f7",
+    "effective_d07_record_hash": "sha256:f7d4a3c6753fb92e003e6acbad1772e56236ee98ed0bce8ef419a012cd9ac3c0",
+    "context_feasibility_attestation_id": "sha256:dc8cb1d152cc42b5b438e4db33fe03606766b8d7ec1b4bc11bd92273cbbd9e60",
+    "source_measurement_evidence_id": "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c2b366c419436253b9ebb56f56dbf9795",
+    "family_id": "lodging_kpi_table",
+    "attested_task_contract_id": "lodging_occupancy_table_v2",
+    "sibling_task_contract_id": "lodging_revpar_table_v2",
+    "source_identity": {
+      "source_kind": "IMMUTABLE_ATTEMPT",
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+    },
+    "source_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+    "source_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+    "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "table_payload_serialization_version": "2"
+  },
+  "requests": {
+    "ATTESTED_MEASUREMENT_REQUEST": {
+      "task_contract_id": "lodging_occupancy_table_v2",
+      "task_contract_hash": "sha256:d308b993cba57eb9e3bb7143ae59633b85cc6fbebfdefb2e09021e6af15b0b81",
+      "task_contract_bytes_sha256": "f2f6eeb30e65259133e98a5a03dbb43b68aac53bd5d8f0d516b10ebd4c8cc047",
+      "task_contract_bytes": 1963,
+      "task_spec_semantic_hash": "sha256:63b28e0967d0837e0a523ca2b4fb68beff11d001a291ff5c3497a1bef3df5744",
+      "prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+      "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+      "reader_input_manifest_id": "sha256:a850c91569998465b7e45d26a7919bb92ec1e2d8695dc39f3333fb31e718efe4",
+      "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+      "expanded_grid_sha256": "sha256:cc25dac2e3f3484bca0a95bbca430acd62a55821f12c684ce392a8f22a02f48b",
+      "compact_payload_sha256": "34651747a41b3a931c561aa8429115a9452a821fc0401e799c2476d51ecefb18",
+      "serializer_version": "2",
+      "serializer_hash": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+      "reader_request_body_sha256": "73205027a23f21478b9ff217d11533100ad85b4d57bc232032861c4cd72afadf",
+      "reader_request_body_bytes": 348739,
+      "provider_output_schema_sha256": "54e1dd9364f3c89b8dea211a9dd2bc29f492eec13615495851a401cf85566cfa",
+      "provider_request_body_sha256": "5ffa7b16d54ff9e3c2bdbc10d468f84b9aaae2ac029b5fc63e459d895eb8109a",
+      "provider_request_body_bytes": 392447,
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
+      "api": "chat_completions"
+    },
+    "UNATTESTED_SIBLING_REQUEST": {
+      "task_contract_id": "lodging_revpar_table_v2",
+      "task_contract_hash": "sha256:bc9b5eac412c042e26b60d2dad9f7dcea1af7c76f58afd5af78deb1262ad35f1",
+      "task_contract_bytes_sha256": "81858293faf3ae5b840603feb01978232b161bcc6d1154c6e7fbe998524932a0",
+      "task_contract_bytes": 1954,
+      "task_spec_semantic_hash": "sha256:bcce479792635a30f81247a10513de79a066c35265226ab7d7177052eaec0aab",
+      "prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+      "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+      "reader_input_manifest_id": "sha256:a850c91569998465b7e45d26a7919bb92ec1e2d8695dc39f3333fb31e718efe4",
+      "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+      "expanded_grid_sha256": "sha256:cc25dac2e3f3484bca0a95bbca430acd62a55821f12c684ce392a8f22a02f48b",
+      "compact_payload_sha256": "34651747a41b3a931c561aa8429115a9452a821fc0401e799c2476d51ecefb18",
+      "serializer_version": "2",
+      "serializer_hash": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+      "reader_request_body_sha256": "693d3cfae301fa78c5a8d450e06c4df59dbc8058fbe49499352b0c875f596b95",
+      "reader_request_body_bytes": 348730,
+      "provider_output_schema_sha256": "54e1dd9364f3c89b8dea211a9dd2bc29f492eec13615495851a401cf85566cfa",
+      "provider_request_body_sha256": "1dbe25dd3886bc7ab5e559c7f790bf40cc3471a3550553435450acfe92e72b0b",
+      "provider_request_body_bytes": 392438,
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
+      "api": "chat_completions"
+    }
+  },
+  "exact_request_comparison": {
+    "provider_request_hash_equal": false,
+    "provider_request_byte_length_equal": false,
+    "component_comparison": [
+      {
+        "component": "reader_input_manifest_id",
+        "status": "SHARED_EXACT",
+        "attested_value": "sha256:a850c91569998465b7e45d26a7919bb92ec1e2d8695dc39f3333fb31e718efe4",
+        "sibling_value": "sha256:a850c91569998465b7e45d26a7919bb92ec1e2d8695dc39f3333fb31e718efe4"
+      },
+      {
+        "component": "derived_asset_id",
+        "status": "SHARED_EXACT",
+        "attested_value": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+        "sibling_value": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f"
+      },
+      {
+        "component": "expanded_grid_sha256",
+        "status": "SHARED_EXACT",
+        "attested_value": "sha256:cc25dac2e3f3484bca0a95bbca430acd62a55821f12c684ce392a8f22a02f48b",
+        "sibling_value": "sha256:cc25dac2e3f3484bca0a95bbca430acd62a55821f12c684ce392a8f22a02f48b"
+      },
+      {
+        "component": "compact_payload_sha256",
+        "status": "SHARED_EXACT",
+        "attested_value": "34651747a41b3a931c561aa8429115a9452a821fc0401e799c2476d51ecefb18",
+        "sibling_value": "34651747a41b3a931c561aa8429115a9452a821fc0401e799c2476d51ecefb18"
+      },
+      {
+        "component": "serializer_version",
+        "status": "SHARED_EXACT",
+        "attested_value": "2",
+        "sibling_value": "2"
+      },
+      {
+        "component": "serializer_hash",
+        "status": "SHARED_EXACT",
+        "attested_value": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+        "sibling_value": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8"
+      },
+      {
+        "component": "task_contract_hash",
+        "status": "CHANGED_EXACT",
+        "attested_value": "sha256:d308b993cba57eb9e3bb7143ae59633b85cc6fbebfdefb2e09021e6af15b0b81",
+        "sibling_value": "sha256:bc9b5eac412c042e26b60d2dad9f7dcea1af7c76f58afd5af78deb1262ad35f1"
+      },
+      {
+        "component": "task_contract_bytes_sha256",
+        "status": "CHANGED_EXACT",
+        "attested_value": "f2f6eeb30e65259133e98a5a03dbb43b68aac53bd5d8f0d516b10ebd4c8cc047",
+        "sibling_value": "81858293faf3ae5b840603feb01978232b161bcc6d1154c6e7fbe998524932a0"
+      },
+      {
+        "component": "task_spec_semantic_hash",
+        "status": "CHANGED_EXACT",
+        "attested_value": "sha256:63b28e0967d0837e0a523ca2b4fb68beff11d001a291ff5c3497a1bef3df5744",
+        "sibling_value": "sha256:bcce479792635a30f81247a10513de79a066c35265226ab7d7177052eaec0aab"
+      },
+      {
+        "component": "prompt_hash",
+        "status": "SHARED_EXACT",
+        "attested_value": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "sibling_value": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33"
+      },
+      {
+        "component": "output_schema_hash",
+        "status": "SHARED_EXACT",
+        "attested_value": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+        "sibling_value": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179"
+      },
+      {
+        "component": "provider_output_schema_sha256",
+        "status": "SHARED_EXACT",
+        "attested_value": "54e1dd9364f3c89b8dea211a9dd2bc29f492eec13615495851a401cf85566cfa",
+        "sibling_value": "54e1dd9364f3c89b8dea211a9dd2bc29f492eec13615495851a401cf85566cfa"
+      },
+      {
+        "component": "reader_request_body_sha256",
+        "status": "CHANGED_EXACT",
+        "attested_value": "73205027a23f21478b9ff217d11533100ad85b4d57bc232032861c4cd72afadf",
+        "sibling_value": "693d3cfae301fa78c5a8d450e06c4df59dbc8058fbe49499352b0c875f596b95"
+      },
+      {
+        "component": "provider_request_body_sha256",
+        "status": "CHANGED_EXACT",
+        "attested_value": "5ffa7b16d54ff9e3c2bdbc10d468f84b9aaae2ac029b5fc63e459d895eb8109a",
+        "sibling_value": "1dbe25dd3886bc7ab5e559c7f790bf40cc3471a3550553435450acfe92e72b0b"
+      },
+      {
+        "component": "provider",
+        "status": "SHARED_EXACT",
+        "attested_value": "deepseek",
+        "sibling_value": "deepseek"
+      },
+      {
+        "component": "model",
+        "status": "SHARED_EXACT",
+        "attested_value": "deepseek-v4-flash",
+        "sibling_value": "deepseek-v4-flash"
+      },
+      {
+        "component": "api",
+        "status": "SHARED_EXACT",
+        "attested_value": "chat_completions",
+        "sibling_value": "chat_completions"
+      }
+    ],
+    "changed_component_names": [
+      "task_contract_hash",
+      "task_contract_bytes_sha256",
+      "task_spec_semantic_hash",
+      "reader_request_body_sha256",
+      "provider_request_body_sha256"
+    ],
+    "minimal_differing_byte_ranges": {
+      "shared_prefix_bytes": 16153,
+      "shared_prefix_sha256": "8bbee5ac0edc2bcc9d1cc74de7b24fd68ce28975c7189087482e4c21406b6fa8",
+      "shared_suffix_bytes": 374222,
+      "shared_suffix_sha256": "34441c7f9ee372f720cd5bd5896cabb287ff2aabed28bd38a570415ad19851dd",
+      "attested_request_range": {
+        "start": 16153,
+        "end_exclusive": 18225,
+        "length": 2072,
+        "sha256": "53e3ae1f2151a227262f2bac1eef451b4a73be0d63772a86d438296bdddbfeab"
+      },
+      "sibling_request_range": {
+        "start": 16153,
+        "end_exclusive": 18216,
+        "length": 2063,
+        "sha256": "74f3cfc88b61cd71ef4404582aa5b1239803c60856a481cd602b45ccb5fa9229"
+      },
+      "range_semantics": "MINIMAL_ENCLOSING_UNEQUAL_BYTE_RANGE"
+    },
+    "task_contract_equal": false,
+    "prompt_equal": true,
+    "output_schema_equal": true
+  },
+  "context_attestation_inventory": {
+    "current_pointer_path": "artifacts/vnext/table_stage_c_evidence/current_context_feasibility_attestation.json",
+    "available_attestations": [
+      {
+        "attestation_id": "sha256:94010dfcc4c8d74b49cf8a92a28b50b3a016c13d5c76864eb7cbbf3406596a82",
+        "task_contract_id": "lodging_occupancy_table_v2",
+        "provider_request_body_sha256": "5ffa7b16d54ff9e3c2bdbc10d468f84b9aaae2ac029b5fc63e459d895eb8109a",
+        "source_measurement_evidence_id": "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c2b366c419436253b9ebb56f56dbf9795"
+      },
+      {
+        "attestation_id": "sha256:dc8cb1d152cc42b5b438e4db33fe03606766b8d7ec1b4bc11bd92273cbbd9e60",
+        "task_contract_id": "lodging_occupancy_table_v2",
+        "provider_request_body_sha256": "5ffa7b16d54ff9e3c2bdbc10d468f84b9aaae2ac029b5fc63e459d895eb8109a",
+        "source_measurement_evidence_id": "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c2b366c419436253b9ebb56f56dbf9795"
+      }
+    ],
+    "matching_sibling_attestation_ids": []
+  },
+  "REVPAR_CONTEXT_STATUS": "EXACT_CONTEXT_EVIDENCE_REQUIRED",
+  "reason": "NO_SOUND_CROSS_TASK_TOKEN_BOUND",
+  "token_upper_bound_assessment": {
+    "repository_authorized_sound_cross_task_upper_bound_exists": false,
+    "sibling_actual_prompt_tokens": "NOT_MEASURED",
+    "inference_from_attested_task": "FORBIDDEN",
+    "inference_from_byte_length": "FORBIDDEN",
+    "inference_from_shared_source_or_family": "FORBIDDEN",
+    "second_measurement_selected": false,
+    "family_wide_exception_selected": false
+  },
+  "authorization_state": {
+    "measurement_authorization_permanently_consumed": true,
+    "additional_measurement_authorized": false,
+    "qualification_authorized": false
+  },
+  "egress_counts": {
+    "real_model_provider_egress_count": 0,
+    "paid_model_provider_call_count": 0,
+    "real_SEC_egress_count": 0
+  },
+  "analysis_id": "sha256:f1bbcfb692cd77b7c470704cf881237a7a11e76ca527fef0ae38bdeb235b31fa"
+}

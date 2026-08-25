@@ -31,6 +31,7 @@ from vnext.stage_a_snapshot import write_stage_a_snapshot
 from vnext.table_grid import build_table_grid
 from vnext.table_qualification_freeze import _measurement_receipts
 from vnext.table_qualification_freeze import _readiness_by_family
+from vnext.table_qualification_freeze import _readiness_by_task_request
 from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_qualification_freeze import validate_table_qualification_freeze
 from vnext.table_qualification_freeze import write_table_qualification_freeze_receipt
@@ -66,23 +67,68 @@ def _synthetic_family_gate_status(
             estimate = 200001
         else:
             estimate = 200000
-        rows.append({
-            "family_id": family_id,
-            "blocking_reason_codes": reasons,
-            "estimated_input_tokens": estimate,
-            "measurement_id": "sha256:" + (
-                "3" * 64 if family_id == "financial_statement"
-                else "4" * 64
-            ),
-        })
+        context_status = (
+            "NOT_EVALUATED_RESOURCE_LIMIT"
+            if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
+            else "BLOCKED"
+            if "ESTIMATED_CONTEXT_LIMIT" in reasons
+            else "PASSED"
+        )
+        for task_contract_id in matrix["entries"][family_id][
+            "task_contract_ids"
+        ]:
+            task_request_id = content_hash(value={
+                "family_id": family_id,
+                "task_contract_id": task_contract_id,
+            })
+            rows.append({
+                "family_id": family_id,
+                "task_contract_id": task_contract_id,
+                "task_request_id": task_request_id,
+                "source_sha256": "a" * 64,
+                "provider_request_body_sha256": (
+                    "NOT_AVAILABLE_RESOURCE_LIMIT"
+                    if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
+                    else "b" * 64
+                ),
+                "blocking_reason_codes": reasons,
+                "estimated_input_tokens": estimate,
+                "measurement_id": content_hash(value={
+                    "task_request_id": task_request_id,
+                    "reasons": reasons,
+                }),
+                "context_feasibility": {
+                    "status": context_status,
+                    "evidence_basis": (
+                        "ESTIMATED_BOUND"
+                        if context_status == "PASSED" else None
+                    ),
+                    "attestation_id": None,
+                    "attested_actual_prompt_tokens": None,
+                    "context_budget_tokens": 200000,
+                    "exact_binding_match": False,
+                    "drift_fields": [],
+                    "blocking_reason_code": (
+                        "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+                        if context_status == "BLOCKED" else None
+                    ),
+                },
+            })
+    measurements = {"qualification_task_measurements": rows}
     readiness = _readiness_by_family(
         matrix=matrix,
-        measurements={"qualification_task_measurements": rows},
+        measurements=measurements,
+        drift_by_family={},
+    )
+    task_request_readiness = _readiness_by_task_request(
+        matrix=matrix,
+        measurements=measurements,
         drift_by_family={},
     )
     return {
         "receipt_id": "sha256:" + "5" * 64,
         "readiness_by_family": readiness,
+        "readiness_by_task_request": task_request_readiness,
     }
 
 
@@ -124,6 +170,24 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             ),
         )
         estimator_patch.start()
+        qualification_requirement_loader = qualification.load_requirement_snapshot
+
+        def authorized_qualification_requirement(*, snapshot_dir: Path) -> Dict[str, object]:
+            """Enable live qualification only inside this disposable authority."""
+            value = copy.deepcopy(
+                qualification_requirement_loader(snapshot_dir=snapshot_dir)
+            )
+            value["effective_decisions"]["D-07"]["choice"][
+                "live_qualification_authorized"
+            ] = True
+            return value
+
+        qualification_requirement_patch = mock.patch.object(
+            qualification,
+            "load_requirement_snapshot",
+            side_effect=authorized_qualification_requirement,
+        )
+        qualification_requirement_patch.start()
         try:
             patch = subprocess.run(
                 ["git", "diff", "--binary"],
@@ -139,7 +203,7 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
                     arguments=["apply"],
                     stdin=patch.stdout,
                 )
-                _run_git(workdir=worktree, arguments=["add", "-u"])
+                _run_git(workdir=worktree, arguments=["add", "-A"])
                 _run_git(
                     workdir=worktree,
                     arguments=[
@@ -282,6 +346,7 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             )
             yield worktree
         finally:
+            qualification_requirement_patch.stop()
             estimator_patch.stop()
             subprocess.run(
                 ["git", "worktree", "remove", "--force", str(worktree)],
@@ -496,10 +561,11 @@ def mocked_live_table_transport(
         {"DEEPSEEK_API_KEY": "synthetic-only"},
         clear=False,
     ):
-        adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+        adapter = ai_adapter.build_table_qualification_transport_adapter(
             release_input_plan_id=binding["qualification_task_plan_id"],
             workspace_dir=repo_root / binding["wb3_workspace_relative_path"],
             owner_token="synthetic-owner",
+            qualification_usage_policy=binding["qualification_usage_policy"],
         )
 
         def transport(
@@ -535,7 +601,8 @@ def mocked_live_table_transport(
                     request_body_bytes=len(outbound),
                 ),
                 raw_response_bytes=(
-                    b'{"usage":{"prompt_tokens":10,"completion_tokens":2}}'
+                    b'{"usage":{"prompt_tokens":10,"completion_tokens":2,'
+                    b'"total_tokens":12}}'
                 ),
                 outbound_request_bytes=outbound,
                 output_schema_bytes=schema,
@@ -551,7 +618,7 @@ def mocked_live_table_transport(
             side_effect=transport,
         ), mock.patch.object(
             qualification,
-            "build_invocation_controlled_transport_adapter",
+            "build_table_qualification_transport_adapter",
             return_value=adapter,
         ):
             yield
@@ -573,10 +640,11 @@ def mocked_live_table_failure_transport(
         {"DEEPSEEK_API_KEY": "synthetic-only"},
         clear=False,
     ):
-        adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+        adapter = ai_adapter.build_table_qualification_transport_adapter(
             release_input_plan_id=binding["qualification_task_plan_id"],
             workspace_dir=repo_root / binding["wb3_workspace_relative_path"],
             owner_token="synthetic-owner",
+            qualification_usage_policy=binding["qualification_usage_policy"],
         )
         remaining = list(outcomes)
 
@@ -637,7 +705,7 @@ def mocked_live_table_failure_transport(
             side_effect=transport,
         ), mock.patch.object(
             qualification,
-            "build_invocation_controlled_transport_adapter",
+            "build_table_qualification_transport_adapter",
             return_value=adapter,
         ):
             yield
@@ -672,7 +740,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             self.assertEqual("lodging_kpi_table", plan["family_id"])
             with self.assertRaisesRegex(
                 qualification.QualificationError,
-                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
             ):
                 qualification.table_qualification_task_plan(
                     repo_root=REPO_ROOT,
@@ -713,7 +781,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             self.assertEqual("financial_statement", plan["family_id"])
             with self.assertRaisesRegex(
                 qualification.QualificationError,
-                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
             ):
                 qualification.table_qualification_task_plan(
                     repo_root=REPO_ROOT,
@@ -815,7 +883,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         ) as blocked_provider:
                             with self.assertRaisesRegex(
                                 qualification.QualificationError,
-                                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
                             ):
                                 task_plan(
                                     repo_root=repo_root,
@@ -827,7 +895,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                                 )
                             with self.assertRaisesRegex(
                                 qualification.QualificationError,
-                                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
                             ):
                                 issue_authorization(
                                     repo_root=repo_root,
@@ -916,7 +984,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
         ) as provider_opener:
             with self.assertRaisesRegex(
                 qualification.QualificationError,
-                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
             ):
                 qualification.table_qualification_task_plan(
                     repo_root=repo_root,
@@ -926,7 +994,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 )
             with self.assertRaisesRegex(
                 qualification.QualificationError,
-                "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
             ):
                 issue_authorization(
                     repo_root=repo_root,
@@ -1083,7 +1151,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 )
                 with self.assertRaisesRegex(
                     qualification.QualificationError,
-                    "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                    "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
                 ):
                     qualification.table_qualification_task_plan(
                         repo_root=repo_root,
@@ -1093,7 +1161,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     )
                 with self.assertRaisesRegex(
                     qualification.QualificationError,
-                    "TABLE_QUALIFICATION_FAMILY_NOT_READY",
+                    "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
                 ):
                     qualification.issue_table_qualification_authorization(
                         repo_root=repo_root,
@@ -1285,12 +1353,15 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     qualification_ordinal=1,
                 )
                 binding = authorization.as_mapping()
-                adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+                adapter = ai_adapter.build_table_qualification_transport_adapter(
                     release_input_plan_id=binding["qualification_task_plan_id"],
                     workspace_dir=(
                         repo_root / binding["wb3_workspace_relative_path"]
                     ),
                     owner_token="synthetic-owner",
+                    qualification_usage_policy=binding[
+                        "qualification_usage_policy"
+                    ],
                 )
 
                 def transport(
@@ -1329,7 +1400,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         ),
                         raw_response_bytes=(
                             b'{"usage":{"prompt_tokens":10,'
-                            b'"completion_tokens":2}}'
+                            b'"completion_tokens":2,"total_tokens":12}}'
                         ),
                         outbound_request_bytes=outbound,
                         output_schema_bytes=schema,
@@ -1345,7 +1416,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     side_effect=transport,
                 ), mock.patch.object(
                     qualification,
-                    "build_invocation_controlled_transport_adapter",
+                    "build_table_qualification_transport_adapter",
                     return_value=adapter,
                 ):
                     created = qualification.execute_table_qualification_task(
@@ -2178,7 +2249,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         {"DEEPSEEK_API_KEY": "synthetic-only"},
                         clear=False,
                     ):
-                        adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+                        adapter = ai_adapter.build_table_qualification_transport_adapter(
                             release_input_plan_id=binding[
                                 "qualification_task_plan_id"
                             ],
@@ -2188,6 +2259,9 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                                 ]
                             ),
                             owner_token="synthetic-owner",
+                            qualification_usage_policy=binding[
+                                "qualification_usage_policy"
+                            ],
                         )
 
                         def terminal_transport(
@@ -2269,7 +2343,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             side_effect=terminal_transport,
                         ), mock.patch.object(
                             qualification,
-                            "build_invocation_controlled_transport_adapter",
+                            "build_table_qualification_transport_adapter",
                             return_value=adapter,
                         ):
                             initial = qualification.execute_table_qualification_task(
@@ -2340,7 +2414,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     ledger_before = ledger_path.read_bytes()
                     with mock.patch.object(
                         qualification,
-                        "build_invocation_controlled_transport_adapter",
+                        "build_table_qualification_transport_adapter",
                         side_effect=AssertionError("transport path reached"),
                     ):
                         for _ in range(2):
@@ -2489,7 +2563,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     ledger_before = ledger_path.read_bytes()
                     with mock.patch.object(
                         qualification,
-                        "build_invocation_controlled_transport_adapter",
+                        "build_table_qualification_transport_adapter",
                         side_effect=AssertionError("provider path reached"),
                     ):
                         if expected == "UNKNOWN_REMOTE_OUTCOME":
@@ -2669,7 +2743,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     ledger_before = ledger_path.read_bytes()
                     with mock.patch.object(
                         qualification,
-                        "build_invocation_controlled_transport_adapter",
+                        "build_table_qualification_transport_adapter",
                         side_effect=AssertionError("provider path reached"),
                     ):
                         repeated = qualification.execute_table_qualification_task(
@@ -2714,7 +2788,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 clear=False,
             ):
                 adapters = [
-                    ai_adapter.build_invocation_controlled_transport_adapter(
+                    ai_adapter.build_table_qualification_transport_adapter(
                         release_input_plan_id=binding[
                             "qualification_task_plan_id"
                         ],
@@ -2722,6 +2796,9 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             repo_root / binding["wb3_workspace_relative_path"]
                         ),
                         owner_token="synthetic-owner",
+                        qualification_usage_policy=binding[
+                            "qualification_usage_policy"
+                        ],
                     )
                     for binding in bindings
                 ]
@@ -2768,7 +2845,8 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             ),
                             raw_response_bytes=(
                                 b'{"usage":{"prompt_tokens":10,'
-                                b'"completion_tokens":2}}'
+                                b'"completion_tokens":2,'
+                                b'"total_tokens":12}}'
                             ),
                             outbound_request_bytes=outbound,
                             output_schema_bytes=schema,
@@ -3020,12 +3098,15 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 {"DEEPSEEK_API_KEY": "synthetic-only"},
                 clear=False,
             ):
-                adapter = ai_adapter.build_invocation_controlled_transport_adapter(
+                adapter = ai_adapter.build_table_qualification_transport_adapter(
                     release_input_plan_id=binding["qualification_task_plan_id"],
                     workspace_dir=(
                         repo_root / binding["wb3_workspace_relative_path"]
                     ),
                     owner_token="synthetic-owner",
+                    qualification_usage_policy=binding[
+                        "qualification_usage_policy"
+                    ],
                 )
 
                 def unknown_transport(
@@ -3091,7 +3172,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     side_effect=unknown_transport,
                 ), mock.patch.object(
                     qualification,
-                    "build_invocation_controlled_transport_adapter",
+                    "build_table_qualification_transport_adapter",
                     return_value=adapter,
                 ), mock.patch.object(
                     workflow,
@@ -3121,7 +3202,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     side_effect=AssertionError("transport reinvoked"),
                 ), mock.patch.object(
                     qualification,
-                    "build_invocation_controlled_transport_adapter",
+                    "build_table_qualification_transport_adapter",
                     return_value=adapter,
                 ):
                     with self.assertRaises(qualification.QualificationError) as error:
@@ -3151,7 +3232,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 self.assertEqual([], unknown_terminal["provider_request_ids"])
                 with mock.patch.object(
                     qualification,
-                    "build_invocation_controlled_transport_adapter",
+                    "build_table_qualification_transport_adapter",
                     side_effect=AssertionError("provider path reached"),
                 ):
                     with self.assertRaises(qualification.QualificationError) as resumed:

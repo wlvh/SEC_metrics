@@ -33,6 +33,7 @@ from .reader_input import build_reader_input_manifest, build_reader_payload
 from .requirements import ISSUE_15_D07_EFFECTIVE_CHOICE
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
+from .sources import raw_blob_record, source_reference_record
 from .table_grid import build_table_grid, TableGridError
 from .table_payload import compact_payload_receipt
 from .table_payload import DECODER_SEMANTIC_VERSION
@@ -111,6 +112,7 @@ RECEIPT_FIELDS = {
     "qualification_cycle_id",
     "live_ready_family_ids",
     "readiness_by_family",
+    "readiness_by_task_request",
     "record_type",
     "schema_version",
     "table_qualification_freeze_receipt_id",
@@ -124,10 +126,14 @@ FAMILY_READINESS_FIELDS = {
     "context_gate",
     "live_ready",
     "protected_closure_gate",
+    "ready_task_request_ids",
+    "required_task_request_ids",
     "resource_gate",
 }
 CONTEXT_GATE_FIELDS = {
+    "attestation_ids",
     "blocking_measurement_ids",
+    "evidence_bases",
     "max_estimated_input_tokens",
     "maximum_observed_estimated_input_tokens",
     "status",
@@ -138,6 +144,30 @@ PROTECTED_CLOSURE_GATE_FIELDS = {
     "drift_labels",
     "family_local_drift",
     "shared_dependency_drift",
+    "status",
+}
+TASK_REQUEST_READINESS_FIELDS = {
+    "blocking_reason_codes",
+    "context_gate",
+    "family_id",
+    "live_ready",
+    "measurement_id",
+    "protected_closure_gate",
+    "provider_request_body_sha256",
+    "resource_gate",
+    "source_sha256",
+    "task_contract_id",
+    "task_request_id",
+}
+TASK_REQUEST_CONTEXT_FIELDS = {
+    "attestation_id",
+    "attested_actual_prompt_tokens",
+    "blocking_reason_code",
+    "context_budget_tokens",
+    "drift_fields",
+    "estimated_input_tokens",
+    "evidence_basis",
+    "exact_binding_match",
     "status",
 }
 ESTIMATED_CONTEXT_LIMIT = "ESTIMATED_CONTEXT_LIMIT"
@@ -202,7 +232,9 @@ QUALIFICATION_ENGINE_ROOTS = (
     Path("scripts/vnext/source_strategy.py"),
     Path("scripts/vnext/specs.py"),
     Path("scripts/vnext/stage_a_snapshot.py"),
+    Path("scripts/vnext/table_context_attestation.py"),
     Path("scripts/vnext/table_grid.py"),
+    Path("scripts/vnext/table_context_attestation.py"),
     Path("scripts/vnext/table_payload.py"),
     Path("scripts/vnext/table_qualification_freeze.py"),
     Path("scripts/vnext/table_task_contracts.py"),
@@ -230,6 +262,10 @@ MEASUREMENT_ENGINE_PATHS = (
     Path("scripts/vnext/table_qualification_freeze.py"),
     Path("scripts/vnext/table_task_contracts.py"),
     Path("config/provider_model_runtime.json"),
+    Path(
+        "artifacts/vnext/table_stage_c_evidence/"
+        "current_context_feasibility_attestation.json"
+    ),
 )
 _MEASUREMENT_CACHE: Dict[str, Dict[str, object]] = {}
 
@@ -715,8 +751,88 @@ def _context_blocking_reason_codes(
     return reason_codes
 
 
+def _task_request_identity(
+    *, family_id: str, task_contract_id: str, source_sha256: str,
+    provider_request_body_sha256: str,
+) -> str:
+    """Name one exact family/task/source/provider-request coordinate."""
+    body = {
+        "family_id": family_id,
+        "task_contract_id": task_contract_id,
+        "source_sha256": source_sha256,
+        "provider_request_body_sha256": provider_request_body_sha256,
+    }
+    return content_hash(value=body)
+
+
+def _context_feasibility(
+    *, repo_root: Path, estimated_input_tokens: int,
+    max_estimated_input_tokens: int,
+    request_binding: Optional[Mapping[str, object]],
+) -> Dict[str, object]:
+    """Evaluate D-07 without importing the attestation module at load time."""
+    from .table_context_attestation import evaluate_context_feasibility
+
+    return evaluate_context_feasibility(
+        repo_root=repo_root,
+        estimated_input_tokens=estimated_input_tokens,
+        max_estimated_input_tokens=max_estimated_input_tokens,
+        request_binding=request_binding,
+    )
+
+
+def _attested_request_authority(
+    *, repo_root: Path,
+) -> Optional[Dict[str, str]]:
+    """Return freshly validated request authority or no exact proof."""
+    try:
+        from .table_context_attestation import (
+            validate_table_context_feasibility_attestation,
+        )
+        attestation = validate_table_context_feasibility_attestation(
+            repo_root=repo_root,
+        )
+    except (OSError, RuntimeError, ValueError):
+        return None
+    return {
+        "protected_closure_hash": str(
+            attestation["protected_closure_hash"]
+        ),
+    }
+
+
+def _lodging_source_reference_id(
+    *, repo_root: Path, matrix_entry: Mapping[str, object],
+) -> str:
+    """Rebuild the exact Marriott SourceReference used by qualification."""
+    from .table_context_measurement import _source_binding
+
+    source = _source_binding(
+        repo_root=repo_root,
+        matrix_entry=matrix_entry,
+        exception=ISSUE_15_D07_EFFECTIVE_CHOICE["measurement_exception"],
+    )
+    declaration = source["source_declaration"]
+    raw = raw_blob_record(
+        repo_root=repo_root,
+        repo_relative_path=str(source["request_repo_relative_path"]),
+        media_type=str(matrix_entry["source_media_type"]),
+    )
+    reference = source_reference_record(
+        raw_blob=raw,
+        company_id=str(declaration["company_id"]),
+        source_url=str(source["source_url"]),
+        accession=str(declaration["accession"]),
+        document_name=str(declaration["document_name"]),
+        source_role=str(source["source_role"]),
+        request_attempt_id=str(source["request_attempt_id"]),
+    )
+    return str(reference["source_reference_id"])
+
+
 def _measure_reader_envelope(
     *,
+    repo_root: Path,
     source_id: str,
     source_path: Path,
     source_sha256: str,
@@ -724,6 +840,12 @@ def _measure_reader_envelope(
     token_limit: int,
     policy: object,
     runtime: Mapping[str, object],
+    family_id: str = "",
+    source_identity: Optional[Mapping[str, object]] = None,
+    source_reference_id: Optional[str] = None,
+    source_repo_relative_path: Optional[str] = None,
+    request_requirement_closure_hash: Optional[str] = None,
+    request_protected_closure_hash: Optional[str] = None,
 ) -> Dict[str, object]:
     """Measure one complete local table source and one fixed task envelope.
 
@@ -763,14 +885,22 @@ def _measure_reader_envelope(
         # The complete expanded grid is authoritative.  A resource refusal
         # must remain visible rather than being bypassed by a table selector,
         # partial parser, or synthetic compact estimate.
+        request_id = _task_request_identity(
+            family_id=family_id or "ROUND_TRIP_FIXTURE",
+            task_contract_id=str(task_contract["task_contract_id"]),
+            source_sha256=source_sha256,
+            provider_request_body_sha256=RESOURCE_LIMIT_ESTIMATE,
+        )
         body = {
             "source_id": source_id,
             "source_sha256": source_sha256,
             "task_contract_id": task_contract["task_contract_id"],
+            "task_request_id": request_id,
             "expanded_reader_payload_bytes": RESOURCE_LIMIT_ESTIMATE,
             "compact_reader_payload_bytes": RESOURCE_LIMIT_ESTIMATE,
             "compression_ratio": RESOURCE_LIMIT_ESTIMATE,
             "provider_envelope_estimated_bytes": RESOURCE_LIMIT_ESTIMATE,
+            "provider_request_body_sha256": RESOURCE_LIMIT_ESTIMATE,
             "estimated_input_tokens": RESOURCE_LIMIT_ESTIMATE,
             "actual_prompt_tokens": "NOT_RUN",
             "estimator_id": runtime["estimator_id"],
@@ -781,11 +911,25 @@ def _measure_reader_envelope(
             "context_or_resource_limit_exceeded": True,
             "blocking_reason_codes": [EXPANDED_GRID_RESOURCE_LIMIT],
             "resource_limit_reason": str(error),
+            "context_feasibility": {
+                "status": "NOT_EVALUATED_RESOURCE_LIMIT",
+                "evidence_basis": None,
+                "attestation_id": None,
+                "attested_actual_prompt_tokens": None,
+                "context_budget_tokens": token_limit,
+                "exact_binding_match": False,
+                "drift_fields": [],
+                "blocking_reason_code": None,
+            },
         }
         return {**body, "measurement_id": content_hash(value=body)}
     manifest = build_reader_input_manifest(
         derived_asset=asset,
-        source_reference_ids=["source:" + source_sha256],
+        source_reference_ids=[
+            source_reference_id
+            if type(source_reference_id) is str and source_reference_id
+            else "source:" + source_sha256
+        ],
     )
     compact_payload = build_reader_payload(
         manifest=manifest,
@@ -820,14 +964,76 @@ def _measure_reader_envelope(
         provider_envelope_bytes=len(provider_envelope),
         maximum_payload_bytes=policy.maximum_payload_bytes,
     )
+    provider_request_body_sha256 = sha256_bytes(content=provider_envelope)
+    request_binding = None
+    if (
+        family_id
+        and type(source_identity) is dict
+        and type(source_repo_relative_path) is str
+        and source_repo_relative_path
+        and type(request_requirement_closure_hash) is str
+        and request_requirement_closure_hash
+        and type(request_protected_closure_hash) is str
+        and request_protected_closure_hash
+    ):
+        request_binding = {
+            "provider_request_body_sha256": provider_request_body_sha256,
+            "family_id": family_id,
+            "task_contract_id": task_contract["task_contract_id"],
+            "source_identity": copy.deepcopy(dict(source_identity)),
+            "source_repo_relative_path": source_repo_relative_path,
+            "source_sha256": source_sha256,
+            "serializer_identity": (
+                "table_payload_serialization_v{}".format(
+                    TABLE_PAYLOAD_SERIALIZATION_VERSION
+                )
+            ),
+            "serializer_hash": sha256_file(
+                path=repo_root / "scripts/vnext/table_payload.py",
+            ),
+            "task_contract_hash": task_contract[
+                "catalog_task_contract_hash"
+            ],
+            "prompt_hash": task_contract["system_prompt_hash"],
+            "output_schema_hash": task_contract["output_schema_hash"],
+            "provider": policy.provider,
+            "model": policy.model,
+            "api": policy.api,
+            "requirement_closure_hash": request_requirement_closure_hash,
+            "protected_closure_hash": request_protected_closure_hash,
+        }
+    context_feasibility = _context_feasibility(
+        repo_root=repo_root,
+        estimated_input_tokens=estimated_tokens,
+        max_estimated_input_tokens=token_limit,
+        request_binding=request_binding,
+    )
+    if context_feasibility["status"] == "PASSED":
+        blocking_reason_codes = [
+            reason
+            for reason in blocking_reason_codes
+            if reason != ESTIMATED_CONTEXT_LIMIT
+        ]
+    elif context_feasibility["blocking_reason_code"] is not None:
+        blocking_reason_codes.append(
+            str(context_feasibility["blocking_reason_code"])
+        )
+    request_id = _task_request_identity(
+        family_id=family_id or "ROUND_TRIP_FIXTURE",
+        task_contract_id=str(task_contract["task_contract_id"]),
+        source_sha256=source_sha256,
+        provider_request_body_sha256=provider_request_body_sha256,
+    )
     body = {
         "source_id": source_id,
         "source_sha256": source_sha256,
         "task_contract_id": task_contract["task_contract_id"],
+        "task_request_id": request_id,
         "expanded_reader_payload_bytes": len(expanded_bytes),
         "compact_reader_payload_bytes": len(compact_payload["request_bytes"]),
         "compression_ratio": format(compression, "f"),
         "provider_envelope_estimated_bytes": len(provider_envelope),
+        "provider_request_body_sha256": provider_request_body_sha256,
         "estimated_input_tokens": estimated_tokens,
         "actual_prompt_tokens": "NOT_RUN",
         "estimator_id": runtime["estimator_id"],
@@ -836,7 +1042,8 @@ def _measure_reader_envelope(
         "round_trip_receipt_id": round_trip["round_trip_receipt_id"],
         "round_trip_hash": content_hash(value=round_trip),
         "context_or_resource_limit_exceeded": bool(blocking_reason_codes),
-        "blocking_reason_codes": blocking_reason_codes,
+        "blocking_reason_codes": sorted(set(blocking_reason_codes)),
+        "context_feasibility": context_feasibility,
     }
     return {**body, "measurement_id": content_hash(value=body)}
 
@@ -868,6 +1075,11 @@ def _measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
+    # Default-bound requests remain independently evaluable.  An oversized
+    # request receives a structured blocker when the exact proof is absent.
+    attested_request_authority = _attested_request_authority(
+        repo_root=repo_root,
+    )
     round_trip_sources = _round_trip_sources(repo_root=repo_root)
     round_trip_entry = matrix["entries"].get("lodging_kpi_table")
     if type(round_trip_entry) is not dict:
@@ -879,6 +1091,7 @@ def _measurement_receipts(
     round_trip_receipts = []
     for fixture_id, source_path, expected_sha256 in round_trip_sources:
         round_trip_receipts.append(_measure_reader_envelope(
+            repo_root=repo_root,
             source_id=fixture_id,
             source_path=source_path,
             source_sha256=expected_sha256,
@@ -888,6 +1101,7 @@ def _measurement_receipts(
             ],
             policy=policy,
             runtime=runtime,
+            family_id="lodging_kpi_table",
         ))
     if len(round_trip_receipts) != 11:
         raise TableQualificationFreezeError("WB-4 measurement set is not eleven")
@@ -900,12 +1114,20 @@ def _measurement_receipts(
         source_path = repo_root / Path(
             str(development["source_repo_relative_path"])
         )
+        development_source_reference_id = (
+            _lodging_source_reference_id(
+                repo_root=repo_root,
+                matrix_entry=entry,
+            )
+            if family_id == "lodging_kpi_table" else None
+        )
         for task_contract_id in entry["task_contract_ids"]:
             task_contract = resolve_table_task_contract(
                 repo_root=repo_root,
                 task_contract_id=task_contract_id,
             )
             measurement = _measure_reader_envelope(
+                repo_root=repo_root,
                 source_id="{}:{}".format(family_id, task_contract_id),
                 source_path=source_path,
                 source_sha256=str(development["source_sha256"]),
@@ -915,6 +1137,19 @@ def _measurement_receipts(
                 ],
                 policy=policy,
                 runtime=runtime,
+                family_id=family_id,
+                source_identity=development,
+                source_reference_id=development_source_reference_id,
+                source_repo_relative_path=str(
+                    development["source_repo_relative_path"]
+                ),
+                request_requirement_closure_hash=str(
+                    requirement["requirement_closure_hash"]
+                ),
+                request_protected_closure_hash=(
+                    attested_request_authority["protected_closure_hash"]
+                    if attested_request_authority is not None else None
+                ),
             )
             task_measurements.append({
                 "family_id": family_id,
@@ -1105,6 +1340,16 @@ def _family_measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
+    attested_request_authority = _attested_request_authority(
+        repo_root=repo_root,
+    )
+    development_source_reference_id = (
+        _lodging_source_reference_id(
+            repo_root=repo_root,
+            matrix_entry=entry,
+        )
+        if family_id == "lodging_kpi_table" else None
+    )
     rows = []
     for task_contract_id in entry["task_contract_ids"]:
         task_contract = resolve_table_task_contract(
@@ -1113,6 +1358,7 @@ def _family_measurement_receipts(
             family_id=family_id,
         )
         measurement = _measure_reader_envelope(
+            repo_root=repo_root,
             source_id="{}:{}".format(family_id, task_contract_id),
             source_path=source_path,
             source_sha256=str(development["source_sha256"]),
@@ -1122,6 +1368,19 @@ def _family_measurement_receipts(
             ],
             policy=policy,
             runtime=runtime,
+            family_id=family_id,
+            source_identity=development,
+            source_reference_id=development_source_reference_id,
+            source_repo_relative_path=str(
+                development["source_repo_relative_path"]
+            ),
+            request_requirement_closure_hash=str(
+                requirement["requirement_closure_hash"]
+            ),
+            request_protected_closure_hash=(
+                attested_request_authority["protected_closure_hash"]
+                if attested_request_authority is not None else None
+            ),
         )
         rows.append({
             "family_id": family_id,
@@ -1212,7 +1471,11 @@ def _d07_authority(
         + list(measurements["qualification_task_measurements"])
     )
     allowed_reason_codes = {
+        "ATTESTED_PROVIDER_CONTEXT_LIMIT",
         ESTIMATED_CONTEXT_LIMIT,
+        "EXACT_CONTEXT_ATTESTATION_INVALID",
+        "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+        "EXACT_CONTEXT_BINDING_MISMATCH",
         PROVIDER_CONTEXT_LIMIT,
         PROVIDER_PAYLOAD_LIMIT,
         EXPANDED_GRID_RESOURCE_LIMIT,
@@ -1220,6 +1483,7 @@ def _d07_authority(
     for item in measurement_rows:
         reasons = item.get("blocking_reason_codes")
         estimate = item.get("estimated_input_tokens")
+        feasibility = item.get("context_feasibility")
         if (
             type(reasons) is not list
             or reasons != sorted(set(reasons))
@@ -1228,14 +1492,27 @@ def _d07_authority(
             != bool(reasons)
             or item.get("estimator_id") != choice["estimator_id"]
             or item.get("estimator_version") != choice["estimator_version"]
+            or type(feasibility) is not dict
+            or set(feasibility) != {
+                field for field in TASK_REQUEST_CONTEXT_FIELDS
+                if field != "estimated_input_tokens"
+            }
             or (
                 estimate == RESOURCE_LIMIT_ESTIMATE
                 and reasons != [EXPANDED_GRID_RESOURCE_LIMIT]
             )
             or (
                 type(estimate) is int
-                and (estimate > choice["max_estimated_input_tokens"])
-                != (ESTIMATED_CONTEXT_LIMIT in reasons)
+                and estimate > choice["max_estimated_input_tokens"]
+                and (
+                    (feasibility["status"] == "PASSED")
+                    == (ESTIMATED_CONTEXT_LIMIT in reasons)
+                )
+            )
+            or (
+                type(estimate) is int
+                and estimate <= choice["max_estimated_input_tokens"]
+                and ESTIMATED_CONTEXT_LIMIT in reasons
             )
         ):
             raise TableQualificationFreezeError(
@@ -1505,17 +1782,11 @@ def _measurement_drift_by_family(
     return drift
 
 
-def _readiness_by_family(
+def _readiness_by_task_request(
     *, matrix: Mapping[str, object], measurements: Mapping[str, object],
     drift_by_family: Mapping[str, Sequence[str]],
 ) -> Dict[str, Dict[str, object]]:
-    """Derive independent context/resource/closure gates for each family.
-
-    Shared dependency drift is already propagated by
-    :func:`_protected_closure_drift`; this function preserves that propagation
-    while preventing one family's local measurement or authority failure from
-    becoming a global execution gate.
-    """
+    """Derive one independent gate for every development task/request."""
     family_ids = set(matrix["entries"])
     if not set(drift_by_family).issubset(family_ids):
         raise TableQualificationFreezeError(
@@ -1527,50 +1798,34 @@ def _readiness_by_family(
             "Readiness measurements are invalid"
         )
     readiness = {}
-    context_codes = {
-        ESTIMATED_CONTEXT_LIMIT,
-        PROVIDER_CONTEXT_LIMIT,
-        PROVIDER_PAYLOAD_LIMIT,
-    }
-    for family_id in sorted(family_ids):
-        family_rows = [
-            item for item in rows if item.get("family_id") == family_id
-        ]
-        if not family_rows:
+    for row in rows:
+        if type(row) is not dict:
             raise TableQualificationFreezeError(
-                "Family readiness measurement set is empty"
+                "Task/request measurement is invalid"
             )
-        threshold = matrix["entries"][family_id]["token_context_limits"][
-            "max_estimated_input_tokens"
-        ]
-        resource_rows = [
-            item for item in family_rows
-            if EXPANDED_GRID_RESOURCE_LIMIT in item["blocking_reason_codes"]
-        ]
-        context_rows = [
-            item for item in family_rows
-            if context_codes & set(item["blocking_reason_codes"])
-        ]
-        known_estimates = [
-            item["estimated_input_tokens"]
-            for item in family_rows
-            if type(item["estimated_input_tokens"]) is int
-        ]
-        if context_rows:
-            context_status = "BLOCKED"
-        elif known_estimates:
-            context_status = "PASSED"
-        elif resource_rows:
-            context_status = "NOT_EVALUATED_RESOURCE_LIMIT"
-        else:
+        family_id = row.get("family_id")
+        task_id = row.get("task_contract_id")
+        task_request_id = row.get("task_request_id")
+        context = row.get("context_feasibility")
+        if (
+            family_id not in family_ids
+            or type(task_id) is not str
+            or not task_id
+            or type(task_request_id) is not str
+            or not task_request_id
+            or type(context) is not dict
+            or set(context) != {
+                field for field in TASK_REQUEST_CONTEXT_FIELDS
+                if field != "estimated_input_tokens"
+            }
+        ):
             raise TableQualificationFreezeError(
-                "Family context readiness cannot be derived"
+                "Task/request context evidence is invalid"
             )
-        resource_status = "BLOCKED" if resource_rows else "PASSED"
         drift_labels = sorted(set(drift_by_family.get(family_id, [])))
         if any(type(label) is not str or not label for label in drift_labels):
             raise TableQualificationFreezeError(
-                "Family readiness drift labels are invalid"
+                "Task/request readiness drift labels are invalid"
             )
         shared_drift = any(
             _is_shared_drift_label(label=label)
@@ -1581,11 +1836,12 @@ def _readiness_by_family(
             for label in drift_labels
         )
         protected_status = "BLOCKED" if drift_labels else "PASSED"
-        reason_codes = {
-            reason
-            for item in family_rows
-            for reason in item["blocking_reason_codes"]
-        }
+        resource_blocked = EXPANDED_GRID_RESOURCE_LIMIT in row[
+            "blocking_reason_codes"
+        ]
+        resource_status = "BLOCKED" if resource_blocked else "PASSED"
+        context_status = str(context["status"])
+        reason_codes = set(row["blocking_reason_codes"])
         if shared_drift:
             reason_codes.add(SHARED_PROTECTED_CLOSURE_DRIFT)
         if family_local_drift:
@@ -1601,27 +1857,41 @@ def _readiness_by_family(
             and resource_status == "PASSED"
             and protected_status == "PASSED"
         )
-        readiness[family_id] = {
+        if task_request_id in readiness:
+            raise TableQualificationFreezeError(
+                "Task/request readiness identity is duplicated"
+            )
+        readiness[task_request_id] = {
+            "task_request_id": task_request_id,
+            "family_id": family_id,
+            "task_contract_id": task_id,
+            "source_sha256": row["source_sha256"],
+            "provider_request_body_sha256": row[
+                "provider_request_body_sha256"
+            ],
+            "measurement_id": row["measurement_id"],
             "context_gate": {
                 "status": context_status,
-                "max_estimated_input_tokens": threshold,
-                "threshold_comparison": (
-                    "estimated_input_tokens <= {}".format(threshold)
-                ),
-                "maximum_observed_estimated_input_tokens": (
-                    max(known_estimates)
-                    if known_estimates else RESOURCE_LIMIT_ESTIMATE
-                ),
-                "blocking_measurement_ids": sorted(
-                    str(item["measurement_id"])
-                    for item in context_rows
-                ),
+                "estimated_input_tokens": row["estimated_input_tokens"],
+                "evidence_basis": context["evidence_basis"],
+                "attestation_id": context["attestation_id"],
+                "attested_actual_prompt_tokens": context[
+                    "attested_actual_prompt_tokens"
+                ],
+                "context_budget_tokens": context[
+                    "context_budget_tokens"
+                ],
+                "exact_binding_match": context["exact_binding_match"],
+                "drift_fields": context["drift_fields"],
+                "blocking_reason_code": context[
+                    "blocking_reason_code"
+                ],
             },
             "resource_gate": {
                 "status": resource_status,
-                "blocking_measurement_ids": sorted(
-                    str(item["measurement_id"])
-                    for item in resource_rows
+                "blocking_measurement_ids": (
+                    [str(row["measurement_id"])]
+                    if resource_blocked else []
                 ),
             },
             "protected_closure_gate": {
@@ -1632,6 +1902,139 @@ def _readiness_by_family(
             },
             "live_ready": live_ready,
             "blocking_reason_codes": sorted(reason_codes),
+        }
+    expected_tasks = {
+        (family_id, str(task_id))
+        for family_id, entry in matrix["entries"].items()
+        for task_id in entry.get("task_contract_ids", [])
+    }
+    actual_tasks = {
+        (str(value["family_id"]), str(value["task_contract_id"]))
+        for value in readiness.values()
+    }
+    if expected_tasks and expected_tasks != actual_tasks:
+        raise TableQualificationFreezeError(
+            "Task/request readiness task set differs"
+        )
+    return readiness
+
+
+def _readiness_by_family(
+    *, matrix: Mapping[str, object], measurements: Mapping[str, object],
+    drift_by_family: Mapping[str, Sequence[str]],
+) -> Dict[str, Dict[str, object]]:
+    """Require every task/request gate before a family can become ready."""
+    by_request = _readiness_by_task_request(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family=drift_by_family,
+    )
+    readiness = {}
+    for family_id in sorted(matrix["entries"]):
+        tasks = sorted(
+            (
+                value for value in by_request.values()
+                if value["family_id"] == family_id
+            ),
+            key=lambda value: str(value["task_contract_id"]),
+        )
+        if not tasks:
+            raise TableQualificationFreezeError(
+                "Family readiness task/request set is empty"
+            )
+        context_statuses = {
+            str(value["context_gate"]["status"]) for value in tasks
+        }
+        if "BLOCKED" in context_statuses:
+            context_status = "BLOCKED"
+        elif context_statuses == {"NOT_EVALUATED_RESOURCE_LIMIT"}:
+            context_status = "NOT_EVALUATED_RESOURCE_LIMIT"
+        elif context_statuses == {"PASSED"}:
+            context_status = "PASSED"
+        else:
+            context_status = "NOT_EVALUATED_RESOURCE_LIMIT"
+        resource_status = (
+            "PASSED"
+            if all(
+                value["resource_gate"]["status"] == "PASSED"
+                for value in tasks
+            )
+            else "BLOCKED"
+        )
+        drift_labels = sorted(set(drift_by_family.get(family_id, [])))
+        shared_drift = any(
+            _is_shared_drift_label(label=label)
+            for label in drift_labels
+        )
+        family_local_drift = any(
+            not _is_shared_drift_label(label=label)
+            for label in drift_labels
+        )
+        protected_status = "BLOCKED" if drift_labels else "PASSED"
+        known_estimates = [
+            value["context_gate"]["estimated_input_tokens"]
+            for value in tasks
+            if type(value["context_gate"]["estimated_input_tokens"]) is int
+        ]
+        required_ids = [str(value["task_request_id"]) for value in tasks]
+        ready_ids = [
+            str(value["task_request_id"])
+            for value in tasks if value["live_ready"]
+        ]
+        live_ready = len(ready_ids) == len(required_ids)
+        readiness[family_id] = {
+            "context_gate": {
+                "status": context_status,
+                "max_estimated_input_tokens": matrix["entries"][family_id][
+                    "token_context_limits"
+                ]["max_estimated_input_tokens"],
+                "threshold_comparison": (
+                    "ESTIMATED_BOUND_OR_PROVIDER_REPORTED_EXACT_BINDING"
+                ),
+                "maximum_observed_estimated_input_tokens": (
+                    max(known_estimates)
+                    if known_estimates else RESOURCE_LIMIT_ESTIMATE
+                ),
+                "blocking_measurement_ids": sorted(
+                    str(value["measurement_id"])
+                    for value in tasks
+                    if value["context_gate"]["status"] == "BLOCKED"
+                ),
+                "evidence_bases": sorted({
+                    str(value["context_gate"]["evidence_basis"])
+                    for value in tasks
+                    if value["context_gate"]["evidence_basis"] is not None
+                }),
+                "attestation_ids": sorted({
+                    str(value["context_gate"]["attestation_id"])
+                    for value in tasks
+                    if value["context_gate"]["attestation_id"] is not None
+                }),
+            },
+            "resource_gate": {
+                "status": resource_status,
+                "blocking_measurement_ids": sorted({
+                    measurement_id
+                    for value in tasks
+                    for measurement_id in value["resource_gate"][
+                        "blocking_measurement_ids"
+                    ]
+                }),
+            },
+            "protected_closure_gate": {
+                "status": protected_status,
+                "drift_labels": drift_labels,
+                "shared_dependency_drift": shared_drift,
+                "family_local_drift": family_local_drift,
+            },
+            "required_task_request_ids": required_ids,
+            "ready_task_request_ids": ready_ids,
+            "live_ready": live_ready,
+            "blocking_reason_codes": sorted({
+                reason
+                for value in tasks
+                for reason in value["blocking_reason_codes"]
+            }),
         }
     return readiness
 
@@ -1653,11 +2056,45 @@ def _validate_readiness_shape(*, readiness: object) -> None:
             or type(value["protected_closure_gate"]) is not dict
             or set(value["protected_closure_gate"])
             != PROTECTED_CLOSURE_GATE_FIELDS
+            or type(value["required_task_request_ids"]) is not list
+            or not value["required_task_request_ids"]
+            or type(value["ready_task_request_ids"]) is not list
+            or not set(value["ready_task_request_ids"]).issubset(
+                set(value["required_task_request_ids"])
+            )
             or type(value["live_ready"]) is not bool
             or type(value["blocking_reason_codes"]) is not list
         ):
             raise TableQualificationFreezeError(
                 "Family readiness fields are invalid"
+            )
+
+
+def _validate_task_request_readiness_shape(*, readiness: object) -> None:
+    """Reject malformed per-task/per-request readiness mappings."""
+    if type(readiness) is not dict or not readiness:
+        raise TableQualificationFreezeError(
+            "Task/request readiness is invalid"
+        )
+    for task_request_id, value in readiness.items():
+        if (
+            type(task_request_id) is not str
+            or not task_request_id
+            or type(value) is not dict
+            or set(value) != TASK_REQUEST_READINESS_FIELDS
+            or value["task_request_id"] != task_request_id
+            or type(value["context_gate"]) is not dict
+            or set(value["context_gate"]) != TASK_REQUEST_CONTEXT_FIELDS
+            or type(value["resource_gate"]) is not dict
+            or set(value["resource_gate"]) != RESOURCE_GATE_FIELDS
+            or type(value["protected_closure_gate"]) is not dict
+            or set(value["protected_closure_gate"])
+            != PROTECTED_CLOSURE_GATE_FIELDS
+            or type(value["live_ready"]) is not bool
+            or type(value["blocking_reason_codes"]) is not list
+        ):
+            raise TableQualificationFreezeError(
+                "Task/request readiness fields are invalid"
             )
 
 
@@ -2063,6 +2500,27 @@ def _family_semantic_closure(
             ),
         }
         paths.update(Path(path) for path in runtime["metric_spec_paths"])
+    if family_id == "lodging_kpi_table":
+        from .table_context_attestation import ATTESTATION_POINTER
+
+        pointer = _json_object(
+            repo_root=repo_root,
+            relative=ATTESTATION_POINTER,
+            label="context attestation pointer",
+        )
+        attestation_path = Path(str(pointer.get("attestation_path", "")))
+        if (
+            not attestation_path.parts
+            or attestation_path.is_absolute()
+            or ".." in attestation_path.parts
+        ):
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                message="Context attestation path is unsafe",
+            )
+        paths.add(ATTESTATION_POINTER)
+        paths.add(attestation_path)
     if set(task_contracts_by_id) != set(matrix_entry["task_contract_ids"]):
         raise TableQualificationFreezeError("Family matrix task set differs")
     return {
@@ -2348,6 +2806,15 @@ def build_table_qualification_freeze_receipt(
         measurements=measurements,
         drift_by_family={},
     )
+    task_request_readiness = _readiness_by_task_request(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family={},
+    )
+    _validate_readiness_shape(readiness=readiness)
+    _validate_task_request_readiness_shape(
+        readiness=task_request_readiness,
+    )
     live_ready_family_ids = sorted(
         family_id
         for family_id, value in readiness.items()
@@ -2382,12 +2849,13 @@ def build_table_qualification_freeze_receipt(
     )
     body = {
         "record_type": "TABLE_QUALIFICATION_FREEZE_RECEIPT",
-        "schema_version": 3,
+        "schema_version": 4,
         "freeze_commit": commit,
         "frozen_at_utc": frozen_at_utc,
         "qualification_cycle_id": cycle_id,
         "d07_decision_required": decision_required,
         "readiness_by_family": readiness,
+        "readiness_by_task_request": task_request_readiness,
         "live_ready_family_ids": live_ready_family_ids,
         "identity": {
             "requirement_closure_hash": task_contracts[
@@ -2672,13 +3140,22 @@ def _family_status_result(
         measurements=measurements,
         drift_by_family=drift_by_family,
     )
+    task_request_readiness = _readiness_by_task_request(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family=drift_by_family,
+    )
     _validate_readiness_shape(readiness=readiness)
+    _validate_task_request_readiness_shape(
+        readiness=task_request_readiness,
+    )
     ready = readiness[family_id]["live_ready"] is True
     return {
         "receipt_id": receipt_id,
         "qualification_cycle_id": receipt["qualification_cycle_id"],
         "d07_decision_required": receipt["d07_decision_required"],
         "readiness_by_family": readiness,
+        "readiness_by_task_request": task_request_readiness,
         "live_ready_family_ids": [family_id] if ready else [],
         "blocked_family_ids": [] if ready else [family_id],
         "provider_ledger_before": dict(provider_ledger_before),
@@ -2904,7 +3381,7 @@ def validate_table_qualification_freeze(
         relative=receipt_relative,
         label="table qualification freeze receipt",
     )
-    if set(receipt) != RECEIPT_FIELDS or receipt["schema_version"] != 3:
+    if set(receipt) != RECEIPT_FIELDS or receipt["schema_version"] != 4:
         raise TableQualificationFreezeError("Freeze receipt fields are invalid")
     receipt_id = receipt["table_qualification_freeze_receipt_id"]
     body = {
@@ -2939,6 +3416,9 @@ def validate_table_qualification_freeze(
     if type(wb4) is not dict:
         raise TableQualificationFreezeError("WB-4 freeze evidence is invalid")
     _validate_readiness_shape(readiness=receipt["readiness_by_family"])
+    _validate_task_request_readiness_shape(
+        readiness=receipt["readiness_by_task_request"],
+    )
     frozen_measurements = _validate_frozen_d07_evidence(
         requirement=requirement,
         wb4=wb4,
@@ -2961,8 +3441,20 @@ def validate_table_qualification_freeze(
         measurements=frozen_measurements,
         drift_by_family={},
     )
+    expected_frozen_task_request_readiness = _readiness_by_task_request(
+        matrix=frozen_matrix,
+        measurements=frozen_measurements,
+        drift_by_family={},
+    )
     if receipt["readiness_by_family"] != expected_frozen_readiness:
         raise TableQualificationFreezeError("Frozen family readiness differs")
+    if (
+        receipt["readiness_by_task_request"]
+        != expected_frozen_task_request_readiness
+    ):
+        raise TableQualificationFreezeError(
+            "Frozen task/request readiness differs"
+        )
     expected_frozen_live = sorted(
         family_id
         for family_id, value in expected_frozen_readiness.items()
@@ -3028,7 +3520,15 @@ def validate_table_qualification_freeze(
         measurements=measurements,
         drift_by_family=drift_by_family,
     )
+    task_request_readiness = _readiness_by_task_request(
+        matrix=matrix,
+        measurements=measurements,
+        drift_by_family=drift_by_family,
+    )
     _validate_readiness_shape(readiness=readiness)
+    _validate_task_request_readiness_shape(
+        readiness=task_request_readiness,
+    )
     live_ready_family_ids = sorted(
         family_id
         for family_id, value in readiness.items()
@@ -3039,6 +3539,7 @@ def validate_table_qualification_freeze(
         "qualification_cycle_id": receipt["qualification_cycle_id"],
         "d07_decision_required": receipt["d07_decision_required"],
         "readiness_by_family": readiness,
+        "readiness_by_task_request": task_request_readiness,
         "live_ready_family_ids": live_ready_family_ids,
         "blocked_family_ids": sorted(
             family_id
@@ -3053,6 +3554,7 @@ def validate_table_qualification_freeze(
 
 def require_table_qualification_freeze(
     *, repo_root: Path, family_id: str,
+    task_contract_id: Optional[str] = None,
 ) -> Dict[str, object]:
     """Fail closed from only the requested family's three readiness gates.
 
@@ -3072,6 +3574,27 @@ def require_table_qualification_freeze(
         raise TableQualificationFreezeError(
             "TABLE_QUALIFICATION_FAMILY_UNKNOWN:{}".format(family_id)
         )
+    if task_contract_id is not None:
+        matching = [
+            value
+            for value in status["readiness_by_task_request"].values()
+            if value["family_id"] == family_id
+            and value["task_contract_id"] == task_contract_id
+        ]
+        if len(matching) != 1:
+            raise TableQualificationFreezeError(
+                "TABLE_QUALIFICATION_TASK_REQUEST_UNKNOWN:{}:{}".format(
+                    family_id, task_contract_id,
+                )
+            )
+        task_readiness = matching[0]
+        if task_readiness["live_ready"] is not True:
+            reasons = ",".join(task_readiness["blocking_reason_codes"])
+            raise TableQualificationFreezeError(
+                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY:{}:{}:{}".format(
+                    family_id, task_contract_id, reasons,
+                )
+            )
     if readiness["live_ready"] is not True:
         reasons = ",".join(readiness["blocking_reason_codes"])
         raise TableQualificationFreezeError(

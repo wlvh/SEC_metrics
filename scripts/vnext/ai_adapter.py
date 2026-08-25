@@ -74,6 +74,20 @@ _ACCEPTANCE_VALIDATOR_SEMANTIC_HASH = content_hash(
         ],
     }
 )
+_QUALIFICATION_USAGE_POLICY_FIELDS = {
+    "actual_prompt_tokens_max",
+    "automatic_retry_count",
+    "context_feasibility_attestation_id",
+    "future_ordinal_on_failure",
+    "measurement_response_reuse_for_qualification",
+    "provider_request_body_sha256",
+    "qualification_task_plan_id",
+    "record_type",
+    "required_usage_fields",
+    "source_measurement_evidence_id",
+    "source_measurement_raw_response_id",
+    "terminal_error_class",
+}
 
 
 class _NoRedirectHandler(HTTPRedirectHandler):
@@ -534,6 +548,7 @@ class InvocationControllerContext:
     release_input_plan_id: str
     workspace_dir: Path
     owner_token: str
+    qualification_usage_policy: Optional[Mapping[str, object]] = None
 
     def __post_init__(self) -> None:
         """Reject incomplete controller coordinates before source replay."""
@@ -546,6 +561,37 @@ class InvocationControllerContext:
             raise AIAdapterError("Invocation workspace is unsafe")
         if not isinstance(self.owner_token, str) or not self.owner_token:
             raise AIAdapterError("Invocation owner token is invalid")
+        usage_policy = self.qualification_usage_policy
+        if usage_policy is not None:
+            if (
+                not isinstance(usage_policy, Mapping)
+                or set(usage_policy) != _QUALIFICATION_USAGE_POLICY_FIELDS
+                or usage_policy["record_type"]
+                != "TABLE_QUALIFICATION_PROVIDER_USAGE_POLICY"
+                or usage_policy["qualification_task_plan_id"]
+                != self.release_input_plan_id
+                or type(usage_policy["actual_prompt_tokens_max"]) is not int
+                or usage_policy["actual_prompt_tokens_max"] < 1
+                or usage_policy["automatic_retry_count"] != 0
+                or usage_policy["future_ordinal_on_failure"] != "STOP"
+                or usage_policy["measurement_response_reuse_for_qualification"]
+                is not False
+                or usage_policy["terminal_error_class"] != "CONTEXT_LIMIT"
+                or usage_policy["required_usage_fields"]
+                != [
+                    "PROMPT_OR_INPUT_TOKENS",
+                    "COMPLETION_OR_OUTPUT_TOKENS",
+                    "TOTAL_TOKENS",
+                ]
+            ):
+                raise AIAdapterError(
+                    "Qualification provider usage policy is invalid"
+                )
+            object.__setattr__(
+                self,
+                "qualification_usage_policy",
+                MappingProxyType(dict(usage_policy)),
+            )
 
 
 class TransportAttemptError(AIAdapterError):
@@ -2055,6 +2101,48 @@ def _controller_usage(*, raw_response_bytes: Optional[bytes]) -> Dict[str, objec
     }
 
 
+def _qualification_usage_error(
+    *, raw_response_bytes: Optional[bytes], policy: Mapping[str, object],
+) -> str:
+    """Return the terminal class for missing or excessive qualification usage."""
+    usage = None
+    if raw_response_bytes:
+        try:
+            payload = strict_json_loads(
+                text=raw_response_bytes.decode("utf-8")
+            )
+            usage = payload.get("usage") if type(payload) is dict else None
+        except (UnicodeDecodeError, ValueError):
+            usage = None
+    if type(usage) is not dict:
+        return str(policy["terminal_error_class"])
+
+    def exact_count(*, names: Tuple[str, ...]) -> Optional[int]:
+        """Return one present, consistent, non-negative provider count."""
+        values = [usage[name] for name in names if name in usage]
+        if (
+            not values
+            or any(type(value) is not int or value < 0 for value in values)
+            or len(set(values)) != 1
+        ):
+            return None
+        return int(values[0])
+
+    prompt = exact_count(names=("prompt_tokens", "input_tokens"))
+    completion = exact_count(
+        names=("completion_tokens", "output_tokens"),
+    )
+    total = exact_count(names=("total_tokens",))
+    if (
+        prompt is None
+        or completion is None
+        or total is None
+        or prompt > int(policy["actual_prompt_tokens_max"])
+    ):
+        return str(policy["terminal_error_class"])
+    return ""
+
+
 def _controller_status_code(*, error_class: str) -> int:
     """Map one repository transport error into effective D-35 status."""
     if error_class.startswith("HTTP_") and error_class[5:].isdigit():
@@ -2093,6 +2181,19 @@ class _InvocationControllerTransport:
             or attempt_ordinal not in {1, 2}
         ):
             raise AIAdapterError("Controlled provider request identity differs")
+        context = self.adapter.invocation_context
+        usage_policy = (
+            context.qualification_usage_policy
+            if context is not None else None
+        )
+        if (
+            usage_policy is not None
+            and usage_policy["provider_request_body_sha256"]
+            != plan["provider_request_body_sha256"]
+        ):
+            raise AIAdapterError(
+                "Qualification provider request differs from context gate"
+            )
         try:
             result = self.adapter._complete_repository_transport(
                 prepared_request=self.prepared_request,
@@ -2100,14 +2201,26 @@ class _InvocationControllerTransport:
             )
             self.last_result = result
             self.last_error = None
+            usage = _controller_usage(
+                raw_response_bytes=result.raw_response_bytes,
+            )
+            qualification_policy = (
+                context.qualification_usage_policy
+                if context is not None else None
+            )
+            usage_error = (
+                _qualification_usage_error(
+                    raw_response_bytes=result.raw_response_bytes,
+                    policy=qualification_policy,
+                )
+                if qualification_policy is not None else ""
+            )
             return {
-                "status_code": 200,
-                "error_class": "",
+                "status_code": 200 if not usage_error else 0,
+                "error_class": usage_error,
                 "response_body": result.response_bytes,
                 "provider_request_id": result.provider_request_id,
-                "usage": _controller_usage(
-                    raw_response_bytes=result.raw_response_bytes,
-                ),
+                "usage": usage,
             }
         except TransportAttemptError as error:
             self.last_error = error
@@ -2651,6 +2764,22 @@ def build_invocation_controlled_transport_adapter(
             release_input_plan_id=release_input_plan_id,
             workspace_dir=workspace_dir,
             owner_token=owner_token,
+        ),
+    )
+
+
+def build_table_qualification_transport_adapter(
+    *, release_input_plan_id: str, workspace_dir: Path, owner_token: str,
+    qualification_usage_policy: Mapping[str, object],
+) -> AIAdapter:
+    """Build the controlled adapter with an exact qualification usage gate."""
+    return _ApprovedTransportAdapter(
+        authority=_ADAPTER_AUTHORITY,
+        invocation_context=InvocationControllerContext(
+            release_input_plan_id=release_input_plan_id,
+            workspace_dir=workspace_dir,
+            owner_token=owner_token,
+            qualification_usage_policy=qualification_usage_policy,
         ),
     )
 

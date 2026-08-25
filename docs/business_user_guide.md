@@ -174,7 +174,7 @@ full validation 需要本地 raw evidence、请求日志和 concept inventory �
 
 ## 10. vNext 当前如何复核
 
-vNext 已提供同一套 recorded/live operator与formal publication primitives。recorded模式强制离线且不修改正式active/root outputs；generic formal commit会fail closed。Issue #15快速验收并发运行十一个直接边界用例，整体最高仍是`PASSED_FAST_LOCAL_ONLY`；读取R2 formal artifacts的用例也不能把partial active升级为full acceptance。
+vNext 已提供同一套 recorded/live operator与formal publication primitives。recorded模式强制离线且不修改正式active/root outputs；generic formal commit会fail closed。Issue #15快速验收并发运行十九个直接边界用例，整体最高仍是`PASSED_FAST_LOCAL_ONLY`；读取R2 formal artifacts的用例也不能把partial active升级为full acceptance。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
 运行负责人可以不读源码，从 `tools/vnext_operator.py fixture list/show` 发现仓库已经绑定的真实 SEC recorded fixture，再运行 `tools/vnext_cutover.py --fixture-id ...`。首次命令会创建真实 structured/OPEN Runs；既有HUMAN decision优先，否则D-06会以固定可审计SYSTEM身份写入完整approval并继续。之后同一Cutover命令完成freeze/replay、complete Batch、Projector，并在request closure通过后把结果CAS提交到该workspace自己的`recorded-publication`再用PublicationView读回。recorded Cutover只接受`artifacts/vnext/recorded-*`专用workspace；live固定使用repository-owned `artifacts/vnext/cutover`，caller传入任何live `--workspace-dir`都会在读取或写入前以`LIVE_WORKSPACE_OVERRIDE_FORBIDDEN`失败。recorded closure可验证历史ledger中唯一、path/hash/headers/size exact的legacy locator并明确保留tier/class；formal/live仍只允许immutable attempt，resume时还会对当前解释器、固定五命令、ledger tail与inventory bytes重验acquisition receipt。这是socket=0的操作训练与transaction证据；正式active pointer、root CSV/报告、formal namespace及SEC ledger不会变化。自动测试中的`TEST_ONLY_EXPLICIT_REVIEW`不是正式HUMAN签署，sandbox publication也不是live、active或full结果，不能交给业务人员作为新数据入口。
@@ -183,6 +183,8 @@ vNext 已提供同一套 recorded/live operator与formal publication primitives�
 正式live core还exact固定module-owned repository、`artifacts/vnext/cutover`、`outputs` legacy snapshot与publication root，fault matrix也不接受caller root。每次有效live调用（包括HUMAN或SYSTEM/committed resume）都会fresh执行SEC acquisition；旧receipt只能重验历史pinned semantic plan，本次receipt会单独进入current audit/full closure。
 
 第二布局与holdout不是把网页下载后手工拼成 fixture：运行负责人只能从 `fixtures/vnext/qualification_candidates.json` 选固定ID，并用 `tools/vnext_capture_qualification_fixture.py` 统一请求官方 SEC、写入ledger/raw bytes、调用固定DeepSeek并保存provider envelope、Reader response与回放excerpt。该工具不接受URL、公司、期间、模型或secret覆盖；录制完成后，qualification 本身仍是 socket=0 回放。
+
+当前开发证据中只有一个exact lodging task/request获得context feasibility attestation：它的Stage C-B actual prompt为160937，低于200000 budget；这不代表measurement response可以复用为qualification，也不代表整个lodging family ready。另一个required sibling request没有matching attestation或严格跨task token上界，仍为`EXACT_CONTEXT_EVIDENCE_REQUIRED`；financial仍为`F3_NEED_MORE_EVIDENCE`，live qualification、R3和publication都未授权。业务人员不得把该attestation或Stage-C packet当成新的指标结果。
 
 但它尚未成为业务结果入口。业务人员当前仍从第 4 节所列 root manifest、snapshot checker、report 和 CSV 开始，不应在 `artifacts/vnext/` 中自行挑选一个 OPEN/FROZEN Run 当成正式结果。
 

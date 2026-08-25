@@ -88,6 +88,69 @@ ISSUE_15_D07_MEASUREMENT_EXCEPTION = {
     "consumes_authorization_after_any_egress_marker": True,
     "execution_requires_external_exact_head_authorization": True,
 }
+ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY = {
+    "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
+    "accepted_measurement_evidence_id": (
+        "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c"
+        "2b366c419436253b9ebb56f56dbf9795"
+    ),
+    "accepted_provider": "deepseek",
+    "accepted_model": "deepseek-v4-flash",
+    "accepted_api": "chat_completions",
+    "accepted_actual_prompt_tokens": 160937,
+    "context_budget_tokens": 200000,
+    "context_headroom_tokens": 39063,
+    "default_path": {
+        "condition": "estimated_input_tokens <= 200000",
+        "result": "PASS",
+        "evidence_basis": "ESTIMATED_BOUND",
+    },
+    "exact_attestation_path": {
+        "estimated_condition": "estimated_input_tokens > 200000",
+        "actual_condition": "attested_actual_prompt_tokens <= 200000",
+        "required_exact_equalities": [
+            "provider_request_body_sha256",
+            "family_id",
+            "task_contract_id",
+            "source_identity",
+            "source_repo_relative_path",
+            "source_sha256",
+            "serializer_identity",
+            "serializer_hash",
+            "task_contract_hash",
+            "prompt_hash",
+            "output_schema_hash",
+            "provider",
+            "model",
+            "api",
+            "requirement_closure_hash",
+            "protected_closure_hash",
+        ],
+        "result": "PASS",
+        "evidence_basis": "PROVIDER_REPORTED_EXACT_BINDING",
+    },
+    "non_exact_equivalence_forbidden": [
+        "APPROXIMATE_RATIO",
+        "SIMILAR_BYTE_LENGTH",
+        "SAME_FAMILY",
+        "SAME_SOURCE",
+        "SAME_SERIALIZER_VERSION",
+        "SHARED_TABLE_PAYLOAD",
+    ],
+    "attestation_scope": "ONE_EXACT_TASK_REQUEST",
+    "attestation_semantics": "CONTEXT_FEASIBILITY_ONLY",
+    "measurement_authorization_permanently_consumed": True,
+    "additional_measurement_authorized": False,
+    "measurement_response_qualification_credit": False,
+    "measurement_response_reuse_for_qualification": False,
+    "qualification_requires_separate_authorization": True,
+    "qualification_requires_new_provider_execution": True,
+    "future_qualification_usage_required": True,
+    "future_qualification_actual_prompt_tokens_max": 200000,
+    "future_qualification_usage_failure_policy": (
+        "TERMINAL_NO_RETRY_STOP_LATER_ORDINALS"
+    ),
+}
 ISSUE_15_D07_EFFECTIVE_CHOICE = {
     "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
     "semantic_prefilter": False,
@@ -114,11 +177,12 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
     "live_measurement_authorized": False,
     "live_qualification_authorized": False,
     "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
+    "context_feasibility_policy": ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
-        "#issuecomment-5399126863"
+        "#issuecomment-5405401715"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -135,8 +199,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:200bb6feae25c5683260e2dd8a758f1a"
-        "b3f0480b8694bb802ca44fd80835554f"
+        "sha256:f7d4a3c6753fb92e003e6acbad1772e5"
+        "6236ee98ed0bce8ef419a012cd9ac3c0"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1323,14 +1387,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 3
+        or len(chains["D-07"]) != 4
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][1])
+        != _decision_record_hash(decision=chains["D-07"][2])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]
