@@ -1174,13 +1174,10 @@ def qualification_authorized_company_traits(
     return list(binding["company_traits"])
 
 
-def qualification_authorized_source_ciks(
-    *, repo_root: Path, authorization: object, task_contract_id: str,
-    company_id: str, source_repo_relative_path: str, source_url: str,
-    accession: str, document_name: str, source_role: str,
-    request_attempt_id: str,
+def qualification_authorized_company_ciks(
+    *, repo_root: Path, authorization: object, company_id: str,
 ) -> list[str]:
-    """Rebuild one opaque qualification source and return its exact SEC CIK."""
+    """Return the exact SEC CIK owned by one opaque qualification source."""
     if (
         type(authorization) is not TableQualificationAuthorization
         or authorization._capability is not _QUALIFICATION_AUTHORIZATION_CAPABILITY
@@ -1192,26 +1189,17 @@ def qualification_authorized_source_ciks(
     binding = _rebuild_authorization_binding(
         repo_root=repo_root, actual=authorization.as_mapping(),
     )
-    source = binding["source_binding"]
-    declaration = source["source_declaration"]
+    declaration = binding["source_binding"]["source_declaration"]
     cik = declaration.get("cik")
     if (
-        binding.get("task_contract_id") != task_contract_id
-        or declaration.get("company_id") != company_id
-        or declaration.get("source_repo_relative_path")
-        != source_repo_relative_path
-        or source.get("source_url") != source_url
-        or declaration.get("accession") != accession
-        or declaration.get("document_name") != document_name
-        or source.get("source_role") != source_role
-        or source.get("request_attempt_id") != request_attempt_id
+        declaration.get("company_id") != company_id
         or type(cik) is not str
         or not cik.isdigit()
         or int(cik) <= 0
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Qualification source differs from CIK authority",
+            message="Qualification CIK differs from source authority",
         )
     return [str(int(cik))]
 

@@ -37,7 +37,7 @@ from .observations import reviewed_observation, scope_key
 from .qualification import QualificationError
 from .qualification import record_table_qualification_execution
 from .qualification import validate_live_table_qualification_authorization
-from .qualification import qualification_authorized_source_ciks
+from .qualification import qualification_authorized_company_ciks
 from .qualification import qualification_authorized_company_traits
 from .qualification import validate_table_qualification_run_bindings
 from .requirements import load_run_requirement_snapshot
@@ -1101,17 +1101,10 @@ def _create_review_run_with_traits(
         qualification_ciks = None
         if qualification_binding is not None:
             try:
-                qualification_ciks = qualification_authorized_source_ciks(
+                qualification_ciks = qualification_authorized_company_ciks(
                     repo_root=repo_root,
                     authorization=qualification_authorization,
-                    task_contract_id=str(task_contract_id),
                     company_id=company_id,
-                    source_repo_relative_path=source_repo_relative_path,
-                    source_url=source_url,
-                    accession=accession,
-                    document_name=document_name,
-                    source_role=source_role,
-                    request_attempt_id=request_attempt_id,
                 )
             except QualificationError as error:
                 raise WorkflowError(
@@ -1229,11 +1222,6 @@ def _create_review_run_with_traits(
             disclosure_spec_path=disclosure_spec_path,
             immutable_source_repo_relative_path=str(
                 live_source_binding["request_repo_relative_path"]
-            ),
-            qualification_authorization=(
-                qualification_authorization
-                if qualification_binding is not None
-                else None
             ),
         )
         if adapter_mode == "LIVE"
