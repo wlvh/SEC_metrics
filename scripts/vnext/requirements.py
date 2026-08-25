@@ -109,6 +109,70 @@ ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION = {
     "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
     "context_budget_tokens": 200000,
 }
+ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
+    {
+        "family_id": "lodging_kpi_table",
+        "task_contract_id": "lodging_occupancy_table_v2",
+        "attestation_id": (
+            "sha256:dc8cb1d152cc42b5b438e4db33fe0360"
+            "6766b8d7ec1b4bc11bd92273cbbd9e60"
+        ),
+        "measurement_evidence_id": (
+            "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c"
+            "2b366c419436253b9ebb56f56dbf9795"
+        ),
+        "actual_prompt_tokens": 160937,
+        "context_budget_tokens": 200000,
+    },
+    {
+        "family_id": "lodging_kpi_table",
+        "task_contract_id": "lodging_revpar_table_v2",
+        "attestation_id": (
+            "sha256:d3824ed29716596cbb4b997462d3974c8"
+            "c36f429555dd35d84f62b8b137a9c42"
+        ),
+        "measurement_evidence_id": (
+            "sha256:9a3d6072a7ce640d510ad8a9451e075f8"
+            "659c078715a5eaae97b2ef51ffff2cd"
+        ),
+        "actual_prompt_tokens": 160928,
+        "context_budget_tokens": 200000,
+    },
+]
+ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
+    "authorized_family_ids": ["lodging_kpi_table"],
+    "authorized_task_contract_ids": [
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2",
+    ],
+    "second_layout_fixture_id": "hilton-2024-sec-layout-v7",
+    "post_freeze_holdout_fixture_id": "hyatt-2025-sec-holdout-v2",
+    "fresh_samples_required": 3,
+    "sample_sequence": [
+        "SECOND_LAYOUT",
+        "PRODUCTION_SEMANTIC_FREEZE",
+        "POST_FREEZE_HOLDOUT",
+        "FRESH_STABILITY_1",
+        "FRESH_STABILITY_2",
+        "FRESH_STABILITY_3",
+    ],
+    "current_content_addressed_freeze_required": True,
+    "current_stage_a_snapshot_required": True,
+    "new_provider_execution_per_sample_required": True,
+    "measurement_response_reuse_for_qualification": False,
+    "provider_usage_required": True,
+    "actual_prompt_tokens_max": 200000,
+    "authorized_context_evidence_bases": [
+        "ESTIMATED_BOUND",
+        "PROVIDER_REPORTED_EXACT_BINDING",
+        "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+    ],
+    "unattested_over_estimated_bound_phase": "POST_FREEZE_HOLDOUT",
+    "unattested_over_estimated_bound_requires_exact_review": True,
+    "missing_or_excess_usage_terminal_no_retry": True,
+    "independent_exact_head_review_required_before_first_egress": True,
+    "financial_qualification_authorized": False,
+}
 ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY = {
     "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
     "accepted_measurement_evidence_id": (
@@ -196,17 +260,22 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
         "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED"
     ),
     "live_measurement_authorized": False,
-    "live_qualification_authorized": False,
+    "live_qualification_authorized": True,
     "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     "context_feasibility_policy": ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
     "revpar_measurement_exception": (
         ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
     ),
+    "accepted_context_attestations": (
+        ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
+    ),
+    "revpar_measurement_authorization_permanently_consumed": True,
+    "live_qualification_scope": ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE,
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
-        "https://github.com/wlvh/SEC_metrics/issues/15"
-        "#issuecomment-5409390114"
+        "https://github.com/wlvh/SEC_metrics/pull/22"
+        "#issuecomment-5410845750"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -223,8 +292,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:df75bb151460f24d2c3173d81f3259d5"
-        "cdcea98786d77e0189cb1e5b1bf6aeee"
+        "sha256:400cdc1299371d090638f589991deb80a"
+        "92e11fe25159578be26d3d578c06600"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1411,14 +1480,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 5
+        or len(chains["D-07"]) != 6
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][3])
+        != _decision_record_hash(decision=chains["D-07"][4])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

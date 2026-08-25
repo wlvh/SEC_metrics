@@ -37,6 +37,7 @@ from .observations import reviewed_observation, scope_key
 from .qualification import QualificationError
 from .qualification import record_table_qualification_execution
 from .qualification import validate_live_table_qualification_authorization
+from .qualification import qualification_authorized_company_traits
 from .qualification import validate_table_qualification_run_bindings
 from .requirements import load_run_requirement_snapshot
 from .scope_contract import scope_satisfies_contract
@@ -592,13 +593,21 @@ def create_table_task_review_run(
         caller must name a catalog contract that is recorded in the Run.
     """
     try:
-        company_traits = repository_company_traits(
-            repo_root=repo_root,
-            company_id=company_id,
+        company_traits = (
+            qualification_authorized_company_traits(
+                repo_root=repo_root,
+                authorization=qualification_authorization,
+                company_id=company_id,
+            )
+            if qualification_authorization is not None
+            else repository_company_traits(
+                repo_root=repo_root,
+                company_id=company_id,
+            )
         )
-    except TraitError as error:
+    except (QualificationError, TraitError) as error:
         raise WorkflowError(
-            "Repository company traits are invalid"
+            "Repository qualification traits are invalid"
         ) from error
     return _create_review_run_with_traits(
         repo_root=repo_root,

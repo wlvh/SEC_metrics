@@ -184,7 +184,7 @@ vNext 已提供同一套 recorded/live operator与formal publication primitives�
 
 第二布局与holdout不是把网页下载后手工拼成 fixture：运行负责人只能从 `fixtures/vnext/qualification_candidates.json` 选固定ID，并用 `tools/vnext_capture_qualification_fixture.py` 统一请求官方 SEC、写入ledger/raw bytes、调用固定DeepSeek并保存provider envelope、Reader response与回放excerpt。该工具不接受URL、公司、期间、模型或secret覆盖；录制完成后，qualification 本身仍是 socket=0 回放。
 
-当前已接受的occupancy exact context attestation仍绑定Stage C-B actual prompt 160937与200000 budget，历史authorization/response不可复用。Owner另以same-ID D-07 additive successor授权exactly-one Marriott RevPAR usage measurement，但它在独立review绑定exact HEAD/request SHA并真实返回authoritative usage以前仍不是context proof；不得用occupancy ratio或相似bytes替代。若RevPAR actual prompt不超过200000，它会用同一内部attestation record type形成第二个task/request proof，随后才可能重建lodging family readiness；measurement response本身仍不计qualification ordinal。业务人员不得把任一measurement/attestation当成新指标结果，live qualification、R3与publication仍需后续真实证据。
+occupancy与RevPAR两个exact context attestation现分别绑定provider actual prompt 160937与160928，均低于200000；两次measurement authorization都已永久消费，response不可复用为qualification或业务结果。lodging family的development request context因此ready，但这仍不等于R3。live qualification必须按Hilton second layout→production semantic freeze→Hyatt post-freeze holdout→每task三个Marriott fresh samples执行；每次都产生新的provider execution、Evidence、Review与FROZEN Run。Hyatt request的安全估算略高于200000，只能在独立review绑定exact request后调用，并由该次response的actual usage门终态裁决。业务人员只能在R3 active terminal validation与strict compatibility完成后读取新的lodging结果。
 
 但它尚未成为业务结果入口。业务人员当前仍从第 4 节所列 root manifest、snapshot checker、report 和 CSV 开始，不应在 `artifacts/vnext/` 中自行挑选一个 OPEN/FROZEN Run 当成正式结果。
 

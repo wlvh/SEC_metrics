@@ -36,18 +36,24 @@ from .records import RecordError, validate_record, validate_run_coordinates
 from .review import effective_review_decision
 from .run_store import load_run_for_status, RunStoreError
 from .stage_a_snapshot import StageASnapshotError, validate_stage_a_snapshot
+from .sources import raw_blob_record, source_reference_record
 from .table_grid import TableGridError, resolve_cell
 from .table_context_attestation import (
     validate_table_context_feasibility_attestation,
 )
+from .table_context_attestation import current_exact_request_binding
 from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
 from .table_qualification_freeze import TableQualificationFreezeError
 from .table_qualification_freeze import FREEZE_CYCLE_ROOT
 from .table_qualification_freeze import load_table_qualification_matrix
+from .table_qualification_freeze import _measure_reader_envelope
 from .table_qualification_freeze import require_table_qualification_freeze
 from .table_task_contracts import load_table_task_contracts
 from .table_task_contracts import resolve_table_task_contract
+from .table_task_contracts import table_task_execution_plan
 from .table_task_contracts import TableTaskContractError
+from .provider_runtime import load_provider_runtime_authority
+from .traits import repository_company_traits, TraitError
 
 
 QUALIFICATION_ROOT = Path("artifacts/vnext/qualification")
@@ -58,6 +64,8 @@ LAYOUT_REFERENCE_INDEX = Path(
 LAYOUT_FIXTURE_ROOT = Path("fixtures/vnext/layouts")
 QUALIFICATION_RUN_ROOT = QUALIFICATION_ROOT / "runs"
 TABLE_QUALIFICATION_CYCLE_ROOT = QUALIFICATION_ROOT / "cycles"
+TABLE_PRODUCTION_FREEZE_FILE = "production_semantic_freeze.json"
+_PHYSICAL_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 LAYOUT_FIXTURE_FIELDS = frozenset({
     "accession",
     "cik",
@@ -114,6 +122,7 @@ _QUALIFICATION_AUTHORIZATION_CAPABILITY = object()
 _QUALIFICATION_AUTHORIZATION_FIELDS = {
     "api",
     "catalog_task_contract_hash",
+    "company_traits",
     "context_feasibility_binding",
     "family_id",
     "freeze_receipt_id",
@@ -123,7 +132,9 @@ _QUALIFICATION_AUTHORIZATION_FIELDS = {
     "provider",
     "qualification_authorization_id",
     "qualification_cycle_id",
+    "qualification_fixture_id",
     "qualification_ordinal",
+    "qualification_phase",
     "qualification_provider_ledger_before_row_count",
     "qualification_provider_ledger_before_sha256",
     "qualification_provider_ledger_path",
@@ -172,6 +183,7 @@ _PROVIDER_LEDGER_ENTRY_FIELDS = {
     "qualification_authorization_id",
     "qualification_cycle_id",
     "qualification_ordinal",
+    "qualification_phase",
     "qualification_provider_ledger_entry_id",
     "qualification_task_plan_id",
     "record_type",
@@ -436,6 +448,260 @@ def _matrix_source_binding(
     }
 
 
+def _matrix_fixture_source_binding(
+    *, repo_root: Path, fixture_id: str,
+) -> Dict[str, object]:
+    """Rebuild one matrix-selected layout source from its immutable attempt."""
+    fixture = _layout_fixture_manifest(
+        repo_root=repo_root, fixture_id=fixture_id,
+    )
+    try:
+        proof = validate_request_attempt_binding(
+            repo_root=repo_root,
+            source_url=str(fixture["source_url"]),
+            content_sha256=str(fixture["source_sha256"]),
+            accession=str(fixture["accession"]),
+            document_name=str(fixture["document_name"]),
+            request_attempt_id=str(fixture["request_attempt_id"]),
+            require_immutable=True,
+        )
+    except BatchWorkflowError as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Layout source immutable-attempt proof differs",
+        ) from error
+    declaration = {
+        "source_kind": "IMMUTABLE_ATTEMPT",
+        "company_id": fixture["company_id"],
+        "cik": fixture["cik"],
+        "accession": fixture["accession"],
+        "document_name": fixture["document_name"],
+        "source_repo_relative_path": proof["request_repo_relative_path"],
+        "source_sha256": fixture["source_sha256"],
+    }
+    body = {
+        "source_declaration": declaration,
+        "source_url": fixture["source_url"],
+        "source_role": fixture["source_role"],
+        **proof,
+    }
+    return {
+        **body,
+        "source_binding_hash": content_hash(value=body),
+        "qualification_fixture_id": fixture_id,
+        "qualification_role": fixture["qualification_role"],
+        "company_traits": list(fixture["company_traits"]),
+        "target_period": _target_period_mapping(value=fixture["target_period"]),
+        "source_media_type": _source_media_type(
+            value=fixture["source_media_type"],
+        ),
+    }
+
+
+def _qualification_sample_authority(
+    *, repo_root: Path, matrix_entry: Mapping[str, object],
+    qualification_phase: str, qualification_ordinal: int,
+) -> Dict[str, object]:
+    """Resolve a phase to its matrix-owned source without caller locators."""
+    if qualification_phase == "FRESH_STABILITY":
+        if qualification_ordinal > matrix_entry["fresh_samples_required"]:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+                message="Fresh stability ordinal exceeds frozen policy",
+            )
+        source_binding = _matrix_source_binding(
+            repo_root=repo_root, matrix_entry=matrix_entry,
+        )
+        try:
+            company_traits = repository_company_traits(
+                repo_root=repo_root,
+                company_id=str(
+                    source_binding["source_declaration"]["company_id"]
+                ),
+            )
+        except TraitError as error:
+            try:
+                task_plan = table_task_execution_plan(
+                    repo_root=repo_root,
+                    task_contract_id=str(matrix_entry["task_contract_ids"][0]),
+                )
+                company_traits = sorted({
+                    str(trait)
+                    for metric in task_plan["metric_specs"]
+                    for trait in metric["compiled"]["applicability"]["all"]
+                })
+            except (KeyError, TableTaskContractError, TypeError) as nested:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+                    message="Qualification company traits are invalid",
+                ) from nested
+            if not company_traits:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+                    message="Qualification company traits are empty",
+                ) from error
+        return {
+            "qualification_phase": qualification_phase,
+            "qualification_fixture_id": None,
+            "source_binding": source_binding,
+            "company_traits": list(company_traits),
+            "target_period": _target_period_mapping(
+                value=matrix_entry["target_period"],
+            ),
+            "source_media_type": _source_media_type(
+                value=matrix_entry["source_media_type"],
+            ),
+        }
+    field = {
+        "SECOND_LAYOUT": "second_layout_source",
+        "POST_FREEZE_HOLDOUT": "post_freeze_holdout_source",
+    }.get(qualification_phase)
+    if field is None or qualification_ordinal != 1:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Qualification phase or ordinal is invalid",
+        )
+    declaration = matrix_entry.get(field)
+    if (
+        type(declaration) is not dict
+        or declaration.get("source_kind") != "RECORDED_LAYOUT_FIXTURE"
+        or type(declaration.get("fixture_id")) is not str
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Qualification layout source is invalid",
+        )
+    binding = _matrix_fixture_source_binding(
+        repo_root=repo_root, fixture_id=str(declaration["fixture_id"]),
+    )
+    if binding["qualification_role"] != qualification_phase:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Qualification layout role differs from phase",
+        )
+    return {
+        "qualification_phase": qualification_phase,
+        "qualification_fixture_id": binding["qualification_fixture_id"],
+        "source_binding": {
+            key: value for key, value in binding.items()
+            if key in _SOURCE_BINDING_FIELDS
+        },
+        "company_traits": list(binding["company_traits"]),
+        "target_period": binding["target_period"],
+        "source_media_type": binding["source_media_type"],
+    }
+
+
+def _qualification_sample_measurement(
+    *, repo_root: Path, family_id: str, task_contract: Mapping[str, object],
+    matrix_entry: Mapping[str, object], sample: Mapping[str, object],
+    requirement: Mapping[str, object], freeze: Mapping[str, object],
+) -> Dict[str, object]:
+    """Build the exact phase-specific provider request without transport."""
+    source = sample["source_binding"]
+    declaration = source["source_declaration"]
+    raw = raw_blob_record(
+        repo_root=repo_root,
+        repo_relative_path=str(source["request_repo_relative_path"]),
+        media_type=str(sample["source_media_type"]),
+    )
+    reference = source_reference_record(
+        raw_blob=raw,
+        company_id=str(declaration["company_id"]),
+        source_url=str(source["source_url"]),
+        accession=str(declaration["accession"]),
+        document_name=str(declaration["document_name"]),
+        source_role=str(source["source_role"]),
+        request_attempt_id=str(source["request_attempt_id"]),
+    )
+    policy = approved_transport_policy(requirement=requirement)
+    runtime = load_provider_runtime_authority(
+        repo_root=repo_root,
+        provider=policy.provider,
+        model=policy.model,
+        api=policy.api,
+    )
+    return _measure_reader_envelope(
+        repo_root=repo_root,
+        source_id="{}:{}:{}".format(
+            family_id,
+            sample["qualification_phase"],
+            task_contract["task_contract_id"],
+        ),
+        source_path=repo_root / str(source["request_repo_relative_path"]),
+        source_sha256=str(declaration["source_sha256"]),
+        task_contract=task_contract,
+        token_limit=int(
+            matrix_entry["token_context_limits"][
+                "max_estimated_input_tokens"
+            ]
+        ),
+        policy=policy,
+        runtime=runtime,
+        family_id=family_id,
+        source_identity=declaration,
+        source_reference_id=str(reference["source_reference_id"]),
+        source_repo_relative_path=str(source["request_repo_relative_path"]),
+        request_requirement_closure_hash=str(
+            requirement["requirement_closure_hash"]
+        ),
+        request_protected_closure_hash=(
+            str(current_exact_request_binding(
+                repo_root=repo_root,
+                task_contract_id=str(task_contract["task_contract_id"]),
+            )["protected_closure_hash"])
+            if sample["qualification_phase"] == "FRESH_STABILITY"
+            else content_hash(value=freeze["protected_closure"])
+        ),
+    )
+
+
+def _qualification_context_plan(
+    *, measurement: Mapping[str, object], qualification_phase: str,
+    matrix_entry: Mapping[str, object], scope: Mapping[str, object],
+) -> Dict[str, object]:
+    """Apply the authorized pre-egress context path to one exact sample."""
+    context = dict(measurement["context_feasibility"])
+    if context["status"] == "PASSED":
+        return context
+    allowed_reasons = {
+        "ESTIMATED_CONTEXT_LIMIT",
+        "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+        "EXACT_CONTEXT_BINDING_MISMATCH",
+    }
+    if (
+        qualification_phase != "POST_FREEZE_HOLDOUT"
+        or scope.get("unattested_over_estimated_bound_phase")
+        != "POST_FREEZE_HOLDOUT"
+        or scope.get(
+            "unattested_over_estimated_bound_requires_exact_review"
+        ) is not True
+        or not set(measurement["blocking_reason_codes"]).issubset(
+            allowed_reasons
+        )
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification sample context is not authorized",
+        )
+    return {
+        "status": "PASSED",
+        "evidence_basis": (
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+        ),
+        "attestation_id": None,
+        "attested_actual_prompt_tokens": None,
+        "context_budget_tokens": int(
+            matrix_entry["token_context_limits"][
+                "max_estimated_input_tokens"
+            ]
+        ),
+        "exact_binding_match": False,
+        "drift_fields": [],
+        "blocking_reason_code": None,
+    }
+
+
 def _qualification_workspace_relative_path(*, cycle_id: str) -> str:
     """Derive the only WB-3 workspace allowed for one qualification cycle."""
     if not _SHA256_ID.fullmatch(cycle_id):
@@ -452,7 +718,7 @@ def _qualification_workspace_relative_path(*, cycle_id: str) -> str:
 
 def _authorization_mapping(
     *, repo_root: Path, family_id: str, task_contract_id: str,
-    qualification_ordinal: int,
+    qualification_ordinal: int, qualification_phase: str,
 ) -> Dict[str, object]:
     """Mechanically rebuild every current authority field for one LIVE task."""
     plan = table_qualification_task_plan(
@@ -460,6 +726,7 @@ def _authorization_mapping(
         family_id=family_id,
         task_contract_id=task_contract_id,
         qualification_ordinal=qualification_ordinal,
+        qualification_phase=qualification_phase,
         include_freeze_status=True,
     )
     try:
@@ -509,16 +776,15 @@ def _authorization_mapping(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification matrix family is absent",
         )
-    source_binding = _matrix_source_binding(
+    sample = _qualification_sample_authority(
         repo_root=repo_root,
         matrix_entry=matrix_entry,
+        qualification_phase=qualification_phase,
+        qualification_ordinal=qualification_ordinal,
     )
-    target_period = _target_period_mapping(
-        value=matrix_entry.get("target_period"),
-    )
-    source_media_type = _source_media_type(
-        value=matrix_entry.get("source_media_type"),
-    )
+    source_binding = sample["source_binding"]
+    target_period = sample["target_period"]
+    source_media_type = sample["source_media_type"]
     ledger_before = freeze.get("provider_ledger_before")
     if (
         type(ledger_before) is not dict
@@ -533,31 +799,58 @@ def _authorization_mapping(
             message="Qualification provider ledger baseline is invalid",
         )
     policy = approved_transport_policy(requirement=requirement)
-    task_request_rows = [
-        value
-        for value in freeze["readiness_by_task_request"].values()
-        if value["family_id"] == family_id
-        and value["task_contract_id"] == task_contract_id
-    ]
-    if len(task_request_rows) != 1:
-        raise QualificationError(
-            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Qualification task/request readiness is ambiguous",
+    if qualification_phase == "FRESH_STABILITY":
+        task_request_rows = [
+            value
+            for value in freeze["readiness_by_task_request"].values()
+            if value["family_id"] == family_id
+            and value["task_contract_id"] == task_contract_id
+        ]
+        if len(task_request_rows) != 1:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification task/request readiness is ambiguous",
+            )
+        task_request = task_request_rows[0]
+        context_gate = task_request["context_gate"]
+        if (
+            task_request["live_ready"] is not True
+            or context_gate["status"] != "PASSED"
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Qualification task/request context is not ready",
+            )
+    else:
+        measurement = _qualification_sample_measurement(
+            repo_root=repo_root,
+            family_id=family_id,
+            task_contract=runtime,
+            matrix_entry=matrix_entry,
+            sample=sample,
+            requirement=requirement,
+            freeze=freeze,
         )
-    task_request = task_request_rows[0]
-    context_gate = task_request["context_gate"]
-    if (
-        task_request["live_ready"] is not True
-        or context_gate["status"] != "PASSED"
-    ):
-        raise QualificationError(
-            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Qualification task/request context is not ready",
+        context_gate = _qualification_context_plan(
+            measurement=measurement,
+            qualification_phase=qualification_phase,
+            matrix_entry=matrix_entry,
+            scope=requirement["effective_decisions"]["D-07"]["choice"][
+                "live_qualification_scope"
+            ],
         )
+        task_request = {
+            "task_request_id": measurement["task_request_id"],
+            "provider_request_body_sha256": measurement[
+                "provider_request_body_sha256"
+            ],
+            "context_gate": context_gate,
+        }
     attestation = None
     if context_gate["evidence_basis"] == "PROVIDER_REPORTED_EXACT_BINDING":
         attestation = validate_table_context_feasibility_attestation(
             repo_root=repo_root,
+            task_contract_id=task_contract_id,
         )
         if (
             context_gate["attestation_id"] != attestation["attestation_id"]
@@ -568,6 +861,18 @@ def _authorization_mapping(
                 code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
                 message="Qualification context attestation differs",
             )
+    if (
+        plan["provider_request_body_sha256"]
+        != task_request["provider_request_body_sha256"]
+        or plan["context_evidence_basis"] != context_gate["evidence_basis"]
+        or plan["qualification_target_period"] != target_period
+        or plan["source_company_id"]
+        != source_binding["source_declaration"]["company_id"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification task plan differs from exact sample request",
+        )
     context_feasibility_binding = {
         "task_request_id": task_request["task_request_id"],
         "provider_request_body_sha256": task_request[
@@ -618,6 +923,7 @@ def _authorization_mapping(
         "qualification_cycle_id": freeze["qualification_cycle_id"],
         "family_id": family_id,
         "task_contract_id": task_contract_id,
+        "qualification_phase": qualification_phase,
         "qualification_ordinal": qualification_ordinal,
         "source_binding_hash": source_binding["source_binding_hash"],
         "target_period": target_period,
@@ -631,9 +937,12 @@ def _authorization_mapping(
         "freeze_receipt_id": freeze["receipt_id"],
         "family_id": family_id,
         "task_contract_id": task_contract_id,
+        "qualification_phase": qualification_phase,
+        "qualification_fixture_id": sample["qualification_fixture_id"],
         "qualification_ordinal": qualification_ordinal,
         "matrix_entry_hash": plan["matrix_entry_hash"],
         "catalog_task_contract_hash": runtime["catalog_task_contract_hash"],
+        "company_traits": list(sample["company_traits"]),
         "context_feasibility_binding": context_feasibility_binding,
         "task_spec_semantic_hash": runtime["task_spec_semantic_hash"],
         "output_schema_hash": runtime["output_schema_hash"],
@@ -681,6 +990,7 @@ def _authorization_mapping(
 def issue_table_qualification_authorization(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int,
+    qualification_phase: str = "FRESH_STABILITY",
 ) -> TableQualificationAuthorization:
     """Issue one opaque authorization only after all current gates revalidate.
 
@@ -692,16 +1002,54 @@ def issue_table_qualification_authorization(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
     d07 = requirement["effective_decisions"]["D-07"]["choice"]
-    if d07.get("live_qualification_authorized") is not True:
+    scope = d07.get("live_qualification_scope")
+    if (
+        d07.get("live_qualification_authorized") is not True
+        or type(scope) is not dict
+        or family_id not in scope.get("authorized_family_ids", [])
+        or task_contract_id not in scope.get("authorized_task_contract_ids", [])
+        or scope.get("financial_qualification_authorized") is not False
+    ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_NOT_AUTHORIZED",
-            message="D-07 does not authorize live qualification",
+            message="D-07 does not authorize this live qualification task",
         )
+    if repo_root.resolve() == _PHYSICAL_REPOSITORY_ROOT.resolve():
+        freeze = require_table_qualification_freeze(
+            repo_root=repo_root, family_id=family_id,
+        )
+        semantic_path = _table_production_freeze_path(
+            repo_root=repo_root,
+            qualification_cycle_id=str(freeze["qualification_cycle_id"]),
+        )
+        if qualification_phase == "SECOND_LAYOUT" and semantic_path.exists():
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                message="Second layout cannot run after production freeze",
+            )
+        if qualification_phase in {"POST_FREEZE_HOLDOUT", "FRESH_STABILITY"}:
+            validate_table_production_semantic_freeze(
+                repo_root=repo_root, family_id=family_id,
+            )
+        if qualification_phase == "FRESH_STABILITY":
+            holdout = _table_phase_terminal_rows(
+                repo_root=repo_root,
+                qualification_cycle_id=str(freeze["qualification_cycle_id"]),
+                family_id=family_id,
+                qualification_phase="POST_FREEZE_HOLDOUT",
+            )
+            expected_tasks = list(scope["authorized_task_contract_ids"])
+            if [row["task_contract_id"] for row in holdout] != expected_tasks:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_HOLDOUT_REQUIRED",
+                    message="Every task needs a FROZEN post-freeze holdout Run",
+                )
     binding = _authorization_mapping(
         repo_root=repo_root,
         family_id=family_id,
         task_contract_id=task_contract_id,
         qualification_ordinal=qualification_ordinal,
+        qualification_phase=qualification_phase,
     )
     return TableQualificationAuthorization(
         binding=binding,
@@ -723,6 +1071,7 @@ def _rebuild_authorization_binding(
         value=actual["task_contract_id"], label="authorization task",
     )
     ordinal = actual["qualification_ordinal"]
+    phase = actual["qualification_phase"]
     if type(ordinal) is not int:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
@@ -733,6 +1082,7 @@ def _rebuild_authorization_binding(
         family_id=family_id,
         task_contract_id=task_contract_id,
         qualification_ordinal=ordinal,
+        qualification_phase=phase,
     )
     if actual != fresh:
         raise QualificationError(
@@ -740,6 +1090,30 @@ def _rebuild_authorization_binding(
             message="Qualification authorization differs from repository",
         )
     return fresh
+
+
+def qualification_authorized_company_traits(
+    *, repo_root: Path, authorization: object, company_id: str,
+) -> list[str]:
+    """Return repository-rebuilt traits for one opaque qualification source."""
+    if (
+        type(authorization) is not TableQualificationAuthorization
+        or authorization._capability is not _QUALIFICATION_AUTHORIZATION_CAPABILITY
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_REQUIRED",
+            message="Qualification traits require opaque authorization",
+        )
+    binding = _rebuild_authorization_binding(
+        repo_root=repo_root, actual=authorization.as_mapping(),
+    )
+    declaration = binding["source_binding"]["source_declaration"]
+    if declaration["company_id"] != company_id:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification company differs from source authority",
+        )
+    return list(binding["company_traits"])
 
 
 def validate_live_table_qualification_authorization(
@@ -894,6 +1268,7 @@ def _require_duplicated_authority_fields(
         "family_id",
         "task_contract_id",
         "qualification_ordinal",
+        "qualification_phase",
         "source_binding_hash",
     ):
         if value.get(field) != binding.get(field):
@@ -1204,6 +1579,7 @@ def record_table_qualification_execution(
         "family_id": binding["family_id"],
         "task_contract_id": binding["task_contract_id"],
         "qualification_ordinal": binding["qualification_ordinal"],
+        "qualification_phase": binding["qualification_phase"],
         "source_binding_hash": binding["source_binding_hash"],
         "run_id": run_id,
         "attempt_id": attempt["attempt_id"],
@@ -1232,6 +1608,7 @@ def record_table_qualification_execution(
         "family_id": binding["family_id"],
         "task_contract_id": binding["task_contract_id"],
         "qualification_ordinal": binding["qualification_ordinal"],
+        "qualification_phase": binding["qualification_phase"],
         "source_binding_hash": binding["source_binding_hash"],
         "run_id": run_id,
         "attempt_id": attempt["attempt_id"],
@@ -1721,6 +2098,7 @@ def _expected_evidence_identifier(*, evidence: Mapping[str, object]) -> str:
         "family_id",
         "task_contract_id",
         "qualification_ordinal",
+        "qualification_phase",
         "source_binding_hash",
         "run_id",
         "attempt_id",
@@ -2238,6 +2616,7 @@ def execute_table_qualification_task(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int, target_period: Mapping[str, object],
     owner_token: str, clock: Optional[object] = None,
+    qualification_phase: str = "FRESH_STABILITY",
 ) -> Dict[str, object]:
     """Run the sole future LIVE table-qualification executor.
 
@@ -2255,6 +2634,7 @@ def execute_table_qualification_task(
         family_id=family_id,
         task_contract_id=task_contract_id,
         qualification_ordinal=qualification_ordinal,
+        qualification_phase=qualification_phase,
     )
     binding = authorization.as_mapping()
     if qualification_ordinal > 1:
@@ -2264,6 +2644,7 @@ def execute_table_qualification_task(
                 family_id=family_id,
                 task_contract_id=task_contract_id,
                 qualification_ordinal=prior_ordinal,
+                qualification_phase=qualification_phase,
             )["qualification_task_plan_id"])
             for prior_ordinal in range(1, qualification_ordinal)
         }
@@ -2430,6 +2811,7 @@ def table_qualification_task_plan(
     family_id: str,
     task_contract_id: str,
     qualification_ordinal: int,
+    qualification_phase: str = "FRESH_STABILITY",
     include_freeze_status: bool = False,
 ) -> Dict[str, object]:
     """Resolve one future qualification ordinal to one catalog table task.
@@ -2519,15 +2901,54 @@ def table_qualification_task_plan(
             code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
             message="Matrix task does not bind the requested table family",
         )
-    if qualification_ordinal > entry["fresh_samples_required"]:
-        raise QualificationError(
-            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
-            message="Qualification ordinal exceeds the frozen sample policy",
-        )
+    sample = _qualification_sample_authority(
+        repo_root=repo_root,
+        matrix_entry=entry,
+        qualification_phase=qualification_phase,
+        qualification_ordinal=qualification_ordinal,
+    )
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )
+    measurement = _qualification_sample_measurement(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract=runtime,
+        matrix_entry=entry,
+        sample=sample,
+        requirement=requirement,
+        freeze=freeze,
+    )
+    context = _qualification_context_plan(
+        measurement=measurement,
+        qualification_phase=qualification_phase,
+        matrix_entry=entry,
+        scope=requirement["effective_decisions"]["D-07"]["choice"][
+            "live_qualification_scope"
+        ],
+    )
+    declaration = sample["source_binding"]["source_declaration"]
     body = {
         "family_id": family_id,
         "task_contract_id": task_contract_id,
+        "qualification_phase": qualification_phase,
         "qualification_ordinal": qualification_ordinal,
+        "qualification_fixture_id": sample["qualification_fixture_id"],
+        "qualification_source_binding_hash": sample["source_binding"][
+            "source_binding_hash"
+        ],
+        "qualification_target_period_hash": content_hash(
+            value=sample["target_period"],
+        ),
+        "qualification_target_period": sample["target_period"],
+        "source_company_id": declaration["company_id"],
+        "source_sha256": declaration["source_sha256"],
+        "provider_request_body_sha256": measurement[
+            "provider_request_body_sha256"
+        ],
+        "estimated_input_tokens": measurement["estimated_input_tokens"],
+        "context_evidence_basis": context["evidence_basis"],
+        "context_budget_tokens": context["context_budget_tokens"],
         "matrix_entry_hash": content_hash(value=entry),
         "task_contract_hash": runtime["catalog_task_contract_hash"],
         "task_spec_semantic_hash": runtime["task_spec_semantic_hash"],
@@ -2623,6 +3044,255 @@ def production_semantic_tree(*, repo_root: Path) -> Dict[str, object]:
     }
     body = {"schema_version": 1, "files": files}
     return {**body, "semantic_tree_id": content_hash(value=body)}
+
+
+def _table_phase_terminal_rows(
+    *, repo_root: Path, qualification_cycle_id: str, family_id: str,
+    qualification_phase: str,
+) -> list[Dict[str, object]]:
+    """Revalidate all FROZEN task Runs for one family/sample phase."""
+    run_root = (
+        repo_root
+        / TABLE_QUALIFICATION_CYCLE_ROOT
+        / qualification_cycle_id.split(":", maxsplit=1)[1]
+        / "runs"
+    )
+    if not run_root.exists():
+        return []
+    if run_root.is_symlink() or not run_root.is_dir():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Qualification Run namespace is unsafe",
+        )
+    rows = []
+    for run_dir in sorted(path for path in run_root.iterdir() if path.is_dir()):
+        manifest, records, _decisions = load_run_for_status(
+            run_dir=run_dir, repo_root=repo_root,
+        )
+        binding = manifest.get("qualification_authorization")
+        if (
+            type(binding) is not dict
+            or binding.get("family_id") != family_id
+            or binding.get("qualification_phase") != qualification_phase
+        ):
+            continue
+        if manifest.get("status") != "FROZEN":
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                message="Qualification phase contains a non-FROZEN Run",
+            )
+        validate_table_qualification_run_bindings(
+            repo_root=repo_root,
+            run_dir=run_dir,
+            manifest=manifest,
+            records=records,
+        )
+        evidence_ids = sorted(
+            str(record["qualification_evidence_id"])
+            for record in records
+            if record["record_type"] == "TABLE_QUALIFICATION_EVIDENCE"
+        )
+        result_ids = sorted(
+            str(record["result_id"])
+            for record in records
+            if record["record_type"] == "METRIC_RESULT"
+        )
+        if len(evidence_ids) != 1 or not result_ids:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                message="Qualification phase Run closure is incomplete",
+            )
+        rows.append({
+            "task_contract_id": binding["task_contract_id"],
+            "qualification_phase": binding["qualification_phase"],
+            "qualification_ordinal": binding["qualification_ordinal"],
+            "qualification_terminal_id": binding[
+                "qualification_terminal_id"
+            ],
+            "qualification_task_plan_id": binding[
+                "qualification_task_plan_id"
+            ],
+            "provider_request_body_sha256": binding[
+                "context_feasibility_binding"
+            ]["provider_request_body_sha256"],
+            "source_binding_hash": binding["source_binding_hash"],
+            "run_id": manifest["run_id"],
+            "qualification_evidence_ids": evidence_ids,
+            "result_ids": result_ids,
+        })
+    rows.sort(key=lambda row: str(row["task_contract_id"]))
+    return rows
+
+
+def _qualification_ledger_prefix(
+    *, repo_root: Path, ledger_relative: str, row_count: Optional[int] = None,
+) -> Dict[str, object]:
+    """Bind an exact canonical JSONL prefix while allowing later append."""
+    relative = Path(ledger_relative)
+    if relative.is_absolute() or ".." in relative.parts:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Qualification ledger path is unsafe",
+        )
+    path = repo_root / relative
+    if path.is_symlink() or not path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Qualification ledger is absent or unsafe",
+        )
+    lines = path.read_bytes().splitlines(keepends=True)
+    if any(not line.endswith(b"\n") for line in lines):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Qualification ledger row is not newline terminated",
+        )
+    count = len(lines) if row_count is None else row_count
+    if type(count) is not int or count < 0 or count > len(lines):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Qualification ledger prefix count is invalid",
+        )
+    prefix = b"".join(lines[:count])
+    return {
+        "path": relative.as_posix(),
+        "row_count": count,
+        "sha256": sha256_bytes(content=prefix),
+    }
+
+
+def _table_production_freeze_path(
+    *, repo_root: Path, qualification_cycle_id: str,
+) -> Path:
+    """Return the cycle-owned production semantic freeze locator."""
+    return (
+        repo_root
+        / TABLE_QUALIFICATION_CYCLE_ROOT
+        / qualification_cycle_id.split(":", maxsplit=1)[1]
+        / TABLE_PRODUCTION_FREEZE_FILE
+    )
+
+
+def write_table_production_semantic_freeze(
+    *, repo_root: Path, family_id: str, frozen_at_utc: str,
+) -> Dict[str, object]:
+    """Freeze production semantics after the complete second-layout set."""
+    try:
+        parse_utc_timestamp(value=frozen_at_utc)
+        freeze = require_table_qualification_freeze(
+            repo_root=repo_root, family_id=family_id,
+        )
+    except (ValueError, TableQualificationFreezeError) as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Table qualification freeze cannot be established",
+        ) from error
+    scope = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements/issue_15_v1",
+    )["effective_decisions"]["D-07"]["choice"]["live_qualification_scope"]
+    task_ids = list(scope["authorized_task_contract_ids"])
+    second = _table_phase_terminal_rows(
+        repo_root=repo_root,
+        qualification_cycle_id=str(freeze["qualification_cycle_id"]),
+        family_id=family_id,
+        qualification_phase="SECOND_LAYOUT",
+    )
+    if (
+        [row["task_contract_id"] for row in second] != task_ids
+        or any(row["qualification_ordinal"] != 1 for row in second)
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SECOND_LAYOUT_REQUIRED",
+            message="Every authorized task needs one FROZEN second-layout Run",
+        )
+    path = _table_production_freeze_path(
+        repo_root=repo_root,
+        qualification_cycle_id=str(freeze["qualification_cycle_id"]),
+    )
+    if path.exists():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Production semantic freeze already exists",
+        )
+    tree = production_semantic_tree(repo_root=repo_root)
+    ledger = _qualification_ledger_prefix(
+        repo_root=repo_root,
+        ledger_relative=str(freeze["provider_ledger_before"]["path"]),
+    )
+    body = {
+        "schema_version": 1,
+        "receipt_type": "PRODUCTION_SEMANTIC_FREEZE",
+        "family_id": family_id,
+        "qualification_cycle_id": freeze["qualification_cycle_id"],
+        "table_qualification_freeze_receipt_id": freeze["receipt_id"],
+        "frozen_at_utc": frozen_at_utc,
+        "semantic_tree_id": tree["semantic_tree_id"],
+        "semantic_files": tree["files"],
+        "second_layout_terminals": second,
+        "pre_holdout_qualification_ledger_prefix": ledger,
+        "planned_holdout_fixture_id": scope[
+            "post_freeze_holdout_fixture_id"
+        ],
+    }
+    receipt = {**body, "receipt_id": content_hash(value=body)}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    atomic_write_json(path=path, value=receipt)
+    return {**receipt, "receipt_path": path.relative_to(repo_root).as_posix()}
+
+
+def validate_table_production_semantic_freeze(
+    *, repo_root: Path, family_id: str,
+) -> Dict[str, object]:
+    """Revalidate the second-layout freeze and append-only ledger prefix."""
+    freeze = require_table_qualification_freeze(
+        repo_root=repo_root, family_id=family_id,
+    )
+    path = _table_production_freeze_path(
+        repo_root=repo_root,
+        qualification_cycle_id=str(freeze["qualification_cycle_id"]),
+    )
+    if path.is_symlink() or not path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_PRODUCTION_FREEZE_REQUIRED",
+            message="Production semantic freeze is absent",
+        )
+    receipt = strict_json_file(path=path)
+    if type(receipt) is not dict:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Production semantic freeze is invalid",
+        )
+    body = {key: value for key, value in receipt.items() if key != "receipt_id"}
+    current_tree = production_semantic_tree(repo_root=repo_root)
+    second = _table_phase_terminal_rows(
+        repo_root=repo_root,
+        qualification_cycle_id=str(freeze["qualification_cycle_id"]),
+        family_id=family_id,
+        qualification_phase="SECOND_LAYOUT",
+    )
+    prefix = receipt.get("pre_holdout_qualification_ledger_prefix", {})
+    current_prefix = _qualification_ledger_prefix(
+        repo_root=repo_root,
+        ledger_relative=str(prefix.get("path", "")),
+        row_count=prefix.get("row_count"),
+    )
+    if (
+        receipt.get("receipt_id") != content_hash(value=body)
+        or receipt.get("receipt_type") != "PRODUCTION_SEMANTIC_FREEZE"
+        or receipt.get("family_id") != family_id
+        or receipt.get("qualification_cycle_id")
+        != freeze["qualification_cycle_id"]
+        or receipt.get("table_qualification_freeze_receipt_id")
+        != freeze["receipt_id"]
+        or receipt.get("semantic_tree_id") != current_tree["semantic_tree_id"]
+        or receipt.get("semantic_files") != current_tree["files"]
+        or receipt.get("second_layout_terminals") != second
+        or current_prefix != prefix
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_PRODUCTION_DRIFT",
+            message="Production semantic freeze differs from current authority",
+        )
+    return dict(receipt)
 
 
 def _namespace_state(

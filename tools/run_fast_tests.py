@@ -55,8 +55,9 @@ FAST_TESTS = (
     "test_historical_stage_c_b_packet_remains_content_addressed",
     "tests.vnext.test_table_context_attestation.TableContextAttestationTest."
     "test_exact_occupancy_request_passes_above_estimated_bound",
-    "tests.vnext.test_table_context_measurement.TableContextMeasurementTest."
-    "test_plan_is_exact_revpar_request_without_ratio_substitution",
+    "tests.vnext.test_table_context_measurement."
+    "TableContextMeasurementTerminalTest."
+    "test_revpar_terminal_is_consumed_exact_and_non_credit",
     "tests.vnext.test_table_context_qualification_guard."
     "TableContextQualificationGuardTest."
     "test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",

@@ -491,6 +491,13 @@ def _prepare_measurement(*, repo_root: Path) -> _PreparedMeasurement:
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
     d07 = requirement["effective_decisions"]["D-07"]
+    if d07["choice"].get(
+        "revpar_measurement_authorization_permanently_consumed"
+    ) is True:
+        _fail(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message="The repository authority records the one-shot as consumed",
+        )
     occupancy_exception = d07["choice"].get("measurement_exception")
     exception = d07["choice"].get("revpar_measurement_exception")
     if (
