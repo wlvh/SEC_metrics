@@ -80,6 +80,16 @@ class TableStageBOwnerPacketTest(unittest.TestCase):
         self.assertFalse(approved["selector_authorized"])
         self.assertFalse(approved["live_measurement_authorized"])
         self.assertFalse(approved["live_qualification_authorized"])
+        self.assertEqual(
+            "ONE_EXACT_TASK_REQUEST",
+            approved["context_attestation_scope"],
+        )
+        self.assertFalse(
+            approved["measurement_response_qualification_credit"]
+        )
+        self.assertFalse(
+            approved["measurement_response_reuse_for_qualification"]
+        )
 
     def test_undecided_options_remain_null(self) -> None:
         """Refuse to select serializer, measurement, resource, or selector."""
@@ -89,7 +99,7 @@ class TableStageBOwnerPacketTest(unittest.TestCase):
         }
         self.assertEqual({
             "adopt_any_lossless_serializer_candidate": None,
-            "authorize_actual_token_live_measurement": None,
+            "obtain_sibling_exact_context_evidence": None,
             "financial_raise_cap_or_per_table_shard": None,
             "replace_financial_development_source": None,
             "authorize_or_require_selector": None,
@@ -103,9 +113,22 @@ class TableStageBOwnerPacketTest(unittest.TestCase):
         """Persist blockers, research IDs, and unchanged R2 root."""
         current = self.packet["current_readiness"]
         self.assertEqual([], current["live_ready_family_ids"])
-        self.assertEqual("NOT_RUN", current["actual_prompt_tokens"])
         self.assertEqual(
-            ["ESTIMATED_CONTEXT_LIMIT"],
+            160937,
+            current["attested_request"]["actual_prompt_tokens"],
+        )
+        self.assertEqual(
+            "FEASIBLE", current["attested_request"]["context_status"]
+        )
+        self.assertEqual(
+            "EXACT_CONTEXT_EVIDENCE_REQUIRED",
+            current["sibling_request"]["context_status"],
+        )
+        self.assertEqual(
+            [
+                "ESTIMATED_CONTEXT_LIMIT",
+                "EXACT_CONTEXT_BINDING_MISMATCH",
+            ],
             current["readiness_by_family"]["lodging_kpi_table"][
                 "blocking_reason_codes"
             ],
@@ -124,6 +147,14 @@ class TableStageBOwnerPacketTest(unittest.TestCase):
         self.assertEqual(
             CENSUS_RECEIPT_ID,
             bindings["financial_grid_census"]["receipt_id"],
+        )
+        self.assertEqual(
+            "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
+            bindings["context_feasibility_attestation"]["record_type"],
+        )
+        self.assertEqual(
+            "EXACT_CONTEXT_EVIDENCE_REQUIRED",
+            bindings["sibling_request_context_analysis"]["status"],
         )
         root = self.packet["unchanged_active_root"]
         self.assertEqual(309, root["public_matrix_row_count"])
