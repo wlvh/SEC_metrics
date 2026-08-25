@@ -94,6 +94,7 @@ _RESERVATION_OWNER_EGRESS_CAPABILITY = object()
 def _open_provider_request(
     *, opener: object, request: Request, timeout_seconds: int,
     egress_capability: object,
+    before_socket_open: Optional[Callable[[], None]] = None,
 ) -> object:
     """Open the sole provider socket behind reservation-owner capability.
 
@@ -102,6 +103,7 @@ def _open_provider_request(
         request: Fixed-host provider request.
         timeout_seconds: Effective D-01 timeout.
         egress_capability: Private token issued only inside controller send.
+        before_socket_open: Optional module-owned one-shot marker callback.
 
     Returns:
         Provider response context manager from the approved opener.
@@ -110,6 +112,10 @@ def _open_provider_request(
         raise AIAdapterError("RESERVATION_OWNER_EGRESS_REQUIRED")
     if opener is not _OPENAI_OPENER and opener is not _DEEPSEEK_OPENER:
         raise AIAdapterError("Provider opener is not repository-owned")
+    if before_socket_open is not None:
+        if not callable(before_socket_open):
+            raise AIAdapterError("Provider egress marker callback is invalid")
+        before_socket_open()
     return opener.open(fullurl=request, timeout=timeout_seconds)
 
 
@@ -1120,6 +1126,7 @@ class _OpenAIResponsesTransport:
     def complete(
         self, *, prepared_request: object,
         egress_capability: object = None,
+        before_socket_open: Optional[Callable[[], None]] = None,
     ) -> TransportResult:
         """Rebuild live SEC bytes, then execute one auditable request.
 
@@ -1127,6 +1134,7 @@ class _OpenAIResponsesTransport:
             prepared_request: Factory-produced live source coordinates. Raw
                 caller bytes are never accepted by the network boundary.
             egress_capability: Reservation-owner token; callers cannot mint it.
+            before_socket_open: Optional Stage-C one-shot marker callback.
 
         Returns:
             Exact provider result and transport observation.
@@ -1192,6 +1200,7 @@ class _OpenAIResponsesTransport:
                 request=request,
                 timeout_seconds=self.policy.timeout_seconds,
                 egress_capability=egress_capability,
+                before_socket_open=before_socket_open,
             ) as response:
                 raw = response.read()
                 request_id = str(
@@ -1316,12 +1325,14 @@ class _DeepSeekChatCompletionsTransport:
     def complete(
         self, *, prepared_request: object,
         egress_capability: object = None,
+        before_socket_open: Optional[Callable[[], None]] = None,
     ) -> TransportResult:
         """Rebuild live SEC bytes, then execute one auditable DeepSeek request.
 
         Args:
             prepared_request: Factory-produced live source coordinates.
             egress_capability: Reservation-owner token; callers cannot mint it.
+            before_socket_open: Optional Stage-C one-shot marker callback.
 
         Returns:
             Exact provider result and transport observation.
@@ -1386,6 +1397,7 @@ class _DeepSeekChatCompletionsTransport:
                 request=request,
                 timeout_seconds=self.policy.timeout_seconds,
                 egress_capability=egress_capability,
+                before_socket_open=before_socket_open,
             ) as response:
                 raw = response.read()
                 request_id = str(
@@ -1896,6 +1908,7 @@ class _ApprovedTransportAdapter(AIAdapter):
 
     def _complete_repository_transport(
         self, *, prepared_request: object, egress_capability: object,
+        before_socket_open: Optional[Callable[[], None]] = None,
     ) -> TransportResult:
         """Replay live SEC authority and invoke its approved provider.
 
@@ -1903,6 +1916,7 @@ class _ApprovedTransportAdapter(AIAdapter):
             prepared_request: Factory-produced live source coordinates. This
                 method never accepts caller-selected outbound bytes.
             egress_capability: Private reservation-owner capability.
+            before_socket_open: Optional Stage-C one-shot marker callback.
 
         Returns:
             Raw response and actual transport facts.
@@ -1940,10 +1954,17 @@ class _ApprovedTransportAdapter(AIAdapter):
             )
         transport = _build_repository_transport(policy=current_policy)
         try:
-            result = transport.complete(
-                prepared_request=prepared_request,
-                egress_capability=egress_capability,
-            )
+            if before_socket_open is None:
+                result = transport.complete(
+                    prepared_request=prepared_request,
+                    egress_capability=egress_capability,
+                )
+            else:
+                result = transport.complete(
+                    prepared_request=prepared_request,
+                    egress_capability=egress_capability,
+                    before_socket_open=before_socket_open,
+                )
         except TransportAttemptError:
             raise
         except (AIAdapterError, OSError, TimeoutError, ValueError) as error:
@@ -2109,6 +2130,155 @@ class _InvocationControllerTransport:
                     raw_response_bytes=error.raw_response_bytes,
                 ),
             }
+
+
+class _TableContextMeasurementTransport:
+    """Expose one raw provider response only to the Stage-C exact plan."""
+
+    transport_kind = "REAL_MODEL_PROVIDER"
+
+    def __init__(
+        self,
+        *,
+        adapter: _ApprovedTransportAdapter,
+        prepared_request: object,
+        provider_request_body: bytes,
+        output_schema_bytes: bytes,
+        authorization_id: str,
+    ) -> None:
+        """Bind the immutable live request and opaque authorization identity."""
+        self.adapter = adapter
+        self.prepared_request = prepared_request
+        self.provider_request_body = provider_request_body
+        self.output_schema_bytes = output_schema_bytes
+        self.authorization_id = authorization_id
+
+    def send(
+        self,
+        *,
+        request_body: bytes,
+        authorization_id: str,
+        execution_id: str,
+        attempt_ordinal: int,
+        before_egress: Callable[[], None],
+    ) -> Dict[str, object]:
+        """Perform at most one call and return the raw provider envelope."""
+        if (
+            request_body != self.provider_request_body
+            or authorization_id != self.authorization_id
+            or not execution_id
+            or attempt_ordinal != 1
+            or not callable(before_egress)
+        ):
+            raise AIAdapterError(
+                "Stage-C measurement transport identity differs"
+            )
+        try:
+            result = self.adapter._complete_repository_transport(
+                prepared_request=self.prepared_request,
+                egress_capability=_RESERVATION_OWNER_EGRESS_CAPABILITY,
+                before_socket_open=before_egress,
+            )
+        except TransportAttemptError as error:
+            if error.error_class in {
+                "DEEPSEEK_TIMEOUT",
+                "DEEPSEEK_TRANSPORT_ERROR",
+                "OPENAI_TIMEOUT",
+                "OPENAI_TRANSPORT_ERROR",
+                "UNKNOWN_REMOTE_OUTCOME",
+            }:
+                raise UnknownRemoteOutcomeError(str(error)) from error
+            status_code = _controller_status_code(
+                error_class=error.error_class,
+            )
+            if error.error_class in {
+                "DEEPSEEK_RESPONSE_INVALID",
+                "DEEPSEEK_MODEL_IDENTITY_MISMATCH",
+                "OPENAI_RESPONSE_INVALID",
+                "OPENAI_MODEL_IDENTITY_MISMATCH",
+            }:
+                status_code = 200
+            return {
+                "http_status": status_code,
+                "error_class": error.error_class,
+                "provider_response_bytes": (
+                    error.raw_response_bytes
+                    if error.raw_response_bytes is not None
+                    else b""
+                ),
+                "provider_request_id": error.provider_request_id,
+                "transport_terminal_status": error.error_class,
+            }
+        raw_response = result.raw_response_bytes
+        if raw_response is None:
+            raise AIAdapterError(
+                "Stage-C measurement requires the raw provider envelope"
+            )
+        return {
+            "http_status": 200,
+            "error_class": "",
+            "provider_response_bytes": raw_response,
+            "provider_request_id": result.provider_request_id,
+            "transport_terminal_status": "SUCCEEDED",
+        }
+
+
+def build_table_context_measurement_transport(
+    *,
+    authorization: object,
+    prepared_request: object,
+    provider_request_body: bytes,
+    output_schema_bytes: bytes,
+) -> object:
+    """Build the sole real transport accepted by Stage-C measurement.
+
+    The factory lazily imports the measurement validator to avoid granting the
+    module its private provider-egress capability.  The opaque authorization,
+    live SEC reconstruction, current D-01, prompt/schema, and provider envelope
+    are all revalidated before the returned object can reach the opener.
+    """
+    from .table_context_measurement import (
+        validate_measurement_transport_authorization,
+    )
+
+    rebuilt = _validate_live_prepared_request(
+        prepared_request=prepared_request,
+    )
+    policy, _closure_hash = _load_transport_policy()
+    rebuilt_body, rebuilt_schema = build_provider_request_body(
+        policy=policy,
+        reader_request_bytes=rebuilt.request_bytes,
+    )
+    if (
+        type(provider_request_body) is not bytes
+        or type(output_schema_bytes) is not bytes
+        or provider_request_body != rebuilt_body
+        or output_schema_bytes != rebuilt_schema
+    ):
+        raise AIAdapterError(
+            "Stage-C provider envelope or output schema differs"
+        )
+    binding = validate_measurement_transport_authorization(
+        repo_root=_REPOSITORY_ROOT,
+        authorization=authorization,
+        provider_request_body_sha256=sha256_bytes(
+            content=provider_request_body,
+        ),
+        provider_output_schema_sha256=sha256_bytes(
+            content=output_schema_bytes,
+        ),
+    )
+    adapter = _ApprovedTransportAdapter(
+        authority=_ADAPTER_AUTHORITY,
+        invocation_context=None,
+    )
+    return _TableContextMeasurementTransport(
+        adapter=adapter,
+        prepared_request=prepared_request,
+        provider_request_body=provider_request_body,
+        output_schema_bytes=output_schema_bytes,
+        authorization_id=str(binding["authorization_id"]),
+    )
 
 
 def _controlled_response_validator(

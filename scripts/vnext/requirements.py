@@ -70,6 +70,24 @@ ISSUE_15_EFFECTIVE_DECISION_IDS = {
     "D-37",
     "D-38",
 }
+ISSUE_15_D07_MEASUREMENT_EXCEPTION = {
+    "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+    "family_id": "lodging_kpi_table",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "source_company_id": "marriott_international",
+    "source_sha256": (
+        "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+    ),
+    "serializer_version": "2",
+    "allowed_successful_provider_egress_count": 1,
+    "automatic_retry_count": 0,
+    "qualification_ordinal_credit": False,
+    "publication_eligible": False,
+    "qualification_evidence_eligible": False,
+    "response_reuse_for_qualification": False,
+    "consumes_authorization_after_any_egress_marker": True,
+    "execution_requires_external_exact_head_authorization": True,
+}
 ISSUE_15_D07_EFFECTIVE_CHOICE = {
     "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
     "semantic_prefilter": False,
@@ -95,11 +113,12 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
     ),
     "live_measurement_authorized": False,
     "live_qualification_authorized": False,
+    "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
-        "#issuecomment-5390663414"
+        "#issuecomment-5399126863"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -116,8 +135,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:bc9830fc98a331ea54625b499665c3e2"
-        "ef71a478194a9f066a31ac5c56de1ec8"
+        "sha256:200bb6feae25c5683260e2dd8a758f1a"
+        "b3f0480b8694bb802ca44fd80835554f"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1304,14 +1323,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 2
+        or len(chains["D-07"]) != 3
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][0])
+        != _decision_record_hash(decision=chains["D-07"][1])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

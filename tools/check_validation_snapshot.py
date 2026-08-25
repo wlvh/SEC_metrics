@@ -21,6 +21,14 @@ from vnext.stage_a_snapshot import (  # noqa: E402
     StageASnapshotError,
     validate_stage_a_snapshot,
 )
+from vnext.stage_c_packet import (  # noqa: E402
+    StageCAPacketError,
+    validate_stage_c_a_packet,
+)
+from vnext.stage_c_b_packet import (  # noqa: E402
+    StageCBPacketError,
+    validate_stage_c_b_packet,
+)
 
 
 def main() -> int:
@@ -40,14 +48,56 @@ def main() -> int:
     for warning in result.warnings:
         print("WARNING: {}".format(warning))
     if result.errors:
-        # Stage A changes source authority but deliberately keeps the R2
+        # Stage A/C change source authority but deliberately keep the R2
         # validation sidecar/root artifacts immutable.  Accept that narrow
         # case only when an independently current-source overlay proves both
-        # the new clean tree and every historical R2 byte still match.
+        # the new clean tree and every historical R2 byte still match.  Once
+        # the one-shot marker exists, Stage C-B supersedes Stage C-A as the
+        # current overlay without rewriting the historical Stage C-A packet.
         if set(result.errors) == SOURCE_ONLY_ERRORS:
+            try:
+                stage_c_b = validate_stage_c_b_packet(repo_root=WORKDIR)
+            except StageCBPacketError as stage_c_b_error:
+                stage_c_b_failure = stage_c_b_error
+            else:
+                if stage_c_b["source_commit_equivalent_tree"]:
+                    print(
+                        "WARNING: Stage-C-B packet base commit differs but "
+                        "its complete source-input tree is equivalent"
+                    )
+                print(
+                    "PASS: historical R2 provenance and current Stage C-B "
+                    "measurement-evidence overlay verified"
+                )
+                return 0
+            try:
+                stage_c = validate_stage_c_a_packet(repo_root=WORKDIR)
+            except StageCAPacketError as stage_c_error:
+                stage_c_failure = stage_c_error
+            else:
+                if stage_c["source_commit_equivalent_tree"]:
+                    print(
+                        "WARNING: Stage-C packet base commit differs but its "
+                        "complete source-input tree is equivalent"
+                    )
+                print(
+                    "PASS: historical R2 provenance and current Stage C-A "
+                    "decision-evidence overlay verified"
+                )
+                return 0
             try:
                 stage_a = validate_stage_a_snapshot(repo_root=WORKDIR)
             except StageASnapshotError as error:
+                print(
+                    "FAIL: Stage-C-B validation overlay: {}".format(
+                        stage_c_b_failure
+                    )
+                )
+                print(
+                    "FAIL: Stage-C validation overlay: {}".format(
+                        stage_c_failure
+                    )
+                )
                 print("FAIL: Stage-A validation overlay: {}".format(error))
             else:
                 if stage_a["source_commit_equivalent_tree"]:

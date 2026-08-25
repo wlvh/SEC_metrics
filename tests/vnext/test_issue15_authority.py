@@ -27,6 +27,7 @@ from vnext.publication import verify_publication_bundle
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
     ISSUE_15_D07_EFFECTIVE_CHOICE,
+    ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -415,7 +416,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -426,10 +427,20 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(
             0, issue_snapshot["effective_decisions"]["D-01"]["choice"]["retry_count"],
         )
+        self.assertEqual(
+            8388608,
+            issue_snapshot["effective_decisions"]["D-01"]["choice"][
+                "maximum_payload_bytes"
+            ],
+        )
         d07_chain = issue_snapshot["decision_chains"]["D-07"]
         self.assertEqual(
             content_hash(value=d07_chain[0]),
             d07_chain[1]["supersedes_decision_id"],
+        )
+        self.assertEqual(
+            content_hash(value=d07_chain[1]),
+            d07_chain[2]["supersedes_decision_id"],
         )
         self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
@@ -440,6 +451,32 @@ class Issue15AuthorityTest(unittest.TestCase):
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "max_estimated_input_tokens"
             ],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_MEASUREMENT_EXCEPTION,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "measurement_exception"
+            ],
+        )
+        self.assertFalse(
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "live_measurement_authorized"
+            ],
+        )
+        runtime = read_json(path=REPO_ROOT / "config/provider_model_runtime.json")
+        self.assertEqual(
+            {
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash",
+                "api": "chat_completions",
+                "maximum_context_tokens": 1000000,
+            },
+            {
+                key: runtime["models"][0][key]
+                for key in (
+                    "provider", "model", "api", "maximum_context_tokens",
+                )
+            },
         )
         self.assertNotIn(
             "freeze_replay",
@@ -912,6 +949,34 @@ class Issue15AuthorityTest(unittest.TestCase):
                 RequirementError, "superseding Decision content differs",
             ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_measurement_exception_is_exact(self) -> None:
+        """Reject any family, task, source, serializer, or egress expansion."""
+        mutations = {
+            "family_id": "financial_statement_table",
+            "task_contract_id": "lodging_revpar_table_v2",
+            "source_sha256": "0" * 64,
+            "serializer_version": "3",
+            "allowed_successful_provider_egress_count": 2,
+            "automatic_retry_count": 1,
+            "qualification_evidence_eligible": True,
+            "execution_requires_external_exact_head_authorization": False,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                d07["choice"]["measurement_exception"][field] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
 
     def test_monetary_observability_cannot_become_a_budget_gate(self) -> None:
         """Reject a self-rebound tip that makes estimated cost blocking."""

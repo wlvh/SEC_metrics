@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "record_type": "TABLE_CONTEXT_MEASUREMENT_PLAN",
+  "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+  "requirement_closure_hash": "sha256:a5b0467d0df529a4c094107ee0430ea862d77e80f5a359ca6d407a806fb0367c",
+  "effective_d07_record_hash": "sha256:200bb6feae25c5683260e2dd8a758f1ab3f0480b8694bb802ca44fd80835554f",
+  "historical_stage_c_baseline": {
+    "table_qualification_freeze_receipt_id": "sha256:9c8ca60dc6fb97fcc693618694a96d009e110efc0ea2d28366022d2d8c0824b6",
+    "qualification_cycle_id": "sha256:df8deeac28b35fff526c5f0b66d7866f695c392a94d17cb05c45e5d81b42781c",
+    "stage_a_snapshot_id": "sha256:bf2d375dc966f2503582ab1d13c464fd9775cac213d4903884b3fbd437fb2888",
+    "owner_decision_packet_id": "sha256:09a9cc1933fc5d60efa00a183583e20dd59283b4397bfdb6b0cfcb4afd1b85a7",
+    "historical_requirement_closure_hash": "sha256:fcd308ed51fe3b7cd6d4dcc82ba373d31832f0f1f522c3b8b765e766693a5822",
+    "historical_effective_d07_record_hash": "sha256:bc9830fc98a331ea54625b499665c3e2ef71a478194a9f066a31ac5c56de1ec8"
+  },
+  "family_id": "lodging_kpi_table",
+  "task_contract_id": "lodging_occupancy_table_v2",
+  "source_company_id": "marriott_international",
+  "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+  "source_binding": {
+    "source_declaration": {
+      "source_kind": "IMMUTABLE_ATTEMPT",
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547"
+    },
+    "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+    "source_role": "target_primary",
+    "request_body_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "request_body_size": 2048661,
+    "request_headers_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283.headers.json",
+    "request_headers_sha256": "d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283",
+    "request_headers_size": 1087,
+    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+    "request_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+    "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+    "source_binding_hash": "sha256:b70062ad82c4d93a92933fcf17f20d458c03d341a146664f535f147cec54ca09"
+  },
+  "source_binding_hash": "sha256:b70062ad82c4d93a92933fcf17f20d458c03d341a146664f535f147cec54ca09",
+  "table_payload_serialization_version": "2",
+  "reader_input_manifest_id": "sha256:a850c91569998465b7e45d26a7919bb92ec1e2d8695dc39f3333fb31e718efe4",
+  "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+  "expanded_grid_sha256": "sha256:cc25dac2e3f3484bca0a95bbca430acd62a55821f12c684ce392a8f22a02f48b",
+  "compact_payload_sha256": "34651747a41b3a931c561aa8429115a9452a821fc0401e799c2476d51ecefb18",
+  "round_trip_receipt_id": "sha256:9eca9aeeeed193ab2f00e7ec227428620cd0a29b3e8864fd01864ed89cfb6035",
+  "catalog_task_contract_hash": "sha256:d308b993cba57eb9e3bb7143ae59633b85cc6fbebfdefb2e09021e6af15b0b81",
+  "task_spec_semantic_hash": "sha256:63b28e0967d0837e0a523ca2b4fb68beff11d001a291ff5c3497a1bef3df5744",
+  "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+  "output_schema_hash": "sha256:61b5ed6d116676c7d997bd5d4c6b8b3952206bb5a818f8b27b7fb82198e77179",
+  "reader_request_body_sha256": "73205027a23f21478b9ff217d11533100ad85b4d57bc232032861c4cd72afadf",
+  "provider_request_body_sha256": "5ffa7b16d54ff9e3c2bdbc10d468f84b9aaae2ac029b5fc63e459d895eb8109a",
+  "provider_request_body_bytes": 392447,
+  "provider_output_schema_sha256": "54e1dd9364f3c89b8dea211a9dd2bc29f492eec13615495851a401cf85566cfa",
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash",
+  "api": "chat_completions",
+  "maximum_payload_bytes": 8388608,
+  "maximum_context_tokens": 1000000,
+  "estimated_input_tokens": 392447,
+  "exact_estimator_identity": {
+    "estimator_id": "utf8_byte_upper_bound",
+    "estimator_version": "1",
+    "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+    "context_authority_hash": "sha256:6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32"
+  },
+  "ordinary_qualification_max_estimated_input_tokens": 200000,
+  "ordinary_qualification_remains_blocked": true,
+  "allowed_successful_provider_egress_count": 1,
+  "automatic_retry_count": 0,
+  "qualification_ordinal_credit": false,
+  "qualification_evidence_eligible": false,
+  "publication_eligible": false,
+  "response_reuse_for_qualification": false,
+  "consumes_authorization_after_any_egress_marker": true,
+  "execution_requires_external_exact_head_authorization": true,
+  "repository_head_binding": "REQUIRED_AT_EXTERNAL_AUTHORIZATION",
+  "protected_closure": {
+    "files": {
+      "catalog/metrics/B10_occupancy.md": {
+        "sha256": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1",
+        "size": 2593
+      },
+      "catalog/table_task_contracts.json": {
+        "sha256": "b41d7e522afafee4ee6a20bdf5e989bb8c56b310741dae7b915abe7abdc369e0",
+        "size": 7272
+      },
+      "config/provider_model_runtime.json": {
+        "sha256": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "size": 606
+      },
+      "config/table_qualification_matrix.json": {
+        "sha256": "6093cae42beb111f4ed3c6d984e87c2d83fac5d4b3d1b00f8e11ed35dd4cd0fe",
+        "size": 5116
+      },
+      "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm": {
+        "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "size": 2048661
+      },
+      "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283.headers.json": {
+        "sha256": "d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283",
+        "size": 1087
+      },
+      "evidence/requests_log.csv": {
+        "sha256": "c017df0abf3a8fa83073162f3bebbba077209eb969247166330ab2bd41463782",
+        "size": 531227
+      },
+      "evidence/requests_log_manifest.json": {
+        "sha256": "82d80decef52644f5e06926200d85563f9ca4f545302c0956bd620fff99c6dcd",
+        "size": 134
+      },
+      "requirements/issue_15_v1/CONTRACT.md": {
+        "sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+        "size": 47898
+      },
+      "requirements/issue_15_v1/baseline_manifest.json": {
+        "sha256": "7a11144587881a377d06132fe0286cf7b293b27e64d132a565f769ee372fbe90",
+        "size": 6136
+      },
+      "requirements/issue_15_v1/decision_register.json": {
+        "sha256": "336dafd7317ddaa4cf3ad68aba76304059eca9d66874e54978c837759d3413ab",
+        "size": 27630
+      },
+      "requirements/issue_15_v1/foundation_verification_receipt.json": {
+        "sha256": "fe6476db361607d6197f2d7145a1717a94d0ad98190dc08d17ece680933a0763",
+        "size": 5136
+      },
+      "requirements/issue_15_v1/legacy_semantic_producer_inventory.json": {
+        "sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+        "size": 143195
+      },
+      "requirements/issue_15_v1/source_strategy_baseline_receipt.json": {
+        "sha256": "fcd4e0e975a451834ffac4cefae071770531120ca767f9162d68e9079260198b",
+        "size": 42147
+      },
+      "requirements/issue_15_v1/transfer_manifest.json": {
+        "sha256": "18f162d48131b3f6d56941dd446ec18089c7a336a50df8cb2c669e3b63711274",
+        "size": 3906
+      },
+      "scripts/sec_http.py": {
+        "sha256": "1de929858d9c45344e77708ed53f04b92501f1f06cfaed38504f4e482d1cc1f4",
+        "size": 69313
+      },
+      "scripts/vnext/ai_adapter.py": {
+        "sha256": "6951273a8130cbc6fe2a0832ccb360e5c789d77b51a29e71c08e0007b6006b8e",
+        "size": 130689
+      },
+      "scripts/vnext/canonical.py": {
+        "sha256": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+        "size": 17626
+      },
+      "scripts/vnext/provider_runtime.py": {
+        "sha256": "863631a82feb7f328d08671bf6b8a4a8d6c6192f9a6484d7381a8460b9547e01",
+        "size": 4952
+      },
+      "scripts/vnext/reader_input.py": {
+        "sha256": "12618a72311a28983bde6378270a0743cec933dc648e4c7e868a124192b3d74f",
+        "size": 25890
+      },
+      "scripts/vnext/requirements.py": {
+        "sha256": "4a1214cc97eafca8a5e3958d67ac90de1470deb910a7b90366c1726fa0971ac5",
+        "size": 62714
+      },
+      "scripts/vnext/sources.py": {
+        "sha256": "53eeef067c450bd5bb7a92daab88bc437546b2d95355186a6464d2222bf23c31",
+        "size": 19156
+      },
+      "scripts/vnext/table_context_measurement.py": {
+        "sha256": "1318be41735c3684e9eed84bc94e06e9eee26590c2f5627bffe3697fe97a2702",
+        "size": 57463
+      },
+      "scripts/vnext/table_grid.py": {
+        "sha256": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
+        "size": 22343
+      },
+      "scripts/vnext/table_payload.py": {
+        "sha256": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+        "size": 17699
+      },
+      "scripts/vnext/table_task_contracts.py": {
+        "sha256": "c0dcf34e2ef8fff693767c66949956d02dd0e94552765cfebb417ce7b6712a68",
+        "size": 33144
+      }
+    },
+    "protected_closure_hash": "sha256:5b69d9966002add4b285cf2f93cc2ec7c2dd583cac6a0224f5db0b574e4d0aaf"
+  },
+  "protected_closure_hash": "sha256:5b69d9966002add4b285cf2f93cc2ec7c2dd583cac6a0224f5db0b574e4d0aaf",
+  "forbidden_output_record_types": [
+    "OBSERVATION_CANDIDATE",
+    "EVIDENCE_CHECK",
+    "REVIEW_UNIT",
+    "VERIFIED_OBSERVATION",
+    "TABLE_QUALIFICATION_EVIDENCE",
+    "PUBLICATION_CANDIDATE"
+  ],
+  "measurement_plan_id": "sha256:89d90019e929566df8e3d7a93c4c8a360067cdc0e3977fa9e4a8ece00a9dbceb"
+}
