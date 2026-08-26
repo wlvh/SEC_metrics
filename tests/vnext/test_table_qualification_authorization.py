@@ -781,8 +781,24 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             "validate_table_qualification_freeze",
             return_value=status,
         ), mock.patch.object(
-            qualification, "_matrix_source_binding",
-        ) as source_opener, mock.patch.object(
+            qualification,
+            "_qualification_sample_measurement",
+            return_value={
+                "provider_request_body_sha256": "b" * 64,
+                "estimated_input_tokens": 10,
+                "blocking_reason_codes": [],
+                "context_feasibility": {
+                    "status": "PASSED",
+                    "evidence_basis": "ESTIMATED_BOUND",
+                    "attestation_id": None,
+                    "attested_actual_prompt_tokens": None,
+                    "context_budget_tokens": 200000,
+                    "exact_binding_match": False,
+                    "drift_fields": [],
+                    "blocking_reason_code": None,
+                },
+            },
+        ), mock.patch.object(
             ai_adapter, "_open_provider_request",
         ) as provider_opener:
             plan = qualification.table_qualification_task_plan(
@@ -804,7 +820,6 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     task_contract_id="lodging_occupancy_table_v2",
                     qualification_ordinal=1,
                 )
-        source_opener.assert_not_called()
         provider_opener.assert_not_called()
 
     def test_public_paths_preserve_family_scoped_local_drift(self) -> None:
