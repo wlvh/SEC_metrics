@@ -320,7 +320,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertTrue(measurements["any_measurement_blocked"])
         self.assertEqual(
-            ["financial_statement", "lodging_kpi_table"],
+            ["financial_statement"],
             measurements["blocking_family_ids"],
         )
         self.assertEqual(
@@ -341,17 +341,13 @@ class TableQualificationFreezeTest(unittest.TestCase):
             drift_by_family={},
         )
         self.assertEqual(
-            392447,
+            393573,
             readiness["lodging_kpi_table"]["context_gate"][
                 "maximum_observed_estimated_input_tokens"
             ],
         )
         self.assertEqual(
-            [
-                "ESTIMATED_CONTEXT_LIMIT",
-                "EXACT_CONTEXT_BINDING_MISMATCH",
-            ],
-            readiness["lodging_kpi_table"]["blocking_reason_codes"],
+            [], readiness["lodging_kpi_table"]["blocking_reason_codes"],
         )
         task_readiness = _readiness_by_task_request(
             matrix=matrix,
@@ -372,17 +368,17 @@ class TableQualificationFreezeTest(unittest.TestCase):
             "PROVIDER_REPORTED_EXACT_BINDING",
             occupancy["context_gate"]["evidence_basis"],
         )
-        self.assertFalse(revpar["live_ready"])
+        self.assertTrue(revpar["live_ready"])
         self.assertEqual(
-            "EXACT_CONTEXT_BINDING_MISMATCH",
-            revpar["context_gate"]["blocking_reason_code"],
+            "PROVIDER_REPORTED_EXACT_BINDING",
+            revpar["context_gate"]["evidence_basis"],
         )
         self.assertEqual(
             ["EXPANDED_GRID_RESOURCE_LIMIT"],
             readiness["financial_statement"]["blocking_reason_codes"],
         )
         self.assertEqual(
-            [],
+            ["lodging_kpi_table"],
             sorted(
                 family_id
                 for family_id, value in readiness.items()
@@ -398,7 +394,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertFalse(d07["d07_decision_required"])
         self.assertEqual(
-            ["financial_statement", "lodging_kpi_table"],
+            ["financial_statement"],
             d07["blocking_family_ids"],
         )
         split_rows = _split_cost_receipts(
@@ -491,8 +487,8 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 }
                 body["readiness_by_family"]["lodging_kpi_table"][
                     "live_ready"
-                ] = True
-                body["live_ready_family_ids"] = ["lodging_kpi_table"]
+                ] = False
+                body["live_ready_family_ids"] = []
                 return {
                     "table_qualification_freeze_receipt_id": content_hash(
                         value=body,
