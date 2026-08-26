@@ -22,9 +22,9 @@ from .requirements import ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
 from .requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from .requirements import ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
-from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
 from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
@@ -368,7 +368,7 @@ def _rebuild_exact_request(
         or revised_policy != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
         or schema_policy != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
         or choice.get("live_measurement_authorized") is not False
-        or choice.get("live_qualification_authorized") is not False
+        or choice.get("live_qualification_authorized") is not True
         or choice.get("accepted_context_attestations")
         != ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
         or choice.get("live_qualification_scope")
@@ -643,7 +643,7 @@ def _validate_preserved_current_task_attestation(
         or plan.get("measurement_plan_id")
         != attestation["measurement_plan_id"]
         or plan.get("revised_prompt_measurement_policy")
-        != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
+        != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
         or plan.get("requirement_closure_hash")
         != attestation["measurement_requirement_closure_hash"]
         or plan.get("protected_closure_hash")

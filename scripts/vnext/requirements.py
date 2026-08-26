@@ -158,7 +158,7 @@ ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY = {
     **ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY,
     "policy_status": "MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED",
 }
-ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY = {
+ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY = {
     "policy_status": "LOCATOR_SCHEMA_REVISION_APPROVED_EXACT_GRANTS_PENDING",
     "family_id": "lodging_kpi_table",
     "task_contract_ids": [
@@ -210,6 +210,12 @@ ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY = {
     "concrete_grant_requires_independent_exact_head_review": True,
     "qualification_requires_both_schema_revised_attestations": True,
 }
+ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY = {
+    **ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY,
+    "policy_status": (
+        "SCHEMA_REVISED_MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
+    ),
+}
 ISSUE_15_D07_HISTORICAL_CONTEXT_ATTESTATIONS = [
     {
         "family_id": "lodging_kpi_table",
@@ -240,7 +246,7 @@ ISSUE_15_D07_HISTORICAL_CONTEXT_ATTESTATIONS = [
         "context_budget_tokens": 200000,
     },
 ]
-ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
+ISSUE_15_D07_SCHEMA_V2_CONTEXT_ATTESTATIONS = [
     {
         "family_id": "lodging_kpi_table",
         "task_contract_id": "lodging_occupancy_table_v2",
@@ -267,6 +273,36 @@ ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
             "58cc8e9f704e8794ad944446b96d950"
         ),
         "actual_prompt_tokens": 161167,
+        "context_budget_tokens": 200000,
+    },
+]
+ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
+    {
+        "family_id": "lodging_kpi_table",
+        "task_contract_id": "lodging_occupancy_table_v2",
+        "attestation_id": (
+            "sha256:ae0a2bee7bbccae2007566413688a9b3f"
+            "605e6eeabe63cf32891a76229c08715"
+        ),
+        "measurement_evidence_id": (
+            "sha256:0399b5034d4920a31d9391f36870eb640"
+            "7a39e943454147f0e6b7f33c9813825"
+        ),
+        "actual_prompt_tokens": 161282,
+        "context_budget_tokens": 200000,
+    },
+    {
+        "family_id": "lodging_kpi_table",
+        "task_contract_id": "lodging_revpar_table_v2",
+        "attestation_id": (
+            "sha256:52d243db14cdfb95507393451cd2a23f9"
+            "c278853cc24e15ed0bce5100799daee"
+        ),
+        "measurement_evidence_id": (
+            "sha256:7679c5d712f4635b5b31ba2f4e666108"
+            "5dc09a8498b9b40929f308a964dfaa42"
+        ),
+        "actual_prompt_tokens": 161263,
         "context_budget_tokens": 200000,
     },
 ]
@@ -307,15 +343,15 @@ ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
 ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY = {
     "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
     "accepted_measurement_evidence_id": (
-        "sha256:b4bc0aaa3f1dbad06f5a29018c00e9b9"
-        "01d47ad2fae66acbc6c5076c8e7d3eec"
+        "sha256:0399b5034d4920a31d9391f36870eb640"
+        "7a39e943454147f0e6b7f33c9813825"
     ),
     "accepted_provider": "deepseek",
     "accepted_model": "deepseek-v4-flash",
     "accepted_api": "chat_completions",
-    "accepted_actual_prompt_tokens": 161181,
+    "accepted_actual_prompt_tokens": 161282,
     "context_budget_tokens": 200000,
-    "context_headroom_tokens": 38819,
+    "context_headroom_tokens": 38718,
     "default_path": {
         "condition": "estimated_input_tokens <= 200000",
         "result": "PASS",
@@ -391,7 +427,7 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
         "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED"
     ),
     "live_measurement_authorized": False,
-    "live_qualification_authorized": False,
+    "live_qualification_authorized": True,
     "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     "context_feasibility_policy": ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
     "revpar_measurement_exception": (
@@ -429,8 +465,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:0770855a0bd60365bbbe751bfba1b34f"
-        "99a960b141b376ad04acc9ddf842460f"
+        "sha256:85219884f420501662a6f4d418d31ef6"
+        "1926e69d766a4fbd43671424fddb2a58"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1617,14 +1653,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 9
+        or len(chains["D-07"]) != 10
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][7])
+        != _decision_record_hash(decision=chains["D-07"][8])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

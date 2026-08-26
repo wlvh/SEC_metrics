@@ -182,10 +182,9 @@ class TableContextMeasurementTest(unittest.TestCase):
             capture_output=True,
             text=True,
         ).stdout.strip()
-        cls.request_sha256 = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )["provider_request_body_sha256"]
+        cls.request_sha256 = (
+            "8473835cdc306cc6b829659fa3cc9e4d02ef8e294a7dd58b313d78409598dc64"
+        )
         cls.review_comment_url = (
             "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-1"
         )
@@ -223,11 +222,12 @@ class TableContextMeasurementTest(unittest.TestCase):
         )
 
     def test_plan_is_exact_revpar_request_without_ratio_substitution(self) -> None:
-        """Bind the schema-v3 RevPAR plan and exact provider bytes."""
-        plan = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
+        """Bind the consumed schema-v3 RevPAR plan and provider bytes."""
+        plan = json.loads((
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/token_measurement/"
+            "plans/468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563.json"
+        ).read_text(encoding="utf-8"))
         self.assertEqual("lodging_kpi_table", plan["family_id"])
         self.assertEqual(
             "lodging_revpar_table_v2", plan["task_contract_id"],
@@ -251,15 +251,19 @@ class TableContextMeasurementTest(unittest.TestCase):
     def test_revised_prompt_plans_are_task_exact_and_schema_unchanged(
         self,
     ) -> None:
-        """Bind two schema-v3 requests without borrowing historical proof."""
-        occupancy = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_occupancy_table_v2",
+        """Bind the two consumed task-exact schema-v3 plans."""
+        plan_root = (
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/token_measurement/plans"
         )
-        revpar = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
+        occupancy = json.loads((
+            plan_root
+            / "f5db7dde7f1d0abec30c6596e1fd0bced33d335b8d972ab6df31abf96fd43f05.json"
+        ).read_text(encoding="utf-8"))
+        revpar = json.loads((
+            plan_root
+            / "468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563.json"
+        ).read_text(encoding="utf-8"))
         self.assertEqual(393999, occupancy["estimated_input_tokens"])
         self.assertEqual(393990, revpar["estimated_input_tokens"])
         self.assertEqual(self.request_sha256, revpar[
@@ -646,22 +650,22 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
         )
         plan = json.loads((
             root
-            / "plans/d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d.json"
+            / "plans/468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563.json"
         ).read_text(encoding="utf-8"))
         cycle = (
             root
-            / "executions/cbf47a83894227e6ba8efe27d6dc0de819f947a058dbc86a4dcbbc1355f1c017"
+            / "executions/615b546ad79b8078cb4bb3b82e992eaf42125e90a16baccba180cab133b2e989"
         )
         marker = json.loads(
             (cycle / "provider_egress_marker.json").read_text(encoding="utf-8")
         )
         evidence = json.loads((
             cycle
-            / "evidence/0d453606d154eec76bb93cbcf69747af658cc8e9f704e8794ad944446b96d950.json"
+            / "evidence/7679c5d712f4635b5b31ba2f4e6661085dc09a8498b9b40929f308a964dfaa42.json"
         ).read_text(encoding="utf-8"))
         validate_table_context_measurement_evidence(evidence=evidence)
         self.assertEqual(
-            "sha256:d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d",
+            "sha256:468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563",
             plan["measurement_plan_id"],
         )
         self.assertEqual(
@@ -672,35 +676,23 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
             evidence["provider_request_body_sha256"],
         )
         self.assertEqual("COMPLETED", evidence["status"])
-        self.assertEqual(161167, evidence["actual_prompt_tokens"])
-        self.assertEqual(595, evidence["actual_completion_tokens"])
-        self.assertEqual(161762, evidence["actual_total_tokens"])
+        self.assertEqual(161263, evidence["actual_prompt_tokens"])
+        self.assertEqual(1051, evidence["actual_completion_tokens"])
+        self.assertEqual(162314, evidence["actual_total_tokens"])
         self.assertEqual(1, evidence["real_model_provider_egress_count"])
         self.assertEqual(1, evidence["paid_model_provider_call_count"])
         self.assertEqual(0, evidence["real_SEC_egress_count"])
         self.assertFalse(evidence["qualification_credit"])
         self.assertFalse(evidence["publication_eligible"])
         self.assertFalse(evidence["response_reuse_for_qualification"])
-        schema_revised = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
-        self.assertNotEqual(
-            plan["provider_request_body_sha256"],
-            schema_revised["provider_request_body_sha256"],
-        )
-        self.assertEqual(
-            "3",
-            schema_revised["revised_prompt_measurement_policy"][
-                "output_schema_version"
-            ],
-        )
-        self.assertEqual(
-            "LOCATOR_SCHEMA_REVISION_APPROVED_EXACT_GRANTS_PENDING",
-            schema_revised["revised_prompt_measurement_policy"][
-                "policy_status"
-            ],
-        )
+        with self.assertRaisesRegex(
+            TableContextMeasurementError,
+            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+        ):
+            build_table_context_measurement_plan(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_revpar_table_v2",
+            )
 
 
 if __name__ == "__main__":

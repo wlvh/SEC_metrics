@@ -39,6 +39,7 @@ from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
 from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
@@ -505,13 +506,25 @@ def _prepare_measurement(
         "schema_revised_measurement_policy"
     )
     if (
+        measurement_policy == ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
+        and measurement_policy.get("policy_status")
+        == "SCHEMA_REVISED_MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
+    ):
+        _fail(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message=(
+                "Both schema-revised task measurements are terminal; no "
+                "later HEAD can create another one-shot plan"
+            ),
+        )
+    if (
         content_hash(value=d07) != _MEASUREMENT_GRANT_D07_HASH
         or occupancy_exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
         or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
         or revised_prompt_policy
         != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
         or measurement_policy
-        != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
+        != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
         or d07["choice"]["live_measurement_authorized"] is not False
         or d07["choice"]["live_qualification_authorized"] is not False
         or d07["choice"].get(

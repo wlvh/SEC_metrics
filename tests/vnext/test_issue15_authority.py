@@ -423,7 +423,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(9, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(10, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -472,6 +472,10 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(
             content_hash(value=d07_chain[7]),
             d07_chain[8]["supersedes_decision_id"],
+        )
+        self.assertEqual(
+            content_hash(value=d07_chain[8]),
+            d07_chain[9]["supersedes_decision_id"],
         )
         self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
@@ -531,7 +535,7 @@ class Issue15AuthorityTest(unittest.TestCase):
                 "live_qualification_scope"
             ],
         )
-        self.assertFalse(
+        self.assertTrue(
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_authorized"
             ],
