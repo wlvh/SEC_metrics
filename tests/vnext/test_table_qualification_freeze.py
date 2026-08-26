@@ -526,13 +526,15 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 estimate: object = "NOT_AVAILABLE_RESOURCE_LIMIT"
             elif "ESTIMATED_CONTEXT_LIMIT" in reasons:
                 estimate = 200001
+            elif reasons:
+                estimate = 1000001
             else:
                 estimate = 200000
             context_status = (
                 "NOT_EVALUATED_RESOURCE_LIMIT"
                 if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
                 else "BLOCKED"
-                if "ESTIMATED_CONTEXT_LIMIT" in reasons
+                if reasons
                 else "PASSED"
             )
             for task_contract_id in matrix["entries"][family_id][
@@ -570,7 +572,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
                         "exact_binding_match": False,
                         "drift_fields": [],
                         "blocking_reason_code": (
-                            "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+                            reasons[0]
                             if context_status == "BLOCKED" else None
                         ),
                     },
