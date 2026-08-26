@@ -23,6 +23,7 @@ from vnext.traits import repository_company_ciks
 from vnext.qualification import _qualification_sample_authority
 from vnext.qualification import _qualification_sample_measurement
 from vnext.qualification import QualificationError
+from vnext.table_context_attestation import TableContextAttestationError
 from vnext.requirements import load_requirement_snapshot
 from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_task_contracts import resolve_table_task_contract
@@ -40,11 +41,12 @@ class TableQualificationSamplesTest(unittest.TestCase):
         cls.entry = load_table_qualification_matrix(
             repo_root=REPO_ROOT, family_id="lodging_kpi_table",
         )["entries"]["lodging_kpi_table"]
-        cls.freeze = strict_json_file(path=(
-            REPO_ROOT
-            / "artifacts/vnext/table_qualification_freeze/receipts"
-            / "2c736dfb7de7ce1bff3bfe80a484abac47059337d8c8a92ac8a7fffdc3dc1c53.json"
-        ))
+        pointer = strict_json_file(
+            path=REPO_ROOT / "config/table_qualification_freeze.json",
+        )
+        cls.freeze = strict_json_file(
+            path=REPO_ROOT / pointer["receipt_path"],
+        )
 
     def _measurement(self, *, phase: str, task_id: str) -> dict:
         """Build one exact offline phase/task request."""
@@ -73,34 +75,24 @@ class TableQualificationSamplesTest(unittest.TestCase):
         """Bind second, holdout, and fresh sources without caller locators."""
         expected = {
             ("SECOND_LAYOUT", "lodging_occupancy_table_v2"): (
-                "hilton_worldwide_holdings", 154659,
-                "53f7f98ff6f494d4a547bb4de5dd1d7cec5987e6285208ada4c682d2f7887677",
+                "hilton_worldwide_holdings", 155085,
+                "7d8caf40e3625644d73d516b485b8ecf491fdac3f740627e06c7ef84f04c0d4b",
                 "PASSED",
             ),
             ("SECOND_LAYOUT", "lodging_revpar_table_v2"): (
-                "hilton_worldwide_holdings", 154650,
-                "7a54f1b8377abd27b5a48552ff9fc2a6868b56eeaa7135b9aa333d7ae153aeed",
+                "hilton_worldwide_holdings", 155076,
+                "021389c1919a9845ba546b6595895af81bd596be25d2013f608bcd421b15658e",
                 "PASSED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_occupancy_table_v2"): (
-                "hyatt_hotels", 205514,
-                "55660d2654e7710abfa392051c073fecd234096f8b2b52539ded7da1ce4f38eb",
+                "hyatt_hotels", 205940,
+                "11bc4275e34175ffcb3b6b3178e3de226856688144c7fe477f00ccc54a45c258",
                 "BLOCKED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_revpar_table_v2"): (
-                "hyatt_hotels", 205505,
-                "1cba2aebe5ca58f46b629c62e099101abaa664d5b6fff85e2d9c51dedc47cb0c",
+                "hyatt_hotels", 205931,
+                "04bf483588e2a2b91bdc1107ce62f9cc2da0a2ef2639be2733c847012d342a63",
                 "BLOCKED",
-            ),
-            ("FRESH_STABILITY", "lodging_occupancy_table_v2"): (
-                "marriott_international", 393573,
-                "96d0a650883c45f54bddc56a088df05e6e5d7f19afe7f2ac6a9c819852eaeeaf",
-                "PASSED",
-            ),
-            ("FRESH_STABILITY", "lodging_revpar_table_v2"): (
-                "marriott_international", 393564,
-                "572929bd544cb14c2c65e04222615419740628f5cbf7055db21f307c1d9091d9",
-                "PASSED",
             ),
         }
         with mock.patch.object(ai_adapter, "_open_provider_request") as opener:
@@ -130,6 +122,19 @@ class TableQualificationSamplesTest(unittest.TestCase):
                         status, measurement["context_feasibility"]["status"],
                     )
         opener.assert_not_called()
+
+    def test_fresh_phase_waits_for_schema_v3_attestations(self) -> None:
+        """Refuse fresh planning until both exact schema-v3 proofs exist."""
+        for task_id in (
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2",
+        ):
+            with self.subTest(task_contract_id=task_id), self.assertRaises(
+                TableContextAttestationError
+            ):
+                self._measurement(
+                    phase="FRESH_STABILITY", task_id=task_id,
+                )
 
     def test_invalid_phase_ordinals_fail_before_source_or_provider(self) -> None:
         """Keep layout phases single-ordinal and fresh at the D-37 count."""
