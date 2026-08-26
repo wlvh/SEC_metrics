@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -13,13 +14,17 @@ from vnext import ai_adapter
 from vnext import qualification as qualification_module
 from vnext import workflow as workflow_module
 from vnext.canonical import strict_json_file
+from vnext.evidence import check_evidence
 from vnext.reader_input import build_reader_input_manifest
 from vnext.reader_input import prepare_live_reader_request
 from vnext.reader_input import prepare_reader_request
+from vnext.reader import validate_reader_output
+from vnext.run_store import load_run_for_status
 from vnext.sources import load_raw_blob_bytes
 from vnext.sources import raw_blob_record
 from vnext.sources import source_reference_record
 from vnext.table_grid import build_table_grid
+from vnext.table_grid import resolve_cell
 from vnext.traits import repository_company_ciks
 from vnext.qualification import _qualification_sample_authority
 from vnext.qualification import _qualification_sample_measurement
@@ -246,6 +251,91 @@ class TableQualificationSamplesTest(unittest.TestCase):
             ),
             "provider_egress_count": 0,
         }, sentinel)
+
+    def test_replacement_occupancy_terminal_preserves_raw_whitespace_failure(
+        self,
+    ) -> None:
+        """Bind the one-shot usage and exact leading-newline Evidence failure."""
+        run_dir = (
+            REPO_ROOT
+            / "artifacts/vnext/qualification/cycles/"
+            "16abb47307e899231dc21ad06d05ee7353c3f83af61dfd0c024b54986cee1359/"
+            "runs/cf8dbd0c7cea9d955a6bd65863d9593465363e699059efaa07e50e659f21c902"
+        )
+        manifest, records, _decisions = load_run_for_status(
+            run_dir=run_dir,
+            repo_root=REPO_ROOT,
+        )
+        self.assertEqual("OPEN", manifest["status"])
+        attempt = next(
+            row for row in records
+            if row["record_type"] == "AI_EXTRACTION_ATTEMPT"
+        )
+        self.assertEqual("FAILED", attempt["status"])
+        self.assertEqual("EVIDENCE_FAILURE", attempt["error_class"])
+        self.assertEqual(0, attempt["transport_observation"]["retries_performed"])
+        raw_response = json.loads(
+            (run_dir / attempt["raw_response_path"]).read_bytes()
+        )
+        self.assertEqual({
+            "prompt_tokens": 159376,
+            "completion_tokens": 550,
+            "total_tokens": 159926,
+        }, {
+            key: raw_response["usage"][key]
+            for key in ("prompt_tokens", "completion_tokens", "total_tokens")
+        })
+        assistant = strict_json_file(
+            path=run_dir / attempt["assistant_output_path"],
+        )
+        geography_label = next(
+            row
+            for row in assistant["candidates"][0]["scope_evidence_locators"]
+            if row["id"] == "scope_2"
+        )
+        derived_asset = next(
+            row for row in records if row["record_type"] == "DERIVED_ASSET"
+        )
+        cell = resolve_cell(
+            derived_asset=derived_asset,
+            locator=geography_label["locator"],
+        )
+        self.assertEqual("Worldwide (2)", geography_label["raw_text"])
+        self.assertEqual("\nWorldwide (2)", cell["raw_text"])
+        task_contract = strict_json_file(
+            path=run_dir / attempt["task_contract_path"],
+        )
+        reader_manifest = next(
+            row for row in records
+            if row["record_type"] == "READER_INPUT_MANIFEST"
+        )
+        source_reference = next(
+            row for row in records
+            if row["record_type"] == "SOURCE_REFERENCE"
+        )
+        candidate = validate_reader_output(
+            response_text=json.dumps(assistant, ensure_ascii=False),
+            attempt_id=attempt["attempt_id"],
+            required_roles=task_contract["required_roles"],
+            scope_contract=task_contract["scope_contract"],
+            source_reference_ids=reader_manifest["source_reference_ids"],
+            derived_asset_ids=[derived_asset["derived_asset_id"]],
+        )
+        evidence = check_evidence(
+            candidate=candidate,
+            derived_asset=derived_asset,
+            reader_manifest=reader_manifest,
+            reader_payload_body=strict_json_file(
+                path=run_dir / attempt["reader_payload_path"],
+            ),
+            source_references=[source_reference],
+            identity_constraints=task_contract["identity_constraints"],
+            scope_contract=task_contract["scope_contract"],
+        )
+        self.assertEqual("REJECTED", evidence["status"])
+        self.assertEqual(
+            ["SCOPE_LABEL_TEXT_MISMATCH"], evidence["reason_codes"],
+        )
 
     def test_invalid_phase_ordinals_fail_before_source_or_provider(self) -> None:
         """Keep layout phases single-ordinal and fresh at the D-37 count."""
