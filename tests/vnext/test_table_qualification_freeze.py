@@ -24,7 +24,6 @@ from vnext.table_qualification_freeze import _protected_closure
 from vnext.table_qualification_freeze import _protected_closure_drift
 from vnext.table_qualification_freeze import _measurement_receipts
 from vnext.table_qualification_freeze import _split_cost_receipts
-from vnext.table_context_attestation import current_exact_request_binding
 from vnext.table_task_contracts import load_table_task_contracts
 
 
@@ -78,26 +77,20 @@ class TableQualificationFreezeTest(unittest.TestCase):
                     entry["token_context_limits"]["maximum_context_tokens"],
                 )
 
-    def test_each_lodging_task_uses_schema_v3_attested_closure(self) -> None:
-        """Do not reuse one schema-v3 protected hash for its sibling request."""
+    def test_each_revised_lodging_task_rejects_historical_attestation(
+        self,
+    ) -> None:
+        """Require reviewed new usage instead of either historical proof."""
         matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
         task_ids = matrix["entries"]["lodging_kpi_table"]["task_contract_ids"]
         self.assertEqual(2, len(task_ids))
         for task_id in task_ids:
             with self.subTest(task_contract_id=task_id):
-                expected = current_exact_request_binding(
-                    repo_root=REPO_ROOT,
-                    task_contract_id=task_id,
-                )
                 actual = freeze_module._attested_request_authority(
                     repo_root=REPO_ROOT,
                     task_contract_id=task_id,
                 )
-                self.assertIsNotNone(actual)
-                self.assertEqual(
-                    expected["protected_closure_hash"],
-                    actual["protected_closure_hash"],
-                )
+                self.assertIsNone(actual)
 
     def test_estimated_context_threshold_is_inclusive(self) -> None:
         """Pass 200000 exactly and block the first value above the D-07 cap."""
@@ -144,7 +137,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
 
         financial_ready = self._synthetic_measurements(
-            lodging_reasons=["ESTIMATED_CONTEXT_LIMIT"],
+            lodging_reasons=["PROVIDER_CONTEXT_LIMIT"],
             financial_reasons=[],
         )
         second = _readiness_by_family(
@@ -155,7 +148,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         self.assertTrue(second["financial_statement"]["live_ready"])
         self.assertFalse(second["lodging_kpi_table"]["live_ready"])
         self.assertIn(
-            "ESTIMATED_CONTEXT_LIMIT",
+            "PROVIDER_CONTEXT_LIMIT",
             second["lodging_kpi_table"]["blocking_reason_codes"],
         )
 

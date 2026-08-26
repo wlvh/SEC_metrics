@@ -65,13 +65,15 @@ def _synthetic_family_gate_status(
             estimate: object = "NOT_AVAILABLE_RESOURCE_LIMIT"
         elif "ESTIMATED_CONTEXT_LIMIT" in reasons:
             estimate = 200001
+        elif reasons:
+            estimate = 1000001
         else:
             estimate = 200000
         context_status = (
             "NOT_EVALUATED_RESOURCE_LIMIT"
             if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
             else "BLOCKED"
-            if "ESTIMATED_CONTEXT_LIMIT" in reasons
+            if reasons
             else "PASSED"
         )
         for task_contract_id in matrix["entries"][family_id][
@@ -109,7 +111,7 @@ def _synthetic_family_gate_status(
                     "exact_binding_match": False,
                     "drift_fields": [],
                     "blocking_reason_code": (
-                        "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+                        reasons[0]
                         if context_status == "BLOCKED" else None
                     ),
                 },
@@ -773,7 +775,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
     ) -> None:
         """Allow financial plan while lodging is context-blocked."""
         status = _synthetic_family_gate_status(
-            lodging_reasons=["ESTIMATED_CONTEXT_LIMIT"],
+            lodging_reasons=["PROVIDER_CONTEXT_LIMIT"],
             financial_reasons=[],
         )
         with mock.patch.object(
