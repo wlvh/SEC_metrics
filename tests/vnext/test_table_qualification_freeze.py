@@ -320,7 +320,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertTrue(measurements["any_measurement_blocked"])
         self.assertEqual(
-            ["financial_statement"],
+            ["financial_statement", "lodging_kpi_table"],
             measurements["blocking_family_ids"],
         )
         self.assertEqual(
@@ -341,7 +341,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
             drift_by_family={},
         )
         self.assertEqual(
-            394837,
+            395337,
             readiness["lodging_kpi_table"]["context_gate"][
                 "maximum_observed_estimated_input_tokens"
             ],
@@ -365,12 +365,12 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertTrue(occupancy["live_ready"])
         self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING",
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
             occupancy["context_gate"]["evidence_basis"],
         )
         self.assertTrue(revpar["live_ready"])
         self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING",
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
             revpar["context_gate"]["evidence_basis"],
         )
         self.assertEqual(
@@ -394,7 +394,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertFalse(d07["d07_decision_required"])
         self.assertEqual(
-            ["financial_statement"],
+            ["financial_statement", "lodging_kpi_table"],
             d07["blocking_family_ids"],
         )
         split_rows = _split_cost_receipts(

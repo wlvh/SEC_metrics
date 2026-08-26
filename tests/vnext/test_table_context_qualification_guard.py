@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import tempfile
 import unittest
@@ -17,6 +18,8 @@ from vnext import ai_adapter, qualification
 from vnext.invocation_control import execute_batch
 from vnext.requirements import load_requirement_snapshot
 from vnext.table_context_attestation import (
+    ATTESTATION_ROOT,
+    TableContextAttestationError,
     validate_table_context_feasibility_attestation,
 )
 from vnext.table_qualification_freeze import _family_measurement_receipts
@@ -86,10 +89,10 @@ class TableContextQualificationGuardTest(unittest.TestCase):
             requirement=cls.requirement,
         )
 
-    def test_two_exact_context_attestations_make_current_family_ready(
+    def test_revised_requests_use_reviewed_qualification_usage_readiness(
         self,
     ) -> None:
-        """Require both current Marriott task requests before family readiness."""
+        """Keep old attestations historical and admit only reviewed new calls."""
         tasks = _readiness_by_task_request(
             matrix=self.matrix,
             measurements=self.measurements,
@@ -111,12 +114,12 @@ class TableContextQualificationGuardTest(unittest.TestCase):
         )
         self.assertTrue(occupancy["live_ready"])
         self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING",
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
             occupancy["context_gate"]["evidence_basis"],
         )
         self.assertTrue(revpar["live_ready"])
         self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING",
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
             revpar["context_gate"]["evidence_basis"],
         )
         self.assertTrue(family["live_ready"])
@@ -141,11 +144,56 @@ class TableContextQualificationGuardTest(unittest.TestCase):
         self.assertEqual("PASSED", context["status"])
         opener.assert_not_called()
 
+    def test_reviewed_usage_readiness_does_not_bypass_provider_limits(
+        self,
+    ) -> None:
+        """Keep provider context/payload and materialization blockers hard."""
+        measurements = copy.deepcopy(self.measurements)
+        occupancy = next(
+            row
+            for row in measurements["qualification_task_measurements"]
+            if row["task_contract_id"] == "lodging_occupancy_table_v2"
+        )
+        occupancy["context_feasibility"]["status"] = "BLOCKED"
+        occupancy["context_feasibility"]["blocking_reason_code"] = (
+            "PROVIDER_CONTEXT_LIMIT"
+        )
+        occupancy["blocking_reason_codes"] = ["PROVIDER_CONTEXT_LIMIT"]
+        readiness = _readiness_by_task_request(
+            matrix=self.matrix,
+            measurements=measurements,
+            drift_by_family={},
+        )
+        occupancy_readiness = next(
+            row
+            for row in readiness.values()
+            if row["task_contract_id"] == "lodging_occupancy_table_v2"
+        )
+        self.assertFalse(occupancy_readiness["live_ready"])
+        self.assertIn(
+            "PROVIDER_CONTEXT_LIMIT",
+            occupancy_readiness["blocking_reason_codes"],
+        )
+
     def test_measurement_response_and_evidence_cannot_be_reused(self) -> None:
         """Reject generic success reuse and measurement evidence promotion."""
-        attestation = validate_table_context_feasibility_attestation(
-            repo_root=REPO_ROOT,
+        accepted = self.requirement["effective_decisions"]["D-07"]["choice"][
+            "accepted_context_attestations"
+        ][0]
+        attestation = json.loads(
+            (
+                REPO_ROOT
+                / ATTESTATION_ROOT
+                / (
+                    accepted["attestation_id"].split(":", maxsplit=1)[1]
+                    + ".json"
+                )
+            ).read_text(encoding="utf-8")
         )
+        with self.assertRaises(TableContextAttestationError):
+            validate_table_context_feasibility_attestation(
+                repo_root=REPO_ROOT,
+            )
         reused_attempt = {
             "record_type": "AI_EXTRACTION_ATTEMPT",
             "request_body_sha256": attestation[
@@ -235,10 +283,10 @@ class TableContextQualificationGuardTest(unittest.TestCase):
                     terminal["attempts"][0]["error_class"],
                 )
 
-    def test_exact_reviewed_terminal_usage_path_covers_two_layout_phases(
+    def test_exact_reviewed_terminal_usage_path_covers_revised_phases(
         self,
     ) -> None:
-        """Admit only the two owner-approved over-estimate sample phases."""
+        """Admit only the three no-measurement lodging sample phases."""
         scope = self.requirement["effective_decisions"]["D-07"]["choice"][
             "live_qualification_scope"
         ]
@@ -254,7 +302,11 @@ class TableContextQualificationGuardTest(unittest.TestCase):
                 "max_estimated_input_tokens": 200000,
             }
         }
-        for phase in ("SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"):
+        for phase in (
+            "SECOND_LAYOUT",
+            "POST_FREEZE_HOLDOUT",
+            "FRESH_STABILITY",
+        ):
             with self.subTest(phase=phase):
                 context = qualification._qualification_context_plan(
                     measurement=measurement,
@@ -270,7 +322,7 @@ class TableContextQualificationGuardTest(unittest.TestCase):
         with self.assertRaises(qualification.QualificationError):
             qualification._qualification_context_plan(
                 measurement=measurement,
-                qualification_phase="FRESH_STABILITY",
+                qualification_phase="PRODUCTION_SEMANTIC_FREEZE",
                 matrix_entry=matrix_entry,
                 scope=scope,
             )

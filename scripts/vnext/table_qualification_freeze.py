@@ -1843,7 +1843,62 @@ def _readiness_by_task_request(
         ]
         resource_status = "BLOCKED" if resource_blocked else "PASSED"
         context_status = str(context["status"])
+        context_evidence_basis = context["evidence_basis"]
+        context_attestation_id = context["attestation_id"]
+        context_attested_actual_prompt_tokens = context[
+            "attested_actual_prompt_tokens"
+        ]
+        context_exact_binding_match = context["exact_binding_match"]
+        context_drift_fields = context["drift_fields"]
+        context_blocking_reason_code = context[
+            "blocking_reason_code"
+        ]
         reason_codes = set(row["blocking_reason_codes"])
+        qualification_scope = ISSUE_15_D07_EFFECTIVE_CHOICE[
+            "live_qualification_scope"
+        ]
+        raw_whitespace_policy = ISSUE_15_D07_EFFECTIVE_CHOICE.get(
+            "raw_whitespace_prompt_revision_policy"
+        )
+        allowed_context_reasons = {
+            ESTIMATED_CONTEXT_LIMIT,
+            "EXACT_CONTEXT_BINDING_MISMATCH",
+        }
+        if type(raw_whitespace_policy) is dict:
+            allowed_context_reasons.update(
+                raw_whitespace_policy.get(
+                    "historical_attestation_blocking_reason_codes", []
+                )
+            )
+        qualification_usage_only = (
+            family_id == "lodging_kpi_table"
+            and type(raw_whitespace_policy) is dict
+            and raw_whitespace_policy.get("additional_measurement_authorized")
+            is False
+            and raw_whitespace_policy.get(
+                "historical_response_reuse_for_qualification"
+            ) is False
+            and raw_whitespace_policy.get(
+                "revised_request_context_evidence_basis"
+            )
+            == "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+            and "FRESH_STABILITY" in qualification_scope.get(
+                "unattested_over_estimated_bound_phases", []
+            )
+            and reason_codes
+            and reason_codes.issubset(allowed_context_reasons)
+        )
+        if qualification_usage_only:
+            context_status = "PASSED"
+            context_evidence_basis = (
+                "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+            )
+            context_attestation_id = None
+            context_attested_actual_prompt_tokens = None
+            context_exact_binding_match = False
+            context_drift_fields = []
+            context_blocking_reason_code = None
+            reason_codes.difference_update(allowed_context_reasons)
         if shared_drift:
             reason_codes.add(SHARED_PROTECTED_CLOSURE_DRIFT)
         if family_local_drift:
@@ -1875,19 +1930,17 @@ def _readiness_by_task_request(
             "context_gate": {
                 "status": context_status,
                 "estimated_input_tokens": row["estimated_input_tokens"],
-                "evidence_basis": context["evidence_basis"],
-                "attestation_id": context["attestation_id"],
-                "attested_actual_prompt_tokens": context[
-                    "attested_actual_prompt_tokens"
-                ],
+                "evidence_basis": context_evidence_basis,
+                "attestation_id": context_attestation_id,
+                "attested_actual_prompt_tokens": (
+                    context_attested_actual_prompt_tokens
+                ),
                 "context_budget_tokens": context[
                     "context_budget_tokens"
                 ],
-                "exact_binding_match": context["exact_binding_match"],
-                "drift_fields": context["drift_fields"],
-                "blocking_reason_code": context[
-                    "blocking_reason_code"
-                ],
+                "exact_binding_match": context_exact_binding_match,
+                "drift_fields": context_drift_fields,
+                "blocking_reason_code": context_blocking_reason_code,
             },
             "resource_gate": {
                 "status": resource_status,

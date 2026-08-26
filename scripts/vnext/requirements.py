@@ -130,6 +130,13 @@ ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT = (
     "one supplied cell in the same selected target table, and copy that "
     "cell exact raw_text. Never use text from another table or nearby prose."
 )
+ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT = (
+    ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT
+    + " For every scope_evidence_locators raw_text, preserve all leading and "
+    "trailing whitespace characters exactly as supplied, represent them with "
+    "valid JSON escape sequences such as \\n, \\r, and \\t, and never trim, "
+    "normalize, or collapse whitespace."
+)
 ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY = {
     "policy_status": "PROMPT_REVISION_APPROVED_EXACT_GRANTS_PENDING",
     "family_id": "lodging_kpi_table",
@@ -292,6 +299,59 @@ ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY = {
         "SCOPE_BOUND_MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
     ),
 }
+ISSUE_15_D07_RAW_WHITESPACE_PROMPT_POLICY = {
+    "policy_status": "APPROVED_QUALIFICATION_USAGE_ONLY",
+    "family_id": "lodging_kpi_table",
+    "task_contract_ids": [
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2",
+    ],
+    "revised_system_prompt": (
+        ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT
+    ),
+    "prompt_revision_scope": (
+        "SYSTEM_PROMPT_SCOPE_RAW_WHITESPACE_PRESERVATION_ONLY"
+    ),
+    "raw_whitespace_contract": {
+        "leading_whitespace_preserved": True,
+        "trailing_whitespace_preserved": True,
+        "json_escape_representation_required": True,
+        "trim_forbidden": True,
+        "normalization_forbidden": True,
+        "collapse_forbidden": True,
+    },
+    "system_prompt_change_authorized": True,
+    "output_schema_change_authorized": False,
+    "metric_meaning_change_authorized": False,
+    "task_role_change_authorized": False,
+    "source_change_authorized": False,
+    "serializer_change_authorized": False,
+    "provider_model_api_change_authorized": False,
+    "table_selection_change_authorized": False,
+    "historical_context_attestations_status": (
+        "HISTORICAL_NOT_CURRENT_FOR_RAW_WHITESPACE_PROMPT_REQUESTS"
+    ),
+    "historical_attestation_blocking_reason_codes": [
+        "EXACT_CONTEXT_ATTESTATION_INVALID",
+        "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+    ],
+    "failed_qualification_terminal_id": (
+        "sha256:cf8dbd0c7cea9d955a6bd65863d95934"
+        "65363e699059efaa07e50e659f21c902"
+    ),
+    "additional_measurement_authorized": False,
+    "historical_response_reuse_for_qualification": False,
+    "revised_request_context_evidence_basis": (
+        "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+    ),
+    "new_qualification_execution_per_sample_required": True,
+    "concrete_plan_requires_independent_exact_head_review": True,
+    "provider_reported_prompt_tokens_required": True,
+    "actual_prompt_tokens_max": 200000,
+    "missing_or_excess_usage_policy": (
+        "TERMINAL_NO_RETRY_STOP_LATER_LODGING_PLANS"
+    ),
+}
 ISSUE_15_D07_HISTORICAL_CONTEXT_ATTESTATIONS = [
     {
         "family_id": "lodging_kpi_table",
@@ -443,10 +503,12 @@ ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
     "unattested_over_estimated_bound_phases": [
         "SECOND_LAYOUT",
         "POST_FREEZE_HOLDOUT",
+        "FRESH_STABILITY",
     ],
     "unattested_over_estimated_bound_requires_exact_review": True,
     "unattested_over_estimated_bound_plan_exact_head_review_required": True,
     "rebuilt_second_layout_plan_requires_new_qualification_execution": True,
+    "revised_prompt_fresh_plan_requires_new_qualification_execution": True,
     "missing_or_excess_usage_terminal_no_retry": True,
     "independent_exact_head_review_required_before_first_egress": True,
     "financial_qualification_authorized": False,
@@ -555,11 +617,14 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
     "schema_revised_measurement_policy": (
         ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
     ),
+    "raw_whitespace_prompt_revision_policy": (
+        ISSUE_15_D07_RAW_WHITESPACE_PROMPT_POLICY
+    ),
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5424079015"
+        "#issuecomment-5424874787"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -576,8 +641,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:77116d8f9e991820fa042cce462b08c71"
-        "1187a7192034289d780c1b296471025"
+        "sha256:ba97aad9b890ce7183fb7588becf8acd72"
+        "ca5819d541e918462991d1387ed9f4"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1764,14 +1829,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 14
+        or len(chains["D-07"]) != 15
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][12])
+        != _decision_record_hash(decision=chains["D-07"][13])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

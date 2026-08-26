@@ -27,6 +27,7 @@ from vnext.table_grid import build_table_grid
 from vnext.table_grid import resolve_cell
 from vnext.traits import repository_company_ciks
 from vnext.qualification import _qualification_sample_authority
+from vnext.qualification import _qualification_context_plan
 from vnext.qualification import _qualification_sample_measurement
 from vnext.qualification import QualificationError
 from vnext.requirements import load_requirement_snapshot
@@ -80,36 +81,36 @@ class TableQualificationSamplesTest(unittest.TestCase):
         """Bind second, holdout, and fresh sources without caller locators."""
         expected = {
             ("SECOND_LAYOUT", "lodging_occupancy_table_v2"): (
-                "marriott_international", 388755,
-                "6e95c0225c147246346c787e25f161441a6d9dbd16fa08ffdc195c691"
-                "41bcaa8",
+                "marriott_international", 389255,
+                "30b73494ac1d843ec4975aa0455207931bd7d84bb75edd9281b1f23c"
+                "b677af50",
                 "BLOCKED",
             ),
             ("SECOND_LAYOUT", "lodging_revpar_table_v2"): (
-                "marriott_international", 388746,
-                "0ff01b4a8e65ed57a88a7094f6b875289fddb426ccde1c138c8a02af"
-                "8396b920",
+                "marriott_international", 389246,
+                "eb837d1e70c1fa7153f5685890991d6d47a71c0f97a1385055ab3262"
+                "d2d57ff1",
                 "BLOCKED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_occupancy_table_v2"): (
-                "hyatt_hotels", 206778,
-                "27d25c6dcf0d1a88dc5edc2d73acd12a85d3a4d326237e3172d528dc5400500d",
+                "hyatt_hotels", 207278,
+                "e8892f682626b2d6d2cccd5f16e0b09b74af3ff6e9e44b511b424bbdcb40fc73",
                 "BLOCKED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_revpar_table_v2"): (
-                "hyatt_hotels", 206769,
-                "20127563885ecc4443e1e5da2e8283730e36367e57297800a01efb434eb710fc",
+                "hyatt_hotels", 207269,
+                "412b4df7b1ebcbcf36a6b777738ccc678121980fc3adf80baeb506de32bdcd38",
                 "BLOCKED",
             ),
             ("FRESH_STABILITY", "lodging_occupancy_table_v2"): (
-                "marriott_international", 394837,
-                "da4f47feca0046758c8d0375333fb6b16eac675ec1c5a0812eb9d2e47c01ec7b",
-                "PASSED",
+                "marriott_international", 395337,
+                "cfe082a68afb6b73f94f50173ac20d0ed050b2cd9ad345392d99d345876fa620",
+                "BLOCKED",
             ),
             ("FRESH_STABILITY", "lodging_revpar_table_v2"): (
-                "marriott_international", 394828,
-                "1afd27317162e441fb0812253e79e287bbb302da0fb9ddf301c887541d06e43a",
-                "PASSED",
+                "marriott_international", 395328,
+                "42e0330e7dece4918011701eb977d2379ef13f09c65cf6562a3e439c9e426fc3",
+                "BLOCKED",
             ),
         }
         with mock.patch.object(ai_adapter, "_open_provider_request") as opener:
@@ -137,6 +138,20 @@ class TableQualificationSamplesTest(unittest.TestCase):
                     )
                     self.assertEqual(
                         status, measurement["context_feasibility"]["status"],
+                    )
+                    context = _qualification_context_plan(
+                        measurement=measurement,
+                        qualification_phase=phase,
+                        matrix_entry=self.entry,
+                        scope=self.requirement["effective_decisions"]["D-07"][
+                            "choice"
+                        ]["live_qualification_scope"],
+                    )
+                    self.assertEqual("PASSED", context["status"])
+                    self.assertEqual(
+                        "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_"
+                        "TERMINAL_USAGE",
+                        context["evidence_basis"],
                     )
         opener.assert_not_called()
 

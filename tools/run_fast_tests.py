@@ -54,7 +54,7 @@ FAST_TESTS = (
     "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
     "test_historical_stage_c_b_packet_remains_content_addressed",
     "tests.vnext.test_table_context_attestation.TableContextAttestationTest."
-    "test_exact_occupancy_request_passes_and_grant_is_consumed",
+    "test_historical_occupancy_request_has_no_current_credit",
     "tests.vnext.test_table_context_measurement."
     "TableContextMeasurementTerminalTest."
     "test_revpar_terminal_is_consumed_exact_and_non_credit",
@@ -62,7 +62,7 @@ FAST_TESTS = (
     "TableContextQualificationGuardTest."
     "test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
     "tests.vnext.test_table_context_attestation.TableContextAttestationTest."
-    "test_exact_revpar_request_passes_only_its_measured_binding",
+    "test_historical_revpar_request_has_no_current_credit",
     "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
     "test_current_packet_persists_sibling_and_financial_blockers",
     "tests.vnext.test_zero_ai_release.ZeroAiReleaseTest."

@@ -21,7 +21,9 @@ from vnext.ai_adapter import build_provider_request_body
 from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
 from vnext.ai_adapter import TransportPolicy
 from vnext.canonical import atomic_write_bytes, atomic_write_json, sha256_bytes
-from vnext.requirements import ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT
+from vnext.requirements import (
+    ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+)
 from vnext.requirements import load_requirement_snapshot
 from vnext.source_strategy import load_source_strategy_registry
 from vnext.table_task_contracts import _table_route_sets
@@ -276,21 +278,29 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertEqual(2, len(lodging))
         self.assertEqual(8, len(financial))
         self.assertEqual(
-            {ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT},
+            {ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT},
             {value["system_prompt"] for value in lodging},
         )
         self.assertIn(
             "selected target table supplies a non-empty caption_raw_text",
-            ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
         )
         self.assertIn(
             "all eight locator fields copied from one supplied cell in the "
             "same selected target table",
-            ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
         )
         self.assertIn(
             "Never use text from another table or nearby prose.",
-            ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+        )
+        self.assertIn(
+            "valid JSON escape sequences such as \\n, \\r, and \\t",
+            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+        )
+        self.assertIn(
+            "never trim, normalize, or collapse whitespace",
+            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
         )
         self.assertEqual(
             {"Return raw claims and exact locators from one selected table only."},
@@ -582,7 +592,7 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertEqual(0, transport.call_count)
 
     def test_matrix_task_plan_uses_scope_bound_proofs(self) -> None:
-        """Form the lodging plan only after both new proofs are current."""
+        """Form a reviewed-usage plan without reusing historical proofs."""
         plan = table_qualification_task_plan(
             repo_root=REPO_ROOT,
             family_id="lodging_kpi_table",
@@ -594,6 +604,10 @@ class TableTaskContractsTest(unittest.TestCase):
             "lodging_occupancy_table_v2", plan["task_contract_id"],
         )
         self.assertEqual(1, plan["qualification_ordinal"])
+        self.assertEqual(
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+            plan["context_evidence_basis"],
+        )
 
     def test_legacy_qualification_prepare_requires_catalog_task(self) -> None:
         """Reject schema-v1 fixture input before choosing any family gate."""

@@ -832,6 +832,16 @@
         "since": "2026-08-21"
       },
       {
+        "anchor_id": "BEHAVIOR.vnext_table_raw_whitespace_prompt",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "Marriott FY2024 Occupancy replacement execution为HTTP 200、provider usage 159376/550/159926且retry=0，context gate通过；模型选中正确table_000011、69.8及完整same-table八字段locator，但把本地cell exact raw_text的leading LF从\\nWorldwide (2) trim为Worldwide (2)，机械Evidence以SCOPE_LABEL_TEXT_MISMATCH终态拒绝且零Candidate/Review/Result/publication credit，RevPAR未执行。owner批准的最小shared prompt修订只要求scope-evidence raw_text逐字保留首尾whitespace并用合法JSON escapes输出，禁止trim/normalize/collapse；schema v3、MetricSpec、task/source/serializer/provider/model/API、全表原序与业务语义不变。additional measurement与历史response reuse继续禁止，161433/161422 attestations只作historical；SECOND_LAYOUT、POST_FREEZE_HOLDOUT与FRESH_STABILITY统一使用既有EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE，每个concrete plan仍需新exact-head审核、新execution和usage terminal。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_table_context_qualification_guard.py::TableContextQualificationGuardTest.test_exact_reviewed_terminal_usage_path_covers_revised_phases",
+        "test_status": "automated_recorded_real_bytes",
+        "since": "2026-08-26"
+      },
+      {
         "anchor_id": "BEHAVIOR.vnext_table_stage_b_context_investigation",
         "type": "agent_behavior",
         "status": "active",

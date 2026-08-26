@@ -675,7 +675,14 @@ def _qualification_sample_measurement(
                 repo_root=repo_root,
                 task_contract_id=str(task_contract["task_contract_id"]),
             )["protected_closure_hash"])
-            if sample["qualification_phase"] == "FRESH_STABILITY"
+            if (
+                sample["qualification_phase"] == "FRESH_STABILITY"
+                and type(
+                    requirement["effective_decisions"]["D-07"]["choice"].get(
+                        "raw_whitespace_prompt_revision_policy"
+                    )
+                ) is not dict
+            )
             else content_hash(value=protected_closure)
         ),
     )
@@ -695,6 +702,7 @@ def _qualification_context_plan(
     allowed_reasons = {
         "ESTIMATED_CONTEXT_LIMIT",
         "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+        "EXACT_CONTEXT_ATTESTATION_INVALID",
         "EXACT_CONTEXT_BINDING_MISMATCH",
     }
     if (
@@ -710,6 +718,12 @@ def _qualification_context_plan(
             qualification_phase == "SECOND_LAYOUT"
             and scope.get(
                 "rebuilt_second_layout_plan_requires_new_qualification_execution"
+            ) is not True
+        )
+        or (
+            qualification_phase == "FRESH_STABILITY"
+            and scope.get(
+                "revised_prompt_fresh_plan_requires_new_qualification_execution"
             ) is not True
         )
         or not set(measurement["blocking_reason_codes"]).issubset(

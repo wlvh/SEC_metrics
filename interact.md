@@ -154,6 +154,8 @@ latest D-07已把live qualification限定到lodging两个current task。`vnext_q
 
 首个schema-v3 Hilton Occupancy response结构合法，但Evidence发现目标表自身caption为空而response引用了另一表或邻近正文，因此`SCOPE_LABEL_TEXT_MISMATCH`终态保留且不能修补。latest frozen prompt只新增目标表绑定：caption必须来自同一目标表的非空supplied caption raw text；否则scope evidence必须从同一目标表的一格复制八字段locator与exact raw text。旧161282/161263 attestations不再给新request current credit；新Occupancy/RevPAR measurements实际prompt为161433/161422并形成两份exact attestation，均retry=false、usage-only且不可复用。same-ID D-07已接受新proof并关闭additional measurement；current freeze/Stage-A重建通过前仍不能进入qualification。
 
+Marriott FY2024 Occupancy新execution的usage为159376/550/159926并通过context gate，但模型把本地`"\nWorldwide (2)"`的leading LF删掉，Evidence以`SCOPE_LABEL_TEXT_MISMATCH`拒绝；RevPAR未执行且旧review授权随evidence commit失效。owner随后只批准raw-whitespace prompt强化：首尾空格/换行必须逐字保留并用JSON escapes输出，禁止trim/normalize/collapse；其他冻结边界不变。两份161433/161422 attestation因此只保留historical，additional measurement继续禁止，所有修订后的SECOND_LAYOUT、POST_FREEZE_HOLDOUT与FRESH_STABILITY samples改由exact-reviewed新qualification response usage裁决。
+
 当前D-07已授权lodging qualification，但每个authorization仍绑定`qualification_response_origin_policy=NEW_PROVIDER_EXECUTION_ONLY`与provider usage policy。Stage C-B raw response即使request SHA相同也不能进入qualification workspace或evidence；generic `REUSED_SUCCESS`的`egress_attempted=false`同样被拒绝。provider response必须存在prompt/input、completion/output与total usage，actual prompt不得超过200000；缺失或超限在success/acceptance持久化前成为`CONTEXT_LIMIT` terminal，controller只写一个attempt、不自动retry，并把后续ordinal列为skipped。context gate、task request ready与family ready只允许形成受审查plan；没有匹配当前exact head与request SHA的独立审核评论仍不能执行模型调用。
 <!-- capability-anchor: BEHAVIOR.vnext_table_transport_scope_and_freeze -->
 
