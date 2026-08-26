@@ -36,10 +36,10 @@ from .provider_runtime import load_provider_runtime_authority
 from .reader_input import build_reader_input_manifest, prepare_live_reader_request
 from .reader_input import prepare_reader_request
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
-from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
 from .sources import source_reference_record
@@ -83,8 +83,8 @@ STAGE_C_BASELINE = {
     ),
 }
 _MEASUREMENT_GRANT_D07_HASH = (
-    "sha256:fc7be3e805d0315f5b71b667fce46688"
-    "568c862f4cd8b425beb9b0427eafd473"
+    "sha256:0770855a0bd60365bbbe751bfba1b34f"
+    "99a960b141b376ad04acc9ddf842460f"
 )
 _AUTHORIZATION_CAPABILITY = object()
 _AUTHORIZATION_CONSUMED_CODE = (
@@ -498,27 +498,20 @@ def _prepare_measurement(
     d07 = requirement["effective_decisions"]["D-07"]
     occupancy_exception = d07["choice"].get("measurement_exception")
     revpar_exception = d07["choice"].get("revpar_measurement_exception")
-    measurement_policy = d07["choice"].get(
+    revised_prompt_policy = d07["choice"].get(
         "revised_prompt_measurement_policy"
     )
-    if (
-        measurement_policy == ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
-        and measurement_policy.get("policy_status")
-        == "MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
-    ):
-        _fail(
-            code=_AUTHORIZATION_CONSUMED_CODE,
-            message=(
-                "Both revised task measurements are terminal; no later HEAD "
-                "can create another one-shot plan"
-            ),
-        )
+    measurement_policy = d07["choice"].get(
+        "schema_revised_measurement_policy"
+    )
     if (
         content_hash(value=d07) != _MEASUREMENT_GRANT_D07_HASH
         or occupancy_exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
         or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+        or revised_prompt_policy
+        != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
         or measurement_policy
-        != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
+        != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
         or d07["choice"]["live_measurement_authorized"] is not False
         or d07["choice"]["live_qualification_authorized"] is not False
         or d07["choice"].get(
@@ -534,7 +527,7 @@ def _prepare_measurement(
     ):
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_AUTHORITY_INVALID",
-            message="Effective D-07 revised measurement policy differs",
+            message="Effective D-07 schema measurement policy differs",
         )
     task_id = _text(
         value=task_contract_id, label="measurement task contract",
@@ -774,6 +767,14 @@ def write_table_context_measurement_plan(
     plan = build_table_context_measurement_plan(
         repo_root=repo_root, task_contract_id=task_contract_id,
     )
+    if _existing_plan_marker(
+        workspace_root=repo_root / MEASUREMENT_EXECUTION_ROOT,
+        measurement_plan_id=str(plan["measurement_plan_id"]),
+    ) is not None:
+        _fail(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message="The exact task plan already has an egress marker",
+        )
     digest = str(plan["measurement_plan_id"]).split(":", maxsplit=1)[1]
     path = repo_root / MEASUREMENT_PLAN_ROOT / (digest + ".json")
     if path.exists():
@@ -1207,6 +1208,58 @@ def _existing_marker(
     return dict(value)
 
 
+def _existing_plan_marker(
+    *, workspace_root: Path, measurement_plan_id: str,
+) -> Optional[Dict[str, object]]:
+    """Return the one marker that permanently consumed an exact task plan."""
+    if not workspace_root.exists():
+        return None
+    if workspace_root.is_symlink() or not workspace_root.is_dir():
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+            message="Measurement execution namespace is unsafe",
+        )
+    matches = []
+    for path in sorted(workspace_root.glob("*/provider_egress_marker.json")):
+        if path.is_symlink() or not path.is_file():
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker namespace contains an unsafe entry",
+            )
+        value = strict_json_file(path=path)
+        if type(value) is not dict or "egress_marker_id" not in value:
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker is invalid",
+            )
+        body = {
+            key: value[key] for key in value if key != "egress_marker_id"
+        }
+        if value["egress_marker_id"] != content_hash(value=body):
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker identity differs",
+            )
+        cycle_id = value.get("measurement_cycle_id")
+        if (
+            type(cycle_id) is not str
+            or not cycle_id.startswith("sha256:")
+            or path.parent.name != cycle_id.split(":", maxsplit=1)[1]
+        ):
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker path differs from its cycle",
+            )
+        if value.get("measurement_plan_id") == measurement_plan_id:
+            matches.append(dict(value))
+    if len(matches) > 1:
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+            message="Exact task plan has multiple egress markers",
+        )
+    return matches[0] if matches else None
+
+
 def _nonnegative_usage_int(
     *, usage: Mapping[str, object], names: Sequence[str],
 ) -> Optional[int]:
@@ -1477,6 +1530,14 @@ def _execute_with_transport(
 ) -> Dict[str, object]:
     """Execute one mock/real terminal with exactly one marker and no retry."""
     initial = _authorization_binding(authorization=authorization)
+    if _existing_plan_marker(
+        workspace_root=workspace_root,
+        measurement_plan_id=str(initial["measurement_plan_id"]),
+    ) is not None:
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+            message="The exact task plan already has an egress marker",
+        )
     if _existing_marker(workspace_root=workspace_root, binding=initial) is not None:
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",

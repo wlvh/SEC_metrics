@@ -705,24 +705,39 @@ _COMPETING_SCHEMA = _object_schema(
         "rejection_reason_claim": _STRING_SCHEMA,
     }
 )
-_LABEL_LOCATOR_SCHEMA = _object_schema(
-    properties={
-        "id": _STRING_SCHEMA,
-        "supports_dimensions": {
-            "type": "array",
-            "minItems": 1,
-            "items": _STRING_SCHEMA,
-        },
-        "location_type": {
-            "type": "string",
-            "enum": ["caption", "cell", "header", "row", "label"],
-        },
-        "locator": {
-            "anyOf": [_TABLE_LOCATOR_SCHEMA, _CELL_LOCATOR_SCHEMA]
-        },
-        "raw_text": _STRING_SCHEMA,
-    }
-)
+_SCOPE_EVIDENCE_COMMON_PROPERTIES = {
+    "id": _STRING_SCHEMA,
+    "supports_dimensions": {
+        "type": "array",
+        "minItems": 1,
+        "items": _STRING_SCHEMA,
+    },
+}
+_LABEL_LOCATOR_SCHEMA = {
+    "anyOf": [
+        _object_schema(
+            properties={
+                **_SCOPE_EVIDENCE_COMMON_PROPERTIES,
+                "location_type": {
+                    "type": "string", "enum": ["caption"],
+                },
+                "locator": _TABLE_LOCATOR_SCHEMA,
+                "raw_text": _STRING_SCHEMA,
+            }
+        ),
+        _object_schema(
+            properties={
+                **_SCOPE_EVIDENCE_COMMON_PROPERTIES,
+                "location_type": {
+                    "type": "string",
+                    "enum": ["cell", "header", "row", "label"],
+                },
+                "locator": _CELL_LOCATOR_SCHEMA,
+                "raw_text": _STRING_SCHEMA,
+            }
+        ),
+    ]
+}
 _CANDIDATE_SCHEMA = _object_schema(
     properties={
         "role": _STRING_SCHEMA,
@@ -3206,7 +3221,7 @@ def _validate_prepared_request(
     if catalog_task:
         if (
             task_contract["representation"] != "table"
-            or task_contract["output_schema_version"] != "2"
+            or task_contract["output_schema_version"] != "3"
             or len(task_contract["metric_ids"]) != 1
             or len(task_contract["metric_spec_paths"]) != 1
             or len(task_contract["metric_spec_semantic_hashes"]) != 1

@@ -30,6 +30,7 @@ from vnext.table_task_contracts import load_table_task_contracts
 from vnext.table_task_contracts import resolve_table_task_contract
 from vnext.reader_input import build_reader_input_manifest
 from vnext.reader_input import prepare_reader_request
+from vnext.qualification import QualificationError
 from vnext.qualification import table_qualification_task_plan
 from vnext.replay import replay_frozen_results
 from vnext.review import create_review_decision
@@ -389,7 +390,7 @@ class TableTaskContractsTest(unittest.TestCase):
             ])
             payload_path = run_dir / str(attempt["task_contract_path"])
             task = json.loads(payload_path.read_text(encoding="utf-8"))
-            self.assertEqual("2", task["output_schema_version"])
+            self.assertEqual("3", task["output_schema_version"])
             self.assertEqual(["occupancy"], task["required_roles"])
             unit = next(
                 record
@@ -568,19 +569,15 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertEqual(0, run_attempt.call_count)
         self.assertEqual(0, transport.call_count)
 
-    def test_matrix_task_plan_uses_revised_context_proofs(self) -> None:
-        """Form the lodging plan only after both revised proofs are current."""
-        plan = table_qualification_task_plan(
-            repo_root=REPO_ROOT,
-            family_id="lodging_kpi_table",
-            task_contract_id="lodging_occupancy_table_v2",
-            qualification_ordinal=1,
-        )
-        self.assertEqual("lodging_kpi_table", plan["family_id"])
-        self.assertEqual(
-            "lodging_occupancy_table_v2", plan["task_contract_id"],
-        )
-        self.assertEqual(1, plan["qualification_ordinal"])
+    def test_matrix_task_plan_waits_for_schema_revised_proofs(self) -> None:
+        """Block lodging planning until both schema-v3 proofs are current."""
+        with self.assertRaises(QualificationError):
+            table_qualification_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="lodging_kpi_table",
+                task_contract_id="lodging_occupancy_table_v2",
+                qualification_ordinal=1,
+            )
 
     def test_legacy_qualification_prepare_requires_catalog_task(self) -> None:
         """Reject schema-v1 fixture input before choosing any family gate."""

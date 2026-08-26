@@ -158,6 +158,58 @@ ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY = {
     **ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY,
     "policy_status": "MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED",
 }
+ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY = {
+    "policy_status": "LOCATOR_SCHEMA_REVISION_APPROVED_EXACT_GRANTS_PENDING",
+    "family_id": "lodging_kpi_table",
+    "task_contract_ids": [
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2",
+    ],
+    "output_schema_version": "3",
+    "schema_revision_scope": "SHARED_READER_OUTPUT_LOCATOR_CONTRACT",
+    "scope_evidence_locator_contract": {
+        "caption": ["derived_asset_id", "table_id"],
+        "cell_header_row_label": [
+            "derived_asset_id",
+            "table_id",
+            "row_index",
+            "column_index",
+            "origin_row_index",
+            "origin_column_index",
+            "rowspan",
+            "colspan",
+        ],
+    },
+    "revised_system_prompt": ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT,
+    "system_prompt_change_authorized": False,
+    "output_schema_change_authorized": True,
+    "metric_meaning_change_authorized": False,
+    "task_role_change_authorized": False,
+    "source_change_authorized": False,
+    "serializer_change_authorized": False,
+    "provider_model_api_change_authorized": False,
+    "table_selection_change_authorized": False,
+    "historical_attestations_status": (
+        "HISTORICAL_NOT_CURRENT_FOR_SCHEMA_REVISED_REQUESTS"
+    ),
+    "failed_qualification_terminal_id": (
+        "sha256:5c5c5997194396485cb4f00d684f0280"
+        "6049f50625708b754bf6a60a428a7cd9"
+    ),
+    "old_no_additional_measurement_rule_overridden": True,
+    "maximum_measurements_per_task": 1,
+    "automatic_retry_count": 0,
+    "provider_reported_prompt_tokens_required": True,
+    "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
+    "context_budget_tokens": 200000,
+    "qualification_ordinal_credit": False,
+    "qualification_evidence_eligible": False,
+    "response_reuse_for_qualification": False,
+    "publication_eligible": False,
+    "consumes_authorization_after_any_egress_marker": True,
+    "concrete_grant_requires_independent_exact_head_review": True,
+    "qualification_requires_both_schema_revised_attestations": True,
+}
 ISSUE_15_D07_HISTORICAL_CONTEXT_ATTESTATIONS = [
     {
         "family_id": "lodging_kpi_table",
@@ -339,7 +391,7 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
         "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED"
     ),
     "live_measurement_authorized": False,
-    "live_qualification_authorized": True,
+    "live_qualification_authorized": False,
     "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     "context_feasibility_policy": ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
     "revpar_measurement_exception": (
@@ -353,11 +405,14 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
     "revised_prompt_measurement_policy": (
         ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
     ),
+    "schema_revised_measurement_policy": (
+        ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
+    ),
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5414304877"
+        "#issuecomment-5420804659"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -374,8 +429,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:bada1d40b5541ebe836d9ba4a647d5b8"
-        "b0489003c1852d766437f4c8427cc6c7"
+        "sha256:0770855a0bd60365bbbe751bfba1b34f"
+        "99a960b141b376ad04acc9ddf842460f"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1562,14 +1617,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 8
+        or len(chains["D-07"]) != 9
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][6])
+        != _decision_record_hash(decision=chains["D-07"][7])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Callable, Dict, Optional
 
 from tests.vnext.common import REPO_ROOT
+from vnext.canonical import atomic_write_json, content_hash
 from vnext.invocation_control import UnknownRemoteOutcomeError
 from vnext.qualification import QualificationError
 from vnext.qualification import table_qualification_task_plan
@@ -181,9 +182,10 @@ class TableContextMeasurementTest(unittest.TestCase):
             capture_output=True,
             text=True,
         ).stdout.strip()
-        cls.request_sha256 = (
-            "572929bd544cb14c2c65e04222615419740628f5cbf7055db21f307c1d9091d9"
-        )
+        cls.request_sha256 = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )["provider_request_body_sha256"]
         cls.review_comment_url = (
             "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-1"
         )
@@ -221,12 +223,11 @@ class TableContextMeasurementTest(unittest.TestCase):
         )
 
     def test_plan_is_exact_revpar_request_without_ratio_substitution(self) -> None:
-        """Bind the consumed immutable RevPAR plan and provider bytes."""
-        plan = json.loads((
-            REPO_ROOT
-            / "artifacts/vnext/table_stage_c_evidence/token_measurement/"
-            "plans/d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d.json"
-        ).read_text(encoding="utf-8"))
+        """Bind the schema-v3 RevPAR plan and exact provider bytes."""
+        plan = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
         self.assertEqual("lodging_kpi_table", plan["family_id"])
         self.assertEqual(
             "lodging_revpar_table_v2", plan["task_contract_id"],
@@ -236,7 +237,7 @@ class TableContextMeasurementTest(unittest.TestCase):
             plan["source_sha256"],
         )
         self.assertEqual("2", plan["table_payload_serialization_version"])
-        self.assertEqual(393564, plan["estimated_input_tokens"])
+        self.assertEqual(393990, plan["estimated_input_tokens"])
         self.assertEqual(
             self.request_sha256, plan["provider_request_body_sha256"],
         )
@@ -250,24 +251,17 @@ class TableContextMeasurementTest(unittest.TestCase):
     def test_revised_prompt_plans_are_task_exact_and_schema_unchanged(
         self,
     ) -> None:
-        """Bind the two consumed task-exact plans and unchanged schema."""
-        plan_root = (
-            REPO_ROOT
-            / "artifacts/vnext/table_stage_c_evidence/token_measurement/plans"
+        """Bind two schema-v3 requests without borrowing historical proof."""
+        occupancy = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
         )
-        occupancy = json.loads((
-            plan_root
-            / "0277504844188008aafead0ac7032fbc7059052f4f7a39d7f635a2769ed2a606.json"
-        ).read_text(encoding="utf-8"))
-        revpar = json.loads((
-            plan_root
-            / "d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d.json"
-        ).read_text(encoding="utf-8"))
-        self.assertEqual(393573, occupancy["estimated_input_tokens"])
-        self.assertEqual(
-            "96d0a650883c45f54bddc56a088df05e6e5d7f19afe7f2ac6a9c819852eaeeaf",
-            occupancy["provider_request_body_sha256"],
+        revpar = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
         )
+        self.assertEqual(393999, occupancy["estimated_input_tokens"])
+        self.assertEqual(393990, revpar["estimated_input_tokens"])
         self.assertEqual(self.request_sha256, revpar[
             "provider_request_body_sha256"
         ])
@@ -281,9 +275,62 @@ class TableContextMeasurementTest(unittest.TestCase):
             occupancy["output_schema_hash"], revpar["output_schema_hash"],
         )
         self.assertEqual(
-            "PROMPT_REVISION_APPROVED_EXACT_GRANTS_PENDING",
+            "LOCATOR_SCHEMA_REVISION_APPROVED_EXACT_GRANTS_PENDING",
             occupancy["revised_prompt_measurement_policy"]["policy_status"],
         )
+
+    def test_plan_marker_consumes_grant_across_head_bindings(self) -> None:
+        """Reject a later-head authorization after this exact plan egressed."""
+        if self.authorization is None:
+            self.skipTest("Exact-head authorization requires a clean checkout")
+        binding = self.authorization.as_mapping()
+        other_cycle = content_hash(value={
+            "measurement_plan_id": binding["measurement_plan_id"],
+            "authorized_repository_head": "f" * 40,
+            "authorized_repository_tree": "e" * 40,
+            "measurement_ordinal": 1,
+        })
+        marker_body = {
+            "schema_version": 2,
+            "record_type": "TABLE_CONTEXT_MEASUREMENT_EGRESS_MARKER",
+            "measurement_plan_id": binding["measurement_plan_id"],
+            "measurement_cycle_id": other_cycle,
+            "authorization_id": "sha256:" + "a" * 64,
+            "execution_id": "sha256:" + "b" * 64,
+            "measurement_ordinal": 1,
+            "family_id": binding["family_id"],
+            "task_contract_id": binding["task_contract_id"],
+            "authorized_repository_head": "f" * 40,
+            "authorized_repository_tree": "e" * 40,
+            "external_review_comment_url": self.review_comment_url,
+            "provider_request_body_sha256": binding[
+                "provider_request_body_sha256"
+            ],
+            "transport_kind": "MOCK",
+            "egress_started_at_utc": "2026-08-25T00:00:01+00:00",
+        }
+        marker = {
+            **marker_body, "egress_marker_id": content_hash(value=marker_body),
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            atomic_write_json(
+                path=(
+                    workspace
+                    / other_cycle.split(":", maxsplit=1)[1]
+                    / "provider_egress_marker.json"
+                ),
+                value=marker,
+            )
+            transport = _MockMeasurementTransport(
+                response=_provider_response(include_prompt=True),
+            )
+            with self.assertRaisesRegex(
+                TableContextMeasurementError,
+                "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+            ):
+                self._execute(workspace=workspace, transport=transport)
+            self.assertEqual(0, transport.send_calls)
 
     def test_revised_tasks_have_independent_one_shot_markers(self) -> None:
         """Allow one mock marker per exact task plan and reject each second use."""
@@ -634,14 +681,26 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
         self.assertFalse(evidence["qualification_credit"])
         self.assertFalse(evidence["publication_eligible"])
         self.assertFalse(evidence["response_reuse_for_qualification"])
-        with self.assertRaisesRegex(
-            TableContextMeasurementError,
-            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
-        ):
-            build_table_context_measurement_plan(
-                repo_root=REPO_ROOT,
-                task_contract_id="lodging_revpar_table_v2",
-            )
+        schema_revised = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
+        self.assertNotEqual(
+            plan["provider_request_body_sha256"],
+            schema_revised["provider_request_body_sha256"],
+        )
+        self.assertEqual(
+            "3",
+            schema_revised["revised_prompt_measurement_policy"][
+                "output_schema_version"
+            ],
+        )
+        self.assertEqual(
+            "LOCATOR_SCHEMA_REVISION_APPROVED_EXACT_GRANTS_PENDING",
+            schema_revised["revised_prompt_measurement_policy"][
+                "policy_status"
+            ],
+        )
 
 
 if __name__ == "__main__":

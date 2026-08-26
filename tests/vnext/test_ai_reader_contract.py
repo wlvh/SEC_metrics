@@ -798,9 +798,34 @@ class AiReaderContractTest(unittest.TestCase):
             '"unresolved_competing_claims"',
             body["messages"][0]["content"],
         )
+        schema = json.loads(schema_bytes.decode("utf-8"))
+        self.assertEqual(ai_adapter.READER_OUTPUT_JSON_SCHEMA, schema)
+        locator_contract = schema["properties"]["candidates"]["items"][
+            "properties"
+        ]["scope_evidence_locators"]["items"]
+        self.assertEqual({"anyOf"}, set(locator_contract))
+        branches = {
+            tuple(branch["properties"]["location_type"]["enum"]): branch
+            for branch in locator_contract["anyOf"]
+        }
         self.assertEqual(
-            ai_adapter.READER_OUTPUT_JSON_SCHEMA,
-            json.loads(schema_bytes.decode("utf-8")),
+            {("caption",), ("cell", "header", "row", "label")},
+            set(branches),
+        )
+        self.assertEqual(
+            {"derived_asset_id", "table_id"},
+            set(branches[("caption",)]["properties"]["locator"]["required"]),
+        )
+        self.assertEqual(
+            {
+                "derived_asset_id", "table_id", "row_index", "column_index",
+                "origin_row_index", "origin_column_index", "rowspan", "colspan",
+            },
+            set(
+                branches[("cell", "header", "row", "label")][
+                    "properties"
+                ]["locator"]["required"]
+            ),
         )
         self.assertNotIn("DEEPSEEK_API_KEY", body_bytes.decode("utf-8"))
 
