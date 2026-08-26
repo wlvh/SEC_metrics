@@ -986,21 +986,33 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             task_contract_id=ready_task,
             qualification_ordinal=1,
         )
-        authorization = issue_authorization(
-            repo_root=repo_root,
-            family_id=ready_family,
-            task_contract_id=ready_task,
-            qualification_ordinal=1,
-        )
+        if ready_family == "lodging_kpi_table":
+            authorization = issue_authorization(
+                repo_root=repo_root,
+                family_id=ready_family,
+                task_contract_id=ready_task,
+                qualification_ordinal=1,
+            )
+            self.assertEqual(
+                ready_family, authorization.as_mapping()["family_id"],
+            )
+        else:
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_NOT_AUTHORIZED",
+            ):
+                issue_authorization(
+                    repo_root=repo_root,
+                    family_id=ready_family,
+                    task_contract_id=ready_task,
+                    qualification_ordinal=1,
+                )
         execution_plan = table_task_execution_plan(
             repo_root=repo_root,
             task_contract_id=ready_task,
             family_id=ready_family,
         )
         self.assertEqual(ready_family, plan["family_id"])
-        self.assertEqual(
-            ready_family, authorization.as_mapping()["family_id"],
-        )
         self.assertEqual(
             ready_family,
             execution_plan["runtime_task_contract"]["reader_family_id"],
@@ -1024,7 +1036,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 )
             with self.assertRaisesRegex(
                 qualification.QualificationError,
-                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
+                (
+                    "TABLE_QUALIFICATION_NOT_AUTHORIZED"
+                    if failed_family == "financial_statement"
+                    else "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY"
+                ),
             ):
                 issue_authorization(
                     repo_root=repo_root,
