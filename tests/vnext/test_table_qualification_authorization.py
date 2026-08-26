@@ -180,9 +180,6 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             value["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_authorized"
             ] = True
-            value["effective_decisions"]["D-07"]["choice"][
-                "live_qualification_scope"
-            ]["financial_qualification_authorized"] = True
             return value
 
         qualification_requirement_patch = mock.patch.object(
@@ -1167,6 +1164,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             "_open_provider_request",
         ) as provider_opener:
             for family_id, task_contract_id in families:
+                authorization_error = (
+                    "TABLE_QUALIFICATION_NOT_AUTHORIZED"
+                    if family_id == "financial_statement"
+                    else "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY"
+                )
                 status = validate_table_qualification_freeze(
                     repo_root=repo_root,
                     family_id=family_id,
@@ -1194,7 +1196,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     )
                 with self.assertRaisesRegex(
                     qualification.QualificationError,
-                    "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
+                    authorization_error,
                 ):
                     qualification.issue_table_qualification_authorization(
                         repo_root=repo_root,
@@ -1292,19 +1294,31 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         task_contract_id=task_contract_id,
                         qualification_ordinal=1,
                     )
-                    authorization = (
-                        qualification.issue_table_qualification_authorization(
-                            repo_root=repo_root,
-                            family_id=family_id,
-                            task_contract_id=task_contract_id,
-                            qualification_ordinal=1,
+                    if family_id == "lodging_kpi_table":
+                        authorization = (
+                            qualification.issue_table_qualification_authorization(
+                                repo_root=repo_root,
+                                family_id=family_id,
+                                task_contract_id=task_contract_id,
+                                qualification_ordinal=1,
+                            )
                         )
-                    )
+                        self.assertEqual(
+                            family_id,
+                            authorization.as_mapping()["family_id"],
+                        )
+                    else:
+                        with self.assertRaisesRegex(
+                            qualification.QualificationError,
+                            "TABLE_QUALIFICATION_NOT_AUTHORIZED",
+                        ):
+                            qualification.issue_table_qualification_authorization(
+                                repo_root=repo_root,
+                                family_id=family_id,
+                                task_contract_id=task_contract_id,
+                                qualification_ordinal=1,
+                            )
                     self.assertEqual(family_id, plan["family_id"])
-                    self.assertEqual(
-                        family_id,
-                        authorization.as_mapping()["family_id"],
-                    )
 
     def test_public_paths_block_shared_serializer_evidence_and_wb3_drift(
         self,
