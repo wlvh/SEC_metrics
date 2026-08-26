@@ -73,33 +73,33 @@ class TableQualificationSamplesTest(unittest.TestCase):
         """Bind second, holdout, and fresh sources without caller locators."""
         expected = {
             ("SECOND_LAYOUT", "lodging_occupancy_table_v2"): (
-                "hilton_worldwide_holdings", 153533,
-                "f837a421292165735a6c1e8b7ef5f0379f51b9d9b5fcdf161a14b0391096800d",
+                "hilton_worldwide_holdings", 154659,
+                "53f7f98ff6f494d4a547bb4de5dd1d7cec5987e6285208ada4c682d2f7887677",
                 "PASSED",
             ),
             ("SECOND_LAYOUT", "lodging_revpar_table_v2"): (
-                "hilton_worldwide_holdings", 153524,
-                "4bb6dbd4d8f4ade8e6e00f493b46ab409f1498f7dcd4dc49173c68f440a55861",
+                "hilton_worldwide_holdings", 154650,
+                "7a54f1b8377abd27b5a48552ff9fc2a6868b56eeaa7135b9aa333d7ae153aeed",
                 "PASSED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_occupancy_table_v2"): (
-                "hyatt_hotels", 204388,
-                "3d62a7feed03e19b2c61185c603d014b8f3151788e97888ec3ae3234f8a32414",
+                "hyatt_hotels", 205514,
+                "55660d2654e7710abfa392051c073fecd234096f8b2b52539ded7da1ce4f38eb",
                 "BLOCKED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_revpar_table_v2"): (
-                "hyatt_hotels", 204379,
-                "8c1ee9bea968a0ccbcb5c84e4da6ad960efcdf142e862a142e3c83fc8e16fa66",
+                "hyatt_hotels", 205505,
+                "1cba2aebe5ca58f46b629c62e099101abaa664d5b6fff85e2d9c51dedc47cb0c",
                 "BLOCKED",
             ),
             ("FRESH_STABILITY", "lodging_occupancy_table_v2"): (
-                "marriott_international", 392447,
-                "5ffa7b16d54ff9e3c2bdbc10d468f84b9aaae2ac029b5fc63e459d895eb8109a",
+                "marriott_international", 393573,
+                "96d0a650883c45f54bddc56a088df05e6e5d7f19afe7f2ac6a9c819852eaeeaf",
                 "PASSED",
             ),
             ("FRESH_STABILITY", "lodging_revpar_table_v2"): (
-                "marriott_international", 392438,
-                "1dbe25dd3886bc7ab5e559c7f790bf40cc3471a3550553435450acfe92e72b0b",
+                "marriott_international", 393564,
+                "572929bd544cb14c2c65e04222615419740628f5cbf7055db21f307c1d9091d9",
                 "PASSED",
             ),
         }
