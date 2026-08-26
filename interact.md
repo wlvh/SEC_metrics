@@ -156,6 +156,8 @@ latest D-07已把live qualification限定到lodging两个current task。`vnext_q
 
 Marriott FY2024 Occupancy新execution的usage为159376/550/159926并通过context gate，但模型把本地`"\nWorldwide (2)"`的leading LF删掉，Evidence以`SCOPE_LABEL_TEXT_MISMATCH`拒绝；RevPAR未执行且旧review授权随evidence commit失效。owner随后只批准raw-whitespace prompt强化：首尾空格/换行必须逐字保留并用JSON escapes输出，禁止trim/normalize/collapse；其他冻结边界不变。两份161433/161422 attestation因此只保留historical，additional measurement继续禁止，所有修订后的SECOND_LAYOUT、POST_FREEZE_HOLDOUT与FRESH_STABILITY samples改由exact-reviewed新qualification response usage裁决。
 
+修订后FY2024 Occupancy response的159479/562/160041 usage与leading LF、Evidence PASS、SYSTEM APPROVE、Result均已持久化，但本地finalization因registered Marriott的registry traits覆盖fixture-bound traits而返回`Run company traits differ from repository`，Run保持OPEN且无qualification credit；RevPAR未执行。修复后，只有含LIVE qualification authorization的Run优先使用其exact fixture traits，普通production仍使用registry，历史无authorization外部fixture只在registry miss时fallback。该OPEN response只作失败诊断证据，不复用到新cycle。
+
 当前D-07已授权lodging qualification，但每个authorization仍绑定`qualification_response_origin_policy=NEW_PROVIDER_EXECUTION_ONLY`与provider usage policy。Stage C-B raw response即使request SHA相同也不能进入qualification workspace或evidence；generic `REUSED_SUCCESS`的`egress_attempted=false`同样被拒绝。provider response必须存在prompt/input、completion/output与total usage，actual prompt不得超过200000；缺失或超限在success/acceptance持久化前成为`CONTEXT_LIMIT` terminal，controller只写一个attempt、不自动retry，并把后续ordinal列为skipped。context gate、task request ready与family ready只允许形成受审查plan；没有匹配当前exact head与request SHA的独立审核评论仍不能执行模型调用。
 <!-- capability-anchor: BEHAVIOR.vnext_table_transport_scope_and_freeze -->
 

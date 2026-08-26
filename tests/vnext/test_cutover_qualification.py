@@ -24,7 +24,9 @@ from scripts.vnext.review import system_review_allowed
 from tools import vnext_qualification
 from vnext.requirements import load_requirement_snapshot
 from vnext.run_store import _qualification_fixture_traits
+from vnext.run_store import _run_company_authority
 from vnext.traits import TraitError
+from vnext.traits import repository_company_traits
 
 
 def run_qualification_cli(*arguments: str) -> tuple[int, str, str]:
@@ -258,6 +260,31 @@ class CutoverQualificationTest(unittest.TestCase):
             _qualification_fixture_traits(
                 repo_root=repo_root, manifest=manifest,
             )
+
+    def test_registered_qualification_still_uses_fixture_traits(self) -> None:
+        """Do not let Marriott registry traits mask its exact layout fixture."""
+        repo_root = Path(__file__).resolve().parents[2]
+        run_path = (
+            repo_root
+            / "artifacts/vnext/qualification/cycles/"
+            "b63c68a8551ffa1ec49760d82874384869e5a621aa28e156ed9195e32920a651/"
+            "runs/c330373bb347f8280560004e5fcd2eba2c053d2772364b752c208ee1e80c9c7a/"
+            "manifest.json"
+        )
+        manifest = json.loads(run_path.read_text(encoding="utf-8"))
+        self.assertNotEqual(
+            manifest["company_traits"],
+            repository_company_traits(
+                repo_root=repo_root,
+                company_id=str(manifest["company_id"]),
+            ),
+        )
+        traits, ciks = _run_company_authority(
+            repo_root=repo_root,
+            manifest=manifest,
+        )
+        self.assertEqual(["lodging"], traits)
+        self.assertEqual(["1048286"], ciks)
 
     def test_failed_qualification_chain_can_reset_with_audit(self) -> None:
         """Archive only a failed pre-active chain before requalification."""
@@ -673,7 +700,11 @@ class CutoverQualificationTest(unittest.TestCase):
             )
             semantic_file = repo_root / SEMANTIC_FILES[0]
             semantic_file.write_text("drift", encoding="utf-8")
-            with self.assertRaisesRegex(
+            with mock.patch.object(
+                qualification,
+                "load_table_task_contracts",
+                return_value={"authorized_family_ids": []},
+            ), self.assertRaisesRegex(
                 QualificationError,
                 "POST_FREEZE_PRODUCTION_DRIFT",
             ):

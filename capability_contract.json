@@ -842,6 +842,16 @@
         "since": "2026-08-26"
       },
       {
+        "anchor_id": "BEHAVIOR.vnext_registered_qualification_fixture_traits",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "raw-whitespace修订后的FY2024 Occupancy execution成功返回159479/562/160041，leading LF exact、mechanical Evidence PASS、SYSTEM Review APPROVE且Result已生成；本地finalization随后发现Marriott同时存在于production registry时，旧run_store先取registry traits而不是LIVE authorization点名fixture traits，Run因此保持OPEN且无qualification credit，RevPAR未执行。修复后，manifest含LIVE qualification_authorization时traits/CIK必须由其exact fixture重建；普通production Run仍registry-first，无authorization外部fixture仍只在registry miss时fallback。该历史OPEN success不进入新cycle、不作为response reuse。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_cutover_qualification.py::CutoverQualificationTest.test_registered_qualification_still_uses_fixture_traits",
+        "test_status": "automated_recorded_real_bytes",
+        "since": "2026-08-26"
+      },
+      {
         "anchor_id": "BEHAVIOR.vnext_table_stage_b_context_investigation",
         "type": "agent_behavior",
         "status": "active",
