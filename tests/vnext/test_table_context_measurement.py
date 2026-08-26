@@ -323,7 +323,7 @@ class TableContextMeasurementTest(unittest.TestCase):
                 value=marker,
             )
             transport = _MockMeasurementTransport(
-                response=_provider_response(include_prompt=True),
+                response=_usage_response(include_prompt=True),
             )
             with self.assertRaisesRegex(
                 TableContextMeasurementError,
