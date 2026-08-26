@@ -1081,13 +1081,18 @@ def _run_company_authority(
 ) -> Tuple[List[str], List[str]]:
     """Resolve traits/CIKs without letting registry membership mask a fixture.
 
-    A LIVE qualification authorization binds its matrix-owned fixture even
-    when that fixture happens to name a company in the production registry.
-    Ordinary production Runs still use the registry first; historical
-    external fixture Runs without an authorization retain the existing
-    registry-miss fallback.
+    A LIVE SECOND_LAYOUT or POST_FREEZE_HOLDOUT authorization binds its
+    matrix-owned fixture even when that fixture happens to name a company in
+    the production registry.  FRESH_STABILITY and ordinary production Runs
+    still use the registry first; historical external fixture Runs without an
+    authorization retain the existing registry-miss fallback.
     """
-    if manifest.get("qualification_authorization") is not None:
+    authorization = manifest.get("qualification_authorization")
+    if (
+        type(authorization) is dict
+        and authorization.get("qualification_phase")
+        in {"SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"}
+    ):
         return _qualification_fixture_traits(
             repo_root=repo_root,
             manifest=manifest,

@@ -286,6 +286,23 @@ class CutoverQualificationTest(unittest.TestCase):
         self.assertEqual(["lodging"], traits)
         self.assertEqual(["1048286"], ciks)
 
+        fresh_manifest = json.loads(json.dumps(manifest))
+        fresh_manifest["qualification_authorization"][
+            "qualification_phase"
+        ] = "FRESH_STABILITY"
+        fresh_traits, fresh_ciks = _run_company_authority(
+            repo_root=repo_root,
+            manifest=fresh_manifest,
+        )
+        self.assertEqual(
+            repository_company_traits(
+                repo_root=repo_root,
+                company_id=str(manifest["company_id"]),
+            ),
+            fresh_traits,
+        )
+        self.assertEqual(["1048286"], fresh_ciks)
+
     def test_failed_qualification_chain_can_reset_with_audit(self) -> None:
         """Archive only a failed pre-active chain before requalification."""
         with tempfile.TemporaryDirectory() as temporary:
