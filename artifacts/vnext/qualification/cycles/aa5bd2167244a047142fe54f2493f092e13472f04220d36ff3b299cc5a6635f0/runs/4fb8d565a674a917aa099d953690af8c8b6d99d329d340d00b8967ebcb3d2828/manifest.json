@@ -1,0 +1,159 @@
+{
+  "record_type": "RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "75509279ef283288c5f561306b4fbb984dd5744f1ffb3ef872cc28ea34f11717",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:qualification:table:4fb8d565a674a917aa099d953690af8c8b6d99d329d340d00b8967ebcb3d2828",
+  "company_id": "hilton_worldwide_holdings",
+  "company_traits": [
+    "lodging"
+  ],
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:eff0fa490ceeeb56fd894f1ae08d7e27e3ac8c77c85471d8a1255fedfe3b4ed6",
+      "raw_asset_id": "sha256:7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+      "company_id": "hilton_worldwide_holdings",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568925000006/q42024earningsrelease.htm",
+      "accession": "0001585689-25-000006",
+      "document_name": "q42024earningsrelease.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:a078e98a116a5d254b9f95585ab6f02e67f16b9ca860847a8269518822f24b4c"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/B10_occupancy.md": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "b87ea3098e3d5cdba5454c1f8571c6b8a7cce807e648aaadc6527aaf1712806a",
+    "contract_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+    "decision_register_sha256": "a0671052f914983ec0307b8e6671784d03aadd9ee3aed10296653d999ca0c455",
+    "event_route_catalog_sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+    "provider_model_runtime_sha256": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+    "public_projection_catalog_sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+    "foundation_verification_receipt_sha256": "fe6476db361607d6197f2d7145a1717a94d0ad98190dc08d17ece680933a0763",
+    "issue_body_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+    "legacy_semantic_producer_inventory_sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+    "parent_requirement_closure_hash": "sha256:8e888bfab9965e96fc72ec963fa46652ba2dc423b156b8239d8de416c05fc2b7",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+    "source_strategy_registry_sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+    "source_strategy_baseline_receipt_sha256": "fcd4e0e975a451834ffac4cefae071770531120ca767f9162d68e9079260198b",
+    "transfer_manifest_sha256": "18f162d48131b3f6d56941dd446ec18089c7a336a50df8cb2c669e3b63711274"
+  },
+  "task_contract_bindings": [
+    {
+      "task_spec_semantic_hash": "sha256:b4f2258a414019c2b4985a3a0a77c2d16aae53b34031f7eb786d2ae5ec164358",
+      "catalog_task_contract_hash": "sha256:3ce47c90522dfe4c0e026d4a6b6ac0b411b7b2b8b9e6b5ab4f44ed51f4c2e39c",
+      "metric_spec_semantic_hashes": [
+        "sha256:6f3d3a6d7a90acca9f416a03c1591953e7cfaa213abf1c2be2cf42bb45e9ce65"
+      ],
+      "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+      "metric_spec_paths": [
+        "catalog/metrics/B10_occupancy.md"
+      ],
+      "metric_spec_closure_hashes": [
+        "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424"
+      ],
+      "system_prompt_hash": "sha256:f6e71bc244f6657e85709bb9a1ddfd143894eddc63c85f9cdd18d99c86bc198a",
+      "task_contract_id": "lodging_occupancy_table_v2"
+    }
+  ],
+  "qualification_authorization": {
+    "qualification_task_plan_id": "sha256:206d9578599df67f7aa919f7c3123df039e0f85d9d9a0211f37f61404cf0b0c1",
+    "qualification_cycle_id": "sha256:aa5bd2167244a047142fe54f2493f092e13472f04220d36ff3b299cc5a6635f0",
+    "freeze_receipt_id": "sha256:9f80afdd7cc4b486d07ffa600a1f2824fb4621888bb4dee45af8836797643f5e",
+    "family_id": "lodging_kpi_table",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "qualification_phase": "SECOND_LAYOUT",
+    "qualification_fixture_id": "hilton-2024-sec-layout-v7",
+    "qualification_ordinal": 1,
+    "matrix_entry_hash": "sha256:939fa2dba5e016fa98698676ce36eeeff581d8acb828b1c793f349a73c8fb1e1",
+    "catalog_task_contract_hash": "sha256:3ce47c90522dfe4c0e026d4a6b6ac0b411b7b2b8b9e6b5ab4f44ed51f4c2e39c",
+    "company_traits": [
+      "lodging"
+    ],
+    "context_feasibility_binding": {
+      "task_request_id": "sha256:b328d8a44d25d71d541d8f7ebb6f0f833fc52c05b63bc4a44fba2db18f2ff349",
+      "provider_request_body_sha256": "7d8caf40e3625644d73d516b485b8ecf491fdac3f740627e06c7ef84f04c0d4b",
+      "evidence_basis": "ESTIMATED_BOUND",
+      "context_feasibility_attestation_id": null,
+      "context_budget_tokens": 200000,
+      "measurement_response_reuse_for_qualification": false,
+      "qualification_response_origin_policy": "NEW_PROVIDER_EXECUTION_ONLY"
+    },
+    "task_spec_semantic_hash": "sha256:b4f2258a414019c2b4985a3a0a77c2d16aae53b34031f7eb786d2ae5ec164358",
+    "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+    "system_prompt_hash": "sha256:f6e71bc244f6657e85709bb9a1ddfd143894eddc63c85f9cdd18d99c86bc198a",
+    "source_binding": {
+      "source_declaration": {
+        "source_kind": "IMMUTABLE_ATTEMPT",
+        "company_id": "hilton_worldwide_holdings",
+        "cik": "1585689",
+        "accession": "0001585689-25-000006",
+        "document_name": "q42024earningsrelease.htm",
+        "source_repo_relative_path": "evidence/request_attempts/70/7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a/q42024earningsrelease.htm",
+        "source_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a"
+      },
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1585689/000158568925000006/q42024earningsrelease.htm",
+      "source_role": "target_primary",
+      "request_body_sha256": "7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a",
+      "request_body_size": 582231,
+      "request_headers_repo_relative_path": "evidence/request_attempts/70/7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a/q42024earningsrelease.htm.92695d76ee21082f37e68f5d34648a60471c89671382f5f511474405750ca4d9.headers.json",
+      "request_headers_sha256": "92695d76ee21082f37e68f5d34648a60471c89671382f5f511474405750ca4d9",
+      "request_headers_size": 1075,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/70/7020fdfe78e3c7131f63fb4e3f29570d0a2e1fdabac205892431e2bfcf697a2a/q42024earningsrelease.htm",
+      "request_attempt_id": "request:attempt:a078e98a116a5d254b9f95585ab6f02e67f16b9ca860847a8269518822f24b4c",
+      "source_binding_hash": "sha256:11581f4e110fd36cb3090088538f32ea915135877f42e4ec1f8deca283e7cf49"
+    },
+    "source_binding_hash": "sha256:11581f4e110fd36cb3090088538f32ea915135877f42e4ec1f8deca283e7cf49",
+    "target_period": {
+      "fiscal_year": 2024,
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31"
+    },
+    "target_period_hash": "sha256:76662460de9955f6de024d08e8042dca4df20250603445674b383e2c254ee7a7",
+    "source_media_type": "text/html",
+    "requirement_closure_hash": "sha256:1c6d77166accae0b3acb1441417fd8e6873f5ccb71c05d1f8be4c9e12772a5eb",
+    "table_payload_serialization_version": "2",
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "api": "chat_completions",
+    "wb3_workspace_relative_path": "artifacts/vnext/qualification/cycles/aa5bd2167244a047142fe54f2493f092e13472f04220d36ff3b299cc5a6635f0/invocation_control",
+    "qualification_provider_ledger_path": "artifacts/vnext/table_qualification_freeze/cycles/aa5bd2167244a047142fe54f2493f092e13472f04220d36ff3b299cc5a6635f0/provider_ledger.jsonl",
+    "qualification_provider_ledger_before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qualification_provider_ledger_before_row_count": 0,
+    "qualification_usage_policy": {
+      "record_type": "TABLE_QUALIFICATION_PROVIDER_USAGE_POLICY",
+      "qualification_task_plan_id": "sha256:206d9578599df67f7aa919f7c3123df039e0f85d9d9a0211f37f61404cf0b0c1",
+      "provider_request_body_sha256": "7d8caf40e3625644d73d516b485b8ecf491fdac3f740627e06c7ef84f04c0d4b",
+      "context_feasibility_attestation_id": null,
+      "source_measurement_evidence_id": null,
+      "source_measurement_raw_response_id": null,
+      "actual_prompt_tokens_max": 200000,
+      "required_usage_fields": [
+        "PROMPT_OR_INPUT_TOKENS",
+        "COMPLETION_OR_OUTPUT_TOKENS",
+        "TOTAL_TOKENS"
+      ],
+      "terminal_error_class": "CONTEXT_LIMIT",
+      "automatic_retry_count": 0,
+      "future_ordinal_on_failure": "STOP",
+      "measurement_response_reuse_for_qualification": false
+    },
+    "qualification_terminal_id": "sha256:4fb8d565a674a917aa099d953690af8c8b6d99d329d340d00b8967ebcb3d2828",
+    "run_id": "run:qualification:table:4fb8d565a674a917aa099d953690af8c8b6d99d329d340d00b8967ebcb3d2828",
+    "run_directory_relative_path": "artifacts/vnext/qualification/cycles/aa5bd2167244a047142fe54f2493f092e13472f04220d36ff3b299cc5a6635f0/runs/4fb8d565a674a917aa099d953690af8c8b6d99d329d340d00b8967ebcb3d2828",
+    "qualification_authorization_id": "sha256:0b4ab9197ee4f7a514a590bac388920403e5f86a1e2c98ac0dbc7e682bec2893"
+  },
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}
