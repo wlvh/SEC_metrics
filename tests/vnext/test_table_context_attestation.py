@@ -54,7 +54,7 @@ class TableContextAttestationTest(unittest.TestCase):
             )
         )
         self.assertEqual(
-            "sha256:0399b5034d4920a31d9391f36870eb6407a39e943454147f0e6b7f33c9813825",
+            "sha256:107c8ae9584afe58170ff230ab0c9534d7b7ea1cd38108f6d23c4326b6f7e127",
             attestation["source_measurement_evidence_id"],
         )
         self.assertEqual(
@@ -83,9 +83,9 @@ class TableContextAttestationTest(unittest.TestCase):
             "prompt_cache_miss_tokens",
         ):
             self.assertEqual(evidence[field], attestation[field])
-        self.assertEqual(161282, attestation["actual_prompt_tokens"])
+        self.assertEqual(161433, attestation["actual_prompt_tokens"])
         self.assertEqual(200000, attestation["context_budget_tokens"])
-        self.assertEqual(38718, attestation["context_headroom_tokens"])
+        self.assertEqual(38567, attestation["context_headroom_tokens"])
         self.assertTrue(attestation["measurement_authorization_consumed"])
         self.assertFalse(attestation["qualification_credit"])
         self.assertFalse(
@@ -151,8 +151,8 @@ class TableContextAttestationTest(unittest.TestCase):
             ],
         )
 
-    def test_scope_bound_prompt_invalidates_prior_occupancy_binding(self) -> None:
-        """Keep the prior schema-v3 proof historical after prompt drift."""
+    def test_scope_bound_occupancy_proof_waits_for_d07_acceptance(self) -> None:
+        """Bind the new prompt while withholding qualification authority."""
         with self.assertRaises(TableContextAttestationError):
             current_exact_request_binding(
                 repo_root=REPO_ROOT,
@@ -162,8 +162,12 @@ class TableContextAttestationTest(unittest.TestCase):
             repo_root=REPO_ROOT,
             task_contract_id="lodging_occupancy_table_v2",
         )
-        self.assertNotEqual(
+        self.assertEqual(
             self.attestation["prompt_hash"], current["system_prompt_hash"],
+        )
+        self.assertEqual(
+            self.attestation["exact_provider_request_body_sha256"],
+            current["provider_request_body_sha256"],
         )
 
     def test_old_occupancy_request_blocks_pending_new_measurement(self) -> None:
