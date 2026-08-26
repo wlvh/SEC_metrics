@@ -732,6 +732,16 @@ def _revpar_terminal_records(
     Dict[str, object], Dict[str, object], Dict[str, object], bytes, str, str, str,
 ]:
     """Discover the unique current plan/marker/evidence/raw terminal."""
+    if task_contract_id not in ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+        "task_contract_ids"
+    ]:
+        _fail("Unsupported revised-prompt context attestation task")
+    measurement_exception = (
+        ISSUE_15_D07_MEASUREMENT_EXCEPTION
+        if task_contract_id
+        == ISSUE_15_D07_MEASUREMENT_EXCEPTION["task_contract_id"]
+        else ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+    )
     plan = build_table_context_measurement_plan(
         repo_root=repo_root, task_contract_id=task_contract_id,
     )
@@ -791,9 +801,9 @@ def _revpar_terminal_records(
         evidence.get("schema_version") == 2,
         evidence.get("status") == "COMPLETED",
         evidence.get("task_contract_id")
-        == ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION["task_contract_id"],
+        == measurement_exception["task_contract_id"],
         evidence.get("family_id")
-        == ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION["family_id"],
+        == measurement_exception["family_id"],
         evidence.get("measurement_cycle_id")
         == marker.get("measurement_cycle_id"),
         evidence.get("authorization_id") == marker.get("authorization_id"),
