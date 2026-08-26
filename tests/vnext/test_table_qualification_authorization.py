@@ -2397,7 +2397,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                                         "request:" + name
                                     ),
                                     observation=observation,
-                                    raw_response_bytes=b"{}",
+                                    raw_response_bytes=(
+                                        b'{"usage":{"prompt_tokens":10,'
+                                        b'"completion_tokens":2,'
+                                        b'"total_tokens":12}}'
+                                    ),
                                     outbound_request_bytes=outbound,
                                     output_schema_bytes=schema,
                                 )
