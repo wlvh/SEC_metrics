@@ -221,11 +221,12 @@ class TableContextMeasurementTest(unittest.TestCase):
         )
 
     def test_plan_is_exact_revpar_request_without_ratio_substitution(self) -> None:
-        """Bind current catalog task, source, serializer, and provider bytes."""
-        plan = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
+        """Bind the consumed immutable RevPAR plan and provider bytes."""
+        plan = json.loads((
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/token_measurement/"
+            "plans/d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d.json"
+        ).read_text(encoding="utf-8"))
         self.assertEqual("lodging_kpi_table", plan["family_id"])
         self.assertEqual(
             "lodging_revpar_table_v2", plan["task_contract_id"],
@@ -249,15 +250,19 @@ class TableContextMeasurementTest(unittest.TestCase):
     def test_revised_prompt_plans_are_task_exact_and_schema_unchanged(
         self,
     ) -> None:
-        """Bind two new requests without borrowing either historical proof."""
-        occupancy = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_occupancy_table_v2",
+        """Bind the two consumed task-exact plans and unchanged schema."""
+        plan_root = (
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/token_measurement/plans"
         )
-        revpar = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
+        occupancy = json.loads((
+            plan_root
+            / "0277504844188008aafead0ac7032fbc7059052f4f7a39d7f635a2769ed2a606.json"
+        ).read_text(encoding="utf-8"))
+        revpar = json.loads((
+            plan_root
+            / "d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d.json"
+        ).read_text(encoding="utf-8"))
         self.assertEqual(393573, occupancy["estimated_input_tokens"])
         self.assertEqual(
             "96d0a650883c45f54bddc56a088df05e6e5d7f19afe7f2ac6a9c819852eaeeaf",
@@ -587,29 +592,29 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
     """Validate the consumed real terminal without reconstructing transport."""
 
     def test_revpar_terminal_is_consumed_exact_and_non_credit(self) -> None:
-        """Bind plan, marker, raw usage, evidence, and permanent consumption."""
+        """Bind revised plan, marker, usage, and permanent consumption."""
         root = (
             REPO_ROOT
             / "artifacts/vnext/table_stage_c_evidence/token_measurement"
         )
         plan = json.loads((
             root
-            / "plans/cdb1b05b7f49417662fee4e8237ebe2f0fa3a99284f3f6930bd555532ff1c0ae.json"
+            / "plans/d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d.json"
         ).read_text(encoding="utf-8"))
         cycle = (
             root
-            / "executions/c00fe1b4cdc0e812a9de47fe438dd5b99e3b6a2ce9f67597b1f7087bc2b0e325"
+            / "executions/cbf47a83894227e6ba8efe27d6dc0de819f947a058dbc86a4dcbbc1355f1c017"
         )
         marker = json.loads(
             (cycle / "provider_egress_marker.json").read_text(encoding="utf-8")
         )
         evidence = json.loads((
             cycle
-            / "evidence/9a3d6072a7ce640d510ad8a9451e075f8659c078715a5eaae97b2ef51ffff2cd.json"
+            / "evidence/0d453606d154eec76bb93cbcf69747af658cc8e9f704e8794ad944446b96d950.json"
         ).read_text(encoding="utf-8"))
         validate_table_context_measurement_evidence(evidence=evidence)
         self.assertEqual(
-            "sha256:cdb1b05b7f49417662fee4e8237ebe2f0fa3a99284f3f6930bd555532ff1c0ae",
+            "sha256:d3538a56ca9d4fd6ac3b0e246635612a5c47ee690f0da93e1e97310d92d42a0d",
             plan["measurement_plan_id"],
         )
         self.assertEqual(
@@ -620,23 +625,23 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
             evidence["provider_request_body_sha256"],
         )
         self.assertEqual("COMPLETED", evidence["status"])
-        self.assertEqual(160928, evidence["actual_prompt_tokens"])
-        self.assertEqual(535, evidence["actual_completion_tokens"])
-        self.assertEqual(161463, evidence["actual_total_tokens"])
+        self.assertEqual(161167, evidence["actual_prompt_tokens"])
+        self.assertEqual(595, evidence["actual_completion_tokens"])
+        self.assertEqual(161762, evidence["actual_total_tokens"])
         self.assertEqual(1, evidence["real_model_provider_egress_count"])
         self.assertEqual(1, evidence["paid_model_provider_call_count"])
         self.assertEqual(0, evidence["real_SEC_egress_count"])
         self.assertFalse(evidence["qualification_credit"])
         self.assertFalse(evidence["publication_eligible"])
         self.assertFalse(evidence["response_reuse_for_qualification"])
-        revised = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
-        self.assertNotEqual(
-            plan["provider_request_body_sha256"],
-            revised["provider_request_body_sha256"],
-        )
+        with self.assertRaisesRegex(
+            TableContextMeasurementError,
+            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+        ):
+            build_table_context_measurement_plan(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_revpar_table_v2",
+            )
 
 
 if __name__ == "__main__":

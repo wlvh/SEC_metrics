@@ -36,6 +36,7 @@ from .provider_runtime import load_provider_runtime_authority
 from .reader_input import build_reader_input_manifest, prepare_live_reader_request
 from .reader_input import prepare_reader_request
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
@@ -81,7 +82,7 @@ STAGE_C_BASELINE = {
         "59283b4397bfdb6b0cfcb4afd1b85a7"
     ),
 }
-_CURRENT_D07_HASH = (
+_MEASUREMENT_GRANT_D07_HASH = (
     "sha256:fc7be3e805d0315f5b71b667fce46688"
     "568c862f4cd8b425beb9b0427eafd473"
 )
@@ -501,10 +502,23 @@ def _prepare_measurement(
         "revised_prompt_measurement_policy"
     )
     if (
-        content_hash(value=d07) != _CURRENT_D07_HASH
+        measurement_policy == ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
+        and measurement_policy.get("policy_status")
+        == "MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
+    ):
+        _fail(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message=(
+                "Both revised task measurements are terminal; no later HEAD "
+                "can create another one-shot plan"
+            ),
+        )
+    if (
+        content_hash(value=d07) != _MEASUREMENT_GRANT_D07_HASH
         or occupancy_exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
         or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
-        or measurement_policy != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
+        or measurement_policy
+        != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
         or d07["choice"]["live_measurement_authorized"] is not False
         or d07["choice"]["live_qualification_authorized"] is not False
         or d07["choice"].get(

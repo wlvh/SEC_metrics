@@ -30,6 +30,7 @@ from .provider_runtime import estimate_context_tokens
 from .provider_runtime import load_provider_runtime_authority
 from .reader_input import READER_SYSTEM_CONTRACT
 from .reader_input import build_reader_input_manifest, build_reader_payload
+from .requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from .requirements import ISSUE_15_D07_EFFECTIVE_CHOICE
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
@@ -2523,7 +2524,6 @@ def _family_semantic_closure(
             )
         paths.add(ATTESTATION_POINTER)
         paths.add(attestation_path)
-        revpar_attestations = []
         attestation_root = repo_root / ATTESTATION_ROOT
         if attestation_root.is_symlink() or not attestation_root.is_dir():
             raise TableQualificationFamilyError(
@@ -2531,7 +2531,29 @@ def _family_semantic_closure(
                 reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
                 message="Context attestation namespace is unsafe",
             )
-        for candidate in sorted(attestation_root.glob("*.json")):
+        accepted = [
+            row for row in ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
+            if row["family_id"] == family_id
+        ]
+        if (
+            {row["task_contract_id"] for row in accepted}
+            != set(matrix_entry["task_contract_ids"])
+            or pointer.get("attestation_id")
+            != next(
+                row["attestation_id"] for row in accepted
+                if row["task_contract_id"] == "lodging_occupancy_table_v2"
+            )
+        ):
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                message="Accepted task context attestation set differs",
+            )
+        for row in accepted:
+            candidate = attestation_root / (
+                str(row["attestation_id"]).split(":", maxsplit=1)[1]
+                + ".json"
+            )
             if candidate.is_symlink() or not candidate.is_file():
                 raise TableQualificationFamilyError(
                     family_id=family_id,
@@ -2539,17 +2561,17 @@ def _family_semantic_closure(
                     message="Context attestation entry is unsafe",
                 )
             value = strict_json_file(path=candidate)
-            if type(value) is dict and value.get("task_contract_id") == (
-                "lodging_revpar_table_v2"
+            if (
+                type(value) is not dict
+                or value.get("attestation_id") != row["attestation_id"]
+                or value.get("task_contract_id") != row["task_contract_id"]
             ):
-                revpar_attestations.append(candidate.relative_to(repo_root))
-        if len(revpar_attestations) > 1:
-            raise TableQualificationFamilyError(
-                family_id=family_id,
-                reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
-                message="Multiple current-task context attestations exist",
-            )
-        paths.update(revpar_attestations)
+                raise TableQualificationFamilyError(
+                    family_id=family_id,
+                    reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                    message="Accepted context attestation bytes differ",
+                )
+            paths.add(candidate.relative_to(repo_root))
     if set(task_contracts_by_id) != set(matrix_entry["task_contract_ids"]):
         raise TableQualificationFreezeError("Family matrix task set differs")
     return {

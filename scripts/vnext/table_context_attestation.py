@@ -22,6 +22,7 @@ from .requirements import ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
 from .requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from .requirements import ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
 from .requirements import load_requirement_snapshot
@@ -364,7 +365,7 @@ def _rebuild_exact_request(
         or policy != ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
         or revised_policy != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
         or choice.get("live_measurement_authorized") is not False
-        or choice.get("live_qualification_authorized") is not False
+        or choice.get("live_qualification_authorized") is not True
         or choice.get("accepted_context_attestations")
         != ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
         or choice.get("live_qualification_scope")
@@ -584,25 +585,48 @@ def _validate_preserved_occupancy_attestation(
 
 
 def _validate_preserved_current_task_attestation(
-    *, repo_root: Path,
+    *, repo_root: Path, task_contract_id: str,
 ) -> Tuple[Dict[str, object], Dict[str, object]]:
-    """Revalidate the current-task proof under qualification-only authority."""
-    digest = CURRENT_TASK_ATTESTATION_ID.split(":", maxsplit=1)[1]
-    attestation = _content_record(
-        repo_root=repo_root,
-        relative=ATTESTATION_ROOT / (digest + ".json"),
-        id_field="attestation_id",
-        label="Current-task context attestation",
+    """Revalidate either revised proof under the additive acceptance tip."""
+    accepted = next(
+        (
+            row for row in ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
+            if row["task_contract_id"] == task_contract_id
+        ),
+        None,
     )
+    if accepted is None:
+        _fail("Task has no accepted current context attestation")
+    if task_contract_id == ISSUE_15_D07_MEASUREMENT_EXCEPTION[
+        "task_contract_id"
+    ]:
+        attestation = _pointer_occupancy_attestation(repo_root=repo_root)
+        measurement_exception = ISSUE_15_D07_MEASUREMENT_EXCEPTION
+    elif task_contract_id == ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION[
+        "task_contract_id"
+    ]:
+        digest = str(accepted["attestation_id"]).split(":", maxsplit=1)[1]
+        attestation = _content_record(
+            repo_root=repo_root,
+            relative=ATTESTATION_ROOT / (digest + ".json"),
+            id_field="attestation_id",
+            label="Current-task context attestation",
+        )
+        measurement_exception = ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+    else:
+        _fail("Unsupported context attestation task")
     if (
         set(attestation) != ATTESTATION_FIELDS
-        or attestation["attestation_id"] != CURRENT_TASK_ATTESTATION_ID
-        or attestation["requirement_closure_hash"]
-        != CURRENT_TASK_ATTESTATION_REQUIREMENT_CLOSURE_HASH
-        or attestation["protected_closure_hash"]
-        != CURRENT_TASK_ATTESTATION_PROTECTED_CLOSURE_HASH
-        or attestation["task_contract_id"]
-        != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION["task_contract_id"]
+        or attestation["attestation_id"] != accepted["attestation_id"]
+        or attestation["task_contract_id"] != task_contract_id
+        or attestation["source_measurement_evidence_id"]
+        != accepted["measurement_evidence_id"]
+        or attestation["actual_prompt_tokens"]
+        != accepted["actual_prompt_tokens"]
+        or attestation["context_budget_tokens"]
+        != accepted["context_budget_tokens"]
+        or attestation["actual_prompt_tokens"]
+        > attestation["context_budget_tokens"]
     ):
         _fail("Accepted current-task attestation identity differs")
     plan = _content_record(
@@ -611,6 +635,18 @@ def _validate_preserved_current_task_attestation(
         id_field="measurement_plan_id",
         label="Current-task measurement plan",
     )
+    if (
+        plan.get("task_contract_id") != task_contract_id
+        or plan.get("measurement_plan_id")
+        != attestation["measurement_plan_id"]
+        or plan.get("revised_prompt_measurement_policy")
+        != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY
+        or plan.get("requirement_closure_hash")
+        != attestation["measurement_requirement_closure_hash"]
+        or plan.get("protected_closure_hash")
+        != attestation["measurement_protected_closure_hash"]
+    ):
+        _fail("Accepted current-task measurement plan differs")
     evidence = _content_record(
         repo_root=repo_root,
         relative=attestation["measurement_evidence_path"],
@@ -663,22 +699,6 @@ def _validate_preserved_current_task_attestation(
         or usage["usage_raw_field_hash"] != attestation["usage_raw_field_hash"]
     ):
         _fail("Current-task measurement chain differs from attestation")
-    accepted = next(
-        (
-            row for row in ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
-            if row["task_contract_id"] == attestation["task_contract_id"]
-        ),
-        None,
-    )
-    if (
-        accepted is None
-        or accepted["attestation_id"] != attestation["attestation_id"]
-        or accepted["measurement_evidence_id"]
-        != attestation["source_measurement_evidence_id"]
-        or accepted["actual_prompt_tokens"]
-        != attestation["actual_prompt_tokens"]
-    ):
-        _fail("Effective D-07 does not accept the current-task attestation")
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
@@ -686,7 +706,7 @@ def _validate_preserved_current_task_attestation(
         repo_root=repo_root,
         requirement=requirement,
         measurement_plan=plan,
-        measurement_exception=ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
+        measurement_exception=measurement_exception,
     )
     exact_fields = {
         "exact_provider_request_body_sha256",
@@ -1126,15 +1146,13 @@ def validate_table_context_feasibility_attestation(
     task_contract_id: str = "lodging_occupancy_table_v2",
 ) -> Dict[str, object]:
     """Rebuild and byte-validate one exact-request attestation."""
-    if task_contract_id == "lodging_occupancy_table_v2":
-        attestation, _current = _validate_preserved_occupancy_attestation(
-            repo_root=repo_root,
-        )
-        return copy.deepcopy(attestation)
-    if task_contract_id != "lodging_revpar_table_v2":
+    if task_contract_id not in (
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2",
+    ):
         _fail("Unsupported context attestation task")
     attestation, _current = _validate_preserved_current_task_attestation(
-        repo_root=repo_root,
+        repo_root=repo_root, task_contract_id=task_contract_id,
     )
     return copy.deepcopy(attestation)
 
@@ -1160,35 +1178,24 @@ def current_exact_request_binding(
     *, repo_root: Path, task_contract_id: str,
 ) -> Dict[str, object]:
     """Project the current exact request bound to one accepted attestation."""
-    if task_contract_id == "lodging_occupancy_table_v2":
-        _attestation, current = _validate_preserved_occupancy_attestation(
-            repo_root=repo_root,
+    if task_contract_id not in (
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2",
+    ):
+        _fail("Unsupported context request task")
+    _attestation, current = _validate_preserved_current_task_attestation(
+        repo_root=repo_root, task_contract_id=task_contract_id,
+    )
+    return {
+        field: copy.deepcopy(
+            current[
+                "exact_provider_request_body_sha256"
+                if field == "provider_request_body_sha256"
+                else field
+            ]
         )
-        return {
-            field: copy.deepcopy(
-                current[
-                    "exact_provider_request_body_sha256"
-                    if field == "provider_request_body_sha256"
-                    else field
-                ]
-            )
-            for field in EXACT_REQUEST_BINDING_FIELDS
-        }
-    if task_contract_id == "lodging_revpar_table_v2":
-        _attestation, current = _validate_preserved_current_task_attestation(
-            repo_root=repo_root,
-        )
-        return {
-            field: copy.deepcopy(
-                current[
-                    "exact_provider_request_body_sha256"
-                    if field == "provider_request_body_sha256"
-                    else field
-                ]
-            )
-            for field in EXACT_REQUEST_BINDING_FIELDS
-        }
-    _fail("Unsupported context request task")
+        for field in EXACT_REQUEST_BINDING_FIELDS
+    }
 
 
 def evaluate_context_feasibility(
@@ -1238,23 +1245,12 @@ def evaluate_context_feasibility(
         }
     task_contract_id = request_binding["task_contract_id"]
     try:
-        if task_contract_id == "lodging_occupancy_table_v2":
-            attestation, current = _validate_preserved_occupancy_attestation(
-                repo_root=repo_root,
-            )
-            expected = {
-                field: copy.deepcopy(
-                    current[
-                        "exact_provider_request_body_sha256"
-                        if field == "provider_request_body_sha256"
-                        else field
-                    ]
-                )
-                for field in EXACT_REQUEST_BINDING_FIELDS
-            }
-        elif task_contract_id == "lodging_revpar_table_v2":
+        if task_contract_id in (
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2",
+        ):
             attestation, current = _validate_preserved_current_task_attestation(
-                repo_root=repo_root,
+                repo_root=repo_root, task_contract_id=task_contract_id,
             )
             expected = {
                 field: copy.deepcopy(
