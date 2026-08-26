@@ -1,0 +1,39 @@
+{
+  "stage_a_snapshot_id": "sha256:d66a6628486354e33822c55807be18873304327cd67378946a37929faaa7e15c",
+  "record_type": "ISSUE_15_STAGE_A_VALIDATION_SNAPSHOT",
+  "schema_version": 1,
+  "frozen_at_utc": "2026-08-26T06:38:35Z",
+  "freeze_receipt_id": "sha256:cd27be3f618a4e9e4a98b6a68d086dfdf3de928ac8e31e3198ece023da3cdffb",
+  "freeze_receipt_sha256": "ee8da6f49671eff0d86118052b23df741e45eaa7975772aea1d7076dbe1028fe",
+  "source_snapshot": {
+    "checkout_status": "GIT_CLEAN",
+    "source_commit": "ca3f296197a9c4945cfae78f9b9a7d5d3d6b6a6a",
+    "source_input_tree_sha256": "787e47f55c79523eae517bf04d6df18f4b5cfc35d8fb35693cc3a5dbc098be85",
+    "source_file_count": 307
+  },
+  "historical_validation_manifest_sha256": "ce04e216c3e27e093bae833aa1407277664ed6092c82299ea2e08284f66ba074",
+  "historical_snapshot_sha256": "d77fc984f52c9c5d9f0d462125bbb7c3eb5b9c97025b4cd6ca4352ba3f85b597",
+  "root_state": {
+    "active_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+    "root_hashes": {
+      "outputs/active_publication.json": {
+        "sha256": "0a61209a89763fc9ac328a3cf31b06101cb0c571f36a51b588eb9efb15e0237c",
+        "size": 354
+      },
+      "outputs/metrics_matrix.csv": {
+        "sha256": "93cab5b425729b32d88e980bd14a6c3ab0108661f06f440c8ba5e766329270e4",
+        "size": 105128
+      },
+      "outputs/metric_evidence.csv": {
+        "sha256": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+        "size": 250439
+      },
+      "REPORT_十公司财务指标.md": {
+        "sha256": "c2ae391892dd999a29aa06888d0de476e623b4f7250744eac665da20ed63b4c1",
+        "size": 29729
+      }
+    },
+    "public_matrix_row_count": 309,
+    "public_key_set_hash": "sha256:33b2a81ac6507b33a37509189fb8eb7fae87fa25c2f441bc4b4bca6705f56fab"
+  }
+}
