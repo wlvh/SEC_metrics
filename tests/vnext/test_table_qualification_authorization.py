@@ -180,6 +180,9 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             value["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_authorized"
             ] = True
+            value["effective_decisions"]["D-07"]["choice"][
+                "live_qualification_scope"
+            ]["financial_qualification_authorized"] = True
             return value
 
         qualification_requirement_patch = mock.patch.object(
