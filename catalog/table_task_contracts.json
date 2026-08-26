@@ -149,7 +149,7 @@
       "system_prompt": "Return raw claims and exact locators from one selected table only. For every primary candidate, emit exactly these schema keys: role, claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, locator, scope_evidence_locators, and competing_candidates. Define every claimed_scope.evidence_locator_ids value in scope_evidence_locators with exact table geometry and raw_text copied from the supplied table. Always emit competing_candidates, using [] when none. Never emit rejection_reason_claim on a primary candidate; emit it only on each competing candidate, which must include every competing-candidate schema key.",
       "split_reason": "RevPAR remains separately qualified under the new scope and transport contracts.",
       "split_baseline_kind": "FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD",
-      "estimated_incremental_tokens": 392438,
+      "estimated_incremental_tokens": 393564,
       "actual_incremental_tokens": "NOT_RUN"
     }
   ]

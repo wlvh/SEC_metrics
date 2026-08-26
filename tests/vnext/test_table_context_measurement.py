@@ -182,7 +182,7 @@ class TableContextMeasurementTest(unittest.TestCase):
             text=True,
         ).stdout.strip()
         cls.request_sha256 = (
-            "cad84d7409f1ec7be4023ccb4e6ac4006dac58f20f4b948e905933944f27c580"
+            "572929bd544cb14c2c65e04222615419740628f5cbf7055db21f307c1d9091d9"
         )
         cls.review_comment_url = (
             "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-1"
