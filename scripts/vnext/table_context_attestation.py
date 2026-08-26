@@ -24,8 +24,7 @@ from .requirements import ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
-from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
-from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
 from .sources import source_reference_record
@@ -366,9 +365,9 @@ def _rebuild_exact_request(
         or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
         or policy != ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
         or revised_policy != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
-        or schema_policy != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
+        or schema_policy != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
         or choice.get("live_measurement_authorized") is not False
-        or choice.get("live_qualification_authorized") is not True
+        or choice.get("live_qualification_authorized") is not False
         or choice.get("accepted_context_attestations")
         != ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
         or choice.get("live_qualification_scope")
@@ -643,7 +642,7 @@ def _validate_preserved_current_task_attestation(
         or plan.get("measurement_plan_id")
         != attestation["measurement_plan_id"]
         or plan.get("revised_prompt_measurement_policy")
-        != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
+        != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
         or plan.get("requirement_closure_hash")
         != attestation["measurement_requirement_closure_hash"]
         or plan.get("protected_closure_hash")
@@ -755,7 +754,7 @@ def _revpar_terminal_records(
     Dict[str, object], Dict[str, object], Dict[str, object], bytes, str, str, str,
 ]:
     """Discover the unique current plan/marker/evidence/raw terminal."""
-    if task_contract_id not in ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+    if task_contract_id not in ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY[
         "task_contract_ids"
     ]:
         _fail("Unsupported revised-prompt context attestation task")
@@ -987,7 +986,7 @@ def build_revpar_context_feasibility_attestation(
         repo_root=repo_root, task_contract_id=task_contract_id,
     )
     actual_prompt_tokens = evidence["actual_prompt_tokens"]
-    context_budget = ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+    context_budget = ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY[
         "context_budget_tokens"
     ]
     if type(actual_prompt_tokens) is not int:
@@ -1007,7 +1006,7 @@ def build_revpar_context_feasibility_attestation(
         == ISSUE_15_D07_MEASUREMENT_EXCEPTION["task_contract_id"]
         else ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
     )
-    if task_contract_id not in ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+    if task_contract_id not in ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY[
         "task_contract_ids"
     ]:
         _fail("Unsupported revised-prompt context attestation task")
@@ -1094,7 +1093,7 @@ def write_table_context_feasibility_attestation(
 ) -> Dict[str, object]:
     """Persist one immutable attestation without adding a packet layer."""
     if task_contract_id not in (
-        ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+        ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY[
             "task_contract_ids"
         ]
     ):

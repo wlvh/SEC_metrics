@@ -37,10 +37,10 @@ from .reader_input import build_reader_input_manifest, prepare_live_reader_reque
 from .reader_input import prepare_reader_request
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
-from .requirements import ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
-from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
-from .requirements import ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
 from .sources import source_reference_record
@@ -84,8 +84,8 @@ STAGE_C_BASELINE = {
     ),
 }
 _MEASUREMENT_GRANT_D07_HASH = (
-    "sha256:0770855a0bd60365bbbe751bfba1b34f"
-    "99a960b141b376ad04acc9ddf842460f"
+    "sha256:fc307fe113e94f1111ccc5b2a1bc8a6c"
+    "62a8bb955e20c078e36edec1e15a3571"
 )
 _AUTHORIZATION_CAPABILITY = object()
 _AUTHORIZATION_CONSUMED_CODE = (
@@ -506,14 +506,14 @@ def _prepare_measurement(
         "schema_revised_measurement_policy"
     )
     if (
-        measurement_policy == ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY
+        measurement_policy == ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
         and measurement_policy.get("policy_status")
-        == "SCHEMA_REVISED_MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
+        == "SCOPE_BOUND_MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
     ):
         _fail(
             code=_AUTHORIZATION_CONSUMED_CODE,
             message=(
-                "Both schema-revised task measurements are terminal; no "
+                "Both scope-bound-prompt task measurements are terminal; no "
                 "later HEAD can create another one-shot plan"
             ),
         )
@@ -524,7 +524,7 @@ def _prepare_measurement(
         or revised_prompt_policy
         != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
         or measurement_policy
-        != ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_GRANT_POLICY
+        != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
         or d07["choice"]["live_measurement_authorized"] is not False
         or d07["choice"]["live_qualification_authorized"] is not False
         or d07["choice"].get(
@@ -540,7 +540,7 @@ def _prepare_measurement(
     ):
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_AUTHORITY_INVALID",
-            message="Effective D-07 schema measurement policy differs",
+            message="Effective D-07 scope-bound measurement policy differs",
         )
     task_id = _text(
         value=task_contract_id, label="measurement task contract",
@@ -578,7 +578,8 @@ def _prepare_measurement(
     if (
         task["reader_family_id"] != family_id
         or TABLE_PAYLOAD_SERIALIZATION_VERSION != exception["serializer_version"]
-        or task["system_prompt"] != ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT
+        or task["system_prompt"]
+        != ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT
         or task["system_prompt"] != measurement_policy["revised_system_prompt"]
     ):
         _fail(
@@ -1480,9 +1481,9 @@ def validate_table_context_measurement_evidence(
         )
     if value["schema_version"] == 2 and (
         value["family_id"]
-        != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY["family_id"]
+        != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY["family_id"]
         or value["task_contract_id"] not in (
-            ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+            ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY[
                 "task_contract_ids"
             ]
         )

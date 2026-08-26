@@ -183,7 +183,7 @@ class TableContextMeasurementTest(unittest.TestCase):
             text=True,
         ).stdout.strip()
         cls.request_sha256 = (
-            "8473835cdc306cc6b829659fa3cc9e4d02ef8e294a7dd58b313d78409598dc64"
+            "1afd27317162e441fb0812253e79e287bbb302da0fb9ddf301c887541d06e43a"
         )
         cls.review_comment_url = (
             "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-1"
@@ -222,11 +222,11 @@ class TableContextMeasurementTest(unittest.TestCase):
         )
 
     def test_plan_is_exact_revpar_request_without_ratio_substitution(self) -> None:
-        """Bind the consumed schema-v3 RevPAR plan and provider bytes."""
+        """Bind the authorized scope-bound RevPAR plan and provider bytes."""
         plan = json.loads((
             REPO_ROOT
             / "artifacts/vnext/table_stage_c_evidence/token_measurement/"
-            "plans/468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563.json"
+            "plans/977a007d70d6f737012174de59ae6e9626709122fe1cdba6d712bb3f078fcd7f.json"
         ).read_text(encoding="utf-8"))
         self.assertEqual("lodging_kpi_table", plan["family_id"])
         self.assertEqual(
@@ -237,7 +237,7 @@ class TableContextMeasurementTest(unittest.TestCase):
             plan["source_sha256"],
         )
         self.assertEqual("2", plan["table_payload_serialization_version"])
-        self.assertEqual(393990, plan["estimated_input_tokens"])
+        self.assertEqual(394828, plan["estimated_input_tokens"])
         self.assertEqual(
             self.request_sha256, plan["provider_request_body_sha256"],
         )
@@ -251,21 +251,21 @@ class TableContextMeasurementTest(unittest.TestCase):
     def test_revised_prompt_plans_are_task_exact_and_schema_unchanged(
         self,
     ) -> None:
-        """Bind the two consumed task-exact schema-v3 plans."""
+        """Bind the two task-exact scope-bound schema-v3 plans."""
         plan_root = (
             REPO_ROOT
             / "artifacts/vnext/table_stage_c_evidence/token_measurement/plans"
         )
         occupancy = json.loads((
             plan_root
-            / "f5db7dde7f1d0abec30c6596e1fd0bced33d335b8d972ab6df31abf96fd43f05.json"
+            / "26fdb6a2e6e0f33578c01c70d7bf86bd6dec642825edafc9908a6ff25dffa236.json"
         ).read_text(encoding="utf-8"))
         revpar = json.loads((
             plan_root
-            / "468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563.json"
+            / "977a007d70d6f737012174de59ae6e9626709122fe1cdba6d712bb3f078fcd7f.json"
         ).read_text(encoding="utf-8"))
-        self.assertEqual(393999, occupancy["estimated_input_tokens"])
-        self.assertEqual(393990, revpar["estimated_input_tokens"])
+        self.assertEqual(394837, occupancy["estimated_input_tokens"])
+        self.assertEqual(394828, revpar["estimated_input_tokens"])
         self.assertEqual(self.request_sha256, revpar[
             "provider_request_body_sha256"
         ])
@@ -279,7 +279,7 @@ class TableContextMeasurementTest(unittest.TestCase):
             occupancy["output_schema_hash"], revpar["output_schema_hash"],
         )
         self.assertEqual(
-            "LOCATOR_SCHEMA_REVISION_APPROVED_EXACT_GRANTS_PENDING",
+            "SCOPE_BINDING_PROMPT_REVISION_APPROVED_EXACT_GRANTS_PENDING",
             occupancy["revised_prompt_measurement_policy"]["policy_status"],
         )
 
@@ -685,14 +685,13 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
         self.assertFalse(evidence["qualification_credit"])
         self.assertFalse(evidence["publication_eligible"])
         self.assertFalse(evidence["response_reuse_for_qualification"])
-        with self.assertRaisesRegex(
-            TableContextMeasurementError,
-            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
-        ):
-            build_table_context_measurement_plan(
-                repo_root=REPO_ROOT,
-                task_contract_id="lodging_revpar_table_v2",
-            )
+        current = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
+        self.assertNotEqual(plan["measurement_plan_id"], current[
+            "measurement_plan_id"
+        ])
 
 
 if __name__ == "__main__":

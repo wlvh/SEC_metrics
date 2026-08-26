@@ -34,7 +34,8 @@ from vnext.requirements import (
     ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT,
     ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY,
     ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
-    ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY,
+    ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
+    ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -423,7 +424,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(10, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(11, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -478,6 +479,10 @@ class Issue15AuthorityTest(unittest.TestCase):
             d07_chain[9]["supersedes_decision_id"],
         )
         self.assertEqual(
+            content_hash(value=d07_chain[9]),
+            d07_chain[10]["supersedes_decision_id"],
+        )
+        self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
             issue_snapshot["effective_decisions"]["D-07"]["choice"],
         )
@@ -524,10 +529,16 @@ class Issue15AuthorityTest(unittest.TestCase):
             ]["revised_system_prompt"],
         )
         self.assertEqual(
-            ISSUE_15_D07_SCHEMA_REVISED_MEASUREMENT_POLICY,
+            ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY,
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "schema_revised_measurement_policy"
             ],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "schema_revised_measurement_policy"
+            ]["revised_system_prompt"],
         )
         self.assertEqual(
             ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE,
@@ -535,7 +546,7 @@ class Issue15AuthorityTest(unittest.TestCase):
                 "live_qualification_scope"
             ],
         )
-        self.assertTrue(
+        self.assertFalse(
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_authorized"
             ],
@@ -1159,6 +1170,56 @@ class Issue15AuthorityTest(unittest.TestCase):
                     RequirementError, "superseding Decision content differs",
                 ):
                     load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_scope_bound_prompt_measurement_policy_is_exact(self) -> None:
+        """Reject cross-table evidence, extra calls, retry, or schema drift."""
+        mutations = {
+            "revised_system_prompt": "Use any nearby title.",
+            "output_schema_change_authorized": True,
+            "system_prompt_change_authorized": False,
+            "old_no_additional_measurement_rule_overridden": False,
+            "maximum_measurements_per_task": 2,
+            "automatic_retry_count": 1,
+            "qualification_ordinal_credit": True,
+            "response_reuse_for_qualification": True,
+            "concrete_grant_requires_independent_exact_head_review": False,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                d07["choice"]["schema_revised_measurement_policy"][field] = (
+                    replacement
+                )
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            register = read_json(path=issue_copy / "decision_register.json")
+            d07 = next(
+                row
+                for row in reversed(register["decisions"])
+                if row["decision_id"] == "D-07"
+            )
+            contract = d07["choice"]["schema_revised_measurement_policy"][
+                "scope_evidence_binding_contract"
+            ]
+            contract["forbidden_text_sources"] = ["NEARBY_PROSE"]
+            rebind_decisions(issue_copy=issue_copy, register=register)
+            with self.assertRaisesRegex(
+                RequirementError, "superseding Decision content differs",
+            ):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
 
     def test_d07_lodging_qualification_scope_is_exact(self) -> None:
         """Reject financial expansion, sample reduction, or response reuse."""
