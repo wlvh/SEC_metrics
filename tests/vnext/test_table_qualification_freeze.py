@@ -341,7 +341,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
             drift_by_family={},
         )
         self.assertEqual(
-            393999,
+            394837,
             readiness["lodging_kpi_table"]["context_gate"][
                 "maximum_observed_estimated_input_tokens"
             ],
