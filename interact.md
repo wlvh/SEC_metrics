@@ -133,6 +133,8 @@ Stage C-A新增的`vnext_table_context_measurement.py plan`只离线重建并保
 
 Stage D已复用同一plan/executor/marker/evidence边界完成唯一RevPAR measurement：review绑定exact head `290c1119…`与request `1dbe25dd…`，provider usage为160928 prompt、535 completion、161463 total，HTTP 200、retry=false、real model/paid/SEC=`1/1/0`。同一`TABLE_CONTEXT_FEASIBILITY_ATTESTATION` record type生成`d3824ed2…`，不新增packet/pointer/state machine；历史occupancy bytes不改写。两个measurement authorization现均永久消费，新plan/execute稳定拒绝。两份response仍不得计入qualification ordinal、business Result或publication，key未写入任何artifact。
 
+上述“新plan稳定拒绝”只适用于旧prompt/request generation。三次qualification schema terminal后，2026-08-26 owner明确覆盖旧no-remeasurement规则，但只覆盖两个修订prompt request：schema/MetricSpec/source/serializer/provider/model/API不变，旧attestation保持historical且不给current credit。CLI现在必须用exact-enum task ID分别生成两个新plan；同一one-shot executor为每个content-addressed cycle单独claim marker，独立exact-head review后每task最多一次、retry=0。新response只供usage/attestation，仍无qualification、Result或publication credit；两份新attestation都有效前qualification保持关闭。
+
 Stage C-A JPM benchmark入口先显示hard-guard preflight，再决定是否启动child。当前receipt为`NOT_RUN_RSS_GUARD_UNAVAILABLE`：Darwin共享虚拟映射使512 MiB RLIMIT无法可靠设置，所以完整parser/materialization从未开始。界面必须把peak RSS、wall time、canonical JSON bytes与DerivedAsset ID显示为null/NOT_RUN，不得拿Stage-B估算填充；仍可核验exact JPM SHA、Stage-B 679/124761 census、test-only 187142仅属于未启动child、production 100000 bytes不变、active/root相等及0/0/0 egress。该结果是Stage C-A BLOCKER。
 <!-- capability-anchor: BEHAVIOR.vnext_table_stage_c_financial_materialization -->
 

@@ -182,7 +182,7 @@ class TableContextMeasurementTest(unittest.TestCase):
             text=True,
         ).stdout.strip()
         cls.request_sha256 = (
-            "1dbe25dd3886bc7ab5e559c7f790bf40cc3471a3550553435450acfe92e72b0b"
+            "cad84d7409f1ec7be4023ccb4e6ac4006dac58f20f4b948e905933944f27c580"
         )
         cls.review_comment_url = (
             "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-1"
@@ -190,6 +190,7 @@ class TableContextMeasurementTest(unittest.TestCase):
         try:
             cls.authorization = issue_table_context_measurement_authorization(
                 repo_root=REPO_ROOT,
+                task_contract_id="lodging_revpar_table_v2",
                 external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
                 authorized_repository_head=cls.head,
                 authorized_provider_request_body_sha256=cls.request_sha256,
@@ -197,7 +198,10 @@ class TableContextMeasurementTest(unittest.TestCase):
                 authorized_at_utc="2026-08-25T00:00:00+00:00",
             )
         except TableContextMeasurementError as error:
-            if error.code != "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED":
+            if error.code not in {
+                "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+                "TABLE_CONTEXT_MEASUREMENT_REPOSITORY_NOT_CLEAN",
+            }:
                 raise
             cls.authorization = None
 
@@ -218,9 +222,10 @@ class TableContextMeasurementTest(unittest.TestCase):
 
     def test_plan_is_exact_revpar_request_without_ratio_substitution(self) -> None:
         """Bind current catalog task, source, serializer, and provider bytes."""
-        if self.authorization is None:
-            self.skipTest("The real one-shot authorization is permanently consumed")
-        plan = build_table_context_measurement_plan(repo_root=REPO_ROOT)
+        plan = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
         self.assertEqual("lodging_kpi_table", plan["family_id"])
         self.assertEqual(
             "lodging_revpar_table_v2", plan["task_contract_id"],
@@ -230,7 +235,7 @@ class TableContextMeasurementTest(unittest.TestCase):
             plan["source_sha256"],
         )
         self.assertEqual("2", plan["table_payload_serialization_version"])
-        self.assertEqual(392438, plan["estimated_input_tokens"])
+        self.assertEqual(393564, plan["estimated_input_tokens"])
         self.assertEqual(
             self.request_sha256, plan["provider_request_body_sha256"],
         )
@@ -240,6 +245,91 @@ class TableContextMeasurementTest(unittest.TestCase):
         self.assertTrue(plan["ordinary_qualification_remains_blocked"])
         self.assertFalse(plan["qualification_evidence_eligible"])
         self.assertFalse(plan["response_reuse_for_qualification"])
+
+    def test_revised_prompt_plans_are_task_exact_and_schema_unchanged(
+        self,
+    ) -> None:
+        """Bind two new requests without borrowing either historical proof."""
+        occupancy = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
+        )
+        revpar = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
+        self.assertEqual(393573, occupancy["estimated_input_tokens"])
+        self.assertEqual(
+            "96d0a650883c45f54bddc56a088df05e6e5d7f19afe7f2ac6a9c819852eaeeaf",
+            occupancy["provider_request_body_sha256"],
+        )
+        self.assertEqual(self.request_sha256, revpar[
+            "provider_request_body_sha256"
+        ])
+        self.assertNotEqual(
+            occupancy["measurement_plan_id"], revpar["measurement_plan_id"],
+        )
+        self.assertEqual(
+            occupancy["system_prompt_hash"], revpar["system_prompt_hash"],
+        )
+        self.assertEqual(
+            occupancy["output_schema_hash"], revpar["output_schema_hash"],
+        )
+        self.assertEqual(
+            "PROMPT_REVISION_APPROVED_EXACT_GRANTS_PENDING",
+            occupancy["revised_prompt_measurement_policy"]["policy_status"],
+        )
+
+    def test_revised_tasks_have_independent_one_shot_markers(self) -> None:
+        """Allow one mock marker per exact task plan and reject each second use."""
+        if self.authorization is None:
+            self.skipTest("Exact-head authorization requires a clean checkout")
+        occupancy_plan = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
+        )
+        occupancy_authorization = issue_table_context_measurement_authorization(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
+            external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
+            authorized_repository_head=self.head,
+            authorized_provider_request_body_sha256=occupancy_plan[
+                "provider_request_body_sha256"
+            ],
+            external_review_comment_url=self.review_comment_url,
+            authorized_at_utc="2026-08-25T00:00:01+00:00",
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            workspace = Path(temp_dir) / "dual-task"
+            occupancy = self._execute(
+                workspace=workspace,
+                transport=_MockMeasurementTransport(response=_usage_response()),
+                authorization=occupancy_authorization,
+            )
+            revpar = self._execute(
+                workspace=workspace,
+                transport=_MockMeasurementTransport(response=_usage_response()),
+            )
+            self.assertEqual("COMPLETED", occupancy["status"])
+            self.assertEqual("COMPLETED", revpar["status"])
+            self.assertNotEqual(
+                occupancy["measurement_cycle_id"], revpar["measurement_cycle_id"],
+            )
+            for authorization in (
+                occupancy_authorization,
+                self.authorization,
+            ):
+                with self.assertRaisesRegex(
+                    TableContextMeasurementError,
+                    "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+                ):
+                    self._execute(
+                        workspace=workspace,
+                        transport=_MockMeasurementTransport(
+                            response=_usage_response(),
+                        ),
+                        authorization=authorization,
+                    )
 
     def test_mock_matrix_enforces_one_egress_and_no_downstream_credit(self) -> None:
         """Cover success, terminal failures, tamper, and ordinary 200k blocking."""
@@ -484,6 +574,7 @@ class TableContextMeasurementTest(unittest.TestCase):
         ):
             issue_table_context_measurement_authorization(
                 repo_root=REPO_ROOT,
+                task_contract_id="lodging_revpar_table_v2",
                 external_authorization_statement="NOT_AUTHORIZED",
                 authorized_repository_head=self.head,
                 authorized_provider_request_body_sha256=self.request_sha256,
@@ -538,11 +629,14 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
         self.assertFalse(evidence["qualification_credit"])
         self.assertFalse(evidence["publication_eligible"])
         self.assertFalse(evidence["response_reuse_for_qualification"])
-        with self.assertRaisesRegex(
-            TableContextMeasurementError,
-            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
-        ):
-            build_table_context_measurement_plan(repo_root=REPO_ROOT)
+        revised = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_revpar_table_v2",
+        )
+        self.assertNotEqual(
+            plan["provider_request_body_sha256"],
+            revised["provider_request_body_sha256"],
+        )
 
 
 if __name__ == "__main__":

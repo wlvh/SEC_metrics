@@ -8,6 +8,7 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import content_hash
+from vnext.requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from vnext.requirements import ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
 from vnext.table_context_attestation import ATTESTATION_POINTER
 from vnext.table_context_attestation import EXACT_REQUEST_BINDING_FIELDS
@@ -20,6 +21,8 @@ from vnext.table_context_attestation import evaluate_context_feasibility
 from vnext.table_context_attestation import (
     validate_table_context_feasibility_attestation,
 )
+from vnext.table_context_attestation import TableContextAttestationError
+from vnext.table_context_measurement import build_table_context_measurement_plan
 
 
 class TableContextAttestationTest(unittest.TestCase):
@@ -27,9 +30,14 @@ class TableContextAttestationTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        """Validate the immutable attestation once for focused field tests."""
-        cls.attestation = validate_table_context_feasibility_attestation(
-            repo_root=REPO_ROOT,
+        """Load the immutable historical attestation without current credit."""
+        pointer = json.loads(
+            (REPO_ROOT / ATTESTATION_POINTER).read_text(encoding="utf-8")
+        )
+        cls.attestation = json.loads(
+            (REPO_ROOT / pointer["attestation_path"]).read_text(
+                encoding="utf-8"
+            )
         )
 
     def test_attestation_is_mechanically_derived_from_stage_c_b(self) -> None:
@@ -117,10 +125,9 @@ class TableContextAttestationTest(unittest.TestCase):
         self.assertEqual(pointer["attestation_id"], attestation["attestation_id"])
 
     def test_attestation_rebuild_is_deterministic(self) -> None:
-        """Repeated offline reconstruction yields the same immutable object."""
-        first = build_table_context_feasibility_attestation(repo_root=REPO_ROOT)
-        second = build_table_context_feasibility_attestation(repo_root=REPO_ROOT)
-        self.assertEqual(first, second)
+        """Reject reconstruction after the frozen lodging prompt changed."""
+        with self.assertRaises(TableContextAttestationError):
+            build_table_context_feasibility_attestation(repo_root=REPO_ROOT)
 
     def test_exact_binding_projection_matches_d07_policy(self) -> None:
         """Expose exactly the fields that D-07 requires future requests to match."""
@@ -145,52 +152,50 @@ class TableContextAttestationTest(unittest.TestCase):
         )
 
     def test_additive_revpar_tip_preserves_occupancy_attestation_bytes(self) -> None:
-        """Reuse accepted usage only after rebuilding the unchanged request."""
-        attestation = self.attestation
-        current = current_exact_request_binding(
+        """Preserve old bytes while refusing them for the revised request."""
+        with self.assertRaises(TableContextAttestationError):
+            current_exact_request_binding(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_occupancy_table_v2",
+            )
+
+    def test_exact_occupancy_request_passes_above_estimated_bound(self) -> None:
+        """Block the historical proof after the revised prompt changed bytes."""
+        result = evaluate_context_feasibility(
+            repo_root=REPO_ROOT,
+            estimated_input_tokens=393573,
+            max_estimated_input_tokens=200000,
+            request_binding=exact_request_binding(attestation=self.attestation),
+        )
+        self.assertEqual("BLOCKED", result["status"])
+        self.assertIsNone(result["evidence_basis"])
+        self.assertEqual(
+            "EXACT_CONTEXT_ATTESTATION_INVALID",
+            result["blocking_reason_code"],
+        )
+        revised = build_table_context_measurement_plan(
             repo_root=REPO_ROOT,
             task_contract_id="lodging_occupancy_table_v2",
         )
-        stored = exact_request_binding(attestation=attestation)
-        self.assertEqual(
-            stored["provider_request_body_sha256"],
-            current["provider_request_body_sha256"],
-        )
-        for field in EXACT_REQUEST_BINDING_FIELDS:
-            if field not in {"requirement_closure_hash", "protected_closure_hash"}:
-                self.assertEqual(stored[field], current[field])
         self.assertNotEqual(
-            stored["requirement_closure_hash"],
-            current["requirement_closure_hash"],
+            self.attestation["exact_provider_request_body_sha256"],
+            revised["provider_request_body_sha256"],
         )
-        self.assertNotEqual(
-            stored["protected_closure_hash"],
-            current["protected_closure_hash"],
-        )
-
-    def test_exact_occupancy_request_passes_above_estimated_bound(self) -> None:
-        """Admit only the measured request via provider-reported exact binding."""
-        attestation = self.attestation
-        result = evaluate_context_feasibility(
-            repo_root=REPO_ROOT,
-            estimated_input_tokens=392447,
-            max_estimated_input_tokens=200000,
-            request_binding=current_exact_request_binding(
-                repo_root=REPO_ROOT,
-                task_contract_id="lodging_occupancy_table_v2",
-            ),
-        )
-        self.assertEqual("PASSED", result["status"])
-        self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING", result["evidence_basis"]
-        )
-        self.assertEqual(160937, result["attested_actual_prompt_tokens"])
 
     def test_exact_revpar_request_passes_only_its_measured_binding(self) -> None:
-        """Admit the sibling task from its own usage terminal, never a ratio."""
-        attestation = validate_table_context_feasibility_attestation(
+        """Block the historical sibling proof rather than borrowing its ratio."""
+        row = ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS[1]
+        attestation = json.loads((
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/"
+            "context_feasibility_attestations"
+            / (row["attestation_id"].split(":", maxsplit=1)[1] + ".json")
+        ).read_text(encoding="utf-8"))
+        result = evaluate_context_feasibility(
             repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
+            estimated_input_tokens=393564,
+            max_estimated_input_tokens=200000,
+            request_binding=exact_request_binding(attestation=attestation),
         )
         self.assertEqual(160928, attestation["actual_prompt_tokens"])
         self.assertEqual(200000, attestation["context_budget_tokens"])
@@ -201,28 +206,16 @@ class TableContextAttestationTest(unittest.TestCase):
         self.assertFalse(
             attestation["qualification_response_reuse_eligible"]
         )
-        binding = current_exact_request_binding(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
-        result = evaluate_context_feasibility(
-            repo_root=REPO_ROOT,
-            estimated_input_tokens=392438,
-            max_estimated_input_tokens=200000,
-            request_binding=binding,
-        )
-        self.assertEqual("PASSED", result["status"])
+        self.assertEqual("BLOCKED", result["status"])
         self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING", result["evidence_basis"],
+            "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+            result["blocking_reason_code"],
         )
-        self.assertEqual(attestation["attestation_id"], result["attestation_id"])
-        self.assertEqual(160928, result["attested_actual_prompt_tokens"])
-
-        changed = copy.deepcopy(binding)
+        changed = copy.deepcopy(exact_request_binding(attestation=attestation))
         changed["provider_request_body_sha256"] = "0" * 64
         blocked = evaluate_context_feasibility(
             repo_root=REPO_ROOT,
-            estimated_input_tokens=392438,
+            estimated_input_tokens=393564,
             max_estimated_input_tokens=200000,
             request_binding=changed,
         )
@@ -234,10 +227,7 @@ class TableContextAttestationTest(unittest.TestCase):
     def test_every_exact_binding_drift_blocks_before_egress(self) -> None:
         """Reject source/task/prompt/schema/transport/request mutations."""
         attestation = self.attestation
-        baseline = current_exact_request_binding(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_occupancy_table_v2",
-        )
+        baseline = exact_request_binding(attestation=self.attestation)
         mutations = {
             "source_sha256": "0" * 64,
             "task_contract_hash": "sha256:" + "0" * 64,
@@ -272,10 +262,7 @@ class TableContextAttestationTest(unittest.TestCase):
             ("family_id", "unrelated_table_family"),
             ("task_contract_id", "lodging_revpar_table_v2"),
         ):
-            binding = current_exact_request_binding(
-                repo_root=REPO_ROOT,
-                task_contract_id="lodging_occupancy_table_v2",
-            )
+            binding = exact_request_binding(attestation=self.attestation)
             binding[field] = replacement
             result = evaluate_context_feasibility(
                 repo_root=REPO_ROOT,

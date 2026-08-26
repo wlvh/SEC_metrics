@@ -31,6 +31,8 @@ from vnext.requirements import (
     ISSUE_15_D07_EFFECTIVE_CHOICE,
     ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE,
     ISSUE_15_D07_MEASUREMENT_EXCEPTION,
+    ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT,
+    ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY,
     ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
@@ -420,7 +422,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(6, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(7, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -459,6 +461,10 @@ class Issue15AuthorityTest(unittest.TestCase):
             d07_chain[5]["supersedes_decision_id"],
         )
         self.assertEqual(
+            content_hash(value=d07_chain[5]),
+            d07_chain[6]["supersedes_decision_id"],
+        )
+        self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
             issue_snapshot["effective_decisions"]["D-07"]["choice"],
         )
@@ -493,12 +499,24 @@ class Issue15AuthorityTest(unittest.TestCase):
             ],
         )
         self.assertEqual(
+            ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "revised_prompt_measurement_policy"
+            ],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "revised_prompt_measurement_policy"
+            ]["revised_system_prompt"],
+        )
+        self.assertEqual(
             ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE,
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_scope"
             ],
         )
-        self.assertTrue(
+        self.assertFalse(
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_authorized"
             ],
@@ -1083,6 +1101,38 @@ class Issue15AuthorityTest(unittest.TestCase):
                     if row["decision_id"] == "D-07"
                 )
                 d07["choice"]["revpar_measurement_exception"][field] = (
+                    replacement
+                )
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_revised_prompt_measurement_policy_is_exact(self) -> None:
+        """Reject schema relaxation, extra calls, retry, or prompt drift."""
+        mutations = {
+            "task_contract_ids": ["lodging_occupancy_table_v2"],
+            "revised_system_prompt": "Return approximate claims.",
+            "output_schema_change_authorized": True,
+            "old_no_remeasurement_rule_overridden_for_revised_requests": False,
+            "maximum_measurements_per_task": 2,
+            "automatic_retry_count": 1,
+            "qualification_ordinal_credit": True,
+            "response_reuse_for_qualification": True,
+            "concrete_grant_requires_independent_exact_head_review": False,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                d07["choice"]["revised_prompt_measurement_policy"][field] = (
                     replacement
                 )
                 rebind_decisions(issue_copy=issue_copy, register=register)

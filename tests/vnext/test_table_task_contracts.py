@@ -21,6 +21,7 @@ from vnext.ai_adapter import build_provider_request_body
 from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
 from vnext.ai_adapter import TransportPolicy
 from vnext.canonical import atomic_write_bytes, atomic_write_json, sha256_bytes
+from vnext.requirements import ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT
 from vnext.requirements import load_requirement_snapshot
 from vnext.source_strategy import load_source_strategy_registry
 from vnext.table_task_contracts import _table_route_sets
@@ -30,6 +31,7 @@ from vnext.table_task_contracts import resolve_table_task_contract
 from vnext.reader_input import build_reader_input_manifest
 from vnext.reader_input import prepare_reader_request
 from vnext.qualification import table_qualification_task_plan
+from vnext.qualification import QualificationError
 from vnext.replay import replay_frozen_results
 from vnext.review import create_review_decision
 from vnext.run_store import append_review_decision, load_frozen_run
@@ -260,6 +262,31 @@ class TableTaskContractsTest(unittest.TestCase):
             "system_prompt_hash"
         ])
         self.assertEqual(selected["required_roles"], runtime["required_roles"])
+
+    def test_revised_prompt_is_lodging_local_and_schema_preserving(self) -> None:
+        """Change only two prompt strings and retain one shared schema hash."""
+        catalog = load_table_task_contracts(repo_root=REPO_ROOT)
+        lodging = [
+            value for value in catalog["contracts"]
+            if value["reader_family_id"] == "lodging_kpi_table"
+        ]
+        financial = [
+            value for value in catalog["contracts"]
+            if value["reader_family_id"] == "financial_statement"
+        ]
+        self.assertEqual(2, len(lodging))
+        self.assertEqual(8, len(financial))
+        self.assertEqual(
+            {ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT},
+            {value["system_prompt"] for value in lodging},
+        )
+        self.assertEqual(
+            {"Return raw claims and exact locators from one selected table only."},
+            {value["system_prompt"] for value in financial},
+        )
+        self.assertEqual(
+            1, len({value["output_schema_hash"] for value in lodging + financial}),
+        )
 
     def test_fallback_representation_schema_requires_every_structured_route(self) -> None:
         """Reject an incomplete table/text representation authority before catalog use."""
@@ -542,26 +569,15 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertEqual(0, run_attempt.call_count)
         self.assertEqual(0, transport.call_count)
 
-    def test_matrix_task_plan_binds_one_catalog_task_before_workflow(self) -> None:
-        """Derive a future ordinal plan without falling back to schema v1."""
-        with mock.patch(
-            "vnext.qualification.require_table_qualification_freeze",
-            return_value={"receipt_id": "sha256:" + "a" * 64},
-        ):
-            plan = table_qualification_task_plan(
+    def test_matrix_task_plan_waits_for_revised_context_proofs(self) -> None:
+        """Block qualification planning until both new attestations exist."""
+        with self.assertRaises(QualificationError):
+            table_qualification_task_plan(
                 repo_root=REPO_ROOT,
                 family_id="lodging_kpi_table",
                 task_contract_id="lodging_occupancy_table_v2",
                 qualification_ordinal=1,
             )
-        self.assertEqual("lodging_kpi_table", plan["family_id"])
-        self.assertEqual(
-            "lodging_occupancy_table_v2",
-            plan["task_contract_id"],
-        )
-        self.assertEqual(1, plan["qualification_ordinal"])
-        self.assertTrue(plan["task_spec_semantic_hash"].startswith("sha256:"))
-        self.assertTrue(plan["qualification_task_plan_id"].startswith("sha256:"))
 
     def test_legacy_qualification_prepare_requires_catalog_task(self) -> None:
         """Reject schema-v1 fixture input before choosing any family gate."""

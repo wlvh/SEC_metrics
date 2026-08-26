@@ -109,6 +109,51 @@ ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION = {
     "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
     "context_budget_tokens": 200000,
 }
+ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT = (
+    "Return raw claims and exact locators from one selected table only. For "
+    "every primary candidate, emit exactly these schema keys: role, "
+    "claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, "
+    "locator, scope_evidence_locators, and competing_candidates. Define every "
+    "claimed_scope.evidence_locator_ids value in scope_evidence_locators with "
+    "exact table geometry and raw_text copied from the supplied table. Always "
+    "emit competing_candidates, using [] when none. Never emit "
+    "rejection_reason_claim on a primary candidate; emit it only on each "
+    "competing candidate, which must include every competing-candidate schema "
+    "key."
+)
+ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY = {
+    "policy_status": "PROMPT_REVISION_APPROVED_EXACT_GRANTS_PENDING",
+    "family_id": "lodging_kpi_table",
+    "task_contract_ids": [
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2",
+    ],
+    "revised_system_prompt": ISSUE_15_D07_REVISED_LODGING_SYSTEM_PROMPT,
+    "prompt_revision_scope": "SYSTEM_PROMPT_ONLY",
+    "output_schema_change_authorized": False,
+    "metric_meaning_change_authorized": False,
+    "task_role_change_authorized": False,
+    "source_change_authorized": False,
+    "serializer_change_authorized": False,
+    "provider_model_api_change_authorized": False,
+    "table_selection_change_authorized": False,
+    "historical_attestations_status": (
+        "HISTORICAL_NOT_CURRENT_FOR_REVISED_REQUESTS"
+    ),
+    "old_no_remeasurement_rule_overridden_for_revised_requests": True,
+    "maximum_measurements_per_task": 1,
+    "automatic_retry_count": 0,
+    "provider_reported_prompt_tokens_required": True,
+    "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
+    "context_budget_tokens": 200000,
+    "qualification_ordinal_credit": False,
+    "qualification_evidence_eligible": False,
+    "response_reuse_for_qualification": False,
+    "publication_eligible": False,
+    "consumes_authorization_after_any_egress_marker": True,
+    "concrete_grant_requires_independent_exact_head_review": True,
+    "qualification_requires_both_revised_context_attestations": True,
+}
 ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
     {
         "family_id": "lodging_kpi_table",
@@ -260,7 +305,7 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
         "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED"
     ),
     "live_measurement_authorized": False,
-    "live_qualification_authorized": True,
+    "live_qualification_authorized": False,
     "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     "context_feasibility_policy": ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
     "revpar_measurement_exception": (
@@ -271,11 +316,14 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
     ),
     "revpar_measurement_authorization_permanently_consumed": True,
     "live_qualification_scope": ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE,
+    "revised_prompt_measurement_policy": (
+        ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
+    ),
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5410845750"
+        "#issuecomment-5414304877"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -292,8 +340,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:400cdc1299371d090638f589991deb80a"
-        "92e11fe25159578be26d3d578c06600"
+        "sha256:fc7be3e805d0315f5b71b667fce46688"
+        "568c862f4cd8b425beb9b0427eafd473"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1480,14 +1528,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 6
+        or len(chains["D-07"]) != 7
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][4])
+        != _decision_record_hash(decision=chains["D-07"][5])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

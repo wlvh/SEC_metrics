@@ -39,8 +39,10 @@ def main(*, argv: Sequence[str]) -> int:
     """Run the offline planner or independently authorized real executor."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command", required=True)
-    subparsers.add_parser("plan")
+    plan = subparsers.add_parser("plan")
+    plan.add_argument("--task-contract-id", required=True)
     execute = subparsers.add_parser("execute")
+    execute.add_argument("--task-contract-id", required=True)
     execute.add_argument("--authorization", required=True)
     execute.add_argument("--authorized-head", required=True)
     execute.add_argument("--authorized-request-sha256", required=True)
@@ -51,10 +53,12 @@ def main(*, argv: Sequence[str]) -> int:
         if arguments.command == "plan":
             result = write_table_context_measurement_plan(
                 repo_root=REPO_ROOT,
+                task_contract_id=arguments.task_contract_id,
             )
         else:
             authorization = issue_table_context_measurement_authorization(
                 repo_root=REPO_ROOT,
+                task_contract_id=arguments.task_contract_id,
                 external_authorization_statement=arguments.authorization,
                 authorized_repository_head=arguments.authorized_head,
                 authorized_provider_request_body_sha256=(

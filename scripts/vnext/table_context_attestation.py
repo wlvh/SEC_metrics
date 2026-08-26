@@ -22,6 +22,7 @@ from .requirements import ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
 from .requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from .requirements import ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
@@ -356,12 +357,14 @@ def _rebuild_exact_request(
     occupancy_exception = choice.get("measurement_exception")
     revpar_exception = choice.get("revpar_measurement_exception")
     policy = choice.get("context_feasibility_policy")
+    revised_policy = choice.get("revised_prompt_measurement_policy")
     if (
         occupancy_exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
         or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
         or policy != ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
+        or revised_policy != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
         or choice.get("live_measurement_authorized") is not False
-        or choice.get("live_qualification_authorized") is not True
+        or choice.get("live_qualification_authorized") is not False
         or choice.get("accepted_context_attestations")
         != ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
         or choice.get("live_qualification_scope")
@@ -724,12 +727,14 @@ def _validate_preserved_current_task_attestation(
 
 
 def _revpar_terminal_records(
-    *, repo_root: Path,
+    *, repo_root: Path, task_contract_id: str = "lodging_revpar_table_v2",
 ) -> Tuple[
     Dict[str, object], Dict[str, object], Dict[str, object], bytes, str, str, str,
 ]:
     """Discover the unique current plan/marker/evidence/raw terminal."""
-    plan = build_table_context_measurement_plan(repo_root=repo_root)
+    plan = build_table_context_measurement_plan(
+        repo_root=repo_root, task_contract_id=task_contract_id,
+    )
     digest = str(plan["measurement_plan_id"]).split(":", maxsplit=1)[1]
     plan_relative = MEASUREMENT_PLAN_ROOT / (digest + ".json")
     persisted_plan = _content_record(
@@ -934,8 +939,9 @@ def build_table_context_feasibility_attestation(
 
 def build_revpar_context_feasibility_attestation(
     *, repo_root: Path,
+    task_contract_id: str = "lodging_revpar_table_v2",
 ) -> Dict[str, object]:
-    """Derive the current attestation from its unique one-shot terminal."""
+    """Derive one revised-prompt attestation from its unique terminal."""
     (
         plan,
         evidence,
@@ -944,9 +950,11 @@ def build_revpar_context_feasibility_attestation(
         plan_path,
         evidence_path,
         raw_path,
-    ) = _revpar_terminal_records(repo_root=repo_root)
+    ) = _revpar_terminal_records(
+        repo_root=repo_root, task_contract_id=task_contract_id,
+    )
     actual_prompt_tokens = evidence["actual_prompt_tokens"]
-    context_budget = ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION[
+    context_budget = ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
         "context_budget_tokens"
     ]
     if type(actual_prompt_tokens) is not int:
@@ -960,11 +968,21 @@ def build_revpar_context_feasibility_attestation(
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
+    exception = (
+        ISSUE_15_D07_MEASUREMENT_EXCEPTION
+        if task_contract_id
+        == ISSUE_15_D07_MEASUREMENT_EXCEPTION["task_contract_id"]
+        else ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+    )
+    if task_contract_id not in ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+        "task_contract_ids"
+    ]:
+        _fail("Unsupported revised-prompt context attestation task")
     current = _rebuild_exact_request(
         repo_root=repo_root,
         requirement=requirement,
         measurement_plan=plan,
-        measurement_exception=ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
+        measurement_exception=exception,
     )
     plan_equalities = {
         "exact_provider_request_body_sha256": "provider_request_body_sha256",
@@ -1042,17 +1060,16 @@ def write_table_context_feasibility_attestation(
     task_contract_id: str = "lodging_occupancy_table_v2",
 ) -> Dict[str, object]:
     """Persist one immutable attestation without adding a packet layer."""
-    if task_contract_id == "lodging_occupancy_table_v2":
-        attestation = build_table_context_feasibility_attestation(
-            repo_root=repo_root,
-        )
-    elif task_contract_id == "lodging_revpar_table_v2":
-        attestation = validate_table_context_feasibility_attestation(
-            repo_root=repo_root,
-            task_contract_id=task_contract_id,
-        )
-    else:
+    if task_contract_id not in (
+        ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY[
+            "task_contract_ids"
+        ]
+    ):
         _fail("Unsupported context attestation task")
+    attestation = build_revpar_context_feasibility_attestation(
+        repo_root=repo_root,
+        task_contract_id=task_contract_id,
+    )
     digest = str(attestation["attestation_id"]).split(":", maxsplit=1)[1]
     relative = ATTESTATION_ROOT / (digest + ".json")
     path = repo_root / relative
