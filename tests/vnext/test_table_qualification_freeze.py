@@ -25,7 +25,6 @@ from vnext.table_qualification_freeze import _protected_closure_drift
 from vnext.table_qualification_freeze import _measurement_receipts
 from vnext.table_qualification_freeze import _split_cost_receipts
 from vnext.table_context_attestation import current_exact_request_binding
-from vnext.table_context_attestation import TableContextAttestationError
 from vnext.table_task_contracts import load_table_task_contracts
 
 
@@ -79,23 +78,26 @@ class TableQualificationFreezeTest(unittest.TestCase):
                     entry["token_context_limits"]["maximum_context_tokens"],
                 )
 
-    def test_each_lodging_task_waits_for_schema_v3_attestation(self) -> None:
-        """Refuse both historical proofs without borrowing sibling evidence."""
+    def test_each_lodging_task_uses_schema_v3_attested_closure(self) -> None:
+        """Do not reuse one schema-v3 protected hash for its sibling request."""
         matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
         task_ids = matrix["entries"]["lodging_kpi_table"]["task_contract_ids"]
         self.assertEqual(2, len(task_ids))
         for task_id in task_ids:
             with self.subTest(task_contract_id=task_id):
-                with self.assertRaises(TableContextAttestationError):
-                    current_exact_request_binding(
-                        repo_root=REPO_ROOT,
-                        task_contract_id=task_id,
-                    )
+                expected = current_exact_request_binding(
+                    repo_root=REPO_ROOT,
+                    task_contract_id=task_id,
+                )
                 actual = freeze_module._attested_request_authority(
                     repo_root=REPO_ROOT,
                     task_contract_id=task_id,
                 )
-                self.assertIsNone(actual)
+                self.assertIsNotNone(actual)
+                self.assertEqual(
+                    expected["protected_closure_hash"],
+                    actual["protected_closure_hash"],
+                )
 
     def test_estimated_context_threshold_is_inclusive(self) -> None:
         """Pass 200000 exactly and block the first value above the D-07 cap."""
@@ -318,7 +320,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertTrue(measurements["any_measurement_blocked"])
         self.assertEqual(
-            ["financial_statement", "lodging_kpi_table"],
+            ["financial_statement"],
             measurements["blocking_family_ids"],
         )
         self.assertEqual(
@@ -345,8 +347,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
             ],
         )
         self.assertEqual(
-            ["ESTIMATED_CONTEXT_LIMIT", "EXACT_CONTEXT_ATTESTATION_REQUIRED"],
-            readiness["lodging_kpi_table"]["blocking_reason_codes"],
+            [], readiness["lodging_kpi_table"]["blocking_reason_codes"],
         )
         task_readiness = _readiness_by_task_request(
             matrix=matrix,
@@ -362,22 +363,22 @@ class TableQualificationFreezeTest(unittest.TestCase):
             value for value in task_readiness.values()
             if value["task_contract_id"] == "lodging_revpar_table_v2"
         )
-        self.assertFalse(occupancy["live_ready"])
+        self.assertTrue(occupancy["live_ready"])
         self.assertEqual(
-            "EXACT_CONTEXT_ATTESTATION_REQUIRED",
-            occupancy["context_gate"]["blocking_reason_code"],
+            "PROVIDER_REPORTED_EXACT_BINDING",
+            occupancy["context_gate"]["evidence_basis"],
         )
-        self.assertFalse(revpar["live_ready"])
+        self.assertTrue(revpar["live_ready"])
         self.assertEqual(
-            "EXACT_CONTEXT_ATTESTATION_REQUIRED",
-            revpar["context_gate"]["blocking_reason_code"],
+            "PROVIDER_REPORTED_EXACT_BINDING",
+            revpar["context_gate"]["evidence_basis"],
         )
         self.assertEqual(
             ["EXPANDED_GRID_RESOURCE_LIMIT"],
             readiness["financial_statement"]["blocking_reason_codes"],
         )
         self.assertEqual(
-            [],
+            ["lodging_kpi_table"],
             sorted(
                 family_id
                 for family_id, value in readiness.items()
@@ -393,7 +394,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertFalse(d07["d07_decision_required"])
         self.assertEqual(
-            ["financial_statement", "lodging_kpi_table"],
+            ["financial_statement"],
             d07["blocking_family_ids"],
         )
         split_rows = _split_cost_receipts(
@@ -486,8 +487,8 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 }
                 body["readiness_by_family"]["lodging_kpi_table"][
                     "live_ready"
-                ] = True
-                body["live_ready_family_ids"] = ["lodging_kpi_table"]
+                ] = False
+                body["live_ready_family_ids"] = []
                 return {
                     "table_qualification_freeze_receipt_id": content_hash(
                         value=body,

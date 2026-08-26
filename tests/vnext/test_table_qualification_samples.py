@@ -23,7 +23,6 @@ from vnext.traits import repository_company_ciks
 from vnext.qualification import _qualification_sample_authority
 from vnext.qualification import _qualification_sample_measurement
 from vnext.qualification import QualificationError
-from vnext.table_context_attestation import TableContextAttestationError
 from vnext.requirements import load_requirement_snapshot
 from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.table_task_contracts import resolve_table_task_contract
@@ -94,6 +93,16 @@ class TableQualificationSamplesTest(unittest.TestCase):
                 "04bf483588e2a2b91bdc1107ce62f9cc2da0a2ef2639be2733c847012d342a63",
                 "BLOCKED",
             ),
+            ("FRESH_STABILITY", "lodging_occupancy_table_v2"): (
+                "marriott_international", 393999,
+                "498e364a6cc8d7a42fd9b8a59d763c7aec2de2adb855f98f3f38d494eda41da3",
+                "PASSED",
+            ),
+            ("FRESH_STABILITY", "lodging_revpar_table_v2"): (
+                "marriott_international", 393990,
+                "8473835cdc306cc6b829659fa3cc9e4d02ef8e294a7dd58b313d78409598dc64",
+                "PASSED",
+            ),
         }
         with mock.patch.object(ai_adapter, "_open_provider_request") as opener:
             for (phase, task_id), values in expected.items():
@@ -122,19 +131,6 @@ class TableQualificationSamplesTest(unittest.TestCase):
                         status, measurement["context_feasibility"]["status"],
                     )
         opener.assert_not_called()
-
-    def test_fresh_phase_waits_for_schema_v3_attestations(self) -> None:
-        """Refuse fresh planning until both exact schema-v3 proofs exist."""
-        for task_id in (
-            "lodging_occupancy_table_v2",
-            "lodging_revpar_table_v2",
-        ):
-            with self.subTest(task_contract_id=task_id), self.assertRaises(
-                TableContextAttestationError
-            ):
-                self._measurement(
-                    phase="FRESH_STABILITY", task_id=task_id,
-                )
 
     def test_invalid_phase_ordinals_fail_before_source_or_provider(self) -> None:
         """Keep layout phases single-ordinal and fresh at the D-37 count."""
