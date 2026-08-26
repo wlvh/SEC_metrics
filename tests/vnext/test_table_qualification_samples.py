@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-import unittest
 import tempfile
+import unittest
 from pathlib import Path
 from unittest import mock
 
+from sec_http import parse_request_log_rows, request_log_attempt_id
 from tests.vnext.common import REPO_ROOT
 from vnext import ai_adapter
 from vnext import qualification as qualification_module
@@ -74,14 +75,16 @@ class TableQualificationSamplesTest(unittest.TestCase):
         """Bind second, holdout, and fresh sources without caller locators."""
         expected = {
             ("SECOND_LAYOUT", "lodging_occupancy_table_v2"): (
-                "hilton_worldwide_holdings", 155923,
-                "b2150da9ade51e9e19d1f162b82c632a57d094229dc47c8271e0b34e1237777a",
-                "PASSED",
+                "marriott_international", 388755,
+                "6e95c0225c147246346c787e25f161441a6d9dbd16fa08ffdc195c691"
+                "41bcaa8",
+                "BLOCKED",
             ),
             ("SECOND_LAYOUT", "lodging_revpar_table_v2"): (
-                "hilton_worldwide_holdings", 155914,
-                "cd4169f8d8f9092f79cd83917270a7e2014fd230f7eb9d72b17d07544c40ffee",
-                "PASSED",
+                "marriott_international", 388746,
+                "0ff01b4a8e65ed57a88a7094f6b875289fddb426ccde1c138c8a02af"
+                "8396b920",
+                "BLOCKED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_occupancy_table_v2"): (
                 "hyatt_hotels", 206778,
@@ -131,6 +134,118 @@ class TableQualificationSamplesTest(unittest.TestCase):
                         status, measurement["context_feasibility"]["status"],
                     )
         opener.assert_not_called()
+
+    def test_replacement_second_layout_proves_scope_before_model(self) -> None:
+        """Require one same-table literal closure and distinct grid geometry."""
+        sample = _qualification_sample_authority(
+            repo_root=REPO_ROOT,
+            matrix_entry=self.entry,
+            qualification_phase="SECOND_LAYOUT",
+            qualification_ordinal=1,
+        )
+        self.assertEqual(
+            "marriott-2024-sec-layout-v1",
+            sample["qualification_fixture_id"],
+        )
+        ledger_rows = parse_request_log_rows(text=(
+            REPO_ROOT / "evidence/requests_log.csv"
+        ).read_text(encoding="utf-8"))
+        acquisition_rows = [
+            (index, row)
+            for index, row in enumerate(ledger_rows)
+            if row["purpose"] == "issue15_lodging_second_layout_candidate"
+        ]
+        self.assertEqual(1, len(acquisition_rows))
+        row_index, acquisition = acquisition_rows[0]
+        self.assertEqual("0", acquisition["retry_attempt"])
+        self.assertTrue(acquisition["user_agent"].startswith(
+            "redacted-sha256:"
+        ))
+        self.assertEqual(
+            64,
+            len(acquisition["user_agent"].removeprefix(
+                "redacted-sha256:"
+            )),
+        )
+        self.assertNotIn("@", acquisition["user_agent"])
+        self.assertEqual(
+            sample["source_binding"]["request_attempt_id"],
+            request_log_attempt_id(row_index=row_index, row=acquisition),
+        )
+        source = sample["source_binding"]["source_declaration"]
+        candidate = build_table_grid(
+            html_bytes=(
+                REPO_ROOT / source["source_repo_relative_path"]
+            ).read_bytes(),
+            parent_raw_asset_ids=["sha256:" + source["source_sha256"]],
+            storage_uri="audit://marriott-2024-second-layout",
+        )
+        development = self.entry["development_source"]
+        fresh = build_table_grid(
+            html_bytes=(
+                REPO_ROOT / development["source_repo_relative_path"]
+            ).read_bytes(),
+            parent_raw_asset_ids=[
+                "sha256:" + development["source_sha256"]
+            ],
+            storage_uri="audit://marriott-2025-fresh",
+        )
+
+        def matching_tables(asset: dict) -> list[dict]:
+            matches = []
+            for table in asset["tables"]:
+                raw_values = [
+                    cell["raw_text"]
+                    for row in table["rows"]
+                    for cell in row["cells"]
+                    if cell["is_origin"]
+                ]
+                normalized = [
+                    cell["text"]
+                    for row in table["rows"]
+                    for cell in row["cells"]
+                    if cell["is_origin"]
+                ]
+                if (
+                    all(any(literal in value for value in raw_values) for literal in (
+                        "Comparable Systemwide Properties", "Worldwide",
+                    ))
+                    and all(any(role in value for value in normalized) for role in (
+                        "Occupancy", "RevPAR",
+                    ))
+                ):
+                    matches.append(table)
+            return matches
+
+        candidate_matches = matching_tables(candidate)
+        fresh_matches = matching_tables(fresh)
+        self.assertEqual(1, len(candidate_matches))
+        self.assertEqual(1, len(fresh_matches))
+        candidate_table = candidate_matches[0]
+        fresh_table = fresh_matches[0]
+        self.assertEqual("table_000011", candidate_table["table_id"])
+        self.assertEqual((29, 39), (
+            candidate_table["row_count"], candidate_table["column_count"],
+        ))
+        self.assertEqual((27, 39), (
+            fresh_table["row_count"], fresh_table["column_count"],
+        ))
+        self.assertNotEqual(
+            candidate_table["grid_sha256"], fresh_table["grid_sha256"],
+        )
+        sentinel = strict_json_file(path=(
+            REPO_ROOT
+            / "fixtures/vnext/layouts/marriott-2024-sec-layout-v1/"
+            "recorded_response.json"
+        ))
+        self.assertEqual({
+            "status": "NOT_RUN",
+            "reason": (
+                "SOURCE_ONLY_LIVE_QUALIFICATION_FIXTURE_REQUIRES_NEW_"
+                "PROVIDER_EXECUTION"
+            ),
+            "provider_egress_count": 0,
+        }, sentinel)
 
     def test_invalid_phase_ordinals_fail_before_source_or_provider(self) -> None:
         """Keep layout phases single-ordinal and fresh at the D-37 count."""
@@ -250,7 +365,7 @@ class TableQualificationSamplesTest(unittest.TestCase):
         """Permit the exact external SEC fixture without expanding registry."""
         fixture = qualification_module._matrix_fixture_source_binding(
             repo_root=REPO_ROOT,
-            fixture_id="hilton-2024-sec-layout-v7",
+            fixture_id="hyatt-2025-sec-holdout-v2",
         )
         source = {
             key: value for key, value in fixture.items()
@@ -314,10 +429,10 @@ class TableQualificationSamplesTest(unittest.TestCase):
     def test_adapter_replays_matrix_owned_layout_cik_without_registry_row(
         self,
     ) -> None:
-        """Replay the exact Hilton fixture while preserving ten-company registry."""
+        """Replay the exact Hyatt fixture while preserving ten-company registry."""
         fixture = qualification_module._matrix_fixture_source_binding(
             repo_root=REPO_ROOT,
-            fixture_id="hilton-2024-sec-layout-v7",
+            fixture_id="hyatt-2025-sec-holdout-v2",
         )
         source = {
             key: value for key, value in fixture.items()
@@ -329,23 +444,10 @@ class TableQualificationSamplesTest(unittest.TestCase):
         )
         self.assertNotIn(str(declaration["company_id"]), registry_text)
         self.assertEqual(
-            ["1585689"],
-            repository_company_ciks(
-                repo_root=REPO_ROOT,
-                company_id=str(declaration["company_id"]),
-            ),
-        )
-        holdout = qualification_module._matrix_fixture_source_binding(
-            repo_root=REPO_ROOT,
-            fixture_id="hyatt-2025-sec-holdout-v2",
-        )
-        self.assertEqual(
             ["1468174"],
             repository_company_ciks(
                 repo_root=REPO_ROOT,
-                company_id=str(
-                    holdout["source_declaration"]["company_id"]
-                ),
+                company_id=str(declaration["company_id"]),
             ),
         )
         raw = raw_blob_record(
@@ -365,7 +467,7 @@ class TableQualificationSamplesTest(unittest.TestCase):
         asset = build_table_grid(
             html_bytes=load_raw_blob_bytes(repo_root=REPO_ROOT, raw_blob=raw),
             parent_raw_asset_ids=[str(raw["raw_asset_id"])],
-            storage_uri="artifacts/vnext/derived/test-hilton.json",
+            storage_uri="artifacts/vnext/derived/test-hyatt.json",
         )
         manifest = build_reader_input_manifest(
             derived_asset=asset,

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "fixture_id": "marriott-2024-sec-layout-v1",
+  "qualification_role": "SECOND_LAYOUT",
+  "company_id": "marriott_international",
+  "cik": "1048286",
+  "company_traits": [
+    "lodging"
+  ],
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31"
+  },
+  "source_role": "target_primary",
+  "source_media_type": "text/html",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+  "accession": "0001628280-25-004818",
+  "document_name": "mar-20241231.htm",
+  "disclosure_spec_path": "catalog/disclosures/lodging_kpi_table.md",
+  "selection_reason": "Owner-approved FY2024 Marriott immutable SEC source whose target table locally proves every frozen scope literal and differs geometrically from the FY2025 development/fresh table.",
+  "layout_differences": [
+    "rowspan_colspan",
+    "year_layout"
+  ],
+  "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92",
+  "source_repo_relative_path": "fixtures/vnext/layouts/marriott-2024-sec-layout-v1/mar-20241231.htm",
+  "source_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+  "recorded_response_repo_relative_path": "fixtures/vnext/layouts/marriott-2024-sec-layout-v1/recorded_response.json",
+  "recorded_response_sha256": "3021505fb34918984e2afc5f836f5f7da22ee397209176e46f83390ff51d22b7",
+  "excerpt_repo_relative_path": "fixtures/vnext/layouts/marriott-2024-sec-layout-v1/excerpt.json",
+  "excerpt_sha256": "ec08ec24efa40048de152420f880d09b812db0d879084ec10631718a71648883"
+}

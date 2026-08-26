@@ -86,8 +86,10 @@ class TableContextQualificationGuardTest(unittest.TestCase):
             requirement=cls.requirement,
         )
 
-    def test_occupancy_context_pass_does_not_make_family_ready(self) -> None:
-        """Keep exact occupancy feasible while unproven RevPAR blocks family."""
+    def test_two_exact_context_attestations_make_current_family_ready(
+        self,
+    ) -> None:
+        """Require both current Marriott task requests before family readiness."""
         tasks = _readiness_by_task_request(
             matrix=self.matrix,
             measurements=self.measurements,
@@ -112,25 +114,31 @@ class TableContextQualificationGuardTest(unittest.TestCase):
             "PROVIDER_REPORTED_EXACT_BINDING",
             occupancy["context_gate"]["evidence_basis"],
         )
-        self.assertFalse(revpar["live_ready"])
-        self.assertFalse(family["live_ready"])
-        self.assertEqual(1, len(family["ready_task_request_ids"]))
+        self.assertTrue(revpar["live_ready"])
+        self.assertEqual(
+            "PROVIDER_REPORTED_EXACT_BINDING",
+            revpar["context_gate"]["evidence_basis"],
+        )
+        self.assertTrue(family["live_ready"])
+        self.assertEqual(2, len(family["ready_task_request_ids"]))
         self.assertEqual(2, len(family["required_task_request_ids"]))
 
-    def test_live_qualification_is_unauthorized_before_any_opener(self) -> None:
-        """Stop on D-07 authorization even though occupancy context passes."""
-        with mock.patch.object(
-            ai_adapter, "_open_provider_request",
-        ) as opener, self.assertRaises(
-            qualification.QualificationError,
-        ) as caught:
-            qualification.issue_table_qualification_authorization(
-                repo_root=REPO_ROOT,
-                family_id="lodging_kpi_table",
-                task_contract_id="lodging_occupancy_table_v2",
-                qualification_ordinal=1,
+    def test_context_admission_never_opens_provider(self) -> None:
+        """Keep context feasibility separate from provider execution."""
+        measurement = {
+            "context_feasibility": {
+                "status": "PASSED",
+                "evidence_basis": "PROVIDER_REPORTED_EXACT_BINDING",
+            },
+        }
+        with mock.patch.object(ai_adapter, "_open_provider_request") as opener:
+            context = qualification._qualification_context_plan(
+                measurement=measurement,
+                qualification_phase="FRESH_STABILITY",
+                matrix_entry={},
+                scope={},
             )
-        self.assertEqual("TABLE_QUALIFICATION_NOT_AUTHORIZED", caught.exception.code)
+        self.assertEqual("PASSED", context["status"])
         opener.assert_not_called()
 
     def test_measurement_response_and_evidence_cannot_be_reused(self) -> None:
@@ -226,6 +234,46 @@ class TableContextQualificationGuardTest(unittest.TestCase):
                     "CONTEXT_LIMIT",
                     terminal["attempts"][0]["error_class"],
                 )
+
+    def test_exact_reviewed_terminal_usage_path_covers_two_layout_phases(
+        self,
+    ) -> None:
+        """Admit only the two owner-approved over-estimate sample phases."""
+        scope = self.requirement["effective_decisions"]["D-07"]["choice"][
+            "live_qualification_scope"
+        ]
+        measurement = {
+            "context_feasibility": {
+                "status": "BLOCKED",
+                "evidence_basis": None,
+            },
+            "blocking_reason_codes": ["ESTIMATED_CONTEXT_LIMIT"],
+        }
+        matrix_entry = {
+            "token_context_limits": {
+                "max_estimated_input_tokens": 200000,
+            }
+        }
+        for phase in ("SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"):
+            with self.subTest(phase=phase):
+                context = qualification._qualification_context_plan(
+                    measurement=measurement,
+                    qualification_phase=phase,
+                    matrix_entry=matrix_entry,
+                    scope=scope,
+                )
+                self.assertEqual("PASSED", context["status"])
+                self.assertEqual(
+                    "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+                    context["evidence_basis"],
+                )
+        with self.assertRaises(qualification.QualificationError):
+            qualification._qualification_context_plan(
+                measurement=measurement,
+                qualification_phase="FRESH_STABILITY",
+                matrix_entry=matrix_entry,
+                scope=scope,
+            )
 
 
 if __name__ == "__main__":

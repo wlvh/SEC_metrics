@@ -418,7 +418,7 @@ ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
         "lodging_occupancy_table_v2",
         "lodging_revpar_table_v2",
     ],
-    "second_layout_fixture_id": "hilton-2024-sec-layout-v7",
+    "second_layout_fixture_id": "marriott-2024-sec-layout-v1",
     "post_freeze_holdout_fixture_id": "hyatt-2025-sec-holdout-v2",
     "fresh_samples_required": 3,
     "sample_sequence": [
@@ -440,8 +440,13 @@ ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
         "PROVIDER_REPORTED_EXACT_BINDING",
         "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
     ],
-    "unattested_over_estimated_bound_phase": "POST_FREEZE_HOLDOUT",
+    "unattested_over_estimated_bound_phases": [
+        "SECOND_LAYOUT",
+        "POST_FREEZE_HOLDOUT",
+    ],
     "unattested_over_estimated_bound_requires_exact_review": True,
+    "unattested_over_estimated_bound_plan_exact_head_review_required": True,
+    "rebuilt_second_layout_plan_requires_new_qualification_execution": True,
     "missing_or_excess_usage_terminal_no_retry": True,
     "independent_exact_head_review_required_before_first_egress": True,
     "financial_qualification_authorized": False,
@@ -554,7 +559,7 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5422296601"
+        "#issuecomment-5424079015"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -571,8 +576,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:086a806fd3d8042bfcd28774541fc5976"
-        "1ea0257f12b334ee56f0102b5a1c744"
+        "sha256:77116d8f9e991820fa042cce462b08c71"
+        "1187a7192034289d780c1b296471025"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1759,14 +1764,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 12
+        or len(chains["D-07"]) != 14
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][10])
+        != _decision_record_hash(decision=chains["D-07"][12])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

@@ -424,7 +424,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(12, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(14, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -485,6 +485,14 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(
             content_hash(value=d07_chain[10]),
             d07_chain[11]["supersedes_decision_id"],
+        )
+        self.assertEqual(
+            content_hash(value=d07_chain[11]),
+            d07_chain[12]["supersedes_decision_id"],
+        )
+        self.assertEqual(
+            content_hash(value=d07_chain[12]),
+            d07_chain[13]["supersedes_decision_id"],
         )
         self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
@@ -1237,6 +1245,15 @@ class Issue15AuthorityTest(unittest.TestCase):
             "measurement_response_reuse_for_qualification": True,
             "provider_usage_required": False,
             "actual_prompt_tokens_max": 200001,
+            "unattested_over_estimated_bound_phases": [
+                "POST_FREEZE_HOLDOUT"
+            ],
+            "unattested_over_estimated_bound_plan_exact_head_review_required": (
+                False
+            ),
+            "rebuilt_second_layout_plan_requires_new_qualification_execution": (
+                False
+            ),
             "independent_exact_head_review_required_before_first_egress": False,
             "financial_qualification_authorized": True,
         }

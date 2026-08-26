@@ -165,6 +165,9 @@ CURRENT_TASK_ATTESTATION_PROTECTED_CLOSURE_HASH = (
     "b7db075a0230e2bcfb07a3c5c200215"
 )
 _CURRENT_TASK_ADDITIVE_SUCCESSOR_PATHS = {
+    "config/table_qualification_matrix.json",
+    "evidence/requests_log.csv",
+    "evidence/requests_log_manifest.json",
     "requirements/issue_15_v1/baseline_manifest.json",
     "requirements/issue_15_v1/decision_register.json",
     "scripts/vnext/requirements.py",

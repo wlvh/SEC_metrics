@@ -689,18 +689,29 @@ def _qualification_context_plan(
     context = dict(measurement["context_feasibility"])
     if context["status"] == "PASSED":
         return context
+    authorized_phases = scope.get(
+        "unattested_over_estimated_bound_phases"
+    )
     allowed_reasons = {
         "ESTIMATED_CONTEXT_LIMIT",
         "EXACT_CONTEXT_ATTESTATION_REQUIRED",
         "EXACT_CONTEXT_BINDING_MISMATCH",
     }
     if (
-        qualification_phase != "POST_FREEZE_HOLDOUT"
-        or scope.get("unattested_over_estimated_bound_phase")
-        != "POST_FREEZE_HOLDOUT"
+        type(authorized_phases) is not list
+        or qualification_phase not in authorized_phases
         or scope.get(
             "unattested_over_estimated_bound_requires_exact_review"
         ) is not True
+        or scope.get(
+            "unattested_over_estimated_bound_plan_exact_head_review_required"
+        ) is not True
+        or (
+            qualification_phase == "SECOND_LAYOUT"
+            and scope.get(
+                "rebuilt_second_layout_plan_requires_new_qualification_execution"
+            ) is not True
+        )
         or not set(measurement["blocking_reason_codes"]).issubset(
             allowed_reasons
         )
