@@ -352,7 +352,7 @@ ISSUE_15_D07_SCHEMA_V2_CONTEXT_ATTESTATIONS = [
         "context_budget_tokens": 200000,
     },
 ]
-ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
+ISSUE_15_D07_SCHEMA_V3_CONTEXT_ATTESTATIONS = [
     {
         "family_id": "lodging_kpi_table",
         "task_contract_id": "lodging_occupancy_table_v2",
@@ -379,6 +379,36 @@ ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
             "5dc09a8498b9b40929f308a964dfaa42"
         ),
         "actual_prompt_tokens": 161263,
+        "context_budget_tokens": 200000,
+    },
+]
+ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
+    {
+        "family_id": "lodging_kpi_table",
+        "task_contract_id": "lodging_occupancy_table_v2",
+        "attestation_id": (
+            "sha256:5ee591dd57a88764f8d4427bf058bef8"
+            "05b7379c023ddf4492e1a14d30e457df"
+        ),
+        "measurement_evidence_id": (
+            "sha256:107c8ae9584afe58170ff230ab0c9534d"
+            "7b7ea1cd38108f6d23c4326b6f7e127"
+        ),
+        "actual_prompt_tokens": 161433,
+        "context_budget_tokens": 200000,
+    },
+    {
+        "family_id": "lodging_kpi_table",
+        "task_contract_id": "lodging_revpar_table_v2",
+        "attestation_id": (
+            "sha256:a5632e9071f1ba27693b0940b9dab51f"
+            "1ca4c80cae6d0e17634026c99a71c8c1"
+        ),
+        "measurement_evidence_id": (
+            "sha256:37eef7180255a830b9b199a81fcbaf8d"
+            "a0243eb59968091d274d5c94f0b79540"
+        ),
+        "actual_prompt_tokens": 161422,
         "context_budget_tokens": 200000,
     },
 ]
@@ -419,15 +449,15 @@ ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
 ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY = {
     "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
     "accepted_measurement_evidence_id": (
-        "sha256:0399b5034d4920a31d9391f36870eb640"
-        "7a39e943454147f0e6b7f33c9813825"
+        "sha256:107c8ae9584afe58170ff230ab0c9534d"
+        "7b7ea1cd38108f6d23c4326b6f7e127"
     ),
     "accepted_provider": "deepseek",
     "accepted_model": "deepseek-v4-flash",
     "accepted_api": "chat_completions",
-    "accepted_actual_prompt_tokens": 161282,
+    "accepted_actual_prompt_tokens": 161433,
     "context_budget_tokens": 200000,
-    "context_headroom_tokens": 38718,
+    "context_headroom_tokens": 38567,
     "default_path": {
         "condition": "estimated_input_tokens <= 200000",
         "result": "PASS",
@@ -503,7 +533,7 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
         "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED"
     ),
     "live_measurement_authorized": False,
-    "live_qualification_authorized": False,
+    "live_qualification_authorized": True,
     "measurement_exception": ISSUE_15_D07_MEASUREMENT_EXCEPTION,
     "context_feasibility_policy": ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
     "revpar_measurement_exception": (
@@ -518,7 +548,7 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
         ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
     ),
     "schema_revised_measurement_policy": (
-        ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
+        ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
     ),
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
@@ -541,8 +571,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:fc307fe113e94f1111ccc5b2a1bc8a6c"
-        "62a8bb955e20c078e36edec1e15a3571"
+        "sha256:086a806fd3d8042bfcd28774541fc5976"
+        "1ea0257f12b334ee56f0102b5a1c744"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1729,14 +1759,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 11
+        or len(chains["D-07"]) != 12
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][9])
+        != _decision_record_hash(decision=chains["D-07"][10])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

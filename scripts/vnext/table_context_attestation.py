@@ -25,6 +25,7 @@ from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
 from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
 from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
 from .requirements import ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
 from .sources import source_reference_record
@@ -167,7 +168,6 @@ _CURRENT_TASK_ADDITIVE_SUCCESSOR_PATHS = {
     "requirements/issue_15_v1/baseline_manifest.json",
     "requirements/issue_15_v1/decision_register.json",
     "scripts/vnext/requirements.py",
-    "scripts/vnext/table_context_measurement.py",
 }
 
 
@@ -365,9 +365,9 @@ def _rebuild_exact_request(
         or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
         or policy != ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
         or revised_policy != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
-        or schema_policy != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
+        or schema_policy != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
         or choice.get("live_measurement_authorized") is not False
-        or choice.get("live_qualification_authorized") is not False
+        or choice.get("live_qualification_authorized") is not True
         or choice.get("accepted_context_attestations")
         != ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
         or choice.get("live_qualification_scope")

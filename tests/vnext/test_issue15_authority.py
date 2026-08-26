@@ -35,7 +35,7 @@ from vnext.requirements import (
     ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY,
     ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION,
     ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
-    ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY,
+    ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -424,7 +424,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(11, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(12, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -483,6 +483,10 @@ class Issue15AuthorityTest(unittest.TestCase):
             d07_chain[10]["supersedes_decision_id"],
         )
         self.assertEqual(
+            content_hash(value=d07_chain[10]),
+            d07_chain[11]["supersedes_decision_id"],
+        )
+        self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
             issue_snapshot["effective_decisions"]["D-07"]["choice"],
         )
@@ -529,7 +533,7 @@ class Issue15AuthorityTest(unittest.TestCase):
             ]["revised_system_prompt"],
         )
         self.assertEqual(
-            ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY,
+            ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY,
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "schema_revised_measurement_policy"
             ],
@@ -546,7 +550,7 @@ class Issue15AuthorityTest(unittest.TestCase):
                 "live_qualification_scope"
             ],
         )
-        self.assertFalse(
+        self.assertTrue(
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_authorized"
             ],

@@ -186,7 +186,7 @@ vNext 已提供同一套 recorded/live operator与formal publication primitives�
 
 occupancy与RevPAR历史exact context attestation分别记录160937与160928，仍是immutable usage证据，但三次second-layout response连续缺少schema必填scope-evidence字段后，owner批准只强化两个lodging task的system prompt。prompt改变使历史attestation不再给新request current context credit；schema、指标口径、source、serializer、provider/model/API与200000门均未放宽。当前qualification关闭，必须先对两个修订request各完成一次independent-review-bound、retry=0、usage-only measurement并形成新attestation；response仍不可复用为qualification或业务结果。之后live qualification才可重新按Hilton second layout→production semantic freeze→Hyatt holdout→每task三个Marriott fresh samples执行。业务人员只能在R3 active terminal validation与strict compatibility完成后读取新lodging结果。
 
-后续schema-v3 measurement分别记录Occupancy 161282与RevPAR 161263，但首个Hilton Occupancy qualification又暴露了更窄的问题：目标表没有caption，模型却把另一表或邻近正文当作标题，Evidence因此拒绝。当前只把prompt收紧为“证据必须来自被选中的同一张表”：有非空caption才可逐字引用，否则必须引用该表内部一个带完整坐标的格子。两份161282/161263 proof仍保留为历史证据，但因prompt request已变化而不能继续授权新request；新measurement完成前qualification再次关闭。
+后续schema-v3 measurement分别记录Occupancy 161282与RevPAR 161263，但首个Hilton Occupancy qualification又暴露了更窄的问题：目标表没有caption，模型却把另一表或邻近正文当作标题，Evidence因此拒绝。当前只把prompt收紧为“证据必须来自被选中的同一张表”：有非空caption才可逐字引用，否则必须引用该表内部一个带完整坐标的格子。161282/161263 proof保留为历史证据；新prompt下Occupancy/RevPAR实际prompt tokens为161433/161422，两份exact attestation已被D-07接受，但measurement回答仍不能作为qualification或业务结果。只有current freeze/Stage-A和qualification exact-head gate通过后才会继续真实样本。
 
 但它尚未成为业务结果入口。业务人员当前仍从第 4 节所列 root manifest、snapshot checker、report 和 CSV 开始，不应在 `artifacts/vnext/` 中自行挑选一个 OPEN/FROZEN Run 当成正式结果。
 

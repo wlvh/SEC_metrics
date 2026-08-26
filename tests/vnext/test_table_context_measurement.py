@@ -685,13 +685,14 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
         self.assertFalse(evidence["qualification_credit"])
         self.assertFalse(evidence["publication_eligible"])
         self.assertFalse(evidence["response_reuse_for_qualification"])
-        current = build_table_context_measurement_plan(
-            repo_root=REPO_ROOT,
-            task_contract_id="lodging_revpar_table_v2",
-        )
-        self.assertNotEqual(plan["measurement_plan_id"], current[
-            "measurement_plan_id"
-        ])
+        with self.assertRaisesRegex(
+            TableContextMeasurementError,
+            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+        ):
+            build_table_context_measurement_plan(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_revpar_table_v2",
+            )
 
 
 if __name__ == "__main__":
