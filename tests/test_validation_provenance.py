@@ -188,6 +188,12 @@ class ValidationProvenanceTest(unittest.TestCase):
         ]:
             self._write(path, "header\nrow\n")
         if mode == "FULL_VALIDATION":
+            policy = load_source_policy(workdir=TEST_ROOT)
+            for relative in policy.full_artifact_directories:
+                (self.workdir / relative).mkdir(
+                    parents=True,
+                    exist_ok=True,
+                )
             self._write("evidence/requests_log.csv", "header\nrow\n")
             self._write(
                 "evidence/requests_log_manifest.json",
@@ -220,6 +226,13 @@ class ValidationProvenanceTest(unittest.TestCase):
                 "outputs/vnext_cutover_audits/fixture.json",
                 '{"evidence":"live-cutover-audit"}\n',
             )
+            for relative in policy.full_artifact_directories:
+                directory = self.workdir / relative
+                if not any(path.is_file() for path in directory.rglob("*")):
+                    self._write(
+                        "{}/fixture.json".format(relative),
+                        '{"evidence":"policy-directory"}\n',
+                    )
         else:
             self._write("LIGHT_REVIEW_PACKAGE.marker", "light\n")
 
