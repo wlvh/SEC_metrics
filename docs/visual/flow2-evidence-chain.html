@@ -1,0 +1,1771 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>证据重读台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+
+<style>
+/* ============================================================
+   证据重读台 — tokens
+   ground/surface 偏冷灰绿（与 accent 同族），不是中性灰
+   ============================================================ */
+:root{
+  --ground:#EDF0F0; --surface:#FBFCFC; --surface-2:#F1F5F5; --surface-3:#E5EBEB;
+  --ink:#131A1C; --ink-2:#3A484C; --muted:#5F6E72; --faint:#8A989C;
+  --rule:#CDD8D9; --rule-strong:#B2C1C3;
+  --accent:#0E5462;          /* 系统 / Evidence 重读 */
+  --accent-soft:#DCEBEE;
+  --claim:#8A5A11;           /* 模型的主张 */
+  --claim-soft:#F4E9D6;
+  --pass:#186A4B; --pass-soft:#DCEDE4;
+  --reject:#9C2B21; --reject-soft:#F5E0DD;
+  --hold:#6B4E8A; --hold-soft:#EAE2F2;
+  --shadow:0 1px 2px rgba(19,26,28,.06), 0 8px 24px rgba(19,26,28,.05);
+  --serif:"Noto Serif SC","Source Serif 4",Georgia,"Songti SC",serif;
+  --sans:"Noto Sans SC",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1315; --surface:#141C1F; --surface-2:#1A2428; --surface-3:#212D31;
+    --ink:#E3EAEA; --ink-2:#BFCCCE; --muted:#93A2A6; --faint:#6E7E82;
+    --rule:#26343A; --rule-strong:#37484E;
+    --accent:#63BACD; --accent-soft:#14343C;
+    --claim:#DCA950; --claim-soft:#372A14;
+    --pass:#4FC28E; --pass-soft:#123328;
+    --reject:#E67A6E; --reject-soft:#3A1B18;
+    --hold:#B49BD6; --hold-soft:#261E33;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1315; --surface:#141C1F; --surface-2:#1A2428; --surface-3:#212D31;
+  --ink:#E3EAEA; --ink-2:#BFCCCE; --muted:#93A2A6; --faint:#6E7E82;
+  --rule:#26343A; --rule-strong:#37484E;
+  --accent:#63BACD; --accent-soft:#14343C;
+  --claim:#DCA950; --claim-soft:#372A14;
+  --pass:#4FC28E; --pass-soft:#123328;
+  --reject:#E67A6E; --reject-soft:#3A1B18;
+  --hold:#B49BD6; --hold-soft:#261E33;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--serif); font-weight:700; text-wrap:balance; margin:0}
+p{margin:0}
+a{color:var(--accent)}
+code,kbd{font-family:var(--mono); overflow-wrap:anywhere}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:3px}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky; top:0; z-index:20; background:var(--surface);
+  border-bottom:1px solid var(--rule);
+}
+.topbar-inner{max-width:1440px; margin:0 auto; padding:14px 22px 0}
+.masthead{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 16px}
+.masthead h1{font-size:19px; letter-spacing:.01em}
+.masthead .sub{font-size:12.5px; color:var(--muted); font-family:var(--mono)}
+.masthead .spacer{flex:1}
+.themebtn{
+  font-family:var(--mono); font-size:11.5px; color:var(--muted);
+  background:var(--surface-2); border:1px solid var(--rule); border-radius:4px;
+  padding:4px 9px; cursor:pointer;
+}
+.themebtn:hover{color:var(--ink); border-color:var(--rule-strong)}
+
+.scrubber{
+  display:flex; gap:5px; margin-top:12px; padding-bottom:12px;
+  overflow-x:auto; scrollbar-width:thin; align-items:stretch;
+}
+.chip{
+  flex:0 0 auto; display:flex; flex-direction:column; gap:1px; align-items:flex-start;
+  padding:5px 10px 6px; border:1px solid var(--rule); border-radius:4px;
+  background:var(--surface-2); color:var(--muted); cursor:pointer;
+  font-family:var(--sans); font-size:12.5px; line-height:1.35; text-align:left;
+  border-bottom-width:3px;
+}
+.chip .n{font-family:var(--mono); font-size:10px; letter-spacing:.08em; color:var(--faint)}
+.chip:hover{border-color:var(--rule-strong); color:var(--ink)}
+.chip[aria-current="true"]{
+  background:var(--accent-soft); color:var(--ink);
+  border-color:var(--rule-strong); border-bottom-color:var(--accent);
+}
+.chip[aria-current="true"] .n{color:var(--accent)}
+.navrow{display:flex; gap:8px; align-items:center; padding-bottom:12px; flex-wrap:wrap}
+.btn{
+  font-family:var(--sans); font-size:13px; padding:6px 13px; cursor:pointer;
+  background:var(--surface-2); color:var(--ink); border:1px solid var(--rule); border-radius:4px;
+}
+.btn:hover:not(:disabled){border-color:var(--rule-strong); background:var(--surface-3)}
+.btn:disabled{opacity:.4; cursor:not-allowed}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:var(--surface)}
+.btn.primary:hover:not(:disabled){filter:brightness(1.1)}
+.navrow .hint{font-size:12px; color:var(--faint); font-family:var(--mono)}
+
+/* ---------- layout ---------- */
+main{max-width:1440px; margin:0 auto; padding:26px 22px 60px;
+     display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:26px; align-items:start}
+@media (max-width:1060px){ main{grid-template-columns:minmax(0,1fr)} }
+
+.stage{min-width:0; display:flex; flex-direction:column; gap:20px}
+.rail{min-width:0; position:sticky; top:150px; display:flex; flex-direction:column; gap:14px}
+@media (max-width:1060px){ .rail{position:static} }
+
+/* ---------- scene header ---------- */
+.scene-head{border-left:3px solid var(--accent); padding-left:16px}
+.scene-kicker{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--accent); margin-bottom:5px;
+}
+.scene-head h2{font-size:25px; line-height:1.35; margin-bottom:10px}
+.reason{color:var(--ink-2); font-size:14.5px; max-width:62ch}
+.reason strong{color:var(--ink); font-weight:700}
+.reason + .reason{margin-top:9px}
+
+.newfact{
+  margin-top:14px; background:var(--surface); border:1px solid var(--rule);
+  border-left:3px solid var(--pass); border-radius:0 5px 5px 0; padding:11px 15px;
+}
+.newfact .lbl{font-family:var(--mono); font-size:10px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--pass); display:block; margin-bottom:3px}
+.newfact p{font-size:14px; color:var(--ink)}
+
+/* ---------- panels ---------- */
+.panel{background:var(--surface); border:1px solid var(--rule); border-radius:6px; box-shadow:var(--shadow)}
+.panel-head{
+  display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  padding:10px 15px; border-bottom:1px solid var(--rule); background:var(--surface-2);
+  border-radius:6px 6px 0 0;
+}
+.panel-head h3{font-size:13.5px; font-family:var(--sans); font-weight:700; letter-spacing:.01em}
+.panel-head .note{font-size:11.5px; color:var(--muted); font-family:var(--mono); margin-left:auto}
+.panel-body{padding:15px}
+.panel-body.tight{padding:11px 15px}
+
+/* ---------- provenance chips ---------- */
+.pv{
+  display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.06em;
+  padding:1px 5px; border-radius:3px; vertical-align:1.5px;
+  border:1px solid var(--rule-strong); color:var(--muted); background:var(--surface-2);
+  white-space:nowrap;
+}
+.pv-run{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+.pv-disk{color:var(--pass); border-color:var(--pass); background:var(--pass-soft)}
+.pv-code{color:var(--claim); border-color:var(--claim); background:var(--claim-soft)}
+.pv-agg{color:var(--hold); border-color:var(--hold); background:var(--hold-soft)}
+.legend{display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12px; color:var(--muted)}
+.legend > span{display:flex; align-items:center; gap:6px}
+
+/* ---------- data / mono blocks ---------- */
+.kv{display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 14px; font-size:12.5px}
+.kv dt{font-family:var(--mono); color:var(--muted); white-space:nowrap}
+.kv dd{margin:0; font-family:var(--mono); color:var(--ink); overflow-wrap:anywhere}
+
+.mono{font-family:var(--mono); font-size:12.5px; overflow-wrap:anywhere}
+.hash{font-family:var(--mono); font-size:11.5px; color:var(--muted); overflow-wrap:anywhere}
+.esc{color:var(--reject); font-weight:700; background:var(--reject-soft);
+     padding:0 2px; border-radius:2px; border:1px dashed var(--reject)}
+.ent{color:var(--claim); background:var(--claim-soft); padding:0 2px; border-radius:2px}
+
+.transition{
+  display:flex; align-items:center; gap:9px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:12.5px; padding:7px 0;
+}
+.transition .f{color:var(--muted)}
+.transition .before{color:var(--muted); text-decoration:line-through; text-decoration-color:var(--rule-strong)}
+.transition .arrow{color:var(--accent); font-weight:700}
+.transition .after{color:var(--ink); font-weight:700; background:var(--accent-soft);
+  padding:1px 6px; border-radius:3px}
+
+.scroll-x{overflow-x:auto; max-width:100%; scrollbar-width:thin}
+/* 任何可能承载长标识符/hash 的文字块都必须能断行，否则窄屏会把整页撑宽 */
+.reason, .newfact p, .diff .h, .diff .k, .predict .q, .predict .qs, .reveal,
+.gate .why, .panel-head .note, .tally .cell .l, figcaption{overflow-wrap:anywhere}
+
+/* ---------- the filing table ---------- */
+table.grid{border-collapse:collapse; font-family:var(--mono); font-size:11.5px; width:100%}
+table.grid th, table.grid td{
+  border:1px solid var(--rule); padding:3px 8px; text-align:left; white-space:nowrap;
+}
+table.grid th{background:var(--surface-2); color:var(--muted); font-weight:500; font-size:10.5px}
+table.grid td.num{text-align:right; font-variant-numeric:tabular-nums}
+table.grid tr.section td{background:var(--surface-3); font-weight:700; color:var(--ink)}
+table.grid tr.hl td{background:var(--accent-soft)}
+table.grid tr.hl2 td{background:var(--claim-soft)}
+table.grid td.rowidx{color:var(--faint); font-size:10px; text-align:right; background:var(--surface-2)}
+table.grid td.pick{outline:2px solid var(--accent); outline-offset:-2px; font-weight:700}
+table.grid td.pick2{outline:2px solid var(--claim); outline-offset:-2px; font-weight:700}
+
+/* ---------- two-voice comparison ---------- */
+.voices{display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); gap:0; align-items:stretch}
+@media (max-width:720px){ .voices{grid-template-columns:minmax(0,1fr)} .voices .vs{display:none} }
+.voice{padding:12px 14px}
+.voice.claim{background:var(--claim-soft); border-right:1px solid var(--rule)}
+.voice.system{background:var(--accent-soft)}
+.voice h4{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+  margin:0 0 8px; font-weight:700;
+}
+.voice.claim h4{color:var(--claim)} .voice.system h4{color:var(--accent)}
+.voice .line{font-family:var(--mono); font-size:12px; margin:3px 0; overflow-wrap:anywhere}
+.voice .line .k{color:var(--muted)}
+.vs{display:flex; align-items:center; justify-content:center; padding:14px 7px;
+    background:var(--surface-2); border-right:1px solid var(--rule);
+    font-family:var(--mono); font-size:11.5px; letter-spacing:.14em; color:var(--muted);
+    writing-mode:vertical-rl; white-space:nowrap}
+
+/* ---------- gates ---------- */
+.gates{display:flex; flex-direction:column; gap:0}
+.gate{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center;
+  padding:10px 14px; border-bottom:1px solid var(--rule);
+}
+.gate:last-child{border-bottom:0}
+.gate .idx{font-family:var(--mono); font-size:10.5px; color:var(--faint); width:1.4em}
+.gate .name{display:block; font-family:var(--mono); font-size:12.5px; font-weight:500; overflow-wrap:anywhere}
+.gate .why{display:block; font-size:12px; color:var(--muted); margin-top:3px; font-family:var(--sans)}
+.badge{
+  font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.05em;
+  padding:2px 8px; border-radius:3px; border:1px solid; white-space:nowrap;
+}
+.b-pass{color:var(--pass); border-color:var(--pass); background:var(--pass-soft)}
+.b-rej{color:var(--reject); border-color:var(--reject); background:var(--reject-soft)}
+.b-skip{color:var(--faint); border-color:var(--rule-strong); background:var(--surface-2)}
+.b-hold{color:var(--hold); border-color:var(--hold); background:var(--hold-soft)}
+.gate.is-skipped{opacity:.55}
+
+/* ---------- controls ---------- */
+.controls{display:flex; flex-direction:column; gap:13px}
+.ctl{display:flex; flex-direction:column; gap:5px}
+.ctl > .lab{font-family:var(--mono); font-size:11.5px; color:var(--muted)}
+.ctl > .lab b{color:var(--ink); font-weight:500}
+.opts{display:flex; flex-wrap:wrap; gap:5px}
+.opt{
+  font-family:var(--mono); font-size:11.5px; padding:4px 9px; cursor:pointer;
+  border:1px solid var(--rule); border-radius:3px; background:var(--surface-2); color:var(--ink-2);
+}
+.opt:hover{border-color:var(--rule-strong)}
+.opt[aria-pressed="true"]{
+  background:var(--claim-soft); border-color:var(--claim); color:var(--ink); font-weight:700;
+}
+.opt .tag{font-size:9.5px; color:var(--muted); margin-left:5px}
+.opt[aria-pressed="true"] .tag{color:var(--claim)}
+
+/* ---------- prediction ---------- */
+.predict{border:1px dashed var(--rule-strong); border-radius:6px; padding:14px 16px; background:var(--surface-2)}
+.predict .q{font-size:14px; font-weight:700; margin-bottom:4px; color:var(--ink)}
+.predict .qs{font-size:12.5px; color:var(--muted); margin-bottom:11px}
+.predict .choices{display:flex; flex-wrap:wrap; gap:7px}
+.pchoice{
+  font-family:var(--sans); font-size:13px; padding:7px 13px; cursor:pointer; text-align:left;
+  border:1px solid var(--rule-strong); border-radius:4px; background:var(--surface); color:var(--ink);
+}
+.pchoice:hover{border-color:var(--accent)}
+.pchoice[data-state="picked-right"]{border-color:var(--pass); background:var(--pass-soft); font-weight:700}
+.pchoice[data-state="picked-wrong"]{border-color:var(--reject); background:var(--reject-soft)}
+.pchoice[data-state="right"]{border-color:var(--pass); background:var(--pass-soft)}
+.pchoice[disabled]{cursor:default}
+.reveal{margin-top:12px; padding-top:12px; border-top:1px solid var(--rule); font-size:13.5px; color:var(--ink-2)}
+.reveal b{color:var(--ink)}
+.reveal .verdict{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  display:block; margin-bottom:5px}
+.reveal .verdict.ok{color:var(--pass)} .reveal .verdict.no{color:var(--reject)}
+
+/* ---------- ladder (ordered steps) ---------- */
+.ladder{display:flex; flex-direction:column}
+.rung{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:start;
+  padding:9px 14px; border-bottom:1px solid var(--rule); cursor:pointer; text-align:left;
+  background:none; border-left:0; border-right:0; border-top:0; width:100%;
+  font-family:inherit; color:inherit;
+}
+.rung:last-of-type{border-bottom:0}
+.rung .idx{font-family:var(--mono); font-size:11px; color:var(--faint)}
+.rung .t{display:block; font-family:var(--mono); font-size:12.5px; color:var(--ink); overflow-wrap:anywhere}
+.rung .d{display:block; font-size:12px; color:var(--muted); margin-top:3px; overflow-wrap:anywhere}
+.rung:hover{background:var(--surface-2)}
+.rung[aria-pressed="true"]{background:var(--reject-soft)}
+.rung[aria-pressed="true"] .t{font-weight:700}
+.rung.after-cut{opacity:.4}
+.cutmark{font-family:var(--mono); font-size:10px; color:var(--reject); font-weight:700}
+
+/* ---------- evidence rail ---------- */
+.ev{border-left:2px solid var(--rule); padding:2px 0 2px 13px; margin-bottom:12px}
+.ev:last-child{margin-bottom:0}
+.ev.lead{border-left-color:var(--accent)}
+.ev .claimtxt{font-size:13px; color:var(--ink); margin-bottom:5px; overflow-wrap:anywhere}
+.ev .claimtxt b{font-weight:700}
+.ev .src{font-family:var(--mono); font-size:11px; color:var(--muted); overflow-wrap:anywhere}
+.ev .src .path{color:var(--accent)}
+
+details.trace{border-top:1px solid var(--rule); margin-top:12px; padding-top:10px}
+details.trace summary{
+  cursor:pointer; font-family:var(--mono); font-size:11.5px; color:var(--muted); list-style:none;
+}
+details.trace summary::-webkit-details-marker{display:none}
+details.trace summary::before{content:"▸ "; color:var(--accent)}
+details.trace[open] summary::before{content:"▾ "}
+details.trace summary:hover{color:var(--ink)}
+.trace-body{margin-top:10px; font-family:var(--mono); font-size:11.5px; color:var(--ink-2);
+  white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.7}
+
+/* ---------- matrix ---------- */
+table.matrix{border-collapse:collapse; font-size:12px; width:100%}
+table.matrix th,table.matrix td{border:1px solid var(--rule); padding:5px 9px; text-align:left}
+table.matrix th{background:var(--surface-2); font-weight:500; color:var(--muted);
+  font-family:var(--mono); font-size:10.5px; white-space:nowrap}
+table.matrix td{font-family:var(--mono); font-size:11.5px; white-space:nowrap}
+table.matrix td.ok{background:var(--pass-soft); color:var(--pass); font-weight:700}
+table.matrix td.no{background:var(--reject-soft); color:var(--reject)}
+table.matrix td.zero{color:var(--faint)}
+table.matrix tfoot td{background:var(--surface-2); font-weight:700}
+
+.tally{display:flex; flex-wrap:wrap; gap:14px; margin-top:14px}
+.tally .cell{flex:1 1 150px; border:1px solid var(--rule); border-radius:5px; padding:10px 13px; background:var(--surface-2)}
+.tally .cell .n{font-family:var(--mono); font-size:23px; font-weight:700; line-height:1.2;
+  font-variant-numeric:tabular-nums}
+.tally .cell .l{font-size:12px; color:var(--muted); margin-top:2px}
+.tally .cell.warn .n{color:var(--reject)}
+.tally .cell.good .n{color:var(--pass)}
+
+/* ---------- figure ---------- */
+figure{margin:0}
+figure svg{max-width:100%; height:auto; display:block}
+figcaption{font-size:12.5px; color:var(--muted); margin-top:10px; padding-top:9px;
+  border-top:1px solid var(--rule)}
+
+/* ---------- diff list ---------- */
+.diffs{display:flex; flex-direction:column; gap:0}
+.diff{padding:13px 15px; border-bottom:1px solid var(--rule); display:grid;
+  grid-template-columns:auto minmax(0,1fr); gap:12px}
+.diff:last-child{border-bottom:0}
+.diff .no{font-family:var(--mono); font-size:11px; color:var(--faint)}
+.diff .h{font-size:13.5px; font-weight:700; margin-bottom:4px}
+.diff .doc, .diff .code{font-family:var(--mono); font-size:11.5px; margin-top:3px; overflow-wrap:anywhere}
+.diff .doc{color:var(--claim)} .diff .code{color:var(--accent)}
+.diff .doc::before{content:"文档  "; color:var(--muted)}
+.diff .code::before{content:"代码  "; color:var(--muted)}
+.diff .k{font-size:12px; color:var(--muted); margin-top:5px}
+
+.scene{display:none}
+.scene.on{display:flex; flex-direction:column; gap:20px}
+.rail-block{display:none}
+.rail-block.on{display:block}
+
+@media (prefers-reduced-motion: no-preference){
+  .scene.on{animation:fade .28s ease-out}
+  @keyframes fade{from{opacity:0; transform:translateY(5px)} to{opacity:1; transform:none}}
+}
+.sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+</style>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="masthead">
+      <h1>证据重读台</h1>
+      <span class="sub">流程二 · 模型读表如何变成可信事实 · 快照 d9bb477</span>
+      <span class="spacer"></span>
+      <button class="themebtn" id="themebtn" type="button">明/暗</button>
+    </div>
+    <nav class="scrubber" id="scrubber" aria-label="场景导航"></nav>
+    <div class="navrow">
+      <button class="btn" id="prev" type="button">← 上一幕</button>
+      <button class="btn primary" id="next" type="button">下一幕 →</button>
+      <button class="btn" id="reset" type="button">重置本幕</button>
+      <button class="btn" id="restart" type="button">⤺ 从头开始</button>
+      <span class="hint">← → 翻页 · Home 回到第 0 幕 · 地址栏 #s5 可直达</span>
+    </div>
+  </div>
+</div>
+
+<main>
+<div class="stage" id="stage">
+
+<!-- ══════════════════════════ S0 ══════════════════════════ -->
+<section class="scene" id="scene-0" aria-labelledby="h0">
+  <div class="scene-head">
+    <div class="scene-kicker">第 0 幕 · 建立问题</div>
+    <h2 id="h0">同一个标签，两个数字</h2>
+    <p class="reason">读这份文档的人几乎都会先把问题想成：<strong>模型给了一个数字，我们去检查这个数字对不对。</strong>这个想法在这里行不通，而且不是因为模型不够强。</p>
+    <p class="reason">下面是 Marriott FY2024 年报里 <span class="mono">table_000011</span> 的真实内容 <span class="pv pv-run">实测</span>。请先看第 18 行和第 28 行的行标签：它们的 <span class="mono">raw_text</span> 是<strong>逐字节相同</strong>的 <span class="mono">"\nWorldwide (2)"</span>。挂在这两个标签下的入住率分别是 69.7 和 69.8。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>table_000011（29 行 × 39 列，节选第 8–28 行）</h3>
+      <span class="note">列 0 = 行标签 · 列 4 = RevPAR · 列 15 = Occupancy</span></div>
+    <div class="panel-body scroll-x" id="s0table"></div>
+  </div>
+
+  <div class="predict" id="pred0">
+    <div class="q">Marriott FY2024 的「全球入住率」，B10 这个指标要的是哪一个？</div>
+    <div class="qs">先猜，再往下看。这一步不影响任何机制状态。</div>
+    <div class="choices">
+      <button class="pchoice" data-i="0" type="button">69.7 —— 第 18 行</button>
+      <button class="pchoice" data-i="1" type="button">69.8 —— 第 28 行</button>
+      <button class="pchoice" data-i="2" type="button">光看行标签无法判断</button>
+    </div>
+    <div class="reveal" id="rev0" hidden></div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>一个数字加一个行标签，不足以定位一个事实。要把 69.8 和 69.7 区分开，必须同时给出<strong>段落头的坐标</strong>（第 19 行）和<strong>行标签的坐标</strong>（第 28 行）。这就是后面所有机制存在的理由：把「这个数字对不对」换成「你指的那几个位置上是不是真的写着这些字」。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S1 ══════════════════════════ -->
+<section class="scene" id="scene-1" aria-labelledby="h1s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 1 幕 · 对象出生</div>
+    <h2 id="h1s">DerivedAsset：把 2 MB HTML 变成一个坐标空间</h2>
+    <p class="reason">上一幕说「必须给坐标」。但一份 SEC HTML 里没有坐标——只有嵌套的 <span class="mono">&lt;table&gt;</span> 和大量 <span class="mono">rowspan/colspan</span>。<strong>第 28 行第 15 列</strong>这个说法在合并单元格的世界里是有歧义的。</p>
+    <p class="reason">这一幕要替换的误解是：「先把相关的表挑出来再给模型看」。<span class="mono">build_table_grid()</span> 的签名里<strong>没有任何过滤参数</strong>，docstring 写死了 <span class="mono">"No metric terms or filter parameters are accepted by this API."</span> <span class="pv pv-code">代码</span>——因为一旦允许按关键词筛表，「模型从完整文档里选对了表」就不再是一个能成立的结论。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>合并单元格如何被展开</h3><span class="note">table_grid.py:335 <span class="mono">_expanded_table</span></span></div>
+    <div class="panel-body">
+      <div class="scroll-x" id="s1span"></div>
+      <p class="reason" style="margin-top:12px; font-size:13.5px">第 28 行第 0 列的行标签 <span class="mono">colspan=3</span>。展开后它在坐标 (28,0)、(28,1)、(28,2) 上<strong>各出现一次</strong>，三个副本都带着 <span class="mono">origin_row_index=28, origin_column_index=0</span> 指回原点。locator 因此无歧义：八个字段全对上才算命中。</p>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>每个格子同时拥有两个文本字段</h3><span class="note">这一对差异是后面全部戏剧性的来源</span></div>
+    <div class="panel-body scroll-x" id="s1text"></div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>任意 <span class="mono">(table_id, row_index, column_index)</span> 要么唯一解析到一个格子，要么越界报错——而且这个解析过程<strong>只依赖原始字节</strong>。同一份 HTML 重建一万次，<span class="mono">derived_asset_id</span> 完全相同。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S2 ══════════════════════════ -->
+<section class="scene" id="scene-2" aria-labelledby="h2s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 2 幕 · 消除一个新风险</div>
+    <h2 id="h2s">往返验证：模型看到的表 = Evidence 重读的表</h2>
+    <p class="reason">展开后的网格有 3 554 243 字节 <span class="pv pv-run">实测</span>，其中 55.23% 是合并格的副本。直接塞给模型是纯浪费，所以要压缩。</p>
+    <p class="reason">但压缩<strong>引入了一个全新的风险</strong>：模型看到的表和 Evidence 重读的表可能不是同一套。如果这个风险不消掉，后面「系统回去重读」这句话就没有意义——它读的可能是另一个世界。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>编码 → 解码 → 逐字段相等</h3><span class="note">table_payload.py:265 / 308-310</span></div>
+    <div class="panel-body">
+      <div class="transition"><span class="f">expanded canonical JSON</span><span class="before">3 554 243 B</span><span class="arrow">→</span><span class="after">331 877 B（9.34%）</span><span class="pv pv-run">实测</span></div>
+      <p class="reason" style="font-size:13.5px; margin:6px 0 12px">只编码<strong>原点格</strong>，每个压成一个位置数组 <span class="mono">[row, col, rowspan, colspan, header, raw_text, text]</span>，加上表的形状。解码器靠 span 把副本重新展开。</p>
+      <div class="mono" style="background:var(--surface-2); border:1px solid var(--rule); border-radius:4px; padding:11px 13px; line-height:1.85">decoded = decode_compact_table_payload(transport=transport)<br>if decoded != tables:<br>&nbsp;&nbsp;&nbsp;&nbsp;raise TablePayloadError(<span style="color:var(--reject)">"Compact table round trip differs"</span>)</div>
+      <p class="reason" style="font-size:13.5px; margin-top:12px">注意这是 <span class="mono">!=</span>，不是比 hash。同一个不变量在<strong>三个不同的信任边界</strong>上各验一次：编码函数自己验（实现正确）、<span class="mono">build_reader_payload</span> 再验（载荷没被中途替换）、<span class="mono">check_evidence</span> 第三次验（复核用的和发出去的是同一套）。</p>
+    </div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>「模型看到的内容和 Evidence 重读的内容一致」不是「差不多一致」，是解码回来后 Python <span class="mono">==</span> 逐字段相等。新增的绑定字段：<span class="mono">expanded_derived_asset_id</span>、<span class="mono">expanded_grid_sha256</span>、<span class="mono">compact_payload_sha256</span>、<span class="mono">round_trip_receipt_id</span>。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S3 ══════════════════════════ -->
+<section class="scene" id="scene-3" aria-labelledby="h3s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 3 幕 · 唯一有外部副作用的地方</div>
+    <h2 id="h3s">先落 marker，再开 socket</h2>
+    <p class="reason">这一幕揭示一个从对象上看不见的状态：<strong>「远端到底执行了没有」</strong>。付费模型调用最危险的情况不是报错，而是请求可能已经发出、本地却不知道结果。</p>
+    <p class="reason">整条链路只有这里会产生外部副作用，所以七个步骤的顺序是被刻意设计过的。<strong>点击任意一步，看进程在那里崩溃会发生什么。</strong></p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>execute_invocation 的执行顺序</h3><span class="note">invocation_control.py:1942</span></div>
+    <div class="ladder" id="s3ladder"></div>
+  </div>
+
+  <div class="panel" id="s3out"></div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>因为 egress marker 在 socket <strong>之前</strong>落盘，「这一次可能已经花了钱」永远是一个可知的事实。<span class="mono">UNKNOWN_REMOTE_OUTCOME</span> 不自动重试——自动重试会同时产生重复扣费和两条无法对账的远端记录。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S4 ══════════════════════════ -->
+<section class="scene" id="scene-4" aria-labelledby="h4s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 4 幕 · 模型的主张进场</div>
+    <h2 id="h4s">ObservationCandidate：结构合法，内容一个字都没验</h2>
+    <p class="reason">这是第一个承载模型输出的对象。它代表的事实是：<strong>模型声称这些坐标上有这些内容。</strong>它不代表这些内容是真的。</p>
+    <p class="reason">要替换的误解是：「JSON 校验通过了，说明模型答对了」。<span class="mono">validate_reader_output()</span> 做的是极严的结构校验——根字段必须<strong>恰好</strong>四个、candidate 字段必须<strong>恰好</strong>八个、角色顺序必须与 Spec 完全一致、所有 locator 必须落在同一张目标表内。但它<strong>一次都没有去看那张表</strong>。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>模型实际返回的内容</h3>
+      <span class="note">4863af40 · assistant_output_98f1fb58… <span class="pv pv-disk">落盘</span></span></div>
+    <div class="panel-body scroll-x" id="s4json"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>Reader 新增的三个字段</h3><span class="note">reader.py:485-492</span></div>
+    <div class="panel-body">
+      <div class="transition"><span class="f">candidate_hash</span><span class="before">—</span><span class="arrow">→</span><span class="after">sha256:909b84f6…</span><span class="pv pv-run">实测</span></div>
+      <div class="transition"><span class="f">assistant_output_sha256</span><span class="before">—</span><span class="arrow">→</span><span class="after">98f1fb58…</span><span class="pv pv-disk">落盘</span></div>
+      <div class="transition"><span class="f">status</span><span class="before">—</span><span class="arrow">→</span><span class="after">CANDIDATE</span><span class="pv pv-run">实测</span></div>
+      <p class="reason" style="font-size:13.5px; margin-top:10px"><span class="mono">status</span> 由代码算，<strong>不由模型声明</strong>。有未决竞争主张、或有任何口径值查不到精确别名 → <span class="mono">REVIEW_REQUIRED</span>；否则 <span class="mono">CANDIDATE</span>。<span class="mono">candidate_hash</span> 只覆盖实质主张，<strong>不含</strong>模型名、时间戳、日志。</p>
+    </div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>结构合法、角色齐全、坐标不越表。<strong>仅此而已。</strong>下游此刻还不能假设任何一个字符是真的。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S5 ══════════════════════════ -->
+<section class="scene" id="scene-5" aria-labelledby="h5s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 5 幕 · 全场中心 · 可扰动</div>
+    <h2 id="h5s">EvidenceCheck：系统自己回去读一遍</h2>
+    <p class="reason">这是整条链路里<strong>唯一一个「凭什么信」的对象</strong>。前面的 Candidate 只是模型的说法，后面的 Review 只处理语义，中间这一层是唯一的机械真值判定。</p>
+    <p class="reason">这里要揭示一个绝大多数人没有注意到的不对称：<strong>Evidence 检查数值时比的是 <span class="mono">cell["text"]</span>，检查口径标签时比的是 <span class="mono">cell["raw_text"]</span>。</strong>下面的控件直接改模型的主张，右侧判决实时按真实规则重算。</p>
+  </div>
+
+  <div class="predict" id="pred5">
+    <div class="q">如果模型把标签写成 <span class="mono">"Worldwide (2)"</span>——只少了一个前导换行，其余全对——哪一项会失败？</div>
+    <div class="qs">这是这条链路上真实发生过、并且最贵的一课。</div>
+    <div class="choices">
+      <button class="pchoice" data-i="0" type="button">值检查和标签检查都失败</button>
+      <button class="pchoice" data-i="1" type="button">只有值检查失败</button>
+      <button class="pchoice" data-i="2" type="button">只有标签检查失败</button>
+      <button class="pchoice" data-i="3" type="button">都通过，换行会被归一化掉</button>
+    </div>
+    <div class="reveal" id="rev5" hidden></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>改写模型的主张</h3>
+      <span class="note">带 <span class="mono">真实</span> 标记的是 4863af40 实际返回的值</span></div>
+    <div class="panel-body"><div class="controls" id="s5ctl"></div></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>逐格比对</h3><span class="note">evidence.py:145 / 190-193</span></div>
+    <div class="voices" id="s5voices"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>check_evidence 判决</h3>
+      <span class="note" id="s5status"></span></div>
+    <div class="gates" id="s5gates"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>产出的 EVIDENCE_CHECK 记录</h3><span class="note">evidence.py:506-529</span></div>
+    <div class="panel-body scroll-x" id="s5record"></div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>「模型指的位置上到底有没有它说的东西」被<strong>机械判定</strong>了。同时：模型说的 <span class="mono">"69.8"</span> 在这里被换成了 Evidence 自己算出的 <span class="mono">"0.698"</span>——从这一刻起，模型的原话再也不会出现在任何下游对象里。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S6 ══════════════════════════ -->
+<section class="scene" id="scene-6" aria-labelledby="h6s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 6 幕 · 失败是一等结果路径</div>
+    <h2 id="h6s">一个换行符的完整去向</h2>
+    <p class="reason">这不是教学假设。<span class="mono">2026-08-26</span>，Run <span class="mono">cf8dbd0c</span>：远端调用<strong>完全成功</strong>（HTTP 200，零重试），模型输出<strong>结构完全合法</strong>，选的表对、指的格对、数也读对了 <span class="pv pv-disk">落盘</span>。</p>
+    <p class="reason">唯一的问题是 <span class="mono">scope_evidence_2.raw_text</span> 少了一个前导换行。下面是异常从产生到消失的完整路径，以及一个只有重跑才能发现的缺口。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>同一份文件、同一个 task、同一个坐标，两次调用</h3>
+      <span class="note"><span class="pv pv-disk">落盘</span> 两次模型输出的字节差异</span></div>
+    <div class="panel-body scroll-x" id="s6diff"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>异常传播：从 evidence.py:192 到 qualification 停止</h3></div>
+    <div class="ladder" id="s6ladder"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>被复现出来、但从未落盘的那条记录</h3>
+      <span class="note"><span class="pv pv-run">实测</span> 本次用原始字节重跑 check_evidence 得到</span></div>
+    <div class="panel-body scroll-x" id="s6rec"></div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>失败有<strong>精确的终态</strong>（<span class="mono">EVIDENCE_FAILURE</span>，不重试）、<strong>精确的记录集合</strong>（Run 停在 OPEN，6 条记录，请求与响应字节完整保留）、和<strong>精确的非影响</strong>（active publication 三个 provider 计数器仍是 0）。<br><br>但它<strong>没有</strong>精确的落盘原因：<span class="mono">SCOPE_LABEL_TEXT_MISMATCH</span> 这个字符串在整个 <span class="mono">artifacts/</span> 目录里出现 <strong>0 次</strong> <span class="pv pv-run">实测</span>。REJECTED 的 EvidenceCheck 只在内存里存在过。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S7 ══════════════════════════ -->
+<section class="scene" id="scene-7" aria-labelledby="h7s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 7 幕 · 语义授权</div>
+    <h2 id="h7s">Review 与 VerifiedObservation：谁为口径负责</h2>
+    <p class="reason">要替换的误解是：<strong>「Evidence PASS 就等于这个数字对了」</strong>。不等于。Evidence 只能证明「你指的位置上确实写着这些字」；「可比全系统口径是不是业务要的那个口径」它<strong>不判断</strong>，也不假装能判断。</p>
+    <p class="reason"><span class="mono">check_evidence</span> 的 docstring 用的词是 <span class="mono">"the asymmetric mechanical Evidence Checker"</span> <span class="pv pv-code">代码</span>——它能证伪，不能证实。证伪可以机械化，证实不能。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>能不能不要人：三盏必须同时亮的灯</h3><span class="note">evidence.py:469-473</span></div>
+    <div class="panel-body" id="s7lamps"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>approved_claims：4 项里有 1 项模型从来没被要求证明</h3><span class="note">review.py:84</span></div>
+    <div class="panel-body scroll-x" id="s7claims"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>VerifiedObservation：进入下游的是哪个数</h3>
+      <span class="note">4863af40 <span class="pv pv-disk">落盘</span></span></div>
+    <div class="panel-body" id="s7obs"></div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p>下游拿到的值来自 <span class="mono">evidence_check["normalized_values"][role]</span>，<strong>不是模型输出</strong>。而 <span class="mono">approval_effect_hash</span> 非空这一件事，就把「这个数经过了一次可追溯的批准」变成了一个一眼可辨的字段——流程一（确定性路径）产出的观测，这个字段恒为空字符串 <span class="mono">""</span>。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S8 ══════════════════════════ -->
+<section class="scene" id="scene-8" aria-labelledby="h8s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 8 幕 · 通过的范围</div>
+    <h2 id="h8s">live_ready = true 到底说了什么</h2>
+    <p class="reason">当前 freeze receipt 写着 <span class="mono">live_ready_family_ids = ["lodging_kpi_table"]</span> <span class="pv pv-disk">落盘</span>。一个不了解背景的人会自然地把它读成「模型读酒店 KPI 表这件事已经验证过了」。</p>
+    <p class="reason"><strong>这是全篇最重要、也最容易被误读的一句。</strong>下面是仓库里全部 15 次真实调用的逐条结果——不是抽样，是全部。</p>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>4 个 prompt 版本 × 3 家发行人 × 15 次真实调用</h3>
+      <span class="note"><span class="pv pv-agg">聚合</span> 逐个 Run 目录统计</span></div>
+    <div class="panel-body scroll-x" id="s8matrix"></div>
+  </div>
+
+  <div class="tally" id="s8tally"></div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>qualification 样本被换过两次</h3>
+      <span class="note"><span class="pv pv-disk">落盘</span> git 历史（本地 clone 为 shallow，只覆盖这 3 个提交）</span></div>
+    <div class="panel-body scroll-x" id="s8matrixhist"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>context 门的 PASSED 是一次豁免</h3></div>
+    <div class="panel-body" id="s8gate"></div>
+  </div>
+
+  <div class="newfact">
+    <span class="lbl">这一幕建立的事实</span>
+    <p><span class="mono">live_ready = true</span> 的准确含义是：<strong>在 Marriott 这一家公司的三个财年上，用当前 prompt，两个 task 的机械证据链完整。</strong>它<strong>不</strong>支持「模型能读任意酒店集团的 KPI 表」——跨发行人 7 次尝试 0 次成功。<br><br>公平地说：这不是隐瞒。fixture id、判据、每一次失败的 Run 全部完整落盘且内容寻址，任何人都能查出来。但只画「通过」不画「在谁身上通过」，就是在误导。</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════ S9 ══════════════════════════ -->
+<section class="scene" id="scene-9" aria-labelledby="h9s">
+  <div class="scene-head">
+    <div class="scene-kicker">第 9 幕 · 收束</div>
+    <h2 id="h9s">因果心智地图</h2>
+    <p class="reason">如果只记住一句话：<strong>模型被降级成一个「指路的人」；系统自己走过去看。看不到它说的东西，就整体作废——不修正、不搜索、不猜。</strong></p>
+  </div>
+
+  <figure class="panel">
+    <div class="panel-head"><h3>四条因果链与一条否定关系</h3></div>
+    <div class="panel-body scroll-x" id="s9map"></div>
+    <figcaption style="padding:0 15px 15px">四条链各自消除一类不确定性；底部的否定关系是这套系统最容易被误读的地方——机械证据链完整（已建立），与模型可靠（未建立），是两件不同的事。<br><br>逐工位的对象血缘与字段变化（含每一站的失败回流）另有一张可打印的静态图，随本页一起提交：<span class="mono">docs/visual/flow2-object-lineage.svg</span>。</figcaption>
+  </figure>
+
+  <div class="panel">
+    <div class="panel-head"><h3>校对结果：文档与代码的差异</h3>
+      <span class="note">以代码与落盘产物为准</span></div>
+    <div class="diffs" id="s9diffs"></div>
+  </div>
+</section>
+
+</div><!-- /stage -->
+
+<aside class="rail" id="rail" aria-label="证据轨"></aside>
+</main>
+
+<script>
+"use strict";
+/* ═══════════════════════════════════════════════════════════
+   全部数据取自快照 d9bb477 的源码、已落盘产物，或本次重跑结果。
+   provenance: run=本次实测 / disk=落盘产物 / code=源码 / agg=聚合计数
+   ═══════════════════════════════════════════════════════════ */
+
+const NL = "\\n";                       // 显示用的转义序列文本
+const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+/* 真实网格片段：本次用 build_table_grid 从 mar-20241231.htm 重建 */
+const CELLS = {
+  "28,15":{raw:"69.8&#160;",       text:"69.8",  or:28,oc:15,rs:1,cs:2},
+  "18,15":{raw:"69.7&#160;",       text:"69.7",  or:18,oc:15,rs:1,cs:2},
+  "28,0" :{raw:"\nWorldwide (2)",  text:"Worldwide (2)", or:28,oc:0,rs:1,cs:3},
+  "18,0" :{raw:"\nWorldwide (2)",  text:"Worldwide (2)", or:18,oc:0,rs:1,cs:3},
+  "19,0" :{raw:"Comparable Systemwide Properties", text:"Comparable Systemwide Properties", or:19,oc:0,rs:1,cs:3},
+  "8,0"  :{raw:"Comparable Company-Operated Properties", text:"Comparable Company-Operated Properties", or:8,oc:0,rs:1,cs:3},
+  "28,4" :{raw:"128.23&#160;",     text:"128.23",or:28,oc:4,rs:1,cs:1},
+  "18,4" :{raw:"147.09&#160;",     text:"147.09",or:18,oc:4,rs:1,cs:1}
+};
+
+/* table_000011 第 8–28 行（列 0 / 4 / 15），raw_text 原样 */
+const ROWS = [
+ [8,"Comparable Company-Operated Properties","",""],
+ [9,"\nU.S. &amp; Canada","177.07","69.4"],
+ [10,"Europe","215.26","72.1"],
+ [11,"Middle East &amp; Africa","132.47","68.6"],
+ [12,"Greater China","84.57","68.7"],
+ [13,"","",""],
+ [14,"Asia Pacific excluding China","122.13","72.5"],
+ [15,"Caribbean &amp; Latin America","182.62","66.0"],
+ [16,"","",""],
+ [17,"\nInternational - All (1)","124.96","69.9"],
+ [18,"\nWorldwide (2)","147.09","69.7"],
+ [19,"Comparable Systemwide Properties","",""],
+ [20,"\nU.S. &amp; Canada","131.26","70.1"],
+ [21,"Europe","154.31","70.3"],
+ [22,"Middle East &amp; Africa","123.62","68.0"],
+ [23,"Greater China","78.91","67.7"],
+ [24,"Asia Pacific excluding China","124.66","72.5"],
+ [25,"Caribbean &amp; Latin America","151.98","65.8"],
+ [26,"","",""],
+ [27,"\nInternational - All (1)","121.75","69.2"],
+ [28,"\nWorldwide (2)","128.23","69.8"]
+];
+
+/* B10 精确别名表（catalog/metrics/B10_occupancy.md，落盘） */
+const ALIASES = {
+  property_population:{comparable:["Comparable Systemwide Properties"]},
+  operating_scope:    {systemwide:["Comparable Systemwide Properties"]},
+  geography:          {worldwide: ["Worldwide"]}
+};
+const REQUIRED_DIMS = ["property_population","operating_scope","geography"];
+const REQUIRED_CLAIMS = {period_role:"current_fiscal_year",property_population:"comparable",
+                         operating_scope:"systemwide",geography:"worldwide"};
+
+/* 15 次真实调用（逐个 Run 目录读出：manifest.json + records.jsonl） */
+const RUNS = [
+ {run:"cf8dbd0c",co:"marriott",fx:"marriott-2024-sec-layout-v1",phase:"SECOND_LAYOUT",task:"occupancy",prompt:"c712190ce6fe",st:"FAILED",err:"EVIDENCE_FAILURE",state:"OPEN"},
+ {run:"264f5003",co:"hilton",  fx:"hilton-2024-sec-layout-v7",  phase:"SECOND_LAYOUT",task:"occupancy",prompt:"c712190ce6fe",st:"FAILED",err:"EVIDENCE_FAILURE",state:"OPEN"},
+ {run:"a31eb975",co:"hilton",  fx:"hilton-2024-sec-layout-v7",  phase:"SECOND_LAYOUT",task:"occupancy",prompt:"75dece000df4",st:"FAILED",err:"SCHEMA_VIOLATION",state:"OPEN"},
+ {run:"5d2ded6e",co:"hilton",  fx:"hilton-2024-sec-layout-v7",  phase:"SECOND_LAYOUT",task:"occupancy",prompt:"75dece000df4",st:"FAILED",err:"SCHEMA_VIOLATION",state:"OPEN"},
+ {run:"6faf411c",co:"hilton",  fx:"hilton-2024-sec-layout-v7",  phase:"SECOND_LAYOUT",task:"revpar",   prompt:"75dece000df4",st:"FAILED",err:"SCHEMA_VIOLATION",state:"OPEN"},
+ {run:"5c5c5997",co:"hilton",  fx:"hilton-2024-sec-layout-v7",  phase:"SECOND_LAYOUT",task:"occupancy",prompt:"f6e71bc244f6",st:"FAILED",err:"SCHEMA_VIOLATION",state:"OPEN"},
+ {run:"4fb8d565",co:"hilton",  fx:"hilton-2024-sec-layout-v7",  phase:"SECOND_LAYOUT",task:"occupancy",prompt:"f6e71bc244f6",st:"FAILED",err:"EVIDENCE_FAILURE",state:"OPEN"},
+ {run:"3b56c364",co:"hyatt",   fx:"hyatt-2025-sec-holdout-v2",  phase:"POST_FREEZE_HOLDOUT",task:"occupancy",prompt:"331bbabae2e0",st:"FAILED",err:"SCHEMA_VIOLATION",state:"OPEN"},
+ {run:"4863af40",co:"marriott",fx:"marriott-2024-sec-layout-v1",phase:"SECOND_LAYOUT",task:"occupancy",prompt:"331bbabae2e0",st:"SUCCEEDED",err:"",state:"FROZEN"},
+ {run:"496ab285",co:"marriott",fx:"marriott-2024-sec-layout-v1",phase:"SECOND_LAYOUT",task:"revpar",   prompt:"331bbabae2e0",st:"SUCCEEDED",err:"",state:"FROZEN"},
+ {run:"8707e7a8",co:"marriott",fx:"marriott-2024-sec-layout-v1",phase:"SECOND_LAYOUT",task:"occupancy",prompt:"331bbabae2e0",st:"SUCCEEDED",err:"",state:"FROZEN"},
+ {run:"c6f7bd70",co:"marriott",fx:"marriott-2024-sec-layout-v1",phase:"SECOND_LAYOUT",task:"revpar",   prompt:"331bbabae2e0",st:"SUCCEEDED",err:"",state:"FROZEN"},
+ {run:"c330373b",co:"marriott",fx:"marriott-2024-sec-layout-v1",phase:"SECOND_LAYOUT",task:"occupancy",prompt:"331bbabae2e0",st:"SUCCEEDED",err:"",state:"OPEN"},
+ {run:"388fd608",co:"marriott",fx:"marriott-2023-sec-holdout-v1",phase:"POST_FREEZE_HOLDOUT",task:"occupancy",prompt:"331bbabae2e0",st:"SUCCEEDED",err:"",state:"FROZEN"},
+ {run:"fce873c6",co:"marriott",fx:"marriott-2023-sec-holdout-v1",phase:"POST_FREEZE_HOLDOUT",task:"revpar",prompt:"331bbabae2e0",st:"SUCCEEDED",err:"",state:"FROZEN"}
+];
+
+/* ═══════════════ 机制引擎：check_evidence 的忠实 JS 镜像 ═══════════════ */
+function tokenChar(ch){ return /[\p{L}\p{N}_]/u.test(ch); }
+
+/* evidence.py:214 _bounded_raw_value_match —— 第一分支（整词恰好一次） */
+function boundedMatch(rawText, rawValue){
+  const hits=[]; let start=0;
+  while(true){
+    const f = rawText.indexOf(rawValue, start);
+    if(f < 0) break;
+    const end = f + rawValue.length;
+    const before = f ? rawText[f-1] : "";
+    const after  = end < rawText.length ? rawText[end] : "";
+    if((!before || !tokenChar(before)) && (!after || !tokenChar(after))) hits.push(f);
+    start = f + rawValue.length;
+  }
+  if(hits.length === 1) return true;
+  if(hits.length) return false;
+  /* 第二分支：空格短语的窄回退（one day ↔ one-day）。逐 token 仍需逐字节相等。 */
+  const toks = rawValue.split(" ");
+  if(toks.length < 2 || toks.some(t => !t || [...t].some(c => !tokenChar(c)))) return false;
+  let n=0, ts=0;
+  while(true){
+    const f = rawText.indexOf(toks[0], ts);
+    if(f < 0) break;
+    const before = f ? rawText[f-1] : "";
+    let cur = f + toks[0].length, ok = true;
+    if(before && tokenChar(before)){ ts = f + toks[0].length; continue; }
+    for(const t of toks.slice(1)){
+      const sep = cur;
+      while(cur < rawText.length && !tokenChar(rawText[cur])) cur++;
+      if(cur === sep || !rawText.startsWith(t, cur)){ ok=false; break; }
+      cur += t.length;
+      if(cur < rawText.length && tokenChar(rawText[cur])){ ok=false; break; }
+    }
+    if(ok) n++;
+    ts = f + toks[0].length;
+  }
+  return n === 1;
+}
+
+/* scope_contract.py:177 exact_enum_alias */
+function exactAlias(dimension, rawValue){
+  const table = ALIASES[dimension];
+  if(!table) return {err:"Scope dimension is not allowed"};
+  for(const [canonical, list] of Object.entries(table))
+    if(list.includes(rawValue)) return {value:canonical};
+  return {value:null};
+}
+
+/* table_grid.py:548 resolve_cell —— 八字段全对，绝不搜索别处 */
+function resolveCell(loc){
+  const key = loc.row_index + "," + loc.column_index;
+  const c = CELLS[key];
+  if(!c) return {err:"Cell coordinate is out of range"};
+  if(c.or !== loc.origin_row_index || c.oc !== loc.origin_column_index
+     || c.rs !== loc.rowspan || c.cs !== loc.colspan)
+    return {err:"Cell locator fields are not exact"};
+  return {cell:c};
+}
+
+/* constraints.py:25 parse_numeric_claim —— percent → ratio */
+function parseNumeric(rawValue, unit){
+  const m = /^\(?([0-9][0-9,]*(?:\.[0-9]+)?)\s*(percent|%|million|billion)?\)?$/i.exec(rawValue);
+  if(!m) return {err:"Cell is not a supported numeric claim"};
+  let v = parseFloat(m[1].replace(/,/g,""));
+  if(unit.toLowerCase() === "percent") v = v / 100;
+  return {value: String(Number(v.toPrecision(12)))};
+}
+
+/* evidence.py:351 check_evidence —— 执行顺序与源码一致 */
+function checkEvidence(claim){
+  const checks=[], reasons=[];
+  let normalized={}, normScope={}, unresolved=[], sysEligible=false, valuePassed=false;
+  let candStatus="CANDIDATE";
+  try{
+    checks.push({check:"SOURCE_BINDINGS", status:"PASS"});
+    checks.push({check:"READER_TABLE_EXACT_SET", status:"PASS"});
+
+    /* --- _verify_claim_cell：比 cell["text"] --- */
+    const r = resolveCell(claim.locator);
+    if(r.err) throw {code:"LOCATOR_REJECTED:" + r.err};
+    if(claim.claimed_raw_value !== r.cell.text) throw {code:"AI_CLAIMED_VALUE_CELL_MISMATCH"};
+    const num = parseNumeric(claim.claimed_raw_value, claim.claimed_reported_unit);
+    if(num.err) throw {code:num.err};
+    valuePassed = true;
+
+    /* --- _normalize_scope → _verify_local_labels：比 cell["raw_text"] --- */
+    const rawById = {};
+    for(const lab of claim.scope_evidence_locators){
+      const lr = resolveCell(lab.locator);
+      if(lr.err) throw {code:"LOCATOR_REJECTED:" + lr.err};
+      if(lab.raw_text !== lr.cell.raw) throw {code:"SCOPE_LABEL_TEXT_MISMATCH"};
+      rawById[lab.id] = lr.cell.raw;
+    }
+    for(const sc of claim.claimed_scope){
+      for(const id of sc.evidence_locator_ids)
+        if(!boundedMatch(rawById[id], sc.raw_value)) throw {code:"SCOPE_RAW_VALUE_LOCATOR_MISMATCH"};
+      const a = exactAlias(sc.dimension, sc.raw_value);
+      if(a.err) throw {code:"SCOPE_CONTRACT_INVALID:" + a.err};
+      if(a.value === null) unresolved.push(sc.dimension); else normScope[sc.dimension] = a.value;
+    }
+    normalized = {occupancy: num.value};
+    checks.push({check:"SELECTED_LOCATOR:occupancy", status:"PASS"});
+
+    const satisfied = REQUIRED_DIMS.every(d => normScope[d] === REQUIRED_CLAIMS[d]);
+    /* Reader 与 Evidence 各算一次 Candidate.status，必须相等（evidence.py:458-468） */
+    candStatus = (unresolved.length || !satisfied) ? "REVIEW_REQUIRED" : "CANDIDATE";
+    sysEligible = candStatus === "CANDIDATE" && unresolved.length === 0 && satisfied;
+    checks.push({check:"SCOPE_EXACT_ENUM_NORMALIZATION",
+                 status: sysEligible ? "PASS" : "REVIEW_REQUIRED",
+                 normalized_scope: {...normScope}, unresolved_dimensions:[...unresolved]});
+  }catch(e){
+    if(!e || !e.code) throw e;
+    reasons.push(e.code);
+    normalized = {}; normScope = {}; unresolved = []; sysEligible = false;
+  }
+  return {status: reasons.length ? "REJECTED" : "PASS",
+          checks, reason_codes:reasons, normalized_values:normalized,
+          normalized_scope:normScope, unresolved_scope_dimensions:unresolved,
+          system_approval_eligible:sysEligible,
+          _valuePassed:valuePassed, _candidateStatus:candStatus};
+}
+
+/* ═══════════════ 场景定义 ═══════════════ */
+const SCENES = [
+ {n:"00", t:"两个数字"},   {n:"01", t:"网格出生"}, {n:"02", t:"往返验证"},
+ {n:"03", t:"出网顺序"},   {n:"04", t:"模型主张"}, {n:"05", t:"逐格重读"},
+ {n:"06", t:"失败回流"},   {n:"07", t:"语义授权"}, {n:"08", t:"通过范围"},
+ {n:"09", t:"因果地图"}
+];
+
+/* ═══════════════ 状态 ═══════════════ */
+const DEFAULTS = () => ({
+  pred0:null, pred5:null,
+  crash:null,                          /* 第 3 幕：崩溃点 */
+  v:"69.8", lab:"\nWorldwide (2)", row:28, geo:"Worldwide"   /* 第 5 幕：四个控件 */
+});
+let scene = 0;
+let M = DEFAULTS();                    /* 机制状态 */
+
+/* ═══════════════ 证据轨内容 ═══════════════ */
+const RAIL = [
+[ {lead:1, c:"这一幕要让读者相信：<b>数字本身不可检验</b>——同一张真表里，两个逐字节相同的行标签下挂着两个不同的入住率。",
+   s:"本次实测 · build_table_grid(mar-20241231.htm) → table_000011 第 18/28 行"},
+  {c:"raw_text 逐字节相同：<code>\"\\nWorldwide (2)\"</code>（含前导换行）。区分它们的只有第 8 行与第 19 行两个段落头。",
+   s:"cell(18,0).raw_text == cell(28,0).raw_text"},
+  {c:"B10 的 Spec 直接把这个坑写进了 <code>forbidden_confusions</code>：<code>prior_year / percentage_change / company_operated / regional_only</code>。",
+   s:"catalog/metrics/B10_occupancy.md（落盘）"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>网格是原始字节的确定性函数，而且一张表都不筛</b>。",
+   s:"本次重建的 derived_asset_id 与冻结 Run 落盘值逐字符相同"},
+  {c:"2 047 740 字节 → 67 张表 / 19 329 个展开格 / 8 654 个原点格（44.77%）。构建耗时 1.15 s。",
+   s:"本次实测 · build_table_grid()"},
+  {c:"<code>sha256:6b9fabbdb461da3e73a28e34f1826007bc0f4987f905266ecca7ea68abdd313f</code>",
+   s:"= 4863af40/records.jsonl 里 DERIVED_ASSET 的 derived_asset_id"},
+  {c:"资源上限在<b>分配前</b>检查，不是分配后。<code>max_total_cells = 100000</code> 是硬编码常量，不是配置项。",
+   s:"scripts/vnext/resource_limits.py"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>压缩没有在模型和 Evidence 之间制造第二个世界</b>。",
+   s:"encode 的最后一步是自己解码一遍并要求 decoded != tables 时抛错"},
+  {c:"3 554 243 → 331 877 字节（9.34%）。编码 + 往返验证耗时 1.42 s。",
+   s:"本次实测 · encode_compact_table_payload()"},
+  {c:"紧凑格式的字段名是单字母 <code>c/i/o/s/x</code>——纯粹为省 token，属于偶然实现，不是契约。",
+   s:"table_payload.py:33 _COMPACT_TABLE_FIELDS"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>「远端可能已经执行」永远是一个可知的事实</b>，代价是崩溃后需要人工介入。",
+   s:"invocation_control.py:2233-2280 · marker 在 transport.send() 之前落盘"},
+  {c:"预约文件用 <code>os.open(..., O_WRONLY|O_CREAT|O_EXCL, 0o600)</code> 独占创建。抢不到 → <code>SINGLE_FLIGHT_HELD</code>。",
+   s:"invocation_control.py:2069"},
+  {c:"外部副作用被限制在文件系统的 10 个命名空间里。流程一的 <code>structured_only_result()</code> 反过来扫这 10 个目录，只要有任何一个文件就报错——这是「这批发布确实没调过模型」的机械证据。",
+   s:"invocation_control.py:143 INVOCATION_STATE_NAMESPACES"},
+  {c:"模块级<b>明确禁止</b>金额门禁：plan 里出现 7 个金额字段中的任何一个都会被拒。成本控制依赖 provider 侧和人工。",
+   s:"invocation_control.py:99 FORBIDDEN_MONETARY_FIELDS"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>结构校验再严，也没有碰过那张表一次</b>。",
+   s:"reader.py 模块 docstring：\"Validate strict Reader output without solving or correcting its claims.\""},
+  {c:"字段集合用<b>精确相等</b>而不是包含：<code>set(value) != fields</code> 就拒。当前 5 次 SCHEMA_VIOLATION 里有 4 次是多了或少了字段。",
+   s:"reader.py:64 _require_exact_mapping"},
+  {c:"注意模型返回的 <code>raw_text: \"\\nWorldwide (2)\"</code> 带着那个换行——这是当前 prompt 明确要求的，不是巧合。",
+   s:"4863af40/attempt_payloads/assistant_output_98f1fb58….json（落盘）"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>值比归一化文本，标签比原样文本</b>——这个不对称是刻意的，也是那次失败的全部原因。",
+   s:"evidence.py:145 <code class=\"path\">cell[\"text\"]</code> · evidence.py:190 <code class=\"path\">cell[\"raw_text\"]</code>"},
+  {c:"为什么值不能也比 raw_text：这一格的 raw_text 是 <code>'69.8&amp;#160;'</code>——SEC 的 HTML 表格普遍用 <code>&amp;#160;</code> 做对齐填充。比 raw_text 会让几乎每个数值主张失败。",
+   s:"本次实测 · cell(28,15).raw_text"},
+  {c:"为什么标签必须比 raw_text：口径标签的精确文本是判断口径的唯一依据。一旦允许任何文本处理，「精确别名表是唯一归一化路径」这个不变量就有了裂缝。",
+   s:"scope_contract.py:5-6 \"It deliberately contains no numeric, percentage, date, or free-text normalizers.\""},
+  {c:"B10 的完整别名表：三个维度，每维一个候选值，每个候选值<b>一个</b>别名字符串。Hilton 用 <code>System-wide</code>、Hyatt 用 <code>System-wide hotels (a)</code>，两个都不在表里——别名表的覆盖面就是这条链路的泛化边界。",
+   s:"catalog/metrics/B10_occupancy.md exact_enum_aliases（落盘）"},
+  {c:"<code>resolve_cell</code> 的 docstring 写死：<code>\"The function never searches elsewhere.\"</code> 指错格子就是 REJECTED，绝不去旁边找一个能对上的。",
+   s:"table_grid.py:563"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>失败留下的证据和成功一样完整——除了失败的精确原因</b>。",
+   s:"本次实测 · grep -ro SCOPE_LABEL_TEXT_MISMATCH artifacts/ → 0 次命中"},
+  {c:"<code>EVIDENCE_FAILURE</code> 和 <code>SCHEMA_VIOLATION</code> 都在 <code>TERMINAL_ERROR_CLASSES</code> 里，<b>不重试</b>。重试用来对抗网络抖动，不用来对抗模型质量——否则「通过了」就变成「试了几次终于通过了」。",
+   s:"invocation_control.py:91-98"},
+  {c:"而且 qualification 这条路的授权里写着 <code>automatic_retry_count: 0</code>——引擎最多 1 次重试，但当前资格路径一次都不重试。",
+   s:"4863af40/manifest.json qualification_usage_policy（落盘）"},
+  {c:"后来的解法不是放宽比较，而是改 prompt：当前 task contract 的最后一句要求模型用 <code>\\n</code> 转义原样保留全部首尾空白。改完之后 Marriott 的 7 次调用全部 PASS。",
+   s:"content_hash(system_prompt) = sha256:331bbabae2e0117c…（本次实测，与授权记录一致）"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>Evidence 能证伪，不能证实</b>；能不能不要人，由三个机械条件决定，而不是由模型自己声明。",
+   s:"evidence.py:361 \"the asymmetric mechanical Evidence Checker\""},
+  {c:"Reader 算一次 <code>status</code>，Evidence <b>独立再算一遍</b>并要求相等，不等就抛 <code>Candidate scope review status differs</code>。两次计算用的信息不同，所以这是交叉验证而不是重复检查。",
+   s:"reader.py:485-492 · evidence.py:458-468"},
+  {c:"非 PASS 的 EvidenceCheck 进不了 Review——<code>build_review_unit</code> 直接拒。「人可以强行批准一个 Evidence 失败的结果」这条路在代码层面不存在。",
+   s:"review.py:141-142"},
+  {c:"SYSTEM 批准要求 D-06 决议是一个<b>精确 8 字段</b>的对象且每个取值都对，少一个字段、多一个字段、值不对，全部返回 False。代码注释：<code>\"It never claims a person approved the result.\"</code>",
+   s:"review.py:235 system_review_allowed · review.py:432-433"},
+  {c:"批准绑定 12 项内容打成的 <code>review_unit_hash</code>，其中包括<b>实际渲染给复核者看的字节</b>的 hash。任何一项变了，旧的批准自动失效。",
+   s:"review.py:111 build_review_unit · rendered_review_hash"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>「机械证据链完整」和「模型可靠」是两件不同的事</b>——前者已经建立得很扎实，后者的证据指向相反方向。",
+   s:"聚合 · artifacts/vnext/qualification/cycles/*/runs/*/ 全部 15 个 Run"},
+  {c:"当前 prompt（331bbabae2e0）上 8 次调用 7 次通过；唯一的那次失败正好是唯一一次跨发行人尝试（Hyatt）。这是对当前 prompt 最公平的读法。",
+   s:"聚合 · 按 qualification_authorization.system_prompt_hash 分组"},
+  {c:"financial family 至今被 <code>max_total_cells = 100000</code> 挡着：JPM 那份 12.9 MB 的 10-K 有 679 张表、60 348 个原点格，展开后 124 761 格，其中 50.29% 是 span 副本。普查收据显式记录了<b>没有做过的事</b>——六个 forbidden_actions 全 false。",
+   s:"artifacts/vnext/table_stage_b_investigation/financial_grid_census/ea3d796f…json（落盘）"},
+  {c:"宁可卡着，也不为了跑通而悄悄丢表。这和第 1 幕的「不筛表」是同一条原则——一旦允许丢表，「模型从完整文档里选对了表」这个结论就作废。",
+   s:"forbidden_actions_performed: tables_deleted=false, keyword_table_filter=false, …"} ],
+
+[ {lead:1, c:"这一幕要让读者相信：<b>四条因果链缺一条，这套系统的保证就换一个意思</b>。",
+   s:"每条链的每一跳都在前面八幕里被单独证明过"},
+  {c:"到当前快照为止，AI 结果进入正式发布的数量是 <b>0</b>。active publication 是 zero-AI R2，三个 provider 计数器全为 0，10 个副作用命名空间全空。",
+   s:"outputs/publications/publication_fe01e227…/internal/{zero_ai_release_receipt,structured_only_invocation}.json（落盘）"} ]
+];
+
+/* ═══════════════ 渲染工具 ═══════════════ */
+const PV = {run:['pv-run','实测'], disk:['pv-disk','落盘'], code:['pv-code','代码'], agg:['pv-agg','聚合']};
+const pv = k => `<span class="pv ${PV[k][0]}">${PV[k][1]}</span>`;
+/* 把控制字符渲染成可见的转义序列文本（不只靠颜色） */
+function showRaw(s){
+  return '"' + esc(s).replace(/\n/g,'<span class="esc">\\n</span>')
+                     .replace(/&amp;#160;/g,'<span class="ent">&amp;#160;</span>') + '"';
+}
+const el = id => document.getElementById(id);
+
+/* ---- S0 表格 ---- */
+function renderS0(){
+  /* 回答之前两个候选格完全对称地标出；回答之后只强调 28 行那个 */
+  const answered = M.pred0 !== null;
+  let h = '<table class="grid"><thead><tr><th>row</th><th>列 0 · 行标签 raw_text</th>'
+        + '<th>列 4 · RevPAR</th><th>列 15 · Occupancy</th></tr></thead><tbody>';
+  for(const [r,lab,rev,occ] of ROWS){
+    const isSection = (r===8 || r===19);
+    const hl = (r===28 || r===18) ? " hl" : "";
+    let mark = "";
+    if(r===28) mark = " pick";
+    else if(r===18) mark = answered ? " pick2" : " pick";
+    h += `<tr class="${isSection?'section':''}${hl}"><td class="rowidx">${r}</td>`
+      +  `<td>${lab? showRaw(lab):'<span style="color:var(--faint)">""</span>'}</td>`
+      +  `<td class="num">${rev||''}</td>`
+      +  `<td class="num${mark}">${occ||''}</td></tr>`;
+  }
+  h += '</tbody></table>'
+    + `<p class="reason" style="font-size:13px;margin-top:11px;color:var(--muted)">`
+    + `第 8 行和第 19 行是两个段落头。第 18 行与第 28 行是两个候选值格——`
+    + (answered
+        ? `回答之后，蓝框是 B10 要的那个（Comparable <b>Systemwide</b>），黄框是 Spec 明确禁止的那个（Comparable <b>Company-Operated</b>）。`
+        : `目前它们完全对称，因为光看行标签确实分不出来。`)
+    + `</p>`;
+  el("s0table").innerHTML = h;
+  const P = el("pred0"), rev = el("rev0");
+  P.querySelectorAll(".pchoice").forEach((b,i)=>{
+    b.disabled = M.pred0 !== null;
+    b.removeAttribute("data-state");
+    if(M.pred0 !== null){
+      if(i === 1) b.dataset.state = (M.pred0===1) ? "picked-right" : "right";
+      else if(i === M.pred0) b.dataset.state = "picked-wrong";
+    }
+  });
+  rev.hidden = M.pred0 === null;
+  if(M.pred0 !== null){
+    rev.innerHTML =
+      `<span class="verdict ok">正确答案：69.8（第 28 行）</span>`
+      + `B10 要的是 <b>Comparable Systemwide</b> 口径，也就是第 19 行那个段落头下面的那一段。第 18 行属于第 8 行的 `
+      + `<b>Comparable Company-Operated</b> 段落——B10 的 Spec 把 <code>company_operated</code> 明确列进了 `
+      + `<code>forbidden_confusions</code> ${pv('disk')}。<br><br>`
+      + `关键在于：<b>这两行的 raw_text 逐字节相同</b>。所以模型光说「Worldwide 是 69.8」证明不了任何事；`
+      + `它必须同时指出 <code>(19,0)</code> 和 <code>(28,0)</code> 两个坐标，系统才能回去把两处都读一遍。`
+      + `${M.pred0===2 ? '<br><br>你选的「光看行标签无法判断」在字面上是对的——这正是整套机制存在的理由。' : ''}`;
+  }
+}
+
+/* ---- S1 ---- */
+function renderS1(){
+  const c = CELLS["28,0"];
+  let h = '<table class="grid"><thead><tr><th>坐标</th><th>is_origin</th><th>origin_row / origin_col</th>'
+        + '<th>rowspan × colspan</th><th>raw_text</th></tr></thead><tbody>';
+  for(const col of [0,1,2]){
+    h += `<tr${col===0?' class="hl"':''}><td>(28, ${col})</td><td>${col===0?'true':'false'}</td>`
+      +  `<td>28 / 0</td><td>1 × 3</td><td>${showRaw(c.raw)}</td></tr>`;
+  }
+  el("s1span").innerHTML = h + '</tbody></table>';
+
+  const rows = [["28,15","值格"],["28,0","口径标签"],["19,0","段落头"]];
+  let t = '<table class="grid"><thead><tr><th>坐标</th><th>角色</th>'
+        + '<th>raw_text — 原样，实体未解码、空白未折叠</th>'
+        + '<th>text — 实体已解码、空白折叠、首尾去空白</th></tr></thead><tbody>';
+  for(const [k,role] of rows){
+    const cc = CELLS[k];
+    const same = cc.raw === cc.text;
+    t += `<tr${same?'':' class="hl"'}><td>(${k.replace(","," , ")})</td><td>${role}</td>`
+      +  `<td>${showRaw(cc.raw)}</td><td>${showRaw(cc.text)}</td></tr>`;
+  }
+  t += '</tbody></table>';
+  el("s1text").innerHTML = t
+    + `<p class="reason" style="font-size:13.5px;margin-top:12px">高亮的两行是<strong>两个字段不相等</strong>的格子`
+    + ` ${pv('run')}。<code>_semantic_text()</code>（table_grid.py:321）负责生成 <code>text</code>；`
+    + `<code>raw_text</code> 是解析器捕获片段的直接拼接。这两个字段并存不是冗余——第 5 幕会看到它们分别被用在哪里。</p>`;
+}
+
+/* ---- S3 ---- */
+const STEPS = [
+ ["校验执行身份", "execution_id 必须等于 execution_identity(plan_id, owner_token, authorized_at_utc)，对不上直接拒", "invocation_control.py:1976-1980"],
+ ["落盘 plan 与请求字节", "把 AI_INVOCATION_PLAN 和 canonical 请求体写进 plans/ 与 requests/", ""],
+ ["查已有终态", "这个 execution 已经有 receipt 了 → 直接返回，不重发", ""],
+ ["查可复用成功响应", "同一个 provider_request_identity 已经成功过 → 复用，但要重新验证 Candidate 与 Evidence", ""],
+ ["O_EXCL 抢预约", "独占创建 reservation 文件。抢不到说明有别的进程在飞 → SINGLE_FLIGHT_HELD", "invocation_control.py:2069"],
+ ["写 egress marker", "落盘一条「远端结果从现在起可能已经存在」的凭证", "invocation_control.py:888"],
+ ["transport.send()", "全仓库唯一能打开 provider socket 的函数，拒绝一切重定向", "ai_adapter.py:108"]
+];
+function renderS3(){
+  let h = "";
+  STEPS.forEach((s,i)=>{
+    const cut = M.crash !== null && i > M.crash;
+    h += `<button class="rung${cut?' after-cut':''}" type="button" data-i="${i}" aria-pressed="${M.crash===i}">`
+      +  `<span class="idx">${i+1}</span><span><span class="t">${s[0]}</span>`
+      +  `<span class="d">${s[1]}${s[2]?` <span class="hash">· ${s[2]}</span>`:''}</span></span>`
+      +  `<span class="cutmark">${M.crash===i?'✕ 崩溃点':''}</span></button>`;
+  });
+  el("s3ladder").innerHTML = h;
+  el("s3ladder").querySelectorAll(".rung").forEach(b=>{
+    b.onclick = () => { M.crash = (M.crash === +b.dataset.i) ? null : +b.dataset.i; renderS3(); };
+  });
+
+  let out;
+  if(M.crash === null){
+    out = `<div class="panel-head"><h3>正常终态</h3><span class="note">4863af40 ${pv('disk')}</span></div>`
+      + `<div class="panel-body"><dl class="kv">`
+      + `<dt>provider / model / api</dt><dd>deepseek / deepseek-v4-flash / chat_completions</dd>`
+      + `<dt>endpoint_host</dt><dd>api.deepseek.com</dd>`
+      + `<dt>request_body_bytes</dt><dd>389 255</dd>`
+      + `<dt>retries_performed</dt><dd>0</dd>`
+      + `<dt>egress_attempted</dt><dd>true</dd>`
+      + `<dt>store</dt><dd>false</dd></dl>`
+      + `<p class="reason" style="font-size:13.5px;margin-top:12px">点击左边任意一步，看进程在那里崩溃会发生什么。</p></div>`;
+  }else if(M.crash < 5){
+    out = `<div class="panel-head"><h3>在第 ${M.crash+1} 步崩溃</h3><span class="badge b-pass">可恢复</span></div>`
+      + `<div class="panel-body">`
+      + `<div class="transition"><span class="f">egress marker</span><span class="arrow">→</span><span class="after">不存在</span></div>`
+      + `<div class="transition"><span class="f">reservation</span><span class="arrow">→</span><span class="after">${M.crash<4?'尚未创建':'孤儿预约'}</span></div>`
+      + `<p class="reason" style="font-size:13.5px;margin-top:10px">还没到写 marker 那一步，所以系统<strong>能证明没有出网</strong>。`
+      + `下一个进程发现持有者已死且 marker 不存在，才允许走 <code>recover_abandoned_before_egress()</code> 归档孤儿预约并重新尝试。`
+      + `<br><br><strong>「能证明没出网」是这里的核心条件</strong>——只有在确知没有发生外部副作用的情况下，才允许替换别人的预约。</p></div>`;
+  }else{
+    out = `<div class="panel-head"><h3>在第 ${M.crash+1} 步崩溃</h3><span class="badge b-rej">不可恢复 · 需人工介入</span></div>`
+      + `<div class="panel-body">`
+      + `<div class="transition"><span class="f">egress marker</span><span class="arrow">→</span><span class="after">已存在</span></div>`
+      + `<div class="transition"><span class="f">status</span><span class="before">SUCCEEDED</span><span class="arrow">→</span><span class="after">UNKNOWN_REMOTE_OUTCOME</span></div>`
+      + `<div class="transition"><span class="f">batch_terminal</span><span class="arrow">→</span><span class="after">true</span></div>`
+      + `<div class="transition"><span class="f">unknown_egress_marker_id</span><span class="arrow">→</span><span class="after">指向那条 marker</span></div>`
+      + `<p class="reason" style="font-size:13.5px;margin-top:10px">marker 已经落盘，本地<strong>无法判断远端是否执行了、是否计费了</strong>。`
+      + `所以：写一条 UNKNOWN 终态 receipt，<strong>不自动重试</strong>，整批停止。`
+      + `<br><br>牺牲的是自动可用性，换来的是不重复扣费、不产生两条无法对账的远端记录。</p></div>`;
+  }
+  el("s3out").innerHTML = out;
+}
+
+/* ---- S4 ---- */
+function renderS4(){
+  const j = [
+   ['{',''],
+   ['  "disclosure_group": "lodging_kpi_table",',''],
+   ['  "table_locator": {"derived_asset_id": "sha256:6b9fabbd…", "table_id": "table_000011"},',''],
+   ['  "candidates": [{',''],
+   ['    "role": "occupancy",',''],
+   ['    "claimed_period": "FY2024",',''],
+   ['    "claimed_raw_value": "69.8",','claim'],
+   ['    "claimed_reported_unit": "percent",',''],
+   ['    "claimed_scope": [',''],
+   ['      {"dimension": "property_population", "raw_value": "Comparable Systemwide Properties", "evidence_locator_ids": ["scope_evidence_1"]},',''],
+   ['      {"dimension": "operating_scope",     "raw_value": "Comparable Systemwide Properties", "evidence_locator_ids": ["scope_evidence_1"]},',''],
+   ['      {"dimension": "geography",           "raw_value": "Worldwide", "evidence_locator_ids": ["scope_evidence_2"]}],',''],
+   ['    "locator": {"table_id": "table_000011", "row_index": 28, "column_index": 15,','claim'],
+   ['                "origin_row_index": 28, "origin_column_index": 15, "rowspan": 1, "colspan": 2},','claim'],
+   ['    "scope_evidence_locators": [',''],
+   ['      {"id": "scope_evidence_1", "location_type": "label", "supports_dimensions": ["property_population","operating_scope"],',''],
+   ['       "locator": {…"row_index": 19, "column_index": 0, "rowspan": 1, "colspan": 3},',''],
+   ['       "raw_text": "Comparable Systemwide Properties"},',''],
+   ['      {"id": "scope_evidence_2", "location_type": "label", "supports_dimensions": ["geography"],',''],
+   ['       "locator": {…"row_index": 28, "column_index": 0, "rowspan": 1, "colspan": 3},',''],
+   ['       "raw_text": "\\nWorldwide (2)"},','claim'],
+   ['    "competing_candidates": []}],',''],
+   ['  "unresolved_competing_claims": []',''],
+   ['}','']
+  ];
+  el("s4json").innerHTML = '<div class="mono" style="line-height:1.85; white-space:pre">'
+    + j.map(([l,k]) => k ? `<span style="background:var(--claim-soft);display:inline-block;width:100%">${
+        esc(l).replace(/\\n/g,'<span class="esc">\\n</span>')}</span>` : esc(l)).join("\n")
+    + '</div>';
+}
+
+/* ---- S5 ---- */
+const OPT_V   = [["69.8","真实"],["69.8&#160;","= raw_text"],["69.80",""],["68.9",""]];
+const OPT_LAB = [["\nWorldwide (2)","真实"],["Worldwide (2)","cf8dbd0c 实际返回"],["\nWorldwide(2)",""],["\nworldwide (2)",""]];
+const OPT_ROW = [[28,"真实 · Systemwide 段"],[18,"Company-Operated 段"]];
+const OPT_GEO = [["Worldwide","真实"],["Worldwide (2)","别名表里没有"],["Global","标签里没有这个词"]];
+
+function buildClaim(){
+  return {
+    claimed_raw_value: M.v,
+    claimed_reported_unit: "percent",
+    locator:{row_index:M.row, column_index:15, origin_row_index:M.row, origin_column_index:15, rowspan:1, colspan:2},
+    scope_evidence_locators:[
+      {id:"scope_evidence_1", raw_text:"Comparable Systemwide Properties",
+       locator:{row_index:19, column_index:0, origin_row_index:19, origin_column_index:0, rowspan:1, colspan:3}},
+      {id:"scope_evidence_2", raw_text:M.lab,
+       locator:{row_index:28, column_index:0, origin_row_index:28, origin_column_index:0, rowspan:1, colspan:3}}
+    ],
+    claimed_scope:[
+      {dimension:"property_population", raw_value:"Comparable Systemwide Properties", evidence_locator_ids:["scope_evidence_1"]},
+      {dimension:"operating_scope",     raw_value:"Comparable Systemwide Properties", evidence_locator_ids:["scope_evidence_1"]},
+      {dimension:"geography",           raw_value:M.geo, evidence_locator_ids:["scope_evidence_2"]}
+    ]
+  };
+}
+
+/* 五个可达终态各自的下游后果 —— 失败不是一种，是四种语义不同的终态 */
+function outcomeOf(R){
+  if(R.status === "PASS" && R.system_approval_eligible)
+    return {k:"pass", badge:"b-pass", t:"PASS · 可走 SYSTEM 自动批准",
+      d:"三盏灯全亮 → <code>create_system_review_decision()</code> 允许在 D-06 授权下 APPROVE，"
+       +"无需人工。Run 可以继续走到 FROZEN。"};
+  if(R.status === "PASS")
+    return {k:"hold", badge:"b-hold", t:"PASS · 但必须由人复核",
+      d:"这是全链路唯一一条<b>优雅降级</b>路径，而且降级的方向是把判断交还给人，不是交给另一个模型。"
+       +"<code>unresolved_scope_dimensions</code> 非空 → <code>system_approval_eligible = false</code> → "
+       +"<code>create_system_review_decision()</code> 抛错 → Run 停在等人复核的状态。<b>这不是失败。</b>"};
+  const c = R.reason_codes[0] || "";
+  if(c === "SCOPE_LABEL_TEXT_MISMATCH")
+    return {k:"rej", badge:"b-rej", t:"REJECTED · error_class = EVIDENCE_FAILURE",
+      d:"标签原文对不上 → 整包拒绝。这正是 Run <code>cf8dbd0c</code> 真实发生的事。"
+       +"不重试、Run 停在 OPEN、qualification 序列按 <code>future_ordinal_on_failure: \"STOP\"</code> 停止。"};
+  if(c === "AI_CLAIMED_VALUE_CELL_MISMATCH")
+    return {k:"rej", badge:"b-rej", t:"REJECTED · error_class = EVIDENCE_FAILURE",
+      d:"指的那一格里不是这个值 → 整包拒绝。<b><code>resolve_cell</code> 不会去旁边找一个能对上的格子</b>——"
+       +"哪怕 69.8 就在下面 10 行的位置上。"};
+  if(c === "SCOPE_RAW_VALUE_LOCATOR_MISMATCH")
+    return {k:"rej", badge:"b-rej", t:"REJECTED · error_class = EVIDENCE_FAILURE",
+      d:"口径原文无法在它引用的标签里找到<b>恰好一次有边界的出现</b> → 整包拒绝。"
+       +"证明不了「这个词确实写在表里」，就不允许进入别名表。"};
+  return {k:"rej", badge:"b-rej", t:"REJECTED", d:"第一个失败即终止，后面的检查不再跑。"};
+}
+
+function renderS5(){
+  /* 预测 */
+  const P = el("pred5"), rv = el("rev5");
+  P.querySelectorAll(".pchoice").forEach((b,i)=>{
+    b.disabled = M.pred5 !== null; b.removeAttribute("data-state");
+    if(M.pred5 !== null){
+      if(i === 2) b.dataset.state = (M.pred5===2) ? "picked-right" : "right";
+      else if(i === M.pred5) b.dataset.state = "picked-wrong";
+    }
+  });
+  rv.hidden = M.pred5 === null;
+  if(M.pred5 !== null){
+    rv.innerHTML = `<span class="verdict ${M.pred5===2?'ok':'no'}">正确答案：只有标签检查失败</span>`
+      + `本次实测：把 cf8dbd0c 真实返回的那份 candidate 喂给 <code>_verify_claim_cell</code> 和 <code>_verify_local_labels</code>，`
+      + `结果是 <code>value check : PASS → 0.698</code>，<code>label check : FAIL → SCOPE_LABEL_TEXT_MISMATCH</code> ${pv('run')}。<br><br>`
+      + `原因是<b>两个函数比的不是同一个字段</b>：值比 <code>cell["text"]</code>（已解码、已折叠），标签比 <code>cell["raw_text"]</code>（原样）。`
+      + `下面把控件切到「Worldwide (2)」可以自己复现这一步。`;
+  }
+
+  /* 控件 */
+  const mk = (label, field, opts, cur, fmt) =>
+    `<div class="ctl"><span class="lab">${label}</span><div class="opts">`
+    + opts.map(([v,tag])=>`<button class="opt" type="button" data-f="${field}" data-v="${esc(String(v))}" `
+        + `aria-pressed="${String(v)===String(cur)}">${fmt(v)}${tag?`<span class="tag">${tag}</span>`:''}</button>`).join("")
+    + `</div></div>`;
+  el("s5ctl").innerHTML =
+      mk('模型声明的值 <b>claimed_raw_value</b> — 会被拿去比 <code>cell["text"]</code>', "v", OPT_V, M.v, v => showRaw(v))
+    + mk('模型声明的口径标签原文 <b>scope_evidence_2.raw_text</b> — 会被拿去比 <code>cell["raw_text"]</code>', "lab", OPT_LAB, M.lab, v => showRaw(v))
+    + mk('值格 locator 的行号 <b>row_index / origin_row_index</b>', "row", OPT_ROW, M.row, v => String(v))
+    + mk('geography 维度的口径原文 <b>claimed_scope[2].raw_value</b> — 先证明它写在标签里，再查别名表', "geo", OPT_GEO, M.geo, v => showRaw(v));
+  el("s5ctl").querySelectorAll(".opt").forEach(b=>{
+    b.onclick = () => {
+      const f = b.dataset.f;
+      M[f] = (f === "row") ? +b.dataset.v : b.dataset.v.replace(/&amp;/g,"&");
+      renderS5();
+    };
+  });
+
+  const claim = buildClaim();
+  const R = checkEvidence(claim);
+  const valueCell = resolveCell(claim.locator);
+  const labelCell = resolveCell(claim.scope_evidence_locators[1].locator);
+
+  /* 两栏比对 */
+  const line = (k,v) => `<div class="line"><span class="k">${k}</span> ${v}</div>`;
+  el("s5voices").innerHTML =
+     `<div class="voice claim"><h4>模型说的</h4>`
+   + line("claimed_raw_value", showRaw(M.v))
+   + line("locator", `(${M.row}, 15) span 1×2`)
+   + line("scope_evidence_1.raw_text", showRaw("Comparable Systemwide Properties"))
+   + line("scope_evidence_2.raw_text", showRaw(M.lab))
+   + line("geography.raw_value", showRaw(M.geo))
+   + `</div><div class="vs">逐字节比对</div>`
+   + `<div class="voice system"><h4>系统重读的</h4>`
+   + line(`cell(${M.row},15)["text"]`, valueCell.cell ? showRaw(valueCell.cell.text) : '<span style="color:var(--reject)">越界</span>')
+   + line(`cell(${M.row},15)["raw_text"]`, valueCell.cell ? showRaw(valueCell.cell.raw) : "—")
+   + line('cell(19,0)["raw_text"]', showRaw(CELLS["19,0"].raw))
+   + line('cell(28,0)["raw_text"]', labelCell.cell ? showRaw(labelCell.cell.raw) : "—")
+   + line("geography 的别名表", '{"worldwide": ["Worldwide"]}')
+   + `</div>`;
+
+  /* 闸门 */
+  const NAMES = [
+    ["SOURCE_BINDINGS", "源引用集合与顺序必须与传入完全一致；DerivedAsset 的父 RawBlob 集合与源引用互为相等"],
+    ["READER_TABLE_EXACT_SET", "紧凑载荷解码回来必须与 DerivedAsset 的 tables 完全相等，manifest 不能被替换"],
+    ["SELECTED_LOCATOR:occupancy", "按八字段 locator 重读值格，比 <code>cell[\"text\"]</code>，再 parse 成规范单位"],
+    ["SCOPE_EXACT_ENUM_NORMALIZATION", "按 locator 重读标签，比 <code>cell[\"raw_text\"]</code>；再走有边界的单次出现证明与精确别名表"]
+  ];
+  const got = Object.fromEntries(R.checks.map(c => [c.check, c]));
+  el("s5gates").innerHTML = NAMES.map(([n,why],i)=>{
+    const c = got[n];
+    let badge;
+    if(c) badge = c.status === "PASS" ? '<span class="badge b-pass">PASS</span>'
+                                      : '<span class="badge b-hold">REVIEW_REQUIRED</span>';
+    else if(R.reason_codes.length) badge = '<span class="badge b-rej">未记录</span>';
+    else badge = '<span class="badge b-skip">—</span>';
+    return `<div class="gate${c?'':' is-skipped'}"><span class="idx">${i+1}</span>`
+         + `<span><span class="name">${n}</span><span class="why">${why}</span></span>${badge}</div>`;
+  }).join("");
+  const oc = outcomeOf(R);
+  el("s5status").innerHTML = R.status === "PASS"
+    ? `<span class="badge b-pass">status = PASS</span> <span class="mono">system_approval_eligible = ${R.system_approval_eligible}</span>`
+    : `<span class="badge b-rej">status = REJECTED</span> <span class="mono">${R.reason_codes.join(", ")}</span>`;
+  el("s5gates").insertAdjacentHTML("beforeend",
+      `<div class="gate" style="background:var(--surface-2)"><span class="idx">→</span>`
+    + `<span><span class="name">下游后果</span><span class="why">${oc.d}</span></span>`
+    + `<span class="badge ${oc.badge}" style="white-space:normal; max-width:15em; text-align:center">${oc.t}</span></div>`);
+
+  /* 记录 */
+  /* checks 压成每条一行，避免记录面板被 JSON 缩进撑得过长 */
+  const recText =
+      '{\n'
+    + ' "record_type": "EVIDENCE_CHECK",\n'
+    + ' "status": ' + JSON.stringify(R.status) + ',\n'
+    + ' "normalized_values": ' + JSON.stringify(R.normalized_values) + ',\n'
+    + ' "normalized_scope": ' + JSON.stringify(R.normalized_scope) + ',\n'
+    + ' "unresolved_scope_dimensions": ' + JSON.stringify(R.unresolved_scope_dimensions) + ',\n'
+    + ' "system_approval_eligible": ' + R.system_approval_eligible + ',\n'
+    + ' "reason_codes": ' + JSON.stringify(R.reason_codes) + ',\n'
+    + ' "identity_constraints": [],\n'
+    + ' "checks": [\n'
+    + R.checks.map(c => '   ' + JSON.stringify({check:c.check, status:c.status})).join(',\n')
+    + (R.checks.length ? '\n' : '')
+    + ' ]\n}';
+  let extra = "";
+  if(R.status === "REJECTED" && R._valuePassed){
+    extra = `<p class="reason" style="font-size:13.5px;margin-top:12px">`
+      + `<strong>注意 checks 里没有 <code>SELECTED_LOCATOR:occupancy</code>。</strong>`
+      + `值检查其实<strong>通过了</strong>（0.698），但 <code>checks.append(...)</code> 排在 <code>_normalize_scope</code> 之后——`
+      + `异常在标签那一步抛出，这条 PASS 就再也没被记下来。落盘的证据里看不出「值是对的」。</p>`;
+  }else if(R.status === "REJECTED"){
+    extra = `<p class="reason" style="font-size:13.5px;margin-top:12px">`
+      + `<code>check_evidence</code> 把四类异常收集成 <code>reason_codes</code> 而不是抛出，所以失败也是一条可 hash、可重放的记录。`
+      + `代价是<strong>只记录第一个失败</strong>——try 块一抛就跳到 except，后面的检查不再跑。</p>`;
+  }else if(!R.system_approval_eligible){
+    extra = `<p class="reason" style="font-size:13.5px;margin-top:12px">`
+      + `<strong>注意 status 仍然是 PASS。</strong>标签重读通过了，「Worldwide (2) 这个词确实写在第 28 行第 0 列」也证明了——`
+      + `只是 Spec 的精确别名表里没有这个字符串，所以 <code>geography</code> 进了 `
+      + `<code>unresolved_scope_dimensions</code>。<br><br>`
+      + `连锁反应：<code>system_approval_eligible = false</code> → Reader 和 Evidence 各自独立算出的 `
+      + `<code>Candidate.status</code> 都是 <code>REVIEW_REQUIRED</code>（两者必须相等，否则报 `
+      + `<code>Candidate scope review status differs</code>）→ <code>create_system_review_decision()</code> 抛错 → `
+      + `只能走 HUMAN 复核。<br><br>`
+      + `真实世界里触发这条路的是<strong>换一家公司</strong>：Hilton 的表里写的是 <code>System-wide</code>，`
+      + `Hyatt 写的是 <code>System-wide hotels (a)</code>——都不在 B10 那张只有三个字符串的别名表里。</p>`;
+  }else{
+    extra = `<p class="reason" style="font-size:13.5px;margin-top:12px">`
+      + `这份记录与 4863af40 落盘的 EVIDENCE_CHECK 逐字段相同，<code>evidence_check_id = `
+      + `sha256:f7f9c146847598590efe0b574c3286a90ff0b444090b2176067d3f96e290dd12</code> ${pv('run')}。`
+      + `冻结 Run 时还会从原始字节把整个 <code>check_evidence()</code> 重跑一遍并要求逐字段相等。</p>`;
+  }
+  /* Candidate.status 由 Reader 与 Evidence 各算一次并要求相等 */
+  const crossCheck = R.reason_codes.length ? "" :
+      `<div class="transition" style="padding-bottom:12px">`
+    + `<span class="f">Candidate.status（Reader 算）</span><span class="arrow">=</span>`
+    + `<span class="after">${R._candidateStatus}</span>`
+    + `<span class="f" style="margin-left:8px">Evidence 独立再算</span><span class="arrow">=</span>`
+    + `<span class="after">${R._candidateStatus}</span>`
+    + `<span class="f" style="margin-left:8px">相等 → 通过</span></div>`;
+  el("s5record").innerHTML = crossCheck
+    + '<div class="mono" style="white-space:pre; line-height:1.8">' + esc(recText) + '</div>' + extra;
+}
+
+/* ---- S6 ---- */
+function renderS6(){
+  el("s6diff").innerHTML =
+    `<table class="grid"><thead><tr><th>Run</th><th>prompt</th><th>claimed_raw_value</th>`
+    + `<th>scope_evidence_2.raw_text</th><th>终态</th></tr></thead><tbody>`
+    + `<tr class="hl2"><td>cf8dbd0c</td><td>c712190ce6fe</td><td>${showRaw("69.8")}</td>`
+    + `<td>${showRaw("Worldwide (2)")}</td><td><span class="badge b-rej">EVIDENCE_FAILURE</span></td></tr>`
+    + `<tr class="hl"><td>4863af40</td><td>331bbabae2e0</td><td>${showRaw("69.8")}</td>`
+    + `<td>${showRaw("\nWorldwide (2)")}</td><td><span class="badge b-pass">SUCCEEDED · FROZEN</span></td></tr>`
+    + `<tr><td colspan="2" style="color:var(--muted)">表里实际是</td><td>text = ${showRaw("69.8")}</td>`
+    + `<td>raw_text = ${showRaw("\nWorldwide (2)")}</td><td></td></tr>`
+    + `</tbody></table>`
+    + `<p class="reason" style="font-size:13.5px;margin-top:12px">两次调用的表相同、任务相同、坐标相同、数值相同。`
+    + `<strong>唯一的差别是 raw_text 里那一个前导换行。</strong> ${pv('disk')}</p>`;
+
+  const L = [
+   ["_verify_local_labels 抛异常","<code>label[\"raw_text\"] != cell[\"raw_text\"]</code> → <code>ConstraintError(\"SCOPE_LABEL_TEXT_MISMATCH\")</code>","evidence.py:192-193"],
+   ["check_evidence 捕获","<code>except ConstraintError</code> → 把字符串塞进 <code>reason_codes</code>","evidence.py:503-504"],
+   ["产出 REJECTED 记录（内存）","status = REJECTED，checks 只有 2 条，normalized_values 为空","evidence.py:505"],
+   ["acceptance validator 拒绝","看到非 PASS → 抛 <code>EvidenceFailureError</code>","ai_adapter.py"],
+   ["classification 被改写","SUCCESS → TERMINAL，<code>error_class = \"EVIDENCE_FAILURE\"</code>","invocation_control.py:2293-2295"],
+   ["不重试","EVIDENCE_FAILURE ∈ TERMINAL_ERROR_CLASSES；且授权里 automatic_retry_count = 0","invocation_control.py:91-97"],
+   ["写终态 receipt 并释放预约","<code>_terminal_and_release</code>。REJECTED 的 EvidenceCheck <b>不在写入范围内</b>",""],
+   ["Run 停在 OPEN","6 条记录：RAW_BLOB / SOURCE_REFERENCE / DERIVED_ASSET / READER_INPUT_MANIFEST / AI_EXTRACTION_ATTEMPT / TABLE_QUALIFICATION_EVIDENCE；validation.json = NOT_RUN","落盘核对"],
+   ["qualification 序列停止","<code>future_ordinal_on_failure: \"STOP\"</code>，后续 ordinal 不再开始","manifest.json"],
+   ["正式发布不受影响","active publication 是 zero-AI R2，三个 provider 计数器仍是 0","落盘核对"]
+  ];
+  el("s6ladder").innerHTML = L.map((s,i)=>
+    `<div class="rung" style="cursor:default"><span class="idx">${i+1}</span>`
+    + `<span><span class="t">${s[0]}</span><span class="d">${s[1]}${s[2]?` <span class="hash">· ${s[2]}</span>`:''}</span></span>`
+    + `<span></span></div>`).join("");
+
+  const rec = {record_type:"EVIDENCE_CHECK",
+    evidence_check_id:"sha256:5562b279fc97a4c37541fe2b4f515623d93ab0308e9c8f8ecb2b9d935e23e637",
+    candidate_hash:"sha256:b80b283bc7eeb77fff7515c219f67868c6ae5c45ec065023b8e9ee2680992273",
+    status:"REJECTED", normalized_values:{},
+    checks:[{check:"SOURCE_BINDINGS",status:"PASS"},{check:"READER_TABLE_EXACT_SET",status:"PASS"}],
+    reason_codes:["SCOPE_LABEL_TEXT_MISMATCH"], identity_constraints:[],
+    normalized_scope:{}, unresolved_scope_dimensions:[], system_approval_eligible:false};
+  el("s6rec").innerHTML = '<div class="mono" style="white-space:pre; line-height:1.8">'
+    + esc(JSON.stringify(rec, null, 1)) + '</div>'
+    + `<p class="reason" style="font-size:13.5px;margin-top:12px">本次用 cf8dbd0c 保留下来的原始响应字节，重建网格、重跑 `
+    + `<code>validate_reader_output</code> 和 <code>check_evidence</code> 得到 ${pv('run')}。`
+    + `<strong>这条记录在仓库里不存在。</strong>落盘的只有 attempt 上那个笼统的 <code>error_class: "EVIDENCE_FAILURE"</code>——`
+    + `具体哪个字段、哪个坐标、差在哪一个字符，全都要靠重跑才能知道。</p>`;
+}
+
+/* ---- S7 ---- */
+function renderS7(){
+  const lamps = [
+    ["Candidate.status == \"CANDIDATE\"","无未决竞争主张。而且这个 status 由 Reader 和 Evidence 各算一次并要求相等——模型不能自报「我不需要复核」","CANDIDATE"],
+    ["unresolved_scope_dimensions == []","每个口径维度都在 Spec 的精确别名表里查到了规范值","[]"],
+    ["scope 满足 Spec 的 scope contract","归一化后的三个维度与 required_claims 一致","true"]
+  ];
+  el("s7lamps").innerHTML = lamps.map(([n,why,val],i)=>
+    `<div class="gate" style="padding-left:0;padding-right:0"><span class="idx">${i+1}</span>`
+    + `<span><span class="name">${esc(n)}</span><span class="why">${why}</span></span>`
+    + `<span class="badge b-pass">${esc(val)}</span></div>`).join("")
+    + `<div class="transition" style="margin-top:12px"><span class="f">system_approval_eligible</span>`
+    + `<span class="before">false</span><span class="arrow">→</span><span class="after">true</span>${pv('disk')}</div>`
+    + `<p class="reason" style="font-size:13.5px;margin-top:8px">三个条件的与。`
+    + `<strong>这是全链路里唯一一个「能不能不要人」的开关。</strong>为 false 时不是失败——是升级为需要人复核，`
+    + `而且降级的方向是把判断交还给人，不是交给另一个模型。</p>`;
+
+  let h = '<table class="grid"><thead><tr><th>维度</th><th>来自 Spec 的 required_claims</th>'
+        + '<th>被 Evidence 归一化结果覆盖</th><th>最终 approved_claims</th></tr></thead><tbody>';
+  const rows = [
+    ["property_population","comparable","comparable","comparable",1],
+    ["operating_scope","systemwide","systemwide","systemwide",1],
+    ["geography","worldwide","worldwide","worldwide",1],
+    ["period_role","current_fiscal_year","—（模型从未被要求证明）","current_fiscal_year",0]
+  ];
+  for(const [d,req,ev,fin,cov] of rows)
+    h += `<tr${cov?'':' class="hl2"'}><td>${d}</td><td>${req}</td><td>${ev}</td><td><b>${fin}</b></td></tr>`;
+  el("s7claims").innerHTML = h + '</tbody></table>'
+    + `<p class="reason" style="font-size:13.5px;margin-top:12px"><code>_system_approved_claims()</code> 先把 `
+    + `<code>required_claims</code> 整份拷过来，再用 Evidence 的归一化结果覆盖其中的 scope 维度。`
+    + `<strong>「这是本财年的数」由 Spec 直接声明，不进入模型的举证范围</strong>——模型只被要求证明它能证明的东西。 ${pv('disk')}</p>`;
+
+  el("s7obs").innerHTML =
+      `<div class="transition"><span class="f">value 来自</span><span class="before">模型的 claimed_raw_value "69.8"</span>`
+    + `<span class="arrow">→</span><span class="after">evidence_check.normalized_values["occupancy"] = "0.698"</span></div>`
+    + `<div class="transition"><span class="f">approval_effect_hash</span>`
+    + `<span class="before">""（流程一恒为空）</span><span class="arrow">→</span><span class="after">sha256:3c56893d143a4ed16…</span></div>`
+    + `<div class="transition"><span class="f">source_binding.locator</span><span class="arrow">→</span>`
+    + `<span class="after">table_000011 (28,15) span 1×2</span></div>`
+    + `<dl class="kv" style="margin-top:14px">`
+    + `<dt>observation_id</dt><dd>sha256:8ad49781a87276ba11cc92b66bd4cc6e93e5091c99b6a9481bdb6a7e61861560</dd>`
+    + `<dt>metric_id / role</dt><dd>B10 / occupancy</dd>`
+    + `<dt>value / unit / quality</dt><dd>0.698 / ratio / EXACT</dd>`
+    + `<dt>reviewer</dt><dd>SYSTEM · system:optional-review-v1 · EVIDENCE_BOUND_AUTO_APPROVE</dd>`
+    + `</dl>`
+    + `<p class="reason" style="font-size:13.5px;margin-top:12px">这个对象和流程一（确定性路径）产出的 `
+    + `<code>VerifiedObservation</code> 是<strong>同一个类型、同一个 schema</strong>，交给<strong>同一个 Calculator</strong>。`
+    + `下游看不出这个 Result 是哪条路来的——除非它去看 <code>approval_effect_hash</code> 空不空。`
+    + `这既是优点（统一契约），也是一个在 AI 结果进入发布之前必须解决的风险。 ${pv('disk')}</p>`;
+}
+
+/* ---- S8 ---- */
+const PROMPTS = ["c712190ce6fe","75dece000df4","f6e71bc244f6","331bbabae2e0"];
+const COS = ["marriott","hilton","hyatt"];
+function renderS8(){
+  let h = '<table class="matrix"><thead><tr><th>prompt 版本</th>'
+        + COS.map(c=>`<th>${c}</th>`).join("") + '<th>小计</th></tr></thead><tbody>';
+  for(const p of PROMPTS){
+    h += `<tr><td>${p}${p==="331bbabae2e0"?' <span style="color:var(--accent)">← 当前</span>':''}</td>`;
+    let ok=0,no=0;
+    for(const co of COS){
+      const rs = RUNS.filter(r=>r.prompt===p && r.co===co);
+      if(!rs.length){ h += '<td class="zero">—</td>'; continue; }
+      const o = rs.filter(r=>r.st==="SUCCEEDED").length, n = rs.length - o;
+      ok+=o; no+=n;
+      const cls = o===rs.length ? "ok" : (o===0 ? "no" : "");
+      h += `<td class="${cls}">${o} 通过 / ${n} 失败</td>`;
+    }
+    h += `<td>${ok} / ${ok+no}</td></tr>`;
+  }
+  h += '</tbody><tfoot><tr><td>合计</td>';
+  for(const co of COS){
+    const rs = RUNS.filter(r=>r.co===co);
+    const o = rs.filter(r=>r.st==="SUCCEEDED").length;
+    h += `<td class="${o?'':'no'}">${o} / ${rs.length}</td>`;
+  }
+  h += `<td>7 / 15</td></tr></tfoot></table>`;
+
+  h += '<details class="trace" style="margin-top:14px"><summary>展开全部 15 次调用的逐条明细</summary>'
+     + '<div style="margin-top:10px" class="scroll-x"><table class="matrix"><thead><tr>'
+     + '<th>run</th><th>公司</th><th>fixture</th><th>阶段</th><th>task</th><th>prompt</th><th>结果</th><th>Run 状态</th>'
+     + '</tr></thead><tbody>'
+     + RUNS.map(r=>`<tr><td>${r.run}</td><td>${r.co}</td><td>${r.fx}</td><td>${r.phase}</td><td>${r.task}</td>`
+        + `<td>${r.prompt}</td><td class="${r.st==="SUCCEEDED"?"ok":"no"}">${r.st==="SUCCEEDED"?"SUCCEEDED":r.err}</td>`
+        + `<td>${r.state}</td></tr>`).join("")
+     + '</tbody></table></div></details>';
+  el("s8matrix").innerHTML = h;
+
+  const cross = RUNS.filter(r=>r.co!=="marriott");
+  el("s8tally").innerHTML = [
+    ["good", "7 / 15", "真实调用通过"],
+    ["warn", "0 / " + cross.length, "跨发行人成功次数"],
+    ["good", "7 / 8", "当前 prompt 上的通过率"],
+    ["warn", "5 + 3", "SCHEMA_VIOLATION + EVIDENCE_FAILURE"]
+  ].map(([k,n,l])=>`<div class="cell ${k}"><div class="n">${n}</div><div class="l">${l}</div></div>`).join("");
+
+  el("s8matrixhist").innerHTML =
+     '<table class="matrix"><thead><tr><th>commit</th><th>second_layout_source</th>'
+   + '<th>post_freeze_holdout_source</th><th>materially_different_criteria[0]</th></tr></thead><tbody>'
+   + `<tr><td>64addc7</td><td class="no">hilton-2024-sec-layout-v7</td><td class="no">hyatt-2025-sec-holdout-v2</td><td>different_issuer_cik</td></tr>`
+   + `<tr><td>632fa6f</td><td class="ok">marriott-2024-sec-layout-v1</td><td class="no">hyatt-2025-sec-holdout-v2</td><td class="no">different_issuer_cik &nbsp;← 与 fixture 矛盾</td></tr>`
+   + `<tr><td>3ff05ac</td><td class="ok">marriott-2024-sec-layout-v1</td><td class="ok">marriott-2023-sec-holdout-v1</td><td>same_issuer_distinct_fiscal_year_and_accession</td></tr>`
+   + '</tbody></table>'
+   + `<p class="reason" style="font-size:13.5px;margin-top:12px">读法：qualification 最初要求<strong>不同发行人</strong>。`
+   + `Hilton 试了 7 个 fixture 版本、6 次真实调用，全部失败；Hyatt 试了 3 个 fixture 版本、1 次真实调用，失败。`
+   + `之后样本被换成同一家公司的不同财年，判据也相应改成 <code>same_issuer_distinct_fiscal_year_and_accession</code>，然后就全过了。`
+   + `<br><br>注意中间那个提交的<strong>内部不一致</strong>：fixture 已经换成 Marriott（同发行人），但判据还写着 `
+   + `<code>different_issuer_cik</code>——下一个提交才消除。 ${pv('disk')}</p>`;
+
+  el("s8gate").innerHTML =
+      `<div class="transition"><span class="f">max_estimated_input_tokens</span><span class="arrow">→</span>`
+    + `<span class="after">200 000</span></div>`
+    + `<div class="transition"><span class="f">maximum_observed_estimated_input_tokens</span><span class="arrow">→</span>`
+    + `<span class="after" style="background:var(--reject-soft)">395 337</span>${pv('disk')}</div>`
+    + `<div class="transition"><span class="f">context_gate.status</span><span class="arrow">→</span>`
+    + `<span class="after">PASSED</span></div>`
+    + `<p class="reason" style="font-size:13.5px;margin-top:10px">估算值接近预算的两倍，门却是 PASSED 的。`
+    + `原因在 <code>evidence_bases: ["EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"]</code>：`
+    + `估算器（<code>utf8_byte_upper_bound</code>）是一个故意保守的<strong>上界</strong>；当存在一次经人工逐 SHA 复核过的真实请求、`
+    + `且 provider 返回的 actual usage 在预算内时，这个精确绑定可以覆盖估算上界。`
+    + `<br><br><code>measurement_response_reuse_for_qualification: false</code> 是配套的关键约束——`
+    + `测量用的响应<strong>不能</strong>被复用为 qualification 证据，必须重新调用。</p>`
+    + `<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--rule)">`
+    + `<div class="transition"><span class="f">financial_statement · resource_gate</span><span class="arrow">→</span>`
+    + `<span class="after" style="background:var(--reject-soft)">BLOCKED · EXPANDED_GRID_RESOURCE_LIMIT</span>${pv('disk')}</div>`
+    + `<p class="reason" style="font-size:13.5px;margin-top:8px">JPM 那份 12 927 325 字节的 10-K：679 张表、`
+    + `60 348 个原点格，展开后 124 761 格——上限是 100 000。触发点是第 588 张表（order 587）：`
+    + `之前累计 99 975 格 + 本表 75 格 = 100 050，超限。 ${pv('disk')}</p></div>`;
+}
+
+/* ---- S9 causal map ---- */
+function renderS9(){
+  el("s9map").innerHTML = CAUSAL_SVG;
+  const D = [
+   ["Run 通过/失败的合计数","doc: 8 次通过、7 次失败","code: 7 SUCCEEDED / 8 FAILED（文档自己的 15 行表格里也只有 7 行 OK）",
+    "逐个读 artifacts/vnext/qualification/cycles/*/runs/*/{manifest.json,records.jsonl}"],
+   ["SCHEMA_VIOLATION 次数","doc: 4 次","code: 5 次（a31eb975 / 5d2ded6e / 6faf411c / 3b56c364 / 5c5c5997）",
+    "EVIDENCE_FAILURE = 3 次，与文档一致"],
+   ["正常路径的请求身份","doc: request_body_sha256 = 6e95c022… / 388 755 字节","code: 那是失败 Run cf8dbd0c 的请求；成功 Run 4863af40 是 30b73494… / 389 255 字节",
+    "两次调用用的是不同版本的 prompt，请求体本来就不同"],
+   ["REJECTED 的 EvidenceCheck 是否落盘","doc:「产出一条完整的、可 hash 的 EVIDENCE_CHECK 记录」","code: 函数层面成立，落盘层面不成立——失败 Run 只有 6 条记录，且 grep -r SCOPE_LABEL_TEXT_MISMATCH artifacts/ 命中 0 次",
+    "这一条反而强化了文档自己提的 R-3；本页第 6 幕把复现出来的那条记录展示了出来"],
+   ["重试次数的说法","doc:「重试硬编码为 2 次」","code: for attempt_ordinal in (1, 2) = 1 次初始 + 最多 1 次重试；且 qualification 授权里 automatic_retry_count = 0",
+    "GPT 版文档对这一点的表述更精确"],
+   ["Evidence「只记录第一个失败」","doc: 单个 try 块，一抛就跳出","code: 基本成立，但 DECLARED_IDENTITY 失败是 append 而不 raise（evidence.py:496），多个恒等约束失败可以累积",
+    "另有两个文档都没提到的检查项：COMPETING_LOCATOR:<role> 与 SCOPE_ROLE_UNRESOLVED_SET_DIFFERS"],
+   ["标签比对的分支数","三份文档都只写了「标签比 raw_text」","code: _verify_local_labels 还有一个 location_type == \"caption\" 分支，比的是 table[\"caption_raw_text\"]",
+    "table_000011 的 caption 为空，所以本例走的是 cell 分支"],
+   ["matrix 演进的 commit 列表","doc: 列了 6 个 commit","本地无法核对: 这个 clone 是 shallow（50 个提交），其中 4 个不在历史里",
+    "能核对的 632fa6f 与 3ff05ac 完全吻合，包括文档指出的那处内部不一致"],
+   ["仓库自己的 TESTING.md 已过期","TESTING.md:26 仍写着 live_ready_family_ids=[]、lodging 最大 392447、ESTIMATED_CONTEXT_LIMIT",
+    "当前 freeze receipt: [\"lodging_kpi_table\"]、395 337、EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+    "这是仓库内部的文档漂移，不是三份分析文档的问题"]
+  ];
+  el("s9diffs").innerHTML = D.map(([h,d,c,k],i)=>
+    `<div class="diff"><span class="no">${String(i+1).padStart(2,"0")}</span><div>`
+    + `<div class="h">${esc(h)}</div><div class="doc">${esc(d.replace(/^doc: |^TESTING\.md:26 /,""))}</div>`
+    + `<div class="code">${esc(c.replace(/^code: |^本地无法核对: |^当前 freeze receipt: /,""))}</div>`
+    + `<div class="k">${esc(k)}</div></div></div>`).join("")
+    + `<div class="panel-body" style="border-top:1px solid var(--rule)">`
+    + `<p class="reason" style="font-size:13.5px">其余全部核对通过：我抽查的约 30 处 <code>文件:行号</code> 引用全部命中（误差 ≤ 2 行），`
+    + `而每一个可复算的数字——67 张表、19 329 / 8 654 格、3 554 243 → 331 877 字节、derived_asset_id、`
+    + `evidence_check_id、observation_id、0.698、以及 financial 普查的全部计数——都精确复现。`
+    + `本页所有画面按<strong>代码与落盘产物</strong>绘制。</p></div>`;
+}
+
+/* 因果心智地图 —— 手写 SVG，currentColor 随主题 */
+const CAUSAL_SVG = `
+<figure style="margin:0">
+<svg viewBox="0 0 960 560" role="img" style="min-width:760px"
+     aria-label="四条因果链：举证责任链、归一化唯一性链、副作用可知链、可重证链，以及一条否定关系——机械证据链完整不等于模型可靠">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <g fill="currentColor" font-family="JetBrains Mono, monospace" font-size="11">
+
+  <!-- chain 1 -->
+  <text x="0" y="14" font-size="12" font-weight="700">1 · 举证责任链</text>
+  <text x="0" y="30" font-size="10" opacity=".62">把「答案对不对」换成「你指的位置上有没有」</text>
+  <g stroke="currentColor" fill="none" stroke-width="1.2">
+    <rect x="0"   y="42" width="150" height="34" rx="3"/>
+    <rect x="182" y="42" width="150" height="34" rx="3"/>
+    <rect x="364" y="42" width="150" height="34" rx="3"/>
+    <rect x="546" y="42" width="150" height="34" rx="3"/>
+    <rect x="728" y="42" width="150" height="34" rx="3"/>
+    <line x1="150" y1="59" x2="176" y2="59" marker-end="url(#ar)"/>
+    <line x1="332" y1="59" x2="358" y2="59" marker-end="url(#ar)"/>
+    <line x1="514" y1="59" x2="540" y2="59" marker-end="url(#ar)"/>
+    <line x1="696" y1="59" x2="722" y2="59" marker-end="url(#ar)"/>
+  </g>
+  <text x="75"  y="63" text-anchor="middle">模型给坐标</text>
+  <text x="257" y="63" text-anchor="middle">系统按坐标重读</text>
+  <text x="439" y="63" text-anchor="middle">逐字节比对</text>
+  <text x="621" y="63" text-anchor="middle">不一致即整体拒绝</text>
+  <text x="803" y="63" text-anchor="middle" font-weight="700">可机械判定</text>
+  <text x="439" y="90" text-anchor="middle" font-size="10" opacity=".62">resolve_cell 绝不搜索别的格子 · 不修正 · 不猜</text>
+
+  <!-- chain 2 -->
+  <text x="0" y="132" font-size="12" font-weight="700">2 · 归一化唯一性链</text>
+  <text x="0" y="148" font-size="10" opacity=".62">口径永远不会被「猜」出来</text>
+  <g stroke="currentColor" fill="none" stroke-width="1.2">
+    <rect x="0"   y="160" width="184" height="34" rx="3"/>
+    <rect x="216" y="160" width="184" height="34" rx="3"/>
+    <rect x="432" y="160" width="184" height="34" rx="3"/>
+    <rect x="648" y="160" width="230" height="34" rx="3"/>
+    <line x1="184" y1="177" x2="210" y2="177" marker-end="url(#ar)"/>
+    <line x1="400" y1="177" x2="426" y2="177" marker-end="url(#ar)"/>
+    <line x1="616" y1="177" x2="642" y2="177" marker-end="url(#ar)"/>
+  </g>
+  <text x="92"  y="181" text-anchor="middle">标签原文有边界地出现一次</text>
+  <text x="308" y="181" text-anchor="middle">查 Spec 的精确别名表</text>
+  <text x="524" y="181" text-anchor="middle">查不到 → unresolved</text>
+  <text x="763" y="181" text-anchor="middle" font-weight="700">升级为需要人，而不是失败</text>
+  <text x="439" y="208" text-anchor="middle" font-size="10" opacity=".62">没有正则 · 没有模糊匹配 · 没有数值容差 · 不用第二个模型</text>
+
+  <!-- chain 3 -->
+  <text x="0" y="250" font-size="12" font-weight="700">3 · 副作用可知链</text>
+  <text x="0" y="266" font-size="10" opacity=".62">不重复扣费，不产生两条无法对账的远端记录</text>
+  <g stroke="currentColor" fill="none" stroke-width="1.2">
+    <rect x="0"   y="278" width="150" height="34" rx="3"/>
+    <rect x="182" y="278" width="150" height="34" rx="3"/>
+    <rect x="364" y="278" width="150" height="34" rx="3"/>
+    <rect x="546" y="278" width="150" height="34" rx="3"/>
+    <rect x="728" y="278" width="150" height="34" rx="3"/>
+    <line x1="150" y1="295" x2="176" y2="295" marker-end="url(#ar)"/>
+    <line x1="332" y1="295" x2="358" y2="295" marker-end="url(#ar)"/>
+    <line x1="514" y1="295" x2="540" y2="295" marker-end="url(#ar)"/>
+    <line x1="696" y1="295" x2="722" y2="295" marker-end="url(#ar)"/>
+  </g>
+  <text x="75"  y="299" text-anchor="middle">O_EXCL 抢预约</text>
+  <text x="257" y="299" text-anchor="middle">写 egress marker</text>
+  <text x="439" y="299" text-anchor="middle">才开 socket</text>
+  <text x="621" y="299" text-anchor="middle">崩溃后可知「可能已执行」</text>
+  <text x="803" y="299" text-anchor="middle" font-weight="700">UNKNOWN 不自动重试</text>
+  <text x="439" y="326" text-anchor="middle" font-size="10" opacity=".62">重试用来对抗网络抖动，不用来对抗模型质量</text>
+
+  <!-- chain 4 -->
+  <text x="0" y="368" font-size="12" font-weight="700">4 · 可重证链</text>
+  <text x="0" y="384" font-size="10" opacity=".62">落盘的 PASS 不能自证，必须能被重新算出来</text>
+  <g stroke="currentColor" fill="none" stroke-width="1.2">
+    <rect x="0"   y="396" width="184" height="34" rx="3"/>
+    <rect x="216" y="396" width="184" height="34" rx="3"/>
+    <rect x="432" y="396" width="184" height="34" rx="3"/>
+    <rect x="648" y="396" width="230" height="34" rx="3"/>
+    <line x1="184" y1="413" x2="210" y2="413" marker-end="url(#ar)"/>
+    <line x1="400" y1="413" x2="426" y2="413" marker-end="url(#ar)"/>
+    <line x1="616" y1="413" x2="642" y2="413" marker-end="url(#ar)"/>
+  </g>
+  <text x="92"  y="417" text-anchor="middle">从原始字节重建网格</text>
+  <text x="308" y="417" text-anchor="middle">重跑 Reader 校验</text>
+  <text x="524" y="417" text-anchor="middle">重跑 check_evidence</text>
+  <text x="763" y="417" text-anchor="middle" font-weight="700">全部要求逐字段相等</text>
+  <text x="439" y="444" text-anchor="middle" font-size="10" opacity=".62">冻结 = 重新计算，不是打标记 · 每个 Run 重放 155–170 秒</text>
+
+  <!-- negation -->
+  <g stroke="currentColor" fill="none" stroke-width="1.2" stroke-dasharray="5 4">
+    <rect x="0" y="474" width="960" height="76" rx="4"/>
+  </g>
+  <text x="16" y="497" font-size="12" font-weight="700">一条必须保留的否定关系</text>
+  <g stroke="currentColor" fill="none" stroke-width="1.2">
+    <rect x="16"  y="508" width="280" height="30" rx="3"/>
+    <rect x="640" y="508" width="304" height="30" rx="3"/>
+  </g>
+  <text x="156" y="527" text-anchor="middle">机械证据链完整 —— 已建立</text>
+  <text x="792" y="527" text-anchor="middle">模型可靠 —— 尚未建立</text>
+  <g stroke="currentColor" fill="none" stroke-width="1.4">
+    <line x1="300" y1="523" x2="636" y2="523"/>
+    <line x1="452" y1="509" x2="484" y2="537"/>
+    <line x1="484" y1="509" x2="452" y2="537"/>
+  </g>
+  <text x="468" y="503" text-anchor="middle" font-size="10" opacity=".72">跨发行人 0 / 7</text>
+  </g>
+</svg>
+</figure>`;
+
+/* ═══════════════ 渲染调度 ═══════════════ */
+const RENDER = [renderS0, renderS1, ()=>{}, renderS3, renderS4, renderS5, renderS6, renderS7, renderS8, renderS9];
+
+function renderRail(){
+  const items = RAIL[scene] || [];
+  el("rail").innerHTML =
+    `<div class="panel"><div class="panel-head"><h3>证据轨</h3>`
+    + `<span class="note">第 ${SCENES[scene].n} 幕</span></div>`
+    + `<div class="panel-body">`
+    + items.map(i => `<div class="ev${i.lead?' lead':''}">`
+        + `<div class="claimtxt">${i.c}</div><div class="src">${i.s}</div></div>`).join("")
+    + `<details class="trace"><summary>标记约定</summary><div class="trace-body">`
+    + `${pv('run')}  本次在快照 d9bb477 上跑出来的\n`
+    + `${pv('disk')}  从仓库已提交产物读出（Run、receipt、fixture）\n`
+    + `${pv('code')}  源码里的常量或结构\n`
+    + `${pv('agg')}  我对落盘产物做的计数\n\n`
+    + `未标记的句子是机制说明，可在左侧引用的文件:行号处核对。`
+    + `</div></details></div></div>`;
+}
+
+function paint(){
+  document.querySelectorAll(".scene").forEach((s,i)=> s.classList.toggle("on", i === scene));
+  document.querySelectorAll(".chip").forEach((c,i)=> c.setAttribute("aria-current", String(i === scene)));
+  el("prev").disabled = scene === 0;
+  el("next").disabled = scene === SCENES.length - 1;
+  RENDER[scene]();
+  renderRail();
+  if(location.hash !== "#s" + scene) history.replaceState(null, "", "#s" + scene);
+}
+function go(i, scroll){
+  scene = Math.max(0, Math.min(SCENES.length - 1, i));
+  paint();
+  if(scroll !== false) window.scrollTo({top:0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto":"smooth"});
+}
+
+/* 初始化 */
+document.documentElement.lang = "zh-CN";
+el("scrubber").innerHTML = SCENES.map((s,i)=>
+  `<button class="chip" type="button" data-i="${i}"><span class="n">${s.n}</span>${s.t}</button>`).join("");
+el("scrubber").querySelectorAll(".chip").forEach(b => b.onclick = () => go(+b.dataset.i));
+el("prev").onclick    = () => go(scene - 1);
+el("next").onclick    = () => go(scene + 1);
+el("reset").onclick   = () => {
+  const d = DEFAULTS();
+  if(scene === 0) M.pred0 = d.pred0;
+  else if(scene === 3) M.crash = d.crash;
+  else if(scene === 5){ M.pred5=d.pred5; M.v=d.v; M.lab=d.lab; M.row=d.row; M.geo=d.geo; }
+  paint();
+};
+el("restart").onclick = () => { M = DEFAULTS(); go(0); };
+el("themebtn").onclick = () => {
+  const cur = document.documentElement.getAttribute("data-theme");
+  const dark = cur ? cur === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.setAttribute("data-theme", dark ? "light" : "dark");
+};
+document.addEventListener("keydown", e => {
+  if(e.target.closest("button, input, select, textarea, details")) { if(e.key !== "ArrowLeft" && e.key !== "ArrowRight") return; }
+  if(e.key === "ArrowRight"){ e.preventDefault(); go(scene + 1); }
+  else if(e.key === "ArrowLeft"){ e.preventDefault(); go(scene - 1); }
+  else if(e.key === "Home"){ e.preventDefault(); go(0); }
+});
+document.addEventListener("click", e => {
+  const b = e.target.closest("#pred0 .pchoice"); if(b && M.pred0 === null){ M.pred0 = +b.dataset.i; renderS0(); }
+  const c = e.target.closest("#pred5 .pchoice"); if(c && M.pred5 === null){ M.pred5 = +c.dataset.i; renderS5(); }
+});
+window.addEventListener("hashchange", () => {
+  const m = /^#s(\d+)$/.exec(location.hash);
+  if(m && +m[1] !== scene) go(+m[1], false);
+});
+
+const h = /^#s(\d+)$/.exec(location.hash);
+go(h ? +h[1] : 0, false);
+</script>
