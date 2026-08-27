@@ -716,6 +716,93 @@ def mocked_live_table_failure_transport(
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
 
+    def test_repeated_fresh_request_uses_plan_owned_wb3_namespaces(
+        self,
+    ) -> None:
+        """Make identical fresh request bytes produce distinct executions."""
+        with synthetic_no_d07_repository() as repo_root:
+            bindings = [
+                qualification._authorization_mapping(
+                    repo_root=repo_root,
+                    family_id="lodging_kpi_table",
+                    task_contract_id="lodging_occupancy_table_v2",
+                    qualification_phase="FRESH_STABILITY",
+                    qualification_ordinal=ordinal,
+                )
+                for ordinal in (1, 2)
+            ]
+            self.assertEqual(
+                bindings[0]["context_feasibility_binding"][
+                    "provider_request_body_sha256"
+                ],
+                bindings[1]["context_feasibility_binding"][
+                    "provider_request_body_sha256"
+                ],
+            )
+            self.assertNotEqual(
+                bindings[0]["qualification_task_plan_id"],
+                bindings[1]["qualification_task_plan_id"],
+            )
+            self.assertNotEqual(
+                bindings[0]["wb3_workspace_relative_path"],
+                bindings[1]["wb3_workspace_relative_path"],
+            )
+            authorizations = [
+                qualification.TableQualificationAuthorization(
+                    binding=binding,
+                    capability=(
+                        qualification._QUALIFICATION_AUTHORIZATION_CAPABILITY
+                    ),
+                )
+                for binding in bindings
+            ]
+            calls: list[bytes] = []
+            response = _occupancy_response(repo_root=repo_root)
+            for index, (binding, authorization) in enumerate(
+                zip(bindings, authorizations), start=1,
+            ):
+                with mock.patch.object(
+                    qualification,
+                    "issue_table_qualification_authorization",
+                    return_value=authorization,
+                ), mocked_live_table_transport(
+                    repo_root=repo_root,
+                    binding=binding,
+                    response_bytes=response,
+                    calls=calls,
+                    provider_request_id="request:fresh:{}".format(index),
+                ):
+                    created = qualification.execute_table_qualification_task(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_occupancy_table_v2",
+                        qualification_phase="FRESH_STABILITY",
+                        qualification_ordinal=index,
+                        target_period=binding["target_period"],
+                        owner_token="synthetic-owner",
+                    )
+                self.assertEqual("PENDING_HUMAN_REVIEW", created["status"])
+            self.assertEqual(2, len(calls))
+            terminal_plan_ids = []
+            for binding in bindings:
+                terminals = qualification.qualification_remote_egress_terminals(
+                    workspace_dir=(
+                        repo_root / binding["wb3_workspace_relative_path"]
+                    ),
+                )
+                self.assertEqual(1, len(terminals))
+                terminal_plan_ids.append(
+                    terminals[0]["qualification_task_plan_id"]
+                )
+            self.assertEqual(
+                [binding["qualification_task_plan_id"] for binding in bindings],
+                terminal_plan_ids,
+            )
+            qualification.validate_table_qualification_cycle_exact_set(
+                repo_root=repo_root,
+                binding=bindings[-1],
+            )
+
     def test_lodging_plan_forms_when_financial_resource_gate_blocks(
         self,
     ) -> None:

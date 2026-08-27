@@ -190,6 +190,8 @@ schema-v3阶段曾暴露更窄的问题：目标表没有caption时，模型可�
 
 随后一个旧cycle的Marriott FY2024 second-layout pair达到FROZEN；Hyatt FY2025 holdout却因目标表缺少冻结scope literals而以`SCHEMA_VIOLATION`停止，RevPAR按stop rule未执行。owner没有放宽scope或Evidence，而是把holdout收窄为Marriott FY2023：同issuer但fiscal year、accession与source bytes必须全部不同，并机械证明materially different layout。exact SEC source只获取一次；production parser证明唯一`table_000011`同表含FY2023 RevPAR 124.70、Occupancy 69.2、`Comparable Systemwide Properties`与`Worldwide`，且document table count与target span geometry等多项布局差异成立。当前new-cycle顺序是Marriott FY2024 second layout → production semantic freeze → Marriott FY2023 post-freeze holdout → 每task三个Marriott FY2025 fresh ordinals；旧cycle response一律不复用，每个plan仍须新exact-head审核与新execution。
 
+Fresh stability按ordinal-major运行两个task：Occupancy 1 → RevPAR 1 → Occupancy 2 → RevPAR 2 → Occupancy 3 → RevPAR 3。由于同一task三轮输入完全相同，provider request SHA也相同；系统以plan-owned WB-3 namespace保证每轮仍是新的真实execution，而不是复用上一轮response。operator必须看到每个ordinal各自不同的provider request ID、marker、attempt、response、acceptance、ledger row与Run；少一项或出现`REUSED_SUCCESS`都不能计入稳定性。
+
 但它尚未成为业务结果入口。业务人员当前仍从第 4 节所列 root manifest、snapshot checker、report 和 CSV 开始，不应在 `artifacts/vnext/` 中自行挑选一个 OPEN/FROZEN Run 当成正式结果。
 
 运行负责人还必须核对release input plan的SEC request binding：系统按exact URL/body hash/accession/document选择最后一个验证通过的attempt。recorded离线审计可以保留唯一且逐path/hash/headers/size验证的`LEGACY_WORKING_LOCATOR`，并在portable closure明确绑定tier/class；formal live只接受`IMMUTABLE_ATTEMPT`，legacy会以`LIVE_SOURCE_ATTEMPT_INCOMPLETE`停止。plan后ledger身份变化会以`SOURCE_LEDGER_BINDING_AMBIGUOUS`停止，不能继续AI、staging或publication。

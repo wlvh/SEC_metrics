@@ -40,6 +40,8 @@ effective D-36 禁用仓库金额预算执法，花费权威是 `EXTERNAL_API_AC
 | 16 | 按matrix phase完成lodging qualification并形成R3前置证据 | `tools/vnext_qualification.py` 的 table-plan、table-execute、table-freeze、table-freeze-status；latest D-07 live qualification scope | 两个task依次完成Marriott FY2024 second-layout新execution→FROZEN、production semantic tree/ledger-prefix freeze、Marriott FY2023 post-freeze holdout新execution→FROZEN、每task三个Marriott FY2025 fresh ordinals。FY2023必须同时满足same issuer、different fiscal year/accession/source bytes及至少两项机械layout差异；所有plan绑定source/request SHA/context basis并经exact-head review。每个sample必须有new WB-3 execution、provider ledger、Evidence、Review、Result、PASSED/FROZEN closure；usage缺失或actual prompt>200000即terminal、零重试并停止后续plan；measurement或旧qualification response禁止复用。financial仍未授权。 |
 | 17 | 验证已完成的prompt/schema-v3 context历史闭包 | latest same-ID D-07；`tools/create_table_context_feasibility_attestation.py --task-contract-id ... --validate` | caption必须来自selected target table自身非空caption raw text，否则从同一目标表的一格复制八字段locator与exact raw text，禁止跨表或借邻近正文；复制值首尾空白与JSON转义必须逐字保持。Occupancy与RevPAR one-shot measurement均已消费、retry=0、usage-only/no-credit，禁止新增measurement或复用response。当前qualification只可走步骤16的new-cycle exact-head-reviewed execution。 |
 
+Fresh stability必须按Occupancy 1 → RevPAR 1 → Occupancy 2 → RevPAR 2 → Occupancy 3 → RevPAR 3推进；每个ordinal的两个task均FROZEN前不得进入下一ordinal。相同task的三轮provider request bytes可以相同，但每个qualification task plan使用独立plan-owned WB-3 namespace并必须产生新的provider execution；`REUSED_SUCCESS`没有fresh credit。任一usage/terminal失败停止剩余序列。
+
 ## 快速入口：只读取现有结果
 
 | 步骤 | 动作 | 权威引用 | 验收 |

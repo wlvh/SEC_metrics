@@ -759,17 +759,31 @@ def _qualification_context_plan(
     }
 
 
-def _qualification_workspace_relative_path(*, cycle_id: str) -> str:
-    """Derive the only WB-3 workspace allowed for one qualification cycle."""
-    if not _SHA256_ID.fullmatch(cycle_id):
+def _qualification_workspace_relative_path(
+    *, cycle_id: str, qualification_task_plan_id: str,
+) -> str:
+    """Derive one WB-3 namespace for one qualification task-plan terminal.
+
+    Fresh stability ordinals intentionally reuse the same exact provider
+    request bytes while requiring a new provider execution.  WB-3 response
+    reuse is request-content addressed, so every qualification task plan must
+    own an isolated instance of the existing invocation-control state machine.
+    The cycle-level validator later aggregates those namespaces back into one
+    exact remote-terminal set.
+    """
+    if (
+        not _SHA256_ID.fullmatch(cycle_id)
+        or not _SHA256_ID.fullmatch(qualification_task_plan_id)
+    ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Qualification cycle identity is invalid",
+            message="Qualification cycle/task-plan identity is invalid",
         )
     return (
         TABLE_QUALIFICATION_CYCLE_ROOT
         / cycle_id.split(":", maxsplit=1)[1]
         / "invocation_control"
+        / qualification_task_plan_id.split(":", maxsplit=1)[1]
     ).as_posix()
 
 
@@ -1019,6 +1033,9 @@ def _authorization_mapping(
         "wb3_workspace_relative_path": (
             _qualification_workspace_relative_path(
                 cycle_id=str(freeze["qualification_cycle_id"]),
+                qualification_task_plan_id=str(
+                    plan["qualification_task_plan_id"]
+                ),
             )
         ),
         "qualification_provider_ledger_path": ledger_before["path"],
@@ -2562,24 +2579,41 @@ def validate_table_qualification_cycle_exact_set(
             code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
             message="Qualification cycle remote evidence exact set differs",
         )
-    workspaces = {
-        str(value["wb3_workspace_relative_path"])
-        for value in bindings_by_task_plan.values()
-    }
-    if workspaces != {str(binding["wb3_workspace_relative_path"])}:
-        raise QualificationError(
-            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
-            message="Qualification cycle WB-3 workspace differs",
+    wb3_terminals = []
+    observed_workspaces = set()
+    for task_plan_id, current in sorted(bindings_by_task_plan.items()):
+        workspace_relative = str(current["wb3_workspace_relative_path"])
+        expected_workspace = _qualification_workspace_relative_path(
+            cycle_id=cycle_id,
+            qualification_task_plan_id=task_plan_id,
         )
-    try:
-        wb3_terminals = qualification_remote_egress_terminals(
-            workspace_dir=repo_root / str(binding["wb3_workspace_relative_path"]),
-        )
-    except InvocationControlError as error:
-        raise QualificationError(
-            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
-            message="Qualification WB-3 egress authority is invalid",
-        ) from error
+        if (
+            workspace_relative != expected_workspace
+            or workspace_relative in observed_workspaces
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification task-plan WB-3 workspace differs",
+            )
+        observed_workspaces.add(workspace_relative)
+        try:
+            task_terminals = qualification_remote_egress_terminals(
+                workspace_dir=repo_root / workspace_relative,
+            )
+        except InvocationControlError as error:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification WB-3 egress authority is invalid",
+            ) from error
+        if any(
+            terminal["qualification_task_plan_id"] != task_plan_id
+            for terminal in task_terminals
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message="Qualification WB-3 namespace owns another task plan",
+            )
+        wb3_terminals.extend(task_terminals)
     wb3_by_terminal: Dict[str, Dict[str, object]] = {}
     for terminal in wb3_terminals:
         terminal_id_value = terminal.get(
@@ -2768,11 +2802,19 @@ def execute_table_qualification_task(
             )["qualification_task_plan_id"])
             for prior_ordinal in range(1, qualification_ordinal)
         }
-        prior_terminals = qualification_remote_egress_terminals(
-            workspace_dir=(
-                repo_root / str(binding["wb3_workspace_relative_path"])
-            ),
-        )
+        prior_terminals = []
+        for prior_plan_id in sorted(prior_plan_ids):
+            prior_terminals.extend(
+                qualification_remote_egress_terminals(
+                    workspace_dir=(
+                        repo_root
+                        / _qualification_workspace_relative_path(
+                            cycle_id=str(binding["qualification_cycle_id"]),
+                            qualification_task_plan_id=prior_plan_id,
+                        )
+                    ),
+                )
+            )
         if any(
             terminal["qualification_task_plan_id"] in prior_plan_ids
             and (

@@ -832,6 +832,16 @@
         "since": "2026-08-21"
       },
       {
+        "anchor_id": "BEHAVIOR.vnext_qualification_plan_owned_wb3_namespace",
+        "type": "agent_behavior",
+        "status": "active",
+        "statement": "每个table qualification task plan在同一qualification cycle内使用由cycle ID与task-plan ID共同派生的独立WB-3 namespace。Fresh stability各ordinal可以保持完全相同的provider request bytes，同时仍产生新的reservation、egress marker、attempt、response、acceptance与execution；不得命中前一ordinal的content-addressed success response。cycle validator必须从全部plan-owned namespaces聚合WB-3 remote terminals，并继续与Run remote attempt、qualification ledger及Evidence做exact-set闭包；prior-terminal、UNKNOWN、retry exhaustion与未物化terminal仍跨namespace阻断后续plan。该隔离复用既有WB-3状态机，不改变provider request、prompt、schema、task、serializer或业务口径。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_table_qualification_authorization.py::TableQualificationAuthorizationTest.test_repeated_fresh_request_uses_plan_owned_wb3_namespaces",
+        "test_status": "automated_recorded_negative",
+        "since": "2026-08-27"
+      },
+      {
         "anchor_id": "BEHAVIOR.vnext_table_raw_whitespace_prompt",
         "type": "agent_behavior",
         "status": "active",
