@@ -22,7 +22,7 @@ from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
 from vnext.ai_adapter import TransportPolicy
 from vnext.canonical import atomic_write_bytes, atomic_write_json, sha256_bytes
 from vnext.requirements import (
-    ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+    ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
 )
 from vnext.requirements import load_requirement_snapshot
 from vnext.source_strategy import load_source_strategy_registry
@@ -278,29 +278,45 @@ class TableTaskContractsTest(unittest.TestCase):
         self.assertEqual(2, len(lodging))
         self.assertEqual(8, len(financial))
         self.assertEqual(
-            {ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT},
+            {ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT},
             {value["system_prompt"] for value in lodging},
         )
         self.assertIn(
             "selected target table supplies a non-empty caption_raw_text",
-            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
         )
         self.assertIn(
             "all eight locator fields copied from one supplied cell in the "
             "same selected target table",
-            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
         )
         self.assertIn(
             "Never use text from another table or nearby prose.",
-            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
         )
         self.assertIn(
             "valid JSON escape sequences such as \\n, \\r, and \\t",
-            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
         )
         self.assertIn(
             "never trim, normalize, or collapse whitespace",
-            ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
+        )
+        self.assertIn(
+            "c=[caption,caption_raw_text]",
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
+        )
+        self.assertIn(
+            "[row_index,column_index,rowspan,colspan,header,raw_text,text]",
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
+        )
+        self.assertIn(
+            "copy c[1] for caption or x[5]",
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
+        )
+        self.assertIn(
+            "never copy c[0] or x[6]",
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
         )
         self.assertEqual(
             {"Return raw claims and exact locators from one selected table only."},

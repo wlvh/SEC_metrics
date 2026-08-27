@@ -1857,28 +1857,30 @@ def _readiness_by_task_request(
         qualification_scope = ISSUE_15_D07_EFFECTIVE_CHOICE[
             "live_qualification_scope"
         ]
-        raw_whitespace_policy = ISSUE_15_D07_EFFECTIVE_CHOICE.get(
-            "raw_whitespace_prompt_revision_policy"
+        compact_raw_text_policy = ISSUE_15_D07_EFFECTIVE_CHOICE.get(
+            "compact_raw_text_prompt_revision_policy"
         )
         allowed_context_reasons = {
             ESTIMATED_CONTEXT_LIMIT,
             "EXACT_CONTEXT_BINDING_MISMATCH",
         }
-        if type(raw_whitespace_policy) is dict:
+        if type(compact_raw_text_policy) is dict:
             allowed_context_reasons.update(
-                raw_whitespace_policy.get(
+                compact_raw_text_policy.get(
                     "historical_attestation_blocking_reason_codes", []
                 )
             )
         qualification_usage_only = (
             family_id == "lodging_kpi_table"
-            and type(raw_whitespace_policy) is dict
-            and raw_whitespace_policy.get("additional_measurement_authorized")
+            and type(compact_raw_text_policy) is dict
+            and compact_raw_text_policy.get(
+                "additional_measurement_authorized"
+            )
             is False
-            and raw_whitespace_policy.get(
+            and compact_raw_text_policy.get(
                 "historical_response_reuse_for_qualification"
             ) is False
-            and raw_whitespace_policy.get(
+            and compact_raw_text_policy.get(
                 "revised_request_context_evidence_basis"
             )
             == "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"

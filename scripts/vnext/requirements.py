@@ -137,6 +137,14 @@ ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT = (
     "valid JSON escape sequences such as \\n, \\r, and \\t, and never trim, "
     "normalize, or collapse whitespace."
 )
+ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT = (
+    ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT
+    + " In the supplied serializer v2 transport, "
+    "c=[caption,caption_raw_text] and each x cell tuple is "
+    "[row_index,column_index,rowspan,colspan,header,raw_text,text]. For "
+    "scope_evidence_locators raw_text, copy c[1] for caption or x[5] for "
+    "cell, header, row, or label; never copy c[0] or x[6]."
+)
 ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_GRANT_POLICY = {
     "policy_status": "PROMPT_REVISION_APPROVED_EXACT_GRANTS_PENDING",
     "family_id": "lodging_kpi_table",
@@ -338,6 +346,67 @@ ISSUE_15_D07_RAW_WHITESPACE_PROMPT_POLICY = {
     "failed_qualification_terminal_id": (
         "sha256:cf8dbd0c7cea9d955a6bd65863d95934"
         "65363e699059efaa07e50e659f21c902"
+    ),
+    "additional_measurement_authorized": False,
+    "historical_response_reuse_for_qualification": False,
+    "revised_request_context_evidence_basis": (
+        "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+    ),
+    "new_qualification_execution_per_sample_required": True,
+    "concrete_plan_requires_independent_exact_head_review": True,
+    "provider_reported_prompt_tokens_required": True,
+    "actual_prompt_tokens_max": 200000,
+    "missing_or_excess_usage_policy": (
+        "TERMINAL_NO_RETRY_STOP_LATER_LODGING_PLANS"
+    ),
+}
+ISSUE_15_D07_COMPACT_RAW_TEXT_PROMPT_POLICY = {
+    "policy_status": "APPROVED_QUALIFICATION_USAGE_ONLY",
+    "family_id": "lodging_kpi_table",
+    "task_contract_ids": [
+        "lodging_occupancy_table_v2",
+        "lodging_revpar_table_v2",
+    ],
+    "revised_system_prompt": (
+        ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT
+    ),
+    "prompt_revision_scope": (
+        "SYSTEM_PROMPT_SERIALIZER_V2_RAW_TEXT_POSITION_BINDING_ONLY"
+    ),
+    "serializer_v2_transport_contract": {
+        "serializer_version": "2",
+        "caption_tuple_fields": ["caption", "caption_raw_text"],
+        "cell_tuple_fields": [
+            "row_index",
+            "column_index",
+            "rowspan",
+            "colspan",
+            "header",
+            "raw_text",
+            "text",
+        ],
+        "caption_scope_raw_text_source": "c[1]",
+        "cell_scope_raw_text_source": "x[5]",
+        "forbidden_scope_raw_text_sources": ["c[0]", "x[6]"],
+    },
+    "system_prompt_change_authorized": True,
+    "output_schema_change_authorized": False,
+    "metric_meaning_change_authorized": False,
+    "task_role_change_authorized": False,
+    "source_change_authorized": False,
+    "serializer_change_authorized": False,
+    "provider_model_api_change_authorized": False,
+    "table_selection_change_authorized": False,
+    "historical_context_attestations_status": (
+        "HISTORICAL_NOT_CURRENT_FOR_COMPACT_RAW_TEXT_PROMPT_REQUESTS"
+    ),
+    "historical_attestation_blocking_reason_codes": [
+        "EXACT_CONTEXT_ATTESTATION_INVALID",
+        "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+    ],
+    "failed_qualification_terminal_id": (
+        "sha256:60d38396fbaf8f5814a65e191ee2ba52"
+        "ce04f9d55851ebdd35c410c83909d2be"
     ),
     "additional_measurement_authorized": False,
     "historical_response_reuse_for_qualification": False,
@@ -620,11 +689,14 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
     "raw_whitespace_prompt_revision_policy": (
         ISSUE_15_D07_RAW_WHITESPACE_PROMPT_POLICY
     ),
+    "compact_raw_text_prompt_revision_policy": (
+        ISSUE_15_D07_COMPACT_RAW_TEXT_PROMPT_POLICY
+    ),
 }
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5433721117"
+        "#issuecomment-5438743026"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -641,8 +713,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:02bb127e86e54251b8c21c59661cfa12fc"
-        "915cd976b280dfc8f275b90b1e9ec3"
+        "sha256:22a0be3ff04f3aa640aa922e111135d7aa"
+        "e90cb7beb9fd8d416f3dad0c9997a4"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1829,14 +1901,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 16
+        or len(chains["D-07"]) != 17
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][14])
+        != _decision_record_hash(decision=chains["D-07"][15])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

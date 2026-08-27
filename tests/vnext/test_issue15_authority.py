@@ -27,6 +27,8 @@ from vnext.publication import verify_publication_bundle
 from vnext.requirements import (
     ISSUE_15_BASE_PIPELINE_SHA256,
     ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY,
+    ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
+    ISSUE_15_D07_COMPACT_RAW_TEXT_PROMPT_POLICY,
     ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS,
     ISSUE_15_D07_EFFECTIVE_CHOICE,
     ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE,
@@ -426,7 +428,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(16, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(17, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -501,6 +503,14 @@ class Issue15AuthorityTest(unittest.TestCase):
             d07_chain[14]["supersedes_decision_id"],
         )
         self.assertEqual(
+            content_hash(value=d07_chain[14]),
+            d07_chain[15]["supersedes_decision_id"],
+        )
+        self.assertEqual(
+            content_hash(value=d07_chain[15]),
+            d07_chain[16]["supersedes_decision_id"],
+        )
+        self.assertEqual(
             ISSUE_15_D07_EFFECTIVE_CHOICE,
             issue_snapshot["effective_decisions"]["D-07"]["choice"],
         )
@@ -568,6 +578,18 @@ class Issue15AuthorityTest(unittest.TestCase):
             ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT,
             issue_snapshot["effective_decisions"]["D-07"]["choice"][
                 "raw_whitespace_prompt_revision_policy"
+            ]["revised_system_prompt"],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_COMPACT_RAW_TEXT_PROMPT_POLICY,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "compact_raw_text_prompt_revision_policy"
+            ],
+        )
+        self.assertEqual(
+            ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
+            issue_snapshot["effective_decisions"]["D-07"]["choice"][
+                "compact_raw_text_prompt_revision_policy"
             ]["revised_system_prompt"],
         )
         self.assertEqual(
@@ -1362,6 +1384,70 @@ class Issue15AuthorityTest(unittest.TestCase):
                 RequirementError, "superseding Decision content differs",
             ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_d07_compact_raw_text_prompt_policy_is_exact(self) -> None:
+        """Reject tuple ambiguity, measurement, reuse, or boundary drift."""
+        mutations = {
+            "revised_system_prompt": (
+                ISSUE_15_D07_RAW_WHITESPACE_LODGING_SYSTEM_PROMPT
+            ),
+            "output_schema_change_authorized": True,
+            "source_change_authorized": True,
+            "serializer_change_authorized": True,
+            "additional_measurement_authorized": True,
+            "historical_response_reuse_for_qualification": True,
+            "new_qualification_execution_per_sample_required": False,
+            "concrete_plan_requires_independent_exact_head_review": False,
+            "actual_prompt_tokens_max": 200001,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                d07["choice"]["compact_raw_text_prompt_revision_policy"][
+                    field
+                ] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+        contract_mutations = {
+            "serializer_version": "3",
+            "caption_scope_raw_text_source": "c[0]",
+            "cell_scope_raw_text_source": "x[6]",
+            "forbidden_scope_raw_text_sources": ["x[6]"],
+            "cell_tuple_fields": [
+                "row_index", "column_index", "rowspan", "colspan",
+                "header", "text", "raw_text",
+            ],
+        }
+        for field, replacement in contract_mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(path=issue_copy / "decision_register.json")
+                d07 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-07"
+                )
+                contract = d07["choice"][
+                    "compact_raw_text_prompt_revision_policy"
+                ]["serializer_v2_transport_contract"]
+                contract[field] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
 
     def test_d07_exact_attestation_requires_every_request_binding(self) -> None:
         """Reject removal of task, prompt, schema, or closure equality."""

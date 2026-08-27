@@ -3727,6 +3727,376 @@
       "approved_at_utc": "2026-08-27T02:47:48Z",
       "supersedes_decision_id": "sha256:ba97aad9b890ce7183fb7588becf8acd72ca5819d541e918462991d1387ed9f4",
       "evidence": "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-5433721117"
+    },
+    {
+      "decision_id": "D-07",
+      "status": "APPROVED",
+      "choice": {
+        "reader_table_set": "ALL_DOCUMENT_TABLE_GRIDS_IN_DOCUMENT_ORDER",
+        "semantic_prefilter": false,
+        "selector_authorized": false,
+        "estimator_id": "utf8_byte_upper_bound",
+        "estimator_version": "1",
+        "max_estimated_input_tokens": 200000,
+        "threshold_comparison": {
+          "passes": "estimated_input_tokens <= 200000",
+          "blocks": "estimated_input_tokens > 200000"
+        },
+        "threshold_scope": "PER_FAMILY_PER_REQUEST",
+        "oversized_payload_policy": "BLOCK_LIVE_QUALIFICATION_FOR_AFFECTED_FAMILY",
+        "shared_dependency_drift_policy": "INVALIDATE_ALL_DEPENDENT_FAMILIES",
+        "family_local_drift_policy": "INVALIDATE_OWNER_FAMILY_ONLY",
+        "lossless_context_minimization_precedes_semantic_selection": true,
+        "actual_prompt_tokens_authority": "PROVIDER_USAGE_WHEN_A_LATER_LIVE_CALL_IS_SEPARATELY_AUTHORIZED",
+        "live_measurement_authorized": false,
+        "live_qualification_authorized": true,
+        "measurement_exception": {
+          "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+          "family_id": "lodging_kpi_table",
+          "task_contract_id": "lodging_occupancy_table_v2",
+          "source_company_id": "marriott_international",
+          "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "serializer_version": "2",
+          "allowed_successful_provider_egress_count": 1,
+          "automatic_retry_count": 0,
+          "qualification_ordinal_credit": false,
+          "publication_eligible": false,
+          "qualification_evidence_eligible": false,
+          "response_reuse_for_qualification": false,
+          "consumes_authorization_after_any_egress_marker": true,
+          "execution_requires_external_exact_head_authorization": true
+        },
+        "context_feasibility_policy": {
+          "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
+          "accepted_measurement_evidence_id": "sha256:107c8ae9584afe58170ff230ab0c9534d7b7ea1cd38108f6d23c4326b6f7e127",
+          "accepted_provider": "deepseek",
+          "accepted_model": "deepseek-v4-flash",
+          "accepted_api": "chat_completions",
+          "accepted_actual_prompt_tokens": 161433,
+          "context_budget_tokens": 200000,
+          "context_headroom_tokens": 38567,
+          "default_path": {
+            "condition": "estimated_input_tokens <= 200000",
+            "result": "PASS",
+            "evidence_basis": "ESTIMATED_BOUND"
+          },
+          "exact_attestation_path": {
+            "estimated_condition": "estimated_input_tokens > 200000",
+            "actual_condition": "attested_actual_prompt_tokens <= 200000",
+            "required_exact_equalities": [
+              "provider_request_body_sha256",
+              "family_id",
+              "task_contract_id",
+              "source_identity",
+              "source_repo_relative_path",
+              "source_sha256",
+              "serializer_identity",
+              "serializer_hash",
+              "task_contract_hash",
+              "prompt_hash",
+              "output_schema_hash",
+              "provider",
+              "model",
+              "api",
+              "requirement_closure_hash",
+              "protected_closure_hash"
+            ],
+            "result": "PASS",
+            "evidence_basis": "PROVIDER_REPORTED_EXACT_BINDING"
+          },
+          "non_exact_equivalence_forbidden": [
+            "APPROXIMATE_RATIO",
+            "SIMILAR_BYTE_LENGTH",
+            "SAME_FAMILY",
+            "SAME_SOURCE",
+            "SAME_SERIALIZER_VERSION",
+            "SHARED_TABLE_PAYLOAD"
+          ],
+          "attestation_scope": "ONE_EXACT_TASK_REQUEST",
+          "attestation_semantics": "CONTEXT_FEASIBILITY_ONLY",
+          "measurement_authorization_permanently_consumed": true,
+          "additional_measurement_authorized": false,
+          "measurement_response_qualification_credit": false,
+          "measurement_response_reuse_for_qualification": false,
+          "qualification_requires_separate_authorization": true,
+          "qualification_requires_new_provider_execution": true,
+          "future_qualification_usage_required": true,
+          "future_qualification_actual_prompt_tokens_max": 200000,
+          "future_qualification_usage_failure_policy": "TERMINAL_NO_RETRY_STOP_LATER_ORDINALS"
+        },
+        "revpar_measurement_exception": {
+          "purpose": "ACTUAL_PROMPT_TOKEN_USAGE_ONLY",
+          "family_id": "lodging_kpi_table",
+          "task_contract_id": "lodging_revpar_table_v2",
+          "source_company_id": "marriott_international",
+          "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "serializer_version": "2",
+          "allowed_successful_provider_egress_count": 1,
+          "automatic_retry_count": 0,
+          "qualification_ordinal_credit": false,
+          "publication_eligible": false,
+          "qualification_evidence_eligible": false,
+          "response_reuse_for_qualification": false,
+          "consumes_authorization_after_any_egress_marker": true,
+          "execution_requires_external_exact_head_authorization": true,
+          "provider_reported_prompt_tokens_required": true,
+          "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
+          "context_budget_tokens": 200000
+        },
+        "accepted_context_attestations": [
+          {
+            "family_id": "lodging_kpi_table",
+            "task_contract_id": "lodging_occupancy_table_v2",
+            "attestation_id": "sha256:5ee591dd57a88764f8d4427bf058bef805b7379c023ddf4492e1a14d30e457df",
+            "measurement_evidence_id": "sha256:107c8ae9584afe58170ff230ab0c9534d7b7ea1cd38108f6d23c4326b6f7e127",
+            "actual_prompt_tokens": 161433,
+            "context_budget_tokens": 200000
+          },
+          {
+            "family_id": "lodging_kpi_table",
+            "task_contract_id": "lodging_revpar_table_v2",
+            "attestation_id": "sha256:a5632e9071f1ba27693b0940b9dab51f1ca4c80cae6d0e17634026c99a71c8c1",
+            "measurement_evidence_id": "sha256:37eef7180255a830b9b199a81fcbaf8da0243eb59968091d274d5c94f0b79540",
+            "actual_prompt_tokens": 161422,
+            "context_budget_tokens": 200000
+          }
+        ],
+        "revpar_measurement_authorization_permanently_consumed": true,
+        "live_qualification_scope": {
+          "authorized_family_ids": [
+            "lodging_kpi_table"
+          ],
+          "authorized_task_contract_ids": [
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2"
+          ],
+          "second_layout_fixture_id": "marriott-2024-sec-layout-v1",
+          "post_freeze_holdout_fixture_id": "marriott-2023-sec-holdout-v1",
+          "fresh_samples_required": 3,
+          "sample_sequence": [
+            "SECOND_LAYOUT",
+            "PRODUCTION_SEMANTIC_FREEZE",
+            "POST_FREEZE_HOLDOUT",
+            "FRESH_STABILITY_1",
+            "FRESH_STABILITY_2",
+            "FRESH_STABILITY_3"
+          ],
+          "current_content_addressed_freeze_required": true,
+          "current_stage_a_snapshot_required": true,
+          "new_provider_execution_per_sample_required": true,
+          "measurement_response_reuse_for_qualification": false,
+          "provider_usage_required": true,
+          "actual_prompt_tokens_max": 200000,
+          "authorized_context_evidence_bases": [
+            "ESTIMATED_BOUND",
+            "PROVIDER_REPORTED_EXACT_BINDING",
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+          ],
+          "unattested_over_estimated_bound_phases": [
+            "SECOND_LAYOUT",
+            "POST_FREEZE_HOLDOUT",
+            "FRESH_STABILITY"
+          ],
+          "unattested_over_estimated_bound_requires_exact_review": true,
+          "unattested_over_estimated_bound_plan_exact_head_review_required": true,
+          "rebuilt_second_layout_plan_requires_new_qualification_execution": true,
+          "revised_prompt_fresh_plan_requires_new_qualification_execution": true,
+          "missing_or_excess_usage_terminal_no_retry": true,
+          "independent_exact_head_review_required_before_first_egress": true,
+          "financial_qualification_authorized": false
+        },
+        "revised_prompt_measurement_policy": {
+          "policy_status": "MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED",
+          "family_id": "lodging_kpi_table",
+          "task_contract_ids": [
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2"
+          ],
+          "revised_system_prompt": "Return raw claims and exact locators from one selected table only. For every primary candidate, emit exactly these schema keys: role, claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, locator, scope_evidence_locators, and competing_candidates. Define every claimed_scope.evidence_locator_ids value in scope_evidence_locators with exact table geometry and raw_text copied from the supplied table. Always emit competing_candidates, using [] when none. Never emit rejection_reason_claim on a primary candidate; emit it only on each competing candidate, which must include every competing-candidate schema key.",
+          "prompt_revision_scope": "SYSTEM_PROMPT_ONLY",
+          "output_schema_change_authorized": false,
+          "metric_meaning_change_authorized": false,
+          "task_role_change_authorized": false,
+          "source_change_authorized": false,
+          "serializer_change_authorized": false,
+          "provider_model_api_change_authorized": false,
+          "table_selection_change_authorized": false,
+          "historical_attestations_status": "HISTORICAL_NOT_CURRENT_FOR_REVISED_REQUESTS",
+          "old_no_remeasurement_rule_overridden_for_revised_requests": true,
+          "maximum_measurements_per_task": 1,
+          "automatic_retry_count": 0,
+          "provider_reported_prompt_tokens_required": true,
+          "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
+          "context_budget_tokens": 200000,
+          "qualification_ordinal_credit": false,
+          "qualification_evidence_eligible": false,
+          "response_reuse_for_qualification": false,
+          "publication_eligible": false,
+          "consumes_authorization_after_any_egress_marker": true,
+          "concrete_grant_requires_independent_exact_head_review": true,
+          "qualification_requires_both_revised_context_attestations": true
+        },
+        "schema_revised_measurement_policy": {
+          "policy_status": "SCOPE_BOUND_MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED",
+          "family_id": "lodging_kpi_table",
+          "task_contract_ids": [
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2"
+          ],
+          "output_schema_version": "3",
+          "prompt_revision_scope": "SYSTEM_PROMPT_SCOPE_EVIDENCE_BINDING_ONLY",
+          "scope_evidence_binding_contract": {
+            "caption": {
+              "selected_target_table_caption_raw_text_non_empty_required": true,
+              "locator_fields": [
+                "derived_asset_id",
+                "table_id"
+              ],
+              "raw_text_source": "SELECTED_TARGET_TABLE_CAPTION_RAW_TEXT_EXACT"
+            },
+            "cell_header_row_label": {
+              "locator_fields": [
+                "derived_asset_id",
+                "table_id",
+                "row_index",
+                "column_index",
+                "origin_row_index",
+                "origin_column_index",
+                "rowspan",
+                "colspan"
+              ],
+              "locator_source": "ONE_SUPPLIED_CELL_IN_SELECTED_TARGET_TABLE",
+              "raw_text_source": "SUPPLIED_CELL_RAW_TEXT_EXACT"
+            },
+            "forbidden_text_sources": [
+              "ANOTHER_TABLE",
+              "NEARBY_PROSE"
+            ]
+          },
+          "revised_system_prompt": "Return raw claims and exact locators from one selected table only. For every primary candidate, emit exactly these schema keys: role, claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, locator, scope_evidence_locators, and competing_candidates. Define every claimed_scope.evidence_locator_ids value in scope_evidence_locators with exact table geometry and raw_text copied from the supplied table. Always emit competing_candidates, using [] when none. Never emit rejection_reason_claim on a primary candidate; emit it only on each competing candidate, which must include every competing-candidate schema key. For scope_evidence_locators, use location_type caption only when the selected target table supplies a non-empty caption_raw_text, and copy that exact caption_raw_text into raw_text. Otherwise use location_type cell, header, row, or label with all eight locator fields copied from one supplied cell in the same selected target table, and copy that cell exact raw_text. Never use text from another table or nearby prose.",
+          "system_prompt_change_authorized": true,
+          "output_schema_change_authorized": false,
+          "metric_meaning_change_authorized": false,
+          "task_role_change_authorized": false,
+          "source_change_authorized": false,
+          "serializer_change_authorized": false,
+          "provider_model_api_change_authorized": false,
+          "table_selection_change_authorized": false,
+          "historical_attestations_status": "HISTORICAL_NOT_CURRENT_FOR_SCOPE_BOUND_PROMPT_REQUESTS",
+          "failed_qualification_terminal_id": "sha256:4fb8d565a674a917aa099d953690af8c8b6d99d329d340d00b8967ebcb3d2828",
+          "old_no_additional_measurement_rule_overridden": true,
+          "maximum_measurements_per_task": 1,
+          "automatic_retry_count": 0,
+          "provider_reported_prompt_tokens_required": true,
+          "usage_unavailable_status": "FAILED_USAGE_UNAVAILABLE",
+          "context_budget_tokens": 200000,
+          "qualification_ordinal_credit": false,
+          "qualification_evidence_eligible": false,
+          "response_reuse_for_qualification": false,
+          "publication_eligible": false,
+          "consumes_authorization_after_any_egress_marker": true,
+          "concrete_grant_requires_independent_exact_head_review": true,
+          "qualification_requires_both_scope_bound_context_attestations": true
+        },
+        "raw_whitespace_prompt_revision_policy": {
+          "policy_status": "APPROVED_QUALIFICATION_USAGE_ONLY",
+          "family_id": "lodging_kpi_table",
+          "task_contract_ids": [
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2"
+          ],
+          "revised_system_prompt": "Return raw claims and exact locators from one selected table only. For every primary candidate, emit exactly these schema keys: role, claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, locator, scope_evidence_locators, and competing_candidates. Define every claimed_scope.evidence_locator_ids value in scope_evidence_locators with exact table geometry and raw_text copied from the supplied table. Always emit competing_candidates, using [] when none. Never emit rejection_reason_claim on a primary candidate; emit it only on each competing candidate, which must include every competing-candidate schema key. For scope_evidence_locators, use location_type caption only when the selected target table supplies a non-empty caption_raw_text, and copy that exact caption_raw_text into raw_text. Otherwise use location_type cell, header, row, or label with all eight locator fields copied from one supplied cell in the same selected target table, and copy that cell exact raw_text. Never use text from another table or nearby prose. For every scope_evidence_locators raw_text, preserve all leading and trailing whitespace characters exactly as supplied, represent them with valid JSON escape sequences such as \\n, \\r, and \\t, and never trim, normalize, or collapse whitespace.",
+          "prompt_revision_scope": "SYSTEM_PROMPT_SCOPE_RAW_WHITESPACE_PRESERVATION_ONLY",
+          "raw_whitespace_contract": {
+            "leading_whitespace_preserved": true,
+            "trailing_whitespace_preserved": true,
+            "json_escape_representation_required": true,
+            "trim_forbidden": true,
+            "normalization_forbidden": true,
+            "collapse_forbidden": true
+          },
+          "system_prompt_change_authorized": true,
+          "output_schema_change_authorized": false,
+          "metric_meaning_change_authorized": false,
+          "task_role_change_authorized": false,
+          "source_change_authorized": false,
+          "serializer_change_authorized": false,
+          "provider_model_api_change_authorized": false,
+          "table_selection_change_authorized": false,
+          "historical_context_attestations_status": "HISTORICAL_NOT_CURRENT_FOR_RAW_WHITESPACE_PROMPT_REQUESTS",
+          "historical_attestation_blocking_reason_codes": [
+            "EXACT_CONTEXT_ATTESTATION_INVALID",
+            "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+          ],
+          "failed_qualification_terminal_id": "sha256:cf8dbd0c7cea9d955a6bd65863d9593465363e699059efaa07e50e659f21c902",
+          "additional_measurement_authorized": false,
+          "historical_response_reuse_for_qualification": false,
+          "revised_request_context_evidence_basis": "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+          "new_qualification_execution_per_sample_required": true,
+          "concrete_plan_requires_independent_exact_head_review": true,
+          "provider_reported_prompt_tokens_required": true,
+          "actual_prompt_tokens_max": 200000,
+          "missing_or_excess_usage_policy": "TERMINAL_NO_RETRY_STOP_LATER_LODGING_PLANS"
+        },
+        "compact_raw_text_prompt_revision_policy": {
+          "policy_status": "APPROVED_QUALIFICATION_USAGE_ONLY",
+          "family_id": "lodging_kpi_table",
+          "task_contract_ids": [
+            "lodging_occupancy_table_v2",
+            "lodging_revpar_table_v2"
+          ],
+          "revised_system_prompt": "Return raw claims and exact locators from one selected table only. For every primary candidate, emit exactly these schema keys: role, claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, locator, scope_evidence_locators, and competing_candidates. Define every claimed_scope.evidence_locator_ids value in scope_evidence_locators with exact table geometry and raw_text copied from the supplied table. Always emit competing_candidates, using [] when none. Never emit rejection_reason_claim on a primary candidate; emit it only on each competing candidate, which must include every competing-candidate schema key. For scope_evidence_locators, use location_type caption only when the selected target table supplies a non-empty caption_raw_text, and copy that exact caption_raw_text into raw_text. Otherwise use location_type cell, header, row, or label with all eight locator fields copied from one supplied cell in the same selected target table, and copy that cell exact raw_text. Never use text from another table or nearby prose. For every scope_evidence_locators raw_text, preserve all leading and trailing whitespace characters exactly as supplied, represent them with valid JSON escape sequences such as \\n, \\r, and \\t, and never trim, normalize, or collapse whitespace. In the supplied serializer v2 transport, c=[caption,caption_raw_text] and each x cell tuple is [row_index,column_index,rowspan,colspan,header,raw_text,text]. For scope_evidence_locators raw_text, copy c[1] for caption or x[5] for cell, header, row, or label; never copy c[0] or x[6].",
+        "prompt_revision_scope": "SYSTEM_PROMPT_SERIALIZER_V2_RAW_TEXT_POSITION_BINDING_ONLY",
+        "serializer_v2_transport_contract": {
+          "serializer_version": "2",
+          "caption_tuple_fields": [
+              "caption",
+              "caption_raw_text"
+            ],
+            "cell_tuple_fields": [
+              "row_index",
+              "column_index",
+              "rowspan",
+              "colspan",
+              "header",
+              "raw_text",
+              "text"
+            ],
+            "caption_scope_raw_text_source": "c[1]",
+            "cell_scope_raw_text_source": "x[5]",
+            "forbidden_scope_raw_text_sources": [
+              "c[0]",
+              "x[6]"
+            ]
+          },
+          "system_prompt_change_authorized": true,
+          "output_schema_change_authorized": false,
+          "metric_meaning_change_authorized": false,
+          "task_role_change_authorized": false,
+          "source_change_authorized": false,
+          "serializer_change_authorized": false,
+          "provider_model_api_change_authorized": false,
+          "table_selection_change_authorized": false,
+          "historical_context_attestations_status": "HISTORICAL_NOT_CURRENT_FOR_COMPACT_RAW_TEXT_PROMPT_REQUESTS",
+          "historical_attestation_blocking_reason_codes": [
+            "EXACT_CONTEXT_ATTESTATION_INVALID",
+            "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+          ],
+          "failed_qualification_terminal_id": "sha256:60d38396fbaf8f5814a65e191ee2ba52ce04f9d55851ebdd35c410c83909d2be",
+          "additional_measurement_authorized": false,
+          "historical_response_reuse_for_qualification": false,
+          "revised_request_context_evidence_basis": "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+          "new_qualification_execution_per_sample_required": true,
+          "concrete_plan_requires_independent_exact_head_review": true,
+          "provider_reported_prompt_tokens_required": true,
+          "actual_prompt_tokens_max": 200000,
+          "missing_or_excess_usage_policy": "TERMINAL_NO_RETRY_STOP_LATER_LODGING_PLANS"
+        }
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-27T12:01:12Z",
+      "supersedes_decision_id": "sha256:02bb127e86e54251b8c21c59661cfa12fc915cd976b280dfc8f275b90b1e9ec3",
+      "evidence": "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-5438743026"
     }
   ],
   "pending_decisions": [

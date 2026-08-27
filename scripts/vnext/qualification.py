@@ -686,7 +686,7 @@ def _qualification_sample_measurement(
                 sample["qualification_phase"] == "FRESH_STABILITY"
                 and type(
                     requirement["effective_decisions"]["D-07"]["choice"].get(
-                        "raw_whitespace_prompt_revision_policy"
+                        "compact_raw_text_prompt_revision_policy"
                     )
                 ) is not dict
             )

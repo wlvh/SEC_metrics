@@ -128,35 +128,35 @@ class TableQualificationSamplesTest(unittest.TestCase):
         """Bind second, holdout, and fresh sources without caller locators."""
         expected = {
             ("SECOND_LAYOUT", "lodging_occupancy_table_v2"): (
-                "marriott_international", 389255,
-                "30b73494ac1d843ec4975aa0455207931bd7d84bb75edd9281b1f23c"
-                "b677af50",
+                "marriott_international", 389823,
+                "d7dac7be1c07612d3cd39cef148d8db12bb95be185245a61d00ed10c"
+                "828a58ff",
                 "BLOCKED",
             ),
             ("SECOND_LAYOUT", "lodging_revpar_table_v2"): (
-                "marriott_international", 389246,
-                "eb837d1e70c1fa7153f5685890991d6d47a71c0f97a1385055ab3262"
-                "d2d57ff1",
+                "marriott_international", 389814,
+                "573ff800c6a90477f371722fcb06f52f0a8fa5422143221f6ab865247c"
+                "de65d1",
                 "BLOCKED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_occupancy_table_v2"): (
-                "marriott_international", 385645,
-                "ccde756a0e6459b1ea28958a3e08ffd4ef608864caf68802951a4e703fb1c77b",
+                "marriott_international", 386213,
+                "b138595f90de8885879e5bcc7c04b75ccc7291383c7ae14d04601484bc6a7bb0",
                 "BLOCKED",
             ),
             ("POST_FREEZE_HOLDOUT", "lodging_revpar_table_v2"): (
-                "marriott_international", 385636,
-                "d604c47a78185086ae529f897a2ab63903fd319a8f021ece500717d0e0cd778c",
+                "marriott_international", 386204,
+                "740aba0d419a181a6a4d6c4a001a9a9343dbc018acbe1e8ebd92c156f422897c",
                 "BLOCKED",
             ),
             ("FRESH_STABILITY", "lodging_occupancy_table_v2"): (
-                "marriott_international", 395337,
-                "cfe082a68afb6b73f94f50173ac20d0ed050b2cd9ad345392d99d345876fa620",
+                "marriott_international", 395905,
+                "93678dcb57574234ba51fc5af975a2f315724284dbefacd82f1e8eef83f36c14",
                 "BLOCKED",
             ),
             ("FRESH_STABILITY", "lodging_revpar_table_v2"): (
-                "marriott_international", 395328,
-                "42e0330e7dece4918011701eb977d2379ef13f09c65cf6562a3e439c9e426fc3",
+                "marriott_international", 395896,
+                "10a878efe4ec0cff640f344b8bca42856a570cc82be4f7cf7ee2b51f6d4da9df",
                 "BLOCKED",
             ),
         }
@@ -413,16 +413,10 @@ class TableQualificationSamplesTest(unittest.TestCase):
             "provider_egress_count": 0,
         }, sentinel)
 
-    def test_replacement_occupancy_terminal_preserves_raw_whitespace_failure(
-        self,
+    def _assert_raw_text_failure(
+        self, *, run_dir: Path, expected_usage: dict, locator_id: str,
     ) -> None:
-        """Bind the one-shot usage and exact leading-newline Evidence failure."""
-        run_dir = (
-            REPO_ROOT
-            / "artifacts/vnext/qualification/cycles/"
-            "16abb47307e899231dc21ad06d05ee7353c3f83af61dfd0c024b54986cee1359/"
-            "runs/cf8dbd0c7cea9d955a6bd65863d9593465363e699059efaa07e50e659f21c902"
-        )
+        """Replay one immutable normalized-text substitution as rejected."""
         manifest, records, _decisions = load_run_for_status(
             run_dir=run_dir,
             repo_root=REPO_ROOT,
@@ -438,11 +432,7 @@ class TableQualificationSamplesTest(unittest.TestCase):
         raw_response = json.loads(
             (run_dir / attempt["raw_response_path"]).read_bytes()
         )
-        self.assertEqual({
-            "prompt_tokens": 159376,
-            "completion_tokens": 550,
-            "total_tokens": 159926,
-        }, {
+        self.assertEqual(expected_usage, {
             key: raw_response["usage"][key]
             for key in ("prompt_tokens", "completion_tokens", "total_tokens")
         })
@@ -452,7 +442,7 @@ class TableQualificationSamplesTest(unittest.TestCase):
         geography_label = next(
             row
             for row in assistant["candidates"][0]["scope_evidence_locators"]
-            if row["id"] == "scope_2"
+            if row["id"] == locator_id
         )
         derived_asset = next(
             row for row in records if row["record_type"] == "DERIVED_ASSET"
@@ -496,6 +486,57 @@ class TableQualificationSamplesTest(unittest.TestCase):
         self.assertEqual("REJECTED", evidence["status"])
         self.assertEqual(
             ["SCOPE_LABEL_TEXT_MISMATCH"], evidence["reason_codes"],
+        )
+
+    def test_replacement_occupancy_terminal_preserves_raw_whitespace_failure(
+        self,
+    ) -> None:
+        """Bind the first one-shot leading-newline Evidence failure."""
+        self._assert_raw_text_failure(
+            run_dir=(
+                REPO_ROOT
+                / "artifacts/vnext/qualification/cycles/"
+                "16abb47307e899231dc21ad06d05ee7353c3f83af61dfd0c024b54986cee1359/"
+                "runs/cf8dbd0c7cea9d955a6bd65863d9593465363e699059efaa07e50e659f21c902"
+            ),
+            expected_usage={
+                "prompt_tokens": 159376,
+                "completion_tokens": 550,
+                "total_tokens": 159926,
+            },
+            locator_id="scope_2",
+        )
+
+    def test_plan_owned_terminal_rejects_normalized_x6_scope_text(self) -> None:
+        """Keep the reviewed x[6] substitution immutable and credit-free."""
+        run_dir = (
+            REPO_ROOT
+            / "artifacts/vnext/qualification/cycles/"
+            "1e69df27e4fad24c698b0d62545dce32c85ab36561a720985ab3caff89ae8881/"
+            "runs/60d38396fbaf8f5814a65e191ee2ba52ce04f9d55851ebdd35c410c83909d2be"
+        )
+        self._assert_raw_text_failure(
+            run_dir=run_dir,
+            expected_usage={
+                "prompt_tokens": 159479,
+                "completion_tokens": 560,
+                "total_tokens": 160039,
+            },
+            locator_id="scope_evidence_2",
+        )
+        _manifest, records, _decisions = load_run_for_status(
+            run_dir=run_dir, repo_root=REPO_ROOT,
+        )
+        self.assertFalse(any(
+            record["record_type"] in {
+                "OBSERVATION_CANDIDATE", "EVIDENCE_CHECK", "REVIEW_UNIT",
+                "VERIFIED_OBSERVATION", "RESULT", "EXECUTION_TRACE",
+            }
+            for record in records
+        ))
+        self.assertEqual(
+            "NOT_RUN",
+            strict_json_file(path=run_dir / "validation.json")["status"],
         )
 
     def test_invalid_phase_ordinals_fail_before_source_or_provider(self) -> None:
