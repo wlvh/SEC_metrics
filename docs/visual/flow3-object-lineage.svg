@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 1010" width="1460" height="1010" font-family="IBM Plex Sans, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Noto Sans CJK SC, sans-serif" role="img" aria-labelledby="t d" aria-label="SEC_metrics 发布事务的对象血缘与失败回流：七个工位把局部终态结果依次加工成批次权威、兼容投影、可发布候选、不可变发布包，再经唯一提交点变成 active pointer 与切换历史，最后由 PublicationView 钉住供下游一致消费；每个工位下方画出失败时的对象结局，提交点两侧的崩溃给出三条相反的恢复出边；底部区分磁盘存在、曾经提交、当前 active 与 full acceptance 四种不同事实。">
+<title id="t">流程三 · 对象血缘与失败回流：一批结果如何成为当前正式版本</title>
+<desc id="d">SEC_metrics 快照 d9bb477。上排七个工位把局部终态结果依次加工成批次权威、兼容投影、可发布候选、不可变发布包，再经唯一提交点变成 active pointer 与切换历史，最后由 PublicationView 钉住供下游一致消费。每个工位下方是失败时的对象结局；中段是提交点两侧崩溃的三条恢复出边；底部区分磁盘存在、曾经提交、当前 active 与 full acceptance 四种不同事实。数值取自源码、已落盘产物或本次实测。</desc>
+<defs>
+<marker id="ar" viewBox="0 0 9 9" refX="8" refY="4.5" markerWidth="7" markerHeight="7" orient="auto"><polygon points="0,1 9,4.5 0,8" fill="#7B8298"/></marker>
+<marker id="arR" viewBox="0 0 9 9" refX="8" refY="4.5" markerWidth="6" markerHeight="6" orient="auto"><polygon points="0,1 9,4.5 0,8" fill="#9C3524"/></marker>
+</defs>
+<rect x="0" y="0" width="1460" height="1010" fill="#F8F9FC"/>
+<text x="28" y="34" font-size="12" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="1.6">SEC_metrics · 流程三 · 一批结果如何成为当前正式版本</text>
+<text x="28" y="66" font-size="25" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">对象血缘与失败回流</text>
+<text x="28" y="88" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">主角是三个对象：批次权威、不可变发布包、active pointer 加它的切换历史。模块只是加工它们的工位。</text>
+<text x="1432" y="34" font-size="11" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="end" font-weight="normal">分支 agent/issue-15-final-delivery</text>
+<text x="1432" y="50" font-size="11" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="end" font-weight="normal">快照 d9bb477e5606bcdcfb8d0f5d116209ec226d570f</text>
+<text x="1432" y="66" font-size="11" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="end" font-weight="normal">active publication_fe01e227…  ·  2026-08-20T11:38:54Z</text>
+<text x="1432" y="82" font-size="11" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#7B8298" text-anchor="end" font-weight="normal">核对日期 2026-08-27 · 数字全部来自该快照的磁盘产物、源码或本次实测</text>
+<line x1="28" y1="104" x2="1432" y2="104" stroke="#C7CBD9" stroke-width="1"/>
+<rect x="1025" y="124" width="202" height="266" rx="3" fill="#E1E6F8"/>
+<line x1="1025" y1="124" x2="1025" y2="390" stroke="#2C3C9C" stroke-width="3"/>
+<text x="1034" y="116" font-size="11.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="500">◆ 唯一官方提交点</text>
+<rect x="28" y="150" width="176" height="208" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<rect x="28" y="150" width="176" height="42" rx="2" fill="#EDEEF2"/>
+<text x="38" y="166" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">上游交来的</text>
+<text x="38" y="183" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">局部终态结果</text>
+<text x="38" y="212" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">每个结果</text>
+<text x="38" y="225" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">可重放</text>
+<text x="38" y="245" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">它知道</text>
+<text x="38" y="258" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">我自己算对了</text>
+<text x="38" y="278" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">它不知道</text>
+<text x="38" y="291" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">整批应有多少坐标</text>
+<line x1="209" y1="254" x2="224" y2="254" stroke="#7B8298" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="230" y="150" width="176" height="208" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<rect x="230" y="150" width="176" height="42" rx="2" fill="#EDEEF2"/>
+<text x="240" y="166" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">① 批次闭合</text>
+<text x="240" y="183" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">批次权威</text>
+<text x="240" y="212" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">batch_manifest_id</text>
+<text x="240" y="225" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">∅ → sha256:c6c1a236…</text>
+<text x="240" y="245" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">result_coordinate_count</text>
+<text x="240" y="258" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">— → 220</text>
+<text x="240" y="278" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">expected == actual</text>
+<text x="240" y="291" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">成立</text>
+<text x="240" y="311" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">fiscal year / Requirement</text>
+<text x="240" y="324" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">全批同一</text>
+<line x1="411" y1="254" x2="426" y2="254" stroke="#7B8298" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="432" y="150" width="176" height="208" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<rect x="432" y="150" width="176" height="42" rx="2" fill="#EDEEF2"/>
+<text x="442" y="166" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">② 独立投影</text>
+<text x="442" y="183" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">strict compatibility</text>
+<text x="442" y="212" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">rendered rows</text>
+<text x="442" y="225" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">0 → 220</text>
+<text x="442" y="245" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">compared_key_count</text>
+<text x="442" y="258" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">— → 141</text>
+<text x="442" y="278" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">compared_field_count</text>
+<text x="442" y="291" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">— → 2820</text>
+<text x="442" y="311" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">两个 delta exact set</text>
+<text x="442" y="324" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">— → 空</text>
+<line x1="613" y1="254" x2="628" y2="254" stroke="#7B8298" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="634" y="150" width="176" height="208" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<rect x="634" y="150" width="176" height="42" rx="2" fill="#EDEEF2"/>
+<text x="644" y="166" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">③ 规则派生</text>
+<text x="644" y="183" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">ProjectionManifest</text>
+<text x="644" y="212" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">status</text>
+<text x="644" y="225" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">— → PUBLISHABLE</text>
+<text x="644" y="245" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">public_matrix_row_count</text>
+<text x="644" y="258" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">— → 309</text>
+<text x="644" y="278" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">APPLICABLE+WITHHELD</text>
+<text x="644" y="291" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">→ BLOCKED</text>
+<text x="644" y="311" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">N_A_STRUCTURAL</text>
+<text x="644" y="324" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">不阻断</text>
+<line x1="815" y1="254" x2="830" y2="254" stroke="#7B8298" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="836" y="150" width="176" height="208" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<rect x="836" y="150" width="176" height="42" rx="2" fill="#EDEEF2"/>
+<text x="846" y="166" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">④⑤ 封包 + 权限</text>
+<text x="846" y="183" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">immutable bundle</text>
+<text x="846" y="212" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">publication_id</text>
+<text x="846" y="225" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">∅ → publication_fe01e227…</text>
+<text x="846" y="245" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">files[]</text>
+<text x="846" y="258" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">25 条 path/sha256/size</text>
+<text x="846" y="278" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">previous_publication_id</text>
+<text x="846" y="291" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">publication_81eb8476…</text>
+<text x="846" y="311" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">commit authority</text>
+<text x="846" y="324" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">FORMAL（判据 2）</text>
+<line x1="1017" y1="254" x2="1032" y2="254" stroke="#7B8298" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="1038" y="150" width="176" height="208" rx="2" fill="#FFFFFF" stroke="#2C3C9C" stroke-width="2"/>
+<rect x="1038" y="150" width="176" height="42" rx="2" fill="#EDEEF2"/>
+<text x="1048" y="166" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal" letter-spacing="0.6">⑥ 唯一提交点</text>
+<text x="1048" y="183" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">active pointer + 切换历史</text>
+<text x="1048" y="212" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">publication_id</text>
+<text x="1048" y="225" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">81eb8476… → fe01e227…</text>
+<text x="1048" y="245" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">bundle_manifest_sha256</text>
+<text x="1048" y="258" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">a8a3a5a6… → a7b26dfd…</text>
+<text x="1048" y="278" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">previous_publication_id</text>
+<text x="1048" y="291" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">5668341b… → 81eb8476…</text>
+<text x="1048" y="311" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">switch receipt tip</text>
+<text x="1048" y="324" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#2C3C9C" text-anchor="start" font-weight="normal">→ sha256:4f9ebf4b…</text>
+<line x1="1219" y1="254" x2="1234" y2="254" stroke="#7B8298" stroke-width="1.4" marker-end="url(#ar)"/>
+<rect x="1240" y="150" width="176" height="208" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<rect x="1240" y="150" width="176" height="42" rx="2" fill="#EDEEF2"/>
+<text x="1250" y="166" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">⑨ 下游消费</text>
+<text x="1250" y="183" font-size="12.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">PublicationView pinned</text>
+<text x="1250" y="212" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">pin</text>
+<text x="1250" y="225" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">publication_fe01e227…</text>
+<text x="1250" y="245" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">read_bytes</text>
+<text x="1250" y="258" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">不再看指针，每次重验 hash</text>
+<text x="1250" y="278" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">外部切换后</text>
+<text x="1250" y="291" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">仍读同一版</text>
+<text x="1250" y="311" font-size="9" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal">pending intent</text>
+<text x="1250" y="324" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">fail closed</text>
+<text x="28" y="446" font-size="12" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#9C3524" text-anchor="start" font-weight="600">失败回流 · 每一条都是正式结果路径，不是一个红色图标</text>
+<line x1="318" y1="362" x2="318" y2="456" stroke="#9C3524" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arR)"/>
+<text x="318" y="472" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">ProjectionError</text>
+<text x="318" y="485" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">exact set 不相等</text>
+<line x1="520" y1="362" x2="520" y2="456" stroke="#9C3524" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arR)"/>
+<text x="520" y="472" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">BLOCKED</text>
+<text x="520" y="485" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">unexpected delta 非空</text>
+<line x1="722" y1="362" x2="722" y2="456" stroke="#9C3524" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arR)"/>
+<text x="722" y="472" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">candidate_status</text>
+<text x="722" y="485" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">= BLOCKED</text>
+<line x1="924" y1="362" x2="924" y2="456" stroke="#9C3524" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arR)"/>
+<text x="924" y="472" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">Publication bundle</text>
+<text x="924" y="485" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">write failed</text>
+<line x1="1126" y1="362" x2="1126" y2="456" stroke="#9C3524" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arR)"/>
+<text x="1126" y="472" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">CAS predecessor</text>
+<text x="1126" y="485" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">changed</text>
+<line x1="1328" y1="362" x2="1328" y2="456" stroke="#9C3524" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arR)"/>
+<text x="1328" y="472" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">Pinned publication</text>
+<text x="1328" y="485" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">artifact changed</text>
+<rect x="28" y="512" width="1404" height="46" rx="3" fill="#F7E4DF" stroke="#9C3524" stroke-width="1"/>
+<text x="44" y="532" font-size="11" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="start" font-weight="500">对象结局（前五条完全相同）</text>
+<text x="44" y="549" font-size="11.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="normal">active_publication.json 逐字节不变  ·  switch receipt 数量不变  ·  14 个镜像未被触碰  ·  已准备的包留在磁盘上，从未提交  ·  下游继续读上一版</text>
+<text x="1416" y="549" font-size="11" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="end" font-weight="normal">第 6 条例外 → 见下</text>
+<text x="28" y="594" font-size="12" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">⑦ 提交点两侧的崩溃，结局相反 —— 方向只由「当前指针等于 intent 里的哪一个」决定</text>
+<rect x="28" y="610" width="460" height="132" rx="2" fill="#FFFFFF" stroke="#2C3C9C" stroke-width="1.5"/>
+<rect x="28" y="610" width="460" height="34" rx="2" fill="#E1E6F8"/>
+<text x="40" y="625" font-size="12" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#2C3C9C" text-anchor="start" font-weight="600">指针前崩溃</text>
+<text x="40" y="638" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">当前指针 == intent.previous_pointer</text>
+<text x="40" y="660" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">镜像可能已全新，intent 在盘上</text>
+<text x="40" y="674" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">reader → Publication switch recovery intent is pending</text>
+<text x="40" y="688" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">下一个 writer：删本事务收据 → 验 previous 历史链 →</text>
+<text x="40" y="702" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">从 R1 包重建 14 个镜像 → 删 intent</text>
+<line x1="40" y1="722" x2="476" y2="722" stroke="#C7CBD9" stroke-width="1"/>
+<text x="40" y="736" font-size="11.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#2C3C9C" text-anchor="start" font-weight="600">最终 active = R1（旧版本）</text>
+<rect x="500" y="610" width="460" height="132" rx="2" fill="#FFFFFF" stroke="#2C3C9C" stroke-width="1.5"/>
+<rect x="500" y="610" width="460" height="34" rx="2" fill="#E1E6F8"/>
+<text x="512" y="625" font-size="12" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#2C3C9C" text-anchor="start" font-weight="600">指针后崩溃</text>
+<text x="512" y="638" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">当前指针 == intent.proposed_pointer</text>
+<text x="512" y="660" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">已经越过唯一提交点，收据可能未写</text>
+<text x="512" y="674" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">reader → 同样 fail closed</text>
+<text x="512" y="688" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">下一个 writer：验 R2 包与 manifest hash → 补写收据 →</text>
+<text x="512" y="702" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">从 R2 包重建 14 个镜像 → 删 intent</text>
+<line x1="512" y1="722" x2="948" y2="722" stroke="#C7CBD9" stroke-width="1"/>
+<text x="512" y="736" font-size="11.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#2C3C9C" text-anchor="start" font-weight="600">最终 active = R2（新版本）</text>
+<rect x="972" y="610" width="460" height="132" rx="2" fill="#FFFFFF" stroke="#9C3524" stroke-width="1.5"/>
+<rect x="972" y="610" width="460" height="34" rx="2" fill="#F7E4DF"/>
+<text x="984" y="625" font-size="12" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#9C3524" text-anchor="start" font-weight="600">两个都不等于</text>
+<text x="984" y="638" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">有人手改了指针，或发生了未建模的事</text>
+<text x="984" y="660" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">这套机制没有对这个状态建模</text>
+<text x="984" y="674" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">任何自动动作都可能让情况更糟</text>
+<text x="984" y="688" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">raise Pending switch pointer is neither</text>
+<text x="984" y="702" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#4A5065" text-anchor="start" font-weight="normal">previous nor proposed</text>
+<line x1="984" y1="722" x2="1420" y2="722" stroke="#C7CBD9" stroke-width="1"/>
+<text x="984" y="736" font-size="11.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#9C3524" text-anchor="start" font-weight="600">拒绝动手，等待人工判定</text>
+<text x="28" y="768" font-size="12" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#161926" text-anchor="start" font-weight="600">四种不同的事实，最容易被混成一件</text>
+<rect x="28" y="780" width="342" height="86" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<text x="40" y="798" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">磁盘上存在</text>
+<text x="40" y="818" font-size="13" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#7B8298" text-anchor="start" font-weight="600">9 个 publication 目录</text>
+<text x="40" y="838" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">内容完整、manifest 自洽、验证通过</text>
+<text x="40" y="851" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">但目录存在不是正式性证明</text>
+<text x="372" y="824" font-size="14" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">≠</text>
+<rect x="382" y="780" width="342" height="86" rx="2" fill="#FFFFFF" stroke="#C7CBD9" stroke-width="1"/>
+<text x="394" y="798" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">曾经正式提交</text>
+<text x="394" y="818" font-size="13" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="600">3 个 publication ID</text>
+<text x="394" y="838" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">出现在 5 条切换收据构成的</text>
+<text x="394" y="851" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">唯一一条连通链里</text>
+<text x="726" y="824" font-size="14" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">≠</text>
+<rect x="736" y="780" width="342" height="86" rx="2" fill="#FFFFFF" stroke="#2C3C9C" stroke-width="1.5"/>
+<text x="748" y="798" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">当前 active</text>
+<text x="748" y="818" font-size="13" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#2C3C9C" text-anchor="start" font-weight="600">1 个：publication_fe01e227…</text>
+<text x="748" y="838" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">pointer == 收据链 tip，</text>
+<text x="748" y="851" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">且 manifest hash 相符</text>
+<text x="1080" y="824" font-size="14" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#9C3524" text-anchor="middle" font-weight="normal">≠</text>
+<rect x="1090" y="780" width="342" height="86" rx="2" fill="#FFFFFF" stroke="#9C3524" stroke-width="1.5"/>
+<text x="1102" y="798" font-size="9.5" font-family='"IBM Plex Mono",ui-monospace,monospace' fill="#7B8298" text-anchor="start" font-weight="normal" letter-spacing="0.6">full acceptance</text>
+<text x="1102" y="818" font-size="13" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#9C3524" text-anchor="start" font-weight="600">0 份 PASSED</text>
+<text x="1102" y="838" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">17 份 full scope：15 BLOCKED + 2 FAILED</text>
+<text x="1102" y="851" font-size="9.5" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#4A5065" text-anchor="start" font-weight="normal">故障矩阵与 cutover 审计命名空间是空标记</text>
+<text x="28" y="988" font-size="11" font-family='"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif' fill="#7B8298" text-anchor="start" font-weight="normal">越过每一道门需要的具体证据、以及每一条失败的完整对象结局，见配套的可交互版本 docs/visual/flow3-commit-point.html（11 幕，时间可回退，可用 #s=&lt;场景&gt;&amp;t=&lt;步&gt; 直达）。</text>
+</svg>

@@ -1,0 +1,1515 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>版本提交台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ── tokens ─────────────────────────────────────────────────────────────── */
+:root{
+  --ground:#EDEEF2; --surface:#F8F9FC; --surface-2:#E3E5EC;
+  --ink:#161926; --ink-2:#4A5065; --ink-3:#7B8298;
+  --rule:#C7CBD9; --rule-2:#DCDFE9;
+  --accent:#2C3C9C; --accent-soft:#E1E6F8; --accent-line:#2C3C9C;
+  --refuse:#9C3524; --refuse-soft:#F7E4DF;
+  --hold:#7A5A11; --hold-soft:#F4EEDA;
+  --shadow:0 1px 2px rgba(22,25,38,.06),0 8px 24px -16px rgba(22,25,38,.28);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif;
+  --disp:"Spectral","Songti SC","Noto Serif CJK SC",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#111320; --surface:#191C2A; --surface-2:#0C0E18;
+    --ink:#E7E9F1; --ink-2:#A6ACC2; --ink-3:#757C97;
+    --rule:#2B3046; --rule-2:#22273A;
+    --accent:#94A5F7; --accent-soft:#1D2445; --accent-line:#94A5F7;
+    --refuse:#E9917A; --refuse-soft:#33201A;
+    --hold:#DCB65E; --hold-soft:#2C2615;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#111320; --surface:#191C2A; --surface-2:#0C0E18;
+  --ink:#E7E9F1; --ink-2:#A6ACC2; --ink-3:#757C97;
+  --rule:#2B3046; --rule-2:#22273A;
+  --accent:#94A5F7; --accent-soft:#1D2445; --accent-line:#94A5F7;
+  --refuse:#E9917A; --refuse-soft:#33201A;
+  --hold:#DCB65E; --hold-soft:#2C2615;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.65;
+  font-feature-settings:"tnum" 0;
+}
+h1,h2,h3{margin:0; text-wrap:balance; font-weight:600}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px}
+code,.mono{font-family:var(--mono); font-size:.86em; font-variant-numeric:tabular-nums}
+
+/* ── shell ──────────────────────────────────────────────────────────────── */
+.shell{max-width:1560px; margin:0 auto; padding:0 20px 72px}
+
+header.masthead{
+  padding:34px 0 22px; border-bottom:1px solid var(--rule);
+  display:flex; flex-wrap:wrap; align-items:flex-end; gap:20px 34px;
+}
+.mast-id{flex:1 1 380px; min-width:280px}
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:9px;
+}
+h1{font-family:var(--disp); font-size:clamp(30px,4.4vw,46px); line-height:1.12; letter-spacing:-.01em}
+.mast-sub{margin-top:10px; color:var(--ink-2); max-width:56ch; font-size:14.5px}
+.mast-meta{
+  font-family:var(--mono); font-size:11.5px; color:var(--ink-3);
+  line-height:1.9; border-left:2px solid var(--rule); padding-left:14px;
+}
+.mast-meta b{color:var(--ink-2); font-weight:500}
+
+/* ── provenance tags ────────────────────────────────────────────────────── */
+.tag{
+  display:inline-block; font-family:var(--mono); font-size:10px; line-height:1.5;
+  padding:1px 5px; border:1px solid var(--rule); border-radius:2px;
+  color:var(--ink-3); vertical-align:.12em; white-space:nowrap; margin-right:3px;
+}
+.tag.artifact{border-color:var(--accent); color:var(--accent)}
+.tag.measured{border-color:var(--hold); color:var(--hold)}
+.tag.code{border-color:var(--ink-3); color:var(--ink-2)}
+.tag.derived{border-style:dashed}
+
+.legend{
+  margin-top:20px; padding:12px 16px; background:var(--surface);
+  border:1px solid var(--rule-2); border-radius:3px;
+  font-size:12.5px; color:var(--ink-2);
+  display:flex; flex-wrap:wrap; gap:6px 22px; align-items:baseline;
+}
+.legend b{font-weight:600; color:var(--ink); font-size:12px; letter-spacing:.04em}
+
+/* ── layout ─────────────────────────────────────────────────────────────── */
+.grid{display:grid; grid-template-columns:206px minmax(0,1fr) 316px; gap:30px; margin-top:26px; align-items:start}
+@media (max-width:1180px){ .grid{grid-template-columns:180px minmax(0,1fr)} .rail{grid-column:1/-1} }
+@media (max-width:860px){ .grid{grid-template-columns:minmax(0,1fr)} .nav{position:static} }
+
+/* ── scene nav ──────────────────────────────────────────────────────────── */
+.nav{position:sticky; top:14px}
+.nav h2{font-size:11px; font-family:var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-bottom:10px}
+.nav ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px}
+.nav button{
+  width:100%; text-align:left; font:inherit; font-size:13px; cursor:pointer;
+  background:none; border:0; border-left:2px solid transparent;
+  padding:5px 8px 5px 10px; color:var(--ink-2); display:flex; gap:9px; border-radius:0 2px 2px 0;
+}
+.nav button:hover{background:var(--surface); color:var(--ink)}
+.nav button .n{font-family:var(--mono); font-size:11px; color:var(--ink-3); padding-top:2px; min-width:14px}
+.nav button[aria-current="true"]{border-left-color:var(--accent-line); background:var(--accent-soft); color:var(--ink); font-weight:500}
+.nav button[aria-current="true"] .n{color:var(--accent)}
+@media (max-width:860px){
+  .nav ol{flex-direction:row; overflow-x:auto; gap:4px; padding-bottom:6px}
+  .nav button{width:auto; white-space:nowrap; border-left:0; border-bottom:2px solid transparent; border-radius:2px}
+  .nav button[aria-current="true"]{border-left:0; border-bottom-color:var(--accent-line)}
+}
+
+/* ── scene body ─────────────────────────────────────────────────────────── */
+.scene-head{border-bottom:1px solid var(--rule); padding-bottom:16px}
+.scene-n{font-family:var(--mono); font-size:11px; letter-spacing:.13em; color:var(--ink-3); text-transform:uppercase}
+.scene-head h2{font-family:var(--disp); font-size:clamp(23px,2.7vw,31px); line-height:1.2; margin-top:5px}
+.claim{margin-top:11px; font-size:15.5px; color:var(--ink); max-width:66ch; border-left:2px solid var(--accent-line); padding-left:13px}
+
+.misc{margin-top:18px; background:var(--surface); border:1px solid var(--rule-2); border-radius:3px; overflow:hidden}
+.misc-row{padding:11px 15px; display:grid; grid-template-columns:88px minmax(0,1fr); gap:14px; align-items:baseline; font-size:14px}
+.misc-row + .misc-row{border-top:1px solid var(--rule-2)}
+.misc-k{font-family:var(--mono); font-size:10.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--ink-3)}
+.misc-wrong .misc-k{color:var(--refuse)}
+.misc-wrong .misc-v{color:var(--ink-2); text-decoration:line-through; text-decoration-color:var(--refuse); text-decoration-thickness:1px}
+.misc-right{background:var(--ground)}
+
+/* ── stage ──────────────────────────────────────────────────────────────── */
+.stage{
+  margin-top:20px; background:var(--surface); border:1px solid var(--rule);
+  border-radius:4px; padding:22px; box-shadow:var(--shadow); min-height:300px;
+}
+.stage-label{
+  font-family:var(--mono); font-size:11px; letter-spacing:.07em;
+  color:var(--ink-3); margin-bottom:16px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+}
+.stage-label .now{color:var(--ink); font-weight:500}
+
+.flow{display:flex; flex-wrap:wrap; gap:14px; align-items:stretch}
+.flow-col{display:flex; flex-direction:column; gap:12px; flex:1 1 226px; min-width:208px}
+
+/* object card */
+.obj{
+  background:var(--ground); border:1px solid var(--rule); border-radius:3px;
+  padding:0; overflow:hidden; display:flex; flex-direction:column;
+}
+.obj.dim{opacity:.44}
+.obj.live{border-color:var(--accent-line); box-shadow:0 0 0 1px var(--accent-line)}
+.obj.gone{border-style:dashed; opacity:.55}
+.obj-h{padding:9px 12px 8px; border-bottom:1px solid var(--rule-2); background:var(--surface-2)}
+.obj-t{font-size:13.5px; font-weight:600; line-height:1.35; overflow-wrap:anywhere}
+.obj-s{font-family:var(--mono); font-size:10.5px; color:var(--ink-3); margin-top:3px; word-break:break-all}
+.obj-state{
+  display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:.07em;
+  padding:1px 6px; border-radius:2px; margin-top:6px; border:1px solid var(--rule);
+  background:var(--surface); color:var(--ink-2);
+}
+.obj-state.on{border-color:var(--accent-line); color:var(--accent); background:var(--accent-soft)}
+.obj-state.no{border-color:var(--refuse); color:var(--refuse); background:var(--refuse-soft)}
+.obj-state.wait{border-color:var(--hold); color:var(--hold); background:var(--hold-soft)}
+.obj-b{padding:4px 0}
+.f{display:grid; grid-template-columns:minmax(0,96px) minmax(0,1fr); gap:4px 10px; padding:3.5px 12px; font-family:var(--mono); font-size:11px; line-height:1.5; align-items:baseline}
+.f .k{color:var(--ink-3); font-size:10.5px; overflow-wrap:anywhere}
+.f .v{color:var(--ink-2); overflow-wrap:break-word}
+.f.chg{background:var(--accent-soft); border-left:2px solid var(--accent-line); padding-left:10px}
+.f.chg .k{color:var(--accent)}
+.f.chg .v{color:var(--ink)}
+.f.chg .from{color:var(--ink-3); text-decoration:line-through; text-decoration-thickness:1px}
+.f.chg .to{font-weight:500}
+.f.bad{background:var(--refuse-soft); border-left:2px solid var(--refuse); padding-left:10px}
+.f.bad .k,.f.bad .v{color:var(--refuse)}
+.obj-note{padding:8px 12px; border-top:1px dashed var(--rule-2); font-size:11.5px; color:var(--ink-2); line-height:1.55}
+
+.arrow{display:flex; align-items:center; justify-content:center; flex:0 0 30px; color:var(--ink-3); font-family:var(--mono); font-size:16px}
+@media (max-width:640px){ .arrow{flex-basis:100%; height:22px} }
+
+.err{
+  margin-top:14px; border:1px solid var(--refuse); background:var(--refuse-soft);
+  border-radius:3px; padding:11px 14px; font-size:13px; color:var(--ink);
+}
+.err .lbl{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--refuse); display:block; margin-bottom:5px}
+.err code{color:var(--refuse); font-weight:500}
+.note{margin-top:14px; font-size:13px; color:var(--ink-2); line-height:1.7; max-width:74ch}
+.note + .note{margin-top:8px}
+.note strong{color:var(--ink); font-weight:600}
+
+/* step strip */
+.steps{margin-top:20px; border-top:1px solid var(--rule); padding-top:14px}
+.steps-hd{display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:9px}
+.steps-hd .t{font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-3)}
+.steps-hd .d{font-size:13px; color:var(--ink-2)}
+.strip{display:flex; gap:0; overflow-x:auto; padding-bottom:4px}
+.strip button{
+  flex:1 1 0; min-width:96px; font:inherit; font-size:11.5px; cursor:pointer; text-align:left;
+  background:var(--ground); color:var(--ink-2); border:1px solid var(--rule); border-right-width:0;
+  padding:7px 9px; line-height:1.4;
+}
+.strip button:last-child{border-right-width:1px}
+.strip button:hover{background:var(--surface-2); color:var(--ink)}
+.strip button .tn{display:block; font-family:var(--mono); font-size:10px; color:var(--ink-3); letter-spacing:.06em}
+.strip button[aria-current="true"]{background:var(--accent-soft); color:var(--ink); border-color:var(--accent-line); font-weight:500; position:relative; z-index:1}
+.strip button[aria-current="true"] .tn{color:var(--accent)}
+.strip button.commit{border-left:2px solid var(--accent-line)}
+.strip button.commit .tn::after{content:" ◆"}
+.strip button.past{background:var(--surface-2)}
+
+/* controls */
+.controls{margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+.controls button{
+  font:inherit; font-size:13px; cursor:pointer; background:var(--ground); color:var(--ink);
+  border:1px solid var(--rule); border-radius:3px; padding:6px 13px;
+}
+.controls button:hover{background:var(--surface-2); border-color:var(--ink-3)}
+.controls button.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+:root[data-theme="dark"] .controls button.primary,
+:root:not([data-theme="light"]) .controls button.primary{color:#0F1220}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .controls button.primary{color:#fff}}
+.controls button.primary:hover{filter:brightness(1.1)}
+.controls .hint{font-size:12px; color:var(--ink-3); margin-left:4px}
+
+/* knobs */
+.knobs{margin-top:18px; border:1px dashed var(--rule); border-radius:3px; padding:13px 15px; background:var(--ground)}
+.knobs-t{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin-bottom:4px}
+.knobs-d{font-size:12.5px; color:var(--ink-2); margin-bottom:11px; max-width:70ch}
+.knob-row{display:flex; flex-wrap:wrap; gap:14px 26px; align-items:flex-start}
+.knob{display:flex; flex-direction:column; gap:5px}
+.knob > span{font-family:var(--mono); font-size:10.5px; color:var(--ink-3); letter-spacing:.05em}
+.seg{display:flex}
+.seg button{
+  font:inherit; font-family:var(--mono); font-size:11.5px; cursor:pointer; padding:4px 10px;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--rule); border-right-width:0;
+}
+.seg button:last-child{border-right-width:1px; border-radius:0 2px 2px 0}
+.seg button:first-child{border-radius:2px 0 0 2px}
+.seg button[aria-pressed="true"]{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent); font-weight:500; position:relative; z-index:1}
+
+/* prediction */
+.pred{margin-top:18px; border:1px solid var(--hold); background:var(--hold-soft); border-radius:3px; padding:14px 16px}
+.pred-t{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--hold); margin-bottom:7px}
+.pred-q{font-size:14.5px; color:var(--ink); margin-bottom:11px; max-width:70ch}
+.pred-opts{display:flex; flex-wrap:wrap; gap:8px}
+.pred-opts button{font:inherit; font-size:13px; cursor:pointer; background:var(--ground); border:1px solid var(--rule); border-radius:3px; padding:6px 13px; color:var(--ink); text-align:left}
+.pred-opts button:hover{border-color:var(--hold)}
+.pred-opts button[data-picked="1"]{border-color:var(--hold); background:var(--hold-soft); font-weight:500}
+.pred-a{margin-top:12px; padding-top:11px; border-top:1px solid var(--rule); font-size:13.5px; line-height:1.7; color:var(--ink)}
+.pred-a .verdict{font-family:var(--mono); font-size:11px; letter-spacing:.09em; text-transform:uppercase; display:block; margin-bottom:5px}
+.pred-a .verdict.ok{color:var(--accent)} .pred-a .verdict.nope{color:var(--refuse)}
+
+/* evidence rail */
+.rail{position:sticky; top:14px; max-height:calc(100vh - 28px); overflow-y:auto}
+@media (max-width:1180px){ .rail{position:static; max-height:none} }
+.rail h2{font-size:11px; font-family:var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-bottom:5px}
+.rail-lead{font-size:12.5px; color:var(--ink-2); margin-bottom:12px; line-height:1.6}
+.ev{border-top:1px solid var(--rule-2); padding:11px 0; font-size:12.5px; line-height:1.62}
+.ev:first-of-type{border-top:1px solid var(--rule)}
+.ev-h{color:var(--ink); margin-bottom:4px}
+.ev-src{font-family:var(--mono); font-size:10.5px; color:var(--ink-3); word-break:break-all; display:block; margin-top:4px}
+.ev.lead .ev-h{font-weight:600}
+.ev pre{
+  margin:6px 0 0; font-family:var(--mono); font-size:10.5px; line-height:1.6; color:var(--ink-2);
+  background:var(--surface-2); border:1px solid var(--rule-2); border-radius:2px; padding:8px 9px;
+  overflow-x:auto; white-space:pre;
+}
+.sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+/* map scene */
+.mapwrap{overflow-x:auto}
+figure{margin:0}
+figcaption{font-size:12.5px; color:var(--ink-2); margin-top:11px; line-height:1.65; max-width:76ch}
+svg.diagram{display:block; max-width:100%; height:auto; min-width:660px; color:var(--ink)}
+
+footer.foot{margin-top:44px; padding-top:20px; border-top:1px solid var(--rule); font-size:12.5px; color:var(--ink-3); line-height:1.8}
+footer.foot b{color:var(--ink-2); font-weight:500}
+
+@media (prefers-reduced-motion:reduce){ *{transition:none !important; animation:none !important} }
+</style>
+</head>
+<body>
+<div class="shell">
+
+<header class="masthead">
+  <div class="mast-id">
+    <div class="eyebrow">SEC_metrics · 流程三 · 一批结果如何成为当前正式版本</div>
+    <h1>版本提交台</h1>
+    <p class="mast-sub">一批已经算对的文件，要怎样才成为「当前正式版本」。主角是三个对象：批次权威、不可变发布包、active pointer 加它的切换历史。模块只是加工它们的工位。</p>
+  </div>
+  <div class="mast-meta">
+    分支 <b>agent/issue-15-final-delivery</b><br>
+    快照 <b>d9bb477e5606bcdcfb8d0f5d116209ec226d570f</b><br>
+    active <b>publication_fe01e227…</b> · 提交于 <b>2026-08-20T11:38:54Z</b><br>
+    核对日期 <b>2026-08-27</b>
+  </div>
+</header>
+
+<div class="legend">
+  <b>数字来源标注</b>
+  <span><span class="tag artifact">产物</span>从仓库已落盘文件读出</span>
+  <span><span class="tag measured">实测</span>本次在这个快照上真跑出来</span>
+  <span><span class="tag code">代码</span>源码常量或结构，带 file:line</span>
+  <span><span class="tag derived">推导</span>对以上数字做的算术</span>
+</div>
+
+<div class="grid">
+
+  <nav class="nav" aria-label="场景导航">
+    <h2>场景</h2>
+    <ol id="nav"></ol>
+  </nav>
+
+  <main>
+    <div class="scene-head">
+      <div class="scene-n" id="scene-n"></div>
+      <h2 id="scene-title"></h2>
+      <p class="claim" id="scene-claim"></p>
+    </div>
+
+    <div class="misc" id="misc"></div>
+
+    <section class="stage" aria-label="机制舞台">
+      <div class="stage-label"><span id="stage-what"></span><span class="now" id="stage-now"></span></div>
+      <div id="stage"></div>
+    </section>
+
+    <div id="after-stage"></div>
+
+    <section class="steps" id="steps-sec" aria-label="时间步">
+      <div class="steps-hd">
+        <span class="t">时间是可寻址的状态，不是一段视频</span>
+        <span class="d" id="step-desc"></span>
+      </div>
+      <div class="strip" id="strip" role="tablist"></div>
+      <div class="controls">
+        <button type="button" id="b-prev">← 上一步</button>
+        <button type="button" id="b-next" class="primary">下一步 →</button>
+        <button type="button" id="b-pscene">上一幕</button>
+        <button type="button" id="b-nscene">下一幕</button>
+        <button type="button" id="b-reset">重置本幕</button>
+        <span class="hint">键盘：← → 步 · ↑ ↓ 幕 · Home 重置</span>
+      </div>
+    </section>
+
+    <p class="sr" id="live" aria-live="polite"></p>
+  </main>
+
+  <aside class="rail" aria-label="证据">
+    <h2>证据</h2>
+    <p class="rail-lead" id="rail-lead"></p>
+    <div id="rail"></div>
+  </aside>
+
+</div>
+
+<footer class="foot">
+  <b>这份作品的事实边界。</b>所有数字都来自上面标注的那一个快照，逐条核对过代码、测试与磁盘产物；文档与代码不一致的地方以代码为准，并在第 10 幕明写。<br>
+  它描述的是 <b>zero-AI R2 partial release</b> 的当前状态。它不声称 39 指标最终 Cutover 完成、AI 指标已进入 active、故障矩阵已为这一版跑过，或 full acceptance 已通过——第 10 幕逐条给了反证。<br>
+  <b>配套产物。</b>同目录下 <code>flow3-object-lineage.svg</code> 是同一机制的单页可打印版：七个工位的字段变化、每一站的失败回流、提交点两侧的三条恢复出边。前两道流程见 <code>flow1-object-lifecycle.html</code>「信任升级台」与 <code>flow2-evidence-chain.html</code>「证据重读台」。
+</footer>
+
+</div>
+
+<script>
+"use strict";
+
+/* ══ 内容 ══════════════════════════════════════════════════════════════════
+   每一幕只建立一条新的系统事实。字段变化用 `旧 → 新` 的文字表达，
+   颜色只做辅助；去掉颜色，含义仍然完整。                                     */
+
+const T = {
+  a:  s => '<span class="tag artifact">产物</span>' + s,
+  m:  s => '<span class="tag measured">实测</span>' + s,
+  c:  s => '<span class="tag code">代码</span>' + s,
+  d:  s => '<span class="tag derived">推导</span>' + s
+};
+
+/* 卡片：把一个对象画成它的字段表。change = {from,to} 时显示 `旧 → 新`。 */
+function obj(o){
+  const cls = ["obj", o.mode || ""].join(" ").trim();
+  const rows = (o.fields || []).map(f => {
+    if (f.bad) return `<div class="f bad"><span class="k">${f.k}</span><span class="v">${f.v}</span></div>`;
+    if (f.from !== undefined)
+      return `<div class="f chg"><span class="k">${f.k}</span><span class="v"><span class="from">${f.from}</span> → <span class="to">${f.to}</span></span></div>`;
+    return `<div class="f"><span class="k">${f.k}</span><span class="v">${f.v}</span></div>`;
+  }).join("");
+  const st = o.state ? `<span class="obj-state ${o.stateTone||""}">${o.state}</span>` : "";
+  return `<div class="${cls}">
+    <div class="obj-h"><div class="obj-t">${o.title}</div>${o.sub?`<div class="obj-s">${o.sub}</div>`:""}${st}</div>
+    ${rows?`<div class="obj-b">${rows}</div>`:""}
+    ${o.note?`<div class="obj-note">${o.note}</div>`:""}
+  </div>`;
+}
+const col   = (...cards) => `<div class="flow-col">${cards.join("")}</div>`;
+const arrow = (label) => `<div class="arrow" aria-hidden="true">${label || "→"}</div>`;
+const flow  = (...parts) => `<div class="flow">${parts.join("")}</div>`;
+const err   = (code, body) => `<div class="err"><span class="lbl">失败是一条正式结果路径</span><code>${code}</code><br>${body}</div>`;
+const note  = s => `<p class="note">${s}</p>`;
+
+/* 机制参数：只有当机制真的依赖它时才提供旋钮。 */
+const P = { applic:"N_A_STRUCTURAL", pub:"WITHHELD", crashAt:1, casStale:false, openAt:1 };
+const P0 = Object.assign({}, P);
+
+const SCENES = [
+
+/* ── 1 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"batch", title:"批次闭合",
+  claim:"一次运行只能证明它自己。「这一批结果既不缺也不重」是另一件事实，必须由仓库独立重新推导出应有坐标，再和实际结果逐个比对，才第一次成立。",
+  wrong:"十家公司的 Run 都 FROZEN 了，这批结果就是完整的。",
+  right:"单个 Run 不知道另一家公司少了一行 N/A、多了一个坐标，或者用的是另一个财年。完整性只能由仓库 registry × release plan × MetricSpec applicability 重新推导，调用者不能自报应有集合。",
+  what:"批次权威对象的诞生",
+  steps:[
+    {t:"t0", n:"上游交来局部终态", d:"多个独立的终态结果，各自可重放"},
+    {t:"t1", n:"仓库推导 expected", d:"从 registry / release plan / applicability 推出应有坐标"},
+    {t:"t2", n:"exact set 比对", d:"expected 与 actual 必须完全相等"},
+    {t:"t3", n:"批次权威成立", d:"content-addressed，不可原地编辑"}
+  ],
+  stage(s){
+    const born = s>=3, cmp = s>=2, exp = s>=1;
+    return flow(
+      col(obj({
+        title:"局部终态结果", sub:"上游产物",
+        mode: born?"dim":"",
+        state:"各自可重放", stateTone:"",
+        fields:[
+          {k:"每个结果", v:"绑定自己的 Trace / Claim / source plan"},
+          {k:"它知道", v:"我自己算对了"},
+          {k:"它不知道", v:"整批应该有多少个坐标"}
+        ]
+      })),
+      arrow(),
+      col(obj({
+        title:"expected 坐标集", sub:"由仓库推导，不由调用者提供",
+        mode: exp?"":"dim",
+        state: exp?"已推导":"尚未推导", stateTone: exp?"on":"",
+        fields: exp?[
+          {k:"来源", v:"company registry × release plan × MetricSpec applicability"},
+          {k:"companies", from:"—", to:"10"},
+          {k:"metrics", from:"—", to:"22 <span class=\"tag artifact\">产物</span>"},
+          {k:"坐标", from:"—", to:"220 <span class=\"tag derived\">推导</span> 10×22"}
+        ]:[{k:"状态", v:"—"}]
+      })),
+      arrow(cmp?"=":"→"),
+      col(obj({
+        title:"批次权威", sub:"R2 编码：ZERO_AI_COORDINATE_INDEX（通用路径：BatchManifest）",
+        mode: born?"live":"dim",
+        state: born?"成立":"不存在", stateTone: born?"on":"",
+        fields: born?[
+          {k:"batch_manifest_id", from:"不存在", to:"sha256:c6c1a236…"},
+          {k:"result_coordinate_count", from:"—", to:"220"},
+          {k:"release_stage", from:"—", to:"R2"},
+          {k:"target fiscal year", v:"全批同一年，来自结果本身"},
+          {k:"requirement", v:"全批同一 Requirement"}
+        ]:[{k:"batch_manifest_id", v:"不存在"}],
+        note: born?"新成立的不变量：应有 <code>(company_id, metric_id, applicability)</code> 与实际结果 exact set 完全相等——不缺、不多、不重复、不跨财年。":""
+      }))
+    ) + (born
+      ? note("这一步<strong>没有产生任何外部副作用</strong>。active pointer 一个字节没动，下游看到的仍然是上一版。")
+      : "");
+  },
+  extra(s){
+    if (s < 2) return "";
+    return err("ProjectionError · 实际结果集 ≠ 仓库推导的 expected 集",
+      "缺一个 N/A 行、重复一个坐标、多一个坐标、混了财年、Requirement 分叉——任何一种都在这里终止。"+
+      "<br>对象结局：<code>batch_manifest_id</code> 仍然不存在；staging、bundle、pointer 全部不产生；旧 active 继续被消费。");
+  },
+  railLead:"这一幕要让你相信：220 不是数出来的，是两边独立算出来后相等。",
+  ev:[
+    {lead:true, h:T.a("<code>internal/coordinate_index.json</code> 与 <code>projection_manifest.json</code> 同时记 <code>result_coordinate_count = 220</code>，且 <code>batch_manifest_id</code> 两处一致。"),
+     src:"outputs/publications/publication_fe01e227…/"},
+    {h:T.a("22 个累计指标 exact set：A01 A02 A05 A06 A07 A08 A10 B01 B02 B03 B04 B05 B07 B08 B09 B12 C01 E01 E02 E03 E04 E05"), src:"projection_manifest.json · cumulative_metric_ids"},
+    {h:T.d("220 = 10 家公司 × 22 个指标。两个数都能单独从产物读出，乘积与 <code>result_coordinate_count</code> 相符。")},
+    {h:T.a("R1 作对照：同一 schema，<code>result_coordinate_count = 20</code>、2 个指标（B01 B03）。同一套编码承载了两次规模完全不同的发布。"),
+     src:"publication_81eb8476…/projection_manifest.json"},
+    {h:T.c("Projector 侧的完整实现与负例：批次不完整、单公司冒充整批、混合财年都有专门的失败用例。"),
+     src:"scripts/vnext/projector.py:1229-1522 · tests/vnext/test_replay.py · tests/vnext/test_publication.py"}
+  ]
+},
+
+/* ── 2 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"projection", title:"先独立渲染，再事后比较",
+  claim:"public 行由新对象图独立生成；冻结的 legacy 快照只在渲染<strong>之后</strong>作为兼容性 oracle 参与逐字段比较。顺序本身就是证明的一部分。",
+  wrong:"兼容就是新输出和旧 CSV 一样——所以先把旧行复制过来，再比一次相等就行。",
+  right:"复制之后再比较相等是循环证明：它永远成立，而且完全发现不了「新结果图和公共数值已经脱节」。当前顺序让两件事互相独立——新对象链决定输出，旧快照只回答「迁移有没有意外改变已有用户字段」。",
+  what:"公共行的生成顺序",
+  steps:[
+    {t:"t0", n:"新对象图就位", d:"records / claims / catalog / 220 坐标"},
+    {t:"t1", n:"独立渲染 220 行", d:"renderer 不接收 legacy_row 作为语义输入"},
+    {t:"t2", n:"取出冻结 legacy 快照", d:"此刻才第一次读旧行"},
+    {t:"t3", n:"逐字段比较", d:"141 个既有 key × 20 个字段"},
+    {t:"t4", n:"组合成公共矩阵", d:"220 迁移行 + 89 未迁移行"}
+  ],
+  stage(s){
+    const rendered=s>=1, legacy=s>=2, cmp=s>=3, done=s>=4;
+    return flow(
+      col(obj({
+        title:"新对象图", sub:"records · claims · catalog · 220 坐标",
+        mode:"", state:"输入", fields:[
+          {k:"renderer 收到", v:"对象图"},
+          {k:"renderer 不收到", v:"legacy_row / expected value / legacy evidence"}
+        ],
+        note: rendered? "还有一层保护：projection-independence receipt 对关键函数的 AST 和禁止标识符做约束——它检查的是 renderer <em>不可能</em>读旧语义，不是「这次没读」。" : ""
+      })),
+      arrow(),
+      col(obj({
+        title:"独立渲染的 public rows", sub:"20 个字段",
+        mode: rendered?"live":"dim",
+        state: rendered?"已生成":"未生成", stateTone: rendered?"on":"",
+        fields:[ rendered? {k:"rendered rows", from:"0", to:"220"} : {k:"rendered rows", v:"0"} ]
+      }),
+      obj({
+        title:"冻结 legacy 快照", sub:"只做事后 oracle，不是数值来源",
+        mode: legacy?"":"dim",
+        state: legacy?"此刻才被读取":"尚未参与", stateTone: legacy?"wait":"",
+        fields:[{k:"角色", v:"回答「迁移有没有改变已有用户字段」"}]
+      })),
+      arrow(cmp?"⇄":"→"),
+      col(obj({
+        title:"strict compatibility 结果",
+        mode: cmp?"live":"dim",
+        state: cmp?"闭合":"未比较", stateTone: cmp?"on":"",
+        fields: cmp?[
+          {k:"compared_key_count", from:"—", to:"141"},
+          {k:"compared_field_count", from:"—", to:"2820"},
+          {k:"approved_delta_exact_set", from:"—", to:"[]（空）"},
+          {k:"unexpected_delta_exact_set", from:"—", to:"[]（空）"}
+        ]:[{k:"状态", v:"—"}]
+      }),
+      obj({
+        title:"正式 metrics_matrix.csv",
+        mode: done?"live":"dim",
+        state: done?"309 行":"未组合", stateTone: done?"on":"",
+        fields: done?[
+          {k:"迁移行", v:"220（由新 rows 替换对应 key）"},
+          {k:"未迁移 legacy 行", v:"89，保持 predecessor 顺序"},
+          {k:"合计", from:"—", to:"309"}
+        ]:[{k:"rows", v:"—"}]
+      }))
+    ) + (cmp? note("2820 个字段比较里，20 个字段每一个都是 <code>equal = 141 / approved_delta = 0 / unexpected_delta = 0</code>。<strong>这不是「数值接近」，是全部迁移字段逐项相等。</strong>") : "");
+  },
+  pred:{
+    q:"如果把顺序换成「先复制旧行，再声明与旧行相同」，下面哪一种错误<strong>还能</strong>被这套兼容性检查发现？",
+    opts:[
+      {t:"新 Result 图算错了，公共值和它已经脱节", ok:false},
+      {t:"旧 CSV 本身某个字段写错了", ok:false},
+      {t:"一个都发现不了——比较变成永真", ok:true}
+    ],
+    a:"<b>比较会变成永真。</b>复制之后，左边和右边是同一份字节，相等是复制这个动作保证的，不是计算保证的。此时新对象链哪怕完全没有参与生成公共值，检查照样全绿。当前顺序把「谁决定输出」和「迁移是否改变了用户可见字段」拆成两个独立问题，才让这 2820 次比较有意义。"
+  },
+  railLead:"这一幕要让你相信：141×20 的比较发生在渲染<em>之后</em>，所以它有信息量。",
+  ev:[
+    {lead:true, h:T.a("<code>internal/public_projection_closure.json → compatibility</code>：<code>compared_key_count = 141</code>、<code>compared_field_count = 2820</code>、两个 delta exact set 都是空数组。"),
+     src:"publication_fe01e227…/internal/public_projection_closure.json"},
+    {h:T.a("per_field_counts 全表 20 行，每行都是 <code>{equal:141, approved_delta:0, unexpected_delta:0}</code>。"),
+     pre:"company 141/0/0   cik 141/0/0\nmetric_id 141/0/0  value 141/0/0\nunit 141/0/0       status 141/0/0\n…（共 20 个字段，无一例外）"},
+    {h:T.m("从 bundle 里的 <code>metrics_matrix.csv</code> 直接数：309 个数据行、20 列；<code>row_bindings</code> 有 220 条。309 − 220 = 89。"),
+     src:"csv.DictReader(bundle/metrics_matrix.csv) → 309"},
+    {h:T.c("生产 renderer 与「渲染后比较」的分工。"), src:"scripts/vnext/public_projection.py · scripts/vnext/projection_independence.py"},
+    {h:T.c("R2 的 legacy canary 测试：证明 producer 不读旧语义。"), src:"tests/vnext/test_zero_ai_release.py::test_r2_projection_and_producers_survive_legacy_canary"}
+  ]
+},
+
+/* ── 3 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"status", title:"可发布由规则派生",
+  claim:"候选是 PUBLISHABLE 还是 BLOCKED，由一个只看两个字段的函数算出来，不由调用者填写。空值不等于失败。",
+  wrong:"矩阵里有空值就是失败，没有空值就能发。",
+  right:"<code>N_A_STRUCTURAL</code>（按公司 traits 本来就不适用）是完整结果的一部分，不阻断发布。<code>APPLICABLE + WITHHELD</code>（本应有结果但证据或计算不足）才阻断。两者在 CSV 里可能都显示为空，语义完全相反。",
+  what:"candidate_status 的判定",
+  steps:[
+    {t:"t0", n:"逐个结果检查", d:"只看 applicability 与 publication 两个字段"},
+    {t:"t1", n:"得出批次级状态", d:"任何一个 APPLICABLE+WITHHELD 即 BLOCKED"}
+  ],
+  knobs:{
+    d:"这两个字段是 <code>publication_candidate_status()</code> 唯一读取的输入（<code>scripts/vnext/states.py:103-117</code>）。改动它们真的会改变判定——所以它们值得做成旋钮。SHA 值、文件顺序、镜像中点不值得。",
+    items:[
+      {key:"applic", label:"applicability", opts:["APPLICABLE","N_A_STRUCTURAL"]},
+      {key:"pub",    label:"publication",   opts:["PUBLISHED","WITHHELD"]}
+    ]
+  },
+  stage(s){
+    const blocked = (P.applic==="APPLICABLE" && P.pub==="WITHHELD");
+    const decided = s>=1;
+    const rows = [
+      ["APPLICABLE","PUBLISHED","不阻断","正常已发布的结果"],
+      ["APPLICABLE","WITHHELD","<b>BLOCKED</b>","本应有结果，证据或计算不足"],
+      ["N_A_STRUCTURAL","PUBLISHED","不阻断","结构性不适用"],
+      ["N_A_STRUCTURAL","WITHHELD","不阻断","结构性不适用，且未发布"]
+    ];
+    const table = rows.map(r=>{
+      const hit = (r[0]===P.applic && r[1]===P.pub);
+      const cls = hit ? (r[2].indexOf("BLOCKED")>=0 ? "f bad" : "f chg") : "f";
+      return `<div class="${cls}"><span class="k">${r[0]} + ${r[1]}</span><span class="v">${r[2]} — ${r[3]}</span></div>`;
+    }).join("");
+    return flow(
+      col(obj({
+        title:"被检查的一个结果", sub:"其余 219 个同时被检查",
+        state: "当前旋钮", stateTone:"wait",
+        fields:[
+          {k:"applicability", v:P.applic},
+          {k:"publication",   v:P.pub}
+        ]
+      }),
+      obj({ title:"规则表", sub:"states.py:103-117 的四种组合", fields:[] , note:`<div style="margin:-8px -12px -8px">${table}</div>`})),
+      arrow(),
+      col(obj({
+        title:"ProjectionManifest",
+        mode: decided?"live":"dim",
+        state: decided ? (blocked?"BLOCKED":"PUBLISHABLE") : "尚未判定",
+        stateTone: decided ? (blocked?"no":"on") : "",
+        fields: decided ? [
+          blocked
+            ? {k:"status", from:"—", to:"BLOCKED"}
+            : {k:"status", from:"—", to:"PUBLISHABLE"},
+          {k:"projection_manifest_id", v: blocked ? "不生成" : "sha256:816bc364…"},
+          {k:"public_matrix_row_count", v: blocked ? "—" : "309"}
+        ] : [{k:"status", v:"—"}],
+        note: decided ? (blocked
+          ? "候选被规则拒绝。<strong>下面看它的对象结局，而不是一个红色图标。</strong>"
+          : "内容资格成立。仍然没有任何外部副作用：active pointer 未移动。") : ""
+      }))
+    );
+  },
+  extra(s){
+    if (s<1) return "";
+    const blocked = (P.applic==="APPLICABLE" && P.pub==="WITHHELD");
+    if (!blocked) return note("当前组合下 <code>publication_candidate_status()</code> 返回 <code>PUBLISHABLE</code>。注意它<strong>只</strong>回答内容资格——离「正式版本」还有封包、提交权限、CAS、切换和读回五道。");
+    return err("candidate_status = BLOCKED",
+      "对象结局逐项写出来：<br>"+
+      "· <code>ProjectionManifest.status: — → BLOCKED</code>，不产生 <code>projection_manifest_id</code><br>"+
+      "· 不调用 <code>_write_prepared_publication_bundle</code>，磁盘上不出现新的 publication 目录<br>"+
+      "· <code>active_publication.json</code> 逐字节不变，下游继续读上一版<br>"+
+      "· 结果与 Trace 全部保留供审计——<strong>失败的尝试不会用空值覆盖成功的旧版本</strong>");
+  },
+  railLead:"这一幕要让你相信：判定是算出来的，调用者填不进去。",
+  ev:[
+    {lead:true, h:T.c("函数体只有一个循环和三条判断，没有任何 caller 输入的布尔值。"),
+     src:"scripts/vnext/states.py:87-117",
+     pre:'if applicability == "APPLICABLE" and \\\n   publication == "WITHHELD":\n        return "BLOCKED"\n# 循环走完\nreturn "PUBLISHABLE"'},
+    {h:T.c("未知的 applicability / publication 值不会被当作「不阻断」——直接抛 <code>StateError</code>。fail closed，不是 fail open。"), src:"states.py:109-114"},
+    {h:T.c("可发布的 validation 状态集合只有一个成员。"), src:"scripts/vnext/states.py:41 · PUBLISHABLE_VALIDATION_STATUSES = frozenset({\"PASSED\"})"},
+    {h:T.a("当前 R2 的判定结果：<code>status = PUBLISHABLE</code>、<code>schema_version = 1</code>、<code>record_type = ZERO_AI_PROJECTION_MANIFEST</code>。"), src:"publication_fe01e227…/projection_manifest.json"},
+    {h:T.c("负例：真实 WITHHELD 候选保留上一版 active；WITHHELD 或不完整的包无法 prepare。"), src:"tests/vnext/test_publication.py"}
+  ]
+},
+
+/* ── 4 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"bundle", title:"封包：目录名就是内容指纹",
+  claim:"一版 = 一个不可变目录，目录名是它全部身份的 content hash。写包本身是一个小事务：临时目录 → 逐文件原子写 → 先验一次 → 目录级 rename → fsync → 再验一次。",
+  wrong:"包写好了，就等于发布了。",
+  right:"准备完全不碰指针。<strong>磁盘上现在有 9 个包，只有 3 个进过切换历史。</strong>另外 6 个内容完整、manifest 自洽、验证通过——从未提交。按目录 mtime 挑「最新的」会绕过前驱、CAS 和整条历史。",
+  what:"staging bytes → immutable bundle",
+  steps:[
+    {t:"t0", n:"staging 里的一堆字节", d:"可以重建的候选目录"},
+    {t:"t1", n:"算出 publication_id", d:"由 identity 内容派生，调用者选不了"},
+    {t:"t2", n:"写进隐藏临时目录", d:".{id}.{uuid4}.tmp，逐文件 atomic_write_bytes"},
+    {t:"t3", n:"在临时目录上先验一次", d:"完整 verify_publication_bundle"},
+    {t:"t4", n:"os.replace + fsync 父目录", d:"目录级原子改名"},
+    {t:"t5", n:"最终目录再验一次", d:"PREPARED —— 但还不是 active"}
+  ],
+  stage(s){
+    const id=s>=1, tmp=s>=2, v1=s>=3, moved=s>=4, done=s>=5;
+    return flow(
+      col(obj({
+        title:"staging", sub:"候选字节 + 各类收据",
+        mode: moved?"dim":"", state: moved?"已消费":"可重建",
+        fields:[{k:"性质", v:"可以重新生成，不是版本"}]
+      })),
+      arrow(),
+      col(obj({
+        title:"PublicationManifest identity", sub:"publication_id 的输入",
+        mode: id?"live":"dim",
+        state: id?"已计算":"未计算", stateTone: id?"on":"",
+        fields: id?[
+          {k:"candidate_status", v:"PUBLISHABLE"},
+          {k:"requirement_hashes", v:"业务/技术 authority closure"},
+          {k:"batch_manifest_id", v:"sha256:c6c1a236…"},
+          {k:"projection_manifest_id", v:"sha256:816bc364…"},
+          {k:"validation_receipt_id", v:"sha256:ab899c99…"},
+          {k:"files[]", v:"25 条 {path, sha256, size}"},
+          {k:"ledger_binding", v:"本批实际消费的 request rows"},
+          {k:"previous_publication_id", v:"publication_81eb8476…"}
+        ]:[{k:"状态", v:"尚未发生"}],
+        note: id? "因为 <code>previous_publication_id</code> 在 identity 里面，<strong>整条发布链是一条 hash 链</strong>：改动任何历史版本的任何一个字节，都会让它自己的 ID 变，进而让所有后继的 ID 失效。" : ""
+      })),
+      arrow(),
+      col(obj({
+        title: tmp ? (moved ? "outputs/publications/publication_fe01e227…" : ".publication_fe01e227….a3f9….tmp") : "（还不存在）",
+        sub: moved ? "不可变目录" : (tmp ? "隐藏临时目录" : ""),
+        mode: done?"live":(tmp?"":"dim"),
+        state: done?"PREPARED":(moved?"已改名":(v1?"临时目录已自验":(tmp?"写入中":"—"))),
+        stateTone: done?"on":(tmp?"wait":""),
+        fields: tmp?[
+          {k:"publication_id", from: id&&!moved?"（临时名）":"不存在", to:"publication_fe01e227…"},
+          {k:"manifest 列出", v:"25 个 payload"},
+          {k:"目录内实际文件", v: done? "26（25 + manifest 自身）" : "写入中"},
+          {k:"对外文件", v:"14"},
+          {k:"internal/ 文件", v:"11"},
+          {k:"合计大小", v: done? "3298.0 KB" : "—"}
+        ]:[{k:"状态", v:"尚未发生"}],
+        note: done ? "此刻新增的事实只有一条：<strong>这一版的全部内容已经冻结、可逐字节验证</strong>。它<em>不是</em>「当前版本」。" : ""
+      }))
+    ) + (done ? `<div style="margin-top:18px">${chainsSVG()}</div>` : "")
+      + (s>=3 ? note("幂等性写在同一个函数里：如果最终目录已存在，就验证已有内容与本次 manifest 逐字段相等；相等直接返回，不等报 <code>Existing publication ID has divergent bytes</code>。<strong>同一个 ID 永远不可能指向两组不同的字节。</strong>") : "");
+  },
+  extra(s){
+    if (s<2) return "";
+    return err("Publication bundle write failed（写包中途失败）",
+      "异常在 <code>finally</code> 里删除临时目录。<strong>最终 publication ID 目录只在完整验证通过后才出现</strong>——不会留下一个看起来完整的半成品包。"+
+      "<br>对象结局：磁盘上没有新的 publication 目录，旧 active 继续被消费，指针未读取。");
+  },
+  railLead:"这一幕要让你相信：目录存在 ≠ 曾经正式。",
+  ev:[
+    {lead:true, h:T.m("<code>outputs/publications/</code> 下 9 个目录；<code>outputs/publication_switch_receipts/</code> 里 5 条收据，只出现 3 个 publication ID。"),
+     pre:"链 1（未提交）b400cc6e → bc966657 → 0f491fd5\n链 2（未提交）970dba4d → 814765e9 → 115d13fd\n链 3（已提交）5668341b → 81eb8476 → fe01e227  ← 当前"},
+    {h:T.m("6 个孤儿包共 7.1 MB，全部 9 个包 11.6 MB。两次完整彩排的代价只有磁盘。")},
+    {h:T.a("当前包实测：磁盘 26 个文件、<code>manifest[\"files\"]</code> 列 25 个、合计 3298.0 KB、manifest 自身 sha256 = <code>a7b26dfd…</code>——与 active pointer 里的 <code>bundle_manifest_sha256</code> 完全一致。")},
+    {h:T.c("写包子事务与幂等分支。"), src:"scripts/vnext/publication.py:890-987（临时目录 951-983、幂等 955-962、注入点 972）"},
+    {h:T.c("包内文件<strong>精确集合</strong>校验连空目录都算：从 manifest 推出 expected files 与 expected directories，再 rglob 实际内容，两个集合都必须精确相等。塞一个额外文件就打不开。"),
+     src:"publication.py:4491-4513 · Publication file exact set differs"}
+  ]
+},
+
+/* ── 5 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"authority", title:"公共提交入口是一块墓碑",
+  claim:"提交权限从包<strong>自己的字节</strong>分类，不从调用者的参数来。名字最像入口的那两个公共函数，永远抛错。",
+  wrong:"<code>commit_publication()</code> 就是提交入口，传对参数就能发布。",
+  right:"<code>commit_publication()</code> 和 <code>commit_initial_publication_chain()</code> 无条件抛 <code>FORMAL_CUTOVER_AUTHORITY_REQUIRED</code>。真正的入口是私有的 <code>_commit_publication</code>，只有少数几个 module-owned 编排器 import 它。这不是把私有函数藏起来（Python 藏不住），而是在公共位置放一个永远失败的同名函数——误用立刻失败，错误码直接说明正确路径。",
+  what:"_publication_commit_authority(bundle_dir) 的三条判据",
+  steps:[
+    {t:"t0", n:"公共 API 被调用", d:"无条件抛错"},
+    {t:"t1", n:"私有入口 · 读包自己的字节", d:"依次尝试三条判据"},
+    {t:"t2", n:"分类结果决定能否碰指针", d:"只有 FORMAL 能前向提交"}
+  ],
+  stage(s){
+    const tried=s>=1, cls=s>=2;
+    return flow(
+      col(obj({
+        title:"commit_publication(...)", sub:"公共 API · publication.py:6011",
+        mode:"gone", state:"永远抛错", stateTone:"no",
+        fields:[{k:"raise", v:"PublicationError(\"FORMAL_CUTOVER_AUTHORITY_REQUIRED\")", bad:true}],
+        note:"<code>commit_initial_publication_chain()</code>（:5902）同样如此。<strong>代价是可发现性差</strong>：新人搜索 <code>commit_publication(</code> 看到的第一个定义就是这个拒绝版本。"
+      })),
+      arrow("✕"),
+      col(obj({
+        title:"_publication_commit_authority", sub:"publication.py:5415 · 只读包内文件",
+        mode: tried?"live":"dim",
+        state: tried?"逐条判据":"未进入", stateTone: tried?"wait":"",
+        fields: tried?[
+          {k:"判据 1", v:"有 internal/legacy_baseline_import.json → <b>LEGACY_BASELINE</b>"},
+          {k:"判据 2", v:"有 internal/zero_ai_release_receipt.json → <b>FORMAL</b>（要求 previous 非 null）"},
+          {k:"判据 3", v:"否则读 validation_run_manifest + validation receipt + internal/closure_manifest.json，按 (mode, result) 查表"}
+        ]:[{k:"状态", v:"尚未发生"}]
+      })),
+      arrow(),
+      col(obj({
+        title:"R2 包走到哪一条",
+        mode: cls?"live":"dim",
+        state: cls?"FORMAL":"未分类", stateTone: cls?"on":"",
+        fields: cls?[
+          {k:"命中", from:"—", to:"判据 2（zero-AI）"},
+          {k:"previous_publication_id", v:"publication_81eb8476…（非 null，通过）"},
+          {k:"validation_run_manifest.mode", v:"LIGHT_REVIEW_MODE"},
+          {k:"validation_run_manifest.result", v:"PASSED_WITH_CAVEATS"}
+        ]:[{k:"状态", v:"尚未发生"}],
+        note: cls ? "<strong>这一对不在判据 3 的查表里。</strong>如果 R2 包走到判据 3，会被判 <code>Publication commit authority is invalid</code>。它拿到 FORMAL，纯粹是因为判据 2 先命中并提前 return。" : ""
+      }))
+    ) + (cls ? note("所以这一层的 <code>FORMAL</code> 意思是「<strong>有权前向提交</strong>」，<em>不是</em>「通过了 FULL_VALIDATION」。两件事在这里被同一个字符串表示，读代码时极容易混。") : "");
+  },
+  pred:{
+    q:"R2 包里 <code>validation_run_manifest.json</code> 写的是 <code>LIGHT_REVIEW_MODE / PASSED_WITH_CAVEATS</code>。它还能被提交成正式版本吗？",
+    opts:[
+      {t:"不能——这不是 FULL_VALIDATION", ok:false},
+      {t:"能，而且正是因为通过了 FULL_VALIDATION", ok:false},
+      {t:"能，但走的是另一条判据，和 FULL_VALIDATION 无关", ok:true}
+    ],
+    a:"<b>能，走的是另一条判据。</b>判据 2 只检查包里有没有 <code>internal/zero_ai_release_receipt.json</code>、以及 <code>previous_publication_id</code> 非空，命中就直接 return FORMAL——根本没读到 <code>validation_run_manifest</code>。这不是漏洞：zero-AI 路径压根不调模型，没有 qualification 可言，它有自己的九项专用门。但它意味着<strong>不能从「active 是 FORMAL」推出「它跑过 FULL_VALIDATION」</strong>。"
+  },
+  railLead:"这一幕要让你相信：FORMAL 是权限标签，不是验证等级。",
+  ev:[
+    {lead:true, h:T.c("两个公共函数的函数体：删掉全部参数，然后无条件 raise。"),
+     src:"publication.py:6011-6034 · publication.py:5902-5925",
+     pre:'del (publication_root, publication_id,\n     expected_active_publication_id,\n     committed_at_utc)\nraise PublicationError(\n    "FORMAL_CUTOVER_AUTHORITY_REQUIRED")'},
+    {h:T.c("三条判据的顺序：判据 2 在读 validation_run_manifest <em>之前</em> return。"), src:"publication.py:5424-5433"},
+    {h:T.a("磁盘核对：9 个包里 6 个有 <code>zero_ai_release_receipt.json</code>、3 个有 <code>legacy_baseline_import.json</code>。<strong>一个都没有 <code>internal/closure_manifest.json</code></strong>——判据 3 那条线（<code>_portable_closure_files</code>，publication.py:1539，只被 <code>prepare_publication_bundle</code> 调用一处）从来没有真的生产出过一个包。")},
+    {h:T.c("非 FORMAL 的拒绝语。recorded 与 legacy 各有专门错误，不共用一句。"),
+     src:"publication.py:5486-5504",
+     pre:'"recorded-only publication cannot become active"\n"legacy baseline publication requires\n initial chain commit"'},
+    {h:T.c("首次提交必须走初始链，否则第一版就是没有前驱的孤儿，回滚无处可去。"),
+     src:"publication.py:5506-5521 · \"first formal publication requires initial publication chain\""}
+  ]
+},
+
+/* ── 6 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"switch", title:"唯一提交点",
+  claim:"14 个兼容镜像先写，指针后写。<strong>指针替换是唯一的官方提交点</strong>——它之前的所有失败都不改变正式版本，它之后的所有失败都可以从指针恢复。",
+  wrong:"根目录的 CSV 已经是新的了，所以版本已经切了。",
+  right:"root mirrors 是派生物，不是权威。在指针仍是旧值的那段时间里，官方状态仍然是旧版本；恢复程序会按旧指针把 14 个镜像全部还原回去。权威永远是 pointer + bundle + 切换历史三者闭合。",
+  what:"一次真实的前向提交：R1 → R2",
+  steps:[
+    {t:"t0", n:"取排他锁 + 先恢复遗留 intent", d:"fcntl LOCK_EX on active_publication.json.lock"},
+    {t:"t1", n:"CAS + 前驱双重校验", d:"两个条件都成立才继续"},
+    {t:"t2", n:"快照 14 个旧镜像", d:"只记 {sha256, size}，不存字节"},
+    {t:"t3", n:"写 switch intent", d:"write-ahead，任何 mutation 之前"},
+    {t:"t4", n:"逐个重写 14 个镜像", d:"写完第 7 个后是 MID_MIRROR_WRITE 注入点"},
+    {t:"t5", n:"写 active pointer", d:"◆ 唯一提交点", commit:true},
+    {t:"t6", n:"写 switch receipt", d:"接上历史 tip"},
+    {t:"t7", n:"读回后置校验 + 删除 intent", d:"同一把锁内重新 _open_paths"}
+  ],
+  stage(s){
+    const official = s>=5 ? "R2" : "R1";
+    const ptr = s>=5
+      ? [{k:"publication_id", from:"publication_81eb8476…", to:"publication_fe01e227…"},
+         {k:"bundle_manifest_sha256", from:"a8a3a5a6…", to:"a7b26dfd…"},
+         {k:"previous_publication_id", from:"publication_5668341b…", to:"publication_81eb8476…"},
+         {k:"committed_at_utc", from:"2026-08-20T11:38:22Z", to:"2026-08-20T11:38:54Z"}]
+      : [{k:"publication_id", v:"publication_81eb8476…"},
+         {k:"bundle_manifest_sha256", v:"a8a3a5a6…"},
+         {k:"previous_publication_id", v:"publication_5668341b…"},
+         {k:"committed_at_utc", v:"2026-08-20T11:38:22Z"}];
+    return flow(
+      col(obj({
+        title:"switch intent", sub:"outputs/publication_switch_intents/",
+        mode: (s>=3 && s<=6) ? "live" : "dim",
+        state: s<3 ? "不存在" : (s>=7 ? "已删除" : "在盘上"),
+        stateTone: (s>=3&&s<7) ? "wait" : "",
+        fields: (s>=3&&s<7)?[
+          {k:"previous_pointer", v:"R1 的四个字段"},
+          {k:"proposed_pointer", v:"R2 的四个字段"},
+          {k:"switch_mode", v:"COMMIT"},
+          {k:"previous_switch_receipt_id", v:"sha256:6adeedaa…"},
+          {k:"previous_mirror_state", v:"14 × {sha256, size} 或 absent"}
+        ]:[{k:"状态", v: s<3?"不存在":"已删除"}],
+        note:(s>=3&&s<7) ? "它记的是 hash，<strong>不是字节</strong>。恢复时从不可变包重建，再要求重建结果与这里的 hash 相符。" : ""
+      })),
+      arrow(),
+      col(obj({
+        title:"14 个 root compatibility mirrors", sub:"12 个在 outputs/，2 个 Markdown 在根目录",
+        mode: s>=4 ? "" : "dim",
+        state: s<4 ? "全部是 R1 的字节" : "全部是 R2 的字节",
+        stateTone: s>=4 ? "on":"",
+        fields:[
+          s>=4 ? {k:"字节来自", from:"R1 bundle", to:"R2 bundle"} : {k:"字节来自", v:"R1 bundle"},
+          {k:"写法", v:"逐个 atomic_write_bytes，写完立刻比对 hash"},
+          {k:"权威性", v:"派生物，不是 authority"}
+        ],
+        note: s>=4 && s<5 ? "<strong>镜像已经全新，官方状态仍然是 R1。</strong>这就是「镜像更新了 ≠ 版本切了」的那个窗口。" : ""
+      })),
+      arrow(),
+      col(obj({
+        title:"outputs/active_publication.json", sub:"四个字段 · 唯一提交点",
+        mode: s>=5 ? "live" : "",
+        state:"official = " + official, stateTone: s>=5 ? "on" : "",
+        fields: ptr
+      }),
+      obj({
+        title:"switch receipt", sub:"outputs/publication_switch_receipts/",
+        mode: s>=6 ? "live" : "dim",
+        state: s>=6 ? "已接上 tip" : "未写",
+        stateTone: s>=6 ? "on" : "",
+        fields: s>=6 ? [
+          {k:"switch_receipt_id", from:"—", to:"sha256:4f9ebf4b…"},
+          {k:"previous_switch_receipt_id", v:"sha256:6adeedaa…"},
+          {k:"switch_mode", v:"COMMIT"},
+          {k:"pointer", v:"与指针文件逐字段相等"}
+        ] : [{k:"状态", v:"尚未发生"}]
+      }))
+    ) + (s===1 ? note("<strong>两个条件都要。</strong>「当前指针 == 我准备时的前驱」防的是并发；「包自己声明的前驱 == 当前指针」防的是错配。单独任何一个都不够。") : "")
+      + (s===4 ? note("镜像不是一次系统调用同时替换的。合作读者持共享锁，在整个 <em>镜像 → 指针 → 收据</em> 区间会等待，最终只看到完整旧事务或完整新事务；<strong>绕过 PublicationView 直接轮流读根目录文件的程序，项目明确不承诺跨文件组原子</strong>。") : "")
+      + (s===5 ? note("在这一刻之前，官方状态是 R1；在这一刻之后，官方状态是 R2。<strong>收据还没写、镜像收尾还没做，都不改变这个事实。</strong>下一幕整幕都建立在这一句上。") : "")
+      + (s===7 ? note("后置校验用的是<strong>正式读取入口本身</strong>（同一把锁内重新 <code>_open_paths</code>），不是写函数的返回值。opened.publication_id 必须等于要提交的 ID，否则整个事务回滚。") : "");
+  },
+  extra(s){
+    if (s!==1) return "";
+    return err("Publication CAS predecessor changed / Prepared bundle predecessor differs",
+      "CAS 或前驱校验失败时，<strong>什么都还没写</strong>：没有 intent、没有镜像改动、没有指针改动、没有收据。"+
+      "<br>对象结局：<code>active_publication.json</code> 逐字节不变；收据数量不变；准备好的包留在磁盘上（它就是第 4 幕那 6 个孤儿之一）。");
+  },
+  railLead:"这一幕要让你相信：提交点只有一个，而且它在指针那一行。",
+  ev:[
+    {lead:true, h:T.c("代码里的顺序与注释。注释直接说明了为什么收据必须在指针之后。"),
+     src:"publication.py:5634-5660",
+     pre:'for … in ordered_mirrors:   # 14 个\n    atomic_write_bytes(…)\n    if index == midpoint:   # 7\n        _fault_injection_checkpoint(\n          "MID_MIRROR_WRITE")\n_fault_injection_checkpoint(\n  "MIRRORS_WRITTEN_BEFORE_POINTER_COMMIT")\natomic_write_json(pointer_path, pointer)   # ◆\n_fault_injection_checkpoint(\n  "POINTER_WRITTEN_BEFORE_SWITCH_RECEIPT")\nswitch_receipt = _write_switch_receipt(…)'},
+    {h:T.c("原注释：<em>“Persisting its history edge beforehand would let a pre-pointer crash leave an orphan that later pointer tamper could misrepresent as committed.”</em>——收据先写会制造一个可被冒用的孤儿边。"), src:"publication.py:5650-5652"},
+    {h:T.a("这一次切换的真实四个字段，就是现在磁盘上的内容。"),
+     src:"outputs/active_publication.json",
+     pre:'{\n "publication_id": "publication_fe01e227…",\n "bundle_manifest_sha256": "a7b26dfd…",\n "previous_publication_id":\n     "publication_81eb8476…",\n "committed_at_utc":\n     "2026-08-20T11:38:54Z"\n}'},
+    {h:T.a("对应的收据：<code>4f9ebf4b…</code>，<code>switch_mode = COMMIT</code>，<code>previous_switch_receipt_id = sha256:6adeedaa…</code>——正好接上 R1 恢复那条边。")},
+    {h:T.m("14 个 root mirror 与 active bundle 逐字节比较：<strong>14 / 14 完全相同</strong>，无差异、无缺失。")},
+    {h:T.c("锁在事务之前就取得，并且第一件事是恢复任何遗留 intent——所以下一幕的恢复永远发生在下一个 writer 手里，不在 reader 手里。"), src:"publication.py:5712-5726"}
+  ]
+},
+
+/* ── 7 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"crash", title:"崩溃落在提交点两侧，结局相反",
+  claim:"恢复方向不由错误类型决定，也不由返回码或文件 mtime 猜测。它只看当前指针等于 intent 里的 previous 还是 proposed。",
+  wrong:"出错就回滚。",
+  right:"指针前崩溃 = 官方状态还没提交 → 还原旧版本。指针后崩溃 = 已经越过唯一提交点 → 补完新版本。<strong>两者都不是「回滚」，也都不是「重试」，而是同一个状态机的两条出边。</strong>还有第三条：两个都不等于，就拒绝动手。",
+  what:"_recover_switch_intent_locked 的三条出边",
+  steps:[
+    {t:"t0", n:"进程死亡", d:"留下 intent，磁盘停在某个中间态"},
+    {t:"t1", n:"reader 撞上 pending intent", d:"fail closed，不自行清理"},
+    {t:"t2", n:"下一个 writer 取排他锁", d:"读 intent + 读当前指针"},
+    {t:"t3", n:"判定方向", d:"只比较指针等于哪一个"},
+    {t:"t4", n:"执行恢复", d:"补完 / 还原 / 拒绝"}
+  ],
+  knobs:{
+    d:"崩溃点是这套机制真正依赖的参数——它决定了恢复方向。把它做成旋钮是忠实的；把 SHA 值或镜像中点做成旋钮不是。",
+    items:[{key:"crashAt", label:"进程在哪一步死亡", opts:["t4 镜像写到一半","t4 镜像全写完","t5 指针刚写完","t6 收据刚写完","手改了指针"], numeric:true}]
+  },
+  stage(s){
+    const K = P.crashAt;                       // 0..4
+    const afterPointer = (K>=2 && K<=3);
+    const tampered = (K===4);
+    const ptrNow = tampered ? "既不是 previous 也不是 proposed"
+                 : (afterPointer ? "== proposed（R2）" : "== previous（R1）");
+    const dir = tampered ? "拒绝" : (afterPointer ? "向前补完" : "向后还原");
+    const finalActive = tampered ? "无法判定，人工介入" : (afterPointer ? "R2（新版本）" : "R1（旧版本）");
+    const mirrorState = K===0 ? "7 个是 R2 的字节，7 个还是 R1 的" : "14 个都是 R2 的字节";
+    const show = s>=3;
+    return flow(
+      col(obj({
+        title:"崩溃现场", sub:"进程已死，锁已随进程释放",
+        state:"磁盘中间态", stateTone:"wait",
+        fields:[
+          {k:"switch intent", v: K===4 ? "在盘上（内容未被改）" : "在盘上"},
+          {k:"14 个镜像", v: mirrorState},
+          {k:"active pointer", v: tampered ? "被手工改成了第三个值" : (afterPointer ? "已经是 R2" : "仍然是 R1")},
+          {k:"switch receipt", v: K===3 ? "已写" : "未写" }
+        ],
+        note: "模拟真实进程终止用的是一个<strong>继承自 <code>BaseException</code> 的异常</strong>——故意不继承 <code>Exception</code>，这样它能穿透生产代码里所有的 <code>except (OSError, ValueError, PublicationError)</code>。"
+      })),
+      arrow(),
+      col(obj({
+        title:"reader 此刻的遭遇", sub:"PublicationView.open()",
+        mode: s>=1 ? "" : "dim",
+        state: s>=1 ? "fail closed" : "尚未发生", stateTone: s>=1 ? "no" : "",
+        fields: s>=1 ? [{k:"raise", v:"Publication switch recovery intent is pending", bad:true}] : [{k:"状态", v:"尚未发生"}],
+        note: s>=1 ? "读者没有排他锁，也不该决定事务方向，所以它<strong>只拒绝，不修复</strong>。代价诚实写在这里：writer 崩溃后、恢复启动前，读服务不可用。" : ""
+      }),
+      obj({
+        title:"下一个 writer 的判定", sub:"publication.py:5259-5292",
+        mode: s>=2 ? "live" : "dim",
+        state: s>=3 ? dir : "尚未判定", stateTone: s>=3 ? (tampered?"no":"on") : "",
+        fields: s>=2 ? [
+          {k:"intent.previous_pointer", v:"R1 的四个字段"},
+          {k:"intent.proposed_pointer", v:"R2 的四个字段"},
+          show ? {k:"当前指针", from:"读取中", to:ptrNow} : {k:"当前指针", v:"读取中"}
+        ] : [{k:"状态", v:"尚未发生"}]
+      })),
+      arrow(),
+      col(obj({
+        title:"恢复动作",
+        mode: s>=4 ? (tampered?"":"live") : "dim",
+        state: s>=4 ? dir : "尚未判定", stateTone: s>=4 ? (tampered?"no":"on") : "",
+        fields: s>=4 ? (tampered
+          ? [{k:"raise", v:"Pending switch pointer is neither previous nor proposed", bad:true}]
+          : afterPointer
+            ? [{k:"1", v:"verify_publication_bundle(R2)"},
+               {k:"2", v:"比对 manifest hash 与 proposed.bundle_manifest_sha256"},
+               {k:"3", v:"补写 switch receipt（幂等）并验证链"},
+               {k:"4", v:"_sync_mirrors_from_bundle 从 R2 包重建 14 个镜像"},
+               {k:"5", v:"删除 intent"}]
+            : [{k:"1", v:"删除本事务可能已写的收据"},
+               {k:"2", v:"验证 previous 的历史链仍成立"},
+               {k:"3", v:"_restore_pre_switch_mirrors 从 R1 包重建 14 个镜像"},
+               {k:"4", v:"删除 intent"}]
+        ) : [{k:"状态", v:"尚未发生"}]
+      }),
+      obj({
+        title:"最终官方状态",
+        mode: s>=4 ? "live" : "dim",
+        state: s>=4 ? finalActive : "尚未判定", stateTone: s>=4 ? (tampered?"no":"on") : "",
+        fields: s>=4 ? [{k:"active_publication.json", v: tampered ? "保持被改后的值，等待人工判定" : (afterPointer ? "publication_fe01e227…" : "publication_81eb8476…")}] : [{k:"状态", v:"尚未发生"}]
+      }))
+    ) + (s>=4 && tampered
+      ? note("<strong>第三条出边才是这个设计最重要的部分：它不猜。</strong>如果状态既不是事务前也不是事务后，说明发生了这套机制没有建模的事情，此时任何自动动作都可能让情况更糟。")
+      : "")
+      + (s>=4 && !tampered && !afterPointer
+      ? note("恢复镜像时<strong>不用备份，用不可变包重建</strong>：intent 里只有 <code>{sha256, size}</code>；恢复从 R1 包读出字节，要求 hash 与 size 与 intent 记录完全一致，不一致就报 <code>Recovery bundle cannot reproduce pre-switch mirrors</code>。系统里从来不存在第二份权威字节。")
+      : "")
+      + (s>=4 && afterPointer
+      ? note("注意这里<strong>不是重跑发布</strong>：不重新计算指标、不调用 SEC、不调用模型。它只是把已经越过提交点的那次切换收口——补写收据、从已验证的不可变包重建镜像。")
+      : "");
+  },
+  railLead:"这一幕要让你相信：恢复方向是算出来的，不是猜出来的。",
+  ev:[
+    {lead:true, h:T.c("三条出边的判定条件，逐字来自源码。"),
+     src:"publication.py:5259-5303",
+     pre:'if current_pointer == proposed_pointer:\n    …补写 receipt / 同步 mirrors\n    return proposed_id\nif current_pointer != previous_pointer:\n    raise PublicationError(\n      "Pending switch pointer is neither\n       previous nor proposed")\n…还原 mirrors / 删 intent\nreturn previous_id'},
+    {h:T.c("恢复镜像从不可变包重建并要求 hash 匹配。"), src:"publication.py:5187-5231 · \"Recovery bundle cannot reproduce pre-switch mirrors\""},
+    {h:T.c("reader 的 fail-closed 只有一句，不做任何清理。"), src:"publication.py:4901-4911 · \"Publication switch recovery intent is pending\""},
+    {h:T.c("同一进程内的<em>可捕获</em>异常走另一条路：立刻用内存快照还原全部镜像和旧指针、删掉本事务收据与 intent，再抛 <code>Publication commit aborted and rolled back</code>。这条路径不需要下一个 writer。"), src:"publication.py:5665-5695"},
+    {h:T.c("生产代码里 4 个命名故障注入点（生产环境是彻底的 no-op，只校验参数）。位置成为生产代码的一部分，不会因重构而漂移。"),
+     src:"publication.py:972 / 5640 / 5644 / 5648",
+     pre:"MID_BUNDLE_WRITE\nMID_MIRROR_WRITE\nMIRRORS_WRITTEN_BEFORE_POINTER_COMMIT\nPOINTER_WRITTEN_BEFORE_SWITCH_RECEIPT"},
+    {h:T.c("故障矩阵定义 14 个场景，每个绑定 4 项期望（故障点 / 结果码 / 临时命名空间是否清理 / 最终 active 应是前驱还是后继）。<strong>第 10 幕会说它跑没跑过。</strong>"), src:"scripts/vnext/fault_matrix.py:44-112"}
+  ]
+},
+
+/* ── 8 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"cas", title:"锁负责串行，CAS 负责决胜",
+  claim:"两个发布者可以同时准备，因为准备不碰指针。提交时锁把他们排成一列——但排队之后，第二个人的前提可能已经过期，这要靠 CAS 拦住。",
+  wrong:"有文件锁就够了，不需要 compare-and-swap。",
+  right:"锁只保证「不会同时写」。它不保证「第二个人拿到锁时，他准备阶段看到的那个前驱还是当前值」。CAS 检查的正是这一句。<strong>只有锁没有 CAS，第二个 writer 会基于一个已经过期的前提把 winner 覆盖掉。</strong>",
+  what:"两个发布者，同一个前驱",
+  steps:[
+    {t:"t0", n:"两个候选都以 A 为前驱准备", d:"prepare 不碰指针，互不干扰"},
+    {t:"t1", n:"同时请求排他锁", d:"内核把他们排成一列"},
+    {t:"t2", n:"winner 完成整条事务", d:"指针 A → B"},
+    {t:"t3", n:"loser 拿到锁，CAS 比较", d:"expected = A，current = B"},
+    {t:"t4", n:"loser 失败，不留痕迹", d:"收据数量不变"}
+  ],
+  stage(s){
+    const won=s>=2, lost=s>=4;
+    return flow(
+      col(obj({
+        title:"发布者甲的包 B", sub:"prepared",
+        mode: won?"live":"", state: won?"已提交":"PREPARED", stateTone: won?"on":"wait",
+        fields:[{k:"manifest.previous_publication_id", v:"A"},
+                {k:"expected_active_publication_id", v:"A"}]
+      }),
+      obj({
+        title:"发布者乙的包 C", sub:"prepared",
+        mode: lost?"gone":"", state: lost?"CAS 失败":"PREPARED", stateTone: lost?"no":"wait",
+        fields:[{k:"manifest.previous_publication_id", v:"A"},
+                {k:"expected_active_publication_id", v:"A"}]
+      })),
+      arrow("⇉"),
+      col(obj({
+        title:"active_publication.json.lock", sub:"fcntl LOCK_EX",
+        mode: s>=1 ? "live":"dim",
+        state: s>=1 ? "串行化":"空闲", stateTone: s>=1?"on":"",
+        fields:[
+          {k:"它保证", v:"同一时刻只有一个 writer 在改指针与镜像"},
+          {k:"它不保证", v:"排到队的人，前提还没过期"}
+        ]
+      }),
+      obj({
+        title:"CAS 检查", sub:"current_id != expected_previous_publication_id",
+        mode: s>=3 ? (lost?"live":"") : "dim",
+        state: s>=3 ? "对乙不成立" : "尚未比较", stateTone: s>=3?"no":"",
+        fields: s>=3 ? [
+          {k:"乙的 expected", v:"A"},
+          {k:"实际 current", from:"A", to:"B（甲已经切走了）"}
+        ] : [{k:"状态", v:"尚未发生"}]
+      })),
+      arrow(),
+      col(obj({
+        title:"active pointer",
+        mode: won?"live":"",
+        state: won ? "publication B" : "publication A", stateTone: won?"on":"",
+        fields:[ won
+          ? {k:"publication_id", from:"A", to:"B"}
+          : {k:"publication_id", v:"A"} ]
+      }),
+      obj({
+        title:"乙的结局",
+        mode: lost?"":"dim",
+        state: lost?"失败，无副作用":"—", stateTone: lost?"no":"",
+        fields: lost ? [
+          {k:"raise", v:"Publication CAS predecessor changed", bad:true},
+          {k:"switch receipts", v:"数量不变，没有多出一条"},
+          {k:"14 个镜像", v:"未被乙触碰"},
+          {k:"包 C", v:"仍在磁盘上，完全有效，只是从未提交"}
+        ] : [{k:"状态", v:"尚未发生"}]
+      }))
+    ) + (lost ? note("包 C 不需要被删除，也不会被自动激活。<strong>它就是第 4 幕里那 6 个孤儿包的来历</strong>——彩排的代价只有磁盘。") : "");
+  },
+  railLead:"这一幕要让你相信：锁和 CAS 拦的不是同一件事。",
+  ev:[
+    {lead:true, h:T.c("CAS 在锁内、在任何写入之前。"),
+     src:"publication.py:5572-5583",
+     pre:'if current_id != expected_previous_publication_id:\n    raise PublicationError(\n      "Publication CAS predecessor changed")\nif switch_mode == "COMMIT":\n    if manifest["previous_publication_id"] \\\n       != current_id:\n        raise PublicationError(\n          "Prepared bundle predecessor differs")'},
+    {h:T.c("故障矩阵里的两个并发场景真的开两个线程，要求恰好一个成功一个失败：<code>ISOLATED_CONCURRENT_PUBLISHERS → EXACTLY_ONE_WINNER</code>、<code>ISOLATED_CAS_LOSER → CAS_LOST_ACTIVE_PRESERVED</code>，两者都要求最终 active 是 <code>SUCCESSOR</code>。"), src:"fault_matrix.py:64-70"},
+    {h:T.m("磁盘证据：9 个包、6 个从未出现在切换历史里。<code>previous_publication_id</code> 显示它们构成两条完整但从未提交的链。")},
+    {h:T.c("回滚也受同类约束：只能回到当前指针证明的<strong>直接</strong>前驱，prepared-only 的兄弟版本即使内容完全有效也不能被回滚过去。"), src:"publication.py:5580-5586 · \"Rollback target is not the committed predecessor\""}
+  ]
+},
+
+/* ── 9 ──────────────────────────────────────────────────────────────────── */
+{
+  id:"pin", title:"读者钉住一个版本",
+  claim:"<code>PublicationView.open()</code> 一次性解析指针，把 publication_id 和 bundle 目录钉在内存里；之后每一次 read_bytes 都不再看指针，并且重新校验那个文件的 size 与 sha256。",
+  wrong:"直接读根目录那几个 CSV 就行，反正内容一样。",
+  right:"直接读会丢三件事：版本钉住（读到一半被切）、篡改检测、以及「我读的到底是哪一版」这个信息本身。而且读者<strong>也参与锁协议</strong>——writer 从镜像准备一直持排他锁到收据落盘，所以持共享锁的读者永远看不到第 6 幕那个故意留出的「指针已切、收据未写」窗口。",
+  what:"打开一次视图，跨越一次切换",
+  steps:[
+    {t:"t0", n:"reader 调 open()", d:"只能给一个 root，不能分别指定子路径"},
+    {t:"t1", n:"八步校验后钉住", d:"锁 → 无 pending intent → 指针 → 收据链 → 整包 → manifest hash"},
+    {t:"t2", n:"别人完成了一次切换", d:"指针已经指向下一版"},
+    {t:"t3", n:"reader 继续读", d:"读到的仍然是钉住的那一版"}
+  ],
+  stage(s){
+    const open=s>=1, switched=s>=2;
+    return flow(
+      col(obj({
+        title:"PublicationView.open(publication_root=repo_root)", sub:"publication.py:6257",
+        mode: open?"live":"dim",
+        state: open?"已钉住":"未打开", stateTone: open?"on":"",
+        fields: open?[
+          {k:"1", v:"从一个 root 推导全部路径（调用方给不了子路径）"},
+          {k:"2", v:"要求锁文件存在且是普通文件"},
+          {k:"3", v:"取共享锁 LOCK_SH"},
+          {k:"4", v:"拒绝任何 pending / 多个 / 被篡改的 switch intent"},
+          {k:"5", v:"严格解析指针（字段集合必须精确）"},
+          {k:"6", v:"收据链：恰好一个 root、一条链、一个 tip，且 tip == 指针"},
+          {k:"7", v:"verify_publication_bundle 完整验证整个包"},
+          {k:"8", v:"比对指针的 bundle_manifest_sha256 与包内 manifest 实际 hash"}
+        ]:[{k:"状态", v:"尚未发生"}]
+      })),
+      arrow(),
+      col(obj({
+        title:"钉住的状态", sub:"内存中",
+        mode: open?"live":"dim",
+        state: open?"pinned":"尚未打开", stateTone: open?"on":"",
+        fields: open?[
+          {k:"publication_id", from:"（每次读都重新解析指针）", to:"publication_fe01e227… 固定"},
+          {k:"bundle_dir", v:"outputs/publications/publication_fe01e227…"},
+          {k:"manifest", v:"25 条 {path, sha256, size}"}
+        ]:[{k:"状态", v:"尚未发生"}],
+        note: open ? "<code>read_bytes(relative_path=…)</code> 只允许读 manifest 列出的路径，并且每次都重新比对长度与 sha256，不符就报 <code>Pinned publication artifact changed</code>。" : ""
+      }),
+      obj({
+        title:"外部发生了一次切换",
+        mode: switched?"":"dim",
+        state: switched ? "指针已经指向下一版" : "尚未发生", stateTone: switched?"wait":"",
+        fields: switched?[{k:"active_publication.json", from:"publication_fe01e227…", to:"publication_<下一版>…"}]:[{k:"状态", v:"尚未发生"}]
+      })),
+      arrow(),
+      col(obj({
+        title:"reader 继续 read_bytes",
+        mode: s>=3 ? "live" : "dim",
+        state: s>=3 ? "仍然读 fe01e227" : "尚未读取", stateTone: s>=3?"on":"",
+        fields: s>=3 ? [
+          {k:"读到的版本", v:"publication_fe01e227…（没有变）"},
+          {k:"为什么", v:"read_bytes 不看指针，只看钉住的 bundle_dir"},
+          {k:"想看新版", v:"打开一个新的 View"}
+        ] : [{k:"状态", v:"尚未发生"}],
+        note: s>=3 ? "<strong>这就是「多文件一致读」的真正下游保证</strong>：不是「切换很快」，而是「你手里的这一次读取，从头到尾属于同一个版本」。" : ""
+      }))
+    );
+  },
+  extra(s){
+    if (s<1) return "";
+    return err("Publication authority lock is missing or unsafe（干净 checkout 上会直接撞到）",
+      "<span class=\"tag measured\">实测</span>在这次的全新 clone 上，<code>outputs/active_publication.json.lock</code> <strong>不存在</strong>——它在 <code>.gitignore:23</code> 里，<code>git ls-files</code> 查不到。"+
+      "<br>于是 <code>PublicationView.open(publication_root=repo_root)</code> 第一步就失败。<code>touch outputs/active_publication.json.lock</code> 之后一切正常。"+
+      "<br><strong>这不是 bug</strong>——锁文件本来就不该进版本库。但它意味着「clone 下来就能离线验证」这个性质需要多一条说明。");
+  },
+  railLead:"这一幕要让你相信：每次读都全量校验，在这个规模下几乎免费。",
+  ev:[
+    {lead:true, h:T.m("在本容器上实际打开并读完整包（各取 5 次中位数）。25 个文件、3298.0 KB。"),
+     pre:"PublicationView.open        0.048 s\nread_bytes 全部 25 个文件    0.011 s\npublication_state_snapshot 0.050 s"},
+    {h:T.m("同一次运行里先复现了失败：无锁文件 → <code>Publication authority lock is missing or unsafe</code>；<code>touch</code> 后 → <code>OPENED: publication_fe01e227…</code>。")},
+    {h:T.c("收据链的七条不变量里最硬的一条：<strong>从 tip 往回走完之后，访问过的收据集合必须等于全部收据集合</strong>。往目录里塞一条格式完全合法的无关收据也会失败。"), src:"publication.py:4989-5058 · \"Publication switch history is not one committed chain\""},
+    {h:T.a("当前收据链的真实五条边——第 3 条是一次真实回滚演练，34 秒内发生过五次指针切换。"),
+     pre:"#1 COMMIT   null     → 5668341b  11:38:20\n#2 COMMIT   5668341b → 81eb8476  11:38:20\n#3 ROLLBACK 81eb8476 → 5668341b  11:38:21\n#4 COMMIT   5668341b → 81eb8476  11:38:22\n#5 COMMIT   81eb8476 → fe01e227  11:38:54 ←tip"},
+    {h:T.c("原注释说明读者为什么也要拿锁：<em>“A forward switch holds this same file exclusively from mirror preparation through pointer and committed-edge persistence. Readers therefore observe either complete transaction, never the deliberate pointer-before-edge interval.”</em>"), src:"publication.py:6292-6295"}
+  ]
+},
+
+/* ── 10 ─────────────────────────────────────────────────────────────────── */
+{
+  id:"limits", title:"包证明到哪里为止",
+  claim:"包保证的是「这些字节没被动过，而且它们之间的声明彼此自洽」。它<strong>不</strong>保证「这些字节代表的验证在今天仍然成立」，也<strong>不</strong>保证「这一版经历过完整的故障演练和验收」。",
+  wrong:"包是不可变的、内容寻址的、每次读都验 hash，所以打开它就等于拿到了完整可信的证据。",
+  right:"前半句由 hash 保证，后半句需要看包<em>之外</em>的证据——而那些证据当前是空的，并且系统自己诚实地把它们标成了空。这一幕全部是本次在这个快照上跑出来的反证。",
+  what:"四条限定，逐条给反证",
+  steps:[
+    {t:"t0", n:"Requirement 声明会漂移", d:"包记的是历史声明，不是当前断言"},
+    {t:"t1", n:"验证范围写在包里", d:"LIGHT_REVIEW_MODE / PASSED_WITH_CAVEATS"},
+    {t:"t2", n:"故障矩阵没为这一版跑过", d:"两个命名空间都是空标记"},
+    {t:"t3", n:"full acceptance 从未通过", d:"17 份 full，0 份 PASSED"},
+    {t:"t4", n:"编排层的测试有真实缺口", d:"14 个用例，5 个不产生保护"}
+  ],
+  stage(s){
+    const cards = [];
+    cards.push(obj({
+      title:"限定一 · Requirement 声明会与仓库漂移",
+      mode: s>=0 ? (s===0?"live":"") : "dim",
+      state:"open() 照常成功", stateTone:"wait",
+      fields:[
+        {k:"包内记录", v:"requirement_closure_hash = sha256:161da433…"},
+        {k:"当前仓库", from:"sha256:161da433…", to:"sha256:1786663c…"},
+        {k:"PublicationView.open()", v:"仍然成功——它把这个字段列为必须存在，但不从仓库重新推导"},
+        {k:"父快照 ai_first_v3_3_1", v:"7 个 hash 与当前仓库全部相符"}
+      ],
+      note:"<strong>这是正确的设计</strong>——不可变包应该记录发布当时的事实，而不是被后来的仓库变更判为无效。但它意味着：包里的 <code>requirement_closure_hash</code> 是一个<em>历史声明</em>，不是一个<em>当前断言</em>；「这个包的 Requirement 绑定仍然与仓库一致」这件事，包自己不说，也没有任何地方说。"
+    }));
+    if (s>=1) cards.push(obj({
+      title:"限定二 · 验证范围包自己写着",
+      mode: s===1?"live":"",
+      state:"PASSED_WITH_CAVEATS", stateTone:"wait",
+      fields:[
+        {k:"validation_run_manifest.mode", v:"LIGHT_REVIEW_MODE"},
+        {k:"validation_run_manifest.result", v:"PASSED_WITH_CAVEATS"},
+        {k:"not_refreshed_artifacts", v:"[\"issue_15_full_acceptance.not_run\"]"},
+        {k:"publication_validation_receipt.status", v:"PASSED（九项专用检查，counters 全 0）"}
+      ],
+      note:"两个状态回答的是<strong>不同问题</strong>，不能互相覆盖：receipt 的 PASSED 只证明它自己那九项门；run manifest 的 PASSED_WITH_CAVEATS 说的是这一轮的范围。"
+    }));
+    if (s>=2) cards.push(obj({
+      title:"限定三 · 14 个故障场景没为这一版跑过",
+      mode: s===2?"live":"",
+      state:"NOT_RUN", stateTone:"no",
+      fields:[
+        {k:"publication_fault_receipts/", v:"只有 EMPTY_NAMESPACE.marker.json"},
+        {k:"↳ 内容", v:"{scope: ISSUE_15_ZERO_AI_R1, status: NOT_RUN_OUT_OF_SCOPE}"},
+        {k:"vnext_cutover_audits/", v:"只有 EMPTY_NAMESPACE.marker.json"},
+        {k:"↳ 内容", v:"{scope: AI_LIVE_CUTOVER, status: NOT_RUN}"}
+      ],
+      note:"<strong>两个 status 的差别有意义</strong>：前者说「在这个范围内不在范围内所以没跑」，后者说「没跑」——后者没有「超出范围」这个借口。场景本身由单元测试覆盖，但正式故障矩阵收据命名空间是空的。<strong>当前 active 的 R2 发布，没有配套的故障矩阵证据。</strong>"
+    }));
+    if (s>=3) cards.push(obj({
+      title:"限定四 · full acceptance 从未通过",
+      mode: s===3?"live":"",
+      state:"0 / 17 PASSED", stateTone:"no",
+      fields:[
+        {k:"acceptance receipts 合计", v:"43"},
+        {k:"↳ 状态分布", v:"PASSED_RECORDED_ONLY 21 · BLOCKED 15 · PASSED_FAST_LOCAL_ONLY 4 · FAILED 3"},
+        {k:"scope = full", v:"17 份（BLOCKED 15 + FAILED 2），无一 PASSED"},
+        {k:"其中 execute_live = True", v:"只有 1 份"},
+        {k:"↳ 那一份", v:"2026-08-17T10:52:45Z 开始 → FAILED"}
+      ]
+    }));
+    if (s>=4) cards.push(obj({
+      title:"限定五 · 编排层的测试缺口",
+      mode: s===4?"live":"",
+      state:"14 tests · failures=2 errors=3", stateTone:"no",
+      fields:[
+        {k:"事务本体", v:"test_publication.py 64 个用例、test_formal_fault_matrix.py 8 个、test_formal_publication.py 2 个"},
+        {k:"编排层", v:"test_cutover.py 14 个 → 5 个不产生保护"},
+        {k:"其中永久失效", v:"mock.patch(\"vnext.cutover.build_approved_transport_adapter\")", bad:true},
+        {k:"↳ 原因", v:"cutover.py 从未 import 过这个名字；它在 ai_adapter.py:2763"},
+        {k:"↳ 后果", v:"它声称覆盖的 post-commit resume 恢复路径，一行都没被执行过"},
+        {k:"另外 4 个", v:"倒在 LIVE_PREREQUISITES_MISSING —— 沙箱里没有真实凭据"}
+      ],
+      note:"后 4 个<strong>是这一层的设计意图</strong>——<code>--execute-live</code> 不能在没有凭据的环境里假装跑通。但它们恰好覆盖的是「首次形式提交的原子初始链」和「blocked 候选不改指针」这两条关键分支。<strong>结论：事务本体和故障恢复的证据是扎实的，缺口全在 cutover 编排这一层。</strong>"
+    }));
+    return `<div class="flow"><div class="flow-col" style="flex:1 1 100%">${cards.join("")}</div></div>`;
+  },
+  extra(s){
+    if (s<4) return "";
+    return note("把这三件事放在一起看，它们指向同一个现象：<code>_portable_closure_files</code>（判据 3 那条线）从未生产出一个包、<code>full</code> scope 验收从未通过、<code>test_cutover.py</code> 有 5 个用例在干净 checkout 上不产生保护。<strong>cutover 那条线的证据，本地拿不到。</strong>");
+  },
+  railLead:"这一幕的每一条都是本次实测的反证，不是推测。",
+  ev:[
+    {lead:true, h:T.m("Requirement 漂移，当场算的："),
+     pre:"当前 issue_15_v1 closure\n  sha256:1786663c4c78bc1201dc…\nR2 包内记录\n  sha256:161da433701e133c6e38…\nDRIFT: True\n\n同时 PublicationView.open() → OPENED"},
+    {h:T.m("父快照 <code>ai_first_v3_3_1</code> 的 7 个文件 hash 与包 manifest 的 <code>requirement_hashes</code> 逐项比较：全部 MATCH。<strong>包的 manifest 层绑定仍然有效，Issue #15 层的声明已经过期——这两层的区别在包里看不出来。</strong>")},
+    {h:T.m("两个空标记的原文。"),
+     pre:'{"record_type":"EMPTY_FORMAL_NAMESPACE_MARKER",\n "scope":"ISSUE_15_ZERO_AI_R1",\n "status":"NOT_RUN_OUT_OF_SCOPE"}\n\n{"record_type":"EMPTY_FORMAL_NAMESPACE_MARKER",\n "scope":"AI_LIVE_CUTOVER",\n "status":"NOT_RUN"}'},
+    {h:T.m("<code>python3 -m unittest tests.vnext.test_cutover</code> 本次真实输出。"),
+     pre:"Ran 14 tests in 18.171s\nFAILED (failures=2, errors=3)\n\nAttributeError: <module 'vnext.cutover'>\n  does not have the attribute\n  'build_approved_transport_adapter'"},
+    {h:T.m("<code>tools/run_fast_tests.py</code> 的 <code>FAST_TESTS</code> 是写死的 20 项、每项 30 秒超时。<strong>里面没有 test_publication / test_cutover / test_formal_publication / test_formal_fault_matrix</strong>——不是因为它们不重要，是因为它们跑不进 30 秒。这一层唯一的日常保护，是有人手动去跑那十几分钟。"), src:"tools/run_fast_tests.py:29-73"}
+  ]
+},
+
+/* ── 11 ─────────────────────────────────────────────────────────────────── */
+{
+  id:"map", title:"因果心智地图",
+  claim:"把前面十幕收束成一条链。每一个 ≠ 都是一道真实的门，越过它需要一组具体的证据。",
+  wrong:"这一层是「把新文件写到 outputs/ 下面」。",
+  right:"这一层是「把更新十几个文件，转化成切换一个指针」。正式性来自完整证明加上一次合法的历史切换，不来自某个文件刚刚被写过。",
+  what:"从局部结果到下游一致消费",
+  steps:[{t:"—", n:"整幅图", d:"这是全部十幕的收束"}],
+  stage(){ return mapSVG(); },
+  extra(){
+    return note("<strong>可以换的实现细节</strong>：JSON 指针、本地目录、<code>fcntl</code>、rename、14 个镜像的具体清单、存储后端。"+
+      "<br><strong>不能丢的因果</strong>：完整批次决定内容资格 · 独立投影加事后比较 · 精确的门禁绑定 · 不可变版本 · <em>唯一</em>提交点 · 前驱与 CAS · write-ahead 恢复 · 一条连通历史 · 钉住式读取 · 篡改时 fail closed。"+
+      "<br>如果未来迁到对象存储或多机数据库，这十条必须逐条找到对应物，而不是「把文件复制到云上」。");
+  },
+  railLead:"这一幕不引入新事实，它只保证前面十幕连成一条因果。",
+  ev:[
+    {lead:true, h:"每一个 <code>≠</code> 对应前面的一幕：批次闭合（1）· 独立投影（2）· 规则派生（3）· 封包（4）· 提交权限（5）· 唯一提交点（6）· 恢复方向（7）· CAS（8）· 钉住（9）· 边界（10）。"},
+    {h:"这一层<strong>不负责</strong>的事，同样重要：不判断 69.8% 这个数字对不对（那在流程一、二里已经决定）· 不生成内容 · 不跨机协调（提交点是 <code>fcntl.flock</code> + 本地文件系统，单机语义）· 不清理历史（旧包永远留着，没有任何 GC）。"},
+    {h:T.m("最后一次核对：本次没有创建、切换或回滚任何 publication。active pointer 仍是 <code>publication_fe01e227…</code>，14 个镜像与包逐字节一致，switch intent 目录不存在（等价于无 pending intent）。")}
+  ]
+}
+];
+
+/* ══ 两张手绘 SVG ═════════════════════════════════════════════════════════ */
+
+function chainsSVG(){
+  const box = (x,y,label,sub,on) => `
+    <rect x="${x}" y="${y}" width="118" height="40" rx="2" fill="none"
+      stroke="${on?'var(--accent-line)':'currentColor'}" stroke-width="${on?2:1}"
+      ${on?'':'stroke-dasharray="4 3"'} opacity="${on?1:.6}"/>
+    <text x="${x+59}" y="${y+17}" text-anchor="middle" font-size="12" font-family="var(--mono)"
+      fill="${on?'var(--accent)':'currentColor'}" opacity="${on?1:.75}">${label}</text>
+    <text x="${x+59}" y="${y+31}" text-anchor="middle" font-size="10" font-family="var(--sans)"
+      fill="currentColor" opacity=".6">${sub}</text>`;
+  const link = (x,y,on) => `<line x1="${x}" y1="${y}" x2="${x+30}" y2="${y}" stroke="${on?'var(--accent-line)':'currentColor'}"
+      stroke-width="${on?2:1}" ${on?'':'stroke-dasharray="4 3"'} opacity="${on?1:.5}" marker-end="url(#ah${on?'-on':''})"/>`;
+  return `<figure><svg class="diagram" viewBox="0 0 660 250" role="img"
+    aria-label="磁盘上九个发布包构成三条链，只有第三条被切换收据承认为正式历史，其中末端一个是当前 active。">
+  <defs>
+    <marker id="ah" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <polygon points="0,1 8,4 0,7" fill="currentColor" opacity=".55"/></marker>
+    <marker id="ah-on" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+      <polygon points="0,1 8,4 0,7" fill="var(--accent-line)"/></marker>
+  </defs>
+  <text x="0" y="14" font-size="11" font-family="var(--mono)" fill="currentColor" opacity=".6">彩排 · 从未提交</text>
+  ${box(0,24,'b400cc6e','legacy',0)}${link(118,44,0)}${box(148,24,'bc966657','R1',0)}${link(266,44,0)}${box(296,24,'0f491fd5','R2',0)}
+  ${box(0,88,'970dba4d','legacy',0)}${link(118,108,0)}${box(148,88,'814765e9','R1',0)}${link(266,108,0)}${box(296,88,'115d13fd','R2',0)}
+  <text x="0" y="168" font-size="11" font-family="var(--mono)" fill="var(--accent)">正式历史 · 5 条切换收据承认</text>
+  ${box(0,178,'5668341b','legacy',1)}${link(118,198,1)}${box(148,178,'81eb8476','R1',1)}${link(266,198,1)}${box(296,178,'fe01e227','R2',1)}
+  <line x1="355" y1="178" x2="355" y2="160" stroke="var(--accent-line)" stroke-width="2"/>
+  <text x="362" y="164" font-size="11.5" font-family="var(--mono)" fill="var(--accent)">← active pointer 指这里</text>
+  <text x="440" y="44" font-size="11.5" font-family="var(--sans)" fill="currentColor" opacity=".7">内容完整</text>
+  <text x="440" y="61" font-size="11.5" font-family="var(--sans)" fill="currentColor" opacity=".7">manifest 自洽</text>
+  <text x="440" y="78" font-size="11.5" font-family="var(--sans)" fill="currentColor" opacity=".7">验证通过</text>
+  <text x="440" y="102" font-size="11.5" font-family="var(--sans)" fill="currentColor" opacity=".7">——但从未提交</text>
+  <text x="440" y="198" font-size="11.5" font-family="var(--sans)" fill="var(--accent)">按 mtime 挑「最新」</text>
+  <text x="440" y="215" font-size="11.5" font-family="var(--sans)" fill="var(--accent)">会绕过整条历史</text>
+  </svg>
+  <figcaption>九个包三条链。前两条是完整彩排：内容完整、manifest 自洽、验证通过，从未提交。只有第三条出现在五条切换收据里，末端 <code>fe01e227</code> 是当前 active。<span class="tag measured">实测</span>孤儿 6 个共 7.1 MB。</figcaption></figure>`;
+}
+
+function mapSVG(){
+  const rows = [
+    ["局部结果可信",       "批次完整",            "① exact set 闭合：expected == actual，同财年、同 Requirement"],
+    ["批次完整",           "public projection 兼容","② 先独立渲染 220 行，再拿冻结快照做 141×20 事后比较"],
+    ["投影兼容",           "PUBLISHABLE",         "③ 由 states.py 的两个字段算出，调用者填不进去"],
+    ["PUBLISHABLE",        "immutable bundle",    "④ 目录名 = 内容指纹；临时目录 → 先验 → rename → 再验"],
+    ["immutable bundle",   "有权提交",            "⑤ 权限从包自己的字节分类；公共 API 永远抛错"],
+    ["有权提交",           "active",              "⑥ 锁 + CAS + 前驱双检 → 指针替换（唯一提交点）→ 收据接上 tip"],
+    ["active",             "崩溃后仍确定",         "⑦ 指针 == previous 还原，== proposed 补完，都不是则拒绝"],
+    ["单个 writer 成功",   "并发下唯一 winner",    "⑧ 锁负责串行，CAS 负责拦住过期前提"],
+    ["active 是对的",      "下游读到的是一致的",   "⑨ open() 钉住一版，read_bytes 不再看指针"],
+    ["字节没被动过",       "验证今天仍然成立",     "⑩ 包证明整性，不证明时效与验收——见第 10 幕的反证"]
+  ];
+  const H = 46, top = 34;
+  const body = rows.map((r,i)=>{
+    const y = top + i*H;
+    return `
+    <text x="0" y="${y}" font-size="12.5" font-family="var(--sans)" fill="currentColor" opacity=".78">${r[0]}</text>
+    <text x="132" y="${y}" font-size="14" font-family="var(--mono)" fill="var(--refuse)">≠</text>
+    <text x="156" y="${y}" font-size="12.5" font-family="var(--sans)" fill="currentColor" font-weight="500">${r[1]}</text>
+    <line x1="0" y1="${y+9}" x2="700" y2="${y+9}" stroke="currentColor" opacity=".14"/>
+    <text x="310" y="${y}" font-size="11.5" font-family="var(--sans)" fill="var(--accent)">${r[2]}</text>`;
+  }).join("");
+  const yC = top + 5*H;
+  return `<figure><svg class="diagram" viewBox="-8 0 716 ${top + rows.length*H + 30}" role="img"
+    aria-label="十条因果台阶：每一条左边的事实都不等于右边的事实，中间一列写出越过这道门需要的具体证据；第六条指针替换是唯一提交点。">
+  <text x="0" y="14" font-size="10.5" font-family="var(--mono)" fill="currentColor" opacity=".55" letter-spacing="1.2">已经成立的事实</text>
+  <text x="156" y="14" font-size="10.5" font-family="var(--mono)" fill="currentColor" opacity=".55" letter-spacing="1.2">还没成立的事实</text>
+  <text x="310" y="14" font-size="10.5" font-family="var(--mono)" fill="currentColor" opacity=".55" letter-spacing="1.2">越过这道门需要什么</text>
+  ${body}
+  <rect x="-8" y="${yC-19}" width="716" height="28" fill="var(--accent-line)" opacity=".08"/>
+  <line x1="-8" y1="${yC-19}" x2="-8" y2="${yC+9}" stroke="var(--accent-line)" stroke-width="3"/>
+  <text x="0" y="${top + rows.length*H + 16}" font-size="11.5" font-family="var(--mono)" fill="var(--accent)">◆ 第六行是唯一提交点：它之前的失败都不改变正式版本，它之后的失败都可以从指针恢复。</text>
+  </svg>
+  <figcaption>十道门。左列是已经成立的事实，右列是还没成立的事实，中列是越过这道门所需的具体证据。第六行加了底色，因为整套机制只有那一行是提交点。</figcaption></figure>`;
+}
+
+/* ══ 渲染 ═════════════════════════════════════════════════════════════════ */
+
+let si = 0, ti = 0;
+const revealed = {};      // 解释状态：与机制状态完全分离，不回流
+
+const $ = id => document.getElementById(id);
+
+function buildNav(){
+  $("nav").innerHTML = SCENES.map((sc,i)=>
+    `<li><button type="button" data-i="${i}"><span class="n">${i+1}</span><span>${sc.title}</span></button></li>`).join("");
+  $("nav").addEventListener("click", e => {
+    const b = e.target.closest("button[data-i]"); if(!b) return;
+    go(+b.dataset.i, 0);
+  });
+}
+
+function render(){
+  const sc = SCENES[si];
+  const maxT = sc.steps.length - 1;
+  if (ti > maxT) ti = maxT;
+  if (ti < 0) ti = 0;
+
+  document.querySelectorAll("#nav button").forEach((b,i)=>
+    b.setAttribute("aria-current", i===si ? "true":"false"));
+
+  $("scene-n").textContent = `第 ${si+1} 幕 / 共 ${SCENES.length} 幕`;
+  $("scene-title").textContent = sc.title;
+  $("scene-claim").innerHTML = sc.claim;
+
+  $("misc").innerHTML =
+    `<div class="misc-row misc-wrong"><span class="misc-k">要替换的误解</span><span class="misc-v">${sc.wrong}</span></div>
+     <div class="misc-row misc-right"><span class="misc-k">实际机制</span><span class="misc-v">${sc.right}</span></div>`;
+
+  $("stage-what").textContent = sc.what;
+  $("stage-now").textContent  = sc.steps.length > 1 ? `${sc.steps[ti].t} · ${sc.steps[ti].n}` : "";
+  $("stage").innerHTML = sc.stage(ti);
+
+  let after = "";
+  if (sc.knobs) after += knobsHTML(sc.knobs);
+  if (sc.extra) after += sc.extra(ti);
+  if (sc.pred)  after += predHTML(sc);
+  $("after-stage").innerHTML = after;
+  wireAfterStage(sc);
+
+  $("steps-sec").style.display = sc.steps.length > 1 ? "" : "none";
+  $("step-desc").textContent = sc.steps.length > 1 ? sc.steps[ti].d : "";
+  $("strip").innerHTML = sc.steps.map((st,i)=>
+    `<button type="button" role="tab" data-t="${i}" class="${st.commit?"commit":""} ${i<ti?"past":""}"
+       aria-current="${i===ti?"true":"false"}"><span class="tn">${st.t}</span>${st.n}</button>`).join("");
+
+  $("rail-lead").textContent = sc.railLead;
+  $("rail").innerHTML = sc.ev.map(e=>
+    `<div class="ev ${e.lead?"lead":""}"><div class="ev-h">${e.h}</div>${e.pre?`<pre>${e.pre}</pre>`:""}${e.src?`<span class="ev-src">${e.src}</span>`:""}</div>`).join("");
+
+  $("live").textContent = `第 ${si+1} 幕 ${sc.title}，第 ${ti+1} 步，共 ${sc.steps.length} 步。${sc.steps[ti].n}。${sc.steps[ti].d}`;
+
+  $("b-prev").disabled  = (ti===0 && si===0);
+  $("b-next").disabled  = (ti===maxT && si===SCENES.length-1);
+  $("b-pscene").disabled = si===0;
+  $("b-nscene").disabled = si===SCENES.length-1;
+
+  const h = `#s=${sc.id}&t=${ti}`;
+  if (location.hash !== h) history.replaceState(null,"",h);
+}
+
+function knobsHTML(k){
+  const items = k.items.map(it=>{
+    const cur = P[it.key];
+    const btns = it.opts.map((o,idx)=>{
+      const val = it.numeric ? idx : o;
+      const on = it.numeric ? (cur===idx) : (cur===o);
+      return `<button type="button" data-knob="${it.key}" data-val="${val}" data-num="${it.numeric?1:0}"
+        aria-pressed="${on}">${o}</button>`;
+    }).join("");
+    return `<label class="knob"><span>${it.label}</span><span class="seg">${btns}</span></label>`;
+  }).join("");
+  return `<div class="knobs"><div class="knobs-t">只有机制真的依赖它时，才做成旋钮</div>
+    <p class="knobs-d">${k.d}</p><div class="knob-row">${items}</div></div>`;
+}
+
+function predHTML(sc){
+  const key = sc.id;
+  const st = revealed[key];
+  const opts = sc.pred.opts.map((o,i)=>
+    `<button type="button" data-pred="${i}" data-picked="${st&&st.pick===i?1:0}">${o.t}</button>`).join("");
+  const ans = st ? `<div class="pred-a"><span class="verdict ${sc.pred.opts[st.pick].ok?"ok":"nope"}">${sc.pred.opts[st.pick].ok?"你猜对了":"多数人会选另一个"}</span>${sc.pred.a}</div>` : "";
+  return `<div class="pred"><div class="pred-t">先预测，再揭示</div>
+    <p class="pred-q">${sc.pred.q}</p><div class="pred-opts">${opts}</div>${ans}</div>`;
+}
+
+function wireAfterStage(sc){
+  $("after-stage").querySelectorAll("[data-knob]").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      P[b.dataset.knob] = b.dataset.num==="1" ? +b.dataset.val : b.dataset.val;
+      render();
+    });
+  });
+  $("after-stage").querySelectorAll("[data-pred]").forEach(b=>{
+    b.addEventListener("click", ()=>{ revealed[sc.id] = {pick:+b.dataset.pred}; render(); });
+  });
+}
+
+function go(nsi, nti){ si = nsi; ti = nti; render(); window.scrollTo({top:0, behavior:"auto"}); }
+function step(d){
+  const maxT = SCENES[si].steps.length - 1;
+  if (ti + d < 0)      { if (si>0){ si--; ti = SCENES[si].steps.length-1; } }
+  else if (ti + d > maxT){ if (si<SCENES.length-1){ si++; ti = 0; } }
+  else ti += d;
+  render();
+}
+function resetScene(){ Object.assign(P, P0); ti = 0; render(); }
+
+$("b-prev").addEventListener("click", ()=>step(-1));
+$("b-next").addEventListener("click", ()=>step(1));
+$("b-pscene").addEventListener("click", ()=>{ if(si>0) go(si-1,0); });
+$("b-nscene").addEventListener("click", ()=>{ if(si<SCENES.length-1) go(si+1,0); });
+$("b-reset").addEventListener("click", resetScene);
+$("strip").addEventListener("click", e=>{
+  const b = e.target.closest("button[data-t]"); if(!b) return;
+  ti = +b.dataset.t; render();
+});
+
+document.addEventListener("keydown", e=>{
+  if (e.target.matches("input,textarea,select")) return;
+  if (e.key==="ArrowRight"){ step(1); e.preventDefault(); }
+  else if (e.key==="ArrowLeft"){ step(-1); e.preventDefault(); }
+  else if (e.key==="ArrowDown"||e.key==="PageDown"){ if(si<SCENES.length-1) go(si+1,0); e.preventDefault(); }
+  else if (e.key==="ArrowUp"||e.key==="PageUp"){ if(si>0) go(si-1,0); e.preventDefault(); }
+  else if (e.key==="Home"){ resetScene(); e.preventDefault(); }
+});
+
+function fromHash(){
+  const m = /#s=([a-z]+)(?:&t=(\d+))?/.exec(location.hash || "");
+  if (!m) return false;
+  const i = SCENES.findIndex(s=>s.id===m[1]);
+  if (i < 0) return false;
+  si = i; ti = m[2] ? Math.min(+m[2], SCENES[i].steps.length-1) : 0;
+  return true;
+}
+window.addEventListener("hashchange", ()=>{ if (fromHash()) render(); });
+
+buildNav();
+fromHash();
+render();
+</script>
+</body>
+</html>
