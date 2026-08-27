@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1460 1130" width="1460" height="1130" font-family="IBM Plex Sans, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Noto Sans CJK SC, sans-serif" role="img" aria-labelledby="t d">
+<title id="t">结构化 SEC 数据成为正式指标：信任升级链与失败回流</title>
+<desc id="d">左列是十一次信任升级，每一次由一个内容寻址对象承载；右列是同一步失败时对象变成什么、异常去哪里。除指针已写入的情形外，所有失败都收敛到「旧 active publication 继续服务」。</desc>
+<style>
+ :root{--bg:#F5F8F6;--ink:#111D1A;--ink2:#4B5C57;--ink3:#71837D;--rule:#D4DDD9;
+       --fact:#0B7A66;--factbg:#E2F1ED;--refuse:#9E3728;--refusebg:#F7E6E2;
+       --degrade:#96600A;--degradebg:#F6EDDC;--card:#FFFFFF;}
+ @media (prefers-color-scheme:dark){:root{--bg:#0B1210;--ink:#E5ECE9;--ink2:#9BADA8;--ink3:#788A85;--rule:#26332E;
+       --fact:#4FD3B2;--factbg:#0F2B25;--refuse:#F08A76;--refusebg:#331C17;
+       --degrade:#E8B45C;--degradebg:#2E2513;--card:#131E1B;}}
+ .bg{fill:var(--bg)} .card{fill:var(--card);stroke:var(--rule);stroke-width:1}
+ .factcard{fill:var(--factbg);stroke:var(--fact);stroke-width:1.3}
+ .failcard{fill:var(--refusebg);stroke:var(--refuse);stroke-width:1}
+ text{fill:var(--ink)}
+ .h1{font-size:30px;font-weight:600;font-family:Newsreader,Songti SC,Georgia,serif}
+ .h2{font-size:12px;font-family:IBM Plex Mono,monospace;letter-spacing:.13em;fill:var(--ink3)}
+ .sub{font-size:14px;fill:var(--ink2)}
+ .obj{font-size:15px;font-weight:600}
+ .id{font-size:11px;font-family:IBM Plex Mono,monospace;fill:var(--fact)}
+ .in{font-size:10.5px;font-family:IBM Plex Mono,monospace;fill:var(--ink3)}
+ .fact{font-size:12.5px;fill:var(--ink)}
+ .trig{font-size:11px;font-family:IBM Plex Mono,monospace;fill:var(--refuse)}
+ .land{font-size:12px;fill:var(--ink2)}
+ .n{font-size:11px;font-family:IBM Plex Mono,monospace;fill:var(--ink3)}
+ .lead{stroke:var(--fact);stroke-width:1.5;fill:none}
+ .fail{stroke:var(--refuse);stroke-width:1;fill:none;stroke-dasharray:4 3}
+ .foot{font-size:12.5px;fill:var(--ink2)}
+</style>
+<rect class="bg" x="0" y="0" width="1460" height="1120"/>
+<defs><marker id="af" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="ar" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker></defs>
+<text class="h2" x="54" y="46">流程一 · 结构化 SEC 数据如何成为正式指标 · 因果心智地图</text>
+<text class="h1" x="54" y="84">每一步消除一种事后无法回答的问题</text>
+<text class="sub" x="54" y="112">代价是每一步都要生成一个不可变、内容寻址的对象来承载答案。任何前置事实失败，后面的对象都不能被伪造出来。</text>
+<text class="h2" x="54" y="140">信任升级 · 建立了什么新事实</text>
+<text class="h2" x="706" y="140">同一步失败时 · 对象变成什么、异常去哪里</text>
+<rect class="factcard" x="54" y="150" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="170">01</text>
+<text class="obj" x="94" y="171">RawBlob</text>
+<text class="id" x="642" y="171" text-anchor="end">raw_asset_id</text>
+<text class="in" x="94" y="188">← SEC 响应字节</text>
+<text class="fact" x="94" y="206">这一组确切的字节</text>
+<path class="lead" d="M76 212 L76 222" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="150" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="172">✕ 路径穿越 / symlink / hash 漂移</text>
+<text class="land" x="718" y="194">SourceError —— 连候选事实都不产生</text>
+<path class="fail" d="M654 181 L700 181" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="222" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="242">02</text>
+<text class="obj" x="94" y="243">SourceReference</text>
+<text class="id" x="642" y="243" text-anchor="end">source_reference_id</text>
+<text class="in" x="94" y="260">← 字节 + 申报</text>
+<text class="fact" x="94" y="278">这组字节属于哪家公司的哪一次申报（同字节可有多个身份）</text>
+<path class="lead" d="M76 284 L76 294" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="222" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="244">✕ 非官方 SEC origin / CIK 不符 / 账本无匹配行</text>
+<text class="land" x="718" y="266">SourceError —— 无 observation，无 Result</text>
+<path class="fail" d="M654 253 L700 253" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="294" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="314">03</text>
+<text class="obj" x="94" y="315">SourceSetManifest</text>
+<text class="id" x="642" y="315" text-anchor="end">source_set_manifest_id</text>
+<text class="in" x="94" y="332">← submissions 字节</text>
+<text class="fact" x="94" y="350">按发现规则，该找到的就是这 N 个 accession（事件计数的闭世界前提）</text>
+<path class="lead" d="M76 356 L76 366" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="294" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="316">✕ 重推集合 ≠ 声明集合 / 引用重复 / 公司不一致</text>
+<text class="land" x="718" y="338">DeterministicRouterError —— 集合不闭合就没有 claim</text>
+<path class="fail" d="M654 325 L700 325" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="366" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="386">04</text>
+<text class="obj" x="94" y="387">DeterministicVerifiedClaim</text>
+<text class="id" x="642" y="387" text-anchor="end">verified_claim_id</text>
+<text class="in" x="94" y="404">← SEC 结构化材料</text>
+<text class="fact" x="94" y="422">文件里在这个定位上确实有这个值和单位</text>
+<path class="lead" d="M76 428 L76 438" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="366" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="388">✕ 来源不在 manifest 内 / 候选 (value,unit) 不唯一</text>
+<text class="land" x="718" y="410">ZeroAiReleaseError —— 不猜、不取第一个，整批中止</text>
+<path class="fail" d="M654 397 L700 397" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="438" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="458">05</text>
+<text class="obj" x="94" y="459">VerifiedObservation</text>
+<text class="id" x="642" y="459" text-anchor="end">observation_id</text>
+<text class="in" x="94" y="476">← 选中的 claims</text>
+<text class="fact" x="94" y="494">这个值有资格作为某指标某角色的计算输入；选中与被拒的分支都写在对象里</text>
+<path class="lead" d="M76 500 L76 510" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="438" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="460">✕ 所有声明分支都不完整</text>
+<text class="land" x="718" y="482">通用路径 → WITHHELD ；R2 确定性路径 → 发布级失败（不统一）</text>
+<path class="fail" d="M654 469 L700 469" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="510" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="530">06</text>
+<text class="obj" x="94" y="531">MetricResult ⇄ ExecutionTrace</text>
+<text class="id" x="642" y="531" text-anchor="end">result_id / trace_id</text>
+<text class="in" x="94" y="548">← Observation + Spec</text>
+<text class="fact" x="94" y="566">结论与推导互锁：四态各有明确语义，空值也是结论</text>
+<path class="lead" d="M76 572 L76 582" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="510" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="532">✕ guard / cross-check 不通过（&gt; 1%）</text>
+<text class="land" x="718" y="554">WITHHELD + 保留 reason 与 CROSS_CHECK_EVALUATED，不发明数值</text>
+<path class="fail" d="M654 541 L700 541" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="582" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="602">07</text>
+<text class="obj" x="94" y="603">坐标 exact set</text>
+<text class="id" x="642" y="603" text-anchor="end">220 = 10 × 22</text>
+<text class="in" x="94" y="620">← 全部 Result</text>
+<text class="fact" x="94" y="638">批次一个不少、一个不多（去重后仍是 220）</text>
+<path class="lead" d="M76 644 L76 654" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="582" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="604">✕ 缺失 / 重复 / 计划外坐标</text>
+<text class="land" x="718" y="626">R2 result coordinate exact set differs —— 无候选版本</text>
+<path class="fail" d="M654 613 L700 613" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="654" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="674">08</text>
+<text class="obj" x="94" y="675">独立渲染的 220 行</text>
+<text class="id" x="642" y="675" text-anchor="end">rendered_row_set_hash</text>
+<text class="in" x="94" y="692">← Result / Trace / claims</text>
+<text class="fact" x="94" y="710">公开字段是新对象图的确定性投影；渲染在比较之前（AST 行号强制）</text>
+<path class="lead" d="M76 716 L76 726" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="654" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="676">✕ 生产者出现 legacy 标识符 / 调用顺序颠倒</text>
+<text class="land" x="718" y="698">ProjectionIndependenceError —— 独立性收据不 PASSED</text>
+<path class="fail" d="M654 685 L700 685" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="726" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="746">09</text>
+<text class="obj" x="94" y="747">strict compatibility</text>
+<text class="id" x="642" y="747" text-anchor="end">141 × 20 = 2 820 格</text>
+<text class="in" x="94" y="764">← 220 行 + legacy</text>
+<text class="fact" x="94" y="782">对外 20 字段没有意外变化（容差为零）</text>
+<path class="lead" d="M76 788 L76 798" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="726" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="748">✕ 任一格不等 / approved_deltas 非空</text>
+<text class="land" x="718" y="770">Unexpected public delta: company:metric:field —— candidate BLOCKED</text>
+<path class="fail" d="M654 757 L700 757" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="798" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="818">10</text>
+<text class="obj" x="94" y="819">PublicationBundle</text>
+<text class="id" x="642" y="819" text-anchor="end">publication_id</text>
+<text class="in" x="94" y="836">← 全部文件</text>
+<text class="fact" x="94" y="854">完整、不可变、内容寻址；文件集合是 exact set，无 symlink</text>
+<path class="lead" d="M76 860 L76 870" marker-end="url(#af)"/>
+<rect class="failcard" x="706" y="798" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="820">✕ 缺文件 / 多文件 / size 或 hash 漂移 / manifest ID 不符</text>
+<text class="land" x="718" y="842">PublicationError —— 候选目录存在也不是正式版本</text>
+<path class="fail" d="M654 829 L700 829" marker-end="url(#ar)"/>
+<rect class="factcard" x="54" y="870" width="600" height="62" rx="6"/>
+<text class="n" x="66" y="890">11</text>
+<text class="obj" x="94" y="891">active pointer</text>
+<text class="id" x="642" y="891" text-anchor="end">publication_fe01e227…</text>
+<text class="in" x="94" y="908">← 已验证 bundle</text>
+<text class="fact" x="94" y="926">这一版就是当前正式版本；PublicationView 一次读取固定在同一版本</text>
+<rect class="failcard" x="706" y="870" width="700" height="62" rx="6"/>
+<text class="trig" x="718" y="892">✕ CAS 前驱变了 / 镜像写到一半崩溃 / 指针前崩溃</text>
+<text class="land" x="718" y="914">恢复镜像 + 恢复旧指针 + 删 receipt/intent → Publication commit aborted and rolled back</text>
+<path class="fail" d="M654 901 L700 901" marker-end="url(#ar)"/>
+<rect class="card" x="54" y="958" width="1352" height="118" rx="8"/>
+<text class="h2" x="72" y="984">所有失败的共同去处</text>
+<text class="obj" x="72" y="1012" fill="var(--fact)">旧 active publication 继续服务，完整可读。</text>
+<text class="foot" x="72" y="1036">没有伪造的下游对象，没有半新半旧的文件组，没有把异常吞掉再用猜测值发布的路径。</text>
+<text class="foot" x="72" y="1058">唯一的例外：崩溃发生在指针写入之后 —— 那一刻新版本已经提交，恢复逻辑向前补齐 receipt、镜像与读回，而不是回退。</text>
+<text class="in" x="1388" y="1058" text-anchor="end">读自 publication_fe01e227… @ HEAD d9bb477</text>
+</svg>

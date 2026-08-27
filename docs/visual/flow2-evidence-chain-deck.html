@@ -1,0 +1,1150 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>读表证据链讲义</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   读表证据链讲义 —— 静态幻灯片。无脚本、无交互控件。
+   配色与《证据重读台》同族：冷灰绿纸面 + 深青（系统）+ 赭石（模型）
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --ground:#E7EBEB; --surface:#FBFCFC; --surface-2:#F1F5F5; --surface-3:#E5EBEB;
+  --ink:#131A1C; --ink-2:#3A484C; --muted:#5F6E72; --faint:#8A989C;
+  --rule:#CDD8D9; --rule-strong:#AFC0C2;
+  --accent:#0E5462; --accent-soft:#DCEBEE;
+  --claim:#8A5A11;  --claim-soft:#F4E9D6;
+  --pass:#186A4B;   --pass-soft:#DCEDE4;
+  --reject:#9C2B21; --reject-soft:#F5E0DD;
+  --hold:#6B4E8A;   --hold-soft:#EAE2F2;
+  --serif:"Noto Serif SC","Source Serif 4",Georgia,"Songti SC",serif;
+  --sans:"Noto Sans SC",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --shadow:0 1px 2px rgba(19,26,28,.07), 0 12px 32px rgba(19,26,28,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0A0F11; --surface:#141C1F; --surface-2:#1A2428; --surface-3:#212D31;
+    --ink:#E3EAEA; --ink-2:#BFCCCE; --muted:#93A2A6; --faint:#6E7E82;
+    --rule:#26343A; --rule-strong:#3B4D54;
+    --accent:#63BACD; --accent-soft:#14343C;
+    --claim:#DCA950;  --claim-soft:#372A14;
+    --pass:#4FC28E;   --pass-soft:#123328;
+    --reject:#E67A6E; --reject-soft:#3A1B18;
+    --hold:#B49BD6;   --hold-soft:#261E33;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 12px 32px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0A0F11; --surface:#141C1F; --surface-2:#1A2428; --surface-3:#212D31;
+  --ink:#E3EAEA; --ink-2:#BFCCCE; --muted:#93A2A6; --faint:#6E7E82;
+  --rule:#26343A; --rule-strong:#3B4D54;
+  --accent:#63BACD; --accent-soft:#14343C;
+  --claim:#DCA950;  --claim-soft:#372A14;
+  --pass:#4FC28E;   --pass-soft:#123328;
+  --reject:#E67A6E; --reject-soft:#3A1B18;
+  --hold:#B49BD6;   --hold-soft:#261E33;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 12px 32px rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  padding:34px 20px 70px;
+}
+h1,h2,h3{font-family:var(--serif); font-weight:700; text-wrap:balance; margin:0}
+p{margin:0}
+code{font-family:var(--mono); overflow-wrap:anywhere}
+a{color:var(--accent); text-decoration-thickness:1px; text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:3px}
+
+/* ── 幻灯片外壳 ───────────────────────────────────────────── */
+.deck{max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:26px}
+.slide{
+  background:var(--surface); border:1px solid var(--rule); border-radius:8px;
+  box-shadow:var(--shadow); padding:38px 46px 42px;
+  aspect-ratio:16/9; display:flex; flex-direction:column; gap:20px;
+  scroll-margin-top:20px; overflow-wrap:anywhere;
+}
+@media (max-width:840px){ .slide{aspect-ratio:auto; padding:28px 24px 32px} }
+
+.eyebrow{
+  display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.15em;
+  color:var(--accent);   /* 不转大写：眉标里带 ObservationCandidate 这类驼峰标识符 */
+}
+.eyebrow .no{color:var(--faint)}
+.eyebrow .sp{flex:1}
+.slide h2{font-size:29px; line-height:1.32; letter-spacing:.005em}
+@media (max-width:840px){ .slide h2{font-size:23px} }
+.lede{font-size:15.5px; color:var(--ink-2); max-width:70ch}
+.lede strong{color:var(--ink); font-weight:700}
+.lede + .lede{margin-top:9px}
+
+.body{display:grid; gap:26px; flex:1; min-height:0}
+.body.split{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr); align-items:start}
+.body.split-l{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr); align-items:start}
+@media (max-width:840px){ .body.split,.body.split-l{grid-template-columns:minmax(0,1fr)} }
+
+figure{margin:0; min-width:0}
+figure svg{max-width:100%; height:auto; display:block}
+figcaption{
+  font-size:12.5px; color:var(--muted); margin-top:11px; padding-top:9px;
+  border-top:1px solid var(--rule); overflow-wrap:anywhere;
+}
+.scroll-x{overflow-x:auto; max-width:100%; scrollbar-width:thin}
+
+/* ── 文字块 ───────────────────────────────────────────────── */
+.note{font-size:14px; color:var(--ink-2)}
+.note + .note{margin-top:11px}
+.note b{color:var(--ink)}
+.note .h{
+  display:block; font-family:var(--mono); font-size:10.5px; letter-spacing:.11em;
+  text-transform:uppercase; color:var(--accent); margin-bottom:4px;
+}
+ul.pts{margin:0; padding-left:19px; font-size:14px; color:var(--ink-2)}
+ul.pts li{margin-bottom:8px}
+ul.pts li:last-child{margin-bottom:0}
+ul.pts b{color:var(--ink)}
+
+.takeaway{
+  margin-top:auto; background:var(--pass-soft); border:1px solid var(--pass);
+  border-radius:5px; padding:13px 18px; font-size:14.5px; color:var(--ink);
+}
+.takeaway .h{
+  display:block; font-family:var(--mono); font-size:10px; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--pass); margin-bottom:4px;
+}
+.warn{background:var(--reject-soft); border-color:var(--reject)}
+.warn .h{color:var(--reject)}
+
+.pv{
+  display:inline-block; font-family:var(--mono); font-size:9.5px; letter-spacing:.06em;
+  padding:1px 5px; border-radius:3px; vertical-align:1.5px; white-space:nowrap;
+  border:1px solid var(--rule-strong); color:var(--muted); background:var(--surface-2);
+}
+.pv-run{color:var(--accent); border-color:var(--accent); background:var(--accent-soft)}
+.pv-disk{color:var(--pass); border-color:var(--pass); background:var(--pass-soft)}
+.pv-code{color:var(--claim); border-color:var(--claim); background:var(--claim-soft)}
+.pv-agg{color:var(--hold); border-color:var(--hold); background:var(--hold-soft)}
+
+.esc{color:var(--reject); font-weight:700; background:var(--reject-soft);
+     padding:0 2px; border-radius:2px; border:1px dashed var(--reject)}
+.ent{color:var(--claim); background:var(--claim-soft); padding:0 2px; border-radius:2px}
+
+/* ── 数据表 ───────────────────────────────────────────────── */
+table{border-collapse:collapse; font-size:12px; width:100%}
+th,td{border:1px solid var(--rule); padding:4px 9px; text-align:left; font-family:var(--mono)}
+th{background:var(--surface-2); color:var(--muted); font-weight:500; font-size:10.5px;
+   letter-spacing:.04em; white-space:nowrap}
+td.num{text-align:right; font-variant-numeric:tabular-nums}
+tr.sect td{background:var(--surface-3); font-weight:700; color:var(--ink)}
+tr.hi td{background:var(--accent-soft)}
+tr.hi2 td{background:var(--claim-soft)}
+td.idx{color:var(--faint); font-size:10px; text-align:right; background:var(--surface-2)}
+td.mark{outline:2px solid var(--accent); outline-offset:-2px; font-weight:700}
+td.mark2{outline:2px solid var(--claim); outline-offset:-2px; font-weight:700}
+td.ok{background:var(--pass-soft); color:var(--pass); font-weight:700}
+td.no{background:var(--reject-soft); color:var(--reject)}
+td.zero{color:var(--faint)}
+tfoot td{background:var(--surface-2); font-weight:700}
+table.nw td, table.nw th{white-space:nowrap}   /* 短标识符列不换行 */
+
+/* ── 封面 / 目录 ──────────────────────────────────────────── */
+.cover{justify-content:center; gap:24px}
+.cover h1{font-size:46px; line-height:1.24}
+@media (max-width:840px){ .cover h1{font-size:31px} }
+.cover .sub{font-size:17px; color:var(--ink-2); max-width:62ch}
+.cover .meta{font-family:var(--mono); font-size:12px; color:var(--muted); line-height:2}
+.legend{display:flex; flex-wrap:wrap; gap:8px 20px; font-size:12.5px; color:var(--muted)}
+.legend > span{display:flex; align-items:center; gap:7px}
+
+.toc{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:4px 34px}
+@media (max-width:840px){ .toc{grid-template-columns:minmax(0,1fr)} }
+.toc a{
+  display:flex; gap:12px; align-items:baseline; padding:5px 0;
+  border-bottom:1px solid var(--rule); color:var(--ink); text-decoration:none; font-size:13.5px;
+}
+.toc a:hover{color:var(--accent)}
+.toc a .n{font-family:var(--mono); font-size:11px; color:var(--faint); width:2.2em; flex:0 0 auto}
+.toc a .g{margin-left:auto; font-size:11px; color:var(--muted); font-family:var(--mono);
+          flex:0 0 auto; padding-left:10px}
+
+/* ── 内联 SVG 的主题化 ─────────────────────────────────────── */
+/* 字号放在 svg 上继承，这样单个 <text> 的 font-size 属性才压得住它
+   （CSS 声明会盖过表现属性，继承值不会） */
+svg{font-size:12px}
+svg text{fill:var(--ink); font-family:var(--sans)}
+svg .mn{font-family:var(--mono)}
+svg .mut{fill:var(--muted); font-size:11px}
+svg .lbl{fill:var(--muted); font-size:10px; letter-spacing:.09em}
+svg .ttl{font-weight:700; font-size:12.5px}
+svg .big{font-size:15px; font-weight:700}
+svg .acc{fill:var(--accent)} svg .rej{fill:var(--reject)}
+svg .pas{fill:var(--pass)}   svg .cla{fill:var(--claim)}  svg .hol{fill:var(--hold)}
+svg .box {fill:var(--surface-2); stroke:var(--rule-strong); stroke-width:1.2}
+svg .boxa{fill:var(--accent-soft); stroke:var(--accent);  stroke-width:1.4}
+svg .boxc{fill:var(--claim-soft);  stroke:var(--claim);   stroke-width:1.4}
+svg .boxp{fill:var(--pass-soft);   stroke:var(--pass);    stroke-width:1.4}
+svg .boxr{fill:var(--reject-soft); stroke:var(--reject);  stroke-width:1.4}
+svg .boxh{fill:var(--hold-soft);   stroke:var(--hold);    stroke-width:1.4}
+svg .ln {stroke:var(--ink-2);  stroke-width:1.4; fill:none}
+svg .lna{stroke:var(--accent); stroke-width:1.6; fill:none}
+svg .lnr{stroke:var(--reject); stroke-width:1.3; fill:none; stroke-dasharray:5 3}
+svg .lnd{stroke:var(--rule-strong); stroke-width:1.1; fill:none; stroke-dasharray:4 4}
+svg .mk {fill:var(--ink-2)}   svg .mka{fill:var(--accent)}   svg .mkr{fill:var(--reject)}
+
+@media print{
+  body{background:#fff; padding:0}
+  .slide{box-shadow:none; border:none; page-break-after:always; aspect-ratio:auto;
+         min-height:0; padding:26px 30px}
+  .deck{gap:0}
+}
+</style>
+
+<!-- 全文档共用的箭头标记 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <marker id="mA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mk" d="M0,1 L9,5 L0,9 z"/></marker>
+  <marker id="mB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="mka" d="M0,1 L9,5 L0,9 z"/></marker>
+  <marker id="mR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="mkr" d="M0,1 L9,5 L0,9 z"/></marker>
+</defs></svg>
+
+<div class="deck">
+
+<!-- ═════════════════ 00 封面 ═════════════════ -->
+<section class="slide cover" id="s00">
+  <div class="eyebrow"><span>流程二 · 讲义</span><span class="sp"></span><span class="no">共 21 页</span></div>
+  <h1>模型读表<br>如何变成可信事实</h1>
+  <p class="sub">一个语言模型给出的数字，怎样才配进入财务指标计算。答案不是「让它解释」，而是<strong>改掉它的输出契约</strong>：模型只负责指认位置，系统自己回到原文重读一遍。</p>
+  <div class="meta">
+    代码基准 &nbsp;<b>agent/issue-15-final-delivery</b> &nbsp;快照 <b>d9bb477</b><br>
+    走完全程的样本 &nbsp;Marriott FY2024 入住率（B10）· Run <b>4863af40</b><br>
+    freeze receipt &nbsp;6616428cd6d6… &nbsp;freeze commit <b>a23fbafd</b>
+  </div>
+  <div class="legend">
+    <span><span class="pv pv-run">实测</span> 本次在这个快照上跑出来的</span>
+    <span><span class="pv pv-disk">落盘</span> 从仓库已提交产物读出</span>
+    <span><span class="pv pv-code">代码</span> 源码里的常量或结构</span>
+    <span><span class="pv pv-agg">聚合</span> 对落盘产物的计数</span>
+  </div>
+</section>
+
+<!-- ═════════════════ 01 目录 ═════════════════ -->
+<section class="slide" id="s01">
+  <div class="eyebrow"><span class="no">01</span><span>目录</span></div>
+  <h2>这份讲义怎么走</h2>
+  <p class="lede">前四页建立问题，中间十页跟着一个真实的数字走完整条链路，最后六页讲清楚它证明了什么、以及<strong>没有</strong>证明什么。</p>
+  <div class="toc">
+    <a href="#s02"><span class="n">02</span>五种情况长得一模一样<span class="g">问题</span></a>
+    <a href="#s03"><span class="n">03</span>真实的坑：两个相同的标签<span class="g">问题</span></a>
+    <a href="#s04"><span class="n">04</span>把输出契约换掉<span class="g">设计</span></a>
+    <a href="#s05"><span class="n">05</span>一次调用，十二个本地工位<span class="g">总览</span></a>
+    <a href="#s06"><span class="n">06</span>第一站：不筛表，全展开<span class="g">机制</span></a>
+    <a href="#s07"><span class="n">07</span>每格两个文本字段<span class="g">机制</span></a>
+    <a href="#s08"><span class="n">08</span>压缩与三次往返验证<span class="g">机制</span></a>
+    <a href="#s09"><span class="n">09</span>先落 marker，再开 socket<span class="g">机制</span></a>
+    <a href="#s10"><span class="n">10</span>模型返回的是坐标，不是答案<span class="g">机制</span></a>
+    <a href="#s11"><span class="n">11</span>Evidence 的四道闸门<span class="g">机制</span></a>
+    <a href="#s12"><span class="n">12</span>核心不对称：两个字段<span class="g">机制</span></a>
+    <a href="#s13"><span class="n">13</span>一个换行符的完整去向<span class="g">失败</span></a>
+    <a href="#s14"><span class="n">14</span>归一化只有一条路<span class="g">机制</span></a>
+    <a href="#s15"><span class="n">15</span>能不能不要人<span class="g">机制</span></a>
+    <a href="#s16"><span class="n">16</span>进入下游的是哪个数<span class="g">机制</span></a>
+    <a href="#s17"><span class="n">17</span>冻结 = 重算，不是打标记<span class="g">机制</span></a>
+    <a href="#s18"><span class="n">18</span>live_ready 到底说了什么<span class="g">范围</span></a>
+    <a href="#s19"><span class="n">19</span>因果心智地图<span class="g">收束</span></a>
+    <a href="#s20"><span class="n">20</span>文档与代码的差异<span class="g">校对</span></a>
+  </div>
+</section>
+
+<!-- ═════════════════ 02 问题 ═════════════════ -->
+<section class="slide" id="s02">
+  <div class="eyebrow"><span class="no">02</span><span>问题</span></div>
+  <h2>模型能给你一个数字，但这个数字不带出处</h2>
+  <p class="lede">有些指标 SEC 的结构化数据（XBRL）里根本没有——酒店的入住率和 RevPAR 只出现在年报正文的 MD&amp;A 表格里，是一张普通 HTML 表，没有任何标签。于是只剩一条路：让模型去读那张表。</p>
+  <div class="body split">
+    <figure>
+      <svg viewBox="0 0 640 300" role="img" aria-label="五条不同的来路——真的读到、抄错、读错年份、读错口径、凭记忆——在输出层面塌缩成同一个字符串 69.8">
+        <text class="lbl" x="0" y="12">模型内部真正发生了什么</text>
+        <text class="lbl" x="470" y="12">你能看到的</text>
+        <g class="mn" font-size="11.5">
+          <rect class="box" x="0" y="26" width="270" height="30" rx="3"/><text x="12" y="46">① 真的从 (28,15) 读到 69.8</text>
+          <rect class="box" x="0" y="64" width="270" height="30" rx="3"/><text x="12" y="84">② 读到 68.9，输出时写错了</text>
+          <rect class="box" x="0" y="102" width="270" height="30" rx="3"/><text x="12" y="122">③ 读的是「2023 年」那一列</text>
+          <rect class="box" x="0" y="140" width="270" height="30" rx="3"/><text x="12" y="160">④ 读的是自营口径那一行</text>
+          <rect class="box" x="0" y="178" width="270" height="30" rx="3"/><text x="12" y="198">⑤ 根本没读表，凭训练数据回忆</text>
+        </g>
+        <g class="ln">
+          <path d="M270 41 L352 110" marker-end="url(#mA)"/>
+          <path d="M270 79 L352 112" marker-end="url(#mA)"/>
+          <path d="M270 117 L352 117" marker-end="url(#mA)"/>
+          <path d="M270 155 L352 122" marker-end="url(#mA)"/>
+          <path d="M270 193 L352 124" marker-end="url(#mA)"/>
+        </g>
+        <line class="lnd" x1="376" y1="16" x2="376" y2="240"/>
+        <text class="lbl" x="382" y="234">输出层</text>
+        <rect class="boxc" x="440" y="94" width="200" height="46" rx="4"/>
+        <text class="mn big cla" x="540" y="123" text-anchor="middle">"69.8"</text>
+        <text class="mut" x="440" y="168">五条不同的来路，在这里塌缩成</text>
+        <text class="mut" x="440" y="186">同一个字符串。它们在输出层面</text>
+        <text class="mut" x="440" y="204">完全不可区分。</text>
+        <text class="mut" x="0" y="252">就算要求它输出 JSON、要求它给出理由 —— 理由和答案出自同一个不可验证的过程。</text>
+        <text class="mut" x="0" y="272">「让模型解释自己」不解决这个问题，它只是把同一个黑箱再包一层。</text>
+      </svg>
+      <figcaption>五种情况在输出层面塌缩成同一个字符串，因此「检查这个数字对不对」是一个不可机械判定的命题。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">这一页要替换的误解</span>
+      「模型准确率够高就行」。准确率是一个统计量，它无法告诉你<b>这一次</b>属于哪一条来路。财务指标要的是逐条可追溯，不是平均正确。</p>
+      <p class="note"><span class="h">也不是这个</span>
+      「用第二个模型检查第一个模型」。第二个模型同样不带出处，只是把不可验证性又叠了一层，还多了一层幻觉。</p>
+    </div>
+  </div>
+  <div class="takeaway"><span class="h">这一页建立的事实</span>
+  问题不是「抽取」，而是<b>让一个模型给出的数字带上可机械验证的出处</b>。</div>
+</section>
+
+<!-- ═════════════════ 03 真实的坑 ═════════════════ -->
+<section class="slide" id="s03">
+  <div class="eyebrow"><span class="no">03</span><span>问题</span></div>
+  <h2>同一个标签，两个数字</h2>
+  <p class="lede">这不是构造的例子。下面是 Marriott FY2024 年报里 <code>table_000011</code> 的真实内容 <span class="pv pv-run">实测</span>。第 18 行和第 28 行的行标签，<strong>raw_text 逐字节相同</strong>——都是 <code>"\nWorldwide (2)"</code>。挂在它们下面的入住率是 69.7 和 69.8。</p>
+  <div class="body split">
+    <figure class="scroll-x">
+      <table>
+        <thead><tr><th>row</th><th>列 0 · 行标签 raw_text</th><th>列 4 · RevPAR</th><th>列 15 · Occupancy</th></tr></thead>
+        <tbody>
+          <tr class="sect"><td class="idx">8</td><td>"Comparable Company-Operated Properties"</td><td></td><td></td></tr>
+          <tr><td class="idx">9</td><td>"<span class="esc">\n</span>U.S. &amp;amp; Canada"</td><td class="num">177.07</td><td class="num">69.4</td></tr>
+          <tr><td class="idx">…</td><td style="color:var(--faint)">（Europe / Middle East / Greater China / Asia Pacific / Caribbean）</td><td class="num">…</td><td class="num">…</td></tr>
+          <tr><td class="idx">17</td><td>"<span class="esc">\n</span>International - All (1)"</td><td class="num">124.96</td><td class="num">69.9</td></tr>
+          <tr class="hi2"><td class="idx">18</td><td>"<span class="esc">\n</span>Worldwide (2)"</td><td class="num">147.09</td><td class="num mark2">69.7</td></tr>
+          <tr class="sect"><td class="idx">19</td><td>"Comparable Systemwide Properties"</td><td></td><td></td></tr>
+          <tr><td class="idx">20</td><td>"<span class="esc">\n</span>U.S. &amp;amp; Canada"</td><td class="num">131.26</td><td class="num">70.1</td></tr>
+          <tr><td class="idx">…</td><td style="color:var(--faint)">（Europe / Middle East / Greater China / Asia Pacific / Caribbean）</td><td class="num">…</td><td class="num">…</td></tr>
+          <tr><td class="idx">27</td><td>"<span class="esc">\n</span>International - All (1)"</td><td class="num">121.75</td><td class="num">69.2</td></tr>
+          <tr class="hi"><td class="idx">28</td><td>"<span class="esc">\n</span>Worldwide (2)"</td><td class="num">128.23</td><td class="num mark">69.8</td></tr>
+        </tbody>
+      </table>
+      <figcaption>B10 要的是<b>蓝框</b>那个（第 19 行段落头之下，Comparable <b>Systemwide</b>）。<b>黄框</b>属于第 8 行的 Comparable <b>Company-Operated</b> 段落——B10 的 Spec 把 <code>company_operated</code> 明确列进了 <code>forbidden_confusions</code> <span class="pv pv-disk">落盘</span>。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">为什么这一页重要</span>
+      模型说「Worldwide 入住率 69.8」，这句话<b>什么都没证明</b>。表里有两个 Worldwide，行标签的原始字节完全一样。</p>
+      <p class="note">要把它们分开，必须同时给出<b>两个坐标</b>：段落头 <code>(19,0)</code> 证明这是 Systemwide 口径，行标签 <code>(28,0)</code> 证明这是 Worldwide 地域。<b>少任何一个都不够。</b></p>
+      <p class="note">这就是后面所有机制存在的理由。</p>
+    </div>
+  </div>
+  <div class="takeaway"><span class="h">这一页建立的事实</span>
+  一个数字加一个行标签不足以定位一个事实。<b>坐标是必需的，而且不止一个。</b></div>
+</section>
+
+<!-- ═════════════════ 04 设计 ═════════════════ -->
+<section class="slide" id="s04">
+  <div class="eyebrow"><span class="no">04</span><span>核心设计</span></div>
+  <h2>模型只负责指认，不负责证明</h2>
+  <p class="lede">解法不是把模型换得更强，而是<strong>改掉它被要求交付的东西</strong>：不要答案，要坐标加声明。这一步把一个不可判定的命题换成了一个可机械判定的命题。</p>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1000 268" role="img" aria-label="两种输出契约的对比：交付答案时系统只能做格式检查、无法判定真假；交付坐标加声明时系统可以回到原文重读并逐字节比对">
+        <rect class="boxc" x="0" y="18" width="470" height="196" rx="5"/>
+        <text class="ttl cla" x="18" y="42">契约 A —— 交付「答案」</text>
+        <text class="mn mut" x="18" y="66">模型返回：</text>
+        <text class="mn" x="18" y="86">{ "occupancy": 0.698 }</text>
+        <line class="lnd" x1="18" y1="102" x2="452" y2="102"/>
+        <text class="mn mut" x="18" y="122">系统能做的检查：</text>
+        <text class="mn" x="18" y="142">是数字吗？ 在 0..1 之间吗？ JSON 合法吗？</text>
+        <line class="lnd" x1="18" y1="158" x2="452" y2="158"/>
+        <text class="mn mut" x="18" y="178">系统无法回答：</text>
+        <text class="mn rej ttl" x="18" y="198">这个数是真的吗？</text>
+
+        <rect class="boxa" x="530" y="18" width="470" height="196" rx="5"/>
+        <text class="ttl acc" x="548" y="42">契约 B —— 交付「坐标 + 声明」</text>
+        <text class="mn mut" x="548" y="66">模型返回：</text>
+        <text class="mn" x="548" y="84">table_000011 · (28,15) · span 1×2 · "69.8" percent</text>
+        <text class="mn" x="548" y="100">口径标签 (19,0)="Comparable Systemwide Properties"</text>
+        <text class="mn" x="548" y="116">口径标签 (28,0)="\nWorldwide (2)"</text>
+        <line class="lnd" x1="548" y1="128" x2="982" y2="128"/>
+        <text class="mn mut" x="548" y="148">系统能做的检查：</text>
+        <text class="mn" x="548" y="168">回到网格把这几格读出来，逐字节比对</text>
+        <line class="lnd" x1="548" y1="180" x2="982" y2="180"/>
+        <text class="mn pas ttl" x="548" y="200">对不上 → 整体拒绝。可机械判定。</text>
+
+        <text class="mut" x="0" y="248">把「这个数字对不对」（不可判定）换成「你指的位置上是不是真的写着这个」（可机械判定）——这是整条链路唯一的核心思想。</text>
+      </svg>
+      <figcaption>模型被降级成一个「指路的人」；系统自己走过去看。看不到它说的东西，就整体作废——不修正、不搜索、不猜。</figcaption>
+    </figure>
+  </div>
+  <div class="takeaway"><span class="h">这一页建立的事实</span>
+  举证责任被搬到了模型自己身上：它必须说出一个<b>可以被原文验证的东西</b>。所有推导留给确定性代码。</div>
+</section>
+
+<!-- ═════════════════ 05 总览 ═════════════════ -->
+<section class="slide" id="s05">
+  <div class="eyebrow"><span class="no">05</span><span>总览</span></div>
+  <h2>一次外部调用，两侧十二个本地工位</h2>
+  <p class="lede">一个数字要从 HTML 字节走到「可以进计算」，中间只有<strong>一次</strong>外部模型调用；它两侧的十二个工位全部是本地确定性计算。下面这张图是后面十四页的地图：三个主角对象、四道机械闸门、以及每一站的失败出口。</p>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1044 336" role="img" aria-label="流程二总览：上排是出网之前的六个本地工位，中间横带是唯一一次外部模型调用，下排是拿到响应之后的六个本地工位；每个工位的失败出口直接画在它下方">
+        <text class="lbl" x="0" y="12">出网之前 —— 全部是本地确定性计算</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box"  x="0"   y="20" width="156" height="44" rx="3"/><text x="78"  y="40" text-anchor="middle">RawBlob</text><text class="mut" x="78" y="56" text-anchor="middle">2 047 740 字节</text>
+          <rect class="box"  x="177" y="20" width="156" height="44" rx="3"/><text x="255" y="40" text-anchor="middle">SourceReference</text><text class="mut" x="255" y="56" text-anchor="middle">accession · 文档名</text>
+          <rect class="boxa" x="354" y="20" width="156" height="44" rx="3"/><text class="acc ttl" x="432" y="40" text-anchor="middle">DerivedAsset</text><text class="mut" x="432" y="56" text-anchor="middle">67 表 · 19 329 格</text>
+          <rect class="box"  x="531" y="20" width="156" height="44" rx="3"/><text x="609" y="40" text-anchor="middle">紧凑传输 + Manifest</text><text class="mut" x="609" y="56" text-anchor="middle">往返验证</text>
+          <rect class="box"  x="708" y="20" width="156" height="44" rx="3"/><text x="786" y="40" text-anchor="middle">请求体</text><text class="mut" x="786" y="56" text-anchor="middle">389 255 字节</text>
+          <rect class="box"  x="885" y="20" width="156" height="44" rx="3"/><text x="963" y="40" text-anchor="middle">预约 + marker</text><text class="mut" x="963" y="56" text-anchor="middle">O_EXCL</text>
+        </g>
+        <g class="lna">
+          <path d="M156 42 L172 42" marker-end="url(#mB)"/><path d="M333 42 L349 42" marker-end="url(#mB)"/>
+          <path d="M510 42 L526 42" marker-end="url(#mB)"/><path d="M687 42 L703 42" marker-end="url(#mB)"/>
+          <path d="M864 42 L880 42" marker-end="url(#mB)"/>
+        </g>
+        <g class="lnr"><path d="M432 64 L432 72" marker-end="url(#mR)"/><path d="M609 64 L609 72" marker-end="url(#mR)"/></g>
+        <g class="mn" font-size="9.5">
+          <rect class="boxr" x="354" y="76" width="156" height="30" rx="3"/><text class="rej" x="432" y="95" text-anchor="middle">RESOURCE_LIMIT</text>
+          <rect class="boxr" x="531" y="76" width="156" height="30" rx="3"/><text class="rej" x="609" y="95" text-anchor="middle">往返不等 → 出网前失败</text>
+        </g>
+        <path class="lna" d="M963 64 L963 114" marker-end="url(#mB)"/>
+
+        <rect class="boxc" x="0" y="118" width="1044" height="32" rx="4"/>
+        <text class="cla ttl mn" x="14" y="138" style="font-size:11px">transport.send() —— 全链路唯一一次外部调用</text>
+        <text class="mut mn" x="440" y="138" style="font-size:10px">SINGLE_FLIGHT_HELD · UNKNOWN_REMOTE_OUTCOME · HTTP 402/400/422 全是 terminal，不自动重试</text>
+        <path class="lna" d="M78 150 L78 174" marker-end="url(#mB)"/>
+
+        <text class="lbl" x="170" y="170">拿到响应之后 —— 同样全部是本地确定性计算</text>
+        <g class="mn" font-size="10.5">
+          <rect class="boxc" x="0"   y="178" width="156" height="44" rx="3"/><text class="cla ttl" x="78"  y="198" text-anchor="middle">Observation</text><text class="cla ttl" x="78" y="214" text-anchor="middle">Candidate</text>
+          <rect class="boxa" x="177" y="178" width="156" height="44" rx="3"/><text class="acc ttl" x="255" y="198" text-anchor="middle">EvidenceCheck</text><text class="mut" x="255" y="214" text-anchor="middle">四道闸门</text>
+          <rect class="box"  x="354" y="178" width="156" height="44" rx="3"/><text x="432" y="198" text-anchor="middle">ReviewUnit</text><text class="mut" x="432" y="214" text-anchor="middle">12 项打成一包</text>
+          <rect class="boxa" x="531" y="178" width="156" height="44" rx="3"/><text class="acc ttl" x="609" y="198" text-anchor="middle">ReviewDecision</text><text class="mut" x="609" y="214" text-anchor="middle">HUMAN 或 SYSTEM</text>
+          <rect class="boxp" x="708" y="178" width="156" height="44" rx="3"/><text class="pas ttl" x="786" y="198" text-anchor="middle">Verified</text><text class="pas ttl" x="786" y="214" text-anchor="middle">Observation</text>
+          <rect class="box"  x="885" y="178" width="156" height="44" rx="3"/><text x="963" y="198" text-anchor="middle">Result + Trace</text><text class="mut" x="963" y="214" text-anchor="middle">→ FROZEN Run</text>
+        </g>
+        <g class="lna">
+          <path d="M156 200 L172 200" marker-end="url(#mB)"/><path d="M333 200 L349 200" marker-end="url(#mB)"/>
+          <path d="M510 200 L526 200" marker-end="url(#mB)"/><path d="M687 200 L703 200" marker-end="url(#mB)"/>
+          <path d="M864 200 L880 200" marker-end="url(#mB)"/>
+        </g>
+        <g class="lnr">
+          <path d="M78 222 L78 230" marker-end="url(#mR)"/><path d="M255 222 L255 230" marker-end="url(#mR)"/>
+          <path d="M609 222 L609 230" marker-end="url(#mR)"/><path d="M963 222 L963 230" marker-end="url(#mR)"/>
+          <path d="M255 264 L255 268" marker-end="url(#mR)"/>
+        </g>
+        <g class="mn" font-size="9.5">
+          <rect class="boxr" x="0"   y="234" width="156" height="30" rx="3"/><text class="rej" x="78"  y="253" text-anchor="middle">SCHEMA_VIOLATION</text>
+          <rect class="boxr" x="177" y="234" width="156" height="30" rx="3"/><text class="rej" x="255" y="253" text-anchor="middle">EVIDENCE_FAILURE</text>
+          <rect class="boxr" x="531" y="234" width="156" height="30" rx="3"/><text class="rej" x="609" y="253" text-anchor="middle">并行决议 fail closed</text>
+          <rect class="boxr" x="885" y="234" width="156" height="30" rx="3"/><text class="rej" font-size="9" x="963" y="253" text-anchor="middle">Requirement 漂移 → 不可重放</text>
+          <rect class="boxh" x="177" y="272" width="330" height="30" rx="3"/><text class="hol" x="342" y="291" text-anchor="middle">PASS 但 eligible = false → 升级为需要人</text>
+        </g>
+        <text class="mut" x="0" y="326">红色 = 失败回流，四个语义完全不同的终态。<tspan class="hol">紫色那一条不是失败</tspan>：机械证据够了，但语义还得人来判 —— 链路里唯一一条优雅降级路径。</text>
+      </svg>
+      <figcaption>模型调用只发生在中间那条横带上，它两侧的十二个工位全部是本地确定性计算。三个主角：<b>DerivedAsset</b>（可重读的坐标空间）、<b>EvidenceCheck</b>（唯一的机械真值判定）、<b>ReviewDecision</b>（谁为口径负责）。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═════════════════ 06 网格 ═════════════════ -->
+<section class="slide" id="s06">
+  <div class="eyebrow"><span class="no">06</span><span>第一站 · DerivedAsset</span></div>
+  <h2>不筛表，全部展开成一个坐标空间</h2>
+  <p class="lede">一份 SEC HTML 里没有坐标，只有嵌套的 <code>&lt;table&gt;</code> 和大量合并单元格。「第 28 行第 15 列」这句话在合并格的世界里是有歧义的。这一站把 2 047 740 字节变成一个无歧义的地址空间。</p>
+  <div class="body split-l">
+    <figure>
+      <svg viewBox="0 0 470 258" role="img" aria-label="一个 colspan 等于 3 的合并单元格被展开成三个坐标，每个副本都带着指回原点 28 逗号 0 的 origin 字段">
+        <text class="lbl" x="0" y="12">源 HTML</text>
+        <rect class="boxc" x="0" y="22" width="240" height="34" rx="3"/>
+        <text class="mn" x="10" y="43" font-size="11">&lt;td colspan="3"&gt;\nWorldwide (2)</text>
+        <path class="lna" d="M120 56 L120 78" marker-end="url(#mB)"/>
+        <text class="lbl" x="0" y="96">展开后的网格 —— 三个坐标，同一个原点</text>
+        <g class="mn" font-size="10.5">
+          <rect class="boxa" x="0"   y="106" width="150" height="52" rx="3"/>
+          <text class="ttl" x="10" y="124">(28, 0)</text><text class="mut" x="10" y="139">is_origin = true</text><text class="mut" x="10" y="152">origin = (28, 0)</text>
+          <rect class="box"  x="160" y="106" width="150" height="52" rx="3"/>
+          <text class="ttl" x="170" y="124">(28, 1)</text><text class="mut" x="170" y="139">is_origin = false</text><text class="mut" x="170" y="152">origin = (28, 0)</text>
+          <rect class="box"  x="320" y="106" width="150" height="52" rx="3"/>
+          <text class="ttl" x="330" y="124">(28, 2)</text><text class="mut" x="330" y="139">is_origin = false</text><text class="mut" x="330" y="152">origin = (28, 0)</text>
+        </g>
+        <path class="ln" d="M235 168 L235 178 L75 178 L75 164" marker-end="url(#mA)"/>
+        <path class="ln" d="M395 168 L395 186 L75 186 L75 164" marker-end="url(#mA)"/>
+        <text class="mut" x="0" y="208">三个副本携带完全相同的 raw_text / text / rowspan / colspan，</text>
+        <text class="mut" x="0" y="226">并各自指回原点。locator 因此无歧义：<tspan class="mn">八个字段全对上才算命中</tspan>。</text>
+        <text class="mut" x="0" y="248">空洞被显式补成空格子，所以矩形永远是满的；重叠会直接抛错。</text>
+      </svg>
+      <figcaption>合并单元格在每一个被覆盖的坐标上都出现一次，每个副本指回左上角原点。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">这一站最关键的约束</span>
+      <code>build_table_grid()</code> 的签名里<b>没有任何过滤参数</b>。docstring 写死：<code>"No metric terms or filter parameters are accepted by this API."</code> <span class="pv pv-code">代码</span></p>
+      <p class="note">为什么这条约束重要：如果允许按关键词筛表，那么「模型选中了正确的表」这个结论就被污染了——是模型选对了，还是筛选器已经把答案递到它面前？<b>不筛，模型面对的就是完整的 67 张表。</b></p>
+      <ul class="pts" style="margin-top:12px">
+        <li><b>2 047 740 字节</b> → 67 张表 / 19 329 展开格 / 8 654 原点格（44.77%）<span class="pv pv-run">实测</span></li>
+        <li>构建耗时 1.15 s，<code>derived_asset_id = sha256:6b9fabbd…</code> 与冻结 Run 落盘值<b>逐字符相同</b></li>
+        <li>资源上限在<b>分配前</b>检查。<code>max_total_cells = 100000</code> 是硬编码常量</li>
+      </ul>
+    </div>
+  </div>
+  <div class="takeaway"><span class="h">这一站建立的事实</span>
+  任意 <code>(table_id, row, column)</code> 要么唯一解析到一个格子，要么越界报错——而且这个解析过程<b>只依赖原始字节</b>。</div>
+</section>
+
+<!-- ═════════════════ 07 两个字段 ═════════════════ -->
+<section class="slide" id="s07">
+  <div class="eyebrow"><span class="no">07</span><span>第一站 · 关键字段</span></div>
+  <h2>每个格子同时拥有两个文本字段</h2>
+  <p class="lede">这一对字段的差异，是后面全部戏剧性的来源。<code>raw_text</code> 是解析器保留的原样文本，HTML 实体未解码、空白未折叠；<code>text</code> 是实体已解码、连续空白折叠成单个空格、首尾去空白之后的结果。</p>
+  <div class="body split">
+    <figure class="scroll-x">
+      <table>
+        <thead><tr><th>坐标</th><th>角色</th><th>raw_text — 原样</th><th>text — 归一</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>(28, 15)</td><td>值格</td><td>"69.8<span class="ent">&amp;#160;</span>"</td><td>"69.8"</td></tr>
+          <tr class="hi"><td>(28, 0)</td><td>口径标签</td><td>"<span class="esc">\n</span>Worldwide (2)"</td><td>"Worldwide (2)"</td></tr>
+          <tr><td>(19, 0)</td><td>段落头</td><td>"Comparable Systemwide Properties"</td><td>"Comparable Systemwide Properties"</td></tr>
+          <tr class="hi"><td>(9, 0)</td><td>行标签</td><td>"<span class="esc">\n</span>U.S. <span class="ent">&amp;amp;</span> Canada"</td><td>"U.S. &amp; Canada"</td></tr>
+        </tbody>
+      </table>
+      <figcaption>高亮的三行是两个字段<b>不相等</b>的格子 <span class="pv pv-run">实测</span>。SEC 的 HTML 表格普遍用 <code>&amp;#160;</code>（不换行空格）做对齐填充，用 <code>&amp;amp;</code> 转义 &amp;，并在单元格开头留下换行。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">先记住这件事</span>
+      Evidence 检查数值时用 <code>text</code>，检查口径标签时用 <code>raw_text</code>。<b>这个不对称是刻意的</b>，第 12 页会讲清楚为什么，第 13 页会展示它的代价。</p>
+      <p class="note"><span class="h">其余字段</span>
+      <code>row_index</code> / <code>column_index</code>（展开后的坐标）、<code>origin_row_index</code> / <code>origin_column_index</code>（合并格的左上角）、<code>rowspan</code> / <code>colspan</code>、<code>header</code>（是否 <code>&lt;th&gt;</code>）、<code>is_origin</code>。</p>
+      <p class="note"><span class="h">谁有修改权</span>
+      没有人。创建后只读，而且<b>每次 Run 冻结验证时都会从原始字节重建一遍并要求逐字段相等</b>。</p>
+    </div>
+  </div>
+  <div class="takeaway"><span class="h">这一站建立的事实</span>
+  同一个格子的「原样」与「归一」两种读法<b>同时被保留</b>，谁在什么场合用哪一个，是后面契约的一部分。</div>
+</section>
+
+<!-- ═════════════════ 08 往返验证 ═════════════════ -->
+<section class="slide" id="s08">
+  <div class="eyebrow"><span class="no">08</span><span>第二站 · 传输</span></div>
+  <h2>压缩省 token，但压缩引入了一个新风险</h2>
+  <p class="lede">展开后的网格有 3 554 243 字节，其中 55.23% 是合并格的副本，直接塞给模型是纯浪费。但压缩引入了一个全新的风险：<strong>模型看到的表和 Evidence 重读的表可能不是同一套。</strong>如果这个风险不消掉，「系统回去重读」这句话就没有意义——它读的可能是另一个世界。</p>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1000 236" role="img" aria-label="展开网格编码成紧凑传输再解码回来，要求与原表逐字段相等；同一个不变量在编码、构造载荷、Evidence 三个信任边界上各验一次">
+        <g class="mn" font-size="11">
+          <rect class="boxa" x="0" y="30" width="200" height="56" rx="4"/>
+          <text class="ttl acc" x="100" y="52" text-anchor="middle">展开网格</text>
+          <text class="mut" x="100" y="70" text-anchor="middle">3 554 243 字节</text>
+          <rect class="box" x="330" y="30" width="200" height="56" rx="4"/>
+          <text class="ttl" x="430" y="52" text-anchor="middle">紧凑传输</text>
+          <text class="mut" x="430" y="70" text-anchor="middle">331 877 字节 · 9.34%</text>
+          <rect class="boxa" x="660" y="30" width="200" height="56" rx="4"/>
+          <text class="ttl acc" x="760" y="52" text-anchor="middle">解码回来</text>
+          <text class="mut" x="760" y="70" text-anchor="middle">decoded</text>
+        </g>
+        <path class="lna" d="M200 58 L324 58" marker-end="url(#mB)"/>
+        <text class="mn mut" x="262" y="48" text-anchor="middle" style="font-size:10.5px">encode</text>
+        <text class="mn mut" x="262" y="78" text-anchor="middle" style="font-size:10.5px">只编原点格</text>
+        <path class="lna" d="M530 58 L654 58" marker-end="url(#mB)"/>
+        <text class="mn mut" x="592" y="48" text-anchor="middle" style="font-size:10.5px">decode</text>
+        <text class="mn mut" x="592" y="78" text-anchor="middle" style="font-size:10.5px">靠 span 重建副本</text>
+        <path class="ln" d="M860 58 L920 58 L920 108 L100 108 L100 92" marker-end="url(#mA)"/>
+        <rect class="boxp" x="330" y="94" width="290" height="28" rx="3"/>
+        <text class="mn pas ttl" x="475" y="113" text-anchor="middle">要求 decoded == tables 逐字段相等</text>
+
+        <text class="lbl" x="0" y="152">同一个不变量，在三个不同的信任边界上各验一次</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box" x="0"   y="162" width="316" height="44" rx="3"/>
+          <text class="ttl" x="12" y="180">① encode 函数自己验</text><text class="mut" x="12" y="196">验的是：实现正确</text>
+          <rect class="box" x="336" y="162" width="316" height="44" rx="3"/>
+          <text class="ttl" x="348" y="180">② build_reader_payload 再验</text><text class="mut" x="348" y="196">验的是：载荷没被中途替换</text>
+          <rect class="boxa" x="672" y="162" width="328" height="44" rx="3"/>
+          <text class="ttl acc" x="684" y="180">③ check_evidence 第三次验</text><text class="mut" x="684" y="196">验的是：复核用的和发出去的是同一套</text>
+        </g>
+        <text class="mut" x="0" y="228">看起来冗余，其实不是：三处验证处在不同的信任边界上，各自排除一类不同的事故。</text>
+      </svg>
+      <figcaption>注意比较用的是 Python <code>!=</code>，不是比 hash。「模型看到的和 Evidence 重读的一致」不是「差不多一致」，是解码后<b>逐字段相等</b>。</figcaption>
+    </figure>
+  </div>
+  <div class="takeaway"><span class="h">这一站建立的事实</span>
+  新增四个绑定字段：<code>expanded_derived_asset_id</code>、<code>expanded_grid_sha256</code>、<code>compact_payload_sha256</code>、<code>round_trip_receipt_id</code>。往返验证通过之后，「同一套表」成为下游可以依赖的前提。</div>
+</section>
+
+<!-- ═════════════════ 09 出网 ═════════════════ -->
+<section class="slide" id="s09">
+  <div class="eyebrow"><span class="no">09</span><span>第三站 · 出网</span></div>
+  <h2>先落 marker，再开 socket</h2>
+  <p class="lede">这是整条链路<strong>唯一</strong>有外部副作用的地方，所以七个步骤的顺序是被刻意设计过的。付费模型调用最危险的情况不是报错，而是<strong>请求可能已经发出、本地却不知道远端执行没有</strong>。</p>
+  <div class="body split-l">
+    <figure>
+      <svg viewBox="0 0 480 320" role="img" aria-label="execute_invocation 的七个步骤：崩溃在第六步之前可以证明没有出网因而可恢复；第六步写下 egress marker 之后崩溃则无法证明，只能记为 UNKNOWN_REMOTE_OUTCOME 并停止整批">
+        <g class="mn" font-size="10.5">
+          <rect class="box" x="0" y="8"   width="290" height="26" rx="3"/><text x="10" y="26">① 校验执行身份 execution_id</text>
+          <rect class="box" x="0" y="38"  width="290" height="26" rx="3"/><text x="10" y="56">② 落盘 plan 与请求字节</text>
+          <rect class="box" x="0" y="68"  width="290" height="26" rx="3"/><text x="10" y="86">③ 查已有终态 → 有就直接返回</text>
+          <rect class="box" x="0" y="98"  width="290" height="26" rx="3"/><text x="10" y="116">④ 查可复用成功响应 → 有就复用</text>
+          <rect class="box" x="0" y="128" width="290" height="26" rx="3"/><text x="10" y="146">⑤ O_EXCL 抢预约</text>
+          <rect class="boxa" x="0" y="158" width="290" height="26" rx="3"/><text class="acc ttl" x="10" y="176">⑥ 写 egress marker</text>
+          <rect class="boxc" x="0" y="188" width="290" height="26" rx="3"/><text class="cla ttl" x="10" y="206">⑦ transport.send()</text>
+        </g>
+        <path class="lnd" d="M0 156 L480 156"/>
+        <text class="lbl rej" x="306" y="150">↑ 崩溃在这条线之上</text>
+        <text class="lbl rej" x="306" y="172">↓ 崩溃在这条线之下</text>
+
+        <rect class="boxp" x="306" y="8" width="174" height="66" rx="3"/>
+        <text class="mn pas ttl" x="318" y="28" style="font-size:10.5px">可恢复</text>
+        <text class="mut" x="318" y="46" style="font-size:10.5px">marker 不存在，</text>
+        <text class="mut" x="318" y="62" style="font-size:10.5px">能证明没有出网</text>
+
+        <rect class="boxr" x="306" y="184" width="174" height="80" rx="3"/>
+        <text class="mn rej ttl" x="318" y="203" style="font-size:9.5px">UNKNOWN_REMOTE_OUTCOME</text>
+        <text class="mut" x="318" y="222" style="font-size:10.5px">无法证明是否执行、</text>
+        <text class="mut" x="318" y="238" style="font-size:10.5px">是否计费</text>
+        <text class="mut" x="318" y="256" style="font-size:10.5px">→ 整批停止，需人工介入</text>
+
+        <text class="mut" x="0" y="248" style="font-size:11px">「能证明没出网」是这里的核心条件：</text>
+        <text class="mut" x="0" y="266" style="font-size:11px">只有在确知没有发生外部副作用的情况下，</text>
+        <text class="mut" x="0" y="284" style="font-size:11px">才允许替换别人的预约并重新尝试。</text>
+        <text class="mut" x="0" y="308" style="font-size:11px">UNKNOWN <tspan class="rej ttl">不自动重试</tspan> —— 自动重试会同时产生重复扣费和两条无法对账的远端记录。</text>
+      </svg>
+      <figcaption>marker 在 socket <b>之前</b>落盘，所以「这一次可能已经花了钱」永远是一个可知的事实。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">重试策略</span>
+      循环是 <code>for attempt_ordinal in (1, 2)</code>——1 次初始 + 最多 1 次重试。而且 qualification 这条路的授权里写着 <code>automatic_retry_count: 0</code>，<b>一次都不重试</b> <span class="pv pv-disk">落盘</span>。</p>
+      <p class="note">HTTP 429 / 5xx / TIMEOUT 是 RETRYABLE；HTTP 400 / 401 / <b>402</b> / 422、<code>SCHEMA_VIOLATION</code>、<code>EVIDENCE_FAILURE</code> 全是 TERMINAL。<code>_classify</code> 的默认分支也是 TERMINAL——不认识的情况按保守处理。</p>
+      <p class="note"><span class="h">背后的原则</span>
+      <b>重试用来对抗网络抖动，不用来对抗模型质量。</b>允许对 schema/evidence 失败重试，等于把「多试几次」变成一种事实上的质量策略，那会污染 qualification 的统计意义——「通过了」就变成了「试了几次终于通过了」。</p>
+      <p class="note"><span class="h">副作用的边界</span>
+      全部外部副作用被限制在文件系统的 10 个命名空间里。流程一的 <code>structured_only_result()</code> 反过来扫这 10 个目录，<b>只要有任何一个文件就报错</b>——这是「这批发布确实没调过模型」的机械证据。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ 10 Candidate ═════════════════ -->
+<section class="slide" id="s10">
+  <div class="eyebrow"><span class="no">10</span><span>第四站 · ObservationCandidate</span></div>
+  <h2>模型返回的是坐标，不是答案</h2>
+  <p class="lede">这是第一个承载模型输出的对象。它代表的事实是：<strong>模型声称这些坐标上有这些内容。</strong>它不代表这些内容是真的。下面是 Run 4863af40 的真实返回 <span class="pv pv-disk">落盘</span>。</p>
+  <div class="body split">
+    <figure class="scroll-x">
+      <div style="font-family:var(--mono); font-size:11.5px; line-height:1.85; white-space:pre; background:var(--surface-2); border:1px solid var(--rule); border-radius:5px; padding:14px 16px">{
+  "disclosure_group": "lodging_kpi_table",
+  "table_locator": {"table_id": <b style="color:var(--accent)">"table_000011"</b>, …},
+  "candidates": [{
+    "role": "occupancy",
+    "claimed_period": "FY2024",
+    "claimed_raw_value": <b style="color:var(--claim)">"69.8"</b>,
+    "claimed_reported_unit": "percent",
+    "locator": {"row_index": <b style="color:var(--accent)">28</b>, "column_index": <b style="color:var(--accent)">15</b>,
+                "origin_row_index": 28, "origin_column_index": 15,
+                "rowspan": 1, "colspan": 2, …},
+    "claimed_scope": [
+      {"dimension": "property_population", "raw_value": "Comparable Systemwide Properties", …},
+      {"dimension": "operating_scope",     "raw_value": "Comparable Systemwide Properties", …},
+      {"dimension": "geography",           "raw_value": "Worldwide", …}],
+    "scope_evidence_locators": [
+      {"id": "scope_evidence_1", "locator": {"row_index": <b style="color:var(--accent)">19</b>, "column_index": <b style="color:var(--accent)">0</b>, …},
+       "raw_text": "Comparable Systemwide Properties"},
+      {"id": "scope_evidence_2", "locator": {"row_index": <b style="color:var(--accent)">28</b>, "column_index": <b style="color:var(--accent)">0</b>, …},
+       "raw_text": <b style="color:var(--claim)">"<span class="esc">\n</span>Worldwide (2)"</b>}],
+    "competing_candidates": []}],
+  "unresolved_competing_claims": []
+}</div>
+      <figcaption>蓝色是<b>坐标</b>，赭色是<b>声明</b>。注意 <code>raw_text</code> 带着那个前导换行——这是当前 prompt 明确要求的，也是这条链路上最贵的一课（第 13 页）。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">Reader 做了什么</span>
+      <code>validate_reader_output()</code> 做极严的结构校验：重复 key 直接拒；根字段必须<b>恰好</b> 4 个；每个 candidate 字段必须<b>恰好</b> 8 个；角色顺序必须与 Spec 完全一致（缺、重、乱序都拒）；<b>所有</b> locator（选中的、竞争的、口径证据的）必须落在同一张目标表内。</p>
+      <p class="note"><span class="h">Reader 没做什么</span>
+      它<b>一次都没有去看那张表</b>。模块 docstring 就是它的设计声明：<code>"Validate strict Reader output without solving or correcting its claims."</code> <span class="pv pv-code">代码</span></p>
+      <p class="note"><span class="h">新增的三个字段</span>
+      <code>candidate_hash</code>（只覆盖实质主张，<b>不含</b>模型名、时间戳、日志）、<code>assistant_output_sha256</code>、<code>status</code>。<br><br><code>status</code> 由代码算，<b>不由模型声明</b>：有未决竞争主张、或有任何口径值查不到精确别名 → <code>REVIEW_REQUIRED</code>；否则 <code>CANDIDATE</code>。</p>
+    </div>
+  </div>
+  <div class="takeaway warn"><span class="h">这一站建立的事实（以及没建立的）</span>
+  结构合法、角色齐全、坐标不越表。<b>仅此而已</b>——内容是否为真，此刻一个字都没验。</div>
+</section>
+
+<!-- ═════════════════ 11 四道闸门 ═════════════════ -->
+<section class="slide" id="s11">
+  <div class="eyebrow"><span class="no">11</span><span>第五站 · EvidenceCheck</span></div>
+  <h2>四道闸门，各自排除一类事故</h2>
+  <p class="lede">这是整条链路里<strong>唯一一个「凭什么信」的对象</strong>。前面的 Candidate 只是模型的说法，后面的 Review 只处理语义，中间这一层是唯一的机械真值判定——全部是确定性代码，没有模型参与。</p>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1040 250" role="img" aria-label="check_evidence 的四道闸门：源绑定、载荷完整性、选中格重读、口径归一化，每一道排除一类具体的事故">
+        <g class="mn" font-size="10.5">
+          <rect class="boxa" x="0"   y="16" width="238" height="112" rx="4"/>
+          <text class="ttl acc" x="12" y="38">① SOURCE_BINDINGS</text>
+          <text x="12" y="60">源引用集合与顺序必须与传入</text>
+          <text x="12" y="76">完全一致；DerivedAsset 的父</text>
+          <text x="12" y="92">RawBlob 集合与源引用互为相等</text>
+          <text class="rej" x="12" y="116">排除：用 A 文件的网格验 B 的主张</text>
+
+          <rect class="boxa" x="266" y="16" width="238" height="112" rx="4"/>
+          <text class="ttl acc" x="278" y="38">② READER_TABLE_EXACT_SET</text>
+          <text x="278" y="60">紧凑载荷解码回来必须与 tables</text>
+          <text x="278" y="76">完全相等；manifest 不能被替换；</text>
+          <text x="278" y="92">system_contract 三个布尔逐字段比</text>
+          <text class="rej" x="278" y="116">排除：模型看筛过的表，Evidence 看全表</text>
+
+          <rect class="boxa" x="532" y="16" width="238" height="112" rx="4"/>
+          <text class="ttl acc" x="544" y="38">③ SELECTED_LOCATOR:role</text>
+          <text x="544" y="60">按八字段 locator 重读值格，</text>
+          <text x="544" y="76">比 cell["text"]，再 parse 成</text>
+          <text x="544" y="92">Spec 的规范单位</text>
+          <text class="rej" x="544" y="116">排除：指错格子、值写错</text>
+
+          <rect class="boxa" x="798" y="16" width="242" height="112" rx="4"/>
+          <text class="ttl acc" x="810" y="38">④ SCOPE_EXACT_ENUM…</text>
+          <text x="810" y="60">按 locator 重读标签，比</text>
+          <text x="810" y="76">cell["raw_text"]；再走有边界的</text>
+          <text x="810" y="92">单次出现证明 + 精确别名表</text>
+          <text class="rej" x="810" y="116">排除：口径靠猜</text>
+        </g>
+        <g class="lna">
+          <path d="M238 72 L260 72" marker-end="url(#mB)"/>
+          <path d="M504 72 L526 72" marker-end="url(#mB)"/>
+          <path d="M770 72 L792 72" marker-end="url(#mB)"/>
+        </g>
+        <text class="lbl" x="0" y="158">此外还有</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box" x="0"   y="166" width="330" height="30" rx="3"/><text x="12" y="185">COMPETING_LOCATOR:role — 竞争候选也要逐个重读</text>
+          <rect class="box" x="350" y="166" width="330" height="30" rx="3"/><text x="362" y="185">DECLARED_IDENTITY — Spec 声明的恒等约束（B10 没有）</text>
+          <rect class="box" x="700" y="166" width="340" height="30" rx="3"/><text x="712" y="185">Candidate.status 交叉验证 — Reader 与 Evidence 必须算得一样</text>
+        </g>
+        <text class="mut" x="0" y="222">四类异常在一个 try 块里被收集成 <tspan class="mn">reason_codes</tspan> 而不是抛出，所以<tspan class="ttl">失败也是一条可 hash、可重放的记录</tspan>。</text>
+        <text class="mut" x="0" y="242">代价是：<tspan class="rej ttl">只记录第一个失败</tspan>——try 块一抛就跳到 except，后面的检查不再跑。</text>
+      </svg>
+      <figcaption>四道闸门按固定顺序执行。<code>check_evidence</code> 的 docstring 用词是 <code>"the asymmetric mechanical Evidence Checker"</code>——它<b>能证伪，不能证实</b>。证伪可以机械化，证实不能。</figcaption>
+    </figure>
+  </div>
+  <div class="takeaway"><span class="h">这一站建立的事实</span>
+  Evidence PASS <b>不代表</b>这个数字是业务要的数字，只代表「模型指的位置上确实写着它说的东西，而且口径标签能追到表里」。Evidence REJECTED <b>确实代表</b>这个主张站不住。</div>
+</section>
+
+<!-- ═════════════════ 12 核心不对称 ═════════════════ -->
+<section class="slide" id="s12">
+  <div class="eyebrow"><span class="no">12</span><span>核心机制</span></div>
+  <h2>值比归一化文本，标签比原样文本</h2>
+  <p class="lede">这是流程二最核心、也最有争议的一条契约。<code>_verify_claim_cell</code> 用 <code>cell["text"]</code>，<code>_verify_local_labels</code> 用 <code>cell["raw_text"]</code>。<strong>同一个格子的两个字段，被用在两个不同的检查里。</strong></p>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1040 244" role="img" aria-label="值检查比对归一化文本 text，标签检查比对原样文本 raw_text；两条比对轨道各自说明为什么必须用那个字段">
+        <text class="lbl" x="0" y="12">轨道一 · 值检查</text>
+        <g class="mn" font-size="11">
+          <rect class="boxc" x="0"   y="22" width="230" height="42" rx="3"/>
+          <text class="mut" x="12" y="39" style="font-size:10px">模型声明</text><text class="cla ttl" x="12" y="56">"69.8"</text>
+          <rect class="boxa" x="330" y="22" width="230" height="42" rx="3"/>
+          <text class="mut" x="342" y="39" style="font-size:10px">系统重读 cell(28,15)["text"]</text><text class="acc ttl" x="342" y="56">"69.8"</text>
+          <rect class="box"  x="620" y="22" width="420" height="42" rx="3" opacity=".55"/>
+          <text class="mut" x="632" y="39" style="font-size:10px">同一格的 raw_text —— 不参与这个比较</text>
+          <text class="mut" x="632" y="56">"69.8&amp;#160;"</text>
+        </g>
+        <path class="lna" d="M230 43 L324 43" marker-end="url(#mB)"/>
+        <text class="mn pas ttl" x="277" y="34" text-anchor="middle" style="font-size:10px">==</text>
+        <text class="mut" x="0" y="84" style="font-size:11px">为什么值不能也比 raw_text：SEC 的 HTML 表格普遍用 <tspan class="mn">&amp;#160;</tspan> 做对齐填充。比 raw_text 会让<tspan class="ttl">几乎每一个数值主张</tspan>都失败。</text>
+
+        <line class="lnd" x1="0" y1="100" x2="1040" y2="100"/>
+
+        <text class="lbl" x="0" y="122">轨道二 · 口径标签检查</text>
+        <g class="mn" font-size="11">
+          <rect class="boxc" x="0"   y="132" width="230" height="42" rx="3"/>
+          <text class="mut" x="12" y="149" style="font-size:10px">模型声明</text><text class="cla ttl" x="12" y="166">"\nWorldwide (2)"</text>
+          <rect class="boxa" x="330" y="132" width="230" height="42" rx="3"/>
+          <text class="mut" x="342" y="149" style="font-size:10px">系统重读 cell(28,0)["raw_text"]</text><text class="acc ttl" x="342" y="166">"\nWorldwide (2)"</text>
+          <rect class="box"  x="620" y="132" width="420" height="42" rx="3" opacity=".55"/>
+          <text class="mut" x="632" y="149" style="font-size:10px">同一格的 text —— 不参与这个比较</text>
+          <text class="mut" x="632" y="166">"Worldwide (2)"</text>
+        </g>
+        <path class="lna" d="M230 153 L324 153" marker-end="url(#mB)"/>
+        <text class="mn pas ttl" x="277" y="144" text-anchor="middle" style="font-size:10px">==</text>
+        <text class="mut" x="0" y="194" style="font-size:11px">为什么标签必须比 raw_text：口径标签的<tspan class="ttl">精确文本</tspan>是判断口径的唯一依据。一旦允许任何形式的文本处理，</text>
+        <text class="mut" x="0" y="212" style="font-size:11px">「精确别名表是唯一归一化路径」这个不变量就有了裂缝。</text>
+        <text class="rej ttl" x="0" y="238" style="font-size:11.5px">代价：模型少写一个前导换行，一次完全正确的抽取就会整体失败。下一页是这件事的真实记录。</text>
+      </svg>
+      <figcaption>设计者接受了「值宽松、标签严格」的不对称，因为值有独立的数值解析层兜底（<code>parse_numeric_claim</code>），而标签没有——标签一旦被放宽，口径就失去了机械可判定性。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═════════════════ 13 失败 ═════════════════ -->
+<section class="slide" id="s13">
+  <div class="eyebrow"><span class="no">13</span><span>失败路径</span></div>
+  <h2>一个换行符的完整去向</h2>
+  <p class="lede">这不是教学假设。2026-08-26，Run <code>cf8dbd0c</code>：远端调用<strong>完全成功</strong>（HTTP 200，零重试），模型输出<strong>结构完全合法</strong>，选的表对、指的格对、数也读对了 <span class="pv pv-disk">落盘</span>。唯一的问题是 <code>scope_evidence_2.raw_text</code> 少了一个前导换行。</p>
+  <div class="body split">
+    <div>
+      <figure class="scroll-x" style="margin-bottom:16px">
+        <table class="nw">
+          <thead><tr><th>Run</th><th>prompt</th><th>claimed_raw_value</th><th>scope_evidence_2.raw_text</th><th>终态</th></tr></thead>
+          <tbody>
+            <tr class="hi2"><td>cf8dbd0c</td><td>c712190ce6fe</td><td>"69.8"</td><td>"Worldwide (2)"</td><td style="color:var(--reject);font-weight:700">EVIDENCE_FAILURE</td></tr>
+            <tr class="hi"><td>4863af40</td><td>331bbabae2e0</td><td>"69.8"</td><td>"<span class="esc">\n</span>Worldwide (2)"</td><td style="color:var(--pass);font-weight:700">SUCCEEDED · FROZEN</td></tr>
+            <tr><td colspan="2" style="color:var(--muted)">表里实际是</td><td>text = "69.8"</td><td>raw_text = "<span class="esc">\n</span>Worldwide (2)"</td><td></td></tr>
+          </tbody>
+        </table>
+        <figcaption>两次调用的表相同、任务相同、坐标相同、数值相同。<b>唯一的差别是 raw_text 里那一个前导换行。</b></figcaption>
+      </figure>
+      <p class="note"><span class="h">本次实测</span>
+      把 cf8dbd0c 真实返回的那份 candidate 喂给两个内部函数，结果是 <code>value check : PASS → 0.698</code>，<code>label check : FAIL → SCOPE_LABEL_TEXT_MISMATCH</code> <span class="pv pv-run">实测</span>。<b>值检查是通过的</b>——模型的答案完全正确，只差一个换行符。</p>
+    </div>
+    <figure>
+      <svg viewBox="0 0 430 340" role="img" aria-label="异常传播的十步：从 evidence.py 抛出 ConstraintError 到 qualification 序列停止，正式发布不受影响">
+        <g class="mn" font-size="10">
+          <rect class="boxr" x="0" y="4"   width="430" height="26" rx="3"/><text class="rej" x="10" y="21">① _verify_local_labels 抛 ConstraintError</text>
+          <rect class="box"  x="0" y="36"  width="430" height="26" rx="3"/><text x="10" y="53">② check_evidence 的 except 捕获 → reason_codes</text>
+          <rect class="box"  x="0" y="68"  width="430" height="26" rx="3"/><text x="10" y="85">③ 产出 REJECTED 记录（只存在于内存）</text>
+          <rect class="box"  x="0" y="100" width="430" height="26" rx="3"/><text x="10" y="117">④ acceptance validator 抛 EvidenceFailureError</text>
+          <rect class="box"  x="0" y="132" width="430" height="26" rx="3"/><text x="10" y="149">⑤ classification: SUCCESS → TERMINAL</text>
+          <rect class="boxr" x="0" y="164" width="430" height="26" rx="3"/><text class="rej" x="10" y="181">⑥ error_class = "EVIDENCE_FAILURE" · 不重试</text>
+          <rect class="box"  x="0" y="196" width="430" height="26" rx="3"/><text x="10" y="213">⑦ 写终态 receipt 并释放预约</text>
+          <rect class="box"  x="0" y="228" width="430" height="26" rx="3"/><text x="10" y="245">⑧ Run 停在 OPEN，6 条记录，validation = NOT_RUN</text>
+          <rect class="box"  x="0" y="260" width="430" height="26" rx="3"/><text x="10" y="277">⑨ qualification 序列按 STOP 停止后续 ordinal</text>
+          <rect class="boxp" x="0" y="292" width="430" height="26" rx="3"/><text class="pas" x="10" y="309">⑩ 正式发布不受影响 · 三个 provider 计数器仍是 0</text>
+        </g>
+        <text class="mut" x="0" y="334" style="font-size:10.5px">请求字节、原始响应字节、attempt receipt、ledger 条目全部完整保留。</text>
+      </svg>
+      <figcaption>失败有<b>精确的终态</b>、<b>精确的记录集合</b>、和<b>精确的非影响</b>。</figcaption>
+    </figure>
+  </div>
+  <div class="takeaway warn"><span class="h">但它没有精确的落盘原因</span>
+  第 ③ 步那条 REJECTED 记录<b>从未落盘</b>。<code>grep -ro SCOPE_LABEL_TEXT_MISMATCH artifacts/</code> 在整个仓库里命中 <b>0 次</b> <span class="pv pv-run">实测</span>。落盘的只有 attempt 上那个笼统的 <code>error_class: "EVIDENCE_FAILURE"</code>——具体哪个字段、哪个坐标、差在哪一个字符，全都要靠重跑才能知道。</div>
+</section>
+
+<!-- ═════════════════ 14 归一化 ═════════════════ -->
+<section class="slide" id="s14">
+  <div class="eyebrow"><span class="no">14</span><span>核心机制</span></div>
+  <h2>归一化只有一条路：Spec 声明的精确别名表</h2>
+  <p class="lede">口径标签重读通过之后，还要回答一个问题：<code>"Comparable Systemwide Properties"</code> 这串字对应哪个规范口径？这一步<strong>没有正则、没有模糊匹配、没有数值容差、也不用第二个模型</strong>。</p>
+  <div class="body split">
+    <figure>
+      <svg viewBox="0 0 560 300" role="img" aria-label="口径归一化两步：先证明口径原文在标签里有恰好一次有边界的出现，再查 Spec 的精确别名表；查不到就进入 unresolved 并升级为需要人复核">
+        <g class="mn" font-size="11">
+          <rect class="boxc" x="0" y="10" width="270" height="40" rx="3"/>
+          <text class="mut" x="10" y="26" style="font-size:10px">模型声明的口径原文</text>
+          <text class="cla ttl" x="10" y="43">"Worldwide"</text>
+          <rect class="boxa" x="290" y="10" width="270" height="40" rx="3"/>
+          <text class="mut" x="300" y="26" style="font-size:10px">已重读的标签原文</text>
+          <text class="acc ttl" x="300" y="43">"\nWorldwide (2)"</text>
+        </g>
+        <path class="ln" d="M140 50 L140 66 L280 66 L280 82" marker-end="url(#mA)"/>
+        <path class="ln" d="M420 50 L420 66 L280 66" />
+        <rect class="box" x="70" y="86" width="420" height="42" rx="3"/>
+        <text class="ttl" x="280" y="105" text-anchor="middle" style="font-size:11.5px">第一步 · 有边界的单次出现证明</text>
+        <text class="mut" x="280" y="121" text-anchor="middle" style="font-size:10.5px">前后都不是词字符，且在整串里恰好出现一次</text>
+        <path class="ln" d="M280 128 L280 148" marker-end="url(#mA)"/>
+        <rect class="boxa" x="70" y="152" width="420" height="42" rx="3"/>
+        <text class="ttl acc" x="280" y="171" text-anchor="middle" style="font-size:11.5px">第二步 · 查 Spec 的精确别名表</text>
+        <text class="mn mut" x="280" y="187" text-anchor="middle" style="font-size:10.5px">geography: { worldwide: ["Worldwide"] }</text>
+        <path class="ln" d="M180 194 L180 216" marker-end="url(#mA)"/>
+        <path class="ln" d="M380 194 L380 216" marker-end="url(#mA)"/>
+        <rect class="boxp" x="30" y="220" width="290" height="40" rx="3"/>
+        <text class="pas ttl" x="175" y="239" text-anchor="middle" style="font-size:11px">命中 → normalized_scope</text>
+        <text class="mn mut" x="175" y="254" text-anchor="middle" style="font-size:10px">geography = "worldwide"</text>
+        <rect class="boxh" x="336" y="220" width="224" height="40" rx="3"/>
+        <text class="hol ttl" x="448" y="239" text-anchor="middle" style="font-size:11px">未命中 → unresolved</text>
+        <text class="mn mut" x="448" y="254" text-anchor="middle" style="font-size:10px">升级为需要人复核</text>
+        <text class="mut" x="0" y="286" style="font-size:11px">未命中<tspan class="ttl">不是失败</tspan>：EvidenceCheck 仍然 PASS，只是 <tspan class="mn">system_approval_eligible = false</tspan>。</text>
+      </svg>
+      <figcaption>这是链路里唯一一条<b>优雅降级</b>路径，而且降级的方向是把判断交还给<b>人</b>，不是交给另一个模型。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">B10 的完整别名表</span>
+      三个维度，每个维度<b>一个</b>候选值，每个候选值<b>一个</b>别名字符串 <span class="pv pv-disk">落盘</span>：</p>
+      <div style="font-family:var(--mono); font-size:11.5px; line-height:1.8; background:var(--surface-2); border:1px solid var(--rule); border-radius:5px; padding:11px 13px; margin-top:9px; white-space:pre-wrap">property_population: {comparable: ["Comparable Systemwide Properties"]}
+operating_scope:     {systemwide: ["Comparable Systemwide Properties"]}
+geography:           {worldwide:  ["Worldwide"]}</div>
+      <p class="note" style="margin-top:12px"><span class="h">这就是泛化边界</span>
+      Hilton 的表里写的是 <code>System-wide</code>（带连字符），Hyatt 写的是 <code>System-wide hotels (a)</code>——两个都不在这张表里。<b>别名表的覆盖面，就是这条链路的泛化边界。</b></p>
+      <p class="note"><span class="h">模块 docstring 写死了这个立场</span>
+      <code>"It deliberately contains no numeric, percentage, date, or free-text normalizers."</code> <span class="pv pv-code">代码</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ 15 授权 ═════════════════ -->
+<section class="slide" id="s15">
+  <div class="eyebrow"><span class="no">15</span><span>第六站 · Review</span></div>
+  <h2>能不能不要人，由三个机械条件决定</h2>
+  <p class="lede">Evidence PASS <strong>不等于</strong>批准。Evidence 能证明「第 19 行第 0 列确实写着 Comparable Systemwide Properties」，但「可比全系统口径是不是业务要的口径」是一个语义判断，由人或被<strong>明确授权</strong>的 SYSTEM 承担。</p>
+  <div class="body split">
+    <figure>
+      <svg viewBox="0 0 540 296" role="img" aria-label="system_approval_eligible 是三个条件的与；为真时 SYSTEM 可在 D-06 授权下自动批准，为假时只能走人工复核">
+        <text class="lbl" x="0" y="12">三盏必须同时亮的灯</text>
+        <g class="mn" font-size="10.5">
+          <rect class="boxp" x="0" y="22" width="540" height="34" rx="3"/>
+          <text class="ttl" x="12" y="36">① Candidate.status == "CANDIDATE"</text>
+          <text class="mut" x="12" y="50">无未决竞争主张。而且这个 status 由 Reader 和 Evidence 各算一次并要求相等</text>
+          <rect class="boxp" x="0" y="62" width="540" height="34" rx="3"/>
+          <text class="ttl" x="12" y="76">② unresolved_scope_dimensions == []</text>
+          <text class="mut" x="12" y="90">每个口径维度都在 Spec 的精确别名表里查到了规范值</text>
+          <rect class="boxp" x="0" y="102" width="540" height="34" rx="3"/>
+          <text class="ttl" x="12" y="116">③ 归一化口径满足 Spec 的 scope contract</text>
+          <text class="mut" x="12" y="130">三个维度与 required_claims 一致</text>
+        </g>
+        <path class="ln" d="M270 136 L270 154" marker-end="url(#mA)"/>
+        <rect class="boxa" x="120" y="158" width="300" height="30" rx="3"/>
+        <text class="mn acc ttl" x="270" y="178" text-anchor="middle" style="font-size:11px">system_approval_eligible</text>
+        <path class="ln" d="M180 188 L180 208" marker-end="url(#mA)"/>
+        <path class="ln" d="M360 188 L360 208" marker-end="url(#mA)"/>
+        <rect class="boxp" x="0" y="212" width="250" height="52" rx="3"/>
+        <text class="pas ttl" x="125" y="231" text-anchor="middle" style="font-size:11px">true → SYSTEM 可自动批准</text>
+        <text class="mn mut" x="125" y="247" text-anchor="middle" style="font-size:10px">但还要 D-06 决议明确开启</text>
+        <text class="mn mut" x="125" y="259" text-anchor="middle" style="font-size:10px">（精确 8 字段，每个值都对）</text>
+        <rect class="boxh" x="290" y="212" width="250" height="52" rx="3"/>
+        <text class="hol ttl" x="415" y="231" text-anchor="middle" style="font-size:11px">false → 只能走 HUMAN</text>
+        <text class="mn mut" x="415" y="247" text-anchor="middle" style="font-size:10px">create_system_review_decision()</text>
+        <text class="mn mut" x="415" y="259" text-anchor="middle" style="font-size:10px">直接抛错</text>
+        <text class="mut" x="0" y="288" style="font-size:11px">非 PASS 的 EvidenceCheck 连 Review 都进不去——<tspan class="ttl">「人可以强行批准」这条路在代码层面不存在</tspan>。</text>
+      </svg>
+      <figcaption>这是全链路里唯一一个「能不能不要人」的开关。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">SYSTEM 记录从不假装有人批准过</span>
+      <code>reviewer_type = "SYSTEM"</code>、<code>reviewer_id = system:optional-review-v1</code>、<code>reason = EVIDENCE_BOUND_AUTO_APPROVE</code>，全是固定常量。代码注释直说：<code>"It never claims a person approved the result."</code> <span class="pv pv-code">代码</span></p>
+      <p class="note"><span class="h">批准的对象是一整包，不是一个数字</span>
+      <code>review_unit_hash</code> 罩住 12 项内容，其中包括 <code>rendered_review_hash</code>——<b>实际渲染给复核者看的字节</b>的 hash。任何一项变了，旧的批准自动失效。</p>
+      <figure class="scroll-x" style="margin-top:12px">
+        <table>
+          <thead><tr><th>维度</th><th>来自 Spec 的 required_claims</th><th>被 Evidence 覆盖</th></tr></thead>
+          <tbody>
+            <tr><td>property_population</td><td>comparable</td><td>comparable</td></tr>
+            <tr><td>operating_scope</td><td>systemwide</td><td>systemwide</td></tr>
+            <tr><td>geography</td><td>worldwide</td><td>worldwide</td></tr>
+            <tr class="hi2"><td>period_role</td><td>current_fiscal_year</td><td>—（模型从未被要求证明）</td></tr>
+          </tbody>
+        </table>
+        <figcaption><code>approved_claims</code> 有 4 项，而 Evidence 只归一化出 3 项。第四项由 Spec <b>直接声明</b>——「这是本财年的数」不进入模型的举证范围。</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ 16 值的替换 ═════════════════ -->
+<section class="slide" id="s16">
+  <div class="eyebrow"><span class="no">16</span><span>第七站 · VerifiedObservation</span></div>
+  <h2>模型说的 69.8 从来没有进入过下游</h2>
+  <p class="lede">这一页解决一个很常见的误解：<strong>「模型说的数字进了系统」</strong>。没有。进入下游的是 Evidence 自己算出的 <code>0.698</code>；模型的原话只留在 attempt 的原始响应字节里，不参与任何后续计算。</p>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1040 214" role="img" aria-label="模型声明的 69.8 经 Evidence 重读并 parse 成 0.698 写入 normalized_values，VerifiedObservation 的 value 直接取自 normalized_values 而不是模型输出">
+        <g class="mn" font-size="11">
+          <rect class="boxc" x="0" y="26" width="200" height="52" rx="4"/>
+          <text class="mut" x="12" y="44" style="font-size:10px">模型声明</text>
+          <text class="cla ttl" x="12" y="62" style="font-size:14px">"69.8" percent</text>
+          <rect class="boxa" x="270" y="26" width="230" height="52" rx="4"/>
+          <text class="mut" x="282" y="44" style="font-size:10px">Evidence 重读并解析</text>
+          <text class="acc ttl" x="282" y="62" style="font-size:14px">parse_numeric_claim</text>
+          <rect class="boxa" x="570" y="26" width="230" height="52" rx="4"/>
+          <text class="mut" x="582" y="44" style="font-size:10px">normalized_values</text>
+          <text class="acc ttl" x="582" y="62" style="font-size:14px">{"occupancy": "0.698"}</text>
+          <rect class="boxp" x="850" y="26" width="190" height="52" rx="4"/>
+          <text class="mut" x="862" y="44" style="font-size:10px">VerifiedObservation</text>
+          <text class="pas ttl" x="862" y="62" style="font-size:14px">value = "0.698"</text>
+        </g>
+        <path class="lna" d="M200 52 L264 52" marker-end="url(#mB)"/>
+        <path class="lna" d="M500 52 L564 52" marker-end="url(#mB)"/>
+        <path class="lna" d="M800 52 L844 52" marker-end="url(#mB)"/>
+        <text class="mn mut" x="232" y="42" text-anchor="middle" style="font-size:9.5px">先比 text</text>
+
+        <path class="lnr" d="M100 78 L100 118" marker-end="url(#mR)"/>
+        <rect class="box" x="0" y="122" width="330" height="42" rx="3" opacity=".6"/>
+        <text class="mut mn" x="12" y="140" style="font-size:10.5px">模型的原话止步于此：只留在</text>
+        <text class="mut mn" x="12" y="156" style="font-size:10.5px">attempt 的原始响应字节里</text>
+
+        <text class="lbl" x="570" y="106">一眼可辨：这个数经过审批了吗</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box"  x="570" y="116" width="230" height="26" rx="3"/><text x="580" y="134">流程一（确定性）：""</text>
+          <rect class="boxp" x="570" y="146" width="230" height="26" rx="3"/><text class="pas" x="580" y="164">流程二（AI）：sha256:3c56893d…</text>
+        </g>
+        <text class="mut" x="812" y="134" style="font-size:10.5px">approval_effect_hash</text>
+        <text class="mut" x="812" y="152" style="font-size:10.5px">空字符串在这里是</text>
+        <text class="mut" x="812" y="168" style="font-size:10.5px">一个正式语义</text>
+        <text class="mut" x="0" y="202" style="font-size:11px">为什么不能让模型直接输出 0.698：那样这个数字就变成不可复核的。<tspan class="mn">"69.8"</tspan> 可以和格子里的文本逐字节比对；<tspan class="mn">0.698</tspan> 和格子里的任何字符串都对不上。</text>
+      </svg>
+      <figcaption><code>reviewed_observation()</code> 在转换前跑 9 道绑定检查，观测值直接取自 <code>evidence_check["normalized_values"][role]</code>——<b>不是取自模型输出</b>。</figcaption>
+    </figure>
+  </div>
+  <div class="takeaway"><span class="h">这一站建立的事实</span>
+  这个对象和流程一产出的 <code>VerifiedObservation</code> 是<b>同一个类型、同一个 schema</b>，交给<b>同一个 Calculator</b>。下游看不出这个 Result 是哪条路来的——除非它去看 <code>approval_effect_hash</code> 空不空。</div>
+</section>
+
+<!-- ═════════════════ 17 冻结 ═════════════════ -->
+<section class="slide" id="s17">
+  <div class="eyebrow"><span class="no">17</span><span>第八站 · 冻结</span></div>
+  <h2>冻结 = 从原始字节重算一遍，不是打标记</h2>
+  <p class="lede">落盘的 PASS <strong>不能自证</strong>。Run 冻结时，系统会把整条链从 RawBlob 的字节重新算一遍，并要求每一步的结果与落盘记录<strong>逐字段相等</strong>。</p>
+  <div class="body split-l">
+    <figure>
+      <svg viewBox="0 0 520 250" role="img" aria-label="冻结验证从原始字节重建网格、重跑 Reader 校验、重跑 check_evidence，并要求每一步的结果与落盘记录逐字段相等">
+        <g class="mn" font-size="10.5">
+          <rect class="boxa" x="0" y="10" width="150" height="34" rx="3"/><text class="acc ttl" x="75" y="32" text-anchor="middle">RawBlob 字节</text>
+          <rect class="box"  x="0" y="58"  width="300" height="30" rx="3"/><text x="12" y="78">重建表格网格 → 要求 DerivedAsset 相等</text>
+          <rect class="box"  x="0" y="96"  width="300" height="30" rx="3"/><text x="12" y="116">重跑 validate_reader_output → Candidate 相等</text>
+          <rect class="box"  x="0" y="134" width="300" height="30" rx="3"/><text x="12" y="154">重跑 check_evidence → EvidenceCheck 相等</text>
+          <rect class="box"  x="0" y="172" width="300" height="30" rx="3"/><text x="12" y="192">重验复核绑定链 / Requirement / 结果精确集合</text>
+        </g>
+        <g class="lna">
+          <path d="M75 44 L75 54" marker-end="url(#mB)"/><path d="M150 88 L150 92" marker-end="url(#mB)"/>
+          <path d="M150 126 L150 130" marker-end="url(#mB)"/><path d="M150 164 L150 168" marker-end="url(#mB)"/>
+        </g>
+        <rect class="boxp" x="320" y="58" width="200" height="144" rx="3"/>
+        <text class="pas ttl" x="420" y="82" text-anchor="middle" style="font-size:11px">validation 7 项全 PASS</text>
+        <text class="mut mn" x="332" y="104" style="font-size:10px">REVIEW_BINDINGS</text>
+        <text class="mut mn" x="332" y="120" style="font-size:10px">REVIEW_ASSETS</text>
+        <text class="mut mn" x="332" y="136" style="font-size:10px">REPOSITORY_BINDINGS</text>
+        <text class="mut mn" x="332" y="152" style="font-size:10px">RESULT_EXACT_SET</text>
+        <text class="mut mn" x="332" y="168" style="font-size:10px">RECORD_GRAPH_REPLAY</text>
+        <text class="mut mn" x="332" y="184" style="font-size:10px">EXECUTION_SEMANTICS</text>
+        <text class="mut mn" x="332" y="196" style="font-size:10px">ARTIFACT_EXACT_SET</text>
+        <text class="mut" x="0" y="226" style="font-size:11px">这不是校验 hash，是<tspan class="ttl">重新计算</tspan>。每个 Run 离线重放要跑 155–170 秒。</text>
+        <text class="mut" x="0" y="244" style="font-size:11px">重放<tspan class="ttl">完全不需要网络，也不接受任何 AI adapter</tspan>。</text>
+      </svg>
+      <figcaption>所以落盘的 PASS 不能自证，必须能被重新算出来。</figcaption>
+    </figure>
+    <div>
+      <p class="note"><span class="h">但「冻结」不等于「永远可重放」</span>
+      仓库里 6 个 FROZEN Run，只有 4 个能重放；另外 2 个属于一个<b>已被取代的</b> qualification cycle，它们冻结时的 Requirement 快照与当前仓库不一致，重放时被拒 <span class="pv pv-run">实测</span>。</p>
+      <p class="note">这个状态本身是可辩护的：当前 freeze receipt 指向的 cycle 里的 4 个 Run 全部可重放，失效的是被取代的历史证据。<b>但可重放性是相对于当前 Requirement 快照而言的</b>——把「冻结」画成一个永久保险箱，就传达错了。</p>
+      <p class="note"><span class="h">最后一步不是「进入正式发布」</span>
+      这条链在 Run 冻结处结束。到当前快照为止，进入 active publication 的 AI 结果数量是 <b>0</b>，三个 provider 计数器全为 0 <span class="pv pv-disk">落盘</span>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════ 18 范围 ═════════════════ -->
+<section class="slide" id="s18">
+  <div class="eyebrow"><span class="no">18</span><span>通过的范围</span></div>
+  <h2>live_ready = true 到底说了什么</h2>
+  <p class="lede">当前 freeze receipt 写着 <code>live_ready_family_ids = ["lodging_kpi_table"]</code> <span class="pv pv-disk">落盘</span>。一个不了解背景的人会自然地把它读成「模型读酒店 KPI 表这件事已经验证过了」。<strong>这是全篇最容易被误读的一句。</strong></p>
+  <div class="body split">
+    <figure class="scroll-x">
+      <table>
+        <thead><tr><th>prompt 版本</th><th>marriott</th><th>hilton</th><th>hyatt</th><th>小计</th></tr></thead>
+        <tbody>
+          <tr><td>c712190ce6fe</td><td class="no">0 通过 / 1 失败</td><td class="no">0 通过 / 1 失败</td><td class="zero">—</td><td>0 / 2</td></tr>
+          <tr><td>75dece000df4</td><td class="zero">—</td><td class="no">0 通过 / 3 失败</td><td class="zero">—</td><td>0 / 3</td></tr>
+          <tr><td>f6e71bc244f6</td><td class="zero">—</td><td class="no">0 通过 / 2 失败</td><td class="zero">—</td><td>0 / 2</td></tr>
+          <tr><td>331bbabae2e0 <span style="color:var(--accent)">← 当前</span></td><td class="ok">7 通过 / 0 失败</td><td class="zero">—</td><td class="no">0 通过 / 1 失败</td><td>7 / 8</td></tr>
+        </tbody>
+        <tfoot><tr><td>合计</td><td>7 / 8</td><td class="no">0 / 6</td><td class="no">0 / 1</td><td>7 / 15</td></tr></tfoot>
+      </table>
+      <figcaption>仓库里<b>全部</b> 15 次真实调用的逐条结果——不是抽样 <span class="pv pv-agg">聚合</span>。失败分布：5 次 <code>SCHEMA_VIOLATION</code>、3 次 <code>EVIDENCE_FAILURE</code>。</figcaption>
+    </figure>
+    <div>
+      <ul class="pts">
+        <li><b>7 次通过，全部是 Marriott。跨发行人 7 次尝试，0 次成功。</b></li>
+        <li>公平地补一句：跨发行人的 7 次里，只有 1 次用的是当前 prompt。当前 prompt 上是 7/8，唯一那次失败正好就是唯一那次跨发行人尝试。</li>
+      </ul>
+      <p class="note" style="margin-top:14px"><span class="h">样本被换过两次</span>
+      qualification 最初要求<b>不同发行人</b>。Hilton 试了 7 个 fixture 版本、6 次真实调用，全部失败；Hyatt 试了 3 个版本、1 次调用，失败。之后样本被换成<b>同一家公司的不同财年</b>，判据也相应从 <code>different_issuer_cik</code> 改成 <code>same_issuer_distinct_fiscal_year_and_accession</code>，然后就全过了 <span class="pv pv-disk">落盘</span>。</p>
+      <p class="note"><span class="h">context 门的 PASSED 是一次豁免</span>
+      估算 <code>395 337</code> tokens 对预算 <code>200 000</code>——接近两倍，门却是 PASSED。依据是 <code>EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE</code>：估算器是故意保守的<b>上界</b>，一次经人工逐 SHA 复核过的真实请求可以覆盖它。</p>
+      <p class="note"><span class="h">financial family 至今卡着</span>
+      JPM 那份 12.9 MB 的 10-K 有 679 张表、60 348 个原点格，展开后 124 761 格，上限 100 000。普查收据显式记录了<b>没有做过的事</b>——六个 <code>forbidden_actions</code> 全 false。<b>宁可卡着，也不为了跑通而悄悄丢表。</b></p>
+    </div>
+  </div>
+  <div class="takeaway warn"><span class="h">准确的读法</span>
+  <code>live_ready = true</code> 说的是「<b>在 Marriott 这一家公司的三个财年上，用当前 prompt，两个 task 的机械证据链完整</b>」。它<b>不</b>支持「模型能读任意酒店集团的 KPI 表」。<br><br>这不是隐瞒——fixture id、判据、每一次失败的 Run 全部完整落盘且内容寻址。但只画「通过」不画「在谁身上通过」，就是在误导。</div>
+</section>
+
+<!-- ═════════════════ 19 因果地图 ═════════════════ -->
+<section class="slide" id="s19">
+  <div class="eyebrow"><span class="no">19</span><span>收束</span></div>
+  <h2>因果心智地图</h2>
+  <p class="lede">如果只记住一句话：<strong>模型被降级成一个「指路的人」；系统自己走过去看。看不到它说的东西，就整体作废——不修正、不搜索、不猜。</strong></p>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1040 384" role="img" aria-label="四条因果链——举证责任链、归一化唯一性链、副作用可知链、可重证链——以及一条否定关系：机械证据链完整不等于模型可靠">
+        <text class="ttl" x="0" y="12">1 · 举证责任链</text><text class="lbl" x="130" y="12">把「答案对不对」换成「你指的位置上有没有」</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box" x="0" y="20" width="176" height="30" rx="3"/><text x="88" y="39" text-anchor="middle">模型给坐标</text>
+          <rect class="box" x="196" y="20" width="176" height="30" rx="3"/><text x="284" y="39" text-anchor="middle">系统按坐标重读</text>
+          <rect class="box" x="392" y="20" width="176" height="30" rx="3"/><text x="480" y="39" text-anchor="middle">逐字节比对</text>
+          <rect class="box" x="588" y="20" width="196" height="30" rx="3"/><text x="686" y="39" text-anchor="middle">不一致即整体拒绝</text>
+          <rect class="boxa" x="804" y="20" width="236" height="30" rx="3"/><text class="acc ttl" x="922" y="39" text-anchor="middle">可机械判定</text>
+        </g>
+        <g class="ln"><path d="M176 35 L190 35" marker-end="url(#mA)"/><path d="M372 35 L386 35" marker-end="url(#mA)"/><path d="M568 35 L582 35" marker-end="url(#mA)"/><path d="M784 35 L798 35" marker-end="url(#mA)"/></g>
+
+        <text class="ttl" x="0" y="82">2 · 归一化唯一性链</text><text class="lbl" x="160" y="82">口径永远不会被「猜」出来</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box" x="0" y="90" width="236" height="30" rx="3"/><text x="118" y="109" text-anchor="middle">标签原文有边界地出现一次</text>
+          <rect class="box" x="256" y="90" width="216" height="30" rx="3"/><text x="364" y="109" text-anchor="middle">查 Spec 的精确别名表</text>
+          <rect class="box" x="492" y="90" width="196" height="30" rx="3"/><text x="590" y="109" text-anchor="middle">查不到 → unresolved</text>
+          <rect class="boxh" x="708" y="90" width="332" height="30" rx="3"/><text class="hol ttl" x="874" y="109" text-anchor="middle">升级为需要人，而不是失败</text>
+        </g>
+        <g class="ln"><path d="M236 105 L250 105" marker-end="url(#mA)"/><path d="M472 105 L486 105" marker-end="url(#mA)"/><path d="M688 105 L702 105" marker-end="url(#mA)"/></g>
+
+        <text class="ttl" x="0" y="152">3 · 副作用可知链</text><text class="lbl" x="140" y="152">不重复扣费，不产生两条无法对账的远端记录</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box" x="0" y="160" width="176" height="30" rx="3"/><text x="88" y="179" text-anchor="middle">O_EXCL 抢预约</text>
+          <rect class="box" x="196" y="160" width="176" height="30" rx="3"/><text x="284" y="179" text-anchor="middle">写 egress marker</text>
+          <rect class="box" x="392" y="160" width="176" height="30" rx="3"/><text x="480" y="179" text-anchor="middle">才开 socket</text>
+          <rect class="box" x="588" y="160" width="196" height="30" rx="3"/><text x="686" y="179" text-anchor="middle">崩溃后可知「可能已执行」</text>
+          <rect class="boxr" x="804" y="160" width="236" height="30" rx="3"/><text class="rej ttl" x="922" y="179" text-anchor="middle">UNKNOWN 不自动重试</text>
+        </g>
+        <g class="ln"><path d="M176 175 L190 175" marker-end="url(#mA)"/><path d="M372 175 L386 175" marker-end="url(#mA)"/><path d="M568 175 L582 175" marker-end="url(#mA)"/><path d="M784 175 L798 175" marker-end="url(#mA)"/></g>
+
+        <text class="ttl" x="0" y="222">4 · 可重证链</text><text class="lbl" x="110" y="222">落盘的 PASS 不能自证，必须能被重新算出来</text>
+        <g class="mn" font-size="10.5">
+          <rect class="box" x="0" y="230" width="236" height="30" rx="3"/><text x="118" y="249" text-anchor="middle">从原始字节重建网格</text>
+          <rect class="box" x="256" y="230" width="216" height="30" rx="3"/><text x="364" y="249" text-anchor="middle">重跑 Reader 校验</text>
+          <rect class="box" x="492" y="230" width="196" height="30" rx="3"/><text x="590" y="249" text-anchor="middle">重跑 check_evidence</text>
+          <rect class="boxa" x="708" y="230" width="332" height="30" rx="3"/><text class="acc ttl" x="874" y="249" text-anchor="middle">全部要求逐字段相等</text>
+        </g>
+        <g class="ln"><path d="M236 245 L250 245" marker-end="url(#mA)"/><path d="M472 245 L486 245" marker-end="url(#mA)"/><path d="M688 245 L702 245" marker-end="url(#mA)"/></g>
+
+        <rect class="box" x="0" y="286" width="1040" height="88" rx="4" fill="none" stroke-dasharray="5 4"/>
+        <text class="ttl" x="18" y="310">一条必须保留的否定关系</text>
+        <g class="mn" font-size="11">
+          <rect class="boxp" x="18" y="322" width="300" height="34" rx="3"/>
+          <text class="pas ttl" x="168" y="344" text-anchor="middle">机械证据链完整 —— 已建立</text>
+          <rect class="boxr" x="722" y="322" width="300" height="34" rx="3"/>
+          <text class="rej ttl" x="872" y="344" text-anchor="middle">模型可靠 —— 尚未建立</text>
+        </g>
+        <g class="ln" stroke-width="1.5">
+          <line x1="322" y1="339" x2="718" y2="339"/>
+          <line x1="504" y1="325" x2="536" y2="353"/><line x1="536" y1="325" x2="504" y2="353"/>
+        </g>
+        <text class="mut mn" x="520" y="318" text-anchor="middle" style="font-size:10px">跨发行人 0 / 7</text>
+      </svg>
+      <figcaption>四条链各自消除一类不确定性。底部的否定关系是这套系统最容易被误读的地方——把前者读成后者，是它最大的风险。</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═════════════════ 20 差异 ═════════════════ -->
+<section class="slide" id="s20">
+  <div class="eyebrow"><span class="no">20</span><span>校对</span></div>
+  <h2>文档与代码的差异</h2>
+  <p class="lede">这份讲义按<strong>代码与落盘产物</strong>绘制。核对了约 30 处 <code>文件:行号</code> 引用（全部命中，误差 ≤ 2 行），以及每一个可复算的数字（67 张表、19 329 / 8 654 格、3 554 243 → 331 877 字节、各个 hash、0.698、financial 普查全部计数——精确复现）。发现的差异如下。</p>
+  <div class="body">
+    <figure class="scroll-x">
+      <table>
+        <thead><tr><th style="width:2em">#</th><th>项目</th><th>源文档写的</th><th>代码 / 落盘产物</th></tr></thead>
+        <tbody>
+          <tr><td class="idx">1</td><td>Run 通过/失败合计</td><td class="no">8 次通过、7 次失败</td><td class="ok">7 SUCCEEDED / 8 FAILED（文档自己的 15 行表里也只有 7 行 OK）</td></tr>
+          <tr><td class="idx">2</td><td>SCHEMA_VIOLATION 次数</td><td class="no">4 次</td><td class="ok">5 次。EVIDENCE_FAILURE = 3 次，与文档一致</td></tr>
+          <tr><td class="idx">3</td><td>正常路径的请求身份</td><td class="no">6e95c022… / 388 755 字节</td><td class="ok">那是失败 Run 的；成功 Run 是 30b73494… / 389 255 字节</td></tr>
+          <tr><td class="idx">4</td><td>REJECTED 记录是否落盘</td><td class="no">「产出一条完整可 hash 的记录」</td><td class="ok">函数层面成立，落盘层面不成立——artifacts/ 里命中 0 次</td></tr>
+          <tr><td class="idx">5</td><td>重试次数的说法</td><td class="no">「重试硬编码为 2 次」</td><td class="ok">1 次初始 + 最多 1 次重试；资格路径 automatic_retry_count = 0</td></tr>
+          <tr><td class="idx">6</td><td>「只记录第一个失败」</td><td class="no">单个 try 块，一抛就跳出</td><td class="ok">基本成立，但 DECLARED_IDENTITY 是 append 而不 raise，可累积</td></tr>
+          <tr><td class="idx">7</td><td>标签比对的分支数</td><td class="no">只写了「标签比 raw_text」</td><td class="ok">还有一个 location_type == "caption" 分支，比 caption_raw_text</td></tr>
+          <tr><td class="idx">8</td><td>matrix 演进的 commit 列表</td><td class="no">列了 6 个 commit</td><td class="zero">本地 clone 为 shallow，4 个不在历史里；能核对的两个完全吻合</td></tr>
+          <tr><td class="idx">9</td><td>仓库自己的 TESTING.md</td><td class="no">live_ready_family_ids=[]、392447</td><td class="ok">当前 receipt：["lodging_kpi_table"]、395 337 —— 仓库内部的文档漂移</td></tr>
+        </tbody>
+      </table>
+      <figcaption>第 4 条反而<b>强化</b>了源文档自己提出的改进项：失败的精确原因没有落盘，只能靠重跑还原。第 8 条不是文档的错，是本地无法核对。</figcaption>
+    </figure>
+  </div>
+  <div class="takeaway"><span class="h">配套材料</span>
+  同一组事实还有两份：交互版《证据重读台》（<code>docs/visual/flow2-evidence-chain.html</code>，第 5 页的 Evidence 判决可以直接改写模型的主张实时复算），以及逐工位的对象血缘图（<code>docs/visual/flow2-object-lineage.svg</code>，可打印）。</div>
+</section>
+
+</div>
+
+<script>document.documentElement.lang = "zh-CN";</script>

@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 1420" width="1240" height="1420"
+     role="img" aria-label="流程二对象血缘与字段变化图：从 RawBlob 到 FROZEN Run 的十一个工位，每一站新增或改写了哪些字段，每一站的失败回流到哪里，以及下游最终可以相信什么">
+<title>流程二 · 对象血缘与字段变化</title>
+<desc>SEC_metrics 快照 d9bb477。每一行是一个工位：左列是对象，中列是这一站新增或改写的字段，右列是这一站的失败回流。数值取自源码、已落盘产物或本次重跑结果。</desc>
+
+<style>
+  .bg   { fill:#EDF0F0 }
+  .band { fill:#E5EBEB; opacity:.5 }
+  .sep  { stroke:#CDD8D9; stroke-width:1 }
+  .obj  { fill:#FBFCFC; stroke:#0E5462; stroke-width:1.5 }
+  .fail { fill:#F5E0DD; stroke:#9C2B21; stroke-width:1 }
+  .hold { fill:#EAE2F2; stroke:#6B4E8A; stroke-width:1 }
+  .good { fill:#DCEDE4; stroke:#186A4B; stroke-width:1 }
+  .flow { stroke:#0E5462; stroke-width:1.8; fill:none }
+  text  { font-family:"Noto Sans SC",system-ui,-apple-system,"Helvetica Neue",sans-serif; fill:#131A1C }
+  .m    { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace }
+  .t    { font-size:13px; font-weight:700 }
+  .s    { font-size:11px; fill:#5F6E72 }
+  .f    { font-size:11.5px }
+  .k    { font-size:10px; fill:#5F6E72; letter-spacing:.1em }
+  .r    { font-size:11px; fill:#9C2B21 }
+  .h    { font-size:11px; fill:#6B4E8A }
+  .g    { font-size:11.5px; fill:#186A4B }
+  .add  { fill:#0E5462; font-weight:700 }
+  .ttl  { font-size:22px; font-weight:700 }
+  @media (prefers-color-scheme: dark) {
+    .bg   { fill:#0D1315 }
+    .band { fill:#1A2428; opacity:.6 }
+    .sep  { stroke:#26343A }
+    .obj  { fill:#141C1F; stroke:#63BACD }
+    .fail { fill:#3A1B18; stroke:#E67A6E }
+    .hold { fill:#261E33; stroke:#B49BD6 }
+    .good { fill:#123328; stroke:#4FC28E }
+    .flow { stroke:#63BACD }
+    text  { fill:#E3EAEA }
+    .s, .k { fill:#93A2A6 }
+    .r    { fill:#E67A6E }
+    .h    { fill:#B49BD6 }
+    .g    { fill:#4FC28E }
+    .add  { fill:#63BACD }
+  }
+  @media print { .bg { fill:#ffffff } .band { opacity:.35 } }
+</style>
+
+<defs>
+  <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,1 L9,5 L0,9 z" fill="#0E5462"/>
+  </marker>
+</defs>
+
+<rect class="bg" x="0" y="0" width="1240" height="1420"/>
+
+<text class="ttl" x="40" y="46">流程二 · 对象血缘与字段变化</text>
+<text class="s"   x="40" y="68">Marriott FY2024 Occupancy（B10）走完全程 · 快照 d9bb477 · Run 4863af40 · 数值取自源码、已落盘产物或本次重跑</text>
+
+<text class="k m" x="40"  y="106">对象 · 工位</text>
+<text class="k m" x="392" y="106">这一站新增或改写了哪些字段</text>
+<text class="k m" x="880" y="106">这一站的失败回流到哪里</text>
+<line class="sep" x1="32" y1="126" x2="1208" y2="126"/>
+<rect class="obj" x="40" y="134" width="320" height="68" rx="4"/>
+<text class="t" x="56" y="155">RawBlob → SourceReference</text>
+<text class="s m" x="56" y="172">sha256:32a365d5… · 2 047 740 字节</text>
+<text class="s m" x="56" y="189">mar-20241231.htm · 0001628280-25-004818</text>
+<text class="f m" x="392" y="152"><tspan class='add'>+</tspan> raw_asset_id · storage_uri</text>
+<text class="f m" x="392" y="169"><tspan class='add'>+</tspan> accession · document_name · source_url</text>
+<text class="f m" x="392" y="186"><tspan class='add'>+</tspan> source_role = target_primary</text>
+<text class="s" x="880" y="152">上游责任。本模块从「一份可按 hash 定位的</text>
+<text class="s" x="880" y="169">SEC HTML」开始，不负责证明下载历史完整。</text>
+<line class="flow" x1="200" y1="202" x2="200" y2="218" marker-end="url(#a)"/>
+<rect class="band" x="32" y="210" width="1176" height="120"/>
+<line class="sep" x1="32" y1="210" x2="1208" y2="210"/>
+<rect class="obj" x="40" y="218" width="320" height="104" rx="4"/>
+<text class="t" x="56" y="239">DerivedAsset —— 证据权威</text>
+<text class="s m" x="56" y="256">sha256:6b9fabbd… · 67 张表</text>
+<text class="s m" x="56" y="273">19 329 展开格 · 8 654 原点（44.77%）</text>
+<text class="s " x="56" y="290">build_table_grid() 无任何过滤参数</text>
+<text class="f m" x="392" y="236"><tspan class='add'>+</tspan> raw_text  原样：'69.8&amp;#160;' · '\nWorldwide (2)'</text>
+<text class="f m" x="392" y="253"><tspan class='add'>+</tspan> text      归一：'69.8'       · 'Worldwide (2)'</text>
+<text class="f m" x="392" y="270"><tspan class='add'>+</tspan> origin_row_index / origin_column_index</text>
+<text class="f m" x="392" y="287"><tspan class='add'>+</tspan> rowspan / colspan / header / is_origin</text>
+<text class="f " x="392" y="304">两个文本字段并存 —— 后面全部戏剧性的来源</text>
+<rect class="fail" x="880" y="220" width="320" height="68" rx="4"/>
+<text class="r m" x="894" y="241" font-weight="700">RESOURCE_LIMIT</text>
+<text class="r" x="894" y="257">上限在分配前检查。financial family 停在这里：</text>
+<text class="r" x="894" y="273">JPM 展开 124 761 格 &gt; 上限 100 000</text>
+<line class="flow" x1="200" y1="322" x2="200" y2="338" marker-end="url(#a)"/>
+<line class="sep" x1="32" y1="330" x2="1208" y2="330"/>
+<rect class="obj" x="40" y="338" width="320" height="68" rx="4"/>
+<text class="t" x="56" y="359">紧凑传输 + ReaderInputManifest</text>
+<text class="s m" x="56" y="376">3 554 243 → 331 877 字节（9.34%）</text>
+<text class="s " x="56" y="393">编码函数自己解码一遍并要求逐字段相等</text>
+<text class="f m" x="392" y="356"><tspan class='add'>+</tspan> expanded_derived_asset_id · expanded_grid_sha256</text>
+<text class="f m" x="392" y="373"><tspan class='add'>+</tspan> compact_payload_sha256 · round_trip_receipt_id</text>
+<text class="f " x="392" y="390">同一个不变量在三个信任边界上各验一次</text>
+<rect class="fail" x="880" y="340" width="320" height="52" rx="4"/>
+<text class="r m" x="894" y="361" font-weight="700">Compact table round trip differs</text>
+<text class="r" x="894" y="377">出网前失败，不创建 egress marker</text>
+<line class="flow" x1="200" y1="406" x2="200" y2="422" marker-end="url(#a)"/>
+<rect class="band" x="32" y="414" width="1176" height="102"/>
+<line class="sep" x1="32" y1="414" x2="1208" y2="414"/>
+<rect class="obj" x="40" y="422" width="320" height="86" rx="4"/>
+<text class="t" x="56" y="443">出网 —— 唯一有外部副作用的地方</text>
+<text class="s m" x="56" y="460">请求体 389 255 字节 · sha256:30b73494…</text>
+<text class="s " x="56" y="477">抢预约(O_EXCL) → 写 marker → 才开 socket</text>
+<text class="s m" x="56" y="494">deepseek-v4-flash · retries_performed 0</text>
+<text class="f m" x="392" y="440"><tspan class='add'>+</tspan> request_body_sha256（canonical JSON，输入的纯函数）</text>
+<text class="f m" x="392" y="457"><tspan class='add'>+</tspan> reservation · egress_marker_id · provider_request_id</text>
+<text class="f m" x="392" y="474"><tspan class='add'>+</tspan> system_contract 三个硬编码布尔</text>
+<text class="f " x="392" y="491">副作用被限制在文件系统的 10 个命名空间里</text>
+<rect class="fail" x="880" y="424" width="320" height="84" rx="4"/>
+<text class="r m" x="894" y="445" font-weight="700">UNKNOWN_REMOTE_OUTCOME</text>
+<text class="r" x="894" y="461">marker 已存在但结果未知 → batch_terminal = true，</text>
+<text class="r" x="894" y="477">不自动重试，整批停止。SINGLE_FLIGHT_HELD 与</text>
+<text class="r" x="894" y="493">HTTP 402 / 400 / 422 同样是 terminal</text>
+<line class="flow" x1="200" y1="508" x2="200" y2="524" marker-end="url(#a)"/>
+<line class="sep" x1="32" y1="516" x2="1208" y2="516"/>
+<rect class="obj" x="40" y="524" width="320" height="86" rx="4"/>
+<text class="t" x="56" y="545">ObservationCandidate</text>
+<text class="s " x="56" y="562">模型声称这些坐标上有这些内容。</text>
+<text class="s " x="56" y="579">它不代表这些内容是真的 —— 一个字都没验。</text>
+<text class="s m" x="56" y="596">validate_reader_output()  reader.py:331</text>
+<text class="f m" x="392" y="542"><tspan class='add'>+</tspan> candidate_hash（只含实质主张，不含模型名/时间戳/日志）</text>
+<text class="f m" x="392" y="559"><tspan class='add'>+</tspan> assistant_output_sha256 = 98f1fb58…</text>
+<text class="f m" x="392" y="576"><tspan class='add'>+</tspan> status  由代码算，不由模型声明</text>
+<text class="f m" x="392" y="593">claimed_raw_value "69.8"  ← 仍然只是模型的说法</text>
+<rect class="fail" x="880" y="526" width="320" height="68" rx="4"/>
+<text class="r m" x="894" y="547" font-weight="700">SCHEMA_VIOLATION</text>
+<text class="r" x="894" y="563">terminal，不重试。Run 停在 OPEN，6 条记录，</text>
+<text class="r" x="894" y="579">请求与响应字节完整保留。当前发生 5 次</text>
+<line class="flow" x1="200" y1="610" x2="200" y2="626" marker-end="url(#a)"/>
+<rect class="band" x="32" y="618" width="1176" height="150"/>
+<line class="sep" x1="32" y1="618" x2="1208" y2="618"/>
+<rect class="obj" x="40" y="626" width="320" height="134" rx="4"/>
+<text class="t" x="56" y="647">EvidenceCheck —— 机械判决</text>
+<text class="s " x="56" y="664">全链路唯一一个「凭什么信」的对象。</text>
+<text class="s m" x="56" y="681">值比 cell["text"] · 标签比 cell["raw_text"]</text>
+<text class="s " x="56" y="698">它能证伪，不能证实。证伪可以机械化。</text>
+<text class="s m" x="56" y="715">check_evidence()  evidence.py:351</text>
+<text class="f m" x="392" y="644">claimed_raw_value "69.8"</text>
+<text class="f m" x="392" y="661"><tspan class='add'>→</tspan> normalized_values {"occupancy": "0.698"}</text>
+<text class="f " x="392" y="678">从这一刻起，模型的原话不再出现在任何下游对象里</text>
+<text class="f m" x="392" y="695"><tspan class='add'>+</tspan> normalized_scope  只走 Spec 的精确别名表</text>
+<text class="f m" x="392" y="712"><tspan class='add'>+</tspan> unresolved_scope_dimensions · reason_codes</text>
+<text class="f m" x="392" y="729"><tspan class='add'>+</tspan> system_approval_eligible  ← 唯一的「不要人」开关</text>
+<rect class="fail" x="880" y="628" width="320" height="68" rx="4"/>
+<text class="r m" x="894" y="649" font-weight="700">EVIDENCE_FAILURE</text>
+<text class="r" x="894" y="665">SCOPE_LABEL_TEXT_MISMATCH —— 一个换行符。</text>
+<text class="r" x="894" y="681">terminal，不重试。而且精确 reason_code 从未落盘</text>
+<rect class="hold" x="880" y="704" width="320" height="68" rx="4"/>
+<text class="h m" x="894" y="725" font-weight="700">PASS 但 eligible = false</text>
+<text class="h" x="894" y="741">别名表里查不到 → 不是失败，是升级为需要人。</text>
+<text class="h" x="894" y="757">换一家公司就会走到这里（Hilton / Hyatt）</text>
+<line class="flow" x1="200" y1="760" x2="200" y2="776" marker-end="url(#a)"/>
+<line class="sep" x1="32" y1="768" x2="1208" y2="768"/>
+<rect class="obj" x="40" y="776" width="320" height="68" rx="4"/>
+<text class="t" x="56" y="797">ReviewUnit</text>
+<text class="s " x="56" y="814">把要批准的东西打成一个整包，</text>
+<text class="s " x="56" y="831">而不是批准一个孤立的数字。</text>
+<text class="f m" x="392" y="794"><tspan class='add'>+</tspan> review_unit_hash  罩住 12 项内容</text>
+<text class="f m" x="392" y="811"><tspan class='add'>+</tspan> rendered_review_hash  复核者实际看到的字节</text>
+<text class="f " x="392" y="828">任何一项变了，旧的批准自动失效</text>
+<rect class="fail" x="880" y="778" width="320" height="68" rx="4"/>
+<text class="r m" x="894" y="799" font-weight="700">非 PASS 进不来</text>
+<text class="r" x="894" y="815">「人可以强行批准一个 Evidence 失败的结果」</text>
+<text class="r" x="894" y="831">这条路在代码层面不存在</text>
+<line class="flow" x1="200" y1="844" x2="200" y2="860" marker-end="url(#a)"/>
+<rect class="band" x="32" y="852" width="1176" height="102"/>
+<line class="sep" x1="32" y1="852" x2="1208" y2="852"/>
+<rect class="obj" x="40" y="860" width="320" height="86" rx="4"/>
+<text class="t" x="56" y="881">ReviewDecision —— 谁为口径负责</text>
+<text class="s m" x="56" y="898">APPROVE · SYSTEM · system:optional-review-v1</text>
+<text class="s m" x="56" y="915">reason = EVIDENCE_BOUND_AUTO_APPROVE</text>
+<text class="s " x="56" y="932">SYSTEM 记录从不假装有人批准过</text>
+<text class="f m" x="392" y="878"><tspan class='add'>+</tspan> approval_effect_hash  7 字段，不含 reviewer_id/时间/理由</text>
+<text class="f m" x="392" y="895"><tspan class='add'>+</tspan> approved_claims  4 项 = required_claims(4) 被 Evidence(3) 覆盖</text>
+<text class="f m" x="392" y="912">period_role: current_fiscal_year ← Spec 声明，模型不举证</text>
+<text class="f m" x="392" y="929"><tspan class='add'>+</tspan> supersedes_decision_id  形成一条不可变的更正链</text>
+<rect class="fail" x="880" y="862" width="320" height="68" rx="4"/>
+<text class="r m" x="894" y="883" font-weight="700">Parallel decisions fail closed</text>
+<text class="r" x="894" y="899">两个根、成环、游离节点、6 个绑定字段中的</text>
+<text class="r" x="894" y="915">任何一个漂移 —— 全部拒绝</text>
+<line class="flow" x1="200" y1="946" x2="200" y2="962" marker-end="url(#a)"/>
+<line class="sep" x1="32" y1="954" x2="1208" y2="954"/>
+<rect class="obj" x="40" y="962" width="320" height="86" rx="4"/>
+<text class="t" x="56" y="983">VerifiedObservation</text>
+<text class="s " x="56" y="1000">获准参与计算的原子事实。</text>
+<text class="s m" x="56" y="1017">sha256:8ad49781…</text>
+<text class="s m" x="56" y="1034">B10 · occupancy · 0.698 · ratio · EXACT</text>
+<text class="f m" x="392" y="980">value <tspan class='add'>←</tspan> evidence_check["normalized_values"][role]</text>
+<text class="f " x="392" y="997">不是模型输出。模型说的 69.8 只留在原始响应字节里</text>
+<text class="f m" x="392" y="1014">approval_effect_hash  "" <tspan class='add'>→</tspan> sha256:3c56893d…</text>
+<text class="f " x="392" y="1031">流程一恒为空字符串 —— 空串在这里是正式语义</text>
+<text class="s" x="880" y="980">与流程一产出的对象同一个类型、同一个 schema。</text>
+<text class="s" x="880" y="997">下游看不出这个 Result 是哪条路来的 —— 除非</text>
+<text class="s" x="880" y="1014">它去看 approval_effect_hash 空不空。这既是</text>
+<text class="s" x="880" y="1031">统一契约的优点，也是一个待解决的风险。</text>
+<line class="flow" x1="200" y1="1048" x2="200" y2="1064" marker-end="url(#a)"/>
+<rect class="band" x="32" y="1056" width="1176" height="84"/>
+<line class="sep" x1="32" y1="1056" x2="1208" y2="1056"/>
+<rect class="obj" x="40" y="1064" width="320" height="68" rx="4"/>
+<text class="t" x="56" y="1085">MetricResult + ExecutionTrace</text>
+<text class="s m" x="56" y="1102">B10 = 0.698 ratio EXACT PUBLISHED PASS</text>
+<text class="s " x="56" y="1119">与流程一 JPMorgan ROA 用的是同一个 Calculator</text>
+<text class="f m" x="392" y="1082"><tspan class='add'>+</tspan> trace_id · execution_semantics_hash · spec_closure_hash</text>
+<text class="f m" x="392" y="1099">steps: REUSED_OBSERVATION → FORMULA_RESULT</text>
+<text class="f " x="392" y="1116">Calculator 做投影 + 一致性检查，不做计算</text>
+<line class="flow" x1="200" y1="1132" x2="200" y2="1148" marker-end="url(#a)"/>
+<line class="sep" x1="32" y1="1140" x2="1208" y2="1140"/>
+<rect class="obj" x="40" y="1148" width="320" height="86" rx="4"/>
+<text class="t" x="56" y="1169">FROZEN Run</text>
+<text class="s m" x="56" y="1186">validation 7 项检查全 PASS</text>
+<text class="s " x="56" y="1203">冻结 = 从原始字节把整条链重算一遍，</text>
+<text class="s " x="56" y="1220">不是打标记。离线重放 155–170 秒／Run。</text>
+<text class="f " x="392" y="1166">重建表格网格 · 重跑 validate_reader_output · 重跑 check_evidence</text>
+<text class="f " x="392" y="1183">全部要求<tspan class='add'>逐字段相等</tspan>，并要求 execution_semantics_hash 没变</text>
+<text class="f " x="392" y="1200">所以落盘的 PASS 不能自证，必须能被重新算出来</text>
+<rect class="fail" x="880" y="1150" width="320" height="68" rx="4"/>
+<text class="r m" x="894" y="1171" font-weight="700">Requirement hashes differ</text>
+<text class="r" x="894" y="1187">「冻结」不等于「永远可重放」：可重放性是</text>
+<text class="r" x="894" y="1203">相对于当前 Requirement 快照而言的</text>
+<rect class="good" x="40" y="1268" width="1160" height="128" rx="4"/>
+<text class="t" x="60" y="1294">链路到此为止 —— 下游可以相信什么，以及这条链<tspan class="m">没有</tspan>说什么</text>
+<text class="g" x="60" y="1318">可以相信：模型指的每一格都真的存在且逐字节吻合 · 口径都能追到表里的具体标签 · 值是 Evidence 自己算的 · 批准绑定了复核者实际看到的字节</text>
+<text class="g" x="60" y="1337">可以相信：出网前一定留下 marker，「可能已经花了钱」永远可知 · 失败保留完整请求与响应字节 · 冻结 Run 可以离线全量重演</text>
+<text class="r" x="60" y="1361">没有说：模型能读任意酒店集团的 KPI 表。全部 15 次真实调用中 7 次通过，<tspan class="m">全部是 Marriott</tspan>；跨发行人 7 次尝试 0 次成功。</text>
+<text class="r" x="60" y="1380">没有说：AI 结果已经在用。到当前快照为止，进入 active publication 的 AI 结果数量是 <tspan class="m">0</tspan>，三个 provider 计数器全为 0。</text>
+</svg>
