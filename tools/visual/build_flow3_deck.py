@@ -195,7 +195,7 @@ def arr(x1, y1, x2, y2, *, tone="dim", dash=False):
 
 def elbow(pts, *, tone="fact", dash=False):
     c = TONE[tone]
-    d = "M" + " L".join(f"{p[0]} {p[1]}" for p in pts[:-1])
+    d = chr(77) + " L".join(f"{p[0]} {p[1]}" for p in pts[:-1])
     last, prev = pts[-1], pts[-2]
     da = ' stroke-dasharray="5 4"' if dash else ""
     return (f'<path d="{d}" fill="none" stroke="{c}" stroke-width="1.5"{da}/>'

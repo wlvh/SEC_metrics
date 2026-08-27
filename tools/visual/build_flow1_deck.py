@@ -54,6 +54,7 @@ def load_facts() -> dict:
         return out
 
     plan_records: dict[str, set] = {}
+    plan_source_references: dict[str, dict] = {}
     plan_attempts: set = set()
 
     def walk(o):
@@ -63,6 +64,7 @@ def load_facts() -> dict:
                 plan_records.setdefault(rt, set()).add(o["source_set_manifest_id"])
             elif rt == "SOURCE_REFERENCE":
                 plan_records.setdefault(rt, set()).add(o["source_reference_id"])
+                plan_source_references[o["source_reference_id"]] = dict(o)
                 plan_attempts.add(o["request_attempt_id"])
             for v in o.values():
                 walk(v)
@@ -78,6 +80,7 @@ def load_facts() -> dict:
         "n_manifests": len(plan_records.get("SOURCE_SET_MANIFEST", ())),
         "n_refs": len(plan_records.get("SOURCE_REFERENCE", ())),
         "n_attempts": len(plan_attempts),
+        "source_references": list(plan_source_references.values()),
         "pointer": pointer, "manifest": manifest, "prov": prov, "rows": rows,
         "registry": registry, "by": by_kind,
         "claim_records": sum(1 for r in graph["records"] if r["record_type"] == "DETERMINISTIC_VERIFIED_CLAIM"),
@@ -100,6 +103,58 @@ METRICS = ["A01", "A02", "A05", "A06", "A07", "A08", "A10", "B01", "B02", "B03",
            "B04", "B05", "B07", "B08", "B09", "B12", "C01", "E01", "E02", "E03", "E04", "E05"]
 COMPANIES = sorted(F["registry"], key=lambda c: DISP[c])
 CELL = {(c["company_id"], c["metric_id"]): c for c in F["index"]}
+
+
+def companyfacts_pairs() -> dict[str, dict[str, dict]]:
+    """Return companies whose artifact refs contain current and prior roles."""
+    grouped: dict[str, dict[str, dict]] = {}
+    for value in F["source_references"]:
+        if value["source_role"] not in {
+            "companyfacts_current", "companyfacts_prior",
+        }:
+            continue
+        grouped.setdefault(value["company_id"], {})[
+            value["source_role"]
+        ] = value
+    return {
+        company_id: refs for company_id, refs in grouped.items()
+        if set(refs) == {"companyfacts_current", "companyfacts_prior"}
+    }
+
+
+def example_event_observation() -> dict:
+    """Return the widest E01 closure with current/prior Company Facts refs."""
+    eligible_companies = set(companyfacts_pairs())
+    candidates = [
+        value for value in F["by"]["VERIFIED_OBSERVATION"].values()
+        if value["metric_id"] == "E01"
+        and value["company_id"] in eligible_companies
+    ]
+    return max(
+        candidates,
+        key=lambda value: len(
+            value["source_binding"]["ordered_source_reference_ids"]
+        ),
+    )
+
+
+def example_companyfacts_pair() -> tuple[dict, dict]:
+    """Return current/prior refs for the deck's artifact-derived example."""
+    company_id = example_event_observation()["company_id"]
+    by_role = companyfacts_pairs()[company_id]
+    return by_role["companyfacts_current"], by_role["companyfacts_prior"]
+
+
+def example_current_asset_claim() -> dict:
+    """Return the example company's current Assets claim from the graph."""
+    company_id = example_event_observation()["company_id"]
+    return next(
+        value for value in F["by"]["DETERMINISTIC_VERIFIED_CLAIM"].values()
+        if value["company_id"] == company_id
+        and value["source_role"] == "companyfacts_current"
+        and value["locator"].get("concept") == "Assets"
+        and value["attributes"].get("fiscal_period") == "FY"
+    )
 
 # --------------------------------------------------------------------------
 # svg primitives — short labels only; prose lives in HTML
@@ -141,7 +196,7 @@ def arr(x1, y1, x2, y2, *, tone="dim", dash=False):
 
 def elbow(pts, *, tone="fact"):
     c = TONE[tone]
-    d = "M" + " L".join(f"{p[0]} {p[1]}" for p in pts[:-1])
+    d = chr(77) + " L".join(f"{p[0]} {p[1]}" for p in pts[:-1])
     last, prev = pts[-1], pts[-2]
     return (f'<path d="{d}" fill="none" stroke="{c}" stroke-width="1.5"/>'
             + arr(prev[0], prev[1], last[0], last[1], tone=tone))
@@ -212,17 +267,18 @@ def fig_rawblob():
 
 
 def fig_two_refs():
+    current, prior = example_companyfacts_pair()
     b = [node(24, 108, 214, 96, tone="raw", kind="RAW_BLOB",
               rows=[("raw_asset_id", "sha256:e5a94464…"), ("byte_length", "7 888 465")],
               note="一份文件含 73 个 accession"),
          arr(246, 132, 300, 74, tone="fact"), arr(246, 178, 300, 236, tone="fact"),
          node(308, 22, 402, 104, tone="fact", kind="SOURCE_REFERENCE · current",
               rows=[("source_reference_id", "sha256:bcdb93f3…", "fact"),
-                    ("accession", "0001628280-26-008131", "fact"),
+                    ("accession", current["accession"], "fact"),
                     ("source_role", "companyfacts_current")]),
          node(308, 186, 402, 104, tone="fact", kind="SOURCE_REFERENCE · prior",
               rows=[("source_reference_id", "sha256:ea0f760a…", "fact"),
-                    ("accession", "0000019617-25-000270", "fact"),
+                    ("accession", prior["accession"], "fact"),
                     ("source_role", "companyfacts_prior")]),
          node(308, 134, 402, 44, tone="dim", rows=[("两条完全相同", "raw_asset_id · request_attempt_id", "dim")])]
     return svg(736, 306, "".join(b), label="同一组字节生成两个申报身份，共享 raw_asset_id 与 request_attempt_id")
@@ -264,9 +320,13 @@ def fig_zero():
 
 
 def fig_funnel():
+    claim = example_current_asset_claim()
+    accession = claim["attributes"]["accession"]
+    display_accession = "…-" + "-".join(accession.split("-")[1:])
+    period_end = claim["locator"]["period_end"]
     steps = [("us-gaap:Assets / USD 全部事实", 206, "raw", "横跨 73 个 accession"),
-             ("+ accession = 0001628280-26-008131", 3, "raw", "2023 / 2024 / 2025 三个年末"),
-             ("+ period_role = current_instant", 1, "fact", "2025-12-31"),
+             (f"+ accession = {accession}", 3, "raw", "2023 / 2024 / 2025 三个年末"),
+             ("+ period_role = current_instant", 1, "fact", period_end),
              ("+ form = 10-K 且 fiscal_period = FY", 1, "fact", "本来就满足")]
     b = []
     for i, (lab, n, tone, sub) in enumerate(steps):
@@ -280,9 +340,10 @@ def fig_funnel():
         if i < 3:
             b.append(arr(344, y + 36, 344, y + 56, tone="dim"))
     b.append(node(596, 24, 268, 160, tone="fact", strong=True, kind="选中的 CLAIM",
-                  rows=[("concept", "Assets"), ("value", "4 424 900 000 000", "fact"),
-                        ("unit", "USD"), ("period", "2025-12-31"),
-                        ("accession", "…-26-008131")],
+                  rows=[("concept", claim["locator"]["concept"]),
+                        ("value", f"{int(claim['value']):,}".replace(",", " "), "fact"),
+                        ("unit", claim["unit"]), ("period", period_end),
+                        ("accession", display_accession)],
                   note="claim_id = 除 ID 外全部字段"))
     b.append(node(596, 196, 268, 62, tone="refuse", kind="若筛完仍有多个不同值",
                   rows=["raise value-ambiguous · 整批中止"]))
