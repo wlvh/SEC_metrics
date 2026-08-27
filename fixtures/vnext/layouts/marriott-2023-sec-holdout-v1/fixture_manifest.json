@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "fixture_id": "marriott-2023-sec-holdout-v1",
+  "qualification_role": "POST_FREEZE_HOLDOUT",
+  "company_id": "marriott_international",
+  "cik": "1048286",
+  "company_traits": [
+    "lodging"
+  ],
+  "target_period": {
+    "fiscal_year": 2023,
+    "period_start": "2023-01-01",
+    "period_end": "2023-12-31"
+  },
+  "source_role": "target_primary",
+  "source_media_type": "text/html",
+  "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm",
+  "accession": "0001628280-24-004372",
+  "document_name": "mar-20231231.htm",
+  "disclosure_spec_path": "catalog/disclosures/lodging_kpi_table.md",
+  "selection_reason": "Owner-approved FY2023 Marriott immutable SEC holdout whose single target table locally proves both current-year task values and every frozen scope literal, while distinct document-table count and target-table span geometry prove a materially different layout.",
+  "layout_differences": [
+    "rowspan_colspan",
+    "year_layout"
+  ],
+  "request_attempt_id": "request:attempt:921b491d86173c117fd783a7ed6ba311ef7f1640bec796ee26fdeb212cd13a79",
+  "source_repo_relative_path": "fixtures/vnext/layouts/marriott-2023-sec-holdout-v1/mar-20231231.htm",
+  "source_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+  "recorded_response_repo_relative_path": "fixtures/vnext/layouts/marriott-2023-sec-holdout-v1/recorded_response.json",
+  "recorded_response_sha256": "3021505fb34918984e2afc5f836f5f7da22ee397209176e46f83390ff51d22b7",
+  "excerpt_repo_relative_path": "fixtures/vnext/layouts/marriott-2023-sec-holdout-v1/excerpt.json",
+  "excerpt_sha256": "fbe9dfa4f15fe1474cf73b8ecf39ed5008a632b07a2d76f114f783bb83d9a998"
+}

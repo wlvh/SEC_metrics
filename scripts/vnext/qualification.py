@@ -32,6 +32,7 @@ from .invocation_control import InvocationControlError
 from .invocation_control import qualification_remote_egress_terminals
 from .canonical import strict_json_file, strict_json_loads
 from .requirements import load_requirement_snapshot
+from .requirements import RequirementError
 from .records import RecordError, validate_record, validate_run_coordinates
 from .review import effective_review_decision
 from .run_store import load_run_for_status, RunStoreError
@@ -111,6 +112,12 @@ LAYOUT_DIFFERENCE_KINDS = {
     "table_header",
     "year_layout",
 }
+LODGING_SAME_ISSUER_HOLDOUT_CRITERIA = [
+    "same_issuer_distinct_fiscal_year_and_accession",
+    "different_document_table_count",
+    "different_primary_document_layout",
+    "rowspan_or_colspan_difference",
+]
 _SHA256_ID = re.compile(r"^sha256:[0-9a-f]{64}$")
 _SHA256_HEX = re.compile(r"^[0-9a-f]{64}$")
 _ACCESSION = re.compile(r"^[0-9]{10}-[0-9]{2}-[0-9]{6}$")
@@ -3938,6 +3945,9 @@ def _layout_fixture_manifest(
             code="LAYOUT_FIXTURE_INVALID",
             message="Layout fixture manifest fields are not exact",
         )
+    fixture["target_period"] = _target_period_mapping(
+        value=fixture["target_period"],
+    )
     for path_field, hash_field, label in (
         ("source_repo_relative_path", "source_sha256", "layout source"),
         ("excerpt_repo_relative_path", "excerpt_sha256", "layout excerpt"),
@@ -4350,31 +4360,92 @@ def _registry_identities(*, repo_root: Path) -> Dict[str, Sequence[str]]:
     }
 
 
+def _same_issuer_layout_policy(*, repo_root: Path) -> Dict[str, object]:
+    """Return the exact owner-approved lodging layout independence policy."""
+    try:
+        matrix = load_table_qualification_matrix(
+            repo_root=repo_root, family_id="lodging_kpi_table",
+        )
+        entry = matrix["entries"]["lodging_kpi_table"]
+        requirement = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements/issue_15_v1",
+        )
+        scope = requirement["effective_decisions"]["D-07"]["choice"][
+            "live_qualification_scope"
+        ]
+    except (
+        KeyError, RequirementError, TableQualificationFreezeError, ValueError,
+    ) as error:
+        raise QualificationError(
+            code="LAYOUT_INDEPENDENCE_POLICY_INVALID",
+            message="Lodging layout independence authority is invalid",
+        ) from error
+    second = entry["second_layout_source"]
+    holdout = entry["post_freeze_holdout_source"]
+    second_fixture_id = scope.get("second_layout_fixture_id")
+    holdout_fixture_id = scope.get("post_freeze_holdout_fixture_id")
+    if (
+        entry["materially_different_criteria"]
+        != LODGING_SAME_ISSUER_HOLDOUT_CRITERIA
+        or second.get("source_kind") != "RECORDED_LAYOUT_FIXTURE"
+        or second.get("fixture_id") != second_fixture_id
+        or holdout.get("source_kind") != "RECORDED_LAYOUT_FIXTURE"
+        or holdout.get("fixture_id") != holdout_fixture_id
+    ):
+        raise QualificationError(
+            code="LAYOUT_INDEPENDENCE_POLICY_INVALID",
+            message="Lodging layout independence authority differs",
+        )
+    return {
+        "second_layout_fixture_id": second_fixture_id,
+        "post_freeze_holdout_fixture_id": holdout_fixture_id,
+        "same_issuer_distinct_fiscal_year_and_accession": True,
+    }
+
+
 def _validate_independent_layouts(
     *, second: Mapping[str, object], holdout: Mapping[str, object],
+    same_issuer_distinct_period_authorized: bool = False,
 ) -> None:
-    """Reject company, filing, or exact-source aliases across qualifications.
+    """Apply the exact owner-approved issuer/period/source independence rule.
 
     Args:
         second: Verified second-layout identity.
         holdout: Verified post-freeze holdout identity.
+        same_issuer_distinct_period_authorized: Allow only the exact
+            owner-approved same-company/CIK path with different fiscal year,
+            accession, and source bytes.
 
     Expected output:
-        No value. Any shared company, CIK, accession, or source bytes fail.
+        No value. Any identity relation outside the selected policy fails.
     """
     required = {"accession", "cik", "company_id", "source_sha256"}
+    if same_issuer_distinct_period_authorized:
+        required.add("target_period")
     if not required.issubset(second) or not required.issubset(holdout):
         raise QualificationError(
             code="LAYOUT_RECEIPT_INVALID",
             message="Layout independence identity is incomplete",
         )
     aliases = []
-    if second["company_id"] == holdout["company_id"]:
-        aliases.append("company_id")
-    if _normalized_cik(
+    same_company = second["company_id"] == holdout["company_id"]
+    same_cik = _normalized_cik(
         value=second["cik"], label="second layout",
-    ) == _normalized_cik(value=holdout["cik"], label="holdout"):
-        aliases.append("cik")
+    ) == _normalized_cik(value=holdout["cik"], label="holdout")
+    if same_issuer_distinct_period_authorized:
+        if not same_company:
+            aliases.append("company_id_differs_from_same_issuer_policy")
+        if not same_cik:
+            aliases.append("cik_differs_from_same_issuer_policy")
+        second_period = _target_period_mapping(value=second["target_period"])
+        holdout_period = _target_period_mapping(value=holdout["target_period"])
+        if second_period["fiscal_year"] == holdout_period["fiscal_year"]:
+            aliases.append("fiscal_year")
+    else:
+        if same_company:
+            aliases.append("company_id")
+        if same_cik:
+            aliases.append("cik")
     for field in ("accession", "source_sha256"):
         if second[field] == holdout[field]:
             aliases.append(field)
@@ -5040,12 +5111,29 @@ def _validate_layout_receipt(
             message="Layout fixture manifest binding differs",
         )
     company_id = receipt["company_id"]
+    independence_policy = _same_issuer_layout_policy(repo_root=repo_root)
+    expected_fixture_id = independence_policy[
+        "second_layout_fixture_id"
+        if expected_type == "SECOND_LAYOUT"
+        else "post_freeze_holdout_fixture_id"
+    ]
+    registry_alias_authorized = (
+        receipt["fixture_id"] == expected_fixture_id
+        and independence_policy[
+            "same_issuer_distinct_fiscal_year_and_accession"
+        ] is True
+    )
     if (
         type(company_id) is not str
-        or company_id in registry_identities["company_ids"]
-        or _normalized_cik(
-            value=receipt["cik"], label="qualification company",
-        ) in registry_identities["ciks"]
+        or (
+            (
+                company_id in registry_identities["company_ids"]
+                or _normalized_cik(
+                    value=receipt["cik"], label="qualification company",
+                ) in registry_identities["ciks"]
+            )
+            and not registry_alias_authorized
+        )
     ):
         raise QualificationError(
             code="LAYOUT_COMPANY_IN_PRODUCTION_REGISTRY",
@@ -5326,6 +5414,7 @@ def _validate_layout_receipt(
         ),
         "accession": receipt["accession"],
         "source_sha256": receipt["source_sha256"],
+        "target_period": fixture["target_period"],
         "selection_reason": receipt["selection_reason"],
         "layout_comparison_id": comparison["comparison_id"],
         "run_id": manifest["run_id"],
@@ -5434,7 +5523,14 @@ def validate_cutover_qualifications(*, repo_root: Path) -> Dict[str, object]:
         registry_identities=registry,
         freeze=freeze,
     )
-    _validate_independent_layouts(second=second, holdout=holdout)
+    independence_policy = _same_issuer_layout_policy(repo_root=repo_root)
+    _validate_independent_layouts(
+        second=second,
+        holdout=holdout,
+        same_issuer_distinct_period_authorized=independence_policy[
+            "same_issuer_distinct_fiscal_year_and_accession"
+        ] is True,
+    )
     body = {
         "schema_version": 1,
         "production_freeze_receipt_id": freeze["receipt_id"],

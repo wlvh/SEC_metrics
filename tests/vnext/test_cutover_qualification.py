@@ -510,6 +510,57 @@ class CutoverQualificationTest(unittest.TestCase):
                     holdout=aliased,
                 )
 
+    def test_owner_approved_same_issuer_requires_distinct_period_and_source(
+        self,
+    ) -> None:
+        """Allow same issuer only with different year, accession, and bytes."""
+        second = {
+            "company_id": "marriott_international",
+            "cik": "1048286",
+            "accession": "0001628280-25-004818",
+            "source_sha256": "1" * 64,
+            "target_period": {
+                "fiscal_year": 2024,
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+            },
+        }
+        holdout = {
+            "company_id": "marriott_international",
+            "cik": "1048286",
+            "accession": "0001628280-24-004372",
+            "source_sha256": "2" * 64,
+            "target_period": {
+                "fiscal_year": 2023,
+                "period_start": "2023-01-01",
+                "period_end": "2023-12-31",
+            },
+        }
+        qualification._validate_independent_layouts(
+            second=second,
+            holdout=holdout,
+            same_issuer_distinct_period_authorized=True,
+        )
+        mutations = {
+            "company_id": "other_company",
+            "cik": "999999",
+            "accession": second["accession"],
+            "source_sha256": second["source_sha256"],
+            "target_period": second["target_period"],
+        }
+        for field, replacement in mutations.items():
+            invalid = dict(holdout)
+            invalid[field] = replacement
+            with self.subTest(field=field), self.assertRaisesRegex(
+                QualificationError,
+                "HOLDOUT_NOT_INDEPENDENT",
+            ):
+                qualification._validate_independent_layouts(
+                    second=second,
+                    holdout=invalid,
+                    same_issuer_distinct_period_authorized=True,
+                )
+
     def test_freeze_inventory_rejects_preexisting_holdout_bytes_and_run(
         self,
     ) -> None:

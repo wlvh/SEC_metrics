@@ -479,7 +479,7 @@ ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
         "lodging_revpar_table_v2",
     ],
     "second_layout_fixture_id": "marriott-2024-sec-layout-v1",
-    "post_freeze_holdout_fixture_id": "hyatt-2025-sec-holdout-v2",
+    "post_freeze_holdout_fixture_id": "marriott-2023-sec-holdout-v1",
     "fresh_samples_required": 3,
     "sample_sequence": [
         "SECOND_LAYOUT",
@@ -624,7 +624,7 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5424874787"
+        "#issuecomment-5433721117"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -641,8 +641,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:ba97aad9b890ce7183fb7588becf8acd72"
-        "ca5819d541e918462991d1387ed9f4"
+        "sha256:02bb127e86e54251b8c21c59661cfa12fc"
+        "915cd976b280dfc8f275b90b1e9ec3"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -1829,14 +1829,14 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 baseline Decision set differs")
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 15
+        or len(chains["D-07"]) != 16
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != 2
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][13])
+        != _decision_record_hash(decision=chains["D-07"][14])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]

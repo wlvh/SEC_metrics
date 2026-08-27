@@ -109,13 +109,13 @@
       },
       "post_freeze_holdout_source": {
         "source_kind": "RECORDED_LAYOUT_FIXTURE",
-        "fixture_id": "hyatt-2025-sec-holdout-v2"
+        "fixture_id": "marriott-2023-sec-holdout-v1"
       },
       "materially_different_criteria": [
-        "different_issuer_cik",
+        "same_issuer_distinct_fiscal_year_and_accession",
+        "different_document_table_count",
         "different_primary_document_layout",
-        "rowspan_or_colspan_difference",
-        "scope_wording_difference"
+        "rowspan_or_colspan_difference"
       ],
       "expected_claims": [
         "occupancy",
