@@ -9,9 +9,11 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest import mock
 from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT
+from vnext.publication import PublicationView
 from vnext.publication import REQUIRED_BUNDLE_FILES, publication_state_snapshot
 from vnext.publication import verify_publication_bundle
 from vnext.ratchet_release import RatchetReleaseError
@@ -51,13 +53,32 @@ class RatchetReleaseTest(unittest.TestCase):
             capture_output=True,
             encoding="utf-8",
         ).stdout.strip()
-        cls.successor, cls.summary = prepare_r3_successor(
-            repo_root=REPO_ROOT,
-            publication_root=cls.temp_root / "publication-root",
-            source_commit=source_commit,
-            validated_at_utc="2026-08-28T10:00:00Z",
-            workspace=cls.temp_root / "workspace",
+        cls.active_view = PublicationView.open(publication_root=REPO_ROOT)
+        predecessor_id = str(
+            cls.active_view.manifest["previous_publication_id"]
         )
+        predecessor_dir = (
+            REPO_ROOT / "outputs/publications" / predecessor_id
+        )
+        cls.predecessor_view = PublicationView(
+            publication_id=predecessor_id,
+            bundle_dir=predecessor_dir,
+            manifest=verify_publication_bundle(bundle_dir=predecessor_dir),
+        )
+        # The formal pointer is already R3.  Offline prepare still needs its
+        # exact R2 predecessor, so pin that verified immutable view without
+        # moving the repository pointer or copying formal state.
+        with mock.patch(
+            "vnext.ratchet_release.PublicationView.open",
+            return_value=cls.predecessor_view,
+        ):
+            cls.successor, cls.summary = prepare_r3_successor(
+                repo_root=REPO_ROOT,
+                publication_root=cls.temp_root / "publication-root",
+                source_commit=source_commit,
+                validated_at_utc="2026-08-28T10:00:00Z",
+                workspace=cls.temp_root / "workspace",
+            )
         cls.bundle = (
             cls.temp_root / "publication-root/outputs/publications"
             / str(cls.successor["publication_id"])
@@ -82,7 +103,7 @@ class RatchetReleaseTest(unittest.TestCase):
         manifest = verify_publication_bundle(bundle_dir=self.bundle)
         self.assertEqual(self.successor, manifest)
         self.assertEqual(
-            self.before_state["active_publication_id"],
+            self.predecessor_view.publication_id,
             manifest["previous_publication_id"],
         )
         self.assertEqual(327, self.summary["public_matrix_row_count"])
@@ -140,6 +161,33 @@ class RatchetReleaseTest(unittest.TestCase):
         )
         self.assertTrue(any(path.endswith("provider_ledger.jsonl") for path in closure_paths))
         self.assertTrue(any("qualification_runs" in path for path in closure_paths))
+
+    def test_formal_active_r3_keeps_exact_r2_predecessor(self) -> None:
+        """Read back the committed R3 pointer, bundle, roots, and R2 edge."""
+        active_plan = json.loads(
+            (
+                self.active_view.bundle_dir
+                / "internal/authority/config/release_plans/"
+                "issue_15_lodging_r3.json"
+            ).read_text(encoding="utf-8")
+        )
+        self.assertEqual("issue_15_lodging_r3", active_plan["release_plan_id"])
+        self.assertEqual(
+            self.predecessor_view.publication_id,
+            self.active_view.manifest["previous_publication_id"],
+        )
+        active_rows = list(csv.DictReader(io.StringIO(
+            self.active_view.read_bytes(
+                relative_path="metrics_matrix.csv"
+            ).decode("utf-8")
+        )))
+        self.assertEqual(327, len(active_rows))
+        for relative, content in self.before_roots.items():
+            bundle_relative = relative.removeprefix("outputs/")
+            self.assertEqual(
+                content,
+                self.active_view.read_bytes(relative_path=bundle_relative),
+            )
 
     def test_committed_qualification_tamper_is_rejected(self) -> None:
         """Reject a copied terminal whose bytes differ from its Git origin."""
