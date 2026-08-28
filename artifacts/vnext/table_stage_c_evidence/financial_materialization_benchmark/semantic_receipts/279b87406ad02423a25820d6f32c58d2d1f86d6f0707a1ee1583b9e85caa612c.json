@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "record_type": "TABLE_STAGE_C_FINANCIAL_MATERIALIZATION_BENCHMARK",
+  "status": "FAILED_CHILD",
+  "source": {
+    "repo_relative_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "size": 12927325
+  },
+  "stage_b_census_binding": {
+    "receipt_id": "sha256:ea3d796f256a43ac5a6079de753d7d5456fc6d7485bb794ef4c9e27276ca6f2c",
+    "exact_table_count": 679,
+    "exact_total_rectangular_expanded_cell_count": 124761
+  },
+  "runtime_identity": {
+    "python_executable_name": "python3.14",
+    "python_implementation": "CPython",
+    "python_version": "3.14.7",
+    "platform_system": "Darwin",
+    "platform_release": "25.4.0",
+    "platform_machine": "arm64"
+  },
+  "production_source_code_hashes": {
+    "scripts/vnext/table_grid.py": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
+    "scripts/vnext/resource_limits.py": "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04",
+    "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+    "tools/benchmark_jpm_full_materialization.py": "b8ada10a4acbc6410b1675f7a0f2c6e4e48ab0dda104ff4ce20b38ac2a59008a"
+  },
+  "test_only_override": {
+    "field": "max_total_cells",
+    "value": 187142,
+    "scope": "BENCHMARK_CHILD_PROCESS_ONLY"
+  },
+  "production_resource_policy": {
+    "max_total_cells": 100000,
+    "resource_limits_sha256_before": "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04",
+    "resource_limits_sha256_after": "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04",
+    "unchanged": true
+  },
+  "safety_ceilings": {
+    "hard_address_space_and_peak_rss_ceiling_bytes": 536870912,
+    "hard_memory_ceiling_bytes": 536870912,
+    "hard_wall_time_ceiling_seconds": 120,
+    "guard_status": "LINUX_CGROUP_V2_AND_NETWORK_NONE_PASS",
+    "guard_mechanism": "DOCKER_CGROUP_V2_NETWORK_NONE",
+    "cgroup_memory_peak_bytes": null
+  },
+  "no_network_proof": {
+    "sandbox_executable": "docker",
+    "profile_sha256": "sha256:ff33db336cb6f311d6e6b14304e22715ffa668f18d9356a6cc0a92aa9be2103d",
+    "policy": "DOCKER_NETWORK_NONE",
+    "container_image_reference": "python:3.12.11-slim-bookworm@sha256:519591d6871b7bc437060736b9f7456b8731f1499a57e22e6c285135ae657bf7",
+    "network_interface_names": null,
+    "ipv4_route_count": null,
+    "ipv6_non_loopback_route_count": null,
+    "benchmark_child_started": true,
+    "real_model_provider_egress_count": 0,
+    "paid_model_provider_call_count": 0,
+    "real_SEC_egress_count": 0
+  },
+  "materialization": {
+    "completed": false,
+    "final_expanded_cells": null,
+    "table_count": null,
+    "canonical_json_bytes": null,
+    "canonical_json_sha256": null,
+    "derived_asset_id": null,
+    "canonical_serialization_completed": false,
+    "table_grid_hashes": [],
+    "table_grid_hash_exact_set_hash": null
+  },
+  "root_business_artifacts_before": {
+    "outputs/active_publication.json": {
+      "sha256": "c7cf04edb11b8e5f19fbc3d2caf65bd8136e218dfc31eced00d21b93e1308e80",
+      "size": 354
+    },
+    "outputs/metrics_matrix.csv": {
+      "sha256": "b390121cdc75c0e9eff50b3c896191731ec7c6102061cb61ff677a4f6a588b72",
+      "size": 108744
+    },
+    "outputs/metric_evidence.csv": {
+      "sha256": "da505166e60adaa7909b4185cd3c6c96f80df711db0c76ec57037ebf853509a2",
+      "size": 249163
+    },
+    "REPORT_十公司财务指标.md": {
+      "sha256": "4d180dd96fbb29e35dfefee4a78b97c33decd13f51b8518dfd5f91e10c84def9",
+      "size": 18899
+    }
+  },
+  "root_business_artifacts_after": {
+    "outputs/active_publication.json": {
+      "sha256": "c7cf04edb11b8e5f19fbc3d2caf65bd8136e218dfc31eced00d21b93e1308e80",
+      "size": 354
+    },
+    "outputs/metrics_matrix.csv": {
+      "sha256": "b390121cdc75c0e9eff50b3c896191731ec7c6102061cb61ff677a4f6a588b72",
+      "size": 108744
+    },
+    "outputs/metric_evidence.csv": {
+      "sha256": "da505166e60adaa7909b4185cd3c6c96f80df711db0c76ec57037ebf853509a2",
+      "size": 249163
+    },
+    "REPORT_十公司财务指标.md": {
+      "sha256": "4d180dd96fbb29e35dfefee4a78b97c33decd13f51b8518dfd5f91e10c84def9",
+      "size": 18899
+    }
+  },
+  "root_business_artifacts_byte_equal": true,
+  "benchmark_receipt_id": "sha256:279b87406ad02423a25820d6f32c58d2d1f86d6f0707a1ee1583b9e85caa612c"
+}

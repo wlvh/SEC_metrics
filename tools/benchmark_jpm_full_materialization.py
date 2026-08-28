@@ -305,9 +305,7 @@ def _child_result() -> Dict[str, object]:
         ),
         "child_user_cpu_seconds": format(Decimal(str(usage.ru_utime)), "f"),
         "child_system_cpu_seconds": format(Decimal(str(usage.ru_stime)), "f"),
-        "runtime_identity": materialized.get(
-            "runtime_identity", _runtime_identity(),
-        ),
+        "runtime_identity": _runtime_identity(),
         "linux_guard_observations": completed_guard,
     }
 
@@ -764,7 +762,9 @@ def _semantic_receipt(
                 "census"
             ]["exact_total_rectangular_expanded_cell_count"],
         },
-        "runtime_identity": _runtime_identity(),
+        "runtime_identity": materialized.get(
+            "runtime_identity", _runtime_identity(),
+        ),
         "production_source_code_hashes": dict(sources_after),
         "test_only_override": {
             "field": "max_total_cells",
