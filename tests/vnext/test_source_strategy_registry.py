@@ -155,10 +155,10 @@ class SourceStrategyRegistryTest(unittest.TestCase):
         self.assertEqual([], plan["qualification_matrix_subset"])
 
     def test_release_plan_chain_is_complete_and_monotonic(self) -> None:
-        """Bind immutable R1/R2 parent, delta, keys, families, and closure."""
+        """Bind immutable R1/R2/R3 parent, keys, families, and closure."""
         loaded = load_issue15_release_plans(repo_root=REPO_ROOT)
-        r1, r2 = loaded["plans"]
-        self.assertEqual("issue_15_zero_ai_r2", loaded["active_release_plan_id"])
+        r1, r2, r3 = loaded["plans"]
+        self.assertEqual("issue_15_lodging_r3", loaded["active_release_plan_id"])
         self.assertEqual(None, r1["parent_release_plan_id"])
         self.assertEqual(r1["release_plan_id"], r2["parent_release_plan_id"])
         self.assertEqual(
@@ -170,6 +170,29 @@ class SourceStrategyRegistryTest(unittest.TestCase):
         self.assertEqual(20, len(r2["added_metric_ids"]))
         self.assertEqual(22, len(r2["cumulative_metric_ids"]))
         self.assertEqual(220, len(r2["cumulative_vnext_result_keys"]))
+        self.assertEqual(r2["release_plan_id"], r3["parent_release_plan_id"])
+        self.assertEqual(
+            r2["release_plan_content_id"],
+            r3["parent_release_plan_content_id"],
+        )
+        self.assertEqual(["B10", "B11"], r3["added_metric_ids"])
+        self.assertEqual(24, len(r3["cumulative_metric_ids"]))
+        self.assertEqual(240, len(r3["cumulative_vnext_result_keys"]))
+        self.assertEqual(
+            [
+                {
+                    "metric_id": "B10",
+                    "reader_family_id": "lodging_kpi_table",
+                    "source_mode": "ai_table",
+                },
+                {
+                    "metric_id": "B11",
+                    "reader_family_id": "lodging_kpi_table",
+                    "source_mode": "ai_table",
+                },
+            ],
+            r3["qualification_matrix_subset"],
+        )
         self.assertEqual(
             sorted(
                 set(r2["cumulative_metric_ids"])
@@ -190,13 +213,22 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             r1["release_plan_content_id"],
             transition["parent_release_plan_content_id"],
         )
-        for plan in (r1, r2):
+        r3_transition = loaded["ratchet_transitions"][2]
+        self.assertEqual(["B10", "B11"], r3_transition["added_metric_ids"])
+        self.assertEqual([], r3_transition["removed_metric_ids"])
+        self.assertEqual([], r3_transition["removed_vnext_result_keys"])
+        self.assertEqual([], r3_transition["unretired_legacy_producer_ids"])
+        self.assertEqual(
+            r2["release_plan_content_id"],
+            r3_transition["parent_release_plan_content_id"],
+        )
+        for plan in (r1, r2, r3):
             self.assertEqual(
                 RELEASED_PLAN_REQUIREMENT_CLOSURES[plan["release_plan_id"]],
                 plan["requirement_closure_hash"],
             )
         self.assertEqual(
-            r2["requirement_closure_hash"],
+            r3["requirement_closure_hash"],
             loaded["requirement_closure_hash"],
         )
         current = load_requirement_snapshot(snapshot_dir=ISSUE_15_DIR)
@@ -204,8 +236,12 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             current["requirement_closure_hash"],
             loaded["current_requirement_closure_hash"],
         )
-        self.assertNotEqual(
+        self.assertEqual(
             loaded["requirement_closure_hash"],
+            loaded["current_requirement_closure_hash"],
+        )
+        self.assertNotEqual(
+            r2["requirement_closure_hash"],
             loaded["current_requirement_closure_hash"],
         )
 

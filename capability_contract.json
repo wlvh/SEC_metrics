@@ -69,7 +69,7 @@
         "anchor_id": "CAPABILITY.issue_15_source_strategy_registry",
         "type": "capability",
         "status": "active",
-        "statement": "Issue #15 SourceStrategy registry精确覆盖39个metric ID，每个恰好一条；source_mode只允许structured_only、structured_first_ai_fallback、ai_table、ai_text，不存在ai_event_text。registry只拥有target route与family-level forbidden production literals，不保存当前迁移状态。content-addressed索引指向不可变R1/R2 ReleasePlan；每档plan以parent content edge、added delta、cumulative IDs/keys、retired producers、reader family versions和全部authority hashes绑定创建时Requirement closure；已发布R1/R2保留historical closure，post-publication same-ID Decision只改变单独返回的current closure，不重签plan/index/active bundle。plan ID到historical closure的exact mapping拒绝完整重签后的任意closure伪造。loader机械要求parent cumulative metric IDs、vNext result keys与retired producer IDs分别为child子集，并推导removed/unretired exact set为空；完整重签plan/content/index后仍不能删除。semantic lint从family union派生并排除risk/value/event/income/current等通用词。",
+        "statement": "Issue #15 SourceStrategy registry精确覆盖39个metric ID，每个恰好一条；source_mode只允许structured_only、structured_first_ai_fallback、ai_table、ai_text，不存在ai_event_text。registry只拥有target route与family-level forbidden production literals，不保存当前迁移状态。content-addressed索引指向不可变R1→R2→R3 ReleasePlan；R3只新增B10/B11，累计24指标/240 result keys/77 retired producers。每档plan以parent content edge、added delta、cumulative IDs/keys、retired producers、reader family versions和全部authority hashes绑定创建时Requirement closure；已发布R1/R2与新R3 plan分别保留其historical closure，post-publication same-ID Decision不重签旧plan/active bundle。plan ID到historical closure的exact mapping拒绝完整重签后的任意closure伪造。loader机械要求parent cumulative metric IDs、vNext result keys与retired producer IDs分别为child子集，并推导removed/unretired exact set为空；完整重签plan/content/index后仍不能删除。semantic lint从family union派生并排除risk/value/event/income/current等通用词。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_source_strategy_registry.py::SourceStrategyRegistryTest.test_release_plan_chain_is_complete_and_monotonic",
         "test_status": "automated_recorded",
@@ -114,6 +114,16 @@
         "test_anchor": "tests/vnext/test_zero_ai_release.py::ZeroAiReleaseTest.test_r2_projection_and_producers_survive_legacy_canary",
         "test_status": "automated_formal_active",
         "since": "2026-08-19"
+      },
+      {
+        "anchor_id": "CAPABILITY.issue_15_r3_ratchet_prepare",
+        "type": "capability",
+        "status": "active",
+        "statement": "Issue #15 R3已有module-owned离线prepare能力：从当前R3 ReleasePlan派生B10/B11的20-coordinate delta BatchManifest，按Git committed exact bytes重验十个qualification terminal并重新执行DerivedAsset、Evidence、Review与Calculator；其余18个坐标由同一catalog task Workflow生成零AI N_A_STRUCTURAL FROZEN Runs。共享Projector继续以冻结legacy A作strict compatibility oracle、以active R2作完整public assembly predecessor，生成327-row candidate；portable closure在CAS bundle内再次重放Batch/Run/SEC locator/Requirement authority。prepare测试证明pointer和root逐byte不变。该能力是implementation-ready/offline证据，不表示R3已经active；只有module-owned r3 command实际commit并read-back后才可扩大active声明。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_ratchet_release.py::RatchetReleaseTest.test_prepare_is_offline_complete_and_non_mutating",
+        "test_status": "automated_recorded_scenario",
+        "since": "2026-08-28"
       },
       {
         "anchor_id": "CAPABILITY.vnext_recorded_shadow",

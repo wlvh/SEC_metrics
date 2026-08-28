@@ -86,7 +86,11 @@ def _rebind_release_plan_chain(*, repo_root: Path) -> None:
         / "legacy_semantic_producer_inventory.json"
     )
     plans = []
-    for plan_id in ("issue_15_zero_ai_r1", "issue_15_zero_ai_r2"):
+    for plan_id in (
+        "issue_15_zero_ai_r1",
+        "issue_15_zero_ai_r2",
+        "issue_15_lodging_r3",
+    ):
         path = repo_root / "config" / "release_plans" / (plan_id + ".json")
         plan = json.loads(path.read_text(encoding="utf-8"))
         plan["requirement_closure_hash"] = requirement[

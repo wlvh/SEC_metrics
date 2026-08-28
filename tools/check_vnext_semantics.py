@@ -59,6 +59,7 @@ GATE_SOURCE_PATHS = (
     "config/provider_model_runtime.json",
     "config/release_plans/issue_15_zero_ai_r1.json",
     "config/release_plans/issue_15_zero_ai_r2.json",
+    "config/release_plans/issue_15_lodging_r3.json",
     "config/source_strategy_registry.json",
     "scripts/sec_pipeline.py",
     "scripts/vnext/projection_independence.py",

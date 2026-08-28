@@ -9,7 +9,7 @@ import re
 import subprocess
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
-from typing import Dict, List, Mapping, Optional, Sequence, Set, Tuple
+from typing import Callable, Dict, List, Mapping, Optional, Sequence, Set, Tuple
 
 from git_workspace import git_checkout_metadata_error, sanitized_git_environment
 
@@ -23,12 +23,17 @@ from .records import metric_result_contract_hash
 from .records import validate_record
 from .requirements import RequirementError, load_requirement_snapshot
 from .run_store import RunStoreError, load_frozen_run
+from .source_strategy import SourceStrategyError, load_issue15_release_plan
 from .specs import SpecError, compile_spec_files, parse_spec_document
 from .states import publication_candidate_status
 from .traits import TraitError, repository_company_traits
 
 
 RowKey = Tuple[str, ...]
+FrozenRunLoader = Callable[
+    [Path, Path],
+    Tuple[Dict[str, object], List[Dict[str, object]], List[Dict[str, object]]],
+]
 
 
 class ProjectionError(ValueError):
@@ -1134,19 +1139,55 @@ def _load_release_specs(
     return compiled, hashes
 
 
-def _release_context(*, repo_root: Path) -> Dict[str, object]:
+def _release_context(
+    *,
+    repo_root: Path,
+    release_id: Optional[str] = None,
+    release_plan_root: Optional[Path] = None,
+) -> Dict[str, object]:
     """Derive the complete company and metric release authority.
 
     Args:
-        repo_root: Repository containing release, registry, trait, and Spec
-            inputs.
+        repo_root: Repository containing registry, trait, Spec, and Run-adjacent
+            Requirement inputs.
+        release_id: Optional Issue #15 ReleasePlan identity.  ``None`` or the
+            inherited vNext release ID keeps the historical full-release path.
+        release_plan_root: Repository containing the named Issue #15 plan;
+            defaults to ``repo_root``.  A ratchet may validate committed Runs
+            in their exact-head worktree while binding the current child plan.
 
     Returns:
         Release plan, registry, Specs, expected keys, and source hashes.
     """
-    release_plan, release_plan_sha256 = load_release_plan(
+    inherited_plan, inherited_plan_sha256 = load_release_plan(
         repo_root=repo_root,
     )
+    plan_root = repo_root if release_plan_root is None else release_plan_root
+    if release_id is None or release_id == inherited_plan["release_id"]:
+        release_plan = inherited_plan
+        release_plan_sha256 = inherited_plan_sha256
+        requirement_snapshot_dir = (
+            repo_root / "requirements" / "ai_first_v3_3_1"
+        )
+    else:
+        try:
+            issue_plan = load_issue15_release_plan(
+                repo_root=plan_root, release_plan_id=release_id,
+            )
+        except SourceStrategyError as error:
+            raise ProjectionError(
+                "Issue #15 projection ReleasePlan is invalid"
+            ) from error
+        plan = issue_plan["release_plan"]
+        release_plan = {
+            "schema_version": plan["schema_version"],
+            "release_id": plan["release_plan_id"],
+            "migrated_metric_ids": list(plan["added_metric_ids"]),
+        }
+        release_plan_sha256 = issue_plan["release_plan_sha256"]
+        requirement_snapshot_dir = (
+            repo_root / "requirements" / "issue_15_v1"
+        )
     metric_ids = [str(value) for value in release_plan["migrated_metric_ids"]]
     registry = _load_registry(repo_root=repo_root)
     specs, metric_spec_hashes = _load_release_specs(
@@ -1195,6 +1236,7 @@ def _release_context(*, repo_root: Path) -> Dict[str, object]:
             path=repo_root / "catalog" / "company_traits.yaml"
         ),
         "metric_spec_hashes": metric_spec_hashes,
+        "requirement_snapshot_dir": requirement_snapshot_dir,
     }
 
 
@@ -1226,9 +1268,21 @@ def _relative_run_path(*, root: Path, run_dir: Path) -> str:
     return relative
 
 
+def _load_projection_run(
+    *, run_dir: Path, repo_root: Path,
+    run_loader: Optional[FrozenRunLoader],
+) -> Tuple[Dict[str, object], List[Dict[str, object]], List[Dict[str, object]]]:
+    """Load one FROZEN Run through the standard or caller-verified boundary."""
+    if run_loader is None:
+        return load_frozen_run(run_dir=run_dir, repo_root=repo_root)
+    return run_loader(run_dir, repo_root)
+
+
 def _batch_manifest_from_paths(
     *, repo_root: Path, batch_root: Path, run_paths: Sequence[str],
-    release_input_plan_id: Optional[str]
+    release_input_plan_id: Optional[str], release_id: Optional[str] = None,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> Dict[str, object]:
     """Rebuild one batch manifest from verified FROZEN Run locators.
 
@@ -1238,6 +1292,9 @@ def _batch_manifest_from_paths(
         run_paths: Exact relative Run-directory set.
         release_input_plan_id: Formal source-plan identity, or ``None`` for a
             recorded/operator batch that has no formal Cutover authority.
+        release_id: Optional Issue #15 child plan used for a delta batch.
+        release_plan_root: Repository containing that child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         Content-addressed complete batch manifest.
@@ -1266,7 +1323,11 @@ def _batch_manifest_from_paths(
         )
     ):
         raise ProjectionError("Batch Run locator exact set is invalid")
-    authority = _release_context(repo_root=repo_root)
+    authority = _release_context(
+        repo_root=repo_root,
+        release_id=release_id,
+        release_plan_root=release_plan_root,
+    )
     expected_entries = authority["expected_result_keys"]
     expected = {
         (str(entry["company_id"]), str(entry["metric_id"])): str(
@@ -1289,8 +1350,10 @@ def _batch_manifest_from_paths(
         ):
             raise ProjectionError("Batch Run locator is unsafe or missing")
         try:
-            manifest, records, _decisions = load_frozen_run(
-                run_dir=run_dir, repo_root=repo_root,
+            manifest, records, _decisions = _load_projection_run(
+                run_dir=run_dir,
+                repo_root=repo_root,
+                run_loader=run_loader,
             )
             receipt_payload = strict_json_file(
                 path=run_dir / "validation.json"
@@ -1365,7 +1428,7 @@ def _batch_manifest_from_paths(
     if len(fiscal_years) != 1:
         raise ProjectionError("Batch target fiscal year differs")
     repository_requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements" / "ai_first_v3_3_1",
+        snapshot_dir=authority["requirement_snapshot_dir"],
     )
     if requirement_hashes != repository_requirement["hashes"]:
         raise ProjectionError("Batch Requirement authority differs")
@@ -1395,7 +1458,10 @@ def _batch_manifest_from_paths(
 
 def write_projection_batch_manifest(
     *, repo_root: Path, batch_manifest_path: Path, run_dirs: Sequence[Path],
-    release_input_plan_id: Optional[str] = None
+    release_input_plan_id: Optional[str] = None,
+    release_id: Optional[str] = None,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> Dict[str, object]:
     """Persist a content-addressed complete release batch authority.
 
@@ -1405,6 +1471,9 @@ def write_projection_batch_manifest(
         run_dirs: Exact FROZEN Run directories below the manifest parent.
         release_input_plan_id: Formal source-plan identity. Recorded/operator
             callers omit it and persist an explicit null authority.
+        release_id: Optional Issue #15 child plan used for a delta batch.
+        release_plan_root: Repository containing that child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         Verified batch manifest.
@@ -1426,6 +1495,9 @@ def write_projection_batch_manifest(
         batch_root=batch_manifest_path.parent,
         run_paths=run_paths,
         release_input_plan_id=release_input_plan_id,
+        release_id=release_id,
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
     expected = canonical_json_bytes(value=manifest) + b"\n"
     if batch_manifest_path.exists():
@@ -1439,13 +1511,17 @@ def write_projection_batch_manifest(
 
 
 def load_projection_batch_manifest(
-    *, repo_root: Path, batch_manifest_path: Path
+    *, repo_root: Path, batch_manifest_path: Path,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> Dict[str, object]:
     """Reload and independently rebuild a persisted batch authority.
 
     Args:
         repo_root: Repository authority.
         batch_manifest_path: Persisted batch manifest.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         Strict manifest matching current Run and repository bytes.
@@ -1478,6 +1554,9 @@ def load_projection_batch_manifest(
         batch_root=batch_manifest_path.parent,
         run_paths=[str(run["run_path"]) for run in runs],
         release_input_plan_id=payload["release_input_plan_id"],
+        release_id=str(payload["release_id"]),
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
     if dict(payload) != rebuilt:
         raise ProjectionError("Batch manifest differs from repository Runs")
@@ -1486,7 +1565,8 @@ def load_projection_batch_manifest(
 
 def _batch_runs(
     *, repo_root: Path, batch_manifest_path: Path,
-    batch_manifest: Mapping[str, object]
+    batch_manifest: Mapping[str, object],
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> List[Tuple[Dict[str, object], List[Dict[str, object]]]]:
     """Load the exact FROZEN Run set named by a verified batch.
 
@@ -1494,6 +1574,7 @@ def _batch_runs(
         repo_root: Repository authority.
         batch_manifest_path: Manifest locator establishing the Run root.
         batch_manifest: Already verified batch mapping.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         Ordered Run manifests and record sequences.
@@ -1511,8 +1592,10 @@ def _batch_runs(
         ):
             raise ProjectionError("Batch Run reload locator is unsafe")
         try:
-            manifest, records, _decisions = load_frozen_run(
-                run_dir=run_dir, repo_root=repo_root,
+            manifest, records, _decisions = _load_projection_run(
+                run_dir=run_dir,
+                repo_root=repo_root,
+                run_loader=run_loader,
             )
         except RunStoreError as error:
             raise ProjectionError("Batch Run reload failed") from error
@@ -1717,25 +1800,33 @@ def _record_indexes(
 
 
 def load_projection_used_source_references(
-    *, repo_root: Path, batch_manifest_path: Path
+    *, repo_root: Path, batch_manifest_path: Path,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> List[Dict[str, object]]:
     """Reload the verified batch and return only sources actually consumed.
 
     Args:
         repo_root: Repository authority used to replay every FROZEN Run.
         batch_manifest_path: Complete persisted batch locator.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         SourceReferences consumed by a verified Observation or by an actual
         AI attempt's ReaderInputManifest, ordered by content identity.
     """
     batch = load_projection_batch_manifest(
-        repo_root=repo_root, batch_manifest_path=batch_manifest_path,
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
     runs = _batch_runs(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
         batch_manifest=batch,
+        run_loader=run_loader,
     )
     indexes = _record_indexes(runs=runs)
     return [
@@ -2024,6 +2115,37 @@ def _joined_binding_field(
     return str(fallback)
 
 
+def _compatible_public_evidence_locator(
+    *, repo_root: Path, baseline_row: Mapping[str, object],
+    projected_row: Mapping[str, object],
+) -> str:
+    """Retain a public locator only when both paths prove one source identity.
+
+    Internal SourceReference and RawBlob bindings remain unchanged.  This
+    compatibility projection only preserves the historical user-facing path
+    after URL, accession, document, content digest, and local bytes all agree.
+    """
+    identity_fields = (
+        "source_url", "content_sha256", "accession", "document_name",
+    )
+    if any(
+        str(baseline_row[field]) != str(projected_row[field])
+        for field in identity_fields
+    ):
+        return str(projected_row["repo_relative_path"])
+    relative = Path(str(baseline_row["repo_relative_path"]))
+    if relative.is_absolute() or ".." in relative.parts:
+        return str(projected_row["repo_relative_path"])
+    path = repo_root / relative
+    if (
+        path.is_symlink()
+        or not path.is_file()
+        or sha256_file(path=path) != str(projected_row["content_sha256"])
+    ):
+        return str(projected_row["repo_relative_path"])
+    return relative.as_posix()
+
+
 def _project_result(
     *,
     result: Mapping[str, object],
@@ -2203,7 +2325,10 @@ def _project_result(
 
 def _projection_candidate(
     *, repo_root: Path, batch_manifest_path: Path,
-    legacy_snapshot_dir: Path
+    legacy_snapshot_dir: Path,
+    public_predecessor_dir: Optional[Path] = None,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> Dict[str, object]:
     """Derive exact candidate bytes and compatibility proof from authority.
 
@@ -2211,14 +2336,26 @@ def _projection_candidate(
         repo_root: Repository authority.
         batch_manifest_path: Complete verified batch locator.
         legacy_snapshot_dir: Post-repair complete legacy snapshot.
+        public_predecessor_dir: Optional active ratchet predecessor used only
+            for full-row assembly. Compatibility remains anchored to the
+            frozen legacy snapshot.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         Candidate rows/bytes, compatibility receipt, and record indexes.
     """
     batch = load_projection_batch_manifest(
-        repo_root=repo_root, batch_manifest_path=batch_manifest_path,
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
-    authority = _release_context(repo_root=repo_root)
+    authority = _release_context(
+        repo_root=repo_root,
+        release_id=str(batch["release_id"]),
+        release_plan_root=release_plan_root,
+    )
     legacy = _legacy_inputs(
         repo_root=repo_root, legacy_snapshot_dir=legacy_snapshot_dir,
     )
@@ -2226,6 +2363,7 @@ def _projection_candidate(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
         batch_manifest=batch,
+        run_loader=run_loader,
     )
     indexes = _record_indexes(runs=runs)
     registry_by_id = {
@@ -2244,6 +2382,23 @@ def _projection_candidate(
     evidence_fields = legacy["fieldnames"]["metric_evidence.csv"]
     legacy_metrics = legacy["rows"]["metrics_matrix.csv"]
     legacy_evidence = legacy["rows"]["metric_evidence.csv"]
+    assembly_metrics = legacy_metrics
+    assembly_evidence = legacy_evidence
+    if public_predecessor_dir is not None:
+        if public_predecessor_dir.is_symlink() or not (
+            public_predecessor_dir.is_dir()
+        ):
+            raise ProjectionError("Public predecessor is unsafe or missing")
+        assembly_metrics = _read_csv_rows(
+            content=(public_predecessor_dir / "metrics_matrix.csv").read_bytes(),
+            fieldnames=metric_fields,
+            label="Public predecessor metrics",
+        )
+        assembly_evidence = _read_csv_rows(
+            content=(public_predecessor_dir / "metric_evidence.csv").read_bytes(),
+            fieldnames=evidence_fields,
+            label="Public predecessor evidence",
+        )
     baseline_metrics = {}
     for row in legacy_metrics:
         if row["metric_id"] not in migrated_ids:
@@ -2307,6 +2462,19 @@ def _projection_candidate(
             fiscal_year=fiscal_year,
             metric_fields=metric_fields,
         )
+        locator_baseline = baseline_evidence.get(internal_key, [])
+        if len(locator_baseline) == 1:
+            evidence_rows = [
+                {
+                    **row,
+                    "repo_relative_path": _compatible_public_evidence_locator(
+                        repo_root=repo_root,
+                        baseline_row=locator_baseline[0],
+                        projected_row=row,
+                    ),
+                }
+                for row in evidence_rows
+            ]
         legacy_key = (
             str(metric_row["company"]), str(metric_row["metric_id"])
         )
@@ -2330,13 +2498,13 @@ def _projection_candidate(
         )
     migrated_keys = set(replacements)
     projected_metrics = project_metric_rows(
-        legacy_rows=legacy_metrics,
+        legacy_rows=assembly_metrics,
         migrated_keys=migrated_keys,
         replacement_rows=replacements,
         fieldnames=metric_fields,
     )
     projected_evidence = project_evidence_rows(
-        legacy_rows=legacy_evidence,
+        legacy_rows=assembly_evidence,
         migrated_keys=migrated_keys,
         replacement_rows=evidence_replacements,
         fieldnames=evidence_fields,
@@ -2554,7 +2722,10 @@ def _projection_candidate(
 
 def write_projection_candidate(
     *, repo_root: Path, batch_manifest_path: Path,
-    legacy_snapshot_dir: Path, staging_dir: Path
+    legacy_snapshot_dir: Path, staging_dir: Path,
+    public_predecessor_dir: Optional[Path] = None,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> Dict[str, object]:
     """Write only Projector-owned candidate and compatibility artifacts.
 
@@ -2563,6 +2734,9 @@ def write_projection_candidate(
         batch_manifest_path: Complete batch locator.
         legacy_snapshot_dir: Post-repair legacy snapshot.
         staging_dir: Dedicated staging root.
+        public_predecessor_dir: Optional active ratchet predecessor assembly.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         Candidate summary including compatibility status and row counts.
@@ -2576,6 +2750,9 @@ def write_projection_candidate(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
         legacy_snapshot_dir=legacy_snapshot_dir,
+        public_predecessor_dir=public_predecessor_dir,
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
     atomic_write_bytes(
         path=staging_dir / "metrics_matrix.csv",
@@ -2689,6 +2866,10 @@ def build_projection_manifest(
     batch_manifest_path: Path,
     legacy_snapshot_dir: Path,
     staging_dir: Path,
+    public_predecessor_dir: Optional[Path] = None,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
+    projection_requirement_hashes: Optional[Mapping[str, str]] = None,
 ) -> Dict[str, object]:
     """Verify generated projection bytes and build their durable proof.
 
@@ -2698,6 +2879,11 @@ def build_projection_manifest(
         batch_manifest_path: Persisted complete FROZEN Run collection.
         legacy_snapshot_dir: Complete post-repair legacy snapshot root.
         staging_dir: Candidate metrics/evidence and gate output root.
+        public_predecessor_dir: Optional active ratchet predecessor assembly.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
+        projection_requirement_hashes: Optional frozen outer publication
+            Requirement shape. Batch Runs retain their own exact Requirement.
 
     Returns:
         Content-addressed ProjectionManifest.
@@ -2710,6 +2896,9 @@ def build_projection_manifest(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
         legacy_snapshot_dir=legacy_snapshot_dir,
+        public_predecessor_dir=public_predecessor_dir,
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
     expected = {
         "metrics_matrix.csv": candidate["metric_bytes"],
@@ -2762,7 +2951,11 @@ def build_projection_manifest(
         "publication_candidate_status": status,
         "release_id": batch["release_id"],
         "release_plan_sha256": batch["release_plan_sha256"],
-        "requirement_hashes": dict(batch["requirement_hashes"]),
+        "requirement_hashes": dict(
+            batch["requirement_hashes"]
+            if projection_requirement_hashes is None
+            else projection_requirement_hashes
+        ),
         "result_bindings": list(candidate["result_bindings"]),
         "result_ids": sorted(str(result["result_id"]) for result in results),
         "review_unit_hashes": sorted(indexes["review_unit_hashes"]),

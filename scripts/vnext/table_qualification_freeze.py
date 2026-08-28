@@ -248,6 +248,7 @@ QUALIFICATION_SHARED_DATA_PATHS = (
     Path("config/provider_model_runtime.json"),
     Path("config/release_plans/issue_15_zero_ai_r1.json"),
     Path("config/release_plans/issue_15_zero_ai_r2.json"),
+    Path("config/release_plans/issue_15_lodging_r3.json"),
     Path("requirements/issue_15_v1/CONTRACT.md"),
     Path("requirements/issue_15_v1/decision_register.json"),
     Path("tools/check_validation_snapshot.py"),
