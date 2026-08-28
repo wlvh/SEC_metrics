@@ -236,9 +236,15 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             current["requirement_closure_hash"],
             loaded["current_requirement_closure_hash"],
         )
-        self.assertEqual(
+        self.assertNotEqual(
             loaded["requirement_closure_hash"],
             loaded["current_requirement_closure_hash"],
+        )
+        self.assertEqual(
+            124761,
+            current["effective_decisions"]["D-35"]["choice"][
+                "financial_materialization_resource_policy"
+            ]["production_max_total_cells_after"],
         )
         self.assertNotEqual(
             r2["requirement_closure_hash"],

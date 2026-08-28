@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 import unittest
+from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT
-from tools.investigate_jpm_financial_grid import (
-    build_financial_grid_census_receipt,
-)
+from vnext.canonical import content_hash, strict_json_file
 
 
 EXPECTED_RECEIPT_ID = (
@@ -20,14 +19,21 @@ class TableStageBFinancialGridCensusTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        """Build twice so PID, duration, or temp-path drift fails the suite."""
-        cls.first = build_financial_grid_census_receipt(repo_root=REPO_ROOT)
-        cls.second = build_financial_grid_census_receipt(repo_root=REPO_ROOT)
+        """Load the immutable pre-policy census consumed by the Decision."""
+        digest = EXPECTED_RECEIPT_ID.split(":", maxsplit=1)[1]
+        cls.first = strict_json_file(path=REPO_ROOT / Path(
+            "artifacts/vnext/table_stage_b_investigation/"
+            "financial_grid_census/{}.json".format(digest)
+        ))
 
-    def test_receipt_rebuild_is_deterministic(self) -> None:
-        """Produce identical receipt content on two consecutive censuses."""
+    def test_committed_receipt_identity_is_deterministic(self) -> None:
+        """Recompute the immutable pre-policy census content identity."""
         self.assertEqual(EXPECTED_RECEIPT_ID, self.first["receipt_id"])
-        self.assertEqual(self.first, self.second)
+        body = {
+            key: value for key, value in self.first.items()
+            if key != "receipt_id"
+        }
+        self.assertEqual(EXPECTED_RECEIPT_ID, content_hash(value=body))
 
     def test_exact_grid_counts_and_production_gate_trigger(self) -> None:
         """Close source, origin, span, blank, and rectangle accounting."""

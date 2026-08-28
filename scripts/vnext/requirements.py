@@ -43,13 +43,20 @@ ISSUE_15_SNAPSHOT_FILES = {
     "source_strategy": "source_strategy_baseline_receipt.json",
     "transfer": "transfer_manifest.json",
 }
-ISSUE_15_RUNTIME_AUTHORITY_FILES = {
+ISSUE_15_PRE_RESOURCE_RUNTIME_AUTHORITY_FILES = {
     "catalog/deterministic_metrics.json",
     "catalog/event_routes.json",
     "catalog/zero_ai_public_projection.json",
     "config/provider_model_runtime.json",
     "config/source_strategy_registry.json",
 }
+ISSUE_15_RUNTIME_AUTHORITY_FILES = (
+    ISSUE_15_PRE_RESOURCE_RUNTIME_AUTHORITY_FILES
+    | {
+    "scripts/vnext/resource_limits.py",
+    "tools/benchmark_jpm_full_materialization.py",
+    }
+)
 ISSUE_15_EFFECTIVE_DECISION_IDS = {
     "D-01",
     "D-03",
@@ -703,8 +710,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
         "#issuecomment-5340538535"
     ),
     "D-35": (
-        "https://github.com/wlvh/SEC_metrics/issues/15"
-        "#issuecomment-5340538535"
+        "https://github.com/wlvh/SEC_metrics/pull/22"
+        "#issuecomment-5450119034"
     ),
     "D-36": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -720,11 +727,58 @@ ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
     ),
     "D-35": (
-        "sha256:6e966a51833c5f1d4fd25e5b8520dfb46414a64e4b868ce4d8181f2b8ac1de04"
+        "sha256:2032cde77f95dc236bff96725f42999100945b0c40ef2562662443cfeef6f672"
     ),
     "D-36": (
         "sha256:468b7ef6528f4d76de56a71bcba4c913e47e858eefdba55129554ddaf845af1e"
     ),
+}
+ISSUE_15_PRE_RESOURCE_D35_TIP_HASH = (
+    "sha256:6e966a51833c5f1d4fd25e5b8520dfb46414a64e4b868ce4d8181f2b8ac1de04"
+)
+ISSUE_15_PRE_RESOURCE_D35_EVIDENCE = (
+    "https://github.com/wlvh/SEC_metrics/issues/15"
+    "#issuecomment-5340538535"
+)
+ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY = {
+    "family_id": "financial_statement",
+    "decision": "RAISE_CAP_TO_EXACT_EXPANDED_CELL_COUNT",
+    "benchmark_source_commit": (
+        "3c2f97b503b20925c1b1cdf3699977713759e9ae"
+    ),
+    "benchmark_source_tree": "0cc8f025c5db54c910010cbec0d43a1cab85659b",
+    "benchmark_receipt_id": (
+        "sha256:00144ea89bec568904a24ec52be33f75897a5a2d132525a727f770dd1b993508"
+    ),
+    "run_receipt_id": (
+        "sha256:f3b954403c9e9dde84d46a5013755ebb329c868551189b46b634506a6a33855a"
+    ),
+    "benchmark_status": "COMPLETED",
+    "source_sha256": (
+        "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    ),
+    "exact_table_count": 679,
+    "exact_expanded_cell_count": 124761,
+    "peak_process_rss_bytes": 282877952,
+    "peak_cgroup_memory_bytes": 288043008,
+    "hard_memory_ceiling_bytes": 536870912,
+    "wall_time_seconds": "5.10483",
+    "hard_wall_time_ceiling_seconds": 120,
+    "canonical_json_bytes": 22174348,
+    "derived_asset_id": (
+        "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110"
+    ),
+    "production_max_total_cells_before": 100000,
+    "production_max_total_cells_after": 124761,
+    "minimum_sufficient_policy": True,
+    "full_table_set_preserved": True,
+    "original_order_preserved": True,
+    "semantic_prefilter": False,
+    "selector_authorized": False,
+    "per_table_shards_selected": False,
+    "model_provider_egress_count": 0,
+    "paid_model_provider_call_count": 0,
+    "SEC_egress_count": 0,
 }
 ISSUE_15_BASE_PIPELINE_SHA256 = (
     "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438"
@@ -1818,12 +1872,18 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
 
     repository_root = snapshot_dir.parents[1]
     runtime_bindings = baseline["runtime_authority_files"]
+    runtime_authority_files = (
+        set(runtime_bindings) if isinstance(runtime_bindings, dict) else set()
+    )
     if (
         not isinstance(runtime_bindings, dict)
-        or set(runtime_bindings) != ISSUE_15_RUNTIME_AUTHORITY_FILES
+        or runtime_authority_files not in (
+            ISSUE_15_PRE_RESOURCE_RUNTIME_AUTHORITY_FILES,
+            ISSUE_15_RUNTIME_AUTHORITY_FILES,
+        )
     ):
         raise RequirementError("Issue #15 runtime authority file set differs")
-    for relative in sorted(ISSUE_15_RUNTIME_AUTHORITY_FILES):
+    for relative in sorted(runtime_authority_files):
         binding = runtime_bindings[relative]
         if not isinstance(binding, dict):
             raise RequirementError("Issue #15 runtime authority binding is invalid")
@@ -1899,11 +1959,17 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Issue #15 has an effective pending Decision")
     if sorted(baseline["effective_decision_ids"]) != sorted(decisions):
         raise RequirementError("Issue #15 baseline Decision set differs")
+    financial_resource_policy_active = (
+        runtime_authority_files == ISSUE_15_RUNTIME_AUTHORITY_FILES
+    )
+    expected_d35_chain_length = (
+        3 if financial_resource_policy_active else 2
+    )
     if (
         len(chains["D-01"]) != 4
         or len(chains["D-07"]) != 17
         or len(chains["D-26"]) != 3
-        or len(chains["D-35"]) != 2
+        or len(chains["D-35"]) != expected_d35_chain_length
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
@@ -1914,7 +1980,9 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         or decisions["D-26"]["supersedes_decision_id"]
         != _decision_record_hash(decision=chains["D-26"][1])
         or decisions["D-35"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-35"][0])
+        != _decision_record_hash(
+            decision=chains["D-35"][expected_d35_chain_length - 2]
+        )
         or decisions["D-36"]["supersedes_decision_id"]
         != _decision_record_hash(decision=chains["D-36"][0])
     ):
@@ -1929,6 +1997,15 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         decision_id: _decision_record_hash(decision=decisions[decision_id])
         for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
     }
+    expected_tip_hashes = dict(ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES)
+    expected_decision_evidence = dict(
+        ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID
+    )
+    if not financial_resource_policy_active:
+        expected_tip_hashes["D-35"] = ISSUE_15_PRE_RESOURCE_D35_TIP_HASH
+        expected_decision_evidence["D-35"] = (
+            ISSUE_15_PRE_RESOURCE_D35_EVIDENCE
+        )
     if (
         decisions["D-01"]["choice"] != expected_d01_choice
         or d07_choice != ISSUE_15_D07_EFFECTIVE_CHOICE
@@ -1936,10 +2013,10 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         or not d26_choice["required_short_deterministic_invariants"]
         or "budget_preflight_provider_calls_zero"
         in d26_choice["required_short_deterministic_invariants"]
-        or effective_tip_hashes != ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
+        or effective_tip_hashes != expected_tip_hashes
         or any(
             decisions[decision_id]["evidence"]
-            != ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID[decision_id]
+            != expected_decision_evidence[decision_id]
             for decision_id in ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES
         )
         or "BUDGET_EXCEEDED" in d35_choice["terminal_classes"]
@@ -1950,6 +2027,15 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         or d35_choice["non_monetary_safety_terminal_classes"]
         != ["PAYLOAD_LIMIT", "CONTEXT_LIMIT", "RESOURCE_LIMIT"]
         or d35_choice["resource_limit_is_monetary_budget_gate"]
+        or (
+            financial_resource_policy_active
+            and d35_choice.get("financial_materialization_resource_policy")
+            != ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY
+        )
+        or (
+            not financial_resource_policy_active
+            and "financial_materialization_resource_policy" in d35_choice
+        )
         or d36_choice["repository_monetary_budget_enforcement"] != "DISABLED"
         or d36_choice["spending_authority"] != "EXTERNAL_API_ACCOUNT_BALANCE"
         or d36_choice["per_call_monetary_hard_cap_exists"]

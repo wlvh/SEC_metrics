@@ -4097,6 +4097,79 @@
       "approved_at_utc": "2026-08-27T12:01:12Z",
       "supersedes_decision_id": "sha256:02bb127e86e54251b8c21c59661cfa12fc915cd976b280dfc8f275b90b1e9ec3",
       "evidence": "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-5438743026"
+    },
+    {
+      "decision_id": "D-35",
+      "status": "APPROVED",
+      "choice": {
+        "retry_owner": "ORCHESTRATOR",
+        "terminal_classes": [
+          "HTTP_400",
+          "HTTP_401",
+          "HTTP_402",
+          "HTTP_422",
+          "SCHEMA_VIOLATION",
+          "EVIDENCE_FAILURE",
+          "PAYLOAD_LIMIT",
+          "CONTEXT_LIMIT",
+          "RESOURCE_LIMIT"
+        ],
+        "retryable_classes": [
+          "HTTP_429",
+          "TIMEOUT",
+          "RECOVERABLE_5XX"
+        ],
+        "maximum_retries": 1,
+        "terminal_stops_execution": true,
+        "terminal_stops_batch": true,
+        "automatic_fallback": false,
+        "abandoned_before_egress_recoverable": true,
+        "unknown_remote_outcome_automatic_retry": false,
+        "http_402_automatic_retries": 0,
+        "http_402_stops_execution": true,
+        "http_402_stops_batch": true,
+        "monetary_budget_terminal_classes": [],
+        "non_monetary_safety_terminal_classes": [
+          "PAYLOAD_LIMIT",
+          "CONTEXT_LIMIT",
+          "RESOURCE_LIMIT"
+        ],
+        "resource_limit_is_monetary_budget_gate": false,
+        "financial_materialization_resource_policy": {
+          "family_id": "financial_statement",
+          "decision": "RAISE_CAP_TO_EXACT_EXPANDED_CELL_COUNT",
+          "benchmark_source_commit": "3c2f97b503b20925c1b1cdf3699977713759e9ae",
+          "benchmark_source_tree": "0cc8f025c5db54c910010cbec0d43a1cab85659b",
+          "benchmark_receipt_id": "sha256:00144ea89bec568904a24ec52be33f75897a5a2d132525a727f770dd1b993508",
+          "run_receipt_id": "sha256:f3b954403c9e9dde84d46a5013755ebb329c868551189b46b634506a6a33855a",
+          "benchmark_status": "COMPLETED",
+          "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "exact_table_count": 679,
+          "exact_expanded_cell_count": 124761,
+          "peak_process_rss_bytes": 282877952,
+          "peak_cgroup_memory_bytes": 288043008,
+          "hard_memory_ceiling_bytes": 536870912,
+          "wall_time_seconds": "5.10483",
+          "hard_wall_time_ceiling_seconds": 120,
+          "canonical_json_bytes": 22174348,
+          "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+          "production_max_total_cells_before": 100000,
+          "production_max_total_cells_after": 124761,
+          "minimum_sufficient_policy": true,
+          "full_table_set_preserved": true,
+          "original_order_preserved": true,
+          "semantic_prefilter": false,
+          "selector_authorized": false,
+          "per_table_shards_selected": false,
+          "model_provider_egress_count": 0,
+          "paid_model_provider_call_count": 0,
+          "SEC_egress_count": 0
+        }
+      },
+      "approved_by": "user:github:wlvh",
+      "approved_at_utc": "2026-08-28T08:14:26Z",
+      "supersedes_decision_id": "sha256:6e966a51833c5f1d4fd25e5b8520dfb46414a64e4b868ce4d8181f2b8ac1de04",
+      "evidence": "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-5450119034"
     }
   ],
   "pending_decisions": [

@@ -1016,6 +1016,62 @@ def validate_current_receipts(*, repo_root: Path) -> Dict[str, object]:
         key: semantic[key] for key in semantic if key != "benchmark_receipt_id"
     }
     run_body = {key: run[key] for key in run if key != "run_receipt_id"}
+    current_sources = _production_source_hashes(repo_root=repo_root)
+    recorded_sources = semantic["production_source_code_hashes"]
+    if type(recorded_sources) is not dict:
+        raise FinancialMaterializationBenchmarkError(
+            "Benchmark source binding is invalid"
+        )
+    source_binding_valid = current_sources == recorded_sources
+    if not source_binding_valid:
+        from vnext.requirements import load_requirement_snapshot
+        from vnext.resource_limits import RESOURCE_LIMITS
+
+        requirement = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements/issue_15_v1",
+        )
+        policy = requirement["effective_decisions"]["D-35"]["choice"].get(
+            "financial_materialization_resource_policy"
+        )
+        if type(policy) is dict:
+            benchmark_commit = str(policy.get("benchmark_source_commit", ""))
+            tree = subprocess.run(
+                ["git", "rev-parse", benchmark_commit + "^{tree}"],
+                cwd=str(repo_root),
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            git_hashes = {}
+            for relative in recorded_sources:
+                blob = subprocess.run(
+                    ["git", "show", benchmark_commit + ":" + relative],
+                    cwd=str(repo_root),
+                    check=False,
+                    capture_output=True,
+                )
+                if blob.returncode == 0:
+                    git_hashes[relative] = sha256_bytes(content=blob.stdout)
+            changed = {
+                relative for relative in recorded_sources
+                if current_sources.get(relative) != recorded_sources[relative]
+            }
+            source_binding_valid = (
+                tree.returncode == 0
+                and tree.stdout.strip() == policy.get("benchmark_source_tree")
+                and git_hashes == recorded_sources
+                and changed == {
+                    RESOURCE_LIMITS_RELATIVE.as_posix(),
+                    TOOL_RELATIVE.as_posix(),
+                }
+                and policy.get("benchmark_receipt_id")
+                == semantic.get("benchmark_receipt_id")
+                and policy.get("run_receipt_id") == run.get("run_receipt_id")
+                and policy.get("production_max_total_cells_before")
+                == semantic["production_resource_policy"]["max_total_cells"]
+                and policy.get("production_max_total_cells_after")
+                == RESOURCE_LIMITS.max_total_cells
+            )
     if (
         semantic.get("benchmark_receipt_id") != content_hash(value=semantic_body)
         or run.get("run_receipt_id") != content_hash(value=run_body)
@@ -1023,8 +1079,7 @@ def validate_current_receipts(*, repo_root: Path) -> Dict[str, object]:
         or pointer["run_receipt_id"] != run["run_receipt_id"]
         or semantic["stage_b_census_binding"]["receipt_id"]
         != STAGE_B_CENSUS_RECEIPT_ID
-        or semantic["production_source_code_hashes"]
-        != _production_source_hashes(repo_root=repo_root)
+        or not source_binding_valid
         or semantic["root_business_artifacts_before"]
         != semantic["root_business_artifacts_after"]
         or semantic["root_business_artifacts_after"]

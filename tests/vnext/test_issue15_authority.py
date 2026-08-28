@@ -40,6 +40,7 @@ from vnext.requirements import (
     ISSUE_15_D07_RAW_WHITESPACE_PROMPT_POLICY,
     ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
     ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY,
+    ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -430,7 +431,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
         self.assertEqual(17, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
-        self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-35"]))
+        self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
         self.assertEqual(
             set(baseline["effective_decision_ids"]),
@@ -658,6 +659,10 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(
             ["PAYLOAD_LIMIT", "CONTEXT_LIMIT", "RESOURCE_LIMIT"],
             d35_choice["non_monetary_safety_terminal_classes"],
+        )
+        self.assertEqual(
+            ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY,
+            d35_choice["financial_materialization_resource_policy"],
         )
         self.assertEqual(
             "DISABLED", d36_choice["repository_monetary_budget_enforcement"],
@@ -1532,6 +1537,36 @@ class Issue15AuthorityTest(unittest.TestCase):
                 RequirementError, "superseding Decision content differs",
             ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_financial_resource_policy_is_exact_and_evidence_bound(self) -> None:
+        """Reject cap inflation, receipt substitution, filtering, or shards."""
+        mutations = {
+            "production_max_total_cells_after": 124762,
+            "benchmark_receipt_id": "sha256:" + ("0" * 64),
+            "full_table_set_preserved": False,
+            "selector_authorized": True,
+            "per_table_shards_selected": True,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(
+                    path=issue_copy / "decision_register.json"
+                )
+                d35 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-35"
+                )
+                d35["choice"]["financial_materialization_resource_policy"][
+                    field
+                ] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
 
     def test_budget_preflight_invariant_cannot_return(self) -> None:
         """Reject a self-rebound D-26 tip that restores the removed test."""

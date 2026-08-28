@@ -221,7 +221,7 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 判断展示版本必须同时读取 active pointer 与 latest run status：active 是当前可用的上一成功完整版本；latest 可能失败、withheld 或仍在 staging。status writer 只接收 persisted Run directory 或 publication ID，在 pointer lock 内加载真实状态并验证 active pointer/bundle；不接受调用方自报的状态枚举、boolean、view 或 manifest。bundle storage、pointer/lock、status 和 mirrors 全部从单一 publication root 派生，调用方不能分别定义互相矛盾的路径。`active_is_latest_success` 由两者 publication ID 是否相同派生。FAILED/BLOCKED 不得携带 latest publication ID，不能把旧 active 描述成最新运行成功。
 <!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
 
-当前可采信的active publication覆盖Issue #15 R3：在R2的16个DET_ONLY与C01/E01–E05基础上新增lodging B10/B11，共24指标/240个累计vNext Result坐标；R3新增20个坐标，其中18个新增key为`N_A_STRUCTURAL`，public matrix共327行。R1历史与R2 predecessor仍可回读；十个lodging qualification terminal均重新执行DerivedAsset/Evidence/Review/Calculator并绑定provider usage，正式发布后又完成R3→R2 rollback→修正版R3，当前previous精确为R2。financial、text、39指标最终Cutover和full acceptance尚未完成。
+当前可采信的active publication覆盖Issue #15 R3：在R2的16个DET_ONLY与C01/E01–E05基础上新增lodging B10/B11，共24指标/240个累计vNext Result坐标；R3新增20个坐标，其中18个新增key为`N_A_STRUCTURAL`，public matrix共327行。R1历史与R2 predecessor仍可回读；十个lodging qualification terminal均重新执行DerivedAsset/Evidence/Review/Calculator并绑定provider usage，正式发布后又完成R3→R2 rollback→修正版R3，当前previous精确为R2。financial的JPM完整表资源门已在Linux 512 MiB硬边界下实测通过，production cap按D-35最小提高到124761且未选择shards；这只表示资源前提就绪，不表示financial qualification或R4已完成。text、39指标最终Cutover和full acceptance同样尚未完成。
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
 <!-- capability-anchor: CAPABILITY.issue_15_r3_ratchet_prepare -->

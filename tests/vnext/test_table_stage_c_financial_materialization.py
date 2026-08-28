@@ -11,12 +11,16 @@ from tools.benchmark_jpm_full_materialization import DOCKER_LINUX_IMAGE
 from tools.benchmark_jpm_full_materialization import DOCKER_WORKDIR
 from tools.benchmark_jpm_full_materialization import RESOURCE_LIMITS_RELATIVE
 from tools.benchmark_jpm_full_materialization import RSS_CEILING_BYTES
+from tools.benchmark_jpm_full_materialization import SOURCE_RELATIVE
 from tools.benchmark_jpm_full_materialization import SOURCE_SHA256
 from tools.benchmark_jpm_full_materialization import STAGE_B_CENSUS_RECEIPT_ID
 from tools.benchmark_jpm_full_materialization import TEST_ONLY_MAX_TOTAL_CELLS
 from tools.benchmark_jpm_full_materialization import _docker_argv
 from tools.benchmark_jpm_full_materialization import validate_current_receipts
 from vnext.canonical import sha256_file, strict_json_file
+from vnext.requirements import load_requirement_snapshot
+from vnext.resource_limits import RESOURCE_LIMITS
+from vnext.table_grid import build_table_grid
 
 
 EXPECTED_BENCHMARK_RECEIPT_ID = (
@@ -25,8 +29,11 @@ EXPECTED_BENCHMARK_RECEIPT_ID = (
 EXPECTED_RUN_RECEIPT_ID = (
     "sha256:f3b954403c9e9dde84d46a5013755ebb329c868551189b46b634506a6a33855a"
 )
-PRODUCTION_RESOURCE_LIMITS_SHA256 = (
+BENCHMARK_RESOURCE_LIMITS_SHA256 = (
     "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04"
+)
+CURRENT_RESOURCE_LIMITS_SHA256 = (
+    "58f09bb6fb83226f6650f3b8a9f4e0a13addc3ec541d3a76eb3b5aac4a6e5777"
 )
 
 
@@ -146,12 +153,30 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
         self.assertEqual(100000, policy["max_total_cells"])
         self.assertTrue(policy["unchanged"])
         self.assertEqual(
-            PRODUCTION_RESOURCE_LIMITS_SHA256,
+            CURRENT_RESOURCE_LIMITS_SHA256,
             sha256_file(path=REPO_ROOT / RESOURCE_LIMITS_RELATIVE),
         )
         self.assertEqual(
-            PRODUCTION_RESOURCE_LIMITS_SHA256,
+            BENCHMARK_RESOURCE_LIMITS_SHA256,
             policy["resource_limits_sha256_before"],
+        )
+        self.assertEqual(
+            BENCHMARK_RESOURCE_LIMITS_SHA256,
+            policy["resource_limits_sha256_after"],
+        )
+        self.assertEqual(124761, RESOURCE_LIMITS.max_total_cells)
+        requirement = load_requirement_snapshot(
+            snapshot_dir=REPO_ROOT / "requirements/issue_15_v1",
+        )
+        resource_policy = requirement["effective_decisions"]["D-35"][
+            "choice"
+        ]["financial_materialization_resource_policy"]
+        self.assertEqual(
+            124761, resource_policy["production_max_total_cells_after"],
+        )
+        self.assertEqual(
+            self.summary["benchmark_receipt_id"],
+            resource_policy["benchmark_receipt_id"],
         )
         self.assertEqual(
             self.semantic["root_business_artifacts_before"],
@@ -162,6 +187,29 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
         self.assertEqual(0, network["real_model_provider_egress_count"])
         self.assertEqual(0, network["paid_model_provider_call_count"])
         self.assertEqual(0, network["real_SEC_egress_count"])
+
+    def test_production_cap_materializes_the_exact_jpm_grid(self) -> None:
+        """Prove the minimum 124761 cap admits all tables in original order."""
+        asset = build_table_grid(
+            html_bytes=(REPO_ROOT / SOURCE_RELATIVE).read_bytes(),
+            parent_raw_asset_ids=["sha256:" + SOURCE_SHA256],
+            storage_uri=(
+                "artifacts/vnext/table_stage_c_evidence/"
+                "financial_materialization_benchmark/derived_asset.json"
+            ),
+        )
+        self.assertEqual(679, len(asset["tables"]))
+        self.assertEqual(
+            124761,
+            sum(
+                int(table["row_count"]) * int(table["column_count"])
+                for table in asset["tables"]
+            ),
+        )
+        self.assertEqual(
+            "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            asset["derived_asset_id"],
+        )
 
     def test_semantic_preimage_excludes_process_and_temporary_noise(self) -> None:
         """Keep semantic identity free of PID, temp locators, and stderr lines."""

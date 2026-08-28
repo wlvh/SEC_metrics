@@ -58,7 +58,9 @@ class ResourceLimits:
 
 
 # These ceilings retain complete in-budget content while bounding the largest
-# materialized grid to a predictable audit-workstation resource envelope.
+# materialized grid to a predictable audit-workstation resource envelope.  The
+# total-cell cap is the minimum value that admits the exact 124761-cell JPM
+# filing proven safe by the Issue #15 D-35 Linux hard-guard benchmark.
 RESOURCE_LIMITS = ResourceLimits(
     max_html_bytes=64 * 1024 * 1024,
     max_tables=2048,
@@ -67,7 +69,7 @@ RESOURCE_LIMITS = ResourceLimits(
     max_span_attribute_chars=32,
     max_entity_reference_chars=64,
     max_cells_per_table=25000,
-    max_total_cells=100000,
+    max_total_cells=124761,
     max_cell_text_chars=1024 * 1024,
     max_table_text_chars=16 * 1024 * 1024,
     max_total_table_text_chars=32 * 1024 * 1024,
