@@ -103,9 +103,9 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 
 当前仓库未登记 UI、API、scheduler、CI、部署状态、专用支持渠道或紧急联系人。
 
-## 8. vNext formal Cutover 的可观察行为（zero-AI R2 active）
+## 8. vNext formal Cutover 的可观察行为（R3 partial active）
 
-仓库已包含同一套recorded/live operator与formal publication primitives。当前active pointer是Issue #15 zero-AI R2业务入口，只覆盖22个累计指标；recorded sandbox仍不能修改或冒充它。
+仓库已包含同一套recorded/live operator与formal publication primitives。当前active pointer是Issue #15 R3业务入口，覆盖24个累计指标、240个累计vNext Result keys和327行public matrix；recorded sandbox仍不能修改或冒充它。previous pointer精确指向R2，不能把这个partial active写成39指标最终Cutover。
 <!-- capability-anchor: CAPABILITY.vnext_recorded_shadow -->
 
 Issue #15 WB-2 另外提供一份可机械加载的39指标SourceStrategy registry，只描述target route；当前ratchet set只能从不可变ReleasePlan chain的`cumulative_metric_ids`读取。loader要求parent累计metrics、vNext keys与retired producers分别为child子集，并显式推导removed/unretired exact set为空；同步重签全部hash不能合法化删除。该registry完成时root `outputs/metrics_matrix.csv`仍与WB-1冻结SHA-256一致，未执行任何adapter、SEC/模型调用或active publication；不能把“route已登记”读成“指标已迁移”。
@@ -152,7 +152,8 @@ Stage C-B packet界面显示独立review 5014622571锚定的exact head/tree、pl
 
 latest D-07已把live qualification限定到lodging两个current task。`vnext_qualification.py table-plan`显示matrix-owned phase/source/request：second layout=Marriott FY2024、replacement holdout=Marriott FY2023、fresh=Marriott FY2025；CLI不接收source/company/period override。同issuer独立性必须重验不同fiscal year、accession和source bytes，并机械证明至少两项layout差异。FY2023 exact source由既有`SecHttpClient`一次HTTP 200/retry=0获取；offline proof定位唯一`table_000011`，同表含2023 RevPAR 124.70、Occupancy 69.2、`Comparable Systemwide Properties`与`Worldwide`，全文档table count为66（FY2024=67、FY2025=68），且FY2023/FY2024目标表第11/13行span geometry不同。source-only fixture不含可复用模型response。每个`table-execute`仍生成新的WB-3 execution、provider ledger row、qualification Evidence、Review、Result与FROZEN Run；estimated超200000的plan只可在独立exact-head review逐plan/request绑定后执行，并由各自新response的provider usage terminal判断，缺usage或actual prompt超限立即terminal、零重试并停止后续lodging plans。两个second-layout task都FROZEN后，`table-freeze`用既有`PRODUCTION_SEMANTIC_FREEZE`类型绑定production tree和ledger prefix；holdout只能在freeze后，三个fresh ordinals只能在两个holdout task FROZEN后。该顺序不新增measurement、不复用历史response，也不自动授权R3 publication。
 
-R3 offline prepare复用现有Issue #15 ReleasePlan、catalog task Workflow、Projector、ValidationReceipt和CAS bundle verifier。它重新读取十个committed qualification terminal并机械重跑DerivedAsset/Evidence/Review/Calculator，只把两个final fresh Run用于APPLICABLE production coordinates；其余18个company×metric坐标由零AI structural FROZEN Runs产生。strict compatibility仍以冻结legacy A作oracle，完整public assembly以pinned active R2作predecessor，故inactive candidate为24个累计指标、240个累计vNext keys、327个public rows。prepare只写临时workspace/publication root，不改变正式pointer或root；当前active仍是R2，直到clean committed `r3`命令真实CAS commit并read-back。
+R3 module-owned路径复用现有Issue #15 ReleasePlan、catalog task Workflow、Projector、ValidationReceipt和CAS bundle verifier。它重新读取十个committed qualification terminal并机械重跑DerivedAsset/Evidence/Review/Calculator，只把两个final fresh Run用于APPLICABLE production coordinates；其余18个company×metric坐标由零AI structural FROZEN Runs产生。strict compatibility仍以冻结legacy A作oracle，完整public assembly以pinned R2作predecessor，形成24个累计指标、240个累计vNext keys、327个public rows。正式CAS提交、bundle read-back与root mirror equality均已通过；修复header-only audit文件的换行兼容时还真实执行了R3→R2 rollback→修正版R3，当前previous精确为R2。
+<!-- capability-anchor: CAPABILITY.issue_15_r3_ratchet_prepare -->
 
 Fresh ordinal在CLI上仍显示同一个exact provider request SHA，这是稳定输入而不是response复用许可。每个task plan会显示不同的plan/terminal/Run identity，并在cycle父目录下使用plan-owned WB-3 namespace；因此相同request bytes仍必须真实产生新的provider request ID、egress marker、attempt、response、acceptance、ledger row和FROZEN Run。cycle状态从全部plan namespaces聚合，业务人员不能把前一ordinal的success文件复制或链接到后一ordinal。执行顺序按ordinal-major跨两个task推进，任一terminal failure或usage门失败会阻断全部剩余fresh。
 
@@ -222,16 +223,16 @@ vNext MetricResult 同时暴露 `applicability`、`quality`、`publication` 与 
 若latest Run失败或withheld，`latest_run_status`必须显示失败原因、candidate status、active publication ID、空的latest publication ID以及`active_is_latest_success=false`。单个FROZEN Run也不能代表完整batch；active仍是上一成功版本，不能被描述成“最新运行成功”。首次formal commit先把冻结legacy root bytes严格重验并只读导入为immutable predecessor A，不调用旧parser/resolver/repair；formal B必须绑定A，隔离root完成14项fault matrix并持久化受绑定receipts后，才允许私有initial-chain primitive执行official lock/CAS。每次switch先在exclusive lock内写`outputs/publication_switch_intents/<sha256>.json`；reader在shared lock看到pending、multiple或tampered intent只返回稳定失败，不修改authority。writer recovery在pointer==proposed时完成connected edge并重建proposed mirrors，在pointer==previous时清理本事务edge并恢复previous，其他状态失败；initial A→B失败还必须清除A孤儿edge、pointer和intent。因此mirror/pointer/switch-receipt中途hard crash不得产生可读的成功半成品。rollback只允许切回current pointer记录的committed predecessor，prepared sibling不能借rollback激活；rollback到imported A也只切pointer、从目标bundle重建mirrors并验证legacy import identity，绝不重新启用旧parser或旧producer。
 <!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
 
-Issue #15 acceptance并发运行十一个直接边界用例；fast整体仍仅为`FAST_LOCAL_ONLY`，不能升级R2或后续scope证据。
+Issue #15 acceptance并发运行直接边界用例；fast整体仍仅为`FAST_LOCAL_ONLY`，不能升级R3或后续scope证据。
 
 ### 8.4 当前不能执行的承诺
 
-zero-AI R2已形成committed active并保留R1 rollback/restore历史，但WB-4以后、AI Reader、39指标最终Cutover和full receipt仍不存在。因此：
+R3已形成committed partial active并保留R1历史、R2 predecessor以及R3→R2→修正版R3的rollback/restore证据，但financial、text、39指标最终Cutover和full receipt仍不存在。因此：
 
 - `tools/run_acceptance.py --scope recorded` 强制离线且不修改 pointer/root mirrors，按 R4 只封存并发快速本地证据，最高状态是 `PASSED_FAST_LOCAL_ONLY`；
 - `--scope full` 未带 `--execute-live` 返回 `LIVE_EXECUTION_NOT_AUTHORIZED`；带授权但凭据或qualification缺失时返回 BLOCKED且不开始 Cutover；首次A→B不要求预先存在previous publication；
 - 只有 `python3 tools/run_acceptance.py --scope full --execute-live` 完成 new→rollback→restore 三次单进程、单次pin terminal cycle并最终返回 0，才是 full PASS；
-- 当前根目录report/CSV/manifest来自R2 successor，只能按22指标partial ratchet解释；不能写Issue #15最终Done或`Closes #15`。
+- 当前根目录report/CSV/manifest来自R3 successor，只能按24指标/240累计vNext keys/327行public matrix的partial ratchet解释；不能写Issue #15最终Done或`Closes #15`。
 
 这些限制是当前能力边界，不是 caveat 可豁免项。
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->

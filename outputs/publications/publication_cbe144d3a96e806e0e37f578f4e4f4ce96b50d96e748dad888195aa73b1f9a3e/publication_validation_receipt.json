@@ -1,0 +1,107 @@
+{
+  "status": "PASSED",
+  "view_id": "staging:sha256:9a5c3f1aa0a570e5e0cdc8c1eced2cae9a5efde58e9839413642be2e0dd7dcce",
+  "checks": [
+    {
+      "check": "COVERAGE",
+      "evidence_hash": "sha256:ff3a8519d6a3a73667cd17e6282e61b782150cf5dc301549d905cc7c8256a85a",
+      "status": "PASS"
+    },
+    {
+      "check": "GOLDEN",
+      "evidence_hash": "sha256:f8c33aeecbd1560d372c1b4633acfae7f9693f4af8aefa995abf187376a7569a",
+      "status": "PASS"
+    },
+    {
+      "check": "LEGACY_INVARIANT_MIGRATION",
+      "evidence_hash": "sha256:40e0eb90c8ee3c4f21e5cf7c53f8c9b049c45d866e01ebae488113af6c5d1a0f",
+      "status": "PASS"
+    },
+    {
+      "check": "PROJECTION_EXACT_SET",
+      "evidence_hash": "sha256:1644b6cd0e74d45d960279c3641fa67cd0e25c8c681b991a544431747709f828",
+      "status": "PASS"
+    },
+    {
+      "check": "REPAIR_VALIDATION",
+      "evidence_hash": "sha256:513b2c3274f4ae3494bd10f1a7fb9e7387d87eb4b3387ca94edb0e161dbec155",
+      "status": "PASS"
+    },
+    {
+      "check": "REQUEST_LOCATOR_TIER",
+      "evidence_hash": "sha256:e1925cb90f42f26eb2d1cfbae2e0bd7caeab3a81d12cfe55ad8b810fb6392adc",
+      "status": "PASS"
+    },
+    {
+      "check": "SCALABILITY_AUDIT",
+      "evidence_hash": "sha256:c4f18a05b2a4e09fa91c04003471cdf430d634121875e2935aa6092568c7eafb",
+      "status": "PASS"
+    },
+    {
+      "check": "SEMANTIC_AUDIT",
+      "evidence_hash": "sha256:504c9180b6b90c6092315739c30a7874bc6b0b50621bf51af970d32cfc861d91",
+      "status": "PASS"
+    },
+    {
+      "check": "STRATIFIED_AUDIT",
+      "evidence_hash": "sha256:69d773280a945d86f06fd1d5e06ba9599bcc6c8d23d7c65e0c8da3fb6f60c8df",
+      "status": "PASS"
+    }
+  ],
+  "artifact_hashes": {
+    "README_RUN.md": {
+      "sha256": "eea0c8104352741fb91502eb40cb205e6a1103f8cc778b1af097d87f97557920",
+      "size": 850
+    },
+    "REPORT_十公司财务指标.md": {
+      "sha256": "4d180dd96fbb29e35dfefee4a78b97c33decd13f51b8518dfd5f91e10c84def9",
+      "size": 18899
+    },
+    "coverage_matrix.csv": {
+      "sha256": "935390dccf22538c5f3afe9f80e781952b2e0e785398cd7479ab2b69ad0790d3",
+      "size": 40452
+    },
+    "golden_results.csv": {
+      "sha256": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+      "size": 9166
+    },
+    "legacy_invariant_migration_receipt.json": {
+      "sha256": "b0ddea8be8d29493c61bc62e74a85939f9f4e07817bfdaa8d708289ab80ad6d2",
+      "size": 104184
+    },
+    "metric_evidence.csv": {
+      "sha256": "da505166e60adaa7909b4185cd3c6c96f80df711db0c76ec57037ebf853509a2",
+      "size": 249163
+    },
+    "metrics_matrix.csv": {
+      "sha256": "b390121cdc75c0e9eff50b3c896191731ec7c6102061cb61ff677a4f6a588b72",
+      "size": 108744
+    },
+    "projection_manifest.json": {
+      "sha256": "b984193c984bf4006e7df7678a0c1296fa61183b3986fc295bfd0d7974ca0c2a",
+      "size": 31879
+    },
+    "repair_validation_results.csv": {
+      "sha256": "93e7e24adba4e7ae1e796de8f031ba356dc420527e6c0e7b36e555071f4fb6ca",
+      "size": 314
+    },
+    "scalability_audit.csv": {
+      "sha256": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f",
+      "size": 55
+    },
+    "semantic_audit_receipt.json": {
+      "sha256": "62007184e921cb4fe16666e57fa5a3fd15cc6366be7ef6668df73fe786adb100",
+      "size": 7629
+    },
+    "stratified_audit.csv": {
+      "sha256": "0701e26fde2355f56fcd7598d951b8a401fabceaee9d402327a90bc11b2947e7",
+      "size": 774
+    },
+    "validation_run_manifest.json": {
+      "sha256": "e6d431187c4aaecdc7ceafbb493085cfa4ccae1d9e00d56cec4cb561550e0d14",
+      "size": 486
+    }
+  },
+  "record_type": "VALIDATION_RECEIPT",
+  "validation_receipt_id": "sha256:eecff4654be353d280c3869f15b99dca3e7e7f195b36b51907dc79ec186d8be1"
+}

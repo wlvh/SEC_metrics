@@ -1,0 +1,124 @@
+{
+  "profile_rules": [
+    {"sic_start": 2830, "sic_end": 2839, "profile": "pharma"},
+    {"sic_start": 3670, "sic_end": 3679, "profile": "manufacturing"},
+    {"sic_start": 3710, "sic_end": 3719, "profile": "manufacturing"},
+    {"sic_start": 4510, "sic_end": 4519, "profile": "airline"},
+    {"sic_start": 4810, "sic_end": 4819, "profile": "telecom"},
+    {"sic_start": 4830, "sic_end": 4839, "profile": "media"},
+    {"sic_start": 5310, "sic_end": 5319, "profile": "retail"},
+    {"sic_start": 6020, "sic_end": 6029, "profile": "financial_institution"},
+    {"sic_start": 7010, "sic_end": 7019, "profile": "lodging"},
+    {"sic_start": 7370, "sic_end": 7379, "profile": "subscription_or_contract_revenue"}
+  ],
+  "profile_overrides": {},
+  "profiles": {
+    "financial_institution": {
+      "extractors": [
+        "BaselCapitalRatioExtractor",
+        "StandardCompanyfactsExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "lodging": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "LodgingKpiExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "subscription_or_contract_revenue": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "RpoCrpoExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "manufacturing": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "CaptiveFinanceDebtExtractor",
+        "CapacityUtilizationExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "retail": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "pharma": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "telecom": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "media": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "EntityContinuityYoyRule",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "airline": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    },
+    "default_non_fi": {
+      "extractors": [
+        "StandardCompanyfactsExtractor",
+        "EcdCompensationExtractor",
+        "AuditorNameExtractor",
+        "EightKItemExtractor",
+        "RiskLegalTextExtractor"
+      ]
+    }
+  },
+  "settings": {
+    "lodging_scope_priority": [
+      "comparable systemwide worldwide",
+      "systemwide worldwide",
+      "companywide",
+      "worldwide"
+    ],
+    "revpar_usd_range": [30, 600],
+    "occupancy_percent_range": [0, 100],
+    "rpo_min_usd": 1000000000
+  }
+}

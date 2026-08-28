@@ -1,0 +1,78 @@
+{
+  "status": "PASSED",
+  "view_id": "run:sha256:619338b2eefd38e9c7c3c5d8b4ab6a85975735646ff94d9d0b1ffe8daf15492e",
+  "checks": [
+    {
+      "check": "REVIEW_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "REVIEW_ASSETS",
+      "status": "PASS"
+    },
+    {
+      "check": "REPOSITORY_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "RESULT_EXACT_SET",
+      "status": "PASS"
+    },
+    {
+      "check": "RECORD_GRAPH_REPLAY",
+      "status": "PASS"
+    },
+    {
+      "check": "EXECUTION_SEMANTICS",
+      "status": "PASS"
+    },
+    {
+      "check": "ARTIFACT_EXACT_SET",
+      "status": "PASS"
+    }
+  ],
+  "artifact_hashes": {
+    "attempt_payloads/assistant_output_47984a6fa40ea4b0a3eabc36980c75c7d90f1a87547902747a913fafdce2a7a0.json": {
+      "sha256": "47984a6fa40ea4b0a3eabc36980c75c7d90f1a87547902747a913fafdce2a7a0",
+      "size": 1718
+    },
+    "attempt_payloads/output_schema_a258d219eae2bb7afb5a9632fc04f5423b1ac398b592d6d49c107e3d75fd4ad9.json": {
+      "sha256": "a258d219eae2bb7afb5a9632fc04f5423b1ac398b592d6d49c107e3d75fd4ad9",
+      "size": 4931
+    },
+    "attempt_payloads/reader_payload_27fcc053d75f48f03ff084555f69935593b86b7b55a6751a8546e6d8f9314ad3.json": {
+      "sha256": "27fcc053d75f48f03ff084555f69935593b86b7b55a6751a8546e6d8f9314ad3",
+      "size": 350243
+    },
+    "attempt_payloads/request_10a878efe4ec0cff640f344b8bca42856a570cc82be4f7cf7ee2b51f6d4da9df.bin": {
+      "sha256": "10a878efe4ec0cff640f344b8bca42856a570cc82be4f7cf7ee2b51f6d4da9df",
+      "size": 395896
+    },
+    "attempt_payloads/response_3d716b462c3ec6f4279059c9b20e021b08131746e2ed4088a4be15e2455af07f.bin": {
+      "sha256": "3d716b462c3ec6f4279059c9b20e021b08131746e2ed4088a4be15e2455af07f",
+      "size": 2370
+    },
+    "attempt_payloads/task_contract_8d3361d8d4e01bf9310b9f9479fbeefeeb011008dd936b135de6760003c400a6.json": {
+      "sha256": "8d3361d8d4e01bf9310b9f9479fbeefeeb011008dd936b135de6760003c400a6",
+      "size": 3467
+    },
+    "records.jsonl": {
+      "sha256": "641d795c9fb579c8a309ab65f0ecbfee89292b8e6b56d16c7e5e574803861d7a",
+      "size": 3997172
+    },
+    "review/sha256:e39887425f84690a26cfccd1cbb7c2abf66f978fbac16a40e704bdd3fb6d253f/review.md": {
+      "sha256": "7fa8d552f16ffd339769d584f1bc85a41403cc1e3611897a1ca767ad1bd82621",
+      "size": 54831
+    },
+    "review/sha256:e39887425f84690a26cfccd1cbb7c2abf66f978fbac16a40e704bdd3fb6d253f/review_context.json": {
+      "sha256": "cc96259f9c20004bd968d620fed92c5f37de5c70726a45931758fdc65df933f5",
+      "size": 180058
+    },
+    "review_decisions.jsonl": {
+      "sha256": "8bad2e244c02df5699f4ae7fd7547f339418fea7758e16e5074fd5dfc3a42828",
+      "size": 1642
+    }
+  },
+  "record_type": "VALIDATION_RECEIPT",
+  "validation_receipt_id": "sha256:b63f1cab034268dacc56bf931e443bff8f08b629c2d52cb7eb79d8590aa6bed6"
+}
