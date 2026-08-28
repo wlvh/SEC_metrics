@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import ast
 import csv
+import hashlib
 import json
 import re
 import subprocess
@@ -27,6 +28,7 @@ from validation_provenance import capture_source_snapshot
 from validation_provenance import pin_validation_publication_transaction
 from validation_provenance import verify_validation_snapshot
 from validation_provenance import ValidationProvenanceError
+from sec_http import parse_request_log_rows, validate_request_log_manifest
 
 from .canonical import atomic_write_json, content_hash, parse_utc_timestamp
 from .canonical import sha256_file, strict_json_file
@@ -73,7 +75,15 @@ POST_SNAPSHOT_APPEND_ROOTS = (
     "artifacts/vnext/table_stage_c_evidence/"
     "financial_materialization_benchmark/",
     "artifacts/vnext/table_qualification_freeze/",
+    "evidence/request_attempts/",
 )
+REQUEST_LOG_PATH = Path("evidence/requests_log.csv")
+REQUEST_LOG_MANIFEST_PATH = Path("evidence/requests_log_manifest.json")
+POST_SNAPSHOT_LEDGER_ERRORS = {
+    "artifact SHA-256 mismatch: evidence/requests_log.csv",
+    "artifact SHA-256 mismatch: evidence/requests_log_manifest.json",
+    "artifact size mismatch: evidence/requests_log.csv",
+}
 
 
 class StageASnapshotError(ValueError):
@@ -200,6 +210,135 @@ def _committed_post_snapshot_artifacts(
     return True
 
 
+def _git_blob(
+    *, repo_root: Path, revision: str, relative: str,
+) -> Optional[bytes]:
+    """Read one exact committed blob without changing the worktree."""
+    if (
+        revision != "HEAD"
+        and re.fullmatch(r"[0-9a-f]{40}", revision) is None
+    ) or Path(relative).is_absolute() or ".." in Path(relative).parts:
+        return None
+    completed = subprocess.run(
+        ["git", "show", revision + ":" + relative],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+    )
+    return completed.stdout if completed.returncode == 0 else None
+
+
+def _request_ledger_append_is_valid(
+    *, repo_root: Path, missing_artifact_paths: List[str],
+) -> bool:
+    """Prove current SEC evidence is one committed immutable ledger append."""
+    try:
+        validation_manifest = _json_object(
+            repo_root=repo_root,
+            relative=Path("outputs/validation_run_manifest.json"),
+            label="historical validation manifest",
+        )
+        historical_commit = str(validation_manifest["source_commit"])
+        historical_log = _git_blob(
+            repo_root=repo_root,
+            revision=historical_commit,
+            relative=REQUEST_LOG_PATH.as_posix(),
+        )
+        historical_manifest_bytes = _git_blob(
+            repo_root=repo_root,
+            revision=historical_commit,
+            relative=REQUEST_LOG_MANIFEST_PATH.as_posix(),
+        )
+        current_log_path = _regular_file(
+            repo_root=repo_root,
+            relative=REQUEST_LOG_PATH,
+            label="current request ledger",
+        )
+        current_manifest_path = _regular_file(
+            repo_root=repo_root,
+            relative=REQUEST_LOG_MANIFEST_PATH,
+            label="current request ledger manifest",
+        )
+        current_log = current_log_path.read_bytes()
+        current_manifest = current_manifest_path.read_bytes()
+        if (
+            historical_log is None
+            or historical_manifest_bytes is None
+            or _git_blob(
+                repo_root=repo_root,
+                revision="HEAD",
+                relative=REQUEST_LOG_PATH.as_posix(),
+            ) != current_log
+            or _git_blob(
+                repo_root=repo_root,
+                revision="HEAD",
+                relative=REQUEST_LOG_MANIFEST_PATH.as_posix(),
+            ) != current_manifest
+            or not current_log.startswith(historical_log)
+        ):
+            return False
+        historical_rows = parse_request_log_rows(
+            text=historical_log.decode("utf-8"),
+        )
+        current_rows = parse_request_log_rows(
+            text=current_log.decode("utf-8"),
+        )
+        historical_manifest = json.loads(
+            historical_manifest_bytes.decode("utf-8"),
+        )
+        if historical_manifest != {
+            "schema_version": 1,
+            "row_count": len(historical_rows),
+            "content_sha256": hashlib.sha256(historical_log).hexdigest(),
+        } or len(current_rows) <= len(historical_rows):
+            return False
+        validate_request_log_manifest(log_path=current_log_path)
+    except (
+        KeyError, OSError, UnicodeDecodeError, ValueError,
+        StageASnapshotError,
+    ):
+        return False
+    appended_paths = set()
+    for row in current_rows[len(historical_rows):]:
+        body_relative = str(row["repo_relative_path"])
+        headers_relative = str(row["headers_repo_relative_path"])
+        if not (
+            body_relative.startswith("evidence/request_attempts/")
+            and headers_relative.startswith("evidence/request_attempts/")
+        ):
+            return False
+        try:
+            body_path = _regular_file(
+                repo_root=repo_root,
+                relative=Path(body_relative),
+                label="appended SEC response body",
+            )
+            headers_path = _regular_file(
+                repo_root=repo_root,
+                relative=Path(headers_relative),
+                label="appended SEC response headers",
+            )
+            header_match = re.search(
+                r"\.([0-9a-f]{64})\.headers\.json$",
+                headers_relative,
+            )
+            if (
+                sha256_file(path=body_path) != row["content_sha256"]
+                or body_path.stat().st_size != int(row["content_length"])
+                or header_match is None
+                or sha256_file(path=headers_path) != header_match.group(1)
+            ):
+                return False
+        except (OSError, StageASnapshotError, ValueError):
+            return False
+        appended_paths.update({body_relative, headers_relative})
+    declared_attempt_paths = {
+        path for path in missing_artifact_paths
+        if path.startswith("evidence/request_attempts/")
+    }
+    return appended_paths == declared_attempt_paths
+
+
 def _post_snapshot_artifact_errors_are_allowed(
     *, repo_root: Path, errors: List[str],
 ) -> bool:
@@ -211,6 +350,10 @@ def _post_snapshot_artifact_errors_are_allowed(
     if pointer_error not in remaining:
         return False
     remaining.remove(pointer_error)
+    ledger_errors = remaining & POST_SNAPSHOT_LEDGER_ERRORS
+    if ledger_errors and ledger_errors != POST_SNAPSHOT_LEDGER_ERRORS:
+        return False
+    remaining -= ledger_errors
     digest_errors = [
         error for error in remaining
         if error.startswith("artifact digest key set mismatch: ")
@@ -235,6 +378,19 @@ def _post_snapshot_artifact_errors_are_allowed(
         or unexpected != []
         or not _committed_post_snapshot_artifacts(
             repo_root=repo_root, relative_paths=missing,
+        )
+        or (
+            (ledger_errors or any(
+                path.startswith("evidence/request_attempts/")
+                for path in missing
+            ))
+            and (
+                ledger_errors != POST_SNAPSHOT_LEDGER_ERRORS
+                or not _request_ledger_append_is_valid(
+                    repo_root=repo_root,
+                    missing_artifact_paths=missing,
+                )
+            )
         )
     ):
         return False
