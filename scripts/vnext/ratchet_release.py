@@ -854,6 +854,29 @@ def _write_validation_receipt(
     return receipt
 
 
+def _preserve_predecessor_scalability_bytes(
+    *, predecessor: PublicationView, staging_dir: Path,
+) -> None:
+    """Keep header-only scalability bytes stable across a pure ratchet."""
+    relative = "scalability_audit.csv"
+    predecessor_bytes = predecessor.read_bytes(relative_path=relative)
+    generated_path = staging_dir / relative
+    generated_bytes = generated_path.read_bytes()
+    predecessor_stream = io.StringIO(predecessor_bytes.decode("utf-8"), newline="")
+    generated_stream = io.StringIO(generated_bytes.decode("utf-8"), newline="")
+    predecessor_reader = csv.DictReader(predecessor_stream)
+    generated_reader = csv.DictReader(generated_stream)
+    predecessor_rows = list(predecessor_reader)
+    generated_rows = list(generated_reader)
+    if (
+        predecessor_reader.fieldnames != generated_reader.fieldnames
+        or predecessor_rows
+        or generated_rows
+    ):
+        raise RatchetReleaseError("Scalability audit is not header-only stable")
+    atomic_write_bytes(path=generated_path, content=predecessor_bytes)
+
+
 def _ratchet_authority_paths(
     *, repo_root: Path, qualification: Mapping[str, object],
 ) -> List[str]:
@@ -1033,6 +1056,9 @@ def prepare_r3_successor(
         validated_at_utc=validated_at_utc,
         validation_mode=FORMAL_VALIDATION_MODE,
         source_commit=source_commit,
+    )
+    _preserve_predecessor_scalability_bytes(
+        predecessor=predecessor, staging_dir=staging,
     )
     ledger_binding = publication_ledger_binding(
         repo_root=repo_root,

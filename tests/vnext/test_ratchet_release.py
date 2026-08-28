@@ -40,6 +40,7 @@ class RatchetReleaseTest(unittest.TestCase):
                 "outputs/metrics_matrix.csv",
                 "outputs/metric_evidence.csv",
                 "outputs/coverage_matrix.csv",
+                "outputs/scalability_audit.csv",
                 "REPORT_十公司财务指标.md",
             )
         }
@@ -85,6 +86,10 @@ class RatchetReleaseTest(unittest.TestCase):
             manifest["previous_publication_id"],
         )
         self.assertEqual(327, self.summary["public_matrix_row_count"])
+        self.assertEqual(
+            self.before_roots["outputs/scalability_audit.csv"],
+            (self.bundle / "scalability_audit.csv").read_bytes(),
+        )
         self.assertEqual(10, self.summary["qualification"]["ledger_row_count"])
         self.assertEqual(
             10, len(self.summary["qualification"]["terminal_validations"]),
