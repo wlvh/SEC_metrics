@@ -1574,6 +1574,7 @@ def _portable_closure_files(
     release_plan_root: Optional[Path] = None,
     run_loader: Optional[FrozenRunLoader] = None,
     additional_authority_paths: Sequence[str] = (),
+    qualification_binding_override: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, bytes]:
     """Build one self-contained Batch/Run/repository authority closure.
 
@@ -1588,6 +1589,8 @@ def _portable_closure_files(
         run_loader: Optional exact committed-Run validation boundary.
         additional_authority_paths: Extra repository authority files required
             to replay a child ratchet and its complete qualification evidence.
+        qualification_binding_override: Existing closure field populated by a
+            module-owned child ratchet after its own complete replay.
 
     Returns:
         Bundle-relative closure files, including its content-addressed index.
@@ -1640,6 +1643,10 @@ def _portable_closure_files(
             raise PublicationError(
                 "Formal qualification closure is unavailable"
             ) from error
+    elif qualification_binding_override is not None:
+        if not isinstance(qualification_binding_override, Mapping):
+            raise PublicationError("Qualification binding override is invalid")
+        qualification_binding = dict(qualification_binding_override)
     metric_root = repo_root / "catalog" / "metrics"
     if metric_root.is_symlink() or not metric_root.is_dir():
         raise PublicationError("Closure MetricSpec catalog is unsafe")
@@ -1914,10 +1921,25 @@ def _verify_portable_closure(
     qualification_binding = closure["qualification_binding"]
     if qualification_binding is not None:
         try:
-            portable_qualification = validate_cutover_qualifications(
-                repo_root=authority_root,
-            )
-        except (OSError, QualificationError, ValueError) as error:
+            if (
+                isinstance(qualification_binding, dict)
+                and "cycle_id" in qualification_binding
+            ):
+                from .ratchet_release import (
+                    validate_portable_qualification_binding,
+                )
+
+                portable_qualification = (
+                    validate_portable_qualification_binding(
+                        repo_root=authority_root,
+                        binding=qualification_binding,
+                    )
+                )
+            else:
+                portable_qualification = validate_cutover_qualifications(
+                    repo_root=authority_root,
+                )
+        except (OSError, QualificationError, RuntimeError, ValueError) as error:
             raise PublicationError(
                 "Publication closure qualification replay failed"
             ) from error

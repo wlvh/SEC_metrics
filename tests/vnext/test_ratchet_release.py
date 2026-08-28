@@ -130,6 +130,9 @@ class RatchetReleaseTest(unittest.TestCase):
         )
         closure_paths = {row["path"] for row in closure["files"]}
         self.assertIn("internal/batch/batch_manifest.json", closure_paths)
+        self.assertEqual(
+            10, closure["qualification_binding"]["ledger_row_count"],
+        )
         self.assertTrue(any(path.endswith("provider_ledger.jsonl") for path in closure_paths))
         self.assertTrue(any("qualification_runs" in path for path in closure_paths))
 

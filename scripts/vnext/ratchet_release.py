@@ -380,6 +380,113 @@ def load_portable_qualification_run(
     )
 
 
+def validate_portable_qualification_binding(
+    *, repo_root: Path, binding: Mapping[str, object],
+) -> Dict[str, object]:
+    """Rebuild the complete ratchet qualification binding inside a bundle."""
+    required = {
+        "cycle_id", "family_id", "fresh_samples_required",
+        "ledger_row_count", "ledger_sha256", "release_plan_content_id",
+        "selected_run_ids", "terminal_validations",
+    }
+    if set(binding) != required:
+        raise RatchetReleaseError("Portable qualification fields differ")
+    cycle_id = str(binding["cycle_id"])
+    cycle_hex = cycle_id.split(":", maxsplit=1)[-1]
+    ledger_path = (
+        repo_root / QUALIFICATION_FREEZE_ROOT / "cycles" / cycle_hex
+        / "provider_ledger.jsonl"
+    )
+    rows = [
+        strict_json_loads(text=line)
+        for line in ledger_path.read_text(encoding="utf-8").splitlines()
+        if line
+    ]
+    if (
+        len(rows) != binding["ledger_row_count"]
+        or sha256_file(path=ledger_path) != binding["ledger_sha256"]
+        or any(not isinstance(row, dict) for row in rows)
+        or any(
+            row["qualification_cycle_id"] != cycle_id
+            or row["family_id"] != binding["family_id"]
+            for row in rows
+        )
+    ):
+        raise RatchetReleaseError("Portable qualification ledger differs")
+    task_ids = sorted({str(row["task_contract_id"]) for row in rows})
+    fresh_count = int(binding["fresh_samples_required"])
+    expected_coordinates = {
+        (task_id, "SECOND_LAYOUT", 1) for task_id in task_ids
+    } | {
+        (task_id, "POST_FREEZE_HOLDOUT", 1) for task_id in task_ids
+    } | {
+        (task_id, "FRESH_STABILITY", ordinal)
+        for task_id in task_ids for ordinal in range(1, fresh_count + 1)
+    }
+    actual_coordinates = {
+        (
+            str(row["task_contract_id"]),
+            str(row["qualification_phase"]),
+            int(row["qualification_ordinal"]),
+        )
+        for row in rows
+    }
+    if (
+        actual_coordinates != expected_coordinates
+        or len(rows) != len(expected_coordinates)
+        or len({str(row["attempt_id"]) for row in rows}) != len(rows)
+        or len({str(row["provider_request_id"]) for row in rows}) != len(rows)
+    ):
+        raise RatchetReleaseError("Portable qualification exact set differs")
+    validations = []
+    selected = {}
+    for row in sorted(
+        rows,
+        key=lambda value: (
+            str(value["qualification_phase"]),
+            int(value["qualification_ordinal"]),
+            str(value["task_contract_id"]),
+        ),
+    ):
+        authorization = row["qualification_authorization"]
+        run_dir = repo_root / str(authorization["run_directory_relative_path"])
+        manifest, records, _decisions = load_portable_qualification_run(
+            run_dir, repo_root,
+        )
+        result = _group(
+            records=records, record_type="METRIC_RESULT", expected=1,
+        )[0]
+        validations.append({
+            "attempt_id": row["attempt_id"],
+            "metric_id": result["metric_id"],
+            "phase": row["qualification_phase"],
+            "ordinal": row["qualification_ordinal"],
+            "provider_request_id": row["provider_request_id"],
+            "run_id": manifest["run_id"],
+            "terminal_id": authorization["qualification_terminal_id"],
+        })
+        if (
+            row["qualification_phase"] == "FRESH_STABILITY"
+            and int(row["qualification_ordinal"]) == fresh_count
+        ):
+            selected[str(result["metric_id"])] = manifest["run_id"]
+    plans = load_issue15_release_plans(repo_root=repo_root)
+    current_plan = plans["plans"][-1]
+    rebuilt = {
+        "cycle_id": cycle_id,
+        "family_id": binding["family_id"],
+        "fresh_samples_required": fresh_count,
+        "ledger_row_count": len(rows),
+        "ledger_sha256": sha256_file(path=ledger_path),
+        "release_plan_content_id": current_plan["release_plan_content_id"],
+        "selected_run_ids": dict(sorted(selected.items())),
+        "terminal_validations": validations,
+    }
+    if rebuilt != dict(binding):
+        raise RatchetReleaseError("Portable qualification binding differs")
+    return rebuilt
+
+
 def _qualification_cycle(
     *, repo_root: Path, workspace: Path,
 ) -> Dict[str, object]:
@@ -752,6 +859,13 @@ def _ratchet_authority_paths(
 ) -> List[str]:
     """Return repository authority needed for portable child-plan replay."""
     paths = set(qualification["closure_authority_paths"])
+    run_record_paths = [
+        relative for relative in paths if relative.endswith("/records.jsonl")
+    ]
+    for relative in run_record_paths:
+        for record in _read_jsonl(path=repo_root / relative):
+            if record["record_type"] == "RAW_BLOB":
+                paths.add(str(record["storage_uri"]))
     paths.update({
         "catalog/deterministic_metrics.json",
         "catalog/event_routes.json",
@@ -825,7 +939,8 @@ def prepare_r3_successor(
 ) -> Tuple[Dict[str, object], Dict[str, object]]:
     """Prepare one R3 successor without mutating the active pointer."""
     current_workspace = (
-        repo_root / RATCHET_WORKSPACE if workspace is None else workspace
+        repo_root / RATCHET_WORKSPACE / source_commit
+        if workspace is None else workspace
     )
     if current_workspace.is_symlink() or (
         current_workspace.exists() and not current_workspace.is_dir()
@@ -983,6 +1098,7 @@ def prepare_r3_successor(
         additional_authority_paths=_ratchet_authority_paths(
             repo_root=repo_root, qualification=qualification,
         ),
+        qualification_binding_override=qualification["summary"],
     )
     files = {**public_files, **closure}
     layout = publication_layout(publication_root=publication_root)
