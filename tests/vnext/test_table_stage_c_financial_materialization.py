@@ -7,11 +7,14 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT
 from tools.benchmark_jpm_full_materialization import CURRENT_POINTER
+from tools.benchmark_jpm_full_materialization import DOCKER_LINUX_IMAGE
+from tools.benchmark_jpm_full_materialization import DOCKER_WORKDIR
 from tools.benchmark_jpm_full_materialization import RESOURCE_LIMITS_RELATIVE
 from tools.benchmark_jpm_full_materialization import RSS_CEILING_BYTES
 from tools.benchmark_jpm_full_materialization import SOURCE_SHA256
 from tools.benchmark_jpm_full_materialization import STAGE_B_CENSUS_RECEIPT_ID
 from tools.benchmark_jpm_full_materialization import TEST_ONLY_MAX_TOTAL_CELLS
+from tools.benchmark_jpm_full_materialization import _docker_argv
 from tools.benchmark_jpm_full_materialization import validate_current_receipts
 from vnext.canonical import sha256_file, strict_json_file
 
@@ -25,6 +28,29 @@ EXPECTED_RUN_RECEIPT_ID = (
 PRODUCTION_RESOURCE_LIMITS_SHA256 = (
     "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04"
 )
+
+
+class DockerLinuxGuardContractTest(unittest.TestCase):
+    """Keep the Linux benchmark command fixed before materialization."""
+
+    def test_docker_argv_has_hard_memory_wall_parent_and_no_network(self) -> None:
+        """Bind the immutable image, read-only source, cgroup, and netns flags."""
+        argv = list(_docker_argv(
+            executable="docker", container_name="guard-contract-test",
+        ))
+        self.assertIn("--network=none", argv)
+        self.assertIn("--memory={}".format(RSS_CEILING_BYTES), argv)
+        self.assertIn("--memory-swap={}".format(RSS_CEILING_BYTES), argv)
+        self.assertIn("--pids-limit=64", argv)
+        self.assertIn("--cap-drop=ALL", argv)
+        self.assertIn("--security-opt=no-new-privileges", argv)
+        self.assertIn("--read-only", argv)
+        self.assertIn(DOCKER_LINUX_IMAGE, argv)
+        self.assertIn("--workdir={}".format(DOCKER_WORKDIR), argv)
+        mounts = [value for value in argv if value.startswith("--mount=")]
+        self.assertEqual(1, len(mounts))
+        self.assertTrue(mounts[0].endswith(",readonly"))
+        self.assertEqual("--child", argv[-1])
 
 
 class TableStageCFinancialMaterializationTest(unittest.TestCase):

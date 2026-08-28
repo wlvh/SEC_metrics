@@ -9,6 +9,7 @@ import json
 import os
 import platform
 import resource
+import shutil
 import signal
 import subprocess
 import sys
@@ -64,6 +65,16 @@ WALL_TIME_CEILING_SECONDS = 120
 RSS_POLL_INTERVAL_SECONDS = 0.02
 NETWORK_DENY_PROFILE = "(version 1) (allow default) (deny network*)"
 SANDBOX_EXECUTABLE = Path("/usr/bin/sandbox-exec")
+DOCKER_LINUX_IMAGE = (
+    "python:3.12.11-slim-bookworm@"
+    "sha256:519591d6871b7bc437060736b9f7456b8731f1499a57e22e6c285135ae657bf7"
+)
+DOCKER_WORKDIR = "/workspace"
+LINUX_CGROUP_MEMORY_MAX = Path("/sys/fs/cgroup/memory.max")
+LINUX_CGROUP_MEMORY_PEAK = Path("/sys/fs/cgroup/memory.peak")
+LINUX_NETWORK_CLASS = Path("/sys/class/net")
+LINUX_IPV4_ROUTES = Path("/proc/net/route")
+LINUX_IPV6_ROUTES = Path("/proc/net/ipv6_route")
 
 
 class FinancialMaterializationBenchmarkError(RuntimeError):
@@ -105,6 +116,59 @@ def _runtime_identity() -> Dict[str, object]:
         "platform_system": platform.system(),
         "platform_release": platform.release(),
         "platform_machine": platform.machine(),
+    }
+
+
+def _linux_container_guard_observations() -> Dict[str, object]:
+    """Verify the benchmark child is inside the required Linux cgroup/netns."""
+    if platform.system() != "Linux":
+        raise FinancialMaterializationBenchmarkError(
+            "Linux container guard is unavailable"
+        )
+    try:
+        memory_max_text = LINUX_CGROUP_MEMORY_MAX.read_text(
+            encoding="utf-8"
+        ).strip()
+        memory_max = int(memory_max_text)
+        memory_peak = int(LINUX_CGROUP_MEMORY_PEAK.read_text(
+            encoding="utf-8"
+        ).strip())
+        interfaces = sorted(path.name for path in LINUX_NETWORK_CLASS.iterdir())
+        ipv4_text = LINUX_IPV4_ROUTES.read_text(encoding="utf-8")
+        ipv6_text = LINUX_IPV6_ROUTES.read_text(encoding="utf-8")
+    except (OSError, ValueError) as error:
+        raise FinancialMaterializationBenchmarkError(
+            "Linux cgroup or network namespace evidence is unavailable"
+        ) from error
+    if memory_max != RSS_CEILING_BYTES:
+        raise FinancialMaterializationBenchmarkError(
+            "Linux cgroup memory ceiling differs"
+        )
+    ipv4_routes = [
+        line for line in ipv4_text.splitlines()[1:] if line.strip()
+    ]
+    ipv6_non_loopback_routes = [
+        line for line in ipv6_text.splitlines()
+        if line.strip() and line.split()[-1] != "lo"
+    ]
+    if ipv4_routes or ipv6_non_loopback_routes:
+        raise FinancialMaterializationBenchmarkError(
+            "Linux benchmark network namespace has a non-loopback route"
+        )
+    return {
+        "cgroup_version": 2,
+        "memory_max_bytes": memory_max,
+        "memory_peak_bytes": memory_peak,
+        "network_interface_names": interfaces,
+        "ipv4_route_count": len(ipv4_routes),
+        "ipv6_non_loopback_route_count": len(ipv6_non_loopback_routes),
+        "ipv4_route_table_sha256": "sha256:" + sha256_bytes(
+            content=ipv4_text.encode("utf-8"),
+        ),
+        "ipv6_route_table_sha256": "sha256:" + sha256_bytes(
+            content=ipv6_text.encode("utf-8"),
+        ),
+        "network_policy": "DOCKER_NETWORK_NONE",
     }
 
 
@@ -154,6 +218,10 @@ def _child_result() -> Dict[str, object]:
     from vnext import table_grid
     from vnext.records import validate_record
 
+    linux_guard = (
+        _linux_container_guard_observations()
+        if platform.system() == "Linux" else None
+    )
     source_path = REPO_ROOT / SOURCE_RELATIVE
     source_bytes = source_path.read_bytes()
     if sha256_bytes(content=source_bytes) != SOURCE_SHA256:
@@ -218,6 +286,10 @@ def _child_result() -> Dict[str, object]:
         )
     canonical = canonical_json_bytes(value=asset)
     usage = resource.getrusage(resource.RUSAGE_SELF)
+    completed_guard = (
+        _linux_container_guard_observations()
+        if linux_guard is not None else None
+    )
     return {
         "status": "COMPLETED",
         "final_expanded_cells": rectangular_cells,
@@ -233,6 +305,10 @@ def _child_result() -> Dict[str, object]:
         ),
         "child_user_cpu_seconds": format(Decimal(str(usage.ru_utime)), "f"),
         "child_system_cpu_seconds": format(Decimal(str(usage.ru_stime)), "f"),
+        "runtime_identity": materialized.get(
+            "runtime_identity", _runtime_identity(),
+        ),
+        "linux_guard_observations": completed_guard,
     }
 
 
@@ -347,11 +423,14 @@ def _run_child() -> Dict[str, object]:
         return {
             "status": "NOT_RUN_RSS_GUARD_UNAVAILABLE",
             "guard_status": guard_status,
+            "guard_mechanism": "DARWIN_RLIMIT_AS_SANDBOX_EXEC",
+            "container_image_reference": None,
             "exit_code": None,
             "wall_time_seconds": None,
             "user_cpu_seconds": None,
             "system_cpu_seconds": None,
             "peak_rss_bytes": None,
+            "cgroup_memory_peak_bytes": None,
             "stdout_sha256": None,
             "stdout_size": 0,
             "stderr_sha256": None,
@@ -413,6 +492,8 @@ def _run_child() -> Dict[str, object]:
     return {
         "status": status,
         "guard_status": guard_status,
+        "guard_mechanism": "DARWIN_RLIMIT_AS_SANDBOX_EXEC",
+        "container_image_reference": None,
         "exit_code": process.returncode,
         "wall_time_seconds": format(Decimal(str(round(wall_time, 6))), "f"),
         "user_cpu_seconds": (
@@ -424,9 +505,231 @@ def _run_child() -> Dict[str, object]:
             if type(child_result) is dict else None
         ),
         "peak_rss_bytes": peak,
+        "cgroup_memory_peak_bytes": None,
         "stdout_sha256": stdout_hash,
         "stdout_size": len(stdout),
         "stderr_sha256": stderr_hash,
+        "stderr_size": len(stderr),
+        "child_result": child_result,
+    }
+
+
+def _docker_executable() -> str:
+    """Return the installed Docker CLI without permitting an override."""
+    executable = shutil.which("docker")
+    if executable is None:
+        raise FinancialMaterializationBenchmarkError(
+            "Docker CLI is unavailable"
+        )
+    return executable
+
+
+def _verify_docker_linux_runtime(*, executable: str) -> None:
+    """Require one local Linux daemon and the already-pulled pinned image."""
+    version = subprocess.run(
+        [
+            executable,
+            "version",
+            "--format",
+            "{{.Server.Os}}|{{.Server.Arch}}|{{.Server.Version}}",
+        ],
+        cwd=str(REPO_ROOT),
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    fields = version.stdout.strip().split("|")
+    if version.returncode != 0 or len(fields) != 3 or fields[0] != "linux":
+        raise FinancialMaterializationBenchmarkError(
+            "Docker Linux daemon is unavailable"
+        )
+    image = subprocess.run(
+        [executable, "image", "inspect", DOCKER_LINUX_IMAGE],
+        cwd=str(REPO_ROOT),
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    if image.returncode != 0:
+        raise FinancialMaterializationBenchmarkError(
+            "Pinned Docker Linux image is unavailable"
+        )
+
+
+def _docker_container_state(
+    *, executable: str, container_name: str,
+) -> Tuple[bool, Optional[int]]:
+    """Read OOM and exit observations before removing the exact container."""
+    state = subprocess.run(
+        [
+            executable,
+            "inspect",
+            "--format",
+            "{{.State.OOMKilled}}|{{.State.ExitCode}}",
+            container_name,
+        ],
+        cwd=str(REPO_ROOT),
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    if state.returncode != 0:
+        return False, None
+    fields = state.stdout.strip().split("|")
+    if len(fields) != 2:
+        return False, None
+    try:
+        return fields[0].lower() == "true", int(fields[1])
+    except ValueError:
+        return False, None
+
+
+def _docker_argv(
+    *, executable: str, container_name: str,
+) -> Sequence[str]:
+    """Build the fixed read-only, networkless, hard-memory Linux command."""
+    return [
+        executable,
+        "run",
+        "--name",
+        container_name,
+        "--network=none",
+        "--memory={}".format(RSS_CEILING_BYTES),
+        "--memory-swap={}".format(RSS_CEILING_BYTES),
+        "--pids-limit=64",
+        "--cap-drop=ALL",
+        "--security-opt=no-new-privileges",
+        "--read-only",
+        "--tmpfs=/tmp:rw,noexec,nosuid,size=16777216",
+        "--env=PYTHONDONTWRITEBYTECODE=1",
+        "--mount=type=bind,src={},dst={},readonly".format(
+            REPO_ROOT, DOCKER_WORKDIR,
+        ),
+        "--workdir={}".format(DOCKER_WORKDIR),
+        DOCKER_LINUX_IMAGE,
+        "python3",
+        str(Path(DOCKER_WORKDIR) / TOOL_RELATIVE),
+        "--child",
+    ]
+
+
+def _run_docker_linux_child() -> Dict[str, object]:
+    """Run the exact child in a networkless 512-MiB Linux cgroup."""
+    executable = _docker_executable()
+    _verify_docker_linux_runtime(executable=executable)
+    container_name = "secmetrics-jpm-benchmark-{}-{}".format(
+        os.getpid(), time.monotonic_ns(),
+    )
+    argv = _docker_argv(
+        executable=executable, container_name=container_name,
+    )
+    started = time.monotonic()
+    process = subprocess.Popen(
+        argv,
+        cwd=str(REPO_ROOT),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=False,
+        start_new_session=True,
+    )
+    terminal_override: Optional[str] = None
+    try:
+        stdout, stderr = process.communicate(
+            timeout=WALL_TIME_CEILING_SECONDS,
+        )
+    except subprocess.TimeoutExpired:
+        terminal_override = "KILLED_WALL_TIME_LIMIT"
+        subprocess.run(
+            [executable, "kill", container_name],
+            cwd=str(REPO_ROOT),
+            check=False,
+            capture_output=True,
+            timeout=15,
+        )
+        stdout, stderr = process.communicate(timeout=15)
+    wall_time = time.monotonic() - started
+    oom_killed, container_exit = _docker_container_state(
+        executable=executable,
+        container_name=container_name,
+    )
+    subprocess.run(
+        [executable, "rm", "-f", container_name],
+        cwd=str(REPO_ROOT),
+        check=False,
+        capture_output=True,
+        timeout=15,
+    )
+    child_result = None
+    if terminal_override is None and process.returncode == 0:
+        try:
+            child_result = json.loads(stdout.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            terminal_override = "FAILED_CHILD_OUTPUT"
+    if terminal_override is None and oom_killed:
+        terminal_override = "KILLED_RSS_LIMIT"
+    if terminal_override is None and process.returncode != 0:
+        terminal_override = "FAILED_CHILD"
+    if (
+        terminal_override is None
+        and type(child_result) is dict
+        and child_result.get("status") == "COMPLETED"
+    ):
+        guard = child_result.get("linux_guard_observations")
+        if (
+            type(guard) is not dict
+            or guard.get("memory_max_bytes") != RSS_CEILING_BYTES
+            or guard.get("network_policy") != "DOCKER_NETWORK_NONE"
+            or guard.get("ipv4_route_count") != 0
+            or guard.get("ipv6_non_loopback_route_count") != 0
+        ):
+            terminal_override = "FAILED_LINUX_GUARD_OBSERVATION"
+    status = terminal_override or (
+        str(child_result.get("status"))
+        if type(child_result) is dict else "FAILED_CHILD"
+    )
+    child_peak = (
+        int(child_result["child_peak_rss_bytes"])
+        if type(child_result) is dict
+        and type(child_result.get("child_peak_rss_bytes")) is int
+        else 0
+    )
+    guard = (
+        child_result.get("linux_guard_observations", {})
+        if type(child_result) is dict else {}
+    )
+    cgroup_peak = (
+        int(guard["memory_peak_bytes"])
+        if type(guard) is dict
+        and type(guard.get("memory_peak_bytes")) is int
+        else None
+    )
+    return {
+        "status": status,
+        "guard_status": "LINUX_CGROUP_V2_AND_NETWORK_NONE_PASS",
+        "guard_mechanism": "DOCKER_CGROUP_V2_NETWORK_NONE",
+        "container_image_reference": DOCKER_LINUX_IMAGE,
+        "exit_code": (
+            container_exit if container_exit is not None else process.returncode
+        ),
+        "wall_time_seconds": format(
+            Decimal(str(round(wall_time, 6))), "f",
+        ),
+        "user_cpu_seconds": (
+            child_result.get("child_user_cpu_seconds")
+            if type(child_result) is dict else None
+        ),
+        "system_cpu_seconds": (
+            child_result.get("child_system_cpu_seconds")
+            if type(child_result) is dict else None
+        ),
+        "peak_rss_bytes": child_peak,
+        "cgroup_memory_peak_bytes": cgroup_peak,
+        "stdout_sha256": "sha256:" + sha256_bytes(content=stdout),
+        "stdout_size": len(stdout),
+        "stderr_sha256": "sha256:" + sha256_bytes(content=stderr),
         "stderr_size": len(stderr),
         "child_result": child_result,
     }
@@ -480,15 +783,59 @@ def _semantic_receipt(
         },
         "safety_ceilings": {
             "hard_address_space_and_peak_rss_ceiling_bytes": RSS_CEILING_BYTES,
+            "hard_memory_ceiling_bytes": RSS_CEILING_BYTES,
             "hard_wall_time_ceiling_seconds": WALL_TIME_CEILING_SECONDS,
             "guard_status": terminal["guard_status"],
+            "guard_mechanism": terminal["guard_mechanism"],
+            "cgroup_memory_peak_bytes": terminal[
+                "cgroup_memory_peak_bytes"
+            ],
         },
         "no_network_proof": {
-            "sandbox_executable": SANDBOX_EXECUTABLE.as_posix(),
-            "profile_sha256": "sha256:" + sha256_bytes(
-                content=NETWORK_DENY_PROFILE.encode("utf-8"),
+            "sandbox_executable": (
+                "docker"
+                if terminal["guard_mechanism"]
+                == "DOCKER_CGROUP_V2_NETWORK_NONE"
+                else SANDBOX_EXECUTABLE.as_posix()
             ),
-            "policy": "DENY_NETWORK_STAR_PROCESS_TREE",
+            "profile_sha256": "sha256:" + sha256_bytes(
+                content=(
+                    "--network=none"
+                    if terminal["guard_mechanism"]
+                    == "DOCKER_CGROUP_V2_NETWORK_NONE"
+                    else NETWORK_DENY_PROFILE
+                ).encode("utf-8"),
+            ),
+            "policy": (
+                "DOCKER_NETWORK_NONE"
+                if terminal["guard_mechanism"]
+                == "DOCKER_CGROUP_V2_NETWORK_NONE"
+                else "DENY_NETWORK_STAR_PROCESS_TREE"
+            ),
+            "container_image_reference": terminal[
+                "container_image_reference"
+            ],
+            "network_interface_names": (
+                materialized.get("linux_guard_observations", {}).get(
+                    "network_interface_names"
+                )
+                if type(materialized.get("linux_guard_observations")) is dict
+                else None
+            ),
+            "ipv4_route_count": (
+                materialized.get("linux_guard_observations", {}).get(
+                    "ipv4_route_count"
+                )
+                if type(materialized.get("linux_guard_observations")) is dict
+                else None
+            ),
+            "ipv6_non_loopback_route_count": (
+                materialized.get("linux_guard_observations", {}).get(
+                    "ipv6_non_loopback_route_count"
+                )
+                if type(materialized.get("linux_guard_observations")) is dict
+                else None
+            ),
             "benchmark_child_started": terminal["status"]
             != "NOT_RUN_RSS_GUARD_UNAVAILABLE",
             "real_model_provider_egress_count": 0,
@@ -528,6 +875,22 @@ def _semantic_receipt(
         or materialized.get("canonical_serialization_completed") is not True
         or len(materialized.get("table_grid_hashes", []))
         != EXPECTED_TABLE_COUNT
+        or (
+            terminal["guard_mechanism"]
+            == "DOCKER_CGROUP_V2_NETWORK_NONE"
+            and (
+                materialized.get("runtime_identity", {}).get(
+                    "platform_system"
+                ) != "Linux"
+                or terminal["cgroup_memory_peak_bytes"] is None
+                or terminal["cgroup_memory_peak_bytes"]
+                > RSS_CEILING_BYTES
+                or body["no_network_proof"]["ipv4_route_count"] != 0
+                or body["no_network_proof"][
+                    "ipv6_non_loopback_route_count"
+                ] != 0
+            )
+        )
     ):
         raise FinancialMaterializationBenchmarkError(
             "Completed benchmark result differs from the exact census"
@@ -549,6 +912,7 @@ def _run_receipt(
         "user_cpu_seconds": terminal["user_cpu_seconds"],
         "system_cpu_seconds": terminal["system_cpu_seconds"],
         "peak_rss_bytes": terminal["peak_rss_bytes"],
+        "cgroup_memory_peak_bytes": terminal["cgroup_memory_peak_bytes"],
         "rss_ceiling_bytes": RSS_CEILING_BYTES,
         "wall_time_ceiling_seconds": WALL_TIME_CEILING_SECONDS,
         "stdout_sha256": terminal["stdout_sha256"],
@@ -584,7 +948,9 @@ def _write_receipts(
     return pointer
 
 
-def run_benchmark(*, repo_root: Path) -> Dict[str, object]:
+def run_benchmark(
+    *, repo_root: Path, docker_linux: bool = False,
+) -> Dict[str, object]:
     """Run once under hard guards and persist honest terminal evidence."""
     source = repo_root / SOURCE_RELATIVE
     if source.is_symlink() or not source.is_file():
@@ -594,7 +960,9 @@ def run_benchmark(*, repo_root: Path) -> Dict[str, object]:
     _stage_b_census(repo_root=repo_root)
     root_before = _root_state(repo_root=repo_root)
     sources_before = _production_source_hashes(repo_root=repo_root)
-    terminal = _run_child()
+    terminal = (
+        _run_docker_linux_child() if docker_linux else _run_child()
+    )
     sources_after = _production_source_hashes(repo_root=repo_root)
     root_after = _root_state(repo_root=repo_root)
     semantic = _semantic_receipt(
@@ -613,6 +981,7 @@ def run_benchmark(*, repo_root: Path) -> Dict[str, object]:
         "run_receipt_id": run["run_receipt_id"],
         "pointer_id": pointer["pointer_id"],
         "peak_rss_bytes": run["peak_rss_bytes"],
+        "cgroup_memory_peak_bytes": run["cgroup_memory_peak_bytes"],
         "wall_time_seconds": run["wall_time_seconds"],
         "canonical_json_bytes": semantic["materialization"][
             "canonical_json_bytes"
@@ -669,6 +1038,7 @@ def validate_current_receipts(*, repo_root: Path) -> Dict[str, object]:
         "benchmark_receipt_id": semantic["benchmark_receipt_id"],
         "run_receipt_id": run["run_receipt_id"],
         "peak_rss_bytes": run["peak_rss_bytes"],
+        "cgroup_memory_peak_bytes": run.get("cgroup_memory_peak_bytes"),
         "wall_time_seconds": run["wall_time_seconds"],
         "canonical_json_bytes": semantic["materialization"][
             "canonical_json_bytes"
@@ -681,10 +1051,13 @@ def main(*, argv: Sequence[str]) -> int:
     """Run parent benchmark, validate receipts, or execute the guarded child."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--child", action="store_true")
+    parser.add_argument("--docker-linux", action="store_true")
     parser.add_argument("--validate", action="store_true")
     arguments = parser.parse_args(list(argv))
-    if arguments.child and arguments.validate:
-        parser.error("--child and --validate are mutually exclusive")
+    if sum((arguments.child, arguments.docker_linux, arguments.validate)) > 1:
+        parser.error(
+            "--child, --docker-linux, and --validate are mutually exclusive"
+        )
     try:
         if arguments.child:
             print(json.dumps(
@@ -697,7 +1070,10 @@ def main(*, argv: Sequence[str]) -> int:
         result = (
             validate_current_receipts(repo_root=REPO_ROOT)
             if arguments.validate
-            else run_benchmark(repo_root=REPO_ROOT)
+            else run_benchmark(
+                repo_root=REPO_ROOT,
+                docker_linux=arguments.docker_linux,
+            )
         )
     except (FinancialMaterializationBenchmarkError, OSError, ValueError) as error:
         print(json.dumps(
