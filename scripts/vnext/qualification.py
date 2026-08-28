@@ -1192,6 +1192,30 @@ def _issue_table_qualification_authorization(
     d07 = requirement["effective_decisions"]["D-07"]["choice"]
     scope = d07.get("live_qualification_scope")
     financial_family = family_id == "financial_statement"
+    financial_policy_valid = (
+        not financial_family
+        or (
+            scope.get("fresh_samples_required") == 1
+            and scope.get("sample_sequence") == [
+                "SECOND_LAYOUT",
+                "PRODUCTION_SEMANTIC_FREEZE",
+                "POST_FREEZE_HOLDOUT",
+                "FRESH_STABILITY_1",
+            ]
+            and scope.get(
+                "financial_all_parent_plans_exact_head_review_required"
+            ) is True
+            and scope.get(
+                "financial_complete_child_shard_plan_set_review_required"
+            ) is True
+            and scope.get(
+                "financial_all_shards_examined_before_task_credit"
+            ) is True
+            and scope.get(
+                "financial_all_tasks_complete_before_phase_advance"
+            ) is True
+        )
+    ) if type(scope) is dict else False
     if (
         d07.get("live_qualification_authorized") is not True
         or type(scope) is not dict
@@ -1199,6 +1223,7 @@ def _issue_table_qualification_authorization(
         or task_contract_id not in scope.get("authorized_task_contract_ids", [])
         or scope.get("financial_qualification_authorized")
         is not financial_family
+        or not financial_policy_valid
         or (financial_family and type(table_shard_index) is not int)
         or (not financial_family and table_shard_index is not None)
     ):
@@ -3984,6 +4009,37 @@ def _table_production_freeze_path(
     )
 
 
+def _planned_holdout_source_identity(
+    *, repo_root: Path, family_id: str,
+) -> Dict[str, object]:
+    """Bind the matrix-owned holdout source without assuming a fixture kind."""
+    try:
+        matrix = load_table_qualification_matrix(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
+        entry = matrix["entries"][family_id]
+        sample = _qualification_sample_authority(
+            repo_root=repo_root,
+            matrix_entry=entry,
+            qualification_phase="POST_FREEZE_HOLDOUT",
+            qualification_ordinal=1,
+        )
+    except (KeyError, TableQualificationFreezeError) as error:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Planned holdout source authority is invalid",
+        ) from error
+    source = sample["source_binding"]
+    return {
+        "qualification_phase": "POST_FREEZE_HOLDOUT",
+        "qualification_fixture_id": sample["qualification_fixture_id"],
+        "source_binding_hash": source["source_binding_hash"],
+        "source_declaration": copy.deepcopy(source["source_declaration"]),
+        "target_period": copy.deepcopy(sample["target_period"]),
+    }
+
+
 def write_table_production_semantic_freeze(
     *, repo_root: Path, family_id: str, frozen_at_utc: str,
 ) -> Dict[str, object]:
@@ -4041,9 +4097,10 @@ def write_table_production_semantic_freeze(
         "semantic_files": tree["files"],
         "second_layout_terminals": second,
         "pre_holdout_qualification_ledger_prefix": ledger,
-        "planned_holdout_fixture_id": scope[
-            "post_freeze_holdout_fixture_id"
-        ],
+        "planned_holdout_source": _planned_holdout_source_identity(
+            repo_root=repo_root,
+            family_id=family_id,
+        ),
     }
     receipt = {**body, "receipt_id": content_hash(value=body)}
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -4098,6 +4155,11 @@ def validate_table_production_semantic_freeze(
         or receipt.get("semantic_tree_id") != current_tree["semantic_tree_id"]
         or receipt.get("semantic_files") != current_tree["files"]
         or receipt.get("second_layout_terminals") != second
+        or receipt.get("planned_holdout_source")
+        != _planned_holdout_source_identity(
+            repo_root=repo_root,
+            family_id=family_id,
+        )
         or current_prefix != prefix
     ):
         raise QualificationError(

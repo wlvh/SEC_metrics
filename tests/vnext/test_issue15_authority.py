@@ -431,7 +431,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         )
         self.assertEqual([], issue_snapshot["pending_decision_ids"])
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
-        self.assertEqual(17, len(issue_snapshot["decision_chains"]["D-07"]))
+        self.assertEqual(18, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
         self.assertEqual(5, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
@@ -1288,14 +1288,20 @@ class Issue15AuthorityTest(unittest.TestCase):
             ):
                 load_requirement_snapshot(snapshot_dir=issue_copy)
 
-    def test_d07_lodging_qualification_scope_is_exact(self) -> None:
-        """Reject financial expansion, sample reduction, or response reuse."""
+    def test_d07_financial_qualification_scope_is_exact(self) -> None:
+        """Reject source, task, shard-review, or sequence scope drift."""
         mutations = {
-            "authorized_family_ids": ["financial_statement"],
-            "authorized_task_contract_ids": ["lodging_occupancy_table_v2"],
+            "authorized_family_ids": ["lodging_kpi_table"],
+            "authorized_task_contract_ids": [
+                "financial_assets_under_management_table_v1"
+            ],
             "second_layout_fixture_id": "other-layout",
             "post_freeze_holdout_fixture_id": "other-holdout",
-            "fresh_samples_required": 1,
+            "financial_second_layout_source_sha256": "0" * 64,
+            "financial_post_freeze_holdout_source_sha256": "0" * 64,
+            "financial_fresh_source_sha256": "0" * 64,
+            "fresh_samples_required": 2,
+            "sample_sequence": ["SECOND_LAYOUT"],
             "new_provider_execution_per_sample_required": False,
             "measurement_response_reuse_for_qualification": True,
             "provider_usage_required": False,
@@ -1313,7 +1319,11 @@ class Issue15AuthorityTest(unittest.TestCase):
                 False
             ),
             "independent_exact_head_review_required_before_first_egress": False,
-            "financial_qualification_authorized": True,
+            "financial_all_parent_plans_exact_head_review_required": False,
+            "financial_complete_child_shard_plan_set_review_required": False,
+            "financial_all_shards_examined_before_task_credit": False,
+            "financial_all_tasks_complete_before_phase_advance": False,
+            "financial_qualification_authorized": False,
         }
         for field, replacement in mutations.items():
             with self.subTest(field=field), tempfile.TemporaryDirectory() \

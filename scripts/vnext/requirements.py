@@ -548,7 +548,7 @@ ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS = [
         "context_budget_tokens": 200000,
     },
 ]
-ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
+ISSUE_15_PRE_FINANCIAL_D07_LIVE_QUALIFICATION_SCOPE = {
     "authorized_family_ids": ["lodging_kpi_table"],
     "authorized_task_contract_ids": [
         "lodging_occupancy_table_v2",
@@ -588,6 +588,64 @@ ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
     "missing_or_excess_usage_terminal_no_retry": True,
     "independent_exact_head_review_required_before_first_egress": True,
     "financial_qualification_authorized": False,
+}
+ISSUE_15_D07_LIVE_QUALIFICATION_SCOPE = {
+    "authorized_family_ids": ["financial_statement"],
+    "authorized_task_contract_ids": [
+        "financial_assets_under_management_table_v1",
+        "financial_capacity_utilization_table_v1",
+        "financial_debt_to_equity_table_v1",
+        "financial_geographic_exposure_table_v1",
+        "financial_liquidity_coverage_ratio_table_v1",
+        "financial_net_interest_margin_table_v1",
+        "financial_nonperforming_loan_ratio_table_v1",
+        "financial_value_at_risk_table_v1",
+    ],
+    "second_layout_fixture_id": "marriott-2024-sec-layout-v1",
+    "post_freeze_holdout_fixture_id": "marriott-2023-sec-holdout-v1",
+    "financial_second_layout_source_sha256": (
+        "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
+    ),
+    "financial_post_freeze_holdout_source_sha256": (
+        "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe"
+    ),
+    "financial_fresh_source_sha256": (
+        "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    ),
+    "fresh_samples_required": 1,
+    "sample_sequence": [
+        "SECOND_LAYOUT",
+        "PRODUCTION_SEMANTIC_FREEZE",
+        "POST_FREEZE_HOLDOUT",
+        "FRESH_STABILITY_1",
+    ],
+    "current_content_addressed_freeze_required": True,
+    "current_stage_a_snapshot_required": True,
+    "new_provider_execution_per_sample_required": True,
+    "measurement_response_reuse_for_qualification": False,
+    "provider_usage_required": True,
+    "actual_prompt_tokens_max": 200000,
+    "authorized_context_evidence_bases": [
+        "ESTIMATED_BOUND",
+        "PROVIDER_REPORTED_EXACT_BINDING",
+        "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+    ],
+    "unattested_over_estimated_bound_phases": [
+        "SECOND_LAYOUT",
+        "POST_FREEZE_HOLDOUT",
+        "FRESH_STABILITY",
+    ],
+    "unattested_over_estimated_bound_requires_exact_review": True,
+    "unattested_over_estimated_bound_plan_exact_head_review_required": True,
+    "rebuilt_second_layout_plan_requires_new_qualification_execution": True,
+    "revised_prompt_fresh_plan_requires_new_qualification_execution": True,
+    "missing_or_excess_usage_terminal_no_retry": True,
+    "independent_exact_head_review_required_before_first_egress": True,
+    "financial_all_parent_plans_exact_head_review_required": True,
+    "financial_complete_child_shard_plan_set_review_required": True,
+    "financial_all_shards_examined_before_task_credit": True,
+    "financial_all_tasks_complete_before_phase_advance": True,
+    "financial_qualification_authorized": True,
 }
 ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY = {
     "attestation_record_type": "TABLE_CONTEXT_FEASIBILITY_ATTESTATION",
@@ -700,10 +758,23 @@ ISSUE_15_D07_EFFECTIVE_CHOICE = {
         ISSUE_15_D07_COMPACT_RAW_TEXT_PROMPT_POLICY
     ),
 }
+ISSUE_15_PRE_FINANCIAL_D07_EFFECTIVE_CHOICE = {
+    **ISSUE_15_D07_EFFECTIVE_CHOICE,
+    "live_qualification_scope": (
+        ISSUE_15_PRE_FINANCIAL_D07_LIVE_QUALIFICATION_SCOPE
+    ),
+}
+ISSUE_15_PRE_FINANCIAL_D07_TIP_HASH = (
+    "sha256:22a0be3ff04f3aa640aa922e111135d7aae90cb7beb9fd8d416f3dad0c9997a4"
+)
+ISSUE_15_PRE_FINANCIAL_D07_EVIDENCE = (
+    "https://github.com/wlvh/SEC_metrics/pull/22"
+    "#issuecomment-5438743026"
+)
 ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     "D-07": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5438743026"
+        "#issuecomment-5458166595"
     ),
     "D-26": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -720,8 +791,8 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
 }
 ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
     "D-07": (
-        "sha256:22a0be3ff04f3aa640aa922e111135d7aa"
-        "e90cb7beb9fd8d416f3dad0c9997a4"
+        "sha256:08af9c1c1bd1713785230619fb44c368ef"
+        "a119200c095dedaea84103342c5b2e"
     ),
     "D-26": (
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
@@ -2087,16 +2158,17 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
     expected_d35_chain_length = (
         5 if financial_resource_policy_active else 2
     )
+    financial_qualification_policy_active = len(chains["D-07"]) == 18
     if (
         len(chains["D-01"]) != 4
-        or len(chains["D-07"]) != 17
+        or len(chains["D-07"]) not in {17, 18}
         or len(chains["D-26"]) != 3
         or len(chains["D-35"]) != expected_d35_chain_length
         or len(chains["D-36"]) != 2
         or decisions["D-01"]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-01"])
         or decisions["D-07"]["supersedes_decision_id"]
-        != _decision_record_hash(decision=chains["D-07"][15])
+        != _decision_record_hash(decision=chains["D-07"][-2])
         or chains["D-26"][1]["supersedes_decision_id"]
         != _decision_record_hash(decision=parent["effective_decisions"]["D-26"])
         or decisions["D-26"]["supersedes_decision_id"]
@@ -2128,9 +2200,21 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         expected_decision_evidence["D-35"] = (
             ISSUE_15_PRE_RESOURCE_D35_EVIDENCE
         )
+    if not financial_qualification_policy_active:
+        expected_tip_hashes["D-07"] = (
+            ISSUE_15_PRE_FINANCIAL_D07_TIP_HASH
+        )
+        expected_decision_evidence["D-07"] = (
+            ISSUE_15_PRE_FINANCIAL_D07_EVIDENCE
+        )
+    expected_d07_choice = (
+        ISSUE_15_D07_EFFECTIVE_CHOICE
+        if financial_qualification_policy_active
+        else ISSUE_15_PRE_FINANCIAL_D07_EFFECTIVE_CHOICE
+    )
     if (
         decisions["D-01"]["choice"] != expected_d01_choice
-        or d07_choice != ISSUE_15_D07_EFFECTIVE_CHOICE
+        or d07_choice != expected_d07_choice
         or "freeze_replay" in d26_choice["prohibited_required_test_classes"]
         or not d26_choice["required_short_deterministic_invariants"]
         or "budget_preflight_provider_calls_zero"

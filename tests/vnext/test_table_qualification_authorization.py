@@ -182,6 +182,24 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             value["effective_decisions"]["D-07"]["choice"][
                 "live_qualification_authorized"
             ] = True
+            scope = value["effective_decisions"]["D-07"]["choice"][
+                "live_qualification_scope"
+            ]
+            scope["authorized_family_ids"] = ["lodging_kpi_table"]
+            scope["authorized_task_contract_ids"] = [
+                "lodging_occupancy_table_v2",
+                "lodging_revpar_table_v2",
+            ]
+            scope["fresh_samples_required"] = 3
+            scope["sample_sequence"] = [
+                "SECOND_LAYOUT",
+                "PRODUCTION_SEMANTIC_FREEZE",
+                "POST_FREEZE_HOLDOUT",
+                "FRESH_STABILITY_1",
+                "FRESH_STABILITY_2",
+                "FRESH_STABILITY_3",
+            ]
+            scope["financial_qualification_authorized"] = False
             return value
 
         qualification_requirement_patch = mock.patch.object(

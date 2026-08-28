@@ -74,6 +74,22 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                 self.assertEqual(["financial"], sample["company_traits"])
                 self.assertIsNone(sample["qualification_fixture_id"])
 
+    def test_production_freeze_plans_the_matrix_owned_citi_holdout(self) -> None:
+        """Avoid carrying the lodging fixture field into financial freeze."""
+        planned = qualification._planned_holdout_source_identity(
+            repo_root=REPO_ROOT,
+            family_id="financial_statement",
+        )
+        self.assertEqual("POST_FREEZE_HOLDOUT", planned["qualification_phase"])
+        self.assertIsNone(planned["qualification_fixture_id"])
+        self.assertEqual(
+            "citigroup", planned["source_declaration"]["company_id"],
+        )
+        self.assertEqual(
+            "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+            planned["source_declaration"]["source_sha256"],
+        )
+
     def test_layout_proof_requires_two_full_document_differences(self) -> None:
         """Reject issuer-only substitutions with equal shape or headers."""
         freeze_id = "sha256:" + ("a" * 64)
