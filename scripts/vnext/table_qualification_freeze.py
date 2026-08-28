@@ -975,6 +975,22 @@ def _measure_contiguous_shard_envelopes(
     }
 
 
+def _embedded_canonical_array_length(
+    *, empty_array_envelope: bytes, canonical_array: bytes,
+) -> int:
+    """Count an array embedded in a canonical parent without its terminal LF."""
+    if (
+        not empty_array_envelope.endswith(b"\n")
+        or not canonical_array.startswith(b"[")
+        or not canonical_array.endswith(b"]\n")
+        or b"[]" not in empty_array_envelope
+    ):
+        raise TableQualificationFreezeError(
+            "Materialized canonical array bytes are invalid"
+        )
+    return len(empty_array_envelope) - len(b"[]") + len(canonical_array) - 1
+
+
 def _measure_reader_envelope(
     *,
     repo_root: Path,
@@ -1129,7 +1145,10 @@ def _measure_reader_envelope(
     }
     expanded_bytes = canonical_json_bytes(value=expanded_body)
     expanded_reader_payload_bytes = (
-        len(expanded_bytes) - 2 + len(materialized_expanded_tables_bytes)
+        _embedded_canonical_array_length(
+            empty_array_envelope=expanded_bytes,
+            canonical_array=materialized_expanded_tables_bytes,
+        )
         if materialized_expanded_tables_bytes is not None
         else len(expanded_bytes)
     )

@@ -9,7 +9,7 @@ from pathlib import Path
 from unittest import mock
 
 from vnext import table_qualification_freeze as freeze_module
-from vnext.canonical import content_hash
+from vnext.canonical import canonical_json_bytes, content_hash
 from vnext.requirements import load_requirement_snapshot
 from vnext.table_qualification_freeze import _d07_authority
 from vnext.table_qualification_freeze import _run_wb3_test_receipts
@@ -23,6 +23,7 @@ from vnext.table_qualification_freeze import validate_table_qualification_freeze
 from vnext.table_qualification_freeze import _protected_closure
 from vnext.table_qualification_freeze import _protected_closure_drift
 from vnext.table_qualification_freeze import _measurement_receipts
+from vnext.table_qualification_freeze import _embedded_canonical_array_length
 from vnext.table_qualification_freeze import _split_cost_receipts
 from vnext.table_task_contracts import load_table_task_contracts
 
@@ -76,6 +77,20 @@ class TableQualificationFreezeTest(unittest.TestCase):
                     1000000,
                     entry["token_context_limits"]["maximum_context_tokens"],
                 )
+
+    def test_shared_materialization_embeds_array_without_second_lf(self) -> None:
+        """Keep optimized and direct canonical byte counts exactly equal."""
+        tables = [{"table_id": "table_000001", "rows": []}]
+        empty = canonical_json_bytes(value={"tables": []})
+        array = canonical_json_bytes(value=tables)
+        direct = canonical_json_bytes(value={"tables": tables})
+        self.assertEqual(
+            len(direct),
+            _embedded_canonical_array_length(
+                empty_array_envelope=empty,
+                canonical_array=array,
+            ),
+        )
 
     def test_each_revised_lodging_task_rejects_historical_attestation(
         self,
