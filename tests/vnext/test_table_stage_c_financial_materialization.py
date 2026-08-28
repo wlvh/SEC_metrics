@@ -20,10 +20,10 @@ from vnext.canonical import sha256_file, strict_json_file
 
 
 EXPECTED_BENCHMARK_RECEIPT_ID = (
-    "sha256:7129778529da4e8b402ad693433531f36c52cd99f4c1b71e20735bb33196b3c3"
+    "sha256:00144ea89bec568904a24ec52be33f75897a5a2d132525a727f770dd1b993508"
 )
 EXPECTED_RUN_RECEIPT_ID = (
-    "sha256:769a848b5099596c9ea04210b8cc7e69facdd010d6739f16d1edbcb90baf32be"
+    "sha256:f3b954403c9e9dde84d46a5013755ebb329c868551189b46b634506a6a33855a"
 )
 PRODUCTION_RESOURCE_LIMITS_SHA256 = (
     "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04"
@@ -54,7 +54,7 @@ class DockerLinuxGuardContractTest(unittest.TestCase):
 
 
 class TableStageCFinancialMaterializationTest(unittest.TestCase):
-    """Keep the fallback honest when macOS lacks a reliable RSS hard limit."""
+    """Verify the completed Linux hard-guard materialization evidence."""
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -69,7 +69,7 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
         )
 
     def test_current_receipt_is_census_bound_and_resource_safe(self) -> None:
-        """Bind exact JPM/census bytes while refusing an unguarded allocation."""
+        """Bind exact JPM/census bytes and the completed full materialization."""
         self.assertEqual(
             EXPECTED_BENCHMARK_RECEIPT_ID,
             self.summary["benchmark_receipt_id"],
@@ -78,7 +78,7 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
             EXPECTED_RUN_RECEIPT_ID, self.summary["run_receipt_id"],
         )
         self.assertEqual(
-            "NOT_RUN_RSS_GUARD_UNAVAILABLE", self.summary["status"],
+            "COMPLETED", self.summary["status"],
         )
         self.assertEqual(SOURCE_SHA256, self.semantic["source"]["sha256"])
         self.assertEqual(
@@ -100,7 +100,7 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
             self.semantic["test_only_override"]["scope"],
         )
         self.assertEqual(
-            "RSS_HARD_LIMIT_SETUP_FAILED",
+            "LINUX_CGROUP_V2_AND_NETWORK_NONE_PASS",
             self.semantic["safety_ceilings"]["guard_status"],
         )
         self.assertEqual(
@@ -109,14 +109,36 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
                 "hard_address_space_and_peak_rss_ceiling_bytes"
             ],
         )
-        self.assertFalse(
+        self.assertTrue(
             self.semantic["no_network_proof"]["benchmark_child_started"]
         )
-        self.assertFalse(self.semantic["materialization"]["completed"])
-        self.assertIsNone(self.summary["peak_rss_bytes"])
-        self.assertIsNone(self.summary["wall_time_seconds"])
-        self.assertIsNone(self.summary["canonical_json_bytes"])
-        self.assertIsNone(self.summary["derived_asset_id"])
+        self.assertEqual(
+            "DOCKER_NETWORK_NONE",
+            self.semantic["no_network_proof"]["policy"],
+        )
+        self.assertEqual(
+            0, self.semantic["no_network_proof"]["ipv4_route_count"],
+        )
+        self.assertEqual(
+            0,
+            self.semantic["no_network_proof"][
+                "ipv6_non_loopback_route_count"
+            ],
+        )
+        materialization = self.semantic["materialization"]
+        self.assertTrue(materialization["completed"])
+        self.assertEqual(124761, materialization["final_expanded_cells"])
+        self.assertEqual(679, materialization["table_count"])
+        self.assertEqual(22174348, self.summary["canonical_json_bytes"])
+        self.assertEqual(
+            "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+            self.summary["derived_asset_id"],
+        )
+        self.assertEqual(282877952, self.summary["peak_rss_bytes"])
+        self.assertEqual(
+            288043008, self.summary["cgroup_memory_peak_bytes"],
+        )
+        self.assertEqual("5.10483", self.summary["wall_time_seconds"])
 
     def test_production_root_and_egress_remain_unchanged(self) -> None:
         """Prove fallback evidence changed no production policy or business bytes."""
