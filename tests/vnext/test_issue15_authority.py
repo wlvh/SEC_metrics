@@ -41,6 +41,7 @@ from vnext.requirements import (
     ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT,
     ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY,
     ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY,
+    ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -431,7 +432,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
         self.assertEqual(17, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
-        self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-35"]))
+        self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
         self.assertEqual(
             set(baseline["effective_decision_ids"]),
@@ -663,6 +664,10 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(
             ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY,
             d35_choice["financial_materialization_resource_policy"],
+        )
+        self.assertEqual(
+            ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY,
+            d35_choice["financial_request_shard_policy"],
         )
         self.assertEqual(
             "DISABLED", d36_choice["repository_monetary_budget_enforcement"],
@@ -1560,6 +1565,39 @@ class Issue15AuthorityTest(unittest.TestCase):
                     if row["decision_id"] == "D-35"
                 )
                 d35["choice"]["financial_materialization_resource_policy"][
+                    field
+                ] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_financial_shard_policy_forbids_selection_or_incomplete_credit(
+        self,
+    ) -> None:
+        """Reject semantic boundaries, skipped tables, early stop, or new CLI."""
+        mutations = {
+            "expected_table_count": 678,
+            "semantic_prefilter": True,
+            "selector_authorized": True,
+            "early_stop_after_candidate": True,
+            "all_shards_examined_before_qualification_credit": False,
+            "new_cli_authorized": True,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(
+                    path=issue_copy / "decision_register.json"
+                )
+                d35 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-35"
+                )
+                d35["choice"]["financial_request_shard_policy"][
                     field
                 ] = replacement
                 rebind_decisions(issue_copy=issue_copy, register=register)

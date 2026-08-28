@@ -711,7 +711,7 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     ),
     "D-35": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5450119034"
+        "#issuecomment-5452220324"
     ),
     "D-36": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -727,7 +727,7 @@ ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
     ),
     "D-35": (
-        "sha256:2032cde77f95dc236bff96725f42999100945b0c40ef2562662443cfeef6f672"
+        "sha256:0cd9e825963f9d5bc630986ecb2df77b0bcd407960bfa4704a61a906cdf3ce35"
     ),
     "D-36": (
         "sha256:468b7ef6528f4d76de56a71bcba4c913e47e858eefdba55129554ddaf845af1e"
@@ -779,6 +779,49 @@ ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY = {
     "model_provider_egress_count": 0,
     "paid_model_provider_call_count": 0,
     "SEC_egress_count": 0,
+}
+ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY = {
+    "policy_status": "OWNER_APPROVED_IMPLEMENTATION_REQUIRED",
+    "family_id": "financial_statement",
+    "source_sha256": (
+        "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+    ),
+    "expected_table_count": 679,
+    "shard_unit": "IMMUTABLE_COMPACT_PER_TABLE_ENTRY",
+    "packing_algorithm": (
+        "GREEDY_MAXIMAL_CONTIGUOUS_PREFIX_BY_EXACT_PROVIDER_REQUEST_"
+        "UTF8_BYTE_UPPER_BOUND_V1"
+    ),
+    "max_estimated_input_tokens_per_shard": 200000,
+    "provider_max_context_tokens": 1000000,
+    "packing_inputs": [
+        "ORIGINAL_TABLE_ORDER",
+        "SERIALIZER_V2_COMPACT_TABLE_BYTES",
+        "FIXED_TASK_PROMPT_SCHEMA_PROVIDER_ENVELOPE",
+    ],
+    "full_table_set_preserved": True,
+    "every_table_exactly_once": True,
+    "original_order_preserved": True,
+    "contiguous_ranges_required": True,
+    "semantic_prefilter": False,
+    "selector_authorized": False,
+    "metric_or_text_may_affect_boundaries": False,
+    "early_stop_after_candidate": False,
+    "examined_table_ids_exact_shard_set_required": True,
+    "candidate_or_no_candidate_shard_disposition_required": True,
+    "no_candidate_disposition_is_shard_local_only": True,
+    "all_shards_examined_before_qualification_credit": True,
+    "all_shards_examined_before_publication_credit": True,
+    "qualification_requires_at_least_one_evidence_pass_candidate_shard": True,
+    "conflicting_candidate_shards_policy": "WITHHELD",
+    "local_materialization_max_total_cells": 124761,
+    "reuse_existing_qualification_wb3_run_evidence_review": True,
+    "new_public_artifact_authorized": False,
+    "new_packet_layer_authorized": False,
+    "new_cache_authorized": False,
+    "new_cli_authorized": False,
+    "concrete_egress_requires_post_implementation_freeze": True,
+    "concrete_egress_requires_exact_head_review": True,
 }
 ISSUE_15_BASE_PIPELINE_SHA256 = (
     "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438"
@@ -1963,7 +2006,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         runtime_authority_files == ISSUE_15_RUNTIME_AUTHORITY_FILES
     )
     expected_d35_chain_length = (
-        3 if financial_resource_policy_active else 2
+        4 if financial_resource_policy_active else 2
     )
     if (
         len(chains["D-01"]) != 4
@@ -2033,8 +2076,16 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
             != ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY
         )
         or (
+            financial_resource_policy_active
+            and d35_choice.get("financial_request_shard_policy")
+            != ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY
+        )
+        or (
             not financial_resource_policy_active
-            and "financial_materialization_resource_policy" in d35_choice
+            and (
+                "financial_materialization_resource_policy" in d35_choice
+                or "financial_request_shard_policy" in d35_choice
+            )
         )
         or d36_choice["repository_monetary_budget_enforcement"] != "DISABLED"
         or d36_choice["spending_authority"] != "EXTERNAL_API_ACCOUNT_BALANCE"
