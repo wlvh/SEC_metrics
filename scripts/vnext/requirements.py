@@ -711,7 +711,7 @@ ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID = {
     ),
     "D-35": (
         "https://github.com/wlvh/SEC_metrics/pull/22"
-        "#issuecomment-5452220324"
+        "#issuecomment-5456154552"
     ),
     "D-36": (
         "https://github.com/wlvh/SEC_metrics/issues/15"
@@ -727,7 +727,7 @@ ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES = {
         "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938"
     ),
     "D-35": (
-        "sha256:0cd9e825963f9d5bc630986ecb2df77b0bcd407960bfa4704a61a906cdf3ce35"
+        "sha256:a9b91519f44be663140dfe460edfd60f38cae199cab5469d58dee2474bdcd5e7"
     ),
     "D-36": (
         "sha256:468b7ef6528f4d76de56a71bcba4c913e47e858eefdba55129554ddaf845af1e"
@@ -814,7 +814,7 @@ ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY = {
     "all_shards_examined_before_publication_credit": True,
     "qualification_requires_at_least_one_evidence_pass_candidate_shard": True,
     "conflicting_candidate_shards_policy": "WITHHELD",
-    "local_materialization_max_total_cells": 124761,
+    "local_materialization_max_total_cells": 200229,
     "reuse_existing_qualification_wb3_run_evidence_review": True,
     "new_public_artifact_authorized": False,
     "new_packet_layer_authorized": False,
@@ -822,6 +822,85 @@ ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY = {
     "new_cli_authorized": False,
     "concrete_egress_requires_post_implementation_freeze": True,
     "concrete_egress_requires_exact_head_review": True,
+}
+ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY = {
+    "policy_status": "OWNER_APPROVED_IMPLEMENTATION_REQUIRED",
+    "family_id": "financial_statement",
+    "selected_option": "A",
+    "decision": (
+        "RAISE_CAP_TO_MAXIMUM_CURRENT_QUALIFICATION_SOURCE_"
+        "EXPANDED_CELL_COUNT"
+    ),
+    "development_source": {
+        "company_id": "jpmorgan_chase",
+        "accession": "0001628280-26-008131",
+        "document_name": "jpm-20251231.htm",
+        "source_sha256": (
+            "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+        ),
+        "exact_table_count": 679,
+        "exact_expanded_cell_count": 124761,
+        "derived_asset_id": (
+            "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110"
+        ),
+    },
+    "second_layout_source": {
+        "company_id": "bank_of_america_corp",
+        "accession": "0000070858-26-000157",
+        "document_name": "bac-20251231.htm",
+        "source_sha256": (
+            "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
+        ),
+        "exact_table_count": 369,
+        "exact_expanded_cell_count": 200229,
+        "derived_asset_id": (
+            "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519"
+        ),
+    },
+    "post_freeze_holdout_source": {
+        "company_id": "citigroup",
+        "accession": "0000831001-26-000011",
+        "document_name": "c-20251231.htm",
+        "source_sha256": (
+            "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe"
+        ),
+        "exact_table_count": 330,
+        "exact_expanded_cell_count": 95463,
+    },
+    "maximum_current_source_expanded_cell_count": 200229,
+    "production_max_total_cells_before": 124761,
+    "production_max_total_cells_after": 200229,
+    "minimum_sufficient_current_source_policy": True,
+    "local_materialization_shards_selected": False,
+    "provider_request_shard_policy_unchanged": True,
+    "hard_guard_source_sha256": (
+        "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
+    ),
+    "hard_guard_status": "COMPLETED",
+    "hard_memory_ceiling_bytes": 536870912,
+    "peak_process_rss_bytes": 366530560,
+    "peak_cgroup_memory_bytes": 371380224,
+    "hard_wall_time_ceiling_seconds": 120,
+    "wall_time_seconds": "4.330166",
+    "canonical_json_bytes": 34204694,
+    "network_policy": "DOCKER_NETWORK_NONE",
+    "ipv4_route_count": 0,
+    "ipv6_non_loopback_route_count": 0,
+    "source_acquisition_request_attempt_count": 4,
+    "source_acquisition_all_http_200_retry_zero": True,
+    "full_table_set_preserved": True,
+    "original_order_preserved": True,
+    "semantic_prefilter": False,
+    "selector_authorized": False,
+    "new_public_artifact_authorized": False,
+    "new_packet_layer_authorized": False,
+    "new_cache_authorized": False,
+    "new_cli_authorized": False,
+    "characterization_model_provider_egress_count": 0,
+    "characterization_paid_model_provider_call_count": 0,
+    "characterization_SEC_egress_count": 0,
+    "concrete_model_egress_requires_post_change_freeze": True,
+    "concrete_model_egress_requires_exact_head_review": True,
 }
 ISSUE_15_BASE_PIPELINE_SHA256 = (
     "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438"
@@ -2006,7 +2085,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         runtime_authority_files == ISSUE_15_RUNTIME_AUTHORITY_FILES
     )
     expected_d35_chain_length = (
-        4 if financial_resource_policy_active else 2
+        5 if financial_resource_policy_active else 2
     )
     if (
         len(chains["D-01"]) != 4
@@ -2081,10 +2160,19 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
             != ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY
         )
         or (
+            financial_resource_policy_active
+            and d35_choice.get(
+                "financial_layout_source_materialization_policy"
+            )
+            != ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY
+        )
+        or (
             not financial_resource_policy_active
             and (
                 "financial_materialization_resource_policy" in d35_choice
                 or "financial_request_shard_policy" in d35_choice
+                or "financial_layout_source_materialization_policy"
+                in d35_choice
             )
         )
         or d36_choice["repository_monetary_budget_enforcement"] != "DISABLED"

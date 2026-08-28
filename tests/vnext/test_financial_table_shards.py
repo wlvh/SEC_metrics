@@ -36,6 +36,128 @@ from vnext.workflow import create_table_task_review_run
 from vnext.workflow import finalize_reviewed_direct_results
 
 
+class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
+    """Bind current layout sources and their pre-egress difference proof."""
+
+    def test_matrix_resolves_exact_boa_and_citi_immutable_attempts(self) -> None:
+        """Keep layout sources ledger-bound without extending the registry."""
+        entry = load_table_qualification_matrix(
+            repo_root=REPO_ROOT,
+            family_id="financial_statement",
+        )["entries"]["financial_statement"]
+        expected = {
+            "SECOND_LAYOUT": (
+                "bank_of_america_corp",
+                "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+                "request:attempt:535d14a6c75aff5a20d5fdd93f3e9e6a370fb34846e6d569bcc5eb17dfd7a8db",
+            ),
+            "POST_FREEZE_HOLDOUT": (
+                "citigroup",
+                "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+                "request:attempt:7bf1096d7127f7eaa2b59a9922a93167b949faed22213dc4b53369f727297eb0",
+            ),
+        }
+        for phase, values in expected.items():
+            with self.subTest(phase=phase):
+                sample = qualification._qualification_sample_authority(
+                    repo_root=REPO_ROOT,
+                    matrix_entry=entry,
+                    qualification_phase=phase,
+                    qualification_ordinal=1,
+                )
+                declaration = sample["source_binding"]["source_declaration"]
+                self.assertEqual(values[0], declaration["company_id"])
+                self.assertEqual(values[1], declaration["source_sha256"])
+                self.assertEqual(
+                    values[2], sample["source_binding"]["request_attempt_id"],
+                )
+                self.assertEqual(["financial"], sample["company_traits"])
+                self.assertIsNone(sample["qualification_fixture_id"])
+
+    def test_layout_proof_requires_two_full_document_differences(self) -> None:
+        """Reject issuer-only substitutions with equal shape or headers."""
+        freeze_id = "sha256:" + ("a" * 64)
+        reference_signature = {
+            "derived_asset_id": "sha256:" + ("1" * 64),
+            "table_count": 679,
+            "expanded_cell_count": 124761,
+            "ordered_table_shape_hash": "sha256:" + ("2" * 64),
+            "ordered_header_layout_hash": "sha256:" + ("3" * 64),
+        }
+        sample_signature = {
+            "derived_asset_id": "sha256:" + ("4" * 64),
+            "table_count": 369,
+            "expanded_cell_count": 200229,
+            "ordered_table_shape_hash": "sha256:" + ("5" * 64),
+            "ordered_header_layout_hash": "sha256:" + ("6" * 64),
+        }
+        matrix_entry = {
+            "development_source": {
+                "company_id": "jpmorgan_chase",
+                "cik": "19617",
+                "accession": "0001628280-26-008131",
+                "source_sha256": "1" * 64,
+            },
+            "materially_different_criteria": list(
+                qualification.FINANCIAL_DIFFERENT_ISSUER_LAYOUT_CRITERIA
+            ),
+        }
+        sample = {
+            "source_binding": {
+                "source_declaration": {
+                    "company_id": "bank_of_america_corp",
+                    "cik": "70858",
+                    "accession": "0000070858-26-000157",
+                    "source_sha256": "2" * 64,
+                },
+            },
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            receipt_path = (
+                root / qualification.FREEZE_RECEIPT_ROOT
+                / (("a" * 64) + ".json")
+            )
+            receipt_path.parent.mkdir(parents=True)
+            receipt_path.write_text(json.dumps({
+                "wb4_compact_transport": {
+                    "qualification_task_measurements": [{
+                        "family_id": "financial_statement",
+                        "task_contract_id": "financial_test_task_v1",
+                        "source_sha256": "1" * 64,
+                        "source_layout_signature": reference_signature,
+                    }],
+                },
+            }), encoding="utf-8")
+            proof = qualification._financial_layout_independence_proof(
+                repo_root=root,
+                freeze={"receipt_id": freeze_id},
+                matrix_entry=matrix_entry,
+                task_contract_id="financial_test_task_v1",
+                qualification_phase="SECOND_LAYOUT",
+                sample=sample,
+                measurement={"source_layout_signature": sample_signature},
+            )
+            self.assertEqual(4, len(proof["verified_differences"]))
+            equal_headers = copy.deepcopy(sample_signature)
+            equal_headers["ordered_header_layout_hash"] = (
+                reference_signature["ordered_header_layout_hash"]
+            )
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "materially different layout",
+            ):
+                qualification._financial_layout_independence_proof(
+                    repo_root=root,
+                    freeze={"receipt_id": freeze_id},
+                    matrix_entry=matrix_entry,
+                    task_contract_id="financial_test_task_v1",
+                    qualification_phase="SECOND_LAYOUT",
+                    sample=sample,
+                    measurement={"source_layout_signature": equal_headers},
+                )
+
+
 class FinancialTableShardClosureTest(unittest.TestCase):
     """Prove shard-local outcomes remain bound to complete ordered coverage."""
 

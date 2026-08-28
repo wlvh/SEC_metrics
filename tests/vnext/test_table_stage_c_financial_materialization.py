@@ -33,7 +33,7 @@ BENCHMARK_RESOURCE_LIMITS_SHA256 = (
     "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04"
 )
 CURRENT_RESOURCE_LIMITS_SHA256 = (
-    "58f09bb6fb83226f6650f3b8a9f4e0a13addc3ec541d3a76eb3b5aac4a6e5777"
+    "c056e29988b76b3d53d414ba325e268a6492cf556c522debc670668287a517c2"
 )
 
 
@@ -164,16 +164,33 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
             BENCHMARK_RESOURCE_LIMITS_SHA256,
             policy["resource_limits_sha256_after"],
         )
-        self.assertEqual(124761, RESOURCE_LIMITS.max_total_cells)
+        self.assertEqual(200229, RESOURCE_LIMITS.max_total_cells)
         requirement = load_requirement_snapshot(
             snapshot_dir=REPO_ROOT / "requirements/issue_15_v1",
         )
-        resource_policy = requirement["effective_decisions"]["D-35"][
-            "choice"
-        ]["financial_materialization_resource_policy"]
+        d35_choice = requirement["effective_decisions"]["D-35"]["choice"]
+        resource_policy = d35_choice["financial_materialization_resource_policy"]
         self.assertEqual(
             124761, resource_policy["production_max_total_cells_after"],
         )
+        layout_policy = d35_choice[
+            "financial_layout_source_materialization_policy"
+        ]
+        self.assertEqual("A", layout_policy["selected_option"])
+        self.assertEqual(
+            resource_policy["production_max_total_cells_after"],
+            layout_policy["production_max_total_cells_before"],
+        )
+        self.assertEqual(
+            RESOURCE_LIMITS.max_total_cells,
+            layout_policy["production_max_total_cells_after"],
+        )
+        self.assertEqual(
+            RESOURCE_LIMITS.max_total_cells,
+            layout_policy["maximum_current_source_expanded_cell_count"],
+        )
+        self.assertFalse(layout_policy["local_materialization_shards_selected"])
+        self.assertTrue(layout_policy["provider_request_shard_policy_unchanged"])
         self.assertEqual(
             self.summary["benchmark_receipt_id"],
             resource_policy["benchmark_receipt_id"],
@@ -189,7 +206,7 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
         self.assertEqual(0, network["real_SEC_egress_count"])
 
     def test_production_cap_materializes_the_exact_jpm_grid(self) -> None:
-        """Prove the minimum 124761 cap admits all tables in original order."""
+        """Prove the current-source cap still admits exact JPM in order."""
         asset = build_table_grid(
             html_bytes=(REPO_ROOT / SOURCE_RELATIVE).read_bytes(),
             parent_raw_asset_ids=["sha256:" + SOURCE_SHA256],

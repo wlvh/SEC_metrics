@@ -119,6 +119,11 @@ LODGING_SAME_ISSUER_HOLDOUT_CRITERIA = [
     "different_primary_document_layout",
     "rowspan_or_colspan_difference",
 ]
+FINANCIAL_DIFFERENT_ISSUER_LAYOUT_CRITERIA = [
+    "different_issuer_cik",
+    "different_primary_document_layout",
+    "different_table_header_or_column_order",
+]
 _SHA256_ID = re.compile(r"^sha256:[0-9a-f]{64}$")
 _SHA256_HEX = re.compile(r"^[0-9a-f]{64}$")
 _ACCESSION = re.compile(r"^[0-9]{10}-[0-9]{2}-[0-9]{6}$")
@@ -349,9 +354,10 @@ def _source_url_from_declaration(*, declaration: Mapping[str, object]) -> str:
 
 def _matrix_source_binding(
     *, repo_root: Path, matrix_entry: Mapping[str, object],
+    source_field: str = "development_source",
 ) -> Dict[str, object]:
     """Rebuild one matrix-owned immutable SEC source and ledger binding."""
-    declaration = matrix_entry.get("development_source")
+    declaration = matrix_entry.get(source_field)
     required = {
         "accession",
         "cik",
@@ -364,13 +370,13 @@ def _matrix_source_binding(
     if type(declaration) is not dict or set(declaration) != required:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source fields are invalid",
+            message="Matrix immutable source fields are invalid",
         )
     source = dict(declaration)
     if source["source_kind"] != "IMMUTABLE_ATTEMPT":
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source is not immutable",
+            message="Matrix source is not immutable",
         )
     for label, field in (
         ("source company", "company_id"),
@@ -382,18 +388,18 @@ def _matrix_source_binding(
     if relative.is_absolute() or ".." in relative.parts:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source path is unsafe",
+            message="Matrix source path is unsafe",
         )
     source_path = repo_root / relative
     if source_path.is_symlink() or not source_path.is_file():
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source bytes are absent",
+            message="Matrix source bytes are absent",
         )
     if sha256_file(path=source_path) != source["source_sha256"]:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source bytes differ",
+            message="Matrix source bytes differ",
         )
     source_url = _source_url_from_declaration(declaration=source)
     try:
@@ -423,7 +429,7 @@ def _matrix_source_binding(
     if len(matches) != 1:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source ledger binding is ambiguous",
+            message="Matrix source ledger binding is ambiguous",
         )
     index, row = matches[0]
     request_attempt_id = request_log_attempt_id(row_index=index, row=row)
@@ -440,14 +446,14 @@ def _matrix_source_binding(
     except BatchWorkflowError as error:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source ledger proof differs",
+            message="Matrix source ledger proof differs",
         ) from error
     if proof["request_repo_relative_path"] != source[
         "source_repo_relative_path"
     ]:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
-            message="Matrix development source locator differs",
+            message="Matrix source locator differs",
         )
     body = {
         "source_declaration": source,
@@ -511,6 +517,39 @@ def _matrix_fixture_source_binding(
     }
 
 
+def _qualification_source_company_traits(
+    *, repo_root: Path, matrix_entry: Mapping[str, object], company_id: str,
+) -> list[str]:
+    """Resolve registry traits or the family's exact applicability traits."""
+    try:
+        return list(repository_company_traits(
+            repo_root=repo_root,
+            company_id=company_id,
+        ))
+    except TraitError as error:
+        try:
+            task_plan = table_task_execution_plan(
+                repo_root=repo_root,
+                task_contract_id=str(matrix_entry["task_contract_ids"][0]),
+            )
+            company_traits = sorted({
+                str(trait)
+                for metric in task_plan["metric_specs"].values()
+                for trait in metric["compiled"]["applicability"]["all"]
+            })
+        except (KeyError, TableTaskContractError, TypeError) as nested:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+                message="Qualification company traits are invalid",
+            ) from nested
+        if not company_traits:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+                message="Qualification company traits are empty",
+            ) from error
+        return company_traits
+
+
 def _qualification_sample_authority(
     *, repo_root: Path, matrix_entry: Mapping[str, object],
     qualification_phase: str, qualification_ordinal: int,
@@ -525,34 +564,13 @@ def _qualification_sample_authority(
         source_binding = _matrix_source_binding(
             repo_root=repo_root, matrix_entry=matrix_entry,
         )
-        try:
-            company_traits = repository_company_traits(
-                repo_root=repo_root,
-                company_id=str(
-                    source_binding["source_declaration"]["company_id"]
-                ),
-            )
-        except TraitError as error:
-            try:
-                task_plan = table_task_execution_plan(
-                    repo_root=repo_root,
-                    task_contract_id=str(matrix_entry["task_contract_ids"][0]),
-                )
-                company_traits = sorted({
-                    str(trait)
-                    for metric in task_plan["metric_specs"].values()
-                    for trait in metric["compiled"]["applicability"]["all"]
-                })
-            except (KeyError, TableTaskContractError, TypeError) as nested:
-                raise QualificationError(
-                    code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
-                    message="Qualification company traits are invalid",
-                ) from nested
-            if not company_traits:
-                raise QualificationError(
-                    code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
-                    message="Qualification company traits are empty",
-                ) from error
+        company_traits = _qualification_source_company_traits(
+            repo_root=repo_root,
+            matrix_entry=matrix_entry,
+            company_id=str(
+                source_binding["source_declaration"]["company_id"]
+            ),
+        )
         return {
             "qualification_phase": qualification_phase,
             "qualification_fixture_id": None,
@@ -575,9 +593,35 @@ def _qualification_sample_authority(
             message="Qualification phase or ordinal is invalid",
         )
     declaration = matrix_entry.get(field)
+    if type(declaration) is not dict:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Qualification layout source is invalid",
+        )
+    if declaration.get("source_kind") == "IMMUTABLE_ATTEMPT":
+        source_binding = _matrix_source_binding(
+            repo_root=repo_root,
+            matrix_entry=matrix_entry,
+            source_field=field,
+        )
+        return {
+            "qualification_phase": qualification_phase,
+            "qualification_fixture_id": None,
+            "source_binding": source_binding,
+            "company_traits": _qualification_source_company_traits(
+                repo_root=repo_root,
+                matrix_entry=matrix_entry,
+                company_id=str(declaration["company_id"]),
+            ),
+            "target_period": _target_period_mapping(
+                value=matrix_entry["target_period"],
+            ),
+            "source_media_type": _source_media_type(
+                value=matrix_entry["source_media_type"],
+            ),
+        }
     if (
-        type(declaration) is not dict
-        or declaration.get("source_kind") != "RECORDED_LAYOUT_FIXTURE"
+        declaration.get("source_kind") != "RECORDED_LAYOUT_FIXTURE"
         or type(declaration.get("fixture_id")) is not str
     ):
         raise QualificationError(
@@ -3185,6 +3229,130 @@ def execute_table_qualification_task(
     }
 
 
+def _financial_layout_independence_proof(
+    *, repo_root: Path, freeze: Mapping[str, object],
+    matrix_entry: Mapping[str, object], task_contract_id: str,
+    qualification_phase: str, sample: Mapping[str, object],
+    measurement: Mapping[str, object],
+) -> Dict[str, object]:
+    """Prove an immutable financial layout differs before any provider call."""
+    if (
+        qualification_phase not in {"SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"}
+        or matrix_entry.get("materially_different_criteria")
+        != FINANCIAL_DIFFERENT_ISSUER_LAYOUT_CRITERIA
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Financial layout comparison policy is invalid",
+        )
+    receipt_id = str(freeze.get("receipt_id", ""))
+    if _SHA256_ID.fullmatch(receipt_id) is None:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Financial layout freeze identity is invalid",
+        )
+    receipt_path = (
+        repo_root / FREEZE_RECEIPT_ROOT
+        / (receipt_id.split(":", maxsplit=1)[1] + ".json")
+    )
+    if receipt_path.is_symlink() or not receipt_path.is_file():
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Financial layout freeze receipt is absent",
+        )
+    receipt = strict_json_file(path=receipt_path)
+    development = matrix_entry["development_source"]
+    frozen_measurements = receipt.get("wb4_compact_transport", {}).get(
+        "qualification_task_measurements", []
+    )
+    references = [
+        row for row in frozen_measurements
+        if row.get("family_id") == "financial_statement"
+        and row.get("task_contract_id") == task_contract_id
+        and row.get("source_sha256") == development["source_sha256"]
+    ]
+    if len(references) != 1:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Financial development layout measurement is ambiguous",
+        )
+    reference_signature = references[0].get("source_layout_signature")
+    sample_signature = measurement.get("source_layout_signature")
+    signature_fields = {
+        "derived_asset_id",
+        "table_count",
+        "expanded_cell_count",
+        "ordered_table_shape_hash",
+        "ordered_header_layout_hash",
+    }
+    if (
+        type(reference_signature) is not dict
+        or type(sample_signature) is not dict
+        or set(reference_signature) != signature_fields
+        or set(sample_signature) != signature_fields
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Financial layout signature is invalid",
+        )
+    sample_declaration = sample["source_binding"]["source_declaration"]
+    different_issuer = (
+        str(int(str(development["cik"])))
+        != str(int(str(sample_declaration["cik"])))
+    )
+    different_source = (
+        development["source_sha256"] != sample_declaration["source_sha256"]
+        and development["accession"] != sample_declaration["accession"]
+    )
+    different_primary_layout = (
+        reference_signature["table_count"] != sample_signature["table_count"]
+        and reference_signature["ordered_table_shape_hash"]
+        != sample_signature["ordered_table_shape_hash"]
+    )
+    different_header_layout = (
+        reference_signature["ordered_header_layout_hash"]
+        != sample_signature["ordered_header_layout_hash"]
+    )
+    if not (
+        different_issuer
+        and different_source
+        and different_primary_layout
+        and different_header_layout
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Financial source is not a materially different layout",
+        )
+    body = {
+        "comparison_basis": "FULL_DOCUMENT_EXPANDED_GRID",
+        "criteria": list(FINANCIAL_DIFFERENT_ISSUER_LAYOUT_CRITERIA),
+        "reference_source": {
+            "company_id": development["company_id"],
+            "cik": str(development["cik"]),
+            "accession": development["accession"],
+            "source_sha256": development["source_sha256"],
+            "layout_signature": dict(reference_signature),
+        },
+        "sample_source": {
+            "company_id": sample_declaration["company_id"],
+            "cik": str(sample_declaration["cik"]),
+            "accession": sample_declaration["accession"],
+            "source_sha256": sample_declaration["source_sha256"],
+            "layout_signature": dict(sample_signature),
+        },
+        "verified_differences": [
+            "different_issuer_cik",
+            "different_source_bytes_and_accession",
+            "different_document_table_count_and_ordered_shape",
+            "different_ordered_header_text_or_geometry",
+        ],
+        "minimum_layout_difference_count": 2,
+        "model_provider_egress_count": 0,
+        "SEC_egress_count": 0,
+    }
+    return {**body, "layout_independence_proof_id": content_hash(value=body)}
+
+
 def table_qualification_task_plan(
     *,
     repo_root: Path,
@@ -3361,6 +3529,20 @@ def table_qualification_task_plan(
             "live_qualification_scope"
         ],
     )
+    layout_independence_proof = None
+    if (
+        family_id == "financial_statement"
+        and qualification_phase in {"SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"}
+    ):
+        layout_independence_proof = _financial_layout_independence_proof(
+            repo_root=repo_root,
+            freeze=freeze,
+            matrix_entry=entry,
+            task_contract_id=task_contract_id,
+            qualification_phase=qualification_phase,
+            sample=sample,
+            measurement=measurement,
+        )
     declaration = sample["source_binding"]["source_declaration"]
     body = {
         "family_id": family_id,
@@ -3390,6 +3572,8 @@ def table_qualification_task_plan(
         "system_prompt_hash": runtime["system_prompt_hash"],
         "freeze_receipt_id": freeze["receipt_id"],
     }
+    if layout_independence_proof is not None:
+        body["layout_independence_proof"] = layout_independence_proof
     request_shard_plan = measurement.get("request_shard_plan")
     if request_shard_plan is not None:
         if (

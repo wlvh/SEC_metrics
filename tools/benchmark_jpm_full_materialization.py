@@ -1033,7 +1033,10 @@ def validate_current_receipts(*, repo_root: Path) -> Dict[str, object]:
         policy = requirement["effective_decisions"]["D-35"]["choice"].get(
             "financial_materialization_resource_policy"
         )
-        if type(policy) is dict:
+        layout_policy = requirement["effective_decisions"]["D-35"][
+            "choice"
+        ].get("financial_layout_source_materialization_policy")
+        if type(policy) is dict and type(layout_policy) is dict:
             benchmark_commit = str(policy.get("benchmark_source_commit", ""))
             tree = subprocess.run(
                 ["git", "rev-parse", benchmark_commit + "^{tree}"],
@@ -1070,7 +1073,17 @@ def validate_current_receipts(*, repo_root: Path) -> Dict[str, object]:
                 and policy.get("production_max_total_cells_before")
                 == semantic["production_resource_policy"]["max_total_cells"]
                 and policy.get("production_max_total_cells_after")
+                == layout_policy.get("production_max_total_cells_before")
+                and layout_policy.get("production_max_total_cells_after")
                 == RESOURCE_LIMITS.max_total_cells
+                and layout_policy.get(
+                    "maximum_current_source_expanded_cell_count"
+                ) == RESOURCE_LIMITS.max_total_cells
+                and layout_policy.get("local_materialization_shards_selected")
+                is False
+                and layout_policy.get(
+                    "provider_request_shard_policy_unchanged"
+                ) is True
             )
     if (
         semantic.get("benchmark_receipt_id") != content_hash(value=semantic_body)

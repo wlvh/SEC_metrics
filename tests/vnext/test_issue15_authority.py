@@ -42,6 +42,7 @@ from vnext.requirements import (
     ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY,
     ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY,
     ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY,
+    ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -432,7 +433,7 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-01"]))
         self.assertEqual(17, len(issue_snapshot["decision_chains"]["D-07"]))
         self.assertEqual(3, len(issue_snapshot["decision_chains"]["D-26"]))
-        self.assertEqual(4, len(issue_snapshot["decision_chains"]["D-35"]))
+        self.assertEqual(5, len(issue_snapshot["decision_chains"]["D-35"]))
         self.assertEqual(2, len(issue_snapshot["decision_chains"]["D-36"]))
         self.assertEqual(
             set(baseline["effective_decision_ids"]),
@@ -668,6 +669,10 @@ class Issue15AuthorityTest(unittest.TestCase):
         self.assertEqual(
             ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY,
             d35_choice["financial_request_shard_policy"],
+        )
+        self.assertEqual(
+            ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY,
+            d35_choice["financial_layout_source_materialization_policy"],
         )
         self.assertEqual(
             "DISABLED", d36_choice["repository_monetary_budget_enforcement"],
@@ -1600,6 +1605,36 @@ class Issue15AuthorityTest(unittest.TestCase):
                 d35["choice"]["financial_request_shard_policy"][
                     field
                 ] = replacement
+                rebind_decisions(issue_copy=issue_copy, register=register)
+                with self.assertRaisesRegex(
+                    RequirementError, "superseding Decision content differs",
+                ):
+                    load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_financial_layout_cap_policy_is_exact_and_shard_free(self) -> None:
+        """Reject cap inflation, source substitution, or local shard fallback."""
+        mutations = {
+            "production_max_total_cells_after": 200230,
+            "maximum_current_source_expanded_cell_count": 200228,
+            "local_materialization_shards_selected": True,
+            "provider_request_shard_policy_unchanged": False,
+            "peak_cgroup_memory_bytes": 371380225,
+        }
+        for field, replacement in mutations.items():
+            with self.subTest(field=field), tempfile.TemporaryDirectory() \
+                    as temp_dir:
+                issue_copy = copy_test_repository(temp_dir=temp_dir)
+                register = read_json(
+                    path=issue_copy / "decision_register.json"
+                )
+                d35 = next(
+                    row
+                    for row in reversed(register["decisions"])
+                    if row["decision_id"] == "D-35"
+                )
+                d35["choice"][
+                    "financial_layout_source_materialization_policy"
+                ][field] = replacement
                 rebind_decisions(issue_copy=issue_copy, register=register)
                 with self.assertRaisesRegex(
                     RequirementError, "superseding Decision content differs",

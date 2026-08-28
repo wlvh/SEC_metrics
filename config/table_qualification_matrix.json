@@ -32,18 +32,22 @@
       },
       "second_layout_policy": "REQUIRED",
       "second_layout_source": {
-        "source_kind": "FUTURE_LIVE_IMMUTABLE_ATTEMPT",
+        "source_kind": "IMMUTABLE_ATTEMPT",
         "company_id": "bank_of_america_corp",
         "cik": "70858",
-        "form": "10-K",
-        "fiscal_year": 2025
+        "accession": "0000070858-26-000157",
+        "document_name": "bac-20251231.htm",
+        "source_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
       },
       "post_freeze_holdout_source": {
-        "source_kind": "FUTURE_LIVE_IMMUTABLE_ATTEMPT",
+        "source_kind": "IMMUTABLE_ATTEMPT",
         "company_id": "citigroup",
         "cik": "831001",
-        "form": "10-K",
-        "fiscal_year": 2025
+        "accession": "0000831001-26-000011",
+        "document_name": "c-20251231.htm",
+        "source_repo_relative_path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+        "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe"
       },
       "materially_different_criteria": [
         "different_issuer_cik",
