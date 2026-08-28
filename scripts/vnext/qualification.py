@@ -3282,6 +3282,7 @@ def _financial_layout_independence_proof(
         "derived_asset_id",
         "table_count",
         "expanded_cell_count",
+        "ordered_column_layout_hash",
         "ordered_table_shape_hash",
         "ordered_header_layout_hash",
     }
@@ -3309,15 +3310,17 @@ def _financial_layout_independence_proof(
         and reference_signature["ordered_table_shape_hash"]
         != sample_signature["ordered_table_shape_hash"]
     )
-    different_header_layout = (
+    different_header_or_column_layout = (
         reference_signature["ordered_header_layout_hash"]
         != sample_signature["ordered_header_layout_hash"]
+        or reference_signature["ordered_column_layout_hash"]
+        != sample_signature["ordered_column_layout_hash"]
     )
     if not (
         different_issuer
         and different_source
         and different_primary_layout
-        and different_header_layout
+        and different_header_or_column_layout
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
@@ -3344,7 +3347,7 @@ def _financial_layout_independence_proof(
             "different_issuer_cik",
             "different_source_bytes_and_accession",
             "different_document_table_count_and_ordered_shape",
-            "different_ordered_header_text_or_geometry",
+            "different_ordered_header_or_column_geometry",
         ],
         "minimum_layout_difference_count": 2,
         "model_provider_egress_count": 0,

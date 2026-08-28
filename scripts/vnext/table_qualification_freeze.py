@@ -1316,6 +1316,20 @@ def _measure_reader_envelope(
             for cell in row["cells"]
             if cell["is_origin"] and cell["header"]
         ]
+        column_layout_rows = [
+            [
+                str(table["table_id"]),
+                int(cell["row_index"]),
+                int(cell["column_index"]),
+                int(cell["rowspan"]),
+                int(cell["colspan"]),
+                bool(cell["header"]),
+            ]
+            for table in asset["tables"]
+            for row in table["rows"]
+            for cell in row["cells"]
+            if cell["is_origin"]
+        ]
         body["source_layout_signature"] = {
             "derived_asset_id": asset["derived_asset_id"],
             "table_count": len(asset["tables"]),
@@ -1325,6 +1339,9 @@ def _measure_reader_envelope(
             ),
             "ordered_table_shape_hash": content_hash(value=shape_rows),
             "ordered_header_layout_hash": content_hash(value=header_rows),
+            "ordered_column_layout_hash": content_hash(
+                value=column_layout_rows,
+            ),
         }
     if shard_measurement is not None:
         body["request_shard_plan"] = shard_measurement[

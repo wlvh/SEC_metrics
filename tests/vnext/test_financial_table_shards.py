@@ -81,6 +81,7 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
             "derived_asset_id": "sha256:" + ("1" * 64),
             "table_count": 679,
             "expanded_cell_count": 124761,
+            "ordered_column_layout_hash": "sha256:" + ("7" * 64),
             "ordered_table_shape_hash": "sha256:" + ("2" * 64),
             "ordered_header_layout_hash": "sha256:" + ("3" * 64),
         }
@@ -88,6 +89,7 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
             "derived_asset_id": "sha256:" + ("4" * 64),
             "table_count": 369,
             "expanded_cell_count": 200229,
+            "ordered_column_layout_hash": "sha256:" + ("8" * 64),
             "ordered_table_shape_hash": "sha256:" + ("5" * 64),
             "ordered_header_layout_hash": "sha256:" + ("6" * 64),
         }
@@ -142,6 +144,9 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
             equal_headers = copy.deepcopy(sample_signature)
             equal_headers["ordered_header_layout_hash"] = (
                 reference_signature["ordered_header_layout_hash"]
+            )
+            equal_headers["ordered_column_layout_hash"] = (
+                reference_signature["ordered_column_layout_hash"]
             )
             with self.assertRaisesRegex(
                 qualification.QualificationError,
