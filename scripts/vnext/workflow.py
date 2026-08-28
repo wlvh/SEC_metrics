@@ -28,6 +28,7 @@ from .canonical import strict_json_file, strict_json_loads
 from .evidence import check_evidence
 from .reader import validate_reader_output
 from .reader_input import build_reader_input_manifest, prepare_reader_request
+from .reader_input import prepare_reader_shard_request
 from .reader_input import prepare_live_reader_request
 from .reader_input import required_reader_roles
 from .render import build_review_context, render_review_markdown
@@ -56,6 +57,8 @@ from .sources import validate_public_sec_filing_identity
 from .specs import SpecError, compile_spec_file, compile_spec_files
 from .specs import parse_spec_document
 from .table_grid import build_table_grid
+from .table_payload import build_contiguous_table_shard
+from .table_payload import encode_compact_table_payload
 from .table_task_contracts import TABLE_TASK_CATALOG_PATH
 from .table_task_contracts import table_task_execution_plan
 from .table_task_contracts import TableTaskContractError
@@ -570,6 +573,8 @@ def create_table_task_review_run(
     clock: Optional[Callable[[], datetime]],
     qualification_authorization: Optional[object] = None,
     resume_existing: bool = False,
+    table_shard: Optional[Mapping[str, object]] = None,
+    table_shard_set_id: str = "",
 ) -> Dict[str, object]:
     """Create one formal single-table catalog task Run.
 
@@ -638,6 +643,8 @@ def create_table_task_review_run(
         task_contract_id=task_contract_id,
         qualification_authorization=qualification_authorization,
         resume_existing=resume_existing,
+        table_shard=table_shard,
+        table_shard_set_id=table_shard_set_id,
     )
 
 
@@ -923,6 +930,8 @@ def _create_review_run_with_traits(
     task_contract_id: Optional[str],
     qualification_authorization: Optional[object] = None,
     resume_existing: bool = False,
+    table_shard: Optional[Mapping[str, object]] = None,
+    table_shard_set_id: str = "",
 ) -> Dict[str, object]:
     """Create one OPEN Run from already repository-resolved company traits.
 
@@ -1205,13 +1214,61 @@ def _create_review_run_with_traits(
         existing_records=existing_records,
         record=reader_manifest,
     )
-    prepared_request = prepare_reader_request(
-        manifest=reader_manifest,
-        derived_asset=derived_asset,
-        compiled_spec=compiled_spec if task_contract_id is None else None,
-        repo_root=repo_root if task_contract_id is not None else None,
-        task_contract_id=task_contract_id,
+    authorized_shard_binding = (
+        qualification_binding.get("table_shard_binding")
+        if type(qualification_binding) is dict
+        else None
     )
+    if authorized_shard_binding is not None:
+        parent_transport = encode_compact_table_payload(
+            derived_asset=derived_asset,
+        )
+        rebuilt_shard = build_contiguous_table_shard(
+            parent_transport=parent_transport,
+            shard_index=authorized_shard_binding["shard_index"],
+            shard_count=authorized_shard_binding["shard_count"],
+            start_table_order=authorized_shard_binding["start_table_order"],
+            end_table_order=authorized_shard_binding["end_table_order"],
+        )
+        if (
+            rebuilt_shard["shard_id"]
+            != authorized_shard_binding["shard_id"]
+            or rebuilt_shard["shard_payload_sha256"]
+            != authorized_shard_binding["shard_payload_sha256"]
+            or rebuilt_shard["table_ids"]
+            != authorized_shard_binding["table_ids"]
+            or (
+                table_shard is not None
+                and dict(table_shard) != rebuilt_shard
+            )
+        ):
+            raise WorkflowError("Authorized table shard binding differs")
+        table_shard = rebuilt_shard
+        table_shard_set_id = str(
+            authorized_shard_binding["table_shard_set_id"]
+        )
+    requires_shard = semantic.get("output_schema_version") == "4"
+    if requires_shard != (table_shard is not None):
+        raise WorkflowError("Financial table shard request shape differs")
+    if table_shard is not None:
+        if task_contract_id is None or not table_shard_set_id:
+            raise WorkflowError("Table shard task authority is incomplete")
+        prepared_request = prepare_reader_shard_request(
+            manifest=reader_manifest,
+            derived_asset=derived_asset,
+            repo_root=repo_root,
+            task_contract_id=task_contract_id,
+            table_shard=table_shard,
+            table_shard_set_id=table_shard_set_id,
+        )
+    else:
+        prepared_request = prepare_reader_request(
+            manifest=reader_manifest,
+            derived_asset=derived_asset,
+            compiled_spec=compiled_spec if task_contract_id is None else None,
+            repo_root=repo_root if task_contract_id is not None else None,
+            task_contract_id=task_contract_id,
+        )
     attempt_request = (
         prepare_live_reader_request(
             prepared_request=prepared_request,
@@ -1409,6 +1466,7 @@ def _create_review_run_with_traits(
         scope_contract=semantic["scope_contract"],
         source_reference_ids=[str(source_reference["source_reference_id"])],
         derived_asset_ids=[str(derived_asset["derived_asset_id"])],
+        table_shard_contract=reader_payload_body.get("table_shard_contract"),
     )
     if candidate["disclosure_group"] != semantic["disclosure_group"]:
         raise WorkflowError("Reader disclosure group differs from Spec")
@@ -1661,10 +1719,21 @@ def finalize_reviewed_direct_results(
     if disclosure_spec["compiled"] != unit["compiled_spec"]:
         raise WorkflowError("Reviewed disclosure Spec differs from repository")
     roles = _required_roles(compiled_spec=disclosure_spec)
+    no_candidate_shard = (
+        candidate.get("shard_disposition") == "NO_CANDIDATE_IN_SHARD"
+    )
+    if no_candidate_shard and (
+        unit.get("shard_disposition") != "NO_CANDIDATE_IN_SHARD"
+        or unit.get("table_shard_binding")
+        != candidate.get("table_shard_binding")
+        or unit.get("examined_table_ids")
+        != candidate.get("examined_table_ids")
+    ):
+        raise WorkflowError("Reviewed no-candidate shard binding differs")
     projection = disclosure_spec["compiled"]["legacy_projection"]
     published_roles = list(projection["roles"])
     supporting_roles = list(projection["supporting_roles"])
-    if set(roles) != set(candidate["selected"]):
+    if not no_candidate_shard and set(roles) != set(candidate["selected"]):
         raise WorkflowError("Reviewed role classification exact set differs")
     role_metric_specs = {}
     for role in published_roles:
@@ -1722,7 +1791,7 @@ def finalize_reviewed_direct_results(
     expected_claimed_period = "FY{}".format(
         manifest["target_period"]["fiscal_year"]
     )
-    if any(
+    if not no_candidate_shard and any(
         candidate["selected"][role]["claimed_period"]
         != expected_claimed_period
         for role in candidate["selected"]
@@ -1738,6 +1807,28 @@ def finalize_reviewed_direct_results(
                 compiled_spec=role_metric_specs[role],
                 target=target,
                 reason_code="HUMAN_REVIEW_REJECTED",
+            )
+            finalization_records.extend([trace, result])
+            created_results.append(result["result_id"])
+            created_traces.append(trace["trace_id"])
+        append_run_records_atomically(
+            run_dir=run_dir,
+            records=finalization_records,
+            expected_records_file_hash=records_file_hash,
+            expected_review_decisions_file_hash=decisions_file_hash,
+        )
+        return {
+            "decision_id": decision["review_decision_id"],
+            "observation_ids": [],
+            "result_ids": created_results,
+            "trace_ids": created_traces,
+        }
+    if no_candidate_shard:
+        for role in published_roles:
+            result, trace = withheld_metric_result(
+                compiled_spec=role_metric_specs[role],
+                target=target,
+                reason_code="SHARD_NO_CANDIDATE",
             )
             finalization_records.extend([trace, result])
             created_results.append(result["result_id"])

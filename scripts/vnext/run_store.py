@@ -7,7 +7,8 @@ from pathlib import Path
 from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
-from .ai_adapter import READER_OUTPUT_JSON_SCHEMA, approved_transport_policy
+from .ai_adapter import _output_schema_for_reader_request
+from .ai_adapter import approved_transport_policy
 from .ai_adapter import build_provider_request_body
 from .ai_adapter import transport_observation_mismatch
 from .canonical import atomic_write_bytes, atomic_write_json, content_hash
@@ -25,7 +26,8 @@ from .records import validate_run_coordinates
 from .render import RenderError, build_review_context
 from .render import render_review_markdown
 from .reader import validate_reader_output
-from .reader_input import build_reader_payload, build_reader_task_contract
+from .reader_input import build_reader_payload, build_reader_shard_payload
+from .reader_input import build_reader_task_contract
 from .requirements import load_run_requirement_snapshot
 from .review import effective_review_decision, system_review_allowed
 from .review import SYSTEM_REVIEWER_ID, SYSTEM_REVIEW_REASON
@@ -34,6 +36,8 @@ from .sources import companyfacts_structured_facts, load_raw_blob_bytes
 from .specs import SpecError, compile_spec_files
 from .states import FREEZEABLE_VALIDATION_STATUSES, validate_transition
 from .table_grid import TableGridError, build_table_grid
+from .table_payload import build_contiguous_table_shard
+from .table_payload import encode_compact_table_payload
 from .table_task_contracts import table_task_execution_plan
 from .table_task_contracts import table_task_run_binding
 from .table_task_contracts import TableTaskContractError
@@ -2070,11 +2074,37 @@ def _validate_record_graph(
         derived_id = str(reader_manifest["derived_asset_id"])
         if derived_id not in derived_assets:
             raise RunStoreError("AI attempt DerivedAsset is absent")
-        payload = build_reader_payload(
-            manifest=reader_manifest,
-            derived_asset=derived_assets[derived_id],
-            task_contract=task_contract,
-        )
+        sharded = "table_shard_id" in attempt
+        if sharded:
+            parent_transport = encode_compact_table_payload(
+                derived_asset=derived_assets[derived_id],
+            )
+            table_shard = build_contiguous_table_shard(
+                parent_transport=parent_transport,
+                shard_index=attempt["table_shard_index"],
+                shard_count=attempt["table_shard_count"],
+                start_table_order=attempt["start_table_order"],
+                end_table_order=attempt["end_table_order"],
+            )
+            if (
+                table_shard["shard_id"] != attempt["table_shard_id"]
+                or table_shard["shard_payload_sha256"]
+                != attempt["table_shard_payload_sha256"]
+            ):
+                raise RunStoreError("AI attempt table shard binding differs")
+            payload = build_reader_shard_payload(
+                manifest=reader_manifest,
+                derived_asset=derived_assets[derived_id],
+                task_contract=task_contract,
+                table_shard=table_shard,
+                table_shard_set_id=attempt["table_shard_set_id"],
+            )
+        else:
+            payload = build_reader_payload(
+                manifest=reader_manifest,
+                derived_asset=derived_assets[derived_id],
+                task_contract=task_contract,
+            )
         stored = attempt_payloads[attempt_id]
         if (
             stored["task_contract"]
@@ -2096,7 +2126,9 @@ def _validate_record_graph(
         else:
             expected_request = stored["reader_payload"]
             expected_schema = canonical_json_bytes(
-                value=READER_OUTPUT_JSON_SCHEMA
+                value=_output_schema_for_reader_request(
+                    reader_request_bytes=stored["reader_payload"],
+                )
             )
         if (
             stored["request_body"] != expected_request
@@ -2123,6 +2155,9 @@ def _validate_record_graph(
                         reader_manifest["source_reference_ids"]
                     ),
                     derived_asset_ids=[derived_id],
+                    table_shard_contract=(
+                        payload["table_shard_contract"] if sharded else None
+                    ),
                 )
             except (UnicodeDecodeError, ValueError) as error:
                 # Candidate reachability cannot be the schema gate: every
@@ -2334,16 +2369,30 @@ def _validate_record_graph(
             expected_units[role] = str(
                 projection["supporting_role_units"][role]
             )
-        if set(candidate["selected"]) != set(expected_units):
+        no_candidate_shard = (
+            candidate.get("shard_disposition") == "NO_CANDIDATE_IN_SHARD"
+        )
+        if (
+            not no_candidate_shard
+            and set(candidate["selected"]) != set(expected_units)
+        ):
             raise RunStoreError("Reviewed Candidate role exact set differs")
-        units_match = not any(
-            candidate["selected"][role]["claimed_reported_unit"]
-            != expected_units[role]
-            for role in expected_units
+        units_match = (
+            True
+            if no_candidate_shard
+            else not any(
+                candidate["selected"][role]["claimed_reported_unit"]
+                != expected_units[role]
+                for role in expected_units
+            )
         )
         expected_roles = (
             set(expected_units)
-            if decision["decision"] == "APPROVE" and units_match
+            if (
+                decision["decision"] == "APPROVE"
+                and units_match
+                and not no_candidate_shard
+            )
             else set()
         )
         actual_by_role = {
@@ -2368,6 +2417,8 @@ def _validate_record_graph(
         expected_reason = "PASS"
         if decision["decision"] == "REJECT":
             expected_reason = "HUMAN_REVIEW_REJECTED"
+        elif no_candidate_shard:
+            expected_reason = "SHARD_NO_CANDIDATE"
         elif not units_match:
             expected_reason = "REPORTED_UNIT_MISMATCH"
         if expected_reason == "PASS":
@@ -2705,6 +2756,22 @@ def _validate_record_graph(
         ):
             if unit[field] != candidate[field]:
                 raise RunStoreError("ReviewUnit Candidate content differs")
+        candidate_shard_fields = {
+            "examined_table_ids",
+            "shard_disposition",
+            "table_shard_binding",
+        } & set(candidate)
+        unit_shard_fields = {
+            "examined_table_ids",
+            "shard_disposition",
+            "table_shard_binding",
+        } & set(unit)
+        if (
+            candidate_shard_fields != unit_shard_fields
+            or any(unit[field] != candidate[field]
+                   for field in candidate_shard_fields)
+        ):
+            raise RunStoreError("ReviewUnit Candidate shard binding differs")
         expected_sources = [
             source_references[str(source_id)]
             for source_id in candidate["source_reference_ids"]

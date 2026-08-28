@@ -157,6 +157,20 @@ def build_review_unit(
     scope_contract = semantic["scope_contract"]
     normalized_scope = None
     system_approval_eligible = None
+    sharded = "table_shard_binding" in candidate
+    if sharded and (
+        evidence_check.get("table_shard_binding")
+        != candidate["table_shard_binding"]
+        or evidence_check.get("shard_disposition")
+        != candidate["shard_disposition"]
+        or evidence_check.get("examined_table_ids")
+        != candidate["examined_table_ids"]
+    ):
+        raise ReviewError("ReviewUnit shard Evidence binding differs")
+    no_candidate_shard = (
+        sharded
+        and candidate["shard_disposition"] == "NO_CANDIDATE_IN_SHARD"
+    )
     if scope_contract is not None:
         validate_scope_contract(value=scope_contract)
         if (
@@ -169,9 +183,13 @@ def build_review_unit(
         system_approval_eligible = bool(
             evidence_check["system_approval_eligible"]
         )
-        if system_approval_eligible and not scope_satisfies_contract(
-            contract=scope_contract,
-            normalized_scope=normalized_scope,
+        if (
+            system_approval_eligible
+            and not no_candidate_shard
+            and not scope_satisfies_contract(
+                contract=scope_contract,
+                normalized_scope=normalized_scope,
+            )
         ):
             raise ReviewError("ReviewUnit Evidence scope is not approvable")
     validated_sources = []
@@ -207,6 +225,14 @@ def build_review_unit(
     if normalized_scope is not None:
         substantive["normalized_scope"] = normalized_scope
         substantive["system_approval_eligible"] = system_approval_eligible
+    if sharded:
+        substantive["examined_table_ids"] = list(
+            candidate["examined_table_ids"]
+        )
+        substantive["shard_disposition"] = candidate["shard_disposition"]
+        substantive["table_shard_binding"] = dict(
+            candidate["table_shard_binding"]
+        )
     record = {
         "record_type": "REVIEW_UNIT",
         "review_unit_hash": content_hash(value=substantive),
@@ -229,6 +255,12 @@ def build_review_unit(
     if normalized_scope is not None:
         record["normalized_scope"] = normalized_scope
         record["system_approval_eligible"] = system_approval_eligible
+    if sharded:
+        record["examined_table_ids"] = list(candidate["examined_table_ids"])
+        record["shard_disposition"] = candidate["shard_disposition"]
+        record["table_shard_binding"] = dict(
+            candidate["table_shard_binding"]
+        )
     return validate_record(record=record)
 
 

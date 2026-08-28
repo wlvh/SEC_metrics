@@ -9,7 +9,7 @@ without searching filing text.
 
 from __future__ import annotations
 
-from typing import Dict, List, Mapping, Sequence, Tuple
+from typing import Callable, Dict, List, Mapping, Sequence, Tuple
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes
 from .records import validate_record
@@ -31,6 +31,21 @@ _TRANSPORT_CORE_FIELDS = _TRANSPORT_FIELDS - {
     "round_trip_receipt_id",
 }
 _COMPACT_TABLE_FIELDS = {"c", "i", "o", "s", "x"}
+_TABLE_SHARD_FIELDS = {
+    "decoder_semantic_version",
+    "end_table_order",
+    "expanded_derived_asset_id",
+    "expanded_grid_sha256",
+    "parent_compact_payload_sha256",
+    "shard_count",
+    "shard_id",
+    "shard_index",
+    "shard_payload_sha256",
+    "start_table_order",
+    "table_ids",
+    "table_payload_serialization_version",
+    "tables",
+}
 _TABLE_FIELDS = {
     "caption",
     "caption_raw_text",
@@ -258,6 +273,15 @@ def compact_payload_receipt(*, transport: Mapping[str, object]) -> Dict[str, obj
         Receipt carrying every required compact/expanded identity binding.
     """
     decode_compact_table_payload(transport=transport)
+    return _compact_payload_receipt_from_validated_transport(
+        transport=transport,
+    )
+
+
+def _compact_payload_receipt_from_validated_transport(
+    *, transport: Mapping[str, object],
+) -> Dict[str, object]:
+    """Return receipt fields after one caller-owned strict round trip."""
     body = _round_trip_receipt_body(transport=transport)
     return {"round_trip_receipt_id": content_hash(value=body), **body}
 
@@ -474,3 +498,342 @@ def decode_compact_table_payload(
     if expanded_grid_sha256(tables=tables) != value["expanded_grid_sha256"]:
         raise TablePayloadError("Decoded expanded grid digest differs")
     return tables
+
+
+def _table_shard_core(*, shard: Mapping[str, object]) -> Dict[str, object]:
+    """Return the exact hash preimage for one internal contiguous shard."""
+    return {
+        key: shard[key]
+        for key in sorted(_TABLE_SHARD_FIELDS - {"shard_id", "shard_payload_sha256"})
+    }
+
+
+def _build_contiguous_table_shard_from_validated_parent(
+    *, parent_transport: Mapping[str, object],
+    parent_tables: Sequence[Mapping[str, object]], shard_index: int,
+    shard_count: int, start_table_order: int, end_table_order: int,
+) -> Dict[str, object]:
+    """Slice entries after the caller has authenticated the full parent once."""
+    tables = parent_transport["tables"]
+    if (
+        type(shard_index) is not int
+        or type(shard_count) is not int
+        or type(start_table_order) is not int
+        or type(end_table_order) is not int
+        or shard_count < 1
+        or shard_index < 0
+        or shard_index >= shard_count
+        or start_table_order < 0
+        or end_table_order < start_table_order
+        or end_table_order >= len(tables)
+    ):
+        raise TablePayloadError("Compact table shard range is invalid")
+    selected = [
+        dict(table)
+        for table in tables[start_table_order:end_table_order + 1]
+    ]
+    expected_orders = list(range(start_table_order, end_table_order + 1))
+    if [table["o"] for table in selected] != expected_orders:
+        raise TablePayloadError("Compact table shard order differs")
+    body = {
+        "table_payload_serialization_version": parent_transport[
+            "table_payload_serialization_version"
+        ],
+        "decoder_semantic_version": parent_transport[
+            "decoder_semantic_version"
+        ],
+        "expanded_derived_asset_id": parent_transport[
+            "expanded_derived_asset_id"
+        ],
+        "expanded_grid_sha256": parent_transport["expanded_grid_sha256"],
+        "parent_compact_payload_sha256": parent_transport[
+            "compact_payload_sha256"
+        ],
+        "shard_index": shard_index,
+        "shard_count": shard_count,
+        "start_table_order": start_table_order,
+        "end_table_order": end_table_order,
+        "table_ids": [str(table["i"]) for table in selected],
+        "tables": selected,
+    }
+    payload_sha256 = sha256_bytes(content=canonical_json_bytes(value=body))
+    provisional = {**body, "shard_payload_sha256": payload_sha256}
+    shard = {
+        **provisional,
+        "shard_id": content_hash(value=provisional),
+    }
+    return shard
+
+
+def build_contiguous_table_shard(
+    *, parent_transport: Mapping[str, object], shard_index: int,
+    shard_count: int, start_table_order: int, end_table_order: int,
+) -> Dict[str, object]:
+    """Slice serializer-v2 table entries without changing any table bytes."""
+    parent_tables = decode_compact_table_payload(transport=parent_transport)
+    shard = _build_contiguous_table_shard_from_validated_parent(
+        parent_transport=parent_transport,
+        parent_tables=parent_tables,
+        shard_index=shard_index,
+        shard_count=shard_count,
+        start_table_order=start_table_order,
+        end_table_order=end_table_order,
+    )
+    _decode_contiguous_table_shard_from_validated_parent(
+        shard=shard,
+        parent_transport=parent_transport,
+        parent_tables=parent_tables,
+    )
+    return shard
+
+
+def _decode_contiguous_table_shard_from_validated_parent(
+    *, shard: Mapping[str, object], parent_transport: Mapping[str, object],
+    parent_tables: Sequence[Mapping[str, object]],
+) -> List[Dict[str, object]]:
+    """Authenticate one shard while reusing an already verified parent."""
+    value = _require_exact_mapping(
+        value=shard, fields=_TABLE_SHARD_FIELDS,
+        label="compact table shard",
+    )
+    if (
+        value["table_payload_serialization_version"]
+        != parent_transport["table_payload_serialization_version"]
+        or value["decoder_semantic_version"]
+        != parent_transport["decoder_semantic_version"]
+        or value["expanded_derived_asset_id"]
+        != parent_transport["expanded_derived_asset_id"]
+        or value["expanded_grid_sha256"]
+        != parent_transport["expanded_grid_sha256"]
+        or value["parent_compact_payload_sha256"]
+        != parent_transport["compact_payload_sha256"]
+    ):
+        raise TablePayloadError("Compact table shard parent binding differs")
+    for key in (
+        "shard_index", "shard_count", "start_table_order", "end_table_order",
+    ):
+        if type(value[key]) is not int:
+            raise TablePayloadError("Compact table shard index is invalid")
+    start = value["start_table_order"]
+    end = value["end_table_order"]
+    if (
+        value["shard_count"] < 1
+        or value["shard_index"] < 0
+        or value["shard_index"] >= value["shard_count"]
+        or start < 0
+        or end < start
+        or end >= len(parent_tables)
+        or type(value["tables"]) is not list
+        or type(value["table_ids"]) is not list
+    ):
+        raise TablePayloadError("Compact table shard range is invalid")
+    expected_compact = parent_transport["tables"][start:end + 1]
+    if value["tables"] != expected_compact:
+        raise TablePayloadError("Compact table shard entries differ")
+    if value["table_ids"] != [str(table["i"]) for table in expected_compact]:
+        raise TablePayloadError("Compact table shard identities differ")
+    core = _table_shard_core(shard=value)
+    if (
+        value["shard_payload_sha256"]
+        != sha256_bytes(content=canonical_json_bytes(value=core))
+        or value["shard_id"]
+        != content_hash(value={**core, "shard_payload_sha256": value[
+            "shard_payload_sha256"
+        ]})
+    ):
+        raise TablePayloadError("Compact table shard digest differs")
+    decoded = [_decode_compact_table(compact=table) for table in value["tables"]]
+    if decoded != parent_tables[start:end + 1]:
+        raise TablePayloadError("Compact table shard round trip differs")
+    return decoded
+
+
+def decode_contiguous_table_shard(
+    *, shard: Mapping[str, object], parent_transport: Mapping[str, object],
+) -> List[Dict[str, object]]:
+    """Authenticate one shard against its complete serializer-v2 parent."""
+    parent_tables = decode_compact_table_payload(transport=parent_transport)
+    return _decode_contiguous_table_shard_from_validated_parent(
+        shard=shard,
+        parent_transport=parent_transport,
+        parent_tables=parent_tables,
+    )
+
+
+def validate_contiguous_table_shard_set(
+    *, shards: Sequence[Mapping[str, object]],
+    parent_transport: Mapping[str, object],
+) -> Dict[str, object]:
+    """Prove all parent tables occur once across contiguous ordered shards."""
+    parent_tables = decode_compact_table_payload(transport=parent_transport)
+    return _validate_contiguous_table_shard_set_from_validated_parent(
+        shards=shards,
+        parent_transport=parent_transport,
+        parent_tables=parent_tables,
+    )
+
+
+def _validate_contiguous_table_shard_set_from_validated_parent(
+    *, shards: Sequence[Mapping[str, object]],
+    parent_transport: Mapping[str, object],
+    parent_tables: Sequence[Mapping[str, object]],
+) -> Dict[str, object]:
+    """Prove full shard coverage after one caller-owned parent validation."""
+    if not shards:
+        raise TablePayloadError("Compact table shard set is empty")
+    expected_count = len(shards)
+    next_order = 0
+    shard_ids = []
+    covered_ids = []
+    for shard_index, shard in enumerate(shards):
+        value = dict(shard)
+        _decode_contiguous_table_shard_from_validated_parent(
+            shard=value,
+            parent_transport=parent_transport,
+            parent_tables=parent_tables,
+        )
+        if (
+            value["shard_index"] != shard_index
+            or value["shard_count"] != expected_count
+            or value["start_table_order"] != next_order
+        ):
+            raise TablePayloadError("Compact table shard set order differs")
+        next_order = int(value["end_table_order"]) + 1
+        shard_ids.append(str(value["shard_id"]))
+        covered_ids.extend(str(table_id) for table_id in value["table_ids"])
+    parent_ids = [str(table["table_id"]) for table in parent_tables]
+    if next_order != len(parent_tables) or covered_ids != parent_ids:
+        raise TablePayloadError("Compact table shard coverage differs")
+    body = {
+        "parent_compact_payload_sha256": parent_transport[
+            "compact_payload_sha256"
+        ],
+        "expanded_derived_asset_id": parent_transport[
+            "expanded_derived_asset_id"
+        ],
+        "expanded_grid_sha256": parent_transport["expanded_grid_sha256"],
+        "table_count": len(parent_tables),
+        "shard_count": expected_count,
+        "shard_ids": shard_ids,
+        "covered_table_ids": covered_ids,
+    }
+    return {**body, "shard_set_id": content_hash(value=body)}
+
+
+def plan_contiguous_table_shards(
+    *, parent_transport: Mapping[str, object],
+    max_estimated_input_tokens: int,
+    estimate_shard_input_tokens: Callable[[Mapping[str, object]], int],
+) -> Dict[str, object]:
+    """Greedily pack maximal contiguous ranges using only exact request size."""
+    parent_tables = decode_compact_table_payload(transport=parent_transport)
+    return _plan_contiguous_table_shards_from_validated_parent(
+        parent_transport=parent_transport,
+        parent_tables=parent_tables,
+        max_estimated_input_tokens=max_estimated_input_tokens,
+        estimate_shard_input_tokens=estimate_shard_input_tokens,
+    )
+
+
+def _plan_contiguous_table_shards_from_validated_parent(
+    *, parent_transport: Mapping[str, object],
+    parent_tables: Sequence[Mapping[str, object]],
+    max_estimated_input_tokens: int,
+    estimate_shard_input_tokens: Callable[[Mapping[str, object]], int],
+) -> Dict[str, object]:
+    """Plan shards after one caller-owned parent/grid round-trip proof."""
+    if (
+        type(max_estimated_input_tokens) is not int
+        or max_estimated_input_tokens < 1
+        or not callable(estimate_shard_input_tokens)
+        or not parent_tables
+    ):
+        raise TablePayloadError("Compact table shard planner input is invalid")
+
+    def boundaries(*, assumed_count: int) -> List[Tuple[int, int]]:
+        ranges = []
+        start = 0
+        while start < len(parent_tables):
+            low = start
+            high = len(parent_tables) - 1
+            accepted = None
+            while low <= high:
+                end = (low + high) // 2
+                provisional = _build_contiguous_table_shard_from_validated_parent(
+                    parent_transport=parent_transport,
+                    parent_tables=parent_tables,
+                    shard_index=len(ranges),
+                    shard_count=max(assumed_count, len(ranges) + 1),
+                    start_table_order=start,
+                    end_table_order=end,
+                )
+                estimate = estimate_shard_input_tokens(provisional)
+                if type(estimate) is not int or estimate < 0:
+                    raise TablePayloadError(
+                        "Compact table shard estimate is invalid"
+                    )
+                if estimate <= max_estimated_input_tokens:
+                    accepted = end
+                    low = end + 1
+                else:
+                    high = end - 1
+            if accepted is None:
+                raise TablePayloadError(
+                    "One compact table exceeds the shard request ceiling"
+                )
+            ranges.append((start, accepted))
+            start = accepted + 1
+        return ranges
+
+    assumed_count = 1
+    ranges: List[Tuple[int, int]] = []
+    for _iteration in range(8):
+        ranges = boundaries(assumed_count=assumed_count)
+        if len(ranges) == assumed_count:
+            break
+        assumed_count = len(ranges)
+    else:
+        raise TablePayloadError("Compact table shard count did not converge")
+    planned = []
+    for shard_index, (start, end) in enumerate(ranges):
+        shard = _build_contiguous_table_shard_from_validated_parent(
+            parent_transport=parent_transport,
+            parent_tables=parent_tables,
+            shard_index=shard_index,
+            shard_count=len(ranges),
+            start_table_order=start,
+            end_table_order=end,
+        )
+        estimate = estimate_shard_input_tokens(shard)
+        if type(estimate) is not int or estimate > max_estimated_input_tokens:
+            raise TablePayloadError("Compact table shard exceeds request ceiling")
+        if end + 1 < len(parent_tables):
+            expanded = _build_contiguous_table_shard_from_validated_parent(
+                parent_transport=parent_transport,
+                parent_tables=parent_tables,
+                shard_index=shard_index,
+                shard_count=len(ranges),
+                start_table_order=start,
+                end_table_order=end + 1,
+            )
+            if estimate_shard_input_tokens(expanded) <= max_estimated_input_tokens:
+                raise TablePayloadError("Compact table shard is not maximal")
+        planned.append({
+            "shard": shard,
+            "estimated_input_tokens": estimate,
+        })
+    coverage = _validate_contiguous_table_shard_set_from_validated_parent(
+        shards=[row["shard"] for row in planned],
+        parent_transport=parent_transport,
+        parent_tables=parent_tables,
+    )
+    body = {
+        "packing_algorithm": (
+            "GREEDY_MAXIMAL_CONTIGUOUS_PREFIX_BY_EXACT_PROVIDER_REQUEST_"
+            "UTF8_BYTE_UPPER_BOUND_V1"
+        ),
+        "max_estimated_input_tokens": max_estimated_input_tokens,
+        "coverage": coverage,
+        "shards": planned,
+    }
+    return {**body, "shard_plan_id": content_hash(value=body)}

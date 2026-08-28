@@ -30,6 +30,8 @@ from .provider_runtime import estimate_context_tokens
 from .provider_runtime import load_provider_runtime_authority
 from .reader_input import READER_SYSTEM_CONTRACT
 from .reader_input import build_reader_input_manifest, build_reader_payload
+from .reader_input import _build_reader_shard_payload_from_validated_inputs
+from .reader_input import _build_reader_payload_from_validated_inputs
 from .requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from .requirements import ISSUE_15_D07_EFFECTIVE_CHOICE
 from .requirements import load_requirement_snapshot
@@ -37,8 +39,12 @@ from .scope_contract import scope_contract_hash, validate_scope_contract
 from .sources import raw_blob_record, source_reference_record
 from .table_grid import build_table_grid, TableGridError
 from .table_payload import compact_payload_receipt
+from .table_payload import _compact_payload_receipt_from_validated_transport
+from .table_payload import _plan_contiguous_table_shards_from_validated_parent
+from .table_payload import encode_compact_table_payload
 from .table_payload import DECODER_SEMANTIC_VERSION
 from .table_payload import TABLE_PAYLOAD_SERIALIZATION_VERSION
+from .table_payload import TablePayloadError
 from .table_task_contracts import load_table_task_contracts
 from .table_task_contracts import RESOURCE_LIMIT_ESTIMATE
 from .table_task_contracts import resolve_table_task_contract
@@ -833,6 +839,142 @@ def _lodging_source_reference_id(
     return str(reference["source_reference_id"])
 
 
+def _measure_contiguous_shard_envelopes(
+    *, parent_transport: Mapping[str, object],
+    parent_tables: Sequence[Mapping[str, object]],
+    manifest: Mapping[str, object], task_contract: Mapping[str, object],
+    token_limit: int, policy: object, runtime: Mapping[str, object],
+) -> Dict[str, object]:
+    """Plan and measure every exact financial request shard offline."""
+    placeholder_set_id = "sha256:" + ("0" * 64)
+    # Replacing the placeholder with the final content hash can change provider
+    # tokenization, but never by more than the 71 UTF-8 bytes in that identity.
+    # Adding that byte count produces the frozen algorithm's deterministic
+    # UTF-8 upper bound without relying on a bytes/token ratio.
+    set_identity_utf8_upper_bound = len(placeholder_set_id.encode("utf-8"))
+
+    def upper_bound_tokens(shard: Mapping[str, object]) -> int:
+        payload = _build_reader_shard_payload_from_validated_inputs(
+            manifest=manifest,
+            task_contract=task_contract,
+            table_shard=shard,
+            table_shard_set_id=placeholder_set_id,
+            parent_transport=parent_transport,
+        )
+        envelope, _schema = build_provider_request_body(
+            policy=policy,
+            reader_request_bytes=payload["request_bytes"],
+        )
+        return estimate_context_tokens(
+            request_body=envelope,
+            authority=runtime,
+        ) + set_identity_utf8_upper_bound
+
+    planned = _plan_contiguous_table_shards_from_validated_parent(
+        parent_transport=parent_transport,
+        parent_tables=parent_tables,
+        max_estimated_input_tokens=token_limit,
+        estimate_shard_input_tokens=upper_bound_tokens,
+    )
+    coverage = planned["coverage"]
+    exact_rows = []
+    blocking_reason_codes = []
+    total_reader_bytes = 0
+    total_provider_bytes = 0
+    for row in planned["shards"]:
+        shard = row["shard"]
+        payload = _build_reader_shard_payload_from_validated_inputs(
+            manifest=manifest,
+            task_contract=task_contract,
+            table_shard=shard,
+            table_shard_set_id=coverage["shard_set_id"],
+            parent_transport=parent_transport,
+        )
+        envelope, schema = build_provider_request_body(
+            policy=policy,
+            reader_request_bytes=payload["request_bytes"],
+        )
+        estimate = estimate_context_tokens(
+            request_body=envelope,
+            authority=runtime,
+        )
+        reasons = _context_blocking_reason_codes(
+            estimated_input_tokens=estimate,
+            max_estimated_input_tokens=token_limit,
+            maximum_context_tokens=runtime["maximum_context_tokens"],
+            provider_envelope_bytes=len(envelope),
+            maximum_payload_bytes=policy.maximum_payload_bytes,
+        )
+        blocking_reason_codes.extend(reasons)
+        total_reader_bytes += len(payload["request_bytes"])
+        total_provider_bytes += len(envelope)
+        exact_rows.append({
+            "shard_index": shard["shard_index"],
+            "shard_count": shard["shard_count"],
+            "shard_id": shard["shard_id"],
+            "shard_payload_sha256": shard["shard_payload_sha256"],
+            "start_table_order": shard["start_table_order"],
+            "end_table_order": shard["end_table_order"],
+            "table_ids": list(shard["table_ids"]),
+            "reader_request_body_sha256": payload["request_body_sha256"],
+            "reader_request_bytes": len(payload["request_bytes"]),
+            "provider_request_body_sha256": sha256_bytes(content=envelope),
+            "provider_envelope_bytes": len(envelope),
+            "provider_output_schema_sha256": sha256_bytes(content=schema),
+            "estimated_input_tokens": estimate,
+            "packing_utf8_upper_bound_tokens": row[
+                "estimated_input_tokens"
+            ],
+            "blocking_reason_codes": sorted(set(reasons)),
+        })
+    if (
+        not exact_rows
+        or any(row["estimated_input_tokens"] > token_limit for row in exact_rows)
+        or coverage["covered_table_ids"]
+        != [str(value["i"]) for value in parent_transport["tables"]]
+    ):
+        raise TableQualificationFreezeError(
+            "Financial request shard coverage or context limit differs"
+        )
+    plan_body = {
+        "packing_algorithm": planned["packing_algorithm"],
+        "max_estimated_input_tokens_per_shard": token_limit,
+        "set_identity_utf8_upper_bound_tokens": (
+            set_identity_utf8_upper_bound
+        ),
+        "coverage": coverage,
+        "shards": exact_rows,
+        "total_reader_request_bytes": total_reader_bytes,
+        "total_provider_envelope_bytes": total_provider_bytes,
+        "total_estimated_input_tokens": sum(
+            row["estimated_input_tokens"] for row in exact_rows
+        ),
+        "all_shards_required_before_credit": True,
+        "semantic_prefilter": False,
+        "selector": False,
+    }
+    aggregate_hash = sha256_bytes(content=canonical_json_bytes(value=[
+        row["provider_request_body_sha256"] for row in exact_rows
+    ]))
+    return {
+        "request_shard_plan": {
+            **plan_body,
+            "request_shard_plan_id": content_hash(value=plan_body),
+        },
+        "provider_request_body_sha256": aggregate_hash,
+        "estimated_input_tokens": max(
+            row["estimated_input_tokens"] for row in exact_rows
+        ),
+        "compact_reader_payload_bytes": max(
+            row["reader_request_bytes"] for row in exact_rows
+        ),
+        "provider_envelope_estimated_bytes": max(
+            row["provider_envelope_bytes"] for row in exact_rows
+        ),
+        "blocking_reason_codes": sorted(set(blocking_reason_codes)),
+    }
+
+
 def _measure_reader_envelope(
     *,
     repo_root: Path,
@@ -849,6 +991,10 @@ def _measure_reader_envelope(
     source_repo_relative_path: Optional[str] = None,
     request_requirement_closure_hash: Optional[str] = None,
     request_protected_closure_hash: Optional[str] = None,
+    materialized_asset: Optional[Mapping[str, object]] = None,
+    materialized_compact_transport: Optional[Mapping[str, object]] = None,
+    materialized_manifest: Optional[Mapping[str, object]] = None,
+    materialized_expanded_tables_bytes: Optional[bytes] = None,
 ) -> Dict[str, object]:
     """Measure one complete local table source and one fixed task envelope.
 
@@ -875,16 +1021,22 @@ def _measure_reader_envelope(
     if sha256_bytes(content=source_bytes) != source_sha256:
         raise TableQualificationFreezeError("Measurement source hash differs")
     try:
-        asset = build_table_grid(
-            html_bytes=source_bytes,
-            parent_raw_asset_ids=["sha256:" + source_sha256],
-            storage_uri=(
-                "artifacts/vnext/table_qualification_freeze/{}.json".format(
-                    source_id
-                )
-            ),
+        asset = (
+            dict(materialized_asset)
+            if materialized_asset is not None
+            else build_table_grid(
+                html_bytes=source_bytes,
+                parent_raw_asset_ids=["sha256:" + source_sha256],
+                storage_uri=(
+                    "artifacts/vnext/table_qualification_freeze/{}.json".format(
+                        source_id
+                    )
+                ),
+            )
         )
-    except TableGridError as error:
+        if asset.get("parent_raw_asset_ids") != ["sha256:" + source_sha256]:
+            raise TableGridError("Materialized source parent differs")
+    except (AttributeError, TableGridError) as error:
         # The complete expanded grid is authoritative.  A resource refusal
         # must remain visible rather than being bypassed by a table selector,
         # partial parser, or synthetic compact estimate.
@@ -926,48 +1078,122 @@ def _measure_reader_envelope(
             },
         }
         return {**body, "measurement_id": content_hash(value=body)}
-    manifest = build_reader_input_manifest(
-        derived_asset=asset,
-        source_reference_ids=[
-            source_reference_id
-            if type(source_reference_id) is str and source_reference_id
-            else "source:" + source_sha256
-        ],
-    )
-    compact_payload = build_reader_payload(
-        manifest=manifest,
-        derived_asset=asset,
-        task_contract=task_contract,
-    )
+    expected_source_reference_ids = [
+        source_reference_id
+        if type(source_reference_id) is str and source_reference_id
+        else "source:" + source_sha256
+    ]
+    if materialized_manifest is not None:
+        manifest = dict(materialized_manifest)
+        if (
+            manifest.get("derived_asset_id") != asset["derived_asset_id"]
+            or manifest.get("source_reference_ids")
+            != expected_source_reference_ids
+        ):
+            raise TableQualificationFreezeError(
+                "Materialized Reader manifest differs from source grid"
+            )
+    else:
+        manifest = build_reader_input_manifest(
+            derived_asset=asset,
+            source_reference_ids=expected_source_reference_ids,
+        )
+    if materialized_compact_transport is not None:
+        compact_transport = dict(materialized_compact_transport)
+        if compact_transport.get("expanded_derived_asset_id") != asset[
+            "derived_asset_id"
+        ]:
+            raise TableQualificationFreezeError(
+                "Materialized compact parent differs from source grid"
+            )
+        compact_payload = _build_reader_payload_from_validated_inputs(
+            manifest=manifest,
+            task_contract=task_contract,
+            compact_transport=compact_transport,
+        )
+    else:
+        compact_payload = build_reader_payload(
+            manifest=manifest,
+            derived_asset=asset,
+            task_contract=task_contract,
+        )
     expanded_body = {
         "system_contract": dict(READER_SYSTEM_CONTRACT),
         "task_contract": dict(task_contract),
         "reader_input_manifest": dict(manifest),
-        "untrusted_table_data": list(asset["tables"]),
+        "untrusted_table_data": (
+            []
+            if materialized_expanded_tables_bytes is not None
+            else list(asset["tables"])
+        ),
     }
     expanded_bytes = canonical_json_bytes(value=expanded_body)
-    provider_envelope, _output_schema = build_provider_request_body(
-        policy=policy,
-        reader_request_bytes=compact_payload["request_bytes"],
-    )
-    estimated_tokens = estimate_context_tokens(
-        request_body=provider_envelope,
-        authority=runtime,
+    expanded_reader_payload_bytes = (
+        len(expanded_bytes) - 2 + len(materialized_expanded_tables_bytes)
+        if materialized_expanded_tables_bytes is not None
+        else len(expanded_bytes)
     )
     compact_transport = compact_payload["table_transport"]
-    round_trip = compact_payload_receipt(transport=compact_transport)
-    compression = (
-        Decimal(len(compact_payload["request_bytes"]))
-        / Decimal(len(expanded_bytes))
-    ).quantize(Decimal("0.00000001"), rounding=ROUND_HALF_EVEN)
-    blocking_reason_codes = _context_blocking_reason_codes(
-        estimated_input_tokens=estimated_tokens,
-        max_estimated_input_tokens=token_limit,
-        maximum_context_tokens=runtime["maximum_context_tokens"],
-        provider_envelope_bytes=len(provider_envelope),
-        maximum_payload_bytes=policy.maximum_payload_bytes,
+    shard_measurement = None
+    if task_contract.get("output_schema_version") == "4":
+        if family_id != "financial_statement":
+            raise TableQualificationFreezeError(
+                "Shard output schema is not financial"
+            )
+        shard_measurement = _measure_contiguous_shard_envelopes(
+            parent_transport=compact_transport,
+            parent_tables=asset["tables"],
+            manifest=manifest,
+            task_contract=task_contract,
+            token_limit=token_limit,
+            policy=policy,
+            runtime=runtime,
+        )
+        estimated_tokens = shard_measurement["estimated_input_tokens"]
+        provider_request_body_sha256 = shard_measurement[
+            "provider_request_body_sha256"
+        ]
+        compact_reader_payload_bytes = shard_measurement[
+            "compact_reader_payload_bytes"
+        ]
+        provider_envelope_estimated_bytes = shard_measurement[
+            "provider_envelope_estimated_bytes"
+        ]
+        blocking_reason_codes = list(
+            shard_measurement["blocking_reason_codes"]
+        )
+    else:
+        provider_envelope, _output_schema = build_provider_request_body(
+            policy=policy,
+            reader_request_bytes=compact_payload["request_bytes"],
+        )
+        estimated_tokens = estimate_context_tokens(
+            request_body=provider_envelope,
+            authority=runtime,
+        )
+        provider_request_body_sha256 = sha256_bytes(
+            content=provider_envelope
+        )
+        compact_reader_payload_bytes = len(compact_payload["request_bytes"])
+        provider_envelope_estimated_bytes = len(provider_envelope)
+        blocking_reason_codes = _context_blocking_reason_codes(
+            estimated_input_tokens=estimated_tokens,
+            max_estimated_input_tokens=token_limit,
+            maximum_context_tokens=runtime["maximum_context_tokens"],
+            provider_envelope_bytes=len(provider_envelope),
+            maximum_payload_bytes=policy.maximum_payload_bytes,
+        )
+    round_trip = (
+        _compact_payload_receipt_from_validated_transport(
+            transport=compact_transport,
+        )
+        if materialized_compact_transport is not None
+        else compact_payload_receipt(transport=compact_transport)
     )
-    provider_request_body_sha256 = sha256_bytes(content=provider_envelope)
+    compression = (
+        Decimal(compact_reader_payload_bytes)
+        / Decimal(expanded_reader_payload_bytes)
+    ).quantize(Decimal("0.00000001"), rounding=ROUND_HALF_EVEN)
     request_binding = None
     if (
         family_id
@@ -1032,10 +1258,10 @@ def _measure_reader_envelope(
         "source_sha256": source_sha256,
         "task_contract_id": task_contract["task_contract_id"],
         "task_request_id": request_id,
-        "expanded_reader_payload_bytes": len(expanded_bytes),
-        "compact_reader_payload_bytes": len(compact_payload["request_bytes"]),
+        "expanded_reader_payload_bytes": expanded_reader_payload_bytes,
+        "compact_reader_payload_bytes": compact_reader_payload_bytes,
         "compression_ratio": format(compression, "f"),
-        "provider_envelope_estimated_bytes": len(provider_envelope),
+        "provider_envelope_estimated_bytes": provider_envelope_estimated_bytes,
         "provider_request_body_sha256": provider_request_body_sha256,
         "estimated_input_tokens": estimated_tokens,
         "actual_prompt_tokens": "NOT_RUN",
@@ -1048,6 +1274,10 @@ def _measure_reader_envelope(
         "blocking_reason_codes": sorted(set(blocking_reason_codes)),
         "context_feasibility": context_feasibility,
     }
+    if shard_measurement is not None:
+        body["request_shard_plan"] = shard_measurement[
+            "request_shard_plan"
+        ]
     return {**body, "measurement_id": content_hash(value=body)}
 
 
@@ -1119,6 +1349,41 @@ def _measurement_receipts(
             )
             if family_id == "lodging_kpi_table" else None
         )
+        source_bytes = source_path.read_bytes()
+        if sha256_bytes(content=source_bytes) != development["source_sha256"]:
+            raise TableQualificationFreezeError(
+                "Development source hash differs before materialization"
+            )
+        try:
+            materialized_asset = build_table_grid(
+                html_bytes=source_bytes,
+                parent_raw_asset_ids=[
+                    "sha256:" + str(development["source_sha256"])
+                ],
+                storage_uri=(
+                    "artifacts/vnext/table_qualification_freeze/"
+                    "{}-shared-materialization.json".format(family_id)
+                ),
+            )
+            materialized_compact_transport = encode_compact_table_payload(
+                derived_asset=materialized_asset,
+            )
+            materialized_manifest = build_reader_input_manifest(
+                derived_asset=materialized_asset,
+                source_reference_ids=[
+                    development_source_reference_id
+                    if development_source_reference_id is not None
+                    else "source:" + str(development["source_sha256"])
+                ],
+            )
+            materialized_expanded_tables_bytes = canonical_json_bytes(
+                value=materialized_asset["tables"],
+            )
+        except (TableGridError, TablePayloadError):
+            materialized_asset = None
+            materialized_compact_transport = None
+            materialized_manifest = None
+            materialized_expanded_tables_bytes = None
         for task_contract_id in entry["task_contract_ids"]:
             attested_request_authority = _attested_request_authority(
                 repo_root=repo_root,
@@ -1151,6 +1416,14 @@ def _measurement_receipts(
                 request_protected_closure_hash=(
                     attested_request_authority["protected_closure_hash"]
                     if attested_request_authority is not None else None
+                ),
+                materialized_asset=materialized_asset,
+                materialized_compact_transport=(
+                    materialized_compact_transport
+                ),
+                materialized_manifest=materialized_manifest,
+                materialized_expanded_tables_bytes=(
+                    materialized_expanded_tables_bytes
                 ),
             )
             task_measurements.append({
@@ -2195,7 +2468,13 @@ def _split_cost_receipts(
             expected_incremental = (
                 0
                 if ordinal == 0
-                else measurement["estimated_input_tokens"]
+                else (
+                    measurement["request_shard_plan"][
+                        "total_estimated_input_tokens"
+                    ]
+                    if "request_shard_plan" in measurement
+                    else measurement["estimated_input_tokens"]
+                )
             )
             if contract["estimated_incremental_tokens"] != expected_incremental:
                 raise TableQualificationFreezeError(

@@ -6,10 +6,12 @@ import json
 import unittest
 from pathlib import Path
 
-from vnext.canonical import sha256_bytes
+from vnext.canonical import canonical_json_bytes, sha256_bytes
 from vnext.table_grid import build_table_grid
 from vnext.table_payload import decode_compact_table_payload
 from vnext.table_payload import encode_compact_table_payload
+from vnext.table_payload import plan_contiguous_table_shards
+from vnext.table_payload import validate_contiguous_table_shard_set
 from vnext.table_payload import TablePayloadError
 
 
@@ -135,6 +137,104 @@ class CompactTablePayloadTest(unittest.TestCase):
         compact["tables"][0]["i"] = "table_mutated"
         with self.assertRaises(TablePayloadError):
             decode_compact_table_payload(transport=compact)
+
+    def test_contiguous_shards_cover_every_table_once_in_original_order(
+        self,
+    ) -> None:
+        """Pack only by bytes and prove exact maximal contiguous coverage."""
+        fixture_id, source_path, expected_sha256 = _round_trip_sources()[0]
+        asset = build_table_grid(
+            html_bytes=source_path.read_bytes(),
+            parent_raw_asset_ids=["sha256:" + expected_sha256],
+            storage_uri="artifacts/vnext/wb4/{}.json".format(fixture_id),
+        )
+        compact = encode_compact_table_payload(derived_asset=asset)
+
+        def estimate(shard: dict) -> int:
+            return len(canonical_json_bytes(value={
+                "fixed_provider_envelope": "x" * 512,
+                "untrusted_table_shard": shard,
+            }))
+
+        largest_table = max(
+            estimate({
+                "tables": [table],
+                "shard_index": 0,
+                "shard_count": 1,
+            })
+            for table in compact["tables"]
+        )
+        limit = largest_table + 24000
+        first = plan_contiguous_table_shards(
+            parent_transport=compact,
+            max_estimated_input_tokens=limit,
+            estimate_shard_input_tokens=estimate,
+        )
+        second = plan_contiguous_table_shards(
+            parent_transport=compact,
+            max_estimated_input_tokens=limit,
+            estimate_shard_input_tokens=estimate,
+        )
+        self.assertEqual(first, second)
+        self.assertGreater(first["coverage"]["shard_count"], 1)
+        self.assertEqual(len(asset["tables"]), first["coverage"]["table_count"])
+        self.assertEqual(
+            [table["table_id"] for table in asset["tables"]],
+            first["coverage"]["covered_table_ids"],
+        )
+        for row in first["shards"]:
+            self.assertLessEqual(row["estimated_input_tokens"], limit)
+
+    def test_shard_set_rejects_missing_duplicate_reorder_and_mutation(self) -> None:
+        """Fail closed on every way a shard set could become a selector."""
+        fixture_id, source_path, expected_sha256 = _round_trip_sources()[0]
+        asset = build_table_grid(
+            html_bytes=source_path.read_bytes(),
+            parent_raw_asset_ids=["sha256:" + expected_sha256],
+            storage_uri="artifacts/vnext/wb4/{}.json".format(fixture_id),
+        )
+        compact = encode_compact_table_payload(derived_asset=asset)
+        plan = plan_contiguous_table_shards(
+            parent_transport=compact,
+            max_estimated_input_tokens=80000,
+            estimate_shard_input_tokens=lambda shard: len(
+                canonical_json_bytes(value=shard)
+            ),
+        )
+        shards = [dict(row["shard"]) for row in plan["shards"]]
+        self.assertGreater(len(shards), 1)
+        mutations = {
+            "missing": shards[:-1],
+            "duplicate": [*shards, shards[-1]],
+            "reordered": [shards[1], shards[0], *shards[2:]],
+        }
+        mutated = [dict(shard) for shard in shards]
+        mutated[0] = dict(mutated[0])
+        mutated[0]["table_ids"] = ["table_mutated", *mutated[0]["table_ids"][1:]]
+        mutations["table_identity"] = mutated
+        for label, values in mutations.items():
+            with self.subTest(label=label), self.assertRaises(TablePayloadError):
+                validate_contiguous_table_shard_set(
+                    shards=values, parent_transport=compact,
+                )
+
+    def test_one_table_over_ceiling_blocks_without_filtering(self) -> None:
+        """Reject an unshardable table instead of deleting or slicing it."""
+        fixture_id, source_path, expected_sha256 = _round_trip_sources()[0]
+        asset = build_table_grid(
+            html_bytes=source_path.read_bytes(),
+            parent_raw_asset_ids=["sha256:" + expected_sha256],
+            storage_uri="artifacts/vnext/wb4/{}.json".format(fixture_id),
+        )
+        compact = encode_compact_table_payload(derived_asset=asset)
+        with self.assertRaises(TablePayloadError):
+            plan_contiguous_table_shards(
+                parent_transport=compact,
+                max_estimated_input_tokens=1,
+                estimate_shard_input_tokens=lambda shard: len(
+                    canonical_json_bytes(value=shard)
+                ),
+            )
 
 
 if __name__ == "__main__":

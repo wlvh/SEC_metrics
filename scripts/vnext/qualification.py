@@ -11,6 +11,7 @@ module never creates a synthetic layout PASS.
 from __future__ import annotations
 
 import csv
+import copy
 import fcntl
 import re
 from dataclasses import dataclass
@@ -163,6 +164,10 @@ _QUALIFICATION_AUTHORIZATION_FIELDS = {
     "run_directory_relative_path",
     "run_id",
 }
+_QUALIFICATION_SHARD_AUTHORIZATION_FIELDS = (
+    _QUALIFICATION_AUTHORIZATION_FIELDS
+    | {"parent_qualification_task_plan_id", "table_shard_binding"}
+)
 _SOURCE_BINDING_FIELDS = {
     "request_attempt_id",
     "request_body_sha256",
@@ -790,6 +795,7 @@ def _qualification_workspace_relative_path(
 def _authorization_mapping(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int, qualification_phase: str,
+    table_shard_index: Optional[int] = None,
 ) -> Dict[str, object]:
     """Mechanically rebuild every current authority field for one LIVE task."""
     plan = table_qualification_task_plan(
@@ -800,6 +806,27 @@ def _authorization_mapping(
         qualification_phase=qualification_phase,
         include_freeze_status=True,
     )
+    shard_task_plan = None
+    shard_plans = plan.get("qualification_shard_task_plans")
+    if shard_plans is not None:
+        if (
+            type(shard_plans) is not list
+            or type(table_shard_index) is not int
+            or table_shard_index < 0
+            or table_shard_index >= len(shard_plans)
+            or shard_plans[table_shard_index]["shard_index"]
+            != table_shard_index
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Financial shard authorization index is invalid",
+            )
+        shard_task_plan = shard_plans[table_shard_index]
+    elif table_shard_index is not None:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Non-sharded qualification received a shard index",
+        )
     try:
         freeze = plan["_freeze_status"]
         if type(freeze) is not dict:
@@ -944,6 +971,47 @@ def _authorization_mapping(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification task plan differs from exact sample request",
         )
+    parent_plan_id = str(plan["qualification_task_plan_id"])
+    effective_plan_id = parent_plan_id
+    table_shard_binding = None
+    if shard_task_plan is not None:
+        if (
+            attestation is not None
+            or shard_task_plan["estimated_input_tokens"]
+            > context_gate["context_budget_tokens"]
+            or shard_task_plan["blocking_reason_codes"]
+            or shard_task_plan["parent_qualification_task_plan_id"]
+            != parent_plan_id
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+                message="Financial shard context binding is invalid",
+            )
+        effective_plan_id = str(
+            shard_task_plan["qualification_task_plan_id"]
+        )
+        table_shard_binding = {
+            key: copy.deepcopy(value)
+            for key, value in shard_task_plan.items()
+            if key != "qualification_task_plan_id"
+            and key != "parent_qualification_task_plan_id"
+        }
+        task_request = {
+            "task_request_id": content_hash(value={
+                "parent_task_request_id": task_request["task_request_id"],
+                "request_shard_plan_id": table_shard_binding[
+                    "request_shard_plan_id"
+                ],
+                "shard_id": table_shard_binding["shard_id"],
+                "provider_request_body_sha256": table_shard_binding[
+                    "provider_request_body_sha256"
+                ],
+            }),
+            "provider_request_body_sha256": table_shard_binding[
+                "provider_request_body_sha256"
+            ],
+            "context_gate": context_gate,
+        }
     context_feasibility_binding = {
         "task_request_id": task_request["task_request_id"],
         "provider_request_body_sha256": task_request[
@@ -961,7 +1029,7 @@ def _authorization_mapping(
     }
     qualification_usage_policy = {
         "record_type": "TABLE_QUALIFICATION_PROVIDER_USAGE_POLICY",
-        "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        "qualification_task_plan_id": effective_plan_id,
         "provider_request_body_sha256": task_request[
             "provider_request_body_sha256"
         ],
@@ -990,7 +1058,7 @@ def _authorization_mapping(
         "measurement_response_reuse_for_qualification": False,
     }
     terminal_body = {
-        "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        "qualification_task_plan_id": effective_plan_id,
         "qualification_cycle_id": freeze["qualification_cycle_id"],
         "family_id": family_id,
         "task_contract_id": task_contract_id,
@@ -1003,7 +1071,7 @@ def _authorization_mapping(
     qualification_terminal_id = content_hash(value=terminal_body)
     terminal_digest = qualification_terminal_id.split(":", maxsplit=1)[1]
     body = {
-        "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        "qualification_task_plan_id": effective_plan_id,
         "qualification_cycle_id": freeze["qualification_cycle_id"],
         "freeze_receipt_id": freeze["receipt_id"],
         "family_id": family_id,
@@ -1033,9 +1101,7 @@ def _authorization_mapping(
         "wb3_workspace_relative_path": (
             _qualification_workspace_relative_path(
                 cycle_id=str(freeze["qualification_cycle_id"]),
-                qualification_task_plan_id=str(
-                    plan["qualification_task_plan_id"]
-                ),
+                qualification_task_plan_id=effective_plan_id,
             )
         ),
         "qualification_provider_ledger_path": ledger_before["path"],
@@ -1055,16 +1121,20 @@ def _authorization_mapping(
             / terminal_digest
         ).as_posix(),
     }
+    if table_shard_binding is not None:
+        body["parent_qualification_task_plan_id"] = parent_plan_id
+        body["table_shard_binding"] = table_shard_binding
     return {
         **body,
         "qualification_authorization_id": content_hash(value=body),
     }
 
 
-def issue_table_qualification_authorization(
+def _issue_table_qualification_authorization(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int,
     qualification_phase: str = "FRESH_STABILITY",
+    table_shard_index: Optional[int] = None,
 ) -> TableQualificationAuthorization:
     """Issue one opaque authorization only after all current gates revalidate.
 
@@ -1077,12 +1147,16 @@ def issue_table_qualification_authorization(
     )
     d07 = requirement["effective_decisions"]["D-07"]["choice"]
     scope = d07.get("live_qualification_scope")
+    financial_family = family_id == "financial_statement"
     if (
         d07.get("live_qualification_authorized") is not True
         or type(scope) is not dict
         or family_id not in scope.get("authorized_family_ids", [])
         or task_contract_id not in scope.get("authorized_task_contract_ids", [])
-        or scope.get("financial_qualification_authorized") is not False
+        or scope.get("financial_qualification_authorized")
+        is not financial_family
+        or (financial_family and type(table_shard_index) is not int)
+        or (not financial_family and table_shard_index is not None)
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_NOT_AUTHORIZED",
@@ -1157,6 +1231,7 @@ def issue_table_qualification_authorization(
         task_contract_id=task_contract_id,
         qualification_ordinal=qualification_ordinal,
         qualification_phase=qualification_phase,
+        table_shard_index=table_shard_index,
     )
     return TableQualificationAuthorization(
         binding=binding,
@@ -1164,11 +1239,30 @@ def issue_table_qualification_authorization(
     )
 
 
+def issue_table_qualification_authorization(
+    *, repo_root: Path, family_id: str, task_contract_id: str,
+    qualification_ordinal: int,
+    qualification_phase: str = "FRESH_STABILITY",
+) -> TableQualificationAuthorization:
+    """Issue one non-sharded task authorization through the existing API."""
+    return _issue_table_qualification_authorization(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract_id=task_contract_id,
+        qualification_ordinal=qualification_ordinal,
+        qualification_phase=qualification_phase,
+        table_shard_index=None,
+    )
+
+
 def _rebuild_authorization_binding(
     *, repo_root: Path, actual: object,
 ) -> Dict[str, object]:
     """Rebuild a persisted authorization without trusting copied fields."""
-    if type(actual) is not dict or set(actual) != _QUALIFICATION_AUTHORIZATION_FIELDS:
+    if type(actual) is not dict or frozenset(actual) not in {
+        frozenset(_QUALIFICATION_AUTHORIZATION_FIELDS),
+        frozenset(_QUALIFICATION_SHARD_AUTHORIZATION_FIELDS),
+    }:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification authorization fields differ",
@@ -1190,6 +1284,11 @@ def _rebuild_authorization_binding(
         task_contract_id=task_contract_id,
         qualification_ordinal=ordinal,
         qualification_phase=phase,
+        table_shard_index=(
+            actual["table_shard_binding"]["shard_index"]
+            if "table_shard_binding" in actual
+            else None
+        ),
     )
     if actual != fresh:
         raise QualificationError(
@@ -2043,6 +2142,12 @@ def _review_tail_is_complete(
         != candidate.get("competing_candidates")
         or review_unit.get("unresolved_competing_claims")
         != candidate.get("unresolved_competing_claims")
+        or review_unit.get("table_shard_binding")
+        != candidate.get("table_shard_binding")
+        or review_unit.get("shard_disposition")
+        != candidate.get("shard_disposition")
+        or review_unit.get("examined_table_ids")
+        != candidate.get("examined_table_ids")
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_TERMINAL_DIVERGENT",
@@ -2766,11 +2871,12 @@ def validate_table_qualification_cycle_exact_set(
             )
 
 
-def execute_table_qualification_task(
+def _execute_table_qualification_terminal(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int, target_period: Mapping[str, object],
     owner_token: str, clock: Optional[object] = None,
     qualification_phase: str = "FRESH_STABILITY",
+    authorization: TableQualificationAuthorization,
 ) -> Dict[str, object]:
     """Run the sole future LIVE table-qualification executor.
 
@@ -2783,25 +2889,27 @@ def execute_table_qualification_task(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
             message="Qualification execution owner is invalid",
         )
-    authorization = issue_table_qualification_authorization(
-        repo_root=repo_root,
-        family_id=family_id,
-        task_contract_id=task_contract_id,
-        qualification_ordinal=qualification_ordinal,
-        qualification_phase=qualification_phase,
-    )
     binding = authorization.as_mapping()
     if qualification_ordinal > 1:
-        prior_plan_ids = {
-            str(table_qualification_task_plan(
+        prior_plan_ids = set()
+        for prior_ordinal in range(1, qualification_ordinal):
+            prior_plan = table_qualification_task_plan(
                 repo_root=repo_root,
                 family_id=family_id,
                 task_contract_id=task_contract_id,
                 qualification_ordinal=prior_ordinal,
                 qualification_phase=qualification_phase,
-            )["qualification_task_plan_id"])
-            for prior_ordinal in range(1, qualification_ordinal)
-        }
+            )
+            prior_shards = prior_plan.get("qualification_shard_task_plans")
+            if type(prior_shards) is list:
+                prior_plan_ids.update(
+                    str(row["qualification_task_plan_id"])
+                    for row in prior_shards
+                )
+            else:
+                prior_plan_ids.add(
+                    str(prior_plan["qualification_task_plan_id"])
+                )
         prior_terminals = []
         for prior_plan_id in sorted(prior_plan_ids):
             prior_terminals.extend(
@@ -2967,6 +3075,116 @@ def execute_table_qualification_task(
     return result
 
 
+def execute_table_qualification_task(
+    *, repo_root: Path, family_id: str, task_contract_id: str,
+    qualification_ordinal: int, target_period: Mapping[str, object],
+    owner_token: str, clock: Optional[object] = None,
+    qualification_phase: str = "FRESH_STABILITY",
+) -> Dict[str, object]:
+    """Execute one ordinary task or every child of one financial shard plan."""
+    plan = table_qualification_task_plan(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract_id=task_contract_id,
+        qualification_ordinal=qualification_ordinal,
+        qualification_phase=qualification_phase,
+    )
+    supplied_period = _target_period_mapping(value=target_period)
+    if supplied_period != plan["qualification_target_period"]:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Qualification target period differs from frozen task plan",
+        )
+    shard_plans = plan.get("qualification_shard_task_plans")
+    if shard_plans is None:
+        authorization = issue_table_qualification_authorization(
+            repo_root=repo_root,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_ordinal=qualification_ordinal,
+            qualification_phase=qualification_phase,
+        )
+        return _execute_table_qualification_terminal(
+            repo_root=repo_root,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_ordinal=qualification_ordinal,
+            target_period=supplied_period,
+            owner_token=owner_token,
+            clock=clock,
+            qualification_phase=qualification_phase,
+            authorization=authorization,
+        )
+    if (
+        family_id != "financial_statement"
+        or type(shard_plans) is not list
+        or not shard_plans
+        or [row["shard_index"] for row in shard_plans]
+        != list(range(len(shard_plans)))
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+            message="Qualification financial shard plan differs",
+        )
+    terminals = []
+    for shard_index in range(len(shard_plans)):
+        authorization = _issue_table_qualification_authorization(
+            repo_root=repo_root,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_ordinal=qualification_ordinal,
+            qualification_phase=qualification_phase,
+            table_shard_index=shard_index,
+        )
+        result = _execute_table_qualification_terminal(
+            repo_root=repo_root,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_ordinal=qualification_ordinal,
+            target_period=supplied_period,
+            owner_token=owner_token,
+            clock=clock,
+            qualification_phase=qualification_phase,
+            authorization=authorization,
+        )
+        binding = authorization.as_mapping()
+        terminals.append({
+            **result,
+            "shard_index": shard_index,
+            "shard_id": binding["table_shard_binding"]["shard_id"],
+            "qualification_terminal_id": binding[
+                "qualification_terminal_id"
+            ],
+            "qualification_task_plan_id": binding[
+                "qualification_task_plan_id"
+            ],
+            "run_directory_relative_path": binding[
+                "run_directory_relative_path"
+            ],
+        })
+        if result.get("status") in {
+            "FAILED_TERMINAL",
+            "PRE_EGRESS_FAILURE",
+            "UNKNOWN_REMOTE_OUTCOME",
+        }:
+            return {
+                "status": result["status"],
+                "qualification_task_plan_id": plan[
+                    "qualification_task_plan_id"
+                ],
+                "completed_shard_count": len(terminals),
+                "required_shard_count": len(shard_plans),
+                "shard_terminals": terminals,
+            }
+    return {
+        "status": "ALL_SHARDS_PENDING_REVIEW",
+        "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        "completed_shard_count": len(terminals),
+        "required_shard_count": len(shard_plans),
+        "shard_terminals": terminals,
+    }
+
+
 def table_qualification_task_plan(
     *,
     repo_root: Path,
@@ -3101,6 +3319,30 @@ def table_qualification_task_plan(
                 if key != "estimated_input_tokens"
             },
         }
+        receipt_path = (
+            repo_root
+            / FREEZE_RECEIPT_ROOT
+            / (str(freeze["receipt_id"]).split(":", maxsplit=1)[1] + ".json")
+        )
+        if receipt_path.is_file() and not receipt_path.is_symlink():
+            receipt = strict_json_file(path=receipt_path)
+            frozen_measurements = receipt.get(
+                "wb4_compact_transport", {}
+            ).get("qualification_task_measurements", [])
+            matching_measurements = [
+                row for row in frozen_measurements
+                if row.get("family_id") == family_id
+                and row.get("task_contract_id") == task_contract_id
+                and row.get("source_sha256") == sample["source_binding"][
+                    "source_declaration"
+                ]["source_sha256"]
+            ]
+            if len(matching_measurements) == 1 and (
+                "request_shard_plan" in matching_measurements[0]
+            ):
+                measurement["request_shard_plan"] = copy.deepcopy(
+                    matching_measurements[0]["request_shard_plan"]
+                )
     else:
         measurement = _qualification_sample_measurement(
             repo_root=repo_root,
@@ -3148,7 +3390,41 @@ def table_qualification_task_plan(
         "system_prompt_hash": runtime["system_prompt_hash"],
         "freeze_receipt_id": freeze["receipt_id"],
     }
-    plan = {**body, "qualification_task_plan_id": content_hash(value=body)}
+    request_shard_plan = measurement.get("request_shard_plan")
+    if request_shard_plan is not None:
+        if (
+            family_id != "financial_statement"
+            or type(request_shard_plan) is not dict
+            or request_shard_plan.get("all_shards_required_before_credit")
+            is not True
+            or request_shard_plan.get("semantic_prefilter") is not False
+            or request_shard_plan.get("selector") is not False
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_TASK_PLAN_INVALID",
+                message="Financial request shard plan is invalid",
+            )
+        body["request_shard_plan"] = request_shard_plan
+    parent_plan_id = content_hash(value=body)
+    plan = {**body, "qualification_task_plan_id": parent_plan_id}
+    if request_shard_plan is not None:
+        shard_plans = []
+        for shard in request_shard_plan["shards"]:
+            child_body = {
+                "parent_qualification_task_plan_id": parent_plan_id,
+                "request_shard_plan_id": request_shard_plan[
+                    "request_shard_plan_id"
+                ],
+                "table_shard_set_id": request_shard_plan["coverage"][
+                    "shard_set_id"
+                ],
+                **dict(shard),
+            }
+            shard_plans.append({
+                **child_body,
+                "qualification_task_plan_id": content_hash(value=child_body),
+            })
+        plan["qualification_shard_task_plans"] = shard_plans
     if include_freeze_status:
         return {**plan, "_freeze_status": freeze}
     return plan
@@ -3300,12 +3576,20 @@ def _table_phase_terminal_rows(
             for record in records
             if record["record_type"] == "METRIC_RESULT"
         )
+        candidates = [
+            record for record in records
+            if record["record_type"] == "OBSERVATION_CANDIDATE"
+        ]
+        checks = [
+            record for record in records
+            if record["record_type"] == "EVIDENCE_CHECK"
+        ]
         if len(evidence_ids) != 1 or not result_ids:
             raise QualificationError(
                 code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
                 message="Qualification phase Run closure is incomplete",
             )
-        rows.append({
+        row = {
             "task_contract_id": binding["task_contract_id"],
             "qualification_phase": binding["qualification_phase"],
             "qualification_ordinal": binding["qualification_ordinal"],
@@ -3322,9 +3606,147 @@ def _table_phase_terminal_rows(
             "run_id": manifest["run_id"],
             "qualification_evidence_ids": evidence_ids,
             "result_ids": result_ids,
+        }
+        if "table_shard_binding" in binding:
+            if (
+                len(candidates) != 1
+                or len(checks) != 1
+                or checks[0]["status"] != "PASS"
+                or candidates[0].get("table_shard_binding")
+                != checks[0].get("table_shard_binding")
+                or candidates[0].get("table_shard_binding")
+                != binding["table_shard_binding"]
+            ):
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Qualification shard Evidence closure is incomplete",
+                )
+            row.update({
+                "parent_qualification_task_plan_id": binding[
+                    "parent_qualification_task_plan_id"
+                ],
+                "table_shard_binding": binding["table_shard_binding"],
+                "shard_disposition": candidates[0]["shard_disposition"],
+                "evidence_check_id": checks[0]["evidence_check_id"],
+                "normalized_values": checks[0]["normalized_values"],
+                "normalized_scope": checks[0]["normalized_scope"],
+            })
+        rows.append(row)
+    ordinary = [row for row in rows if "table_shard_binding" not in row]
+    sharded = [row for row in rows if "table_shard_binding" in row]
+    grouped: Dict[tuple, list[Dict[str, object]]] = {}
+    for row in sharded:
+        key = (
+            row["task_contract_id"],
+            row["qualification_phase"],
+            row["qualification_ordinal"],
+            row["parent_qualification_task_plan_id"],
+        )
+        grouped.setdefault(key, []).append(row)
+    aggregates = []
+    for key, members in grouped.items():
+        members.sort(
+            key=lambda value: value["table_shard_binding"]["shard_index"]
+        )
+        bindings = [row["table_shard_binding"] for row in members]
+        shard_count = bindings[0]["shard_count"]
+        if (
+            len(members) != shard_count
+            or [binding["shard_index"] for binding in bindings]
+            != list(range(shard_count))
+            or len({binding["table_shard_set_id"] for binding in bindings})
+            != 1
+            or len({binding["request_shard_plan_id"] for binding in bindings})
+            != 1
+            or any(
+                current["start_table_order"]
+                != (
+                    0
+                    if index == 0
+                    else bindings[index - 1]["end_table_order"] + 1
+                )
+                for index, current in enumerate(bindings)
+            )
+            or len({table_id for binding in bindings
+                    for table_id in binding["table_ids"]})
+            != sum(len(binding["table_ids"]) for binding in bindings)
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SHARD_COVERAGE_INCOMPLETE",
+                message="Every contiguous financial shard must be FROZEN",
+            )
+        candidate_members = [
+            row for row in members
+            if row["shard_disposition"] == "CANDIDATE_PRESENT"
+        ]
+        if not candidate_members:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SHARD_CANDIDATE_REQUIRED",
+                message="Financial qualification has no Evidence-pass candidate shard",
+            )
+        candidate_facts = {
+            content_hash(value={
+                "normalized_values": row["normalized_values"],
+                "normalized_scope": row["normalized_scope"],
+            })
+            for row in candidate_members
+        }
+        if len(candidate_facts) != 1:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SHARD_CONFLICT_WITHHELD",
+                message="Conflicting financial candidate shards are WITHHELD",
+            )
+        first = members[0]
+        aggregate_body = {
+            "task_contract_id": first["task_contract_id"],
+            "qualification_phase": first["qualification_phase"],
+            "qualification_ordinal": first["qualification_ordinal"],
+            "qualification_task_plan_id": first[
+                "parent_qualification_task_plan_id"
+            ],
+            "request_shard_plan_id": bindings[0]["request_shard_plan_id"],
+            "table_shard_set_id": bindings[0]["table_shard_set_id"],
+            "shard_count": shard_count,
+            "covered_table_ids": [
+                table_id for binding in bindings
+                for table_id in binding["table_ids"]
+            ],
+            "qualification_terminal_ids": [
+                row["qualification_terminal_id"] for row in members
+            ],
+            "qualification_shard_task_plan_ids": [
+                row["qualification_task_plan_id"] for row in members
+            ],
+            "provider_request_body_sha256s": [
+                row["provider_request_body_sha256"] for row in members
+            ],
+            "source_binding_hash": first["source_binding_hash"],
+            "run_ids": [row["run_id"] for row in members],
+            "qualification_evidence_ids": [
+                value for row in members
+                for value in row["qualification_evidence_ids"]
+            ],
+            "result_ids": [
+                value for row in members for value in row["result_ids"]
+            ],
+            "candidate_shard_count": len(candidate_members),
+            "candidate_fact_hash": next(iter(candidate_facts)),
+            "all_shards_examined_before_credit": True,
+        }
+        aggregates.append({
+            **aggregate_body,
+            "qualification_shard_closure_id": content_hash(
+                value=aggregate_body
+            ),
         })
-    rows.sort(key=lambda row: str(row["task_contract_id"]))
-    return rows
+    terminal_rows = ordinary + aggregates
+    terminal_rows.sort(
+        key=lambda row: (
+            str(row["task_contract_id"]),
+            int(row["qualification_ordinal"]),
+        )
+    )
+    return terminal_rows
 
 
 def _qualification_ledger_prefix(

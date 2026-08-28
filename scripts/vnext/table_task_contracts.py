@@ -2,9 +2,11 @@
 
 The catalog maps metrics to independently qualified target-table tasks without
 giving shared Reader, Evidence, or Projector code any metric/company/table
-literals.  It is deliberately a static declaration layer: a request still
-receives the complete compact document table set and the model chooses its one
-target table through the normal locator contract.
+literals.  It is deliberately a static declaration layer: lodging receives
+the complete compact document table set in one request; financial receives
+deterministic contiguous byte-size shards of that same complete parent and
+cannot earn credit until every shard closes.  The model still identifies any
+target table only through the normal locator contract.
 """
 
 from __future__ import annotations
@@ -80,6 +82,25 @@ OUTPUT_SCHEMA_IDENTITY = {
             "colspan",
         ],
     },
+}
+FINANCIAL_SHARD_OUTPUT_SCHEMA_IDENTITY = {
+    "schema_version": "4",
+    "root_fields": [
+        "candidates",
+        "disclosure_group",
+        "examined_table_ids",
+        "shard_disposition",
+        "shard_id",
+        "table_locator",
+        "unresolved_competing_claims",
+    ],
+    "shard_dispositions": [
+        "CANDIDATE_PRESENT",
+        "NO_CANDIDATE_IN_SHARD",
+    ],
+    "examined_table_ids_policy": "EXACT_SUPPLIED_SHARD_TABLE_ID_SET",
+    "no_candidate_policy": "SHARD_LOCAL_NO_QUALIFICATION_CREDIT",
+    "candidate_schema_identity": OUTPUT_SCHEMA_IDENTITY,
 }
 RUNTIME_TASK_CONTRACT_FIELDS = {
     "catalog_task_contract_hash",
@@ -262,8 +283,13 @@ def _contract_identity(*, contract: Mapping[str, object]) -> Dict[str, object]:
     Returns:
         Contract plus task, output-schema, and system-prompt identities.
     """
+    schema_identity = (
+        FINANCIAL_SHARD_OUTPUT_SCHEMA_IDENTITY
+        if contract["reader_family_id"] == "financial_statement"
+        else OUTPUT_SCHEMA_IDENTITY
+    )
     output_schema = {
-        **OUTPUT_SCHEMA_IDENTITY,
+        **schema_identity,
         "output_schema_version": contract["output_schema_version"],
         "scope_contract_version": contract["scope_contract_version"],
     }
@@ -655,7 +681,10 @@ def _validate_task_family(
             raise TableTaskContractError("Task contract must have one role")
         if contract["scope_contract_version"] != SCOPE_CONTRACT_VERSION:
             raise TableTaskContractError("Task scope contract version differs")
-        if contract["output_schema_version"] != "3":
+        expected_output_schema_version = (
+            "4" if family_id == "financial_statement" else "3"
+        )
+        if contract["output_schema_version"] != expected_output_schema_version:
             raise TableTaskContractError("Task output schema version differs")
         _text(value=contract["system_prompt"], label="task system_prompt")
         _text(value=contract["split_reason"], label="task split_reason")

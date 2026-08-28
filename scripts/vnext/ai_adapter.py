@@ -37,11 +37,14 @@ from .provider_runtime import estimate_context_tokens
 from .provider_runtime import load_provider_runtime_authority
 from .reader_input import live_reader_authority_fields
 from .reader_input import PreparedReaderRequest
+from .reader_input import prepare_reader_shard_request
 from .reader_input import READER_SYSTEM_CONTRACT
 from .records import validate_record
 from .requirements import RequirementError, load_requirement_snapshot
 from .scope_contract import scope_contract_hash
 from .table_payload import decode_compact_table_payload
+from .table_payload import build_contiguous_table_shard
+from .table_payload import encode_compact_table_payload
 from .table_payload import expanded_grid_sha256
 from .table_payload import TablePayloadError
 from .table_task_contracts import RUNTIME_TASK_CONTRACT_FIELDS
@@ -769,6 +772,56 @@ READER_OUTPUT_JSON_SCHEMA = _object_schema(
         },
     }
 )
+READER_SHARD_OUTPUT_JSON_SCHEMA = _object_schema(
+    properties={
+        "disclosure_group": _STRING_SCHEMA,
+        "shard_id": _STRING_SCHEMA,
+        "examined_table_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": _STRING_SCHEMA,
+        },
+        "shard_disposition": {
+            "type": "string",
+            "enum": ["CANDIDATE_PRESENT", "NO_CANDIDATE_IN_SHARD"],
+        },
+        "table_locator": {
+            "anyOf": [_TABLE_LOCATOR_SCHEMA, {"type": "null"}],
+        },
+        "candidates": {"type": "array", "items": _CANDIDATE_SCHEMA},
+        "unresolved_competing_claims": {
+            "type": "array",
+            "items": _object_schema(
+                properties={"description": _STRING_SCHEMA}
+            ),
+        },
+    }
+)
+
+
+def _output_schema_for_reader_request(
+    *, reader_request_bytes: bytes,
+) -> Mapping[str, object]:
+    """Select the fixed schema only from the bound request shape/version."""
+    try:
+        request = strict_json_loads(
+            text=reader_request_bytes.decode("utf-8")
+        )
+    except (UnicodeDecodeError, CanonicalError, ValueError) as error:
+        raise AIAdapterError("Reader request is not strict UTF-8 JSON") from error
+    task = request.get("task_contract") if type(request) is dict else None
+    sharded = type(request) is dict and "table_shard_contract" in request
+    if (
+        sharded
+        and type(task) is dict
+        and task.get("output_schema_version") == "4"
+    ):
+        return READER_SHARD_OUTPUT_JSON_SCHEMA
+    if sharded:
+        raise AIAdapterError("Table shard output schema version differs")
+    if type(task) is dict and task.get("output_schema_version") == "4":
+        raise AIAdapterError("Financial schema v4 requires a table shard")
+    return READER_OUTPUT_JSON_SCHEMA
 
 
 def _catalog_system_prompt(*, reader_request_bytes: bytes) -> str:
@@ -836,7 +889,10 @@ def build_openai_responses_body(
         strict_json_loads(text=reader_text)
     except (UnicodeDecodeError, CanonicalError) as error:
         raise AIAdapterError("Reader request is not strict UTF-8 JSON") from error
-    schema_bytes = canonical_json_bytes(value=READER_OUTPUT_JSON_SCHEMA)
+    schema = _output_schema_for_reader_request(
+        reader_request_bytes=reader_request_bytes,
+    )
+    schema_bytes = canonical_json_bytes(value=schema)
     system_prompt = _catalog_system_prompt(
         reader_request_bytes=reader_request_bytes,
     )
@@ -857,7 +913,7 @@ def build_openai_responses_body(
                 "type": "json_schema",
                 "name": "sec_vnext_reader_output",
                 "strict": True,
-                "schema": READER_OUTPUT_JSON_SCHEMA,
+                "schema": schema,
             }
         },
         "tools": [],
@@ -899,7 +955,10 @@ def build_deepseek_chat_completions_body(
         strict_json_loads(text=reader_text)
     except (UnicodeDecodeError, CanonicalError) as error:
         raise AIAdapterError("Reader request is not strict UTF-8 JSON") from error
-    schema_bytes = canonical_json_bytes(value=READER_OUTPUT_JSON_SCHEMA)
+    schema = _output_schema_for_reader_request(
+        reader_request_bytes=reader_request_bytes,
+    )
+    schema_bytes = canonical_json_bytes(value=schema)
     system_contract = canonical_json_bytes(
         value=READER_SYSTEM_CONTRACT,
     ).decode("utf-8")
@@ -2424,6 +2483,7 @@ def _controlled_response_validator(
                 "source_reference_ids"
             ],
             derived_asset_ids=[prepared["manifest"]["derived_asset_id"]],
+            table_shard_contract=prepared["table_shard_contract"],
         )
     except (UnicodeDecodeError, ValueError) as error:
         raise SchemaViolationError("Reader response schema rejected") from error
@@ -2477,6 +2537,7 @@ def _controlled_acceptance_validator(
                 "source_reference_ids"
             ],
             derived_asset_ids=[prepared["manifest"]["derived_asset_id"]],
+            table_shard_contract=prepared["table_shard_contract"],
         )
     except (UnicodeDecodeError, ValueError) as error:
         raise EvidenceFailureError(
@@ -3106,13 +3167,38 @@ def _validate_live_prepared_request(
             if task_contract_id
             else compile_spec_file(path=current, dependency_specs={})
         )
-        rebuilt = prepare_reader_request(
-            manifest=reader_manifest,
-            derived_asset=derived_asset,
-            compiled_spec=compiled_spec,
-            repo_root=authority_root,
-            task_contract_id=task_contract_id if task_contract_id else None,
-        )
+        wrapped = fields["prepared_request"]
+        if wrapped.table_shard_id:
+            if not task_contract_id:
+                raise AIAdapterError(
+                    "Table shard requires a catalog task contract"
+                )
+            parent_transport = encode_compact_table_payload(
+                derived_asset=derived_asset,
+            )
+            table_shard = build_contiguous_table_shard(
+                parent_transport=parent_transport,
+                shard_index=wrapped.table_shard_index,
+                shard_count=wrapped.table_shard_count,
+                start_table_order=wrapped.start_table_order,
+                end_table_order=wrapped.end_table_order,
+            )
+            rebuilt = prepare_reader_shard_request(
+                manifest=reader_manifest,
+                derived_asset=derived_asset,
+                repo_root=authority_root,
+                task_contract_id=task_contract_id,
+                table_shard=table_shard,
+                table_shard_set_id=wrapped.table_shard_set_id,
+            )
+        else:
+            rebuilt = prepare_reader_request(
+                manifest=reader_manifest,
+                derived_asset=derived_asset,
+                compiled_spec=compiled_spec,
+                repo_root=authority_root,
+                task_contract_id=task_contract_id if task_contract_id else None,
+            )
     except (
         BatchWorkflowError,
         SourceError,
@@ -3197,6 +3283,7 @@ def _validate_prepared_request(
         isinstance(task_contract, dict)
         and set(task_contract) == RUNTIME_TASK_CONTRACT_FIELDS
     )
+    sharded = bool(prepared_request.table_shard_id)
     if (
         not isinstance(task_contract, dict)
         or (
@@ -3219,9 +3306,11 @@ def _validate_prepared_request(
     ):
         raise AIAdapterError("Prepared Reader task contract is invalid")
     if catalog_task:
+        expected_schema_version = "4" if sharded else "3"
         if (
             task_contract["representation"] != "table"
-            or task_contract["output_schema_version"] != "3"
+            or task_contract["output_schema_version"]
+            != expected_schema_version
             or len(task_contract["metric_ids"]) != 1
             or len(task_contract["metric_spec_paths"]) != 1
             or len(task_contract["metric_spec_semantic_hashes"]) != 1
@@ -3249,6 +3338,8 @@ def _validate_prepared_request(
         "task_contract",
         "untrusted_table_data",
     }
+    if sharded:
+        body_fields.add("table_shard_contract")
     if (
         not isinstance(request_body, dict)
         or set(request_body) != body_fields
@@ -3261,21 +3352,95 @@ def _validate_prepared_request(
         )
     except ValueError as error:
         raise AIAdapterError("Prepared Reader manifest is invalid") from error
-    compact_transport = request_body["untrusted_table_data"]
-    if type(compact_transport) is not dict:
+    untrusted_transport = request_body["untrusted_table_data"]
+    if type(untrusted_transport) is not dict:
         raise AIAdapterError("Prepared Reader request binding differs")
-    try:
-        tables = decode_compact_table_payload(transport=compact_transport)
-    except TablePayloadError as error:
-        raise AIAdapterError("Prepared Reader compact payload is invalid") from error
-    table_bindings = [
-        {
-            "table_id": table["table_id"],
-            "grid_sha256": table["grid_sha256"],
-            "order": table["order"],
+    if sharded:
+        shard_contract = request_body["table_shard_contract"]
+        if (
+            type(shard_contract) is not dict
+            or set(shard_contract) != {
+                "all_shards_required_before_credit",
+                "end_table_order",
+                "semantic_prefilter",
+                "selector",
+                "shard_count",
+                "shard_id",
+                "shard_index",
+                "start_table_order",
+                "table_ids",
+                "table_shard_set_id",
+            }
+            or shard_contract["table_shard_set_id"]
+            != prepared_request.table_shard_set_id
+            or re.fullmatch(
+                r"sha256:[0-9a-f]{64}",
+                str(shard_contract["table_shard_set_id"]),
+            ) is None
+            or shard_contract["shard_id"] != prepared_request.table_shard_id
+            or re.fullmatch(
+                r"sha256:[0-9a-f]{64}", str(shard_contract["shard_id"])
+            ) is None
+            or shard_contract["shard_index"]
+            != prepared_request.table_shard_index
+            or shard_contract["shard_count"]
+            != prepared_request.table_shard_count
+            or shard_contract["start_table_order"]
+            != prepared_request.start_table_order
+            or shard_contract["end_table_order"]
+            != prepared_request.end_table_order
+            or shard_contract["all_shards_required_before_credit"] is not True
+            or shard_contract["semantic_prefilter"] is not False
+            or shard_contract["selector"] is not False
+            or untrusted_transport.get("shard_payload_sha256")
+            != prepared_request.table_shard_payload_sha256
+            or untrusted_transport.get("shard_id")
+            != prepared_request.table_shard_id
+            or untrusted_transport.get("table_ids")
+            != shard_contract["table_ids"]
+        ):
+            raise AIAdapterError("Prepared Reader table shard differs")
+        start = prepared_request.start_table_order
+        end = prepared_request.end_table_order
+        if (
+            start < 0
+            or end < start
+            or end >= len(manifest["tables"])
+            or shard_contract["table_ids"]
+            != [
+                str(row["table_id"])
+                for row in manifest["tables"][start:end + 1]
+            ]
+        ):
+            raise AIAdapterError("Prepared Reader shard manifest differs")
+        table_transport = {
+            "table_payload_serialization_version": (
+                prepared_request.table_payload_serialization_version
+            ),
+            "expanded_derived_asset_id": prepared_request.derived_asset_id,
+            "expanded_grid_sha256": prepared_request.expanded_grid_sha256,
+            "compact_payload_sha256": prepared_request.compact_payload_sha256,
+            "decoder_semantic_version": prepared_request.decoder_semantic_version,
+            "round_trip_receipt_id": prepared_request.round_trip_receipt_id,
         }
-        for table in tables
-    ]
+        table_bindings = list(manifest["tables"])
+    else:
+        compact_transport = untrusted_transport
+        try:
+            tables = decode_compact_table_payload(transport=compact_transport)
+        except TablePayloadError as error:
+            raise AIAdapterError(
+                "Prepared Reader compact payload is invalid"
+            ) from error
+        table_bindings = [
+            {
+                "table_id": table["table_id"],
+                "grid_sha256": table["grid_sha256"],
+                "order": table["order"],
+            }
+            for table in tables
+        ]
+        table_transport = compact_transport
     if (
         manifest["record_type"] != "READER_INPUT_MANIFEST"
         or manifest["reader_input_manifest_id"]
@@ -3284,19 +3449,22 @@ def _validate_prepared_request(
         != prepared_request.source_reference_ids
         or manifest["derived_asset_id"] != prepared_request.derived_asset_id
         or manifest["tables"] != table_bindings
-        or compact_transport["expanded_derived_asset_id"]
+        or table_transport["expanded_derived_asset_id"]
         != prepared_request.derived_asset_id
-        or compact_transport["expanded_grid_sha256"]
-        != expanded_grid_sha256(tables=tables)
-        or compact_transport["table_payload_serialization_version"]
+        or (
+            not sharded
+            and table_transport["expanded_grid_sha256"]
+            != expanded_grid_sha256(tables=tables)
+        )
+        or table_transport["table_payload_serialization_version"]
         != prepared_request.table_payload_serialization_version
-        or compact_transport["expanded_grid_sha256"]
+        or table_transport["expanded_grid_sha256"]
         != prepared_request.expanded_grid_sha256
-        or compact_transport["compact_payload_sha256"]
+        or table_transport["compact_payload_sha256"]
         != prepared_request.compact_payload_sha256
-        or compact_transport["decoder_semantic_version"]
+        or table_transport["decoder_semantic_version"]
         != prepared_request.decoder_semantic_version
-        or compact_transport["round_trip_receipt_id"]
+        or table_transport["round_trip_receipt_id"]
         != prepared_request.round_trip_receipt_id
         or request_body["task_contract"] != task_contract
         or canonical_json_bytes(value=task_contract) != task_contract_bytes
@@ -3309,7 +3477,11 @@ def _validate_prepared_request(
         "task_contract": task_contract,
         "task_contract_bytes": task_contract_bytes,
         "task_spec_semantic_hash": spec_hash,
-        "table_transport": compact_transport,
+        "table_transport": table_transport,
+        "table_shard": untrusted_transport if sharded else None,
+        "table_shard_contract": (
+            request_body["table_shard_contract"] if sharded else None
+        ),
     }
 
 
@@ -3362,7 +3534,11 @@ def run_ai_attempt(
     raw_response: Optional[bytes] = None
     assistant_output: Optional[bytes] = None
     outbound_request = request_bytes
-    output_schema = canonical_json_bytes(value=READER_OUTPUT_JSON_SCHEMA)
+    output_schema = canonical_json_bytes(
+        value=_output_schema_for_reader_request(
+            reader_request_bytes=request_bytes,
+        )
+    )
     observation: Optional[TransportObservation] = None
     provider_request_id = ""
     error_class = ""
@@ -3422,6 +3598,7 @@ def run_ai_attempt(
             scope_contract=task_contract["scope_contract"],
             source_reference_ids=reader_manifest["source_reference_ids"],
             derived_asset_ids=[reader_manifest["derived_asset_id"]],
+            table_shard_contract=prepared["table_shard_contract"],
         )
         if candidate["disclosure_group"] != task_contract[
             "disclosure_group"
@@ -3556,6 +3733,18 @@ def run_ai_attempt(
                 "output_schema_hash"
             ],
             "system_prompt_hash": task_contract["system_prompt_hash"],
+        })
+    if prepared["table_shard"] is not None:
+        record.update({
+            "table_shard_id": prepared_request.table_shard_id,
+            "table_shard_set_id": prepared_request.table_shard_set_id,
+            "table_shard_payload_sha256": (
+                prepared_request.table_shard_payload_sha256
+            ),
+            "table_shard_index": prepared_request.table_shard_index,
+            "table_shard_count": prepared_request.table_shard_count,
+            "start_table_order": prepared_request.start_table_order,
+            "end_table_order": prepared_request.end_table_order,
         })
     payloads = AttemptPayloads(
         request_body_bytes=outbound_request,

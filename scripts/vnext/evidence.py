@@ -14,6 +14,8 @@ from .scope_contract import exact_enum_alias, ScopeContractError
 from .scope_contract import scope_satisfies_contract, validate_scope_contract
 from .table_grid import TableGridError, resolve_cell
 from .table_payload import decode_compact_table_payload
+from .table_payload import decode_contiguous_table_shard
+from .table_payload import encode_compact_table_payload
 from .table_payload import expanded_grid_sha256
 from .table_payload import TablePayloadError
 
@@ -69,6 +71,7 @@ def _verify_source_bindings(
 
 def _verify_payload(
     *,
+    candidate: Mapping[str, object],
     reader_manifest: Mapping[str, object],
     reader_payload_body: Mapping[str, object],
     derived_asset: Mapping[str, object],
@@ -84,12 +87,15 @@ def _verify_payload(
         EvidenceError: On missing fields, substituted manifest, or filtered
         compact transport, or filtered decoded table bytes.
     """
+    sharded = "table_shard_binding" in candidate
     required = {
         "system_contract",
         "task_contract",
         "reader_input_manifest",
         "untrusted_table_data",
     }
+    if sharded:
+        required.add("table_shard_contract")
     if set(reader_payload_body) != required:
         raise EvidenceError("Reader payload fields are not exact")
     try:
@@ -100,17 +106,40 @@ def _verify_payload(
         raise EvidenceError("ReaderInputManifest table set differs") from error
     if reader_payload_body["reader_input_manifest"] != reader_manifest:
         raise EvidenceError("Reader payload substituted the manifest")
-    compact_transport = reader_payload_body["untrusted_table_data"]
+    untrusted_transport = reader_payload_body["untrusted_table_data"]
     try:
-        decoded_tables = decode_compact_table_payload(
-            transport=compact_transport,
-        )
+        if sharded:
+            parent_transport = encode_compact_table_payload(
+                derived_asset=derived_asset,
+            )
+            decoded_tables = decode_contiguous_table_shard(
+                shard=untrusted_transport,
+                parent_transport=parent_transport,
+            )
+        else:
+            decoded_tables = decode_compact_table_payload(
+                transport=untrusted_transport,
+            )
     except TablePayloadError as error:
         raise EvidenceError("Reader compact payload is invalid") from error
-    if (
-        compact_transport["expanded_derived_asset_id"]
+    if sharded:
+        binding = candidate["table_shard_binding"]
+        start = binding["start_table_order"]
+        end = binding["end_table_order"]
+        if (
+            reader_payload_body["table_shard_contract"] != binding
+            or candidate["examined_table_ids"] != binding["table_ids"]
+            or untrusted_transport["shard_id"] != binding["shard_id"]
+            or untrusted_transport["table_ids"] != binding["table_ids"]
+            or decoded_tables != derived_asset["tables"][start:end + 1]
+            or [table["table_id"] for table in decoded_tables]
+            != binding["table_ids"]
+        ):
+            raise EvidenceError("Reader table shard coverage differs")
+    elif (
+        untrusted_transport["expanded_derived_asset_id"]
         != derived_asset["derived_asset_id"]
-        or compact_transport["expanded_grid_sha256"]
+        or untrusted_transport["expanded_grid_sha256"]
         != expanded_grid_sha256(tables=derived_asset["tables"])
         or decoded_tables != derived_asset["tables"]
     ):
@@ -399,11 +428,24 @@ def check_evidence(
             raise EvidenceError("Reader manifest SourceReferences differ")
         checks.append({"check": "SOURCE_BINDINGS", "status": "PASS"})
         _verify_payload(
+            candidate=candidate,
             reader_manifest=reader_manifest,
             reader_payload_body=reader_payload_body,
             derived_asset=derived_asset,
         )
         checks.append({"check": "READER_TABLE_EXACT_SET", "status": "PASS"})
+        sharded = "table_shard_binding" in candidate
+        no_candidate_shard = (
+            sharded
+            and candidate["shard_disposition"] == "NO_CANDIDATE_IN_SHARD"
+        )
+        if sharded:
+            checks.append({
+                "check": "TABLE_SHARD_EXACT_COVERAGE",
+                "status": "PASS",
+                "shard_id": candidate["table_shard_binding"]["shard_id"],
+                "examined_table_ids": list(candidate["examined_table_ids"]),
+            })
         roles = [
             str(item["role"]) for item in candidate["competing_candidates"]
         ]
@@ -451,16 +493,23 @@ def check_evidence(
         if scope_values:
             normalized_scope = scope_values[0]
             unresolved_scope_dimensions = unresolved_values[0]
-        scope_contract_satisfied = scope_satisfies_contract(
-            contract=validated_scope_contract,
-            normalized_scope=normalized_scope,
+        scope_contract_satisfied = (
+            False
+            if no_candidate_shard
+            else scope_satisfies_contract(
+                contract=validated_scope_contract,
+                normalized_scope=normalized_scope,
+            )
         )
         expected_candidate_status = (
             "REVIEW_REQUIRED"
             if (
-                candidate["unresolved_competing_claims"]
-                or unresolved_scope_dimensions
-                or not scope_contract_satisfied
+                not no_candidate_shard
+                and (
+                    candidate["unresolved_competing_claims"]
+                    or unresolved_scope_dimensions
+                    or not scope_contract_satisfied
+                )
             )
             else "CANDIDATE"
         )
@@ -469,7 +518,7 @@ def check_evidence(
         system_approval_eligible = (
             candidate["status"] == "CANDIDATE"
             and not unresolved_scope_dimensions
-            and scope_contract_satisfied
+            and (scope_contract_satisfied or no_candidate_shard)
         )
         checks.append(
             {
@@ -481,7 +530,12 @@ def check_evidence(
                 "unresolved_dimensions": unresolved_scope_dimensions,
             }
         )
-        for constraint in identity_constraints:
+        if no_candidate_shard:
+            checks.append({
+                "check": "SHARD_NO_CANDIDATE_DISPOSITION",
+                "status": "PASS",
+            })
+        for constraint in ([] if no_candidate_shard else identity_constraints):
             result = evaluate_identity_constraint(
                 constraint=constraint, values=values,
             )
@@ -514,6 +568,14 @@ def check_evidence(
         "unresolved_scope_dimensions": unresolved_scope_dimensions,
         "system_approval_eligible": system_approval_eligible,
     }
+    if "table_shard_binding" in candidate:
+        substantive["examined_table_ids"] = list(
+            candidate["examined_table_ids"]
+        )
+        substantive["shard_disposition"] = candidate["shard_disposition"]
+        substantive["table_shard_binding"] = dict(
+            candidate["table_shard_binding"]
+        )
     record = {
         "record_type": "EVIDENCE_CHECK",
         "evidence_check_id": content_hash(value=substantive),
@@ -527,4 +589,10 @@ def check_evidence(
         "unresolved_scope_dimensions": unresolved_scope_dimensions,
         "system_approval_eligible": system_approval_eligible,
     }
+    if "table_shard_binding" in candidate:
+        record["examined_table_ids"] = list(candidate["examined_table_ids"])
+        record["shard_disposition"] = candidate["shard_disposition"]
+        record["table_shard_binding"] = dict(
+            candidate["table_shard_binding"]
+        )
     return validate_record(record=record)

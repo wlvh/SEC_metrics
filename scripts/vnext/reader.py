@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, Mapping, Sequence, Tuple
+from typing import Dict, Mapping, Optional, Sequence, Tuple
 
 from .canonical import CanonicalError, content_hash, sha256_bytes
 from .canonical import strict_json_loads
@@ -16,6 +16,11 @@ ROOT_FIELDS = {
     "disclosure_group",
     "table_locator",
     "unresolved_competing_claims",
+}
+SHARD_ROOT_FIELDS = ROOT_FIELDS | {
+    "examined_table_ids",
+    "shard_disposition",
+    "shard_id",
 }
 CANDIDATE_FIELDS = {
     "claimed_period",
@@ -336,6 +341,7 @@ def validate_reader_output(
     scope_contract: Mapping[str, object],
     source_reference_ids: Sequence[str],
     derived_asset_ids: Sequence[str],
+    table_shard_contract: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Validate exact Reader JSON and create a substantive Candidate record.
 
@@ -383,26 +389,73 @@ def validate_reader_output(
             raise ReaderError(
                 "{} identities must be unique and non-empty".format(label)
             )
+    sharded = table_shard_contract is not None
+    if sharded:
+        if (
+            type(table_shard_contract) is not dict
+            or set(table_shard_contract) != {
+                "all_shards_required_before_credit",
+                "end_table_order",
+                "semantic_prefilter",
+                "selector",
+                "shard_count",
+                "shard_id",
+                "shard_index",
+                "start_table_order",
+                "table_ids",
+                "table_shard_set_id",
+            }
+            or table_shard_contract["all_shards_required_before_credit"]
+            is not True
+            or table_shard_contract["semantic_prefilter"] is not False
+            or table_shard_contract["selector"] is not False
+        ):
+            raise ReaderError("Reader table shard contract is invalid")
     try:
         parsed = strict_json_loads(
-            text=response_text, allowed_fields=ROOT_FIELDS
+            text=response_text,
+            allowed_fields=(SHARD_ROOT_FIELDS if sharded else ROOT_FIELDS),
         )
     except CanonicalError as error:
         raise ReaderError("Reader response is not strict JSON") from error
     if not isinstance(parsed, dict):
         raise ReaderError("Reader response root must be an object")
-    if set(parsed) != ROOT_FIELDS:
+    if set(parsed) != (SHARD_ROOT_FIELDS if sharded else ROOT_FIELDS):
         raise ReaderError("Reader response fields are not exact")
-    table_locator = _require_exact_mapping(
-        value=parsed["table_locator"],
-        fields=TABLE_LOCATOR_FIELDS,
-        label="table locator",
-    )
-    for key in TABLE_LOCATOR_FIELDS:
-        if not isinstance(table_locator[key], str) or not table_locator[key]:
-            raise ReaderError("Reader table locator identity is empty")
-    if table_locator["derived_asset_id"] not in derived_asset_ids:
-        raise ReaderError("Reader table locator names an unsupplied asset")
+    shard_disposition = ""
+    examined_table_ids: list[str] = []
+    if sharded:
+        shard_disposition = parsed["shard_disposition"]
+        examined_table_ids = parsed["examined_table_ids"]
+        if (
+            parsed["shard_id"] != table_shard_contract["shard_id"]
+            or examined_table_ids != table_shard_contract["table_ids"]
+            or shard_disposition not in {
+                "CANDIDATE_PRESENT", "NO_CANDIDATE_IN_SHARD",
+            }
+        ):
+            raise ReaderError("Reader table shard coverage differs")
+    if sharded and shard_disposition == "NO_CANDIDATE_IN_SHARD":
+        table_locator = None
+        if (
+            parsed["table_locator"] is not None
+            or parsed["candidates"] != []
+            or parsed["unresolved_competing_claims"] != []
+        ):
+            raise ReaderError("Reader no-candidate shard fields differ")
+    else:
+        table_locator = _require_exact_mapping(
+            value=parsed["table_locator"],
+            fields=TABLE_LOCATOR_FIELDS,
+            label="table locator",
+        )
+        for key in TABLE_LOCATOR_FIELDS:
+            if not isinstance(table_locator[key], str) or not table_locator[key]:
+                raise ReaderError("Reader table locator identity is empty")
+        if table_locator["derived_asset_id"] not in derived_asset_ids:
+            raise ReaderError("Reader table locator names an unsupplied asset")
+        if sharded and table_locator["table_id"] not in examined_table_ids:
+            raise ReaderError("Reader target table leaves the supplied shard")
     if (
         not isinstance(parsed["disclosure_group"], str)
         or not parsed["disclosure_group"]
@@ -419,7 +472,12 @@ def validate_reader_output(
         candidates.append(candidate)
         scope_review_required = scope_review_required or needs_review
     roles = [str(candidate["role"]) for candidate in candidates]
-    if roles != list(required_roles):
+    expected_roles = (
+        []
+        if sharded and shard_disposition == "NO_CANDIDATE_IN_SHARD"
+        else list(required_roles)
+    )
+    if roles != expected_roles:
         raise ReaderError("Reader roles are missing, duplicated, or reordered")
     for candidate in candidates:
         locators = [candidate["locator"]]
@@ -466,6 +524,10 @@ def validate_reader_output(
         ],
         "unresolved_competing_claims": unresolved,
     }
+    if sharded:
+        substantive["table_shard_binding"] = dict(table_shard_contract)
+        substantive["shard_disposition"] = shard_disposition
+        substantive["examined_table_ids"] = list(examined_table_ids)
     record = {
         "record_type": "OBSERVATION_CANDIDATE",
         "candidate_hash": content_hash(value=substantive),
@@ -490,4 +552,8 @@ def validate_reader_output(
             else "CANDIDATE"
         ),
     }
+    if sharded:
+        record["table_shard_binding"] = dict(table_shard_contract)
+        record["shard_disposition"] = shard_disposition
+        record["examined_table_ids"] = list(examined_table_ids)
     return validate_record(record=record)

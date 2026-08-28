@@ -10,7 +10,11 @@ import unittest
 from tests.vnext.common import compiled_specs, reader_response, sample_asset
 from vnext.reader import ReaderError, validate_reader_output
 from vnext.reader_input import ReaderInputError, build_reader_input_manifest
-from vnext.reader_input import build_reader_payload, verify_reader_table_set
+from vnext.reader_input import build_reader_payload, build_reader_shard_payload
+from vnext.reader_input import verify_reader_table_set
+from vnext.table_payload import build_contiguous_table_shard
+from vnext.table_payload import encode_compact_table_payload
+from vnext.table_payload import validate_contiguous_table_shard_set
 
 
 class ReaderInputManifestTest(unittest.TestCase):
@@ -52,6 +56,78 @@ class ReaderInputManifestTest(unittest.TestCase):
         with self.assertRaises(ReaderInputError):
             verify_reader_table_set(
                 manifest=changed, derived_asset=self.asset,
+            )
+
+    def test_shard_payload_keeps_full_manifest_and_exact_contiguous_slice(
+        self,
+    ) -> None:
+        """Expose one table's bytes while retaining full-set coverage authority."""
+        parent = encode_compact_table_payload(derived_asset=self.asset)
+        shards = [
+            build_contiguous_table_shard(
+                parent_transport=parent,
+                shard_index=index,
+                shard_count=2,
+                start_table_order=index,
+                end_table_order=index,
+            )
+            for index in range(2)
+        ]
+        coverage = validate_contiguous_table_shard_set(
+            shards=shards, parent_transport=parent,
+        )
+        payload = build_reader_shard_payload(
+            manifest=self.manifest,
+            derived_asset=self.asset,
+            task_contract={"metric_words": ["must-not-select"]},
+            table_shard=shards[1],
+            table_shard_set_id=coverage["shard_set_id"],
+        )
+        self.assertEqual(
+            self.manifest,
+            payload["body"]["reader_input_manifest"],
+        )
+        self.assertEqual(
+            [self.asset["tables"][1]["table_id"]],
+            payload["body"]["table_shard_contract"]["table_ids"],
+        )
+        self.assertEqual(
+            shards[1], payload["body"]["untrusted_table_data"],
+        )
+        self.assertFalse(
+            payload["body"]["table_shard_contract"]["semantic_prefilter"]
+        )
+        self.assertFalse(
+            payload["body"]["table_shard_contract"]["selector"]
+        )
+
+    def test_shard_payload_rejects_substitution_before_reader_use(self) -> None:
+        """Reject a shard whose parent entry or set identity was substituted."""
+        parent = encode_compact_table_payload(derived_asset=self.asset)
+        shard = build_contiguous_table_shard(
+            parent_transport=parent,
+            shard_index=0,
+            shard_count=1,
+            start_table_order=0,
+            end_table_order=1,
+        )
+        mutated = copy.deepcopy(shard)
+        mutated["table_ids"][0] = "table_substituted"
+        with self.assertRaises(ReaderInputError):
+            build_reader_shard_payload(
+                manifest=self.manifest,
+                derived_asset=self.asset,
+                task_contract={"metric_words": []},
+                table_shard=mutated,
+                table_shard_set_id="sha256:" + ("a" * 64),
+            )
+        with self.assertRaises(ReaderInputError):
+            build_reader_shard_payload(
+                manifest=self.manifest,
+                derived_asset=self.asset,
+                task_contract={"metric_words": []},
+                table_shard=shard,
+                table_shard_set_id="not-content-addressed",
             )
 
     def test_reader_requires_one_ordered_complete_role_group(self) -> None:

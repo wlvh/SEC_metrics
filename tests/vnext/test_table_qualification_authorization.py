@@ -258,7 +258,13 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
                     task_contracts=contracts,
                 )
                 estimates = {
-                    row["task_contract_id"]: row["estimated_input_tokens"]
+                    row["task_contract_id"]: (
+                        row["request_shard_plan"][
+                            "total_estimated_input_tokens"
+                        ]
+                        if "request_shard_plan" in row
+                        else row["estimated_input_tokens"]
+                    )
                     for row in measurements["qualification_task_measurements"]
                 }
                 catalog = json.loads(catalog_path.read_text(encoding="utf-8"))

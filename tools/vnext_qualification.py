@@ -268,21 +268,20 @@ def main(*, argv: Sequence[str]) -> int:
                 ),
             }
         elif arguments.command == "table-execute":
-            authorization = issue_table_qualification_authorization(
+            plan = table_qualification_task_plan(
                 repo_root=REPO_ROOT,
                 family_id=arguments.family_id,
                 task_contract_id=arguments.task_contract_id,
                 qualification_phase=arguments.phase,
                 qualification_ordinal=arguments.ordinal,
             )
-            binding = authorization.as_mapping()
             result = execute_table_qualification_task(
                 repo_root=REPO_ROOT,
                 family_id=arguments.family_id,
                 task_contract_id=arguments.task_contract_id,
                 qualification_phase=arguments.phase,
                 qualification_ordinal=arguments.ordinal,
-                target_period=binding["target_period"],
+                target_period=plan["qualification_target_period"],
                 owner_token=arguments.owner_token,
             )
             terminal_status = result.get("status")
@@ -300,41 +299,85 @@ def main(*, argv: Sequence[str]) -> int:
                     ),
                     details={
                         "execution_status": terminal_status,
-                        "run_id": result["run_id"],
-                        "qualification_terminal_id": binding[
-                            "qualification_terminal_id"
-                        ],
-                        "qualification_task_plan_id": binding[
+                        "run_id": result.get("run_id"),
+                        "qualification_task_plan_id": plan[
                             "qualification_task_plan_id"
                         ],
                     },
                 )
-            run_dir = REPO_ROOT / binding["run_directory_relative_path"]
-            manifest, records, _decisions = load_run_for_status(
-                run_dir=run_dir, repo_root=REPO_ROOT,
-            )
-            if manifest["status"] == "OPEN":
-                if not any(
-                    record["record_type"] == "METRIC_RESULT"
-                    for record in records
-                ):
-                    finalize_reviewed_direct_results(
+            shard_terminals = result.get("shard_terminals")
+            if type(shard_terminals) is list:
+                frozen_terminals = []
+                for terminal in shard_terminals:
+                    run_dir = REPO_ROOT / terminal[
+                        "run_directory_relative_path"
+                    ]
+                    manifest, records, _decisions = load_run_for_status(
                         run_dir=run_dir, repo_root=REPO_ROOT,
                     )
-                manifest = validate_and_freeze_run(
+                    if manifest["status"] == "OPEN":
+                        if not any(
+                            record["record_type"] == "METRIC_RESULT"
+                            for record in records
+                        ):
+                            finalize_reviewed_direct_results(
+                                run_dir=run_dir, repo_root=REPO_ROOT,
+                            )
+                        manifest = validate_and_freeze_run(
+                            run_dir=run_dir, repo_root=REPO_ROOT,
+                        )
+                    frozen_terminals.append({
+                        **terminal,
+                        "status": manifest["status"],
+                        "run_id": manifest["run_id"],
+                    })
+                output = {
+                    **result,
+                    "status": (
+                        "FROZEN"
+                        if len(frozen_terminals)
+                        == result["required_shard_count"]
+                        and all(row["status"] == "FROZEN"
+                                for row in frozen_terminals)
+                        else "INCOMPLETE"
+                    ),
+                    "shard_terminals": frozen_terminals,
+                }
+            else:
+                authorization = issue_table_qualification_authorization(
+                    repo_root=REPO_ROOT,
+                    family_id=arguments.family_id,
+                    task_contract_id=arguments.task_contract_id,
+                    qualification_phase=arguments.phase,
+                    qualification_ordinal=arguments.ordinal,
+                )
+                binding = authorization.as_mapping()
+                run_dir = REPO_ROOT / binding["run_directory_relative_path"]
+                manifest, records, _decisions = load_run_for_status(
                     run_dir=run_dir, repo_root=REPO_ROOT,
                 )
-            output = {
-                **result,
-                "status": manifest["status"],
-                "run_id": manifest["run_id"],
-                "qualification_terminal_id": binding[
-                    "qualification_terminal_id"
-                ],
-                "qualification_task_plan_id": binding[
-                    "qualification_task_plan_id"
-                ],
-            }
+                if manifest["status"] == "OPEN":
+                    if not any(
+                        record["record_type"] == "METRIC_RESULT"
+                        for record in records
+                    ):
+                        finalize_reviewed_direct_results(
+                            run_dir=run_dir, repo_root=REPO_ROOT,
+                        )
+                    manifest = validate_and_freeze_run(
+                        run_dir=run_dir, repo_root=REPO_ROOT,
+                    )
+                output = {
+                    **result,
+                    "status": manifest["status"],
+                    "run_id": manifest["run_id"],
+                    "qualification_terminal_id": binding[
+                        "qualification_terminal_id"
+                    ],
+                    "qualification_task_plan_id": binding[
+                        "qualification_task_plan_id"
+                    ],
+                }
         elif arguments.command == "table-freeze":
             receipt = write_table_production_semantic_freeze(
                 repo_root=REPO_ROOT,

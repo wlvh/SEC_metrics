@@ -4,12 +4,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 from typing import Dict, Mapping, Optional, Sequence, Tuple
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes
 from .records import RecordError, validate_record
 from .scope_contract import scope_contract_hash, validate_scope_contract
 from .table_payload import decode_compact_table_payload
+from .table_payload import decode_contiguous_table_shard
 from .table_payload import encode_compact_table_payload
 from .table_payload import TablePayloadError
 from .table_task_contracts import resolve_table_task_contract
@@ -65,6 +67,13 @@ class PreparedReaderRequest:
     catalog_task_contract_hash: str = ""
     output_schema_hash: str = ""
     system_prompt_hash: str = ""
+    table_shard_id: str = ""
+    table_shard_set_id: str = ""
+    table_shard_payload_sha256: str = ""
+    table_shard_index: int = -1
+    table_shard_count: int = 0
+    start_table_order: int = -1
+    end_table_order: int = -1
 
 
 @dataclass(frozen=True, init=False)
@@ -423,18 +432,96 @@ def build_reader_payload(
         raise ReaderInputError(
             "Compact table payload differs from Evidence grid"
         )
+    return _build_reader_payload_from_validated_inputs(
+        manifest=manifest,
+        task_contract=task_contract,
+        compact_transport=compact_transport,
+    )
+
+
+def _build_reader_payload_from_validated_inputs(
+    *, manifest: Mapping[str, object], task_contract: Mapping[str, object],
+    compact_transport: Mapping[str, object],
+) -> Dict[str, object]:
+    """Assemble one ordinary payload after a caller's exact parent proof."""
     body = {
         "system_contract": dict(READER_SYSTEM_CONTRACT),
         "task_contract": dict(task_contract),
         "reader_input_manifest": dict(manifest),
-        "untrusted_table_data": compact_transport,
+        "untrusted_table_data": dict(compact_transport),
     }
     request_bytes = canonical_json_bytes(value=body)
     return {
         "body": body,
         "request_bytes": request_bytes,
         "request_body_sha256": sha256_bytes(content=request_bytes),
-        "table_transport": compact_transport,
+        "table_transport": dict(compact_transport),
+    }
+
+
+def build_reader_shard_payload(
+    *, manifest: Mapping[str, object], derived_asset: Mapping[str, object],
+    task_contract: Mapping[str, object], table_shard: Mapping[str, object],
+    table_shard_set_id: str,
+) -> Dict[str, object]:
+    """Build one internal request shard while retaining the full manifest."""
+    verify_reader_table_set(manifest=manifest, derived_asset=derived_asset)
+    parent_transport = encode_compact_table_payload(derived_asset=derived_asset)
+    try:
+        decoded = decode_contiguous_table_shard(
+            shard=table_shard,
+            parent_transport=parent_transport,
+        )
+    except TablePayloadError as error:
+        raise ReaderInputError("Compact table shard is invalid") from error
+    if (
+        type(table_shard_set_id) is not str
+        or re.fullmatch(r"sha256:[0-9a-f]{64}", table_shard_set_id) is None
+        or not decoded
+    ):
+        raise ReaderInputError("Compact table shard set identity is invalid")
+    return _build_reader_shard_payload_from_validated_inputs(
+        manifest=manifest,
+        task_contract=task_contract,
+        table_shard=table_shard,
+        table_shard_set_id=table_shard_set_id,
+        parent_transport=parent_transport,
+    )
+
+
+def _build_reader_shard_payload_from_validated_inputs(
+    *, manifest: Mapping[str, object], task_contract: Mapping[str, object],
+    table_shard: Mapping[str, object], table_shard_set_id: str,
+    parent_transport: Mapping[str, object],
+) -> Dict[str, object]:
+    """Assemble bytes after the caller has authenticated parent and shard once."""
+    shard_contract = {
+        "table_shard_set_id": table_shard_set_id,
+        "shard_id": table_shard["shard_id"],
+        "shard_index": table_shard["shard_index"],
+        "shard_count": table_shard["shard_count"],
+        "start_table_order": table_shard["start_table_order"],
+        "end_table_order": table_shard["end_table_order"],
+        "table_ids": list(table_shard["table_ids"]),
+        "all_shards_required_before_credit": True,
+        "semantic_prefilter": False,
+        "selector": False,
+    }
+    body = {
+        "system_contract": dict(READER_SYSTEM_CONTRACT),
+        "task_contract": dict(task_contract),
+        "reader_input_manifest": dict(manifest),
+        "table_shard_contract": shard_contract,
+        "untrusted_table_data": dict(table_shard),
+    }
+    request_bytes = canonical_json_bytes(value=body)
+    return {
+        "body": body,
+        "request_bytes": request_bytes,
+        "request_body_sha256": sha256_bytes(content=request_bytes),
+        "parent_table_transport": dict(parent_transport),
+        "table_shard": dict(table_shard),
+        "table_shard_contract": shard_contract,
     }
 
 
@@ -518,6 +605,57 @@ def prepare_reader_request(
             if task_contract_id is not None
             else ""
         ),
+    )
+
+
+def prepare_reader_shard_request(
+    *, manifest: Mapping[str, object], derived_asset: Mapping[str, object],
+    repo_root: Path, task_contract_id: str,
+    table_shard: Mapping[str, object], table_shard_set_id: str,
+) -> PreparedReaderRequest:
+    """Prepare one financial shard through the existing Reader task authority."""
+    task_contract = build_reader_task_contract(
+        repo_root=repo_root,
+        task_contract_id=task_contract_id,
+    )
+    payload = build_reader_shard_payload(
+        manifest=manifest,
+        derived_asset=derived_asset,
+        task_contract=task_contract,
+        table_shard=table_shard,
+        table_shard_set_id=table_shard_set_id,
+    )
+    parent = payload["parent_table_transport"]
+    shard = payload["table_shard"]
+    return PreparedReaderRequest(
+        request_bytes=payload["request_bytes"],
+        task_contract_bytes=canonical_json_bytes(value=task_contract),
+        task_spec_semantic_hash=str(task_contract["task_spec_semantic_hash"]),
+        reader_input_manifest_id=str(manifest["reader_input_manifest_id"]),
+        source_reference_ids=tuple(
+            str(value) for value in manifest["source_reference_ids"]
+        ),
+        derived_asset_id=str(manifest["derived_asset_id"]),
+        table_payload_serialization_version=str(
+            parent["table_payload_serialization_version"]
+        ),
+        expanded_grid_sha256=str(parent["expanded_grid_sha256"]),
+        compact_payload_sha256=str(parent["compact_payload_sha256"]),
+        decoder_semantic_version=str(parent["decoder_semantic_version"]),
+        round_trip_receipt_id=str(parent["round_trip_receipt_id"]),
+        task_contract_id=str(task_contract["task_contract_id"]),
+        catalog_task_contract_hash=str(
+            task_contract["catalog_task_contract_hash"]
+        ),
+        output_schema_hash=str(task_contract["output_schema_hash"]),
+        system_prompt_hash=str(task_contract["system_prompt_hash"]),
+        table_shard_id=str(shard["shard_id"]),
+        table_shard_set_id=table_shard_set_id,
+        table_shard_payload_sha256=str(shard["shard_payload_sha256"]),
+        table_shard_index=int(shard["shard_index"]),
+        table_shard_count=int(shard["shard_count"]),
+        start_table_order=int(shard["start_table_order"]),
+        end_table_order=int(shard["end_table_order"]),
     )
 
 

@@ -264,8 +264,8 @@ class TableTaskContractsTest(unittest.TestCase):
         ])
         self.assertEqual(selected["required_roles"], runtime["required_roles"])
 
-    def test_revised_prompt_is_lodging_local_and_schema_preserving(self) -> None:
-        """Change only two prompt strings and retain one shared schema hash."""
+    def test_lodging_prompt_stays_frozen_and_financial_uses_shard_v4(self) -> None:
+        """Keep lodging v3 exact while binding financial no-match coverage."""
         catalog = load_table_task_contracts(repo_root=REPO_ROOT)
         lodging = [
             value for value in catalog["contracts"]
@@ -318,12 +318,27 @@ class TableTaskContractsTest(unittest.TestCase):
             "never copy c[0] or x[6]",
             ISSUE_15_D07_COMPACT_RAW_TEXT_LODGING_SYSTEM_PROMPT,
         )
-        self.assertEqual(
-            {"Return raw claims and exact locators from one selected table only."},
-            {value["system_prompt"] for value in financial},
-        )
-        self.assertEqual(
-            1, len({value["output_schema_hash"] for value in lodging + financial}),
+        self.assertEqual(1, len({value["system_prompt"] for value in financial}))
+        financial_prompt = financial[0]["system_prompt"]
+        self.assertIn("deterministic contiguous table shard", financial_prompt)
+        self.assertIn("every supplied shard table_id", financial_prompt)
+        self.assertIn("NO_CANDIDATE_IN_SHARD", financial_prompt)
+        self.assertIn("never permits early stop", financial_prompt)
+        self.assertEqual({"3"}, {
+            value["output_schema_version"] for value in lodging
+        })
+        self.assertEqual({"4"}, {
+            value["output_schema_version"] for value in financial
+        })
+        self.assertEqual(1, len({
+            value["output_schema_hash"] for value in lodging
+        }))
+        self.assertEqual(1, len({
+            value["output_schema_hash"] for value in financial
+        }))
+        self.assertNotEqual(
+            lodging[0]["output_schema_hash"],
+            financial[0]["output_schema_hash"],
         )
 
     def test_fallback_representation_schema_requires_every_structured_route(self) -> None:

@@ -77,6 +77,13 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "catalog_output_schema_hash",
             "system_prompt_hash",
             "qualification_authorization",
+            "table_shard_id",
+            "table_shard_set_id",
+            "table_shard_payload_sha256",
+            "table_shard_index",
+            "table_shard_count",
+            "start_table_order",
+            "end_table_order",
         ),
     ),
     "TABLE_QUALIFICATION_EVIDENCE": RecordSchema(
@@ -122,7 +129,10 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "identity_constraints",
         ),
         optional=(
+            "examined_table_ids",
             "normalized_scope",
+            "shard_disposition",
+            "table_shard_binding",
             "unresolved_scope_dimensions",
             "system_approval_eligible",
         ),
@@ -174,7 +184,12 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "competing_candidates",
             "unresolved_competing_claims",
             "status",
-        )
+        ),
+        optional=(
+            "examined_table_ids",
+            "shard_disposition",
+            "table_shard_binding",
+        ),
     ),
     "PUBLICATION_MANIFEST": RecordSchema(
         required=(
@@ -247,8 +262,11 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "review_renderer_semantic_version",
         ),
         optional=(
+            "examined_table_ids",
             "normalized_scope",
+            "shard_disposition",
             "system_approval_eligible",
+            "table_shard_binding",
         ),
     ),
     "RUN": RecordSchema(
@@ -431,6 +449,10 @@ TEXT_FIELDS = {
     "catalog_output_schema_hash",
     "task_spec_semantic_hash",
     "system_prompt_hash",
+    "shard_disposition",
+    "table_shard_id",
+    "table_shard_payload_sha256",
+    "table_shard_set_id",
     "table_payload_serialization_version",
     "trace_id",
     "transform_id",
@@ -453,6 +475,7 @@ LIST_FIELDS = {
     "company_traits",
     "competing_candidates",
     "derived_asset_ids",
+    "examined_table_ids",
     "files",
     "input_observation_ids",
     "identity_constraints",
@@ -488,9 +511,17 @@ MAPPING_FIELDS = {
     "source_binding",
     "spec_file_hashes",
     "target_period",
+    "table_shard_binding",
     "transport_observation",
 }
-INTEGER_FIELDS = {"byte_length", "qualification_ordinal"}
+INTEGER_FIELDS = {
+    "byte_length",
+    "qualification_ordinal",
+    "table_shard_index",
+    "table_shard_count",
+    "start_table_order",
+    "end_table_order",
+}
 BOOLEAN_FIELDS = {"system_approval_eligible"}
 
 METRIC_RESULT_CONTRACT_FIELDS = (
@@ -775,17 +806,24 @@ def _expected_identifier(
         }
         return "reader_input_manifest_id", content_hash(value=body)
     if record_type == "OBSERVATION_CANDIDATE":
-        body = {
-            key: record[key]
-            for key in (
-                "disclosure_group",
-                "source_reference_ids",
-                "derived_asset_ids",
-                "selected",
-                "competing_candidates",
-                "unresolved_competing_claims",
-            )
-        }
+        fields = [
+            "disclosure_group",
+            "source_reference_ids",
+            "derived_asset_ids",
+            "selected",
+            "competing_candidates",
+            "unresolved_competing_claims",
+        ]
+        shard_fields = [
+            "examined_table_ids",
+            "shard_disposition",
+            "table_shard_binding",
+        ]
+        supplied_shard_fields = set(shard_fields) & set(record)
+        if supplied_shard_fields and supplied_shard_fields != set(shard_fields):
+            raise RecordError("Candidate table shard binding is incomplete")
+        fields.extend(shard_fields if supplied_shard_fields else [])
+        body = {key: record[key] for key in fields}
         return "candidate_hash", content_hash(value=body)
     if record_type == "EVIDENCE_CHECK":
         fields = [
@@ -805,6 +843,15 @@ def _expected_identifier(
         if supplied_scope_fields and supplied_scope_fields != set(scope_fields):
             raise RecordError("Evidence scope binding is incomplete")
         fields.extend(scope_fields if supplied_scope_fields else [])
+        shard_fields = [
+            "examined_table_ids",
+            "shard_disposition",
+            "table_shard_binding",
+        ]
+        supplied_shard_fields = set(shard_fields) & set(record)
+        if supplied_shard_fields and supplied_shard_fields != set(shard_fields):
+            raise RecordError("Evidence table shard binding is incomplete")
+        fields.extend(shard_fields if supplied_shard_fields else [])
         body = {key: record[key] for key in fields}
         return "evidence_check_id", content_hash(value=body)
     if record_type == "REVIEW_UNIT":
@@ -827,6 +874,15 @@ def _expected_identifier(
         if supplied_scope_fields and supplied_scope_fields != set(scope_fields):
             raise RecordError("ReviewUnit scope binding is incomplete")
         fields.extend(scope_fields if supplied_scope_fields else [])
+        shard_fields = [
+            "examined_table_ids",
+            "shard_disposition",
+            "table_shard_binding",
+        ]
+        supplied_shard_fields = set(shard_fields) & set(record)
+        if supplied_shard_fields and supplied_shard_fields != set(shard_fields):
+            raise RecordError("ReviewUnit table shard binding is incomplete")
+        fields.extend(shard_fields if supplied_shard_fields else [])
         body = {key: record[key] for key in fields}
         return "review_unit_hash", content_hash(value=body)
     if record_type == "VERIFIED_OBSERVATION":
@@ -963,6 +1019,60 @@ def _validate_decision_hashes(*, record: Mapping[str, object]) -> None:
         raise RecordError("ReviewDecision audit identity differs")
 
 
+def _validate_table_shard_binding(
+    *, binding: object, examined_table_ids: object,
+    shard_disposition: object,
+) -> None:
+    """Validate the exact internal shard coverage identity shared by records."""
+    fields = {
+        "all_shards_required_before_credit",
+        "end_table_order",
+        "semantic_prefilter",
+        "selector",
+        "shard_count",
+        "shard_id",
+        "shard_index",
+        "start_table_order",
+        "table_ids",
+        "table_shard_set_id",
+    }
+    if type(binding) is not dict or set(binding) != fields:
+        raise RecordError("Table shard binding fields are not exact")
+    table_ids = binding["table_ids"]
+    if (
+        type(table_ids) is not list
+        or not table_ids
+        or any(type(value) is not str or not value for value in table_ids)
+        or len(table_ids) != len(set(table_ids))
+        or examined_table_ids != table_ids
+        or binding["all_shards_required_before_credit"] is not True
+        or binding["semantic_prefilter"] is not False
+        or binding["selector"] is not False
+        or type(binding["shard_index"]) is not int
+        or type(binding["shard_count"]) is not int
+        or type(binding["start_table_order"]) is not int
+        or type(binding["end_table_order"]) is not int
+        or binding["shard_count"] < 1
+        or binding["shard_index"] < 0
+        or binding["shard_index"] >= binding["shard_count"]
+        or binding["start_table_order"] < 0
+        or binding["end_table_order"] < binding["start_table_order"]
+        or len(table_ids)
+        != binding["end_table_order"] - binding["start_table_order"] + 1
+        or re.fullmatch(
+            r"sha256:[0-9a-f]{64}", str(binding["shard_id"])
+        ) is None
+        or re.fullmatch(
+            r"sha256:[0-9a-f]{64}", str(binding["table_shard_set_id"])
+        ) is None
+        or shard_disposition not in {
+            "CANDIDATE_PRESENT",
+            "NO_CANDIDATE_IN_SHARD",
+        }
+    ):
+        raise RecordError("Table shard binding is invalid")
+
+
 def _validate_enums(*, record_type: str, record: Mapping[str, object]) -> None:
     """Reject unknown contract enumerations not owned by a state machine.
 
@@ -1009,6 +1119,26 @@ def _validate_enums(*, record_type: str, record: Mapping[str, object]) -> None:
         r"[0-9a-f]{64}", str(record["assistant_output_sha256"])
     ) is None:
         raise RecordError("Candidate assistant output digest is invalid")
+    if record_type in {
+        "OBSERVATION_CANDIDATE",
+        "EVIDENCE_CHECK",
+        "REVIEW_UNIT",
+    } and "table_shard_binding" in record:
+        _validate_table_shard_binding(
+            binding=record["table_shard_binding"],
+            examined_table_ids=record["examined_table_ids"],
+            shard_disposition=record["shard_disposition"],
+        )
+        if record_type == "OBSERVATION_CANDIDATE":
+            no_candidate = (
+                record["shard_disposition"] == "NO_CANDIDATE_IN_SHARD"
+            )
+            if no_candidate != (
+                record["selected"] == {}
+                and record["competing_candidates"] == []
+                and record["unresolved_competing_claims"] == []
+            ):
+                raise RecordError("Candidate shard disposition differs")
     if record_type == "VERIFIED_OBSERVATION" and record["quality"] not in {
         "EXACT",
         "APPROX",
@@ -1214,6 +1344,39 @@ def _validate_record_semantics(
                 r"sha256:[0-9a-f]{64}", str(record["round_trip_receipt_id"])
             ) is None:
                 raise RecordError("Attempt round-trip receipt is invalid")
+        shard_fields = {
+            "table_shard_id",
+            "table_shard_set_id",
+            "table_shard_payload_sha256",
+            "table_shard_index",
+            "table_shard_count",
+            "start_table_order",
+            "end_table_order",
+        }
+        supplied_shard_fields = shard_fields & set(record)
+        if supplied_shard_fields and supplied_shard_fields != shard_fields:
+            raise RecordError("Attempt table shard binding is incomplete")
+        if supplied_shard_fields:
+            if (
+                not supplied_compact_fields
+                or re.fullmatch(
+                    r"sha256:[0-9a-f]{64}", str(record["table_shard_id"])
+                ) is None
+                or re.fullmatch(
+                    r"sha256:[0-9a-f]{64}",
+                    str(record["table_shard_set_id"]),
+                ) is None
+                or re.fullmatch(
+                    r"[0-9a-f]{64}",
+                    str(record["table_shard_payload_sha256"]),
+                ) is None
+                or record["table_shard_count"] < 1
+                or record["table_shard_index"] < 0
+                or record["table_shard_index"] >= record["table_shard_count"]
+                or record["start_table_order"] < 0
+                or record["end_table_order"] < record["start_table_order"]
+            ):
+                raise RecordError("Attempt table shard binding is invalid")
         catalog_task_fields = {
             "task_contract_id",
             "catalog_task_contract_hash",
