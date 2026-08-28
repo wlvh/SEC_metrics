@@ -14,6 +14,7 @@ Git/source/artifact bytes and never create SEC or provider egress.
 
 from __future__ import annotations
 
+import ast
 import csv
 import json
 import re
@@ -63,6 +64,15 @@ SOURCE_ONLY_ERRORS = {
     "source-input file count mismatch",
     "source commit mismatch",
 }
+POST_SNAPSHOT_MUTABLE_POINTER = (
+    "artifacts/vnext/table_stage_c_evidence/"
+    "financial_materialization_benchmark/current.json"
+)
+POST_SNAPSHOT_APPEND_ROOTS = (
+    "artifacts/vnext/table_stage_c_evidence/"
+    "financial_materialization_benchmark/",
+    "artifacts/vnext/table_qualification_freeze/",
+)
 
 
 class StageASnapshotError(ValueError):
@@ -163,6 +173,81 @@ def _root_state(*, repo_root: Path) -> Dict[str, object]:
     }
 
 
+def _committed_post_snapshot_artifacts(
+    *, repo_root: Path, relative_paths: List[str],
+) -> bool:
+    """Verify each allowed post-snapshot artifact is exact in current HEAD."""
+    for relative in relative_paths:
+        path = Path(relative)
+        if (
+            path.is_absolute()
+            or ".." in path.parts
+            or not any(relative.startswith(root) for root in POST_SNAPSHOT_APPEND_ROOTS)
+        ):
+            return False
+        working = repo_root / path
+        if working.is_symlink() or not working.is_file():
+            return False
+        committed = subprocess.run(
+            ["git", "show", "HEAD:" + relative],
+            cwd=str(repo_root),
+            check=False,
+            capture_output=True,
+        )
+        if committed.returncode != 0 or committed.stdout != working.read_bytes():
+            return False
+    return True
+
+
+def _post_snapshot_artifact_errors_are_allowed(
+    *, repo_root: Path, errors: List[str],
+) -> bool:
+    """Allow only the committed financial pointer and append-only evidence."""
+    remaining = set(errors) - SOURCE_ONLY_ERRORS
+    pointer_error = (
+        "artifact SHA-256 mismatch: " + POST_SNAPSHOT_MUTABLE_POINTER
+    )
+    if pointer_error not in remaining:
+        return False
+    remaining.remove(pointer_error)
+    digest_errors = [
+        error for error in remaining
+        if error.startswith("artifact digest key set mismatch: ")
+    ]
+    if len(digest_errors) != 1 or len(remaining) != 1:
+        return False
+    match = re.fullmatch(
+        r"artifact digest key set mismatch: missing=(\[.*\]) unexpected=(\[.*\])",
+        digest_errors[0],
+    )
+    if match is None:
+        return False
+    try:
+        missing = ast.literal_eval(match.group(1))
+        unexpected = ast.literal_eval(match.group(2))
+    except (SyntaxError, ValueError):
+        return False
+    if (
+        type(missing) is not list
+        or not missing
+        or any(type(value) is not str for value in missing)
+        or unexpected != []
+        or not _committed_post_snapshot_artifacts(
+            repo_root=repo_root, relative_paths=missing,
+        )
+    ):
+        return False
+    try:
+        from tools import benchmark_jpm_full_materialization
+
+        benchmark = benchmark_jpm_full_materialization.validate_current_receipts(
+            repo_root=repo_root,
+        )
+    except (ImportError, OSError, RuntimeError, ValueError):
+        return False
+    return benchmark.get("status") == "COMPLETED"
+
+
 def _historical_source_errors(*, repo_root: Path) -> List[str]:
     """Verify R2 artifacts and return only its expected source-tree drift.
 
@@ -186,7 +271,12 @@ def _historical_source_errors(*, repo_root: Path) -> List[str]:
     except ValidationProvenanceError as error:
         raise StageASnapshotError("Historical validation is unavailable") from error
     errors = sorted(result.errors)
-    if set(errors) != SOURCE_ONLY_ERRORS:
+    if (
+        set(errors) != SOURCE_ONLY_ERRORS
+        and not _post_snapshot_artifact_errors_are_allowed(
+            repo_root=repo_root, errors=errors,
+        )
+    ):
         raise StageASnapshotError(
             "Historical R2 snapshot has non-source failure: {}".format(
                 ";".join(errors),
