@@ -19,6 +19,7 @@ import csv
 import json
 import re
 import subprocess
+import sys
 from pathlib import Path
 from typing import Dict, List, Mapping, Optional
 
@@ -237,15 +238,26 @@ def _post_snapshot_artifact_errors_are_allowed(
         )
     ):
         return False
+    benchmark_check = subprocess.run(
+        [
+            sys.executable,
+            str(repo_root / "tools/benchmark_jpm_full_materialization.py"),
+            "--validate",
+        ],
+        cwd=str(repo_root),
+        check=False,
+        capture_output=True,
+        encoding="utf-8",
+    )
     try:
-        from tools import benchmark_jpm_full_materialization
-
-        benchmark = benchmark_jpm_full_materialization.validate_current_receipts(
-            repo_root=repo_root,
-        )
-    except (ImportError, OSError, RuntimeError, ValueError):
+        benchmark = json.loads(benchmark_check.stdout)
+    except json.JSONDecodeError:
         return False
-    return benchmark.get("status") == "COMPLETED"
+    return (
+        benchmark_check.returncode == 0
+        and type(benchmark) is dict
+        and benchmark.get("status") == "COMPLETED"
+    )
 
 
 def _historical_source_errors(*, repo_root: Path) -> List[str]:
