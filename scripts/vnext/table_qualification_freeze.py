@@ -20,6 +20,8 @@ from decimal import Decimal, ROUND_HALF_EVEN
 from pathlib import Path
 from typing import Dict, List, Mapping, Optional, Sequence, Set, Tuple
 
+from sec_urls import accession_document_url
+
 from .ai_adapter import _open_provider_request, approved_transport_policy
 from .ai_adapter import build_provider_request_body
 from .canonical import atomic_write_json, canonical_json_bytes, content_hash
@@ -36,7 +38,8 @@ from .requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from .requirements import ISSUE_15_D07_EFFECTIVE_CHOICE
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
-from .sources import raw_blob_record, source_reference_record
+from .sources import raw_blob_record, SourceError
+from .sources import source_reference_identifier
 from .table_grid import build_table_grid, TableGridError
 from .table_payload import compact_payload_receipt
 from .table_payload import _compact_payload_receipt_from_validated_transport
@@ -810,33 +813,44 @@ def _attested_request_authority(
     }
 
 
-def _lodging_source_reference_id(
+def _development_source_reference_id(
     *, repo_root: Path, matrix_entry: Mapping[str, object],
 ) -> str:
-    """Rebuild the exact Marriott SourceReference used by qualification."""
-    from .table_context_measurement import _source_binding
-
-    source = _source_binding(
-        repo_root=repo_root,
-        matrix_entry=matrix_entry,
-        exception=ISSUE_15_D07_EFFECTIVE_CHOICE["measurement_exception"],
-    )
-    declaration = source["source_declaration"]
-    raw = raw_blob_record(
-        repo_root=repo_root,
-        repo_relative_path=str(source["request_repo_relative_path"]),
-        media_type=str(matrix_entry["source_media_type"]),
-    )
-    reference = source_reference_record(
-        raw_blob=raw,
-        company_id=str(declaration["company_id"]),
-        source_url=str(source["source_url"]),
-        accession=str(declaration["accession"]),
-        document_name=str(declaration["document_name"]),
-        source_role=str(source["source_role"]),
-        request_attempt_id=str(source["request_attempt_id"]),
-    )
-    return str(reference["source_reference_id"])
+    """Rebuild the exact development SourceReference identity for requests."""
+    declaration = matrix_entry.get("development_source")
+    if (
+        type(declaration) is not dict
+        or set(declaration) != IMMUTABLE_SOURCE_FIELDS
+        or declaration.get("source_kind") != "IMMUTABLE_ATTEMPT"
+    ):
+        raise TableQualificationFreezeError(
+            "Development SourceReference authority is invalid"
+        )
+    try:
+        raw = raw_blob_record(
+            repo_root=repo_root,
+            repo_relative_path=str(
+                declaration["source_repo_relative_path"]
+            ),
+            media_type=str(matrix_entry["source_media_type"]),
+        )
+        source_url = accession_document_url(
+            cik=int(str(declaration["cik"])),
+            accession=str(declaration["accession"]),
+            document_name=str(declaration["document_name"]),
+        )
+        return source_reference_identifier(
+            raw_asset_id=str(raw["raw_asset_id"]),
+            company_id=str(declaration["company_id"]),
+            source_url=source_url,
+            accession=str(declaration["accession"]),
+            document_name=str(declaration["document_name"]),
+            source_role="target_primary",
+        )
+    except (SourceError, TypeError, ValueError) as error:
+        raise TableQualificationFreezeError(
+            "Development SourceReference authority differs"
+        ) from error
 
 
 def _measure_contiguous_shard_envelopes(
@@ -1412,11 +1426,9 @@ def _measurement_receipts(
             str(development["source_repo_relative_path"])
         )
         development_source_reference_id = (
-            _lodging_source_reference_id(
-                repo_root=repo_root,
-                matrix_entry=entry,
+            _development_source_reference_id(
+                repo_root=repo_root, matrix_entry=entry,
             )
-            if family_id == "lodging_kpi_table" else None
         )
         source_bytes = source_path.read_bytes()
         if sha256_bytes(content=source_bytes) != development["source_sha256"]:
@@ -1685,11 +1697,9 @@ def _family_measurement_receipts(
         api=policy.api,
     )
     development_source_reference_id = (
-        _lodging_source_reference_id(
-            repo_root=repo_root,
-            matrix_entry=entry,
+        _development_source_reference_id(
+            repo_root=repo_root, matrix_entry=entry,
         )
-        if family_id == "lodging_kpi_table" else None
     )
     rows = []
     for task_contract_id in entry["task_contract_ids"]:

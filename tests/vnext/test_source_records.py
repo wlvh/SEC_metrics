@@ -11,6 +11,7 @@ from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes
 from vnext.records import RecordError, validate_record
 from vnext.sources import SourceError, companyfacts_structured_facts
 from vnext.sources import load_raw_blob_bytes, raw_blob_record
+from vnext.sources import source_reference_identifier
 from vnext.sources import source_reference_record
 
 
@@ -52,6 +53,17 @@ class SourceRecordTest(unittest.TestCase):
             self.assertEqual(first["raw_asset_id"], second["raw_asset_id"])
             self.assertNotEqual(
                 first["source_reference_id"], second["source_reference_id"],
+            )
+            self.assertEqual(
+                first["source_reference_id"],
+                source_reference_identifier(
+                    raw_asset_id=str(raw["raw_asset_id"]),
+                    company_id="company_one",
+                    source_url="https://www.sec.gov/Archives/one.htm",
+                    accession="0000000000-25-000001",
+                    document_name="one.htm",
+                    source_role="target_primary",
+                ),
             )
 
     def test_changed_bytes_and_non_sec_origin_fail_closed(self) -> None:

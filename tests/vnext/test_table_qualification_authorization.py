@@ -790,6 +790,62 @@ def mocked_live_table_failure_transport(
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
 
+    def test_current_financial_fresh_first_child_matches_freeze_request(
+        self,
+    ) -> None:
+        """Form the first official Fresh authorization from frozen readiness."""
+        family_id = "financial_statement"
+        task_contract_id = "financial_assets_under_management_table_v1"
+        status = validate_table_qualification_freeze(
+            repo_root=REPO_ROOT,
+            family_id=family_id,
+        )
+        plan = qualification.table_qualification_task_plan(
+            repo_root=REPO_ROOT,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_phase="FRESH_STABILITY",
+            qualification_ordinal=1,
+        )
+        readiness = [
+            row
+            for row in status["readiness_by_task_request"].values()
+            if row["family_id"] == family_id
+            and row["task_contract_id"] == task_contract_id
+        ]
+        self.assertEqual(1, len(readiness))
+        self.assertEqual(
+            readiness[0]["provider_request_body_sha256"],
+            plan["provider_request_body_sha256"],
+        )
+        children = plan["qualification_shard_task_plans"]
+        self.assertGreater(len(children), 1)
+        ledger_path = REPO_ROOT / status["provider_ledger_before"]["path"]
+        ledger_before = ledger_path.read_bytes()
+        binding = qualification._authorization_mapping(
+            repo_root=REPO_ROOT,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_phase="FRESH_STABILITY",
+            qualification_ordinal=1,
+            table_shard_index=0,
+        )
+        self.assertEqual(
+            plan["qualification_task_plan_id"],
+            binding["parent_qualification_task_plan_id"],
+        )
+        self.assertEqual(
+            children[0]["qualification_task_plan_id"],
+            binding["qualification_task_plan_id"],
+        )
+        self.assertEqual(
+            children[0]["provider_request_body_sha256"],
+            binding["context_feasibility_binding"][
+                "provider_request_body_sha256"
+            ],
+        )
+        self.assertEqual(ledger_before, ledger_path.read_bytes())
+
     def test_repeated_fresh_request_uses_plan_owned_wb3_namespaces(
         self,
     ) -> None:

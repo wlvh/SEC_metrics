@@ -215,25 +215,16 @@ def source_reference_record(
         raise SourceError(
             "SourceReference fields are empty: {}".format(",".join(missing))
         )
-    # Reuse the production transport's exact-origin rule so source provenance
-    # cannot accept an authority that the SEC client would refuse to request.
-    try:
-        validate_official_sec_url(url=source_url)
-    except ValueError as error:
-        raise SourceError(
-            "SourceReference URL must use an official SEC origin"
-        ) from error
-    identity = {
-        "raw_asset_id": raw_blob["raw_asset_id"],
-        "company_id": company_id,
-        "source_url": source_url,
-        "accession": accession,
-        "document_name": document_name,
-        "source_role": source_role,
-    }
     record = {
         "record_type": "SOURCE_REFERENCE",
-        "source_reference_id": content_hash(value=identity),
+        "source_reference_id": source_reference_identifier(
+            raw_asset_id=str(raw_blob["raw_asset_id"]),
+            company_id=company_id,
+            source_url=source_url,
+            accession=accession,
+            document_name=document_name,
+            source_role=source_role,
+        ),
         "raw_asset_id": raw_blob["raw_asset_id"],
         "company_id": company_id,
         "source_url": source_url,
@@ -243,6 +234,49 @@ def source_reference_record(
         "request_attempt_id": request_attempt_id,
     }
     return validate_record(record=record)
+
+
+def source_reference_identifier(
+    *, raw_asset_id: str, company_id: str, source_url: str,
+    accession: str, document_name: str, source_role: str,
+) -> str:
+    """Return the canonical SourceReference identity without an attempt row.
+
+    A request-attempt ID proves acquisition provenance but is deliberately not
+    part of SourceReference identity.  Keeping this pure identity constructor
+    beside ``source_reference_record`` lets offline request planning and Run
+    materialization use exactly the same preimage without inventing a ledger
+    row or duplicating the record formula.
+    """
+    required_text = {
+        "raw_asset_id": raw_asset_id,
+        "company_id": company_id,
+        "source_url": source_url,
+        "accession": accession,
+        "document_name": document_name,
+        "source_role": source_role,
+    }
+    missing = sorted(key for key in required_text if not required_text[key])
+    if missing:
+        raise SourceError(
+            "SourceReference fields are empty: {}".format(",".join(missing))
+        )
+    # Reuse the production transport's exact-origin rule so source provenance
+    # cannot accept an authority that the SEC client would refuse to request.
+    try:
+        validate_official_sec_url(url=source_url)
+    except ValueError as error:
+        raise SourceError(
+            "SourceReference URL must use an official SEC origin"
+        ) from error
+    return content_hash(value={
+        "raw_asset_id": raw_asset_id,
+        "company_id": company_id,
+        "source_url": source_url,
+        "accession": accession,
+        "document_name": document_name,
+        "source_role": source_role,
+    })
 
 
 def load_raw_blob_bytes(
