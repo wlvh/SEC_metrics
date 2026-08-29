@@ -1636,7 +1636,10 @@ def qualification_remote_egress_terminals(
         ) or (
             status == "FAILED_RETRYABLE_FINAL"
             and attempt_statuses
-            != ["FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL"]
+            not in (
+                ["FAILED_RETRYABLE_FINAL"],
+                ["FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL"],
+            )
         ) or (
             status == "UNKNOWN_REMOTE_OUTCOME" and attempt_statuses
         ):
@@ -1951,6 +1954,7 @@ def execute_invocation(
     transport: object,
     response_validator: Callable[[bytes], None],
     evidence_validator: Callable[[bytes], Mapping[str, object]],
+    automatic_retry_count: int = 1,
 ) -> Dict[str, object]:
     """Execute or reuse one exact request under single-flight control.
 
@@ -1966,11 +1970,17 @@ def execute_invocation(
         response_validator: Injected strict response-schema validator.
         evidence_validator: Injected full Candidate/Evidence validator that
             returns the exact acceptance closure only when Evidence is PASS.
+        automatic_retry_count: Zero for one-shot qualification calls or one
+            for the ordinary D-35 retryable-terminal path.
 
     Returns:
         Immutable execution receipt or reusable/single-flight result.
     """
     validated_plan = validate_ai_invocation_plan(plan=plan)
+    if type(automatic_retry_count) is not int or automatic_retry_count not in {
+        0, 1,
+    }:
+        raise InvocationControlError("Automatic retry count is invalid")
     expected_execution_id = execution_identity(
         ai_invocation_plan_id=str(validated_plan["ai_invocation_plan_id"]),
         owner_token=owner_token,
@@ -2088,6 +2098,7 @@ def execute_invocation(
                 transport=transport,
                 response_validator=response_validator,
                 evidence_validator=evidence_validator,
+                automatic_retry_count=automatic_retry_count,
             )
         existing_reservation = _validate_active_reservation_for_plan(
             reservation=existing_reservation,
@@ -2159,6 +2170,7 @@ def execute_invocation(
                 transport=transport,
                 response_validator=response_validator,
                 evidence_validator=evidence_validator,
+                automatic_retry_count=automatic_retry_count,
             )
         abandoned_markers = _egress_markers_for_execution(
             root=root, execution_id=abandoned_execution_id,
@@ -2196,6 +2208,7 @@ def execute_invocation(
                 transport=transport,
                 response_validator=response_validator,
                 evidence_validator=evidence_validator,
+                automatic_retry_count=automatic_retry_count,
             )
         return {
             "schema_version": 1,
@@ -2230,7 +2243,7 @@ def execute_invocation(
     if transport_kind not in {"MOCK", "REAL_MODEL_PROVIDER"}:
         raise InvocationControlError("Transport kind is invalid")
     attempts = []
-    for attempt_ordinal in (1, 2):
+    for attempt_ordinal in range(1, automatic_retry_count + 2):
         marker = _egress_marker(
             root=root,
             execution_id=execution_id,
@@ -2390,7 +2403,10 @@ def execute_invocation(
                     ),
                 },
             )
-        retryable = classification == "RETRYABLE" and attempt_ordinal == 1
+        retryable = (
+            classification == "RETRYABLE"
+            and attempt_ordinal <= automatic_retry_count
+        )
         attempt_status = (
             "FAILED_RETRYABLE"
             if retryable

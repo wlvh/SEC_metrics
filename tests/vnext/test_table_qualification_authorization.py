@@ -18,6 +18,7 @@ from unittest import mock
 from tests.vnext.common import cell_locator
 from validation_provenance import ValidationProvenanceError
 from vnext import ai_adapter, invocation_control, qualification, workflow
+from vnext import stage_a_snapshot as stage_a_module
 from vnext import table_qualification_freeze as freeze_module
 from vnext.ai_adapter import TransportAttemptError, TransportObservation
 from vnext.ai_adapter import TransportResult
@@ -366,10 +367,20 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
                     "synthetic no-d07 authority",
                 ],
             )
-            write_stage_a_snapshot(
-                repo_root=worktree,
-                frozen_at_utc="2026-08-21T08:31:00Z",
-            )
+            # Detached synthetic worktrees do not contain the repository's
+            # intentionally ignored historical qualification artifacts.  The
+            # dedicated Stage-A tests own that real historical closure; this
+            # fixture keeps every current freeze/root/source check while
+            # supplying only its unavailable historical checker result.
+            with mock.patch.object(
+                stage_a_module,
+                "_historical_source_errors",
+                return_value=sorted(stage_a_module.SOURCE_ONLY_ERRORS),
+            ):
+                write_stage_a_snapshot(
+                    repo_root=worktree,
+                    frozen_at_utc="2026-08-21T08:31:00Z",
+                )
             yield worktree
         finally:
             qualification_requirement_patch.stop()
@@ -2844,8 +2855,8 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             self.assertEqual("PENDING_HUMAN_REVIEW", repaired["status"])
             self.assertEqual(1, len(calls))
 
-    def test_exhausted_retryable_terminals_bind_cycle_evidence(self) -> None:
-        """D-35 retry exhaustion remains one fully bound qualification terminal."""
+    def test_retryable_terminal_is_one_shot_and_binds_cycle_evidence(self) -> None:
+        """Qualification retry=0 remains one fully bound terminal."""
         scenarios = (
             ("http_429", "HTTP_429", 429),
             ("timeout", "TIMEOUT", 0),
@@ -2887,7 +2898,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             **common,
                         )
                     self.assertEqual("FAILED_TERMINAL", initial["status"])
-                    self.assertEqual(2, len(calls))
+                    self.assertEqual(1, len(calls))
                     run_dir = repo_root / binding["run_directory_relative_path"]
                     manifest, records, _decisions = load_run_for_status(
                         run_dir=run_dir,
@@ -2908,21 +2919,22 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     terminal = terminals[0]
                     self.assertEqual("FAILED_RETRYABLE_FINAL", terminal["status"])
                     self.assertTrue(terminal["batch_terminal"])
-                    self.assertEqual(2, len(terminal["egress_marker_ids"]))
-                    self.assertEqual(2, len(terminal["provider_request_ids"]))
+                    self.assertEqual(1, len(terminal["egress_marker_ids"]))
+                    self.assertEqual(1, len(terminal["provider_request_ids"]))
                     self.assertEqual(
-                        ["FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL"],
+                        ["FAILED_RETRYABLE_FINAL"],
                         terminal["attempt_statuses"],
                     )
                     self.assertEqual(
-                        [error_class, error_class],
+                        [error_class],
                         terminal["attempt_error_classes"],
                     )
                     mismatched_terminal = {
                         **terminal,
-                        "provider_request_ids": list(reversed(
-                            terminal["provider_request_ids"]
-                        )),
+                        "provider_request_ids": [
+                            str(terminal["provider_request_ids"][0])
+                            + ":forged"
+                        ],
                     }
                     mismatched_terminal[
                         "qualification_wb3_remote_egress_terminal_id"
@@ -2954,7 +2966,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             **common,
                         )
                     self.assertEqual("FAILED_TERMINAL", repeated["status"])
-                    self.assertEqual(2, len(calls))
+                    self.assertEqual(1, len(calls))
                     self.assertEqual(records_before, (run_dir / "records.jsonl").read_bytes())
                     self.assertEqual(ledger_before, ledger_path.read_bytes())
 

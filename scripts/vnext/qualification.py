@@ -1174,6 +1174,309 @@ def _authorization_mapping(
     }
 
 
+_FINANCIAL_PHASE_ORDER = {
+    "SECOND_LAYOUT": 0,
+    "POST_FREEZE_HOLDOUT": 1,
+    "FRESH_STABILITY": 2,
+}
+
+
+def _financial_authorization_order(
+    *, binding: Mapping[str, object], task_ids: Sequence[str],
+) -> tuple[int, int, int, int]:
+    """Return the deterministic phase/ordinal/task/shard order."""
+    phase = binding.get("qualification_phase")
+    task_id = binding.get("task_contract_id")
+    shard = binding.get("table_shard_binding")
+    if (
+        phase not in _FINANCIAL_PHASE_ORDER
+        or task_id not in task_ids
+        or type(binding.get("qualification_ordinal")) is not int
+        or binding["qualification_ordinal"] != 1
+        or type(shard) is not dict
+        or type(shard.get("shard_index")) is not int
+        or type(shard.get("shard_count")) is not int
+        or shard["shard_index"] < 0
+        or shard["shard_count"] < 1
+        or shard["shard_index"] >= shard["shard_count"]
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Financial qualification order binding is invalid",
+        )
+    return (
+        _FINANCIAL_PHASE_ORDER[str(phase)],
+        int(binding["qualification_ordinal"]),
+        task_ids.index(str(task_id)),
+        int(shard["shard_index"]),
+    )
+
+
+def _financial_cycle_stop_gate(
+    *, repo_root: Path, binding: Mapping[str, object],
+    scope: Mapping[str, object],
+) -> None:
+    """Stop every later financial child after any incomplete prior terminal."""
+    task_ids = scope.get("authorized_task_contract_ids")
+    if (
+        binding.get("family_id") != "financial_statement"
+        or type(task_ids) is not list
+        or not task_ids
+        or len(task_ids) != len(set(task_ids))
+        or set(binding) != _QUALIFICATION_SHARD_AUTHORIZATION_FIELDS
+        or binding.get("qualification_authorization_id")
+        != content_hash(value={
+            key: value for key, value in binding.items()
+            if key != "qualification_authorization_id"
+        })
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="Financial qualification stop-gate authority is invalid",
+        )
+    current_order = _financial_authorization_order(
+        binding=binding, task_ids=task_ids,
+    )
+    cycle_id = str(binding["qualification_cycle_id"])
+    cycle_root = (
+        repo_root / TABLE_QUALIFICATION_CYCLE_ROOT
+        / cycle_id.split(":", maxsplit=1)[1]
+    )
+    run_root = cycle_root / "runs"
+    run_rows = []
+    if run_root.exists():
+        if run_root.is_symlink() or not run_root.is_dir():
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                message="Financial qualification Run root is unsafe",
+            )
+        for run_dir in sorted(run_root.iterdir(), key=lambda path: path.name):
+            if run_dir.is_symlink() or not run_dir.is_dir():
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification Run entry is unsafe",
+                )
+            manifest, records, _decisions = load_run_for_status(
+                run_dir=run_dir, repo_root=repo_root,
+            )
+            prior = manifest.get("qualification_authorization")
+            if type(prior) is not dict:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification Run authority is absent",
+                )
+            if (
+                prior.get("family_id") != "financial_statement"
+                or prior.get("qualification_cycle_id") != cycle_id
+                or prior.get("freeze_receipt_id")
+                != binding["freeze_receipt_id"]
+                or prior.get("requirement_closure_hash")
+                != binding["requirement_closure_hash"]
+                or prior.get("provider") != binding["provider"]
+                or prior.get("model") != binding["model"]
+                or prior.get("api") != binding["api"]
+                or prior.get("qualification_authorization_id")
+                != content_hash(value={
+                    key: value for key, value in prior.items()
+                    if key != "qualification_authorization_id"
+                })
+            ):
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification Run authority differs",
+                )
+            order = _financial_authorization_order(
+                binding=prior, task_ids=task_ids,
+            )
+            if order > current_order:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="A later financial plan already has Run state",
+                )
+            run_rows.append({
+                "binding": prior,
+                "manifest": manifest,
+                "records": records,
+                "run_dir": run_dir,
+                "order": order,
+            })
+
+    parent_groups: Dict[tuple[str, int, str], list[Dict[str, object]]] = {}
+    run_by_plan = {}
+    for row in run_rows:
+        prior = row["binding"]
+        plan_id = str(prior["qualification_task_plan_id"])
+        if plan_id in run_by_plan:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                message="Financial qualification child Run is duplicated",
+            )
+        run_by_plan[plan_id] = row
+        key = (
+            str(prior["qualification_phase"]),
+            int(prior["qualification_ordinal"]),
+            str(prior["task_contract_id"]),
+        )
+        parent_groups.setdefault(key, []).append(row)
+
+    current_phase = str(binding["qualification_phase"])
+    current_task = str(binding["task_contract_id"])
+    current_task_index = task_ids.index(current_task)
+    current_phase_index = _FINANCIAL_PHASE_ORDER[current_phase]
+    expected_prior_parents = [
+        (phase, 1, task_id)
+        for phase, phase_index in _FINANCIAL_PHASE_ORDER.items()
+        for task_id in task_ids
+        if phase_index < current_phase_index
+        or (phase == current_phase and task_ids.index(task_id) < current_task_index)
+    ]
+    for parent_key in expected_prior_parents:
+        rows = parent_groups.get(parent_key, [])
+        shard_counts = {
+            int(row["binding"]["table_shard_binding"]["shard_count"])
+            for row in rows
+        }
+        parent_ids = {
+            str(row["binding"]["parent_qualification_task_plan_id"])
+            for row in rows
+        }
+        if (
+            len(shard_counts) != 1
+            or len(parent_ids) != 1
+            or len(rows) != next(iter(shard_counts), 0)
+            or sorted(
+                int(row["binding"]["table_shard_binding"]["shard_index"])
+                for row in rows
+            ) != list(range(next(iter(shard_counts), 0)))
+            or any(row["manifest"].get("status") != "FROZEN" for row in rows)
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+                message="A prior financial parent is incomplete or terminal",
+            )
+
+    current_key = (current_phase, 1, current_task)
+    current_rows = parent_groups.get(current_key, [])
+    current_shard_index = int(
+        binding["table_shard_binding"]["shard_index"]
+    )
+    prior_current_rows = [
+        row for row in current_rows
+        if int(row["binding"]["table_shard_binding"]["shard_index"])
+        < current_shard_index
+    ]
+    if sorted(
+        int(row["binding"]["table_shard_binding"]["shard_index"])
+        for row in prior_current_rows
+    ) != list(range(current_shard_index)):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+            message="A prior financial child Run is absent",
+        )
+    if any(
+        row["manifest"].get("status") not in {"OPEN", "FROZEN"}
+        for row in prior_current_rows
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+            message="A prior financial child Run is terminal",
+        )
+    open_prior = [
+        row for row in prior_current_rows
+        if row["manifest"].get("status") == "OPEN"
+    ]
+    if open_prior:
+        latest = max(open_prior, key=lambda row: row["order"])
+        recovery = _table_qualification_recovery_state(
+            repo_root=repo_root,
+            run_dir=latest["run_dir"],
+            manifest=latest["manifest"],
+            records=latest["records"],
+            binding=latest["binding"],
+        )
+        if recovery != "COMPLETE_OPEN_PENDING_REVIEW":
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+                message="A prior financial child is not materialized",
+            )
+
+    workspace_root = cycle_root / "invocation_control"
+    terminals_by_plan = {}
+    current_plan_id = str(binding["qualification_task_plan_id"])
+    if workspace_root.exists():
+        if workspace_root.is_symlink() or not workspace_root.is_dir():
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                message="Financial qualification WB-3 root is unsafe",
+            )
+        for workspace in sorted(
+            workspace_root.iterdir(), key=lambda path: path.name,
+        ):
+            if workspace.is_symlink() or not workspace.is_dir():
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification WB-3 entry is unsafe",
+                )
+            try:
+                terminals = qualification_remote_egress_terminals(
+                    workspace_dir=workspace,
+                )
+            except InvocationControlError as error:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification WB-3 state is invalid",
+                ) from error
+            if not terminals:
+                candidate_id = "sha256:" + workspace.name
+                if candidate_id != current_plan_id:
+                    raise QualificationError(
+                        code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+                        message="A prior financial child has no remote terminal",
+                    )
+                continue
+            if len(terminals) != 1:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification remote terminal duplicates",
+                )
+            terminal = terminals[0]
+            plan_id = str(terminal["qualification_task_plan_id"])
+            if workspace.name != plan_id.split(":", maxsplit=1)[1]:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification WB-3 plan path differs",
+                )
+            if plan_id in terminals_by_plan:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                    message="Financial qualification remote terminal duplicates",
+                )
+            terminals_by_plan[plan_id] = terminal
+            row = run_by_plan.get(plan_id)
+            if row is None and plan_id != current_plan_id:
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+                    message="A financial remote terminal lacks Run materialization",
+                )
+            if row is not None and row["order"] < current_order and (
+                terminal["status"] != "SUCCEEDED"
+                or terminal["batch_terminal"] is not False
+            ):
+                raise QualificationError(
+                    code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+                    message="A prior financial remote terminal stopped the cycle",
+                )
+    expected_prior_plan_ids = {
+        str(row["binding"]["qualification_task_plan_id"])
+        for row in run_rows if row["order"] < current_order
+    }
+    if not expected_prior_plan_ids.issubset(set(terminals_by_plan)):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
+            message="A prior financial child lacks WB-3 closure",
+        )
+
+
 def _issue_table_qualification_authorization(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int,
@@ -1302,6 +1605,12 @@ def _issue_table_qualification_authorization(
         qualification_phase=qualification_phase,
         table_shard_index=table_shard_index,
     )
+    if financial_family:
+        _financial_cycle_stop_gate(
+            repo_root=repo_root,
+            binding=binding,
+            scope=scope,
+        )
     return TableQualificationAuthorization(
         binding=binding,
         capability=_QUALIFICATION_AUTHORIZATION_CAPABILITY,
@@ -2869,11 +3178,7 @@ def validate_table_qualification_cycle_exact_set(
         if attempt["status"] == "SUCCEEDED":
             expected_wb3_statuses = {"SUCCEEDED"}
             expected_batch_terminal = False
-            expected_attempt_statuses = (
-                ["SUCCEEDED"]
-                if len(marker_ids) == 1
-                else ["FAILED_RETRYABLE", "SUCCEEDED"]
-            )
+            expected_attempt_statuses = ["SUCCEEDED"]
         elif attempt.get("error_class") == "UNKNOWN_REMOTE_OUTCOME":
             expected_wb3_statuses = {"UNKNOWN_REMOTE_OUTCOME"}
             expected_batch_terminal = True
@@ -2881,9 +3186,7 @@ def validate_table_qualification_cycle_exact_set(
         elif wb3["status"] == "FAILED_RETRYABLE_FINAL":
             expected_wb3_statuses = {"FAILED_RETRYABLE_FINAL"}
             expected_batch_terminal = True
-            expected_attempt_statuses = [
-                "FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL",
-            ]
+            expected_attempt_statuses = ["FAILED_RETRYABLE_FINAL"]
         else:
             expected_wb3_statuses = {"FAILED_TERMINAL"}
             expected_batch_terminal = True
@@ -2959,6 +3262,17 @@ def _execute_table_qualification_terminal(
             message="Qualification execution owner is invalid",
         )
     binding = authorization.as_mapping()
+    if family_id == "financial_statement":
+        scope = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements/issue_15_v1",
+        )["effective_decisions"]["D-07"]["choice"][
+            "live_qualification_scope"
+        ]
+        _financial_cycle_stop_gate(
+            repo_root=repo_root,
+            binding=binding,
+            scope=scope,
+        )
     if qualification_ordinal > 1:
         prior_plan_ids = set()
         for prior_ordinal in range(1, qualification_ordinal):

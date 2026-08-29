@@ -15,7 +15,7 @@ from tests.vnext.common import fixed_clock, reviewed_fixture, sample_asset
 from vnext import qualification
 from vnext.ai_adapter import AIAdapterError, READER_SHARD_OUTPUT_JSON_SCHEMA
 from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
-from vnext.canonical import canonical_json_bytes
+from vnext.canonical import canonical_json_bytes, content_hash
 from vnext.evidence import check_evidence
 from vnext.reader import validate_reader_output
 from vnext.reader_input import build_reader_input_manifest
@@ -176,6 +176,135 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                     qualification_phase="SECOND_LAYOUT",
                     sample=sample,
                     measurement={"source_layout_signature": equal_headers},
+                )
+
+    def test_next_financial_task_stops_after_prior_task_terminal(self) -> None:
+        """Block cross-task egress after one earlier parent fails."""
+        cycle_id = "sha256:" + ("a" * 64)
+
+        def binding(*, task_id: str, plan_digit: str) -> dict:
+            value = {
+                field: None
+                for field in qualification._QUALIFICATION_SHARD_AUTHORIZATION_FIELDS
+                if field != "qualification_authorization_id"
+            }
+            plan_id = "sha256:" + (plan_digit * 64)
+            value.update({
+                "family_id": "financial_statement",
+                "qualification_cycle_id": cycle_id,
+                "freeze_receipt_id": "sha256:" + ("b" * 64),
+                "requirement_closure_hash": "sha256:" + ("c" * 64),
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash",
+                "api": "chat_completions",
+                "qualification_phase": "SECOND_LAYOUT",
+                "qualification_ordinal": 1,
+                "task_contract_id": task_id,
+                "qualification_task_plan_id": plan_id,
+                "parent_qualification_task_plan_id": (
+                    "sha256:" + (("d" if task_id == "task-a" else "e") * 64)
+                ),
+                "table_shard_binding": {
+                    "shard_index": 0,
+                    "shard_count": 1,
+                },
+            })
+            value["qualification_authorization_id"] = content_hash(
+                value=value,
+            )
+            return value
+
+        prior = binding(task_id="task-a", plan_digit="1")
+        current = binding(task_id="task-b", plan_digit="2")
+        scope = {"authorized_task_contract_ids": ["task-a", "task-b"]}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            run_root = (
+                root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
+                / ("a" * 64) / "runs"
+            )
+            (run_root / "prior-run").mkdir(parents=True)
+            with mock.patch.object(
+                qualification,
+                "load_run_for_status",
+                return_value=(
+                    {
+                        "status": "FAILED",
+                        "qualification_authorization": prior,
+                    },
+                    [],
+                    [],
+                ),
+            ), self.assertRaisesRegex(
+                qualification.QualificationError,
+                "prior financial parent",
+            ):
+                qualification._financial_cycle_stop_gate(
+                    repo_root=root,
+                    binding=current,
+                    scope=scope,
+                )
+            workspace = (
+                root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
+                / ("a" * 64) / "invocation_control" / ("1" * 64)
+            )
+            workspace.mkdir(parents=True)
+            with mock.patch.object(
+                qualification,
+                "load_run_for_status",
+                return_value=(
+                    {
+                        "status": "FROZEN",
+                        "qualification_authorization": prior,
+                    },
+                    [],
+                    [],
+                ),
+            ), mock.patch.object(
+                qualification,
+                "qualification_remote_egress_terminals",
+                return_value=[{
+                    "qualification_task_plan_id": prior[
+                        "qualification_task_plan_id"
+                    ],
+                    "status": "PENDING_REMOTE_OUTCOME",
+                    "batch_terminal": None,
+                }],
+            ), self.assertRaisesRegex(
+                qualification.QualificationError,
+                "remote terminal stopped",
+            ):
+                qualification._financial_cycle_stop_gate(
+                    repo_root=root,
+                    binding=current,
+                    scope=scope,
+                )
+            with mock.patch.object(
+                qualification,
+                "load_run_for_status",
+                return_value=(
+                    {
+                        "status": "FROZEN",
+                        "qualification_authorization": prior,
+                    },
+                    [],
+                    [],
+                ),
+            ), mock.patch.object(
+                qualification,
+                "qualification_remote_egress_terminals",
+                return_value=[{
+                    "qualification_task_plan_id": prior[
+                        "qualification_task_plan_id"
+                    ],
+                    "status": "SUCCEEDED",
+                    "batch_terminal": False,
+                }],
+            ):
+                qualification._financial_cycle_stop_gate(
+                    repo_root=root,
+                    binding=current,
+                    scope=scope,
                 )
 
 

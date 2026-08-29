@@ -1505,6 +1505,38 @@ class InvocationControlTest(unittest.TestCase):
         )
         self.assertEqual(2, transport.invocation_count)
 
+    def test_retryable_failure_can_be_authorized_one_shot(self) -> None:
+        """Honor a qualification-owned retry count of zero at WB-3."""
+        with tempfile.TemporaryDirectory() as directory:
+            invocation_plan = plan()
+            transport = MockTransport(
+                results=[transport_result(status_code=429), transport_result()]
+            )
+            result = execute_invocation(
+                workspace_dir=Path(directory),
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution(
+                    invocation_plan=invocation_plan,
+                    owner="one-shot-owner",
+                    at=UTC,
+                ),
+                owner_token="one-shot-owner",
+                authorized_at_utc=UTC,
+                clock=clock,
+                transport=transport,
+                response_validator=validate_response,
+                evidence_validator=validate_evidence,
+                automatic_retry_count=0,
+            )
+        self.assertEqual("FAILED_RETRYABLE_FINAL", result["status"])
+        self.assertTrue(result["batch_terminal"])
+        self.assertEqual(1, transport.invocation_count)
+        self.assertEqual(
+            ["FAILED_RETRYABLE_FINAL"],
+            [attempt["status"] for attempt in result["attempts"]],
+        )
+
     def test_terminal_http_schema_and_evidence_never_retry(self) -> None:
         """Stop 400/401/422/schema/evidence classes after one invocation."""
         cases = [

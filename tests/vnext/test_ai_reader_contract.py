@@ -156,6 +156,15 @@ def live_sec_reader_repository(*, workspace: Path) -> dict:
         destination = repo_root / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(REPO_ROOT / relative, destination)
+    issue_baseline = json.loads((
+        repo_root / "requirements/issue_15_v1/baseline_manifest.json"
+    ).read_text(encoding="utf-8"))
+    for relative in issue_baseline["runtime_authority_files"]:
+        destination = repo_root / relative
+        if destination.exists():
+            continue
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(REPO_ROOT / relative, destination)
     source_url = (
         "https://www.sec.gov/Archives/edgar/data/1048286/"
         "000104828625000001/sample.htm"

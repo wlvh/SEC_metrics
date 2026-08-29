@@ -2736,6 +2736,15 @@ def _execute_controlled_transport(
                 context=acceptance_context,
             )
         ),
+        automatic_retry_count=(
+            1
+            if context.qualification_usage_policy is None
+            else int(
+                context.qualification_usage_policy[
+                    "automatic_retry_count"
+                ]
+            )
+        ),
     )
     if execution["status"] in {"SUCCEEDED", "REUSED_SUCCESS"}:
         reusable = load_successful_response(
