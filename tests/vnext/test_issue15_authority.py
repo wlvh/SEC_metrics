@@ -42,7 +42,6 @@ from vnext.requirements import (
     ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY,
     ISSUE_15_D35_FINANCIAL_RESOURCE_POLICY,
     ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY,
-    ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY,
     ISSUE_15_EXPECTED_PRODUCER_EXACT_SET_HASH,
     ISSUE_15_EXPECTED_PRODUCER_RECORD_SET_HASH,
     ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH,
@@ -50,6 +49,7 @@ from vnext.requirements import (
     ISSUE_15_POST_FREEZE_DECISION_EVIDENCE_BY_ID,
     ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES,
     RequirementError,
+    issue_15_expected_financial_layout_source_policy,
     load_requirement_snapshot,
 )
 
@@ -228,7 +228,7 @@ def assignment_value(*, path: Path, symbol: str) -> ast.AST:
 
 
 def copy_test_repository(*, temp_dir: str) -> Path:
-    """Copy both Requirement snapshots and every bound foundation receipt.
+    """Copy Requirement, runtime, matrix, and foundation authority inputs.
 
     Args:
         temp_dir: Empty temporary directory used as a repository root.
@@ -264,6 +264,13 @@ def copy_test_repository(*, temp_dir: str) -> Path:
     shutil.copy2(
         src=REPO_ROOT / "config" / "company_registry.csv",
         dst=company_registry,
+    )
+    qualification_matrix = (
+        repository_root / "config" / "table_qualification_matrix.json"
+    )
+    shutil.copy2(
+        src=REPO_ROOT / "config" / "table_qualification_matrix.json",
+        dst=qualification_matrix,
     )
     foundation = read_json(path=ISSUE_15_DIR / "foundation_verification_receipt.json")
     for binding in foundation["receipt_bindings"]:
@@ -671,7 +678,9 @@ class Issue15AuthorityTest(unittest.TestCase):
             d35_choice["financial_request_shard_policy"],
         )
         self.assertEqual(
-            ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY,
+            issue_15_expected_financial_layout_source_policy(
+                repository_root=REPO_ROOT,
+            ),
             d35_choice["financial_layout_source_materialization_policy"],
         )
         self.assertEqual(
@@ -1650,6 +1659,30 @@ class Issue15AuthorityTest(unittest.TestCase):
                     RequirementError, "superseding Decision content differs",
                 ):
                     load_requirement_snapshot(snapshot_dir=issue_copy)
+
+    def test_financial_layout_accessions_must_match_frozen_matrix(self) -> None:
+        """Reject source identity drift between D-35 and its frozen matrix."""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issue_copy = copy_test_repository(temp_dir=temp_dir)
+            matrix_path = (
+                issue_copy.parents[1]
+                / "config"
+                / "table_qualification_matrix.json"
+            )
+            matrix = read_json(path=matrix_path)
+            financial = next(
+                family
+                for family in matrix["families"]
+                if family["family_id"] == "financial_statement"
+            )
+            financial["development_source"]["accession"] = (
+                "0000000000-00-000000"
+            )
+            write_json(path=matrix_path, value=matrix)
+            with self.assertRaisesRegex(
+                RequirementError, "superseding Decision content differs",
+            ):
+                load_requirement_snapshot(snapshot_dir=issue_copy)
 
     def test_budget_preflight_invariant_cannot_return(self) -> None:
         """Reject a self-rebound D-26 tip that restores the removed test."""

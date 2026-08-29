@@ -894,7 +894,7 @@ ISSUE_15_D35_FINANCIAL_REQUEST_SHARD_POLICY = {
     "concrete_egress_requires_post_implementation_freeze": True,
     "concrete_egress_requires_exact_head_review": True,
 }
-ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY = {
+ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY_STATIC = {
     "policy_status": "OWNER_APPROVED_IMPLEMENTATION_REQUIRED",
     "family_id": "financial_statement",
     "selected_option": "A",
@@ -904,7 +904,6 @@ ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY = {
     ),
     "development_source": {
         "company_id": "jpmorgan_chase",
-        "accession": "0001628280-26-008131",
         "document_name": "jpm-20251231.htm",
         "source_sha256": (
             "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
@@ -917,7 +916,6 @@ ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY = {
     },
     "second_layout_source": {
         "company_id": "bank_of_america_corp",
-        "accession": "0000070858-26-000157",
         "document_name": "bac-20251231.htm",
         "source_sha256": (
             "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
@@ -930,7 +928,6 @@ ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY = {
     },
     "post_freeze_holdout_source": {
         "company_id": "citigroup",
-        "accession": "0000831001-26-000011",
         "document_name": "c-20251231.htm",
         "source_sha256": (
             "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe"
@@ -997,6 +994,90 @@ ISSUE_15_EXPECTED_SCOPE_EVIDENCE_HASH = (
 
 class RequirementError(ValueError):
     """Report missing, changed, ambiguous, or malformed requirement bytes."""
+
+
+def issue_15_expected_financial_layout_source_policy(
+    *, repository_root: Path,
+) -> Dict[str, object]:
+    """Build the exact D-35 layout policy from static and matrix authority.
+
+    The immutable D-35 record hash binds the complete approved policy.  This
+    helper deliberately avoids copying qualification accessions into
+    production Python: it joins those source identities from the existing
+    table qualification matrix while independently retaining every other
+    resource-policy invariant here.
+
+    Args:
+        repository_root: Repository root containing the frozen matrix.
+
+    Returns:
+        Complete expected ``financial_layout_source_materialization_policy``.
+
+    Raises:
+        RequirementError: If the matrix is unsafe, malformed, ambiguous, or
+            disagrees with the static D-35 source identity fields.
+    """
+    matrix_path = _bound_repository_file(
+        repository_root=repository_root,
+        relative="config/table_qualification_matrix.json",
+    )
+    matrix = _read_object(path=matrix_path)
+    families = matrix.get("families")
+    if not isinstance(families, list):
+        raise RequirementError("Table qualification matrix families are invalid")
+    matches = [
+        family for family in families
+        if isinstance(family, dict)
+        and family.get("family_id") == "financial_statement"
+    ]
+    if len(matches) != 1:
+        raise RequirementError(
+            "Financial table qualification matrix family is not unique"
+        )
+    family = matches[0]
+    source_roles = (
+        ("development_source", "development_source"),
+        ("second_layout_source", "second_layout_source"),
+        ("post_freeze_holdout_source", "post_freeze_holdout_source"),
+    )
+    expected = dict(
+        ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY_STATIC
+    )
+    for policy_role, matrix_role in source_roles:
+        static_source = expected.get(policy_role)
+        matrix_source = family.get(matrix_role)
+        if not isinstance(static_source, dict) or not isinstance(
+            matrix_source, dict
+        ):
+            raise RequirementError(
+                "Financial layout source authority is invalid: {}".format(
+                    policy_role
+                )
+            )
+        if matrix_source.get("source_kind") != "IMMUTABLE_ATTEMPT":
+            raise RequirementError(
+                "Financial layout source is not immutable: {}".format(
+                    policy_role
+                )
+            )
+        for field in ("company_id", "document_name", "source_sha256"):
+            if matrix_source.get(field) != static_source.get(field):
+                raise RequirementError(
+                    "Financial layout source identity differs: {}".format(
+                        policy_role
+                    )
+                )
+        accession = matrix_source.get("accession")
+        if not isinstance(accession, str) or not accession:
+            raise RequirementError(
+                "Financial layout source accession is invalid: {}".format(
+                    policy_role
+                )
+            )
+        complete_source = dict(static_source)
+        complete_source["accession"] = accession
+        expected[policy_role] = complete_source
+    return expected
 
 
 def load_run_requirement_snapshot(
@@ -2212,6 +2293,13 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         if financial_qualification_policy_active
         else ISSUE_15_PRE_FINANCIAL_D07_EFFECTIVE_CHOICE
     )
+    expected_financial_layout_policy = (
+        issue_15_expected_financial_layout_source_policy(
+            repository_root=repository_root,
+        )
+        if financial_resource_policy_active
+        else None
+    )
     if (
         decisions["D-01"]["choice"] != expected_d01_choice
         or d07_choice != expected_d07_choice
@@ -2248,7 +2336,7 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
             and d35_choice.get(
                 "financial_layout_source_materialization_policy"
             )
-            != ISSUE_15_D35_FINANCIAL_LAYOUT_SOURCE_MATERIALIZATION_POLICY
+            != expected_financial_layout_policy
         )
         or (
             not financial_resource_policy_active
