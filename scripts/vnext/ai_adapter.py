@@ -3249,13 +3249,24 @@ def _live_reader_allowed_ciks(
     carried by the factory request.  Ordinary disclosure requests and any
     non-matching catalog source remain registry-owned.
     """
-    from .traits import repository_company_ciks
+    from .sources import SourceError
+    from .traits import repository_company_ciks, TraitError
 
     wrapped = fields.get("prepared_request")
     task_contract_id = (
         wrapped.task_contract_id
         if type(wrapped) is PreparedReaderRequest else ""
     )
+    registry_failure = None
+    try:
+        return repository_company_ciks(
+            repo_root=repo_root,
+            company_id=str(fields.get("company_id", "")),
+        )
+    except TraitError as registry_error:
+        registry_failure = registry_error
+        if not task_contract_id:
+            raise
     if task_contract_id:
         try:
             from .table_qualification_freeze import (
@@ -3310,10 +3321,9 @@ def _live_reader_allowed_ciks(
                     "Qualification matrix source CIK is invalid"
                 )
             return [cik]
-    return repository_company_ciks(
-        repo_root=repo_root,
-        company_id=str(fields.get("company_id", "")),
-    )
+    if registry_failure is None:
+        raise SourceError("Live Reader CIK authority is invalid")
+    raise registry_failure
 
 
 def _validate_prepared_request(

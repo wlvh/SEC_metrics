@@ -26,11 +26,15 @@ from vnext.requirements import load_requirement_snapshot
 from vnext.reader_input import build_reader_input_manifest
 from vnext.reader_input import prepare_live_reader_request
 from vnext.reader_input import prepare_reader_request
+from vnext.reader_input import prepare_reader_shard_request
 from vnext.replay import replay_frozen_results
 from vnext.run_store import load_open_run
 from vnext.run_store import validate_and_freeze_run
 from vnext.sources import raw_blob_record, source_reference_record
 from vnext.table_grid import build_table_grid
+from vnext.table_payload import build_contiguous_table_shard
+from vnext.table_payload import encode_compact_table_payload
+from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.traits import TraitError
 from vnext.workflow import create_review_run
 
@@ -521,16 +525,133 @@ class AiReaderContractTest(unittest.TestCase):
                 repo_root=REPO_ROOT, fields=fields,
             ),
         )
-        forged = {
-            **fields,
+        mutations = {
+            "task_contract_id": "not_a_catalog_task",
+            "company_id": str(fields["company_id"]) + "_forged",
             "source_repo_relative_path": (
                 str(fields["source_repo_relative_path"]) + ".forged"
             ),
+            "raw_asset_id": "sha256:" + "0" * 64,
+            "accession": "0000000000-00-000000",
+            "document_name": str(fields["document_name"]) + ".forged",
+            "source_media_type": "application/json",
+            "source_role": "supporting",
         }
-        with self.assertRaises(TraitError):
-            ai_adapter._live_reader_allowed_ciks(
-                repo_root=REPO_ROOT, fields=forged,
+        for field, replacement in mutations.items():
+            forged = dict(fields)
+            if field == "task_contract_id":
+                forged["prepared_request"] = replace(
+                    prepared, task_contract_id=replacement,
+                )
+            else:
+                forged[field] = replacement
+            with self.subTest(field=field), self.assertRaises(TraitError):
+                ai_adapter._live_reader_allowed_ciks(
+                    repo_root=REPO_ROOT, fields=forged,
+                )
+
+    def test_registry_live_replay_does_not_load_qualification_matrix(
+        self,
+    ) -> None:
+        """Keep an ordinary registered issuer independent of matrix bytes."""
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = live_sec_reader_repository(
+                workspace=Path(directory),
             )
+            live = live_prepared_fixture(fixture=fixture)
+            with mock.patch.object(
+                ai_adapter,
+                "_REPOSITORY_ROOT",
+                fixture["repo_root"],
+            ), mock.patch(
+                "vnext.table_qualification_freeze."
+                "load_table_qualification_matrix",
+                side_effect=AssertionError("matrix path reached"),
+            ) as matrix_loader:
+                rebuilt = ai_adapter._validate_live_prepared_request(
+                    prepared_request=live,
+                )
+            self.assertEqual(live.prepared_request, rebuilt)
+            matrix_loader.assert_not_called()
+
+    def test_boa_matrix_source_replays_one_exact_shard_without_state(
+        self,
+    ) -> None:
+        """Rebuild a BOA shard through the fixed live verifier without egress."""
+        from vnext import qualification
+
+        matrix = load_table_qualification_matrix(
+            repo_root=REPO_ROOT,
+            family_id="financial_statement",
+        )
+        entry = matrix["entries"]["financial_statement"]
+        source = qualification._matrix_source_binding(
+            repo_root=REPO_ROOT,
+            matrix_entry=entry,
+            source_field="second_layout_source",
+        )
+        declaration = source["source_declaration"]
+        raw = raw_blob_record(
+            repo_root=REPO_ROOT,
+            repo_relative_path=source["request_repo_relative_path"],
+            media_type=entry["source_media_type"],
+        )
+        reference = source_reference_record(
+            raw_blob=raw,
+            company_id=declaration["company_id"],
+            source_url=source["source_url"],
+            accession=declaration["accession"],
+            document_name=declaration["document_name"],
+            source_role=source["source_role"],
+            request_attempt_id=source["request_attempt_id"],
+        )
+        asset = build_table_grid(
+            html_bytes=(
+                REPO_ROOT / source["request_repo_relative_path"]
+            ).read_bytes(),
+            parent_raw_asset_ids=[raw["raw_asset_id"]],
+            storage_uri="artifacts/vnext/derived/boa-direct-replay.json",
+        )
+        manifest = build_reader_input_manifest(
+            derived_asset=asset,
+            source_reference_ids=[reference["source_reference_id"]],
+        )
+        parent = encode_compact_table_payload(derived_asset=asset)
+        shard = build_contiguous_table_shard(
+            parent_transport=parent,
+            shard_index=0,
+            shard_count=1,
+            start_table_order=0,
+            end_table_order=0,
+        )
+        prepared = prepare_reader_shard_request(
+            manifest=manifest,
+            derived_asset=asset,
+            repo_root=REPO_ROOT,
+            task_contract_id=(
+                "financial_assets_under_management_table_v1"
+            ),
+            table_shard=shard,
+            table_shard_set_id="sha256:" + "1" * 64,
+        )
+        live = prepare_live_reader_request(
+            prepared_request=prepared,
+            raw_blob=raw,
+            source_reference=reference,
+            derived_asset=asset,
+            reader_manifest=manifest,
+            disclosure_spec_path="catalog/table_task_contracts.json",
+            immutable_source_repo_relative_path=source[
+                "request_repo_relative_path"
+            ],
+        )
+        with mock.patch.object(
+            ai_adapter, "_REPOSITORY_ROOT", REPO_ROOT,
+        ):
+            rebuilt = ai_adapter._validate_live_prepared_request(
+                prepared_request=live,
+            )
+        self.assertEqual(prepared, rebuilt)
 
     def test_remote_adapter_direct_complete_requires_live_source_authority(
         self,
