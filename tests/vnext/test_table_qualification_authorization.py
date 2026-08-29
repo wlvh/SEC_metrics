@@ -10,6 +10,7 @@ import subprocess
 import tempfile
 import unittest
 from contextlib import contextmanager
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Iterator, Sequence
@@ -19,11 +20,13 @@ from tests.vnext.common import cell_locator
 from validation_provenance import ValidationProvenanceError
 from vnext import ai_adapter, invocation_control, qualification, workflow
 from vnext import stage_a_snapshot as stage_a_module
+from vnext import table_grid as table_grid_module
 from vnext import table_qualification_freeze as freeze_module
 from vnext.ai_adapter import TransportAttemptError, TransportObservation
 from vnext.ai_adapter import TransportResult
 from vnext.ai_adapter import build_provider_request_body
 from vnext.canonical import atomic_write_bytes, atomic_write_json, content_hash
+from vnext.canonical import sha256_bytes
 from vnext.replay import replay_frozen_results
 from vnext.run_store import load_frozen_run, load_run_for_status, RunStoreError
 from vnext.run_store import validate_and_freeze_run
@@ -150,13 +153,18 @@ def _run_git(*, workdir: Path, arguments: list[str], stdin: bytes = b"") -> str:
 
 
 @contextmanager
-def synthetic_no_d07_repository() -> Iterator[Path]:
+def synthetic_no_d07_repository(
+    *, financial_ready: bool = True,
+) -> Iterator[Path]:
     """Build a clean, committed test-only authority without D-07 blocking.
 
-    This changes a disposable worktree's matrix-owned development source and
-    uses a deterministic estimator test double pinned exactly to the approved
-    inclusive 200000 boundary.  The real freeze/readiness builder still owns
-    the gate; no receipt boolean is flipped and no provider is contacted.
+    This preserves every matrix-owned development source identity and uses a
+    deterministic estimator test double pinned exactly to the approved
+    inclusive 200000 boundary.  Lodging execution tests may request an
+    explicit test-only financial resource fault; the real freeze/readiness
+    builder must then record financial as blocked while lodging remains ready.
+    D-35 source closure still owns both modes, no receipt boolean is flipped,
+    and no provider is contacted.
     """
     with tempfile.TemporaryDirectory() as directory:
         parent = Path(directory)
@@ -173,6 +181,7 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             ),
         )
         estimator_patch.start()
+        financial_resource_patch = None
         qualification_requirement_loader = qualification.load_requirement_snapshot
 
         def authorized_qualification_requirement(*, snapshot_dir: Path) -> Dict[str, object]:
@@ -236,35 +245,43 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             (worktree / "outputs/active_publication.json.lock").touch()
             matrix_path = worktree / "config/table_qualification_matrix.json"
             matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
-            entries = {
-                entry["family_id"]: entry
+            financial_entry = next(
+                entry
                 for entry in matrix["families"]
-            }
-            # The production financial source reaches the local complete-grid
-            # resource stop.  Use a distinct, already-local layout source so a
-            # later byte fault belongs to one family rather than both families.
-            financial_source = copy.deepcopy(
-                entries["financial_statement"]["development_source"]
+                if entry["family_id"] == "financial_statement"
             )
-            financial_source.update({
-                "cik": "1046311",
-                "accession": "0001046311-26-000006",
-                "document_name": "exhibit991earningspressrel.htm",
-                "source_repo_relative_path": (
-                    "evidence/request_attempts/4e/"
-                    "4ec31787712bff704482c50ed9c0df571870b790330eabbb"
-                    "6712770f35581a9b/"
-                    "exhibit991earningspressrel.htm"
-                ),
-                "source_sha256": (
-                    "4ec31787712bff704482c50ed9c0df571870b790330eabbb"
-                    "6712770f35581a9b"
-                ),
-            })
-            entries["financial_statement"][
-                "development_source"
-            ] = financial_source
-            atomic_write_json(path=matrix_path, value=matrix)
+            if not financial_ready:
+                financial_sha256 = financial_entry["development_source"][
+                    "source_sha256"
+                ]
+                production_build_table_grid = freeze_module.build_table_grid
+                bounded_limits = replace(
+                    table_grid_module.RESOURCE_LIMITS,
+                    max_total_cells=1,
+                )
+
+                def family_scoped_resource_fault(**kwargs: object) -> object:
+                    """Stop only the exact financial source at materialization."""
+                    html_bytes = kwargs.get("html_bytes")
+                    if (
+                        isinstance(html_bytes, bytes)
+                        and sha256_bytes(content=html_bytes)
+                        == financial_sha256
+                    ):
+                        with mock.patch.object(
+                            table_grid_module,
+                            "RESOURCE_LIMITS",
+                            bounded_limits,
+                        ):
+                            return production_build_table_grid(**kwargs)
+                    return production_build_table_grid(**kwargs)
+
+                financial_resource_patch = mock.patch.object(
+                    freeze_module,
+                    "build_table_grid",
+                    side_effect=family_scoped_resource_fault,
+                )
+                financial_resource_patch.start()
             catalog_path = worktree / "catalog/table_task_contracts.json"
             # The split receipt intentionally measures complete task envelopes.
             # Its test-only catalog values must therefore be iterated through
@@ -316,8 +333,7 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             _run_git(
                 workdir=worktree,
                 arguments=[
-                    "add", "--", "config/table_qualification_matrix.json",
-                    "catalog/table_task_contracts.json",
+                    "add", "--", "catalog/table_task_contracts.json",
                 ],
             )
             _run_git(
@@ -339,6 +355,27 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             )
             if receipt["d07_decision_required"] is not False:
                 raise AssertionError("Synthetic measurement authority still blocks D-07")
+            financial_readiness = receipt["readiness_by_family"][
+                "financial_statement"
+            ]
+            lodging_readiness = receipt["readiness_by_family"][
+                "lodging_kpi_table"
+            ]
+            if lodging_readiness["live_ready"] is not True:
+                raise AssertionError("Synthetic lodging authority is not ready")
+            if financial_ready:
+                if financial_readiness["live_ready"] is not True:
+                    raise AssertionError(
+                        "Synthetic financial authority is unexpectedly blocked"
+                    )
+            elif (
+                financial_readiness["live_ready"] is not False
+                or "EXPANDED_GRID_RESOURCE_LIMIT"
+                not in financial_readiness["blocking_reason_codes"]
+            ):
+                raise AssertionError(
+                    "Synthetic financial resource fault was not recorded"
+                )
             atomic_write_json(
                 path=worktree / "config/table_qualification_freeze.json",
                 value={
@@ -384,6 +421,8 @@ def synthetic_no_d07_repository() -> Iterator[Path]:
             yield worktree
         finally:
             qualification_requirement_patch.stop()
+            if financial_resource_patch is not None:
+                financial_resource_patch.stop()
             estimator_patch.stop()
             subprocess.run(
                 ["git", "worktree", "remove", "--force", str(worktree)],
@@ -398,7 +437,7 @@ def cloned_synthetic_no_d07_repositories(*, count: int) -> Iterator[list[Path]]:
     """Share one built authority while isolating each crash scenario's WB-3 state."""
     if type(count) is not int or count < 1:
         raise AssertionError("Synthetic clone count is invalid")
-    with synthetic_no_d07_repository() as authority_root:
+    with synthetic_no_d07_repository(financial_ready=False) as authority_root:
         _run_git(
             workdir=authority_root,
             arguments=[
@@ -755,7 +794,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
         self,
     ) -> None:
         """Make identical fresh request bytes produce distinct executions."""
-        with synthetic_no_d07_repository() as repo_root:
+        with synthetic_no_d07_repository(financial_ready=False) as repo_root:
             bindings = [
                 qualification._authorization_mapping(
                     repo_root=repo_root,
@@ -2663,10 +2702,10 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 1,
             ),
             (
-                "retry_exhausted",
-                (("HTTP_429", 429), ("HTTP_429", 429)),
+                "retryable_one_shot",
+                (("HTTP_429", 429),),
                 "FAILED_TERMINAL",
-                2,
+                1,
             ),
         )
 
@@ -2799,7 +2838,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
 
     def test_pre_egress_failure_leaves_ordinal_recoverable(self) -> None:
         """A local credential/preflight error creates no remote terminal closure."""
-        with synthetic_no_d07_repository() as repo_root:
+        with synthetic_no_d07_repository(financial_ready=False) as repo_root:
             (repo_root / "outputs/active_publication.json.lock").touch()
             clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
             binding = qualification.issue_table_qualification_authorization(
@@ -2974,7 +3013,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
         self,
     ) -> None:
         """Concurrent ledger appends must be owned by complete Run closures."""
-        with synthetic_no_d07_repository() as repo_root:
+        with synthetic_no_d07_repository(financial_ready=False) as repo_root:
             clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
             issued = [
                 qualification.issue_table_qualification_authorization(
@@ -3292,7 +3331,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
         self,
     ) -> None:
         """An egress marker without terminal response cannot be retried."""
-        with synthetic_no_d07_repository() as repo_root:
+        with synthetic_no_d07_repository(financial_ready=False) as repo_root:
             clock = lambda: datetime(2026, 8, 21, tzinfo=timezone.utc)
             authorization = qualification.issue_table_qualification_authorization(
                 repo_root=repo_root,
