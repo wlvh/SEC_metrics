@@ -219,11 +219,11 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
         scope = {"authorized_task_contract_ids": ["task-a", "task-b"]}
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            run_root = (
+            cycle_root = (
                 root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
-                / ("a" * 64) / "runs"
+                / ("a" * 64)
             )
-            (run_root / "prior-run").mkdir(parents=True)
+            (cycle_root / "runs" / "prior-run").mkdir(parents=True)
             with mock.patch.object(
                 qualification,
                 "load_run_for_status",
@@ -244,22 +244,21 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                     binding=current,
                     scope=scope,
                 )
-            workspace = (
-                root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
-                / ("a" * 64) / "invocation_control" / ("1" * 64)
-            )
+
+            workspace = cycle_root / "invocation_control" / ("1" * 64)
             workspace.mkdir(parents=True)
+            frozen_run = (
+                {
+                    "status": "FROZEN",
+                    "qualification_authorization": prior,
+                },
+                [],
+                [],
+            )
             with mock.patch.object(
                 qualification,
                 "load_run_for_status",
-                return_value=(
-                    {
-                        "status": "FROZEN",
-                        "qualification_authorization": prior,
-                    },
-                    [],
-                    [],
-                ),
+                return_value=frozen_run,
             ), mock.patch.object(
                 qualification,
                 "qualification_remote_egress_terminals",
@@ -282,14 +281,7 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
             with mock.patch.object(
                 qualification,
                 "load_run_for_status",
-                return_value=(
-                    {
-                        "status": "FROZEN",
-                        "qualification_authorization": prior,
-                    },
-                    [],
-                    [],
-                ),
+                return_value=frozen_run,
             ), mock.patch.object(
                 qualification,
                 "qualification_remote_egress_terminals",
@@ -300,6 +292,115 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                     "status": "SUCCEEDED",
                     "batch_terminal": False,
                 }],
+            ):
+                qualification._financial_cycle_stop_gate(
+                    repo_root=root,
+                    binding=current,
+                    scope=scope,
+                )
+
+    def test_every_prior_sibling_must_be_materialized(self) -> None:
+        """Reject an early incomplete Run even when the latest sibling passes."""
+        cycle_id = "sha256:" + ("a" * 64)
+
+        def binding(*, shard_index: int, plan_digit: str) -> dict:
+            value = {
+                field: None
+                for field in qualification._QUALIFICATION_SHARD_AUTHORIZATION_FIELDS
+                if field != "qualification_authorization_id"
+            }
+            value.update({
+                "family_id": "financial_statement",
+                "qualification_cycle_id": cycle_id,
+                "freeze_receipt_id": "sha256:" + ("b" * 64),
+                "requirement_closure_hash": "sha256:" + ("c" * 64),
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash",
+                "api": "chat_completions",
+                "qualification_phase": "SECOND_LAYOUT",
+                "qualification_ordinal": 1,
+                "task_contract_id": "task-a",
+                "qualification_task_plan_id": (
+                    "sha256:" + (plan_digit * 64)
+                ),
+                "parent_qualification_task_plan_id": (
+                    "sha256:" + ("d" * 64)
+                ),
+                "table_shard_binding": {
+                    "shard_index": shard_index,
+                    "shard_count": 3,
+                },
+            })
+            value["qualification_authorization_id"] = content_hash(
+                value=value,
+            )
+            return value
+
+        prior = [
+            binding(shard_index=0, plan_digit="1"),
+            binding(shard_index=1, plan_digit="2"),
+        ]
+        current = binding(shard_index=2, plan_digit="3")
+        scope = {"authorized_task_contract_ids": ["task-a"]}
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            cycle_root = (
+                root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
+                / ("a" * 64)
+            )
+            for index in range(2):
+                (cycle_root / "runs" / "run-{}".format(index)).mkdir(
+                    parents=True,
+                )
+                (cycle_root / "invocation_control" / (str(index + 1) * 64)).mkdir(
+                    parents=True,
+                )
+
+            def load(run_dir: Path, repo_root: Path) -> tuple:
+                del repo_root
+                index = int(run_dir.name.split("-")[-1])
+                return (
+                    {
+                        "status": "OPEN",
+                        "qualification_authorization": prior[index],
+                    },
+                    [],
+                    [],
+                )
+
+            def terminals(workspace_dir: Path) -> list[dict]:
+                index = int(workspace_dir.name[0]) - 1
+                return [{
+                    "qualification_task_plan_id": prior[index][
+                        "qualification_task_plan_id"
+                    ],
+                    "status": "SUCCEEDED",
+                    "batch_terminal": False,
+                }]
+
+            def recovery(**kwargs: object) -> str:
+                prior_binding = kwargs["binding"]
+                return (
+                    "OPEN_BEFORE_EGRESS"
+                    if prior_binding["table_shard_binding"]["shard_index"] == 0
+                    else "COMPLETE_OPEN_PENDING_REVIEW"
+                )
+
+            with mock.patch.object(
+                qualification,
+                "load_run_for_status",
+                side_effect=load,
+            ), mock.patch.object(
+                qualification,
+                "qualification_remote_egress_terminals",
+                side_effect=terminals,
+            ), mock.patch.object(
+                qualification,
+                "_table_qualification_recovery_state",
+                side_effect=recovery,
+            ), self.assertRaisesRegex(
+                qualification.QualificationError,
+                "not materialized",
             ):
                 qualification._financial_cycle_stop_gate(
                     repo_root=root,

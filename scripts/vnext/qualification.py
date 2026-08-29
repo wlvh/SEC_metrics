@@ -1381,18 +1381,17 @@ def _financial_cycle_stop_gate(
             code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
             message="A prior financial child Run is terminal",
         )
-    open_prior = [
-        row for row in prior_current_rows
-        if row["manifest"].get("status") == "OPEN"
-    ]
-    if open_prior:
-        latest = max(open_prior, key=lambda row: row["order"])
+    for prior_row in prior_current_rows:
+        if prior_row["manifest"].get("status") != "OPEN":
+            # load_run_for_status already performs full replay and current
+            # qualification-authorization validation for every FROZEN Run.
+            continue
         recovery = _table_qualification_recovery_state(
             repo_root=repo_root,
-            run_dir=latest["run_dir"],
-            manifest=latest["manifest"],
-            records=latest["records"],
-            binding=latest["binding"],
+            run_dir=prior_row["run_dir"],
+            manifest=prior_row["manifest"],
+            records=prior_row["records"],
+            binding=prior_row["binding"],
         )
         if recovery != "COMPLETE_OPEN_PENDING_REVIEW":
             raise QualificationError(
