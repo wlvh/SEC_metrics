@@ -3114,7 +3114,7 @@ def _validate_live_prepared_request(
     from .sources import validate_public_sec_filing_identity
     from .specs import compile_spec_file, SpecError
     from .table_grid import build_table_grid, TableGridError
-    from .traits import repository_company_ciks, TraitError
+    from .traits import TraitError
 
     try:
         raw_blob = raw_blob_record(
@@ -3128,9 +3128,8 @@ def _validate_live_prepared_request(
             accession=str(fields["accession"]),
             document_name=str(fields["document_name"]),
             source_role=str(fields["source_role"]),
-            allowed_ciks=repository_company_ciks(
-                repo_root=authority_root,
-                company_id=str(fields["company_id"]),
+            allowed_ciks=_live_reader_allowed_ciks(
+                repo_root=authority_root, fields=fields,
             ),
         )
         binding = validate_request_attempt_binding(
@@ -3237,6 +3236,84 @@ def _validate_live_prepared_request(
     ):
         raise AIAdapterError("Live Reader source authority binding differs")
     return rebuilt
+
+
+def _live_reader_allowed_ciks(
+    *, repo_root: Path, fields: Mapping[str, object],
+) -> list[str]:
+    """Resolve registry CIKs or one exact matrix-owned qualification source.
+
+    Catalog table qualification may intentionally use an issuer that is not a
+    production projection company.  Such a source is accepted only when the
+    current matrix owns the task and every immutable filing coordinate already
+    carried by the factory request.  Ordinary disclosure requests and any
+    non-matching catalog source remain registry-owned.
+    """
+    from .traits import repository_company_ciks
+
+    wrapped = fields.get("prepared_request")
+    task_contract_id = (
+        wrapped.task_contract_id
+        if type(wrapped) is PreparedReaderRequest else ""
+    )
+    if task_contract_id:
+        try:
+            from .table_qualification_freeze import (
+                load_table_qualification_matrix,
+            )
+
+            matrix = load_table_qualification_matrix(repo_root=repo_root)
+        except (OSError, RuntimeError, ValueError) as error:
+            raise SourceError(
+                "Qualification matrix source authority is invalid"
+            ) from error
+        source_sha256 = str(fields.get("raw_asset_id", "")).removeprefix(
+            "sha256:"
+        )
+        matches = []
+        for entry in matrix["entries"].values():
+            if task_contract_id not in entry["task_contract_ids"]:
+                continue
+            for source_field in (
+                "development_source",
+                "second_layout_source",
+                "post_freeze_holdout_source",
+            ):
+                source = entry[source_field]
+                if (
+                    source.get("source_kind") == "IMMUTABLE_ATTEMPT"
+                    and source.get("company_id") == fields.get("company_id")
+                    and source.get("source_repo_relative_path")
+                    == fields.get("source_repo_relative_path")
+                    and source.get("source_sha256") == source_sha256
+                    and source.get("accession") == fields.get("accession")
+                    and source.get("document_name")
+                    == fields.get("document_name")
+                    and entry.get("source_media_type")
+                    == fields.get("source_media_type")
+                    and fields.get("source_role") == "target_primary"
+                ):
+                    matches.append(str(source["cik"]))
+        if len(matches) > 1:
+            raise SourceError(
+                "Qualification matrix source authority is ambiguous"
+            )
+        if len(matches) == 1:
+            try:
+                cik = str(int(matches[0]))
+            except ValueError as error:
+                raise SourceError(
+                    "Qualification matrix source CIK is invalid"
+                ) from error
+            if int(cik) <= 0:
+                raise SourceError(
+                    "Qualification matrix source CIK is invalid"
+                )
+            return [cik]
+    return repository_company_ciks(
+        repo_root=repo_root,
+        company_id=str(fields.get("company_id", "")),
+    )
 
 
 def _validate_prepared_request(

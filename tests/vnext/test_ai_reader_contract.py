@@ -31,6 +31,7 @@ from vnext.run_store import load_open_run
 from vnext.run_store import validate_and_freeze_run
 from vnext.sources import raw_blob_record, source_reference_record
 from vnext.table_grid import build_table_grid
+from vnext.traits import TraitError
 from vnext.workflow import create_review_run
 
 
@@ -484,6 +485,52 @@ class _DirectProviderOpener:
 
 class AiReaderContractTest(unittest.TestCase):
     """Prove remote fail-closed behavior and immutable recorded attempts."""
+
+    def test_matrix_owned_qualification_cik_requires_exact_source(self) -> None:
+        """Allow BOA only through its exact immutable matrix declaration."""
+        matrix = json.loads((
+            REPO_ROOT / "config/table_qualification_matrix.json"
+        ).read_text(encoding="utf-8"))
+        financial = next(
+            row
+            for row in matrix["families"]
+            if row["family_id"] == "financial_statement"
+        )
+        source = financial["second_layout_source"]
+        prepared = replace(
+            reader_attempt_fixture()["prepared_request"],
+            task_contract_id=(
+                "financial_assets_under_management_table_v1"
+            ),
+        )
+        fields = {
+            "prepared_request": prepared,
+            "company_id": source["company_id"],
+            "source_repo_relative_path": source[
+                "source_repo_relative_path"
+            ],
+            "source_media_type": financial["source_media_type"],
+            "accession": source["accession"],
+            "document_name": source["document_name"],
+            "source_role": "target_primary",
+            "raw_asset_id": "sha256:" + source["source_sha256"],
+        }
+        self.assertEqual(
+            [str(int(source["cik"]))],
+            ai_adapter._live_reader_allowed_ciks(
+                repo_root=REPO_ROOT, fields=fields,
+            ),
+        )
+        forged = {
+            **fields,
+            "source_repo_relative_path": (
+                str(fields["source_repo_relative_path"]) + ".forged"
+            ),
+        }
+        with self.assertRaises(TraitError):
+            ai_adapter._live_reader_allowed_ciks(
+                repo_root=REPO_ROOT, fields=forged,
+            )
 
     def test_remote_adapter_direct_complete_requires_live_source_authority(
         self,
