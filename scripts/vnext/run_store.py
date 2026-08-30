@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+from contextlib import contextmanager
+import fcntl
 import json
+import os
 from pathlib import Path
-from typing import Dict, List, Mapping, Optional, Sequence, Tuple
+from typing import Dict, Iterator, List, Mapping, Optional, Sequence, Tuple
 
 from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
 from .ai_adapter import _output_schema_for_reader_request
@@ -116,6 +119,23 @@ FORMAL_RUN_VALIDATION_CHECKS = (
 
 class RunStoreError(RuntimeError):
     """Report unsafe Run writes, freeze binding failures, or tampering."""
+
+
+@contextmanager
+def _run_write_lock(*, run_dir: Path) -> Iterator[None]:
+    """Serialize cooperating Run mutations on the stable directory inode."""
+    if run_dir.is_symlink() or not run_dir.is_dir():
+        raise RunStoreError("Run lock directory is absent or unsafe")
+    descriptor = os.open(str(run_dir), os.O_RDONLY)
+    try:
+        fcntl.flock(descriptor, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            os.fsync(descriptor)
+            fcntl.flock(descriptor, fcntl.LOCK_UN)
+    finally:
+        os.close(descriptor)
 
 
 def _run_paths(*, run_dir: Path) -> Dict[str, Path]:
@@ -632,6 +652,14 @@ def append_run_record(*, run_dir: Path, record: Mapping[str, object]) -> None:
         The complete JSONL is atomically replaced; a FROZEN/FAILED Run remains
         byte-immutable.
     """
+    with _run_write_lock(run_dir=run_dir):
+        _append_run_record_unlocked(run_dir=run_dir, record=record)
+
+
+def _append_run_record_unlocked(
+    *, run_dir: Path, record: Mapping[str, object],
+) -> None:
+    """Append one record while the caller holds the stable Run lock."""
     manifest = _read_manifest(run_dir=run_dir)
     if manifest["status"] != "OPEN":
         raise RunStoreError("Frozen or failed Run cannot be modified")
@@ -655,6 +683,19 @@ def append_run_record_if_unchanged(
     prefix from being extended, while the atomic replacement preserves the
     existing crash boundary without reparsing a large DerivedAsset.
     """
+    with _run_write_lock(run_dir=run_dir):
+        return _append_run_record_if_unchanged_unlocked(
+            run_dir=run_dir,
+            record=record,
+            expected_records_file_hash=expected_records_file_hash,
+        )
+
+
+def _append_run_record_if_unchanged_unlocked(
+    *, run_dir: Path, record: Mapping[str, object],
+    expected_records_file_hash: str,
+) -> str:
+    """Execute one byte-CAS append under the stable Run lock."""
     manifest = _read_manifest(run_dir=run_dir)
     if manifest["status"] != "OPEN":
         raise RunStoreError("Frozen or failed Run cannot be modified")
@@ -698,6 +739,23 @@ def append_run_records_atomically(
         or the prior bytes remain authoritative. A changed record stream or
         HUMAN decision chain fails before the atomic replacement.
     """
+    with _run_write_lock(run_dir=run_dir):
+        _append_run_records_atomically_unlocked(
+            run_dir=run_dir,
+            records=records,
+            expected_records_file_hash=expected_records_file_hash,
+            expected_review_decisions_file_hash=(
+                expected_review_decisions_file_hash
+            ),
+        )
+
+
+def _append_run_records_atomically_unlocked(
+    *, run_dir: Path, records: Sequence[Mapping[str, object]],
+    expected_records_file_hash: str,
+    expected_review_decisions_file_hash: str,
+) -> None:
+    """Execute one finalization CAS batch under the stable Run lock."""
     manifest = _read_manifest(run_dir=run_dir)
     if manifest["status"] != "OPEN":
         raise RunStoreError("Frozen or failed Run cannot be modified")
@@ -771,6 +829,17 @@ def append_review_decision(
         run_dir: Run root.
         decision: Strict REVIEW_DECISION record.
     """
+    with _run_write_lock(run_dir=run_dir):
+        _append_review_decision_unlocked(
+            run_dir=run_dir,
+            decision=decision,
+        )
+
+
+def _append_review_decision_unlocked(
+    *, run_dir: Path, decision: Mapping[str, object],
+) -> None:
+    """Append one decision while the caller holds the stable Run lock."""
     manifest = _read_manifest(run_dir=run_dir)
     if manifest["status"] != "OPEN":
         raise RunStoreError("Frozen or failed Run cannot accept a decision")
@@ -3160,6 +3229,14 @@ def validate_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
         Content-bound PASSED ValidationReceipt derived without caller status
         or caller-authored checks.
     """
+    with _run_write_lock(run_dir=run_dir):
+        return _validate_run_unlocked(run_dir=run_dir, repo_root=repo_root)
+
+
+def _validate_run_unlocked(
+    *, run_dir: Path, repo_root: Path,
+) -> Dict[str, object]:
+    """Validate and write the receipt while holding the stable Run lock."""
     manifest, _records, _decisions = _mechanically_replay_open_run(
         run_dir=run_dir,
         repo_root=repo_root,
@@ -3200,8 +3277,9 @@ def validate_and_freeze_run(
     Returns:
         FROZEN manifest bound to the mechanically issued PASSED receipt.
     """
-    validate_run(run_dir=run_dir, repo_root=repo_root)
-    return freeze_run(run_dir=run_dir, repo_root=repo_root)
+    with _run_write_lock(run_dir=run_dir):
+        _validate_run_unlocked(run_dir=run_dir, repo_root=repo_root)
+        return _freeze_run_unlocked(run_dir=run_dir, repo_root=repo_root)
 
 
 def freeze_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
@@ -3220,6 +3298,14 @@ def freeze_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
             receipt and WITHHELD metric results may freeze for audit/replay,
             but publication rejects them.
     """
+    with _run_write_lock(run_dir=run_dir):
+        return _freeze_run_unlocked(run_dir=run_dir, repo_root=repo_root)
+
+
+def _freeze_run_unlocked(
+    *, run_dir: Path, repo_root: Path,
+) -> Dict[str, object]:
+    """Freeze current bytes while holding the stable Run lock."""
     manifest, records, decisions = _mechanically_replay_open_run(
         run_dir=run_dir,
         repo_root=repo_root,

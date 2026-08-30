@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import copy
 import json
+import multiprocessing
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from typing import Optional
@@ -28,6 +30,7 @@ from vnext.records import RecordError, validate_record
 from vnext.render import build_review_context, render_review_markdown
 from vnext.requirements import load_requirement_snapshot
 from vnext.run_store import append_run_record_if_unchanged
+from vnext.run_store import append_run_records_atomically, create_run
 from vnext.run_store import load_frozen_run, RunStoreError
 from vnext.run_store import validate_and_freeze_run
 from vnext.review import build_review_unit, create_system_review_decision
@@ -39,6 +42,59 @@ from vnext.table_qualification_freeze import load_table_qualification_matrix
 from vnext.traits import TraitError
 from vnext.workflow import create_table_task_review_run
 from vnext.workflow import finalize_reviewed_direct_results
+
+
+def _cas_race_worker(
+    *, label: str, run_dir_text: str, record: dict, expected_hash: str,
+    decision_hash: str, batch: bool, entered: object, release: object,
+    results: object, block_before_replace: bool,
+) -> None:
+    """Run one cooperating CAS writer in a separate local process."""
+    from pathlib import Path
+    from unittest import mock as child_mock
+
+    import vnext.run_store as child_store
+
+    original = child_store.atomic_write_bytes
+
+    def gated_write(**kwargs: object) -> None:
+        """Pause the first writer after validation while it owns the lock."""
+        entered.set()
+        if not release.wait(timeout=15):
+            raise RuntimeError("race barrier timed out")
+        original(**kwargs)
+
+    try:
+        context = (
+            child_mock.patch.object(
+                child_store,
+                "atomic_write_bytes",
+                side_effect=gated_write,
+            )
+            if block_before_replace else child_mock.patch.object(
+                child_store,
+                "atomic_write_bytes",
+                wraps=original,
+            )
+        )
+        with context:
+            if batch:
+                child_store.append_run_records_atomically(
+                    run_dir=Path(run_dir_text),
+                    records=[record],
+                    expected_records_file_hash=expected_hash,
+                    expected_review_decisions_file_hash=decision_hash,
+                )
+                value = "BATCH_OK"
+            else:
+                value = child_store.append_run_record_if_unchanged(
+                    run_dir=Path(run_dir_text),
+                    record=record,
+                    expected_records_file_hash=expected_hash,
+                )
+        results.put((label, "OK", value))
+    except Exception as error:  # pragma: no cover - asserted in parent
+        results.put((label, type(error).__name__, str(error)))
 
 
 class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
@@ -568,6 +624,97 @@ class FinancialTableShardClosureTest(unittest.TestCase):
                         expected_records_file_hash=updated_hash,
                     )
                 self.assertEqual(changed, records_path.read_bytes())
+
+    def test_stable_run_lock_prevents_single_and_batch_lost_update(
+        self,
+    ) -> None:
+        """Make a stale cooperating writer fail after the winner replaces."""
+        process_context = multiprocessing.get_context("fork")
+        for batch in (False, True):
+            with self.subTest(batch=batch), tempfile.TemporaryDirectory() as directory:
+                run_dir = Path(directory) / "run"
+                create_run(
+                    run_dir=run_dir,
+                    run_id="run:cas-race:{}".format(
+                        "batch" if batch else "single"
+                    ),
+                    company_id="cas_race_company",
+                    company_traits=["financial"],
+                    target_period={
+                        "fiscal_year": 2025,
+                        "period_start": "2025-01-01",
+                        "period_end": "2025-12-31",
+                    },
+                    source_references=[],
+                    missing_required_source_roles=[],
+                    spec_file_hashes={},
+                    requirement_hashes={},
+                )
+                empty_hash = sha256_bytes(content=b"")
+                entered = process_context.Event()
+                release = process_context.Event()
+                results = process_context.Queue()
+                common = {
+                    "run_dir_text": str(run_dir),
+                    "expected_hash": empty_hash,
+                    "decision_hash": empty_hash,
+                    "batch": batch,
+                    "entered": entered,
+                    "release": release,
+                    "results": results,
+                }
+                first = process_context.Process(
+                    target=_cas_race_worker,
+                    kwargs={
+                        **common,
+                        "label": "first",
+                        "record": self.asset,
+                        "block_before_replace": True,
+                    },
+                )
+                second = process_context.Process(
+                    target=_cas_race_worker,
+                    kwargs={
+                        **common,
+                        "label": "second",
+                        "record": self.source,
+                        "block_before_replace": False,
+                    },
+                )
+                try:
+                    first.start()
+                    self.assertTrue(entered.wait(timeout=10))
+                    second.start()
+                    time.sleep(0.25)
+                    self.assertTrue(
+                        second.is_alive(),
+                        "second writer bypassed the stable Run lock",
+                    )
+                    release.set()
+                    first.join(timeout=15)
+                    second.join(timeout=15)
+                    self.assertFalse(first.is_alive())
+                    self.assertFalse(second.is_alive())
+                    observed = {
+                        row[0]: row[1:]
+                        for row in (
+                            results.get(timeout=5),
+                            results.get(timeout=5),
+                        )
+                    }
+                finally:
+                    release.set()
+                    for process in (first, second):
+                        if process.is_alive():
+                            process.terminate()
+                        process.join(timeout=5)
+                self.assertEqual("OK", observed["first"][0])
+                self.assertEqual("RunStoreError", observed["second"][0])
+                self.assertIn("changed", observed["second"][1])
+                self.assertEqual(
+                    run_store_module._jsonl_bytes(records=[self.asset]),
+                    (run_dir / "records.jsonl").read_bytes(),
+                )
 
     def _candidate_and_evidence(
         self, *, shard_index: int, response: dict,
