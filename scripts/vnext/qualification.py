@@ -1288,11 +1288,6 @@ def _financial_cycle_stop_gate(
             order = _financial_authorization_order(
                 binding=prior, task_ids=task_ids,
             )
-            if order > current_order:
-                raise QualificationError(
-                    code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
-                    message="A later financial plan already has Run state",
-                )
             run_rows.append({
                 "binding": prior,
                 "manifest": manifest,
@@ -1360,6 +1355,49 @@ def _financial_cycle_stop_gate(
     current_shard_index = int(
         binding["table_shard_binding"]["shard_index"]
     )
+    later_rows = [
+        row for row in run_rows if row["order"] > current_order
+    ]
+    if later_rows:
+        # A restarted parent always re-enters its deterministic loop at shard
+        # zero.  Later state is safe only when the current child itself is an
+        # already-materialized member of one exact, gap-free prefix from this
+        # same parent.  This is recovery of durable executions, never
+        # permission to skip a missing child or to create a new out-of-order
+        # egress.
+        current_plan_id = str(binding["qualification_task_plan_id"])
+        current_row = run_by_plan.get(current_plan_id)
+        current_indices = sorted(
+            int(row["binding"]["table_shard_binding"]["shard_index"])
+            for row in current_rows
+        )
+        parent_plan_id = str(binding["parent_qualification_task_plan_id"])
+        shard_count = int(binding["table_shard_binding"]["shard_count"])
+        if (
+            current_row is None
+            or current_row["order"] != current_order
+            or not current_indices
+            or current_indices != list(range(current_indices[-1] + 1))
+            or any(
+                (
+                    str(row["binding"]["qualification_phase"]),
+                    int(row["binding"]["qualification_ordinal"]),
+                    str(row["binding"]["task_contract_id"]),
+                ) != current_key
+                or row["binding"]["parent_qualification_task_plan_id"]
+                != parent_plan_id
+                or row["binding"]["table_shard_binding"]["shard_count"]
+                != shard_count
+                for row in later_rows
+            )
+        ):
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
+                message=(
+                    "Later financial Run state is not a recoverable "
+                    "contiguous prefix"
+                ),
+            )
     prior_current_rows = [
         row for row in current_rows
         if int(row["binding"]["table_shard_binding"]["shard_index"])
@@ -1373,15 +1411,16 @@ def _financial_cycle_stop_gate(
             code="TABLE_QUALIFICATION_SEQUENCE_INVALID",
             message="A prior financial child Run is absent",
         )
+    recovery_rows = current_rows if later_rows else prior_current_rows
     if any(
         row["manifest"].get("status") not in {"OPEN", "FROZEN"}
-        for row in prior_current_rows
+        for row in recovery_rows
     ):
         raise QualificationError(
             code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
             message="A prior financial child Run is terminal",
         )
-    for prior_row in prior_current_rows:
+    for prior_row in recovery_rows:
         if prior_row["manifest"].get("status") != "OPEN":
             # load_run_for_status already performs full replay and current
             # qualification-authorization validation for every FROZEN Run.
@@ -1402,6 +1441,10 @@ def _financial_cycle_stop_gate(
     workspace_root = cycle_root / "invocation_control"
     terminals_by_plan = {}
     current_plan_id = str(binding["qualification_task_plan_id"])
+    recovery_prefix_plan_ids = {
+        str(row["binding"]["qualification_task_plan_id"])
+        for row in recovery_rows
+    } if later_rows else set()
     if workspace_root.exists():
         if workspace_root.is_symlink() or not workspace_root.is_dir():
             raise QualificationError(
@@ -1457,7 +1500,10 @@ def _financial_cycle_stop_gate(
                     code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
                     message="A financial remote terminal lacks Run materialization",
                 )
-            if row is not None and row["order"] < current_order and (
+            if row is not None and (
+                row["order"] < current_order
+                or plan_id in recovery_prefix_plan_ids
+            ) and (
                 terminal["status"] != "SUCCEEDED"
                 or terminal["batch_terminal"] is not False
             ):
@@ -1469,7 +1515,10 @@ def _financial_cycle_stop_gate(
         str(row["binding"]["qualification_task_plan_id"])
         for row in run_rows if row["order"] < current_order
     }
-    if not expected_prior_plan_ids.issubset(set(terminals_by_plan)):
+    expected_existing_plan_ids = (
+        expected_prior_plan_ids | recovery_prefix_plan_ids
+    )
+    if not expected_existing_plan_ids.issubset(set(terminals_by_plan)):
         raise QualificationError(
             code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
             message="A prior financial child lacks WB-3 closure",

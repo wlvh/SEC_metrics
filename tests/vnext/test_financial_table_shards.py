@@ -620,6 +620,139 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                     scope=scope,
                 )
 
+    def test_contiguous_multishard_prefix_is_recoverable_but_gaps_fail(
+        self,
+    ) -> None:
+        """Resume an exact durable prefix without accepting disorder or gaps."""
+        cycle_id = "sha256:" + ("a" * 64)
+
+        def binding(*, shard_index: int, plan_digit: str) -> dict:
+            value = {
+                field: None
+                for field in qualification._QUALIFICATION_SHARD_AUTHORIZATION_FIELDS
+                if field != "qualification_authorization_id"
+            }
+            value.update({
+                "family_id": "financial_statement",
+                "qualification_cycle_id": cycle_id,
+                "freeze_receipt_id": "sha256:" + ("b" * 64),
+                "requirement_closure_hash": "sha256:" + ("c" * 64),
+                "provider": "deepseek",
+                "model": "deepseek-v4-flash",
+                "api": "chat_completions",
+                "qualification_phase": "SECOND_LAYOUT",
+                "qualification_ordinal": 1,
+                "task_contract_id": "task-a",
+                "qualification_task_plan_id": (
+                    "sha256:" + (plan_digit * 64)
+                ),
+                "parent_qualification_task_plan_id": (
+                    "sha256:" + ("d" * 64)
+                ),
+                "table_shard_binding": {
+                    "shard_index": shard_index,
+                    "shard_count": 3,
+                },
+            })
+            value["qualification_authorization_id"] = content_hash(
+                value=value,
+            )
+            return value
+
+        bindings = [
+            binding(shard_index=index, plan_digit=str(index + 1))
+            for index in range(3)
+        ]
+        scope = {"authorized_task_contract_ids": ["task-a"]}
+
+        def exercise(
+            *, existing_indices: list[int],
+            terminal_status_by_index: Optional[dict[int, str]] = None,
+        ) -> list[int]:
+            with tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                cycle_root = (
+                    root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
+                    / ("a" * 64)
+                )
+                for index in existing_indices:
+                    (cycle_root / "runs" / "run-{}".format(index)).mkdir(
+                        parents=True,
+                    )
+                    (cycle_root / "invocation_control"
+                     / (str(index + 1) * 64)).mkdir(parents=True)
+
+                def load(run_dir: Path, repo_root: Path) -> tuple:
+                    del repo_root
+                    index = int(run_dir.name.split("-")[-1])
+                    return (
+                        {
+                            "status": "OPEN",
+                            "qualification_authorization": bindings[index],
+                        },
+                        [],
+                        [],
+                    )
+
+                def terminals(workspace_dir: Path) -> list[dict]:
+                    index = int(workspace_dir.name[0]) - 1
+                    status = (terminal_status_by_index or {}).get(
+                        index, "SUCCEEDED",
+                    )
+                    return [{
+                        "qualification_task_plan_id": bindings[index][
+                            "qualification_task_plan_id"
+                        ],
+                        "status": status,
+                        "batch_terminal": False,
+                    }]
+
+                recovered: list[int] = []
+
+                def recovery(**kwargs: object) -> str:
+                    recovered.append(
+                        kwargs["binding"]["table_shard_binding"][
+                            "shard_index"
+                        ]
+                    )
+                    return "COMPLETE_OPEN_PENDING_REVIEW"
+
+                with mock.patch.object(
+                    qualification,
+                    "load_run_for_status",
+                    side_effect=load,
+                ), mock.patch.object(
+                    qualification,
+                    "qualification_remote_egress_terminals",
+                    side_effect=terminals,
+                ), mock.patch.object(
+                    qualification,
+                    "_table_qualification_recovery_state",
+                    side_effect=recovery,
+                ):
+                    qualification._financial_cycle_stop_gate(
+                        repo_root=root,
+                        binding=bindings[0],
+                        scope=scope,
+                    )
+                return recovered
+
+        self.assertEqual([0, 1], exercise(existing_indices=[0, 1]))
+        for indices in ([1], [0, 2]):
+            with self.subTest(invalid_prefix=indices), self.assertRaisesRegex(
+                qualification.QualificationError,
+                "recoverable contiguous prefix",
+            ):
+                exercise(existing_indices=list(indices))
+        with self.assertRaisesRegex(
+            qualification.QualificationError,
+            "remote terminal stopped",
+        ):
+            exercise(
+                existing_indices=[0, 1],
+                terminal_status_by_index={1: "FAILED_TERMINAL"},
+            )
+
 
 class FinancialTableShardClosureTest(unittest.TestCase):
     """Prove shard-local outcomes remain bound to complete ordered coverage."""
