@@ -8,6 +8,7 @@ import unittest
 
 from sec_http import parse_request_log_rows
 from tests.vnext.common import REPO_ROOT
+from vnext.stage_a_snapshot import _qualification_evidence_append_is_valid
 from vnext.stage_a_snapshot import _request_ledger_append_is_valid
 
 
@@ -49,6 +50,29 @@ class StageAPostSnapshotAppendTest(unittest.TestCase):
         self.assertFalse(_request_ledger_append_is_valid(
             repo_root=REPO_ROOT,
             missing_artifact_paths=appended_paths[:-1],
+        ))
+
+    def test_financial_qualification_append_is_one_terminal_dag(self) -> None:
+        """Accept the complete first shard cycle and reject a partial commit."""
+        cycle = (
+            "artifacts/vnext/qualification/cycles/"
+            "4b299e648b801e0160c98b9358db143e8a72405b00eb02503a706c01e7ff017c"
+        )
+        paths = subprocess.run(
+            ["git", "ls-files", "--", cycle],
+            cwd=str(REPO_ROOT),
+            check=True,
+            capture_output=True,
+            encoding="utf-8",
+        ).stdout.splitlines()
+        self.assertEqual(22, len(paths))
+        self.assertTrue(_qualification_evidence_append_is_valid(
+            repo_root=REPO_ROOT,
+            missing_artifact_paths=paths,
+        ))
+        self.assertFalse(_qualification_evidence_append_is_valid(
+            repo_root=REPO_ROOT,
+            missing_artifact_paths=paths[:-1],
         ))
 
 

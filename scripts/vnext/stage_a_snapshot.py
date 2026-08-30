@@ -75,8 +75,10 @@ POST_SNAPSHOT_APPEND_ROOTS = (
     "artifacts/vnext/table_stage_c_evidence/"
     "financial_materialization_benchmark/",
     "artifacts/vnext/table_qualification_freeze/",
+    "artifacts/vnext/qualification/cycles/",
     "evidence/request_attempts/",
 )
+QUALIFICATION_CYCLE_APPEND_ROOT = "artifacts/vnext/qualification/cycles/"
 REQUEST_LOG_PATH = Path("evidence/requests_log.csv")
 REQUEST_LOG_MANIFEST_PATH = Path("evidence/requests_log_manifest.json")
 POST_SNAPSHOT_LEDGER_ERRORS = {
@@ -339,6 +341,252 @@ def _request_ledger_append_is_valid(
     return appended_paths == declared_attempt_paths
 
 
+def _qualification_evidence_append_is_valid(
+    *, repo_root: Path, missing_artifact_paths: List[str],
+) -> bool:
+    """Verify each newly committed qualification cycle as one terminal DAG."""
+    declared = {
+        path for path in missing_artifact_paths
+        if path.startswith(QUALIFICATION_CYCLE_APPEND_ROOT)
+    }
+    if not declared:
+        return True
+    try:
+        from .invocation_control import qualification_remote_egress_terminals
+        from .qualification import _parse_qualification_ledger
+        from .qualification import (
+            validate_table_qualification_provider_ledger_entry,
+        )
+        from .run_store import load_frozen_run_terminal_bytes
+    except ImportError:
+        return False
+    cycle_pattern = re.compile(
+        r"^" + re.escape(QUALIFICATION_CYCLE_APPEND_ROOT)
+        + r"([0-9a-f]{64})/"
+    )
+    cycles: Dict[str, set[str]] = {}
+    for relative in declared:
+        match = cycle_pattern.match(relative)
+        if match is None:
+            return False
+        cycles.setdefault(match.group(1), set()).add(relative)
+    try:
+        for cycle_digest, cycle_paths in cycles.items():
+            cycle_relative = QUALIFICATION_CYCLE_APPEND_ROOT + cycle_digest
+            tracked = subprocess.run(
+                ["git", "ls-files", "--", cycle_relative],
+                cwd=str(repo_root),
+                check=True,
+                capture_output=True,
+                encoding="utf-8",
+            )
+            tracked_paths = {
+                line for line in tracked.stdout.splitlines() if line
+            }
+            if tracked_paths != cycle_paths:
+                return False
+            cycle_root = repo_root / cycle_relative
+            runs_root = cycle_root / "runs"
+            invocation_root = cycle_root / "invocation_control"
+            if (
+                cycle_root.is_symlink()
+                or runs_root.is_symlink()
+                or invocation_root.is_symlink()
+                or not runs_root.is_dir()
+                or not invocation_root.is_dir()
+            ):
+                return False
+            cycle_id = "sha256:" + cycle_digest
+            ledger_path = (
+                repo_root
+                / "artifacts/vnext/table_qualification_freeze/cycles"
+                / cycle_digest
+                / "provider_ledger.jsonl"
+            )
+            if ledger_path.is_symlink() or not ledger_path.is_file():
+                return False
+            ledger_rows = _parse_qualification_ledger(
+                content=ledger_path.read_bytes(),
+            )
+            ledger_by_id = {
+                str(row["qualification_provider_ledger_entry_id"]): row
+                for row in ledger_rows
+            }
+            if len(ledger_by_id) != len(ledger_rows):
+                return False
+            used_ledger_ids = set()
+            used_workspaces = set()
+            run_directories = sorted(
+                path for path in runs_root.iterdir()
+                if path.is_dir() and not path.is_symlink()
+            )
+            if not run_directories:
+                return False
+            for run_dir in run_directories:
+                manifest, records, decisions = load_frozen_run_terminal_bytes(
+                    run_dir=run_dir,
+                )
+                authorization = manifest.get("qualification_authorization")
+                if type(authorization) is not dict:
+                    return False
+                body = {
+                    key: authorization[key]
+                    for key in authorization
+                    if key != "qualification_authorization_id"
+                }
+                expected_run_relative = run_dir.relative_to(
+                    repo_root
+                ).as_posix()
+                if (
+                    authorization.get("qualification_authorization_id")
+                    != content_hash(value=body)
+                    or authorization.get("qualification_cycle_id") != cycle_id
+                    or authorization.get("run_id") != manifest.get("run_id")
+                    or authorization.get("run_directory_relative_path")
+                    != expected_run_relative
+                    or manifest.get("target_period")
+                    != authorization.get("target_period")
+                ):
+                    return False
+                freeze_id = authorization.get("freeze_receipt_id")
+                if (
+                    type(freeze_id) is not str
+                    or re.fullmatch(r"sha256:[0-9a-f]{64}", freeze_id)
+                    is None
+                ):
+                    return False
+                freeze_path = (
+                    repo_root
+                    / "artifacts/vnext/table_qualification_freeze/receipts"
+                    / (freeze_id.split(":", maxsplit=1)[1] + ".json")
+                )
+                freeze = _json_object(
+                    repo_root=repo_root,
+                    relative=freeze_path.relative_to(repo_root),
+                    label="historical qualification freeze receipt",
+                )
+                freeze_body = {
+                    key: freeze[key]
+                    for key in freeze
+                    if key != "table_qualification_freeze_receipt_id"
+                }
+                if (
+                    freeze.get("table_qualification_freeze_receipt_id")
+                    != content_hash(value=freeze_body)
+                    or freeze.get("table_qualification_freeze_receipt_id")
+                    != freeze_id
+                    or freeze.get("qualification_cycle_id") != cycle_id
+                ):
+                    return False
+                attempts = [
+                    record for record in records
+                    if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+                ]
+                qualification_evidence = [
+                    record for record in records
+                    if record["record_type"]
+                    == "TABLE_QUALIFICATION_EVIDENCE"
+                ]
+                checks = [
+                    record for record in records
+                    if record["record_type"] == "EVIDENCE_CHECK"
+                ]
+                results = [
+                    record for record in records
+                    if record["record_type"] == "METRIC_RESULT"
+                ]
+                if (
+                    len(attempts) != 1
+                    or attempts[0].get("status") != "SUCCEEDED"
+                    or attempts[0].get("qualification_authorization")
+                    != authorization
+                    or len(qualification_evidence) != 1
+                    or qualification_evidence[0].get(
+                        "qualification_authorization"
+                    ) != authorization
+                    or qualification_evidence[0].get("attempt_id")
+                    != attempts[0].get("attempt_id")
+                    or not checks
+                    or any(check.get("status") != "PASS" for check in checks)
+                    or not results
+                    or len(decisions) != 1
+                    or decisions[0].get("decision") != "APPROVE"
+                ):
+                    return False
+                ledger_id = qualification_evidence[0].get(
+                    "provider_ledger_entry_id"
+                )
+                ledger = ledger_by_id.get(str(ledger_id))
+                if ledger is None:
+                    return False
+                validate_table_qualification_provider_ledger_entry(
+                    entry=ledger,
+                    binding=authorization,
+                    run_id=str(manifest["run_id"]),
+                    attempt=attempts[0],
+                )
+                used_ledger_ids.add(str(ledger_id))
+                workspace_relative = authorization.get(
+                    "wb3_workspace_relative_path"
+                )
+                plan_id = authorization.get("qualification_task_plan_id")
+                if (
+                    type(workspace_relative) is not str
+                    or type(plan_id) is not str
+                    or re.fullmatch(r"sha256:[0-9a-f]{64}", plan_id) is None
+                    or workspace_relative in used_workspaces
+                    or workspace_relative
+                    != (
+                        cycle_relative + "/invocation_control/"
+                        + plan_id.split(":", maxsplit=1)[1]
+                    )
+                ):
+                    return False
+                used_workspaces.add(workspace_relative)
+                terminals = qualification_remote_egress_terminals(
+                    workspace_dir=repo_root / workspace_relative,
+                )
+                usage_limit = authorization.get(
+                    "qualification_usage_policy", {}
+                ).get("actual_prompt_tokens_max")
+                if (
+                    len(terminals) != 1
+                    or terminals[0].get("status") != "SUCCEEDED"
+                    or terminals[0].get("batch_terminal") is not False
+                    or terminals[0].get("qualification_task_plan_id")
+                    != plan_id
+                    or terminals[0].get("provider_request_body_sha256")
+                    != attempts[0].get("request_body_sha256")
+                    or terminals[0].get("provider_request_ids")
+                    != [attempts[0].get("provider_request_id")]
+                    or len(terminals[0].get("egress_marker_ids", [])) != 1
+                    or type(usage_limit) is not int
+                    or not terminals[0].get("attempt_usages")
+                    or type(terminals[0]["attempt_usages"][-1].get(
+                        "input_tokens"
+                    )) is not int
+                    or terminals[0]["attempt_usages"][-1]["input_tokens"]
+                    > usage_limit
+                ):
+                    return False
+            actual_workspaces = {
+                path.relative_to(repo_root).as_posix()
+                for path in invocation_root.iterdir()
+                if path.is_dir() and not path.is_symlink()
+            }
+            if (
+                used_ledger_ids != set(ledger_by_id)
+                or used_workspaces != actual_workspaces
+            ):
+                return False
+    except (
+        KeyError, OSError, RuntimeError, StageASnapshotError, ValueError,
+        subprocess.SubprocessError,
+    ):
+        return False
+    return True
+
+
 def _post_snapshot_artifact_errors_are_allowed(
     *, repo_root: Path, errors: List[str],
 ) -> bool:
@@ -378,6 +626,10 @@ def _post_snapshot_artifact_errors_are_allowed(
         or unexpected != []
         or not _committed_post_snapshot_artifacts(
             repo_root=repo_root, relative_paths=missing,
+        )
+        or not _qualification_evidence_append_is_valid(
+            repo_root=repo_root,
+            missing_artifact_paths=missing,
         )
         or (
             (ledger_errors or any(

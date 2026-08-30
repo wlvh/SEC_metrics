@@ -3444,6 +3444,66 @@ def load_frozen_run(
     return manifest, records, decisions
 
 
+def load_frozen_run_terminal_bytes(
+    *, run_dir: Path,
+) -> Tuple[
+    Dict[str, object], List[Dict[str, object]], List[Dict[str, object]]
+]:
+    """Verify one historical FROZEN Run's self-contained terminal bytes.
+
+    This loader deliberately does not reinterpret old qualification evidence
+    under the current freeze.  It proves only the immutable terminal that was
+    already mechanically validated at its exact head: record identities,
+    review linkage/assets, payload hashes, PASSED receipt, and both terminal
+    manifest hashes.  Current execution must continue to use
+    :func:`load_frozen_run` and its repository-authority replay.
+    """
+    manifest = _read_manifest(run_dir=run_dir)
+    if manifest["status"] != "FROZEN":
+        raise RunStoreError("Historical terminal requires a FROZEN Run")
+    paths = _run_paths(run_dir=run_dir)
+    expected = {
+        "records_file_hash": sha256_file(path=paths["records"]),
+        "review_decisions_file_hash": sha256_file(path=paths["decisions"]),
+        "validation_file_hash": sha256_file(path=paths["validation"]),
+    }
+    if any(manifest[field] != digest for field, digest in expected.items()):
+        raise RunStoreError("Historical frozen Run file hash differs")
+    records = _read_jsonl(path=paths["records"])
+    decisions = _read_jsonl(path=paths["decisions"])
+    _validate_review_bindings(records=records, decisions=decisions)
+    _verify_review_assets(
+        run_dir=run_dir,
+        review_units=[
+            record for record in records
+            if record["record_type"] == "REVIEW_UNIT"
+        ],
+    )
+    validation_payload = strict_json_file(path=paths["validation"])
+    if not isinstance(validation_payload, dict):
+        raise RunStoreError("Historical validation root must be an object")
+    validation = validate_record(record=validation_payload)
+    if validation["status"] != "PASSED":
+        raise RunStoreError("Historical frozen Run is not PASSED")
+    _verify_run_validation_receipt(
+        run_dir=run_dir,
+        manifest=manifest,
+        receipt=validation,
+    )
+    expected_content, expected_audit = _run_content_and_audit_hashes(
+        manifest=manifest,
+        records=records,
+        decisions=decisions,
+        validation=validation,
+    )
+    if (
+        manifest["content_manifest_hash"] != expected_content
+        or manifest["audit_manifest_hash"] != expected_audit
+    ):
+        raise RunStoreError("Historical frozen Run terminal hash differs")
+    return manifest, records, decisions
+
+
 def load_run_for_status(
     *, run_dir: Path, repo_root: Path
 ) -> Tuple[
