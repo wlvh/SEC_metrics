@@ -30,8 +30,9 @@ from validation_provenance import verify_validation_snapshot
 from validation_provenance import ValidationProvenanceError
 from sec_http import parse_request_log_rows, validate_request_log_manifest
 
-from .canonical import atomic_write_json, content_hash, parse_utc_timestamp
-from .canonical import sha256_file, strict_json_file
+from .canonical import atomic_write_json, canonical_json_bytes, content_hash
+from .canonical import parse_utc_timestamp, sha256_bytes, sha256_file
+from .canonical import strict_json_file
 from .table_qualification_freeze import validate_table_qualification_freeze
 from .table_qualification_freeze import TableQualificationFreezeError
 
@@ -86,6 +87,24 @@ POST_SNAPSHOT_LEDGER_ERRORS = {
     "artifact SHA-256 mismatch: evidence/requests_log_manifest.json",
     "artifact size mismatch: evidence/requests_log.csv",
 }
+JPM_BENCHMARK_POINTER = Path(
+    "artifacts/vnext/table_stage_c_evidence/"
+    "financial_materialization_benchmark/current.json"
+)
+JPM_SOURCE = Path(
+    "evidence/request_attempts/4d/"
+    "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/"
+    "jpm-20251231.htm"
+)
+JPM_SOURCE_SHA256 = (
+    "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+)
+JPM_MATERIALIZATION_SOURCE_PATHS = (
+    "scripts/vnext/table_grid.py",
+    "scripts/vnext/resource_limits.py",
+    "scripts/vnext/canonical.py",
+    "tools/benchmark_jpm_full_materialization.py",
+)
 
 
 class StageASnapshotError(ValueError):
@@ -587,6 +606,188 @@ def _qualification_evidence_append_is_valid(
     return True
 
 
+def _current_jpm_materialization_matches_historical_receipt(
+    *, repo_root: Path,
+) -> bool:
+    """Prove a canonicalizer-only drift preserves the guarded JPM result."""
+    try:
+        from .requirements import load_requirement_snapshot
+        from .resource_limits import RESOURCE_LIMITS
+        from .table_grid import build_table_grid
+
+        pointer = _json_object(
+            repo_root=repo_root,
+            relative=JPM_BENCHMARK_POINTER,
+            label="historical JPM benchmark pointer",
+        )
+        pointer_body = {
+            key: pointer[key] for key in pointer if key != "pointer_id"
+        }
+        if pointer.get("pointer_id") != content_hash(value=pointer_body):
+            return False
+        semantic_relative = Path(str(pointer["benchmark_receipt_path"]))
+        run_relative = Path(str(pointer["run_receipt_path"]))
+        semantic = _json_object(
+            repo_root=repo_root,
+            relative=semantic_relative,
+            label="historical JPM benchmark semantic receipt",
+        )
+        run = _json_object(
+            repo_root=repo_root,
+            relative=run_relative,
+            label="historical JPM benchmark run receipt",
+        )
+        semantic_body = {
+            key: semantic[key]
+            for key in semantic
+            if key != "benchmark_receipt_id"
+        }
+        run_body = {
+            key: run[key] for key in run if key != "run_receipt_id"
+        }
+        if (
+            semantic.get("benchmark_receipt_id")
+            != content_hash(value=semantic_body)
+            or run.get("run_receipt_id") != content_hash(value=run_body)
+            or pointer.get("benchmark_receipt_id")
+            != semantic.get("benchmark_receipt_id")
+            or pointer.get("run_receipt_id") != run.get("run_receipt_id")
+            or run.get("benchmark_receipt_id")
+            != semantic.get("benchmark_receipt_id")
+            or semantic.get("status") != "COMPLETED"
+            or run.get("status") != "COMPLETED"
+            or semantic.get("root_business_artifacts_byte_equal") is not True
+            or semantic.get("root_business_artifacts_before")
+            != semantic.get("root_business_artifacts_after")
+        ):
+            return False
+        current_root = {
+            relative.as_posix(): {
+                "sha256": sha256_file(path=repo_root / relative),
+                "size": (repo_root / relative).stat().st_size,
+            }
+            for relative in ROOT_PATHS
+        }
+        if semantic.get("root_business_artifacts_after") != current_root:
+            return False
+        requirement = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements/issue_15_v1",
+        )
+        d35 = requirement["effective_decisions"]["D-35"]["choice"]
+        policy = d35.get("financial_materialization_resource_policy")
+        layout_policy = d35.get(
+            "financial_layout_source_materialization_policy"
+        )
+        if type(policy) is not dict or type(layout_policy) is not dict:
+            return False
+        benchmark_commit = str(policy.get("benchmark_source_commit", ""))
+        tree = subprocess.run(
+            ["git", "rev-parse", benchmark_commit + "^{tree}"],
+            cwd=str(repo_root),
+            check=False,
+            capture_output=True,
+            encoding="utf-8",
+        )
+        recorded_sources = semantic.get("production_source_code_hashes")
+        if type(recorded_sources) is not dict or set(recorded_sources) != set(
+            JPM_MATERIALIZATION_SOURCE_PATHS
+        ):
+            return False
+        benchmark_sources = {}
+        for relative in recorded_sources:
+            blob = subprocess.run(
+                ["git", "show", benchmark_commit + ":" + relative],
+                cwd=str(repo_root),
+                check=False,
+                capture_output=True,
+            )
+            if blob.returncode != 0:
+                return False
+            benchmark_sources[relative] = sha256_bytes(content=blob.stdout)
+        current_sources = {
+            relative: sha256_file(path=repo_root / relative)
+            for relative in recorded_sources
+        }
+        changed = {
+            relative for relative in recorded_sources
+            if current_sources[relative] != recorded_sources[relative]
+        }
+        if (
+            tree.returncode != 0
+            or tree.stdout.strip() != policy.get("benchmark_source_tree")
+            or benchmark_sources != recorded_sources
+            or changed != {
+                "scripts/vnext/resource_limits.py",
+                "scripts/vnext/canonical.py",
+                "tools/benchmark_jpm_full_materialization.py",
+            }
+            or policy.get("benchmark_receipt_id")
+            != semantic.get("benchmark_receipt_id")
+            or policy.get("run_receipt_id") != run.get("run_receipt_id")
+            or policy.get("production_max_total_cells_before")
+            != semantic["production_resource_policy"]["max_total_cells"]
+            or policy.get("production_max_total_cells_after")
+            != layout_policy.get("production_max_total_cells_before")
+            or layout_policy.get("production_max_total_cells_after")
+            != RESOURCE_LIMITS.max_total_cells
+            or layout_policy.get(
+                "maximum_current_source_expanded_cell_count"
+            ) != RESOURCE_LIMITS.max_total_cells
+            or layout_policy.get("local_materialization_shards_selected")
+            is not False
+            or layout_policy.get("provider_request_shard_policy_unchanged")
+            is not True
+        ):
+            return False
+        source_bytes = _regular_file(
+            repo_root=repo_root,
+            relative=JPM_SOURCE,
+            label="exact JPM benchmark source",
+        ).read_bytes()
+        if sha256_bytes(content=source_bytes) != JPM_SOURCE_SHA256:
+            return False
+        asset = build_table_grid(
+            html_bytes=source_bytes,
+            parent_raw_asset_ids=["sha256:" + JPM_SOURCE_SHA256],
+            storage_uri=(
+                "artifacts/vnext/table_stage_c_evidence/"
+                "financial_materialization_benchmark/derived_asset.json"
+            ),
+        )
+        serialized = canonical_json_bytes(value=asset)
+        table_hashes = [
+            {
+                "order": table["order"],
+                "table_id": table["table_id"],
+                "grid_sha256": table["grid_sha256"],
+            }
+            for table in asset["tables"]
+        ]
+        current_materialization = {
+            "completed": True,
+            "final_expanded_cells": sum(
+                int(table["row_count"]) * int(table["column_count"])
+                for table in asset["tables"]
+            ),
+            "table_count": len(asset["tables"]),
+            "canonical_json_bytes": len(serialized),
+            "canonical_json_sha256": (
+                "sha256:" + sha256_bytes(content=serialized)
+            ),
+            "derived_asset_id": asset["derived_asset_id"],
+            "canonical_serialization_completed": True,
+            "table_grid_hashes": table_hashes,
+            "table_grid_hash_exact_set_hash": content_hash(
+                value=table_hashes,
+            ),
+        }
+        return current_materialization == semantic.get("materialization")
+    except (
+        KeyError, OSError, RuntimeError, StageASnapshotError, ValueError,
+    ):
+        return False
+
+
 def _post_snapshot_artifact_errors_are_allowed(
     *, repo_root: Path, errors: List[str],
 ) -> bool:
@@ -661,10 +862,15 @@ def _post_snapshot_artifact_errors_are_allowed(
         benchmark = json.loads(benchmark_check.stdout)
     except json.JSONDecodeError:
         return False
-    return (
+    historical_benchmark_valid = (
         benchmark_check.returncode == 0
         and type(benchmark) is dict
         and benchmark.get("status") == "COMPLETED"
+    )
+    return historical_benchmark_valid or (
+        _current_jpm_materialization_matches_historical_receipt(
+            repo_root=repo_root,
+        )
     )
 
 

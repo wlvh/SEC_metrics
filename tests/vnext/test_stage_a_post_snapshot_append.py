@@ -5,9 +5,14 @@ from __future__ import annotations
 import json
 import subprocess
 import unittest
+from unittest import mock
 
+import vnext.stage_a_snapshot as stage_a_module
 from sec_http import parse_request_log_rows
 from tests.vnext.common import REPO_ROOT
+from vnext.stage_a_snapshot import (
+    _current_jpm_materialization_matches_historical_receipt,
+)
 from vnext.stage_a_snapshot import _qualification_evidence_append_is_valid
 from vnext.stage_a_snapshot import _request_ledger_append_is_valid
 
@@ -74,6 +79,27 @@ class StageAPostSnapshotAppendTest(unittest.TestCase):
             repo_root=REPO_ROOT,
             missing_artifact_paths=paths[:-1],
         ))
+
+    def test_canonical_speedup_preserves_guarded_jpm_materialization(
+        self,
+    ) -> None:
+        """Keep every historical materialization byte under source drift."""
+        self.assertTrue(
+            _current_jpm_materialization_matches_historical_receipt(
+                repo_root=REPO_ROOT,
+            )
+        )
+        serialize = stage_a_module.canonical_json_bytes
+        with mock.patch.object(
+            stage_a_module,
+            "canonical_json_bytes",
+            side_effect=lambda **kwargs: serialize(**kwargs) + b"drift",
+        ):
+            self.assertFalse(
+                _current_jpm_materialization_matches_historical_receipt(
+                    repo_root=REPO_ROOT,
+                )
+            )
 
 
 if __name__ == "__main__":
