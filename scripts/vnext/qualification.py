@@ -1495,6 +1495,7 @@ def _financial_cycle_stop_gate(
             repo_root=repo_root,
             binding=binding,
             plan_cache=plan_cache,
+            final_uncached_rebuild=False,
         )
 
     workspace_root = cycle_root / "invocation_control"
@@ -2966,6 +2967,7 @@ def _read_cycle_run_records(*, run_dir: Path) -> tuple[Dict[str, object], list[D
 def validate_table_qualification_cycle_exact_set(
     *, repo_root: Path, binding: Mapping[str, object],
     plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
+    final_uncached_rebuild: bool = True,
 ) -> None:
     """Require a one-to-one remote-attempt, ledger, and evidence set per cycle.
 
@@ -3375,19 +3377,28 @@ def validate_table_qualification_cycle_exact_set(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
                 message="Qualification cycle evidence linkage differs",
             )
-    # Detect any authority drift that happened while the invocation-local
-    # cache was validating the complete cycle.  This final rebuild is
-    # deliberately uncached; the LIVE Workflow performs another uncached
-    # rebuild immediately before any provider egress.
-    final_binding = _rebuild_authorization_binding(
-        repo_root=repo_root,
-        actual=binding,
-    )
-    if final_binding != binding:
+    if type(final_uncached_rebuild) is not bool:
         raise QualificationError(
             code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
-            message="Qualification authority drifted during exact-set validation",
+            message="Qualification exact-set rebuild policy is invalid",
         )
+    if final_uncached_rebuild:
+        # Detect any authority drift that happened while the invocation-local
+        # cache was validating the complete cycle.  A financial stop-gate may
+        # omit this duplicate only because the LIVE Workflow performs an
+        # uncached rebuild immediately before provider egress.
+        final_binding = _rebuild_authorization_binding(
+            repo_root=repo_root,
+            actual=binding,
+        )
+        if final_binding != binding:
+            raise QualificationError(
+                code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+                message=(
+                    "Qualification authority drifted during exact-set "
+                    "validation"
+                ),
+            )
 
 
 def _execute_table_qualification_terminal(
@@ -3607,7 +3618,8 @@ def _execute_table_qualification_terminal(
 
 def execute_table_qualification_task(
     *, repo_root: Path, family_id: str, task_contract_id: str,
-    qualification_ordinal: int, target_period: Mapping[str, object],
+    qualification_ordinal: int,
+    target_period: Optional[Mapping[str, object]],
     owner_token: str, clock: Optional[object] = None,
     qualification_phase: str = "FRESH_STABILITY",
 ) -> Dict[str, object]:
@@ -3621,7 +3633,11 @@ def execute_table_qualification_task(
         qualification_phase=qualification_phase,
         plan_cache=plan_cache,
     )
-    supplied_period = _target_period_mapping(value=target_period)
+    supplied_period = (
+        dict(plan["qualification_target_period"])
+        if target_period is None
+        else _target_period_mapping(value=target_period)
+    )
     if supplied_period != plan["qualification_target_period"]:
         raise QualificationError(
             code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
@@ -3638,7 +3654,7 @@ def execute_table_qualification_task(
             table_shard_index=None,
             plan_cache=plan_cache,
         )
-        return _execute_table_qualification_terminal(
+        terminal = _execute_table_qualification_terminal(
             repo_root=repo_root,
             family_id=family_id,
             task_contract_id=task_contract_id,
@@ -3649,6 +3665,10 @@ def execute_table_qualification_task(
             qualification_phase=qualification_phase,
             authorization=authorization,
         )
+        return {
+            **terminal,
+            "qualification_task_plan_id": plan["qualification_task_plan_id"],
+        }
     if (
         family_id != "financial_statement"
         or type(shard_plans) is not list

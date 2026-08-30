@@ -177,6 +177,9 @@ class CutoverQualificationTest(unittest.TestCase):
             "run_id": "run:qualification:failed",
             "status": "FAILED_TERMINAL",
             "attempt_id": "attempt:failed",
+            "qualification_task_plan_id": binding[
+                "qualification_task_plan_id"
+            ],
         }
         with mock.patch(
             "tools.vnext_qualification.issue_table_qualification_authorization",
@@ -184,7 +187,7 @@ class CutoverQualificationTest(unittest.TestCase):
         ), mock.patch(
             "tools.vnext_qualification.execute_table_qualification_task",
             return_value=result,
-        ), mock.patch(
+        ) as execute, mock.patch(
             "tools.vnext_qualification.load_run_for_status",
             side_effect=AssertionError("failed terminal advanced to Run reload"),
         ):
@@ -212,6 +215,8 @@ class CutoverQualificationTest(unittest.TestCase):
             binding["qualification_task_plan_id"],
             payload["details"]["qualification_task_plan_id"],
         )
+        execute.assert_called_once()
+        self.assertIsNone(execute.call_args.kwargs["target_period"])
 
     def test_qualification_system_review_is_explicit(
         self,

@@ -268,20 +268,13 @@ def main(*, argv: Sequence[str]) -> int:
                 ),
             }
         elif arguments.command == "table-execute":
-            plan = table_qualification_task_plan(
-                repo_root=REPO_ROOT,
-                family_id=arguments.family_id,
-                task_contract_id=arguments.task_contract_id,
-                qualification_phase=arguments.phase,
-                qualification_ordinal=arguments.ordinal,
-            )
             result = execute_table_qualification_task(
                 repo_root=REPO_ROOT,
                 family_id=arguments.family_id,
                 task_contract_id=arguments.task_contract_id,
                 qualification_phase=arguments.phase,
                 qualification_ordinal=arguments.ordinal,
-                target_period=plan["qualification_target_period"],
+                target_period=None,
                 owner_token=arguments.owner_token,
             )
             terminal_status = result.get("status")
@@ -300,9 +293,9 @@ def main(*, argv: Sequence[str]) -> int:
                     details={
                         "execution_status": terminal_status,
                         "run_id": result.get("run_id"),
-                        "qualification_task_plan_id": plan[
+                        "qualification_task_plan_id": result.get(
                             "qualification_task_plan_id"
-                        ],
+                        ),
                     },
                 )
             shard_terminals = result.get("shard_terminals")

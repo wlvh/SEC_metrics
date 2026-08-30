@@ -745,7 +745,12 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                 return (
                     recovered,
                     exact_set.call_count,
-                    exact_set.call_args.kwargs["plan_cache"] is plan_cache,
+                    (
+                        exact_set.call_args.kwargs["plan_cache"] is plan_cache
+                        and exact_set.call_args.kwargs[
+                            "final_uncached_rebuild"
+                        ] is False
+                    ),
                 )
 
         self.assertEqual(
