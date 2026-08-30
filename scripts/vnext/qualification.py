@@ -836,19 +836,66 @@ def _qualification_workspace_relative_path(
     ).as_posix()
 
 
+def _authorization_task_plan(
+    *, repo_root: Path, family_id: str, task_contract_id: str,
+    qualification_ordinal: int, qualification_phase: str,
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
+) -> Dict[str, object]:
+    """Build one exact task plan or reuse it within one executor invocation.
+
+    The cache is deliberately caller-owned and process-local.  It never
+    survives a command, stores no response, and does not replace the uncached
+    repository rebuild performed by the LIVE Workflow immediately before
+    provider egress.
+    """
+    key = (
+        str(repo_root.resolve()),
+        family_id,
+        task_contract_id,
+        qualification_phase,
+        qualification_ordinal,
+    )
+    plan = plan_cache.get(key) if plan_cache is not None else None
+    if plan is None:
+        plan = table_qualification_task_plan(
+            repo_root=repo_root,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_ordinal=qualification_ordinal,
+            qualification_phase=qualification_phase,
+            include_freeze_status=True,
+        )
+        if plan_cache is not None:
+            plan_cache[key] = plan
+    if (
+        type(plan) is not dict
+        or plan.get("family_id") != family_id
+        or plan.get("task_contract_id") != task_contract_id
+        or plan.get("qualification_phase") != qualification_phase
+        or plan.get("qualification_ordinal") != qualification_ordinal
+        or type(plan.get("_freeze_status")) is not dict
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Cached qualification task plan differs from authority",
+        )
+    return plan
+
+
 def _authorization_mapping(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int, qualification_phase: str,
     table_shard_index: Optional[int] = None,
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> Dict[str, object]:
     """Mechanically rebuild every current authority field for one LIVE task."""
-    plan = table_qualification_task_plan(
+    plan = _authorization_task_plan(
         repo_root=repo_root,
         family_id=family_id,
         task_contract_id=task_contract_id,
         qualification_ordinal=qualification_ordinal,
         qualification_phase=qualification_phase,
-        include_freeze_status=True,
+        plan_cache=plan_cache,
     )
     shard_task_plan = None
     shard_plans = plan.get("qualification_shard_task_plans")
@@ -1215,6 +1262,7 @@ def _financial_authorization_order(
 def _financial_cycle_stop_gate(
     *, repo_root: Path, binding: Mapping[str, object],
     scope: Mapping[str, object],
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> None:
     """Stop every later financial child after any incomplete prior terminal."""
     task_ids = scope.get("authorized_task_contract_ids")
@@ -1431,12 +1479,23 @@ def _financial_cycle_stop_gate(
             manifest=prior_row["manifest"],
             records=prior_row["records"],
             binding=prior_row["binding"],
+            validate_cycle_exact_set=False,
+            plan_cache=plan_cache,
         )
         if recovery != "COMPLETE_OPEN_PENDING_REVIEW":
             raise QualificationError(
                 code="TABLE_QUALIFICATION_PRIOR_TERMINAL",
                 message="A prior financial child is not materialized",
             )
+    if recovery_rows:
+        # Local review-tail checks above are per Run; the shared attempt / Run
+        # / ledger exact-set is global to the cycle and must be rebuilt once,
+        # not once for every prior child.
+        validate_table_qualification_cycle_exact_set(
+            repo_root=repo_root,
+            binding=binding,
+            plan_cache=plan_cache,
+        )
 
     workspace_root = cycle_root / "invocation_control"
     terminals_by_plan = {}
@@ -1530,6 +1589,7 @@ def _issue_table_qualification_authorization(
     qualification_ordinal: int,
     qualification_phase: str = "FRESH_STABILITY",
     table_shard_index: Optional[int] = None,
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> TableQualificationAuthorization:
     """Issue one opaque authorization only after all current gates revalidate.
 
@@ -1583,9 +1643,19 @@ def _issue_table_qualification_authorization(
             message="D-07 does not authorize this live qualification task",
         )
     if repo_root.resolve() == _PHYSICAL_REPOSITORY_ROOT.resolve():
-        freeze = require_table_qualification_freeze(
-            repo_root=repo_root, family_id=family_id,
-        )
+        if plan_cache is None:
+            freeze = require_table_qualification_freeze(
+                repo_root=repo_root, family_id=family_id,
+            )
+        else:
+            freeze = _authorization_task_plan(
+                repo_root=repo_root,
+                family_id=family_id,
+                task_contract_id=task_contract_id,
+                qualification_ordinal=qualification_ordinal,
+                qualification_phase=qualification_phase,
+                plan_cache=plan_cache,
+            )["_freeze_status"]
         semantic_path = _table_production_freeze_path(
             repo_root=repo_root,
             qualification_cycle_id=str(freeze["qualification_cycle_id"]),
@@ -1652,12 +1722,14 @@ def _issue_table_qualification_authorization(
         qualification_ordinal=qualification_ordinal,
         qualification_phase=qualification_phase,
         table_shard_index=table_shard_index,
+        plan_cache=plan_cache,
     )
     if financial_family:
         _financial_cycle_stop_gate(
             repo_root=repo_root,
             binding=binding,
             scope=scope,
+            plan_cache=plan_cache,
         )
     return TableQualificationAuthorization(
         binding=binding,
@@ -1683,6 +1755,7 @@ def issue_table_qualification_authorization(
 
 def _rebuild_authorization_binding(
     *, repo_root: Path, actual: object,
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> Dict[str, object]:
     """Rebuild a persisted authorization without trusting copied fields."""
     if type(actual) is not dict or frozenset(actual) not in {
@@ -1715,6 +1788,7 @@ def _rebuild_authorization_binding(
             if "table_shard_binding" in actual
             else None
         ),
+        plan_cache=plan_cache,
     )
     if actual != fresh:
         raise QualificationError(
@@ -2548,6 +2622,8 @@ def _review_tail_is_complete(
     attempt: Mapping[str, object], candidate: Mapping[str, object],
     evidence_check: Mapping[str, object], review_unit: Mapping[str, object],
     binding: Mapping[str, object],
+    validate_cycle_exact_set: bool = True,
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> bool:
     """Verify the final review-tail handoff before declaring an OPEN Run complete."""
     checkpoint = run_dir / "qualification_recovery.json"
@@ -2627,16 +2703,20 @@ def _review_tail_is_complete(
         for name, expected in expected_assets.items()
     ):
         return False
-    validate_table_qualification_cycle_exact_set(
-        repo_root=repo_root,
-        binding=binding,
-    )
+    if validate_cycle_exact_set:
+        validate_table_qualification_cycle_exact_set(
+            repo_root=repo_root,
+            binding=binding,
+            plan_cache=plan_cache,
+        )
     return True
 
 
 def _table_qualification_recovery_state(
     *, repo_root: Path, run_dir: Path, manifest: Mapping[str, object],
     records: Sequence[Mapping[str, object]], binding: Mapping[str, object],
+    validate_cycle_exact_set: bool = True,
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> str:
     """Classify a deterministic table terminal without making an egress call."""
     status = manifest.get("status")
@@ -2746,6 +2826,8 @@ def _table_qualification_recovery_state(
             evidence_check=checks[0],
             review_unit=units[0],
             binding=binding,
+            validate_cycle_exact_set=validate_cycle_exact_set,
+            plan_cache=plan_cache,
         ):
             return "COMPLETE_OPEN_PENDING_REVIEW"
         return "EXACT_SUCCESS_NOT_MATERIALIZED"
@@ -2883,6 +2965,7 @@ def _read_cycle_run_records(*, run_dir: Path) -> tuple[Dict[str, object], list[D
 
 def validate_table_qualification_cycle_exact_set(
     *, repo_root: Path, binding: Mapping[str, object],
+    plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> None:
     """Require a one-to-one remote-attempt, ledger, and evidence set per cycle.
 
@@ -2914,6 +2997,7 @@ def validate_table_qualification_cycle_exact_set(
     seen_run_ids = set()
     seen_attempt_ids = set()
     seen_evidence_ids = set()
+    local_plan_cache = plan_cache if plan_cache is not None else {}
     for run_dir in sorted(run_root.iterdir(), key=lambda path: path.name):
         if run_dir.is_symlink() or not run_dir.is_dir():
             raise QualificationError(
@@ -2930,6 +3014,7 @@ def validate_table_qualification_cycle_exact_set(
         current = _rebuild_authorization_binding(
             repo_root=repo_root,
             actual=authorization,
+            plan_cache=local_plan_cache,
         )
         if current["qualification_cycle_id"] != cycle_id or (
             run_dir.resolve()
@@ -3083,6 +3168,7 @@ def validate_table_qualification_cycle_exact_set(
         rebuilt = _rebuild_authorization_binding(
             repo_root=repo_root,
             actual=nested,
+            plan_cache=local_plan_cache,
         )
         if rebuilt["qualification_cycle_id"] != cycle_id:
             raise QualificationError(
@@ -3289,6 +3375,19 @@ def validate_table_qualification_cycle_exact_set(
                 code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
                 message="Qualification cycle evidence linkage differs",
             )
+    # Detect any authority drift that happened while the invocation-local
+    # cache was validating the complete cycle.  This final rebuild is
+    # deliberately uncached; the LIVE Workflow performs another uncached
+    # rebuild immediately before any provider egress.
+    final_binding = _rebuild_authorization_binding(
+        repo_root=repo_root,
+        actual=binding,
+    )
+    if final_binding != binding:
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_CYCLE_EXACT_SET_INVALID",
+            message="Qualification authority drifted during exact-set validation",
+        )
 
 
 def _execute_table_qualification_terminal(
@@ -3513,12 +3612,14 @@ def execute_table_qualification_task(
     qualification_phase: str = "FRESH_STABILITY",
 ) -> Dict[str, object]:
     """Execute one ordinary task or every child of one financial shard plan."""
-    plan = table_qualification_task_plan(
+    plan_cache: Dict[tuple, Dict[str, object]] = {}
+    plan = _authorization_task_plan(
         repo_root=repo_root,
         family_id=family_id,
         task_contract_id=task_contract_id,
         qualification_ordinal=qualification_ordinal,
         qualification_phase=qualification_phase,
+        plan_cache=plan_cache,
     )
     supplied_period = _target_period_mapping(value=target_period)
     if supplied_period != plan["qualification_target_period"]:
@@ -3528,12 +3629,14 @@ def execute_table_qualification_task(
         )
     shard_plans = plan.get("qualification_shard_task_plans")
     if shard_plans is None:
-        authorization = issue_table_qualification_authorization(
+        authorization = _issue_table_qualification_authorization(
             repo_root=repo_root,
             family_id=family_id,
             task_contract_id=task_contract_id,
             qualification_ordinal=qualification_ordinal,
             qualification_phase=qualification_phase,
+            table_shard_index=None,
+            plan_cache=plan_cache,
         )
         return _execute_table_qualification_terminal(
             repo_root=repo_root,
@@ -3566,6 +3669,7 @@ def execute_table_qualification_task(
             qualification_ordinal=qualification_ordinal,
             qualification_phase=qualification_phase,
             table_shard_index=shard_index,
+            plan_cache=plan_cache,
         )
         result = _execute_table_qualification_terminal(
             repo_root=repo_root,

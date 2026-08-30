@@ -668,9 +668,10 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
         def exercise(
             *, existing_indices: list[int],
             terminal_status_by_index: Optional[dict[int, str]] = None,
-        ) -> list[int]:
+        ) -> tuple[list[int], int, bool]:
             with tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
+                plan_cache: dict[tuple, dict] = {}
                 cycle_root = (
                     root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
                     / ("a" * 64)
@@ -710,6 +711,8 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                 recovered: list[int] = []
 
                 def recovery(**kwargs: object) -> str:
+                    self.assertIs(plan_cache, kwargs["plan_cache"])
+                    self.assertFalse(kwargs["validate_cycle_exact_set"])
                     recovered.append(
                         kwargs["binding"]["table_shard_binding"][
                             "shard_index"
@@ -729,15 +732,26 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                     qualification,
                     "_table_qualification_recovery_state",
                     side_effect=recovery,
-                ):
+                ), mock.patch.object(
+                    qualification,
+                    "validate_table_qualification_cycle_exact_set",
+                ) as exact_set:
                     qualification._financial_cycle_stop_gate(
                         repo_root=root,
                         binding=bindings[0],
                         scope=scope,
+                        plan_cache=plan_cache,
                     )
-                return recovered
+                return (
+                    recovered,
+                    exact_set.call_count,
+                    exact_set.call_args.kwargs["plan_cache"] is plan_cache,
+                )
 
-        self.assertEqual([0, 1], exercise(existing_indices=[0, 1]))
+        self.assertEqual(
+            ([0, 1], 1, True),
+            exercise(existing_indices=[0, 1]),
+        )
         for indices in ([1], [0, 2]):
             with self.subTest(invalid_prefix=indices), self.assertRaisesRegex(
                 qualification.QualificationError,
@@ -751,6 +765,53 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
             exercise(
                 existing_indices=[0, 1],
                 terminal_status_by_index={1: "FAILED_TERMINAL"},
+            )
+
+    def test_authorization_plan_cache_is_invocation_local_and_exact(self) -> None:
+        """Build one task plan per key and reject a mutated cached value."""
+        plan = {
+            "family_id": "financial_statement",
+            "task_contract_id": "task-a",
+            "qualification_phase": "SECOND_LAYOUT",
+            "qualification_ordinal": 1,
+            "_freeze_status": {"receipt_id": "sha256:" + ("a" * 64)},
+        }
+        plan_cache: dict[tuple, dict] = {}
+        with mock.patch.object(
+            qualification,
+            "table_qualification_task_plan",
+            return_value=plan,
+        ) as builder:
+            first = qualification._authorization_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id="task-a",
+                qualification_phase="SECOND_LAYOUT",
+                qualification_ordinal=1,
+                plan_cache=plan_cache,
+            )
+            second = qualification._authorization_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id="task-a",
+                qualification_phase="SECOND_LAYOUT",
+                qualification_ordinal=1,
+                plan_cache=plan_cache,
+            )
+        self.assertIs(first, second)
+        builder.assert_called_once()
+        plan["qualification_phase"] = "POST_FREEZE_HOLDOUT"
+        with self.assertRaisesRegex(
+            qualification.QualificationError,
+            "Cached qualification task plan differs",
+        ):
+            qualification._authorization_task_plan(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id="task-a",
+                qualification_phase="SECOND_LAYOUT",
+                qualification_ordinal=1,
+                plan_cache=plan_cache,
             )
 
 
