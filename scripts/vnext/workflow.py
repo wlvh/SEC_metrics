@@ -44,6 +44,7 @@ from .qualification import validate_table_qualification_run_bindings
 from .requirements import load_run_requirement_snapshot
 from .scope_contract import scope_satisfies_contract
 from .run_store import append_review_decision, append_run_record
+from .run_store import append_run_record_if_unchanged
 from .run_store import append_run_records_atomically
 from .run_store import create_run, load_open_run
 from .run_store import load_run_bound_specs
@@ -332,8 +333,8 @@ def _checkpoint_recovery_phase(*, phase: str) -> None:
 
 def _ensure_open_run_record(
     *, run_dir: Path, existing_records: list[Dict[str, object]],
-    record: Mapping[str, object],
-) -> None:
+    record: Mapping[str, object], expected_records_file_hash: str,
+) -> str:
     """Append an expected recovery record once, or reject any divergence."""
     expected = validate_record(record=dict(record))
     same_type = [
@@ -341,11 +342,16 @@ def _ensure_open_run_record(
         if value["record_type"] == expected["record_type"]
     ]
     if not same_type:
-        append_run_record(run_dir=run_dir, record=expected)
+        updated_hash = append_run_record_if_unchanged(
+            run_dir=run_dir,
+            record=expected,
+            expected_records_file_hash=expected_records_file_hash,
+        )
         existing_records.append(expected)
-        return
+        return updated_hash
     if len(same_type) != 1 or same_type[0] != expected:
         raise WorkflowError("TABLE_QUALIFICATION_TERMINAL_DIVERGENT")
+    return expected_records_file_hash
 
 
 def _restore_reused_remote_attempt(
@@ -1180,13 +1186,16 @@ def _create_review_run_with_traits(
             task_contract_bindings=task_run_bindings,
             qualification_authorization=qualification_binding,
         )
-    _ensure_open_run_record(
+    records_file_hash = sha256_file(path=run_dir / "records.jsonl")
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir, existing_records=existing_records, record=raw_blob,
+        expected_records_file_hash=records_file_hash,
     )
-    _ensure_open_run_record(
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir,
         existing_records=existing_records,
         record=source_reference,
+        expected_records_file_hash=records_file_hash,
     )
     # Re-read through the RawBlob verifier so review input cannot race away
     # from the exact source identity created above.
@@ -1200,19 +1209,21 @@ def _create_review_run_with_traits(
             )
         ),
     )
-    _ensure_open_run_record(
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir,
         existing_records=existing_records,
         record=derived_asset,
+        expected_records_file_hash=records_file_hash,
     )
     reader_manifest = build_reader_input_manifest(
         derived_asset=derived_asset,
         source_reference_ids=[str(source_reference["source_reference_id"])],
     )
-    _ensure_open_run_record(
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir,
         existing_records=existing_records,
         record=reader_manifest,
+        expected_records_file_hash=records_file_hash,
     )
     authorized_shard_binding = (
         qualification_binding.get("table_shard_binding")
@@ -1403,8 +1414,9 @@ def _create_review_run_with_traits(
         payloads=attempt_payloads,
     )
     _checkpoint_recovery_phase(phase="AFTER_ATTEMPT_PAYLOAD")
-    _ensure_open_run_record(
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir, existing_records=existing_records, record=attempt,
+        expected_records_file_hash=records_file_hash,
     )
     _checkpoint_recovery_phase(phase="AFTER_ATTEMPT_RECORD")
     unknown_remote_outcome = (
@@ -1428,10 +1440,11 @@ def _create_review_run_with_traits(
         except QualificationError as error:
             raise WorkflowError(error.code) from error
         _checkpoint_recovery_phase(phase="AFTER_LEDGER")
-        _ensure_open_run_record(
+        records_file_hash = _ensure_open_run_record(
             run_dir=run_dir,
             existing_records=existing_records,
             record=qualification_evidence,
+            expected_records_file_hash=records_file_hash,
         )
         _checkpoint_recovery_phase(phase="AFTER_QUALIFICATION_EVIDENCE")
     if unknown_remote_outcome:
@@ -1486,11 +1499,13 @@ def _create_review_run_with_traits(
         candidate=candidate,
         evidence=evidence,
     )
-    _ensure_open_run_record(
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir, existing_records=existing_records, record=candidate,
+        expected_records_file_hash=records_file_hash,
     )
-    _ensure_open_run_record(
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir, existing_records=existing_records, record=evidence,
+        expected_records_file_hash=records_file_hash,
     )
     _checkpoint_recovery_phase(phase="AFTER_CANDIDATE_EVIDENCE")
     if evidence["status"] != "PASS":
@@ -1523,10 +1538,11 @@ def _create_review_run_with_traits(
             rendered["review_renderer_semantic_version"]
         ),
     )
-    _ensure_open_run_record(
+    records_file_hash = _ensure_open_run_record(
         run_dir=run_dir,
         existing_records=existing_records,
         record=review_unit,
+        expected_records_file_hash=records_file_hash,
     )
     _checkpoint_recovery_phase(phase="AFTER_REVIEW_UNIT")
     review_dir = run_dir / "review" / str(review_unit["review_unit_hash"])

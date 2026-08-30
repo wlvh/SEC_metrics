@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import unittest
 from decimal import Decimal, getcontext
+from unittest import mock
 
+import vnext.canonical as canonical_module
 from vnext.canonical import (
     CanonicalError,
     arithmetic_context,
@@ -20,6 +22,17 @@ from vnext.canonical import (
 
 class CanonicalHashTest(unittest.TestCase):
     """Exercise every canonicalization fail-closed boundary."""
+
+    def test_native_nfc_json_uses_byte_equivalent_direct_path(self) -> None:
+        """Avoid allocating a normalized copy for a strict native JSON tree."""
+        value = {"z": True, "a": (1, "é")}
+        with mock.patch.object(
+            canonical_module,
+            "_canonicalize",
+            side_effect=AssertionError("slow normalization reached"),
+        ):
+            actual = canonical_json_bytes(value=value)
+        self.assertEqual('{"a":[1,"é"],"z":true}\n'.encode(), actual)
 
     def test_strict_json_rejects_ambiguous_extensions(self) -> None:
         """Reject duplicates, non-finite values, unknowns, and surrogates."""

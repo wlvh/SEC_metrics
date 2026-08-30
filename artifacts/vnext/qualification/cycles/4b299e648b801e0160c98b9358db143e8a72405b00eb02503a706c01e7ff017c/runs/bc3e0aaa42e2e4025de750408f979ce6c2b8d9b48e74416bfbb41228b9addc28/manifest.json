@@ -1,0 +1,233 @@
+{
+  "record_type": "RUN",
+  "status": "FROZEN",
+  "records_file_hash": "fff3a45cd93fb548a60fe6c2f55a225abfd6bf6c53c789d485587d4510aa3bd1",
+  "review_decisions_file_hash": "8cef292788db5620a23fbf43ab9e9b0e193a68e7eb793c0b2966a19111832f3e",
+  "validation_file_hash": "422a131c4098ddadc738f24f9a3768a3f680a16dd822e54e749de02043e0acde",
+  "content_manifest_hash": "sha256:f95ac8649fe260c2ad8c744a8f54043db6a4706b5a1773ad028a03edf1318c7f",
+  "audit_manifest_hash": "sha256:04afdc370ff2cf446eef5ad2fcf41bb88dfedd388102cc71f06a6562a65ecb0e",
+  "run_id": "run:qualification:table:bc3e0aaa42e2e4025de750408f979ce6c2b8d9b48e74416bfbb41228b9addc28",
+  "company_id": "bank_of_america_corp",
+  "company_traits": [
+    "financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:ca389fe7897d766abc80bc5673785c168d32701dbd3b60a8dfb91f3fa8064efa",
+      "raw_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "company_id": "bank_of_america_corp",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+      "accession": "0000070858-26-000157",
+      "document_name": "bac-20251231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:535d14a6c75aff5a20d5fdd93f3e9e6a370fb34846e6d569bcc5eb17dfd7a8db"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/A11_assets_under_management.md": "44d6134495e0d265592178e300779efd6fb979d284d5a99796199389e3348f9c"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "6bd3a6152afc93d7538edafac9849a67a9f58fd3affe0a9cc6321101c8048775",
+    "contract_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+    "decision_register_sha256": "6d383352894f9c81a1efad7c5de3ed41461e44669842c57298308e6357e8d0b2",
+    "event_route_catalog_sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+    "provider_model_runtime_sha256": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+    "public_projection_catalog_sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+    "foundation_verification_receipt_sha256": "fe6476db361607d6197f2d7145a1717a94d0ad98190dc08d17ece680933a0763",
+    "issue_body_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+    "legacy_semantic_producer_inventory_sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+    "parent_requirement_closure_hash": "sha256:8e888bfab9965e96fc72ec963fa46652ba2dc423b156b8239d8de416c05fc2b7",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+    "source_strategy_registry_sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+    "source_strategy_baseline_receipt_sha256": "fcd4e0e975a451834ffac4cefae071770531120ca767f9162d68e9079260198b",
+    "transfer_manifest_sha256": "18f162d48131b3f6d56941dd446ec18089c7a336a50df8cb2c669e3b63711274"
+  },
+  "task_contract_bindings": [
+    {
+      "catalog_task_contract_hash": "sha256:3a8d9ab47bb63c39f04cad76ff24eda57e7c3748b917e211905551524a393bff",
+      "metric_spec_closure_hashes": [
+        "sha256:ba23d3ea348699c4ae62ad88347bb6c1d7901af2eab20e2a4e6cc49420c82b43"
+      ],
+      "system_prompt_hash": "sha256:dc49067ff993a758a83bac0977819db9c0fdb72a75e9115c0533f410c87d8df8",
+      "task_contract_id": "financial_assets_under_management_table_v1",
+      "task_spec_semantic_hash": "sha256:cfb51136ea6bd8cb5ae012a341319e6139ad49b019f0e28407d9dd420df410d9",
+      "metric_spec_semantic_hashes": [
+        "sha256:e5c4d3c496fa038941aa8682f254923ec3b79826b0150fa0a03a40201bb5fc2b"
+      ],
+      "metric_spec_paths": [
+        "catalog/metrics/A11_assets_under_management.md"
+      ],
+      "output_schema_hash": "sha256:2ae69b6ef5dd8c559a935093e26ea5eab5d49db394b1570d872c421c553012e8"
+    }
+  ],
+  "qualification_authorization": {
+    "qualification_task_plan_id": "sha256:0c22ebc40445664917a433f372b88054c16a9e95d7ad2c7e2ebe4d21d246d7e9",
+    "qualification_cycle_id": "sha256:4b299e648b801e0160c98b9358db143e8a72405b00eb02503a706c01e7ff017c",
+    "freeze_receipt_id": "sha256:084d99fdb7dcc4c325b5dc56ed80b6a25672577f61d663ecc11141a01c013cc6",
+    "family_id": "financial_statement",
+    "task_contract_id": "financial_assets_under_management_table_v1",
+    "qualification_phase": "SECOND_LAYOUT",
+    "qualification_fixture_id": null,
+    "qualification_ordinal": 1,
+    "matrix_entry_hash": "sha256:c892918d5faddbd1ec4458715ad7c97fea711a34a0d0006095efcc60d12b124c",
+    "catalog_task_contract_hash": "sha256:3a8d9ab47bb63c39f04cad76ff24eda57e7c3748b917e211905551524a393bff",
+    "company_traits": [
+      "financial"
+    ],
+    "context_feasibility_binding": {
+      "task_request_id": "sha256:b7247d9beb6fd245254d2d42e89e4939b2b5063bf1d5f622e3de85479e4ceffc",
+      "provider_request_body_sha256": "85735cfaa121a4bc6f9e76faceaa56fcaa1f9efd38ebe404446987ee2a3d5266",
+      "evidence_basis": "ESTIMATED_BOUND",
+      "context_feasibility_attestation_id": null,
+      "context_budget_tokens": 200000,
+      "measurement_response_reuse_for_qualification": false,
+      "qualification_response_origin_policy": "NEW_PROVIDER_EXECUTION_ONLY"
+    },
+    "task_spec_semantic_hash": "sha256:cfb51136ea6bd8cb5ae012a341319e6139ad49b019f0e28407d9dd420df410d9",
+    "output_schema_hash": "sha256:2ae69b6ef5dd8c559a935093e26ea5eab5d49db394b1570d872c421c553012e8",
+    "system_prompt_hash": "sha256:dc49067ff993a758a83bac0977819db9c0fdb72a75e9115c0533f410c87d8df8",
+    "source_binding": {
+      "source_declaration": {
+        "source_kind": "IMMUTABLE_ATTEMPT",
+        "company_id": "bank_of_america_corp",
+        "cik": "70858",
+        "accession": "0000070858-26-000157",
+        "document_name": "bac-20251231.htm",
+        "source_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134"
+      },
+      "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+      "source_role": "target_primary",
+      "request_body_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "request_body_size": 12819060,
+      "request_headers_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm.951df84d2d4e1ad1737ad2e38286cf5233664da29462daeae6106ba7badb4af9.headers.json",
+      "request_headers_sha256": "951df84d2d4e1ad1737ad2e38286cf5233664da29462daeae6106ba7badb4af9",
+      "request_headers_size": 1066,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+      "request_attempt_id": "request:attempt:535d14a6c75aff5a20d5fdd93f3e9e6a370fb34846e6d569bcc5eb17dfd7a8db",
+      "source_binding_hash": "sha256:b965419e97baf6009e9dfe60984a0d4244cb21ee5e741532c9323d97c042829a"
+    },
+    "source_binding_hash": "sha256:b965419e97baf6009e9dfe60984a0d4244cb21ee5e741532c9323d97c042829a",
+    "target_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "target_period_hash": "sha256:5b8502cbfc5dd7f5d509e09565c9b138413e9d94658033c33833688b926945f6",
+    "source_media_type": "text/html",
+    "requirement_closure_hash": "sha256:e65f73343f13424181db8bcf6a7736a2804be164dab9ca72ef21dc47caf3635c",
+    "table_payload_serialization_version": "2",
+    "provider": "deepseek",
+    "model": "deepseek-v4-flash",
+    "api": "chat_completions",
+    "wb3_workspace_relative_path": "artifacts/vnext/qualification/cycles/4b299e648b801e0160c98b9358db143e8a72405b00eb02503a706c01e7ff017c/invocation_control/0c22ebc40445664917a433f372b88054c16a9e95d7ad2c7e2ebe4d21d246d7e9",
+    "qualification_provider_ledger_path": "artifacts/vnext/table_qualification_freeze/cycles/4b299e648b801e0160c98b9358db143e8a72405b00eb02503a706c01e7ff017c/provider_ledger.jsonl",
+    "qualification_provider_ledger_before_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qualification_provider_ledger_before_row_count": 0,
+    "qualification_usage_policy": {
+      "record_type": "TABLE_QUALIFICATION_PROVIDER_USAGE_POLICY",
+      "qualification_task_plan_id": "sha256:0c22ebc40445664917a433f372b88054c16a9e95d7ad2c7e2ebe4d21d246d7e9",
+      "provider_request_body_sha256": "85735cfaa121a4bc6f9e76faceaa56fcaa1f9efd38ebe404446987ee2a3d5266",
+      "context_feasibility_attestation_id": null,
+      "source_measurement_evidence_id": null,
+      "source_measurement_raw_response_id": null,
+      "actual_prompt_tokens_max": 200000,
+      "required_usage_fields": [
+        "PROMPT_OR_INPUT_TOKENS",
+        "COMPLETION_OR_OUTPUT_TOKENS",
+        "TOTAL_TOKENS"
+      ],
+      "terminal_error_class": "CONTEXT_LIMIT",
+      "automatic_retry_count": 0,
+      "future_ordinal_on_failure": "STOP",
+      "measurement_response_reuse_for_qualification": false
+    },
+    "qualification_terminal_id": "sha256:bc3e0aaa42e2e4025de750408f979ce6c2b8d9b48e74416bfbb41228b9addc28",
+    "run_id": "run:qualification:table:bc3e0aaa42e2e4025de750408f979ce6c2b8d9b48e74416bfbb41228b9addc28",
+    "run_directory_relative_path": "artifacts/vnext/qualification/cycles/4b299e648b801e0160c98b9358db143e8a72405b00eb02503a706c01e7ff017c/runs/bc3e0aaa42e2e4025de750408f979ce6c2b8d9b48e74416bfbb41228b9addc28",
+    "parent_qualification_task_plan_id": "sha256:a5e6f1bbd3e5d50db14e83232b2c5d17d35afcbfacc8bddc9e97d0439a581fbc",
+    "table_shard_binding": {
+      "request_shard_plan_id": "sha256:2f0935fefa968d2c84dc8724f9b19b9ca84ccc6d221bf1c61eecc80f9e912a16",
+      "table_shard_set_id": "sha256:37a5eaa6a303dc01dcc0a2d71300b1a6558f108519ced390c80a6c68f9f58e8e",
+      "shard_index": 0,
+      "shard_count": 23,
+      "shard_id": "sha256:30e203b7fc254baf677b20e3397af0938a5fa6a7df6d393faeb04a4f22d3de79",
+      "shard_payload_sha256": "3c09b13096250c8b07ae4db574c093a2b6c1ec373c192eb6a6c48b1a66dba278",
+      "start_table_order": 0,
+      "end_table_order": 52,
+      "table_ids": [
+        "table_000001",
+        "table_000002",
+        "table_000003",
+        "table_000004",
+        "table_000005",
+        "table_000006",
+        "table_000007",
+        "table_000008",
+        "table_000009",
+        "table_000010",
+        "table_000011",
+        "table_000012",
+        "table_000013",
+        "table_000014",
+        "table_000015",
+        "table_000016",
+        "table_000017",
+        "table_000018",
+        "table_000019",
+        "table_000020",
+        "table_000021",
+        "table_000022",
+        "table_000023",
+        "table_000024",
+        "table_000025",
+        "table_000026",
+        "table_000027",
+        "table_000028",
+        "table_000029",
+        "table_000030",
+        "table_000031",
+        "table_000032",
+        "table_000033",
+        "table_000034",
+        "table_000035",
+        "table_000036",
+        "table_000037",
+        "table_000038",
+        "table_000039",
+        "table_000040",
+        "table_000041",
+        "table_000042",
+        "table_000043",
+        "table_000044",
+        "table_000045",
+        "table_000046",
+        "table_000047",
+        "table_000048",
+        "table_000049",
+        "table_000050",
+        "table_000051",
+        "table_000052",
+        "table_000053"
+      ],
+      "reader_request_body_sha256": "95e16c8546e9c9cc43e7815f8cae0589157ba5d77be585e99adb169e870adbf0",
+      "reader_request_bytes": 136177,
+      "provider_request_body_sha256": "85735cfaa121a4bc6f9e76faceaa56fcaa1f9efd38ebe404446987ee2a3d5266",
+      "provider_envelope_bytes": 159482,
+      "provider_output_schema_sha256": "9c9695b73ff3be41b1b46933337dec4ba910e333a5cfd56b75e52a473fa05cb4",
+      "estimated_input_tokens": 159482,
+      "packing_utf8_upper_bound_tokens": 159553,
+      "blocking_reason_codes": []
+    },
+    "qualification_authorization_id": "sha256:42ec25a44726a9a1ff41ef72f9c2e79f119170c361b9495742433aaf52c679ed"
+  },
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

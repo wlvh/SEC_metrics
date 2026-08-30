@@ -10,12 +10,14 @@ from pathlib import Path
 from typing import Optional
 from unittest import mock
 
+import vnext.ai_adapter as ai_adapter
+import vnext.run_store as run_store_module
 from tests.vnext.common import REPO_ROOT, compiled_specs, reader_response
 from tests.vnext.common import fixed_clock, reviewed_fixture, sample_asset
 from vnext import qualification
 from vnext.ai_adapter import AIAdapterError, READER_SHARD_OUTPUT_JSON_SCHEMA
 from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
-from vnext.canonical import canonical_json_bytes, content_hash
+from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes
 from vnext.evidence import check_evidence
 from vnext.reader import validate_reader_output
 from vnext.reader_input import build_reader_input_manifest
@@ -25,19 +27,110 @@ from vnext.reader_input import prepare_reader_shard_request
 from vnext.records import RecordError, validate_record
 from vnext.render import build_review_context, render_review_markdown
 from vnext.requirements import load_requirement_snapshot
-from vnext.run_store import load_frozen_run, validate_and_freeze_run
+from vnext.run_store import append_run_record_if_unchanged
+from vnext.run_store import load_frozen_run, RunStoreError
+from vnext.run_store import validate_and_freeze_run
 from vnext.review import build_review_unit, create_system_review_decision
 from vnext.table_payload import build_contiguous_table_shard
 from vnext.table_payload import encode_compact_table_payload
 from vnext.table_payload import validate_contiguous_table_shard_set
 from vnext.table_grid import build_table_grid
 from vnext.table_qualification_freeze import load_table_qualification_matrix
+from vnext.traits import TraitError
 from vnext.workflow import create_table_task_review_run
 from vnext.workflow import finalize_reviewed_direct_results
 
 
 class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
     """Bind current layout sources and their pre-egress difference proof."""
+
+    @staticmethod
+    def _matrix_run_authority() -> tuple[dict, dict]:
+        """Build one exact persisted matrix-owned source binding and Run."""
+        source_sha256 = "a" * 64
+        target_period = {
+            "fiscal_year": 2025,
+            "period_start": "2025-01-01",
+            "period_end": "2025-12-31",
+        }
+        source = {
+            "source_url": (
+                "https://www.sec.gov/Archives/edgar/data/70858/"
+                "000007085826000077/bac-20251231.htm"
+            ),
+            "source_role": "target_primary",
+            "request_attempt_id": "request:attempt:" + ("b" * 64),
+            "source_declaration": {
+                "company_id": "bank_of_america_corp",
+                "cik": "70858",
+                "accession": "0000070858-26-000077",
+                "document_name": "bac-20251231.htm",
+                "source_sha256": source_sha256,
+            },
+        }
+        binding = {
+            "qualification_fixture_id": None,
+            "qualification_phase": "SECOND_LAYOUT",
+            "company_traits": ["financial"],
+            "target_period": target_period,
+            "source_binding": source,
+        }
+        manifest = {
+            "company_id": "bank_of_america_corp",
+            "company_traits": ["financial"],
+            "target_period": target_period,
+            "qualification_authorization": binding,
+            "source_references": [{
+                "company_id": "bank_of_america_corp",
+                "source_url": source["source_url"],
+                "accession": source["source_declaration"]["accession"],
+                "document_name": source["source_declaration"][
+                    "document_name"
+                ],
+                "source_role": source["source_role"],
+                "request_attempt_id": source["request_attempt_id"],
+                "raw_asset_id": "sha256:" + source_sha256,
+            }],
+        }
+        return binding, manifest
+
+    def test_run_authority_rebuilds_matrix_owned_financial_source(self) -> None:
+        """Use current qualification authority when no fixture ID exists."""
+        binding, manifest = self._matrix_run_authority()
+        with mock.patch.object(
+            qualification,
+            "_rebuild_authorization_binding",
+            return_value=binding,
+        ) as rebuild:
+            traits, ciks = run_store_module._run_company_authority(
+                repo_root=REPO_ROOT,
+                manifest=manifest,
+            )
+        self.assertEqual(["financial"], traits)
+        self.assertEqual(["70858"], ciks)
+        rebuild.assert_called_once_with(
+            repo_root=REPO_ROOT,
+            actual=binding,
+        )
+
+    def test_run_authority_rejects_matrix_source_substitution(self) -> None:
+        """Reject a Run SourceReference not owned by rebuilt authorization."""
+        binding, manifest = self._matrix_run_authority()
+        manifest["source_references"][0]["raw_asset_id"] = (
+            "sha256:" + ("c" * 64)
+        )
+        with mock.patch.object(
+            qualification,
+            "_rebuild_authorization_binding",
+            return_value=binding,
+        ), self.assertRaisesRegex(
+            TraitError,
+            "authorization source differs",
+        ):
+            run_store_module._run_company_authority(
+                repo_root=REPO_ROOT,
+                manifest=manifest,
+            )
 
     def test_matrix_resolves_exact_boa_and_citi_immutable_attempts(self) -> None:
         """Keep layout sources ledger-bound without extending the registry."""
@@ -437,6 +530,45 @@ class FinancialTableShardClosureTest(unittest.TestCase):
             parent_transport=self.parent,
         )
 
+    def test_snapshot_append_is_byte_equivalent_and_fails_on_drift(
+        self,
+    ) -> None:
+        """Append a validated large record without trusting a changed prefix."""
+        with tempfile.TemporaryDirectory() as directory:
+            run_dir = Path(directory)
+            records_path = run_dir / "records.jsonl"
+            records_path.write_bytes(b"")
+            empty_hash = sha256_bytes(content=b"")
+            with mock.patch.object(
+                run_store_module,
+                "_read_manifest",
+                return_value={"status": "OPEN"},
+            ):
+                updated_hash = append_run_record_if_unchanged(
+                    run_dir=run_dir,
+                    record=self.asset,
+                    expected_records_file_hash=empty_hash,
+                )
+                expected = run_store_module._jsonl_bytes(
+                    records=[self.asset]
+                )
+                self.assertEqual(expected, records_path.read_bytes())
+                self.assertEqual(
+                    sha256_bytes(content=expected), updated_hash,
+                )
+                records_path.write_bytes(expected + b"tamper\n")
+                changed = records_path.read_bytes()
+                with self.assertRaisesRegex(
+                    RunStoreError,
+                    "snapshot changed",
+                ):
+                    append_run_record_if_unchanged(
+                        run_dir=run_dir,
+                        record=self.source,
+                        expected_records_file_hash=updated_hash,
+                    )
+                self.assertEqual(changed, records_path.read_bytes())
+
     def _candidate_and_evidence(
         self, *, shard_index: int, response: dict,
     ) -> tuple[dict, dict, dict]:
@@ -606,6 +738,62 @@ class FinancialTableShardClosureTest(unittest.TestCase):
             canonical_json_bytes(value=READER_SHARD_OUTPUT_JSON_SCHEMA),
             payloads.output_schema_bytes,
         )
+
+    def test_live_attempt_records_rebuilt_shard_identity(self) -> None:
+        """Use the replayed ordinary request when auditing a live shard."""
+        shard = self.shards[0]
+        response = canonical_json_bytes(value={
+            "disclosure_group": "financial_statement",
+            "shard_id": shard["shard_id"],
+            "examined_table_ids": list(shard["table_ids"]),
+            "shard_disposition": "NO_CANDIDATE_IN_SHARD",
+            "table_locator": None,
+            "candidates": [],
+            "unresolved_competing_claims": [],
+        })
+        rebuilt = prepare_reader_shard_request(
+            manifest=self.manifest,
+            derived_asset=self.asset,
+            repo_root=REPO_ROOT,
+            task_contract_id="financial_net_interest_margin_table_v1",
+            table_shard=shard,
+            table_shard_set_id=self.coverage["shard_set_id"],
+        )
+        recorded = build_recorded_adapter(
+            response_bytes=response,
+            fixture_id="financial-live-shard-metadata",
+        )
+        adapter = ai_adapter._ApprovedTransportAdapter(
+            authority=ai_adapter._ADAPTER_AUTHORITY,
+            invocation_context=None,
+        )
+
+        def complete_without_transport(**_kwargs: object) -> object:
+            """Return deterministic bytes after the live replay test seam."""
+            return recorded.complete(request_bytes=rebuilt.request_bytes)
+
+        live_wrapper = object()
+        with mock.patch.object(
+            ai_adapter,
+            "_validate_live_prepared_request",
+            return_value=rebuilt,
+        ), mock.patch.object(
+            ai_adapter._ApprovedTransportAdapter,
+            "_complete_authorized",
+            new=complete_without_transport,
+        ):
+            returned, _raw, attempt, _payloads = run_ai_attempt(
+                adapter=adapter,
+                prepared_request=live_wrapper,
+                clock=fixed_clock,
+            )
+        self.assertEqual(response, returned)
+        self.assertEqual(shard["shard_id"], attempt["table_shard_id"])
+        self.assertEqual(
+            self.coverage["shard_set_id"],
+            attempt["table_shard_set_id"],
+        )
+        self.assertEqual(0, attempt["table_shard_index"])
 
     def test_financial_v4_request_cannot_bypass_sharding(self) -> None:
         """Reject the old one-request full-document path for financial tasks."""

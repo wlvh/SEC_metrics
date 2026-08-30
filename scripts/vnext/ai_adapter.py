@@ -3832,15 +3832,15 @@ def run_ai_attempt(
         })
     if prepared["table_shard"] is not None:
         record.update({
-            "table_shard_id": prepared_request.table_shard_id,
-            "table_shard_set_id": prepared_request.table_shard_set_id,
+            "table_shard_id": ordinary_request.table_shard_id,
+            "table_shard_set_id": ordinary_request.table_shard_set_id,
             "table_shard_payload_sha256": (
-                prepared_request.table_shard_payload_sha256
+                ordinary_request.table_shard_payload_sha256
             ),
-            "table_shard_index": prepared_request.table_shard_index,
-            "table_shard_count": prepared_request.table_shard_count,
-            "start_table_order": prepared_request.start_table_order,
-            "end_table_order": prepared_request.end_table_order,
+            "table_shard_index": ordinary_request.table_shard_index,
+            "table_shard_count": ordinary_request.table_shard_count,
+            "start_table_order": ordinary_request.start_table_order,
+            "end_table_order": ordinary_request.end_table_order,
         })
     payloads = AttemptPayloads(
         request_body_bytes=outbound_request,

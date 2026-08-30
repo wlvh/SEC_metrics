@@ -644,6 +644,39 @@ def append_run_record(*, run_dir: Path, record: Mapping[str, object]) -> None:
     )
 
 
+def append_run_record_if_unchanged(
+    *, run_dir: Path, record: Mapping[str, object],
+    expected_records_file_hash: str,
+) -> str:
+    """Append to one caller-validated OPEN snapshot through a byte CAS.
+
+    The caller must have either created the empty Run or loaded and validated
+    its record stream.  The exact byte hash prevents a concurrent or tampered
+    prefix from being extended, while the atomic replacement preserves the
+    existing crash boundary without reparsing a large DerivedAsset.
+    """
+    manifest = _read_manifest(run_dir=run_dir)
+    if manifest["status"] != "OPEN":
+        raise RunStoreError("Frozen or failed Run cannot be modified")
+    try:
+        validated = validate_record(record=record)
+    except ValueError as error:
+        raise RunStoreError("Run record is invalid") from error
+    path = _run_paths(run_dir=run_dir)["records"]
+    if path.is_symlink() or not path.is_file():
+        raise RunStoreError("Run records path is unsafe")
+    current = path.read_bytes()
+    if sha256_bytes(content=current) != expected_records_file_hash:
+        raise RunStoreError("Run record snapshot changed")
+    if current and not current.endswith(b"\n"):
+        raise RunStoreError("Run JSONL has no terminal newline")
+    appended = current + _jsonl_bytes(records=[validated])
+    if path.read_bytes() != current:
+        raise RunStoreError("Run record snapshot changed")
+    atomic_write_bytes(path=path, content=appended)
+    return sha256_bytes(content=appended)
+
+
 def append_run_records_atomically(
     *,
     run_dir: Path,
@@ -671,21 +704,34 @@ def append_run_records_atomically(
     if not records:
         raise RunStoreError("Atomic finalization batch cannot be empty")
     paths = _run_paths(run_dir=run_dir)
+    if any(
+        path.is_symlink() or not path.is_file()
+        for path in (paths["records"], paths["decisions"])
+    ):
+        raise RunStoreError("Run finalization input path is unsafe")
+    records_bytes = paths["records"].read_bytes()
+    decisions_bytes = paths["decisions"].read_bytes()
     if (
-        sha256_file(path=paths["records"])
+        sha256_bytes(content=records_bytes)
         != expected_records_file_hash
-        or sha256_file(path=paths["decisions"])
+        or sha256_bytes(content=decisions_bytes)
         != expected_review_decisions_file_hash
     ):
         raise RunStoreError("Run finalization input bytes changed")
-    existing = _read_jsonl(path=paths["records"])
+    if records_bytes and not records_bytes.endswith(b"\n"):
+        raise RunStoreError("Run JSONL has no terminal newline")
     try:
         validated = [validate_record(record=record) for record in records]
     except ValueError as error:
         raise RunStoreError("Finalization batch record is invalid") from error
+    if (
+        paths["records"].read_bytes() != records_bytes
+        or paths["decisions"].read_bytes() != decisions_bytes
+    ):
+        raise RunStoreError("Run finalization input bytes changed")
     atomic_write_bytes(
         path=paths["records"],
-        content=_jsonl_bytes(records=[*existing, *validated]),
+        content=records_bytes + _jsonl_bytes(records=validated),
     )
 
 
@@ -1080,6 +1126,66 @@ def _qualification_fixture_traits(
     return list(fixture["company_traits"]), [str(int(fixture["cik"]))]
 
 
+def _qualification_authorization_traits(
+    *, repo_root: Path, manifest: Mapping[str, object],
+) -> Tuple[List[str], List[str]]:
+    """Rebuild one matrix-owned qualification issuer from current authority."""
+    authorization = manifest.get("qualification_authorization")
+    if type(authorization) is not dict:
+        raise TraitError("Qualification authorization is invalid")
+    try:
+        from .qualification import _rebuild_authorization_binding
+        from .qualification import QualificationError
+
+        binding = _rebuild_authorization_binding(
+            repo_root=repo_root,
+            actual=authorization,
+        )
+    except QualificationError as error:
+        raise TraitError(
+            "Qualification authorization cannot be rebuilt"
+        ) from error
+    source = binding.get("source_binding")
+    declaration = (
+        source.get("source_declaration")
+        if isinstance(source, Mapping) else None
+    )
+    references = manifest.get("source_references")
+    traits = binding.get("company_traits")
+    cik = declaration.get("cik") if isinstance(declaration, Mapping) else None
+    if (
+        binding.get("qualification_fixture_id") is not None
+        or not isinstance(declaration, Mapping)
+        or not isinstance(references, list)
+        or len(references) != 1
+        or not isinstance(references[0], Mapping)
+        or not isinstance(traits, list)
+        or not traits
+        or any(type(trait) is not str or not trait for trait in traits)
+        or len(traits) != len(set(traits))
+        or manifest.get("company_id") != declaration.get("company_id")
+        or manifest.get("company_traits") != traits
+        or manifest.get("target_period") != binding.get("target_period")
+        or type(cik) is not str
+        or not cik.isdigit()
+        or int(cik) <= 0
+        or references[0].get("company_id") != declaration.get("company_id")
+        or references[0].get("source_url") != source.get("source_url")
+        or references[0].get("accession") != declaration.get("accession")
+        or references[0].get("document_name")
+        != declaration.get("document_name")
+        or references[0].get("source_role") != source.get("source_role")
+        or references[0].get("request_attempt_id")
+        != source.get("request_attempt_id")
+        or references[0].get("raw_asset_id")
+        != "sha256:" + str(declaration.get("source_sha256", ""))
+    ):
+        raise TraitError(
+            "Qualification authorization source differs from Run"
+        )
+    return list(traits), [str(int(cik))]
+
+
 def _run_company_authority(
     *, repo_root: Path, manifest: Mapping[str, object],
 ) -> Tuple[List[str], List[str]]:
@@ -1097,10 +1203,12 @@ def _run_company_authority(
         and authorization.get("qualification_phase")
         in {"SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"}
     ):
-        return _qualification_fixture_traits(
-            repo_root=repo_root,
-            manifest=manifest,
+        resolver = (
+            _qualification_fixture_traits
+            if authorization.get("qualification_fixture_id") is not None
+            else _qualification_authorization_traits
         )
+        return resolver(repo_root=repo_root, manifest=manifest)
     try:
         return (
             repository_company_traits(
@@ -1113,6 +1221,14 @@ def _run_company_authority(
             ),
         )
     except TraitError:
+        if (
+            type(authorization) is dict
+            and authorization.get("qualification_fixture_id") is None
+        ):
+            return _qualification_authorization_traits(
+                repo_root=repo_root,
+                manifest=manifest,
+            )
         return _qualification_fixture_traits(
             repo_root=repo_root,
             manifest=manifest,

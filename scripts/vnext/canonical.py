@@ -123,11 +123,41 @@ def _validate_unicode(*, value: str) -> str:
     Raises:
         CanonicalError: When UTF-8 cannot represent the value.
     """
+    if value.isascii():
+        return value
     try:
         value.encode("utf-8")
     except UnicodeEncodeError as error:
         raise CanonicalError("Lone surrogate is forbidden") from error
     return unicodedata.normalize("NFC", value)
+
+
+def _is_direct_canonical_json_tree(*, value: object) -> bool:
+    """Return whether stdlib JSON emits the exact canonicalized tree bytes.
+
+    This fast path is intentionally limited to ordinary JSON-native trees
+    whose strings and object keys are already NFC.  Decimal normalization,
+    non-NFC text, mapping subclasses, floats, and other semantic extensions
+    continue through :func:`_canonicalize` and retain its exact validation.
+    """
+    if value is None or isinstance(value, (bool, int)):
+        return True
+    if isinstance(value, str):
+        return value.isascii() or _validate_unicode(value=value) == value
+    if type(value) is dict:
+        for key, item in value.items():
+            if type(key) is not str or not (
+                key.isascii() or _validate_unicode(value=key) == key
+            ):
+                return False
+            if not _is_direct_canonical_json_tree(value=item):
+                return False
+        return True
+    if isinstance(value, (list, tuple)):
+        return all(
+            _is_direct_canonical_json_tree(value=item) for item in value
+        )
+    return False
 
 
 def _validate_tree_unicode(*, value: object) -> None:
@@ -412,7 +442,11 @@ def canonical_json_bytes(
     Returns:
         Compact UTF-8 JSON terminated by one LF.
     """
-    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+    normalized = (
+        value
+        if not set_paths and _is_direct_canonical_json_tree(value=value)
+        else _canonicalize(value=value, path=(), set_paths=set_paths)
+    )
     text = json.dumps(
         normalized, ensure_ascii=False, separators=(",", ":"), sort_keys=True,
     )
