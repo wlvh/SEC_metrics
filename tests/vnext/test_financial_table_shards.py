@@ -16,6 +16,7 @@ import vnext.ai_adapter as ai_adapter
 import vnext.run_store as run_store_module
 from tests.vnext.common import REPO_ROOT, compiled_specs, reader_response
 from tests.vnext.common import fixed_clock, reviewed_fixture, sample_asset
+from tests.vnext.common import sample_source_reference
 from vnext import qualification
 from vnext.ai_adapter import AIAdapterError, READER_SHARD_OUTPUT_JSON_SCHEMA
 from vnext.ai_adapter import build_recorded_adapter, run_ai_attempt
@@ -39,6 +40,7 @@ from vnext.table_payload import encode_compact_table_payload
 from vnext.table_payload import validate_contiguous_table_shard_set
 from vnext.table_grid import build_table_grid
 from vnext.table_qualification_freeze import load_table_qualification_matrix
+from vnext.table_task_contracts import table_task_execution_plan
 from vnext.traits import TraitError
 from vnext.workflow import create_table_task_review_run
 from vnext.workflow import finalize_reviewed_direct_results
@@ -222,6 +224,67 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                 )
                 self.assertEqual(["financial"], sample["company_traits"])
                 self.assertIsNone(sample["qualification_fixture_id"])
+
+    def test_boa_source_binds_both_approved_a11_aliases_to_same_value(
+        self,
+    ) -> None:
+        """Prove the two owner-approved labels are exact immutable SEC cells."""
+        entry = load_table_qualification_matrix(
+            repo_root=REPO_ROOT,
+            family_id="financial_statement",
+        )["entries"]["financial_statement"]
+        source = qualification._matrix_source_binding(
+            repo_root=REPO_ROOT,
+            matrix_entry=entry,
+            source_field="second_layout_source",
+        )
+        declaration = source["source_declaration"]
+        asset = build_table_grid(
+            html_bytes=(
+                REPO_ROOT / declaration["source_repo_relative_path"]
+            ).read_bytes(),
+            parent_raw_asset_ids=["sha256:" + declaration["source_sha256"]],
+            storage_uri="artifacts/vnext/derived/a11-boa-alias-proof.json",
+        )
+        labels = {
+            "Assets under management",
+            "Total assets under management, end of year",
+        }
+        matches = []
+        for table in asset["tables"]:
+            rows = {
+                row["row_index"]: row for row in table["rows"]
+            }
+            label_rows = {}
+            for row_index, row in rows.items():
+                origins = {
+                    (cell["origin_row_index"], cell["origin_column_index"]): cell
+                    for cell in row["cells"]
+                }
+                for cell in origins.values():
+                    if cell["raw_text"] in labels:
+                        label_rows[cell["raw_text"]] = row_index
+            if set(label_rows) != labels:
+                continue
+            values = {}
+            for label, row_index in label_rows.items():
+                value_cell = next(
+                    cell for cell in rows[row_index]["cells"]
+                    if cell["origin_column_index"] == 16
+                )
+                values[label] = value_cell["raw_text"]
+            matches.append((table["table_id"], values))
+        self.assertEqual(1, len(matches))
+        self.assertEqual("table_000069", matches[0][0])
+        self.assertEqual(
+            {
+                "Assets under management": "2,177,708&#160;",
+                "Total assets under management, end of year": (
+                    "2,177,708&#160;"
+                ),
+            },
+            matches[0][1],
+        )
 
     def test_production_freeze_plans_the_matrix_owned_citi_holdout(self) -> None:
         """Avoid carrying the lodging fixture field into financial freeze."""
@@ -747,6 +810,145 @@ class FinancialTableShardClosureTest(unittest.TestCase):
             scope_contract=self.spec["compiled"]["scope_contract"],
         )
         return candidate, evidence, payload
+
+    def _aum_alias_evidence(
+        self, *, source_label: str, claimed_scope_raw_value: str,
+    ) -> dict:
+        """Run one exact A11 label through Reader and mechanical Evidence."""
+        html = (
+            "<html><body><table><tr><th>Metric</th><th>2025</th></tr>"
+            "<tr><td>{}</td><td>2177708</td></tr></table></body></html>"
+        ).format(source_label).encode("utf-8")
+        asset = build_table_grid(
+            html_bytes=html,
+            parent_raw_asset_ids=["sha256:" + sha256_bytes(content=html)],
+            storage_uri="artifacts/vnext/derived/a11-alias-test.json",
+        )
+        source = sample_source_reference(
+            raw_asset_id=asset["parent_raw_asset_ids"][0],
+        )
+        manifest = build_reader_input_manifest(
+            derived_asset=asset,
+            source_reference_ids=[source["source_reference_id"]],
+        )
+        parent = encode_compact_table_payload(derived_asset=asset)
+        shard = build_contiguous_table_shard(
+            parent_transport=parent,
+            shard_index=0,
+            shard_count=1,
+            start_table_order=0,
+            end_table_order=0,
+        )
+        coverage = validate_contiguous_table_shard_set(
+            shards=[shard],
+            parent_transport=parent,
+        )
+        payload = build_reader_shard_payload(
+            manifest=manifest,
+            derived_asset=asset,
+            task_contract={"fixture": "a11-scope-alias"},
+            table_shard=shard,
+            table_shard_set_id=coverage["shard_set_id"],
+        )
+        table = asset["tables"][0]
+        label_cell = table["rows"][1]["cells"][0]
+        value_cell = table["rows"][1]["cells"][1]
+
+        def locator(cell: dict) -> dict:
+            return {
+                "derived_asset_id": asset["derived_asset_id"],
+                "table_id": table["table_id"],
+                "row_index": cell["row_index"],
+                "column_index": cell["column_index"],
+                "origin_row_index": cell["origin_row_index"],
+                "origin_column_index": cell["origin_column_index"],
+                "rowspan": cell["rowspan"],
+                "colspan": cell["colspan"],
+            }
+
+        response = {
+            "disclosure_group": "financial_statement",
+            "shard_id": shard["shard_id"],
+            "examined_table_ids": list(shard["table_ids"]),
+            "shard_disposition": "CANDIDATE_PRESENT",
+            "table_locator": {
+                "derived_asset_id": asset["derived_asset_id"],
+                "table_id": table["table_id"],
+            },
+            "candidates": [{
+                "role": "assets_under_management",
+                "claimed_period": "FY2025",
+                "claimed_raw_value": "2177708",
+                "claimed_reported_unit": "USD",
+                "claimed_scope": [{
+                    "dimension": "asset_scope",
+                    "raw_value": claimed_scope_raw_value,
+                    "evidence_locator_ids": ["asset_scope_label"],
+                }],
+                "locator": locator(value_cell),
+                "scope_evidence_locators": [{
+                    "id": "asset_scope_label",
+                    "supports_dimensions": ["asset_scope"],
+                    "location_type": "label",
+                    "locator": locator(label_cell),
+                    "raw_text": source_label,
+                }],
+                "competing_candidates": [],
+            }],
+            "unresolved_competing_claims": [],
+        }
+        plan = table_task_execution_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="financial_assets_under_management_table_v1",
+        )
+        contract = plan["runtime_task_contract"]
+        candidate = validate_reader_output(
+            response_text=json.dumps(response),
+            attempt_id="attempt:a11:alias",
+            required_roles=contract["required_roles"],
+            scope_contract=contract["scope_contract"],
+            source_reference_ids=[source["source_reference_id"]],
+            derived_asset_ids=[asset["derived_asset_id"]],
+            table_shard_contract=payload["table_shard_contract"],
+        )
+        return check_evidence(
+            candidate=candidate,
+            derived_asset=asset,
+            reader_manifest=manifest,
+            reader_payload_body=payload["body"],
+            source_references=[source],
+            identity_constraints=[],
+            scope_contract=contract["scope_contract"],
+        )
+
+    def test_a11_owner_approved_exact_source_aliases_pass(self) -> None:
+        """Normalize both immutable BOA labels to the existing scope key."""
+        for label in (
+            "Assets under management",
+            "Total assets under management, end of year",
+        ):
+            with self.subTest(label=label):
+                evidence = self._aum_alias_evidence(
+                    source_label=label,
+                    claimed_scope_raw_value=label,
+                )
+                self.assertEqual("PASS", evidence["status"])
+                self.assertEqual(
+                    {"asset_scope": "total_assets_under_management"},
+                    evidence["normalized_scope"],
+                )
+
+    def test_a11_alias_does_not_weaken_exact_raw_text_binding(self) -> None:
+        """Keep semantic alias text and the located source bytes identical."""
+        evidence = self._aum_alias_evidence(
+            source_label="Assets under management",
+            claimed_scope_raw_value="Total assets under management",
+        )
+        self.assertEqual("REJECTED", evidence["status"])
+        self.assertEqual(
+            ["SCOPE_RAW_VALUE_LOCATOR_MISMATCH"],
+            evidence["reason_codes"],
+        )
 
     def test_no_candidate_shard_passes_local_evidence_and_system_review(
         self,

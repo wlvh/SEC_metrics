@@ -15,7 +15,11 @@
     "allowed_dimensions": ["asset_scope"],
     "exact_enum_aliases": {
       "asset_scope": {
-        "total_assets_under_management": ["Total assets under management"]
+        "total_assets_under_management": [
+          "Total assets under management",
+          "Assets under management",
+          "Total assets under management, end of year"
+        ]
       }
     },
     "selection_preference": {
