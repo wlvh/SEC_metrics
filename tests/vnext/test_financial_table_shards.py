@@ -672,6 +672,7 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
             with tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
                 plan_cache: dict[tuple, dict] = {}
+                mapping_cache: dict[tuple, dict] = {}
                 cycle_root = (
                     root / qualification.TABLE_QUALIFICATION_CYCLE_ROOT
                     / ("a" * 64)
@@ -741,12 +742,15 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                         binding=bindings[0],
                         scope=scope,
                         plan_cache=plan_cache,
+                        mapping_cache=mapping_cache,
                     )
                 return (
                     recovered,
                     exact_set.call_count,
                     (
                         exact_set.call_args.kwargs["plan_cache"] is plan_cache
+                        and exact_set.call_args.kwargs["mapping_cache"]
+                        is mapping_cache
                         and exact_set.call_args.kwargs[
                             "final_uncached_rebuild"
                         ] is False
@@ -817,6 +821,74 @@ class FinancialQualificationSourceAuthorityTest(unittest.TestCase):
                 qualification_phase="SECOND_LAYOUT",
                 qualification_ordinal=1,
                 plan_cache=plan_cache,
+            )
+
+    def test_authorization_mapping_cache_is_exact_and_returns_a_copy(
+        self,
+    ) -> None:
+        """Reuse one content-addressed mapping and reject cache mutation."""
+        value = {
+            field: None
+            for field in qualification._QUALIFICATION_SHARD_AUTHORIZATION_FIELDS
+            if field != "qualification_authorization_id"
+        }
+        value.update({
+            "family_id": "financial_statement",
+            "task_contract_id": "task-a",
+            "qualification_phase": "SECOND_LAYOUT",
+            "qualification_ordinal": 1,
+            "provider": "deepseek",
+            "table_shard_binding": {"shard_index": 0, "shard_count": 2},
+        })
+        value["qualification_authorization_id"] = content_hash(value=value)
+        cache_key = qualification._authorization_mapping_cache_key(
+            repo_root=REPO_ROOT,
+            family_id="financial_statement",
+            task_contract_id="task-a",
+            qualification_phase="SECOND_LAYOUT",
+            qualification_ordinal=1,
+            table_shard_index=0,
+        )
+        mapping_cache = {cache_key: copy.deepcopy(value)}
+        with mock.patch.object(
+            qualification,
+            "_authorization_task_plan",
+            side_effect=AssertionError("cache hit rebuilt the task plan"),
+        ):
+            first = qualification._authorization_mapping(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id="task-a",
+                qualification_phase="SECOND_LAYOUT",
+                qualification_ordinal=1,
+                table_shard_index=0,
+                mapping_cache=mapping_cache,
+            )
+            first["provider"] = "mutated-return-value"
+            second = qualification._authorization_mapping(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id="task-a",
+                qualification_phase="SECOND_LAYOUT",
+                qualification_ordinal=1,
+                table_shard_index=0,
+                mapping_cache=mapping_cache,
+            )
+        self.assertEqual("deepseek", second["provider"])
+        self.assertIsNot(first, second)
+        mapping_cache[cache_key]["provider"] = "tampered-cache"
+        with self.assertRaisesRegex(
+            qualification.QualificationError,
+            "Cached qualification authorization differs",
+        ):
+            qualification._authorization_mapping(
+                repo_root=REPO_ROOT,
+                family_id="financial_statement",
+                task_contract_id="task-a",
+                qualification_phase="SECOND_LAYOUT",
+                qualification_ordinal=1,
+                table_shard_index=0,
+                mapping_cache=mapping_cache,
             )
 
 

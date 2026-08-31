@@ -882,13 +882,90 @@ def _authorization_task_plan(
     return plan
 
 
+def _authorization_mapping_cache_key(
+    *, repo_root: Path, family_id: str, task_contract_id: str,
+    qualification_ordinal: int, qualification_phase: str,
+    table_shard_index: Optional[int],
+) -> tuple:
+    """Return one process-local key for an exact authorization mapping."""
+    return (
+        str(repo_root.resolve()),
+        family_id,
+        task_contract_id,
+        qualification_phase,
+        qualification_ordinal,
+        table_shard_index,
+    )
+
+
+def _validated_cached_authorization_mapping(
+    *, value: object, family_id: str, task_contract_id: str,
+    qualification_ordinal: int, qualification_phase: str,
+    table_shard_index: Optional[int],
+) -> Dict[str, object]:
+    """Return an isolated exact cached mapping or reject any mutation."""
+    expected_fields = (
+        _QUALIFICATION_SHARD_AUTHORIZATION_FIELDS
+        if table_shard_index is not None
+        else _QUALIFICATION_AUTHORIZATION_FIELDS
+    )
+    if (
+        type(value) is not dict
+        or set(value) != expected_fields
+        or value.get("family_id") != family_id
+        or value.get("task_contract_id") != task_contract_id
+        or value.get("qualification_phase") != qualification_phase
+        or value.get("qualification_ordinal") != qualification_ordinal
+        or value.get("qualification_authorization_id")
+        != content_hash(value={
+            key: item for key, item in value.items()
+            if key != "qualification_authorization_id"
+        })
+        or (
+            table_shard_index is not None
+            and (
+                type(value.get("table_shard_binding")) is not dict
+                or value["table_shard_binding"].get("shard_index")
+                != table_shard_index
+            )
+        )
+    ):
+        raise QualificationError(
+            code="TABLE_QUALIFICATION_AUTHORIZATION_INVALID",
+            message="Cached qualification authorization differs",
+        )
+    return copy.deepcopy(value)
+
+
 def _authorization_mapping(
     *, repo_root: Path, family_id: str, task_contract_id: str,
     qualification_ordinal: int, qualification_phase: str,
     table_shard_index: Optional[int] = None,
     plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
+    mapping_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> Dict[str, object]:
     """Mechanically rebuild every current authority field for one LIVE task."""
+    mapping_key = _authorization_mapping_cache_key(
+        repo_root=repo_root,
+        family_id=family_id,
+        task_contract_id=task_contract_id,
+        qualification_ordinal=qualification_ordinal,
+        qualification_phase=qualification_phase,
+        table_shard_index=table_shard_index,
+    )
+    cached_mapping = (
+        mapping_cache.get(mapping_key)
+        if mapping_cache is not None else None
+    )
+    if cached_mapping is not None:
+        return _validated_cached_authorization_mapping(
+            value=cached_mapping,
+            family_id=family_id,
+            task_contract_id=task_contract_id,
+            qualification_ordinal=qualification_ordinal,
+            qualification_phase=qualification_phase,
+            table_shard_index=table_shard_index,
+        )
     plan = _authorization_task_plan(
         repo_root=repo_root,
         family_id=family_id,
@@ -1215,10 +1292,13 @@ def _authorization_mapping(
     if table_shard_binding is not None:
         body["parent_qualification_task_plan_id"] = parent_plan_id
         body["table_shard_binding"] = table_shard_binding
-    return {
+    result = {
         **body,
         "qualification_authorization_id": content_hash(value=body),
     }
+    if mapping_cache is not None:
+        mapping_cache[mapping_key] = copy.deepcopy(result)
+    return result
 
 
 _FINANCIAL_PHASE_ORDER = {
@@ -1263,6 +1343,7 @@ def _financial_cycle_stop_gate(
     *, repo_root: Path, binding: Mapping[str, object],
     scope: Mapping[str, object],
     plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
+    mapping_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> None:
     """Stop every later financial child after any incomplete prior terminal."""
     task_ids = scope.get("authorized_task_contract_ids")
@@ -1495,6 +1576,7 @@ def _financial_cycle_stop_gate(
             repo_root=repo_root,
             binding=binding,
             plan_cache=plan_cache,
+            mapping_cache=mapping_cache,
             final_uncached_rebuild=False,
         )
 
@@ -1591,6 +1673,7 @@ def _issue_table_qualification_authorization(
     qualification_phase: str = "FRESH_STABILITY",
     table_shard_index: Optional[int] = None,
     plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
+    mapping_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> TableQualificationAuthorization:
     """Issue one opaque authorization only after all current gates revalidate.
 
@@ -1724,6 +1807,7 @@ def _issue_table_qualification_authorization(
         qualification_phase=qualification_phase,
         table_shard_index=table_shard_index,
         plan_cache=plan_cache,
+        mapping_cache=mapping_cache,
     )
     if financial_family:
         _financial_cycle_stop_gate(
@@ -1731,6 +1815,7 @@ def _issue_table_qualification_authorization(
             binding=binding,
             scope=scope,
             plan_cache=plan_cache,
+            mapping_cache=mapping_cache,
         )
     return TableQualificationAuthorization(
         binding=binding,
@@ -1757,6 +1842,7 @@ def issue_table_qualification_authorization(
 def _rebuild_authorization_binding(
     *, repo_root: Path, actual: object,
     plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
+    mapping_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
 ) -> Dict[str, object]:
     """Rebuild a persisted authorization without trusting copied fields."""
     if type(actual) is not dict or frozenset(actual) not in {
@@ -1790,6 +1876,7 @@ def _rebuild_authorization_binding(
             else None
         ),
         plan_cache=plan_cache,
+        mapping_cache=mapping_cache,
     )
     if actual != fresh:
         raise QualificationError(
@@ -2967,6 +3054,7 @@ def _read_cycle_run_records(*, run_dir: Path) -> tuple[Dict[str, object], list[D
 def validate_table_qualification_cycle_exact_set(
     *, repo_root: Path, binding: Mapping[str, object],
     plan_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
+    mapping_cache: Optional[Dict[tuple, Dict[str, object]]] = None,
     final_uncached_rebuild: bool = True,
 ) -> None:
     """Require a one-to-one remote-attempt, ledger, and evidence set per cycle.
@@ -3000,6 +3088,7 @@ def validate_table_qualification_cycle_exact_set(
     seen_attempt_ids = set()
     seen_evidence_ids = set()
     local_plan_cache = plan_cache if plan_cache is not None else {}
+    local_mapping_cache = mapping_cache if mapping_cache is not None else {}
     for run_dir in sorted(run_root.iterdir(), key=lambda path: path.name):
         if run_dir.is_symlink() or not run_dir.is_dir():
             raise QualificationError(
@@ -3017,6 +3106,7 @@ def validate_table_qualification_cycle_exact_set(
             repo_root=repo_root,
             actual=authorization,
             plan_cache=local_plan_cache,
+            mapping_cache=local_mapping_cache,
         )
         if current["qualification_cycle_id"] != cycle_id or (
             run_dir.resolve()
@@ -3171,6 +3261,7 @@ def validate_table_qualification_cycle_exact_set(
             repo_root=repo_root,
             actual=nested,
             plan_cache=local_plan_cache,
+            mapping_cache=local_mapping_cache,
         )
         if rebuilt["qualification_cycle_id"] != cycle_id:
             raise QualificationError(
@@ -3625,6 +3716,7 @@ def execute_table_qualification_task(
 ) -> Dict[str, object]:
     """Execute one ordinary task or every child of one financial shard plan."""
     plan_cache: Dict[tuple, Dict[str, object]] = {}
+    mapping_cache: Dict[tuple, Dict[str, object]] = {}
     plan = _authorization_task_plan(
         repo_root=repo_root,
         family_id=family_id,
@@ -3653,6 +3745,7 @@ def execute_table_qualification_task(
             qualification_phase=qualification_phase,
             table_shard_index=None,
             plan_cache=plan_cache,
+            mapping_cache=mapping_cache,
         )
         terminal = _execute_table_qualification_terminal(
             repo_root=repo_root,
@@ -3690,6 +3783,7 @@ def execute_table_qualification_task(
             qualification_phase=qualification_phase,
             table_shard_index=shard_index,
             plan_cache=plan_cache,
+            mapping_cache=mapping_cache,
         )
         result = _execute_table_qualification_terminal(
             repo_root=repo_root,
