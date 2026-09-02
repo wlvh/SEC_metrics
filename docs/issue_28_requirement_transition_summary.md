@@ -1,62 +1,63 @@
-# Issue #28 Requirement transition summary
+# PR #29 reworked Requirement transition summary
 
-## Approval object
+Status: `REWORKED_DRAFT_REVIEW_PENDING` / `NOT_ACTIVATED`.
+This summary is not an approval request, activation receipt, or live grant.
 
-| Field | Candidate value |
+## Identity
+
+| Field | Value |
 |---|---|
-| Issue | `#28` |
-| Requirement | `issue_28_v1` |
+| Issue / Requirement | `#28` / `issue_28_v1` |
 | Exact merged baseline | `e0cd1da793a9851ac853ce3cf62467d199fb192e` |
 | Baseline tree | `801ea0206c67d87a216e13a8d49974acbd8d7af0` |
-| Parent Requirement | `issue_15_v1` |
+| Reworked closure | `sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac` |
+| Retained engine | `PROFILE_DRIVEN_V1` → `scripts/vnext/requirement_profile_v1.py` |
 | Parent closure | `sha256:e4b1d8141196fae9bb5da904692fd0d495ec69b89101b8304e12f6cb2640b7c7` |
-| Candidate successor closure | `sha256:5b14c4d8d4cfa2381adc6f48568d538818110bd82c206f59209bf96ab3789549` |
 | Active / predecessor | R3 `publication_4f2542…` / R2 `publication_fe01e2…` |
-| PR #22 archive | `archive/pr22-r4-development-62678e3` → `62678e304778970c8d2bc69db45a6b9fc969d01f` |
 
-The exact PR head is deliberately not embedded in a file inside that same
-commit. The owner approval must copy the live GitHub PR head and the closure
-above; both values are re-read immediately before merge.
+The exact head/tree are in the live PR body; embedding the commit's own SHA
+inside itself would be self-referential. The rejected head
+`3973ef94d950093270df27110a17c317075cf413` and rejected closure
+`sha256:5b14c4d8d4cfa2381adc6f48568d538818110bd82c206f59209bf96ab3789549`
+are no longer approval candidates.
 
-## What changes
+## Rework delivered
 
-- Add the five-file `requirements/issue_28_v1` snapshot.
-- Keep the two historical adapters and add generation-based profile dispatch,
-  so a future profile snapshot does not require another Issue-specific branch.
-- Resolve Decision chains generically and execute ten closed typed invariant
-  kinds. The profile contains only Decision references; policy values remain
-  solely in the Decision Register.
-- Classify all 18 effective parent policies exactly once: 14
-  `CARRY_FORWARD`, 3 `SUPERSEDED`, and 1 Decision-level `HISTORICAL_ONLY`;
-  five PR #22 evidence classes are separately `HISTORICAL_ONLY`.
-- Require successor Run identity to contain Requirement ID, closure and file
-  hashes together; preserve legacy hash-only Run/Publication bytes.
+- Independent `SUCCESSOR_RUN`, `SUCCESSOR_RELEASE_PLAN`, and
+  `SUCCESSOR_PUBLICATION_MANIFEST` subtypes require immutable generation and
+  all three Requirement identity fields. Real builders, schemas, loaders,
+  freeze/replay and full publication read-back reject missing/partial identity.
+- Legacy Run/Publication hashes equal the selected historical Requirement.
+  Historical `ISSUE_15_RELEASE_PLAN` keeps its original ID/closure schema.
+- The mutable module is only a version registry. V1 stays available; V2 adds
+  one typed product-meaning extension without changing V1. Evolution tests add
+  an R5 scope, resolve its pending meaning Decision, and retain old R4 closure.
+- All 477 parent choice leaf obligations have exactly one disposition:
+  189 carry-forward, 278 historical-only, 10 superseded. D-01 transport,
+  D-24 honest security boundary and D-26 fast policy retain their real meaning.
+- V1 enforces the R4 exact set, live-call/context/performance bounds, zero-call
+  fixture classes, two positive classes only, selector prohibitions,
+  SourceScopeManifest bindings, and non-weakenable test policy.
+- Recorded Issue-body policy and exact parent approvals replace the incorrect
+  identifier-comment provenance. Candidate validation, exact-head activation,
+  and live authorization remain separate. No activation receipt is issued.
+- Parent loading reconstructs recorded hashes plus immutable snapshot bytes,
+  without invoking the Issue #15 live-root adapter. Current successor execution
+  independently validates its own inputs.
 
-## What does not change
+## Boundaries retained
 
-- `requirements/issue_15_v1/**`, R1–R3 bundles/receipts, active R3, exact R2,
-  root mirrors, provider runtime, source routing, freeze, cycle and Stage-A.
-- No R4 scope extraction, fixture execution, Issue #24 performance
-  implementation, provider call, paid call or SEC request occurs in PR-A.
-- PR #22 archive has qualification/current-execution credit `NONE` and response
-  reuse `NOT_AUTHORIZED`.
-- Issues #15 and #24 stay open until PR-A merges; their later terminal label is
-  `SUPERSEDED_BY_ISSUE_28`, not completed.
+The five-file snapshot remains intact. Issue #15/ai_first bytes, R1–R3 bundles,
+receipts, active pointer, 14 root mirrors, config/catalog, provider boundary,
+freeze/cycle/Stage-A and SEC ledger are unchanged. PR #22 archive remains
+`archive/pr22-r4-development-62678e3` →
+`62678e304778970c8d2bc69db45a6b9fc969d01f`, qualification credit `NONE`, response
+reuse `NOT_AUTHORIZED`.
 
-## Required owner decision
+No PR-B, R4 business implementation, actual qualification/publication,
+provider/paid/SEC call, Issue closure, Ready transition, or merge is performed.
+Full artifact tests use temporary recorded fixtures only; formal successor
+publication remains fail-closed. Issues #15 and #24 remain open.
 
-```text
-APPROVE_REQUIREMENT_TRANSITION
-
-Issue: #28
-PR-A exact head: <copy current GitHub head>
-Requirement ID: issue_28_v1
-Requirement closure: sha256:5b14c4d8d4cfa2381adc6f48568d538818110bd82c206f59209bf96ab3789549
-
-Approved scope:
-- successor Requirement transition
-- historical R1–R3 compatibility
-- generic invariant validation
-
-Provider / paid / SEC execution remains unauthorized.
-```
+See `docs/issue_28_pr29_rework_audit.md` for the defect-to-test ledger and exact
+commands; the PR body records the final head, timings, return codes and CI URL.

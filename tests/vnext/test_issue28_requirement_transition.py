@@ -12,6 +12,7 @@ from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT
 from tests.vnext.test_issue15_authority import copy_test_repository
+from tests.vnext.issue28_fixture_support import copy_profile_repository, evolve_to_v2
 from vnext.canonical import atomic_write_json, content_hash, sha256_file
 from vnext.canonical import strict_json_file
 from vnext.publication import PublicationView, ROOT_MIRROR_RELATIVE_PATHS
@@ -32,7 +33,7 @@ ISSUE_15_CLOSURE = (
     "sha256:e4b1d8141196fae9bb5da904692fd0d495ec69b89101b8304e12f6cb2640b7c7"
 )
 ISSUE_28_CLOSURE = (
-    "sha256:5b14c4d8d4cfa2381adc6f48568d538818110bd82c206f59209bf96ab3789549"
+    "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac"
 )
 ACTIVE_R3 = (
     "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8"
@@ -74,10 +75,7 @@ ISSUE_15_FILE_BINDINGS = {
 
 def _copied_issue28_repository(*, directory: str) -> Path:
     """Copy exact historical fixtures plus the successor five-file snapshot."""
-    issue15 = copy_test_repository(temp_dir=directory)
-    issue28 = issue15.parent / "issue_28_v1"
-    shutil.copytree(src=ISSUE_28_DIR, dst=issue28)
-    return issue28
+    return copy_profile_repository(directory=directory)
 
 
 def _rebind_snapshot_file(*, issue28: Path, relative: str) -> None:
@@ -106,28 +104,23 @@ class Issue28RequirementTransitionFastTest(unittest.TestCase):
         self.assertEqual(ISSUE_28_CLOSURE, successor["requirement_closure_hash"])
         self.assertEqual("PROFILE_DRIVEN_V1", successor["requirement_generation"])
         self.assertEqual(
-            EXPLICIT_ARTIFACT_GENERATION,
-            successor["artifact_requirement_generation"],
+            EXPLICIT_ARTIFACT_GENERATION, successor["artifact_requirement_generation"],
         )
         self.assertEqual(
             parent["requirement_closure_hash"],
             successor["parent_requirement_closure_hash"],
         )
-        self.assertEqual(
-            ["S-R5-B06-B13-MEANING"], successor["pending_decision_ids"]
-        )
-        self.assertEqual(10, len(successor["evaluated_invariants"]["by_invariant_id"]))
-        self.assertEqual(18, len(successor["transfer"]["dispositions"]))
+        self.assertEqual(["S-R5-B06-B13-MEANING"], successor["pending_decision_ids"])
+        self.assertEqual(14, len(successor["evaluated_invariants"]["by_invariant_id"]))
+        self.assertEqual(477, len(successor["transfer"]["fragments"]))
         self.assertEqual(5, len(successor["transfer"]["historical_material"]))
         self.assertEqual(
-            {"CARRY_FORWARD": 14, "HISTORICAL_ONLY": 1, "SUPERSEDED": 3},
-            strict_json_file(
-                path=ISSUE_28_DIR / "transfer_manifest.json"
-            )["classification_counts"],
+            {"CARRY_FORWARD": 189, "HISTORICAL_ONLY": 278, "SUPERSEDED": 10},
+            strict_json_file(path=ISSUE_28_DIR / "transfer_manifest.json")[
+                "fragment_classification_counts"
+            ],
         )
-        historical = successor["effective_decisions"][
-            "S-HISTORICAL-EVIDENCE"
-        ]["choice"]
+        historical = successor["effective_decisions"]["S-HISTORICAL-EVIDENCE"]["choice"]
         self.assertEqual("NONE", historical["qualification_credit"])
         self.assertEqual("NOT_AUTHORIZED", historical["response_reuse"])
         self.assertEqual(
@@ -143,12 +136,11 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
 
     def test_issue15_snapshot_bytes_remain_exact(self) -> None:
         """Freeze all seven Issue #15 files independently of child metadata."""
-        self.assertEqual(set(ISSUE_15_FILE_BINDINGS), {
-            path.name for path in ISSUE_15_DIR.iterdir() if path.is_file()
-        })
-        for relative, (expected_hash, expected_size) in (
-            ISSUE_15_FILE_BINDINGS.items()
-        ):
+        self.assertEqual(
+            set(ISSUE_15_FILE_BINDINGS),
+            {path.name for path in ISSUE_15_DIR.iterdir() if path.is_file()},
+        )
+        for relative, (expected_hash, expected_size) in ISSUE_15_FILE_BINDINGS.items():
             path = ISSUE_15_DIR / relative
             self.assertFalse(path.is_symlink())
             self.assertEqual(expected_hash, sha256_file(path=path))
@@ -156,14 +148,10 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
 
     def test_baseline_binds_exact_merged_main_and_parent_tree(self) -> None:
         """Resolve recorded Git objects without treating live HEAD as authority."""
-        baseline = strict_json_file(
-            path=ISSUE_28_DIR / "baseline_manifest.json"
-        )
+        baseline = strict_json_file(path=ISSUE_28_DIR / "baseline_manifest.json")
         commit = baseline["repository"]["commit"]
         repository_tree = subprocess.check_output(
-            ["git", "rev-parse", commit + "^{tree}"],
-            cwd=REPO_ROOT,
-            text=True,
+            ["git", "rev-parse", commit + "^{tree}"], cwd=REPO_ROOT, text=True,
         ).strip()
         parent_tree = subprocess.check_output(
             ["git", "rev-parse", commit + ":requirements/issue_15_v1"],
@@ -176,8 +164,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
             path=REPO_ROOT / "outputs" / "active_publication.json"
         )
         self.assertEqual(
-            baseline["active_publication"]["publication_id"],
-            pointer["publication_id"],
+            baseline["active_publication"]["publication_id"], pointer["publication_id"],
         )
         self.assertEqual(
             baseline["active_publication"]["predecessor_publication_id"],
@@ -188,10 +175,12 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
         """Keep policy content in the Decision Register, not a JSON DSL."""
         profile = strict_json_file(path=ISSUE_28_DIR / "invariant_profile.json")
         self.assertTrue(profile["invariants"])
-        self.assertTrue(all(
-            set(entry) == {"decision_id", "invariant_id"}
-            for entry in profile["invariants"]
-        ))
+        self.assertTrue(
+            all(
+                set(entry) == {"decision_id", "invariant_id"}
+                for entry in profile["invariants"]
+            )
+        )
         profile_text = json.dumps(profile, sort_keys=True)
         for forbidden in (
             "expression",
@@ -203,51 +192,13 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
             self.assertNotIn(forbidden, profile_text)
 
     def test_profile_dispatch_is_generation_driven_not_issue_branch(self) -> None:
-        """Load a re-bound future profile without adding Python dispatch code."""
+        """Load a later revision through a retained engine, not an Issue branch."""
         with tempfile.TemporaryDirectory() as directory:
-            issue29 = _copied_issue28_repository(directory=directory)
-            contract_path = issue29 / "CONTRACT.md"
-            contract_path.write_text(
-                contract_path.read_text(encoding="utf-8").replace(
-                    "Issue #28", "Issue #29"
-                ).replace("issue_28_v1", "issue_29_v1"),
-                encoding="utf-8",
-            )
-            register_path = issue29 / "decision_register.json"
-            register = strict_json_file(path=register_path)
-            register["requirement_id"] = "issue_29_v1"
-            atomic_write_json(path=register_path, value=register)
-            profile_path = issue29 / "invariant_profile.json"
-            profile = strict_json_file(path=profile_path)
-            profile["requirement_id"] = "issue_29_v1"
-            atomic_write_json(path=profile_path, value=profile)
-            transfer_path = issue29 / "transfer_manifest.json"
-            transfer = strict_json_file(path=transfer_path)
-            transfer["requirement_id"] = "issue_29_v1"
-            atomic_write_json(path=transfer_path, value=transfer)
-            baseline_path = issue29 / "baseline_manifest.json"
-            baseline = strict_json_file(path=baseline_path)
-            baseline["requirement_id"] = "issue_29_v1"
-            baseline["issue"]["number"] = 29
-            baseline["issue"]["url"] = (
-                "https://github.com/wlvh/SEC_metrics/issues/29"
-            )
-            baseline["issue"]["identifier_comment_url"] = (
-                "https://github.com/wlvh/SEC_metrics/issues/29#issuecomment-1"
-            )
-            atomic_write_json(path=baseline_path, value=baseline)
-            for relative in (
-                "CONTRACT.md",
-                "decision_register.json",
-                "invariant_profile.json",
-                "transfer_manifest.json",
-            ):
-                _rebind_snapshot_file(issue28=issue29, relative=relative)
-            loaded = load_requirement_snapshot(snapshot_dir=issue29)
-            self.assertEqual("issue_29_v1", loaded["requirement_id"])
-            self.assertEqual(
-                "PROFILE_DRIVEN_V1", loaded["requirement_generation"]
-            )
+            issue28 = _copied_issue28_repository(directory=directory)
+            later = evolve_to_v2(snapshot=issue28)
+            loaded = load_requirement_snapshot(snapshot_dir=later)
+            self.assertEqual("issue_28_v2", loaded["requirement_id"])
+            self.assertEqual("PROFILE_DRIVEN_V2", loaded["requirement_generation"])
 
     def test_contract_byte_drift_fails_closed(self) -> None:
         """Reject one changed snapshot byte before semantic evaluation."""
@@ -328,9 +279,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
             issue28 = _copied_issue28_repository(directory=directory)
             register_path = issue28 / "decision_register.json"
             register = strict_json_file(path=register_path)
-            register["decisions"][0]["choice"] = {
-                "kind": "ARBITRARY_JSON_EXPRESSION"
-            }
+            register["decisions"][0]["choice"] = {"kind": "ARBITRARY_JSON_EXPRESSION"}
             atomic_write_json(path=register_path, value=register)
             _rebind_snapshot_file(issue28=issue28, relative="decision_register.json")
             with self.assertRaisesRegex(RequirementError, "Unknown invariant kind"):
@@ -343,7 +292,8 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
             register_path = issue28 / "decision_register.json"
             register = strict_json_file(path=register_path)
             transport = [
-                row for row in register["decisions"]
+                row
+                for row in register["decisions"]
                 if row["decision_id"] == "S-TRANSPORT-RETRY"
             ][0]
             transport["choice"]["automatic_retry_count"] = 1
@@ -369,8 +319,8 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
             issue28 = _copied_issue28_repository(directory=directory)
             transfer_path = issue28 / "transfer_manifest.json"
             transfer = strict_json_file(path=transfer_path)
-            transfer["dispositions"].pop()
-            transfer["classification_counts"]["CARRY_FORWARD"] -= 1
+            removed = transfer["fragments"].pop()
+            transfer["fragment_classification_counts"][removed["disposition"]] -= 1
             atomic_write_json(path=transfer_path, value=transfer)
             _rebind_snapshot_file(issue28=issue28, relative="transfer_manifest.json")
             with self.assertRaisesRegex(RequirementError, "incomplete"):
@@ -379,13 +329,16 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
     def test_successor_artifact_identity_is_all_or_nothing(self) -> None:
         """Reject missing or forged identity for every successor artifact type."""
         requirement = load_requirement_snapshot(snapshot_dir=ISSUE_28_DIR)
-        for record_type in ("PUBLICATION_MANIFEST", "RELEASE_PLAN", "RUN"):
+        for record_type in (
+            "SUCCESSOR_PUBLICATION_MANIFEST",
+            "SUCCESSOR_RELEASE_PLAN",
+            "SUCCESSOR_RUN",
+        ):
             artifact = {
                 "record_type": record_type,
+                "artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
                 "requirement_id": requirement["requirement_id"],
-                "requirement_closure_hash": requirement[
-                    "requirement_closure_hash"
-                ],
+                "requirement_closure_hash": requirement["requirement_closure_hash"],
                 "requirement_hashes": requirement["hashes"],
             }
             self.assertEqual(
@@ -439,7 +392,9 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
                 / "publication_manifest.json"
             )
         )
-        parent = load_requirement_snapshot(snapshot_dir=ISSUE_15_DIR)
+        parent = load_requirement_snapshot(
+            snapshot_dir=REPO_ROOT / "requirements/ai_first_v3_3_1"
+        )
         self.assertNotIn("requirement_id", manifest)
         self.assertNotIn("requirement_closure_hash", manifest)
         self.assertEqual(
@@ -466,6 +421,8 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
             requirement_id=successor["requirement_id"],
             requirement_closure_hash=successor["requirement_closure_hash"],
             requirement_hashes=successor["hashes"],
+            record_type="SUCCESSOR_RUN",
+            artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
         )
         self.assertEqual("issue_28_v1", resolved["requirement_id"])
         with self.assertRaisesRegex(RequirementError, "incomplete"):
@@ -474,10 +431,11 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
                 task_contract_bindings=[],
                 requirement_id="issue_28_v1",
                 requirement_hashes=successor["hashes"],
+                record_type="SUCCESSOR_RUN",
+                artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
             )
         legacy = load_run_requirement_snapshot(
-            repo_root=REPO_ROOT,
-            task_contract_bindings=[],
+            repo_root=REPO_ROOT, task_contract_bindings=[],
         )
         self.assertEqual("ai_first_v3_3_1", legacy["requirement_id"])
 
@@ -500,9 +458,8 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
                 spec_file_hashes={"fixture": "sha256:fixture"},
                 requirement_hashes=successor["hashes"],
                 requirement_id=successor["requirement_id"],
-                requirement_closure_hash=successor[
-                    "requirement_closure_hash"
-                ],
+                artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
+                requirement_closure_hash=successor["requirement_closure_hash"],
             )
             self.assertEqual("issue_28_v1", manifest["requirement_id"])
             self.assertEqual(
@@ -511,7 +468,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
             )
             incomplete_manifest = dict(manifest)
             incomplete_manifest.pop("requirement_closure_hash")
-            with self.assertRaisesRegex(RecordError, "incomplete"):
+            with self.assertRaisesRegex(RecordError, "Missing record fields"):
                 validate_record(record=incomplete_manifest)
         with tempfile.TemporaryDirectory() as directory:
             with self.assertRaisesRegex(RunStoreError, "incomplete"):
@@ -530,6 +487,7 @@ class Issue28RequirementTransitionTest(unittest.TestCase):
                     spec_file_hashes={"fixture": "sha256:fixture"},
                     requirement_hashes=successor["hashes"],
                     requirement_id=successor["requirement_id"],
+                    artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
                 )
 
 
@@ -557,9 +515,9 @@ class Issue28HistoricalReadBackIntegrationTest(unittest.TestCase):
         """Preserve R3 active, exact R2, R1 availability and 14 mirrors."""
         self.assertEqual(ACTIVE_R3, self.active.publication_id)
         self.assertEqual(EXACT_R2, self.r2.publication_id)
-        self.assertEqual(self.r2.publication_id, self.active.manifest[
-            "previous_publication_id"
-        ])
+        self.assertEqual(
+            self.r2.publication_id, self.active.manifest["previous_publication_id"]
+        )
         self.assertEqual(
             self.r1.publication_id, self.r2.manifest["previous_publication_id"]
         )

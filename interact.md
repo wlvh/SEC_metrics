@@ -103,7 +103,7 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 
 当前仓库只登记了在 PR 上运行 fast suite 的 GitHub CI check；未登记 UI、API、生产 scheduler、部署状态、专用支持渠道或紧急联系人。CI green 只证明该 fast boundary，不表示 live、full acceptance 或部署完成。
 
-R1–R3结果继续由`issue_15_v1`历史adapter和已提交PublicationView读取；successor开发authority为五文件`issue_28_v1` snapshot。对用户可见的关键区别不是目录名，而是解释边界：旧Run/publication缺少新identity字段仍可按历史schema回读，任何successor Run若缺少或伪造`requirement_id`、`requirement_closure_hash`、`requirement_hashes`则不能freeze/replay。Requirement transition本身不改变active R3、root mirrors、指标值或live能力。
+R1–R3继续按不可变bundle与历史schema读取；successor五文件snapshot使用保留的versioned engine。三个SUCCESSOR_* record subtype必须携带独立generation与完整id/closure/hashes，删除这些字段不能落回legacy。旧ReleasePlan原本已有id/closure，不会被误判为successor；旧RUN/Publication的hashes必须等于所选历史Requirement。后来合法root catalog/config变动不改变已记录parent closure，但新执行必须符合自身execution authority。policy内容来源、closure校验、exact-head activation与live grant分别显示；PR #29当前NOT_ACTIVATED，transition不改变active R3、14 mirrors、指标值或live能力。
 <!-- capability-anchor: CAPABILITY.issue_28_profile_requirement_authority -->
 
 ## 8. vNext formal Cutover 的可观察行为（R3 partial active）

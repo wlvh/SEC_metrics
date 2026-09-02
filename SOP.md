@@ -12,10 +12,10 @@
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
-| 1 | 加载五文件successor snapshot及parent | `requirements/issue_28_v1/`；`scripts/vnext/requirement_profile.py` | exact file set/hash/size、validator identity、parent closure与R3/R2 baseline一致 |
-| 2 | 执行transfer和typed invariants | `transfer_manifest.json`；`decision_register.json`；`invariant_profile.json` | 每条parent Decision仅一个disposition；每个approved successor Decision恰好一个已知typed evaluator；未知kind/fork/detached/tamper fail closed |
-| 3 | 重验历史兼容与新artifact identity | `tests/vnext/test_issue28_requirement_transition.py` | R1–R3原bytes可读；Issue #15零修改；新artifact缺失/伪造identity失败；provider/paid/SEC为0/0/0 |
-| 4 | 请求transition approval | PR-A一页summary | owner只绑定exact head与`issue_28_v1` closure；合并前不得开始R4或关闭Issue #15/#24 |
+| 1 | 加载五文件snapshot、固定版本engine与记录parent | `requirements/issue_28_v1/`；`scripts/vnext/requirement_profile.py` | exact files/hash/size、engine及其dependencies、parent recorded hashes/snapshot bytes一致；parent不读取current root authority |
+| 2 | 执行fragment transfer和typed safety bounds | `transfer_manifest.json`；`decision_register.json`；`invariant_profile.json` | 每个parent叶级义务唯一分类；D-01/D-24/D-26语义不可错配；同kind按ratchet独立；未知kind/fork/detached/tamper失败 |
+| 3 | 重验真实artifact与历史兼容 | `tests/vnext/test_issue28_rework.py`；`tests/vnext/test_issue28_requirement_transition.py` | successor三个subtype的generation和完整identity均必填；真实round-trip及删字段负例通过；root drift不破坏R1–R3；0/0/0 egress |
+| 4 | 保持Draft并提交返工证据 | PR-A一页summary与rework audit | 被拒head/closure不再请求批准；policy-content evidence不是activation。后续有效exact-head approval才可形成单独activation receipt；合并前不开始R4、不关闭#15/#24 |
 
 ## Issue #15 D-36/D-35 金额与资源安全边界
 

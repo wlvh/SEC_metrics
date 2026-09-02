@@ -29,11 +29,18 @@ rewrite or reinterpret already published evidence.
   development only. It has no current/successor qualification credit and its
   responses are not reusable.
 
-## 4. Successor artifact identity
+## 4. Versioned authority and successor artifact identity
 
-Historical artifacts keep `requirement_hashes` and are interpreted only by a
-historical adapter; their bytes are never rewritten. Every successor `RUN`,
-`RELEASE_PLAN`, and `PUBLICATION_MANIFEST` must carry all of:
+`PROFILE_DRIVEN_V1` executes the retained `requirement_profile_v1.py` engine.
+Later registered engines never replace that file. Revisions such as
+`issue_28_v2` name their previous exact closure; multiple Ratchets may each
+have scope/call/source/predecessor invariants keyed by invariant ID and Ratchet.
+
+Historical `RUN`/`PUBLICATION_MANIFEST` retain hash-only identity; historical
+`ISSUE_15_RELEASE_PLAN` retains its already explicit ID/closure schema. Their
+bytes are never rewritten. New `SUCCESSOR_RUN`, `SUCCESSOR_RELEASE_PLAN`, and
+`SUCCESSOR_PUBLICATION_MANIFEST` use a distinct subtype and a required immutable
+`artifact_requirement_generation=EXPLICIT_REQUIREMENT_V1`, plus all of:
 
 - `requirement_id`;
 - `requirement_closure_hash`;
@@ -41,6 +48,13 @@ historical adapter; their bytes are never rewritten. Every successor `RUN`,
 
 The three values must resolve to one profile-driven Requirement. Missing or
 forged successor identity fails closed and cannot select legacy mode.
+Legacy hashes must equal the selected historical Requirement, not merely be
+non-empty. Publication wrapper authority and projection/Run authority are
+separately bound; a new wrapper cannot relabel historical qualification credit.
+
+Parent history is reconstructed from recorded parent hashes and immutable
+snapshot bytes, not mutable current catalog/config or semantic-version values.
+Current successor execution independently validates its own bound inputs.
 
 ## 5. Carried safety boundaries
 
@@ -49,6 +63,15 @@ locator/raw value/unit/period/scope recovery, mechanical Evidence and Review,
 dense result keys and compatibility, actual usage/context ceilings, retry
 zero, UNKNOWN no-retry, publication predecessor safety, immutable read-back,
 rollback, and restore.
+
+V1 enforces stable safety bounds: R4 is exactly A03/A04/A09/A11/A12/A13;
+live hard calls are at most 24 with target range within 12–18; required negative
+fixture classes remain zero-call; context is exactly 200000; offline improvement
+is at least 10x. SourceScopeManifest requires source SHA, full DerivedAsset ID,
+task-contract hash, ordered table IDs and ordered grid hashes. Loosening these
+bounds requires a new engine version and an explicit owner policy Decision.
+Transfer classification covers every parent effective-choice leaf obligation,
+not merely every Decision ID.
 
 ## 6. Superseded process constraints
 
@@ -88,6 +111,14 @@ Issue #24 performance work, SEC acquisition, freeze, cycle, qualification,
 publication, or response reuse. Provider/paid/SEC execution remains `0/0/0`.
 
 ## 9. Transition completion
+
+Policy-content provenance, candidate closure validation, exact-head activation,
+and live execution authorization are four separate facts. The identifier-only
+Issue comment approves no policy content or activation. Policy evidence names
+the recorded Issue body section or exact historical parent Decision. This
+snapshot remains `NOT_ACTIVATED`; a later exact-head owner approval is recorded
+in a separate activation receipt bound to the approved closure. No such receipt
+or live grant is created by this PR.
 
 The transition is merge-eligible only after exact parent closure, five-file
 snapshot closure, complete transfer classification, typed invariant

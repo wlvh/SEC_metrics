@@ -15,13 +15,16 @@ from typing import Dict, List, Mapping, Sequence
 from .canonical import CanonicalError, SEMANTIC_VERSIONS, content_hash
 from .canonical import parse_utc_timestamp
 from .canonical import sha256_file, strict_json_file
-from .requirement_profile import PROFILE_REQUIREMENT_GENERATION
+from .requirement_profile import PROFILE_ENGINES
+from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
+from .requirement_profile import LEGACY_ARTIFACT_GENERATION
 from .requirement_profile import RequirementProfileError
 from .requirement_profile import decision_record_hash
 from .requirement_profile import load_profile_requirement_snapshot
 from .requirement_profile import read_requirement_object
 from .requirement_profile import resolve_decision_chains
 from .requirement_profile import validate_artifact_requirement_identity
+from .requirement_profile import validate_execution_authority
 
 
 FSD_SHA256 = "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b"
@@ -764,45 +767,48 @@ def load_run_requirement_snapshot(
     requirement_id: object = None,
     requirement_closure_hash: object = None,
     requirement_hashes: object = None,
+    artifact_requirement_generation: object = None,
+    record_type: str = "RUN",
 ) -> Dict[str, object]:
     """Load the Requirement authority mechanically selected by one Run type.
 
     Args:
-        repo_root: Repository owning both supported immutable snapshots.
+        repo_root: Repository owning retained historical and versioned snapshots.
         task_contract_bindings: Run manifest's explicit catalog-task bindings.
         requirement_id: Successor Run's explicit Requirement identity.
         requirement_closure_hash: Successor Run's explicit closure identity.
         requirement_hashes: Persisted exact Requirement file hashes.
+        artifact_requirement_generation: Required discriminator for the
+            SUCCESSOR_RUN subtype; absent only in the retained RUN schema.
+        record_type: Persisted subtype; identity-field presence never selects it.
 
     Returns:
-        Issue #15 authority for catalog table-task Runs; otherwise the retained
-        parent authority for historical disclosure Runs.
+        Exact successor authority, or legacy Issue #15/catalog and
+        ai_first/disclosure authority selected only for the old RUN subtype.
 
     Raises:
         RequirementError: When the Run binding shape is invalid or its selected
         snapshot cannot be loaded from the repository.
 
     Why:
-        A catalog task is governed by Issue #15's effective decisions, while a
-        historical disclosure Run remains replayable under its inherited
-        parent.  Choosing from the persisted task-binding shape avoids letting
-        a later caller select a policy at creation, review, or replay time.
+        Legacy task-binding dispatch is retained for historical bytes only.
+        SUCCESSOR_RUN always requires its generation and full identity triple;
+        missing fields cannot enter that legacy dispatch.
     """
     if type(task_contract_bindings) is not list:
         raise RequirementError("Run task contract bindings are invalid")
-    explicit_values = (
-        requirement_id,
-        requirement_closure_hash,
-    )
-    if any(value is not None for value in explicit_values):
-        if any(value is None for value in explicit_values):
+    if record_type == "SUCCESSOR_RUN":
+        if (artifact_requirement_generation != EXPLICIT_ARTIFACT_GENERATION
+                or any(value is None for value in (
+                    requirement_id, requirement_closure_hash, requirement_hashes))):
             raise RequirementError("Run explicit Requirement identity is incomplete")
         if type(requirement_id) is not str or not requirement_id:
             raise RequirementError("Run explicit Requirement identity is invalid")
         snapshot_dir = repo_root / "requirements" / requirement_id
         requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)
         artifact = {
-            "record_type": "RUN",
+            "record_type": "SUCCESSOR_RUN",
+            "artifact_requirement_generation": artifact_requirement_generation,
             "requirement_closure_hash": requirement_closure_hash,
             "requirement_hashes": requirement_hashes,
             "requirement_id": requirement_id,
@@ -811,11 +817,15 @@ def load_run_requirement_snapshot(
             validate_artifact_requirement_identity(
                 artifact=artifact, requirement=requirement,
             )
+            validate_execution_authority(repo_root=repo_root, requirement=requirement)
         except RequirementProfileError as error:
             raise RequirementError(
                 "Run explicit Requirement identity differs"
             ) from error
         return requirement
+    if (record_type != "RUN" or artifact_requirement_generation is not None
+            or requirement_id is not None or requirement_closure_hash is not None):
+        raise RequirementError("Legacy Run cannot contain successor identity")
     requirement_id = (
         ISSUE_15_REQUIREMENT_ID
         if task_contract_bindings
@@ -2015,10 +2025,12 @@ def load_requirement_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Requirement baseline identity is missing")
     requirement_id = baseline["requirement_id"]
     if requirement_id == PARENT_REQUIREMENT_ID:
-        return _load_ai_first_snapshot(snapshot_dir=snapshot_dir)
+        return {**_load_ai_first_snapshot(snapshot_dir=snapshot_dir),
+                "artifact_requirement_generation": LEGACY_ARTIFACT_GENERATION}
     if requirement_id == ISSUE_15_REQUIREMENT_ID:
-        return _load_issue_15_snapshot(snapshot_dir=snapshot_dir)
-    if baseline.get("requirement_generation") == PROFILE_REQUIREMENT_GENERATION:
+        return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+                "artifact_requirement_generation": LEGACY_ARTIFACT_GENERATION}
+    if baseline.get("requirement_generation") in PROFILE_ENGINES:
         try:
             return load_profile_requirement_snapshot(
                 snapshot_dir=snapshot_dir,

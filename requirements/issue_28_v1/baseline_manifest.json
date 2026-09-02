@@ -5,7 +5,7 @@
   "requirement_generation": "PROFILE_DRIVEN_V1",
   "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
   "contract_revision": "ISSUE_28_V1",
-  "created_at_utc": "2026-09-02T11:32:30Z",
+  "created_at_utc": "2026-09-02T18:08:22Z",
   "issue": {
     "number": 28,
     "url": "https://github.com/wlvh/SEC_metrics/issues/28",
@@ -86,26 +86,108 @@
   },
   "snapshot_files": {
     "CONTRACT.md": {
-      "sha256": "be9b70ae5bb6db06c47ff5876e481da69c3ee2b26438540ff48cebeba299a8f9",
-      "size": 4486
+      "sha256": "cd2195e627000a6de3e3ffe7c279b6dfaafa68a2b69fe1058b6fd1ff90ad0113",
+      "size": 6533
     },
     "decision_register.json": {
-      "sha256": "ae0fcfd88da418f03fa9426d784413f436f32ca8a908c83d2909e54ea799678b",
-      "size": 8926
+      "sha256": "e197738643b2dc2da2ad4de71d37e7d13d2795cea8fca62e1374d6a05ba66c4b",
+      "size": 48933
     },
     "invariant_profile.json": {
-      "sha256": "ffb8ec3b24f881267bf9155455dda9de763f991fec570ba37ea5329e5bf93351",
-      "size": 1176
+      "sha256": "da8ea9ab76edf3b352ba2e58ec7ddb244f993c8b1c3ecc6a305dcfb3fd598e6e",
+      "size": 1582
     },
     "transfer_manifest.json": {
-      "sha256": "8d35c0f1d24a7fb0290c26ab227197ad4ad7755703d07da82e4e45bb86e6de13",
-      "size": 10693
+      "sha256": "5f3cc1edfbc34947d3e8681fe5b87df8ff54a37d538cf59fc03665d325b39903",
+      "size": 320754
     }
   },
   "validator": {
-    "path": "scripts/vnext/requirement_profile.py",
+    "path": "scripts/vnext/requirement_profile_v1.py",
     "semantic_version": "1",
-    "sha256": "1553ac73e19759dcd6179a52e1fdeae02ef7b765e9fba32479fc0d097dc9106c"
+    "sha256": "575ad8e14c41f2835087583b66a3bbb5886ce5f0816fb500e29a35184c895e48",
+    "dependencies": {}
   },
-  "source_input_role": "SUCCESSOR_REQUIREMENT_AUTHORITY"
+  "source_input_role": "SUCCESSOR_REQUIREMENT_AUTHORITY",
+  "activation_state": "NOT_ACTIVATED",
+  "supersedes_requirement": null,
+  "policy_evidence": [
+    {
+      "source_id": "ISSUE_28_BODY",
+      "kind": "ISSUE_BODY_POLICY",
+      "source_url": "https://github.com/wlvh/SEC_metrics/issues/28",
+      "source_sha256": "d3ece2313923faa1e8f30177550675c47c3df442c9d3d880d33db5a98d8dfd6f",
+      "author": "github:wlvh",
+      "published_at_utc": "2026-09-02T11:20:56Z",
+      "text": "# Outcome\n\nDeliver the remaining vNext ratchets from R4 through Rf while separating three lifecycles that were previously entangled: product authority, implementation/offline qualification, and live provider qualification/publication.\n\n**STATUS: REQUIREMENT_TRANSITION_PENDING.** This Issue is a governance and tracking surface only. Production runtime must not read the live Issue body. Until the successor Requirement Snapshot is merged and owner-approved, this Issue authorizes no production-semantic change and no provider/paid/SEC execution.\n\n## Current verified baseline\n\n- Current `main`: `e0cd1da793a9851ac853ce3cf62467d199fb192e`\n- Current `main` tree: `801ea0206c67d87a216e13a8d49974acbd8d7af0`\n- PR #27 merged: PR-only fast-suite CI is present; it is not full acceptance.\n- Active publication remains R3: `publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8`\n- Exact predecessor remains R2: `publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f`\n- PR #22 is closed without merge. Its historical R4 development state is preserved at `archive/pr22-r4-development-62678e3` → `62678e304778970c8d2bc69db45a6b9fc969d01f`.\n- Archived PR #22 responses/cycles have no successor qualification credit and are not reusable.\n- Issues #15 and #24 remain open until the successor Requirement transition PR is merged; they will then be closed as `SUPERSEDED_BY_ISSUE_<this issue>` rather than `COMPLETED`.\n\n## Delivery planes\n\n1. **Historical plane** — R1–R3 publications, `requirements/ai_first_v3_3_1`, `requirements/issue_15_v1`, and the PR #22 archive remain immutable historical authority/evidence.\n2. **Development plane** — a new successor Requirement Snapshot, generic multi-requirement loader/invariant evaluator, R4 engine, scope manifests, fixtures, and offline qualification.\n3. **Release plane** — a separate exact-head release PR containing live plans, provider responses, Evidence/Review/Run closure, publication receipts, read-back, rollback, and restore evidence.\n\nImplementation PRs and live qualification/release PRs must remain separate. Production Python must not be changed inside a live release PR; a required code fix stops the release and returns to a new implementation PR.\n\n## Ratchet scope\n\n- **R4:** A03, A04, A09, A11, A12, A13 only.\n- **R5:** B06, B13, C03, C04; B06/B13 require an explicit product-semantics decision first.\n- **R6:** qualitative, legal, risk, and CLOSED_WORLD coverage.\n- **Rf:** all 39 metrics migrated and every frozen legacy semantic producer proven production-unreachable.\n- **WB-7:** independent PR to generalize generation of `SourceScopeManifest`; R4 may use source-specific audited manifests first.\n\nA single PR must not introduce more than one new production Ratchet stage.\n\n## Successor Requirement transition (PR-A)\n\nCreate `requirements/issue_<this issue number>_v1/` with:\n\n- `CONTRACT.md`\n- `baseline_manifest.json`\n- `transfer_manifest.json`\n- `decision_register.json`\n- `invariant_profile.json`\n\nThe snapshot must bind this Issue number, the exact merged baseline, the active R3 publication, exact R2 predecessor, snapshot hashes, and generic validator identity.\n\n`transfer_manifest.json` must classify prior policy as `CARRY_FORWARD`, `SUPERSEDED`, or `HISTORICAL_ONLY`.\n\nMinimum carry-forward invariants:\n\n- immutable SEC source/accession/hash and acquisition records;\n- exact table/cell or text-span locator and mechanical raw value/unit/period/scope recovery;\n- actual usage and context ceiling;\n- retry = 0 and UNKNOWN no-retry;\n- Evidence/Review/Result closure;\n- publication read-back, predecessor safety, rollback/restore;\n- dense result-key and compatibility principles.\n\nMinimum superseded policies:\n\n- full-filing provider input;\n- all financial tasks × all sources Cartesian product;\n- eight financial tasks blocking one phase and B06/B13 inside R4;\n- per-child full repository closure replay/rebuild;\n- full Decision choice duplicated in Python;\n- owner micro-approval of ordinary implementation details;\n- all remaining Ratchets in one PR;\n- byte equality between live Issue body and `CONTRACT.md`.\n\nHistorical-only material includes PR #22 failed cycles, old full-document plans, historical responses, HTTP 402/UNKNOWN/schema-violation terminals, and old exact-head grants.\n\nThe Decision Register is the only policy-content authority for the new Requirement. Python may implement generic schema, content hash, supersedes-chain, and semantic-invariant validation, but must not reproduce each full Decision body as a second authority.\n\nEvery new Run, ReleasePlan, and Publication artifact must explicitly bind `requirement_id` and `requirement_closure_hash`. The loader must continue to read and validate R1–R3 historical artifacts through the `issue_15_v1` compatibility path.\n\nPR-A must have provider/paid/SEC egress `0/0/0`, must not implement R4 routing or Issue #24 performance work, and requires one owner approval bound to exact PR head plus Requirement closure hash before merge.\n\n## R4 implementation and offline qualification (PR-B)\n\nR4 provider input is one continuous table window, or at most two continuous windows, certified against the complete locally parsed filing and bound by a `SourceScopeManifest`. No runtime TOC guesser, literal-only selector, sparse ranker, embedding/fuzzy/top-k selector, AI selector, or automatic full-document fallback is allowed.\n\nFixture classes:\n\n- `POSITIVE_PRODUCTION`\n- `POSITIVE_ALTERNATE_LAYOUT`\n- `NEGATIVE_EXPECTED`\n- `NOT_APPLICABLE`\n- `QUALITATIVE_ONLY`\n- `AMBIGUOUS_EXCLUDED`\n\nOnly the first two classes may create provider calls. Positive scopes must pass the existing `check_evidence` path via synthetic Candidates; no second verifier may be introduced merely to accept audit output.\n\nLegacy numeric anchors must be mechanically re-confirmed where available: A03 = 1.11, A04 = 0.025, A11 = 4,791,000,000,000 USD, A12 = 40,000,000 USD. A09/A13 must be labeled `NO_INDEPENDENT_LEGACY_ANCHOR` and require materially different positive sources, disjoint navigation paths, Evidence PASS, explained out-of-window candidates, and no unresolved ambiguity.\n\nAlternate layouts must differ by issuer CIK, primary-document layout, and table header or column order. At most two additional SEC 10-K filings may be acquired through the immutable request-attempt mechanism; a third requires owner escalation.\n\nThe Issue #24 successor performance contract is outcome-based:\n\n- full source materialization ≤ 1/session;\n- full parent authority construction ≤ 1/session;\n- full prior-Run replay per child = 0;\n- full DerivedAsset rebuild per child = 0;\n- final independent disk replay = 1;\n- aggregate local wall-time improvement ≥ 10×;\n- offline provider/paid/SEC = 0/0/0.\n\n## R4 live qualification and publication (PR-C)\n\nPR-C starts only from merged, frozen implementation `main` and should not modify production Python. The live plan targets 12–18 provider calls with a hard cap of 24; negative, not-applicable, qualitative-only, and ambiguous fixtures must have zero calls. There is no historical-response credit/reuse and no full-document fallback.\n\nLive execution requires owner authorization bound to exact PR head and plan ID. After authorization, semantic code/config, MetricSpecs, scope manifests, provider/model/API, retry=0, UNKNOWN handling, Evidence gates, and rollback semantics are frozen. Failure leaves R3 active.\n\nR4 publication is complete only after qualification, strict compatibility, immutable read-back, R4 active publication, rollback R4→R3, restore R3→R4, and active-terminal validation all pass.\n\n## Owner escalation boundary\n\nEscalate only for metric economic meaning; value/unit/period/scope semantics; applicability; provider/model/API; R3 publication/rollback semantics; no auto-certified positive; unclosed A09/A13 no-anchor path; more than two new filings; live plan over 24 calls; weakening UNKNOWN/retry/Evidence/locator/tamper/rollback; reintroducing full-document fallback; adding response reuse to R4; or inability to read historical R1–R3 artifacts.\n\nOrdinary module boundaries, private dataclasses/helpers, session/memoization design, scope-window bounds, fixture assignment, use of up to two new filings, tests, commit organization, audit reports, and non-semantic bug fixes do not require owner approval.\n\n## Planned PR sequence\n\n- PR-A — successor Requirement transition\n- PR-B — R4 implementation and offline qualification\n- PR-C — R4 live qualification and publication\n- PR-D — WB-7\n- PR-E — R5\n- PR-F — R6\n- PR-G — Rf and final legacy retirement\n"
+    },
+    {
+      "source_id": "PARENT_D-01",
+      "kind": "PARENT_DECISION_POLICY",
+      "source_url": "requirements/issue_15_v1/decision_register.json#sha256:91fe4b7ef9620adadd3ef63c058259485ac8d11fdcd974ab9904869328539bb9",
+      "source_sha256": "5c7e3eeb008ac42999809d3adea54d88cc88198c6240e5cfc4e6665cc2df1ba1",
+      "author": "user:current-thread",
+      "published_at_utc": "2026-08-19T04:02:38Z",
+      "text": "{\n  \"decision_id\": \"D-01\",\n  \"status\": \"APPROVED\",\n  \"choice\": {\n    \"provider\": \"deepseek\",\n    \"model\": \"deepseek-v4-flash\",\n    \"api\": \"chat_completions\",\n    \"endpoint_host\": \"api.deepseek.com\",\n    \"region\": \"provider-managed-no-residency-guarantee\",\n    \"retention\": \"provider-managed; no zero-retention claim\",\n    \"data_use\": \"provider-managed; no training or data-use guarantee\",\n    \"timeout_seconds\": 120,\n    \"retry_count\": 0,\n    \"maximum_payload_bytes\": 8388608,\n    \"filing_egress_policy\": \"PUBLIC_SEC_FILING_TABLE_GRIDS_ONLY\"\n  },\n  \"approved_by\": \"user:current-thread\",\n  \"approved_at_utc\": \"2026-08-19T04:02:38Z\",\n  \"supersedes_decision_id\": \"sha256:8e980afbd5a167abf33d4fe9d723d0c7229021f024c976e330dce6f4614471e8\",\n  \"evidence\": \"CONTRACT.md#decisionwb-1-必须落盘\"\n}\n"
+    },
+    {
+      "source_id": "PARENT_D-24",
+      "kind": "PARENT_DECISION_POLICY",
+      "source_url": "requirements/issue_15_v1/decision_register.json#sha256:45695d8fddfcff4e2f919a17920ba67c8f1049e3dec0f278ae4d38f9a1537109",
+      "source_sha256": "8f22da3f0061e0c201dc290b16cb1dc457ef3fbe1a27442b692843010c422bfa",
+      "author": "github-user:30534800",
+      "published_at_utc": "2026-07-29T12:41:52Z",
+      "text": "{\n  \"decision_id\": \"D-24\",\n  \"status\": \"APPROVED\",\n  \"choice\": {\n    \"security_claim\": \"DEPENDENCY_CALL_GRAPH_EGRESS_AND_WRITE_CONSTRAINTS_ONLY\",\n    \"same_process_strong_sandbox_claim\": false\n  },\n  \"approved_by\": \"github-user:30534800\",\n  \"approved_at_utc\": \"2026-07-29T12:41:52Z\",\n  \"supersedes_decision_id\": null,\n  \"evidence\": \"ISSUE_CONTRACT.md#33-ai-adapterattempt-与诚实安全边界\"\n}\n"
+    },
+    {
+      "source_id": "PARENT_D-26",
+      "kind": "PARENT_DECISION_POLICY",
+      "source_url": "requirements/issue_15_v1/decision_register.json#sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938",
+      "source_sha256": "60f92a24a70bb5b16aaf081e7c61382fbbcdf41edd0cccc8aebca2c1cc38feda",
+      "author": "user:github:wlvh",
+      "published_at_utc": "2026-08-19T10:01:11Z",
+      "text": "{\n  \"decision_id\": \"D-26\",\n  \"status\": \"APPROVED\",\n  \"choice\": {\n    \"test_execution_policy\": \"ISSUE_15_FAST_LOCAL_DIRECT_INVARIANTS\",\n    \"applies_to\": [\n      \"development\",\n      \"pull_request\",\n      \"final_acceptance\"\n    ],\n    \"required_fast_command\": \"python3 tools/run_fast_tests.py --jobs 4\",\n    \"per_case_timeout_seconds\": 30,\n    \"recorded_gate_timeout_seconds\": 60,\n    \"prohibited_required_test_classes\": [\n      \"broad_repository_regression\",\n      \"isolated_repository_or_worktree\",\n      \"long_running_serial_suite\"\n    ],\n    \"required_short_deterministic_invariants\": [\n      \"semantic_freeze_rejects_mutation\",\n      \"frozen_run_replay_network_calls_zero\",\n      \"rollback_restore_network_calls_zero\",\n      \"single_flight_reservation_is_mutually_exclusive\",\n      \"unknown_remote_outcome_is_not_retried\",\n      \"http_402_stops_batch_after_one_call\",\n      \"compact_table_round_trip_exact\",\n      \"public_key_set_union_exact\",\n      \"new_public_keys_are_structural_na\",\n      \"structured_only_provider_calls_zero\",\n      \"closed_world_incomplete_coverage_withheld\",\n      \"unknown_scope_alias_requires_human\",\n      \"claim_chain_immutable_readback_exact\"\n    ],\n    \"evidence_tier\": \"FAST_LOCAL_ONLY\",\n    \"may_claim_ci_pass\": false\n  },\n  \"approved_by\": \"user:github:wlvh\",\n  \"approved_at_utc\": \"2026-08-19T10:01:11Z\",\n  \"supersedes_decision_id\": \"sha256:9dc7cb36a0893f80ac84c385a7cf1723516529c442442a1915c50bb1973133df\",\n  \"evidence\": \"https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535\"\n}\n"
+    }
+  ],
+  "execution_authority": {
+    "files": {
+      "catalog/company_traits.yaml": {
+        "sha256": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
+        "size": 649
+      },
+      "catalog/deterministic_metrics.json": {
+        "sha256": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+        "size": 16246
+      },
+      "catalog/event_routes.json": {
+        "sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+        "size": 2353
+      },
+      "catalog/table_task_contracts.json": {
+        "sha256": "ece72e72a93d52fc82370d5cc2c7c72a3fc3ba79ba20c91ccdf230718986a8f9",
+        "size": 10298
+      },
+      "catalog/zero_ai_public_projection.json": {
+        "sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+        "size": 22408
+      },
+      "config/company_registry.csv": {
+        "sha256": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+        "size": 1562
+      },
+      "config/metric_applicability.yaml": {
+        "sha256": "09457bfa3170149f2e86af52d5013605f04c7b13ec4724792993660cc5dbcf94",
+        "size": 3567
+      },
+      "config/provider_model_runtime.json": {
+        "sha256": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "size": 606
+      },
+      "config/source_strategy_registry.json": {
+        "sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+        "size": 12801
+      }
+    },
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  }
 }

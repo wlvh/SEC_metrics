@@ -1,4 +1,4 @@
-"""Load the Issue #15 SourceStrategy registry and ratchet ReleasePlan.
+"""Load historical SourceStrategy and versioned ratchet ReleasePlan artifacts.
 
 The registry owns target source routing and reader-family literals for all 39
 metrics. The separate ReleasePlan is the only owner of current migration
@@ -10,11 +10,15 @@ from __future__ import annotations
 
 import csv
 import json
+import re
 from pathlib import Path
 from typing import Dict, List, Mapping, Sequence
 
-from .canonical import content_hash, sha256_file, strict_json_file
+from .canonical import atomic_write_json, content_hash, sha256_file, strict_json_file
 from .requirements import ISSUE_15_REQUIREMENT_ID, load_requirement_snapshot
+from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
+from .requirement_profile import validate_artifact_requirement_identity
+from .requirement_profile import validate_execution_authority
 
 
 ALLOWED_SOURCE_MODES = [
@@ -60,7 +64,7 @@ METRIC_FIELDS = {
     "source_mode",
     "structured_route_id",
 }
-RELEASE_PLAN_FIELDS = {
+LEGACY_RELEASE_PLAN_FIELDS = {
     "added_metric_ids",
     "authority_hashes",
     "cumulative_metric_ids",
@@ -76,6 +80,9 @@ RELEASE_PLAN_FIELDS = {
     "requirement_closure_hash",
     "retired_legacy_producer_ids",
     "schema_version",
+}
+RELEASE_PLAN_FIELDS = LEGACY_RELEASE_PLAN_FIELDS | {
+    "artifact_requirement_generation", "requirement_hashes",
 }
 RELEASE_PLAN_INDEX_FIELDS = {
     "active_release_plan_content_id",
@@ -586,7 +593,7 @@ def _validate_release_plan(
     """Validate one immutable full-schema ReleasePlan independently."""
     value = _object(value=plan, label="Issue #15 ReleasePlan")
     _exact_fields(
-        value=value, expected=RELEASE_PLAN_FIELDS,
+        value=value, expected=LEGACY_RELEASE_PLAN_FIELDS,
         label="Issue #15 ReleasePlan",
     )
     if (
@@ -858,3 +865,225 @@ def load_issue15_release_plan(
             "source_strategy_registry_sha256"
         ],
     }
+
+
+def _successor_plan_path(*, repo_root: Path, release_plan_id: str) -> Path:
+    if re.fullmatch(r"[a-z][a-z0-9_]{2,95}", release_plan_id) is None:
+        raise SourceStrategyError("ReleasePlan identity is unsafe")
+    for directory in (repo_root / "config", repo_root / "config/release_plans"):
+        if directory.is_symlink():
+            raise SourceStrategyError("ReleasePlan namespace contains a symlink")
+    return repo_root / "config" / "release_plans" / (release_plan_id + ".json")
+
+
+def _validate_successor_release_plan(
+    *,
+    plan: Mapping[str, object],
+    requirement: Mapping[str, object],
+    parent: Mapping[str, object],
+) -> Dict[str, object]:
+    """Validate the complete successor artifact, not an identity-only envelope."""
+    _exact_fields(
+        value=plan, expected=RELEASE_PLAN_FIELDS, label="Successor ReleasePlan"
+    )
+    if plan["record_type"] != "SUCCESSOR_RELEASE_PLAN" or plan["schema_version"] != 3:
+        raise SourceStrategyError("Successor ReleasePlan subtype/version differs")
+    try:
+        validate_artifact_requirement_identity(artifact=plan, requirement=requirement)
+    except ValueError as error:
+        raise SourceStrategyError(
+            "Successor ReleasePlan Requirement differs"
+        ) from error
+    scopes = [
+        entry["value"]
+        for entry in requirement["evaluated_invariants"]["by_invariant_id"].values()
+        if entry["kind"] == "RATCHET_SCOPE"
+        and entry["value"]["ratchet_id"] == plan["release_stage"]
+    ]
+    if len(scopes) != 1 or plan["added_metric_ids"] != scopes[0]["metric_ids"]:
+        raise SourceStrategyError("Successor ReleasePlan ratchet scope differs")
+    cumulative = sorted(
+        set(parent["cumulative_metric_ids"]) | set(plan["added_metric_ids"])
+    )
+    companies = sorted(
+        {row["company_id"] for row in parent["cumulative_vnext_result_keys"]}
+    )
+    expected_keys = [
+        {"company_id": company, "metric_id": metric}
+        for company in companies
+        for metric in cumulative
+    ]
+    if (
+        plan["parent_release_plan_id"] != parent["release_plan_id"]
+        or plan["parent_release_plan_content_id"] != parent["release_plan_content_id"]
+        or plan["cumulative_metric_ids"] != cumulative
+        or plan["cumulative_vnext_result_keys"] != expected_keys
+        or not set(parent["retired_legacy_producer_ids"]).issubset(
+            plan["retired_legacy_producer_ids"]
+        )
+        or plan["retired_legacy_producer_ids"]
+        != sorted(set(plan["retired_legacy_producer_ids"]))
+        or type(plan["reader_family_versions"]) is not dict
+        or not plan["reader_family_versions"]
+    ):
+        raise SourceStrategyError(
+            "Successor ReleasePlan parent/no-removal binding differs"
+        )
+    if any(
+        type(key) is not str or not key or type(value) is not str or not value
+        for key, value in plan["reader_family_versions"].items()
+    ) or not set(parent["reader_family_versions"]).issubset(
+        plan["reader_family_versions"]
+    ):
+        raise SourceStrategyError(
+            "Successor ReleasePlan reader version binding is incomplete"
+        )
+    expected_authority = {
+        path: binding["sha256"]
+        for path, binding in requirement["execution_authority"]["files"].items()
+    }
+    if plan["authority_hashes"] != expected_authority:
+        raise SourceStrategyError("Successor ReleasePlan execution authority differs")
+    body = {
+        key: value for key, value in plan.items() if key != "release_plan_content_id"
+    }
+    if plan["release_plan_content_id"] != content_hash(value=body):
+        raise SourceStrategyError("Successor ReleasePlan content identity differs")
+    return dict(plan)
+
+
+def load_release_plan_artifact(
+    *, repo_root: Path, release_plan_id: str, _ancestry: tuple = (),
+) -> Dict[str, object]:
+    """Load historical or successor full records by immutable subtype."""
+    if release_plan_id in _ancestry:
+        raise SourceStrategyError("ReleasePlan predecessor cycle")
+    path = _successor_plan_path(repo_root=repo_root, release_plan_id=release_plan_id)
+    if path.is_symlink() or not path.is_file():
+        raise SourceStrategyError("ReleasePlan file is unsafe or missing")
+    plan = _json_object(path=path, label="ReleasePlan artifact")
+    if plan.get("release_plan_id") != release_plan_id:
+        raise SourceStrategyError("ReleasePlan filename/identity binding differs")
+    if plan.get("record_type") == "ISSUE_15_RELEASE_PLAN":
+        # Historical records already carry id/closure but not requirement_hashes.
+        # Their explicit legacy subtype retains the original full-chain validator.
+        verified = load_issue15_release_plan(
+            repo_root=repo_root, release_plan_id=release_plan_id
+        )["release_plan"]
+        if plan != {key: verified[key] for key in LEGACY_RELEASE_PLAN_FIELDS}:
+            raise SourceStrategyError("Historical ReleasePlan bytes differ")
+        return plan
+    if plan.get("record_type") != "SUCCESSOR_RELEASE_PLAN":
+        raise SourceStrategyError("Unknown ReleasePlan artifact subtype")
+    _exact_fields(
+        value=plan, expected=RELEASE_PLAN_FIELDS, label="Successor ReleasePlan"
+    )
+    requirement_id = plan["requirement_id"]
+    if (
+        type(requirement_id) is not str
+        or re.fullmatch(r"issue_[0-9]+_v[1-9][0-9]*", requirement_id) is None
+    ):
+        raise SourceStrategyError("Successor ReleasePlan Requirement id is invalid")
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / requirement_id
+    )
+    parent = load_release_plan_artifact(
+        repo_root=repo_root,
+        release_plan_id=str(plan["parent_release_plan_id"]),
+        _ancestry=(*_ancestry, release_plan_id),
+    )
+    return _validate_successor_release_plan(
+        plan=plan, requirement=requirement, parent=parent
+    )
+
+
+def build_successor_release_plan(
+    *,
+    repo_root: Path,
+    requirement_id: str,
+    release_plan_id: str,
+    release_stage: str,
+    parent_release_plan_id: str,
+    reader_family_versions: Mapping[str, str],
+) -> Dict[str, object]:
+    """Build a fully bound plan; this does not execute or qualify any Ratchet."""
+    _successor_plan_path(repo_root=repo_root, release_plan_id=release_plan_id)
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / requirement_id
+    )
+    validate_execution_authority(repo_root=repo_root, requirement=requirement)
+    parent = load_release_plan_artifact(
+        repo_root=repo_root, release_plan_id=parent_release_plan_id
+    )
+    scopes = [
+        entry["value"]
+        for entry in requirement["evaluated_invariants"]["by_invariant_id"].values()
+        if entry["kind"] == "RATCHET_SCOPE"
+        and entry["value"]["ratchet_id"] == release_stage
+    ]
+    if len(scopes) != 1:
+        raise SourceStrategyError("Successor ReleasePlan has no approved Ratchet scope")
+    added = scopes[0]["metric_ids"]
+    cumulative = sorted(set(parent["cumulative_metric_ids"]) | set(added))
+    companies = sorted(
+        {row["company_id"] for row in parent["cumulative_vnext_result_keys"]}
+    )
+    body = {
+        "record_type": "SUCCESSOR_RELEASE_PLAN",
+        "schema_version": 3,
+        "artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
+        "requirement_id": requirement_id,
+        "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "requirement_hashes": requirement["hashes"],
+        "release_plan_id": release_plan_id,
+        "release_stage": release_stage,
+        "parent_release_plan_id": parent_release_plan_id,
+        "parent_release_plan_content_id": parent["release_plan_content_id"],
+        "added_metric_ids": added,
+        "cumulative_metric_ids": cumulative,
+        "cumulative_vnext_result_keys": [
+            {"company_id": c, "metric_id": m} for c in companies for m in cumulative
+        ],
+        "retired_legacy_producer_ids": parent["retired_legacy_producer_ids"],
+        "reader_family_versions": {
+            **parent["reader_family_versions"],
+            **dict(reader_family_versions),
+        },
+        "authority_hashes": {
+            path: binding["sha256"]
+            for path, binding in requirement["execution_authority"]["files"].items()
+        },
+    }
+    return _validate_successor_release_plan(
+        plan={**body, "release_plan_content_id": content_hash(value=body)},
+        requirement=requirement,
+        parent=parent,
+    )
+
+
+def write_successor_release_plan(
+    *, repo_root: Path, plan: Mapping[str, object]
+) -> Dict[str, object]:
+    """Persist a validated full plan without replacing an existing artifact."""
+    _exact_fields(
+        value=plan, expected=RELEASE_PLAN_FIELDS, label="Successor ReleasePlan"
+    )
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / str(plan["requirement_id"])
+    )
+    validate_execution_authority(repo_root=repo_root, requirement=requirement)
+    parent = load_release_plan_artifact(
+        repo_root=repo_root, release_plan_id=str(plan["parent_release_plan_id"])
+    )
+    validated = _validate_successor_release_plan(
+        plan=plan, requirement=requirement, parent=parent
+    )
+    path = _successor_plan_path(
+        repo_root=repo_root, release_plan_id=str(plan["release_plan_id"])
+    )
+    if path.exists():
+        raise SourceStrategyError("ReleasePlan is immutable and already exists")
+    atomic_write_json(path=path, value=validated)
+    return load_release_plan_artifact(
+        repo_root=repo_root, release_plan_id=str(plan["release_plan_id"])
+    )

@@ -69,9 +69,9 @@
         "anchor_id": "CAPABILITY.issue_28_profile_requirement_authority",
         "type": "capability",
         "status": "active",
-        "statement": "仓库能加载任意声明PROFILE_DRIVEN_V1 generation的五文件successor Requirement，而不为每个Issue增加硬编码分支。通用层机械验证regular-file/no-symlink、exact file set、hash/size、parent closure、Decision duplicate/detached/fork/cycle、每项parent policy唯一transfer disposition、validator identity及closed typed invariant kinds；invariant profile只保存Decision引用，policy值只在Decision Register。issue_28_v1继承exact issue_15_v1 closure，绑定main e0cd1da、active R3/exact R2与PR #22 archive no-credit/no-reuse。successor Run按generation同时要求requirement_id、requirement_closure_hash和requirement_hashes；缺失或伪造不能回退legacy。该transition不实现R4或授权provider/paid/SEC调用。",
+        "statement": "五文件successor Requirement由版本注册表选择保留的requirement_profile_v1/v2 engine，支持同Issue revision与按invariant_id/ratchet区分的多实例。V1机械执行R4 exact set、24-call上限、12-18 target范围、零调用fixture classes、200000 context、10x性能下限、SourceScopeManifest必需bindings及provider/security/test政策；477个parent choice叶级义务各有唯一disposition，189 carry-forward、278 historical-only、10 superseded。parent closure只由已记录hashes与冻结snapshot bytes重建，不重跑Issue #15 adapter的live root检查。SUCCESSOR_RUN/RELEASE_PLAN/PUBLICATION_MANIFEST独立subtype强制generation与id/closure/hashes三联绑定，并进入真实builder/load/freeze/replay/read-back；旧RUN/Publication hashes必须与所选历史Requirement相等，旧ISSUE_15_RELEASE_PLAN保留其原id/closure schema。policy provenance、候选closure、exact-head activation及live授权相互分离；当前NOT_ACTIVATED，不实现R4或授权provider/paid/SEC。",
         "audience": ["operator", "developer", "reviewer"],
-        "test_anchor": "tests/vnext/test_issue28_requirement_transition.py::Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke",
+        "test_anchor": "tests/vnext/test_issue28_rework.py::Issue28ArtifactReworkTest.test_version_evolution_preserves_old_closure_and_resolves_pending_r5",
         "test_status": "validation_gate",
         "since": "2026-09-02"
       },

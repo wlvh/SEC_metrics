@@ -62,7 +62,7 @@ requirements/issue_28_v1/CONTRACT.md（successor outcome/boundary）
 → SOP.md「vNext operator 与正式 Cutover」
 ```
 
-Issue #28 / `issue_28_v1` 是 R4–Rf successor 开发入口；Issue #15 / `issue_15_v1` 冻结为 R1–R3 历史回读 authority。通用 loader 以 `requirement_generation` 选择 profile-driven successor，不为每个新 Issue 增加硬编码分支；Decision Register 是新 policy-content 唯一来源，`invariant_profile.json` 只把 Decision ID 路由到少数 typed evaluator。旧 artifact 继续按hash-only兼容路径原字节读取；新 Run、ReleasePlan、PublicationManifest 必须显式绑定 Requirement ID、closure和hashes。PR #22 archive无qualification/current execution credit且response不可复用。PR-A不授权R4实现或任何provider/paid/SEC调用。
+Issue #28 / `issue_28_v1` 是待激活的 R4–Rf successor authority；PR #29保持Draft，旧被拒head/closure不是审批候选。版本注册表选择保留的V1/V2 engine，同Issue可以有v2等revision，同kind可以按ratchet拥有多个invariant实例。Decision Register是policy-content authority，transfer按parent每个叶级语义义务唯一分类。旧RUN/Publication保留hash-only字节，旧ISSUE_15_RELEASE_PLAN保留原id/closure；三个SUCCESSOR_* subtype则强制独立generation和id/closure/hashes。historical parent只从记录hashes与冻结snapshot重建，不跟随current root漂移。policy provenance、closure验证、exact-head activation与live授权分离；PR #22 archive无credit/reuse，PR-A不实现R4、不创建activation或live grant。
 
 当前lodging authority在owner批准的compact prompt、same-target-table八字段locator、Marriott FY2024 second layout、Marriott FY2023 post-freeze holdout和Marriott FY2025 fresh source上冻结。Occupancy与RevPAR context均由各自provider-reported actual usage证明不超过200000；qualification没有复用measurement response。SECOND_LAYOUT、POST_FREEZE_HOLDOUT和三个FRESH ordinals按ordinal-major顺序形成十个独立provider execution，全部Evidence PASS、D-06 SYSTEM APPROVE、Result PUBLISHED、validation PASSED且usage terminal通过。任何新exact-head push不会重签这些已提交的无关family证据；financial仍停在Linux hard-RSS full-materialization benchmark之前。
 
@@ -79,6 +79,7 @@ Issue #28 / `issue_28_v1` 是 R4–Rf successor 开发入口；Issue #15 / `issu
 - `docs/business_user_guide.md`：面向首次读取结果的业务人员的派生指南。
 - `docs/validation_snapshot_provenance.md`：source-input tree、artifact digest、publication 顺序与 checker 语义。
 - `docs/issue_28_requirement_transition_summary.md`：PR-A的一页owner review对象；closure固定，exact head从GitHub PR实时读取以避免自引用。
+- `docs/issue_28_pr29_rework_audit.md`：被拒candidate的复现、七项authority返工、fragment语义分类及真实artifact测试命令；不构成activation或live grant。
 - `TESTING.md`：测试层级、真实命令、full/light 边界与副作用。
 - `SOP.md`：标准流程的一级导航，只保留动作、权威引用与验收。
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
@@ -112,7 +113,8 @@ Issue #28 / `issue_28_v1` 是 R4–Rf successor 开发入口；Issue #15 / `issu
 - `scripts/validation_provenance.py`：读取 source policy、校验 SOP 权威引用角色、捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
 - `scripts/00_*.py` 至 `scripts/12_*.py`：薄单阶段 CLI；04/09 只接受`--workspace-dir <absolute-isolated-root>`，11 无参数时只作active read-back、带该参数时构建legacy candidate，其余wrapper保持无参数。candidate全链统一经`sec_pipeline.py --workspace-dir ... <stage>`；legacy stage 11 mutation使旧provenance失配，stage 12负责终态publication，active stage 11只读。
 - `scripts/vnext/`：vNext的canonical/schema/state、source/table-grid、latest verified request-attempt与locator-tier source plan、Spec/constraint、固定DeepSeek OpenAI-compatible Chat Completions adapter、Evidence/Review/Calculator、Run freeze/replay、complete BatchManifest/Projector、固定SEC Stage00/01/02/03/05 acquisition/inventory、资格门、正式Cutover编排、pinned `PublicationView`与publication/rollback transaction实现。recorded可exact验证并闭合legacy working locator，正式live只允许immutable attempt；二者仍受各自Review、staging与publication gates约束。
-- `scripts/vnext/requirement_profile.py`：successor Requirement通用安全读取、Decision单链、transfer exact classification、typed invariant evaluator与新旧artifact identity generation门；不保存Issue #28具体policy值。
+- `scripts/vnext/requirement_profile.py`：版本注册表与portable authority路径收集；不被旧snapshot绑定为可变共享engine。
+- `scripts/vnext/requirement_profile_v1.py` / `requirement_profile_v2.py`：保留的版本化engine。V1拥有strict读取、Decision链、fragment transfer、安全bounds和显式artifact generation；V2依赖不可变V1并只增加typed产品语义Decision扩展。新engine不得覆盖旧engine。
 - `scripts/vnext/source_strategy.py`：严格加载39指标registry与Issue #15 ReleasePlan，机械验证exact source-mode mapping、family literal union、迁移状态分离、全部authority hashes及parent→child metric/key/retirement三类no-removal子集门。已发布R1/R2 plan按content ID保留其历史Requirement closure，loader另返回current closure；post-publication D-07 tip不得重签历史plan或active bundle，未来新plan必须显式登记current closure。
 - `scripts/vnext/deterministic_router.py`：以统一 `sources[]`/SourceSetManifest 闭合 companyfacts、accession XBRL、ECD XBRL、auditor fact 和 8-K item index 五个 adapter；它生成非模型 DeterministicVerifiedClaim，再投影为 VerifiedObservation/Result/ExecutionTrace。
 - `scripts/vnext/invocation_control.py`：绑定 release-input/invocation/execution 三层身份；生产adapter在exact provider envelope形成plan后才进入`O_CREAT|O_EXCL` owner-only socket路径。terminal reservation归档后释放，dead owner的egress marker+缺terminal receipt从磁盘封存为UNKNOWN；plan/request/egress/attempt/execution/response均可重算三种调用计数，不包含仓库金额 cap/preflight。
