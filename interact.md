@@ -101,7 +101,7 @@ repair validation 的 status 只允许 `PASS`、`FAIL`、`SKIPPED_LIGHT_PACKAGE`
 
 validation snapshot provenance 同样是仓库内完整性机制，不是外部签名、透明日志或 WORM；它证明当前 source/artifact bytes 与已发布 sidecar 一致，不证明业务方法本身正确，也不能约束能同时改写全部文件并重签的人。
 
-当前仓库未登记 UI、API、scheduler、CI、部署状态、专用支持渠道或紧急联系人。
+当前仓库只登记了在 PR 上运行 fast suite 的 GitHub CI check；未登记 UI、API、生产 scheduler、部署状态、专用支持渠道或紧急联系人。CI green 只证明该 fast boundary，不表示 live、full acceptance 或部署完成。
 
 ## 8. vNext formal Cutover 的可观察行为（R3 partial active）
 

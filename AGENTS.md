@@ -83,6 +83,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `SOP.md`：标准流程的一级导航，只保留动作、权威引用与验收。
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
 - `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
+- `.github/workflows/vnext-fast.yml`：PR fast-suite CI；只运行 `tools/run_fast_tests.py`，不替代integration、live或full acceptance。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
 - `requirements/issue_15_v1/`：Issue #15 的 exact Contract、自包含 Decision Register、post-freeze D-36/D-35/D-26/D-07 tips、parent transfer/baseline、39 指标 legacy semantic producer inventory、matrix baseline 与 foundation verification；是后续开发 authority，冻结 Contract 和 inherited parent bytes 均不因新 tip 被改写。
 - `requirements/ai_first_v3_3_1/`：不可变 inherited foundation；其 exact FSD、R2/R3、历史 Decision、旧基线与 inventory 继续供 parent closure 验证，任何文件不得因 Issue #15 开发被改写。
@@ -225,7 +226,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 
 ## 6. Review 与测试
 
-- Issue #15 的 effective D-26 保留 fast/local 主入口 `python3 tools/run_fast_tests.py --jobs 4` 与快速静态 gate；不把全仓/双解释器、隔离 repository/worktree 或长串行套件列为必跑项。金额 budget preflight 不再是必测项；必须保留 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络和 structured-only 零模型调用的短小确定性证据。`PASSED_FAST_LOCAL_ONLY` 不是 CI、live 或 Cutover。
+- Issue #15 的 effective D-26 保留 fast/local 主入口 `python3 tools/run_fast_tests.py --jobs 4` 与快速静态 gate；`.github/workflows/vnext-fast.yml` 在PR上运行同一fast set。不把全仓/双解释器、隔离 repository/worktree 或长串行套件列为必跑项。金额 budget preflight 不再是必测项；必须保留 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络和 structured-only 零模型调用的短小确定性证据。`PASSED_FAST_LOCAL_ONLY` 只界定证据范围；CI green仍不是live、full acceptance或Cutover。
 - 发现 Bug 时遵循 `TESTING.md`：先补稳定复现，再修实现；跨阶段问题同时补场景级证据。
 - 不用 quick unittest 替代 Golden、repair gate、snapshot checker 或完整场景，也不用 light review 冒充 full validation。
 - 真实运营中会写 `evidence/`、`outputs/` 或报告的命令仍须遵循其受控 authority；它们不是 R4 测试。

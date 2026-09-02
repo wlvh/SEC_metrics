@@ -535,7 +535,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的十一个并发直接边界用例，其中authority/scope/WB-2/WB-2B/WB-3与R2 active read-back用例机械验证Requirement、producer closure、39指标registry、E01 parity、invocation故障矩阵及已提交partial publication；整体证据等级仍为FAST_LOCAL_ONLY，不能由此声称CI或Issue #15 full acceptance。",
+        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的二十个并发直接边界条目，其中authority/scope/WB-2/WB-2B/WB-3与R2 predecessor read-back用例机械验证Requirement、producer closure、39指标registry、E01 parity、invocation故障矩阵及已提交publication；pull_request GitHub workflow执行同一fast set。FAST_LOCAL_ONLY标记界定证据范围；CI green只证明该fast set，不能由此声称Issue #15 full acceptance。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",
