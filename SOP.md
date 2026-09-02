@@ -6,7 +6,7 @@
 
 ## Issue #15 D-26 测试执行边界
 
-`requirements/issue_15_v1/decision_register.json` 的 effective D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级，并继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件。金额 `budget_preflight_provider_calls_zero` 已从必测集合删除；仍保留 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络与 structured-only 零模型调用的短小确定性测试。随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY`；该状态仍不是 CI、live、full acceptance 或 active Cutover。
+`requirements/issue_15_v1/decision_register.json` 的 effective D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级，并继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件。金额 `budget_preflight_provider_calls_zero` 已从必测集合删除；仍保留 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络与 structured-only 零模型调用的短小确定性测试。`.github/workflows/vnext-fast.yml` 在 PR 上运行同一fast命令；GitHub CI green只证明该边界。随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY`；本地receipt与CI fast check都不是live、full acceptance或active Cutover。
 
 ## Issue #15 D-36/D-35 金额与资源安全边界
 

@@ -93,7 +93,7 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 
 ## 8. 发布声明约束
 
-当前仓库没有 CI workflow、生产部署、自动调度、UI 或 API。除非真实实现和运行证据增加这些能力，否则 PR body 必须写“不适用/未实现”。vNext formal代码存在也不等于active切换完成。
+当前仓库只有在 `pull_request` 上运行 fast suite 的 CI workflow，没有生产部署、业务自动调度、UI 或 API。PR body 必须区分本地 fast PASS、GitHub CI green 与 full acceptance；未真实实现和运行的其他能力仍写“不适用/未实现”。vNext formal代码存在也不等于active切换完成。
 
 vNext Cutover声明必须有Issue #15 exact Requirement、effective D-01、有效SEC/provider环境、clean committed checkout、适用的acquisition/inventory receipt及其command/ledger-tail binding，并由final full receipt绑定path/bytes/hash/ID/type/status；release input plan还必须绑定exact source的latest verified immutable request attempt，formal live不得消费`LEGACY_WORKING_LOCATOR`。还必须有适用的family qualification、portable live audit closure、complete staging、旧producer不可达、active/previous publication、fault receipts、rollback/restore和最终full receipt。public generic formal receipt/commit入口必须fail closed。Issue #15任一Done gate未完成时PR必须Draft，正文第一行保持`Progress on #15`，不得写`Closes #15`。
 

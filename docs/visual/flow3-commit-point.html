@@ -1264,7 +1264,7 @@ const SCENES = [
      pre:'{"record_type":"EMPTY_FORMAL_NAMESPACE_MARKER",\n "scope":"ISSUE_15_ZERO_AI_R1",\n "status":"NOT_RUN_OUT_OF_SCOPE"}\n\n{"record_type":"EMPTY_FORMAL_NAMESPACE_MARKER",\n "scope":"AI_LIVE_CUTOVER",\n "status":"NOT_RUN"}'},
     {h:T.m("<code>python3 -m unittest tests.vnext.test_cutover</code> 本次真实输出。"),
      pre:"Ran 14 tests in 18.171s\nFAILED (failures=2, errors=3)\n\nAttributeError: <module 'vnext.cutover'>\n  does not have the attribute\n  'build_approved_transport_adapter'"},
-    {h:T.m("<code>tools/run_fast_tests.py</code> 的 <code>FAST_TESTS</code> 是写死的 20 项、每项 30 秒超时。<strong>里面没有 test_publication / test_cutover / test_formal_publication / test_formal_fault_matrix</strong>——不是因为它们不重要，是因为它们跑不进 30 秒。这一层唯一的日常保护，是有人手动去跑那十几分钟。"), src:"tools/run_fast_tests.py:29-73"}
+    {h:T.m("<code>tools/run_fast_tests.py</code> 的 <code>FAST_TESTS</code> 是写死的 20 项、每项 30 秒超时。<strong>里面没有 test_publication / test_cutover / test_formal_publication / test_formal_fault_matrix</strong>——不是因为它们不重要，是因为它们跑不进 30 秒。现在PR会自动运行这一fast层；更长的integration gates仍需单独执行。"), src:"tools/run_fast_tests.py:29-73"}
   ]
 },
 
