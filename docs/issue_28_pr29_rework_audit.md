@@ -16,6 +16,12 @@ The expanded matrix also reproduced removal of the AI-selector prohibition
 and coordinated addition of a non-approved positive fixture class; V1 now
 rejects both, even after all outer snapshot bindings are updated.
 
+The first complete publication regression also rejected adding successor
+parameters to the legacy `prepare_publication_bundle` signature. Its existing
+negative test is unchanged: the fix restores that exact public signature and
+adds `prepare_successor_publication_bundle`, sharing the internal verifier.
+Neither public entrypoint accepts caller ledger/provider/validation overrides.
+
 ## Defect-to-test ledger
 
 | Review item | Reworked mechanism | Evidence |

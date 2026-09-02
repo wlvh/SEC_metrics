@@ -1,6 +1,7 @@
 """PR #29 authority regressions using rebound snapshots and full artifacts."""
 
 import copy
+import inspect
 import itertools
 import json
 import shutil
@@ -26,7 +27,8 @@ from vnext.publication import (
     PublicationView,
     ROOT_MIRROR_RELATIVE_PATHS,
 )
-from vnext.publication import prepare_publication_bundle, verify_publication_bundle
+from vnext.publication import prepare_successor_publication_bundle
+from vnext.publication import verify_publication_bundle
 from vnext.publication import _commit_recorded_sandbox_publication
 from vnext.requirement_profile import (
     EXPLICIT_ARTIFACT_GENERATION,
@@ -629,6 +631,20 @@ class Issue28ArtifactReworkTest(unittest.TestCase):
 
 
 class Issue28PublicationReworkTest(unittest.TestCase):
+    def test_successor_builder_exposes_no_ledger_or_provider_override(self):
+        self.assertEqual(
+            {
+                "publication_root",
+                "repo_root",
+                "batch_manifest_path",
+                "legacy_snapshot_dir",
+                "staging_dir",
+                "previous_publication_id",
+                "requirement_id",
+            },
+            set(inspect.signature(prepare_successor_publication_bundle).parameters),
+        )
+
     def test_real_successor_publication_roundtrip_and_identity_removal(self):
         with tempfile.TemporaryDirectory() as directory, mock.patch(
             "socket.socket", side_effect=AssertionError("NO_NETWORK")
@@ -639,11 +655,10 @@ class Issue28PublicationReworkTest(unittest.TestCase):
             )
             snapshot = rebind_scoped_parent(repo_root=inputs["repo_root"])
             requirement = load_requirement_snapshot(snapshot_dir=snapshot)
-            manifest = prepare_publication_bundle(
+            manifest = prepare_successor_publication_bundle(
                 publication_root=root / "publication",
                 **inputs,
-                artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
-                publication_requirement_id="issue_28_v1",
+                requirement_id="issue_28_v1",
             )
             bundle = (
                 root / "publication/outputs/publications" / manifest["publication_id"]

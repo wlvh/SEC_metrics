@@ -3848,7 +3848,7 @@ def write_cutover_publication_validation_receipt(
     raise PublicationError("FORMAL_CUTOVER_AUTHORITY_REQUIRED")
 
 
-def prepare_publication_bundle(
+def _prepare_publication_bundle(
     *,
     publication_root: Path,
     repo_root: Path,
@@ -4008,6 +4008,53 @@ def prepare_publication_bundle(
         previous_publication_id=previous_publication_id,
         requirement=outer_requirement,
         projection_requirement_hashes=(requirement_hashes if outer_requirement is not None else None),
+    )
+
+
+def prepare_publication_bundle(
+    *,
+    publication_root: Path,
+    repo_root: Path,
+    batch_manifest_path: Path,
+    legacy_snapshot_dir: Path,
+    staging_dir: Path,
+    previous_publication_id: Optional[str],
+) -> Dict[str, object]:
+    """Keep the historical publication entrypoint and its exact argument set."""
+    return _prepare_publication_bundle(
+        publication_root=publication_root,
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+    )
+
+
+def prepare_successor_publication_bundle(
+    *,
+    publication_root: Path,
+    repo_root: Path,
+    batch_manifest_path: Path,
+    legacy_snapshot_dir: Path,
+    staging_dir: Path,
+    previous_publication_id: Optional[str],
+    requirement_id: str,
+) -> Dict[str, object]:
+    """Build an explicit successor recorded wrapper through the same gates.
+
+    The separate entrypoint selects the immutable successor subtype. It takes
+    no caller ledger, Requirement hash map, provider, or validation override.
+    """
+    return _prepare_publication_bundle(
+        publication_root=publication_root,
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+        artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
+        publication_requirement_id=requirement_id,
     )
 
 
