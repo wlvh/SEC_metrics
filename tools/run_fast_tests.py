@@ -1,4 +1,4 @@
-"""Run the R4 fast local verification set concurrently.
+"""Run the vNext fast local verification set concurrently.
 
 Purpose:
     Provide the fast/local feedback loop inherited by Issue #15. Its D-26 tip
@@ -9,7 +9,8 @@ Call relationships:
     Developers and ``tools/run_acceptance.py`` call this script.  Each selected
     unittest is a direct, non-isolated unit boundary and executes in a separate
     subprocess so independent checks use available CPU cores without sharing
-    repository authority state.
+    repository authority state. Full portable publication closure belongs to
+    the documented integration gates, not this 30-second-per-case tier.
 """
 
 from __future__ import annotations
@@ -36,7 +37,7 @@ FAST_TESTS = (
     "tests.vnext.test_legacy_projector.LegacyProjectorTest."
     "test_legacy_inventory_binds_frozen_commit_and_source_blobs",
     "tests.vnext.test_issue15_authority.Issue15AuthorityTest."
-    "test_issue15_snapshot_loads_and_preserves_parent_history",
+    "test_issue15_requirement_snapshot_fast_smoke",
     "tests.vnext.test_issue15_authority.Issue15AuthorityTest."
     "test_reusable_producer_scopes_match_exact_base_call_graph",
     "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest."
@@ -46,9 +47,7 @@ FAST_TESTS = (
     "tests.vnext.test_invocation_control",
     "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
     "test_current_packet_persists_no_credit_and_zero_current_egress",
-    "tests.vnext.test_table_stage_c_financial_materialization."
-    "TableStageCFinancialMaterializationTest."
-    "test_current_receipt_is_census_bound_and_resource_safe",
+    "tests.vnext.test_table_stage_c_financial_materialization",
     "tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest."
     "test_packet_sections_preserve_stage_c_a_claim_boundaries",
     "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
@@ -65,8 +64,8 @@ FAST_TESTS = (
     "test_historical_revpar_request_has_no_current_credit",
     "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest."
     "test_current_packet_persists_sibling_and_financial_blockers",
-    "tests.vnext.test_zero_ai_release.ZeroAiReleaseTest."
-    "test_r2_active_key_union_compatibility_and_retirement_are_bound",
+    "tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest."
+    "test_r2_predecessor_bundle_fast_smoke",
     "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest."
     "test_r4_plan_uses_fast_runner_without_full_discovery",
 )

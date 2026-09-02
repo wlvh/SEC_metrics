@@ -14,7 +14,7 @@ from unittest.mock import patch
 
 from tests.vnext.common import REPO_ROOT
 from vnext import zero_ai_r2
-from vnext.canonical import content_hash, sha256_file
+from vnext.canonical import content_hash, sha256_file, strict_json_file
 from vnext.publication import PublicationError, PublicationView
 from vnext.publication import ROOT_MIRROR_RELATIVE_PATHS
 from vnext.publication import ZERO_AI_FORMAL_MANIFEST
@@ -31,22 +31,45 @@ ZERO_COUNTERS = {
     "paid_model_provider_call_count": 0,
     "real_model_provider_egress_count": 0,
 }
+ACTIVE_R3_PUBLICATION_ID = (
+    "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8"
+)
+EXACT_R2_PUBLICATION_ID = (
+    "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f"
+)
 
 
 class ZeroAiReleaseTest(unittest.TestCase):
-    """Prove R1 history and the final cumulative R2 active publication."""
+    """Prove R1/R2 history beneath the fully verified active R3 bundle."""
 
-    def _active_and_r1(self) -> tuple[PublicationView, PublicationView]:
-        """Return the active R2 view and its verified R1 predecessor."""
-        active = PublicationView.open(publication_root=REPO_ROOT)
-        r1_id = str(active.manifest["previous_publication_id"])
+    @classmethod
+    def setUpClass(cls) -> None:
+        """Pin one verified active R3 -> R2 -> R1 publication chain."""
+        cls.active_view = PublicationView.open(publication_root=REPO_ROOT)
+        if cls.active_view.publication_id != ACTIVE_R3_PUBLICATION_ID:
+            raise AssertionError("Active publication is not exact R3")
+        r2_id = str(cls.active_view.manifest["previous_publication_id"])
+        if r2_id != EXACT_R2_PUBLICATION_ID:
+            raise AssertionError("Active R3 predecessor is not exact R2")
+        r2_dir = REPO_ROOT / "outputs" / "publications" / r2_id
+        r2_manifest = verify_publication_bundle(bundle_dir=r2_dir)
+        cls.r2_view = PublicationView(
+            publication_id=r2_id,
+            bundle_dir=r2_dir,
+            manifest=r2_manifest,
+        )
+        r1_id = str(r2_manifest["previous_publication_id"])
         r1_dir = REPO_ROOT / "outputs" / "publications" / r1_id
         r1_manifest = verify_publication_bundle(bundle_dir=r1_dir)
-        return active, PublicationView(
+        cls.r1_view = PublicationView(
             publication_id=r1_id,
             bundle_dir=r1_dir,
             manifest=r1_manifest,
         )
+
+    def _active_and_r1(self) -> tuple[PublicationView, PublicationView]:
+        """Return the pinned active R3 view and verified R1 ancestor."""
+        return self.active_view, self.r1_view
 
     def test_r2_financial_producer_has_no_legacy_semantic_input(self) -> None:
         """Ban old rows, evidence, and expected values from financial build."""
@@ -350,7 +373,12 @@ class ZeroAiReleaseTest(unittest.TestCase):
         self,
     ) -> None:
         """Prove 22x10 coordinates, 309 keys, receipts, and zero calls."""
-        view, r1_view = self._active_and_r1()
+        view = self.r2_view
+        r1_view = self.r1_view
+        self.assertEqual(
+            view.publication_id,
+            self.active_view.manifest["previous_publication_id"],
+        )
         marker = json.loads(
             view.read_bytes(relative_path=ZERO_AI_FORMAL_MANIFEST).decode("utf-8")
         )
@@ -473,7 +501,7 @@ class ZeroAiReleaseTest(unittest.TestCase):
 
     def test_r1_marker_tamper_fails_closed(self) -> None:
         """Reject a forged nonzero egress counter in an otherwise copied B."""
-        view = PublicationView.open(publication_root=REPO_ROOT)
+        view = self.r1_view
         with tempfile.TemporaryDirectory() as directory:
             copied = Path(directory) / "bundle"
             shutil.copytree(view.bundle_dir, copied)
@@ -498,6 +526,65 @@ class ZeroAiReleaseTest(unittest.TestCase):
             )
             with self.assertRaises(PublicationError):
                 verify_publication_bundle(bundle_dir=copied)
+
+
+class ZeroAiReleaseFastTest(unittest.TestCase):
+    """Check the active edge while fully verifying only its R2 predecessor."""
+
+    def test_r2_predecessor_bundle_fast_smoke(self) -> None:
+        """Bind the active R3 manifest edge, then fully verify exact R2."""
+        pointer = strict_json_file(
+            path=REPO_ROOT / "outputs" / "active_publication.json"
+        )
+        self.assertIsInstance(pointer, dict)
+        self.assertEqual(ACTIVE_R3_PUBLICATION_ID, pointer["publication_id"])
+        self.assertEqual(
+            EXACT_R2_PUBLICATION_ID, pointer["previous_publication_id"]
+        )
+
+        active_dir = (
+            REPO_ROOT
+            / "outputs"
+            / "publications"
+            / str(pointer["publication_id"])
+        )
+        active_manifest_path = active_dir / "publication_manifest.json"
+        self.assertEqual(
+            pointer["bundle_manifest_sha256"],
+            sha256_file(path=active_manifest_path),
+        )
+        active_manifest = strict_json_file(path=active_manifest_path)
+        self.assertIsInstance(active_manifest, dict)
+        self.assertEqual(pointer["publication_id"], active_manifest["publication_id"])
+        self.assertEqual(
+            pointer["previous_publication_id"],
+            active_manifest["previous_publication_id"],
+        )
+
+        r2_dir = (
+            REPO_ROOT
+            / "outputs"
+            / "publications"
+            / str(active_manifest["previous_publication_id"])
+        )
+        r2_manifest = verify_publication_bundle(bundle_dir=r2_dir)
+        r2_view = PublicationView(
+            publication_id=EXACT_R2_PUBLICATION_ID,
+            bundle_dir=r2_dir,
+            manifest=r2_manifest,
+        )
+        marker = json.loads(
+            r2_view.read_bytes(relative_path=ZERO_AI_FORMAL_MANIFEST).decode(
+                "utf-8"
+            )
+        )
+        self.assertEqual("R2", marker["release_stage"])
+        self.assertEqual("PASSED", marker["status"])
+        self.assertEqual(309, marker["public_matrix_row_count"])
+        self.assertEqual(
+            r2_manifest["previous_publication_id"],
+            marker["previous_publication_id"],
+        )
 
 
 if __name__ == "__main__":
