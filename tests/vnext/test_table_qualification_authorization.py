@@ -65,13 +65,15 @@ def _synthetic_family_gate_status(
             estimate: object = "NOT_AVAILABLE_RESOURCE_LIMIT"
         elif "ESTIMATED_CONTEXT_LIMIT" in reasons:
             estimate = 200001
+        elif reasons:
+            estimate = 1000001
         else:
             estimate = 200000
         context_status = (
             "NOT_EVALUATED_RESOURCE_LIMIT"
             if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
             else "BLOCKED"
-            if "ESTIMATED_CONTEXT_LIMIT" in reasons
+            if reasons
             else "PASSED"
         )
         for task_contract_id in matrix["entries"][family_id][
@@ -109,7 +111,7 @@ def _synthetic_family_gate_status(
                     "exact_binding_match": False,
                     "drift_fields": [],
                     "blocking_reason_code": (
-                        "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+                        reasons[0]
                         if context_status == "BLOCKED" else None
                     ),
                 },
@@ -714,6 +716,93 @@ def mocked_live_table_failure_transport(
 class TableQualificationAuthorizationTest(unittest.TestCase):
     """Prove LIVE qualification cannot be a generic debugging request."""
 
+    def test_repeated_fresh_request_uses_plan_owned_wb3_namespaces(
+        self,
+    ) -> None:
+        """Make identical fresh request bytes produce distinct executions."""
+        with synthetic_no_d07_repository() as repo_root:
+            bindings = [
+                qualification._authorization_mapping(
+                    repo_root=repo_root,
+                    family_id="lodging_kpi_table",
+                    task_contract_id="lodging_occupancy_table_v2",
+                    qualification_phase="FRESH_STABILITY",
+                    qualification_ordinal=ordinal,
+                )
+                for ordinal in (1, 2)
+            ]
+            self.assertEqual(
+                bindings[0]["context_feasibility_binding"][
+                    "provider_request_body_sha256"
+                ],
+                bindings[1]["context_feasibility_binding"][
+                    "provider_request_body_sha256"
+                ],
+            )
+            self.assertNotEqual(
+                bindings[0]["qualification_task_plan_id"],
+                bindings[1]["qualification_task_plan_id"],
+            )
+            self.assertNotEqual(
+                bindings[0]["wb3_workspace_relative_path"],
+                bindings[1]["wb3_workspace_relative_path"],
+            )
+            authorizations = [
+                qualification.TableQualificationAuthorization(
+                    binding=binding,
+                    capability=(
+                        qualification._QUALIFICATION_AUTHORIZATION_CAPABILITY
+                    ),
+                )
+                for binding in bindings
+            ]
+            calls: list[bytes] = []
+            response = _occupancy_response(repo_root=repo_root)
+            for index, (binding, authorization) in enumerate(
+                zip(bindings, authorizations), start=1,
+            ):
+                with mock.patch.object(
+                    qualification,
+                    "issue_table_qualification_authorization",
+                    return_value=authorization,
+                ), mocked_live_table_transport(
+                    repo_root=repo_root,
+                    binding=binding,
+                    response_bytes=response,
+                    calls=calls,
+                    provider_request_id="request:fresh:{}".format(index),
+                ):
+                    created = qualification.execute_table_qualification_task(
+                        repo_root=repo_root,
+                        family_id="lodging_kpi_table",
+                        task_contract_id="lodging_occupancy_table_v2",
+                        qualification_phase="FRESH_STABILITY",
+                        qualification_ordinal=index,
+                        target_period=binding["target_period"],
+                        owner_token="synthetic-owner",
+                    )
+                self.assertEqual("PENDING_HUMAN_REVIEW", created["status"])
+            self.assertEqual(2, len(calls))
+            terminal_plan_ids = []
+            for binding in bindings:
+                terminals = qualification.qualification_remote_egress_terminals(
+                    workspace_dir=(
+                        repo_root / binding["wb3_workspace_relative_path"]
+                    ),
+                )
+                self.assertEqual(1, len(terminals))
+                terminal_plan_ids.append(
+                    terminals[0]["qualification_task_plan_id"]
+                )
+            self.assertEqual(
+                [binding["qualification_task_plan_id"] for binding in bindings],
+                terminal_plan_ids,
+            )
+            qualification.validate_table_qualification_cycle_exact_set(
+                repo_root=repo_root,
+                binding=bindings[-1],
+            )
+
     def test_lodging_plan_forms_when_financial_resource_gate_blocks(
         self,
     ) -> None:
@@ -727,8 +816,24 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             "validate_table_qualification_freeze",
             return_value=status,
         ), mock.patch.object(
-            qualification, "_matrix_source_binding",
-        ) as source_opener, mock.patch.object(
+            qualification,
+            "_qualification_sample_measurement",
+            return_value={
+                "provider_request_body_sha256": "a" * 64,
+                "estimated_input_tokens": 10,
+                "blocking_reason_codes": [],
+                "context_feasibility": {
+                    "status": "PASSED",
+                    "evidence_basis": "ESTIMATED_BOUND",
+                    "attestation_id": None,
+                    "attested_actual_prompt_tokens": None,
+                    "context_budget_tokens": 200000,
+                    "exact_binding_match": False,
+                    "drift_fields": [],
+                    "blocking_reason_code": None,
+                },
+            },
+        ), mock.patch.object(
             ai_adapter, "_open_provider_request",
         ) as provider_opener:
             plan = qualification.table_qualification_task_plan(
@@ -750,7 +855,6 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     ),
                     qualification_ordinal=1,
                 )
-        source_opener.assert_not_called()
         provider_opener.assert_not_called()
 
     def test_financial_plan_forms_when_lodging_context_gate_blocks(
@@ -758,7 +862,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
     ) -> None:
         """Allow financial plan while lodging is context-blocked."""
         status = _synthetic_family_gate_status(
-            lodging_reasons=["ESTIMATED_CONTEXT_LIMIT"],
+            lodging_reasons=["PROVIDER_CONTEXT_LIMIT"],
             financial_reasons=[],
         )
         with mock.patch.object(
@@ -766,8 +870,24 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             "validate_table_qualification_freeze",
             return_value=status,
         ), mock.patch.object(
-            qualification, "_matrix_source_binding",
-        ) as source_opener, mock.patch.object(
+            qualification,
+            "_qualification_sample_measurement",
+            return_value={
+                "provider_request_body_sha256": "b" * 64,
+                "estimated_input_tokens": 10,
+                "blocking_reason_codes": [],
+                "context_feasibility": {
+                    "status": "PASSED",
+                    "evidence_basis": "ESTIMATED_BOUND",
+                    "attestation_id": None,
+                    "attested_actual_prompt_tokens": None,
+                    "context_budget_tokens": 200000,
+                    "exact_binding_match": False,
+                    "drift_fields": [],
+                    "blocking_reason_code": None,
+                },
+            },
+        ), mock.patch.object(
             ai_adapter, "_open_provider_request",
         ) as provider_opener:
             plan = qualification.table_qualification_task_plan(
@@ -789,7 +909,6 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     task_contract_id="lodging_occupancy_table_v2",
                     qualification_ordinal=1,
                 )
-        source_opener.assert_not_called()
         provider_opener.assert_not_called()
 
     def test_public_paths_preserve_family_scoped_local_drift(self) -> None:
@@ -862,17 +981,29 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                                 task_contract_id=ready_task,
                                 qualification_ordinal=1,
                             )
-                            authorization = issue_authorization(
-                                repo_root=repo_root,
-                                family_id=ready_family,
-                                task_contract_id=ready_task,
-                                qualification_ordinal=1,
-                            )
+                            if ready_family == "lodging_kpi_table":
+                                authorization = issue_authorization(
+                                    repo_root=repo_root,
+                                    family_id=ready_family,
+                                    task_contract_id=ready_task,
+                                    qualification_ordinal=1,
+                                )
+                                self.assertEqual(
+                                    ready_family,
+                                    authorization.as_mapping()["family_id"],
+                                )
+                            else:
+                                with self.assertRaisesRegex(
+                                    qualification.QualificationError,
+                                    "TABLE_QUALIFICATION_NOT_AUTHORIZED",
+                                ):
+                                    issue_authorization(
+                                        repo_root=repo_root,
+                                        family_id=ready_family,
+                                        task_contract_id=ready_task,
+                                        qualification_ordinal=1,
+                                    )
                         self.assertEqual(ready_family, plan["family_id"])
-                        self.assertEqual(
-                            ready_family,
-                            authorization.as_mapping()["family_id"],
-                        )
                         provider_opener.assert_not_called()
                         with mock.patch.object(
                             qualification,
@@ -895,7 +1026,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                                 )
                             with self.assertRaisesRegex(
                                 qualification.QualificationError,
-                                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
+                                (
+                                    "TABLE_QUALIFICATION_NOT_AUTHORIZED"
+                                    if drift_family == "financial_statement"
+                                    else "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY"
+                                ),
                             ):
                                 issue_authorization(
                                     repo_root=repo_root,
@@ -956,21 +1091,33 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             task_contract_id=ready_task,
             qualification_ordinal=1,
         )
-        authorization = issue_authorization(
-            repo_root=repo_root,
-            family_id=ready_family,
-            task_contract_id=ready_task,
-            qualification_ordinal=1,
-        )
+        if ready_family == "lodging_kpi_table":
+            authorization = issue_authorization(
+                repo_root=repo_root,
+                family_id=ready_family,
+                task_contract_id=ready_task,
+                qualification_ordinal=1,
+            )
+            self.assertEqual(
+                ready_family, authorization.as_mapping()["family_id"],
+            )
+        else:
+            with self.assertRaisesRegex(
+                qualification.QualificationError,
+                "TABLE_QUALIFICATION_NOT_AUTHORIZED",
+            ):
+                issue_authorization(
+                    repo_root=repo_root,
+                    family_id=ready_family,
+                    task_contract_id=ready_task,
+                    qualification_ordinal=1,
+                )
         execution_plan = table_task_execution_plan(
             repo_root=repo_root,
             task_contract_id=ready_task,
             family_id=ready_family,
         )
         self.assertEqual(ready_family, plan["family_id"])
-        self.assertEqual(
-            ready_family, authorization.as_mapping()["family_id"],
-        )
         self.assertEqual(
             ready_family,
             execution_plan["runtime_task_contract"]["reader_family_id"],
@@ -994,7 +1141,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 )
             with self.assertRaisesRegex(
                 qualification.QualificationError,
-                "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
+                (
+                    "TABLE_QUALIFICATION_NOT_AUTHORIZED"
+                    if failed_family == "financial_statement"
+                    else "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY"
+                ),
             ):
                 issue_authorization(
                     repo_root=repo_root,
@@ -1134,6 +1285,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
             "_open_provider_request",
         ) as provider_opener:
             for family_id, task_contract_id in families:
+                authorization_error = (
+                    "TABLE_QUALIFICATION_NOT_AUTHORIZED"
+                    if family_id == "financial_statement"
+                    else "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY"
+                )
                 status = validate_table_qualification_freeze(
                     repo_root=repo_root,
                     family_id=family_id,
@@ -1161,7 +1317,7 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                     )
                 with self.assertRaisesRegex(
                     qualification.QualificationError,
-                    "TABLE_QUALIFICATION_TASK_REQUEST_NOT_READY",
+                    authorization_error,
                 ):
                     qualification.issue_table_qualification_authorization(
                         repo_root=repo_root,
@@ -1259,19 +1415,31 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                         task_contract_id=task_contract_id,
                         qualification_ordinal=1,
                     )
-                    authorization = (
-                        qualification.issue_table_qualification_authorization(
-                            repo_root=repo_root,
-                            family_id=family_id,
-                            task_contract_id=task_contract_id,
-                            qualification_ordinal=1,
+                    if family_id == "lodging_kpi_table":
+                        authorization = (
+                            qualification.issue_table_qualification_authorization(
+                                repo_root=repo_root,
+                                family_id=family_id,
+                                task_contract_id=task_contract_id,
+                                qualification_ordinal=1,
+                            )
                         )
-                    )
+                        self.assertEqual(
+                            family_id,
+                            authorization.as_mapping()["family_id"],
+                        )
+                    else:
+                        with self.assertRaisesRegex(
+                            qualification.QualificationError,
+                            "TABLE_QUALIFICATION_NOT_AUTHORIZED",
+                        ):
+                            qualification.issue_table_qualification_authorization(
+                                repo_root=repo_root,
+                                family_id=family_id,
+                                task_contract_id=task_contract_id,
+                                qualification_ordinal=1,
+                            )
                     self.assertEqual(family_id, plan["family_id"])
-                    self.assertEqual(
-                        family_id,
-                        authorization.as_mapping()["family_id"],
-                    )
 
     def test_public_paths_block_shared_serializer_evidence_and_wb3_drift(
         self,
@@ -1837,10 +2005,6 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                 )
                 for family_id, task_contract_id in (
                     ("lodging_kpi_table", "lodging_occupancy_table_v2"),
-                    (
-                        "financial_statement",
-                        "financial_assets_under_management_table_v1",
-                    ),
                 ):
                     with self.subTest(unrelated_source_drift_family=family_id):
                         authorization = issue_authorization(
@@ -1853,6 +2017,18 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                             family_id,
                             authorization.as_mapping()["family_id"],
                         )
+                with self.assertRaisesRegex(
+                    qualification.QualificationError,
+                    "TABLE_QUALIFICATION_NOT_AUTHORIZED",
+                ):
+                    issue_authorization(
+                        repo_root=repo_root,
+                        family_id="financial_statement",
+                        task_contract_id=(
+                            "financial_assets_under_management_table_v1"
+                        ),
+                        qualification_ordinal=1,
+                    )
             finally:
                 source_path.write_bytes(source_original)
 
@@ -2310,7 +2486,11 @@ class TableQualificationAuthorizationTest(unittest.TestCase):
                                         "request:" + name
                                     ),
                                     observation=observation,
-                                    raw_response_bytes=b"{}",
+                                    raw_response_bytes=(
+                                        b'{"usage":{"prompt_tokens":10,'
+                                        b'"completion_tokens":2,'
+                                        b'"total_tokens":12}}'
+                                    ),
                                     outbound_request_bytes=outbound,
                                     output_schema_bytes=schema,
                                 )

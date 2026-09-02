@@ -1,0 +1,72 @@
+{
+  "disclosure_group": "lodging_kpi_table",
+  "table_locator": {
+    "derived_asset_id": "sha256:ffbe6eeb942dc6e6edc744a6dd4a78eef792fe8f6809d1ee4e2e1bcf1303c02a",
+    "table_id": "table_000004"
+  },
+  "candidates": [
+    {
+      "role": "occupancy",
+      "claimed_period": "FY2025",
+      "claimed_raw_value": "70.6",
+      "claimed_reported_unit": "percent",
+      "claimed_scope": [
+        {
+          "dimension": "property_population",
+          "raw_value": "Comparable Systemwide Properties",
+          "evidence_locator_ids": ["scope_1"]
+        },
+        {
+          "dimension": "operating_scope",
+          "raw_value": "Comparable Systemwide Properties",
+          "evidence_locator_ids": ["scope_1"]
+        },
+        {
+          "dimension": "geography",
+          "raw_value": "Worldwide",
+          "evidence_locator_ids": ["scope_2"]
+        }
+      ],
+      "locator": {
+        "derived_asset_id": "sha256:ffbe6eeb942dc6e6edc744a6dd4a78eef792fe8f6809d1ee4e2e1bcf1303c02a",
+        "table_id": "table_000004",
+        "row_index": 23,
+        "column_index": 12,
+        "origin_row_index": 23,
+        "origin_column_index": 12,
+        "rowspan": 1,
+        "colspan": 2
+      },
+      "scope_evidence_locators": [
+        {
+          "id": "scope_1",
+          "supports_dimensions": ["property_population", "operating_scope"],
+          "location_type": "label",
+          "locator": {
+            "derived_asset_id": "sha256:ffbe6eeb942dc6e6edc744a6dd4a78eef792fe8f6809d1ee4e2e1bcf1303c02a",
+            "table_id": "table_000004",
+            "row_index": 23,
+            "column_index": 0,
+            "origin_row_index": 23,
+            "origin_column_index": 0,
+            "rowspan": 1,
+            "colspan": 3
+          },
+          "raw_text": "System-wide hotels (a)"
+        },
+        {
+          "id": "scope_2",
+          "supports_dimensions": ["geography"],
+          "location_type": "caption",
+          "locator": {
+            "derived_asset_id": "sha256:ffbe6eeb942dc6e6edc744a6dd4a78eef792fe8f6809d1ee4e2e1bcf1303c02a",
+            "table_id": "table_000004"
+          },
+          "raw_text": ""
+        }
+      ],
+      "competing_candidates": []
+    }
+  ],
+  "unresolved_competing_claims": []
+}

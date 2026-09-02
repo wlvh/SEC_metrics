@@ -2,7 +2,7 @@
 
 The registry owns target source routing and reader-family literals for all 39
 metrics. The separate ReleasePlan is the only owner of current migration
-state. Published R1/R2 plans retain their exact historical Requirement
+state. Published R1/R2/R3 plans retain their exact historical Requirement
 closure; a later same-ID Decision tip does not rewrite those content IDs.
 """
 
@@ -105,6 +105,7 @@ RELEASE_AUTHORITY_FIELDS = {
 RELEASE_PLAN_IDS = (
     "issue_15_zero_ai_r1",
     "issue_15_zero_ai_r2",
+    "issue_15_lodging_r3",
 )
 RELEASED_PLAN_REQUIREMENT_CLOSURES = {
     "issue_15_zero_ai_r1": (
@@ -115,6 +116,15 @@ RELEASED_PLAN_REQUIREMENT_CLOSURES = {
         "sha256:161da433701e133c6e388356225fb01f"
         "a245847450b39a2a8b5335189a69624f"
     ),
+    "issue_15_lodging_r3": (
+        "sha256:e4b1d8141196fae9bb5da904692fd0d"
+        "495ec69b89101b8304e12f6cb2640b7c7"
+    ),
+}
+RELEASE_STAGE_BY_PLAN_ID = {
+    "issue_15_zero_ai_r1": "R1",
+    "issue_15_zero_ai_r2": "R2",
+    "issue_15_lodging_r3": "R3",
 }
 
 
@@ -592,7 +602,7 @@ def _validate_release_plan(
     )
     if release_plan_id not in RELEASE_PLAN_IDS:
         raise SourceStrategyError("ReleasePlan id is not authorized")
-    expected_stage = "R1" if release_plan_id == RELEASE_PLAN_IDS[0] else "R2"
+    expected_stage = RELEASE_STAGE_BY_PLAN_ID[release_plan_id]
     if value["release_stage"] != expected_stage:
         raise SourceStrategyError("ReleasePlan stage differs")
     added = _string_list(
@@ -653,7 +663,7 @@ def _validate_release_plan(
 
 
 def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
-    """Load and validate the complete immutable R1-to-R2 plan chain."""
+    """Load and validate the complete immutable Issue #15 ratchet chain."""
     registry = load_source_strategy_registry(repo_root=repo_root)
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID

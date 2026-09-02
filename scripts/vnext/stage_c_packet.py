@@ -182,7 +182,10 @@ def _content_record(
 
 def _measurement_plan(*, repo_root: Path) -> Dict[str, object]:
     """Rebuild and compare the sole persisted Stage C-A measurement plan."""
-    current = build_table_context_measurement_plan(repo_root=repo_root)
+    current = build_table_context_measurement_plan(
+        repo_root=repo_root,
+        task_contract_id="lodging_revpar_table_v2",
+    )
     digest = str(current["measurement_plan_id"]).split(":", maxsplit=1)[1]
     persisted = _content_record(
         repo_root=repo_root,

@@ -114,7 +114,19 @@ class TableContextComparisonTest(unittest.TestCase):
             first = build_sibling_request_context_analysis(repo_root=REPO_ROOT)
             second = build_sibling_request_context_analysis(repo_root=REPO_ROOT)
         self.assertEqual(first, second)
-        self.assertEqual(self.analysis, first)
+        for field in (
+            "requests",
+            "exact_request_comparison",
+            "token_upper_bound_assessment",
+            "REVPAR_CONTEXT_STATUS",
+            "reason",
+            "egress_counts",
+        ):
+            self.assertEqual(self.analysis[field], first[field])
+        self.assertNotEqual(
+            self.analysis["authority"]["effective_d07_record_hash"],
+            first["authority"]["effective_d07_record_hash"],
+        )
         provider_opener.assert_not_called()
         self.assertEqual(
             {

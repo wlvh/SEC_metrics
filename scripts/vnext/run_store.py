@@ -994,14 +994,21 @@ def _qualification_fixture_traits(
     outside that registry, so their traits must be reconstructed from the
     source-bound fixture rather than supplied by a caller.
     """
-    run_id = manifest["run_id"]
-    if type(run_id) is not str or not run_id.startswith(
-        _QUALIFICATION_RUN_PREFIX
-    ):
-        raise TraitError("Run is not a qualification fixture Run")
-    fixture_id = run_id[len(_QUALIFICATION_RUN_PREFIX):]
+    authorization = manifest.get("qualification_authorization")
+    if authorization is not None:
+        if type(authorization) is not dict:
+            raise TraitError("Qualification authorization is invalid")
+        fixture_id = authorization.get("qualification_fixture_id")
+    else:
+        run_id = manifest["run_id"]
+        if type(run_id) is not str or not run_id.startswith(
+            _QUALIFICATION_RUN_PREFIX
+        ):
+            raise TraitError("Run is not a qualification fixture Run")
+        fixture_id = run_id[len(_QUALIFICATION_RUN_PREFIX):]
     if (
-        not fixture_id
+        type(fixture_id) is not str
+        or not fixture_id
         or any(
             character not in "abcdefghijklmnopqrstuvwxyz0123456789_-"
             for character in fixture_id
@@ -1067,6 +1074,45 @@ def _qualification_fixture_traits(
     ):
         raise TraitError("Qualification SourceReference differs from fixture")
     return list(fixture["company_traits"]), [str(int(fixture["cik"]))]
+
+
+def _run_company_authority(
+    *, repo_root: Path, manifest: Mapping[str, object],
+) -> Tuple[List[str], List[str]]:
+    """Resolve traits/CIKs without letting registry membership mask a fixture.
+
+    A LIVE SECOND_LAYOUT or POST_FREEZE_HOLDOUT authorization binds its
+    matrix-owned fixture even when that fixture happens to name a company in
+    the production registry.  FRESH_STABILITY and ordinary production Runs
+    still use the registry first; historical external fixture Runs without an
+    authorization retain the existing registry-miss fallback.
+    """
+    authorization = manifest.get("qualification_authorization")
+    if (
+        type(authorization) is dict
+        and authorization.get("qualification_phase")
+        in {"SECOND_LAYOUT", "POST_FREEZE_HOLDOUT"}
+    ):
+        return _qualification_fixture_traits(
+            repo_root=repo_root,
+            manifest=manifest,
+        )
+    try:
+        return (
+            repository_company_traits(
+                repo_root=repo_root,
+                company_id=str(manifest["company_id"]),
+            ),
+            repository_company_ciks(
+                repo_root=repo_root,
+                company_id=str(manifest["company_id"]),
+            ),
+        )
+    except TraitError:
+        return _qualification_fixture_traits(
+            repo_root=repo_root,
+            manifest=manifest,
+        )
 
 
 def _verify_repository_bindings(
@@ -1181,23 +1227,14 @@ def _verify_repository_bindings(
         if replayed != asset:
             raise RunStoreError("DerivedAsset bytes differ from parent")
     try:
-        repository_traits = repository_company_traits(
-            repo_root=repo_root, company_id=str(manifest["company_id"]),
+        repository_traits, repository_ciks = _run_company_authority(
+            repo_root=repo_root,
+            manifest=manifest,
         )
-        repository_ciks = repository_company_ciks(
-            repo_root=repo_root, company_id=str(manifest["company_id"]),
-        )
-    except TraitError:
-        try:
-            repository_traits, repository_ciks = (
-                _qualification_fixture_traits(
-                    repo_root=repo_root, manifest=manifest,
-                )
-            )
-        except TraitError as qualification_error:
-            raise RunStoreError(
-                "Run company traits cannot be derived from repository"
-            ) from qualification_error
+    except TraitError as qualification_error:
+        raise RunStoreError(
+            "Run company traits cannot be derived from repository"
+        ) from qualification_error
     if manifest["company_traits"] != repository_traits:
         raise RunStoreError("Run company traits differ from repository")
     if (

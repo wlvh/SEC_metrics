@@ -48,7 +48,7 @@ TABLE_TASK_CONTRACT_FIELDS = {
 SPLIT_BASELINE_KINDS = {"FIRST_TASK_PLUS_DUPLICATED_FULL_PAYLOAD"}
 RESOURCE_LIMIT_ESTIMATE = "NOT_AVAILABLE_RESOURCE_LIMIT"
 OUTPUT_SCHEMA_IDENTITY = {
-    "schema_version": "2",
+    "schema_version": "3",
     "root_fields": [
         "candidates",
         "disclosure_group",
@@ -67,6 +67,19 @@ OUTPUT_SCHEMA_IDENTITY = {
         "raw_text",
         "supports_dimensions",
     ],
+    "scope_evidence_locator_contract": {
+        "caption": ["derived_asset_id", "table_id"],
+        "cell_header_row_label": [
+            "derived_asset_id",
+            "table_id",
+            "row_index",
+            "column_index",
+            "origin_row_index",
+            "origin_column_index",
+            "rowspan",
+            "colspan",
+        ],
+    },
 }
 RUNTIME_TASK_CONTRACT_FIELDS = {
     "catalog_task_contract_hash",
@@ -642,7 +655,7 @@ def _validate_task_family(
             raise TableTaskContractError("Task contract must have one role")
         if contract["scope_contract_version"] != SCOPE_CONTRACT_VERSION:
             raise TableTaskContractError("Task scope contract version differs")
-        if contract["output_schema_version"] != "2":
+        if contract["output_schema_version"] != "3":
             raise TableTaskContractError("Task output schema version differs")
         _text(value=contract["system_prompt"], label="task system_prompt")
         _text(value=contract["split_reason"], label="task split_reason")

@@ -12,11 +12,13 @@ from pathlib import Path
 from typing import Callable, Dict, Optional
 
 from tests.vnext.common import REPO_ROOT
+from vnext.canonical import atomic_write_json, content_hash
 from vnext.invocation_control import UnknownRemoteOutcomeError
 from vnext.qualification import QualificationError
 from vnext.qualification import table_qualification_task_plan
 from vnext.records import RecordError, validate_record
 from vnext.table_context_measurement import _execute_with_transport
+from vnext.table_context_measurement import build_table_context_measurement_plan
 from vnext.table_context_measurement import EXTERNAL_AUTHORIZATION_STATEMENT
 from vnext.table_context_measurement import issue_table_context_measurement_authorization
 from vnext.table_context_measurement import TableContextMeasurementError
@@ -172,7 +174,7 @@ class TableContextMeasurementTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        """Issue one opaque capability from the clean committed test HEAD."""
+        """Issue a mock capability only while the historical grant is open."""
         cls.head = subprocess.run(
             ["git", "rev-parse", "HEAD"],
             cwd=str(REPO_ROOT),
@@ -180,12 +182,29 @@ class TableContextMeasurementTest(unittest.TestCase):
             capture_output=True,
             text=True,
         ).stdout.strip()
-        cls.authorization = issue_table_context_measurement_authorization(
-            repo_root=REPO_ROOT,
-            external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
-            authorized_repository_head=cls.head,
-            authorized_at_utc="2026-08-25T00:00:00+00:00",
+        cls.request_sha256 = (
+            "1afd27317162e441fb0812253e79e287bbb302da0fb9ddf301c887541d06e43a"
         )
+        cls.review_comment_url = (
+            "https://github.com/wlvh/SEC_metrics/pull/22#issuecomment-1"
+        )
+        try:
+            cls.authorization = issue_table_context_measurement_authorization(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_revpar_table_v2",
+                external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
+                authorized_repository_head=cls.head,
+                authorized_provider_request_body_sha256=cls.request_sha256,
+                external_review_comment_url=cls.review_comment_url,
+                authorized_at_utc="2026-08-25T00:00:00+00:00",
+            )
+        except TableContextMeasurementError as error:
+            if error.code not in {
+                "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+                "TABLE_CONTEXT_MEASUREMENT_REPOSITORY_NOT_CLEAN",
+            }:
+                raise
+            cls.authorization = None
 
     def _execute(
         self, *, workspace: Path, transport: _MockMeasurementTransport,
@@ -202,8 +221,176 @@ class TableContextMeasurementTest(unittest.TestCase):
             clock=_clock(),
         )
 
+    def test_plan_is_exact_revpar_request_without_ratio_substitution(self) -> None:
+        """Bind the authorized scope-bound RevPAR plan and provider bytes."""
+        plan = json.loads((
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/token_measurement/"
+            "plans/977a007d70d6f737012174de59ae6e9626709122fe1cdba6d712bb3f078fcd7f.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual("lodging_kpi_table", plan["family_id"])
+        self.assertEqual(
+            "lodging_revpar_table_v2", plan["task_contract_id"],
+        )
+        self.assertEqual(
+            "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+            plan["source_sha256"],
+        )
+        self.assertEqual("2", plan["table_payload_serialization_version"])
+        self.assertEqual(394828, plan["estimated_input_tokens"])
+        self.assertEqual(
+            self.request_sha256, plan["provider_request_body_sha256"],
+        )
+        self.assertEqual(200000, plan[
+            "ordinary_qualification_max_estimated_input_tokens"
+        ])
+        self.assertTrue(plan["ordinary_qualification_remains_blocked"])
+        self.assertFalse(plan["qualification_evidence_eligible"])
+        self.assertFalse(plan["response_reuse_for_qualification"])
+
+    def test_revised_prompt_plans_are_task_exact_and_schema_unchanged(
+        self,
+    ) -> None:
+        """Bind the two task-exact scope-bound schema-v3 plans."""
+        plan_root = (
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/token_measurement/plans"
+        )
+        occupancy = json.loads((
+            plan_root
+            / "26fdb6a2e6e0f33578c01c70d7bf86bd6dec642825edafc9908a6ff25dffa236.json"
+        ).read_text(encoding="utf-8"))
+        revpar = json.loads((
+            plan_root
+            / "977a007d70d6f737012174de59ae6e9626709122fe1cdba6d712bb3f078fcd7f.json"
+        ).read_text(encoding="utf-8"))
+        self.assertEqual(394837, occupancy["estimated_input_tokens"])
+        self.assertEqual(394828, revpar["estimated_input_tokens"])
+        self.assertEqual(self.request_sha256, revpar[
+            "provider_request_body_sha256"
+        ])
+        self.assertNotEqual(
+            occupancy["measurement_plan_id"], revpar["measurement_plan_id"],
+        )
+        self.assertEqual(
+            occupancy["system_prompt_hash"], revpar["system_prompt_hash"],
+        )
+        self.assertEqual(
+            occupancy["output_schema_hash"], revpar["output_schema_hash"],
+        )
+        self.assertEqual(
+            "SCOPE_BINDING_PROMPT_REVISION_APPROVED_EXACT_GRANTS_PENDING",
+            occupancy["revised_prompt_measurement_policy"]["policy_status"],
+        )
+
+    def test_plan_marker_consumes_grant_across_head_bindings(self) -> None:
+        """Reject a later-head authorization after this exact plan egressed."""
+        if self.authorization is None:
+            self.skipTest("Exact-head authorization requires a clean checkout")
+        binding = self.authorization.as_mapping()
+        other_cycle = content_hash(value={
+            "measurement_plan_id": binding["measurement_plan_id"],
+            "authorized_repository_head": "f" * 40,
+            "authorized_repository_tree": "e" * 40,
+            "measurement_ordinal": 1,
+        })
+        marker_body = {
+            "schema_version": 2,
+            "record_type": "TABLE_CONTEXT_MEASUREMENT_EGRESS_MARKER",
+            "measurement_plan_id": binding["measurement_plan_id"],
+            "measurement_cycle_id": other_cycle,
+            "authorization_id": "sha256:" + "a" * 64,
+            "execution_id": "sha256:" + "b" * 64,
+            "measurement_ordinal": 1,
+            "family_id": binding["family_id"],
+            "task_contract_id": binding["task_contract_id"],
+            "authorized_repository_head": "f" * 40,
+            "authorized_repository_tree": "e" * 40,
+            "external_review_comment_url": self.review_comment_url,
+            "provider_request_body_sha256": binding[
+                "provider_request_body_sha256"
+            ],
+            "transport_kind": "MOCK",
+            "egress_started_at_utc": "2026-08-25T00:00:01+00:00",
+        }
+        marker = {
+            **marker_body, "egress_marker_id": content_hash(value=marker_body),
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            atomic_write_json(
+                path=(
+                    workspace
+                    / other_cycle.split(":", maxsplit=1)[1]
+                    / "provider_egress_marker.json"
+                ),
+                value=marker,
+            )
+            transport = _MockMeasurementTransport(
+                response=_usage_response(include_prompt=True),
+            )
+            with self.assertRaisesRegex(
+                TableContextMeasurementError,
+                "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+            ):
+                self._execute(workspace=workspace, transport=transport)
+            self.assertEqual(0, transport.send_calls)
+
+    def test_revised_tasks_have_independent_one_shot_markers(self) -> None:
+        """Allow one mock marker per exact task plan and reject each second use."""
+        if self.authorization is None:
+            self.skipTest("Exact-head authorization requires a clean checkout")
+        occupancy_plan = build_table_context_measurement_plan(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
+        )
+        occupancy_authorization = issue_table_context_measurement_authorization(
+            repo_root=REPO_ROOT,
+            task_contract_id="lodging_occupancy_table_v2",
+            external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
+            authorized_repository_head=self.head,
+            authorized_provider_request_body_sha256=occupancy_plan[
+                "provider_request_body_sha256"
+            ],
+            external_review_comment_url=self.review_comment_url,
+            authorized_at_utc="2026-08-25T00:00:01+00:00",
+        )
+        with tempfile.TemporaryDirectory() as temp_dir:
+            workspace = Path(temp_dir) / "dual-task"
+            occupancy = self._execute(
+                workspace=workspace,
+                transport=_MockMeasurementTransport(response=_usage_response()),
+                authorization=occupancy_authorization,
+            )
+            revpar = self._execute(
+                workspace=workspace,
+                transport=_MockMeasurementTransport(response=_usage_response()),
+            )
+            self.assertEqual("COMPLETED", occupancy["status"])
+            self.assertEqual("COMPLETED", revpar["status"])
+            self.assertNotEqual(
+                occupancy["measurement_cycle_id"], revpar["measurement_cycle_id"],
+            )
+            for authorization in (
+                occupancy_authorization,
+                self.authorization,
+            ):
+                with self.assertRaisesRegex(
+                    TableContextMeasurementError,
+                    "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+                ):
+                    self._execute(
+                        workspace=workspace,
+                        transport=_MockMeasurementTransport(
+                            response=_usage_response(),
+                        ),
+                        authorization=authorization,
+                    )
+
     def test_mock_matrix_enforces_one_egress_and_no_downstream_credit(self) -> None:
         """Cover success, terminal failures, tamper, and ordinary 200k blocking."""
+        if self.authorization is None:
+            self.skipTest("Historical open-grant mock matrix is preserved in Git")
         with tempfile.TemporaryDirectory() as temp_dir:
             workspace = Path(temp_dir) / "success"
             success_transport = _MockMeasurementTransport(
@@ -223,6 +410,15 @@ class TableContextMeasurementTest(unittest.TestCase):
             self.assertEqual(0, success["real_model_provider_egress_count"])
             self.assertEqual(0, success["paid_model_provider_call_count"])
             self.assertEqual(0, success["real_SEC_egress_count"])
+            self.assertEqual("lodging_kpi_table", success["family_id"])
+            self.assertEqual(
+                "lodging_revpar_table_v2", success["task_contract_id"],
+            )
+            self.assertEqual(self.head, success["authorized_repository_head"])
+            self.assertEqual(
+                self.review_comment_url,
+                success["external_review_comment_url"],
+            )
             second_success_transport = _MockMeasurementTransport(
                 response=_usage_response(),
             )
@@ -375,7 +571,7 @@ class TableContextMeasurementTest(unittest.TestCase):
                 table_qualification_task_plan(
                     repo_root=REPO_ROOT,
                     family_id="lodging_kpi_table",
-                    task_contract_id="lodging_occupancy_table_v2",
+                    task_contract_id="lodging_revpar_table_v2",
                     qualification_ordinal=1,
                 )
 
@@ -426,25 +622,76 @@ class TableContextMeasurementTest(unittest.TestCase):
 
     def test_external_authorization_must_bind_current_head(self) -> None:
         """Reject missing wording or any different repository HEAD."""
+        if self.authorization is None:
+            self.skipTest("The real one-shot authorization is permanently consumed")
         with self.assertRaisesRegex(
             TableContextMeasurementError,
             "TABLE_CONTEXT_MEASUREMENT_EXTERNAL_AUTHORIZATION_REQUIRED",
         ):
             issue_table_context_measurement_authorization(
                 repo_root=REPO_ROOT,
+                task_contract_id="lodging_revpar_table_v2",
                 external_authorization_statement="NOT_AUTHORIZED",
                 authorized_repository_head=self.head,
+                authorized_provider_request_body_sha256=self.request_sha256,
+                external_review_comment_url=self.review_comment_url,
                 authorized_at_utc="2026-08-25T00:00:00+00:00",
             )
+
+
+class TableContextMeasurementTerminalTest(unittest.TestCase):
+    """Validate the consumed real terminal without reconstructing transport."""
+
+    def test_revpar_terminal_is_consumed_exact_and_non_credit(self) -> None:
+        """Bind revised plan, marker, usage, and permanent consumption."""
+        root = (
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/token_measurement"
+        )
+        plan = json.loads((
+            root
+            / "plans/468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563.json"
+        ).read_text(encoding="utf-8"))
+        cycle = (
+            root
+            / "executions/615b546ad79b8078cb4bb3b82e992eaf42125e90a16baccba180cab133b2e989"
+        )
+        marker = json.loads(
+            (cycle / "provider_egress_marker.json").read_text(encoding="utf-8")
+        )
+        evidence = json.loads((
+            cycle
+            / "evidence/7679c5d712f4635b5b31ba2f4e6661085dc09a8498b9b40929f308a964dfaa42.json"
+        ).read_text(encoding="utf-8"))
+        validate_table_context_measurement_evidence(evidence=evidence)
+        self.assertEqual(
+            "sha256:468d6ee09f9538f0c3da3296ba0ae8b885254a3dafc40ed488d1116b75343563",
+            plan["measurement_plan_id"],
+        )
+        self.assertEqual(
+            plan["measurement_plan_id"], marker["measurement_plan_id"],
+        )
+        self.assertEqual(
+            plan["provider_request_body_sha256"],
+            evidence["provider_request_body_sha256"],
+        )
+        self.assertEqual("COMPLETED", evidence["status"])
+        self.assertEqual(161263, evidence["actual_prompt_tokens"])
+        self.assertEqual(1051, evidence["actual_completion_tokens"])
+        self.assertEqual(162314, evidence["actual_total_tokens"])
+        self.assertEqual(1, evidence["real_model_provider_egress_count"])
+        self.assertEqual(1, evidence["paid_model_provider_call_count"])
+        self.assertEqual(0, evidence["real_SEC_egress_count"])
+        self.assertFalse(evidence["qualification_credit"])
+        self.assertFalse(evidence["publication_eligible"])
+        self.assertFalse(evidence["response_reuse_for_qualification"])
         with self.assertRaisesRegex(
             TableContextMeasurementError,
-            "TABLE_CONTEXT_MEASUREMENT_HEAD_MISMATCH",
+            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
         ):
-            issue_table_context_measurement_authorization(
+            build_table_context_measurement_plan(
                 repo_root=REPO_ROOT,
-                external_authorization_statement=EXTERNAL_AUTHORIZATION_STATEMENT,
-                authorized_repository_head="0" * 40,
-                authorized_at_utc="2026-08-25T00:00:00+00:00",
+                task_contract_id="lodging_revpar_table_v2",
             )
 
 

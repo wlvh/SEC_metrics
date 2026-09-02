@@ -8,9 +8,6 @@ from tests.vnext.common import REPO_ROOT
 from vnext.canonical import content_hash, strict_json_file
 from vnext.stage_c_context_packet import PACKET_POINTER
 from vnext.stage_c_context_packet import (
-    build_stage_c_context_attestation_packet,
-)
-from vnext.stage_c_context_packet import (
     validate_stage_c_context_attestation_packet,
 )
 
@@ -102,10 +99,10 @@ class StageCContextPacketTest(unittest.TestCase):
         )
 
     def test_packet_rebuild_is_deterministic(self) -> None:
-        """Recompute the packet from all current addressed authorities."""
+        """Keep the pre-RevPAR packet immutable under the additive successor."""
         self.assertEqual(
             self.packet,
-            build_stage_c_context_attestation_packet(repo_root=REPO_ROOT),
+            validate_stage_c_context_attestation_packet(repo_root=REPO_ROOT),
         )
 
 

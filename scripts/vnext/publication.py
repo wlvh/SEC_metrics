@@ -14,7 +14,7 @@ import tempfile
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Mapping, Optional, Tuple
+from typing import Dict, Mapping, Optional, Sequence, Tuple
 
 from git_workspace import sanitized_git_environment
 from sec_http import REQUEST_LOG_MANIFEST_SCHEMA_VERSION
@@ -35,6 +35,7 @@ from .projector import LEGACY_BASELINE_SOURCE_FILES
 from .projector import LEGACY_INPUT_FILES, PROJECTION_CANDIDATE_FILES
 from .projector import LEGACY_MIGRATION_STATUSES, LEGACY_PROOF_MODES
 from .projector import PROJECTION_GATE_FILES, PROJECTION_MANIFEST_FIELDS
+from .projector import FrozenRunLoader
 from .projector import ProjectionError, build_projection_manifest
 from .projector import golden_row_passes
 from .projector import load_projection_batch_manifest
@@ -46,7 +47,7 @@ from .qualification import validate_cutover_qualifications
 from .records import validate_record
 from .requirements import RequirementError, SNAPSHOT_FILES
 from .requirements import load_requirement_snapshot
-from .run_store import RunStoreError, load_run_for_status
+from .run_store import RunStoreError, load_frozen_run, load_run_for_status
 from .sources import SourceError, resolve_repository_file
 from .states import PUBLISHABLE_VALIDATION_STATUSES
 from .states import publication_candidate_status
@@ -641,6 +642,8 @@ def _empty_legacy_ledger_binding() -> Dict[str, object]:
 def _publication_ledger_evidence(
     *, repo_root: Path, batch_manifest_path: Path,
     validation_tier: str,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> Dict[str, object]:
     """Derive the exact request prefix and replayable locator provenance.
 
@@ -648,6 +651,8 @@ def _publication_ledger_evidence(
         repo_root: Repository containing Batch and request authority.
         batch_manifest_path: Complete FROZEN Run collection.
         validation_tier: Recorded or formal publication tier.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         A strict ledger binding plus its content-addressed source proofs.
@@ -699,6 +704,8 @@ def _publication_ledger_evidence(
         sources = load_projection_used_source_references(
             repo_root=repo_root,
             batch_manifest_path=batch_manifest_path,
+            release_plan_root=release_plan_root,
+            run_loader=run_loader,
         )
     except ValueError as error:
         raise PublicationError(
@@ -759,6 +766,8 @@ def _publication_ledger_evidence(
 def publication_ledger_binding(
     *, repo_root: Path, batch_manifest_path: Path,
     validation_tier: str = FORMAL_VALIDATION_MODE,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
 ) -> Dict[str, object]:
     """Derive exact publication provenance from batch and request ledger.
 
@@ -767,6 +776,8 @@ def publication_ledger_binding(
         batch_manifest_path: Complete verified FROZEN Run collection.
         validation_tier: Explicit evidence tier; the generic default remains
             formal and therefore never accepts a legacy working locator.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
 
     Returns:
         Minimal ordered ledger prefix through the latest consumed row, plus
@@ -780,6 +791,8 @@ def publication_ledger_binding(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
         validation_tier=validation_tier,
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
     return dict(evidence["binding"])
 
@@ -1504,6 +1517,24 @@ def _validated_run_documents(*, run_dir: Path) -> Tuple[
     return manifest, records
 
 
+def _portable_frozen_run_loader(
+    run_dir: Path, repo_root: Path,
+) -> Tuple[Dict[str, object], list, list]:
+    """Use receipt-bound replay for catalog qualification Runs in a bundle."""
+    try:
+        manifest_payload = strict_json_file(path=run_dir / "manifest.json")
+    except CanonicalError as error:
+        raise RunStoreError("Portable Run manifest is invalid") from error
+    if not isinstance(manifest_payload, dict):
+        raise RunStoreError("Portable Run manifest is malformed")
+    if "qualification_authorization" not in manifest_payload:
+        return load_frozen_run(run_dir=run_dir, repo_root=repo_root)
+    # Late import avoids a publication/ratchet module initialization cycle.
+    from .ratchet_release import load_portable_qualification_run
+
+    return load_portable_qualification_run(run_dir, repo_root)
+
+
 def _copy_tree_into_closure(
     *, source_root: Path, destination_root: Path,
     files: Dict[str, bytes]
@@ -1540,6 +1571,10 @@ def _portable_closure_files(
     *, repo_root: Path, batch_manifest_path: Path,
     ledger_binding: Mapping[str, object],
     include_cutover_qualification: bool, validation_tier: str,
+    release_plan_root: Optional[Path] = None,
+    run_loader: Optional[FrozenRunLoader] = None,
+    additional_authority_paths: Sequence[str] = (),
+    qualification_binding_override: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, bytes]:
     """Build one self-contained Batch/Run/repository authority closure.
 
@@ -1550,6 +1585,12 @@ def _portable_closure_files(
         include_cutover_qualification: Whether formal Cutover layout evidence
             must be verified and carried into the portable authority tree.
         validation_tier: Recorded or formal request-locator evidence tier.
+        release_plan_root: Repository containing a named Issue #15 child plan.
+        run_loader: Optional exact committed-Run validation boundary.
+        additional_authority_paths: Extra repository authority files required
+            to replay a child ratchet and its complete qualification evidence.
+        qualification_binding_override: Existing closure field populated by a
+            module-owned child ratchet after its own complete replay.
 
     Returns:
         Bundle-relative closure files, including its content-addressed index.
@@ -1562,6 +1603,8 @@ def _portable_closure_files(
         batch = load_projection_batch_manifest(
             repo_root=repo_root,
             batch_manifest_path=batch_manifest_path,
+            release_plan_root=release_plan_root,
+            run_loader=run_loader,
         )
     except (OSError, ProjectionError) as error:
         raise PublicationError(
@@ -1571,6 +1614,8 @@ def _portable_closure_files(
         repo_root=repo_root,
         batch_manifest_path=batch_manifest_path,
         validation_tier=validation_tier,
+        release_plan_root=release_plan_root,
+        run_loader=run_loader,
     )
     if ledger_evidence["binding"] != ledger_binding:
         raise PublicationError("Closure request locator binding differs")
@@ -1582,6 +1627,7 @@ def _portable_closure_files(
         ),
     }
     authority_paths = set(CLOSURE_AUTHORITY_FILES)
+    authority_paths.update(str(value) for value in additional_authority_paths)
     qualification_binding = None
     if include_cutover_qualification:
         # Formal publication must remain independently auditable after the
@@ -1597,6 +1643,10 @@ def _portable_closure_files(
             raise PublicationError(
                 "Formal qualification closure is unavailable"
             ) from error
+    elif qualification_binding_override is not None:
+        if not isinstance(qualification_binding_override, Mapping):
+            raise PublicationError("Qualification binding override is invalid")
+        qualification_binding = dict(qualification_binding_override)
     metric_root = repo_root / "catalog" / "metrics"
     if metric_root.is_symlink() or not metric_root.is_dir():
         raise PublicationError("Closure MetricSpec catalog is unsafe")
@@ -1819,6 +1869,8 @@ def _verify_portable_closure(
         batch = load_projection_batch_manifest(
             repo_root=authority_root,
             batch_manifest_path=batch_path,
+            release_plan_root=authority_root,
+            run_loader=_portable_frozen_run_loader,
         )
     except (OSError, ProjectionError) as error:
         raise PublicationError(
@@ -1854,6 +1906,8 @@ def _verify_portable_closure(
             validation_tier=str(
                 manifest["ledger_binding"]["request_locator_tier"]
             ),
+            release_plan_root=authority_root,
+            run_loader=_portable_frozen_run_loader,
         )
     except (CanonicalError, PublicationError) as error:
         raise PublicationError(
@@ -1867,10 +1921,25 @@ def _verify_portable_closure(
     qualification_binding = closure["qualification_binding"]
     if qualification_binding is not None:
         try:
-            portable_qualification = validate_cutover_qualifications(
-                repo_root=authority_root,
-            )
-        except (OSError, QualificationError, ValueError) as error:
+            if (
+                isinstance(qualification_binding, dict)
+                and "cycle_id" in qualification_binding
+            ):
+                from .ratchet_release import (
+                    validate_portable_qualification_binding,
+                )
+
+                portable_qualification = (
+                    validate_portable_qualification_binding(
+                        repo_root=authority_root,
+                        binding=qualification_binding,
+                    )
+                )
+            else:
+                portable_qualification = validate_cutover_qualifications(
+                    repo_root=authority_root,
+                )
+        except (OSError, QualificationError, RuntimeError, ValueError) as error:
             raise PublicationError(
                 "Publication closure qualification replay failed"
             ) from error

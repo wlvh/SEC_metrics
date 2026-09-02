@@ -30,6 +30,7 @@ from .provider_runtime import estimate_context_tokens
 from .provider_runtime import load_provider_runtime_authority
 from .reader_input import READER_SYSTEM_CONTRACT
 from .reader_input import build_reader_input_manifest, build_reader_payload
+from .requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from .requirements import ISSUE_15_D07_EFFECTIVE_CHOICE
 from .requirements import load_requirement_snapshot
 from .scope_contract import scope_contract_hash, validate_scope_contract
@@ -247,6 +248,7 @@ QUALIFICATION_SHARED_DATA_PATHS = (
     Path("config/provider_model_runtime.json"),
     Path("config/release_plans/issue_15_zero_ai_r1.json"),
     Path("config/release_plans/issue_15_zero_ai_r2.json"),
+    Path("config/release_plans/issue_15_lodging_r3.json"),
     Path("requirements/issue_15_v1/CONTRACT.md"),
     Path("requirements/issue_15_v1/decision_register.json"),
     Path("tools/check_validation_snapshot.py"),
@@ -782,21 +784,22 @@ def _context_feasibility(
 
 
 def _attested_request_authority(
-    *, repo_root: Path,
+    *, repo_root: Path, task_contract_id: str,
 ) -> Optional[Dict[str, str]]:
-    """Return freshly validated request authority or no exact proof."""
+    """Return one task's freshly validated current request authority."""
     try:
         from .table_context_attestation import (
-            validate_table_context_feasibility_attestation,
+            current_exact_request_binding,
         )
-        attestation = validate_table_context_feasibility_attestation(
+        binding = current_exact_request_binding(
             repo_root=repo_root,
+            task_contract_id=task_contract_id,
         )
     except (OSError, RuntimeError, ValueError):
         return None
     return {
         "protected_closure_hash": str(
-            attestation["protected_closure_hash"]
+            binding["protected_closure_hash"]
         ),
     }
 
@@ -1075,11 +1078,6 @@ def _measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
-    # Default-bound requests remain independently evaluable.  An oversized
-    # request receives a structured blocker when the exact proof is absent.
-    attested_request_authority = _attested_request_authority(
-        repo_root=repo_root,
-    )
     round_trip_sources = _round_trip_sources(repo_root=repo_root)
     round_trip_entry = matrix["entries"].get("lodging_kpi_table")
     if type(round_trip_entry) is not dict:
@@ -1122,6 +1120,10 @@ def _measurement_receipts(
             if family_id == "lodging_kpi_table" else None
         )
         for task_contract_id in entry["task_contract_ids"]:
+            attested_request_authority = _attested_request_authority(
+                repo_root=repo_root,
+                task_contract_id=str(task_contract_id),
+            )
             task_contract = resolve_table_task_contract(
                 repo_root=repo_root,
                 task_contract_id=task_contract_id,
@@ -1340,9 +1342,6 @@ def _family_measurement_receipts(
         model=policy.model,
         api=policy.api,
     )
-    attested_request_authority = _attested_request_authority(
-        repo_root=repo_root,
-    )
     development_source_reference_id = (
         _lodging_source_reference_id(
             repo_root=repo_root,
@@ -1352,6 +1351,10 @@ def _family_measurement_receipts(
     )
     rows = []
     for task_contract_id in entry["task_contract_ids"]:
+        attested_request_authority = _attested_request_authority(
+            repo_root=repo_root,
+            task_contract_id=str(task_contract_id),
+        )
         task_contract = resolve_table_task_contract(
             repo_root=repo_root,
             task_contract_id=task_contract_id,
@@ -1841,7 +1844,64 @@ def _readiness_by_task_request(
         ]
         resource_status = "BLOCKED" if resource_blocked else "PASSED"
         context_status = str(context["status"])
+        context_evidence_basis = context["evidence_basis"]
+        context_attestation_id = context["attestation_id"]
+        context_attested_actual_prompt_tokens = context[
+            "attested_actual_prompt_tokens"
+        ]
+        context_exact_binding_match = context["exact_binding_match"]
+        context_drift_fields = context["drift_fields"]
+        context_blocking_reason_code = context[
+            "blocking_reason_code"
+        ]
         reason_codes = set(row["blocking_reason_codes"])
+        qualification_scope = ISSUE_15_D07_EFFECTIVE_CHOICE[
+            "live_qualification_scope"
+        ]
+        compact_raw_text_policy = ISSUE_15_D07_EFFECTIVE_CHOICE.get(
+            "compact_raw_text_prompt_revision_policy"
+        )
+        allowed_context_reasons = {
+            ESTIMATED_CONTEXT_LIMIT,
+            "EXACT_CONTEXT_BINDING_MISMATCH",
+        }
+        if type(compact_raw_text_policy) is dict:
+            allowed_context_reasons.update(
+                compact_raw_text_policy.get(
+                    "historical_attestation_blocking_reason_codes", []
+                )
+            )
+        qualification_usage_only = (
+            family_id == "lodging_kpi_table"
+            and type(compact_raw_text_policy) is dict
+            and compact_raw_text_policy.get(
+                "additional_measurement_authorized"
+            )
+            is False
+            and compact_raw_text_policy.get(
+                "historical_response_reuse_for_qualification"
+            ) is False
+            and compact_raw_text_policy.get(
+                "revised_request_context_evidence_basis"
+            )
+            == "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+            and "FRESH_STABILITY" in qualification_scope.get(
+                "unattested_over_estimated_bound_phases", []
+            )
+            and reason_codes
+            and reason_codes.issubset(allowed_context_reasons)
+        )
+        if qualification_usage_only:
+            context_status = "PASSED"
+            context_evidence_basis = (
+                "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE"
+            )
+            context_attestation_id = None
+            context_attested_actual_prompt_tokens = None
+            context_exact_binding_match = False
+            context_drift_fields = []
+            context_blocking_reason_code = None
+            reason_codes.difference_update(allowed_context_reasons)
         if shared_drift:
             reason_codes.add(SHARED_PROTECTED_CLOSURE_DRIFT)
         if family_local_drift:
@@ -1873,19 +1933,17 @@ def _readiness_by_task_request(
             "context_gate": {
                 "status": context_status,
                 "estimated_input_tokens": row["estimated_input_tokens"],
-                "evidence_basis": context["evidence_basis"],
-                "attestation_id": context["attestation_id"],
-                "attested_actual_prompt_tokens": context[
-                    "attested_actual_prompt_tokens"
-                ],
+                "evidence_basis": context_evidence_basis,
+                "attestation_id": context_attestation_id,
+                "attested_actual_prompt_tokens": (
+                    context_attested_actual_prompt_tokens
+                ),
                 "context_budget_tokens": context[
                     "context_budget_tokens"
                 ],
-                "exact_binding_match": context["exact_binding_match"],
-                "drift_fields": context["drift_fields"],
-                "blocking_reason_code": context[
-                    "blocking_reason_code"
-                ],
+                "exact_binding_match": context_exact_binding_match,
+                "drift_fields": context_drift_fields,
+                "blocking_reason_code": context_blocking_reason_code,
             },
             "resource_gate": {
                 "status": resource_status,
@@ -2502,6 +2560,7 @@ def _family_semantic_closure(
         paths.update(Path(path) for path in runtime["metric_spec_paths"])
     if family_id == "lodging_kpi_table":
         from .table_context_attestation import ATTESTATION_POINTER
+        from .table_context_attestation import ATTESTATION_ROOT
 
         pointer = _json_object(
             repo_root=repo_root,
@@ -2521,6 +2580,54 @@ def _family_semantic_closure(
             )
         paths.add(ATTESTATION_POINTER)
         paths.add(attestation_path)
+        attestation_root = repo_root / ATTESTATION_ROOT
+        if attestation_root.is_symlink() or not attestation_root.is_dir():
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                message="Context attestation namespace is unsafe",
+            )
+        accepted = [
+            row for row in ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
+            if row["family_id"] == family_id
+        ]
+        if (
+            {row["task_contract_id"] for row in accepted}
+            != set(matrix_entry["task_contract_ids"])
+            or pointer.get("attestation_id")
+            != next(
+                row["attestation_id"] for row in accepted
+                if row["task_contract_id"] == "lodging_occupancy_table_v2"
+            )
+        ):
+            raise TableQualificationFamilyError(
+                family_id=family_id,
+                reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                message="Accepted task context attestation set differs",
+            )
+        for row in accepted:
+            candidate = attestation_root / (
+                str(row["attestation_id"]).split(":", maxsplit=1)[1]
+                + ".json"
+            )
+            if candidate.is_symlink() or not candidate.is_file():
+                raise TableQualificationFamilyError(
+                    family_id=family_id,
+                    reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                    message="Context attestation entry is unsafe",
+                )
+            value = strict_json_file(path=candidate)
+            if (
+                type(value) is not dict
+                or value.get("attestation_id") != row["attestation_id"]
+                or value.get("task_contract_id") != row["task_contract_id"]
+            ):
+                raise TableQualificationFamilyError(
+                    family_id=family_id,
+                    reason_code="LOCAL_CONTEXT_ATTESTATION_INVALID",
+                    message="Accepted context attestation bytes differ",
+                )
+            paths.add(candidate.relative_to(repo_root))
     if set(task_contracts_by_id) != set(matrix_entry["task_contract_ids"]):
         raise TableQualificationFreezeError("Family matrix task set differs")
     return {

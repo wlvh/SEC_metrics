@@ -33,6 +33,11 @@ from vnext.qualification import reset_qualification_chain  # noqa: E402
 from vnext.qualification import validate_cutover_qualifications  # noqa: E402
 from vnext.qualification import write_layout_qualification_receipt  # noqa: E402
 from vnext.qualification import write_production_freeze_receipt  # noqa: E402
+from vnext.qualification import table_qualification_task_plan  # noqa: E402
+from vnext.qualification import execute_table_qualification_task  # noqa: E402
+from vnext.qualification import issue_table_qualification_authorization  # noqa: E402
+from vnext.qualification import write_table_production_semantic_freeze  # noqa: E402
+from vnext.qualification import validate_table_production_semantic_freeze  # noqa: E402
 from vnext.run_store import load_run_for_status  # noqa: E402
 from vnext.run_store import RunStoreError, validate_and_freeze_run  # noqa: E402
 from vnext.workflow import create_layout_qualification_run  # noqa: E402
@@ -207,6 +212,22 @@ def main(*, argv: Sequence[str]) -> int:
     reset.add_argument("--reason", required=True)
     prepare = subparsers.add_parser("prepare")
     prepare.add_argument("--fixture-id", required=True)
+    table_plan = subparsers.add_parser("table-plan")
+    table_plan.add_argument("--family-id", required=True)
+    table_plan.add_argument("--task-contract-id", required=True)
+    table_plan.add_argument("--phase", required=True)
+    table_plan.add_argument("--ordinal", required=True, type=int)
+    table_execute = subparsers.add_parser("table-execute")
+    table_execute.add_argument("--family-id", required=True)
+    table_execute.add_argument("--task-contract-id", required=True)
+    table_execute.add_argument("--phase", required=True)
+    table_execute.add_argument("--ordinal", required=True, type=int)
+    table_execute.add_argument("--owner-token", required=True)
+    table_freeze = subparsers.add_parser("table-freeze")
+    table_freeze.add_argument("--family-id", required=True)
+    table_freeze.add_argument("--frozen-at-utc", required=True)
+    table_freeze_status = subparsers.add_parser("table-freeze-status")
+    table_freeze_status.add_argument("--family-id", required=True)
     subparsers.add_parser("status")
     arguments = parser.parse_args(list(argv))
     try:
@@ -235,6 +256,100 @@ def main(*, argv: Sequence[str]) -> int:
             }
         elif arguments.command == "prepare":
             output = prepare_layout(fixture_id=arguments.fixture_id)
+        elif arguments.command == "table-plan":
+            output = {
+                "status": "PLANNED",
+                **table_qualification_task_plan(
+                    repo_root=REPO_ROOT,
+                    family_id=arguments.family_id,
+                    task_contract_id=arguments.task_contract_id,
+                    qualification_phase=arguments.phase,
+                    qualification_ordinal=arguments.ordinal,
+                ),
+            }
+        elif arguments.command == "table-execute":
+            authorization = issue_table_qualification_authorization(
+                repo_root=REPO_ROOT,
+                family_id=arguments.family_id,
+                task_contract_id=arguments.task_contract_id,
+                qualification_phase=arguments.phase,
+                qualification_ordinal=arguments.ordinal,
+            )
+            binding = authorization.as_mapping()
+            result = execute_table_qualification_task(
+                repo_root=REPO_ROOT,
+                family_id=arguments.family_id,
+                task_contract_id=arguments.task_contract_id,
+                qualification_phase=arguments.phase,
+                qualification_ordinal=arguments.ordinal,
+                target_period=binding["target_period"],
+                owner_token=arguments.owner_token,
+            )
+            terminal_status = result.get("status")
+            if terminal_status in {"FAILED_TERMINAL", "PRE_EGRESS_FAILURE"}:
+                raise QualificationCliError(
+                    code=(
+                        "TABLE_QUALIFICATION_FAILED_TERMINAL"
+                        if terminal_status == "FAILED_TERMINAL"
+                        else "TABLE_QUALIFICATION_PRE_EGRESS_FAILURE"
+                    ),
+                    message=(
+                        "Qualification execution failed terminally"
+                        if terminal_status == "FAILED_TERMINAL"
+                        else "Qualification stopped before provider egress"
+                    ),
+                    details={
+                        "execution_status": terminal_status,
+                        "run_id": result["run_id"],
+                        "qualification_terminal_id": binding[
+                            "qualification_terminal_id"
+                        ],
+                        "qualification_task_plan_id": binding[
+                            "qualification_task_plan_id"
+                        ],
+                    },
+                )
+            run_dir = REPO_ROOT / binding["run_directory_relative_path"]
+            manifest, records, _decisions = load_run_for_status(
+                run_dir=run_dir, repo_root=REPO_ROOT,
+            )
+            if manifest["status"] == "OPEN":
+                if not any(
+                    record["record_type"] == "METRIC_RESULT"
+                    for record in records
+                ):
+                    finalize_reviewed_direct_results(
+                        run_dir=run_dir, repo_root=REPO_ROOT,
+                    )
+                manifest = validate_and_freeze_run(
+                    run_dir=run_dir, repo_root=REPO_ROOT,
+                )
+            output = {
+                **result,
+                "status": manifest["status"],
+                "run_id": manifest["run_id"],
+                "qualification_terminal_id": binding[
+                    "qualification_terminal_id"
+                ],
+                "qualification_task_plan_id": binding[
+                    "qualification_task_plan_id"
+                ],
+            }
+        elif arguments.command == "table-freeze":
+            receipt = write_table_production_semantic_freeze(
+                repo_root=REPO_ROOT,
+                family_id=arguments.family_id,
+                frozen_at_utc=arguments.frozen_at_utc,
+            )
+            output = {"status": "FROZEN", **receipt}
+        elif arguments.command == "table-freeze-status":
+            output = {
+                "status": "PASSED",
+                **validate_table_production_semantic_freeze(
+                    repo_root=REPO_ROOT,
+                    family_id=arguments.family_id,
+                ),
+            }
         else:
             output = {
                 "status": "PASSED",

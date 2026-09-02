@@ -1562,6 +1562,49 @@ class InvocationControlTest(unittest.TestCase):
                 self.assertEqual(error_class, result["attempts"][0]["error_class"])
                 self.assertEqual(1, transport.invocation_count)
 
+    def test_qualification_terminal_survives_git_empty_directory_loss(
+        self,
+    ) -> None:
+        """Reconstruct a failed terminal when known empty namespaces vanish."""
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            invocation_plan = plan()
+            result = execute_invocation(
+                workspace_dir=workspace,
+                plan=invocation_plan,
+                request_body=REQUEST_BODY,
+                execution_id=execution(
+                    invocation_plan=invocation_plan,
+                    owner="portable-terminal",
+                    at=UTC,
+                ),
+                owner_token="portable-terminal",
+                authorized_at_utc=UTC,
+                clock=clock,
+                transport=MockTransport(results=[transport_result()]),
+                response_validator=reject_schema,
+                evidence_validator=validate_evidence,
+            )
+            self.assertEqual("FAILED_TERMINAL", result["status"])
+            root = workspace / "invocation_control"
+            removed = []
+            for name in INVOCATION_STATE_NAMESPACES:
+                path = root / name
+                if path.is_dir() and not any(path.iterdir()):
+                    path.rmdir()
+                    removed.append(name)
+            self.assertTrue(removed)
+            terminals = qualification_remote_egress_terminals(
+                workspace_dir=workspace,
+            )
+            self.assertEqual(1, len(terminals))
+            self.assertEqual("FAILED_TERMINAL", terminals[0]["status"])
+            (root / "unexpected").mkdir()
+            with self.assertRaises(InvocationControlError):
+                qualification_remote_egress_terminals(
+                    workspace_dir=workspace,
+                )
+
     def test_cost_observability_never_blocks_but_resources_do(self) -> None:
         """Allow arbitrary cost observations and fail hard payload/context."""
         with tempfile.TemporaryDirectory() as directory:

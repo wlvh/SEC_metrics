@@ -1,0 +1,567 @@
+<meta charset="utf-8">
+<title>发布事务讲义</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Spectral:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EDEEF3; --card:#FFFFFF; --panel:#F8F9FC; --panel2:#E4E6EE;
+  --ink:#151827; --ink2:#494F66; --ink3:#7A8198;
+  --rule:#C6CAD9; --rule2:#DFE2EC;
+  --fact:#2C3C9C; --factbg:#E2E6F8;
+  --degrade:#7A5A11; --degradebg:#F4EEDA;
+  --refuse:#9C3524; --refusebg:#F7E4DF;
+  --inherit:#6B4E8A; --inheritbg:#EAE2F2;
+  --neutral:#5E6472;
+  --shadow:0 1px 2px rgba(21,24,39,.05),0 10px 30px rgba(21,24,39,.06);
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"IBM Plex Sans","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Source Han Sans SC",system-ui,sans-serif;
+  --disp:"Spectral","Songti SC","Noto Serif CJK SC",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0A0C14; --card:#141726; --panel:#1A1E30; --panel2:#212639;
+  --ink:#E7E9F1; --ink2:#A5ABC2; --ink3:#767D97;
+  --rule:#2A3048; --rule2:#212639;
+  --fact:#94A5F7; --factbg:#1C2345;
+  --degrade:#DCB65E; --degradebg:#2C2615;
+  --refuse:#E9917A; --refusebg:#33201A;
+  --inherit:#B49BD6; --inheritbg:#251E33;
+  --neutral:#8A91A6;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 10px 30px rgba(0,0,0,.35);
+}}
+:root[data-theme="dark"]{
+  --ground:#0A0C14; --card:#141726; --panel:#1A1E30; --panel2:#212639;
+  --ink:#E7E9F1; --ink2:#A5ABC2; --ink3:#767D97;
+  --rule:#2A3048; --rule2:#212639;
+  --fact:#94A5F7; --factbg:#1C2345;
+  --degrade:#DCB65E; --degradebg:#2C2615;
+  --refuse:#E9917A; --refusebg:#33201A;
+  --inherit:#B49BD6; --inheritbg:#251E33;
+  --neutral:#8A91A6;
+  --shadow:0 1px 2px rgba(0,0,0,.5),0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.72;-webkit-font-smoothing:antialiased}
+.deck{max-width:1180px;margin:0 auto;padding:34px clamp(14px,3vw,30px) 90px;
+  display:flex;flex-direction:column;gap:30px}
+
+.slide{background:var(--card);border:1px solid var(--rule);border-radius:12px;
+  padding:clamp(24px,3.4vw,46px);box-shadow:var(--shadow);position:relative;
+  counter-increment:sl}
+.slide::after{content:counter(sl) " / " counter(total);position:absolute;right:26px;bottom:16px;
+  font-family:var(--mono);font-size:10.5px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.deck{counter-reset:sl -1 total 17}
+
+.sh{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding-bottom:11px;margin-bottom:16px;border-bottom:1px solid var(--rule2)}
+.sn{font-family:var(--mono);font-size:12px;color:var(--fact);font-weight:600;letter-spacing:.06em}
+.sk{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.si{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-left:auto}
+h2{font-family:var(--disp);font-weight:600;font-size:clamp(23px,2.9vw,33px);line-height:1.24;
+  margin:0 0 18px;letter-spacing:-.012em;text-wrap:balance}
+h2 em{font-style:normal;color:var(--fact)}
+p.lead{margin:-8px 0 18px;color:var(--ink2);font-size:15.5px;max-width:70ch}
+
+.sb{display:grid;gap:clamp(16px,2.2vw,30px) clamp(18px,2.6vw,38px);align-items:start}
+.sb{grid-template-columns:minmax(0,1.52fr) minmax(0,1fr);
+  grid-template-areas:"fig fig" "prose ev"}
+.fig{grid-area:fig}.prose{grid-area:prose}.ev{grid-area:ev}
+@media (max-width:880px){
+  .sb{grid-template-columns:minmax(0,1fr);grid-template-areas:"fig" "prose" "ev"}
+}
+
+.fig{margin:0;background:var(--panel2);border:1px solid var(--rule2);border-radius:9px;
+  padding:14px;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:480px}
+.fig.wide svg{min-width:560px}
+svg text{font-family:var(--sans);fill:var(--ink)}
+svg .m,svg .m2,svg .k,svg .n{font-family:var(--mono)}
+svg .k{font-size:11px;letter-spacing:.07em}
+svg .m{font-size:11.5px}
+svg .m2{font-size:10.5px;fill:var(--ink3)}
+svg .n{font-size:10.5px;fill:var(--ink3)}
+svg .b{font-size:12.5px}
+svg .s{font-size:13.5px;font-weight:600}
+svg .big{font-size:24px;font-weight:600;font-family:var(--mono)}
+
+.prose{max-width:70ch}
+.ev{align-self:start}
+.prose p{margin:0 0 13px}
+.prose p:last-of-type{margin-bottom:16px}
+.prose b{font-weight:600}
+.prose em{font-style:normal;color:var(--fact);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--panel2);
+  padding:1px 5px;border-radius:3px;word-break:break-word}
+
+table.t{border-collapse:collapse;width:100%;font-size:13px;margin:0;
+  font-variant-numeric:tabular-nums}
+table.t th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;
+  text-transform:uppercase;color:var(--ink3);font-weight:500;
+  padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
+table.t td{padding:9px 10px;border-bottom:1px solid var(--rule2);vertical-align:top}
+table.t tbody tr:last-child td{border-bottom:0}
+table.t td.ok{color:var(--fact);font-family:var(--mono);font-size:11.5px}
+table.t td.no{color:var(--refuse);font-family:var(--mono);font-size:11.5px;font-weight:600}
+
+ul.cite{list-style:none;margin:0;padding:15px 16px;border:1px solid var(--rule2);
+  border-radius:8px;background:var(--panel)}
+ul.cite li{font-size:12.5px;line-height:1.6;color:var(--ink2);margin-bottom:8px}
+ul.cite li:last-child{margin-bottom:0}
+ul.cite code{display:block;margin-top:2px;font-size:11px;color:var(--ink3);background:none;padding:0}
+.tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.09em;border:1px solid var(--rule);
+  border-radius:3px;padding:1px 5px;margin-right:7px;color:var(--ink3);white-space:nowrap}
+.tag[data-k="artifact"]{color:var(--fact);border-color:color-mix(in srgb,var(--fact) 42%,transparent)}
+.tag[data-k="test"]{color:var(--inherit);border-color:color-mix(in srgb,var(--inherit) 42%,transparent)}
+.tag[data-k="recomputed"]{color:var(--degrade);border-color:color-mix(in srgb,var(--degrade) 48%,transparent)}
+.tag[data-k="code"]{color:var(--neutral);border-color:color-mix(in srgb,var(--neutral) 48%,transparent)}
+.tag[data-k="gap"]{color:var(--refuse);border-color:color-mix(in srgb,var(--refuse) 48%,transparent)}
+
+.cover{background:var(--factbg);border-color:color-mix(in srgb,var(--fact) 26%,transparent)}
+.cover::after{content:""}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--fact);margin:0 0 14px}
+h1{font-family:var(--disp);font-weight:600;font-size:clamp(30px,5vw,54px);line-height:1.1;
+  margin:0 0 20px;letter-spacing:-.018em;text-wrap:balance}
+.thesis{max-width:72ch;color:var(--ink2);font-size:16px;margin:0 0 20px}
+.thesis b{color:var(--ink);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.chip{font-family:var(--mono);font-size:11.5px;padding:3px 10px;border:1px solid var(--rule);
+  border-radius:999px;color:var(--ink2);background:var(--card);white-space:nowrap}
+.chip b{color:var(--ink);font-weight:500}
+.foot{font-size:12.5px;color:var(--ink3);margin:16px 0 0}
+
+@media print{
+  body{background:#fff;font-size:12.5px;line-height:1.6}
+  .deck{max-width:none;padding:0;gap:0}
+  .slide{break-after:page;page-break-after:always;box-shadow:none;border:0;
+    border-radius:0;padding:0 0 12px;min-height:0}
+  .slide::after{position:static;display:block;text-align:right;margin-top:6px}
+  h1{font-size:34px}h2{font-size:22px;margin-bottom:12px}
+  .sb{gap:14px 22px}
+  .fig{background:none;border:1px solid #d8dae2;padding:8px}
+  .fig svg{min-width:0}
+  /* a figure, a table or an evidence block must never split across pages */
+  .fig,table.t,ul.cite,.prose p{break-inside:avoid;page-break-inside:avoid}
+  table.t{font-size:11px}
+  ul.cite{background:none;font-size:11px}
+  .cover{background:none;border:0}
+  @page{size:A4 landscape;margin:10mm}
+}
+</style>
+<main class="deck">
+<section class="slide cover" id="s00">
+  <p class="eyebrow">流程三 · 一批结果如何成为当前正式版本</p>
+  <h1>正式性不来自「刚刚写过这个文件」，<br>来自一次合法的指针切换</h1>
+  <p class="thesis">这条流程接收的不是一堆待写入的 CSV，而是一批已经算对、可以重放的结果。
+     它先证明这批结果完整而无重复，再把整版内容封成一个内容寻址的不可变目录，
+     最后只用一次原子替换宣告「当前正式版本是谁」。
+     <b>把「更新十几个文件」转化成「切换一个指针」，崩溃窗口就从十几个收敛成一个，而且这一个是可判定的。</b></p>
+  <div class="chips">
+    <span class="chip">HEAD <b>d9bb477</b></span>
+    <span class="chip">active <b>publication_fe01e227848d…</b></span>
+    <span class="chip">前驱 <b>81eb8476…</b></span>
+    <span class="chip">提交于 <b>2026-08-20T11:38:54Z</b></span>
+    <span class="chip">切换收据 <b>5</b> 条</span>
+    <span class="chip">磁盘 <b>9</b> 个包 / 提交过 <b>3</b> 个</span>
+  </div>
+  <figure class="fig wide"><svg viewBox="0 0 1402 358" role="img" aria-label="七个工位把局部终态结果加工成当前正式版本，第五站是唯一提交点，任意一站失败都回落到旧版本"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="30" y="40" width="178" height="88" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="n" x="43" y="64">入口</text><text class="s" x="43" y="88">局部终态结果</text><text class="m" x="43" y="110" fill="var(--neutral)">上游交来</text><line x1="208" y1="84.0" x2="222" y2="84.0" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="224" y="40" width="178" height="88" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="237" y="64">01</text><text class="s" x="237" y="88">批次权威</text><text class="m" x="237" y="110" fill="var(--fact)">batch_manifest_id</text><line x1="402" y1="84.0" x2="416" y2="84.0" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="418" y="40" width="178" height="88" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="431" y="64">02</text><text class="s" x="431" y="88">独立投影 + 兼容</text><text class="m" x="431" y="110" fill="var(--fact)">2 820 次比较</text><line x1="596" y1="84.0" x2="610" y2="84.0" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="612" y="40" width="178" height="88" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="625" y="64">03</text><text class="s" x="625" y="88">PUBLISHABLE 候选</text><text class="m" x="625" y="110" fill="var(--fact)">candidate_status</text><path d="M701 140 L701 152 L44 152" fill="none" stroke="var(--fact)" stroke-width="1.5"/><line x1="44" y1="152" x2="44" y2="166" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="30" y="164" width="178" height="88" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="43" y="188">04</text><text class="s" x="43" y="212">immutable bundle</text><text class="m" x="43" y="234" fill="var(--fact)">publication_id</text><line x1="208" y1="208.0" x2="222" y2="208.0" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="215" y="152" width="196" height="112" rx="6" fill="var(--fact)" opacity=".10"/><rect x="224" y="164" width="178" height="88" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="n" x="237" y="188">05</text><text class="s" x="237" y="212">active pointer</text><text class="m" x="237" y="234" fill="var(--fact)">◆ 唯一提交点</text><line x1="402" y1="208.0" x2="416" y2="208.0" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="418" y="164" width="178" height="88" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="431" y="188">06</text><text class="s" x="431" y="212">pinned read</text><text class="m" x="431" y="234" fill="var(--fact)">PublicationView</text><rect x="30" y="278" width="1342" height="62" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="43" y="299" fill="var(--refuse)">✕ 任意一站失败</text><text class="b" x="43" y="320">active_publication.json 逐字节不变 · 收据数量不变 · 14 个镜像未被触碰 · 下游继续读上一版</text></svg></figure>
+  <p class="foot">本页所有数值在构建时读自 <code>outputs/active_publication.json</code>、
+     <code>outputs/publications/publication_fe01e227848d6a42…</code> 与仓库源码，没有一处来自转写。<br>
+     同目录下 <code>flow3-commit-point.html</code> 是同一机制的可交互版（时间可回退、可跳转到任意一步），
+     <code>flow3-object-lineage.svg</code> 是单页可打印的对象血缘图。前两道流程见
+     <code>flow1-mechanism-deck.html</code> 与 <code>flow2-evidence-chain.html</code>。</p>
+</section>
+<section class="slide" id="s01">
+  <header class="sh">
+    <span class="sn">01</span>
+    <span class="sk">问题</span>
+    <span class="si">为什么不能直接覆盖</span>
+  </header>
+  <h2>十几个文件的更新，有<em>十几个</em>可以崩在中间的时刻</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 910 274" role="img" aria-label="直接覆盖输出目录会产生一个从未存在过的半新半旧组合，且无法回退，因为系统里根本没有版本这个概念"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="26" width="250" height="150" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="37" y="47" fill="var(--refuse)">✕ 直接覆盖 outputs/</text><text class="m2" x="37" y="68">已写新的</text><text class="m" x="261" y="68" text-anchor="end" fill="var(--refuse)">metrics_matrix.csv</text><text class="m2" x="37" y="87">还没写</text><text class="m" x="261" y="87" text-anchor="end" fill="var(--refuse)">coverage_matrix.csv</text><text class="m2" x="37" y="106">进程被 kill</text><text class="m" x="261" y="106" text-anchor="end" fill="var(--refuse)">——</text><text class="n" x="37" y="164">两个文件各自都是合法 CSV</text><line x1="282" y1="100" x2="320" y2="100" stroke="var(--refuse)" stroke-width="1.5" marker-end="url(#a-refuse)"/><rect x="328" y="26" width="268" height="150" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="341" y="47" fill="var(--refuse)">✕ 下游读到的组合</text><text class="b" x="341" y="68">一半新，一半旧</text><text class="b" x="341" y="88">这个组合从未存在过</text><text class="b" x="341" y="108">任何格式校验都发现不了</text><text class="n" x="341" y="164">没有一个文件是「坏」的</text><line x1="604" y1="100" x2="642" y2="100" stroke="var(--refuse)" stroke-width="1.5" marker-end="url(#a-refuse)"/><rect x="650" y="26" width="236" height="150" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="663" y="47" fill="var(--refuse)">✕ 想退回去</text><text class="b" x="663" y="68">旧文件已经被覆盖</text><text class="b" x="663" y="88">没了</text><text class="b" x="663" y="108">手工备份本身也会写一半</text><text class="n" x="663" y="164">没有版本，只有文件</text><rect x="24" y="196" width="862" height="58" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="217" fill="var(--degrade)">◐ 更根本的缺失</text><text class="b" x="37" y="238">「当前正式版本是哪一版」这个概念根本不存在 —— 你说不出现在生效的是哪一版，也说不出上一版是什么</text></svg></figure>
+    <div class="prose"><p><b>要替换的误解：</b>「把新文件写到 <code>outputs/</code> 下面，覆盖旧的」看起来只是一次批量写入。
+      它不是——它是十四次独立写入，每两次之间都存在一个下游可以读到的中间态。</p>
+      <p>问题不在于某个文件写坏了。<b>每个文件都是合法的</b>，格式校验全过。
+      问题在于下游读到的<b>组合</b>从未存在过：一半来自新版本，一半来自旧版本。
+      这种损坏没有任何单文件校验能发现。</p>
+      <p>而且退不回去。旧字节已经被覆盖，除非事先手工备份——
+      可手工备份本身又是一个会写到一半崩的操作，于是你需要一套机制保证备份的正确性，
+      然后又需要一套机制保证那套机制。</p>
+      <p><b>最根本的缺失是：这个目录里只有文件，没有版本。</b>
+      你说不出「现在生效的是哪一版」，也说不出「上一版是什么」。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>14 个对外文件的精确集合定义在源码里，不是约定俗成。<code>scripts/vnext/publication.py:101-116 · REQUIRED_BUNDLE_FILES</code></li><li><span class="tag" data-k="artifact">产物</span>当前这 14 个文件与 active bundle 逐字节比较：14 / 14 完全相同。</li><li><span class="tag" data-k="gap">边界</span>项目明确不向绕过 PublicationView、直接轮流读根目录文件的程序承诺跨文件组原子。</li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s02">
+  <header class="sh">
+    <span class="sn">02</span>
+    <span class="sk">核心设计</span>
+    <span class="si">一个提交点</span>
+  </header>
+  <h2>把更新十几个文件，转化成<em>替换一个指针</em></h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 910 236" role="img" aria-label="把十四个文件的更新转化成一个四字段指针文件的原子替换，崩溃窗口从十四个收敛成一个"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><text class="k" x="30" y="26" fill="var(--refuse)">十几个文件的更新</text><text class="k" x="500" y="26" fill="var(--fact)">一个指针的替换</text><rect x="30" y="44" width="300" height="16" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="40" y="56">metrics_matrix.csv</text><rect x="30" y="66" width="300" height="16" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="40" y="78">coverage_matrix.csv</text><rect x="30" y="88" width="300" height="16" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="40" y="100">metric_evidence.csv</text><rect x="30" y="110" width="300" height="16" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="40" y="122">golden_results.csv</text><rect x="30" y="132" width="300" height="16" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="40" y="144">REPORT_十公司财务指标.md</text><rect x="30" y="154" width="300" height="16" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="40" y="166">README_RUN.md</text><rect x="30" y="176" width="300" height="16" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="40" y="188">…共 14 个</text><text class="n" x="30" y="212" fill="var(--refuse)">14 次写入 = 14 个可以崩在中间的时刻</text><line x1="346" y1="120" x2="468" y2="120" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><text class="n" x="407" y="110" text-anchor="middle">转化成</text><rect x="500" y="74" width="386" height="92" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="k" x="513" y="95" fill="var(--fact)">● outputs/active_publication.json</text><text class="m2" x="513" y="116">publication_id</text><text class="m" x="873" y="116" text-anchor="end" fill="var(--fact)">fe01e227…</text><text class="m2" x="513" y="135">previous_publication_id</text><text class="m" x="873" y="135" text-anchor="end" fill="var(--ink)">81eb8476…</text><text class="n" x="513" y="154">一次 rename = 一个不可分割的时刻</text><text class="n" x="500" y="212" fill="var(--fact)">1 次原子替换 = 唯一一个提交点</text></svg></figure>
+    <div class="prose"><p>一版 = 一个<b>不可变目录</b>，目录名就是它全部内容的指纹。
+      目录里有一份 manifest，列出每个文件的路径、SHA-256、字节数。
+      根目录只留一个很小的 <code>active_publication.json</code>，说明当前正式版本是哪一个包。</p>
+      <p>发布 = 先把新目录整个写好<b>并验证</b>，然后原子地重写这一个指针文件。</p>
+      <p><b>指针替换是唯一的提交点。</b>这句话的实际含义是两条：
+      它之前的所有失败都不改变正式版本；它之后的所有失败都可以从指针恢复。
+      没有第三种结局，也不需要猜。</p>
+      <p>代价是要多维护一批对象——发布包、切换意图、切换收据、历史链——
+      并且旧包永远留着，没有任何 GC。这是这套设计明确接受的成本。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="artifact">产物</span>当前指针的四个字段，就是磁盘上的内容。<code>publication_id fe01e227… · previous 81eb8476… · 2026-08-20T11:38:54Z</code></li><li><span class="tag" data-k="code">代码</span>指针字段集合必须精确相等，多一个少一个都拒绝解析。<code>publication.py:217 · POINTER_FIELDS</code></li><li><span class="tag" data-k="code">代码</span>全部路径只能从一个 root 推导，调用方给不了子路径——否则就能拼出「用 A 的包配 B 的指针」。<code>publication.py:320 · publication_layout</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s03">
+  <header class="sh">
+    <span class="sn">03</span>
+    <span class="sk">主角</span>
+    <span class="si">三个对象</span>
+  </header>
+  <h2>模块只是工位，<em>对象</em>才是主角</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 958 258" role="img" aria-label="三个主角对象各自回答一个不同的问题，第三个必须由指针和切换收据链共同承担"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="30" width="270" height="130" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="37" y="51" fill="var(--fact)">● ① 批次权威</text><text class="m2" x="37" y="72">回答</text><text class="m" x="281" y="72" text-anchor="end" fill="var(--ink)">这批既不缺也不重</text><text class="m2" x="37" y="91">身份</text><text class="m" x="281" y="91" text-anchor="end" fill="var(--ink)">batch_manifest_id</text><text class="m2" x="37" y="110">当前值</text><text class="m" x="281" y="110" text-anchor="end" fill="var(--fact)">c6c1a236…</text><text class="n" x="37" y="148">R2 编码：ZERO_AI_COORDINATE_INDEX</text><line x1="302" y1="95" x2="336" y2="95" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="344" y="30" width="270" height="130" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="357" y="51" fill="var(--fact)">● ② 不可变发布包</text><text class="m2" x="357" y="72">回答</text><text class="m" x="601" y="72" text-anchor="end" fill="var(--ink)">这一版包含什么</text><text class="m2" x="357" y="91">身份</text><text class="m" x="601" y="91" text-anchor="end" fill="var(--ink)">publication_id</text><text class="m2" x="357" y="110">当前值</text><text class="m" x="601" y="110" text-anchor="end" fill="var(--fact)">fe01e227…</text><text class="n" x="357" y="148">目录名就是内容指纹</text><line x1="622" y1="95" x2="656" y2="95" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="664" y="30" width="270" height="130" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="k" x="677" y="51" fill="var(--fact)">● ③ pointer + 切换历史</text><text class="m2" x="677" y="72">回答</text><text class="m" x="921" y="72" text-anchor="end" fill="var(--ink)">此刻哪一版是正式的</text><text class="m2" x="677" y="91">身份</text><text class="m" x="921" y="91" text-anchor="end" fill="var(--ink)">四个字段 + 一条收据链</text><text class="m2" x="677" y="110">当前值</text><text class="m" x="921" y="110" text-anchor="end" fill="var(--fact)">fe01e227…</text><text class="n" x="677" y="148">pointer 单独不能自证</text><rect x="24" y="184" width="910" height="56" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="205" fill="var(--degrade)">◐ 为什么第三个必须是两件东西</text><text class="b" x="37" y="226">pointer 只是一个四字段 JSON。如果它能脱离收据链单独被改，改一个文件就能把任意包变成「正式版本」。</text></svg></figure>
+    <div class="prose"><p>判断一个对象是不是主角，用一句话检验：<b>删掉它，我还能不能准确说清这一层建立了什么新事实？</b></p>
+      <p>删掉<b>批次权威</b>，说不清「这一批到底完不完整」——单个结果只能证明自己。<br>
+      删掉<b>不可变发布包</b>，说不清「这一版包含什么」。<br>
+      删掉 <b>pointer 加切换历史</b>，说不清「哪一版是正式的、它是怎么来的」。</p>
+      <p>第三个必须是两件东西合在一起。pointer 只是一个四字段 JSON；
+      如果它能脱离收据链单独被改，那么改一个文件就能把任意包——包括一个从未通过验证的包——变成「正式版本」。
+      收据链把这件事变成：<b>你还得伪造一整条自洽的历史，而且新 tip 的 hash 必须和指针对上。</b></p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="artifact">产物</span>三个身份都是内容派生的，不由调用者挑选。<code>batch sha256:c6c1a2362a23f20… · projection sha256:816bc3649efe45b…</code></li><li><span class="tag" data-k="code">代码</span>每次读指针之后立刻要求收据链能证明这个指针，两者不可分开。<code>publication.py:4989 · _switch_receipt_for_pointer</code></li><li><span class="tag" data-k="test">测试</span>历史指针字节不是当前链尾；孤立的自签收据无法冒充。<code>tests/vnext/test_publication.py</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s04">
+  <header class="sh">
+    <span class="sn">04</span>
+    <span class="sk">第一站</span>
+    <span class="si">批次权威</span>
+  </header>
+  <h2>十个结果各自正确，<em>不等于</em>这一批完整</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 934 262" role="img" aria-label="仓库独立推导的应有坐标集与实际结果集必须完全相等，批次权威才成立"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="30" width="250" height="136" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="k" x="37" y="51" fill="var(--neutral)">▤ 仓库独立推导</text><text class="m2" x="37" y="72">company registry</text><text class="m" x="261" y="72" text-anchor="end" fill="var(--ink)">10</text><text class="m2" x="37" y="91">release plan × spec</text><text class="m" x="261" y="91" text-anchor="end" fill="var(--ink)">22 指标</text><text class="m2" x="37" y="110">expected 坐标</text><text class="m" x="261" y="110" text-anchor="end" fill="var(--fact)">220</text><text class="n" x="37" y="154">调用者不能自报应有集合</text><rect x="330" y="30" width="250" height="136" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="k" x="343" y="51" fill="var(--neutral)">▤ 实际结果集</text><text class="m2" x="343" y="72">actual 坐标</text><text class="m" x="567" y="72" text-anchor="end" fill="var(--fact)">220</text><text class="m2" x="343" y="91">重复</text><text class="m" x="567" y="91" text-anchor="end" fill="var(--ink)">0</text><text class="m2" x="343" y="110">缺失</text><text class="m" x="567" y="110" text-anchor="end" fill="var(--ink)">0</text><text class="m2" x="343" y="129">多余</text><text class="m" x="567" y="129" text-anchor="end" fill="var(--ink)">0</text><text class="n" x="343" y="154">来自 deterministic 执行图</text><text class="big" x="302" y="100" text-anchor="middle" fill="var(--fact)">=</text><line x1="588" y1="98" x2="622" y2="98" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="630" y="30" width="280" height="136" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="k" x="643" y="51" fill="var(--fact)">● 批次权威成立</text><text class="m2" x="643" y="72">batch_manifest_id</text><text class="m" x="897" y="72" text-anchor="end" fill="var(--fact)">c6c1a236…</text><text class="m2" x="643" y="91">target fiscal year</text><text class="m" x="897" y="91" text-anchor="end" fill="var(--ink)">全批同一</text><text class="m2" x="643" y="110">Requirement</text><text class="m" x="897" y="110" text-anchor="end" fill="var(--ink)">全批同一</text><text class="n" x="643" y="154">content-addressed，不能原地编辑</text><rect x="24" y="190" width="886" height="54" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="37" y="211" fill="var(--refuse)">✕ 不相等就在这里终止</text><text class="b" x="37" y="232">ProjectionError 上抛 · 不产生 staging、不产生 bundle、不读取指针 · 单个 Run 永远发现不了「另一家公司少了一行 N/A」</text></svg></figure>
+    <div class="prose"><p><b>要替换的误解：</b>「每家公司的计算都已经封存且能重放，所以这批结果是完整的。」</p>
+      <p>单个结果不知道另一家公司少了一行 N/A、多了一个坐标，或者用的是另一个财年。
+      完整性是另一件事实，必须由<b>仓库独立重新推导</b>：从 company registry、release plan
+      和 MetricSpec applicability 联合算出应有的 <code>(company_id, metric_id)</code> 集合，
+      再和实际结果集逐坐标比对。<b>调用者不能自报应有集合。</b></p>
+      <p>比对通过后新成立的不变量是：应有坐标与实际结果 exact set 完全相等——
+      不缺、不多、不重复、不跨财年、Requirement 不分叉。</p>
+      <p>不相等就在这里终止。<b>这一步没有任何外部副作用</b>：
+      不产生 staging、不产生 bundle、甚至没有读取指针。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="artifact">产物</span>坐标数 220 与 batch_manifest_id 在两个独立文件里一致。<code>internal/coordinate_index.json · projection_manifest.json</code></li><li><span class="tag" data-k="recomputed">推导</span>10 家公司 × 22 个累计指标 = 220；两个因数都能从产物单独读出。</li><li><span class="tag" data-k="code">代码</span>通用路径上批次不完整、单公司冒充整批、混合财年都有专门的失败用例。<code>scripts/vnext/projector.py:1229-1522 · tests/vnext/test_replay.py</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s05">
+  <header class="sh">
+    <span class="sn">05</span>
+    <span class="sk">第二站</span>
+    <span class="si">独立投影</span>
+  </header>
+  <h2>先渲染，<em>再</em>比较——顺序本身就是证明</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 934 240" role="img" aria-label="左边是复制后比较的循环证明，右边是先独立渲染再拿冻结快照做事后比较的当前做法"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="22" width="430" height="200" rx="6" fill="var(--refuse)" opacity=".07"/><text class="k" x="38" y="44" fill="var(--refuse)">✕ 先复制，再声明相同</text><rect x="38" y="58" width="180" height="62" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="51" y="84">旧 CSV</text><text class="m" x="205" y="84" text-anchor="end" fill="var(--ink)">141 行</text><line x1="226" y1="89" x2="258" y2="89" stroke="var(--refuse)" stroke-width="1.5" marker-end="url(#a-refuse)"/><rect x="266" y="58" width="174" height="62" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="m2" x="279" y="84">新输出</text><text class="m" x="427" y="84" text-anchor="end" fill="var(--ink)">= 同一份字节</text><text class="b" x="38" y="152" fill="var(--refuse)">比较永远成立 —— 因为相等是复制</text><text class="b" x="38" y="174" fill="var(--refuse)">保证的，不是计算保证的。</text><text class="n" x="38" y="202" fill="var(--refuse)">新对象图哪怕完全没参与，也全绿</text><rect x="478" y="22" width="432" height="200" rx="6" fill="var(--fact)" opacity=".07"/><text class="k" x="492" y="44" fill="var(--fact)">● 先独立渲染，再事后比较</text><rect x="492" y="58" width="180" height="62" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="m2" x="505" y="84">新对象图</text><text class="m" x="659" y="84" text-anchor="end" fill="var(--ink)">→ 220 行</text><rect x="492" y="132" width="180" height="56" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="m2" x="505" y="158">冻结 legacy</text><text class="m" x="659" y="158" text-anchor="end" fill="var(--ink)">此刻才读</text><line x1="680" y1="89" x2="712" y2="89" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><path d="M582 188 L582 204 L760 204" fill="none" stroke="var(--neutral)" stroke-width="1.5" stroke-dasharray="5 4"/><line x1="760" y1="204" x2="760" y2="190" stroke="var(--neutral)" stroke-width="1.5" marker-end="url(#a-raw)" stroke-dasharray="5 4"/><rect x="720" y="58" width="174" height="130" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="m2" x="733" y="84">compared_key</text><text class="m" x="881" y="84" text-anchor="end" fill="var(--fact)">141</text><text class="m2" x="733" y="103">compared_field</text><text class="m" x="881" y="103" text-anchor="end" fill="var(--fact)">2,820</text><text class="m2" x="733" y="122">approved delta</text><text class="m" x="881" y="122" text-anchor="end" fill="var(--ink)">空</text><text class="m2" x="733" y="141">unexpected delta</text><text class="m" x="881" y="141" text-anchor="end" fill="var(--fact)">空</text><text class="n" x="733" y="176">oracle，不是数值来源</text></svg></figure>
+    <div class="prose"><p><b>要替换的误解：</b>「兼容就是新输出和旧 CSV 一样，所以先把旧行复制过来，再比一次相等就行。」</p>
+      <p>复制之后再比较相等是<b>循环证明</b>：它永远成立，而且完全发现不了「新结果图和公共数值已经脱节」。
+      左边那条路上，新对象链哪怕根本没参与生成公共值，检查照样全绿。</p>
+      <p>当前顺序把两件事拆开：生产 renderer 先从新对象图独立生成 220 行——
+      它<b>不接收</b> legacy 行、期望值或旧证据作为语义输入；
+      冻结的 legacy 快照此刻才第一次被读取，只回答「迁移有没有意外改变已有用户字段」。</p>
+      <p>还有一层保护：projection-independence receipt 对关键函数的 AST 和禁止标识符做约束——
+      它检查的是 renderer <b>不可能</b>读旧语义，不是「这次没读」。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="artifact">产物</span>141 个既有 key × 20 个字段 = 2,820 次比较，两个 delta 集都是空数组。<code>internal/public_projection_closure.json → compatibility</code></li><li><span class="tag" data-k="artifact">产物</span>per_field_counts 全表 20 行，每行都是 equal=141 / approved_delta=0 / unexpected_delta=0。</li><li><span class="tag" data-k="test">测试</span>legacy canary 证明 producer 不读旧语义。<code>tests/vnext/test_zero_ai_release.py::test_r2_projection_and_producers_survive_legacy_canary</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s06">
+  <header class="sh">
+    <span class="sn">06</span>
+    <span class="sk">第二站</span>
+    <span class="si">行的来源</span>
+  </header>
+  <h2>309 行不是一个整体，是<em>两种来源</em>的组合</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 910 254" role="img" aria-label="公共矩阵三百零九行由两百二十行本次迁移行与八十九行未迁移行组成，迁移行中有一百四十一个既有 key 参与逐字段比较"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><text class="k" x="24" y="26" fill="var(--fact)">正式 metrics_matrix.csv · 309 行 × 20 列</text><rect x="24" y="40" width="612" height="54" rx="4" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.6"/><rect x="636" y="40" width="248" height="54" rx="4" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="s" x="330" y="64" text-anchor="middle" fill="var(--fact)">220 行 · 本次迁移</text><text class="m2" x="330" y="84" text-anchor="middle">由新对象图独立渲染</text><text class="s" x="760" y="64" text-anchor="middle">89 行 · 未迁移</text><text class="m2" x="760" y="84" text-anchor="middle">保持前驱顺序</text><line x1="636" y1="34" x2="636" y2="100" stroke="var(--fact)" stroke-width="1" stroke-dasharray="3 3"/><rect x="24" y="118" width="420" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="37" y="139" fill="var(--fact)">● 220 行里有 141 个既有 key</text><text class="m2" x="37" y="160">逐字段比较</text><text class="m" x="431" y="160" text-anchor="end" fill="var(--fact)">141 × 20 = 2,820</text><text class="m2" x="37" y="179">每个字段</text><text class="m" x="431" y="179" text-anchor="end" fill="var(--ink)">equal 141 / delta 0 / delta 0</text><rect x="464" y="118" width="420" height="96" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="k" x="477" y="139" fill="var(--neutral)">▤ 另外 79 个是新增 key</text><text class="m2" x="477" y="160">主要是</text><text class="m" x="871" y="160" text-anchor="end" fill="var(--ink)">结构性 N/A 坐标</text><text class="m2" x="477" y="179">语义</text><text class="m" x="871" y="179" text-anchor="end" fill="var(--ink)">完整结果的一部分，不是缺失</text><text class="n" x="24" y="236">309 − 220 = 89：这两个数都能从产物单独读出，差值与 CSV 实际行数相符。</text></svg></figure>
+    <div class="prose"><p>正式的 <code>metrics_matrix.csv</code> 有 309 行、20 列。
+      这个数字很容易被当成「这次算了 309 行」——不是。</p>
+      <p>其中 220 行是本次迁移：由新对象图独立渲染，替换掉前驱里对应的 key。
+      另外 89 行是未迁移的 legacy 行，保持前驱顺序原样带过来。</p>
+      <p>220 行里又分两类：141 个是前驱里已经存在的 key，
+      它们参与了上一页那 2,820 次逐字段比较；
+      另外 79 个是新增 key，主要是结构性 N/A 坐标——
+      <b>它们是完整结果的一部分，不是缺失</b>。</p>
+      <p>把这三类分开看，才能理解下一页那条规则为什么必须存在。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="recomputed">推导</span>309 − 220 = 89；两个数分别从 CSV 实际行数与 row_bindings 条数读出。</li><li><span class="tag" data-k="artifact">产物</span>public_matrix_row_count = 309 · replaced_legacy_row_count = 141 · new_public_key_count = 79。<code>projection_manifest.json</code></li><li><span class="tag" data-k="artifact">产物</span>20 个字段：company / cik / metric_id / metric_name / value / unit / status / source_class / formula / period × 2 / fiscal × 2 / accession / form / filed_date / concept / context / confidence / notes。</li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s07">
+  <header class="sh">
+    <span class="sn">07</span>
+    <span class="sk">第三站</span>
+    <span class="si">candidate_status</span>
+  </header>
+  <h2>空值<em>不等于</em>失败</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><table class="t"><thead><tr><th>applicability</th><th>publication</th><th>批次级判定</th><th>语义</th></tr></thead><tbody><tr><td><code>APPLICABLE</code></td><td><code>PUBLISHED</code></td><td class="ok">不阻断</td><td>正常已发布的结果</td></tr><tr><td><code>APPLICABLE</code></td><td><code>WITHHELD</code></td><td class="no">BLOCKED</td><td>本应有结果，证据或计算不足</td></tr><tr><td><code>N_A_STRUCTURAL</code></td><td><code>PUBLISHED</code></td><td class="ok">不阻断</td><td>结构性不适用</td></tr><tr><td><code>N_A_STRUCTURAL</code></td><td><code>WITHHELD</code></td><td class="ok">不阻断</td><td>结构性不适用，且未发布</td></tr></tbody></table></figure>
+    <div class="prose"><p><b>要替换的误解：</b>「矩阵里有空值就是失败，没有空值就能发。」</p>
+      <p>批次级判定只读两个字段，而且只有一种组合会阻断发布。
+      <code>N_A_STRUCTURAL</code> 表示这个指标按公司 traits 本来就不适用——
+      它是<b>完整结果的一部分</b>，不阻断。
+      <code>APPLICABLE + WITHHELD</code> 表示本应有结果但证据或计算不足，这才阻断。</p>
+      <p>两者在 CSV 里可能都显示为空，语义完全相反。</p>
+      <p>判定是<b>算出来的</b>，函数体里没有任何调用者传入的布尔值；
+      未知的字段值也不会被当作「不阻断」，而是直接抛 <code>StateError</code>——fail closed，不是 fail open。</p>
+      <p>被判 BLOCKED 时的对象结局是完整的：不产生 <code>projection_manifest_id</code>、
+      不写发布包、<b>指针逐字节不变</b>、结果与 Trace 全部保留供审计。
+      失败的尝试不会用空值覆盖成功的旧版本。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>整个函数只有一个循环和三条判断。<code>scripts/vnext/states.py:87-117 · publication_candidate_status</code></li><li><span class="tag" data-k="code">代码</span>可发布的 validation 状态集合只有一个成员。<code>states.py:41 · PUBLISHABLE_VALIDATION_STATUSES = frozenset({&quot;PASSED&quot;})</code></li><li><span class="tag" data-k="artifact">产物</span>当前 R2 的判定结果：status = PUBLISHABLE，schema_version = 1，record_type = ZERO_AI_PROJECTION_MANIFEST。</li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s08">
+  <header class="sh">
+    <span class="sn">08</span>
+    <span class="sk">第四站</span>
+    <span class="si">写包</span>
+  </header>
+  <h2>目录名就是<em>内容指纹</em>，写包本身是个小事务</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 1148 252" role="img" aria-label="写包的七个步骤：先写隐藏临时目录并在其上完整验证，再目录级原子改名，中途异常则删除临时目录"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="35" y="62" fill="var(--fact)">t0</text><text class="m" x="35" y="84">算 publication_id</text><text class="m2" x="35" y="102">由 identity</text><text class="m2" x="35" y="117">内容派生</text><line x1="176" y1="88" x2="181" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="182" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="193" y="62" fill="var(--fact)">t1</text><text class="m" x="193" y="84">写隐藏临时目录</text><text class="m2" x="193" y="102">.{id}.{uuid4}</text><text class="m2" x="193" y="117">.tmp</text><line x1="334" y1="88" x2="339" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="340" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="351" y="62" fill="var(--fact)">t2</text><text class="m" x="351" y="84">逐文件原子写</text><text class="m2" x="351" y="102">25 个 payload</text><text class="m2" x="351" y="117">atomic_write</text><line x1="492" y1="88" x2="497" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="498" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="509" y="62" fill="var(--fact)">t3</text><text class="m" x="509" y="84">写 manifest</text><text class="m2" x="509" y="102">publication_</text><text class="m2" x="509" y="117">manifest.json</text><line x1="650" y1="88" x2="655" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="656" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="667" y="62" fill="var(--fact)">t4</text><text class="m" x="667" y="84">临时目录上先验</text><text class="m2" x="667" y="102">verify_</text><text class="m2" x="667" y="117">publication_bundle</text><line x1="808" y1="88" x2="813" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="814" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="n" x="825" y="62" fill="var(--fact)">t5</text><text class="m" x="825" y="84">os.replace</text><text class="m2" x="825" y="102">+ fsync 父目录</text><text class="m2" x="825" y="117">目录级原子改名</text><line x1="966" y1="88" x2="971" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="972" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="983" y="62" fill="var(--fact)">t6</text><text class="m" x="983" y="84">最终目录再验</text><text class="m2" x="983" y="102">一次</text><text class="m2" x="983" y="117">→ PREPARED</text><text class="k" x="24" y="26" fill="var(--fact)">写包本身就是一个小事务</text><rect x="24" y="154" width="1100" height="58" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="37" y="175" fill="var(--refuse)">✕ 中途任何异常</text><text class="b" x="37" y="196">finally 删除临时目录 · 最终 publication ID 目录只在完整验证通过后才出现 · 不会留下一个看起来完整的半成品包</text><text class="n" x="24" y="234">幂等：最终目录已存在时，验证已有内容与本次 manifest 逐字段相等；不等报 Existing publication ID has divergent bytes。</text></svg></figure>
+    <div class="prose"><p><code>publication_id</code> 不是随机的，是从 identity 内容派生的：
+      candidate_status、requirement_hashes、batch / projection / validation 三个 ID、
+      全部文件的 <code>{path, sha256, size}</code>、ledger_binding，以及
+      <code>previous_publication_id</code>。</p>
+      <p><b>因为前驱也在 identity 里面，整条发布链是一条 hash 链</b>：
+      改动任何一个历史版本的任何一个字节，都会让它自己的 ID 变，进而让所有后继版本的 ID 失效。</p>
+      <p>写入过程本身是个小事务：先写进隐藏临时目录，逐文件原子写，写完 manifest，
+      <b>在临时目录上先跑一次完整验证</b>，通过了才 <code>os.replace</code> 目录级改名并 fsync 父目录，
+      最后对最终目录再验一次。</p>
+      <p>而且它是幂等的：最终目录已存在时，验证已有内容与本次 manifest 逐字段相等，
+      相等直接返回，不等报错。<b>同一个 ID 永远不可能指向两组不同的字节。</b></p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="artifact">产物</span>当前包：磁盘 26 个文件，manifest 列 25 个 payload，合计 3298.0 KB，manifest 自身 sha256 = a7b26dfd…，与指针里的 bundle_manifest_sha256 完全一致。</li><li><span class="tag" data-k="code">代码</span>临时目录、幂等分支、故障注入点都在同一个函数里。<code>publication.py:890-987</code></li><li><span class="tag" data-k="code">代码</span>包内文件精确集合校验连空目录都算：从 manifest 推出 expected files 与 directories，再 rglob 实际内容，两个集合都必须精确相等。<code>publication.py:4491-4513 · Publication file exact set differs</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s09">
+  <header class="sh">
+    <span class="sn">09</span>
+    <span class="sk">第四站</span>
+    <span class="si">准备 ≠ 发布</span>
+  </header>
+  <h2>磁盘上 9 个包，只有 <em>3</em> 个进过切换历史</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 778 346" role="img" aria-label="磁盘上九个发布包构成三条建造链，只有第三条出现在切换收据里，末端是当前 active"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><text class="n" x="24" y="36" fill="var(--ink3)">彩排 · 从未提交</text><rect x="24" y="44" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="m" x="36" y="66">970dba4d</text><text class="m2" x="36" y="82">legacy</text><line x1="192" y1="67" x2="220" y2="67" stroke="var(--ink3)" stroke-width="1.5" marker-end="url(#a-dim)" stroke-dasharray="5 4"/><rect x="222" y="44" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="m" x="234" y="66">814765e9</text><text class="m2" x="234" y="82">R1</text><line x1="390" y1="67" x2="418" y2="67" stroke="var(--ink3)" stroke-width="1.5" marker-end="url(#a-dim)" stroke-dasharray="5 4"/><rect x="420" y="44" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="m" x="432" y="66">115d13fd</text><text class="m2" x="432" y="82">R2</text><text class="n" x="24" y="110" fill="var(--ink3)">彩排 · 从未提交</text><rect x="24" y="118" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="m" x="36" y="140">b400cc6e</text><text class="m2" x="36" y="156">legacy</text><line x1="192" y1="141" x2="220" y2="141" stroke="var(--ink3)" stroke-width="1.5" marker-end="url(#a-dim)" stroke-dasharray="5 4"/><rect x="222" y="118" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="m" x="234" y="140">bc966657</text><text class="m2" x="234" y="156">R1</text><line x1="390" y1="141" x2="418" y2="141" stroke="var(--ink3)" stroke-width="1.5" marker-end="url(#a-dim)" stroke-dasharray="5 4"/><rect x="420" y="118" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--ink3)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="m" x="432" y="140">0f491fd5</text><text class="m2" x="432" y="156">R2</text><text class="n" x="24" y="184" fill="var(--fact)">正式历史 · 收据链承认</text><rect x="24" y="192" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="m" x="36" y="214" fill="var(--fact)">5668341b</text><text class="m2" x="36" y="230">legacy</text><line x1="192" y1="215" x2="220" y2="215" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="222" y="192" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="m" x="234" y="214" fill="var(--fact)">81eb8476</text><text class="m2" x="234" y="230">R1</text><line x1="390" y1="215" x2="418" y2="215" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="420" y="192" width="168" height="46" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="m" x="432" y="214" fill="var(--fact)">fe01e227</text><text class="m2" x="432" y="230">R2</text><line x1="594" y1="215" x2="622" y2="215" stroke="var(--fact)" stroke-width="1.5"/><text class="m" x="628" y="219" fill="var(--fact)">← active pointer</text><rect x="24" y="274" width="564" height="56" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="295" fill="var(--degrade)">◐ 目录存在 ≠ 曾经正式</text><text class="b" x="37" y="316">9 个包，3 个进过切换历史 · 孤儿 6 个共 7.1 MB · 彩排的代价只有磁盘</text></svg></figure>
+    <div class="prose"><p>准备阶段<b>完全不碰指针</b>。这个性质有一个很直观的证据：
+      仓库里现在有 9 个内容完整、manifest 自洽、验证通过的发布包，
+      而切换收据里只出现 3 个 publication ID。</p>
+      <p>另外 6 个是两次完整的彩排——准备好了、验证过了、从未提交。
+      <b>这正是这个设计想要的：彩排的代价只有磁盘。</b></p>
+      <p>反过来说，按目录 mtime 挑「最新的那个」会绕过前驱校验、CAS 和整条切换历史。
+      正确的入口是 <code>PublicationView.open(publication_root=repo_root)</code>，
+      不是 <code>glob(outputs/publications/*)[-1]</code>。</p>
+      <p>这条区分要一直记到最后一页：<b>目录存在、曾经提交、当前 active、通过验收，是四种不同的事实。</b></p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="artifact">产物</span>9 个目录的 previous_publication_id 构成三条链，只有第三条出现在收据里。</li><li><span class="tag" data-k="recomputed">推导</span>孤儿 6 个共 7.1 MB，全部 9 个包 11.6 MB。</li><li><span class="tag" data-k="gap">边界</span>旧包永远留着，没有任何 GC。清理需要先做可达性普查，否则可能删掉 rollback 的前驱或审计引用。</li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s10">
+  <header class="sh">
+    <span class="sn">10</span>
+    <span class="sk">第五站</span>
+    <span class="si">提交权限</span>
+  </header>
+  <h2>名字最像入口的那两个函数，<em>永远抛错</em></h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 972 318" role="img" aria-label="两个公共提交函数永远抛错，真正的分类由三条判据从包自己的字节读出，R2 命中第二条"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="30" width="300" height="108" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="37" y="51" fill="var(--refuse)">✕ commit_publication()</text><text class="b" x="37" y="72">无条件 raise</text><text class="b" x="37" y="92">FORMAL_CUTOVER_AUTHORITY_REQUIRED</text><text class="n" x="37" y="126">publication.py:6011 · 公共 API</text><rect x="24" y="150" width="300" height="76" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="37" y="171" fill="var(--refuse)">✕ commit_initial_publication_chain()</text><text class="b" x="37" y="192">同样无条件 raise</text><text class="n" x="37" y="214">publication.py:5902</text><text class="big" x="348" y="92" text-anchor="middle" fill="var(--refuse)">✕</text><text class="big" x="348" y="190" text-anchor="middle" fill="var(--refuse)">✕</text><rect x="392" y="30" width="300" height="196" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="405" y="51" fill="var(--fact)">● _publication_commit_authority</text><text class="b" x="405" y="72">判据 1  有 legacy_baseline_import.json</text><text class="b" x="405" y="92">        → LEGACY_BASELINE</text><text class="b" x="405" y="112">判据 2  有 zero_ai_release_receipt.json</text><text class="b" x="405" y="132">        → FORMAL（要求 previous 非空）</text><text class="b" x="405" y="152">判据 3  否则查 (mode, result) 表</text><text class="b" x="405" y="172">        → FORMAL 或 RECORDED</text><text class="n" x="405" y="214">只读包自己的字节 · publication.py:5415</text><line x1="700" y1="128" x2="734" y2="128" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="742" y="30" width="206" height="196" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="k" x="755" y="51" fill="var(--fact)">● R2 包命中</text><text class="m2" x="755" y="72">命中</text><text class="m" x="935" y="72" text-anchor="end" fill="var(--fact)">判据 2</text><text class="m2" x="755" y="91">mode</text><text class="m" x="935" y="91" text-anchor="end" fill="var(--degrade)">LIGHT_REVIEW_MODE</text><text class="m2" x="755" y="110">result</text><text class="m" x="935" y="110" text-anchor="end" fill="var(--degrade)">PASSED_WITH_CAVEATS</text><text class="n" x="755" y="214">判据 2 在读 mode 之前就 return</text><rect x="24" y="246" width="924" height="54" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="267" fill="var(--degrade)">◐ 所以这一层的 FORMAL 意思是</text><text class="b" x="37" y="288">「有权前向提交」，不是「通过了 FULL_VALIDATION」 —— 两件事在这里被同一个字符串表示</text></svg></figure>
+    <div class="prose"><p><code>commit_publication()</code> 和 <code>commit_initial_publication_chain()</code>
+      无条件抛 <code>FORMAL_CUTOVER_AUTHORITY_REQUIRED</code>。</p>
+      <p>这不是把私有函数藏起来（Python 藏不住），而是在公共位置放一个<b>永远失败的同名函数</b>：
+      误用会立刻失败而不是悄悄成功，错误码直接说明正确路径，
+      代码搜索时看到的第一个定义就是这个拒绝版本。代价是可发现性差。</p>
+      <p>真正的分类由 <code>_publication_commit_authority</code> 从<b>包自己的字节</b>读出，
+      依次尝试三条判据。R2 包命中判据 2。</p>
+      <p><b>这里有一个非显然的事实：</b>R2 的 <code>validation_run_manifest</code> 写的是
+      <code>LIGHT_REVIEW_MODE / PASSED_WITH_CAVEATS</code>——这一对<b>不在</b>判据 3 的查表里。
+      它拿到 FORMAL，纯粹是因为判据 2 先命中并提前 return。
+      所以这一层的 <code>FORMAL</code> 意思是「有权前向提交」，<b>不是</b>「通过了 FULL_VALIDATION」。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>两个公共函数都先 del 掉全部参数，再无条件 raise。<code>publication.py:6011-6034 · publication.py:5902-5925</code></li><li><span class="tag" data-k="artifact">产物</span>9 个包里 6 个带 zero-AI 收据、3 个带 legacy 导入清单，0 个带 internal/closure_manifest.json——判据 3 那条线从来没有真的生产出过一个包。</li><li><span class="tag" data-k="code">代码</span>首次提交必须走初始链，否则第一版就是没有前驱的孤儿，回滚无处可去。<code>publication.py:5506-5521 · &quot;first formal publication requires initial publication chain&quot;</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s11">
+  <header class="sh">
+    <span class="sn">11</span>
+    <span class="sk">第六站</span>
+    <span class="si">唯一提交点</span>
+  </header>
+  <h2>镜像先写、指针后写，<em>官方状态由指针决定</em></h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 1066 254" role="img" aria-label="发布事务的八个步骤，第五步写指针是唯一的官方提交点，它左边官方状态仍是旧版本，右边已是新版本"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="112" width="637" height="40" rx="6" fill="var(--neutral)" opacity=".12"/><rect x="664" y="112" width="378" height="40" rx="6" fill="var(--fact)" opacity=".14"/><text class="m" x="30" y="138" fill="var(--neutral)">official state = R1（旧版本）</text><text class="m" x="672" y="138" fill="var(--fact)">official state = R2（新版本）</text><rect x="24" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="n" x="34" y="44">t0</text><text class="m" x="34" y="62">取排他锁</text><text class="m2" x="34" y="78">LOCK_EX</text><text class="m2" x="34" y="93">先恢复遗留 intent</text><line x1="146" y1="65" x2="151" y2="65" stroke="var(--neutral)" stroke-width="1.5" marker-end="url(#a-raw)"/><rect x="152" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="n" x="162" y="44">t1</text><text class="m" x="162" y="62">CAS + 前驱双检</text><text class="m2" x="162" y="78">两个条件</text><text class="m2" x="162" y="93">都成立才继续</text><line x1="274" y1="65" x2="279" y2="65" stroke="var(--neutral)" stroke-width="1.5" marker-end="url(#a-raw)"/><rect x="280" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="n" x="290" y="44">t2</text><text class="m" x="290" y="62">快照旧镜像</text><text class="m2" x="290" y="78">14 × </text><text class="m2" x="290" y="93">{sha256, size}</text><line x1="402" y1="65" x2="407" y2="65" stroke="var(--neutral)" stroke-width="1.5" marker-end="url(#a-raw)"/><rect x="408" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="n" x="418" y="44">t3</text><text class="m" x="418" y="62">写 switch</text><text class="m2" x="418" y="78">intent</text><text class="m2" x="418" y="93">write-ahead</text><line x1="530" y1="65" x2="535" y2="65" stroke="var(--neutral)" stroke-width="1.5" marker-end="url(#a-raw)"/><rect x="536" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="n" x="546" y="44">t4</text><text class="m" x="546" y="62">重写 14 个镜像</text><text class="m2" x="546" y="78">第 7 个后</text><text class="m2" x="546" y="93">是故障注入点</text><line x1="658" y1="65" x2="663" y2="65" stroke="var(--neutral)" stroke-width="1.5" marker-end="url(#a-raw)"/><rect x="664" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="n" x="674" y="44" fill="var(--fact)">t5</text><text class="m" x="674" y="62" fill="var(--fact)">写 active</text><text class="m2" x="674" y="78">pointer</text><text class="m2" x="674" y="93">◆ 唯一提交点</text><line x1="786" y1="65" x2="791" y2="65" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="792" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="802" y="44">t6</text><text class="m" x="802" y="62">写 switch</text><text class="m2" x="802" y="78">receipt</text><text class="m2" x="802" y="93">接上历史 tip</text><line x1="914" y1="65" x2="919" y2="65" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="920" y="24" width="122" height="82" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="n" x="930" y="44">t7</text><text class="m" x="930" y="62">读回后置校验</text><text class="m2" x="930" y="78">同一把锁内</text><text class="m2" x="930" y="93">再删除 intent</text><line x1="661" y1="12" x2="661" y2="168" stroke="var(--fact)" stroke-width="3"/><text class="k" x="666" y="8" fill="var(--fact)">◆ 唯一官方提交点</text><rect x="24" y="182" width="1018" height="54" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="203" fill="var(--degrade)">◐ 镜像先写、指针后写，是恢复协议的一部分</text><text class="b" x="37" y="224">指针仍是旧值时，官方状态就仍是旧版本，恢复程序按旧指针把 14 个镜像全部还原回去</text></svg></figure>
+    <div class="prose"><p>事务在排他锁内按固定顺序进行。前四步都还没有改变官方状态：
+      CAS 与前驱双检失败时，连 intent 都还没写。</p>
+      <p><b>两个前置条件都要。</b>「当前指针 == 我准备时的前驱」防的是并发；
+      「包自己声明的前驱 == 当前指针」防的是错配。单独任何一个都不够。</p>
+      <p>然后写 switch intent——这是 write-ahead 记录，
+      它保存 previous / proposed 两个指针、切换模式、上一条收据 ID，
+      以及 14 个旧镜像当时的 <code>{sha256, size}</code>。<b>它记 hash，不记字节。</b></p>
+      <p>接着逐个重写 14 个兼容镜像。<b>在这段时间里镜像已经全是新的，而官方状态仍然是旧版本</b>——
+      这正是「镜像更新了 ≠ 版本切了」的那个窗口。</p>
+      <p>指针替换之后才写收据，顺序不能反：收据先写会在指针前崩溃时留下一个孤儿边，
+      而后来的指针篡改可以把它冒充成已提交。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>原注释解释了为什么收据必须在指针之后。<code>publication.py:5650-5652 · &quot;Persisting its history edge beforehand would let a pre-pointer crash leave an orphan&quot;</code></li><li><span class="tag" data-k="artifact">产物</span>这一次切换的真实收据：4f9ebf4b…，mode = COMMIT，previous = 6adeedaa…。</li><li><span class="tag" data-k="code">代码</span>后置校验用的是正式读取入口本身（同一把锁内重新 _open_paths），不是写函数的返回值。<code>publication.py:5657-5663</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s12">
+  <header class="sh">
+    <span class="sn">12</span>
+    <span class="sk">韧性</span>
+    <span class="si">崩溃恢复</span>
+  </header>
+  <h2>「出错就回滚」是错的：<em>方向由指针决定</em></h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 1044 306" role="img" aria-label="崩溃恢复的三条出边：指针等于 proposed 则向前补完，等于 previous 则向后还原，两个都不等于则拒绝动手"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="30" width="236" height="132" rx="7" fill="var(--panel)" stroke="var(--inherit)" stroke-width="1.2"/><text class="k" x="37" y="51" fill="var(--inherit)">◇ 磁盘上留下的 intent</text><text class="m2" x="37" y="72">previous</text><text class="m" x="247" y="72" text-anchor="end" fill="var(--ink)">R1 四字段</text><text class="m2" x="37" y="91">proposed</text><text class="m" x="247" y="91" text-anchor="end" fill="var(--ink)">R2 四字段</text><text class="m2" x="37" y="110">mirror_state</text><text class="m" x="247" y="110" text-anchor="end" fill="var(--ink)">14 × hash/size</text><text class="n" x="37" y="150">只记 hash，不记字节</text><rect x="312" y="30" width="224" height="168" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="325" y="51" fill="var(--fact)">● 向前补完</text><text class="b" x="325" y="72">验 R2 包与 manifest hash</text><text class="b" x="325" y="92">补写收据（幂等）并验证链</text><text class="b" x="325" y="112">从 R2 包重建 14 个镜像</text><text class="b" x="325" y="132">删除 intent</text><text class="n" x="325" y="186">最终 active = R2</text><text class="m2" x="323" y="22">当前指针 == proposed</text><line x1="294" y1="114" x2="308" y2="114" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="548" y="30" width="224" height="168" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="561" y="51" fill="var(--fact)">● 向后还原</text><text class="b" x="561" y="72">删本事务可能已写的收据</text><text class="b" x="561" y="92">验 previous 的历史链仍成立</text><text class="b" x="561" y="112">从 R1 包重建 14 个镜像</text><text class="b" x="561" y="132">删除 intent</text><text class="n" x="561" y="186">最终 active = R1</text><text class="m2" x="559" y="22">当前指针 == previous</text><line x1="530" y1="114" x2="544" y2="114" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="784" y="30" width="224" height="168" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="797" y="51" fill="var(--refuse)">✕ 拒绝动手</text><text class="b" x="797" y="72">这套机制没有对这个状态建模</text><text class="b" x="797" y="92">任何自动动作都可能让情况更糟</text><text class="b" x="797" y="112">raise Pending switch pointer</text><text class="b" x="797" y="132">is neither previous nor proposed</text><text class="n" x="797" y="186">等待人工判定</text><text class="m2" x="795" y="22">两个都不等于</text><line x1="766" y1="114" x2="780" y2="114" stroke="var(--refuse)" stroke-width="1.5" marker-end="url(#a-refuse)"/><path d="M142 162 L142 214" fill="none" stroke="var(--ink3)" stroke-width="1.5"/><line x1="142" y1="214" x2="178" y2="214" stroke="var(--ink3)" stroke-width="1.5" marker-end="url(#a-dim)"/><text class="m2" x="186" y="218" fill="var(--refuse)">reader 同时：fail closed，只拒绝不修复</text><rect x="24" y="236" width="996" height="52" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="257" fill="var(--degrade)">◐ 方向不由错误类型决定</text><text class="b" x="37" y="278">也不由返回码或文件 mtime 猜测 —— 它只看当前指针等于 intent 里的哪一个</text></svg></figure>
+    <div class="prose"><p>进程死亡不会执行任何清理代码——故障演练用的是一个<b>继承自 <code>BaseException</code></b>
+      的异常，故意不继承 <code>Exception</code>，这样它能穿透生产代码里所有的
+      <code>except (OSError, ValueError, PublicationError)</code>。</p>
+      <p>磁盘上只留下 intent 和一个停在某处的状态。下一个 writer 取得排他锁后，
+      读 intent、读当前指针，然后只做一次比较。</p>
+      <p><b>第三条出边是这个设计最重要的部分：它不猜。</b>
+      如果状态既不是事务前也不是事务后，说明发生了这套机制没有建模的事情，
+      此时任何自动动作都可能让情况更糟。</p>
+      <p>还原镜像时<b>不用备份，用不可变包重建</b>：从 R1 包读出字节，
+      要求 hash 与 size 与 intent 记录完全一致才写回。
+      好处是<b>系统里从来只有一份权威字节</b>——备份本身会写一半、会损坏、会和权威源不一致。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>三条出边的判定条件。<code>publication.py:5259-5303 · _recover_switch_intent_locked</code></li><li><span class="tag" data-k="code">代码</span>重建失败时的错误语明确指向包，而不是指向备份。<code>publication.py:5187-5231 · &quot;Recovery bundle cannot reproduce pre-switch mirrors&quot;</code></li><li><span class="tag" data-k="code">代码</span>reader 遇到 pending intent 只拒绝、不清理——它没有排他锁，也不该决定事务方向。<code>publication.py:4901-4911 · &quot;Publication switch recovery intent is pending&quot;</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s13">
+  <header class="sh">
+    <span class="sn">13</span>
+    <span class="sk">韧性</span>
+    <span class="si">并发</span>
+  </header>
+  <h2>锁负责<em>串行</em>，CAS 负责<em>决胜</em></h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 886 360" role="img" aria-label="两个发布者以同一前驱并发提交，文件锁负责串行，比较并交换负责拦住前提已过期的那一个"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="30" width="232" height="92" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="37" y="51" fill="var(--fact)">● 发布者甲的包 B</text><text class="m2" x="37" y="72">manifest.previous</text><text class="m" x="243" y="72" text-anchor="end" fill="var(--ink)">A</text><text class="m2" x="37" y="91">expected_active</text><text class="m" x="243" y="91" text-anchor="end" fill="var(--ink)">A</text><rect x="24" y="138" width="232" height="92" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="37" y="159" fill="var(--refuse)">✕ 发布者乙的包 C</text><text class="m2" x="37" y="180">manifest.previous</text><text class="m" x="243" y="180" text-anchor="end" fill="var(--ink)">A</text><text class="m2" x="37" y="199">expected_active</text><text class="m" x="243" y="199" text-anchor="end" fill="var(--ink)">A</text><line x1="264" y1="76" x2="296" y2="100" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><line x1="264" y1="184" x2="296" y2="160" stroke="var(--refuse)" stroke-width="1.5" marker-end="url(#a-refuse)"/><rect x="304" y="74" width="244" height="112" rx="7" fill="var(--panel)" stroke="var(--neutral)" stroke-width="1.2"/><text class="k" x="317" y="95" fill="var(--neutral)">▤ fcntl LOCK_EX</text><text class="m2" x="317" y="116">它保证</text><text class="m" x="535" y="116" text-anchor="end" fill="var(--ink)">不会同时写</text><text class="m2" x="317" y="135">它不保证</text><text class="m" x="535" y="135" text-anchor="end" fill="var(--refuse)">排到队的人前提没过期</text><text class="n" x="317" y="174">锁只解决串行</text><line x1="556" y1="130" x2="588" y2="130" stroke="var(--ink3)" stroke-width="1.5" marker-end="url(#a-dim)"/><rect x="596" y="74" width="244" height="112" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="609" y="95" fill="var(--fact)">● CAS 检查</text><text class="m2" x="609" y="116">乙的 expected</text><text class="m" x="827" y="116" text-anchor="end" fill="var(--ink)">A</text><text class="m2" x="609" y="135">实际 current</text><text class="m" x="827" y="135" text-anchor="end" fill="var(--refuse)">B（甲已切走）</text><text class="n" x="609" y="174">CAS 才解决过期前提</text><rect x="24" y="250" width="816" height="92" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="37" y="271" fill="var(--refuse)">✕ 乙的结局</text><text class="m2" x="37" y="292">raise</text><text class="m" x="827" y="292" text-anchor="end" fill="var(--refuse)">Publication CAS predecessor changed</text><text class="m2" x="37" y="311">收据数量</text><text class="m" x="827" y="311" text-anchor="end" fill="var(--ink)">不变，没有多出一条</text><text class="m2" x="37" y="330">包 C</text><text class="m" x="827" y="330" text-anchor="end" fill="var(--ink)">仍在磁盘上，完全有效，只是从未提交</text><text class="n" x="37" y="330">它就是上一页那 6 个孤儿包的来历</text></svg></figure>
+    <div class="prose"><p>两个发布者可以同时准备，因为准备不碰指针。提交时排他锁把他们排成一列。</p>
+      <p><b>但排队之后，第二个人的前提可能已经过期。</b>
+      锁只保证「不会同时写」，它不保证「我拿到锁时，我准备阶段看到的那个前驱还是当前值」。
+      CAS 检查的正是这一句。</p>
+      <p>只有锁没有 CAS，第二个 writer 会基于一个已经过期的前提，把 winner 覆盖掉。</p>
+      <p>loser 的结局是干净的：抛 <code>Publication CAS predecessor changed</code>，
+      <b>不留任何痕迹</b>——收据数量不变，镜像未被触碰。
+      它准备好的包仍在磁盘上、完全有效，只是从未提交。</p>
+      <p>回滚受同类约束：只能回到当前指针证明的<b>直接</b>前驱，
+      prepared-only 的兄弟版本即使内容完全有效也不能被回滚过去。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>CAS 在锁内、在任何写入之前。<code>publication.py:5572-5583 · &quot;Publication CAS predecessor changed&quot; / &quot;Prepared bundle predecessor differs&quot;</code></li><li><span class="tag" data-k="code">代码</span>故障矩阵的两个并发场景真开两个线程，要求恰好一个成功一个失败。<code>fault_matrix.py:64-70 · EXACTLY_ONE_WINNER / CAS_LOST_ACTIVE_PRESERVED</code></li><li><span class="tag" data-k="code">代码</span>回滚目标必须是当前指针的直接前驱。<code>publication.py:5580-5586 · &quot;Rollback target is not the committed predecessor&quot;</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s14">
+  <header class="sh">
+    <span class="sn">14</span>
+    <span class="sk">历史</span>
+    <span class="si">切换收据</span>
+  </header>
+  <h2>所有收据必须构成<em>恰好一条</em>链</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 968 272" role="img" aria-label="五条切换收据构成恰好一条从根到尾的链，尾部必须与指针文件逐字段相等，其中第三条是一次真实回滚"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="m" x="35" y="62" fill="var(--fact)">#1  a1a097da</text><text class="m2" x="35" y="82">COMMIT</text><text class="m2" x="35" y="102">null →</text><text class="m2" x="35" y="118">5668341b</text><line x1="176" y1="88" x2="200" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="202" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="m" x="213" y="62" fill="var(--fact)">#2  2dea04ee</text><text class="m2" x="213" y="82">COMMIT</text><text class="m2" x="213" y="102">5668341b →</text><text class="m2" x="213" y="118">81eb8476</text><line x1="354" y1="88" x2="378" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="380" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="m" x="391" y="62" fill="var(--fact)">#3  42fcac62</text><text class="m2" x="391" y="82">ROLLBACK</text><text class="m2" x="391" y="102">81eb8476 →</text><text class="m2" x="391" y="118">5668341b</text><line x1="532" y1="88" x2="556" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="558" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="m" x="569" y="62" fill="var(--fact)">#4  6adeedaa</text><text class="m2" x="569" y="82">COMMIT</text><text class="m2" x="569" y="102">5668341b →</text><text class="m2" x="569" y="118">81eb8476</text><line x1="710" y1="88" x2="734" y2="88" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="736" y="40" width="152" height="96" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="m" x="747" y="62" fill="var(--fact)">#5  4f9ebf4b</text><text class="m2" x="747" y="82">COMMIT</text><text class="m2" x="747" y="102">81eb8476 →</text><text class="m2" x="747" y="118">fe01e227</text><text class="k" x="24" y="26" fill="var(--fact)">outputs/publication_switch_receipts/ · 恰好一条链</text><text class="m" x="894" y="92" fill="var(--fact)">← tip</text><text class="m2" x="894" y="112">= 指针</text><rect x="24" y="156" width="864" height="76" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="177" fill="var(--degrade)">◐ 七条不变量里最硬的一条</text><text class="b" x="37" y="198">从 tip 往回走完之后，访问过的收据集合必须等于全部收据集合</text><text class="b" x="37" y="218">往目录里塞一条格式完全合法的无关收据，也会报 Publication switch history is not one committed chain</text><text class="n" x="24" y="254">第 3 条是一次真实的回滚演练：2026-08-20T11:38:21Z —— 34 秒内实际发生过五次指针切换。</text></svg></figure>
+    <div class="prose"><p>指针写完之后，writer 生成一条 <code>PUBLICATION_SWITCH</code> 收据，
+      绑定新指针、切换模式和上一条收据的 ID。</p>
+      <p>每次读取时这条链都要重新验证：收据 ID 等于其余字段的 content hash 且文件名就是这个 hash；
+      没有悬空引用；<b>恰好一个 tip</b>；tip 的 pointer 与指针文件逐字段相等；
+      从 tip 往回走无环。</p>
+      <p><b>最硬的是最后一条</b>：走完之后访问过的收据集合必须等于全部收据集合。
+      你不能往这个目录里塞一条无关的收据，哪怕它自身格式完全合法。</p>
+      <p>当前这条链有 5 条边、3 个 publication ID。
+      <b>第 3 条是一次真实的回滚演练</b>——不是设计文档里的承诺，
+      是 34 秒内实际发生过的五次指针切换之一。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="artifact">产物</span>五条边按 root → tip 排序，时间戳分别是 11:38:20 · 11:38:20 · 11:38:21 · 11:38:22 · 11:38:54。</li><li><span class="tag" data-k="code">代码</span>链完整性的七条不变量。<code>publication.py:4989-5058 · &quot;Publication switch history is not one committed chain&quot;</code></li><li><span class="tag" data-k="code">代码</span>加载器显式跳过原子写留下的隐藏临时文件，避免把正常的并发准备变成假失败。<code>publication.py:4933-4937</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s15">
+  <header class="sh">
+    <span class="sn">15</span>
+    <span class="sk">下游</span>
+    <span class="si">PublicationView</span>
+  </header>
+  <h2>读者<em>钉住</em>一个版本，之后再也不看指针</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 882 320" role="img" aria-label="打开发布视图时做八步校验并钉住一个版本，之后外部切换指针也不影响这个读者读到的版本"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="30" width="250" height="190" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="37" y="51" fill="var(--fact)">● PublicationView.open()</text><text class="b" x="37" y="72">1 从一个 root 推导全部路径</text><text class="b" x="37" y="92">2 锁文件必须存在且是普通文件</text><text class="b" x="37" y="112">3 取共享锁 LOCK_SH</text><text class="b" x="37" y="132">4 拒绝任何 pending intent</text><text class="b" x="37" y="152">5 严格解析指针</text><text class="b" x="37" y="172">6 收据链：一根、一链、一尾</text><text class="b" x="37" y="192">7 完整验证整个包</text><text class="b" x="37" y="212">8 比对 manifest hash</text><text class="n" x="37" y="208">publication.py:6257</text><line x1="282" y1="124" x2="316" y2="124" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="324" y="30" width="250" height="190" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="2"/><text class="k" x="337" y="51" fill="var(--fact)">● 钉住的状态</text><text class="m2" x="337" y="72">publication_id</text><text class="m" x="561" y="72" text-anchor="end" fill="var(--fact)">fe01e227…</text><text class="m2" x="337" y="91">bundle_dir</text><text class="m" x="561" y="91" text-anchor="end" fill="var(--ink)">固定</text><text class="m2" x="337" y="110">manifest</text><text class="m" x="561" y="110" text-anchor="end" fill="var(--ink)">25 条记录</text><text class="n" x="337" y="208">read_bytes 之后再也不看指针</text><rect x="608" y="30" width="250" height="88" rx="7" fill="var(--panel)" stroke="var(--inherit)" stroke-width="1.2" stroke-dasharray="5 4"/><text class="k" x="621" y="51" fill="var(--inherit)">◇ 外部完成了一次切换</text><text class="m2" x="621" y="72">active_publication.json</text><text class="m" x="845" y="72" text-anchor="end" fill="var(--ink)">→ 下一版</text><rect x="608" y="132" width="250" height="88" rx="7" fill="var(--panel)" stroke="var(--fact)" stroke-width="1.2"/><text class="k" x="621" y="153" fill="var(--fact)">● 这个 reader 读到的</text><text class="m2" x="621" y="174">仍然是</text><text class="m" x="845" y="174" text-anchor="end" fill="var(--fact)">fe01e227…</text><text class="n" x="621" y="208">想看新版，打开一个新的 View</text><path d="M574 124 L592 124 L592 176" fill="none" stroke="var(--fact)" stroke-width="1.5"/><line x1="592" y1="176" x2="600" y2="176" stroke="var(--fact)" stroke-width="1.5" marker-end="url(#a-fact)"/><rect x="24" y="244" width="834" height="58" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="265" fill="var(--degrade)">◐ 读者也参与锁协议</text><text class="b" x="37" y="286">writer 从镜像准备一直持排他锁到收据落盘，所以持共享锁的读者永远看不到「指针已切、收据未写」那个故意留出的窗口</text></svg></figure>
+    <div class="prose"><p><code>PublicationView.open()</code> 只接受一个 root，做八步校验，
+      然后把 publication ID 和 bundle 目录钉在内存里。
+      之后每次 <code>read_bytes()</code> 只允许读 manifest 列出的路径，
+      并且<b>重新校验那个文件的长度与 sha256</b>。</p>
+      <p>即使外部指针随后切到别的版本，已打开的 View 仍读旧包；新 View 才看新版本。
+      <b>这是多文件一致读的真正下游保证</b>——不是「切换很快」，
+      而是「你手里的这一次读取，从头到尾属于同一个版本」。</p>
+      <p>读者也参与锁协议：writer 从镜像准备一直持排他锁到收据落盘，
+      所以持共享锁的读者永远看不到「指针已切、收据未写」那个<b>故意留出的</b>中间态。</p>
+      <p><b>一个会绊住新人的真实坑：</b><code>open()</code> 要求
+      <code>outputs/active_publication.json.lock</code> 存在且是普通文件，
+      而这个文件在 <code>.gitignore</code> 里。
+      全新 clone 里它不存在，任何要打开发布视图的代码都会直接失败。
+      这不是 bug——锁文件本来就不该进版本库——
+      但它意味着「clone 下来就能离线验证」这个性质需要多一条说明。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>八步校验与钉住语义。<code>publication.py:6257-6301 · publication.py:6338-6367</code></li><li><span class="tag" data-k="recomputed">实测</span>干净 checkout 上 open() 报 Publication authority lock is missing or unsafe；touch 该锁文件后正常打开并读完全部 25 个文件。</li><li><span class="tag" data-k="code">代码</span>原注释说明读者为什么也要拿锁。<code>publication.py:6292-6295 · &quot;Readers therefore observe either complete transaction&quot;</code></li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s16">
+  <header class="sh">
+    <span class="sn">16</span>
+    <span class="sk">边界</span>
+    <span class="si">包证明到哪为止</span>
+  </header>
+  <h2>包证明<em>完整性</em>，不证明<em>时效</em>与<em>验收</em></h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 1034 276" role="img" aria-label="发布包证明的四条边界：需求声明会漂移、验证范围写在包里、故障矩阵没跑过、完整验收从未通过"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><rect x="24" y="30" width="230" height="150" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="51" fill="var(--degrade)">◐ 限定一 · Requirement 漂移</text><text class="m2" x="37" y="72">包内记录</text><text class="m" x="241" y="72" text-anchor="end" fill="var(--ink)">161da433…</text><text class="m2" x="37" y="91">当前仓库</text><text class="m" x="241" y="91" text-anchor="end" fill="var(--refuse)">1786663c…</text><text class="m2" x="37" y="110">open()</text><text class="m" x="241" y="110" text-anchor="end" fill="var(--degrade)">照常成功</text><text class="n" x="37" y="168">历史声明，不是当前断言</text><rect x="276" y="30" width="230" height="150" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="289" y="51" fill="var(--degrade)">◐ 限定二 · 验证范围</text><text class="m2" x="289" y="72">mode</text><text class="m" x="493" y="72" text-anchor="end" fill="var(--ink)">LIGHT_REVIEW_MODE</text><text class="m2" x="289" y="91">result</text><text class="m" x="493" y="91" text-anchor="end" fill="var(--degrade)">PASSED_WITH_CAVEATS</text><text class="m2" x="289" y="110">未刷新</text><text class="m" x="493" y="110" text-anchor="end" fill="var(--degrade)">full_acceptance</text><text class="n" x="289" y="168">包自己诚实写着</text><rect x="528" y="30" width="230" height="150" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="541" y="51" fill="var(--refuse)">✕ 限定三 · 故障矩阵</text><text class="m2" x="541" y="72">定义了</text><text class="m" x="745" y="72" text-anchor="end" fill="var(--ink)">14 个场景</text><text class="m2" x="541" y="91">fault ns</text><text class="m" x="745" y="91" text-anchor="end" fill="var(--refuse)">NOT_RUN_OUT_OF_SCOPE</text><text class="m2" x="541" y="110">audit ns</text><text class="m" x="745" y="110" text-anchor="end" fill="var(--refuse)">NOT_RUN</text><text class="n" x="541" y="168">为这一版跑过的：0 次</text><rect x="780" y="30" width="230" height="150" rx="7" fill="var(--panel)" stroke="var(--refuse)" stroke-width="1.2"/><text class="k" x="793" y="51" fill="var(--refuse)">✕ 限定四 · full acceptance</text><text class="m2" x="793" y="72">scope=full</text><text class="m" x="997" y="72" text-anchor="end" fill="var(--ink)">17 份</text><text class="m2" x="793" y="91">BLOCKED / FAILED</text><text class="m" x="997" y="91" text-anchor="end" fill="var(--refuse)">15 / 2</text><text class="m2" x="793" y="110">PASSED</text><text class="m" x="997" y="110" text-anchor="end" fill="var(--refuse)">0</text><text class="n" x="793" y="168">仅 1 份真的 execute_live</text><rect x="24" y="200" width="986" height="58" rx="7" fill="var(--panel)" stroke="var(--degrade)" stroke-width="1.2"/><text class="k" x="37" y="221" fill="var(--degrade)">◐ 正确的心智模型</text><text class="b" x="37" y="242">包保证「这些字节没被动过，而且它们之间的声明彼此自洽」 —— 不保证「这些字节代表的验证在今天仍然成立」</text></svg></figure>
+    <div class="prose"><p>一个自然的理解是：既然包是不可变的、自包含的、每次读都验 hash，
+      那么打开它就等于拿到了完整可信的证据。<b>这个理解有四处需要限定。</b></p>
+      <p><b>一、Requirement 声明会漂移。</b>包里记的
+      <code>requirement_closure_hash</code> 与当前仓库重新推导的值已经不同，
+      而 <code>open()</code> 照常成功——它把这个字段列为必须存在，但<b>不</b>从仓库重新推导。
+      这是正确的设计：不可变包应该记录发布当时的事实。但它意味着那是一个<b>历史声明</b>，不是<b>当前断言</b>。</p>
+      <p><b>二、验证范围包自己写着</b>：<code>LIGHT_REVIEW_MODE / PASSED_WITH_CAVEATS</code>，
+      并显式列出 <code>issue_15_full_acceptance.not_run</code>。</p>
+      <p><b>三、14 个故障场景没为这一版跑过</b>：两个正式收据命名空间都只有一个空标记。</p>
+      <p><b>四、full acceptance 从未通过</b>：17 份 full scope 收据里没有一份 PASSED。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="recomputed">实测</span>当场重算的 Requirement closure 与包内记录不同，而 PublicationView 仍然成功打开。<code>当前 sha256:1786663c4c78bc1… vs 包内 sha256:161da433701e133…</code></li><li><span class="tag" data-k="gap">边界</span>两个空标记的 scope 与 status 不同，这个差别有意义：前者是「不在范围内所以没跑」，后者是「没跑」——后者没有「超出范围」这个借口。<code>publication_fault_receipts → NOT_RUN_OUT_OF_SCOPE · vnext_cutover_audits → NOT_RUN</code></li><li><span class="tag" data-k="artifact">产物</span>acceptance receipts 合计 43 份：BLOCKED 15 · FAILED 3 · PASSED_FAST_LOCAL_ONLY 4 · PASSED_RECORDED_ONLY 21。</li></ul></aside>
+  </div>
+</section>
+<section class="slide" id="s17">
+  <header class="sh">
+    <span class="sn">17</span>
+    <span class="sk">收束</span>
+    <span class="si">因果心智地图</span>
+  </header>
+  <h2>十道门，每一个 <em>≠</em> 都需要一组具体的证据</h2>
+
+  <div class="sb stack">
+    <figure class="fig"><svg viewBox="0 0 946 420" role="img" aria-label="十道因果台阶，左边是已经成立的事实，右边是还没成立的事实，中间是越过这道门所需的证据"><defs><marker id="a-fact" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--fact)"/></marker><marker id="a-raw" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--neutral)"/></marker><marker id="a-degrade" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--degrade)"/></marker><marker id="a-refuse" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--refuse)"/></marker><marker id="a-inherit" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--inherit)"/></marker><marker id="a-dim" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink3)"/></marker></defs><text class="k" x="24" y="20">已经成立</text><text class="k" x="196" y="20">还没成立</text><text class="k" x="372" y="20">越过这道门需要什么</text><text class="b" x="24" y="46">局部结果可信</text><text class="m" x="168" y="46" fill="var(--refuse)">≠</text><text class="s" x="196" y="46">批次完整</text><text class="m2" x="372" y="46">① expected == actual，同财年、同 Requirement</text><line x1="24" y1="56" x2="922" y2="56" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="80">批次完整</text><text class="m" x="168" y="80" fill="var(--refuse)">≠</text><text class="s" x="196" y="80">投影兼容</text><text class="m2" x="372" y="80">② 先独立渲染 220 行，再做 2,820 次事后比较</text><line x1="24" y1="90" x2="922" y2="90" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="114">投影兼容</text><text class="m" x="168" y="114" fill="var(--refuse)">≠</text><text class="s" x="196" y="114">PUBLISHABLE</text><text class="m2" x="372" y="114">③ 由两个字段算出，调用者填不进去</text><line x1="24" y1="124" x2="922" y2="124" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="148">PUBLISHABLE</text><text class="m" x="168" y="148" fill="var(--refuse)">≠</text><text class="s" x="196" y="148">immutable bundle</text><text class="m2" x="372" y="148">④ 目录名 = 内容指纹；先验 → rename → 再验</text><line x1="24" y1="158" x2="922" y2="158" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="182">immutable bundle</text><text class="m" x="168" y="182" fill="var(--refuse)">≠</text><text class="s" x="196" y="182">有权提交</text><text class="m2" x="372" y="182">⑤ 权限从包自己的字节分类；公共 API 永远抛错</text><line x1="24" y1="192" x2="922" y2="192" stroke="var(--ink3)" stroke-width="1"/><rect x="16" y="198" width="906" height="30" rx="6" fill="var(--fact)" opacity=".12"/><text class="b" x="24" y="216">有权提交</text><text class="m" x="168" y="216" fill="var(--refuse)">≠</text><text class="s" x="196" y="216">active</text><text class="m2" x="372" y="216">⑥ 锁 + CAS + 前驱双检 → 指针替换 → 收据接上 tip</text><line x1="24" y1="226" x2="922" y2="226" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="250">active</text><text class="m" x="168" y="250" fill="var(--refuse)">≠</text><text class="s" x="196" y="250">崩溃后仍确定</text><text class="m2" x="372" y="250">⑦ 指针 == previous 还原，== proposed 补完，都不是则拒绝</text><line x1="24" y1="260" x2="922" y2="260" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="284">单 writer 成功</text><text class="m" x="168" y="284" fill="var(--refuse)">≠</text><text class="s" x="196" y="284">并发下唯一 winner</text><text class="m2" x="372" y="284">⑧ 锁负责串行，CAS 负责拦住过期前提</text><line x1="24" y1="294" x2="922" y2="294" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="318">active 是对的</text><text class="m" x="168" y="318" fill="var(--refuse)">≠</text><text class="s" x="196" y="318">下游读到一致</text><text class="m2" x="372" y="318">⑨ open() 钉住一版，read_bytes 不再看指针</text><line x1="24" y1="328" x2="922" y2="328" stroke="var(--ink3)" stroke-width="1"/><text class="b" x="24" y="352">字节没被动过</text><text class="m" x="168" y="352" fill="var(--refuse)">≠</text><text class="s" x="196" y="352">验证今天仍成立</text><text class="m2" x="372" y="352">⑩ 包证明完整性，不证明时效与验收</text><line x1="24" y1="362" x2="922" y2="362" stroke="var(--ink3)" stroke-width="1"/><text class="m" x="24" y="402" fill="var(--fact)">第六行是唯一提交点：它之前的失败都不改变正式版本，它之后的失败都可以从指针恢复。</text></svg></figure>
+    <div class="prose"><p><b>可以换的实现细节：</b>JSON 指针、本地目录、<code>fcntl</code> 文件锁、
+      rename、14 个镜像的具体清单、存储后端。这些都是当前实现，不是产品承诺。</p>
+      <p><b>不能丢的因果：</b>完整批次决定内容资格 · 独立投影加事后比较 ·
+      精确的门禁绑定 · 不可变版本 · <b>唯一</b>提交点 · 前驱与 CAS ·
+      write-ahead 恢复 · 一条连通历史 · 钉住式读取 · 篡改时 fail closed。</p>
+      <p>如果未来迁到对象存储或多机数据库，这十条必须逐条找到对应物——
+      而不是「把文件复制到云上」。多机方案还要额外定义网络分区、ack 丢失、
+      租约与 ETag 语义，那是新问题，不是同一个问题换个地方。</p>
+      <p>这一层<b>不负责</b>的事同样重要：不判断某个数字对不对（那在前两道流程里已经决定）·
+      不生成内容 · 不跨机协调 · 不清理历史。</p></div>
+    <aside class="ev"><ul class="cite"><li><span class="tag" data-k="code">代码</span>这一层的责任边界：接收已在 staging 准备好的字节，产出不可变包、指针、收据与钉住式读取入口。<code>scripts/vnext/publication.py</code></li><li><span class="tag" data-k="gap">边界</span>提交点是 fcntl.flock 加本地文件系统，单机语义。不承诺网络文件系统或多主机故障语义。</li><li><span class="tag" data-k="recomputed">实测</span>本次没有创建、切换或回滚任何 publication。active pointer 仍是 fe01e227…，14 个镜像与包逐字节一致（14/14），switch intent 目录不存在（等价于无 pending intent）。</li></ul></aside>
+  </div>
+</section></main>

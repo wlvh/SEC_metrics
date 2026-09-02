@@ -8,17 +8,19 @@ import unittest
 
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import content_hash
+from vnext.requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from vnext.requirements import ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
 from vnext.table_context_attestation import ATTESTATION_POINTER
 from vnext.table_context_attestation import EXACT_REQUEST_BINDING_FIELDS
-from vnext.table_context_attestation import (
-    build_table_context_feasibility_attestation,
-)
 from vnext.table_context_attestation import exact_request_binding
+from vnext.table_context_attestation import current_exact_request_binding
 from vnext.table_context_attestation import evaluate_context_feasibility
 from vnext.table_context_attestation import (
+    TableContextAttestationError,
     validate_table_context_feasibility_attestation,
 )
+from vnext.table_context_measurement import build_table_context_measurement_plan
+from vnext.table_context_measurement import TableContextMeasurementError
 
 
 class TableContextAttestationTest(unittest.TestCase):
@@ -26,9 +28,14 @@ class TableContextAttestationTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls) -> None:
-        """Validate the immutable attestation once for focused field tests."""
-        cls.attestation = validate_table_context_feasibility_attestation(
-            repo_root=REPO_ROOT,
+        """Load the accepted revised Occupancy attestation."""
+        pointer = json.loads(
+            (REPO_ROOT / ATTESTATION_POINTER).read_text(encoding="utf-8")
+        )
+        cls.attestation = json.loads(
+            (REPO_ROOT / pointer["attestation_path"]).read_text(
+                encoding="utf-8"
+            )
         )
 
     def test_attestation_is_mechanically_derived_from_stage_c_b(self) -> None:
@@ -45,7 +52,7 @@ class TableContextAttestationTest(unittest.TestCase):
             )
         )
         self.assertEqual(
-            "sha256:bd5c4e1e1fb302ce539c2ae7aa88b67c2b366c419436253b9ebb56f56dbf9795",
+            "sha256:107c8ae9584afe58170ff230ab0c9534d7b7ea1cd38108f6d23c4326b6f7e127",
             attestation["source_measurement_evidence_id"],
         )
         self.assertEqual(
@@ -74,19 +81,19 @@ class TableContextAttestationTest(unittest.TestCase):
             "prompt_cache_miss_tokens",
         ):
             self.assertEqual(evidence[field], attestation[field])
-        self.assertEqual(160937, attestation["actual_prompt_tokens"])
+        self.assertEqual(161433, attestation["actual_prompt_tokens"])
         self.assertEqual(200000, attestation["context_budget_tokens"])
-        self.assertEqual(39063, attestation["context_headroom_tokens"])
+        self.assertEqual(38567, attestation["context_headroom_tokens"])
         self.assertTrue(attestation["measurement_authorization_consumed"])
         self.assertFalse(attestation["qualification_credit"])
         self.assertFalse(
             attestation["qualification_response_reuse_eligible"]
         )
-        self.assertNotEqual(
+        self.assertEqual(
             attestation["measurement_requirement_closure_hash"],
             attestation["requirement_closure_hash"],
         )
-        self.assertNotEqual(
+        self.assertEqual(
             attestation["measurement_protected_closure_hash"],
             attestation["protected_closure_hash"],
         )
@@ -115,11 +122,16 @@ class TableContextAttestationTest(unittest.TestCase):
         )
         self.assertEqual(pointer["attestation_id"], attestation["attestation_id"])
 
-    def test_attestation_rebuild_is_deterministic(self) -> None:
-        """Repeated offline reconstruction yields the same immutable object."""
-        first = build_table_context_feasibility_attestation(repo_root=REPO_ROOT)
-        second = build_table_context_feasibility_attestation(repo_root=REPO_ROOT)
-        self.assertEqual(first, second)
+    def test_attestation_is_historical_after_raw_whitespace_prompt(self) -> None:
+        """Reject current-request credit while preserving immutable bytes."""
+        with self.assertRaisesRegex(
+            TableContextAttestationError,
+            "Current request differs",
+        ):
+            validate_table_context_feasibility_attestation(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_occupancy_table_v2",
+            )
 
     def test_exact_binding_projection_matches_d07_policy(self) -> None:
         """Expose exactly the fields that D-07 requires future requests to match."""
@@ -143,20 +155,86 @@ class TableContextAttestationTest(unittest.TestCase):
             ],
         )
 
-    def test_exact_occupancy_request_passes_above_estimated_bound(self) -> None:
-        """Admit only the measured request via provider-reported exact binding."""
-        attestation = self.attestation
+    def test_scope_bound_occupancy_proof_is_not_current(self) -> None:
+        """Do not project old prompt-bound usage onto the revised request."""
+        with self.assertRaisesRegex(
+            TableContextAttestationError,
+            "Current request differs",
+        ):
+            current_exact_request_binding(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_occupancy_table_v2",
+            )
+
+    def test_historical_occupancy_request_has_no_current_credit(
+        self,
+    ) -> None:
+        """Keep old usage bytes while blocking current credit or measurement."""
+        binding = exact_request_binding(attestation=self.attestation)
         result = evaluate_context_feasibility(
             repo_root=REPO_ROOT,
-            estimated_input_tokens=392447,
+            estimated_input_tokens=394837,
+            max_estimated_input_tokens=200000,
+            request_binding=binding,
+        )
+        self.assertEqual("BLOCKED", result["status"])
+        self.assertEqual(
+            "EXACT_CONTEXT_ATTESTATION_INVALID",
+            result["blocking_reason_code"],
+        )
+        self.assertIsNone(result["attested_actual_prompt_tokens"])
+        with self.assertRaisesRegex(
+            TableContextMeasurementError,
+            "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+        ):
+            build_table_context_measurement_plan(
+                repo_root=REPO_ROOT,
+                task_contract_id="lodging_occupancy_table_v2",
+            )
+
+    def test_historical_revpar_request_has_no_current_credit(self) -> None:
+        """Keep RevPAR usage bytes without projecting them onto the new prompt."""
+        row = ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS[1]
+        attestation = json.loads((
+            REPO_ROOT
+            / "artifacts/vnext/table_stage_c_evidence/"
+            "context_feasibility_attestations"
+            / (row["attestation_id"].split(":", maxsplit=1)[1] + ".json")
+        ).read_text(encoding="utf-8"))
+        result = evaluate_context_feasibility(
+            repo_root=REPO_ROOT,
+            estimated_input_tokens=394828,
             max_estimated_input_tokens=200000,
             request_binding=exact_request_binding(attestation=attestation),
         )
-        self.assertEqual("PASSED", result["status"])
-        self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING", result["evidence_basis"]
+        self.assertEqual(161422, attestation["actual_prompt_tokens"])
+        self.assertEqual(200000, attestation["context_budget_tokens"])
+        self.assertEqual(38578, attestation["context_headroom_tokens"])
+        self.assertIsNone(attestation["source_stage_c_b_packet_id"])
+        self.assertIsNone(attestation["source_stage_c_b_packet_path"])
+        self.assertFalse(attestation["qualification_credit"])
+        self.assertFalse(
+            attestation["qualification_response_reuse_eligible"]
         )
-        self.assertEqual(160937, result["attested_actual_prompt_tokens"])
+        self.assertEqual("BLOCKED", result["status"])
+        self.assertEqual(
+            "EXACT_CONTEXT_ATTESTATION_REQUIRED",
+            result["blocking_reason_code"],
+        )
+        changed = copy.deepcopy(exact_request_binding(
+            attestation=attestation,
+        ))
+        changed["provider_request_body_sha256"] = "0" * 64
+        blocked = evaluate_context_feasibility(
+            repo_root=REPO_ROOT,
+            estimated_input_tokens=394828,
+            max_estimated_input_tokens=200000,
+            request_binding=changed,
+        )
+        self.assertEqual("BLOCKED", blocked["status"])
+        self.assertIn(
+            "provider_request_body_sha256", blocked["drift_fields"],
+        )
 
     def test_every_exact_binding_drift_blocks_before_egress(self) -> None:
         """Reject source/task/prompt/schema/transport/request mutations."""
@@ -205,7 +283,13 @@ class TableContextAttestationTest(unittest.TestCase):
                 request_binding=binding,
             )
             self.assertEqual("BLOCKED", result["status"])
-            self.assertIn(field, result["drift_fields"])
+            if field == "task_contract_id":
+                self.assertIn(
+                    "provider_request_body_sha256", result["drift_fields"],
+                )
+                self.assertIn("task_contract_hash", result["drift_fields"])
+            else:
+                self.assertIn(field, result["drift_fields"])
 
     def test_default_estimated_bound_does_not_need_attestation(self) -> None:
         """Preserve the ordinary inclusive 200000 path unchanged."""

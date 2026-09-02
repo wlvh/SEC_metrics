@@ -1,0 +1,59 @@
+{
+  "record_type": "RUN",
+  "status": "FROZEN",
+  "records_file_hash": "ad34b6b1f0be03f40e31622e553505a836c41ee929b9ae2920c102ca5e69310b",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "4362f508147edd250bbd2e00ec48b2376525fdc8c538252c901941f48bf4bb06",
+  "content_manifest_hash": "sha256:37155379abb6ad179212f37f364b17d22e04799804cbdc9e86629e327e102cfa",
+  "audit_manifest_hash": "sha256:524b8ce83b02d3533a6ddedbfb25c1bf7c1c3484cdbbeddccb0e31916899b7e0",
+  "run_id": "run:ratchet:structural:d8ce8c369d66869e7eaa92ccd389e25335ae2431dca15593e52efa64669dad5c",
+  "company_id": "paramount_skydance_paramount_global",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/B11_revpar.md": "ca03800209951aa6b4a4804d76b8a6eb64e49727ccb03a8b62b445b1c7f9e81c"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "f6dac7b0c37aeba77e477dfbb3539fa0bc8226b00843ee0e538406aa9911c25f",
+    "contract_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+    "decision_register_sha256": "c77d35f72ab87e75c1982baaa3522d48bb6b20b25822822ea2edd0578171ec0f",
+    "event_route_catalog_sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+    "provider_model_runtime_sha256": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+    "public_projection_catalog_sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+    "foundation_verification_receipt_sha256": "fe6476db361607d6197f2d7145a1717a94d0ad98190dc08d17ece680933a0763",
+    "issue_body_sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+    "legacy_semantic_producer_inventory_sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+    "parent_requirement_closure_hash": "sha256:8e888bfab9965e96fc72ec963fa46652ba2dc423b156b8239d8de416c05fc2b7",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+    "source_strategy_registry_sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+    "source_strategy_baseline_receipt_sha256": "fcd4e0e975a451834ffac4cefae071770531120ca767f9162d68e9079260198b",
+    "transfer_manifest_sha256": "18f162d48131b3f6d56941dd446ec18089c7a336a50df8cb2c669e3b63711274"
+  },
+  "task_contract_bindings": [
+    {
+      "metric_spec_closure_hashes": [
+        "sha256:1c0fec749db938e5581ba6280e00a8e492bc4d5f65b64a4dd63dda1a4189f764"
+      ],
+      "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+      "system_prompt_hash": "sha256:82ed911f6e1274744d7151782da6e171d01120cc4dc1283758f1fed351573a45",
+      "metric_spec_paths": [
+        "catalog/metrics/B11_revpar.md"
+      ],
+      "metric_spec_semantic_hashes": [
+        "sha256:a57efbcde386d8347dbe918a8f4f8affab1ecfbaa9490650c40cca06e0b496cf"
+      ],
+      "task_contract_id": "lodging_revpar_table_v2",
+      "catalog_task_contract_hash": "sha256:be932afce0fb330dbcd8d2c5c2c3ee1c77ea13027d5dc4b49d4c241e41eac181",
+      "task_spec_semantic_hash": "sha256:bb3a81a376c4f7fb531cfc4289e0f33815df92632fa788599c795f31cb027848"
+    }
+  ],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

@@ -24,7 +24,9 @@ from scripts.vnext.review import system_review_allowed
 from tools import vnext_qualification
 from vnext.requirements import load_requirement_snapshot
 from vnext.run_store import _qualification_fixture_traits
+from vnext.run_store import _run_company_authority
 from vnext.traits import TraitError
+from vnext.traits import repository_company_traits
 
 
 def run_qualification_cli(*arguments: str) -> tuple[int, str, str]:
@@ -152,6 +154,65 @@ class CutoverQualificationTest(unittest.TestCase):
         )["error_code"])
         self.assertIn("Traceback", stderr)
 
+    def test_table_execute_surfaces_remote_failure_as_nonzero(self) -> None:
+        """Stop the CLI on a persisted failed terminal before phase advance."""
+        binding = {
+            "target_period": {
+                "fiscal_year": 2024,
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+            },
+            "qualification_terminal_id": "sha256:" + "a" * 64,
+            "qualification_task_plan_id": "sha256:" + "b" * 64,
+        }
+
+        class Authorization:
+            """Return the exact fake binding needed by the CLI boundary."""
+
+            def as_mapping(self) -> dict:
+                """Return an isolated binding copy."""
+                return dict(binding)
+
+        result = {
+            "run_id": "run:qualification:failed",
+            "status": "FAILED_TERMINAL",
+            "attempt_id": "attempt:failed",
+        }
+        with mock.patch(
+            "tools.vnext_qualification.issue_table_qualification_authorization",
+            return_value=Authorization(),
+        ), mock.patch(
+            "tools.vnext_qualification.execute_table_qualification_task",
+            return_value=result,
+        ), mock.patch(
+            "tools.vnext_qualification.load_run_for_status",
+            side_effect=AssertionError("failed terminal advanced to Run reload"),
+        ):
+            return_code, stdout, stderr = run_qualification_cli(
+                "table-execute",
+                "--family-id", "lodging_kpi_table",
+                "--task-contract-id", "lodging_occupancy_table_v2",
+                "--phase", "SECOND_LAYOUT",
+                "--ordinal", "1",
+                "--owner-token", "test-owner",
+            )
+        self.assertEqual(2, return_code)
+        self.assertEqual("", stderr)
+        payload = json.loads(stdout)
+        self.assertEqual("BLOCKED", payload["status"])
+        self.assertEqual(
+            "TABLE_QUALIFICATION_FAILED_TERMINAL",
+            payload["error_code"],
+        )
+        self.assertEqual(
+            "FAILED_TERMINAL",
+            payload["details"]["execution_status"],
+        )
+        self.assertEqual(
+            binding["qualification_task_plan_id"],
+            payload["details"]["qualification_task_plan_id"],
+        )
+
     def test_qualification_system_review_is_explicit(
         self,
     ) -> None:
@@ -199,6 +260,48 @@ class CutoverQualificationTest(unittest.TestCase):
             _qualification_fixture_traits(
                 repo_root=repo_root, manifest=manifest,
             )
+
+    def test_registered_qualification_still_uses_fixture_traits(self) -> None:
+        """Do not let Marriott registry traits mask its exact layout fixture."""
+        repo_root = Path(__file__).resolve().parents[2]
+        run_path = (
+            repo_root
+            / "artifacts/vnext/qualification/cycles/"
+            "b63c68a8551ffa1ec49760d82874384869e5a621aa28e156ed9195e32920a651/"
+            "runs/c330373bb347f8280560004e5fcd2eba2c053d2772364b752c208ee1e80c9c7a/"
+            "manifest.json"
+        )
+        manifest = json.loads(run_path.read_text(encoding="utf-8"))
+        self.assertNotEqual(
+            manifest["company_traits"],
+            repository_company_traits(
+                repo_root=repo_root,
+                company_id=str(manifest["company_id"]),
+            ),
+        )
+        traits, ciks = _run_company_authority(
+            repo_root=repo_root,
+            manifest=manifest,
+        )
+        self.assertEqual(["lodging"], traits)
+        self.assertEqual(["1048286"], ciks)
+
+        fresh_manifest = json.loads(json.dumps(manifest))
+        fresh_manifest["qualification_authorization"][
+            "qualification_phase"
+        ] = "FRESH_STABILITY"
+        fresh_traits, fresh_ciks = _run_company_authority(
+            repo_root=repo_root,
+            manifest=fresh_manifest,
+        )
+        self.assertEqual(
+            repository_company_traits(
+                repo_root=repo_root,
+                company_id=str(manifest["company_id"]),
+            ),
+            fresh_traits,
+        )
+        self.assertEqual(["1048286"], fresh_ciks)
 
     def test_failed_qualification_chain_can_reset_with_audit(self) -> None:
         """Archive only a failed pre-active chain before requalification."""
@@ -405,6 +508,57 @@ class CutoverQualificationTest(unittest.TestCase):
                 qualification._validate_independent_layouts(
                     second=base,
                     holdout=aliased,
+                )
+
+    def test_owner_approved_same_issuer_requires_distinct_period_and_source(
+        self,
+    ) -> None:
+        """Allow same issuer only with different year, accession, and bytes."""
+        second = {
+            "company_id": "marriott_international",
+            "cik": "1048286",
+            "accession": "0001628280-25-004818",
+            "source_sha256": "1" * 64,
+            "target_period": {
+                "fiscal_year": 2024,
+                "period_start": "2024-01-01",
+                "period_end": "2024-12-31",
+            },
+        }
+        holdout = {
+            "company_id": "marriott_international",
+            "cik": "1048286",
+            "accession": "0001628280-24-004372",
+            "source_sha256": "2" * 64,
+            "target_period": {
+                "fiscal_year": 2023,
+                "period_start": "2023-01-01",
+                "period_end": "2023-12-31",
+            },
+        }
+        qualification._validate_independent_layouts(
+            second=second,
+            holdout=holdout,
+            same_issuer_distinct_period_authorized=True,
+        )
+        mutations = {
+            "company_id": "other_company",
+            "cik": "999999",
+            "accession": second["accession"],
+            "source_sha256": second["source_sha256"],
+            "target_period": second["target_period"],
+        }
+        for field, replacement in mutations.items():
+            invalid = dict(holdout)
+            invalid[field] = replacement
+            with self.subTest(field=field), self.assertRaisesRegex(
+                QualificationError,
+                "HOLDOUT_NOT_INDEPENDENT",
+            ):
+                qualification._validate_independent_layouts(
+                    second=second,
+                    holdout=invalid,
+                    same_issuer_distinct_period_authorized=True,
                 )
 
     def test_freeze_inventory_rejects_preexisting_holdout_bytes_and_run(
@@ -614,7 +768,11 @@ class CutoverQualificationTest(unittest.TestCase):
             )
             semantic_file = repo_root / SEMANTIC_FILES[0]
             semantic_file.write_text("drift", encoding="utf-8")
-            with self.assertRaisesRegex(
+            with mock.patch.object(
+                qualification,
+                "load_table_task_contracts",
+                return_value={"authorized_family_ids": []},
+            ), self.assertRaisesRegex(
                 QualificationError,
                 "POST_FREEZE_PRODUCTION_DRIFT",
             ):

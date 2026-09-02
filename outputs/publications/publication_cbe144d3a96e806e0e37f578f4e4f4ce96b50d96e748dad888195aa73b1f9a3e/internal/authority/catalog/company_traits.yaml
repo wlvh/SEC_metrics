@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "projection_source": {
+    "company_registry": "config/company_registry.csv",
+    "metric_applicability": "config/metric_applicability.yaml"
+  },
+  "profile_traits": {
+    "airline": ["non_financial"],
+    "default_non_fi": ["non_financial"],
+    "financial_institution": ["financial"],
+    "lodging": ["lodging", "non_financial"],
+    "manufacturing": ["non_financial"],
+    "media": ["non_financial"],
+    "pharma": ["non_financial"],
+    "retail": ["non_financial"],
+    "subscription_or_contract_revenue": [
+      "non_financial",
+      "subscription_or_contract_revenue"
+    ],
+    "telecom": ["non_financial"]
+  }
+}

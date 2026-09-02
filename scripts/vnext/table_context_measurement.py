@@ -1,11 +1,12 @@
 """Acquire one exact table prompt-token measurement without qualification.
 
-The Stage-C path is deliberately separate from catalog qualification.  It
-rebuilds one Marriott lodging request from immutable repository authority,
-issues an opaque execution capability only after an external exact-HEAD
-authorization, and permanently consumes that capability at the first provider
-socket marker.  It never creates a Run, Candidate, EvidenceCheck, ReviewUnit,
-VerifiedObservation, qualification receipt, or publication candidate.
+The same one-shot boundary that served the historical task now rebuilds the
+separately authorized sibling request.  It remains deliberately separate from
+catalog qualification, issues an opaque capability only after an independent
+review binds the exact HEAD and provider request digest, and permanently
+consumes that capability at the first provider socket marker.  It never creates
+a Run, Candidate, EvidenceCheck, ReviewUnit, VerifiedObservation,
+qualification receipt, or publication candidate.
 """
 
 from __future__ import annotations
@@ -35,6 +36,11 @@ from .provider_runtime import load_provider_runtime_authority
 from .reader_input import build_reader_input_manifest, prepare_live_reader_request
 from .reader_input import prepare_reader_request
 from .requirements import ISSUE_15_D07_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
+from .requirements import ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
+from .requirements import ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
 from .requirements import load_requirement_snapshot
 from .sources import load_raw_blob_bytes, raw_blob_record
 from .sources import source_reference_record
@@ -77,9 +83,9 @@ STAGE_C_BASELINE = {
         "59283b4397bfdb6b0cfcb4afd1b85a7"
     ),
 }
-_CURRENT_D07_HASH = (
-    "sha256:200bb6feae25c5683260e2dd8a758f1a"
-    "b3f0480b8694bb802ca44fd80835554f"
+_MEASUREMENT_GRANT_D07_HASH = (
+    "sha256:fc307fe113e94f1111ccc5b2a1bc8a6c"
+    "62a8bb955e20c078e36edec1e15a3571"
 )
 _AUTHORIZATION_CAPABILITY = object()
 _AUTHORIZATION_CONSUMED_CODE = (
@@ -87,6 +93,10 @@ _AUTHORIZATION_CONSUMED_CODE = (
 )
 _GIT_OID = re.compile(r"^[0-9a-f]{40}$")
 _ACCESSION = re.compile(r"^[0-9]{10}-[0-9]{2}-[0-9]{6}$")
+_REVIEW_COMMENT_URL = re.compile(
+    r"^https://github\.com/wlvh/SEC_metrics/pull/[1-9][0-9]*"
+    r"#issuecomment-[1-9][0-9]*$"
+)
 _AUTHORIZATION_FIELDS = {
     "api",
     "authorization_id",
@@ -95,6 +105,7 @@ _AUTHORIZATION_FIELDS = {
     "authorized_repository_tree",
     "effective_d07_record_hash",
     "external_authorization_statement",
+    "external_review_comment_url",
     "family_id",
     "measurement_cycle_id",
     "measurement_ordinal",
@@ -150,6 +161,13 @@ _EVIDENCE_FIELDS = {
     "status",
     "transport_terminal_status",
     "usage_raw_field_hash",
+}
+_EVIDENCE_V2_FIELDS = _EVIDENCE_FIELDS | {
+    "authorized_repository_head",
+    "authorized_repository_tree",
+    "external_review_comment_url",
+    "family_id",
+    "task_contract_id",
 }
 _PROTECTED_RUNTIME_PATHS = (
     Path("catalog/table_task_contracts.json"),
@@ -259,21 +277,14 @@ def _content_addressed_record(
 
 
 def _stage_c_baseline(*, repo_root: Path) -> Dict[str, object]:
-    """Verify the exact PR-19 freeze/snapshot/packet lineage without rebuilding."""
-    pointer = strict_json_file(
-        path=repo_root / "config/table_qualification_freeze.json",
-    )
+    """Verify the immutable pre-measurement lineage without moving pointers.
+
+    The current qualification pointer legitimately advanced after the
+    historical measurement.  A later sibling plan therefore opens the historical
+    content-addressed objects by their accepted identities instead of requiring
+    a mutable pointer to move backwards.
+    """
     freeze_id = STAGE_C_BASELINE["table_qualification_freeze_receipt_id"]
-    if (
-        type(pointer) is not dict
-        or pointer.get("receipt_id") != freeze_id
-        or pointer.get("qualification_cycle_id")
-        != STAGE_C_BASELINE["qualification_cycle_id"]
-    ):
-        _fail(
-            code="TABLE_CONTEXT_MEASUREMENT_BASELINE_DRIFT",
-            message="Current table-freeze pointer differs",
-        )
     freeze_digest = str(freeze_id).split(":", maxsplit=1)[1]
     freeze = _content_addressed_record(
         path=(
@@ -293,22 +304,7 @@ def _stage_c_baseline(*, repo_root: Path) -> Dict[str, object]:
         id_field="stage_a_snapshot_id",
         expected_id=str(STAGE_C_BASELINE["stage_a_snapshot_id"]),
     )
-    owner_pointer = strict_json_file(
-        path=(
-            repo_root
-            / "artifacts/vnext/table_qualification_freeze"
-            / "current_owner_decision_packet.json"
-        )
-    )
     owner_id = STAGE_C_BASELINE["owner_decision_packet_id"]
-    if (
-        type(owner_pointer) is not dict
-        or owner_pointer.get("owner_decision_packet_id") != owner_id
-    ):
-        _fail(
-            code="TABLE_CONTEXT_MEASUREMENT_BASELINE_DRIFT",
-            message="Owner packet pointer differs",
-        )
     owner = _content_addressed_record(
         path=(
             repo_root
@@ -493,25 +489,73 @@ def _protected_file_bindings(
     return {**body, "protected_closure_hash": content_hash(value=body)}
 
 
-def _prepare_measurement(*, repo_root: Path) -> _PreparedMeasurement:
+def _prepare_measurement(
+    *, repo_root: Path, task_contract_id: str,
+) -> _PreparedMeasurement:
     """Rebuild the exact full-table provider request with no network action."""
     requirement = load_requirement_snapshot(
         snapshot_dir=repo_root / "requirements/issue_15_v1",
     )
     d07 = requirement["effective_decisions"]["D-07"]
-    exception = d07["choice"].get("measurement_exception")
+    occupancy_exception = d07["choice"].get("measurement_exception")
+    revpar_exception = d07["choice"].get("revpar_measurement_exception")
+    revised_prompt_policy = d07["choice"].get(
+        "revised_prompt_measurement_policy"
+    )
+    measurement_policy = d07["choice"].get(
+        "schema_revised_measurement_policy"
+    )
     if (
-        content_hash(value=d07) != _CURRENT_D07_HASH
-        or exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
+        measurement_policy == ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_POLICY
+        and measurement_policy.get("policy_status")
+        == "SCOPE_BOUND_MEASUREMENTS_CONSUMED_ATTESTATIONS_ACCEPTED"
+    ):
+        _fail(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message=(
+                "Both scope-bound-prompt task measurements are terminal; no "
+                "later HEAD can create another one-shot plan"
+            ),
+        )
+    if (
+        content_hash(value=d07) != _MEASUREMENT_GRANT_D07_HASH
+        or occupancy_exception != ISSUE_15_D07_MEASUREMENT_EXCEPTION
+        or revpar_exception != ISSUE_15_D07_REVPAR_MEASUREMENT_EXCEPTION
+        or revised_prompt_policy
+        != ISSUE_15_D07_REVISED_PROMPT_MEASUREMENT_POLICY
+        or measurement_policy
+        != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY
         or d07["choice"]["live_measurement_authorized"] is not False
         or d07["choice"]["live_qualification_authorized"] is not False
+        or d07["choice"].get(
+            "revpar_measurement_authorization_permanently_consumed"
+        ) is not True
+        or measurement_policy[
+            "provider_reported_prompt_tokens_required"
+        ] is not True
+        or measurement_policy["usage_unavailable_status"]
+        != "FAILED_USAGE_UNAVAILABLE"
+        or measurement_policy["context_budget_tokens"]
+        != d07["choice"]["max_estimated_input_tokens"]
     ):
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_AUTHORITY_INVALID",
-            message="Effective D-07 measurement exception differs",
+            message="Effective D-07 scope-bound measurement policy differs",
         )
-    family_id = str(exception["family_id"])
-    task_id = str(exception["task_contract_id"])
+    task_id = _text(
+        value=task_contract_id, label="measurement task contract",
+    )
+    if task_id not in measurement_policy["task_contract_ids"]:
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_TASK_NOT_AUTHORIZED",
+            message="Task is outside the revised one-shot policy",
+        )
+    exception = (
+        occupancy_exception
+        if task_id == occupancy_exception["task_contract_id"]
+        else revpar_exception
+    )
+    family_id = str(measurement_policy["family_id"])
     matrix = load_table_qualification_matrix(
         repo_root=repo_root, family_id=family_id,
     )
@@ -534,10 +578,13 @@ def _prepare_measurement(*, repo_root: Path) -> _PreparedMeasurement:
     if (
         task["reader_family_id"] != family_id
         or TABLE_PAYLOAD_SERIALIZATION_VERSION != exception["serializer_version"]
+        or task["system_prompt"]
+        != ISSUE_15_D07_SCOPE_BOUND_LODGING_SYSTEM_PROMPT
+        or task["system_prompt"] != measurement_policy["revised_system_prompt"]
     ):
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_AUTHORITY_INVALID",
-            message="D-07 task or serializer binding differs",
+            message="D-07 task, prompt, or serializer binding differs",
         )
     source = _source_binding(
         repo_root=repo_root, matrix_entry=entry, exception=exception,
@@ -629,6 +676,8 @@ def _prepare_measurement(*, repo_root: Path) -> _PreparedMeasurement:
         "requirement_closure_hash": requirement["requirement_closure_hash"],
         "effective_d07_record_hash": content_hash(value=d07),
         "historical_stage_c_baseline": baseline,
+        "historical_occupancy_measurement_exception": occupancy_exception,
+        "revised_prompt_measurement_policy": measurement_policy,
         "family_id": family_id,
         "task_contract_id": task_id,
         "source_company_id": exception["source_company_id"],
@@ -673,25 +722,25 @@ def _prepare_measurement(*, repo_root: Path) -> _PreparedMeasurement:
             "choice"
         ]["max_estimated_input_tokens"],
         "ordinary_qualification_remains_blocked": True,
-        "allowed_successful_provider_egress_count": exception[
-            "allowed_successful_provider_egress_count"
+        "allowed_successful_provider_egress_count": measurement_policy[
+            "maximum_measurements_per_task"
         ],
-        "automatic_retry_count": exception["automatic_retry_count"],
-        "qualification_ordinal_credit": exception[
+        "automatic_retry_count": measurement_policy["automatic_retry_count"],
+        "qualification_ordinal_credit": measurement_policy[
             "qualification_ordinal_credit"
         ],
-        "qualification_evidence_eligible": exception[
+        "qualification_evidence_eligible": measurement_policy[
             "qualification_evidence_eligible"
         ],
-        "publication_eligible": exception["publication_eligible"],
-        "response_reuse_for_qualification": exception[
+        "publication_eligible": measurement_policy["publication_eligible"],
+        "response_reuse_for_qualification": measurement_policy[
             "response_reuse_for_qualification"
         ],
-        "consumes_authorization_after_any_egress_marker": exception[
+        "consumes_authorization_after_any_egress_marker": measurement_policy[
             "consumes_authorization_after_any_egress_marker"
         ],
-        "execution_requires_external_exact_head_authorization": exception[
-            "execution_requires_external_exact_head_authorization"
+        "execution_requires_external_exact_head_authorization": measurement_policy[
+            "concrete_grant_requires_independent_exact_head_review"
         ],
         "repository_head_binding": "REQUIRED_AT_EXTERNAL_AUTHORIZATION",
         "protected_closure": protected,
@@ -717,17 +766,29 @@ def _prepare_measurement(*, repo_root: Path) -> _PreparedMeasurement:
 
 
 def build_table_context_measurement_plan(
-    *, repo_root: Path,
+    *, repo_root: Path, task_contract_id: str,
 ) -> Dict[str, object]:
     """Return the exact offline Stage-C measurement plan without issuing it."""
-    return copy.deepcopy(_prepare_measurement(repo_root=repo_root).plan)
+    return copy.deepcopy(_prepare_measurement(
+        repo_root=repo_root, task_contract_id=task_contract_id,
+    ).plan)
 
 
 def write_table_context_measurement_plan(
-    *, repo_root: Path,
+    *, repo_root: Path, task_contract_id: str,
 ) -> Dict[str, object]:
     """Persist the content-addressed offline plan without provider execution."""
-    plan = build_table_context_measurement_plan(repo_root=repo_root)
+    plan = build_table_context_measurement_plan(
+        repo_root=repo_root, task_contract_id=task_contract_id,
+    )
+    if _existing_plan_marker(
+        workspace_root=repo_root / MEASUREMENT_EXECUTION_ROOT,
+        measurement_plan_id=str(plan["measurement_plan_id"]),
+    ) is not None:
+        _fail(
+            code=_AUTHORIZATION_CONSUMED_CODE,
+            message="The exact task plan already has an egress marker",
+        )
     digest = str(plan["measurement_plan_id"]).split(":", maxsplit=1)[1]
     path = repo_root / MEASUREMENT_PLAN_ROOT / (digest + ".json")
     if path.exists():
@@ -800,11 +861,14 @@ def _repository_state(*, repo_root: Path, require_clean: bool) -> Dict[str, str]
 def issue_table_context_measurement_authorization(
     *,
     repo_root: Path,
+    task_contract_id: str,
     external_authorization_statement: str,
     authorized_repository_head: str,
+    authorized_provider_request_body_sha256: str,
+    external_review_comment_url: str,
     authorized_at_utc: str,
 ) -> TableContextMeasurementAuthorization:
-    """Issue the opaque one-shot capability only for an exact clean HEAD."""
+    """Issue the one-shot capability for an audited HEAD and request digest."""
     if external_authorization_statement != EXTERNAL_AUTHORIZATION_STATEMENT:
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_EXTERNAL_AUTHORIZATION_REQUIRED",
@@ -823,7 +887,21 @@ def issue_table_context_measurement_authorization(
             code="TABLE_CONTEXT_MEASUREMENT_HEAD_MISMATCH",
             message="External authorization does not bind current HEAD",
         )
-    plan = build_table_context_measurement_plan(repo_root=repo_root)
+    plan = build_table_context_measurement_plan(
+        repo_root=repo_root, task_contract_id=task_contract_id,
+    )
+    if authorized_provider_request_body_sha256 != plan[
+        "provider_request_body_sha256"
+    ]:
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_REQUEST_MISMATCH",
+            message="External review does not bind the exact provider request",
+        )
+    if _REVIEW_COMMENT_URL.fullmatch(external_review_comment_url) is None:
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_EXTERNAL_AUTHORIZATION_REQUIRED",
+            message="Independent PR review comment URL is absent or malformed",
+        )
     cycle_body = {
         "measurement_plan_id": plan["measurement_plan_id"],
         "authorized_repository_head": state["head"],
@@ -836,6 +914,7 @@ def issue_table_context_measurement_authorization(
         "measurement_cycle_id": cycle_id,
         "measurement_ordinal": MEASUREMENT_ORDINAL,
         "external_authorization_statement": external_authorization_statement,
+        "external_review_comment_url": external_review_comment_url,
         "authorized_at_utc": authorized_at_utc,
         "authorized_repository_head": state["head"],
         "authorized_repository_tree": state["tree"],
@@ -893,12 +972,16 @@ def _validate_authorization(
     """Rebuild HEAD, closure, source, task, prompt, schema, and request bytes."""
     actual = _authorization_binding(authorization=authorization)
     state = _repository_state(repo_root=repo_root, require_clean=True)
-    prepared = _prepare_measurement(repo_root=repo_root)
+    prepared = _prepare_measurement(
+        repo_root=repo_root,
+        task_contract_id=str(actual["task_contract_id"]),
+    )
     plan = prepared.plan
     expected = {
         "measurement_plan_id": plan["measurement_plan_id"],
         "measurement_ordinal": MEASUREMENT_ORDINAL,
         "external_authorization_statement": EXTERNAL_AUTHORIZATION_STATEMENT,
+        "external_review_comment_url": actual["external_review_comment_url"],
         "authorized_repository_head": state["head"],
         "authorized_repository_tree": state["tree"],
         "protected_closure_hash": plan["protected_closure_hash"],
@@ -1080,12 +1163,20 @@ def _write_egress_marker(
         )
     parse_utc_timestamp(value=started_at_utc)
     body = {
-        "schema_version": 1,
+        "schema_version": 2,
         "record_type": "TABLE_CONTEXT_MEASUREMENT_EGRESS_MARKER",
+        "measurement_plan_id": binding["measurement_plan_id"],
         "measurement_cycle_id": binding["measurement_cycle_id"],
         "authorization_id": binding["authorization_id"],
         "execution_id": execution_id,
         "measurement_ordinal": MEASUREMENT_ORDINAL,
+        "family_id": binding["family_id"],
+        "task_contract_id": binding["task_contract_id"],
+        "authorized_repository_head": binding["authorized_repository_head"],
+        "authorized_repository_tree": binding["authorized_repository_tree"],
+        "external_review_comment_url": binding[
+            "external_review_comment_url"
+        ],
         "provider_request_body_sha256": binding[
             "provider_request_body_sha256"
         ],
@@ -1129,6 +1220,58 @@ def _existing_marker(
             message="Measurement marker binding differs",
         )
     return dict(value)
+
+
+def _existing_plan_marker(
+    *, workspace_root: Path, measurement_plan_id: str,
+) -> Optional[Dict[str, object]]:
+    """Return the one marker that permanently consumed an exact task plan."""
+    if not workspace_root.exists():
+        return None
+    if workspace_root.is_symlink() or not workspace_root.is_dir():
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+            message="Measurement execution namespace is unsafe",
+        )
+    matches = []
+    for path in sorted(workspace_root.glob("*/provider_egress_marker.json")):
+        if path.is_symlink() or not path.is_file():
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker namespace contains an unsafe entry",
+            )
+        value = strict_json_file(path=path)
+        if type(value) is not dict or "egress_marker_id" not in value:
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker is invalid",
+            )
+        body = {
+            key: value[key] for key in value if key != "egress_marker_id"
+        }
+        if value["egress_marker_id"] != content_hash(value=body):
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker identity differs",
+            )
+        cycle_id = value.get("measurement_cycle_id")
+        if (
+            type(cycle_id) is not str
+            or not cycle_id.startswith("sha256:")
+            or path.parent.name != cycle_id.split(":", maxsplit=1)[1]
+        ):
+            _fail(
+                code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+                message="Measurement marker path differs from its cycle",
+            )
+        if value.get("measurement_plan_id") == measurement_plan_id:
+            matches.append(dict(value))
+    if len(matches) > 1:
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_STORAGE_INVALID",
+            message="Exact task plan has multiple egress markers",
+        )
+    return matches[0] if matches else None
 
 
 def _nonnegative_usage_int(
@@ -1258,7 +1401,7 @@ def _measurement_evidence(
         )
     transport_kind = str(marker["transport_kind"])
     body = {
-        "schema_version": 1,
+        "schema_version": 2,
         "record_type": "TABLE_CONTEXT_MEASUREMENT_EVIDENCE",
         "status": status,
         "measurement_plan_id": prepared.plan["measurement_plan_id"],
@@ -1266,6 +1409,13 @@ def _measurement_evidence(
         "measurement_ordinal": MEASUREMENT_ORDINAL,
         "authorization_id": binding["authorization_id"],
         "execution_id": execution_id,
+        "family_id": prepared.plan["family_id"],
+        "task_contract_id": prepared.plan["task_contract_id"],
+        "authorized_repository_head": binding["authorized_repository_head"],
+        "authorized_repository_tree": binding["authorized_repository_tree"],
+        "external_review_comment_url": binding[
+            "external_review_comment_url"
+        ],
         "provider_request_body_sha256": prepared.plan[
             "provider_request_body_sha256"
         ],
@@ -1303,7 +1453,8 @@ def validate_table_context_measurement_evidence(
     *, evidence: Mapping[str, object],
 ) -> Dict[str, object]:
     """Validate exact measurement evidence without granting downstream credit."""
-    if type(evidence) is not dict or set(evidence) != _EVIDENCE_FIELDS:
+    fields = set(evidence) if type(evidence) is dict else set()
+    if fields != _EVIDENCE_FIELDS and fields != _EVIDENCE_V2_FIELDS:
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_EVIDENCE_INVALID",
             message="Measurement evidence fields differ",
@@ -1320,10 +1471,31 @@ def validate_table_context_measurement_evidence(
         or value["response_reuse_for_qualification"] is not False
         or value["retry_performed"] is not False
         or value["real_SEC_egress_count"] != 0
+        or value["schema_version"] not in {1, 2}
+        or (value["schema_version"] == 1 and fields != _EVIDENCE_FIELDS)
+        or (value["schema_version"] == 2 and fields != _EVIDENCE_V2_FIELDS)
     ):
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_EVIDENCE_INVALID",
             message="Measurement evidence identity or non-credit status differs",
+        )
+    if value["schema_version"] == 2 and (
+        value["family_id"]
+        != ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY["family_id"]
+        or value["task_contract_id"] not in (
+            ISSUE_15_D07_SCOPE_BOUND_MEASUREMENT_GRANT_POLICY[
+                "task_contract_ids"
+            ]
+        )
+        or _GIT_OID.fullmatch(value["authorized_repository_head"]) is None
+        or _GIT_OID.fullmatch(value["authorized_repository_tree"]) is None
+        or _REVIEW_COMMENT_URL.fullmatch(
+            value["external_review_comment_url"]
+        ) is None
+    ):
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_EVIDENCE_INVALID",
+            message="Current measurement review or target binding differs",
         )
     return value
 
@@ -1372,6 +1544,14 @@ def _execute_with_transport(
 ) -> Dict[str, object]:
     """Execute one mock/real terminal with exactly one marker and no retry."""
     initial = _authorization_binding(authorization=authorization)
+    if _existing_plan_marker(
+        workspace_root=workspace_root,
+        measurement_plan_id=str(initial["measurement_plan_id"]),
+    ) is not None:
+        _fail(
+            code="TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
+            message="The exact task plan already has an egress marker",
+        )
     if _existing_marker(workspace_root=workspace_root, binding=initial) is not None:
         _fail(
             code="TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",

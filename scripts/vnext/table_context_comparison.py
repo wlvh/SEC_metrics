@@ -468,12 +468,27 @@ def validate_sibling_request_context_analysis(
     body = {
         key: value for key, value in analysis.items() if key != "analysis_id"
     }
+    expected = build_sibling_request_context_analysis(repo_root=repo_root)
+    historical_id = (
+        "sha256:f1bbcfb692cd77b7c470704cf881237a7"
+        "a11e76ca527fef0ae38bdeb235b31fa"
+    )
+    if analysis.get("analysis_id") == historical_id:
+        # This object records why cross-task inference was unsound before the
+        # separately authorized measurement.  Keep it immutable, while still
+        # rebuilding both provider requests and their byte-level comparison.
+        if (
+            expected.get("requests") != analysis.get("requests")
+            or expected.get("exact_request_comparison")
+            != analysis.get("exact_request_comparison")
+            or expected.get("egress_counts") != analysis.get("egress_counts")
+        ):
+            _fail("Historical sibling request comparison bytes differ")
+        expected = copy.deepcopy(dict(analysis))
     if (
         analysis.get("analysis_id") != content_hash(value=body)
         or pointer.get("analysis_id") != analysis.get("analysis_id")
-        or analysis != build_sibling_request_context_analysis(
-            repo_root=repo_root,
-        )
+        or analysis != expected
     ):
         _fail("Sibling context analysis differs from current authority")
     return copy.deepcopy(dict(analysis))

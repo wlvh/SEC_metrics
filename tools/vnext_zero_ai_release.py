@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Operate the repository-owned Issue #15 zero-AI release ratchet.
+"""Operate the repository-owned Issue #15 release ratchet.
 
 Purpose:
-    ``r1`` performs the authorized zero-AI cold start; ``r2`` commits the
-    deterministic cumulative successor.  Neither accepts a workspace, source,
-    company, metric, provider, or publication-root override, so a caller
-    cannot mint alternative formal authority.
+    ``r1`` performs the zero-AI cold start, ``r2`` commits the deterministic
+    successor, and ``r3`` commits the qualified table delta.  The historical
+    filename remains stable.  No command accepts a workspace, source, company,
+    metric, provider, or publication-root override.
 
 Call relationships:
     The CLI validates the current checkout identity and delegates to
@@ -30,6 +30,7 @@ if str(SCRIPTS_DIR) not in sys.path:
 
 from vnext.zero_ai_release import ZeroAiReleaseError, publish_r1  # noqa: E402
 from vnext.zero_ai_r2 import publish_r2  # noqa: E402
+from vnext.ratchet_release import RatchetReleaseError, publish_r3  # noqa: E402
 from vnext.publication import PublicationError  # noqa: E402
 from validation_provenance import ValidationProvenanceError  # noqa: E402
 
@@ -68,6 +69,8 @@ def main(*, argv: Sequence[str]) -> int:
     r1.add_argument("--committed-at-utc", required=True)
     r2 = subparsers.add_parser("r2")
     r2.add_argument("--committed-at-utc", required=True)
+    r3 = subparsers.add_parser("r3")
+    r3.add_argument("--committed-at-utc", required=True)
     arguments = parser.parse_args(list(argv))
     try:
         if arguments.command == "r1":
@@ -82,11 +85,18 @@ def main(*, argv: Sequence[str]) -> int:
                 source_commit=_head_sha(),
                 committed_at_utc=str(arguments.committed_at_utc),
             )
+        elif arguments.command == "r3":
+            result = publish_r3(
+                repo_root=REPO_ROOT,
+                source_commit=_head_sha(),
+                committed_at_utc=str(arguments.committed_at_utc),
+            )
         else:
             raise ZeroAiReleaseError("ZERO_AI_COMMAND_UNSUPPORTED")
     except (
         OSError,
         PublicationError,
+        RatchetReleaseError,
         ValidationProvenanceError,
         ValueError,
         ZeroAiReleaseError,

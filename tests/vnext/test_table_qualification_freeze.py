@@ -77,6 +77,21 @@ class TableQualificationFreezeTest(unittest.TestCase):
                     entry["token_context_limits"]["maximum_context_tokens"],
                 )
 
+    def test_each_revised_lodging_task_rejects_historical_attestation(
+        self,
+    ) -> None:
+        """Require reviewed new usage instead of either historical proof."""
+        matrix = load_table_qualification_matrix(repo_root=REPO_ROOT)
+        task_ids = matrix["entries"]["lodging_kpi_table"]["task_contract_ids"]
+        self.assertEqual(2, len(task_ids))
+        for task_id in task_ids:
+            with self.subTest(task_contract_id=task_id):
+                actual = freeze_module._attested_request_authority(
+                    repo_root=REPO_ROOT,
+                    task_contract_id=task_id,
+                )
+                self.assertIsNone(actual)
+
     def test_estimated_context_threshold_is_inclusive(self) -> None:
         """Pass 200000 exactly and block the first value above the D-07 cap."""
         common = {
@@ -122,7 +137,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
 
         financial_ready = self._synthetic_measurements(
-            lodging_reasons=["ESTIMATED_CONTEXT_LIMIT"],
+            lodging_reasons=["PROVIDER_CONTEXT_LIMIT"],
             financial_reasons=[],
         )
         second = _readiness_by_family(
@@ -133,7 +148,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
         self.assertTrue(second["financial_statement"]["live_ready"])
         self.assertFalse(second["lodging_kpi_table"]["live_ready"])
         self.assertIn(
-            "ESTIMATED_CONTEXT_LIMIT",
+            "PROVIDER_CONTEXT_LIMIT",
             second["lodging_kpi_table"]["blocking_reason_codes"],
         )
 
@@ -319,17 +334,13 @@ class TableQualificationFreezeTest(unittest.TestCase):
             drift_by_family={},
         )
         self.assertEqual(
-            392447,
+            395905,
             readiness["lodging_kpi_table"]["context_gate"][
                 "maximum_observed_estimated_input_tokens"
             ],
         )
         self.assertEqual(
-            [
-                "ESTIMATED_CONTEXT_LIMIT",
-                "EXACT_CONTEXT_BINDING_MISMATCH",
-            ],
-            readiness["lodging_kpi_table"]["blocking_reason_codes"],
+            [], readiness["lodging_kpi_table"]["blocking_reason_codes"],
         )
         task_readiness = _readiness_by_task_request(
             matrix=matrix,
@@ -347,20 +358,20 @@ class TableQualificationFreezeTest(unittest.TestCase):
         )
         self.assertTrue(occupancy["live_ready"])
         self.assertEqual(
-            "PROVIDER_REPORTED_EXACT_BINDING",
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
             occupancy["context_gate"]["evidence_basis"],
         )
-        self.assertFalse(revpar["live_ready"])
+        self.assertTrue(revpar["live_ready"])
         self.assertEqual(
-            "EXACT_CONTEXT_BINDING_MISMATCH",
-            revpar["context_gate"]["blocking_reason_code"],
+            "EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE",
+            revpar["context_gate"]["evidence_basis"],
         )
         self.assertEqual(
             ["EXPANDED_GRID_RESOURCE_LIMIT"],
             readiness["financial_statement"]["blocking_reason_codes"],
         )
         self.assertEqual(
-            [],
+            ["lodging_kpi_table"],
             sorted(
                 family_id
                 for family_id, value in readiness.items()
@@ -469,8 +480,8 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 }
                 body["readiness_by_family"]["lodging_kpi_table"][
                     "live_ready"
-                ] = True
-                body["live_ready_family_ids"] = ["lodging_kpi_table"]
+                ] = False
+                body["live_ready_family_ids"] = []
                 return {
                     "table_qualification_freeze_receipt_id": content_hash(
                         value=body,
@@ -515,13 +526,15 @@ class TableQualificationFreezeTest(unittest.TestCase):
                 estimate: object = "NOT_AVAILABLE_RESOURCE_LIMIT"
             elif "ESTIMATED_CONTEXT_LIMIT" in reasons:
                 estimate = 200001
+            elif reasons:
+                estimate = 1000001
             else:
                 estimate = 200000
             context_status = (
                 "NOT_EVALUATED_RESOURCE_LIMIT"
                 if estimate == "NOT_AVAILABLE_RESOURCE_LIMIT"
                 else "BLOCKED"
-                if "ESTIMATED_CONTEXT_LIMIT" in reasons
+                if reasons
                 else "PASSED"
             )
             for task_contract_id in matrix["entries"][family_id][
@@ -559,7 +572,7 @@ class TableQualificationFreezeTest(unittest.TestCase):
                         "exact_binding_match": False,
                         "drift_fields": [],
                         "blocking_reason_code": (
-                            "EXACT_CONTEXT_ATTESTATION_REQUIRED"
+                            reasons[0]
                             if context_status == "BLOCKED" else None
                         ),
                     },

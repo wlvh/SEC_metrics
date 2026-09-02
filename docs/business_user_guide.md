@@ -37,7 +37,7 @@ SEC_metrics 为当前 registry 中配置的公司生成最近年度 SEC 申报�
   <!-- capability-anchor: BOUNDARY.sec_only_point_in_time -->
 - 不保证复杂表格、维度债务、治理与风险指标都能自动得到数值；它们可能明确降级。
   <!-- capability-anchor: BOUNDARY.complex_extraction_can_degrade -->
-- 当前没有前端、API、daily scheduler或生产数据库服务；Issue #15 zero-AI R2已有committed active publication，但WB-4以后、AI Reader、39指标最终Cutover与full receipt仍不存在。
+- 当前没有前端、API、daily scheduler或生产数据库服务；Issue #15 R3已有24指标/240个累计vNext Result keys/327行public matrix的committed active publication，但financial、text、39指标最终Cutover与full receipt仍不存在。
   <!-- capability-anchor: BOUNDARY.not_production_service -->
 - 不替人做投资、信用、报价、监管或外部审计决定。
   <!-- capability-anchor: RESPONSIBILITY.human_reviews_caveats_and_decides -->
@@ -182,9 +182,15 @@ vNext 已提供同一套 recorded/live operator与formal publication primitives�
 
 正式live core还exact固定module-owned repository、`artifacts/vnext/cutover`、`outputs` legacy snapshot与publication root，fault matrix也不接受caller root。每次有效live调用（包括HUMAN或SYSTEM/committed resume）都会fresh执行SEC acquisition；旧receipt只能重验历史pinned semantic plan，本次receipt会单独进入current audit/full closure。
 
-第二布局与holdout不是把网页下载后手工拼成 fixture：运行负责人只能从 `fixtures/vnext/qualification_candidates.json` 选固定ID，并用 `tools/vnext_capture_qualification_fixture.py` 统一请求官方 SEC、写入ledger/raw bytes、调用固定DeepSeek并保存provider envelope、Reader response与回放excerpt。该工具不接受URL、公司、期间、模型或secret覆盖；录制完成后，qualification 本身仍是 socket=0 回放。
+第二布局与holdout不是把网页下载后手工拼成response fixture。source只能来自matrix exact点名、manifest与immutable SEC attempt共同绑定的固定fixture；需要新增SEC source时，必须按owner授予的exact URL/purpose通过既有`SecHttpClient`获取并发布完整ledger/attempt closure。source-only fixture以`NOT_RUN` sentinel明确没有模型response。`table-plan`只离线重建exact provider envelope；经exact-head审核后的`table-execute`才通过WB-3 reservation发起该sample自己的live response并生成qualification evidence。`tools/vnext_capture_qualification_fixture.py`当前在SEC/provider构造前稳定拒绝egress，不能绕过上述路径。
 
-当前开发证据中只有一个exact lodging task/request获得context feasibility attestation：它的Stage C-B actual prompt为160937，低于200000 budget；这不代表measurement response可以复用为qualification，也不代表整个lodging family ready。另一个required sibling request没有matching attestation或严格跨task token上界，仍为`EXACT_CONTEXT_EVIDENCE_REQUIRED`；financial仍为`F3_NEED_MORE_EVIDENCE`，live qualification、R3和publication都未授权。业务人员不得把该attestation或Stage-C packet当成新的指标结果。
+occupancy与RevPAR最早的exact context attestation分别记录160937与160928；后续prompt/schema演进产生的新proof也全部保留为immutable usage历史。它们只证明各自exact request在当时的context可行，measurement response始终不可复用为qualification或业务结果。当前measurement authorization均已消费，不能再测；新cycle必须按matrix为每个sample产生新的qualification execution、provider usage、Evidence、Review、Result与PASSED/FROZEN closure。业务人员只能在R3 active terminal validation与strict compatibility完成后读取新lodging结果。
+
+schema-v3阶段曾暴露更窄的问题：目标表没有caption时，模型可能借用另一表或邻近正文。当前prompt因此要求证据只能来自被选中的同一张表：目标表有非空caption才可逐字引用；否则必须从该表内部复制一格的完整八字段locator与exact raw text，并原样保留首尾空白及JSON转义。serializer v2同时携带raw与normalized文本，latest prompt进一步明示caption tuple的raw位置是`c[1]`、cell tuple的raw位置是`x[5]`，禁止把`c[0]`或`x[6]`当成scope raw evidence。修订后的historical measurements记录Occupancy 161433、RevPAR 161422 prompt tokens并被D-07接受，但同样没有qualification credit；新prompt不新增measurement，每个qualification sample仍用自己的provider usage裁决context。
+
+随后一个旧cycle的Marriott FY2024 second-layout pair达到FROZEN；Hyatt FY2025 holdout却因目标表缺少冻结scope literals而以`SCHEMA_VIOLATION`停止，RevPAR按stop rule未执行。owner没有放宽scope或Evidence，而是把holdout收窄为Marriott FY2023：同issuer但fiscal year、accession与source bytes必须全部不同，并机械证明materially different layout。exact SEC source只获取一次；production parser证明唯一`table_000011`同表含FY2023 RevPAR 124.70、Occupancy 69.2、`Comparable Systemwide Properties`与`Worldwide`，且document table count与target span geometry等多项布局差异成立。当前new-cycle顺序是Marriott FY2024 second layout → production semantic freeze → Marriott FY2023 post-freeze holdout → 每task三个Marriott FY2025 fresh ordinals；旧cycle response一律不复用，每个plan仍须新exact-head审核与新execution。
+
+Fresh stability按ordinal-major运行两个task：Occupancy 1 → RevPAR 1 → Occupancy 2 → RevPAR 2 → Occupancy 3 → RevPAR 3。由于同一task三轮输入完全相同，provider request SHA也相同；系统以plan-owned WB-3 namespace保证每轮仍是新的真实execution，而不是复用上一轮response。operator必须看到每个ordinal各自不同的provider request ID、marker、attempt、response、acceptance、ledger row与Run；少一项或出现`REUSED_SUCCESS`都不能计入稳定性。
 
 但它尚未成为业务结果入口。业务人员当前仍从第 4 节所列 root manifest、snapshot checker、report 和 CSV 开始，不应在 `artifacts/vnext/` 中自行挑选一个 OPEN/FROZEN Run 当成正式结果。
 
@@ -205,7 +211,7 @@ vNext 已提供同一套 recorded/live operator与formal publication primitives�
 
 任何 APPLICABLE/WITHHELD 或不完整 bundle 都不能替换 active。Projector 必须加载由 registry/applicability/release plan 派生的 complete BatchManifest 及全部 PASSED FROZEN Runs，生成 strict-compatible candidate；formal publisher还必须绑定qualification、live三轮portable audit closure、有效review、ledger与全部gate。首次Cutover把冻结legacy root bytes严格重验后只读导入为immutable predecessor A，再提交绑定A的formal B；导入、rollback与restore都不会运行旧parser。rollback只能回到current pointer记录的committed predecessor。
 
-qualification 的顺序不是任意的：先用同一 Reader/Evidence/Review path完成第二真实布局，并取得有效 HUMAN 或D-06 SYSTEM `APPROVE`、全量`PUBLISHED` Result和`PASSED` validation的资格receipt；`REJECT`/WITHHELD 只保留审计，不能进入freeze。随后冻结production semantic tree并记录pre-holdout fixture/Run exact inventory，最后才加入不同company/CIK的独立holdout。若holdout在freeze前已存在，或加入后production semantic hash变化，Cutover必须停止。每个new/rollback/restore终态cycle只启动一次公开terminal CLI，并在单进程、单次pinned publication transaction中依序执行Stage10 Golden、Stage11 report、Stage12 active validation、snapshot publish与verify，防止读取过程中pointer切换造成混合视图。
+qualification 的顺序不是任意的：先用同一 Reader/Evidence/Review path完成第二真实布局，并取得有效 HUMAN 或D-06 SYSTEM `APPROVE`、全量`PUBLISHED` Result和`PASSED` validation的资格receipt；`REJECT`/WITHHELD 只保留审计，不能进入freeze。随后冻结production semantic tree并记录pre-holdout fixture/Run exact inventory，最后才加入matrix声明的独立holdout。当前same-issuer holdout必须同时证明不同fiscal year、accession、source bytes以及至少两项material layout差异，不能退化为同一文件的复刻。若holdout在freeze前已存在，或加入后production semantic hash变化，Cutover必须停止。每个new/rollback/restore终态cycle只启动一次公开terminal CLI，并在单进程、单次pinned publication transaction中依序执行Stage10 Golden、Stage11 report、Stage12 active validation、snapshot publish与verify，防止读取过程中pointer切换造成混合视图。
 
 publication switch在改root mirrors前先于独占锁内写`outputs/publication_switch_intents/<sha256>.json`。共享锁读取者遇pending、多份或被篡改的intent只会fail closed，不会擅自清理；恢复者仍持独占锁，pointer已经是proposed时完成switch edge并重建proposed mirrors，pointer仍是previous时撤销本事务edge并恢复previous，其他状态停止。initial A→B失败还会清掉本次A孤儿edge、pointer与intent；整个恢复过程不运行旧parser，也不回滚request ledger。
 
@@ -215,9 +221,10 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 判断展示版本必须同时读取 active pointer 与 latest run status：active 是当前可用的上一成功完整版本；latest 可能失败、withheld 或仍在 staging。status writer 只接收 persisted Run directory 或 publication ID，在 pointer lock 内加载真实状态并验证 active pointer/bundle；不接受调用方自报的状态枚举、boolean、view 或 manifest。bundle storage、pointer/lock、status 和 mirrors 全部从单一 publication root 派生，调用方不能分别定义互相矛盾的路径。`active_is_latest_success` 由两者 publication ID 是否相同派生。FAILED/BLOCKED 不得携带 latest publication ID，不能把旧 active 描述成最新运行成功。
 <!-- capability-anchor: BEHAVIOR.vnext_latest_active_separate -->
 
-当前可采信的active publication覆盖Issue #15 zero-AI R2：16个DET_ONLY与C01/E01–E05，共22指标/220个Result坐标；141个legacy行strict-compatible，79个新增key均为`N_A_STRUCTURAL`，public matrix共309行。R1的verified A→B→A→B历史仍可回读；R2以完整submissions current/history shard source sets、event-key parity、retirement和immutable read-back receipts提交，real model egress与paid call均为0。WB-4以后、AI Reader、39指标最终Cutover和full acceptance尚未完成。
+当前可采信的active publication覆盖Issue #15 R3：在R2的16个DET_ONLY与C01/E01–E05基础上新增lodging B10/B11，共24指标/240个累计vNext Result坐标；R3新增20个坐标，其中18个新增key为`N_A_STRUCTURAL`，public matrix共327行。R1历史与R2 predecessor仍可回读；十个lodging qualification terminal均重新执行DerivedAsset/Evidence/Review/Calculator并绑定provider usage，正式发布后又完成R3→R2 rollback→修正版R3，当前previous精确为R2。financial、text、39指标最终Cutover和full acceptance尚未完成。
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r1_active -->
 <!-- capability-anchor: CAPABILITY.issue_15_zero_ai_r2_active -->
+<!-- capability-anchor: CAPABILITY.issue_15_r3_ratchet_prepare -->
 <!-- capability-anchor: BOUNDARY.vnext_cutover_not_complete -->
 
 ## 11. 最短建议
