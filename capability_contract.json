@@ -1,7 +1,7 @@
 {
   "schema_version": "0.4.0",
   "status": "active",
-  "purpose": "SEC_metrics 当前 SEC-only 单财年批处理、Issue #15 Requirement authority、已正式发布的零 AI ratchet、尚未完成的后续 Cutover、限制、责任和用户可见行为的机器可读真相源。",
+  "purpose": "SEC_metrics 当前 SEC-only 单财年批处理、R1–R3历史Requirement authority、Issue #28 successor authority、已正式发布的ratchet、尚未完成的后续Cutover、限制、责任和用户可见行为的机器可读真相源。",
   "rules": [
     "Markdown 文档只能引用稳定 anchor_id，不得引用 JSON path、数组下标或 schema 内部路径。",
     "废弃 anchor_id 必须保留登记，且不得复用于不同含义。",
@@ -59,11 +59,21 @@
         "anchor_id": "CAPABILITY.issue_15_requirement_authority",
         "type": "capability",
         "status": "active",
-        "statement": "仓库能显式加载 requirements/issue_15_v1 的 exact Contract、自包含 Decision 单链、post-freeze D-36/D-35/D-26 exact tips、parent transfer/baseline、39 指标 legacy semantic producer exact set、matrix baseline 与 foundation verification，并逐字节拒绝 Contract、parent、tip 或 receipt 漂移。对Run，非空的持久task_contract_bindings机械选择Issue #15 closure，空绑定的保留historical disclosure Run才选择ai_first_v3_3_1；catalog binding与parent hashes的组合会在freeze/replay失败。Requirement authority 冻结开发输入，其本身不证明对应 Reader、transport、publication 或业务运行时已实施。",
+        "statement": "仓库继续以historical adapter显式加载requirements/issue_15_v1的exact Contract、Decision单链、parent transfer/baseline、legacy producer/matrix/foundation证据，并逐字节拒绝漂移。旧catalog Run仍由持久task_contract_bindings机械选择Issue #15，空binding的更早disclosure Run选择ai_first_v3_3_1；两类历史artifact不增加新identity字段且原bytes不改写。Issue #15只提供R1–R3兼容解释，不再承载successor policy。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_table_qualification_freeze.py::TableQualificationFreezeTest.test_full_freeze_receipt_rebuild_is_deterministic",
         "test_status": "automated_recorded",
         "since": "2026-08-19"
+      },
+      {
+        "anchor_id": "CAPABILITY.issue_28_profile_requirement_authority",
+        "type": "capability",
+        "status": "active",
+        "statement": "仓库能加载任意声明PROFILE_DRIVEN_V1 generation的五文件successor Requirement，而不为每个Issue增加硬编码分支。通用层机械验证regular-file/no-symlink、exact file set、hash/size、parent closure、Decision duplicate/detached/fork/cycle、每项parent policy唯一transfer disposition、validator identity及closed typed invariant kinds；invariant profile只保存Decision引用，policy值只在Decision Register。issue_28_v1继承exact issue_15_v1 closure，绑定main e0cd1da、active R3/exact R2与PR #22 archive no-credit/no-reuse。successor Run按generation同时要求requirement_id、requirement_closure_hash和requirement_hashes；缺失或伪造不能回退legacy。该transition不实现R4或授权provider/paid/SEC调用。",
+        "audience": ["operator", "developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_issue28_requirement_transition.py::Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke",
+        "test_status": "validation_gate",
+        "since": "2026-09-02"
       },
       {
         "anchor_id": "CAPABILITY.issue_15_source_strategy_registry",
@@ -535,7 +545,7 @@
         "anchor_id": "BEHAVIOR.r4_fast_concurrent_test_policy",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Issue #15 D-26 effective tip保留tools/run_fast_tests.py的二十个并发直接边界条目，其中authority/scope/WB-2/WB-2B/WB-3与R2 predecessor read-back用例机械验证Requirement、producer closure、39指标registry、E01 parity、invocation故障矩阵及已提交publication；pull_request GitHub workflow执行同一fast set。FAST_LOCAL_ONLY标记界定证据范围；CI green只证明该fast set，不能由此声称Issue #15 full acceptance。",
+        "statement": "Issue #15 historical D-26保留tools/run_fast_tests.py的二十个并发直接边界条目；Requirement smoke现在同时加载profile-driven issue_28_v1和exact issue_15_v1 parent，其余条目继续验证producer closure、registry、E01 parity、invocation故障矩阵及已提交publication。pull_request GitHub workflow执行同一fast set；FAST_LOCAL_ONLY与CI green都不能声称successor full acceptance。",
         "audience": ["developer", "reviewer", "operator"],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",
@@ -967,13 +977,25 @@
         "anchor_id": "DOC.issue_15_requirement_contract",
         "type": "document",
         "status": "active",
-        "statement": "requirements/issue_15_v1/CONTRACT.md 是当前 Issue #15 正文的 exact bytes，也是全部未来 vNext 开发的首要 Requirement authority；父 ai_first_v3_3_1 快照保持不可变 inherited foundation。",
+        "statement": "requirements/issue_15_v1/CONTRACT.md保留Issue #15 frozen exact bytes，并与ai_first_v3_3_1共同作为R1–R3历史兼容authority；它不再是successor开发policy入口。",
         "audience": ["operator", "developer", "reviewer"],
         "document_path": "requirements/issue_15_v1/CONTRACT.md",
         "language": "zh-CN",
         "test_anchor": "tests/vnext/test_issue15_authority.py::Issue15AuthorityTest.test_issue15_snapshot_loads_and_preserves_parent_history",
         "test_status": "automated_recorded",
         "since": "2026-08-19"
+      },
+      {
+        "anchor_id": "DOC.issue_28_requirement_contract",
+        "type": "document",
+        "status": "active",
+        "statement": "requirements/issue_28_v1/CONTRACT.md定义successor outcome、边界和升级条件；policy content只在同snapshot的Decision Register，typed invariant profile不构成通用表达式语言。",
+        "audience": ["operator", "developer", "reviewer"],
+        "document_path": "requirements/issue_28_v1/CONTRACT.md",
+        "language": "en",
+        "test_anchor": "tests/vnext/test_issue28_requirement_transition.py::Issue28RequirementTransitionTest.test_invariant_profile_contains_references_not_policy_values",
+        "test_status": "validation_gate",
+        "since": "2026-09-02"
       },
       {
         "anchor_id": "DOC.business_user_guide",

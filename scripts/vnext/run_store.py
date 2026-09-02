@@ -27,6 +27,7 @@ from .render import render_review_markdown
 from .reader import validate_reader_output
 from .reader_input import build_reader_payload, build_reader_task_contract
 from .requirements import load_run_requirement_snapshot
+from .requirement_profile import CONTENT_HASH_PATTERN
 from .review import effective_review_decision, system_review_allowed
 from .review import SYSTEM_REVIEWER_ID, SYSTEM_REVIEW_REASON
 from .review import validate_decision_binding
@@ -52,7 +53,9 @@ MANIFEST_FIELDS = {
     "records_file_hash",
     "review_decisions_file_hash",
     "qualification_authorization",
+    "requirement_closure_hash",
     "requirement_hashes",
+    "requirement_id",
     "run_id",
     "source_references",
     "spec_file_hashes",
@@ -67,7 +70,9 @@ RUN_VALIDATION_VIEW_FIELDS = (
     "execution_semantics_hash",
     "missing_required_source_roles",
     "qualification_authorization",
+    "requirement_closure_hash",
     "requirement_hashes",
+    "requirement_id",
     "run_id",
     "source_references",
     "spec_file_hashes",
@@ -237,6 +242,8 @@ def create_run(
     requirement_hashes: Mapping[str, str],
     task_contract_bindings: Sequence[Mapping[str, object]] = (),
     qualification_authorization: Optional[Mapping[str, object]] = None,
+    requirement_id: Optional[str] = None,
+    requirement_closure_hash: Optional[str] = None,
 ) -> Dict[str, object]:
     """Create a new OPEN Run with explicit empty data files.
 
@@ -254,6 +261,9 @@ def create_run(
             retained historical disclosure Runs use an empty sequence.
         qualification_authorization: Exact LIVE table qualification authority,
             or ``None`` for recorded and retained historical Runs.
+        requirement_id: Required explicit identity for successor Runs; legacy
+            Runs omit both this field and ``requirement_closure_hash``.
+        requirement_closure_hash: Exact successor Requirement closure.
 
     Returns:
         Initial strict RUN manifest.
@@ -304,6 +314,15 @@ def create_run(
             for key in hashes
         ):
             raise RunStoreError("{} hashes are invalid".format(label))
+    if (requirement_id is None) != (requirement_closure_hash is None):
+        raise RunStoreError("Run explicit Requirement identity is incomplete")
+    if requirement_id is not None:
+        try:
+            validate_identifier(value=requirement_id, field="requirement_id")
+        except RecordError as error:
+            raise RunStoreError("Run explicit Requirement identity is invalid") from error
+        if CONTENT_HASH_PATTERN.fullmatch(str(requirement_closure_hash)) is None:
+            raise RunStoreError("Run explicit Requirement closure is invalid")
     normalized_task_bindings = []
     binding_ids = set()
     for binding in task_contract_bindings:
@@ -355,6 +374,14 @@ def create_run(
         "missing_required_source_roles": list(missing_required_source_roles),
         "spec_file_hashes": dict(spec_file_hashes),
         "requirement_hashes": dict(requirement_hashes),
+        **(
+            {
+                "requirement_closure_hash": requirement_closure_hash,
+                "requirement_id": requirement_id,
+            }
+            if requirement_id is not None
+            else {}
+        ),
         "task_contract_bindings": normalized_task_bindings,
         **(
             {"qualification_authorization": dict(qualification_authorization)}
@@ -1175,6 +1202,9 @@ def _verify_repository_bindings(
         requirement = load_run_requirement_snapshot(
             repo_root=repo_root,
             task_contract_bindings=task_contract_bindings,
+            requirement_id=manifest.get("requirement_id"),
+            requirement_closure_hash=manifest.get("requirement_closure_hash"),
+            requirement_hashes=manifest["requirement_hashes"],
         )
     except ValueError as error:
         raise RunStoreError("Run Requirement Snapshot is invalid") from error
@@ -2817,6 +2847,10 @@ def _run_content_and_audit_hashes(
         "decisions": list(decisions),
         "validation": dict(validation),
     }
+    for field in ("requirement_closure_hash", "requirement_id"):
+        if field in manifest:
+            content_value[field] = manifest[field]
+            audit_value[field] = manifest[field]
     return content_hash(value=content_value), content_hash(value=audit_value)
 
 

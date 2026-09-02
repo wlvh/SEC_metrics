@@ -270,7 +270,12 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "audit_manifest_hash",
             "execution_semantics_hash",
         ),
-        optional=("task_contract_bindings", "qualification_authorization"),
+        optional=(
+            "task_contract_bindings",
+            "qualification_authorization",
+            "requirement_closure_hash",
+            "requirement_id",
+        ),
     ),
     "SOURCE_REFERENCE": RecordSchema(
         required=(
@@ -389,6 +394,8 @@ TEXT_FIELDS = {
     "request_attempt_id",
     "request_body_sha256",
     "request_body_path",
+    "requirement_closure_hash",
+    "requirement_id",
     "qualification_authorization_id",
     "qualification_cycle_id",
     "qualification_evidence_id",
@@ -1061,6 +1068,15 @@ def _validate_record_semantics(
             target_period=record["target_period"],
             company_traits=record["company_traits"],
         )
+        has_requirement_id = "requirement_id" in record
+        has_requirement_closure = "requirement_closure_hash" in record
+        if has_requirement_id != has_requirement_closure:
+            raise RecordError("Run explicit Requirement identity is incomplete")
+        if has_requirement_closure and re.fullmatch(
+            r"sha256:[0-9a-f]{64}",
+            str(record["requirement_closure_hash"]),
+        ) is None:
+            raise RecordError("Run explicit Requirement closure is invalid")
     if record_type == "AI_EXTRACTION_ATTEMPT":
         observation = record["transport_observation"]
         observation_fields = {

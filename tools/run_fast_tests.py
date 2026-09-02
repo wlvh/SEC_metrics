@@ -36,8 +36,9 @@ FAST_TESTS = (
     "test_optional_system_decision_is_auditable",
     "tests.vnext.test_legacy_projector.LegacyProjectorTest."
     "test_legacy_inventory_binds_frozen_commit_and_source_blobs",
-    "tests.vnext.test_issue15_authority.Issue15AuthorityTest."
-    "test_issue15_requirement_snapshot_fast_smoke",
+    "tests.vnext.test_issue28_requirement_transition."
+    "Issue28RequirementTransitionFastTest."
+    "test_profile_snapshot_loads_with_historical_parent_fast_smoke",
     "tests.vnext.test_issue15_authority.Issue15AuthorityTest."
     "test_reusable_producer_scopes_match_exact_base_call_graph",
     "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest."

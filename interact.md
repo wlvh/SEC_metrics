@@ -103,6 +103,9 @@ validation snapshot provenance 同样是仓库内完整性机制，不是外部�
 
 当前仓库只登记了在 PR 上运行 fast suite 的 GitHub CI check；未登记 UI、API、生产 scheduler、部署状态、专用支持渠道或紧急联系人。CI green 只证明该 fast boundary，不表示 live、full acceptance 或部署完成。
 
+R1–R3结果继续由`issue_15_v1`历史adapter和已提交PublicationView读取；successor开发authority为五文件`issue_28_v1` snapshot。对用户可见的关键区别不是目录名，而是解释边界：旧Run/publication缺少新identity字段仍可按历史schema回读，任何successor Run若缺少或伪造`requirement_id`、`requirement_closure_hash`、`requirement_hashes`则不能freeze/replay。Requirement transition本身不改变active R3、root mirrors、指标值或live能力。
+<!-- capability-anchor: CAPABILITY.issue_28_profile_requirement_authority -->
+
 ## 8. vNext formal Cutover 的可观察行为（R3 partial active）
 
 仓库已包含同一套recorded/live operator与formal publication primitives。当前active pointer是Issue #15 R3业务入口，覆盖24个累计指标、240个累计vNext Result keys和327行public matrix；recorded sandbox仍不能修改或冒充它。previous pointer精确指向R2，不能把这个partial active写成39指标最终Cutover。

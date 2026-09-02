@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "record_type": "REQUIREMENT_INVARIANT_PROFILE",
+  "requirement_id": "issue_28_v1",
+  "profile_semantic_version": "1",
+  "invariants": [
+    {
+      "invariant_id": "INV-ARTIFACT-IDENTITY",
+      "decision_id": "S-ARTIFACT-IDENTITY"
+    },
+    {
+      "invariant_id": "INV-DELIVERY-SEPARATION",
+      "decision_id": "S-DELIVERY-SEPARATION"
+    },
+    {
+      "invariant_id": "INV-EVIDENCE-RESULT",
+      "decision_id": "S-EVIDENCE-RESULT"
+    },
+    {
+      "invariant_id": "INV-HISTORICAL-EVIDENCE",
+      "decision_id": "S-HISTORICAL-EVIDENCE"
+    },
+    {
+      "invariant_id": "INV-LIVE-CALL-BOUND",
+      "decision_id": "S-LIVE-CALL-BOUND"
+    },
+    {
+      "invariant_id": "INV-PUBLICATION-PREDECESSOR",
+      "decision_id": "S-PUBLICATION-PREDECESSOR"
+    },
+    {
+      "invariant_id": "INV-R4-SCOPE",
+      "decision_id": "S-R4-SCOPE"
+    },
+    {
+      "invariant_id": "INV-SESSION-RESOURCE",
+      "decision_id": "S-SESSION-RESOURCE"
+    },
+    {
+      "invariant_id": "INV-SOURCE-SCOPE",
+      "decision_id": "S-SOURCE-SCOPE"
+    },
+    {
+      "invariant_id": "INV-TRANSPORT-RETRY",
+      "decision_id": "S-TRANSPORT-RETRY"
+    }
+  ]
+}

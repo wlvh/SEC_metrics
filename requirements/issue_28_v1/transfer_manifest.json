@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "record_type": "REQUIREMENT_TRANSFER_MANIFEST",
+  "requirement_id": "issue_28_v1",
+  "parent_requirement_id": "issue_15_v1",
+  "parent_requirement_closure_hash": "sha256:e4b1d8141196fae9bb5da904692fd0d495ec69b89101b8304e12f6cb2640b7c7",
+  "parent_snapshot_files": {
+    "CONTRACT.md": {
+      "sha256": "9a368d3cf7381d29adb0a1b041e882f74c1137b6e16d266300ef4ec21b9e19ec",
+      "size": 47898
+    },
+    "baseline_manifest.json": {
+      "sha256": "f6dac7b0c37aeba77e477dfbb3539fa0bc8226b00843ee0e538406aa9911c25f",
+      "size": 6137
+    },
+    "decision_register.json": {
+      "sha256": "c77d35f72ab87e75c1982baaa3522d48bb6b20b25822822ea2edd0578171ec0f",
+      "size": 210918
+    },
+    "foundation_verification_receipt.json": {
+      "sha256": "fe6476db361607d6197f2d7145a1717a94d0ad98190dc08d17ece680933a0763",
+      "size": 5136
+    },
+    "legacy_semantic_producer_inventory.json": {
+      "sha256": "78d2732a19ac838b00cb878e085bad2976b1dc16f2632438cf38276e64a442a1",
+      "size": 143195
+    },
+    "source_strategy_baseline_receipt.json": {
+      "sha256": "fcd4e0e975a451834ffac4cefae071770531120ca767f9162d68e9079260198b",
+      "size": 42147
+    },
+    "transfer_manifest.json": {
+      "sha256": "18f162d48131b3f6d56941dd446ec18089c7a336a50df8cb2c669e3b63711274",
+      "size": 3906
+    }
+  },
+  "parent_snapshot_binding_hash": "sha256:88c4d1d6c12f14d569ac8e6867a859d15b19f67b01ddb24d46e82426135addbc",
+  "classification_counts": {
+    "CARRY_FORWARD": 14,
+    "HISTORICAL_ONLY": 1,
+    "SUPERSEDED": 3
+  },
+  "dispositions": [
+    {
+      "decision_id": "D-01",
+      "parent_effective_record_hash": "sha256:91fe4b7ef9620adadd3ef63c058259485ac8d11fdcd974ab9904869328539bb9",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-TRANSPORT-RETRY"
+      ],
+      "rationale": "Carry forward fixed transport, context and retry safety without copying the full historical choice."
+    },
+    {
+      "decision_id": "D-03",
+      "parent_effective_record_hash": "sha256:130fab18dc7d855bfdfad0be18254540c25b6499779342d996899eec4edb1f03",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT"
+      ],
+      "rationale": "Carry forward fail-closed result completeness and withheld-result principles."
+    },
+    {
+      "decision_id": "D-04",
+      "parent_effective_record_hash": "sha256:28bac1e54f7c1e115ffc9568c5290bd86b9532b306ba0c395b111cc13dbb1865",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-PUBLICATION-PREDECESSOR"
+      ],
+      "rationale": "Carry forward immutable publication and predecessor/read-back safety."
+    },
+    {
+      "decision_id": "D-05",
+      "parent_effective_record_hash": "sha256:b00826690311cba5dc00cdcea4b5187e7dfd8dfea131c15a61c9152624d68f98",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT"
+      ],
+      "rationale": "Carry forward value, unit, period and compatibility semantics."
+    },
+    {
+      "decision_id": "D-06",
+      "parent_effective_record_hash": "sha256:975c17330d266cea40ce979542f141fc1c621409ab4cff3490519c6aecb6e1db",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT"
+      ],
+      "rationale": "Carry forward audited Evidence, Review and Result closure."
+    },
+    {
+      "decision_id": "D-07",
+      "parent_effective_record_hash": "sha256:22a0be3ff04f3aa640aa922e111135d7aae90cb7beb9fd8d416f3dad0c9997a4",
+      "disposition": "SUPERSEDED",
+      "successor_decision_ids": [
+        "S-LIVE-CALL-BOUND",
+        "S-SOURCE-SCOPE",
+        "S-TRANSPORT-RETRY"
+      ],
+      "rationale": "Replace full-filing/no-selector execution policy with bounded continuous source windows while retaining context and no-retry safety."
+    },
+    {
+      "decision_id": "D-08",
+      "parent_effective_record_hash": "sha256:1b80d735adff8a0654cb42191719ab66cfbbc73a9ffa21eae872f4f6c7c2685f",
+      "disposition": "HISTORICAL_ONLY",
+      "successor_decision_ids": [],
+      "rationale": "The lodging-specific tolerance and historical method-change identity remain bound to R3 read-back; successor metrics require their own later Decision content."
+    },
+    {
+      "decision_id": "D-24",
+      "parent_effective_record_hash": "sha256:45695d8fddfcff4e2f919a17920ba67c8f1049e3dec0f278ae4d38f9a1537109",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-ARTIFACT-IDENTITY"
+      ],
+      "rationale": "Carry forward fail-closed identity boundaries without upgrading same-process controls into a sandbox claim."
+    },
+    {
+      "decision_id": "D-26",
+      "parent_effective_record_hash": "sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938",
+      "disposition": "SUPERSEDED",
+      "successor_decision_ids": [
+        "S-DELIVERY-SEPARATION"
+      ],
+      "rationale": "Replace the one-branch delivery process with bounded implementation and release PRs while retaining the fast gate."
+    },
+    {
+      "decision_id": "D-30",
+      "parent_effective_record_hash": "sha256:259a2d3b0d7b2efa3da60c9b5249fc6279bafc085d05e32ddab1103b084297d2",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT"
+      ],
+      "rationale": "Carry forward dense result-key and no-removal compatibility principles."
+    },
+    {
+      "decision_id": "D-31",
+      "parent_effective_record_hash": "sha256:e2cfe6065b7a1263c7a0ab4c526b5d72e70a1ff96224d324401076aa40bb12cd",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT",
+        "S-SOURCE-SCOPE"
+      ],
+      "rationale": "Carry forward exact locator and raw scope evidence while changing only how candidate source windows are bounded."
+    },
+    {
+      "decision_id": "D-32",
+      "parent_effective_record_hash": "sha256:7db800a3249759304c5ad55a66b2041937a0016a47fd824231b89deaf7faefb3",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT",
+        "S-SOURCE-SCOPE"
+      ],
+      "rationale": "Carry forward exact table/cell merge and locator invariants."
+    },
+    {
+      "decision_id": "D-33",
+      "parent_effective_record_hash": "sha256:fdbdb9f9e604a6ec02a7beb2d66b842f9f3d1d98157a66f712e89e91b30c34d9",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT",
+        "S-PUBLICATION-PREDECESSOR"
+      ],
+      "rationale": "Carry forward Result-derived publication and migration-state separation."
+    },
+    {
+      "decision_id": "D-34",
+      "parent_effective_record_hash": "sha256:b8032e1dca3c122120008b86a909ab5cda57ab2b46b0ec5d954c31d67fbd44ab",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT"
+      ],
+      "rationale": "Carry forward explicit coverage and incomplete-publication safety."
+    },
+    {
+      "decision_id": "D-35",
+      "parent_effective_record_hash": "sha256:6e966a51833c5f1d4fd25e5b8520dfb46414a64e4b868ce4d8181f2b8ac1de04",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-TRANSPORT-RETRY"
+      ],
+      "rationale": "Carry forward retry zero, UNKNOWN no-retry and terminal stop behavior."
+    },
+    {
+      "decision_id": "D-36",
+      "parent_effective_record_hash": "sha256:468b7ef6528f4d76de56a71bcba4c913e47e858eefdba55129554ddaf845af1e",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-LIVE-CALL-BOUND",
+        "S-TRANSPORT-RETRY"
+      ],
+      "rationale": "Carry forward actual usage observability without introducing a repository monetary gate."
+    },
+    {
+      "decision_id": "D-37",
+      "parent_effective_record_hash": "sha256:d3033afaa2a76988101588d974df735d9945aab884074c19c196ccc55537d1c7",
+      "disposition": "SUPERSEDED",
+      "successor_decision_ids": [
+        "S-LIVE-CALL-BOUND",
+        "S-SOURCE-SCOPE"
+      ],
+      "rationale": "Replace the historical full-source stability matrix with explicit fixture classes and bounded live calls."
+    },
+    {
+      "decision_id": "D-38",
+      "parent_effective_record_hash": "sha256:9b47beae22224f88ed9e72a0fcd336e5aad2d57e91c3c60f1dcce8b57c7e67e3",
+      "disposition": "CARRY_FORWARD",
+      "successor_decision_ids": [
+        "S-EVIDENCE-RESULT"
+      ],
+      "rationale": "Carry forward catalog-owned semantics and audit-only claim boundaries."
+    }
+  ],
+  "historical_material": [
+    {
+      "material_id": "PR22_FAILED_CYCLES",
+      "disposition": "HISTORICAL_ONLY",
+      "archive_ref": "archive/pr22-r4-development-62678e3",
+      "archive_commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+      "qualification_credit": "NONE",
+      "current_execution_credit": "NONE",
+      "response_reuse": "NOT_AUTHORIZED",
+      "rationale": "Failed and incomplete PR #22 cycles remain audit history only."
+    },
+    {
+      "material_id": "PR22_FULL_DOCUMENT_PLANS",
+      "disposition": "HISTORICAL_ONLY",
+      "archive_ref": "archive/pr22-r4-development-62678e3",
+      "archive_commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+      "qualification_credit": "NONE",
+      "current_execution_credit": "NONE",
+      "response_reuse": "NOT_AUTHORIZED",
+      "rationale": "Old full-document plans cannot authorize successor execution."
+    },
+    {
+      "material_id": "PR22_HISTORICAL_RESPONSES",
+      "disposition": "HISTORICAL_ONLY",
+      "archive_ref": "archive/pr22-r4-development-62678e3",
+      "archive_commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+      "qualification_credit": "NONE",
+      "current_execution_credit": "NONE",
+      "response_reuse": "NOT_AUTHORIZED",
+      "rationale": "Archived provider responses receive no new credit or reuse."
+    },
+    {
+      "material_id": "PR22_HTTP_SCHEMA_UNKNOWN_TERMINALS",
+      "disposition": "HISTORICAL_ONLY",
+      "archive_ref": "archive/pr22-r4-development-62678e3",
+      "archive_commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+      "qualification_credit": "NONE",
+      "current_execution_credit": "NONE",
+      "response_reuse": "NOT_AUTHORIZED",
+      "rationale": "HTTP 402, schema-violation and UNKNOWN terminals remain historical."
+    },
+    {
+      "material_id": "PR22_OLD_EXACT_HEAD_GRANTS",
+      "disposition": "HISTORICAL_ONLY",
+      "archive_ref": "archive/pr22-r4-development-62678e3",
+      "archive_commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+      "qualification_credit": "NONE",
+      "current_execution_credit": "NONE",
+      "response_reuse": "NOT_AUTHORIZED",
+      "rationale": "Old exact-head grants cannot authorize a successor head."
+    }
+  ]
+}

@@ -1,0 +1,270 @@
+{
+  "schema_version": 2,
+  "record_type": "REQUIREMENT_DECISION_REGISTER",
+  "requirement_id": "issue_28_v1",
+  "issue_contract_revision": "ISSUE_28_V1",
+  "decisions": [
+    {
+      "decision_id": "S-ARTIFACT-IDENTITY",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "ARTIFACT_REQUIREMENT_IDENTITY",
+        "generation": "EXPLICIT_REQUIREMENT_V1",
+        "legacy_requirement_ids": [
+          "ai_first_v3_3_1",
+          "issue_15_v1"
+        ],
+        "required_artifact_types": [
+          "PUBLICATION_MANIFEST",
+          "RELEASE_PLAN",
+          "RUN"
+        ],
+        "required_identity_fields": [
+          "requirement_closure_hash",
+          "requirement_hashes",
+          "requirement_id"
+        ],
+        "successor_missing_identity_allowed": false
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5508858390"
+    },
+    {
+      "decision_id": "S-DELIVERY-SEPARATION",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "DELIVERY_SEPARATION_POLICY",
+        "implementation_and_live_release_prs_separate": true,
+        "live_release_production_python_changes_allowed": false,
+        "maximum_new_production_ratchets_per_pr": 1,
+        "planned_pr_sequence": [
+          "PR-A",
+          "PR-B",
+          "PR-C",
+          "PR-D",
+          "PR-E",
+          "PR-F",
+          "PR-G"
+        ],
+        "r5_metric_ids": [
+          "B06",
+          "B13",
+          "C03",
+          "C04"
+        ],
+        "r6_scope_categories": [
+          "CLOSED_WORLD",
+          "LEGAL",
+          "QUALITATIVE",
+          "RISK"
+        ],
+        "r4_start_requires_transition_merge": true,
+        "rf_final_metric_count": 39,
+        "wb7_independent_pr": true,
+        "superseded_issue_numbers_after_transition_merge": [
+          15,
+          24
+        ],
+        "superseded_issue_close_status": "SUPERSEDED_BY_ISSUE_28",
+        "transition_allows_r4_implementation": false,
+        "transition_provider_calls": 0,
+        "transition_paid_calls": 0,
+        "transition_sec_calls": 0
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-EVIDENCE-RESULT",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "EVIDENCE_RESULT_POLICY",
+        "immutable_source_binding_required": true,
+        "exact_locator_required": true,
+        "raw_value_unit_period_scope_recovery_required": true,
+        "mechanical_evidence_required": true,
+        "review_required": true,
+        "result_closure_required": true,
+        "dense_result_keys_required": true,
+        "strict_compatibility_required": true
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-HISTORICAL-EVIDENCE",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "HISTORICAL_EVIDENCE_POLICY",
+        "immutable_requirement_ids": [
+          "ai_first_v3_3_1",
+          "issue_15_v1"
+        ],
+        "archive_ref": "archive/pr22-r4-development-62678e3",
+        "archive_commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+        "classification": "HISTORICAL_R4_DEVELOPMENT_ONLY",
+        "qualification_credit": "NONE",
+        "response_reuse": "NOT_AUTHORIZED",
+        "current_execution_credit": "NONE"
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-LIVE-CALL-BOUND",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "LIVE_CALL_BOUND",
+        "ratchet_id": "R4",
+        "target_minimum_provider_calls": 12,
+        "target_maximum_provider_calls": 18,
+        "hard_maximum_provider_calls": 24,
+        "positive_fixture_classes": [
+          "POSITIVE_ALTERNATE_LAYOUT",
+          "POSITIVE_PRODUCTION"
+        ],
+        "zero_call_fixture_classes": [
+          "AMBIGUOUS_EXCLUDED",
+          "NEGATIVE_EXPECTED",
+          "NOT_APPLICABLE",
+          "QUALITATIVE_ONLY"
+        ],
+        "historical_response_qualification_credit": "NONE",
+        "response_reuse": "NOT_AUTHORIZED"
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-PUBLICATION-PREDECESSOR",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "PUBLICATION_PREDECESSOR",
+        "ratchet_id": "R4",
+        "required_predecessor": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+        "failure_active_publication": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+        "immutable_read_back_required": true,
+        "rollback_required": true,
+        "restore_required": true
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-R4-SCOPE",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "RATCHET_SCOPE",
+        "ratchet_id": "R4",
+        "metric_ids": [
+          "A03",
+          "A04",
+          "A09",
+          "A11",
+          "A12",
+          "A13"
+        ],
+        "maximum_new_production_ratchets_per_pr": 1
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-SESSION-RESOURCE",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "SESSION_RESOURCE_POLICY",
+        "full_source_materializations_per_session_maximum": 1,
+        "full_parent_authority_constructions_per_session_maximum": 1,
+        "full_prior_run_replays_per_child_maximum": 0,
+        "full_derived_asset_rebuilds_per_child_maximum": 0,
+        "final_independent_disk_replays": 1,
+        "minimum_wall_time_improvement_factor": 10,
+        "source_issue_url": "https://github.com/wlvh/SEC_metrics/issues/24",
+        "offline_provider_calls": 0,
+        "offline_paid_calls": 0,
+        "offline_sec_calls": 0
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-SOURCE-SCOPE",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "SOURCE_SCOPE_POLICY",
+        "ratchet_id": "R4",
+        "minimum_continuous_windows": 1,
+        "maximum_continuous_windows": 2,
+        "positive_fixture_classes": [
+          "POSITIVE_ALTERNATE_LAYOUT",
+          "POSITIVE_PRODUCTION"
+        ],
+        "zero_call_fixture_classes": [
+          "AMBIGUOUS_EXCLUDED",
+          "NEGATIVE_EXPECTED",
+          "NOT_APPLICABLE",
+          "QUALITATIVE_ONLY"
+        ],
+        "forbidden_selector_classes": [
+          "AI_SELECTOR",
+          "EMBEDDING_FUZZY_TOP_K_SELECTOR",
+          "LITERAL_ONLY_SELECTOR",
+          "RUNTIME_TOC_GUESSER",
+          "SPARSE_RANKER"
+        ],
+        "automatic_full_document_fallback": false
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    },
+    {
+      "decision_id": "S-TRANSPORT-RETRY",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "TRANSPORT_RETRY_POLICY",
+        "automatic_retry_count": 0,
+        "unknown_remote_outcome_retry_allowed": false,
+        "http_402_automatic_retry_count": 0,
+        "http_402_stops_execution": true,
+        "http_402_stops_batch": true,
+        "actual_usage_required": true,
+        "context_ceiling_tokens": 200000
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-02T11:32:30Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    }
+  ],
+  "pending_decisions": [
+    {
+      "decision_id": "S-R5-B06-B13-MEANING",
+      "status": "PENDING_EXTERNAL_APPROVAL",
+      "effect": "R5 cannot migrate B06 or B13 until economic meaning is approved",
+      "required_choice_fields": [
+        "b06_economic_meaning",
+        "b13_economic_meaning"
+      ],
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28"
+    }
+  ]
+}
