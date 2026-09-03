@@ -1,4 +1,33 @@
-# R4 offline one-page summary — owner decision required
+# R4 offline one-page summary — A03 alternate scope blocked
+
+## Current continuation after owner policy comment 5524085182
+
+The A12/A13/resource policy comment was posted by explicit owner delegation and
+is retained in `docs/evidence/issue_28_prb_policy_revision.json`. Native SEC
+preflight passed. Both approved BAC/Citi filings were acquired with HTTP 200,
+one attempt each and retry zero: [acquisition receipt](fixture_acquisition_receipt.json).
+The ledger grew from 981 to 983 rows, preserving its exact old prefix;
+provider/paid/SEC accounting is **0/0/2**, with no filing slots remaining.
+
+All three complete sources passed the 512 MiB/no-swap/network-none worker.
+Expanded counts are JPM 124761, BAC 200229 and Citi 95463. The production cap is
+now 210000 (smallest 10000-rounded sufficient value, 4.88% headroom); the worker
+no longer overrides it. All other production resource limits are unchanged.
+
+Fresh sources exposed a new [A03 alternate scope blocker](a03_alternate_scope_blocker.md).
+Root independently repeated both exhaustive source censuses and the native Citi
+probe: numeric value 1.15 is verified, but Candidate remains REVIEW_REQUIRED and
+system_approval_eligible is false. The approved A12-only composite policy does
+not permit A03's entity/average narrative or silently change its averaging period.
+
+**PR-B remains incomplete.** The unactivated `issue_28_v2` snapshot has not yet
+been generated; full v2/composite tests, six production/alternate fixture pairs,
+the aggregate >=10x benchmark and independent full R4 replay are not passed.
+Current bounded fast tests pass 23/23 (8.464s); full R3/R2/R1 read-back, R3 PASSED
+index and 14 mirrors pass (39.087s). No old snapshot, retained V1/V2 engine,
+publication, freeze/cycle/Stage-A or historical receipt bytes changed.
+
+## Initial v1 diagnostic baseline (commit 3404f5d; historical context)
 
 **PR-B is not complete.** B0 and bounded transport/session/audit work are
 implemented; the user-defined A12 no-auto-positive and A13 no-anchor/economic-basis

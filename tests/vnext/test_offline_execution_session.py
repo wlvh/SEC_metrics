@@ -1,6 +1,8 @@
 """B0 session counters, immutable byte reuse, terminal stop and disk replay."""
 
 import json
+from dataclasses import asdict
+import inspect
 from pathlib import Path
 import subprocess
 import tempfile
@@ -8,13 +10,15 @@ import unittest
 from unittest.mock import patch
 
 from tests.vnext.r4_b0_fixture_support import REPO_ROOT, SOURCE_PATH
-from vnext.canonical import canonical_json_bytes, sha256_bytes
-from vnext.offline_execution_session import FileBinding, OfflineExecutionSession
+from vnext.canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_file
+from vnext.offline_execution_session import FileBinding, OfflineExecutionSession, OfflineExecutionGroup
+from vnext.offline_execution_session import OfflinePriorRunSet
 from vnext.offline_execution_session import OfflineSessionError
 from vnext.offline_execution_session import OfflineOperationObserver
 from vnext.r4_materialization import materialize_full_source, OfflineMaterializationError, PINNED_IMAGE_ID
 from vnext.requirements import load_requirement_snapshot
-from vnext.table_grid import build_table_grid
+from vnext.resource_limits import RESOURCE_LIMITS
+from vnext.table_grid import build_table_grid, TableGridError
 
 
 class OfflineExecutionSessionTest(unittest.TestCase):
@@ -85,6 +89,9 @@ class OfflineExecutionSessionTest(unittest.TestCase):
         self.assertEqual(1, observed.counts["derived_asset_builds"])
         self.assertEqual(1, observed.counts["requirement_builds"])
         self.assertEqual(1, observed.counts["parent_authority_builds"])
+        self.assertEqual(1, len(observed.source_censuses))
+        self.assertEqual(6, observed.source_censuses[0]["raw_source_cells"])
+        self.assertEqual(3, observed.source_censuses[0]["table_count"])
         self.assertGreater(observed.counts["canonicalizations"], session.counts["canonicalizations"])
         self.assertGreater(observed.counts["semantic_hashes"], 0)
         self.assertEqual(0, observed.counts["native_prior_run_loads"])
@@ -116,6 +123,35 @@ class OfflineExecutionSessionTest(unittest.TestCase):
         self.assertEqual("FAILED", session.state)
         with self.assertRaises(OfflineSessionError):
             session.final_disk_replay(replay=lambda *_: {"status": "PASSED"})
+
+    def test_child_cannot_hide_a_real_full_source_rebuild_in_success(self):
+        session = self._session()
+        session.prepare()
+
+        def rebuild(inputs):
+            build_table_grid(
+                html_bytes=inputs.source_bytes,
+                parent_raw_asset_ids=["sha256:" + inputs.source_binding.sha256],
+                storage_uri="offline://forbidden-per-child-rebuild",
+            )
+            return {"status": "PASSED"}
+
+        with self.assertRaisesRegex(OfflineSessionError, "rebuilt or replayed"):
+            session.run_child(child_id="rebuild", operation=rebuild)
+        self.assertEqual("FAILED", session.state)
+        self.assertEqual(2, session.report()["observed_operation_counts"]["derived_asset_builds"])
+
+    def test_child_cannot_rebuild_full_requirement_authority(self):
+        session = self._session()
+        session.prepare()
+
+        def rebuild(_):
+            load_requirement_snapshot(snapshot_dir=REPO_ROOT / "requirements/issue_28_v1")
+            return {"status": "PASSED"}
+
+        with self.assertRaisesRegex(OfflineSessionError, "rebuilt or replayed"):
+            session.run_child(child_id="authority-rebuild", operation=rebuild)
+        self.assertEqual("FAILED", session.state)
 
     def test_disk_hash_pin_rejects_same_size_mutation_and_symlink(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -203,3 +239,112 @@ class OfflineExecutionSessionTest(unittest.TestCase):
         self.assertEqual("536870912", command[command.index("--memory") + 1])
         self.assertEqual("536870912", command[command.index("--memory-swap") + 1])
         self.assertEqual("32", command[command.index("--pids-limit") + 1])
+
+    def test_distinct_source_group_uses_one_aggregate_disk_callback(self):
+        first = self._session()
+        path = "tests/fixtures/vnext/sample_lodging.html"
+        data = (REPO_ROOT / path).read_bytes()
+        second = OfflineExecutionSession(
+            repo_root=REPO_ROOT, source=FileBinding(path, sha256_bytes(content=data), len(data)),
+            requirement_id=first.requirement_id, requirement_closure_hash=first.requirement_closure_hash,
+        )
+        for session in (first, second):
+            session.prepare()
+            session.run_child(child_id="synthetic-child", operation=lambda _: {"status": "PASSED"})
+        group = OfflineExecutionGroup(sessions=[first, second])
+        calls = []
+
+        def replay(root, sources, requirement_id, closure):
+            calls.append(sources)
+            self.assertTrue(all(type(source) is FileBinding for source in sources))
+            for source in sources:
+                self.assertEqual(sha256_bytes(content=(root / source.path).read_bytes()), source.sha256)
+            return {"status": "PASSED", "evidence_tier": "SYNTHETIC_GROUP_INTERFACE_ONLY"}
+
+        group.final_disk_replay(replay=replay)
+        self.assertEqual(1, len(calls))
+        self.assertEqual(1, group.final_independent_disk_replays)
+        self.assertEqual("FINALIZED", group.state)
+        self.assertEqual(["FINALIZED", "FINALIZED"], [first.state, second.state])
+        with self.assertRaises(OfflineSessionError):
+            group.final_disk_replay(replay=replay)
+        with self.assertRaises(OfflineSessionError):
+            OfflineExecutionGroup(sessions=[first, first])
+
+    def test_prior_history_requires_six_distinct_paths(self):
+        binding = FileBinding("a", "0" * 64, 0)
+        with self.assertRaises(OfflineSessionError):
+            OfflinePriorRunSet(repo_root=REPO_ROOT, manifests=[binding])
+        with self.assertRaises(OfflineSessionError):
+            OfflinePriorRunSet(repo_root=REPO_ROOT, manifests=[binding] * 6)
+
+    def test_prior_control_byte_drift_cannot_be_restored_into_ready_state(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "control.json"
+            path.write_bytes(b"FROZEN")
+            prior = OfflinePriorRunSet(repo_root=root, manifests=[
+                FileBinding(str(i), "0" * 64, 0) for i in range(6)
+            ])
+            prior._pin("control.json")
+            prior.state = "READY"
+            prior.assert_unchanged()
+            path.write_bytes(b"UNKNOWN")
+            with self.assertRaises(OfflineSessionError):
+                prior.assert_unchanged()
+            path.write_bytes(b"FROZEN")
+            with self.assertRaises(OfflineSessionError):
+                prior.assert_unchanged()
+            self.assertEqual("FAILED", prior.state)
+
+
+class R4ProductionResourcePolicyTest(unittest.TestCase):
+    """Production parser ceiling: measured inputs, no runtime overrides."""
+
+    @staticmethod
+    def _expanded_cells_source(cells):
+        tables = []
+        while cells:
+            chunk = min(cells, RESOURCE_LIMITS.max_cells_per_table)
+            rows, columns = divmod(chunk, 200)
+            if rows:
+                tables.append('<table><tr><td rowspan="{}" colspan="200">x</td></tr></table>'.format(rows))
+            if columns:
+                tables.append('<table><tr><td colspan="{}">x</td></tr></table>'.format(columns))
+            cells -= chunk
+        return ("<html>" + "".join(tables) + "</html>").encode("utf-8")
+
+    def test_only_total_cell_limit_changed_and_covers_measured_sources(self):
+        receipt = strict_json_file(path=REPO_ROOT / "docs/r4_offline/performance_resource_measurement_initial.json")
+        self.assertEqual(receipt["receipt_id"], content_hash(value={k: v for k, v in receipt.items() if k != "receipt_id"}))
+        actual = asdict(RESOURCE_LIMITS)
+        total = actual.pop("max_total_cells")
+        self.assertEqual(actual, receipt["other_resource_limits"])
+        maximum = max(max(row["raw_source_cells"], row["expanded_cells"]) for row in receipt["sources"])
+        self.assertEqual(200229, maximum)
+        self.assertEqual(((maximum + 9999) // 10000) * 10000, total)
+        self.assertLessEqual(total, 250000)
+        self.assertEqual(3, len(receipt["sources"]))
+
+    def test_exact_cap_succeeds_and_cap_plus_one_fails(self):
+        cap = RESOURCE_LIMITS.max_total_cells
+        asset = build_table_grid(
+            html_bytes=self._expanded_cells_source(cap),
+            parent_raw_asset_ids=["sha256:" + "a" * 64], storage_uri="offline://cap-boundary",
+        )
+        self.assertEqual(cap, sum(t["row_count"] * t["column_count"] for t in asset["tables"]))
+        with self.assertRaisesRegex(TableGridError, "resource budget exceeded"):
+            build_table_grid(
+                html_bytes=self._expanded_cells_source(cap + 1),
+                parent_raw_asset_ids=["sha256:" + "a" * 64], storage_uri="offline://cap-plus-one",
+            )
+
+    def test_no_public_parser_or_worker_limit_override(self):
+        self.assertEqual(set(inspect.signature(build_table_grid).parameters),
+                         {"html_bytes", "parent_raw_asset_ids", "storage_uri"})
+        self.assertEqual(set(inspect.signature(materialize_full_source).parameters),
+                         {"repo_root", "source_path", "source_sha256", "source_size"})
+        worker = (REPO_ROOT / "tools/r4_materialization_worker.py").read_text()
+        self.assertNotIn("dataclasses.replace", worker)
+        self.assertNotIn("table_grid.RESOURCE_LIMITS =", worker)
+        self.assertNotIn("OFFLINE_MAX_TOTAL_CELLS", worker)

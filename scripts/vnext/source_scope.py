@@ -43,6 +43,7 @@ SCOPE_FIELDS = frozenset({
     "estimated_tokens", "out_of_window_candidates", "table_audit",
     "material_layout_proof", "navigation_paths", "qualification_credit",
 })
+SCOPE_V2_FIELDS = SCOPE_FIELDS | frozenset({"source_bound_proof", "task_contract_generation"})
 AUDIT_FIELDS = frozenset({
     "fixture_id", "fixture_class", "windows", "target_locator", "reference",
     "synthetic_candidate", "out_of_window_candidates", "table_audit",
@@ -287,7 +288,10 @@ def _validate_audit_closure(*, manifest: Mapping, full_derived_asset: Mapping,
 
 def _native_evidence(*, candidate: object, full_derived_asset: Mapping,
                      reader_manifest: Mapping, evidence_authority_payload: Mapping,
-                     source_reference: Mapping, task_contract: Mapping) -> object:
+                     source_reference: Mapping, task_contract: Mapping,
+                     source_bound_proof: Mapping = None, requirement: Mapping = None,
+                     raw_blob: Mapping = None, source_bytes: bytes = None,
+                     repo_root: Path = None) -> object:
     if evidence_authority_payload.get("task_contract") != task_contract:
         raise SourceScopeError("Full Evidence task contract differs")
     if candidate is None:
@@ -305,19 +309,33 @@ def _native_evidence(*, candidate: object, full_derived_asset: Mapping,
     # stores a synthetic Candidate, not a claimed provider response, so this
     # canonical reconstruction verifies shape/semantics but never claims to
     # reproduce the audit producer's assistant-output byte hash.
-    native = validate_reader_output(
-        response_text=canonical_json_bytes(value={
+    response_text = canonical_json_bytes(value={
             "disclosure_group": candidate["disclosure_group"],
             "table_locator": {key: claims[0]["locator"][key]
                               for key in ("derived_asset_id", "table_id")},
             "candidates": claims,
             "unresolved_competing_claims": candidate["unresolved_competing_claims"],
-        }).decode("utf-8"),
-        attempt_id=candidate["attempt_id"], required_roles=task_contract["required_roles"],
-        scope_contract=task_contract["scope_contract"],
-        source_reference_ids=[source_reference["source_reference_id"]],
-        derived_asset_ids=[full_derived_asset["derived_asset_id"]],
-    )
+        }).decode("utf-8")
+    context = None
+    if source_bound_proof is None:
+        native = validate_reader_output(response_text=response_text,
+            attempt_id=candidate["attempt_id"], required_roles=task_contract["required_roles"],
+            scope_contract=task_contract["scope_contract"],
+            source_reference_ids=[source_reference["source_reference_id"]],
+            derived_asset_ids=[full_derived_asset["derived_asset_id"]])
+    else:
+        from .reader import validate_source_bound_reader_output
+        root = repo_root or Path(__file__).resolve().parents[2]
+        actual_source = source_bytes if source_bytes is not None else load_raw_blob_bytes(repo_root=root, raw_blob=raw_blob)
+        native = validate_source_bound_reader_output(response_text=response_text,
+            attempt_id=candidate["attempt_id"], source_bound_proof=source_bound_proof,
+            expected_proof_id=source_bound_proof["source_bound_proof_id"],
+            requirement=requirement, repo_root=root, source_bytes=actual_source,
+            raw_blob=raw_blob, source_reference=source_reference,
+            full_derived_asset=full_derived_asset, task_contract=task_contract)
+        context = {"proof": source_bound_proof, "expected_proof_id": source_bound_proof["source_bound_proof_id"],
+            "requirement": requirement, "repo_root": root, "source_bytes": actual_source,
+            "raw_blob": raw_blob, "task_contract": task_contract}
     if any(native[key] != value for key, value in candidate.items()
            if key != "assistant_output_sha256"):
         raise SourceScopeError("Synthetic Candidate differs from native Reader semantics")
@@ -328,6 +346,7 @@ def _native_evidence(*, candidate: object, full_derived_asset: Mapping,
         source_references=[source_reference],
         identity_constraints=task_contract["identity_constraints"],
         scope_contract=task_contract["scope_contract"],
+        source_bound_context=context,
     )
 
 
@@ -349,6 +368,8 @@ def build_source_scope_manifest(
     *, requirement: Mapping, raw_blob: Mapping, source_reference: Mapping,
     full_derived_asset: Mapping, reader_manifest: Mapping, task_contract: Mapping,
     evidence_authority_payload: Mapping, audit: Mapping, repo_root: Path = None,
+    scope_schema_version: int = 1, source_bound_proof: Mapping = None,
+    source_bytes: bytes = None,
 ) -> Dict[str, object]:
     """Certify explicit audit coordinates using the existing Evidence Checker.
 
@@ -356,6 +377,10 @@ def build_source_scope_manifest(
     never labeled as the scoped outbound request and is never sent by this API.
     """
     _exact(audit, AUDIT_FIELDS, "Scope audit")
+    if type(scope_schema_version) is not int or scope_schema_version not in {1, 2}:
+        raise SourceScopeError("Scope schema version is not explicit")
+    if scope_schema_version == 1 and source_bound_proof is not None:
+        raise SourceScopeError("Legacy scope cannot opt into source-bound enrichment")
     selected = scope_tables(windows=audit["windows"],
                             full_derived_asset=full_derived_asset)
     evidence = _native_evidence(
@@ -363,9 +388,11 @@ def build_source_scope_manifest(
         reader_manifest=reader_manifest,
         evidence_authority_payload=evidence_authority_payload,
         source_reference=source_reference, task_contract=task_contract,
+        source_bound_proof=source_bound_proof, requirement=requirement,
+        raw_blob=raw_blob, source_bytes=source_bytes, repo_root=repo_root,
     )
     body = {
-        "record_type": "SOURCE_SCOPE_MANIFEST", "schema_version": 1,
+        "record_type": "SOURCE_SCOPE_MANIFEST", "schema_version": scope_schema_version,
         "artifact_requirement_generation": requirement["artifact_requirement_generation"],
         "requirement_id": requirement["requirement_id"],
         "requirement_closure_hash": requirement["requirement_closure_hash"],
@@ -388,6 +415,8 @@ def build_source_scope_manifest(
         },
         "qualification_credit": "NONE_OFFLINE_SYNTHETIC",
     }
+    if scope_schema_version == 2:
+        body.update(task_contract_generation="R4_TASK_CONTRACTS_V2", source_bound_proof=source_bound_proof)
     record = {**body, "source_scope_manifest_id": content_hash(value=body)}
     return validate_source_scope_manifest(
         manifest=record, expected_manifest_id=record["source_scope_manifest_id"],
@@ -396,6 +425,7 @@ def build_source_scope_manifest(
         task_contract=task_contract,
         evidence_authority_payload=evidence_authority_payload,
         repo_root=repo_root,
+        source_bytes=source_bytes,
     )
 
 
@@ -403,17 +433,20 @@ def validate_source_scope_manifest(
     *, manifest: Mapping, expected_manifest_id: str, requirement: Mapping,
     raw_blob: Mapping, source_reference: Mapping, full_derived_asset: Mapping,
     reader_manifest: Mapping, task_contract: Mapping,
-    evidence_authority_payload: Mapping, repo_root: Path = None,
+    evidence_authority_payload: Mapping, repo_root: Path = None, source_bytes: bytes = None,
 ) -> Dict[str, object]:
     """Replay a pinned scope; re-signing a tampered record cannot change the pin."""
-    _exact(manifest, SCOPE_FIELDS, "SourceScopeManifest")
+    version = manifest.get("schema_version") if type(manifest) is dict else None
+    _exact(manifest, SCOPE_V2_FIELDS if version == 2 else SCOPE_FIELDS, "SourceScopeManifest")
     body = {k: v for k, v in manifest.items() if k != "source_scope_manifest_id"}
     if (manifest["record_type"] != "SOURCE_SCOPE_MANIFEST"
             or type(manifest["schema_version"]) is not int
-            or manifest["schema_version"] != 1
+            or manifest["schema_version"] not in {1, 2}
             or manifest["source_scope_manifest_id"] != expected_manifest_id
             or content_hash(value=body) != expected_manifest_id):
         raise SourceScopeError("Scope content identity differs from fixture authority")
+    if version == 2 and manifest["task_contract_generation"] != "R4_TASK_CONTRACTS_V2":
+        raise SourceScopeError("Successor scope task generation is not explicit")
     _hash(expected_manifest_id, "Scope manifest")
     validate_scope_requirement_identity(artifact=manifest, requirement=requirement)
     for artifact, record_type in ((raw_blob, "RAW_BLOB"), (source_reference, "SOURCE_REFERENCE"),
@@ -485,6 +518,8 @@ def validate_source_scope_manifest(
         candidate=manifest["synthetic_candidate"], full_derived_asset=full_derived_asset,
         reader_manifest=reader_manifest, evidence_authority_payload=evidence_authority_payload,
         source_reference=source_reference, task_contract=task_contract,
+        source_bound_proof=manifest.get("source_bound_proof"), requirement=requirement,
+        raw_blob=raw_blob, source_bytes=source_bytes, repo_root=repo_root,
     )
     if manifest["check_evidence_result"] != expected_evidence:
         raise SourceScopeError("Native Evidence replay differs")
@@ -526,8 +561,13 @@ def load_source_scope_manifest(*, path: Path, repo_root: Path,
         raise SourceScopeError("Scope artifact is not strict UTF-8 JSON") from error
     load_raw_blob_bytes(repo_root=repo_root, raw_blob=authority["raw_blob"])
     validate_execution_authority(repo_root=repo_root, requirement=authority["requirement"])
-    expected_task = resolve_table_task_contract(
-        repo_root=repo_root, task_contract_id=authority["task_contract"]["task_contract_id"])
+    if type(value) is dict and value.get("schema_version") == 2:
+        from .r4_task_contracts import resolve_r4_task_contract
+        expected_task = resolve_r4_task_contract(repo_root=repo_root, requirement=authority["requirement"],
+            task_contract_id=authority["task_contract"]["task_contract_id"])
+    else:
+        expected_task = resolve_table_task_contract(
+            repo_root=repo_root, task_contract_id=authority["task_contract"]["task_contract_id"])
     if authority["task_contract"] != expected_task:
         raise SourceScopeError("Scope task contract differs from repository authority")
     return validate_source_scope_manifest(manifest=value,

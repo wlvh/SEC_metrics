@@ -694,7 +694,19 @@ def verified_claim(
     """
     kind = _text(value=claim_kind, label="claim kind")
     reference = _reference(value=source_reference)
-    manifest = validate_source_set_manifest(manifest=source_set_manifest)
+    if source_set_manifest.get("record_type") == "PINNED_SINGLE_FILING_FIXTURE_SOURCE_SET":
+        # This additive subtype is never accepted by normal source-role or
+        # release-input planners. It only carries owner-pinned offline fixture
+        # facts through the existing accession parser; it claims no complete
+        # submissions inventory, latest source or qualification credit.
+        from .r4_structured_sources import validate_fixture_source_set
+        if kind not in {"ACCESSION_XBRL_NUMERIC_FACT", "ACCESSION_XBRL_TEXT_FACT"}:
+            raise DeterministicRouterError("Fixture source set is accession-audit only")
+        manifest = validate_fixture_source_set(manifest=source_set_manifest)
+        if reference != manifest["source_reference"]:
+            raise DeterministicRouterError("Fixture claim source/attempt differs")
+    else:
+        manifest = validate_source_set_manifest(manifest=source_set_manifest)
     reference_id = str(reference["source_reference_id"])
     if (
         reference["company_id"] != manifest["company_id"]

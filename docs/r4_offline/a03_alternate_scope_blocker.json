@@ -1,0 +1,1582 @@
+{
+  "record_type": "R4_A03_ALTERNATE_SCOPE_BLOCKER",
+  "schema_version": 1,
+  "status": "NO_AUTO_CERTIFIED_ALTERNATE_UNDER_CURRENT_A03_SCOPE",
+  "metric_id": "A03",
+  "task_contract_id": "financial_liquidity_coverage_ratio_table_v1",
+  "cases": [
+    {
+      "source_id": "bank_of_america_fy2025_10k",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "source_size": 12819060,
+      "source_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+      "request_attempt_id": "request:attempt:e531f356a6a06facbfbf9d3dc506144e80c80d3a0e46909772f80d420727eed6",
+      "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+      "scope_coverage": {
+        "record_type": "R4_RAW_SCOPE_ALIAS_COVERAGE",
+        "schema_version": 1,
+        "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "task_contract_id": "financial_liquidity_coverage_ratio_table_v1",
+        "task_contract_hash": "sha256:33eee19f7244882be5ea4ae6ff599ce40553fb4a110c1080e2a50eb16f4a03a9",
+        "table_count": 369,
+        "exact_enum_aliases": {
+          "entity_scope": {
+            "firm": [
+              "Firm"
+            ]
+          },
+          "aggregation": {
+            "average": [
+              "average"
+            ]
+          }
+        },
+        "any_alias_tables": [
+          {
+            "table_id": "table_000044",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 22,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average assets (1)"
+                },
+                {
+                  "row_index": 23,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average common shareholders&#8217; equity (1)"
+                },
+                {
+                  "row_index": 24,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average tangible common shareholders&#8217; equity&#160;(2)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000054",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 20,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average assets (1)"
+                },
+                {
+                  "row_index": 21,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average common shareholders&#8217; equity (1)"
+                },
+                {
+                  "row_index": 22,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average tangible common shareholders&#8217; equity&#160;(2)"
+                },
+                {
+                  "row_index": 23,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average shareholders&#8217; equity (1)"
+                },
+                {
+                  "row_index": 24,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average tangible shareholders&#8217; equity&#160;(2)"
+                },
+                {
+                  "row_index": 56,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nNet charge-offs as a percentage of average loans and leases outstanding (4)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000056",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 20,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\n&#160;&#160;&#160;&#160;Return on average assets (1)"
+                },
+                {
+                  "row_index": 21,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\n&#160;&#160;&#160;&#160;Four-quarter trailing return on average assets&#160;(2)"
+                },
+                {
+                  "row_index": 22,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\n&#160;&#160;&#160;&#160;Return on average common shareholders&#8217; equity (1)"
+                },
+                {
+                  "row_index": 23,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average tangible common shareholders&#8217; equity&#160;(3)"
+                },
+                {
+                  "row_index": 24,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\n&#160;&#160;&#160;&#160;Return on average shareholders&#8217; equity (1)"
+                },
+                {
+                  "row_index": 25,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\n&#160;&#160;&#160;&#160;Return on average tangible shareholders&#8217; equity&#160;(3)"
+                },
+                {
+                  "row_index": 54,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAnnualized net charge-offs as a percentage of average loans and leases outstanding (5)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000063",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 23,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Return on average allocated capital"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000067",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 21,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Return on average allocated capital"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000071",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 22,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Return on average allocated capital"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000076",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 22,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Return on average allocated capital"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000086",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 17,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted quarterly average assets (in billions) (5)"
+                },
+                {
+                  "row_index": 34,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted quarterly average assets (in billions) (5)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000091",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 16,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted quarterly average assets (in billions) (5)"
+                },
+                {
+                  "row_index": 33,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted quarterly average assets (in billions) (5)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000141",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 56,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nNet charge-offs as a percentage of average loans and leases outstanding"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000234",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 7,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average duration "
+                },
+                {
+                  "row_index": 14,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average Term Extension "
+                },
+                {
+                  "row_index": 17,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average Interest Rate Reduction"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000256",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 9,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average discount rate\n&#160;&#160;used to calculate present \n&#160;&#160;value of future minimum lease\n&#160;&#160;payments"
+                },
+                {
+                  "row_index": 10,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average lease term \n&#160;&#160;(in years)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000266",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 1,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average Rate"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000283",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 19,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nTotal average diluted common shares issued and outstanding"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000285",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 17,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted quarterly average assets (in billions) (5)"
+                },
+                {
+                  "row_index": 34,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted quarterly average assets (in billions) (5)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000287",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 37,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average assumptions, December 31"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000290",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 15,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average assumptions used to determine net cost for years ended December 31"
+                },
+                {
+                  "row_index": 32,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average assumptions used to determine net cost for years ended December&#160;31"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000298",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 4,
+                  "raw_cell_ordinal": 3,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-\naverage Grant Date Fair Value"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000319",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 32,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average life, fixed rate (5)"
+                },
+                {
+                  "row_index": 33,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average life, variable rate (5)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000321",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 27,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average life, fixed rate (5)"
+                },
+                {
+                  "row_index": 28,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average life, variable rate (5)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000355",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 3,
+                  "raw_value": "average",
+                  "raw_text": "\n(b)                        Weighted-average Exercise Price of Outstanding Options, Warrants and Rights (3)"
+                }
+              ]
+            }
+          }
+        ],
+        "complete_scope_tables": [],
+        "qualification_credit": "NONE_OFFLINE_AUDIT",
+        "provider_paid_sec_calls": [
+          0,
+          0,
+          0
+        ],
+        "coverage_id": "sha256:6fb65deb1fa658edb992e6f0fcfee81b15e47d1b1c8431f38caaa245be1a1137"
+      },
+      "all_original_table_lcr_labels": [
+        {
+          "table_id": "table_000351",
+          "row_index": 51,
+          "column_index": 0,
+          "raw_text": "LCR",
+          "text": "LCR"
+        },
+        {
+          "table_id": "table_000351",
+          "row_index": 51,
+          "column_index": 3,
+          "raw_text": "Liquidity Coverage Ratio",
+          "text": "Liquidity Coverage Ratio"
+        }
+      ],
+      "relevant_narrative_spans": [
+        {
+          "start_byte": 3449928,
+          "end_byte": 3451080,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "margin-bottom:7pt;text-align:justify"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:353",
+            "div:3",
+            "div:1"
+          ],
+          "visible_text": "at a lower value that incorporates regulatory deductions and the exclusion of excess liquidity held at certain subsidiaries. The LCR is calculated as the amount of a financial institution’s unencumbered HQLA relative to the estimated net cash outflows the institution could encounter over a 30-day period of significant liquidity stress, expressed as a percentage. Our average consolidated HQLA, on a net basis, was $667 billion and $623 billion for the three months ended December 31, 2025 and 2024. For the same periods, the average consolidated LCR was 112 percent and 113 percent. Our LCR fluctuates due to normal business flows from customer activity.",
+          "span_sha256": "6926e969900091a53aee74a7bde166ace82e1dedf622f8fdaf5530a86e6b6cd9"
+        }
+      ],
+      "native_probe": null
+    },
+    {
+      "source_id": "citigroup_fy2025_10k",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "source_size": 16150764,
+      "source_repo_relative_path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+      "request_attempt_id": "request:attempt:2ca17e95050d85613ce264edcd8d1c05bd0aa8e39f00adcfa3d786e925defa95",
+      "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+      "scope_coverage": {
+        "record_type": "R4_RAW_SCOPE_ALIAS_COVERAGE",
+        "schema_version": 1,
+        "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "task_contract_id": "financial_liquidity_coverage_ratio_table_v1",
+        "task_contract_hash": "sha256:33eee19f7244882be5ea4ae6ff599ce40553fb4a110c1080e2a50eb16f4a03a9",
+        "table_count": 330,
+        "exact_enum_aliases": {
+          "entity_scope": {
+            "firm": [
+              "Firm"
+            ]
+          },
+          "aggregation": {
+            "average": [
+              "average"
+            ]
+          }
+        },
+        "any_alias_tables": [
+          {
+            "table_id": "table_000014",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 11,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Return on average assets"
+                },
+                {
+                  "row_index": 12,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average common stockholders&#8217; equity(2)"
+                },
+                {
+                  "row_index": 13,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average total stockholders&#8217; equity(2)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000021",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 18,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Net credit losses (NCLs) as a percentage of average loans"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000023",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 20,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "NCLs as a percentage of average loans"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000027",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 4,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "NCLs as a percentage of average loans"
+                },
+                {
+                  "row_index": 9,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "NCLs as a percentage of average loans"
+                },
+                {
+                  "row_index": 14,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "NCLs as a percentage of average loans"
+                },
+                {
+                  "row_index": 19,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "NCLs as a percentage of average loans"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000028",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 30,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "NCLs as a percentage of average loans\n(Mexico Consumer only)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000040",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 23,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average common stockholders&#8217; equity"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000061",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "In millions of dollars, except average loan amounts in billions"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000066",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 11,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "As a percentage of average consumer loans"
+                },
+                {
+                  "row_index": 13,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "As a percentage of average corporate loans"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000081",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 7,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "As a percentage of average interest-earning assets"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000084",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 5,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nInterest income&#8212;average rate(3)"
+                },
+                {
+                  "row_index": 6,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Interest expense&#8212;average rate"
+                },
+                {
+                  "row_index": 9,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Two-year&#160;U.S.&#160;Treasury&#160;note&#8212;average&#160;rate"
+                },
+                {
+                  "row_index": 10,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "10-year U.S. Treasury note&#8212;average rate"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000087",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 32,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nNet interest income as a percentage of average interest-earning assets(12)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000098",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 1,
+                  "raw_value": "average",
+                  "raw_text": "Quarterly average"
+                },
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 4,
+                  "raw_value": "average",
+                  "raw_text": "\n8-quarter average(1)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000104",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average common shares outstanding (in millions)"
+                },
+                {
+                  "row_index": 6,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted weighted-average diluted common shares outstanding \n(in millions)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000127",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-\naverage&#160;grant\ndate&#160;fair value per share"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000128",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-\naverage exercise price"
+                },
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 3,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-\naverage&#160;\nremaining contractual life (in years)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000130",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Valuation assumptions&#8212;weighted average"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000138",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 9,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average"
+                },
+                {
+                  "row_index": 12,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average"
+                },
+                {
+                  "row_index": 16,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average"
+                },
+                {
+                  "row_index": 23,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average"
+                },
+                {
+                  "row_index": 26,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average"
+                },
+                {
+                  "row_index": 27,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nInterest crediting rate (weighted average)(3)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000139",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 9,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average "
+                },
+                {
+                  "row_index": 12,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average "
+                },
+                {
+                  "row_index": 16,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average "
+                },
+                {
+                  "row_index": 23,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average "
+                },
+                {
+                  "row_index": 26,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average "
+                },
+                {
+                  "row_index": 27,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nInterest crediting rate (weighted average)(5)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000143",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 6,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Health care&#160;cost&#160;increase&#160;rate&#160;for&#160;\nnon-U.S.&#160;plans (weighted average)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000145",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 3,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average\nat&#160;December&#160;31,"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000146",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 3,
+                  "raw_value": "average",
+                  "raw_text": "Weighted average\nat&#160;December&#160;31,"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000169",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 12,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average common shares outstanding applicable to basic EPS (in millions)"
+                },
+                {
+                  "row_index": 21,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average common shares outstanding applicable to basic EPS (in millions)"
+                },
+                {
+                  "row_index": 24,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nAdjusted weighted-average common shares outstanding applicable to diluted EPS (in millions)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000187",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 3,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average yield(1)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000189",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 3,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average yield(2)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000202",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "In millions of dollars, except weighted-average \nterm extension"
+                },
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 7,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average term extension\n(months)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000203",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "In millions of dollars, except weighted-average \nterm extension"
+                },
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 4,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average term extension\n(months)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000218",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 12,
+                  "raw_value": "average",
+                  "raw_text": "Weighted- average interest rate reduction %"
+                },
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 13,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average term extension (months)"
+                },
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 14,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average delay in payments (months)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000219",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 12,
+                  "raw_value": "average",
+                  "raw_text": "Weighted- average interest rate reduction %"
+                },
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 13,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average term extension (months)"
+                },
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 14,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average delay in payments (months)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000238",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 3,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average coupon(1)"
+                },
+                {
+                  "row_index": 3,
+                  "raw_cell_ordinal": 4,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted- average coupon(1)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000239",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 1,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-\naverage\ncoupon(1)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000242",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 9,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nQuarterly adjusted average total assets(1)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000257",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 4,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average discount rate"
+                },
+                {
+                  "row_index": 5,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average constant prepayment rate"
+                },
+                {
+                  "row_index": 6,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average anticipated net credit losses(2)"
+                },
+                {
+                  "row_index": 7,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average life"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000258",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 4,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average discount rate"
+                },
+                {
+                  "row_index": 5,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average constant prepayment rate"
+                },
+                {
+                  "row_index": 6,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average anticipated net credit losses(2)"
+                },
+                {
+                  "row_index": 7,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average life"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000259",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 4,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average discount rate"
+                },
+                {
+                  "row_index": 5,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average constant prepayment rate"
+                },
+                {
+                  "row_index": 6,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average anticipated net credit losses(2)"
+                },
+                {
+                  "row_index": 7,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average life"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000260",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 4,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average discount rate"
+                },
+                {
+                  "row_index": 5,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average constant prepayment rate"
+                },
+                {
+                  "row_index": 6,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted-average anticipated net credit losses(2)"
+                },
+                {
+                  "row_index": 7,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Weighted-average life"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000286",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 6,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted\naverage(4)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000287",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 6,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted\naverage(4)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000291",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 6,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted\naverage(3)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000292",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 6,
+                  "raw_value": "average",
+                  "raw_text": "\nWeighted\naverage(3)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000311",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 9,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nLess imputed interest (based on weighted-average discount rate of 4.4%)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000317",
+            "scope_aliases": {
+              "aggregation": [
+                {
+                  "row_index": 2,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "Return on average assets"
+                },
+                {
+                  "row_index": 3,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average common stockholders&#8217; equity(1)"
+                },
+                {
+                  "row_index": 4,
+                  "raw_cell_ordinal": 0,
+                  "raw_value": "average",
+                  "raw_text": "\nReturn on average total stockholders&#8217; equity(2)"
+                }
+              ]
+            }
+          },
+          {
+            "table_id": "table_000329",
+            "scope_aliases": {
+              "entity_scope": [
+                {
+                  "row_index": 1,
+                  "raw_cell_ordinal": 2,
+                  "raw_value": "Firm",
+                  "raw_text": "\nConsent of KPMG LLP, Independent Registered Public Accounting Firm."
+                }
+              ]
+            }
+          }
+        ],
+        "complete_scope_tables": [],
+        "qualification_credit": "NONE_OFFLINE_AUDIT",
+        "provider_paid_sec_calls": [
+          0,
+          0,
+          0
+        ],
+        "coverage_id": "sha256:e746a5102da7976160533b6cc3968b27b4b3fa067bc7d04909f5fe39d5832536"
+      },
+      "all_original_table_lcr_labels": [
+        {
+          "table_id": "table_000041",
+          "row_index": 14,
+          "column_index": 3,
+          "raw_text": "Liquidity Coverage Ratio (LCR)",
+          "text": "Liquidity Coverage Ratio (LCR)"
+        },
+        {
+          "table_id": "table_000075",
+          "row_index": 4,
+          "column_index": 0,
+          "raw_text": "LCR",
+          "text": "LCR"
+        }
+      ],
+      "relevant_narrative_spans": [
+        {
+          "start_byte": 5103861,
+          "end_byte": 5104862,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "text-indent:18pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:828",
+            "div:1",
+            "div:1"
+          ],
+          "visible_text": "The table above includes average amounts of HQLA held at Citigroup’s operating entities that are eligible for inclusion in the calculation of Citigroup’s consolidated LCR, pursuant to the U.S. LCR rules. These amounts include the HQLA needed to meet the minimum requirements at these entities as well as any amounts in excess of these minimums that are available to be transferred to other entities within Citigroup. Citigroup’s average HQLA increased quarter-over-quarter as of the fourth quarter of 2025, primarily driven by an increase in average deposits in Services. ",
+          "span_sha256": "9e68b4b97da5036ffca29f57f38691d4d21c73f8c4b32d60ea189d7afd1f2c34"
+        },
+        {
+          "start_byte": 5116934,
+          "end_byte": 5117332,
+          "tag": "div",
+          "attributes": [
+            [
+              "style",
+              "text-indent:18pt"
+            ]
+          ],
+          "inside_table": false,
+          "structure_path": [
+            "html:1",
+            "body:1",
+            "div:828",
+            "div:3",
+            "div:7"
+          ],
+          "visible_text": "As of December 31, 2025, Citigroup’s average LCR remained unchanged from the quarter ended September 30, 2025. The increase in average HQLA was offset by an increase in net outflows from unsecured and secured wholesale funding.",
+          "span_sha256": "2d5a2171df84dcde5e324645f4ec3da92170d8aca00e35d909f7f4b8a850fa09"
+        }
+      ],
+      "native_probe": {
+        "reported_unit": "percent",
+        "target_locator": {
+          "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+          "table_id": "table_000075",
+          "row_index": 4,
+          "column_index": 3,
+          "origin_row_index": 4,
+          "origin_column_index": 3,
+          "rowspan": 1,
+          "colspan": 2
+        },
+        "target_raw_text": "115&#160;",
+        "target_text": "115",
+        "headers": [
+          {
+            "locator": {
+              "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+              "table_id": "table_000075",
+              "row_index": 1,
+              "column_index": 3,
+              "origin_row_index": 1,
+              "origin_column_index": 3,
+              "rowspan": 1,
+              "colspan": 3
+            },
+            "raw_text": "Dec. 31, 2025",
+            "text": "Dec. 31, 2025"
+          }
+        ],
+        "response": {
+          "disclosure_group": "financial_statement",
+          "table_locator": {
+            "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+            "table_id": "table_000075"
+          },
+          "candidates": [
+            {
+              "role": "liquidity_coverage_ratio",
+              "claimed_period": "FY2025",
+              "claimed_raw_value": "115",
+              "claimed_reported_unit": "percent",
+              "claimed_scope": [],
+              "locator": {
+                "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                "table_id": "table_000075",
+                "row_index": 4,
+                "column_index": 3,
+                "origin_row_index": 4,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 2
+              },
+              "scope_evidence_locators": [],
+              "competing_candidates": []
+            }
+          ],
+          "unresolved_competing_claims": []
+        },
+        "candidate": {
+          "record_type": "OBSERVATION_CANDIDATE",
+          "candidate_hash": "sha256:879af1129d71e32138dca73de6925b08688c9772423b487d89fdc4a775a29e6d",
+          "attempt_id": "offline-synthetic:700eb43c8210b4e1f92eb3db8e2e2b25db9a42d3056fd5f7e53136f283c7c7d3",
+          "assistant_output_sha256": "974f514980bc4c1b315e05f093c5cd74f7cc5f03778ed295b00a63206a92cf83",
+          "disclosure_group": "financial_statement",
+          "source_reference_ids": [
+            "sha256:fe437cdc44a92932ebe716b35ddc1fe400233c6e3cb3e63aeb650764d7c74352"
+          ],
+          "derived_asset_ids": [
+            "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196"
+          ],
+          "selected": {
+            "liquidity_coverage_ratio": {
+              "role": "liquidity_coverage_ratio",
+              "claimed_period": "FY2025",
+              "claimed_raw_value": "115",
+              "claimed_reported_unit": "percent",
+              "claimed_scope": [],
+              "locator": {
+                "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+                "table_id": "table_000075",
+                "row_index": 4,
+                "column_index": 3,
+                "origin_row_index": 4,
+                "origin_column_index": 3,
+                "rowspan": 1,
+                "colspan": 2
+              },
+              "scope_evidence_locators": [],
+              "competing_candidates": []
+            }
+          },
+          "competing_candidates": [
+            {
+              "role": "liquidity_coverage_ratio",
+              "claims": []
+            }
+          ],
+          "unresolved_competing_claims": [],
+          "status": "REVIEW_REQUIRED"
+        },
+        "evidence": {
+          "record_type": "EVIDENCE_CHECK",
+          "evidence_check_id": "sha256:99a70f312783556ea9bafb4d4fc4a47110721af4ba9125f9c07d2d9b2b545b5f",
+          "candidate_hash": "sha256:879af1129d71e32138dca73de6925b08688c9772423b487d89fdc4a775a29e6d",
+          "status": "PASS",
+          "normalized_values": {
+            "liquidity_coverage_ratio": "1.15"
+          },
+          "checks": [
+            {
+              "check": "SOURCE_BINDINGS",
+              "status": "PASS"
+            },
+            {
+              "check": "READER_TABLE_EXACT_SET",
+              "status": "PASS"
+            },
+            {
+              "check": "SELECTED_LOCATOR:liquidity_coverage_ratio",
+              "status": "PASS"
+            },
+            {
+              "check": "SCOPE_EXACT_ENUM_NORMALIZATION",
+              "status": "REVIEW_REQUIRED",
+              "normalized_scope": {},
+              "unresolved_dimensions": []
+            }
+          ],
+          "reason_codes": [],
+          "identity_constraints": [],
+          "normalized_scope": {},
+          "unresolved_scope_dimensions": [],
+          "system_approval_eligible": false
+        }
+      },
+      "native_probe_recipe": {
+        "target": {
+          "table_order": 74,
+          "row_index": 4,
+          "column_index": 3
+        },
+        "claimed_period": "FY2025",
+        "scope_labels": [],
+        "header_coordinates": [
+          {
+            "table_order": 74,
+            "row_index": 1,
+            "column_index": 3
+          }
+        ]
+      },
+      "target_table_source_span": {
+        "table_order": 74,
+        "start_byte": 5107406,
+        "end_byte": 5116689,
+        "structure_path": [
+          "html:1",
+          "body:1",
+          "div:828",
+          "div:3",
+          "div:3",
+          "table:1"
+        ],
+        "span_sha256": "72791fe8e37b3770b0c86996096759fc126ede7c672e3e9b5e27c2ce504fa682"
+      }
+    }
+  ],
+  "provider_paid_sec_calls_by_this_probe": [
+    0,
+    0,
+    0
+  ],
+  "new_sec_acquisitions_already_recorded": 2,
+  "qualification_credit": "NONE_OFFLINE_AUDIT",
+  "period_evidence": "Fresh LCR figures are reported as quarter-average (three months ended December31), whereas diagnostic claimed_period FY2025 simply reuses current task label and does not prove annual-average semantics. No period substitution has been certified.",
+  "blocker_id": "sha256:143f064cd0babe66cf2bf8a8a0d1645c0961083fcf96cb7032965007e83c83c9",
+  "wall_seconds": "13.345"
+}

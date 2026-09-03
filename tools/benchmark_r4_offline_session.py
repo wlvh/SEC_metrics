@@ -85,7 +85,9 @@ def main() -> int:
         "prior_terminal_inventory": prior_terminal_inventory(repo_root=ROOT),
         "aggregate_performance_benchmark": "NOT_RUN_PENDING_AUTO_CERTIFIED_SIX_TASK_WORKLOAD",
         "minimum_10x_gate": "NOT_RUN", "final_independent_r4_disk_replay": "NOT_RUN",
-        "qualification_credit": "NONE", "production_resource_policy_changed": False,
+        "qualification_credit": "NONE", "runtime_limit_override": False,
+        "production_max_total_cells": report["production_max_total_cells"],
+        "production_resource_policy_modified_by_this_command": False,
         "provider_paid_sec_calls": [0, 0, 0],
     }
     receipt = {**body, "receipt_id": content_hash(value=body)}

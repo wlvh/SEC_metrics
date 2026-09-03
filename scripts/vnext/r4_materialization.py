@@ -1,9 +1,9 @@
-"""Guarded, offline-only complete table materialization for R4 research.
+"""Guarded, offline-only complete production-parser materialization for R4.
 
-The historical parser and production resource policy are not modified. A
-separate network-none, read-only Linux worker uses the *same* parser with an
-explicit bounded research ceiling; that ceiling is not live readiness or a
-production resource grant. No asset is persisted or shared between sessions.
+The network-none, read-only Linux worker uses exactly the production parser
+and ResourceLimits object. There is no runtime/caller limit override. A
+successful offline measurement is not live readiness or a qualification grant.
+No asset is persisted or shared between sessions.
 """
 
 from __future__ import annotations
@@ -20,11 +20,11 @@ import uuid
 
 from .canonical import sha256_bytes, strict_json_loads
 from .records import validate_record
+from .resource_limits import RESOURCE_LIMITS
 from .sources import resolve_repository_file
 
 
 PINNED_IMAGE_ID = "sha256:6bb4a52297019add65df37d3abcd37819ea4e247adeaff276d03343b05b94b17"
-OFFLINE_MAX_TOTAL_CELLS = 250000
 MEMORY_CEILING_BYTES = 512 * 1024 * 1024
 WALL_CEILING_SECONDS = 120
 WORKER_PATH = "tools/r4_materialization_worker.py"
@@ -108,6 +108,10 @@ def materialize_full_source(
         or report.get("canonical_asset_sha256") != sha256_bytes(content=child.stdout)
         or report.get("canonical_asset_size") != len(child.stdout)
         or report.get("provider_paid_sec_calls") != [0, 0, 0]
+        or report.get("production_max_total_cells") != RESOURCE_LIMITS.max_total_cells
+        or report.get("runtime_limit_override") is not False
+        or report.get("expanded_cells", 250001) > RESOURCE_LIMITS.max_total_cells
+        or report.get("raw_source_cells", 250001) > RESOURCE_LIMITS.max_total_cells
         or report.get("code_sha256") != code_hashes
         or report.get("guard", {}).get("memory_max_bytes") != MEMORY_CEILING_BYTES
         or report.get("guard", {}).get("non_loopback_active_interfaces") != []

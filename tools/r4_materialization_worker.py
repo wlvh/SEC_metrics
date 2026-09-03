@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import dataclasses
 import json
 from pathlib import Path
 import platform
@@ -17,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from vnext.canonical import canonical_json_bytes, sha256_bytes  # noqa: E402
-from vnext.r4_materialization import MEMORY_CEILING_BYTES, OFFLINE_MAX_TOTAL_CELLS  # noqa: E402
+from vnext.r4_materialization import MEMORY_CEILING_BYTES  # noqa: E402
 from vnext.r4_materialization import MATERIALIZATION_CODE_PATHS  # noqa: E402
 from vnext.r4_materialization import offline_asset_summary  # noqa: E402
 from vnext.offline_execution_session import OfflineOperationObserver  # noqa: E402
@@ -26,7 +25,7 @@ from vnext.sources import resolve_repository_file  # noqa: E402
 
 def _guard() -> dict:
     if platform.system() != "Linux":
-        raise RuntimeError("Offline research cell ceiling requires guarded Linux worker")
+        raise RuntimeError("Offline materialization requires guarded Linux worker")
     root_flags = [row.split()[3].split(",") for row in Path("/proc/mounts").read_text().splitlines() if row.split()[1] == "/"]
     interfaces = [path for path in Path("/sys/class/net").iterdir() if (path / "operstate").is_file()]
     guard = {
@@ -65,9 +64,8 @@ def main() -> int:
         raise RuntimeError("Exact immutable source identity differs")
     from vnext import table_grid
     from vnext.resource_limits import RESOURCE_LIMITS
-    # This assignment exists only inside the guarded one-shot process. The
-    # production object is immutable and no caller may choose a larger cap.
-    table_grid.RESOURCE_LIMITS = dataclasses.replace(RESOURCE_LIMITS, max_total_cells=OFFLINE_MAX_TOTAL_CELLS)
+    if table_grid.RESOURCE_LIMITS is not RESOURCE_LIMITS:
+        raise RuntimeError("Production table parser resource object was substituted")
     started = time.perf_counter()
     with OfflineOperationObserver() as observed:
         asset = table_grid.build_table_grid(
@@ -75,6 +73,8 @@ def main() -> int:
             storage_uri="offline://full-derived-asset/" + args.sha256,
         )
         data = canonical_json_bytes(value=asset)
+    if len(observed.source_censuses) != 1:
+        raise RuntimeError("One and only one native source census is required")
     report = {
         "status": "PASSED_OFFLINE_ONLY", "source_sha256": args.sha256, "source_size": args.size,
         **offline_asset_summary(asset=asset),
@@ -84,8 +84,10 @@ def main() -> int:
         "wall_seconds": format(time.perf_counter() - started, ".6f"),
         "interpreter": {"implementation": platform.python_implementation(), "version": platform.python_version()},
         "production_max_total_cells": RESOURCE_LIMITS.max_total_cells,
-        "offline_worker_max_total_cells": OFFLINE_MAX_TOTAL_CELLS,
+        "runtime_limit_override": False,
         "source_materializations": 1, "derived_asset_builds": 1,
+        "raw_source_cells": observed.source_censuses[0]["raw_source_cells"],
+        "raw_table_text_characters": observed.source_censuses[0]["raw_table_text_characters"],
         "observed_operation_counts": dict(observed.counts),
         "instrumentation_backend": observed.instrumentation_backend,
         "provider_paid_sec_calls": [0, 0, 0], "qualification_credit": "NONE",

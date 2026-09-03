@@ -19,6 +19,11 @@ from .requirement_profile_v1 import SUCCESSOR_RECORD_TYPES
 
 
 IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9:_./-]{2,255}$")
+SOURCE_BOUND_CANDIDATE_TYPE = "SOURCE_BOUND_OBSERVATION_CANDIDATE"
+SOURCE_BOUND_CANDIDATE_FIELDS = (
+    "artifact_requirement_generation", "requirement_id", "requirement_closure_hash",
+    "requirement_hashes", "native_candidate_hash", "source_bound_proof_id",
+)
 
 
 @dataclass(frozen=True)
@@ -350,6 +355,11 @@ SCHEMAS["SUCCESSOR_PUBLICATION_MANIFEST"] = RecordSchema(
 )
 
 
+SCHEMAS[SOURCE_BOUND_CANDIDATE_TYPE] = RecordSchema(
+    required=SCHEMAS["OBSERVATION_CANDIDATE"].required + SOURCE_BOUND_CANDIDATE_FIELDS,
+)
+
+
 TEXT_FIELDS = {
     "artifact_requirement_generation",
     "accession",
@@ -359,6 +369,8 @@ TEXT_FIELDS = {
     "audit_manifest_hash",
     "batch_manifest_id",
     "candidate_hash",
+    "native_candidate_hash",
+    "source_bound_proof_id",
     "candidate_status",
     "claim_kind",
     "company_id",
@@ -809,6 +821,10 @@ def _expected_identifier(
                 "unresolved_competing_claims",
             )
         }
+        if record["record_type"] == SOURCE_BOUND_CANDIDATE_TYPE:
+            if record["native_candidate_hash"] != content_hash(value=body):
+                raise RecordError("Source-bound Candidate native identity differs")
+            body.update({key: record[key] for key in SOURCE_BOUND_CANDIDATE_FIELDS})
         return "candidate_hash", content_hash(value=body)
     if record_type == "EVIDENCE_CHECK":
         fields = [
@@ -1625,8 +1641,9 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
         canonical_json_bytes(value=dict(record))
     except CanonicalError as error:
         raise RecordError("Record is not canonical JSON data") from error
-    semantic_type = SUCCESSOR_RECORD_TYPES.get(record_type, record_type)
-    if record_type in SUCCESSOR_RECORD_TYPES:
+    semantic_type = ("OBSERVATION_CANDIDATE" if record_type == SOURCE_BOUND_CANDIDATE_TYPE
+                     else SUCCESSOR_RECORD_TYPES.get(record_type, record_type))
+    if record_type in SUCCESSOR_RECORD_TYPES or record_type == SOURCE_BOUND_CANDIDATE_TYPE:
         if (record["artifact_requirement_generation"] != EXPLICIT_ARTIFACT_GENERATION
                 or re.fullmatch(r"issue_[0-9]+_v[1-9][0-9]*", str(record["requirement_id"])) is None
                 or type(record["requirement_hashes"]) is not dict

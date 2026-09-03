@@ -12,12 +12,13 @@ from typing import Dict, Mapping
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
 from .evidence import check_evidence
-from .reader import validate_reader_output
+from .reader import validate_reader_output, validate_source_bound_reader_output
 from .reader_input import READER_SYSTEM_CONTRACT
 from .records import validate_record
 from .source_scope import SourceScopeError, policy_choice, scope_tables
 from .source_scope import load_source_scope_manifest, read_scope_repository_bytes
 from .source_scope import validate_source_scope_manifest, validate_scope_requirement_identity
+from .sources import load_raw_blob_bytes
 from .table_payload import _compact_table, _decode_compact_table
 
 
@@ -47,6 +48,7 @@ ATTEMPT_FIELDS = IDENTITY_FIELDS | frozenset({
     "execution_mode", "provider_call_count", "paid_model_call_count", "sec_call_count",
     "actual_provider_usage", "qualification_credit",
 })
+V2_IDENTITY_FIELDS = frozenset({"task_contract_generation", "source_bound_proof_id"})
 ARTIFACT_FILENAMES = frozenset({
     "source_scope.json", "scoped_plan.json", "scoped_request.json", "scoped_attempt.json",
 })
@@ -59,7 +61,12 @@ def _exact(value: object, fields: frozenset, label: str) -> Mapping:
 
 
 def _identity(scope: Mapping) -> Dict[str, object]:
-    return {field: scope[field] for field in IDENTITY_FIELDS}
+    identity = {field: scope[field] for field in IDENTITY_FIELDS}
+    if scope["schema_version"] == 2:
+        proof = scope["source_bound_proof"]
+        identity.update(task_contract_generation=scope["task_contract_generation"],
+                        source_bound_proof_id=None if proof is None else proof["source_bound_proof_id"])
+    return identity
 
 
 def _window_binding(scope: Mapping) -> Dict[str, object]:
@@ -70,7 +77,7 @@ def _window_binding(scope: Mapping) -> Dict[str, object]:
 def _plan_body(*, scope: Mapping, raw_blob: Mapping,
                reader_manifest: Mapping, task_contract: Mapping) -> Dict[str, object]:
     body = {
-        "record_type": "SCOPED_READER_PLAN", "schema_version": 1, **_identity(scope),
+        "record_type": "SCOPED_READER_PLAN", "schema_version": scope["schema_version"], **_identity(scope),
         "raw_asset_id": raw_blob["raw_asset_id"],
         "source_reference_ids": list(reader_manifest["source_reference_ids"]),
         "window_binding": _window_binding(scope),
@@ -113,6 +120,7 @@ def prepare_scoped_reader_request(
     requirement: Mapping, raw_blob: Mapping, source_reference: Mapping,
     full_derived_asset: Mapping, reader_manifest: Mapping, task_contract: Mapping,
     evidence_authority_payload: Mapping,
+    source_bytes: bytes = None, repo_root: Path = None,
 ) -> PreparedScopedReaderRequest:
     """Pack only certified original-order tables; never fall back to a filing."""
     scope = validate_source_scope_manifest(
@@ -120,6 +128,7 @@ def prepare_scoped_reader_request(
         requirement=requirement, raw_blob=raw_blob, source_reference=source_reference,
         full_derived_asset=full_derived_asset, reader_manifest=reader_manifest,
         task_contract=task_contract, evidence_authority_payload=evidence_authority_payload,
+        source_bytes=source_bytes, repo_root=repo_root,
     )
     policy = policy_choice(requirement=requirement, kind="SOURCE_SCOPE_POLICY")
     if scope["fixture_class"] not in policy["positive_fixture_classes"]:
@@ -133,7 +142,7 @@ def prepare_scoped_reader_request(
     plan_bytes = canonical_json_bytes(value=plan_body)
     plan_id = plan_body["scoped_plan_id"]
     body = {
-        "record_type": "SCOPED_READER_REQUEST", "schema_version": 1,
+        "record_type": "SCOPED_READER_REQUEST", "schema_version": scope["schema_version"],
         **_identity(scope), "scoped_plan_id": plan_id,
         "raw_asset_id": raw_blob["raw_asset_id"],
         "source_reference_ids": list(reader_manifest["source_reference_ids"]),
@@ -167,7 +176,7 @@ def load_scoped_reader_plan(*, path: Path, repo_root: Path, expected_plan_id: st
         body = strict_json_loads(text=data.decode("utf-8"))
     except (ValueError, UnicodeError) as error:
         raise ScopedReaderError("Scoped plan is not strict UTF-8 JSON") from error
-    _exact(body, PLAN_FIELDS, "Scoped Reader plan")
+    _exact(body, PLAN_FIELDS | V2_IDENTITY_FIELDS if body.get("schema_version") == 2 else PLAN_FIELDS, "Scoped Reader plan")
     expected = build_scoped_reader_plan(**authority)
     if (body != expected or body["scoped_plan_id"] != expected_plan_id
             or data != canonical_json_bytes(value=expected)):
@@ -183,7 +192,7 @@ def load_scoped_reader_request(*, path: Path, repo_root: Path, expected_request_
         body = strict_json_loads(text=data.decode("utf-8"))
     except (ValueError, UnicodeError) as error:
         raise ScopedReaderError("Scoped request is not strict UTF-8 JSON") from error
-    _exact(body, REQUEST_FIELDS, "Scoped Reader request")
+    _exact(body, REQUEST_FIELDS | V2_IDENTITY_FIELDS if body.get("schema_version") == 2 else REQUEST_FIELDS, "Scoped Reader request")
     expected = prepare_scoped_reader_request(**authority)
     if data != expected.request_bytes or content_hash(value=body) != expected_request_id:
         raise ScopedReaderError("Scoped request bytes/identity differ")
@@ -197,6 +206,7 @@ def validate_scoped_reader_response(
     source_reference: Mapping, full_derived_asset: Mapping,
     reader_manifest: Mapping, task_contract: Mapping,
     evidence_authority_payload: Mapping,
+    source_bytes: bytes = None, repo_root: Path = None,
 ) -> Dict[str, object]:
     """Certify an offline synthetic response with the existing native checker.
 
@@ -211,6 +221,7 @@ def validate_scoped_reader_response(
         raw_blob=raw_blob, source_reference=source_reference,
         full_derived_asset=full_derived_asset, reader_manifest=reader_manifest,
         task_contract=task_contract, evidence_authority_payload=evidence_authority_payload,
+        source_bytes=source_bytes, repo_root=repo_root,
     )
     if (not isinstance(prepared_request, PreparedScopedReaderRequest)
             or expected_request != prepared_request):
@@ -219,13 +230,23 @@ def validate_scoped_reader_response(
         raise ScopedReaderError("Scoped attempt identity is empty")
     if type(response_text) is not str:
         raise ScopedReaderError("Scoped response is not UTF-8 text")
-    candidate = validate_reader_output(
-        response_text=response_text, attempt_id=attempt_id,
-        required_roles=task_contract["required_roles"],
-        scope_contract=task_contract["scope_contract"],
-        source_reference_ids=[source_reference["source_reference_id"]],
-        derived_asset_ids=[full_derived_asset["derived_asset_id"]],
-    )
+    source_proof = source_scope_manifest.get("source_bound_proof")
+    evidence_context = None
+    if source_proof is None:
+        candidate = validate_reader_output(response_text=response_text, attempt_id=attempt_id,
+            required_roles=task_contract["required_roles"], scope_contract=task_contract["scope_contract"],
+            source_reference_ids=[source_reference["source_reference_id"]],
+            derived_asset_ids=[full_derived_asset["derived_asset_id"]])
+    else:
+        root = repo_root or Path(__file__).resolve().parents[2]
+        exact_source = source_bytes if source_bytes is not None else load_raw_blob_bytes(repo_root=root, raw_blob=raw_blob)
+        candidate = validate_source_bound_reader_output(response_text=response_text, attempt_id=attempt_id,
+            source_bound_proof=source_proof, expected_proof_id=source_proof["source_bound_proof_id"],
+            requirement=requirement, repo_root=root, source_bytes=exact_source, raw_blob=raw_blob,
+            source_reference=source_reference, full_derived_asset=full_derived_asset, task_contract=task_contract)
+        evidence_context = {"proof": source_proof, "expected_proof_id": source_proof["source_bound_proof_id"],
+            "requirement": requirement, "repo_root": root, "source_bytes": exact_source,
+            "raw_blob": raw_blob, "task_contract": task_contract}
     if candidate["disclosure_group"] != task_contract["disclosure_group"]:
         raise ScopedReaderError("Scoped response task/disclosure group differs")
     for claim in candidate["selected"].values():
@@ -243,9 +264,10 @@ def validate_scoped_reader_response(
         source_references=[source_reference],
         identity_constraints=task_contract["identity_constraints"],
         scope_contract=task_contract["scope_contract"],
+        source_bound_context=evidence_context,
     )
     link_body = {
-        "record_type": "SCOPED_CANDIDATE_EVIDENCE_LINK", "schema_version": 1,
+        "record_type": "SCOPED_CANDIDATE_EVIDENCE_LINK", "schema_version": source_scope_manifest["schema_version"],
         **_identity(source_scope_manifest), "attempt_id": attempt_id,
         "scoped_plan_id": prepared_request.plan_id,
         "scoped_request_id": prepared_request.request_id,
@@ -258,7 +280,7 @@ def validate_scoped_reader_response(
         "qualification_credit": "NONE",
     }
     body = {
-        "record_type": "SCOPED_OFFLINE_EXTRACTION_ATTEMPT", "schema_version": 1,
+        "record_type": "SCOPED_OFFLINE_EXTRACTION_ATTEMPT", "schema_version": source_scope_manifest["schema_version"],
         **_identity(source_scope_manifest), "attempt_id": attempt_id,
         "scoped_plan_id": prepared_request.plan_id,
         "plan_sha256": sha256_bytes(content=prepared_request.plan_bytes),
@@ -281,10 +303,11 @@ def replay_scoped_offline_attempt(*, attempt: Mapping,
                                   expected_attempt_id: str = None,
                                   **authority) -> Dict[str, object]:
     """Rebuild the complete attempt, Candidate and Evidence graph from disk data."""
-    _exact(attempt, ATTEMPT_FIELDS, "Scoped offline extraction attempt")
+    _exact(attempt, ATTEMPT_FIELDS | V2_IDENTITY_FIELDS if attempt.get("schema_version") == 2 else ATTEMPT_FIELDS,
+           "Scoped offline extraction attempt")
     validate_scope_requirement_identity(artifact=attempt, requirement=authority["requirement"])
     if (attempt["record_type"] != "SCOPED_OFFLINE_EXTRACTION_ATTEMPT"
-            or type(attempt["schema_version"]) is not int or attempt["schema_version"] != 1
+            or type(attempt["schema_version"]) is not int or attempt["schema_version"] not in {1, 2}
             or (expected_attempt_id is not None and attempt["scoped_attempt_id"] != expected_attempt_id)):
         raise ScopedReaderError("Scoped attempt subtype/content identity differs")
     validate_record(record=attempt["candidate"])

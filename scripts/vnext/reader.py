@@ -491,3 +491,57 @@ def validate_reader_output(
         ),
     }
     return validate_record(record=record)
+
+
+def validate_source_bound_reader_output(
+    *, response_text: str, attempt_id: str, source_bound_proof: Mapping,
+    expected_proof_id: str, requirement: Mapping, repo_root,
+    source_bytes: bytes, raw_blob: Mapping, source_reference: Mapping,
+    full_derived_asset: Mapping, task_contract: Mapping,
+) -> Dict[str, object]:
+    """Keep model output intact and bind deterministic successor enrichment.
+
+    The ordinary Reader schema remains table-only. Narrative bytes and unit
+    factors are independently reconstructed local evidence, never invented
+    model claims or text inserted into a source caption/cell.
+    """
+    from .composite_scope import source_bound_scope, validate_source_bound_proof
+    from .records import SOURCE_BOUND_CANDIDATE_FIELDS, SOURCE_BOUND_CANDIDATE_TYPE
+    native = validate_reader_output(response_text=response_text, attempt_id=attempt_id,
+        required_roles=task_contract["required_roles"], scope_contract=task_contract["scope_contract"],
+        source_reference_ids=[source_reference["source_reference_id"]],
+        derived_asset_ids=[full_derived_asset["derived_asset_id"]])
+    proof = validate_source_bound_proof(proof=source_bound_proof, expected_proof_id=expected_proof_id,
+        requirement=requirement, repo_root=repo_root, source_bytes=source_bytes, raw_blob=raw_blob,
+        source_reference=source_reference, full_derived_asset=full_derived_asset, task_contract=task_contract)
+    if native["disclosure_group"] != task_contract["disclosure_group"]:
+        raise ReaderError("Source-bound Reader task differs")
+    requires_review = bool(native["unresolved_competing_claims"])
+    for claim in native["selected"].values():
+        if claim["locator"] != proof["target_locator"]:
+            raise ReaderError("Source-bound response does not name the certified target")
+        numeric = proof["numeric_normalization"]
+        if numeric is not None and claim["claimed_reported_unit"] != numeric["reported_unit"]:
+            raise ReaderError("Source-bound response invented a different reported unit")
+        scope = {}
+        for item in claim["claimed_scope"]:
+            value = exact_enum_alias(contract=task_contract["scope_contract"],
+                                     dimension=item["dimension"], raw_value=item["raw_value"])
+            if value is None:
+                requires_review = True
+            else:
+                scope[item["dimension"]] = value
+        source_bound_scope(proof=proof, native_scope=scope, task_contract=task_contract)
+    candidate = {**native, "record_type": SOURCE_BOUND_CANDIDATE_TYPE,
+        "artifact_requirement_generation": requirement["artifact_requirement_generation"],
+        "requirement_id": requirement["requirement_id"],
+        "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "requirement_hashes": dict(requirement["hashes"]),
+        "native_candidate_hash": native["candidate_hash"],
+        "source_bound_proof_id": proof["source_bound_proof_id"],
+        "status": "REVIEW_REQUIRED" if requires_review else "CANDIDATE"}
+    body = {key: candidate[key] for key in (
+        "disclosure_group", "source_reference_ids", "derived_asset_ids", "selected",
+        "competing_candidates", "unresolved_competing_claims", *SOURCE_BOUND_CANDIDATE_FIELDS)}
+    candidate["candidate_hash"] = content_hash(value=body)
+    return validate_record(record=candidate)

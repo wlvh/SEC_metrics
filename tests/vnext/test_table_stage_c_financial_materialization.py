@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unittest
 
 from tests.vnext.common import REPO_ROOT
@@ -13,10 +14,12 @@ from tools.benchmark_jpm_full_materialization import SOURCE_RELATIVE
 from tools.benchmark_jpm_full_materialization import SOURCE_SHA256
 from tools.benchmark_jpm_full_materialization import STAGE_B_CENSUS_RECEIPT_ID
 from tools.benchmark_jpm_full_materialization import TEST_ONLY_MAX_TOTAL_CELLS
+from tools.benchmark_jpm_full_materialization import TABLE_GRID_RELATIVE
 from tools.benchmark_jpm_full_materialization import _production_source_hashes
 from tools.benchmark_jpm_full_materialization import _root_state
 from tools.benchmark_jpm_full_materialization import _stage_b_census
-from vnext.canonical import content_hash, sha256_file, strict_json_file
+from vnext.canonical import content_hash, sha256_bytes, sha256_file, strict_json_file
+from vnext.resource_limits import RESOURCE_LIMITS
 
 
 EXPECTED_BENCHMARK_RECEIPT_ID = (
@@ -101,6 +104,45 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
                 "derived_asset_id"
             ],
         }
+
+    def _historical_resource_source_hash(self) -> str:
+        """Allow only the explicitly authorized integer, not arbitrary drift.
+
+        R3 preserves the original source hash. Replacing the one production
+        cap literal with its benchmark-time value in memory must reproduce
+        that exact byte hash; no receipt or runtime file is rewritten.
+        """
+        data = (REPO_ROOT / RESOURCE_LIMITS_RELATIVE).read_bytes()
+        pattern = rb"(?m)^(    max_total_cells=)([0-9]+)(,)$"
+        matches = list(re.finditer(pattern, data))
+        self.assertEqual(1, len(matches))
+        self.assertEqual(RESOURCE_LIMITS.max_total_cells, int(matches[0].group(2)))
+        self.assertGreaterEqual(RESOURCE_LIMITS.max_total_cells, 100000)
+        self.assertLessEqual(RESOURCE_LIMITS.max_total_cells, 250000)
+        historical = data[:matches[0].start(2)] + b"100000" + data[matches[0].end(2):]
+        return sha256_bytes(content=historical)
+
+    def _historical_table_grid_source_hash(self) -> str:
+        """Reverse only the exact approved locator factoring, in memory.
+
+        This is stricter than an AST equivalence check: every original parser,
+        materializer, public validator and shared locator-body byte must match
+        the benchmark-time source SHA. No artifact or source is rewritten.
+        """
+        data = (REPO_ROOT / TABLE_GRID_RELATIVE).read_bytes()
+        inserted = (
+            b"    return _resolve_verified_cell(derived_asset=derived_asset, locator=locator)\n\n\n"
+            b"def _resolve_verified_cell(\n"
+            b"    *, derived_asset: Mapping[str, object], locator: Mapping[str, object]\n"
+            b") -> Dict[str, object]:\n"
+            b'    """Apply the same exact locator checks to an already verified immutable grid.\n\n'
+            b"    Only the explicit process-local Evidence context uses this internal seam.\n"
+            b"    Public resolve_cell always performs full record verification before calling\n"
+            b"    it; locator/range/origin/span behavior is shared, not reimplemented.\n"
+            b'    """\n'
+        )
+        self.assertEqual(1, data.count(inserted))
+        return sha256_bytes(content=data.replace(inserted, b"", 1))
 
     def test_current_receipt_is_census_bound_and_resource_safe(self) -> None:
         """Bind historical JPM facts and exact, independently verified R3 drift."""
@@ -188,10 +230,16 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
             (REPO_ROOT / SOURCE_RELATIVE).stat().st_size,
             self.semantic["source"]["size"],
         )
-        self.assertEqual(
-            _production_source_hashes(repo_root=REPO_ROOT),
-            self.semantic["production_source_code_hashes"],
-        )
+        current_hashes = _production_source_hashes(repo_root=REPO_ROOT)
+        historical_hashes = self.semantic["production_source_code_hashes"]
+        self.assertEqual(set(current_hashes), set(historical_hashes))
+        for relative, historical_hash in historical_hashes.items():
+            if relative == RESOURCE_LIMITS_RELATIVE.as_posix():
+                self.assertEqual(self._historical_resource_source_hash(), historical_hash)
+            elif relative == TABLE_GRID_RELATIVE.as_posix():
+                self.assertEqual(self._historical_table_grid_source_hash(), historical_hash)
+            else:
+                self.assertEqual(current_hashes[relative], historical_hash)
         self.assertEqual(
             self.semantic["root_business_artifacts_before"],
             self.semantic["root_business_artifacts_after"],
@@ -206,7 +254,7 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
         self.assertTrue(policy["unchanged"])
         self.assertEqual(
             PRODUCTION_RESOURCE_LIMITS_SHA256,
-            sha256_file(path=REPO_ROOT / RESOURCE_LIMITS_RELATIVE),
+            self._historical_resource_source_hash(),
         )
         self.assertEqual(
             PRODUCTION_RESOURCE_LIMITS_SHA256,

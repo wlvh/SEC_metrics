@@ -1,4 +1,8 @@
-# PR-B bounded implementation validation
+# PR-B initial bounded implementation validation (3404f5d)
+
+The results below record the earlier pre-acquisition implementation, not the
+current continuation. See [current summary](README.md) for the two new SEC
+attempts, authorized production resource change and A03 owner-policy blocker.
 
 These are implementation/audit results, not completed R4 offline qualification.
 The owner escalation is in `owner_decision_request.md`. No timeout was raised,
