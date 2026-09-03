@@ -1,10 +1,12 @@
 """Complete-file synthetic A03 fixture; never business/reference evidence."""
 
 import json
+from copy import deepcopy
 from pathlib import Path
 
 from tests.vnext.common import cell_locator
 from vnext.reader import validate_reader_output
+from vnext.canonical import content_hash
 from vnext.reader_input import build_reader_input_manifest, build_reader_payload
 from vnext.requirements import load_requirement_snapshot
 from vnext.sources import raw_blob_record, source_reference_record
@@ -72,17 +74,28 @@ def b0_fixture():
         "fixture_id": "b0_synthetic_a03", "fixture_class": "POSITIVE_PRODUCTION",
         "windows": [{"start_order": 1, "end_order": 1}],
         "target_locator": locator,
-        "reference": {"status": "SYNTHETIC_INTERFACE_REFERENCE", "value": "1.11", "unit": "ratio"},
+        "reference": {"status": "SYNTHETIC_INTERFACE_REFERENCE", "value": "1.11", "unit": "ratio",
+                      "period": "FY2025", "scope": {"aggregation": "average", "entity_scope": "firm"},
+                      "evidence": "Complete synthetic interface fixture, not a legacy financial anchor"},
         "synthetic_candidate": candidate, "out_of_window_candidates": [],
         "table_audit": [{
             "table_id": t["table_id"], "grid_sha256": t["grid_sha256"],
             "disposition": "TARGET" if t["order"] == 1 else "NO_TARGET_CANDIDATE",
             "evidence": "Complete synthetic table inventory; not a real filing audit",
+            "candidate_locator_ids": [content_hash(value=locator)] if t["order"] == 1 else [],
+            "candidate_dispositions": [{"locator": locator, "disposition": "TARGET",
+                                        "evidence": "Exact synthetic selected cell", "unresolved": False}]
+                                        if t["order"] == 1 else [],
         } for t in asset["tables"]],
-        "material_layout_proof": {"kind": "SYNTHETIC_INTERFACE_ONLY"},
+        "material_layout_proof": {"kind": "SYNTHETIC_INTERFACE_ONLY", "source_cik": "123",
+                                  "source_sha256": raw["raw_asset_id"][7:],
+                                  "comparison_source_cik": None, "comparison_source_sha256": None,
+                                  "differences": [], "evidence": "Synthetic interface, not an alternate filing"},
         "navigation_paths": [
-            {"path_id": "A", "method": "SYNTHETIC_SECTION_ANCHOR"},
-            {"path_id": "B", "method": "SYNTHETIC_REVERSE_VALUE_TRACE"},
+            {"path_id": "A", "method": "SYNTHETIC_SECTION_ANCHOR", "source_sha256": raw["raw_asset_id"][7:],
+             "anchor": "Firm average", "evidence": "Synthetic forward source-section navigation", "target_locator": locator},
+            {"path_id": "B", "method": "SYNTHETIC_REVERSE_VALUE_TRACE", "source_sha256": raw["raw_asset_id"][7:],
+             "anchor": "111%", "evidence": "Synthetic reverse numeric-cell trace", "target_locator": locator},
         ],
     }
     authority = {
@@ -93,3 +106,21 @@ def b0_fixture():
     scope = build_source_scope_manifest(audit=audit, **authority)
     return {"authority": authority, "audit": audit, "scope": scope,
             "response_text": response_text, "response": response}
+
+
+def zero_call_audit(*, audit, classification):
+    """Retain a full closed table census while withholding a certified target."""
+    result = deepcopy(audit)
+    result.update(fixture_class=classification, synthetic_candidate=None, target_locator=None)
+    result["reference"] = {"status": "NOT_APPLICABLE", "value": None, "unit": None,
+                           "period": None, "scope": {}, "evidence": "Synthetic zero-call classification"}
+    for row in result["table_audit"]:
+        for item in row["candidate_dispositions"]:
+            if item["disposition"] == "TARGET":
+                item["disposition"] = "AMBIGUOUS_EXCLUDED"
+        if row["disposition"] == "TARGET":
+            row["disposition"] = "CANDIDATES_CLOSED"
+    for path in result["navigation_paths"]:
+        path["target_locator"] = None
+    result["material_layout_proof"]["kind"] = "ZERO_CALL_CLASSIFICATION"
+    return result

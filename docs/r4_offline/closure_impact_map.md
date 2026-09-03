@@ -59,10 +59,15 @@ a distinct file and entrypoint; it never reinterprets the historical eight tasks
 | `scripts/vnext/offline_execution_session.py` | process-local exact-object reuse and deterministic counters |
 | `scripts/vnext/r4_fixture_authority.py` | separate versioned R4 fixture/scope loader; six metrics only |
 | `scripts/vnext/r4_offline_qualification.py` | synthetic Candidates through existing Evidence, never a second verifier |
+| `scripts/vnext/r4_source_audit.py` | deterministic source-specific audit/navigation records, never runtime discovery |
+| `scripts/vnext/r4_materialization.py` | additive offline full-grid resource boundary; no legacy budget mutation |
 | `tools/qualify_r4_offline.py` | offline-only reproducible qualification/audit CLI |
+| `tools/audit_r4_sources.py` | offline source inventory and two-path audit CLI |
 | `tools/benchmark_r4_offline_session.py` | same-input/interpreter baseline and optimized comparison |
+| `tools/r4_materialization_worker.py` | if required, isolated hard-guarded full-source worker; not live authority |
 | `tools/acquire_r4_fixture_filings.py` | only if inventory proves need; existing SecHttpClient; maximum two filings |
 | `config/r4_fixture_matrix_v1.json` | source-specific audited successor fixture authority |
+| `config/r4_fixture_acquisitions_v1.json` | two permitted future filing identities; locator metadata only, no qualification credit |
 | `config/release_plans/issue_28_r4_offline_v1.json` | six-metric successor plan, offline evidence only |
 | `tests/vnext/test_source_scope.py` | scope identity and full tamper matrix |
 | `tests/vnext/r4_b0_fixture_support.py` | small complete-file synthetic B0 fixture, using the real A03 task/Evidence path |
@@ -70,6 +75,7 @@ a distinct file and entrypoint; it never reinterprets the historical eight tasks
 | `tests/vnext/test_offline_execution_session.py` | exact cache keys, mutation/crash/UNKNOWN boundaries and counters |
 | `tests/vnext/test_r4_fixture_authority.py` | fixture/structured-first/classification/ReleasePlan gates |
 | `tests/vnext/test_r4_offline_qualification.py` | complete offline source/task evidence integration |
+| `tests/vnext/test_r4_fixture_acquisitions.py` | exact quota/source/retry/identity and pre-egress failure tests |
 | `tests/fixtures/vnext/r4_offline/**` | synthetic fixtures and audited source-specific manifests, not live credit |
 | `docs/r4_offline/**` | B0 interfaces, inventory, audit/reconciliation, benchmark evidence and one-page summary |
 | `docs/evidence/issue_28_transition_activation.json` | exact PR #29 activation receipt, unchanged content identity |
