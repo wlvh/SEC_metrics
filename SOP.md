@@ -6,7 +6,16 @@
 
 ## Issue #15 D-26 测试执行边界
 
-`requirements/issue_15_v1/decision_register.json` 的 effective D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级，并继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件。金额 `budget_preflight_provider_calls_zero` 已从必测集合删除；仍保留 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络与 structured-only 零模型调用的短小确定性测试。`.github/workflows/vnext-fast.yml` 在 PR 上运行同一fast命令；GitHub CI green只证明该边界。随后可运行 `python3 tools/run_acceptance.py --scope recorded` 封存 `PASSED_FAST_LOCAL_ONLY`；本地receipt与CI fast check都不是live、full acceptance或active Cutover。
+`requirements/issue_15_v1/decision_register.json` 的 historical D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级；该集合现在以successor smoke同时加载`issue_28_v1`和exact `issue_15_v1` parent。它继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件，并保留single-flight、HTTP 402停批、UNKNOWN no-retry、零网络replay/rollback/restore等短小确定性测试。`.github/workflows/vnext-fast.yml` 在 PR 上运行同一命令；本地receipt与CI fast check都不是live、full acceptance或active Cutover。
+
+## Issue #28 successor Requirement transition
+
+| 步骤 | 动作 | 权威引用 | 验收 |
+|---|---|---|---|
+| 1 | 加载五文件snapshot、固定版本engine与记录parent | `requirements/issue_28_v1/`；`scripts/vnext/requirement_profile.py` | exact files/hash/size、engine及其dependencies、parent recorded hashes/snapshot bytes一致；parent不读取current root authority |
+| 2 | 执行fragment transfer和typed safety bounds | `transfer_manifest.json`；`decision_register.json`；`invariant_profile.json` | 每个parent叶级义务唯一分类；D-01/D-24/D-26语义不可错配；同kind按ratchet独立；未知kind/fork/detached/tamper失败 |
+| 3 | 重验真实artifact与历史兼容 | `tests/vnext/test_issue28_rework.py`；`tests/vnext/test_issue28_requirement_transition.py` | successor三个subtype的generation和完整identity均必填；真实round-trip及删字段负例通过；root drift不破坏R1–R3；0/0/0 egress |
+| 4 | 保持Draft并提交返工证据 | PR-A一页summary与rework audit | 被拒head/closure不再请求批准；policy-content evidence不是activation。后续有效exact-head approval才可形成单独activation receipt；合并前不开始R4、不关闭#15/#24 |
 
 ## Issue #15 D-36/D-35 金额与资源安全边界
 
@@ -17,7 +26,7 @@ effective D-36 禁用仓库金额预算执法，花费权威是 `EXTERNAL_API_AC
 
 按 [Issue #12 R5 用户授权](https://github.com/wlvh/SEC_metrics/issues/12#issuecomment-5314176033)，live Reader 使用 `DEEPSEEK_API_KEY` 对应的官方 `deepseek-v4-flash` Chat Completions；HUMAN review 可选，缺失时 D-06 只允许明确标注的 SYSTEM approval。Issue #12 的历史 Hilton/Hyatt 样本说明不能替代 Issue #15 当前 matrix：当前 lodging 顺序为 Marriott FY2024 second layout → production semantic freeze → Marriott FY2023 post-freeze holdout → Marriott FY2025 fresh stability。FY2023 holdout只在同issuer、fiscal year/accession/source bytes均不同且至少两项material layout差异机械通过时成立；旧cycle response一律不能给新cycle qualification ordinal。首次 Cutover 不需要预先存在 active/previous pointer，而是导入 legacy A 后原子创建 B→A chain。
 
-## Issue #15 Requirement authority 与后续开发
+## Issue #15 R1–R3 历史 Requirement authority
 
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|

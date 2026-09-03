@@ -47,23 +47,22 @@ architecture.md
 
 需要发布 PR 时，先读取 `SOP.md` 的 PR 发布章节，再执行 `PR_Checklist.md`。涉及 SEC 访问、证据、manifest、verdict、source provenance 或 artifact publication 的改动，必须同时核对用户可观察后果和负例测试。
 
-### 开发、复核或执行 vNext Cutover
+### 开发、复核 successor vNext Ratchet
 
 ```text
-requirements/issue_15_v1/CONTRACT.md（Issue #15 exact authority）
-→ requirements/issue_15_v1/transfer_manifest.json
-→ requirements/issue_15_v1/decision_register.json
-→ requirements/issue_15_v1/baseline_manifest.json
-→ requirements/issue_15_v1/legacy_semantic_producer_inventory.json
-→ requirements/issue_15_v1/source_strategy_baseline_receipt.json
-→ requirements/issue_15_v1/foundation_verification_receipt.json
+requirements/issue_28_v1/CONTRACT.md（successor outcome/boundary）
+→ requirements/issue_28_v1/decision_register.json（policy-content authority）
+→ requirements/issue_28_v1/invariant_profile.json（typed evaluator routing）
+→ requirements/issue_28_v1/transfer_manifest.json
+→ requirements/issue_28_v1/baseline_manifest.json
+→ requirements/issue_15_v1/（immutable R1–R3 compatibility authority）
 → requirements/ai_first_v3_3_1/（immutable inherited foundation）
 → architecture.md「vNext Cutover 实现」
 → TESTING.md「vNext recorded / formal Cutover」
 → SOP.md「vNext operator 与正式 Cutover」
 ```
 
-Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快照继续提供不可变R2/R3、既有实现和历史Decision链；child snapshot以same-ID tips和D-30–D-38形成自包含authority。post-freeze D-36/D-35/D-26禁用仓库金额门禁，外部API账户余额是花费权威，cost/token/usage/cache只作非阻断observability；HTTP 402仍零自动重试并停止execution/batch，payload/context/resource仍是独立fail-closed安全类。D-07链保留全表、原序、无selector/prefilter、inclusive 200000 context ceiling与family-scoped failure domain；后续owner grants仅对冻结的prompt/schema/source/task和exact-head plan逐次授权，measurement response始终没有qualification/publication credit。WB-1/Decision/attestation只冻结和验证authority，不自动切换Reader、transport、publication或业务语义。
+Issue #28 / `issue_28_v1` 是待激活的 R4–Rf successor authority；PR #29保持Draft，旧被拒head/closure不是审批候选。版本注册表选择保留的V1/V2 engine，同Issue可以有v2等revision，同kind可以按ratchet拥有多个invariant实例。Decision Register是policy-content authority，transfer按parent每个叶级语义义务唯一分类。旧RUN/Publication保留hash-only字节，旧ISSUE_15_RELEASE_PLAN保留原id/closure；三个SUCCESSOR_* subtype则强制独立generation和id/closure/hashes。historical parent只从记录hashes与冻结snapshot重建，不跟随current root漂移。policy provenance、closure验证、exact-head activation与live授权分离；PR #22 archive无credit/reuse，PR-A不实现R4、不创建activation或live grant。
 
 当前lodging authority在owner批准的compact prompt、same-target-table八字段locator、Marriott FY2024 second layout、Marriott FY2023 post-freeze holdout和Marriott FY2025 fresh source上冻结。Occupancy与RevPAR context均由各自provider-reported actual usage证明不超过200000；qualification没有复用measurement response。SECOND_LAYOUT、POST_FREEZE_HOLDOUT和三个FRESH ordinals按ordinal-major顺序形成十个独立provider execution，全部Evidence PASS、D-06 SYSTEM APPROVE、Result PUBLISHED、validation PASSED且usage terminal通过。任何新exact-head push不会重签这些已提交的无关family证据；financial仍停在Linux hard-RSS full-materialization benchmark之前。
 
@@ -79,13 +78,16 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `interact.md`：CLI 与文件交付中用户可观察行为和验收不变量。
 - `docs/business_user_guide.md`：面向首次读取结果的业务人员的派生指南。
 - `docs/validation_snapshot_provenance.md`：source-input tree、artifact digest、publication 顺序与 checker 语义。
+- `docs/issue_28_requirement_transition_summary.md`：PR-A的一页owner review对象；closure固定，exact head从GitHub PR实时读取以避免自引用。
+- `docs/issue_28_pr29_rework_audit.md`：被拒candidate的复现、七项authority返工、fragment语义分类及真实artifact测试命令；不构成activation或live grant。
 - `TESTING.md`：测试层级、真实命令、full/light 边界与副作用。
 - `SOP.md`：标准流程的一级导航，只保留动作、权威引用与验收。
 - `PR_Checklist.md`：仅在用户明确要求发布时使用的发布治理流程，不属于批次 acceptance source。
 - `.github/pull_request_template.md`：长期 PR body 发布治理模板，不属于批次 acceptance source。
 - `.github/workflows/vnext-fast.yml`：PR fast-suite CI；只运行 `tools/run_fast_tests.py`，不替代integration、live或full acceptance。
 - `.gitignore`：本地缓存、环境与临时 PR 草稿的忽略规则。
-- `requirements/issue_15_v1/`：Issue #15 的 exact Contract、自包含 Decision Register、post-freeze D-36/D-35/D-26/D-07 tips、parent transfer/baseline、39 指标 legacy semantic producer inventory、matrix baseline 与 foundation verification；是后续开发 authority，冻结 Contract 和 inherited parent bytes 均不因新 tip 被改写。
+- `requirements/issue_28_v1/`：Issue #28 successor 的五文件profile-driven snapshot；Decision Register拥有policy content，typed invariant profile、transfer classification、parent/R3/R2/archive与validator binding共同形成新closure。
+- `requirements/issue_15_v1/`：Issue #15 的 exact Contract、自包含 Decision Register、post-freeze tips、parent transfer/baseline、legacy producer/matrix/foundation证据；只作为不可变R1–R3历史兼容authority，不再承载successor policy。
 - `requirements/ai_first_v3_3_1/`：不可变 inherited foundation；其 exact FSD、R2/R3、历史 Decision、旧基线与 inventory 继续供 parent closure 验证，任何文件不得因 Issue #15 开发被改写。
 
 ### 核心配置
@@ -111,6 +113,8 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 - `scripts/validation_provenance.py`：读取 source policy、校验 SOP 权威引用角色、捕获 source-input tree、发布关键 artifact digest sidecar，并在 postflight 失败时使终态 fail closed。
 - `scripts/00_*.py` 至 `scripts/12_*.py`：薄单阶段 CLI；04/09 只接受`--workspace-dir <absolute-isolated-root>`，11 无参数时只作active read-back、带该参数时构建legacy candidate，其余wrapper保持无参数。candidate全链统一经`sec_pipeline.py --workspace-dir ... <stage>`；legacy stage 11 mutation使旧provenance失配，stage 12负责终态publication，active stage 11只读。
 - `scripts/vnext/`：vNext的canonical/schema/state、source/table-grid、latest verified request-attempt与locator-tier source plan、Spec/constraint、固定DeepSeek OpenAI-compatible Chat Completions adapter、Evidence/Review/Calculator、Run freeze/replay、complete BatchManifest/Projector、固定SEC Stage00/01/02/03/05 acquisition/inventory、资格门、正式Cutover编排、pinned `PublicationView`与publication/rollback transaction实现。recorded可exact验证并闭合legacy working locator，正式live只允许immutable attempt；二者仍受各自Review、staging与publication gates约束。
+- `scripts/vnext/requirement_profile.py`：版本注册表与portable authority路径收集；不被旧snapshot绑定为可变共享engine。
+- `scripts/vnext/requirement_profile_v1.py` / `requirement_profile_v2.py`：保留的版本化engine。V1拥有strict读取、Decision链、fragment transfer、安全bounds和显式artifact generation；V2依赖不可变V1并只增加typed产品语义Decision扩展。新engine不得覆盖旧engine。
 - `scripts/vnext/source_strategy.py`：严格加载39指标registry与Issue #15 ReleasePlan，机械验证exact source-mode mapping、family literal union、迁移状态分离、全部authority hashes及parent→child metric/key/retirement三类no-removal子集门。已发布R1/R2 plan按content ID保留其历史Requirement closure，loader另返回current closure；post-publication D-07 tip不得重签历史plan或active bundle，未来新plan必须显式登记current closure。
 - `scripts/vnext/deterministic_router.py`：以统一 `sources[]`/SourceSetManifest 闭合 companyfacts、accession XBRL、ECD XBRL、auditor fact 和 8-K item index 五个 adapter；它生成非模型 DeterministicVerifiedClaim，再投影为 VerifiedObservation/Result/ExecutionTrace。
 - `scripts/vnext/invocation_control.py`：绑定 release-input/invocation/execution 三层身份；生产adapter在exact provider envelope形成plan后才进入`O_CREAT|O_EXCL` owner-only socket路径。terminal reservation归档后释放，dead owner的egress marker+缺terminal receipt从磁盘封存为UNKNOWN；plan/request/egress/attempt/execution/response均可重算三种调用计数，不包含仓库金额 cap/preflight。
@@ -226,7 +230,7 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 
 ## 6. Review 与测试
 
-- Issue #15 的 effective D-26 保留 fast/local 主入口 `python3 tools/run_fast_tests.py --jobs 4` 与快速静态 gate；`.github/workflows/vnext-fast.yml` 在PR上运行同一fast set。不把全仓/双解释器、隔离 repository/worktree 或长串行套件列为必跑项。金额 budget preflight 不再是必测项；必须保留 single-flight、HTTP 402 一次调用后停批、UNKNOWN_REMOTE_OUTCOME 不自动重试、frozen replay/rollback/restore 零网络和 structured-only 零模型调用的短小确定性证据。`PASSED_FAST_LOCAL_ONLY` 只界定证据范围；CI green仍不是live、full acceptance或Cutover。
+- Issue #15 的 historical D-26 保留 fast/local 主入口 `python3 tools/run_fast_tests.py --jobs 4`；fast set以`issue_28_v1` smoke同时覆盖successor与其exact historical parent，`.github/workflows/vnext-fast.yml` 在PR上运行同一集合。不把全仓/双解释器、隔离 repository/worktree 或长串行套件列为必跑项。`PASSED_FAST_LOCAL_ONLY` 只界定证据范围；CI green仍不是live、full acceptance或Cutover。
 - 发现 Bug 时遵循 `TESTING.md`：先补稳定复现，再修实现；跨阶段问题同时补场景级证据。
 - 不用 quick unittest 替代 Golden、repair gate、snapshot checker 或完整场景，也不用 light review 冒充 full validation。
 - 真实运营中会写 `evidence/`、`outputs/` 或报告的命令仍须遵循其受控 authority；它们不是 R4 测试。
@@ -238,7 +242,8 @@ Issue #15 / `issue_15_v1` 是全部未来开发与验收的唯一入口。父快
 
 - 只读取现有结果
 - SEC 阶段 00-12 完整批次运行
-- Issue #15 Requirement authority 与后续 ratchet 开发
+- Issue #28 successor Requirement 与后续 ratchet 开发
+- Issue #15 / R1–R3 历史 authority 回读
 - vNext operator 与正式 Cutover
 - 分层验收与失败定位
 - PR 发布（仅用户明确要求时）

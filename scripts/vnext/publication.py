@@ -47,6 +47,11 @@ from .qualification import validate_cutover_qualifications
 from .records import validate_record
 from .requirements import RequirementError, SNAPSHOT_FILES
 from .requirements import load_requirement_snapshot
+from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
+from .requirement_profile import LEGACY_ARTIFACT_GENERATION
+from .requirement_profile import requirement_authority_paths
+from .requirement_profile import validate_artifact_requirement_identity
+from .requirement_profile import validate_execution_authority
 from .run_store import RunStoreError, load_frozen_run, load_run_for_status
 from .sources import SourceError, resolve_repository_file
 from .states import PUBLISHABLE_VALIDATION_STATUSES
@@ -172,7 +177,12 @@ REQUIREMENT_HASH_FIELDS = {
     "release_plan_sha256",
     "semantic_runtime_versions_hash",
 }
-REQUIREMENT_CONTENT_HASH_FIELDS = {"semantic_runtime_versions_hash"}
+PROFILE_REQUIREMENT_HASH_FIELDS = {
+    "baseline_sha256", "contract_sha256", "decision_register_sha256",
+    "invariant_profile_sha256", "parent_requirement_closure_hash",
+    "transfer_manifest_sha256", "validator_sha256",
+}
+REQUIREMENT_CONTENT_HASH_FIELDS = {"semantic_runtime_versions_hash", "parent_requirement_closure_hash"}
 LEDGER_BINDING_FIELDS = {
     "request_locator_classes",
     "request_locator_proof_id",
@@ -821,7 +831,7 @@ def _validate_publication_metadata(
     """
     if type(requirement_hashes) is not dict or set(
         requirement_hashes
-    ) != REQUIREMENT_HASH_FIELDS or any(
+    ) not in (REQUIREMENT_HASH_FIELDS, PROFILE_REQUIREMENT_HASH_FIELDS) or any(
         type(requirement_hashes[field]) is not str
         or (
             CONTENT_ID_PATTERN
@@ -906,6 +916,8 @@ def _write_prepared_publication_bundle(
     projection_manifest_id: str, validation_receipt_id: str,
     ledger_binding: Mapping[str, object],
     previous_publication_id: Optional[str],
+    requirement: Optional[Mapping[str, object]] = None,
+    projection_requirement_hashes: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Write one immutable bundle from already verified exact bytes.
 
@@ -918,6 +930,9 @@ def _write_prepared_publication_bundle(
         validation_receipt_id: Verified or legacy-derived validation identity.
         ledger_binding: Exact consumed request-ledger prefix binding.
         previous_publication_id: Prepared predecessor or ``None``.
+        requirement: Loaded successor wrapper authority, or legacy mode.
+        projection_requirement_hashes: Independently retained inner projection
+            authority for a successor wrapper; never qualification reuse credit.
 
     Returns:
         Strict content-addressed PublicationManifest.
@@ -953,15 +968,29 @@ def _write_prepared_publication_bundle(
         "ledger_binding": dict(ledger_binding),
         "previous_publication_id": previous_publication_id,
     }
+    if requirement is not None:
+        if projection_requirement_hashes is None or requirement_hashes != requirement["hashes"]:
+            raise PublicationError("Successor publication authority is incomplete")
+        identity.update({
+            "artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
+            "requirement_id": requirement["requirement_id"],
+            "requirement_closure_hash": requirement["requirement_closure_hash"],
+            "projection_requirement_hashes": dict(projection_requirement_hashes),
+        })
+    elif set(requirement_hashes) != REQUIREMENT_HASH_FIELDS:
+        raise PublicationError("Legacy publication cannot use successor Requirement hashes")
     publication_id = (
         "publication_" + content_hash(value=identity).split(":", 1)[1]
     )
     manifest = {
-        "record_type": "PUBLICATION_MANIFEST",
+        "record_type": ("SUCCESSOR_PUBLICATION_MANIFEST" if requirement is not None
+                        else "PUBLICATION_MANIFEST"),
         "publication_id": publication_id,
         **identity,
     }
     validate_record(record=manifest)
+    if requirement is not None:
+        validate_artifact_requirement_identity(artifact=manifest, requirement=requirement)
     publications_dir.mkdir(parents=True, exist_ok=True)
     final_dir = publications_dir / publication_id
     if final_dir.exists():
@@ -1864,6 +1893,18 @@ def _verify_portable_closure(
             )
 
     authority_root = bundle_dir / INTERNAL_AUTHORITY_ROOT
+    requirement_id = (
+        str(manifest["requirement_id"])
+        if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST"
+        else "ai_first_v3_3_1"
+    )
+    try:
+        publication_requirement = load_requirement_snapshot(
+            snapshot_dir=authority_root / "requirements" / requirement_id
+        )
+        validate_artifact_requirement_identity(artifact=manifest, requirement=publication_requirement)
+    except ValueError as error:
+        raise PublicationError("Publication immutable Requirement identity differs") from error
     batch_path = bundle_dir / INTERNAL_BATCH_MANIFEST
     try:
         batch = load_projection_batch_manifest(
@@ -3807,7 +3848,7 @@ def write_cutover_publication_validation_receipt(
     raise PublicationError("FORMAL_CUTOVER_AUTHORITY_REQUIRED")
 
 
-def prepare_publication_bundle(
+def _prepare_publication_bundle(
     *,
     publication_root: Path,
     repo_root: Path,
@@ -3815,6 +3856,8 @@ def prepare_publication_bundle(
     legacy_snapshot_dir: Path,
     staging_dir: Path,
     previous_publication_id: Optional[str],
+    artifact_requirement_generation: str = LEGACY_ARTIFACT_GENERATION,
+    publication_requirement_id: Optional[str] = None,
 ) -> Dict[str, object]:
     """Create and verify one immutable complete PUBLISHABLE bundle.
 
@@ -3825,6 +3868,9 @@ def prepare_publication_bundle(
         legacy_snapshot_dir: Legacy inputs named by ProjectionManifest.
         staging_dir: Exact candidate artifact directory.
         previous_publication_id: Active predecessor at preparation time.
+        artifact_requirement_generation: Explicit legacy/successor record mode.
+        publication_requirement_id: Required for successor recorded wrappers;
+            formal successor release remains disabled pending later authorization.
 
     Returns:
         Strict PublicationManifest.
@@ -3843,6 +3889,20 @@ def prepare_publication_bundle(
         label="Validation manifest",
     )
     validation_mode = str(validation_manifest["mode"])
+    outer_requirement = None
+    if artifact_requirement_generation == EXPLICIT_ARTIFACT_GENERATION:
+        if (type(publication_requirement_id) is not str
+                or re.fullmatch(r"issue_[0-9]+_v[1-9][0-9]*", publication_requirement_id) is None):
+            raise PublicationError("Successor publication Requirement identity is required")
+        if validation_mode != RECORDED_VALIDATION_MODE:
+            raise PublicationError("SUCCESSOR_FORMAL_RELEASE_NOT_ENABLED")
+        outer_requirement = load_requirement_snapshot(
+            snapshot_dir=repo_root / "requirements" / publication_requirement_id
+        )
+        validate_execution_authority(repo_root=repo_root, requirement=outer_requirement)
+    elif (artifact_requirement_generation != LEGACY_ARTIFACT_GENERATION
+          or publication_requirement_id is not None):
+        raise PublicationError("Publication generation must be explicit")
     if validation_mode not in {
         FORMAL_VALIDATION_MODE,
         RECORDED_VALIDATION_MODE,
@@ -3928,6 +3988,10 @@ def prepare_publication_bundle(
             validation_mode == FORMAL_VALIDATION_MODE
         ),
         validation_tier=validation_mode,
+        additional_authority_paths=(
+            requirement_authority_paths(repo_root=repo_root, requirement=outer_requirement)
+            if outer_requirement is not None else ()
+        ),
     )
     if set(files).intersection(closure_files):
         raise PublicationError("Publication closure overlaps user artifacts")
@@ -3935,12 +3999,62 @@ def prepare_publication_bundle(
     return _write_prepared_publication_bundle(
         publications_dir=Path(publications_dir),
         files=files,
-        requirement_hashes=requirement_hashes,
+        requirement_hashes=(outer_requirement["hashes"] if outer_requirement is not None
+                            else requirement_hashes),
         batch_manifest_id=str(batch_manifest_id),
         projection_manifest_id=str(projection_manifest_id),
         validation_receipt_id=str(validation_receipt_id),
         ledger_binding=ledger_binding,
         previous_publication_id=previous_publication_id,
+        requirement=outer_requirement,
+        projection_requirement_hashes=(requirement_hashes if outer_requirement is not None else None),
+    )
+
+
+def prepare_publication_bundle(
+    *,
+    publication_root: Path,
+    repo_root: Path,
+    batch_manifest_path: Path,
+    legacy_snapshot_dir: Path,
+    staging_dir: Path,
+    previous_publication_id: Optional[str],
+) -> Dict[str, object]:
+    """Keep the historical publication entrypoint and its exact argument set."""
+    return _prepare_publication_bundle(
+        publication_root=publication_root,
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+    )
+
+
+def prepare_successor_publication_bundle(
+    *,
+    publication_root: Path,
+    repo_root: Path,
+    batch_manifest_path: Path,
+    legacy_snapshot_dir: Path,
+    staging_dir: Path,
+    previous_publication_id: Optional[str],
+    requirement_id: str,
+) -> Dict[str, object]:
+    """Build an explicit successor recorded wrapper through the same gates.
+
+    The separate entrypoint selects the immutable successor subtype. It takes
+    no caller ledger, Requirement hash map, provider, or validation override.
+    """
+    return _prepare_publication_bundle(
+        publication_root=publication_root,
+        repo_root=repo_root,
+        batch_manifest_path=batch_manifest_path,
+        legacy_snapshot_dir=legacy_snapshot_dir,
+        staging_dir=staging_dir,
+        previous_publication_id=previous_publication_id,
+        artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
+        publication_requirement_id=requirement_id,
     )
 
 
@@ -4525,6 +4639,13 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         raise PublicationError(
             "Publication manifest record is invalid"
         ) from error
+    if manifest["record_type"] not in {"PUBLICATION_MANIFEST", "SUCCESSOR_PUBLICATION_MANIFEST"}:
+        raise PublicationError("Publication artifact subtype differs")
+    projection_requirement_hashes = (
+        manifest["projection_requirement_hashes"]
+        if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST"
+        else manifest["requirement_hashes"]
+    )
     if manifest[
         "publication_id"
     ] != bundle_dir.name and not bundle_dir.name.startswith("."):
@@ -4548,6 +4669,8 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
     internal_paths = expected_paths - public_paths
     legacy_import = LEGACY_BASELINE_IMPORT_MANIFEST in internal_paths
     zero_ai_formal = ZERO_AI_FORMAL_MANIFEST in internal_paths
+    if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST" and (legacy_import or zero_ai_formal):
+        raise PublicationError("Historical release cannot be relabelled as successor")
     if (
         public_paths != REQUIRED_BUNDLE_FILES
         or any(not path.startswith(INTERNAL_PREFIX) for path in internal_paths)
@@ -4617,6 +4740,10 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         "ledger_binding": manifest["ledger_binding"],
         "previous_publication_id": manifest["previous_publication_id"],
     }
+    if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST":
+        for field in ("artifact_requirement_generation", "requirement_id",
+                      "requirement_closure_hash", "projection_requirement_hashes"):
+            identity[field] = manifest[field]
     expected_id = (
         "publication_" + content_hash(value=identity).split(":", 1)[1]
     )
@@ -4636,9 +4763,17 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
             internal_paths=internal_paths,
         )
         return manifest
+    if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST":
+        validation_mode = _json_mapping(
+            content=(bundle_dir / "validation_run_manifest.json").read_bytes(),
+            label="Successor validation mode",
+        )
+        if (validation_mode.get("mode") != RECORDED_VALIDATION_MODE
+                or validation_mode.get("result") != RECORDED_VALIDATION_RESULT):
+            raise PublicationError("SUCCESSOR_FORMAL_RELEASE_NOT_ENABLED")
     projection = _validate_projection_manifest(
         content=(bundle_dir / "projection_manifest.json").read_bytes(),
-        requirement_hashes=manifest["requirement_hashes"],
+        requirement_hashes=projection_requirement_hashes,
         batch_manifest_id=str(manifest["batch_manifest_id"]),
         projection_manifest_id=str(manifest["projection_manifest_id"]),
     )
@@ -4674,7 +4809,7 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
     _validate_receipt_artifacts(
         files=bundle_files,
         receipt=receipt,
-        requirement_hashes=manifest["requirement_hashes"],
+        requirement_hashes=projection_requirement_hashes,
         batch_manifest_id=str(manifest["batch_manifest_id"]),
         projection_manifest_id=str(manifest["projection_manifest_id"]),
         gate_evidence=_publication_gate_evidence(

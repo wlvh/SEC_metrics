@@ -14,6 +14,8 @@ from .canonical import CanonicalError, canonical_json_bytes, content_hash
 from .canonical import decimal_text, parse_decimal, parse_utc_timestamp
 from .specs import SEMANTIC_SET_PATHS
 from .states import validate_state
+from .requirement_profile_v1 import EXPLICIT_ARTIFACT_GENERATION
+from .requirement_profile_v1 import SUCCESSOR_RECORD_TYPES
 
 
 IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9:_./-]{2,255}$")
@@ -270,7 +272,10 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "audit_manifest_hash",
             "execution_semantics_hash",
         ),
-        optional=("task_contract_bindings", "qualification_authorization"),
+        optional=(
+            "task_contract_bindings",
+            "qualification_authorization",
+        ),
     ),
     "SOURCE_REFERENCE": RecordSchema(
         required=(
@@ -331,7 +336,22 @@ SCHEMAS: Dict[str, RecordSchema] = {
 }
 
 
+SCHEMAS["SUCCESSOR_RUN"] = RecordSchema(
+    required=SCHEMAS["RUN"].required + (
+        "artifact_requirement_generation", "requirement_id", "requirement_closure_hash",
+    ),
+    optional=SCHEMAS["RUN"].optional,
+)
+SCHEMAS["SUCCESSOR_PUBLICATION_MANIFEST"] = RecordSchema(
+    required=SCHEMAS["PUBLICATION_MANIFEST"].required + (
+        "artifact_requirement_generation", "requirement_id", "requirement_closure_hash",
+        "projection_requirement_hashes",
+    ),
+)
+
+
 TEXT_FIELDS = {
+    "artifact_requirement_generation",
     "accession",
     "applicability",
     "approval_effect_hash",
@@ -389,6 +409,8 @@ TEXT_FIELDS = {
     "request_attempt_id",
     "request_body_sha256",
     "request_body_path",
+    "requirement_closure_hash",
+    "requirement_id",
     "qualification_authorization_id",
     "qualification_cycle_id",
     "qualification_evidence_id",
@@ -470,6 +492,7 @@ LIST_FIELDS = {
     "unresolved_scope_dimensions",
 }
 MAPPING_FIELDS = {
+    "projection_requirement_hashes",
     "approved_claims",
     "artifact_hashes",
     "calculation_target",
@@ -923,6 +946,10 @@ def _expected_identifier(
                 "previous_publication_id",
             )
         }
+        if record["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST":
+            for field in ("artifact_requirement_generation", "requirement_id",
+                          "requirement_closure_hash", "projection_requirement_hashes"):
+                body[field] = record[field]
         expected = "publication_" + content_hash(value=body).split(":", 1)[1]
         return "publication_id", expected
     return None
@@ -1598,9 +1625,17 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
         canonical_json_bytes(value=dict(record))
     except CanonicalError as error:
         raise RecordError("Record is not canonical JSON data") from error
-    _validate_record_status(record_type=record_type, record=record)
-    _validate_enums(record_type=record_type, record=record)
-    _validate_record_semantics(record_type=record_type, record=record)
+    semantic_type = SUCCESSOR_RECORD_TYPES.get(record_type, record_type)
+    if record_type in SUCCESSOR_RECORD_TYPES:
+        if (record["artifact_requirement_generation"] != EXPLICIT_ARTIFACT_GENERATION
+                or re.fullmatch(r"issue_[0-9]+_v[1-9][0-9]*", str(record["requirement_id"])) is None
+                or type(record["requirement_hashes"]) is not dict
+                or not record["requirement_hashes"]
+                or record["requirement_closure_hash"] != content_hash(value=record["requirement_hashes"])):
+            raise RecordError("Successor artifact Requirement identity differs")
+    _validate_record_status(record_type=semantic_type, record=record)
+    _validate_enums(record_type=semantic_type, record=record)
+    _validate_record_semantics(record_type=semantic_type, record=record)
     identifiers = [
         key
         for key in record
@@ -1610,7 +1645,7 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
         validate_identifier(value=record[key], field=key)
     if record_type == "REVIEW_DECISION":
         _validate_decision_hashes(record=record)
-    expected = _expected_identifier(record_type=record_type, record=record)
+    expected = _expected_identifier(record_type=semantic_type, record=record)
     if expected is not None:
         field, expected_value = expected
         if record[field] != expected_value:

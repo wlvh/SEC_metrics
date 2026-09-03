@@ -10,11 +10,21 @@ from __future__ import annotations
 
 import stat
 from pathlib import Path
-from typing import Dict, List, Mapping, Optional, Sequence
+from typing import Dict, List, Mapping, Sequence
 
 from .canonical import CanonicalError, SEMANTIC_VERSIONS, content_hash
 from .canonical import parse_utc_timestamp
 from .canonical import sha256_file, strict_json_file
+from .requirement_profile import PROFILE_ENGINES
+from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
+from .requirement_profile import LEGACY_ARTIFACT_GENERATION
+from .requirement_profile import RequirementProfileError
+from .requirement_profile import decision_record_hash
+from .requirement_profile import load_profile_requirement_snapshot
+from .requirement_profile import read_requirement_object
+from .requirement_profile import resolve_decision_chains
+from .requirement_profile import validate_artifact_requirement_identity
+from .requirement_profile import validate_execution_authority
 
 
 FSD_SHA256 = "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b"
@@ -754,29 +764,68 @@ class RequirementError(ValueError):
 
 def load_run_requirement_snapshot(
     *, repo_root: Path, task_contract_bindings: object,
+    requirement_id: object = None,
+    requirement_closure_hash: object = None,
+    requirement_hashes: object = None,
+    artifact_requirement_generation: object = None,
+    record_type: str = "RUN",
 ) -> Dict[str, object]:
     """Load the Requirement authority mechanically selected by one Run type.
 
     Args:
-        repo_root: Repository owning both supported immutable snapshots.
+        repo_root: Repository owning retained historical and versioned snapshots.
         task_contract_bindings: Run manifest's explicit catalog-task bindings.
+        requirement_id: Successor Run's explicit Requirement identity.
+        requirement_closure_hash: Successor Run's explicit closure identity.
+        requirement_hashes: Persisted exact Requirement file hashes.
+        artifact_requirement_generation: Required discriminator for the
+            SUCCESSOR_RUN subtype; absent only in the retained RUN schema.
+        record_type: Persisted subtype; identity-field presence never selects it.
 
     Returns:
-        Issue #15 authority for catalog table-task Runs; otherwise the retained
-        parent authority for historical disclosure Runs.
+        Exact successor authority, or legacy Issue #15/catalog and
+        ai_first/disclosure authority selected only for the old RUN subtype.
 
     Raises:
         RequirementError: When the Run binding shape is invalid or its selected
         snapshot cannot be loaded from the repository.
 
     Why:
-        A catalog task is governed by Issue #15's effective decisions, while a
-        historical disclosure Run remains replayable under its inherited
-        parent.  Choosing from the persisted task-binding shape avoids letting
-        a later caller select a policy at creation, review, or replay time.
+        Legacy task-binding dispatch is retained for historical bytes only.
+        SUCCESSOR_RUN always requires its generation and full identity triple;
+        missing fields cannot enter that legacy dispatch.
     """
     if type(task_contract_bindings) is not list:
         raise RequirementError("Run task contract bindings are invalid")
+    if record_type == "SUCCESSOR_RUN":
+        if (artifact_requirement_generation != EXPLICIT_ARTIFACT_GENERATION
+                or any(value is None for value in (
+                    requirement_id, requirement_closure_hash, requirement_hashes))):
+            raise RequirementError("Run explicit Requirement identity is incomplete")
+        if type(requirement_id) is not str or not requirement_id:
+            raise RequirementError("Run explicit Requirement identity is invalid")
+        snapshot_dir = repo_root / "requirements" / requirement_id
+        requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)
+        artifact = {
+            "record_type": "SUCCESSOR_RUN",
+            "artifact_requirement_generation": artifact_requirement_generation,
+            "requirement_closure_hash": requirement_closure_hash,
+            "requirement_hashes": requirement_hashes,
+            "requirement_id": requirement_id,
+        }
+        try:
+            validate_artifact_requirement_identity(
+                artifact=artifact, requirement=requirement,
+            )
+            validate_execution_authority(repo_root=repo_root, requirement=requirement)
+        except RequirementProfileError as error:
+            raise RequirementError(
+                "Run explicit Requirement identity differs"
+            ) from error
+        return requirement
+    if (record_type != "RUN" or artifact_requirement_generation is not None
+            or requirement_id is not None or requirement_closure_hash is not None):
+        raise RequirementError("Legacy Run cannot contain successor identity")
     requirement_id = (
         ISSUE_15_REQUIREMENT_ID
         if task_contract_bindings
@@ -786,6 +835,11 @@ def load_run_requirement_snapshot(
     requirement = load_requirement_snapshot(snapshot_dir=snapshot_dir)
     if requirement["requirement_id"] != requirement_id:
         raise RequirementError("Run Requirement authority identity differs")
+    if (
+        requirement_hashes is not None
+        and requirement_hashes != requirement["hashes"]
+    ):
+        raise RequirementError("Run legacy Requirement hashes differ")
     return requirement
 
 
@@ -798,10 +852,10 @@ def _read_object(*, path: Path) -> Dict[str, object]:
     Returns:
         Isolated root mapping.
     """
-    parsed = strict_json_file(path=path)
-    if not isinstance(parsed, dict):
-        raise RequirementError("Requirement JSON root must be an object")
-    return dict(parsed)
+    try:
+        return read_requirement_object(path=path)
+    except RequirementProfileError as error:
+        raise RequirementError(str(error)) from error
 
 
 def _decision_record_hash(*, decision: Mapping[str, object]) -> str:
@@ -813,85 +867,7 @@ def _decision_record_hash(*, decision: Mapping[str, object]) -> str:
     Returns:
         Canonical content hash.
     """
-    return content_hash(value=dict(decision))
-
-
-def _validate_decision(*, decision: Mapping[str, object]) -> Dict[str, object]:
-    """Validate one historical pending or terminal decision-chain record.
-
-    Args:
-        decision: Candidate decision mapping.
-
-    Returns:
-        Isolated record.
-
-    Raises:
-        RequirementError: On schema, state, identity, or UTC drift.
-    """
-    pending = {
-        "decision_id",
-        "effect",
-        "evidence",
-        "required_choice_fields",
-        "status",
-    }
-    if set(decision) == pending:
-        if decision["status"] != "PENDING_EXTERNAL_APPROVAL":
-            raise RequirementError("Pending Decision status is invalid")
-        for key in ("decision_id", "effect", "evidence"):
-            if not isinstance(decision[key], str) or not decision[key]:
-                raise RequirementError(
-                    "Pending Decision field is empty: {}".format(key)
-                )
-        fields = decision["required_choice_fields"]
-        if (
-            not isinstance(fields, list)
-            or not fields
-            or any(not isinstance(item, str) or not item for item in fields)
-            or len(fields) != len(set(fields))
-        ):
-            raise RequirementError("Pending Decision required fields are invalid")
-        return dict(decision)
-    required = {
-        "approved_at_utc",
-        "approved_by",
-        "choice",
-        "decision_id",
-        "evidence",
-        "status",
-        "supersedes_decision_id",
-    }
-    if set(decision) != required:
-        raise RequirementError("Decision fields are not exact")
-    for key in ("approved_at_utc", "approved_by", "decision_id", "evidence"):
-        if not isinstance(decision[key], str) or not decision[key]:
-            raise RequirementError("Decision field is empty: {}".format(key))
-    try:
-        parse_utc_timestamp(value=str(decision["approved_at_utc"]))
-    except CanonicalError as error:
-        raise RequirementError("Decision timestamp must be UTC") from error
-    if decision["status"] not in {"APPROVED", "REJECTED", "SUPERSEDED"}:
-        raise RequirementError("Decision status is invalid")
-    if not isinstance(decision["choice"], dict):
-        raise RequirementError("Decision choice must be an object")
-    parent = decision["supersedes_decision_id"]
-    if parent is not None and (not isinstance(parent, str) or not parent):
-        raise RequirementError("Decision supersedes identity is invalid")
-    return dict(decision)
-
-
-def _decision_parent(*, decision: Mapping[str, object]) -> Optional[str]:
-    """Return the predecessor hash for either supported history record.
-
-    Args:
-        decision: Validated pending or terminal record.
-
-    Returns:
-        ``None`` for the historical pending root, otherwise the named parent.
-    """
-    if decision["status"] == "PENDING_EXTERNAL_APPROVAL":
-        return None
-    return decision["supersedes_decision_id"]
+    return decision_record_hash(decision=decision)
 
 
 def _resolve_decisions(
@@ -905,47 +881,10 @@ def _resolve_decisions(
     Returns:
         Effective tips and root-to-tip audit chains by Decision ID.
     """
-    groups: Dict[str, List[Dict[str, object]]] = {}
-    for candidate in decisions:
-        decision = _validate_decision(decision=candidate)
-        groups.setdefault(str(decision["decision_id"]), []).append(decision)
-    effective: Dict[str, Dict[str, object]] = {}
-    chains: Dict[str, List[Dict[str, object]]] = {}
-    for decision_id, records in groups.items():
-        by_hash = {_decision_record_hash(decision=record): record for record in records}
-        if len(by_hash) != len(records):
-            raise RequirementError("Decision chain contains duplicate bytes")
-        children: Dict[Optional[str], List[str]] = {}
-        for record_hash, record in by_hash.items():
-            parent = _decision_parent(decision=record)
-            if parent is not None and parent not in by_hash:
-                raise RequirementError("Decision chain has a detached parent")
-            children.setdefault(parent, []).append(record_hash)
-        roots = children[None] if None in children else []
-        if len(roots) != 1:
-            raise RequirementError("Decision chain must have one root")
-        current = roots[0]
-        visited = set()
-        ordered = []
-        while True:
-            if current in visited:
-                raise RequirementError("Decision chain contains a cycle")
-            visited.add(current)
-            ordered.append(by_hash[current])
-            next_records = children[current] if current in children else []
-            if len(next_records) > 1:
-                raise RequirementError("Parallel effective decisions fail closed")
-            if not next_records:
-                break
-            current = next_records[0]
-        if len(visited) != len(records):
-            raise RequirementError("Decision chain is disconnected")
-        tip = by_hash[current]
-        if tip["status"] == "SUPERSEDED":
-            raise RequirementError("Effective decision cannot be SUPERSEDED")
-        effective[decision_id] = tip
-        chains[decision_id] = ordered
-    return effective, chains
+    try:
+        return resolve_decision_chains(decisions=decisions)
+    except RequirementProfileError as error:
+        raise RequirementError(str(error)) from error
 
 
 def effective_decisions(
@@ -2068,12 +2007,12 @@ def _load_issue_15_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
 
 
 def load_requirement_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
-    """Load one of the two explicit supported Requirement snapshots.
+    """Load a historical adapter or any valid profile-driven successor.
 
     Args:
-        snapshot_dir: Exact parent ``ai_first_v3_3_1`` or child
-            ``issue_15_v1`` snapshot directory. Test copies may use another
-            directory name because dispatch is by the bound requirement ID.
+        snapshot_dir: Historical or profile-driven Requirement directory.
+            Test copies may use another directory name because dispatch is by
+            the bound Requirement generation and identity.
 
     Returns:
         Verified Requirement closure and effective Decision chains.
@@ -2086,9 +2025,19 @@ def load_requirement_snapshot(*, snapshot_dir: Path) -> Dict[str, object]:
         raise RequirementError("Requirement baseline identity is missing")
     requirement_id = baseline["requirement_id"]
     if requirement_id == PARENT_REQUIREMENT_ID:
-        return _load_ai_first_snapshot(snapshot_dir=snapshot_dir)
+        return {**_load_ai_first_snapshot(snapshot_dir=snapshot_dir),
+                "artifact_requirement_generation": LEGACY_ARTIFACT_GENERATION}
     if requirement_id == ISSUE_15_REQUIREMENT_ID:
-        return _load_issue_15_snapshot(snapshot_dir=snapshot_dir)
+        return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+                "artifact_requirement_generation": LEGACY_ARTIFACT_GENERATION}
+    if baseline.get("requirement_generation") in PROFILE_ENGINES:
+        try:
+            return load_profile_requirement_snapshot(
+                snapshot_dir=snapshot_dir,
+                parent_loader=load_requirement_snapshot,
+            )
+        except RequirementProfileError as error:
+            raise RequirementError(str(error)) from error
     raise RequirementError(
         "Unsupported Requirement Snapshot: {}".format(requirement_id)
     )

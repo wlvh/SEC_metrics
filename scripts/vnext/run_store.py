@@ -27,6 +27,9 @@ from .render import render_review_markdown
 from .reader import validate_reader_output
 from .reader_input import build_reader_payload, build_reader_task_contract
 from .requirements import load_run_requirement_snapshot
+from .requirement_profile import CONTENT_HASH_PATTERN
+from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
+from .requirement_profile import LEGACY_ARTIFACT_GENERATION
 from .review import effective_review_decision, system_review_allowed
 from .review import SYSTEM_REVIEWER_ID, SYSTEM_REVIEW_REASON
 from .review import validate_decision_binding
@@ -42,6 +45,7 @@ from .traits import repository_company_traits
 
 
 MANIFEST_FIELDS = {
+    "artifact_requirement_generation",
     "audit_manifest_hash",
     "company_id",
     "company_traits",
@@ -52,7 +56,9 @@ MANIFEST_FIELDS = {
     "records_file_hash",
     "review_decisions_file_hash",
     "qualification_authorization",
+    "requirement_closure_hash",
     "requirement_hashes",
+    "requirement_id",
     "run_id",
     "source_references",
     "spec_file_hashes",
@@ -62,12 +68,15 @@ MANIFEST_FIELDS = {
     "validation_file_hash",
 }
 RUN_VALIDATION_VIEW_FIELDS = (
+    "artifact_requirement_generation",
     "company_id",
     "company_traits",
     "execution_semantics_hash",
     "missing_required_source_roles",
     "qualification_authorization",
+    "requirement_closure_hash",
     "requirement_hashes",
+    "requirement_id",
     "run_id",
     "source_references",
     "spec_file_hashes",
@@ -237,6 +246,9 @@ def create_run(
     requirement_hashes: Mapping[str, str],
     task_contract_bindings: Sequence[Mapping[str, object]] = (),
     qualification_authorization: Optional[Mapping[str, object]] = None,
+    requirement_id: Optional[str] = None,
+    requirement_closure_hash: Optional[str] = None,
+    artifact_requirement_generation: str = LEGACY_ARTIFACT_GENERATION,
 ) -> Dict[str, object]:
     """Create a new OPEN Run with explicit empty data files.
 
@@ -254,6 +266,11 @@ def create_run(
             retained historical disclosure Runs use an empty sequence.
         qualification_authorization: Exact LIVE table qualification authority,
             or ``None`` for recorded and retained historical Runs.
+        requirement_id: Required explicit identity for successor Runs; legacy
+            Runs omit both this field and ``requirement_closure_hash``.
+        requirement_closure_hash: Exact successor Requirement closure.
+        artifact_requirement_generation: Explicitly selects SUCCESSOR_RUN;
+            retained callers default to the historical RUN schema.
 
     Returns:
         Initial strict RUN manifest.
@@ -304,6 +321,20 @@ def create_run(
             for key in hashes
         ):
             raise RunStoreError("{} hashes are invalid".format(label))
+    if artifact_requirement_generation == EXPLICIT_ARTIFACT_GENERATION:
+        if requirement_id is None or requirement_closure_hash is None or not requirement_hashes:
+            raise RunStoreError("Run explicit Requirement identity is incomplete")
+        try:
+            validate_identifier(value=requirement_id, field="requirement_id")
+        except RecordError as error:
+            raise RunStoreError("Run explicit Requirement identity is invalid") from error
+        if CONTENT_HASH_PATTERN.fullmatch(str(requirement_closure_hash)) is None:
+            raise RunStoreError("Run explicit Requirement closure is invalid")
+        if content_hash(value=dict(requirement_hashes)) != requirement_closure_hash:
+            raise RunStoreError("Run Requirement closure/hash binding differs")
+    elif (artifact_requirement_generation != LEGACY_ARTIFACT_GENERATION
+          or requirement_id is not None or requirement_closure_hash is not None):
+        raise RunStoreError("Run generation must be explicit; legacy identity cannot be upgraded")
     normalized_task_bindings = []
     binding_ids = set()
     for binding in task_contract_bindings:
@@ -355,6 +386,15 @@ def create_run(
         "missing_required_source_roles": list(missing_required_source_roles),
         "spec_file_hashes": dict(spec_file_hashes),
         "requirement_hashes": dict(requirement_hashes),
+        **(
+            {
+                "requirement_closure_hash": requirement_closure_hash,
+                "requirement_id": requirement_id,
+                "artifact_requirement_generation": artifact_requirement_generation,
+            }
+            if artifact_requirement_generation == EXPLICIT_ARTIFACT_GENERATION
+            else {}
+        ),
         "task_contract_bindings": normalized_task_bindings,
         **(
             {"qualification_authorization": dict(qualification_authorization)}
@@ -383,7 +423,10 @@ def create_run(
     validate_record(record=validation)
     atomic_write_json(path=paths["validation"], value=validation)
     manifest = {
-        "record_type": "RUN",
+        "record_type": (
+            "SUCCESSOR_RUN" if artifact_requirement_generation == EXPLICIT_ARTIFACT_GENERATION
+            else "RUN"
+        ),
         "status": "OPEN",
         "records_file_hash": sha256_file(path=paths["records"]),
         "review_decisions_file_hash": sha256_file(path=paths["decisions"]),
@@ -1175,6 +1218,11 @@ def _verify_repository_bindings(
         requirement = load_run_requirement_snapshot(
             repo_root=repo_root,
             task_contract_bindings=task_contract_bindings,
+            requirement_id=manifest.get("requirement_id"),
+            requirement_closure_hash=manifest.get("requirement_closure_hash"),
+            requirement_hashes=manifest["requirement_hashes"],
+            artifact_requirement_generation=manifest.get("artifact_requirement_generation"),
+            record_type=str(manifest["record_type"]),
         )
     except ValueError as error:
         raise RunStoreError("Run Requirement Snapshot is invalid") from error
@@ -2817,6 +2865,10 @@ def _run_content_and_audit_hashes(
         "decisions": list(decisions),
         "validation": dict(validation),
     }
+    if manifest["record_type"] == "SUCCESSOR_RUN":
+        for field in ("artifact_requirement_generation", "requirement_closure_hash", "requirement_id"):
+            content_value[field] = manifest[field]
+            audit_value[field] = manifest[field]
     return content_hash(value=content_value), content_hash(value=audit_value)
 
 

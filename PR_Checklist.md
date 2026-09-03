@@ -95,7 +95,7 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 
 当前仓库只有在 `pull_request` 上运行 fast suite 的 CI workflow，没有生产部署、业务自动调度、UI 或 API。PR body 必须区分本地 fast PASS、GitHub CI green 与 full acceptance；未真实实现和运行的其他能力仍写“不适用/未实现”。vNext formal代码存在也不等于active切换完成。
 
-vNext Cutover声明必须有Issue #15 exact Requirement、effective D-01、有效SEC/provider环境、clean committed checkout、适用的acquisition/inventory receipt及其command/ledger-tail binding，并由final full receipt绑定path/bytes/hash/ID/type/status；release input plan还必须绑定exact source的latest verified immutable request attempt，formal live不得消费`LEGACY_WORKING_LOCATOR`。还必须有适用的family qualification、portable live audit closure、complete staging、旧producer不可达、active/previous publication、fault receipts、rollback/restore和最终full receipt。public generic formal receipt/commit入口必须fail closed。Issue #15任一Done gate未完成时PR必须Draft，正文第一行保持`Progress on #15`，不得写`Closes #15`。
+R1–R3历史声明必须回到Issue #15 exact Requirement与原Publication closure；successor实现/Cutover必须使用owner批准的Issue #28 exact Requirement closure。PR-A transition在owner以exact head+closure批准前保持Draft，且不得写R4实现或任何live credit。后续live声明仍须有有效SEC/provider环境、clean committed checkout、acquisition/inventory、source attempt、family qualification、portable audit、staging、active/previous、fault、rollback/restore和final full receipt；public generic formal入口继续fail closed。
 
 root CSV/报告是active bundle compatibility mirrors；PR body必须说明active与latest分离、mirrors不向任意无PublicationView reader承诺组原子、rollback不启用旧parser、OpenAI不是SEC evidence source。
 
@@ -109,7 +109,7 @@ root CSV/报告是active bundle compatibility mirrors；PR body必须说明activ
 gh pr create --title "<标题>" --body-file PR_BODY.md --head <feature-branch> --base main
 ```
 
-成功后返回真实 PR URL，并明确 draft/ready 状态。Issue #15缺任一Done gate时只能创建/保持Draft；用户未要求PR时本节完全不执行。冻结 Issue #15 正文及状态评论不得被修改或删除，后续需求变化只进入 Decision records。
+成功后返回真实 PR URL，并明确 draft/ready 状态。Issue #28 PR-A在exact-head/Requirement-closure owner approval前只能保持Draft；Issue #15/#24在PR-A合并前保持OPEN。冻结Issue #15 snapshot不得修改，successor policy只进入`issue_28_v1` Decision records。用户未要求PR时本节完全不执行。
 
 ## 10. 最终核对
 
