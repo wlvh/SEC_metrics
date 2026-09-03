@@ -15,11 +15,14 @@ a fixture earned live qualification credit, or R4 was published. Deterministic
 token estimates are labeled estimates; actual provider usage remains NOT_RUN.
 <!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
 
+PR-B 的真实来源离线结果区分9个scoped positive、3个structured positive和4个zero-call class；不是16次或12次模型执行。Citi A03显示真实`2025Q4`，A13显示international net revenue而非net income。数值/scale/窗口及同源scope证明可按原始locator独立核验，旧原型失败报告保留为历史，不伪装成当前成功。v2尚未激活；可读结果与边界见`docs/r4_offline/README.md`。
+<!-- capability-anchor: CAPABILITY.r4_offline_source_bound_evidence -->
+
 SEC_metrics 是配置驱动、SEC-only、单财年批处理研究流程。它能为 `config/company_registry.csv` 中配置的逻辑公司生成最新年度申报的指标、治理、风险与事件结果，并保留可审计证据。
 <!-- capability-anchor: CAPABILITY.sec_latest_fiscal_batch -->
 <!-- capability-anchor: CAPABILITY.sec_governance_risk_event_signals -->
 
-它不是自然语言问答系统，不会在运行时追问公司、日期或指标；也不是实时行情、生产API、daily scheduler或报价模型。vNext formal Cutover与full acquisition编排已实现，本轮SEC acquisition已通过，但live Reader因provider余额失败，committed active pointer/full receipt仍不存在，不能称为已切换产品。
+它不是自然语言问答系统，不会在运行时追问公司、日期或指标；也不是实时行情、生产API、daily scheduler或报价模型。当前committed active为R3，含24指标/240个vNext结果keys/327行public matrix，previous精确为R2。历史provider余额失败不是当前R3不存在的证据；但R3仍不代表financial/text完成或39指标最终full acceptance。
 <!-- capability-anchor: BOUNDARY.configured_batch_not_interactive -->
 <!-- capability-anchor: BOUNDARY.sec_only_point_in_time -->
 <!-- capability-anchor: BOUNDARY.not_production_service -->

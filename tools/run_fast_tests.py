@@ -28,6 +28,8 @@ from typing import Dict, Sequence
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FAST_TESTS = (
+    "tests.vnext.test_issue28_v2.Issue28V2FastTest."
+    "test_real_five_file_revision_has_exact_parent_and_no_activation",
     "tests.vnext.test_source_scope.SourceScopeTest."
     "test_complete_native_candidate_and_evidence_are_bound",
     "tests.vnext.test_scoped_reader.ScopedReaderTest."

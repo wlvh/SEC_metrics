@@ -75,9 +75,9 @@ def validate_fixture_source_set(*, manifest: Mapping) -> dict:
     return dict(manifest)
 
 
-def build_pinned_fixture_source_set(*, repo_root: Path, source_id: str) -> dict:
+def build_pinned_fixture_source_set(*, repo_root: Path, source_id: str, parsed_source=None) -> dict:
     """Rebuild fresh attempt, exact acquisition inputs and inline filing identity."""
-    from .deterministic_router import _XbrlContextParser, _XbrlFactParser
+    from .deterministic_router import ParsedAccessionXbrlSource, _XbrlContextParser, _XbrlFactParser
     from .r4_source_audit import source_authority
 
     plan_path = resolve_repository_file(repo_root=repo_root,
@@ -103,13 +103,20 @@ def build_pinned_fixture_source_set(*, repo_root: Path, source_id: str) -> dict:
                               declaration={**declaration, "media_type": "text/html"})
     if source["source_reference"]["request_attempt_id"] != declaration["request_attempt_id"]:
         raise FixtureSourceSetError("Fixture native attempt identity changed")
-    parser = _XbrlFactParser()
-    parser.feed(source["source_bytes"].decode("utf-8"))
-    parser.close()
-    context_parser = _XbrlContextParser()
-    context_parser.feed(source["source_bytes"].decode("utf-8"))
-    context_parser.close()
-    contexts = context_parser.contexts()
+    if parsed_source is None:
+        parser = _XbrlFactParser()
+        parser.feed(source["source_bytes"].decode("utf-8"))
+        parser.close()
+        context_parser = _XbrlContextParser()
+        context_parser.feed(source["source_bytes"].decode("utf-8"))
+        context_parser.close()
+        contexts, source_facts = context_parser.contexts(), parser.facts()
+    else:
+        if (type(parsed_source) is not ParsedAccessionXbrlSource
+                or parsed_source.source_sha256 != declaration["source_sha256"]
+                or parsed_source.source_size != declaration["source_size"]):
+            raise FixtureSourceSetError("Native parsed source does not bind this exact fixture")
+        contexts, source_facts = parsed_source.contexts, parsed_source.facts
     names = {"entity_central_index_key": "dei:entitycentralindexkey",
              "document_type": "dei:documenttype",
              "fiscal_year_focus": "dei:documentfiscalyearfocus",
@@ -117,7 +124,7 @@ def build_pinned_fixture_source_set(*, repo_root: Path, source_id: str) -> dict:
     dei = {}
     context_ids = set()
     for field, name in names.items():
-        facts = [fact for fact in parser.facts() if fact["qualified_name"].casefold() == name]
+        facts = [fact for fact in source_facts if fact["qualified_name"].casefold() == name]
         values = {fact["text"] for fact in facts}
         if len(values) != 1:
             raise FixtureSourceSetError("Inline DEI field is absent or ambiguous: " + field)

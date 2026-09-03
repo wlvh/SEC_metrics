@@ -1,4 +1,9 @@
-# R4 offline materialization and session status
+# Historical R4 materialization and session diagnostic
+
+The status and measurements below belong to the initial pre-policy diagnostic.
+They are not current aggregate acceptance; see [current summary](README.md) and
+[full benchmark method](performance_benchmark_method.md). Historical JSON
+receipts retain their original bytes and do not acquire new qualification credit.
 
 Status: **MATERIALIZATION VERIFIED; AGGREGATE PERFORMANCE NOT RUN**.
 The source/task audit reached the owner-escalation condition: the retained task

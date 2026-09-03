@@ -498,6 +498,7 @@ def validate_source_bound_reader_output(
     expected_proof_id: str, requirement: Mapping, repo_root,
     source_bytes: bytes, raw_blob: Mapping, source_reference: Mapping,
     full_derived_asset: Mapping, task_contract: Mapping,
+    _offline_context=None,
 ) -> Dict[str, object]:
     """Keep model output intact and bind deterministic successor enrichment.
 
@@ -511,9 +512,19 @@ def validate_source_bound_reader_output(
         required_roles=task_contract["required_roles"], scope_contract=task_contract["scope_contract"],
         source_reference_ids=[source_reference["source_reference_id"]],
         derived_asset_ids=[full_derived_asset["derived_asset_id"]])
-    proof = validate_source_bound_proof(proof=source_bound_proof, expected_proof_id=expected_proof_id,
-        requirement=requirement, repo_root=repo_root, source_bytes=source_bytes, raw_blob=raw_blob,
-        source_reference=source_reference, full_derived_asset=full_derived_asset, task_contract=task_contract)
+    if _offline_context is None:
+        proof = validate_source_bound_proof(proof=source_bound_proof, expected_proof_id=expected_proof_id,
+            requirement=requirement, repo_root=repo_root, source_bytes=source_bytes, raw_blob=raw_blob,
+            source_reference=source_reference, full_derived_asset=full_derived_asset, task_contract=task_contract)
+    else:
+        from .evidence import OfflineEvidenceContext
+        if type(_offline_context) is not OfflineEvidenceContext:
+            raise ReaderError("Source-bound Reader context type is not exact")
+        _offline_context._source_bound_inputs(requirement=requirement, raw_blob=raw_blob,
+            source_reference=source_reference, source_bytes=source_bytes,
+            derived_asset=full_derived_asset, task_contract=task_contract)
+        proof = _offline_context.verify_source_bound_proof(proof=source_bound_proof,
+            expected_proof_id=expected_proof_id, task_contract_id=task_contract["task_contract_id"])
     if native["disclosure_group"] != task_contract["disclosure_group"]:
         raise ReaderError("Source-bound Reader task differs")
     requires_review = bool(native["unresolved_competing_claims"])
@@ -523,6 +534,8 @@ def validate_source_bound_reader_output(
         numeric = proof["numeric_normalization"]
         if numeric is not None and claim["claimed_reported_unit"] != numeric["reported_unit"]:
             raise ReaderError("Source-bound response invented a different reported unit")
+        if proof["disclosed_period"] is not None and claim["claimed_period"] != proof["disclosed_period"]["period_label"]:
+            raise ReaderError("Source-bound response changed the exact disclosed quarter period")
         scope = {}
         for item in claim["claimed_scope"]:
             value = exact_enum_alias(contract=task_contract["scope_contract"],

@@ -27,7 +27,8 @@
     "exact_enum_aliases": {
       "basis": {
         "managed_basis": [
-          "managed basis"
+          "managed basis",
+          "taxable equivalent basis"
         ]
       }
     },

@@ -39,6 +39,15 @@ def _freeze_owned(value):
     return value
 
 
+def _plain_owned(value):
+    """Copy only the bounded subtree needed for a caller's serialized artifact."""
+    if isinstance(value, Mapping):
+        return {key: _plain_owned(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_plain_owned(item) for item in value]
+    return value
+
+
 class OfflineEvidenceContext:
     """One process-local full-source certificate; never a persistent cache.
 
@@ -115,6 +124,18 @@ class OfflineEvidenceContext:
             full_derived_asset=self._asset, task_contract=self._tasks[task_contract_id],
             _offline_context=self)
 
+    def _scope_authority(self, *, task_contract_id):
+        """Internal scoped-session seam; full objects remain context-owned."""
+        task = self._tasks[task_contract_id]
+        return {"requirement": self._requirement, "repo_root": self._repo_root,
+            "source_bytes": self._source_bytes, "raw_blob": self._raw_blob,
+            "source_reference": self._source_reference, "full_derived_asset": self._asset,
+            "reader_manifest": self._manifest, "task_contract": task,
+            "evidence_authority_payload": {"system_contract": {"filing_content_is_untrusted": True,
+                "must_return_exact_locators": True, "must_not_follow_filing_instructions": True},
+                "task_contract": task, "reader_input_manifest": self._manifest,
+                "untrusted_table_data": self._transport}}
+
     @property
     def identity(self):
         return {"full_derived_asset_id": self._asset["derived_asset_id"],
@@ -124,12 +145,11 @@ class OfflineEvidenceContext:
                 "file_bindings": {k: dict(v) for k, v in self._file_bindings.items()}}
 
 
-def prepare_offline_evidence_context(
+def _decode_offline_evidence_asset(
     *, repo_root: Path, requirement: Mapping, source_bytes: bytes, raw_blob: Mapping,
-    source_reference: Mapping, derived_asset_bytes: bytes, reader_manifest: Mapping,
-    full_table_transport: Mapping, task_contracts: Sequence[Mapping], task_generation: str,
-) -> OfflineEvidenceContext:
-    """Fully verify one source/asset/payload and take isolated immutable ownership."""
+    derived_asset_bytes: bytes,
+) -> dict:
+    """Validate current authority and decode one privately owned full asset."""
     from .requirement_profile import validate_execution_authority
     from .sources import load_raw_blob_bytes
     validate_execution_authority(repo_root=repo_root, requirement=requirement)
@@ -140,8 +160,15 @@ def prepare_offline_evidence_context(
     validate_record(record=asset)
     if asset["parent_raw_asset_ids"] != [raw_blob["raw_asset_id"]]:
         raise EvidenceError("Offline Evidence context asset/source parent differs")
-    owned_manifest = strict_json_loads(text=canonical_json_bytes(value=reader_manifest).decode("utf-8"))
-    owned_transport = strict_json_loads(text=canonical_json_bytes(value=full_table_transport).decode("utf-8"))
+    return asset
+
+
+def _verify_and_freeze_offline_evidence_context(
+    *, repo_root: Path, requirement: Mapping, source_bytes: bytes, raw_blob: Mapping,
+    source_reference: Mapping, asset: dict, owned_manifest: dict,
+    owned_transport: dict, task_contracts: Sequence[Mapping], task_generation: str,
+) -> OfflineEvidenceContext:
+    """Run the same native full-payload/task checks for both ownership factories."""
     _verify_payload(reader_manifest=owned_manifest, derived_asset=asset,
         reader_payload_body={"system_contract": {"filing_content_is_untrusted": True,
             "must_return_exact_locators": True, "must_not_follow_filing_instructions": True},
@@ -173,6 +200,51 @@ def prepare_offline_evidence_context(
         source_reference=dict(source_reference), raw_blob=dict(raw_blob),
         requirement=strict_json_loads(text=canonical_json_bytes(value=requirement).decode("utf-8")),
         tasks=tasks, repo_root=repo_root, source_bytes=source_bytes)
+
+
+def prepare_offline_evidence_context(
+    *, repo_root: Path, requirement: Mapping, source_bytes: bytes, raw_blob: Mapping,
+    source_reference: Mapping, derived_asset_bytes: bytes, reader_manifest: Mapping,
+    full_table_transport: Mapping, task_contracts: Sequence[Mapping], task_generation: str,
+) -> OfflineEvidenceContext:
+    """Fully verify one source/asset/payload and take isolated immutable ownership."""
+    asset = _decode_offline_evidence_asset(repo_root=repo_root, requirement=requirement,
+        source_bytes=source_bytes, raw_blob=raw_blob, derived_asset_bytes=derived_asset_bytes)
+    owned_manifest = strict_json_loads(text=canonical_json_bytes(value=reader_manifest).decode("utf-8"))
+    owned_transport = strict_json_loads(text=canonical_json_bytes(value=full_table_transport).decode("utf-8"))
+    return _verify_and_freeze_offline_evidence_context(repo_root=repo_root,
+        requirement=requirement, source_bytes=source_bytes, raw_blob=raw_blob,
+        source_reference=source_reference, asset=asset, owned_manifest=owned_manifest,
+        owned_transport=owned_transport, task_contracts=task_contracts,
+        task_generation=task_generation)
+
+
+def prepare_offline_evidence_context_from_asset_bytes(
+    *, repo_root: Path, requirement: Mapping, source_bytes: bytes, raw_blob: Mapping,
+    source_reference: Mapping, derived_asset_bytes: bytes,
+    task_contracts: Sequence[Mapping], task_generation: str,
+) -> OfflineEvidenceContext:
+    """Derive unchanged complete Reader inputs from one private asset decode.
+
+    Callers supply immutable bytes, never a shared asset graph or a preverified
+    flag. The native manifest builder and compact encoder retain every table,
+    followed by the same full payload/source/task verification as the original
+    factory. This creates no outbound request, persistent cache, or live grant.
+    """
+    from .reader_input import build_reader_input_manifest
+    from .table_payload import encode_compact_table_payload
+    if type(source_bytes) is not bytes or type(derived_asset_bytes) is not bytes:
+        raise EvidenceError("Offline Evidence byte-owned factory requires immutable bytes")
+    asset = _decode_offline_evidence_asset(repo_root=repo_root, requirement=requirement,
+        source_bytes=source_bytes, raw_blob=raw_blob, derived_asset_bytes=derived_asset_bytes)
+    manifest = build_reader_input_manifest(derived_asset=asset,
+        source_reference_ids=[source_reference["source_reference_id"]])
+    transport = encode_compact_table_payload(derived_asset=asset)
+    return _verify_and_freeze_offline_evidence_context(repo_root=repo_root,
+        requirement=requirement, source_bytes=source_bytes, raw_blob=raw_blob,
+        source_reference=source_reference, asset=asset, owned_manifest=manifest,
+        owned_transport=transport, task_contracts=task_contracts,
+        task_generation=task_generation)
 
 
 def check_evidence_in_offline_session(*, context: OfflineEvidenceContext,
@@ -635,6 +707,11 @@ def check_evidence(
             if proof is not None:
                 if claim["locator"] != proof["target_locator"]:
                     raise EvidenceError("Source-bound target locator differs")
+                if proof["disclosed_period"] is not None:
+                    if claim["claimed_period"] != proof["disclosed_period"]["period_label"]:
+                        raise EvidenceError("Source-bound quarter period differs")
+                    checks.append({"check": "SOURCE_BOUND_DISCLOSED_QUARTER", "status": "PASS",
+                                   "source_bound_proof_id": proof["source_bound_proof_id"]})
                 numeric = proof["numeric_normalization"]
                 if numeric is not None:
                     if claim["claimed_reported_unit"] != numeric["reported_unit"]:
@@ -652,7 +729,9 @@ def check_evidence(
                 offline_context=_offline_context,
             )
             if proof is not None:
-                from .composite_scope import source_bound_scope
+                from .composite_scope import source_bound_scope, validate_table_scope_disambiguation
+                validate_table_scope_disambiguation(proof=proof, claim=claim, derived_asset=derived_asset,
+                                                     offline_context=_offline_context)
                 role_scope = source_bound_scope(proof=proof, native_scope=role_scope,
                                                 task_contract=source_bound_context["task_contract"])
                 checks.append({"check": "SOURCE_BOUND_COMPOSITE_SCOPE", "status": "PASS",

@@ -3,6 +3,7 @@
 import copy
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from tests.vnext.r4_b0_fixture_support import b0_fixture
 from vnext.batch_workflow import request_attempt_binding
@@ -12,6 +13,15 @@ from vnext.r4_source_audit import R4SourceAuditError, _native_probe
 from vnext.r4_source_audit import audit_scope_alias_coverage
 from vnext.r4_source_audit import inventory_immutable_sources, source_authority
 from vnext.sources import raw_blob_record, source_reference_record
+from vnext.r4_fixture_authority import load_r4_fixture_authority
+from vnext.r4_offline_qualification import INDEX_PATH, R4OfflineQualificationError
+from vnext.r4_offline_qualification import replay_case_artifacts, _scoped_summary
+from vnext.r4_offline_qualification import _structured_context, prepare_source_bundle_from_context
+from vnext.r4_offline_qualification import prepare_source_bundle, _validate_recipe_scope_binding
+from vnext.r4_offline_qualification import _structured_fiscal_period
+from vnext.r4_task_contracts import inspect_r4_task_catalog
+from vnext.deterministic_router import DeterministicRouterError, parse_accession_xbrl_source
+from vnext.requirements import load_requirement_snapshot
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -19,6 +29,35 @@ RECIPE_PATH = REPO_ROOT / "tests/fixtures/vnext/r4_offline/jpm_fy2025_probe.json
 
 
 class R4OfflineAuditTest(unittest.TestCase):
+    def test_source_context_adapter_rejects_caller_dictionary(self):
+        with self.assertRaises(R4OfflineQualificationError):
+            prepare_source_bundle_from_context(repo_root=REPO_ROOT,
+                source_id="jpmorgan_fy2025_10k", evidence_context={},
+                task_contract_id="r4_liquidity_coverage_ratio_table_v2")
+
+    def test_native_structured_inputs_do_not_depend_on_old_diagnostic_document(self):
+        authority = load_r4_fixture_authority(repo_root=REPO_ROOT)
+        source = next(s for s in authority["sources"].values() if s["structured_source_authority"] is not None)
+        bundle = {**source_authority(repo_root=REPO_ROOT, declaration=source),
+            "declaration": source, "source_id": source["source_id"], "structured_context": None}
+        def read(*, path):
+            if path.name == "source_audit_evidence.json":
+                raise AssertionError("Historical diagnostic document is not runtime authority")
+            return strict_json_file(path=path)
+        with patch("vnext.r4_offline_qualification.strict_json_file", side_effect=read):
+            context = _structured_context(repo_root=REPO_ROOT, bundle=bundle)
+        self.assertEqual(context["source_set_manifest"]["source_set_manifest_id"],
+                         source["structured_source_authority"]["source_set_manifest_id"])
+        self.assertEqual(len(context["file_bindings"]), 3)
+        fiscal = _structured_fiscal_period(context=context,
+            recipe=authority["recipes"]["r4_a13_production"], source_bundle=bundle)
+        self.assertEqual(fiscal["period_label"], "FY2025")
+        self.assertEqual(fiscal["period_start"], "2025-01-01")
+        self.assertEqual(fiscal["period_end"], "2025-12-31")
+        wrong = dict(bundle, source_id="another_source")
+        with self.assertRaises(R4OfflineQualificationError):
+            _structured_context(repo_root=REPO_ROOT, bundle=wrong)
+
     def test_inventory_binds_existing_ledger_and_immutable_source(self):
         recipe = strict_json_file(path=RECIPE_PATH)
         inventory = inventory_immutable_sources(
@@ -132,6 +171,194 @@ class R4OfflineAuditTest(unittest.TestCase):
                 self.assertGreater(len(current), 1)
                 self.assertEqual(outcome["candidate_resolution"], "NOT_SELECTED_BY_AUDIT")
                 self.assertEqual(outcome["no_anchor_closure"], "NOT_COMPLETE")
+
+
+class R4CompleteOfflineArtifactTest(unittest.TestCase):
+    """Integration assertions over all complete real-source artifacts, not stubs."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.authority = load_r4_fixture_authority(repo_root=REPO_ROOT)
+        cls.index = strict_json_file(path=REPO_ROOT / INDEX_PATH)
+        cls.requirement = load_requirement_snapshot(snapshot_dir=REPO_ROOT / "requirements/issue_28_v2")
+
+    def test_all_pairs_remain_offline_and_structured_success_does_not_get_ai_plan(self):
+        self.assertEqual(len(self.index["cases"]), 16)
+        self.assertEqual(self.index["requirement_closure_hash"], self.requirement["requirement_closure_hash"])
+        self.assertEqual(self.index["provider_paid_sec_calls"], [0, 0, 0])
+        eligible = []
+        for entry in self.index["cases"]:
+            summary = entry["summary"]
+            self.assertEqual(summary["qualification_credit"], "NONE_OFFLINE_SYNTHETIC")
+            if summary["provider_call_eligible"]:
+                eligible.append(entry["fixture_id"])
+                self.assertEqual(entry["artifact_kind"], "SCOPED_EXTRACTION")
+            if entry["artifact_kind"] == "STRUCTURED_PRIMARY":
+                self.assertEqual(set(entry["files"]), {"structured_route.json", "source_audit.json"})
+                self.assertFalse(summary["provider_call_eligible"])
+                route = entry["structured_route"]
+                self.assertEqual(route["outcome"], "STRUCTURED_PRIMARY_RESOLVED")
+                self.assertEqual(len(route["claim_dispositions"]), route["all_claims_count"])
+                self.assertFalse(any(d["unresolved"] for d in route["claim_dispositions"]))
+                self.assertFalse(route["regional_sum_used"])
+        self.assertEqual(len(eligible), 9)
+
+    def test_native_scoped_evidence_and_quarter_period_are_not_promoted_or_relabelled(self):
+        for entry in self.index["cases"]:
+            if entry["artifact_kind"] != "SCOPED_EXTRACTION":
+                continue
+            directory = REPO_ROOT / entry["directory"]
+            scope = strict_json_file(path=directory / "source_scope.json")
+            attempt = strict_json_file(path=directory / "scoped_attempt.json")
+            recipe = self.authority["recipes"][entry["fixture_id"]]
+            self.assertEqual(attempt["evidence"]["status"], "PASS")
+            self.assertTrue(attempt["evidence"]["system_approval_eligible"])
+            self.assertEqual([attempt[k] for k in ("provider_call_count", "paid_model_call_count", "sec_call_count")], [0, 0, 0])
+            self.assertEqual(_scoped_summary(recipe=recipe, scope=scope, attempt=attempt), entry["summary"])
+            self.assertEqual(scope["task_period"], recipe["period"])
+            self.assertEqual(len(scope["table_audit"]), self.authority["sources"][recipe["source_id"]]["table_count"])
+            self.assertTrue(all(not d["unresolved"] for d in scope["out_of_window_candidates"]))
+            self.assertTrue(1 <= len(scope["windows"]) <= 2)
+        quarter = next(c for c in self.index["cases"] if c["fixture_id"] == "r4_a03_alternate")
+        self.assertEqual(quarter["summary"]["period"], "2025Q4")
+        self.assertEqual(quarter["summary"]["value"], "1.15")
+
+    def test_forged_index_claims_fail_even_with_recomputed_content_id(self):
+        fixture = self.authority["fixtures"][0]
+        mutations = []
+        for key, value in (("status", "LIVE"), ("requirement_id", "issue_28_v1"),
+                           ("provider_paid_sec_calls", [1, 0, 0]),
+                           ("qualification_credit", "CURRENT"), ("live_authorization", "APPROVED")):
+            changed = copy.deepcopy(self.index)
+            changed[key] = value
+            mutations.append(changed)
+        changed = copy.deepcopy(self.index)
+        changed["cases"].append(copy.deepcopy(changed["cases"][0]))
+        mutations.append(changed)
+        changed = copy.deepcopy(self.index)
+        changed["metric_ids"].append("B13")
+        mutations.append(changed)
+        for changed in mutations:
+            changed["index_id"] = content_hash(value={k: v for k, v in changed.items() if k != "index_id"})
+            with self.subTest(index_id=changed["index_id"]), patch(
+                    "vnext.r4_offline_qualification.strict_json_file", return_value=changed):
+                with self.assertRaises(R4OfflineQualificationError):
+                    replay_case_artifacts(repo_root=REPO_ROOT, requirement=self.requirement,
+                        fixture=fixture, source_bundle={"source_id": fixture["source_id"]})
+
+    def test_negative_and_ambiguity_native_evidence_never_receive_auto_credit(self):
+        entries = {c["fixture_class"]: c for c in self.index["cases"] if c["artifact_kind"] == "ZERO_CALL_CLASSIFICATION"}
+        self.assertEqual(set(entries), {"NEGATIVE_EXPECTED", "NOT_APPLICABLE", "QUALITATIVE_ONLY", "AMBIGUOUS_EXCLUDED"})
+        for fixture_class in ("NEGATIVE_EXPECTED", "AMBIGUOUS_EXCLUDED"):
+            entry = entries[fixture_class]
+            result = strict_json_file(path=REPO_ROOT / entry["directory"] / "zero_call_result.json")
+            self.assertFalse(result["native_evidence"]["system_approval_eligible"])
+            self.assertFalse(result["provider_call_eligible"])
+        self.assertEqual(entries["AMBIGUOUS_EXCLUDED"]["summary"]["synthetic_candidate"]["status"], "REVIEW_REQUIRED")
+
+
+class R4FullArtifactRecipeBindingTest(unittest.TestCase):
+    """Real JPM source/Scope/attempt mutations at the recipe authority boundary."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.authority = load_r4_fixture_authority(repo_root=REPO_ROOT)
+        recipe = cls.authority["recipes"]["r4_a04_production"]
+        cls.bundle = prepare_source_bundle(repo_root=REPO_ROOT, source_id=recipe["source_id"])
+        cls.bundle["repo_root"] = str(REPO_ROOT)
+        cls.tasks = {t["task_contract_id"]: t for t in inspect_r4_task_catalog(repo_root=REPO_ROOT)["contracts"]}
+
+    def records(self, fixture_id):
+        directory = REPO_ROOT / "docs/r4_offline/qualified_cases" / fixture_id
+        return (strict_json_file(path=directory / "source_scope.json"),
+                strict_json_file(path=directory / "scoped_attempt.json"),
+                self.authority["recipes"][fixture_id])
+
+    def check(self, scope, attempt, recipe):
+        _validate_recipe_scope_binding(scope=scope, attempt=attempt, recipe=recipe,
+            authority=self.authority, source_bundle=self.bundle,
+            task=self.tasks[recipe["task_contract_id"]])
+
+    def test_real_complete_artifact_matches_recipe_and_rebound_scope_mutations_fail(self):
+        scope, attempt, recipe = self.records("r4_a04_production")
+        self.check(scope, attempt, recipe)
+        mutations = []
+        changed = copy.deepcopy(scope)
+        changed["windows"][0]["end_order"] += 1
+        mutations.append(changed)
+        changed = copy.deepcopy(scope)
+        changed["reference"]["value"] = "0.026"
+        mutations.append(changed)
+        changed = copy.deepcopy(scope)
+        changed["navigation_paths"][1]["evidence"] = "Unrelated but nonempty text"
+        mutations.append(changed)
+        changed = copy.deepcopy(scope)
+        changed["out_of_window_candidates"].pop()
+        mutations.append(changed)
+        changed = copy.deepcopy(scope)
+        changed["table_audit"][0]["grid_sha256"] = "sha256:" + "f" * 64
+        mutations.append(changed)
+        for changed in mutations:
+            changed["source_scope_manifest_id"] = content_hash(value={k: v for k, v in changed.items() if k != "source_scope_manifest_id"})
+            with self.subTest(scope_id=changed["source_scope_manifest_id"]):
+                with self.assertRaises(R4OfflineQualificationError):
+                    self.check(changed, attempt, recipe)
+
+    def test_rebound_response_and_composite_proof_cannot_choose_different_recipe(self):
+        scope, attempt, recipe = self.records("r4_a12_production")
+        self.check(scope, attempt, recipe)
+        changed = copy.deepcopy(scope)
+        changed["source_bound_proof"]["composite_scope"]["recipe"]["table_association_span"]["start_byte"] += 1
+        with self.assertRaises(R4OfflineQualificationError):
+            self.check(changed, attempt, recipe)
+        changed = copy.deepcopy(attempt)
+        changed["response_text"] = changed["response_text"].replace('"40"', '"41"')
+        self.assertNotEqual(changed["response_text"], attempt["response_text"])
+        with self.assertRaises(R4OfflineQualificationError):
+            self.check(scope, changed, recipe)
+
+
+class R4NativeFiscalPeriodTest(unittest.TestCase):
+    """Native XBRL bytes supply the complete fiscal duration, not code literals."""
+
+    def context(self, *, omit=None, duplicate=False, document_end="2051-02-28",
+                period_focus="FY", context_end="2051-02-28"):
+        fields = {"EntityCentralIndexKey": "1", "DocumentType": "10-K",
+                  "DocumentFiscalYearFocus": "2050", "DocumentFiscalPeriodFocus": period_focus,
+                  "DocumentPeriodEndDate": document_end}
+        if omit is not None:
+            fields.pop(omit)
+        tags = ''.join('<dei:{0} contextRef="fiscal">{1}</dei:{0}>'.format(k, v) for k, v in fields.items())
+        if duplicate:
+            tags += '<dei:DocumentFiscalYearFocus contextRef="fiscal">2049</dei:DocumentFiscalYearFocus>'
+        raw = ('<xbrl><xbrli:context id="fiscal"><xbrli:entity><xbrli:identifier scheme="CIK">1</xbrli:identifier></xbrli:entity>'
+               '<xbrli:period><xbrli:startDate>2050-03-01</xbrli:startDate><xbrli:endDate>' + context_end +
+               '</xbrli:endDate></xbrli:period></xbrli:context>' + tags + '</xbrl>').encode()
+        parsed = parse_accession_xbrl_source(raw_bytes=raw)
+        return {"parsed": parsed, "raw_bytes": raw,
+                "source_reference": {"raw_asset_id": "sha256:" + parsed.source_sha256}}
+
+    def test_noncalendar_fiscal_duration_is_taken_from_native_source(self):
+        for end in ("2051-02-28", "February 28, 2051"):
+            result = _structured_fiscal_period(context=self.context(document_end=end),
+                recipe={"period": "FY2050"}, source_bundle={"declaration": {"cik": "1"}})
+            self.assertEqual((result["period_start"], result["period_end"]), ("2050-03-01", "2051-02-28"))
+            self.assertEqual(result["period_label"], "FY2050")
+
+    def test_native_metadata_omission_conflict_and_period_relabel_fail(self):
+        contexts = [self.context(omit="DocumentFiscalYearFocus"), self.context(duplicate=True),
+                    self.context(document_end="2050-02-28"), self.context(period_focus="Q4")]
+        for context in contexts:
+            with self.subTest(parsed_source_id=context["parsed"].parsed_source_id):
+                with self.assertRaises(R4OfflineQualificationError):
+                    _structured_fiscal_period(context=context, recipe={"period": "FY2050"},
+                                             source_bundle={"declaration": {"cik": "1"}})
+        for period, cik in (("FY2049", "1"), ("2050Q4", "1"), ("FY2050", "2")):
+            with self.subTest(period=period, cik=cik), self.assertRaises(R4OfflineQualificationError):
+                _structured_fiscal_period(context=self.context(), recipe={"period": period},
+                                         source_bundle={"declaration": {"cik": cik}})
+        with self.assertRaises(DeterministicRouterError):
+            self.context(context_end="")
 
 
 if __name__ == "__main__":

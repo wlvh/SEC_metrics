@@ -15,6 +15,9 @@ from vnext.scoped_reader import build_scoped_reader_plan, load_scoped_reader_pla
 from vnext.scoped_reader import load_scoped_reader_request, load_scoped_offline_attempt
 from vnext.scoped_reader import replay_scoped_offline_artifact_set
 from vnext.source_scope import build_source_scope_manifest
+from vnext.reader import validate_reader_output
+from vnext.evidence import check_evidence
+from tests.vnext.common import cell_locator
 
 
 class ScopedReaderTest(unittest.TestCase):
@@ -174,6 +177,33 @@ class ScopedReaderTest(unittest.TestCase):
         self.assertEqual(attempt, replay_scoped_offline_attempt(
             attempt=attempt, prepared_request=prepared, **self._arguments()))
         self.assertEqual(0, attempt["provider_call_count"])
+
+    def test_native_pass_for_wrong_in_window_cell_unit_or_period_is_not_certified(self):
+        args = self._arguments()
+        prepared = prepare_scoped_reader_request(**args)
+        mutations = [
+            lambda claim: claim.update(locator=cell_locator(asset=args["full_derived_asset"],
+                table_id="table_000002", row_index=1, column_index=0), claimed_raw_value="2025"),
+            lambda claim: claim.update(claimed_period="FY2024"),
+            lambda claim: claim.update(claimed_reported_unit="ratio"),
+        ]
+        for mutation in mutations:
+            response = copy.deepcopy(self.fixture["response"])
+            mutation(response["candidates"][0])
+            response_text = json.dumps(response)
+            candidate = validate_reader_output(response_text=response_text, attempt_id="attempt:wrong:certificate",
+                required_roles=args["task_contract"]["required_roles"], scope_contract=args["task_contract"]["scope_contract"],
+                source_reference_ids=args["reader_manifest"]["source_reference_ids"],
+                derived_asset_ids=[args["full_derived_asset"]["derived_asset_id"]])
+            evidence = check_evidence(candidate=candidate, derived_asset=args["full_derived_asset"],
+                reader_manifest=args["reader_manifest"], reader_payload_body=args["evidence_authority_payload"],
+                source_references=[args["source_reference"]], identity_constraints=args["task_contract"]["identity_constraints"],
+                scope_contract=args["task_contract"]["scope_contract"])
+            with self.subTest(mutation=mutation):
+                self.assertEqual("PASS", evidence["status"])
+                with self.assertRaisesRegex(ScopedReaderError, "SCOPED_(CERTIFIED_TARGET_MISMATCH|REFERENCE_RECONCILIATION_FAILED)"):
+                    validate_scoped_reader_response(prepared_request=prepared, response_text=response_text,
+                        attempt_id="attempt:wrong:certificate", **args)
 
     def _write_artifact_set(self, directory, prepared, attempt):
         contents = {"source_scope.json": canonical_json_bytes(value=self.fixture["scope"]),

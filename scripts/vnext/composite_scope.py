@@ -10,7 +10,9 @@ from __future__ import annotations
 
 import html
 import re
+import calendar
 from copy import deepcopy
+from datetime import date
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Dict, Mapping, Optional
@@ -20,7 +22,7 @@ from .canonical import decimal_text, parse_decimal, sha256_bytes, strict_json_fi
 from .constraints import parse_numeric_claim
 from .records import EXPLICIT_ARTIFACT_GENERATION, validate_record
 from .scope_contract import exact_enum_alias, scope_satisfies_contract
-from .sources import resolve_repository_file
+from .sources import resolve_repository_file, validate_public_sec_filing_identity
 from .table_grid import resolve_cell
 
 
@@ -32,6 +34,7 @@ PROOF_FIELDS = frozenset({
     "requirement_hashes", "raw_blob", "source_reference", "source_sha256", "source_size",
     "full_derived_asset_id", "task_contract_id", "task_contract_hash", "metric_id",
     "target_locator", "numeric_normalization", "composite_scope", "qualification_credit",
+    "disclosed_period",
 })
 RECIPE_FIELDS = frozenset({
     "section_heading", "section_end_heading", "association_heading",
@@ -50,9 +53,10 @@ def _exact(value: object, fields: frozenset, label: str) -> Mapping:
     return value
 
 
-def _choice(*, requirement: Mapping, kind: str) -> Mapping:
+def _choice(*, requirement: Mapping, kind: str, metric_id: str) -> Mapping:
     choices = [d["choice"] for d in requirement["effective_decisions"].values()
-               if d["status"] == "APPROVED" and d["choice"]["kind"] == kind]
+               if d["status"] == "APPROVED" and d["choice"]["kind"] == kind
+               and d["choice"].get("metric_id") == metric_id]
     if len(choices) != 1:
         raise CompositeScopeError("Source-bound policy is absent or ambiguous: " + kind)
     return choices[0]
@@ -205,11 +209,42 @@ def _alias_occurrences(*, text: str, alias: str) -> list:
     return [m.span() for m in re.finditer(r"(?<!\w)" + r"\W+".join(map(re.escape, tokens)) + r"(?!\w)", text)]
 
 
+def _explicit_contrast(*, text: str, occurrence: tuple, forbidden_labels: list,
+                       required_aliases: list, measure: str) -> Optional[dict]:
+    """Prove an explicit source 'while/whereas' contrast, never infer one.
+
+    Both complete clauses remain in the proof. The excluded clause must name
+    exactly one task-declared forbidden measure, and the other clause must name
+    the target measure plus the owner-required exact scope alias.
+    """
+    for separator in re.finditer(r",?\s*\b(?:while|whereas)\b\s*", text, flags=re.IGNORECASE):
+        clauses = [(0, separator.start()), (separator.end(), len(text))]
+        for index, (start, end) in enumerate(clauses):
+            if not start <= occurrence[0] < occurrence[1] <= end:
+                continue
+            excluded = text[start:end]
+            other_start, other_end = clauses[1 - index]
+            supporting = text[other_start:other_end]
+            labels = [label for label in forbidden_labels if len(label.split()) >= 2
+                      and _alias_occurrences(text=excluded.casefold(), alias=label.casefold())]
+            if (len(labels) == 1
+                    and not any(_alias_occurrences(text=excluded, alias=alias) for alias in required_aliases)
+                    and any(_alias_occurrences(text=supporting, alias=alias) for alias in required_aliases)
+                    and _alias_occurrences(text=supporting.casefold(), alias=measure.casefold())
+                    and not _alias_occurrences(text=supporting.casefold(), alias=labels[0].casefold())):
+                return {"kind": "EXACT_SOURCE_WHILE_CONTRAST", "named_measure": labels[0],
+                    "excluded_clause_start": start, "excluded_clause_end": end,
+                    "exact_excluded_clause": excluded, "target_clause_start": other_start,
+                    "target_clause_end": other_end, "exact_target_clause": supporting}
+    return None
+
+
 def _composite(*, recipe: Mapping, source_bytes: bytes, full_derived_asset: Mapping,
                target_locator: Mapping, task_contract: Mapping, requirement: Mapping,
                offline_context=None) -> dict:
     _exact(recipe, RECIPE_FIELDS, "Composite scope recipe")
-    policy = _choice(requirement=requirement, kind="SOURCE_BOUND_COMPOSITE_SCOPE_POLICY")
+    policy = _choice(requirement=requirement, kind="SOURCE_BOUND_COMPOSITE_SCOPE_POLICY",
+                     metric_id=task_contract["metric_ids"][0])
     if (policy["metric_id"] != task_contract["metric_ids"][0]
             or policy["mechanism"] != "SOURCE_BOUND_COMPOSITE_SCOPE_PROOF_V1"):
         raise CompositeScopeError("Composite scope is not authorized for this task")
@@ -236,11 +271,15 @@ def _composite(*, recipe: Mapping, source_bytes: bytes, full_derived_asset: Mapp
             or not association["end_byte"] <= table_association["start_byte"] < table_association["end_byte"] <= table_span["start_byte"]
             or any(table_association["end_byte"] <= t["start_byte"] < table_span["start_byte"] for t in structure["tables"])):
         raise CompositeScopeError("Original source does not associate the named measure with the immediate target table")
-    if (re.search(r"market\s+risk", heading["visible_text"], flags=re.IGNORECASE) is None
+    section_patterns = {"same_named_market_risk_section": r"(?:market|trading)\s+risk",
+                        "same_named_liquidity_section": r"liquidity"}
+    section_rules = [pattern for name, pattern in section_patterns.items()
+                     if policy["text_span_requirements"].get(name) is True]
+    if (len(section_rules) != 1 or re.search(section_rules[0], heading["visible_text"], flags=re.IGNORECASE) is None
             or not heading["start_byte"] <= association["start_byte"] < table_span["start_byte"]
             or not table_span["end_byte"] <= association_end["start_byte"] <= end_heading["start_byte"]
             or association["end_byte"] > association_end["start_byte"]):
-        raise CompositeScopeError("Target table is not in the audited named market-risk subsection")
+        raise CompositeScopeError("Target table is not in the audited required named subsection")
     # Coordinates are supplied by offline audit; association is an exact
     # document-order interval between real heading nodes, not a TOC guesser.
     for block in structure["blocks"]:
@@ -251,9 +290,11 @@ def _composite(*, recipe: Mapping, source_bytes: bytes, full_derived_asset: Mapp
     allowed = list(policy["scope_dimensions_allowed_from_text_span"])
     required = dict(policy["required_scope"])
     selected = recipe["selected_scope_spans"]
-    if (type(selected) is not list or [x.get("dimension") for x in selected] != allowed
+    dimensions = [x.get("dimension") for x in selected] if type(selected) is list else []
+    if (not dimensions or len(dimensions) != len(set(dimensions))
+            or dimensions != [dimension for dimension in allowed if dimension in dimensions]
             or set(required) != set(allowed)):
-        raise CompositeScopeError("Composite selected dimensions are not the exact authorized set")
+        raise CompositeScopeError("Composite selected dimensions are not an ordered authorized subset")
     selected_records, normalized = [], {}
     from .evidence import _bounded_raw_value_match
     for item in selected:
@@ -264,13 +305,18 @@ def _composite(*, recipe: Mapping, source_bytes: bytes, full_derived_asset: Mapp
             raise CompositeScopeError("Scope span leaves the target-table association")
         canonical = exact_enum_alias(contract=task_contract["scope_contract"],
                                      dimension=item["dimension"], raw_value=item["raw_value"])
+        named_association = bool(_alias_occurrences(text=node["visible_text"], alias=measure))
+        following_blocks = [block for block in structure["blocks"]
+                            if not block["inside_table"] and block["start_byte"] >= table_span["end_byte"]]
+        immediate_note = bool(following_blocks and following_blocks[0]["start_byte"] == node["start_byte"])
         if (canonical != required[item["dimension"]]
                 or not _bounded_raw_value_match(raw_text=node["visible_text"], raw_value=item["raw_value"])
-                or not _alias_occurrences(text=node["visible_text"], alias=measure)):
+                or not (named_association or immediate_note)):
             raise CompositeScopeError("Source span does not prove the approved exact scope alias")
         normalized[item["dimension"]] = canonical
-        selected_records.append({**item, "canonical_value": canonical, "source_span": node})
-    census = []
+        selected_records.append({**item, "canonical_value": canonical, "source_span": node,
+            "association_evidence": "EXACT_NAMED_MEASURE" if named_association else "IMMEDIATE_ORIGINAL_TABLE_NOTE"})
+    census, table_disambiguation = [], set()
     aliases = task_contract["scope_contract"]["exact_enum_aliases"]
     for block in structure["blocks"]:
         if block["inside_table"]:
@@ -287,6 +333,11 @@ def _composite(*, recipe: Mapping, source_bytes: bytes, full_derived_asset: Mapp
                 disposition = ("SUPPORTING_SAME_SCOPE" if canonical == required[dimension]
                                else "CONFLICTING_SCOPE") if inside else "OUTSIDE_TARGET_SUBSECTION"
                 measure_dispositions = []
+                if inside and dimension not in dimensions:
+                    disposition = "SAME_TARGET_TABLE_SCOPE_REQUIRED"
+                    if canonical != required[dimension]:
+                        table_disambiguation.add(dimension)
+                        disposition = "SAME_COLUMN_TABLE_SCOPE_REQUIRED"
                 if disposition == "CONFLICTING_SCOPE":
                     # A source can explicitly discuss another declared measure
                     # in the same subsection. Only a same-sentence exact named
@@ -303,12 +354,19 @@ def _composite(*, recipe: Mapping, source_bytes: bytes, full_derived_asset: Mapp
                         labels = [label for label in task_contract["forbidden_confusions"]
                                   if len(label.split()) >= 2
                                   and _alias_occurrences(text=sentence.casefold(), alias=label.casefold())]
-                        if (len(labels) != 1
-                                or _alias_occurrences(text=sentence.casefold(), alias=measure.casefold())):
-                            raise CompositeScopeError("Conflicting same-subsection scope blocks auto-certification")
-                        measure_dispositions.append({"named_measure": labels[0],
-                            "sentence_start": sentence_start, "sentence_end": sentence_end,
-                            "exact_visible_sentence": sentence})
+                        if len(labels) == 1 and not _alias_occurrences(text=sentence.casefold(), alias=measure.casefold()):
+                            measure_dispositions.append({"named_measure": labels[0],
+                                "sentence_start": sentence_start, "sentence_end": sentence_end,
+                                "exact_visible_sentence": sentence})
+                        else:
+                            contrast = _explicit_contrast(text=sentence,
+                                occurrence=(occurrence_start - sentence_start, occurrence_end - sentence_start),
+                                forbidden_labels=task_contract["forbidden_confusions"],
+                                required_aliases=aliases[dimension][required[dimension]], measure=measure)
+                            if contrast is None:
+                                raise CompositeScopeError("Conflicting same-subsection scope blocks auto-certification")
+                            measure_dispositions.append({**contrast, "sentence_start": sentence_start,
+                                                        "sentence_end": sentence_end})
                     disposition = "DIFFERENT_DECLARED_MEASURE"
                 census.append({"start_byte": block["start_byte"], "end_byte": block["end_byte"],
                     "span_sha256": block["span_sha256"], "dimension": dimension,
@@ -322,7 +380,9 @@ def _composite(*, recipe: Mapping, source_bytes: bytes, full_derived_asset: Mapp
         "association_rule": "EXACT_AUDITED_HEADING_INTERVAL_AND_ORIGINAL_TABLE_ORDER",
         "target_table_source_span": table_span, "target_table_grid_sha256": table["grid_sha256"],
         "selected_scope_spans": selected_records, "competing_scope_span_census": census,
-        "normalized_scope": normalized, "source_structure_hash": content_hash(value={
+        "normalized_scope": normalized, "required_scope": required,
+        "table_disambiguation_dimensions": [d for d in allowed if d in table_disambiguation],
+        "source_structure_hash": content_hash(value={
             "table": table_span, "section": [heading, end_heading], "association": [association, association_end]})}
 
 
@@ -358,6 +418,18 @@ def _numeric(*, unit_locator: Mapping, target_locator: Mapping, full_derived_ass
     if len(matches) != 1:
         raise CompositeScopeError("Numeric mechanism is not authorized for this task")
     binding = matches[0]
+    from .specs import compile_spec_file
+    if len(task_contract["metric_spec_paths"]) != 1:
+        raise CompositeScopeError("Numeric normalization requires one bound native MetricSpec")
+    spec = compile_spec_file(path=resolve_repository_file(repo_root=repo_root,
+        repo_relative_path=task_contract["metric_spec_paths"][0]), dependency_specs={})
+    if (task_contract["metric_spec_semantic_hashes"] != [spec["spec_semantic_hash"]]
+            or task_contract["metric_spec_closure_hashes"] != [spec["spec_closure_hash"]]
+            or any(binding[key] != spec["compiled"][key] for key in ("canonical_unit", "reported_unit"))):
+        raise CompositeScopeError("Numeric units differ from the exact native MetricSpec")
+    if binding["mechanism"] == "SAME_ROW_PERCENT_MARKER" and (
+            binding["canonical_unit"] != "ratio" or binding["reported_unit"] != "ratio"):
+        raise CompositeScopeError("Separate percent marker cannot rescale a non-ratio or already-percent claim")
     resolver = resolve_cell if offline_context is None else offline_context.resolve_cell
     value_cell = resolver(derived_asset=full_derived_asset, locator=target_locator)
     unit_cell = resolver(derived_asset=full_derived_asset, locator=unit_locator)
@@ -406,11 +478,78 @@ def _numeric(*, unit_locator: Mapping, target_locator: Mapping, full_derived_ass
         "normalized_value": decimal_text(value=normalized)}
 
 
+def _disclosed_period(*, recipe: Mapping, composite: Mapping, requirement: Mapping,
+                      repo_root: Path, raw_blob: Mapping, source_reference: Mapping, source_bytes: bytes,
+                      full_derived_asset: Mapping, task_contract: Mapping, target_locator: Mapping,
+                      offline_context=None) -> dict:
+    fields = frozenset({"source_id", "fixture_class", "averaging_period", "period_label",
+        "period_start", "period_end", "period_header_locator", "quarter_span", "averaging_span"})
+    _exact(recipe, fields, "Disclosed quarter period")
+    policy = _choice(requirement=requirement, kind="SOURCE_BOUND_ALTERNATE_PERIOD_POLICY",
+                     metric_id=task_contract["metric_ids"][0])
+    if composite is None or any(recipe[key] != policy[key] for key in ("source_id", "fixture_class", "averaging_period")):
+        raise CompositeScopeError("Disclosed period is not the approved source/fixture exception")
+    path_name = "config/r4_fixture_acquisitions_v1.json"
+    binding = requirement["execution_authority"]["files"].get(path_name)
+    path = resolve_repository_file(repo_root=repo_root, repo_relative_path=path_name)
+    data = path.read_bytes()
+    if not binding or sha256_bytes(content=data) != binding["sha256"] or len(data) != binding["size"]:
+        raise CompositeScopeError("Disclosed period source declaration is not execution-bound")
+    rows = strict_json_file(path=path)["sources"]
+    sources = [row for row in rows if row["source_id"] == recipe["source_id"]]
+    if (len(sources) != 1 or any(sources[0][key] != source_reference[key]
+                                for key in ("company_id", "accession", "document_name"))):
+        raise CompositeScopeError("Quarter-average exception names a different source")
+    validate_public_sec_filing_identity(raw_blob=raw_blob, source_url=source_reference["source_url"],
+        accession=source_reference["accession"], document_name=source_reference["document_name"],
+        source_role=source_reference["source_role"], allowed_ciks=[sources[0]["cik"]])
+    match = re.fullmatch(r"([0-9]{4})-?Q([1-4])", recipe["period_label"])
+    if match is None:
+        raise CompositeScopeError("Quarter-average period cannot be relabeled as an annual period")
+    year, quarter = int(match.group(1)), int(match.group(2))
+    end_month = quarter * 3
+    period_start = date(year, end_month - 2, 1)
+    period_end = date(year, end_month, calendar.monthrange(year, end_month)[1])
+    if recipe["period_start"] != period_start.isoformat() or recipe["period_end"] != period_end.isoformat():
+        raise CompositeScopeError("Disclosed quarter dates do not match the exact quarter")
+    resolver = resolve_cell if offline_context is None else offline_context.resolve_cell
+    header = resolver(derived_asset=full_derived_asset, locator=recipe["period_header_locator"])
+    header_locator = recipe["period_header_locator"]
+    if (header_locator["table_id"] != target_locator["table_id"]
+            or header_locator["row_index"] >= target_locator["row_index"]
+            or not header["origin_column_index"] <= target_locator["column_index"] < header["origin_column_index"] + header["colspan"]):
+        raise CompositeScopeError("Disclosed quarter header does not cover the target value column")
+    month_names = {name.lower(): month for month in range(1, 13)
+                   for name in (calendar.month_name[month], calendar.month_abbr[month])}
+    dates = re.findall(r"\b([A-Za-z]+)\.?\s*([0-9]{1,2}),\s*([0-9]{4})\b", header["text"])
+    parsed = [date(int(y), month_names[name.lower()], int(day)) for name, day, y in dates
+              if name.lower() in month_names]
+    if parsed != [period_end]:
+        raise CompositeScopeError("Exact target-column source header does not prove the disclosed quarter end")
+    structure = index_source_structure(source_bytes=source_bytes) if offline_context is None else offline_context._structure
+    quarter_span = _node(locator=recipe["quarter_span"], structure=structure, source_bytes=source_bytes)
+    averaging_span = _node(locator=recipe["averaging_span"], structure=structure, source_bytes=source_bytes)
+    lower, upper = composite["association_heading"]["end_byte"], composite["association_end_heading"]["start_byte"]
+    if any(not lower <= span["start_byte"] < span["end_byte"] <= upper for span in (quarter_span, averaging_span)):
+        raise CompositeScopeError("Period evidence leaves the certified source association")
+    quarter_word = ("first", "second", "third", "fourth")[quarter - 1]
+    if re.search(r"\b" + quarter_word + r"\s+quarter\s+of\s*" + str(year) + r"\b",
+                 quarter_span["visible_text"], flags=re.IGNORECASE) is None:
+        raise CompositeScopeError("Source narrative does not disclose the exact quarter")
+    aggregation_aliases = task_contract["scope_contract"]["exact_enum_aliases"]["aggregation"]["average"]
+    if not any(_alias_occurrences(text=averaging_span["visible_text"], alias=alias) for alias in aggregation_aliases):
+        raise CompositeScopeError("Source narrative does not disclose averaging")
+    return {**deepcopy(dict(recipe)), "period_header_raw_text": header["raw_text"],
+        "period_header_text": header["text"], "quarter_source_span": quarter_span,
+        "averaging_source_span": averaging_span, "must_not_claim_annual_average": True}
+
+
 def build_source_bound_proof(*, requirement: Mapping, repo_root: Path, source_bytes: bytes,
                             raw_blob: Mapping, source_reference: Mapping,
                             full_derived_asset: Mapping, task_contract: Mapping,
                             target_locator: Mapping, numeric_locator: Optional[Mapping] = None,
                             composite_scope_recipe: Optional[Mapping] = None,
+                            disclosed_period_recipe: Optional[Mapping] = None,
                             _offline_context=None) -> dict:
     """Construct exact numeric/narrative facts without mutating source authority."""
     if (requirement["artifact_requirement_generation"] != EXPLICIT_ARTIFACT_GENERATION
@@ -443,6 +582,29 @@ def build_source_bound_proof(*, requirement: Mapping, repo_root: Path, source_by
     composite = None if composite_scope_recipe is None else _composite(recipe=composite_scope_recipe,
         source_bytes=source_bytes, full_derived_asset=full_derived_asset, target_locator=target_locator,
         task_contract=task_contract, requirement=requirement, offline_context=_offline_context)
+    if disclosed_period_recipe is None:
+        period_policies = [d["choice"] for d in requirement["effective_decisions"].values()
+            if d["status"] == "APPROVED" and d["choice"].get("kind") == "SOURCE_BOUND_ALTERNATE_PERIOD_POLICY"
+            and d["choice"].get("metric_id") == task_contract["metric_ids"][0]]
+        if len(period_policies) > 1:
+            raise CompositeScopeError("Disclosed period policy is ambiguous")
+        if period_policies:
+            path_name = "config/r4_fixture_acquisitions_v1.json"
+            path = resolve_repository_file(repo_root=repo_root, repo_relative_path=path_name)
+            data = path.read_bytes()
+            binding = requirement["execution_authority"]["files"].get(path_name)
+            if not binding or sha256_bytes(content=data) != binding["sha256"] or len(data) != binding["size"]:
+                raise CompositeScopeError("Disclosed period source declaration is not execution-bound")
+            rows = [row for row in strict_json_file(path=path)["sources"]
+                    if row["source_id"] == period_policies[0]["source_id"]]
+            if len(rows) != 1:
+                raise CompositeScopeError("Disclosed period source declaration is absent or ambiguous")
+            if all(source_reference[key] == rows[0][key] for key in ("accession", "document_name")):
+                raise CompositeScopeError("Approved quarter-average source requires an explicit disclosed-period proof")
+    period = None if disclosed_period_recipe is None else _disclosed_period(recipe=disclosed_period_recipe,
+        composite=composite, requirement=requirement, repo_root=repo_root, raw_blob=raw_blob, source_reference=source_reference,
+        source_bytes=source_bytes, full_derived_asset=full_derived_asset, task_contract=task_contract,
+        target_locator=target_locator, offline_context=_offline_context)
     body = {"record_type": PROOF_TYPE, "schema_version": 1,
         "artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
         "requirement_id": requirement["requirement_id"],
@@ -455,6 +617,7 @@ def build_source_bound_proof(*, requirement: Mapping, repo_root: Path, source_by
         "task_contract_hash": task_contract["catalog_task_contract_hash"],
         "metric_id": task_contract["metric_ids"][0], "target_locator": dict(target_locator),
         "numeric_normalization": numeric, "composite_scope": composite,
+        "disclosed_period": period,
         "qualification_credit": "NONE_OFFLINE_SOURCE_PROOF"}
     return {**body, "source_bound_proof_id": content_hash(value=body)}
 
@@ -466,9 +629,13 @@ def validate_source_bound_proof(*, proof: Mapping, expected_proof_id: str, **aut
         raise CompositeScopeError("Source-bound proof differs from the containing scope pin")
     numeric = proof["numeric_normalization"]
     composite = proof["composite_scope"]
+    period = proof["disclosed_period"]
     rebuilt = build_source_bound_proof(target_locator=proof["target_locator"],
         numeric_locator=None if numeric is None else numeric["unit_locator"],
-        composite_scope_recipe=None if composite is None else composite["recipe"], **authority)
+        composite_scope_recipe=None if composite is None else composite["recipe"],
+        disclosed_period_recipe=None if period is None else {k: period[k] for k in (
+            "source_id", "fixture_class", "averaging_period", "period_label", "period_start", "period_end",
+            "period_header_locator", "quarter_span", "averaging_span")}, **authority)
     if dict(proof) != rebuilt:
         raise CompositeScopeError("Source-bound proof source/span/scale/Requirement identity differs")
     return rebuilt
@@ -482,6 +649,32 @@ def source_bound_scope(*, proof: Mapping, native_scope: Mapping, task_contract: 
         if dimension in scope and scope[dimension] != value:
             raise CompositeScopeError("Native table scope conflicts with source-bound narrative")
         scope[dimension] = value
+    if proof["composite_scope"] is not None and any(
+            scope.get(dimension) != value for dimension, value in proof["composite_scope"]["required_scope"].items()):
+        raise CompositeScopeError("Combined source/table scope differs from the owner-required scope")
     if not scope_satisfies_contract(contract=task_contract["scope_contract"], normalized_scope=scope):
         raise CompositeScopeError("Source-bound scope remains incomplete")
     return scope
+
+
+def validate_table_scope_disambiguation(*, proof: Mapping, claim: Mapping,
+                                        derived_asset: Mapping, offline_context=None) -> None:
+    """Paired narrative values require an original header over the selected column."""
+    composite = proof["composite_scope"]
+    if composite is None:
+        return
+    resolver = resolve_cell if offline_context is None else offline_context.resolve_cell
+    labels = {label["id"]: label for label in claim["scope_evidence_locators"]}
+    claims = {item["dimension"]: item for item in claim["claimed_scope"]}
+    for dimension in composite["table_disambiguation_dimensions"]:
+        if dimension not in claims:
+            raise CompositeScopeError("Paired narrative scope lacks same-table disambiguation")
+        for label_id in claims[dimension]["evidence_locator_ids"]:
+            label = labels[label_id]
+            if label["location_type"] == "caption":
+                raise CompositeScopeError("Paired scope requires a target-column header, not a global caption")
+            cell = resolver(derived_asset=derived_asset, locator=label["locator"])
+            if (label["locator"]["table_id"] != claim["locator"]["table_id"]
+                    or cell["row_index"] >= claim["locator"]["row_index"]
+                    or not cell["origin_column_index"] <= claim["locator"]["column_index"] < cell["origin_column_index"] + cell["colspan"]):
+                raise CompositeScopeError("Paired scope label does not cover the selected target column")

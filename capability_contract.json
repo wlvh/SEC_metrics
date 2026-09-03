@@ -24,6 +24,16 @@
         "since": "2026-09-03"
       },
       {
+        "anchor_id": "CAPABILITY.r4_offline_source_bound_evidence",
+        "type": "capability",
+        "status": "active",
+        "statement": "PR-B以独立六指标task/fixture authority生成十二个positive和四个zero-call离线case。A03只允许owner批准的firm/average同源span与Citi真实季度；A12数值/scale留在原表，95%/one-day可按完整同源关联/冲突证明补全。A09绑定原百分号、A11/A12绑定原表scale，使用既有check_evidence而不是第二verifier。A09/A13先运行native accession XBRL并保留完整claim dispositions；A13仅实现直接发行人披露international net revenue，regional-sum分支未实现且无该路径credit。当前九个scoped positive和三个structured positive不等于十二次provider调用；synthetic PASS只证明离线证据路径，不是模型准确率、live资格、v2 activation或R4发布。",
+        "audience": ["developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_r4_offline_qualification.py::R4CompleteOfflineArtifactTest.test_all_pairs_remain_offline_and_structured_success_does_not_get_ai_plan",
+        "test_status": "automated_recorded",
+        "since": "2026-09-03"
+      },
+      {
         "anchor_id": "CAPABILITY.sec_latest_fiscal_batch",
         "type": "capability",
         "status": "active",
@@ -79,7 +89,7 @@
         "anchor_id": "CAPABILITY.issue_28_profile_requirement_authority",
         "type": "capability",
         "status": "active",
-        "statement": "五文件successor Requirement由版本注册表选择保留的requirement_profile_v1/v2 engine，支持同Issue revision与按invariant_id/ratchet区分的多实例。V1机械执行R4 exact set、24-call上限、12-18 target范围、零调用fixture classes、200000 context、10x性能下限、SourceScopeManifest必需bindings及provider/security/test政策；477个parent choice叶级义务各有唯一disposition，189 carry-forward、278 historical-only、10 superseded。parent closure只由已记录hashes与冻结snapshot bytes重建，不重跑Issue #15 adapter的live root检查。SUCCESSOR_RUN/RELEASE_PLAN/PUBLICATION_MANIFEST独立subtype强制generation与id/closure/hashes三联绑定，并进入真实builder/load/freeze/replay/read-back；旧RUN/Publication hashes必须与所选历史Requirement相等，旧ISSUE_15_RELEASE_PLAN保留其原id/closure schema。policy provenance、候选closure、exact-head activation及live授权相互分离；当前NOT_ACTIVATED，不实现R4或授权provider/paid/SEC。",
+        "statement": "五文件successor Requirement由版本注册表选择保留的V1/V2/V3 engine，支持同Issue revision与按invariant_id/ratchet区分的多实例。V1机械执行R4 exact set、24-call上限、12-18 target范围、零调用classes、200000 context、10x性能下限及provider/security/test政策；v1的477个parent叶级义务逐项分类。issue_28_v1已由PR-A治理receipt激活；新的issue_28_v2使用V3 engine、保留v1和全部历史bytes，以622个parent fragments（619 carry-forward、3 scoped superseded）绑定两条真实owner政策评论，状态仍NOT_ACTIVATED。parent解释不依赖current root authority；当前执行必须通过自身execution绑定。三个SUCCESSOR artifact subtype强制generation与id/closure/hashes完整身份，并进入builder/load/freeze/replay/read-back；legacy identity与选择的历史Requirement精确比较。policy-content、候选closure、exact-head activation和live授权分别验证，任何离线实现或测试都不签发provider/paid/live/publication权限。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_issue28_rework.py::Issue28ArtifactReworkTest.test_version_evolution_preserves_old_closure_and_resolves_pending_r5",
         "test_status": "validation_gate",

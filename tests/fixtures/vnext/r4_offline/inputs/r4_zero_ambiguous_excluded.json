@@ -1,0 +1,32 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_zero_ambiguous_excluded",
+  "metric_id": "A04",
+  "source_id": "jpmorgan_fy2025_10k",
+  "task_contract_id": "r4_net_interest_margin_table_v2",
+  "fixture_class": "AMBIGUOUS_EXCLUDED",
+  "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+  "period": "FY2025",
+  "target": null,
+  "reference": null,
+  "scope_labels": [],
+  "numeric_locator": null,
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [],
+  "structured_route_input": null,
+  "windows": [],
+  "navigation_paths": [],
+  "zero_call_reason": "Synthetic competing current/prior-period candidate ambiguity is retained as REVIEW_REQUIRED; it cannot create a provider plan.",
+  "negative_probe": {
+    "base_fixture_id": "r4_a04_production",
+    "target": null,
+    "scope_labels": null,
+    "unresolved_competing_claims": [
+      {
+        "description": "Synthetic current/prior-period competing-claim ambiguity; no response reuse or automatic choice."
+      }
+    ]
+  }
+}

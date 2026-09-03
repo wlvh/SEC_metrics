@@ -3,6 +3,7 @@
 import copy
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from vnext.canonical import content_hash, strict_json_file
 from vnext.deterministic_router import DeterministicRouterError
@@ -13,6 +14,7 @@ from vnext.r4_structured_sources import FixtureSourceSetError
 from vnext.r4_structured_sources import build_pinned_fixture_source_set, validate_fixture_source_set
 from vnext.r4_task_contracts import R4TaskContractError
 from vnext.r4_task_contracts import inspect_r4_task_catalog, resolve_r4_task_contract
+from vnext.r4_fixture_authority import load_r4_fixture_authority, R4FixtureAuthorityError
 from vnext.requirements import load_requirement_snapshot
 
 
@@ -20,6 +22,45 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class R4FixtureAuthorityTest(unittest.TestCase):
+    def test_input_matrix_has_exact_six_pairs_and_all_six_classes(self):
+        authority = load_r4_fixture_authority(repo_root=ROOT)
+        self.assertEqual(authority["matrix"]["metric_ids"], ["A03", "A04", "A09", "A11", "A12", "A13"])
+        self.assertEqual(len(authority["fixtures"]), 16)
+        self.assertEqual(sum(f["artifact_kind"] == "SCOPED_EXTRACTION" for f in authority["fixtures"]), 9)
+        self.assertEqual(sum(f["artifact_kind"] == "STRUCTURED_PRIMARY" for f in authority["fixtures"]), 3)
+        for metric in authority["matrix"]["metric_ids"]:
+            pair = [f for f in authority["fixtures"] if f["metric_id"] == metric and f["fixture_class"].startswith("POSITIVE_")]
+            self.assertEqual(len(pair), 2)
+            sources = [authority["sources"][f["source_id"]] for f in pair]
+            self.assertNotEqual(sources[0]["cik"], sources[1]["cik"])
+            self.assertNotEqual(sources[0]["full_derived_asset_id"], sources[1]["full_derived_asset_id"])
+
+    def test_rebound_input_matrix_cannot_drop_class_or_add_future_metric(self):
+        original = load_r4_fixture_authority(repo_root=ROOT)["matrix"]
+        mutations = []
+        changed = copy.deepcopy(original)
+        changed["metric_ids"].append("B06")
+        mutations.append(changed)
+        changed = copy.deepcopy(original)
+        changed["fixtures"] = [f for f in changed["fixtures"] if f["fixture_class"] != "QUALITATIVE_ONLY"]
+        mutations.append(changed)
+        changed = copy.deepcopy(original)
+        changed["fixtures"].append(copy.deepcopy(changed["fixtures"][0]))
+        mutations.append(changed)
+        changed = copy.deepcopy(original)
+        changed["provider_paid_sec_authorized"] = True
+        mutations.append(changed)
+        changed = copy.deepcopy(original)
+        changed["qualification_credit"] = "CURRENT"
+        mutations.append(changed)
+        for changed in mutations:
+            def read(*, path):
+                return changed if path.name == "r4_fixture_matrix_v1.json" else strict_json_file(path=path)
+            with self.subTest(matrix_hash=content_hash(value=changed)), patch(
+                    "vnext.r4_fixture_authority.strict_json_file", side_effect=read):
+                with self.assertRaises(R4FixtureAuthorityError):
+                    load_r4_fixture_authority(repo_root=ROOT)
+
     def test_successor_task_set_is_exact_and_v1_does_not_authorize_it(self):
         data = inspect_r4_task_catalog(repo_root=ROOT)
         self.assertEqual([task["metric_ids"][0] for task in data["contracts"]],

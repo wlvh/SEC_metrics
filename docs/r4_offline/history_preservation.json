@@ -1,0 +1,53 @@
+{
+  "record_type": "R4_OFFLINE_HISTORY_PRESERVATION_AUDIT",
+  "schema_version": 1,
+  "base_commit": "c45338567700e3048f4cf32d251369e4521e9444",
+  "protected_paths": [
+    "REPORT_十公司财务指标.md",
+    "artifacts/vnext",
+    "catalog/company_traits.yaml",
+    "catalog/deterministic_metrics.json",
+    "catalog/event_routes.json",
+    "catalog/metrics",
+    "catalog/table_task_contracts.json",
+    "catalog/zero_ai_public_projection.json",
+    "config/company_registry.csv",
+    "config/issue_15_release_plan.json",
+    "config/metric_applicability.yaml",
+    "config/provider_model_runtime.json",
+    "config/release_plans/issue_15_lodging_r3.json",
+    "config/release_plans/issue_15_zero_ai_r1.json",
+    "config/release_plans/issue_15_zero_ai_r2.json",
+    "config/source_strategy_registry.json",
+    "config/table_qualification_matrix.json",
+    "outputs",
+    "requirements/ai_first_v3_3_1",
+    "requirements/issue_15_v1",
+    "requirements/issue_28_v1",
+    "scripts/vnext/canonical.py",
+    "scripts/vnext/reader_input.py",
+    "scripts/vnext/requirement_profile_v1.py",
+    "scripts/vnext/requirement_profile_v2.py"
+  ],
+  "protected_changed_paths": [],
+  "protected_untracked_paths": [],
+  "request_ledger": {
+    "baseline_rows": 981,
+    "current_rows": 983,
+    "baseline_sha256": "fe49d7f8aa4fbb0618924f5e212e713604296be1c4e443476fe38cda6f57722d",
+    "current_sha256": "f60c48c64b1552494087a12e7f7e9b54e93aed1b4c43f963dea10ce9bd041eec",
+    "exact_ordered_prefix": true,
+    "new_attempt_ids": [
+      "request:attempt:e531f356a6a06facbfbf9d3dc506144e80c80d3a0e46909772f80d420727eed6",
+      "request:attempt:2ca17e95050d85613ce264edcd8d1c05bd0aa8e39f00adcfa3d786e925defa95"
+    ]
+  },
+  "provider_paid_sec_calls_total_prb": [
+    0,
+    0,
+    2
+  ],
+  "count_basis": "Two native immutable acquisition receipts; unchanged formal runtime namespace; separately instrumented offline/prohibition tests",
+  "qualification_credit": "NONE_OFFLINE_AUDIT",
+  "history_audit_id": "sha256:a960443e88fe56ddebdfe86c129a285b8e3c5fabcaae9ab37a7a6b378f09dca4"
+}

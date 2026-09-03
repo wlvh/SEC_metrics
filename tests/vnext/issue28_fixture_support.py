@@ -101,21 +101,21 @@ def rebind_scoped_parent(*, repo_root: Path) -> Path:
     return snapshot
 
 
-def evolve_to_v2(*, snapshot: Path) -> Path:
-    """Add an R5 scope and a synthetic owner-approved pending-policy tip."""
+def evolve_to_v2(*, snapshot: Path, successor_requirement_id: str = "issue_28_v2") -> Path:
+    """Add synthetic R5 policy using V2 engine and a separate revision identity."""
     old = load_requirement_snapshot(snapshot_dir=snapshot)
-    successor = snapshot.parent / "issue_28_v2"
+    successor = snapshot.parent / successor_requirement_id
     shutil.copytree(snapshot, successor)
     contract = successor / "CONTRACT.md"
     contract.write_text(
-        contract.read_text().replace("issue_28_v1", "issue_28_v2"), encoding="utf-8"
+        contract.read_text().replace("issue_28_v1", successor_requirement_id), encoding="utf-8"
     )
     baseline_path = successor / "baseline_manifest.json"
     baseline = strict_json_file(path=baseline_path)
     baseline.update(
-        requirement_id="issue_28_v2",
+        requirement_id=successor_requirement_id,
         requirement_generation="PROFILE_DRIVEN_V2",
-        contract_revision="ISSUE_28_V2",
+        contract_revision=successor_requirement_id.upper(),
         supersedes_requirement={
             "requirement_id": old["requirement_id"],
             "requirement_closure_hash": old["requirement_closure_hash"],
@@ -123,7 +123,8 @@ def evolve_to_v2(*, snapshot: Path) -> Path:
     )
     register_path = successor / "decision_register.json"
     register = strict_json_file(path=register_path)
-    register.update(requirement_id="issue_28_v2", issue_contract_revision="ISSUE_28_V2")
+    register.update(requirement_id=successor_requirement_id,
+                    issue_contract_revision=successor_requirement_id.upper())
     scope = copy.deepcopy(
         next(d for d in register["decisions"] if d["decision_id"] == "S-R4-SCOPE")
     )
@@ -235,7 +236,7 @@ def evolve_to_v2(*, snapshot: Path) -> Path:
     atomic_write_json(path=register_path, value=register)
     profile_path = successor / "invariant_profile.json"
     profile = strict_json_file(path=profile_path)
-    profile.update(requirement_id="issue_28_v2", profile_semantic_version="2")
+    profile.update(requirement_id=successor_requirement_id, profile_semantic_version="2")
     profile["invariants"].extend(
         [
             {"invariant_id": "INV-R5-SCOPE", "decision_id": "S-R5-SCOPE"},
@@ -250,7 +251,7 @@ def evolve_to_v2(*, snapshot: Path) -> Path:
     atomic_write_json(path=profile_path, value=profile)
     transfer_path = successor / "transfer_manifest.json"
     transfer = strict_json_file(path=transfer_path)
-    transfer["requirement_id"] = "issue_28_v2"
+    transfer["requirement_id"] = successor_requirement_id
     atomic_write_json(path=transfer_path, value=transfer)
     atomic_write_json(path=baseline_path, value=baseline)
     refresh_snapshot(snapshot=successor, bind_execution=True)

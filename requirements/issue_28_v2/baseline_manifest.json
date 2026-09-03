@@ -1,0 +1,386 @@
+{
+  "schema_version": 1,
+  "record_type": "REQUIREMENT_BASELINE_MANIFEST",
+  "requirement_id": "issue_28_v2",
+  "requirement_generation": "PROFILE_DRIVEN_V3",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "contract_revision": "ISSUE_28_V2",
+  "created_at_utc": "2026-09-03T11:05:07Z",
+  "issue": {
+    "number": 28,
+    "url": "https://github.com/wlvh/SEC_metrics/issues/28",
+    "tracking_body_sha256": "d3ece2313923faa1e8f30177550675c47c3df442c9d3d880d33db5a98d8dfd6f",
+    "tracking_body_size": 8597,
+    "identifier_comment_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5508858390",
+    "identifier_comment_sha256": "02e1d500ce6eda904472ccd520a984f6f23a3dc8b44761824f130e68ffec005a"
+  },
+  "repository": {
+    "identity": "wlvh/SEC_metrics",
+    "commit": "c45338567700e3048f4cf32d251369e4521e9444",
+    "tree": "0b8ccaf6b6b708b2c07b8f4ce1d5dd178638493a"
+  },
+  "parent": {
+    "requirement_id": "issue_28_v1",
+    "requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+    "hashes": {
+      "baseline_sha256": "842646de48d78eaedef39603e98078fb3a45812bf74b1ab5bd29d1243bedd624",
+      "contract_sha256": "cd2195e627000a6de3e3ffe7c279b6dfaafa68a2b69fe1058b6fd1ff90ad0113",
+      "decision_register_sha256": "e197738643b2dc2da2ad4de71d37e7d13d2795cea8fca62e1374d6a05ba66c4b",
+      "invariant_profile_sha256": "da8ea9ab76edf3b352ba2e58ec7ddb244f993c8b1c3ecc6a305dcfb3fd598e6e",
+      "parent_requirement_closure_hash": "sha256:e4b1d8141196fae9bb5da904692fd0d495ec69b89101b8304e12f6cb2640b7c7",
+      "transfer_manifest_sha256": "5f3cc1edfbc34947d3e8681fe5b87df8ff54a37d538cf59fc03665d325b39903",
+      "validator_sha256": "575ad8e14c41f2835087583b66a3bbb5886ce5f0816fb500e29a35184c895e48"
+    },
+    "snapshot_files": {
+      "CONTRACT.md": {
+        "sha256": "cd2195e627000a6de3e3ffe7c279b6dfaafa68a2b69fe1058b6fd1ff90ad0113",
+        "size": 6533
+      },
+      "baseline_manifest.json": {
+        "sha256": "842646de48d78eaedef39603e98078fb3a45812bf74b1ab5bd29d1243bedd624",
+        "size": 20395
+      },
+      "decision_register.json": {
+        "sha256": "e197738643b2dc2da2ad4de71d37e7d13d2795cea8fca62e1374d6a05ba66c4b",
+        "size": 48933
+      },
+      "invariant_profile.json": {
+        "sha256": "da8ea9ab76edf3b352ba2e58ec7ddb244f993c8b1c3ecc6a305dcfb3fd598e6e",
+        "size": 1582
+      },
+      "transfer_manifest.json": {
+        "sha256": "5f3cc1edfbc34947d3e8681fe5b87df8ff54a37d538cf59fc03665d325b39903",
+        "size": 320754
+      }
+    },
+    "snapshot_binding_hash": "sha256:9b682d4e7e761410ea22b31cfcee7d04daa6de9b437901a6181462438d5ad710",
+    "snapshot_git_tree": "39689d8ee482e3284ba95e1628a8f02e43131ff8"
+  },
+  "active_publication": {
+    "status": "PASSED",
+    "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "predecessor_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+    "bundle_manifest_sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a"
+  },
+  "historical_archive": {
+    "status": "HISTORICAL_R4_DEVELOPMENT_ONLY",
+    "ref": "archive/pr22-r4-development-62678e3",
+    "commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+    "qualification_credit": "NONE",
+    "response_reuse": "NOT_AUTHORIZED"
+  },
+  "snapshot_files": {
+    "CONTRACT.md": {
+      "sha256": "c9bfc89efb7038447aaee229f6cb2dc386db9c2fb8560e38b25fcc4aa48df984",
+      "size": 4269
+    },
+    "decision_register.json": {
+      "sha256": "cca8c1cd34408fef9c5c3f93b0f7e96a7594de0e60fd135d297eb18836ab4ae4",
+      "size": 91297
+    },
+    "invariant_profile.json": {
+      "sha256": "dfedb575ea49ff8379dd18d8d64c36504679594fa6193b3721249d1794c5fe52",
+      "size": 2270
+    },
+    "transfer_manifest.json": {
+      "sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+      "size": 369165
+    }
+  },
+  "validator": {
+    "path": "scripts/vnext/requirement_profile_v3.py",
+    "semantic_version": "3",
+    "sha256": "3bd5a658111d4bc6a29b308be9c362afb3118357a903432787e63100c20808af",
+    "dependencies": {
+      "scripts/vnext/requirement_profile_v1.py": {
+        "sha256": "575ad8e14c41f2835087583b66a3bbb5886ce5f0816fb500e29a35184c895e48",
+        "size": 83868
+      }
+    }
+  },
+  "source_input_role": "SUCCESSOR_REQUIREMENT_AUTHORITY",
+  "activation_state": "NOT_ACTIVATED",
+  "supersedes_requirement": {
+    "requirement_id": "issue_28_v1",
+    "requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac"
+  },
+  "policy_evidence": [
+    {
+      "source_id": "ISSUE_28_BODY",
+      "kind": "ISSUE_BODY_POLICY",
+      "source_url": "https://github.com/wlvh/SEC_metrics/issues/28",
+      "source_sha256": "d3ece2313923faa1e8f30177550675c47c3df442c9d3d880d33db5a98d8dfd6f",
+      "author": "github:wlvh",
+      "published_at_utc": "2026-09-02T11:20:56Z",
+      "text": "# Outcome\n\nDeliver the remaining vNext ratchets from R4 through Rf while separating three lifecycles that were previously entangled: product authority, implementation/offline qualification, and live provider qualification/publication.\n\n**STATUS: REQUIREMENT_TRANSITION_PENDING.** This Issue is a governance and tracking surface only. Production runtime must not read the live Issue body. Until the successor Requirement Snapshot is merged and owner-approved, this Issue authorizes no production-semantic change and no provider/paid/SEC execution.\n\n## Current verified baseline\n\n- Current `main`: `e0cd1da793a9851ac853ce3cf62467d199fb192e`\n- Current `main` tree: `801ea0206c67d87a216e13a8d49974acbd8d7af0`\n- PR #27 merged: PR-only fast-suite CI is present; it is not full acceptance.\n- Active publication remains R3: `publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8`\n- Exact predecessor remains R2: `publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f`\n- PR #22 is closed without merge. Its historical R4 development state is preserved at `archive/pr22-r4-development-62678e3` → `62678e304778970c8d2bc69db45a6b9fc969d01f`.\n- Archived PR #22 responses/cycles have no successor qualification credit and are not reusable.\n- Issues #15 and #24 remain open until the successor Requirement transition PR is merged; they will then be closed as `SUPERSEDED_BY_ISSUE_<this issue>` rather than `COMPLETED`.\n\n## Delivery planes\n\n1. **Historical plane** — R1–R3 publications, `requirements/ai_first_v3_3_1`, `requirements/issue_15_v1`, and the PR #22 archive remain immutable historical authority/evidence.\n2. **Development plane** — a new successor Requirement Snapshot, generic multi-requirement loader/invariant evaluator, R4 engine, scope manifests, fixtures, and offline qualification.\n3. **Release plane** — a separate exact-head release PR containing live plans, provider responses, Evidence/Review/Run closure, publication receipts, read-back, rollback, and restore evidence.\n\nImplementation PRs and live qualification/release PRs must remain separate. Production Python must not be changed inside a live release PR; a required code fix stops the release and returns to a new implementation PR.\n\n## Ratchet scope\n\n- **R4:** A03, A04, A09, A11, A12, A13 only.\n- **R5:** B06, B13, C03, C04; B06/B13 require an explicit product-semantics decision first.\n- **R6:** qualitative, legal, risk, and CLOSED_WORLD coverage.\n- **Rf:** all 39 metrics migrated and every frozen legacy semantic producer proven production-unreachable.\n- **WB-7:** independent PR to generalize generation of `SourceScopeManifest`; R4 may use source-specific audited manifests first.\n\nA single PR must not introduce more than one new production Ratchet stage.\n\n## Successor Requirement transition (PR-A)\n\nCreate `requirements/issue_<this issue number>_v1/` with:\n\n- `CONTRACT.md`\n- `baseline_manifest.json`\n- `transfer_manifest.json`\n- `decision_register.json`\n- `invariant_profile.json`\n\nThe snapshot must bind this Issue number, the exact merged baseline, the active R3 publication, exact R2 predecessor, snapshot hashes, and generic validator identity.\n\n`transfer_manifest.json` must classify prior policy as `CARRY_FORWARD`, `SUPERSEDED`, or `HISTORICAL_ONLY`.\n\nMinimum carry-forward invariants:\n\n- immutable SEC source/accession/hash and acquisition records;\n- exact table/cell or text-span locator and mechanical raw value/unit/period/scope recovery;\n- actual usage and context ceiling;\n- retry = 0 and UNKNOWN no-retry;\n- Evidence/Review/Result closure;\n- publication read-back, predecessor safety, rollback/restore;\n- dense result-key and compatibility principles.\n\nMinimum superseded policies:\n\n- full-filing provider input;\n- all financial tasks × all sources Cartesian product;\n- eight financial tasks blocking one phase and B06/B13 inside R4;\n- per-child full repository closure replay/rebuild;\n- full Decision choice duplicated in Python;\n- owner micro-approval of ordinary implementation details;\n- all remaining Ratchets in one PR;\n- byte equality between live Issue body and `CONTRACT.md`.\n\nHistorical-only material includes PR #22 failed cycles, old full-document plans, historical responses, HTTP 402/UNKNOWN/schema-violation terminals, and old exact-head grants.\n\nThe Decision Register is the only policy-content authority for the new Requirement. Python may implement generic schema, content hash, supersedes-chain, and semantic-invariant validation, but must not reproduce each full Decision body as a second authority.\n\nEvery new Run, ReleasePlan, and Publication artifact must explicitly bind `requirement_id` and `requirement_closure_hash`. The loader must continue to read and validate R1–R3 historical artifacts through the `issue_15_v1` compatibility path.\n\nPR-A must have provider/paid/SEC egress `0/0/0`, must not implement R4 routing or Issue #24 performance work, and requires one owner approval bound to exact PR head plus Requirement closure hash before merge.\n\n## R4 implementation and offline qualification (PR-B)\n\nR4 provider input is one continuous table window, or at most two continuous windows, certified against the complete locally parsed filing and bound by a `SourceScopeManifest`. No runtime TOC guesser, literal-only selector, sparse ranker, embedding/fuzzy/top-k selector, AI selector, or automatic full-document fallback is allowed.\n\nFixture classes:\n\n- `POSITIVE_PRODUCTION`\n- `POSITIVE_ALTERNATE_LAYOUT`\n- `NEGATIVE_EXPECTED`\n- `NOT_APPLICABLE`\n- `QUALITATIVE_ONLY`\n- `AMBIGUOUS_EXCLUDED`\n\nOnly the first two classes may create provider calls. Positive scopes must pass the existing `check_evidence` path via synthetic Candidates; no second verifier may be introduced merely to accept audit output.\n\nLegacy numeric anchors must be mechanically re-confirmed where available: A03 = 1.11, A04 = 0.025, A11 = 4,791,000,000,000 USD, A12 = 40,000,000 USD. A09/A13 must be labeled `NO_INDEPENDENT_LEGACY_ANCHOR` and require materially different positive sources, disjoint navigation paths, Evidence PASS, explained out-of-window candidates, and no unresolved ambiguity.\n\nAlternate layouts must differ by issuer CIK, primary-document layout, and table header or column order. At most two additional SEC 10-K filings may be acquired through the immutable request-attempt mechanism; a third requires owner escalation.\n\nThe Issue #24 successor performance contract is outcome-based:\n\n- full source materialization ≤ 1/session;\n- full parent authority construction ≤ 1/session;\n- full prior-Run replay per child = 0;\n- full DerivedAsset rebuild per child = 0;\n- final independent disk replay = 1;\n- aggregate local wall-time improvement ≥ 10×;\n- offline provider/paid/SEC = 0/0/0.\n\n## R4 live qualification and publication (PR-C)\n\nPR-C starts only from merged, frozen implementation `main` and should not modify production Python. The live plan targets 12–18 provider calls with a hard cap of 24; negative, not-applicable, qualitative-only, and ambiguous fixtures must have zero calls. There is no historical-response credit/reuse and no full-document fallback.\n\nLive execution requires owner authorization bound to exact PR head and plan ID. After authorization, semantic code/config, MetricSpecs, scope manifests, provider/model/API, retry=0, UNKNOWN handling, Evidence gates, and rollback semantics are frozen. Failure leaves R3 active.\n\nR4 publication is complete only after qualification, strict compatibility, immutable read-back, R4 active publication, rollback R4→R3, restore R3→R4, and active-terminal validation all pass.\n\n## Owner escalation boundary\n\nEscalate only for metric economic meaning; value/unit/period/scope semantics; applicability; provider/model/API; R3 publication/rollback semantics; no auto-certified positive; unclosed A09/A13 no-anchor path; more than two new filings; live plan over 24 calls; weakening UNKNOWN/retry/Evidence/locator/tamper/rollback; reintroducing full-document fallback; adding response reuse to R4; or inability to read historical R1–R3 artifacts.\n\nOrdinary module boundaries, private dataclasses/helpers, session/memoization design, scope-window bounds, fixture assignment, use of up to two new filings, tests, commit organization, audit reports, and non-semantic bug fixes do not require owner approval.\n\n## Planned PR sequence\n\n- PR-A — successor Requirement transition\n- PR-B — R4 implementation and offline qualification\n- PR-C — R4 live qualification and publication\n- PR-D — WB-7\n- PR-E — R5\n- PR-F — R6\n- PR-G — Rf and final legacy retirement\n"
+    },
+    {
+      "source_id": "OWNER_A03_POLICY",
+      "kind": "OWNER_ISSUE_COMMENT_POLICY",
+      "source_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524746204",
+      "source_sha256": "ad1f616329c5ee54e0119a06064b8e8760ede71b3f4383a643b653d72f3e8b9c",
+      "author": "github:wlvh",
+      "published_at_utc": "2026-09-03T11:05:07Z",
+      "text": "{\n  \"decision\": \"APPROVE_R4_A03_COMPOSITE_SCOPE_AND_ALTERNATE_PERIOD\",\n  \"scope\": \"PR_B_OFFLINE_IMPLEMENTATION_ONLY\",\n  \"predecessor_policy_comment_url\": \"https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524085182\",\n  \"predecessor_requirement_id\": \"issue_28_v1\",\n  \"predecessor_requirement_closure_hash\": \"sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac\",\n  \"a03_scope_policy\": {\n    \"metric_id\": \"A03\",\n    \"mechanism\": \"SOURCE_BOUND_COMPOSITE_SCOPE_PROOF_V1\",\n    \"numeric_value_locator\": \"SAME_TARGET_TABLE_CELL_REQUIRED\",\n    \"scope_dimensions_allowed_from_text_span\": [\n      \"entity_scope\",\n      \"aggregation\"\n    ],\n    \"required_scope\": {\n      \"entity_scope\": \"firm\",\n      \"aggregation\": \"average\"\n    },\n    \"text_span_requirements\": {\n      \"same_source_sha_and_accession\": true,\n      \"exact_byte_offsets_and_span_sha256\": true,\n      \"same_named_liquidity_section\": true,\n      \"deterministic_target_table_association\": true,\n      \"all_competing_scope_spans_dispositioned\": true,\n      \"conflicting_scope_blocks_auto_certification\": true\n    },\n    \"provider_payload_remains_table_window_only\": true,\n    \"ai_or_fuzzy_span_selection_allowed\": false,\n    \"cross_source_scope_evidence_allowed\": false,\n    \"copying_text_into_table_or_caption_allowed\": false\n  },\n  \"a03_alternate_period_policy\": {\n    \"source_id\": \"citigroup_fy2025_10k\",\n    \"fixture_class\": \"POSITIVE_ALTERNATE_LAYOUT\",\n    \"averaging_period\": \"AS_DISCLOSED_QUARTER_AVERAGE\",\n    \"exact_disclosed_period_must_be_bound\": true,\n    \"must_not_claim_annual_average\": true,\n    \"other_metric_period_semantics_unchanged\": true\n  },\n  \"additional_sec_acquisitions_authorized\": false,\n  \"provider_calls_authorized\": false,\n  \"paid_model_calls_authorized\": false,\n  \"live_qualification_authorized\": false,\n  \"publication_authorized\": false,\n  \"transition_activation_authorized\": false,\n  \"merge_authorized\": false,\n  \"active_publication_must_remain\": \"R3\"\n}",
+      "evidence_path": "docs/evidence/issue_28_a03_policy_revision.json"
+    },
+    {
+      "source_id": "OWNER_PRB_POLICY",
+      "kind": "OWNER_ISSUE_COMMENT_POLICY",
+      "source_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524085182",
+      "source_sha256": "ab5babbe06719e3aafa9d4ce9e56b7c8d65fdd0216d1df8af2ae11f53959c5d3",
+      "author": "github:wlvh",
+      "published_at_utc": "2026-09-03T10:08:54Z",
+      "text": "{\n  \"decision\": \"APPROVE_R4_PRB_POLICY_REVISION\",\n  \"scope\": \"PR_B_OFFLINE_IMPLEMENTATION_ONLY\",\n  \"predecessor_requirement_id\": \"issue_28_v1\",\n  \"predecessor_requirement_closure_hash\": \"sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac\",\n  \"a12_scope_policy\": {\n    \"metric_id\": \"A12\",\n    \"mechanism\": \"SOURCE_BOUND_COMPOSITE_SCOPE_PROOF_V1\",\n    \"numeric_value_locator\": \"SAME_TARGET_TABLE_CELL_REQUIRED\",\n    \"amount_scale_locator\": \"SAME_TARGET_TABLE_HEADER_REQUIRED\",\n    \"scope_dimensions_allowed_from_text_span\": [\n      \"confidence_level\",\n      \"holding_period\"\n    ],\n    \"required_scope\": {\n      \"confidence_level\": \"ninety_five_percent\",\n      \"holding_period\": \"one_day\"\n    },\n    \"text_span_requirements\": {\n      \"same_source_sha_and_accession\": true,\n      \"exact_byte_offsets_and_span_sha256\": true,\n      \"same_named_market_risk_section\": true,\n      \"deterministic_target_table_association\": true,\n      \"all_competing_scope_spans_dispositioned\": true,\n      \"conflicting_scope_blocks_auto_certification\": true\n    },\n    \"provider_payload_remains_table_window_only\": true,\n    \"ai_or_fuzzy_span_selection_allowed\": false,\n    \"cross_source_scope_evidence_allowed\": false,\n    \"copying_text_into_table_or_caption_allowed\": false\n  },\n  \"a13_product_semantics\": {\n    \"metric_id\": \"A13\",\n    \"economic_measure\": \"INTERNATIONAL_NET_REVENUE\",\n    \"explicitly_not_net_income\": true,\n    \"geography_scope\": \"ISSUER_DISCLOSED_NON_US_OR_INTERNATIONAL\",\n    \"period\": \"FULL_FISCAL_YEAR_DURATION\",\n    \"canonical_unit\": \"USD\",\n    \"preferred_selection\": \"DIRECT_ISSUER_DISCLOSED_INTERNATIONAL_TOTAL\",\n    \"regional_sum_allowed_only_when\": {\n      \"leaf_regions_are_mutually_exclusive\": true,\n      \"concept_unit_period_and_non_geography_context_match\": true,\n      \"no_parent_child_geography_overlap\": true,\n      \"reconciles_to_global_total_minus_us_total\": true\n    },\n    \"excluded_measure_families\": [\n      \"NET_INCOME\",\n      \"ASSETS\",\n      \"LOANS\",\n      \"DEPOSITS\",\n      \"MATURITY_SCHEDULES\",\n      \"SEGMENT_ONLY_TOTALS\",\n      \"GLOBAL_TOTAL\"\n    ],\n    \"no_independent_legacy_anchor_controls_remain_required\": true\n  },\n  \"parser_resource_policy\": {\n    \"production_max_total_cells_may_increase\": true,\n    \"maximum_authorized_total_cells\": 250000,\n    \"actual_limit_must_be_minimum_sufficient_after_jpm_bac_citi_measurement\": true,\n    \"same_production_parser_must_parse_all_r4_sources\": true,\n    \"runtime_or_caller_limit_override_allowed\": false,\n    \"guarded_worker_must_stop_overriding_production_resource_limits\": true,\n    \"other_resource_limits_must_remain_unchanged\": true,\n    \"all_sources_must_pass_512_mib_no_swap_measurement\": true,\n    \"over_250000_or_unsafe_memory_requires_new_owner_escalation\": true\n  },\n  \"sec_acquisition\": {\n    \"existing_two_filing_quota_may_proceed\": true,\n    \"sources\": [\n      \"bank_of_america_fy2025_10k\",\n      \"citigroup_fy2025_10k\"\n    ],\n    \"automatic_retry_count\": 0,\n    \"contact_environment_prerequisite_is_now_available\": true\n  },\n  \"provider_calls_authorized\": false,\n  \"paid_model_calls_authorized\": false,\n  \"live_qualification_authorized\": false,\n  \"publication_authorized\": false,\n  \"active_publication_must_remain\": \"R3\"\n}",
+      "evidence_path": "docs/evidence/issue_28_prb_policy_revision.json"
+    },
+    {
+      "source_id": "PARENT_D-01",
+      "kind": "PARENT_DECISION_POLICY",
+      "source_url": "requirements/issue_15_v1/decision_register.json#sha256:91fe4b7ef9620adadd3ef63c058259485ac8d11fdcd974ab9904869328539bb9",
+      "source_sha256": "5c7e3eeb008ac42999809d3adea54d88cc88198c6240e5cfc4e6665cc2df1ba1",
+      "author": "user:current-thread",
+      "published_at_utc": "2026-08-19T04:02:38Z",
+      "text": "{\n  \"decision_id\": \"D-01\",\n  \"status\": \"APPROVED\",\n  \"choice\": {\n    \"provider\": \"deepseek\",\n    \"model\": \"deepseek-v4-flash\",\n    \"api\": \"chat_completions\",\n    \"endpoint_host\": \"api.deepseek.com\",\n    \"region\": \"provider-managed-no-residency-guarantee\",\n    \"retention\": \"provider-managed; no zero-retention claim\",\n    \"data_use\": \"provider-managed; no training or data-use guarantee\",\n    \"timeout_seconds\": 120,\n    \"retry_count\": 0,\n    \"maximum_payload_bytes\": 8388608,\n    \"filing_egress_policy\": \"PUBLIC_SEC_FILING_TABLE_GRIDS_ONLY\"\n  },\n  \"approved_by\": \"user:current-thread\",\n  \"approved_at_utc\": \"2026-08-19T04:02:38Z\",\n  \"supersedes_decision_id\": \"sha256:8e980afbd5a167abf33d4fe9d723d0c7229021f024c976e330dce6f4614471e8\",\n  \"evidence\": \"CONTRACT.md#decisionwb-1-必须落盘\"\n}\n"
+    },
+    {
+      "source_id": "PARENT_D-24",
+      "kind": "PARENT_DECISION_POLICY",
+      "source_url": "requirements/issue_15_v1/decision_register.json#sha256:45695d8fddfcff4e2f919a17920ba67c8f1049e3dec0f278ae4d38f9a1537109",
+      "source_sha256": "8f22da3f0061e0c201dc290b16cb1dc457ef3fbe1a27442b692843010c422bfa",
+      "author": "github-user:30534800",
+      "published_at_utc": "2026-07-29T12:41:52Z",
+      "text": "{\n  \"decision_id\": \"D-24\",\n  \"status\": \"APPROVED\",\n  \"choice\": {\n    \"security_claim\": \"DEPENDENCY_CALL_GRAPH_EGRESS_AND_WRITE_CONSTRAINTS_ONLY\",\n    \"same_process_strong_sandbox_claim\": false\n  },\n  \"approved_by\": \"github-user:30534800\",\n  \"approved_at_utc\": \"2026-07-29T12:41:52Z\",\n  \"supersedes_decision_id\": null,\n  \"evidence\": \"ISSUE_CONTRACT.md#33-ai-adapterattempt-与诚实安全边界\"\n}\n"
+    },
+    {
+      "source_id": "PARENT_D-26",
+      "kind": "PARENT_DECISION_POLICY",
+      "source_url": "requirements/issue_15_v1/decision_register.json#sha256:f7186286693e9c9b2ec4bb9084060468ef1629d3ad3b06e53510efbf2d74b938",
+      "source_sha256": "60f92a24a70bb5b16aaf081e7c61382fbbcdf41edd0cccc8aebca2c1cc38feda",
+      "author": "user:github:wlvh",
+      "published_at_utc": "2026-08-19T10:01:11Z",
+      "text": "{\n  \"decision_id\": \"D-26\",\n  \"status\": \"APPROVED\",\n  \"choice\": {\n    \"test_execution_policy\": \"ISSUE_15_FAST_LOCAL_DIRECT_INVARIANTS\",\n    \"applies_to\": [\n      \"development\",\n      \"pull_request\",\n      \"final_acceptance\"\n    ],\n    \"required_fast_command\": \"python3 tools/run_fast_tests.py --jobs 4\",\n    \"per_case_timeout_seconds\": 30,\n    \"recorded_gate_timeout_seconds\": 60,\n    \"prohibited_required_test_classes\": [\n      \"broad_repository_regression\",\n      \"isolated_repository_or_worktree\",\n      \"long_running_serial_suite\"\n    ],\n    \"required_short_deterministic_invariants\": [\n      \"semantic_freeze_rejects_mutation\",\n      \"frozen_run_replay_network_calls_zero\",\n      \"rollback_restore_network_calls_zero\",\n      \"single_flight_reservation_is_mutually_exclusive\",\n      \"unknown_remote_outcome_is_not_retried\",\n      \"http_402_stops_batch_after_one_call\",\n      \"compact_table_round_trip_exact\",\n      \"public_key_set_union_exact\",\n      \"new_public_keys_are_structural_na\",\n      \"structured_only_provider_calls_zero\",\n      \"closed_world_incomplete_coverage_withheld\",\n      \"unknown_scope_alias_requires_human\",\n      \"claim_chain_immutable_readback_exact\"\n    ],\n    \"evidence_tier\": \"FAST_LOCAL_ONLY\",\n    \"may_claim_ci_pass\": false\n  },\n  \"approved_by\": \"user:github:wlvh\",\n  \"approved_at_utc\": \"2026-08-19T10:01:11Z\",\n  \"supersedes_decision_id\": \"sha256:9dc7cb36a0893f80ac84c385a7cf1723516529c442442a1915c50bb1973133df\",\n  \"evidence\": \"https://github.com/wlvh/SEC_metrics/issues/15#issuecomment-5340538535\"\n}\n"
+    }
+  ],
+  "execution_authority": {
+    "files": {
+      "catalog/company_traits.yaml": {
+        "sha256": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
+        "size": 649
+      },
+      "catalog/deterministic_metrics.json": {
+        "sha256": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+        "size": 16246
+      },
+      "catalog/event_routes.json": {
+        "sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+        "size": 2353
+      },
+      "catalog/r4_v2/A03_liquidity_coverage_ratio.md": {
+        "sha256": "43620d35bd01d38fa65425c548d6b5ee184daa98f3402ed515ad18b5c61e4755",
+        "size": 1393
+      },
+      "catalog/r4_v2/A04_net_interest_margin.md": {
+        "sha256": "fa5f38fc1e06159dd1058a638785a144cac7c2b760200df16b0eda3fd696f32b",
+        "size": 1216
+      },
+      "catalog/r4_v2/A09_nonperforming_loan_ratio.md": {
+        "sha256": "100fbdb78122565097379b54ebd1e4cd7bff7621007d74c5ceceb8cd15490452",
+        "size": 1239
+      },
+      "catalog/r4_v2/A11_assets_under_management.md": {
+        "sha256": "f76e908820a2ce10dca9f0601c7a48c81bbde93769e45c4d89d5de497bd9dbc8",
+        "size": 1245
+      },
+      "catalog/r4_v2/A12_trading_exposure.md": {
+        "sha256": "b0aa4a0b6da8f6a58f297af4a4ebdec6a602b72cc5fc5c8c3e6a71652aca26b2",
+        "size": 1972
+      },
+      "catalog/r4_v2/A13_geographic_exposure.md": {
+        "sha256": "1768014b3ea9f412386a855bc1af957eb496f75b9276ec040b23d01cb932ff8c",
+        "size": 1566
+      },
+      "catalog/table_task_contracts.json": {
+        "sha256": "ece72e72a93d52fc82370d5cc2c7c72a3fc3ba79ba20c91ccdf230718986a8f9",
+        "size": 10298
+      },
+      "catalog/zero_ai_public_projection.json": {
+        "sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+        "size": 22408
+      },
+      "config/company_registry.csv": {
+        "sha256": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+        "size": 1562
+      },
+      "config/metric_applicability.yaml": {
+        "sha256": "09457bfa3170149f2e86af52d5013605f04c7b13ec4724792993660cc5dbcf94",
+        "size": 3567
+      },
+      "config/provider_model_runtime.json": {
+        "sha256": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+        "size": 606
+      },
+      "config/r4_fixture_acquisitions_v1.json": {
+        "sha256": "cf2aa15c35f4b82f6e8e6ae1685b2eab05641d1705422fb8f667f5d038256f86",
+        "size": 1212
+      },
+      "config/r4_fixture_matrix_v1.json": {
+        "sha256": "04a75b8584299524038f7d39d250049b79a9bbf3455454bcf49ccece6e2c289c",
+        "size": 15307
+      },
+      "config/r4_numeric_normalization_v1.json": {
+        "sha256": "b52cadf1317ec5a758a063e4519a39f76afc35f5ecbc07f455a0cb9dfe0a554e",
+        "size": 443
+      },
+      "config/r4_task_contracts_v2.json": {
+        "sha256": "55b7d04ab71ccb968e7976f686b019532efa44acfb653ac85bd29965166965bd",
+        "size": 1597
+      },
+      "config/source_strategy_registry.json": {
+        "sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+        "size": 12801
+      },
+      "docs/evidence/issue_28_a03_policy_revision.json": {
+        "sha256": "265f9705b912633e893fd3229a103a6c55eb7eeee6f0fa78adb6ccfb194040b2",
+        "size": 2713
+      },
+      "docs/evidence/issue_28_prb_policy_revision.json": {
+        "sha256": "e7479ebe9cf2f75488659114118d903a3c19ea0f3ce65b3a06349d0a8cf86e28",
+        "size": 4070
+      },
+      "docs/r4_offline/fixture_acquisition_receipt.json": {
+        "sha256": "4ab6dee512eb93b8636d53bad141db1c434e0be30d1e94c27a94fe8954acda11",
+        "size": 3233
+      },
+      "scripts/vnext/composite_scope.py": {
+        "sha256": "10ece04209863e74197ca1304441090b41d473d62fb5113f4c65d4caa391ca66",
+        "size": 43777
+      },
+      "scripts/vnext/deterministic_router.py": {
+        "sha256": "4b2867c017f1f770e1a61b8c435114c69eb0c793298d17147a11615698d9aa7c",
+        "size": 73472
+      },
+      "scripts/vnext/evidence.py": {
+        "sha256": "fb5a7a99e2f062c9ce0fb5910521fa9efef9a6e02af5a499ad9c057bf4981cca",
+        "size": 40319
+      },
+      "scripts/vnext/offline_execution_session.py": {
+        "sha256": "67a7b1fd7b5d8443fcffb3c4fffd08f122efd1748b02565aaabaae9236457f58",
+        "size": 31323
+      },
+      "scripts/vnext/r4_fixture_authority.py": {
+        "sha256": "3baf895119ee1a75b84111793733f8afd7a04686f60e54937e6566a873fdc94d",
+        "size": 8009
+      },
+      "scripts/vnext/r4_materialization.py": {
+        "sha256": "e4b3352c7efe0b96eb7ae68fcc1ab18c2f1984ded63771e02a571344bd8872fc",
+        "size": 7541
+      },
+      "scripts/vnext/r4_offline_qualification.py": {
+        "sha256": "7ae5383a9b411a484d0b71e7a9aaaa7b6f4cf729984668ac765db3f1102061f7",
+        "size": 52751
+      },
+      "scripts/vnext/r4_source_audit.py": {
+        "sha256": "73a2770f0b2e3c4ac6f86046b35c751a249511bd689fa466dbbcf1c1abbbefd3",
+        "size": 14565
+      },
+      "scripts/vnext/r4_structured_sources.py": {
+        "sha256": "f9739f622097ce3b1ab7aee0a07dd6b57048e9f13caf47252e363a926402028e",
+        "size": 10026
+      },
+      "scripts/vnext/r4_task_contracts.py": {
+        "sha256": "c66cea64596f6c0e514d296b00d8279265e071ea41d968eaf01af95fc6fade3e",
+        "size": 7041
+      },
+      "scripts/vnext/reader.py": {
+        "sha256": "20720efd18067ff6ec614a4c25ec84bf6094f544e268fe28cb09f520d3ae8c2b",
+        "size": 21776
+      },
+      "scripts/vnext/records.py": {
+        "sha256": "215ab95e626bf5058dfd412d904999cb3cd7d38bfaa665a5f5fc71268e12811f",
+        "size": 58846
+      },
+      "scripts/vnext/resource_limits.py": {
+        "sha256": "2be2aab001242107db8ffe877d9a7e16ea0bd8dc04e0fa40481b28a65732187b",
+        "size": 3126
+      },
+      "scripts/vnext/scoped_reader.py": {
+        "sha256": "6d369b780b8606b747ec2828232a46c003a3f7568417d7c486a8ff6f26a38f30",
+        "size": 32292
+      },
+      "scripts/vnext/source_scope.py": {
+        "sha256": "6e50dfc25c028c097772f63b6e69ff89045e7fa5c6ece78d3e4af2debc0afe51",
+        "size": 36960
+      },
+      "scripts/vnext/table_grid.py": {
+        "sha256": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+        "size": 22873
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a03_alternate.json": {
+        "sha256": "8e04f01d45bac2777c7b318193041508881abdd9438ef853fc650ac4874543a1",
+        "size": 3181
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a03_production.json": {
+        "sha256": "87b1d0448a4da3121502122ae436a6bd8dfa5e34b4cde6e0b45c6615d158b218",
+        "size": 1998
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a04_alternate.json": {
+        "sha256": "8793f0d2089ecc807cadb6054aad8e174c4b94324f4b0b53e5ac16feeca66e54",
+        "size": 1990
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a04_production.json": {
+        "sha256": "08926bf08c7879e62fcd0a904f44018944a02b8e51603ebb01c6faa8b1085d78",
+        "size": 2583
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a09_alternate.json": {
+        "sha256": "70727710c99e1cf7540e8591dbda65d66fc6ed4a8c1275017e947933478650b6",
+        "size": 2745
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a09_production.json": {
+        "sha256": "d1025a849be9511dc6027bad36c55a7bd04ca4101c924facea792e0e300a12e9",
+        "size": 3287
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a11_alternate.json": {
+        "sha256": "d7550ec3ab40ec78237e47700f621ef1865babb356e9af92e4c30a5e64023fa4",
+        "size": 2238
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a11_production.json": {
+        "sha256": "29194d02a488f771b546672624d593a43ef488b3bed4a7f10e7b2648c349b6b6",
+        "size": 2354
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a12_alternate.json": {
+        "sha256": "e7ec312cb484224ba2a9b6f67e87cae9fea8127ebfaf18bf2d8d11aabf1cf185",
+        "size": 5912
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a12_production.json": {
+        "sha256": "4c5fca3e88bec5b760fd5711f0d77720517f23da023b853709db3a0d0c8e3d55",
+        "size": 4614
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a13_alternate.json": {
+        "sha256": "1c2096fe0847f574a858431b57b054103356c26d73fac52997ddf4bc7fcbc014",
+        "size": 3497
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_a13_production.json": {
+        "sha256": "e776b9ef20a55f5ec3e61a0a1473787e67873d78f35f94a3dd41d8d8a1900568",
+        "size": 5472
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_zero_ambiguous_excluded.json": {
+        "sha256": "d6ce9d8ba13c68b344a17427cfb5f2ac871787724941af2d85293a558549c712",
+        "size": 1051
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_zero_negative_expected.json": {
+        "sha256": "8c43ca1506b196ee8c1bd8f7d718453b2632de8474ff7e930a1c24311d21d0d8",
+        "size": 1181
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_zero_not_applicable.json": {
+        "sha256": "7e4ecc8c5f34aae4f21c753d2d8f0c0fb56878767bf1fee3191986f645ce3217",
+        "size": 731
+      },
+      "tests/fixtures/vnext/r4_offline/inputs/r4_zero_qualitative_only.json": {
+        "sha256": "2150f5db856f985f9c9ac622c5df8e248aa8a3eb13fe625cb9e086f00620c1f1",
+        "size": 761
+      }
+    },
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  }
+}

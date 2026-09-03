@@ -2,9 +2,12 @@
 
 import json
 from dataclasses import asdict
+from decimal import Decimal
 import inspect
+import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -18,6 +21,7 @@ from vnext.offline_execution_session import OfflineOperationObserver
 from vnext.r4_materialization import materialize_full_source, OfflineMaterializationError, PINNED_IMAGE_ID
 from vnext.requirements import load_requirement_snapshot
 from vnext.resource_limits import RESOURCE_LIMITS
+from vnext.sources import resolve_repository_file
 from vnext.table_grid import build_table_grid, TableGridError
 
 
@@ -98,6 +102,18 @@ class OfflineExecutionSessionTest(unittest.TestCase):
         self.assertEqual(0, observed.counts["portable_prior_run_loads"])
         for key in ("provider_calls", "paid_model_calls", "sec_calls"):
             self.assertEqual(0, observed.counts[key])
+
+    def test_nested_observer_counts_actual_full_json_decode_once(self):
+        asset = build_table_grid(html_bytes=(REPO_ROOT / SOURCE_PATH).read_bytes(),
+            parent_raw_asset_ids=["sha256:" + "a" * 64], storage_uri="offline://decode-count")
+        encoded = canonical_json_bytes(value=asset)
+        with OfflineOperationObserver() as outer:
+            with OfflineOperationObserver() as inner:
+                restored = json.loads(encoded)
+            self.assertEqual(asset, restored)
+            self.assertEqual(1, inner.counts["derived_asset_json_decodes"])
+        self.assertEqual(1, outer.counts["derived_asset_json_decodes"])
+        self.assertEqual(0, outer.counts["derived_asset_builds"])
 
     def test_crash_and_unknown_status_are_terminal_and_never_retried(self):
         for status in ("UNKNOWN", "PENDING", "FAILED", "CRASHED", "REUSED_SUCCESS", None):
@@ -206,6 +222,44 @@ class OfflineExecutionSessionTest(unittest.TestCase):
             extra.unlink()
             with self.assertRaises(OfflineSessionError):
                 session.run_child(child_id="after-restore", operation=lambda _: {"status": "PASS"})
+
+    def test_revision_session_pins_all_parent_levels_and_retained_engine_dependencies(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "source.bin").write_bytes(b"source")
+            for identifier in ("issue_28_v2", "issue_28_v1", "issue_15_v1", "ai_first_v3_3_1"):
+                snapshot = root / "requirements" / identifier
+                snapshot.mkdir(parents=True)
+                (snapshot / "binding.json").write_bytes(b"{}")
+            engines = root / "scripts/vnext"
+            engines.mkdir(parents=True)
+            for name in ("engine_v3.py", "engine_v1.py", "engine_support.py"):
+                (engines / name).write_bytes(b"# retained\n")
+            parent = {"requirement_id": "issue_15_v1",
+                      "baseline": {"parent_requirement_id": "ai_first_v3_3_1"}}
+            parent = {"requirement_id": "issue_28_v1", "parent_snapshot": parent,
+                      "baseline": {"validator": {"path": "scripts/vnext/engine_v1.py",
+                                                  "dependencies": {"scripts/vnext/engine_support.py": {}}}}}
+            current = {"requirement_id": "issue_28_v2", "parent_snapshot": parent,
+                       "baseline": {"validator": {"path": "scripts/vnext/engine_v3.py", "dependencies": {}}},
+                       "execution_authority": {"files": {}}}
+            source = FileBinding("source.bin", sha256_bytes(content=b"source"), 6)
+            for changed in ("requirements/issue_15_v1/binding.json", "scripts/vnext/engine_support.py"):
+                with self.subTest(changed=changed):
+                    session = OfflineExecutionSession(repo_root=root, source=source,
+                        requirement_id="issue_28_v2", requirement_closure_hash="sha256:" + "a" * 64)
+                    session._pin_authority_chain(current)
+                    session.state = "OPEN"
+                    session._check_pins()
+                    self.assertEqual(4, len(session._authority_directory_pins))
+                    original = (root / changed).read_bytes()
+                    (root / changed).write_bytes(original + b" ")
+                    with self.assertRaisesRegex(OfflineSessionError, "drift"):
+                        session._check_pins()
+                    (root / changed).write_bytes(original)
+                    with self.assertRaises(OfflineSessionError):
+                        session.run_child(child_id="after-restore", operation=lambda _: {"status": "PASS"})
+                    self.assertEqual("FAILED", session.state)
 
     def test_unrecognized_materialization_mode_cannot_override_resource_caps(self):
         session = self._session()
@@ -348,3 +402,148 @@ class R4ProductionResourcePolicyTest(unittest.TestCase):
         self.assertNotIn("dataclasses.replace", worker)
         self.assertNotIn("table_grid.RESOURCE_LIMITS =", worker)
         self.assertNotIn("OFFLINE_MAX_TOTAL_CELLS", worker)
+
+
+class ParsedXbrlReuseTest(unittest.TestCase):
+    def test_owned_parse_reuses_native_claim_logic_without_reparsing(self):
+        from tests.vnext.test_deterministic_router import fixture_sources
+        from vnext.deterministic_router import adapt_accession_xbrl, adapt_accession_xbrl_from_parsed
+        from vnext.deterministic_router import parse_accession_xbrl_source
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = fixture_sources(root=Path(directory))
+            args = dict(raw_bytes=fixture["bytes"]["accession"],
+                        source_reference=fixture["references"]["accession"],
+                        source_set_manifest=fixture["manifests"]["target_accession_instance"],
+                        fact_names=["Assets"])
+            expected = adapt_accession_xbrl(**args)
+            with OfflineOperationObserver() as observed:
+                parsed = parse_accession_xbrl_source(raw_bytes=args["raw_bytes"])
+                for _ in range(2):
+                    actual = adapt_accession_xbrl_from_parsed(parsed_source=parsed, **args)
+                    self.assertEqual(expected, actual)
+                    self.assertEqual(canonical_json_bytes(value=expected), canonical_json_bytes(value=actual))
+            self.assertEqual(1, observed.counts["xbrl_context_parses"])
+            self.assertEqual(1, observed.counts["xbrl_fact_parses"])
+            self.assertEqual(2, observed.counts["native_xbrl_claim_evaluations"])
+            with self.assertRaises(TypeError):
+                parsed.contexts["FY"]["period_end"] = "2024-12-31"
+            with self.assertRaises(TypeError):
+                parsed.facts[0]["text"] = "999"
+
+    def test_parsed_source_mismatch_and_forged_factory_fail(self):
+        from tests.vnext.test_deterministic_router import fixture_sources
+        from vnext.deterministic_router import adapt_accession_xbrl_from_parsed, parse_accession_xbrl_source
+        from vnext.deterministic_router import ParsedAccessionXbrlSource, DeterministicRouterError
+        with tempfile.TemporaryDirectory() as directory:
+            fixture = fixture_sources(root=Path(directory)); raw = fixture["bytes"]["accession"]
+            parsed = parse_accession_xbrl_source(raw_bytes=raw)
+            args = dict(parsed_source=parsed, raw_bytes=raw,
+                        source_reference=fixture["references"]["accession"],
+                        source_set_manifest=fixture["manifests"]["target_accession_instance"], fact_names=["Assets"])
+            with self.assertRaises(DeterministicRouterError):
+                adapt_accession_xbrl_from_parsed(**{**args, "raw_bytes": raw + b" "})
+            other = parse_accession_xbrl_source(raw_bytes=raw + b" ")
+            with self.assertRaises(DeterministicRouterError):
+                adapt_accession_xbrl_from_parsed(**{**args, "parsed_source": other})
+            with self.assertRaises(DeterministicRouterError):
+                ParsedAccessionXbrlSource(source_sha256="a" * 64, source_size=1, contexts={}, facts=[], factory=None)
+            with self.assertRaises(DeterministicRouterError):
+                parse_accession_xbrl_source(raw_bytes=bytearray(raw))
+
+
+class OfflineBenchmarkBoundaryTest(unittest.TestCase):
+    """CLI failures are boundary tests, never synthetic performance evidence."""
+
+    def test_benchmark_output_cannot_overwrite_active_publication(self):
+        target = REPO_ROOT / "outputs/active_publication.json"
+        before = target.read_bytes()
+        command = [sys.executable, str(REPO_ROOT / "tools/benchmark_r4_offline_session.py"),
+                   "--benchmark", "--requirement-id", "issue_28_v2",
+                   "--requirement-closure", "sha256:" + "0" * 64, "--output", str(target)]
+        completed = subprocess.run(command, cwd=REPO_ROOT, capture_output=True, text=True,
+            env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}, timeout=10, check=False)
+        self.assertNotEqual(0, completed.returncode)
+        self.assertIn("must not overwrite runtime or authority paths", completed.stderr)
+        self.assertEqual(before, target.read_bytes())
+
+    def test_forged_workload_is_rejected_before_fixture_or_source_work(self):
+        with tempfile.TemporaryDirectory() as directory:
+            temporary = Path(directory)
+            workload = temporary / "forged-workload.json"
+            workload.write_text('{"workload_id":"sha256:' + "0" * 64 + '"}')
+            output = temporary / "result.json"
+            command = [sys.executable, str(REPO_ROOT / "tools/benchmark_r4_offline_session.py"),
+                       "--worker-mode", "optimized", "--workload", str(workload), "--output", str(output)]
+            completed = subprocess.run(command, cwd=REPO_ROOT, capture_output=True, text=True,
+                env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"}, timeout=10, check=False)
+            self.assertNotEqual(0, completed.returncode)
+            self.assertIn("Benchmark workload identity differs", completed.stderr)
+            self.assertNotIn("preparing_source", completed.stdout)
+            self.assertFalse(output.exists())
+
+
+class RecordedOfflineBenchmarkTest(unittest.TestCase):
+    """Check recorded measurement integrity, not rerun or manufacture timings."""
+
+    def test_complete_recorded_gate_and_current_inputs_remain_bound(self):
+        receipt = strict_json_file(path=REPO_ROOT / "docs/r4_offline/performance_session_benchmark.json")
+        self.assertEqual(receipt["benchmark_receipt_id"],
+            content_hash(value={k: v for k, v in receipt.items() if k != "benchmark_receipt_id"}))
+        self.assertEqual("PASSED", receipt["status"])
+        self.assertEqual(1, receipt["final_independent_disk_replay_executions"])
+        self.assertEqual([0, 0, 0], receipt["provider_paid_sec_calls"])
+        reports = receipt["reports"]
+        self.assertEqual({"baseline", "optimized", "independent-replay"}, set(reports))
+        self.assertEqual(3, len({r["worker_pid"] for r in reports.values()}))
+        self.assertEqual(1, len({content_hash(value=r["interpreter"]) for r in reports.values()}))
+        self.assertEqual(reports["baseline"]["results"], reports["optimized"]["results"])
+        self.assertEqual(reports["baseline"]["results"], reports["independent-replay"]["results"])
+        for report in reports.values():
+            self.assertEqual(16, len(report["results"]))
+            self.assertEqual("PASSED", report["status"])
+            self.assertEqual([0, 0, 0], report["provider_paid_sec_calls"])
+            self.assertEqual(content_hash(value=report["results"]), report["semantic_result_set_id"])
+        final = Decimal(reports["independent-replay"]["process_wall_seconds"])
+        baseline = Decimal(reports["baseline"]["process_wall_seconds"]) + final
+        optimized = Decimal(reports["optimized"]["process_wall_seconds"]) + final
+        self.assertEqual(baseline, Decimal(receipt["baseline_aggregate_seconds"]))
+        self.assertEqual(optimized, Decimal(receipt["optimized_aggregate_seconds"]))
+        self.assertEqual(baseline / optimized, Decimal(receipt["aggregate_improvement_factor"]))
+        self.assertGreaterEqual(baseline / optimized, 10)
+        self.assertEqual(96, reports["baseline"]["operation_counts"]["portable_prior_run_loads"])
+        for mode in ("optimized", "independent-replay"):
+            report = reports[mode]
+            self.assertEqual(6, report["operation_counts"]["portable_prior_run_loads"])
+            self.assertEqual(4, len(report["source_sessions"]))
+            for session in report["source_sessions"]:
+                for key in ("source_materializations", "derived_asset_builds", "derived_asset_json_decodes",
+                            "requirement_builds", "revision_requirement_builds", "parent_authority_builds"):
+                    self.assertEqual(1, session["preparation_counts"][key])
+                for child in session["children"]:
+                    for key in ("source_materializations", "derived_asset_builds", "derived_asset_json_decodes",
+                                "requirement_builds", "revision_requirement_builds", "parent_authority_builds",
+                                "portable_prior_run_loads", "xbrl_fact_parses", "xbrl_context_parses",
+                                "provider_calls", "paid_model_calls", "sec_calls"):
+                        self.assertEqual(0, child["operation_counts"][key], (mode, child["fixture_id"], key))
+        self.assertEqual(reports["optimized"]["operation_counts"], reports["independent-replay"]["operation_counts"])
+        for binding in receipt["workload"]["input_bindings"]:
+            data = resolve_repository_file(repo_root=REPO_ROOT, repo_relative_path=binding["path"]).read_bytes()
+            self.assertEqual(binding["size"], len(data), binding["path"])
+            self.assertEqual(binding["sha256"], sha256_bytes(content=data), binding["path"])
+
+    def test_streamed_progress_contains_the_exact_measured_case_set_and_times(self):
+        receipt = strict_json_file(path=REPO_ROOT / "docs/r4_offline/performance_session_benchmark.json")
+        path = REPO_ROOT / "docs/r4_offline/performance_session_benchmark.stdout.jsonl"
+        rows = [json.loads(line) for line in path.read_text().splitlines()]
+        expected_ids = {r["fixture_id"] for r in receipt["workload"]["cases"]}
+        for mode, report in receipt["reports"].items():
+            completed = [row for row in rows if row.get("mode") == mode and "completed_fixture" in row]
+            self.assertEqual(16, len(completed))
+            self.assertEqual(expected_ids, {row["completed_fixture"] for row in completed})
+            recorded = report["baseline_children"] if mode == "baseline" else [
+                child for session in report["source_sessions"] for child in session["children"]]
+            expected_times = {child["fixture_id"]: child["wall_seconds"] for child in recorded}
+            self.assertEqual(expected_times,
+                {row["completed_fixture"]: row["fixture_wall_seconds"] for row in completed})
+        self.assertEqual(receipt["aggregate_improvement_factor"], rows[-1]["factor"])
+        self.assertEqual(receipt["status"], rows[-1]["status"])

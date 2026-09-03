@@ -1,4 +1,10 @@
-# A03 alternate-layout scope gate
+# Historical A03 alternate-layout scope gate
+
+This records the genuine pre-approval failure. Owner comment
+[5524746204](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524746204)
+subsequently approved only the A03 same-source scope and Citi disclosed-quarter
+exception. The original blocker JSON remains byte-identical; it is not rewritten
+as a success. Current positive evidence is in [the source/task audit](current_source_task_audit.md).
 
 Status: `NO_AUTO_CERTIFIED_ALTERNATE_UNDER_CURRENT_A03_SCOPE`.
 This is a new-source audit, not qualification credit or an execution grant.

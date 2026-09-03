@@ -1,0 +1,80 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_a11_alternate",
+  "metric_id": "A11",
+  "source_id": "bank_of_america_fy2025_10k",
+  "task_contract_id": "r4_assets_under_management_table_v2",
+  "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+  "artifact_kind": "SCOPED_EXTRACTION",
+  "period": "FY2025",
+  "target": {
+    "table_order": 68,
+    "row_index": 35,
+    "column_index": 16
+  },
+  "reference": {
+    "status": "AUDITED_ALTERNATE_REFERENCE",
+    "value": "2177708000000",
+    "unit": "USD",
+    "scope": {
+      "asset_scope": "total_assets_under_management"
+    },
+    "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value."
+  },
+  "scope_labels": [
+    {
+      "coordinate": {
+        "table_order": 68,
+        "row_index": 35,
+        "column_index": 0
+      },
+      "claims": {
+        "asset_scope": "Total assets under management"
+      }
+    }
+  ],
+  "numeric_locator": {
+    "table_order": 68,
+    "row_index": 5,
+    "column_index": 0
+  },
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [
+    {
+      "table_order": 68,
+      "row_index": 21,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 68,
+      "row_index": 30,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 68,
+      "row_index": 35,
+      "disposition": "REFERENCE_ONLY"
+    }
+  ],
+  "structured_route_input": null,
+  "windows": [
+    {
+      "start_order": 68,
+      "end_order": 68
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path_id": "A",
+      "method": "NAMED_SECTION_AND_DOCUMENT_STRUCTURE",
+      "evidence": "Original GWIM table_000069 r35c16=2,177,708 under Total assets under management, end of year and Dollars in millions; preserve complete source geometry."
+    },
+    {
+      "path_id": "B",
+      "method": "INDEPENDENT_REFERENCE_AND_WHOLE_DOCUMENT_RECONCILIATION",
+      "evidence": "Independent same-table AUM roll-forward ending row 21 duplicates 2,177,708; beginning row 30 is 1,882,211 and total client balances 4,751,394 are different measures. Alternate value is 2,177,708,000,000 USD, not a JPM legacy anchor."
+    }
+  ]
+}

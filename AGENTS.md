@@ -62,9 +62,9 @@ requirements/issue_28_v1/CONTRACT.md（successor outcome/boundary）
 → SOP.md「vNext operator 与正式 Cutover」
 ```
 
-Issue #28 / `issue_28_v1` 是待激活的 R4–Rf successor authority；PR #29保持Draft，旧被拒head/closure不是审批候选。版本注册表选择保留的V1/V2 engine，同Issue可以有v2等revision，同kind可以按ratchet拥有多个invariant实例。Decision Register是policy-content authority，transfer按parent每个叶级语义义务唯一分类。旧RUN/Publication保留hash-only字节，旧ISSUE_15_RELEASE_PLAN保留原id/closure；三个SUCCESSOR_* subtype则强制独立generation和id/closure/hashes。historical parent只从记录hashes与冻结snapshot重建，不跟随current root漂移。policy provenance、closure验证、exact-head activation与live授权分离；PR #22 archive无credit/reuse，PR-A不实现R4、不创建activation或live grant。
+Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；旧被拒head/closure永不恢复为审批候选。当前PR #30的`issue_28_v2`是未激活的离线policy revision：在上述阅读链前先读v2五文件和`docs/r4_offline/README.md`，不得把代码/测试完成当成exact-head activation。版本注册表保留V1/V2/V3 engine，Requirement revision与engine generation是不同编号；同kind可按ratchet拥有多个实例。Decision Register是policy-content authority，transfer按parent叶级义务唯一分类。旧RUN/Publication保留hash-only字节，旧ISSUE_15_RELEASE_PLAN保留原id/closure；三个SUCCESSOR_* subtype强制generation与id/closure/hashes。historical parent只从记录hashes与冻结snapshot重建，不跟随current root漂移。PR22 archive无credit/reuse；两份SEC acquisition已完成且quota耗尽，provider/paid/live/publication仍未授权，PR30不得自动Ready/merge或启动PR-C。
 
-当前lodging authority在owner批准的compact prompt、same-target-table八字段locator、Marriott FY2024 second layout、Marriott FY2023 post-freeze holdout和Marriott FY2025 fresh source上冻结。Occupancy与RevPAR context均由各自provider-reported actual usage证明不超过200000；qualification没有复用measurement response。SECOND_LAYOUT、POST_FREEZE_HOLDOUT和三个FRESH ordinals按ordinal-major顺序形成十个独立provider execution，全部Evidence PASS、D-06 SYSTEM APPROVE、Result PUBLISHED、validation PASSED且usage terminal通过。任何新exact-head push不会重签这些已提交的无关family证据；financial仍停在Linux hard-RSS full-materialization benchmark之前。
+当前lodging authority在owner批准的compact prompt、same-target-table八字段locator、Marriott FY2024 second layout、Marriott FY2023 post-freeze holdout和Marriott FY2025 fresh source上冻结。Occupancy与RevPAR context均由各自provider-reported actual usage证明不超过200000；qualification没有复用measurement response。SECOND_LAYOUT、POST_FREEZE_HOLDOUT和三个FRESH ordinals按ordinal-major顺序形成十个独立provider execution，全部Evidence PASS、D-06 SYSTEM APPROVE、Result PUBLISHED、validation PASSED且usage terminal通过。任何新exact-head push不会重签这些已提交的无关family证据。PR-B的JPM/BAC/Citi已通过同一生产parser、512MiB/no-swap/network-none测量，max_total_cells仅提高至210000；这只解除本地materialization阻断，不授予financial live资格。
 
 代码已具备同一 recorded/live operator、D-06 optional HUMAN/SYSTEM audited Review、固定 DeepSeek/SEC 边界、资格门、legacy migrated producer 退出、PublicationView consumers、正式 publication/rollback primitives 与 new/rollback/restore 终态编排。Issue #15 R1 已只读导入 verified legacy A，以 immutable SEC attempts 冻结十公司 B01/B03 successor B，并真实完成 A→B、rollback→A、restore→B。R2 又以 commit-bound immutable SEC blobs、完整submissions current/history shards和request-ledger绑定的acquisition receipt补集累计加入其余14个DET_ONLY与C01/E01–E05。R3在R2上新增lodging B10/B11：重验十个qualification terminals，为两个APPLICABLE fresh坐标生成模型Result，并为其余18个坐标生成零AI`N_A_STRUCTURAL` Runs。当前active为R3的24指标/240个累计vNext Result keys/327行public matrix，previous精确为R2；发布期间还真实完成R3→R2 rollback→修正版R3。该事实仍不证明financial/text、39指标最终Cutover或full acceptance。
 
@@ -82,6 +82,12 @@ Issue #28 / `issue_28_v1` 是待激活的 R4–Rf successor authority；PR #29�
   B0 is not freeze/cycle/Stage-A or live authority.
 - `docs/evidence/issue_28_transition_activation.json`: persisted exact PR #29
   merge-governance receipt, not a provider/SEC execution grant.
+- `requirements/issue_28_v2/`, `scripts/vnext/requirement_profile_v3.py`: pending
+  A03/A12 composite, A13 international net revenue and bounded parser policy;
+  retained v1 snapshot/V1/V2 engines must stay byte-identical.
+- `config/r4_fixture_matrix_v1.json`, `catalog/r4_v2/`,
+  `scripts/vnext/r4_offline_qualification.py`: exact six-task source-specific
+  offline corpus and native structured/Evidence replay, not a live cycle.
 
 ### 核心治理与工作流文档
 

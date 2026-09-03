@@ -1,0 +1,73 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_a03_production",
+  "metric_id": "A03",
+  "source_id": "jpmorgan_fy2025_10k",
+  "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+  "fixture_class": "POSITIVE_PRODUCTION",
+  "artifact_kind": "SCOPED_EXTRACTION",
+  "period": "FY2025",
+  "target": {
+    "table_order": 64,
+    "row_index": 28,
+    "column_index": 6
+  },
+  "reference": {
+    "status": "INDEPENDENT_LEGACY_ANCHOR",
+    "value": "1.11",
+    "unit": "ratio",
+    "scope": {
+      "entity_scope": "firm",
+      "aggregation": "average"
+    },
+    "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors."
+  },
+  "scope_labels": [
+    {
+      "coordinate": {
+        "table_order": 64,
+        "row_index": 28,
+        "column_index": 0
+      },
+      "claims": {
+        "entity_scope": "Firm",
+        "aggregation": "average"
+      }
+    }
+  ],
+  "numeric_locator": null,
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [
+    {
+      "table_order": 64,
+      "row_index": 28,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 64,
+      "row_index": 29,
+      "disposition": "DIFFERENT_SCOPE"
+    }
+  ],
+  "structured_route_input": null,
+  "windows": [
+    {
+      "start_order": 64,
+      "end_order": 64
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path_id": "A",
+      "method": "NAMED_SECTION_AND_DOCUMENT_STRUCTURE",
+      "evidence": "Document-order liquidity disclosure: original table_000065, row 28 Firm LCR (average), 2025 column 6, exact value 111; the subsidiary row 29 is a different entity scope."
+    },
+    {
+      "path_id": "B",
+      "method": "INDEPENDENT_REFERENCE_AND_WHOLE_DOCUMENT_RECONCILIATION",
+      "evidence": "Independent frozen JPM legacy anchor 1.11 reconciles 111 percent; whole-document LCR row census separates Firm and bank-subsidiary rows and preserves 2024/2023 columns as different periods."
+    }
+  ]
+}

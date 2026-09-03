@@ -32,12 +32,21 @@
         "ninety_five_percent": [
           "95%",
           "95 percent"
+        ],
+        "ninety_nine_percent": [
+          "99%",
+          "99 percent"
         ]
       },
       "holding_period": {
         "one_day": [
           "one day",
           "one-day"
+        ],
+        "ten_days": [
+          "10 days",
+          "ten days",
+          "10-day"
         ]
       }
     },
@@ -52,6 +61,7 @@
   },
   "forbidden_confusions": [
     "regulatory VaR",
+    "regulatory capital calculations",
     "maximum"
   ],
   "review_policy": "human_optional_system_audited_r5",

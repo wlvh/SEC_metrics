@@ -1,11 +1,12 @@
-# PR-B owner escalation — A03 alternate scope
+# Historical PR-B owner escalation — resolved by policy comments
 
 The earlier A12/A13/resource requests below are superseded by the owner's
 approved [policy comment](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524085182).
-Both planned SEC acquisitions now succeeded. The newly evidenced, unresolved
-request is [A03 alternate scope and averaging period](a03_alternate_scope_blocker.md):
-the A12-only source-span grant cannot be extended to A03 without owner policy.
-No A03 proof or period rule has been loosened. PR-B remains Draft and incomplete.
+Both planned SEC acquisitions succeeded. The later
+[A03 scope and disclosed-quarter approval](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524746204)
+also resolved the separately evidenced A03 request below. The unactivated v2
+proposal binds both exact comments; neither is an exact-head merge approval
+or live grant. See [current summary](README.md) for implementation results.
 
 ## Previous request (historical, before that owner decision)
 

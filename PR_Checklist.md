@@ -109,7 +109,7 @@ root CSV/报告是active bundle compatibility mirrors；PR body必须说明activ
 gh pr create --title "<标题>" --body-file PR_BODY.md --head <feature-branch> --base main
 ```
 
-成功后返回真实 PR URL，并明确 draft/ready 状态。Issue #28 PR-A在exact-head/Requirement-closure owner approval前只能保持Draft；Issue #15/#24在PR-A合并前保持OPEN。冻结Issue #15 snapshot不得修改，successor policy只进入`issue_28_v1` Decision records。用户未要求PR时本节完全不执行。
+成功后返回真实 PR URL，并明确 draft/ready 状态。Issue #28 PR-A已合并，Issue #15/#24仅按SUPERSEDED关闭；当前PR-B保持Draft。新policy只进入显式supersedes前一closure的同Issue revision提案，冻结的Issue #15和issue_28_v1 bytes不得修改。policy-content评论不是exact-head/Requirement-closure activation；PR-B在独立审核与owner activation前不得Ready/merge，live授权又是后续独立阶段。用户未要求PR时本节完全不执行。
 
 ## 10. 最终核对
 

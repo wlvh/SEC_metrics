@@ -30,7 +30,8 @@
     "exact_enum_aliases": {
       "entity_scope": {
         "firm": [
-          "Firm"
+          "Firm",
+          "Citigroup’s consolidated LCR"
         ]
       },
       "aggregation": {

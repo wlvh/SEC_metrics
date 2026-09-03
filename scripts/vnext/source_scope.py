@@ -13,7 +13,8 @@ from typing import Dict, Mapping, Sequence
 
 from .canonical import canonical_json_bytes, content_hash
 from .canonical import sha256_bytes, strict_json_loads
-from .evidence import check_evidence, _verify_payload
+from .evidence import check_evidence, _verify_payload, _plain_owned
+from .evidence import OfflineEvidenceContext, check_evidence_in_offline_session
 from .reader import validate_reader_output
 from .reader_input import verify_reader_table_set
 from .records import EXPLICIT_ARTIFACT_GENERATION, validate_record
@@ -43,7 +44,7 @@ SCOPE_FIELDS = frozenset({
     "estimated_tokens", "out_of_window_candidates", "table_audit",
     "material_layout_proof", "navigation_paths", "qualification_credit",
 })
-SCOPE_V2_FIELDS = SCOPE_FIELDS | frozenset({"source_bound_proof", "task_contract_generation"})
+SCOPE_V2_FIELDS = SCOPE_FIELDS | frozenset({"source_bound_proof", "task_contract_generation", "task_period"})
 AUDIT_FIELDS = frozenset({
     "fixture_id", "fixture_class", "windows", "target_locator", "reference",
     "synthetic_candidate", "out_of_window_candidates", "table_audit",
@@ -69,7 +70,7 @@ CLOSED_CANDIDATE_DISPOSITIONS = frozenset({
 })
 POSITIVE_REFERENCE_STATUSES = frozenset({
     "INDEPENDENT_LEGACY_ANCHOR", "NO_INDEPENDENT_LEGACY_ANCHOR",
-    "SYNTHETIC_INTERFACE_REFERENCE",
+    "SYNTHETIC_INTERFACE_REFERENCE", "AUDITED_ALTERNATE_REFERENCE",
 })
 
 
@@ -161,8 +162,8 @@ def scope_tables(*, windows: Sequence[Mapping[str, int]],
     if type(windows) is not list or not 1 <= len(windows) <= 2:
         raise SourceScopeError("A scope requires one or two continuous windows")
     tables = full_derived_asset["tables"]
-    if (type(tables) is not list or not tables
-            or any(type(table) is not dict or type(table.get("order")) is not int
+    if (not isinstance(tables, (list, tuple)) or not tables
+            or any(not isinstance(table, Mapping) or type(table.get("order")) is not int
                    or table["order"] != index for index, table in enumerate(tables))
             or len({table.get("table_id") for table in tables}) != len(tables)):
         raise SourceScopeError("Full DerivedAsset original table order is invalid")
@@ -181,13 +182,15 @@ def scope_tables(*, windows: Sequence[Mapping[str, int]],
 
 
 def _validate_audit_closure(*, manifest: Mapping, full_derived_asset: Mapping,
-                            source_reference: Mapping, positive: bool) -> None:
+                            source_reference: Mapping, positive: bool,
+                            offline_context=None) -> None:
     """Close every explicitly audited candidate, including in-window duplicates.
 
     This is an integrity check over source-specific audit facts, not a generic
     discovery algorithm or an alternative economic-value verifier. The parent
     fixture authority must independently pin the complete audit's content ID.
     """
+    resolver = resolve_cell if offline_context is None else offline_context.resolve_cell
     table_audit = manifest["table_audit"]
     if type(table_audit) is not list or len(table_audit) != len(full_derived_asset["tables"]):
         raise SourceScopeError("Full document audit census is not exact")
@@ -207,7 +210,7 @@ def _validate_audit_closure(*, manifest: Mapping, full_derived_asset: Mapping,
             if item["disposition"] not in CLOSED_CANDIDATE_DISPOSITIONS or item["unresolved"] is not False:
                 raise SourceScopeError("Candidate remains unresolved or has no typed disposition")
             _text(item["evidence"], "Candidate disposition evidence")
-            resolve_cell(derived_asset=full_derived_asset, locator=item["locator"])
+            resolver(derived_asset=full_derived_asset, locator=item["locator"])
             if item["locator"]["table_id"] != table["table_id"]:
                 raise SourceScopeError("Candidate census names a different table")
             locator_id = content_hash(value=item["locator"])
@@ -238,6 +241,9 @@ def _validate_audit_closure(*, manifest: Mapping, full_derived_asset: Mapping,
     if positive:
         if reference["status"] not in POSITIVE_REFERENCE_STATUSES:
             raise SourceScopeError("Positive reference status is invalid")
+        if reference["status"] == "AUDITED_ALTERNATE_REFERENCE" and (
+                manifest["schema_version"] != 2 or manifest["fixture_class"] != "POSITIVE_ALTERNATE_LAYOUT"):
+            raise SourceScopeError("Audited alternate reference is not an explicit successor alternate")
         for field in ("value", "unit", "period"):
             _text(reference[field], "Reference " + field)
     elif (reference["status"] != "NOT_APPLICABLE" or reference["scope"] != {}
@@ -291,13 +297,14 @@ def _native_evidence(*, candidate: object, full_derived_asset: Mapping,
                      source_reference: Mapping, task_contract: Mapping,
                      source_bound_proof: Mapping = None, requirement: Mapping = None,
                      raw_blob: Mapping = None, source_bytes: bytes = None,
-                     repo_root: Path = None) -> object:
+                     repo_root: Path = None, offline_context=None) -> object:
     if evidence_authority_payload.get("task_contract") != task_contract:
         raise SourceScopeError("Full Evidence task contract differs")
     if candidate is None:
-        _verify_payload(reader_manifest=reader_manifest,
-                        reader_payload_body=evidence_authority_payload,
-                        derived_asset=full_derived_asset)
+        if offline_context is None:
+            _verify_payload(reader_manifest=reader_manifest,
+                            reader_payload_body=evidence_authority_payload,
+                            derived_asset=full_derived_asset)
         return None
     validate_record(record=candidate)
     if candidate["disclosure_group"] != task_contract["disclosure_group"]:
@@ -332,13 +339,17 @@ def _native_evidence(*, candidate: object, full_derived_asset: Mapping,
             expected_proof_id=source_bound_proof["source_bound_proof_id"],
             requirement=requirement, repo_root=root, source_bytes=actual_source,
             raw_blob=raw_blob, source_reference=source_reference,
-            full_derived_asset=full_derived_asset, task_contract=task_contract)
+            full_derived_asset=full_derived_asset, task_contract=task_contract,
+            _offline_context=offline_context)
         context = {"proof": source_bound_proof, "expected_proof_id": source_bound_proof["source_bound_proof_id"],
             "requirement": requirement, "repo_root": root, "source_bytes": actual_source,
             "raw_blob": raw_blob, "task_contract": task_contract}
     if any(native[key] != value for key, value in candidate.items()
            if key != "assistant_output_sha256"):
         raise SourceScopeError("Synthetic Candidate differs from native Reader semantics")
+    if offline_context is not None:
+        return check_evidence_in_offline_session(context=offline_context, candidate=candidate,
+            task_contract_id=task_contract["task_contract_id"], source_bound_context=context)
     return check_evidence(
         candidate=candidate, derived_asset=full_derived_asset,
         reader_manifest=reader_manifest,
@@ -370,6 +381,7 @@ def build_source_scope_manifest(
     evidence_authority_payload: Mapping, audit: Mapping, repo_root: Path = None,
     scope_schema_version: int = 1, source_bound_proof: Mapping = None,
     source_bytes: bytes = None,
+    _offline_context=None,
 ) -> Dict[str, object]:
     """Certify explicit audit coordinates using the existing Evidence Checker.
 
@@ -390,6 +402,7 @@ def build_source_scope_manifest(
         source_reference=source_reference, task_contract=task_contract,
         source_bound_proof=source_bound_proof, requirement=requirement,
         raw_blob=raw_blob, source_bytes=source_bytes, repo_root=repo_root,
+        offline_context=_offline_context,
     )
     body = {
         "record_type": "SOURCE_SCOPE_MANIFEST", "schema_version": scope_schema_version,
@@ -410,13 +423,14 @@ def build_source_scope_manifest(
         "check_evidence_result": evidence,
         "estimated_tokens": {
             "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
-            "value": len(canonical_json_bytes(value=selected)),
+            "value": len(canonical_json_bytes(value=_plain_owned(selected) if _offline_context is not None else selected)),
             "actual_provider_usage": "NOT_RUN",
         },
         "qualification_credit": "NONE_OFFLINE_SYNTHETIC",
     }
     if scope_schema_version == 2:
-        body.update(task_contract_generation="R4_TASK_CONTRACTS_V2", source_bound_proof=source_bound_proof)
+        body.update(task_contract_generation="R4_TASK_CONTRACTS_V2", source_bound_proof=source_bound_proof,
+                    task_period=audit["reference"]["period"])
     record = {**body, "source_scope_manifest_id": content_hash(value=body)}
     return validate_source_scope_manifest(
         manifest=record, expected_manifest_id=record["source_scope_manifest_id"],
@@ -426,6 +440,7 @@ def build_source_scope_manifest(
         evidence_authority_payload=evidence_authority_payload,
         repo_root=repo_root,
         source_bytes=source_bytes,
+        _offline_context=_offline_context,
     )
 
 
@@ -434,6 +449,7 @@ def validate_source_scope_manifest(
     raw_blob: Mapping, source_reference: Mapping, full_derived_asset: Mapping,
     reader_manifest: Mapping, task_contract: Mapping,
     evidence_authority_payload: Mapping, repo_root: Path = None, source_bytes: bytes = None,
+    _offline_context=None,
 ) -> Dict[str, object]:
     """Replay a pinned scope; re-signing a tampered record cannot change the pin."""
     version = manifest.get("schema_version") if type(manifest) is dict else None
@@ -447,11 +463,26 @@ def validate_source_scope_manifest(
         raise SourceScopeError("Scope content identity differs from fixture authority")
     if version == 2 and manifest["task_contract_generation"] != "R4_TASK_CONTRACTS_V2":
         raise SourceScopeError("Successor scope task generation is not explicit")
+    if version == 2 and manifest["task_period"] != manifest["reference"]["period"]:
+        raise SourceScopeError("Successor task period differs from the pinned certificate")
+    if version == 2 and manifest["source_bound_proof"] is not None:
+        period = manifest["source_bound_proof"].get("disclosed_period")
+        if period is not None and period["fixture_class"] != manifest["fixture_class"]:
+            raise SourceScopeError("Disclosed-quarter exception cannot be relabeled as a production fixture")
     _hash(expected_manifest_id, "Scope manifest")
     validate_scope_requirement_identity(artifact=manifest, requirement=requirement)
-    for artifact, record_type in ((raw_blob, "RAW_BLOB"), (source_reference, "SOURCE_REFERENCE"),
-                                   (full_derived_asset, "DERIVED_ASSET"),
-                                   (reader_manifest, "READER_INPUT_MANIFEST")):
+    if _offline_context is not None:
+        if type(_offline_context) is not OfflineEvidenceContext:
+            raise SourceScopeError("Scope context type is not exact")
+        _offline_context._source_bound_inputs(requirement=requirement, raw_blob=raw_blob,
+            source_reference=source_reference, source_bytes=source_bytes,
+            derived_asset=full_derived_asset, task_contract=task_contract)
+        _offline_context._owns(derived_asset=full_derived_asset, reader_manifest=reader_manifest,
+                               reader_payload_body=evidence_authority_payload)
+    artifacts = [(raw_blob, "RAW_BLOB"), (source_reference, "SOURCE_REFERENCE")]
+    if _offline_context is None:
+        artifacts += [(full_derived_asset, "DERIVED_ASSET"), (reader_manifest, "READER_INPUT_MANIFEST")]
+    for artifact, record_type in artifacts:
         validate_record(record=artifact)
         if artifact["record_type"] != record_type:
             raise SourceScopeError("Scope local Evidence authority subtype differs")
@@ -460,9 +491,10 @@ def validate_source_scope_manifest(
             or task_contract["scope_contract_hash"] != scope_contract_hash(contract=task_contract["scope_contract"])
             or evidence_authority_payload.get("task_contract") != task_contract):
         raise SourceScopeError("Full Evidence task contract differs")
-    for table in full_derived_asset["tables"]:
-        _validate_expanded_table(table=table)
-    verify_reader_table_set(manifest=reader_manifest, derived_asset=full_derived_asset)
+    if _offline_context is None:
+        for table in full_derived_asset["tables"]:
+            _validate_expanded_table(table=table)
+        verify_reader_table_set(manifest=reader_manifest, derived_asset=full_derived_asset)
     bindings = {
         "artifact_requirement_generation": requirement["artifact_requirement_generation"],
         "requirement_id": requirement["requirement_id"],
@@ -479,8 +511,8 @@ def validate_source_scope_manifest(
     if any(manifest[k] != value for k, value in bindings.items()):
         raise SourceScopeError("Scope source/asset/task/Requirement binding differs")
     if (source_reference["raw_asset_id"] != raw_blob["raw_asset_id"]
-            or full_derived_asset["parent_raw_asset_ids"] != [raw_blob["raw_asset_id"]]
-            or reader_manifest["source_reference_ids"] != [source_reference["source_reference_id"]]):
+            or list(full_derived_asset["parent_raw_asset_ids"]) != [raw_blob["raw_asset_id"]]
+            or list(reader_manifest["source_reference_ids"]) != [source_reference["source_reference_id"]]):
         raise SourceScopeError("Scope full source authority differs")
     ratchet = policy_choice(requirement=requirement, kind="RATCHET_SCOPE")
     source_policy = policy_choice(requirement=requirement, kind="SOURCE_SCOPE_POLICY")
@@ -499,7 +531,7 @@ def validate_source_scope_manifest(
             raise SourceScopeError("Scope table exact set/order/hash differs")
     expected_estimate = {
         "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
-        "value": len(canonical_json_bytes(value=selected)),
+        "value": len(canonical_json_bytes(value=_plain_owned(selected) if _offline_context is not None else selected)),
         "actual_provider_usage": "NOT_RUN",
     }
     if manifest["estimated_tokens"] != expected_estimate:
@@ -507,25 +539,30 @@ def validate_source_scope_manifest(
     positive = manifest["fixture_class"] in source_policy["positive_fixture_classes"]
     if positive:
         locator = manifest["target_locator"]
-        resolve_cell(derived_asset=full_derived_asset, locator=locator)
+        resolver = resolve_cell if _offline_context is None else _offline_context.resolve_cell
+        resolver(derived_asset=full_derived_asset, locator=locator)
         if locator["table_id"] not in manifest["ordered_table_ids"]:
             raise SourceScopeError("Positive target is outside the certified windows")
     elif manifest["target_locator"] is not None or manifest["synthetic_candidate"] is not None:
         raise SourceScopeError("Zero-call fixture cannot retain a certified Candidate/target")
     _validate_audit_closure(manifest=manifest, full_derived_asset=full_derived_asset,
-                            source_reference=source_reference, positive=positive)
+                            source_reference=source_reference, positive=positive, offline_context=_offline_context)
     expected_evidence = _native_evidence(
         candidate=manifest["synthetic_candidate"], full_derived_asset=full_derived_asset,
         reader_manifest=reader_manifest, evidence_authority_payload=evidence_authority_payload,
         source_reference=source_reference, task_contract=task_contract,
         source_bound_proof=manifest.get("source_bound_proof"), requirement=requirement,
         raw_blob=raw_blob, source_bytes=source_bytes, repo_root=repo_root,
+        offline_context=_offline_context,
     )
     if manifest["check_evidence_result"] != expected_evidence:
         raise SourceScopeError("Native Evidence replay differs")
     if positive and (expected_evidence is None or expected_evidence["status"] != "PASS"
                      or expected_evidence["system_approval_eligible"] is not True):
         raise SourceScopeError("Positive fixture lacks auto-certified Evidence PASS")
+    if positive and any(expected_evidence["normalized_scope"].get(key) != value
+                        for key, value in task_contract["required_claims"].items()):
+        raise SourceScopeError("Positive fixture does not satisfy the exact task-required scope")
     if positive:
         claims = manifest["synthetic_candidate"]["selected"]
         if (list(claims) != task_contract["required_roles"]

@@ -1,4 +1,8 @@
-# R4 source audit: blocked before fixture qualification
+# Historical R4 source audit: before fixture policy approval
+
+This is the preserved pre-acquisition diagnostic, not current PR-B status.
+See [current source/task audit](current_source_task_audit.md) and
+[current summary](README.md) for the owner-approved revision and actual corpus.
 
 This is offline diagnostic evidence, not a qualified fixture matrix, production
 freeze, Stage-A, cycle, live grant or R4 publication. No archived PR #22 response

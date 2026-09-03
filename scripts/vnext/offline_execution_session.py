@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import importlib
+import json
 from pathlib import Path
 import platform
 import resource
@@ -39,6 +40,7 @@ class OfflineOperationObserver:
         ("vnext.table_grid", "build_table_grid"): "derived_asset_builds",
         ("vnext.requirements", "load_requirement_snapshot"): "requirement_load_calls",
         ("vnext.requirement_profile_v1", "_load_profile_requirement_snapshot"): "requirement_builds",
+        ("vnext.requirement_profile_v3", "_load_profile_requirement_snapshot"): "revision_requirement_builds",
         ("vnext.requirement_profile_v1", "_recorded_parent"): "parent_authority_builds",
         ("vnext.requirements", "_load_issue_15_snapshot"): "legacy_parent_authority_builds",
         ("vnext.canonical", "canonical_json_bytes"): "canonicalizations",
@@ -49,19 +51,33 @@ class OfflineOperationObserver:
         ("vnext.evidence", "check_evidence"): "evidence_checks",
         ("vnext.table_payload", "encode_compact_table_payload"): "full_table_encodes",
         ("vnext.table_payload", "decode_compact_table_payload"): "full_table_decodes",
+        ("vnext.deterministic_router", "_adapt_xbrl"): "native_xbrl_adaptations",
+        ("vnext.deterministic_router", "adapt_accession_xbrl_from_parsed"): "native_xbrl_reevaluations",
+        ("vnext.deterministic_router", "_claims_from_xbrl_parts"): "native_xbrl_claim_evaluations",
+        ("vnext.r4_structured_sources", "build_pinned_fixture_source_set"): "fixture_source_set_builds",
+        ("vnext.composite_scope", "index_source_structure"): "source_structure_scans",
         ("vnext.ai_adapter", "_open_provider_request"): "provider_calls",
         ("sec_http", "urlopen"): "sec_calls",
+    }
+    _PARSER_CLASSES = {
+        ("vnext.deterministic_router", "_XbrlFactParser"): "xbrl_fact_parses",
+        ("vnext.deterministic_router", "_XbrlContextParser"): "xbrl_context_parses",
+        ("vnext.composite_scope", "_SourceStructure"): "source_structure_parses",
     }
     _active_observer = None
 
     def __init__(self) -> None:
         self.counts = {key: 0 for key in set(self._FUNCTIONS.values())}
-        self.counts.update(source_materializations=0, paid_model_calls=0)
+        self.counts.update(source_materializations=0, paid_model_calls=0, derived_asset_json_decodes=0)
+        self.counts.update({label: 0 for label in self._PARSER_CLASSES.values()})
         self._code_keys = {}
         self._active = False
         self.instrumentation_backend = "NOT_STARTED"
         self._monitoring_codes = []
         self.source_censuses = []
+        self._shared_parent = None
+        self._shared_before = None
+        self._shared_census_start = 0
 
     def _capture_parser(self, parser):
         if type(parser).__name__ != "_AllTablesParser":
@@ -73,6 +89,10 @@ class OfflineOperationObserver:
         })
 
     def _observe(self, frame, event, argument):
+        if (event == "return" and frame.f_globals.get("__name__") == "json"
+                and frame.f_code.co_name == "loads" and isinstance(argument, dict)
+                and argument.get("record_type") == "DERIVED_ASSET"):
+            self.counts["derived_asset_json_decodes"] += 1
         if event == "return" and frame.f_globals.get("__name__") == "vnext.table_grid" and frame.f_code.co_name == "close":
             self._capture_parser(frame.f_locals.get("self"))
         if event != "call":
@@ -84,6 +104,8 @@ class OfflineOperationObserver:
             if module == "vnext.table_grid" and code.co_name == "__init__":
                 if type(frame.f_locals.get("self")).__name__ == "_AllTablesParser":
                     key = "source_materializations"
+            if code.co_name == "__init__":
+                key = self._PARSER_CLASSES.get((module, type(frame.f_locals.get("self")).__name__), key)
             self._code_keys[code] = key
         key = self._code_keys[code]
         if key:
@@ -92,7 +114,16 @@ class OfflineOperationObserver:
                 raise OfflineSessionError("Offline operation attempted forbidden egress: " + key)
 
     def __enter__(self):
-        if self._active or self._active_observer is not None or sys.getprofile() is not None:
+        if self._active:
+            raise OfflineSessionError("Offline observation requires an exclusive profiler slot")
+        if self._active_observer is not None:
+            self._shared_parent = self._active_observer
+            self._shared_before = dict(self._shared_parent.counts)
+            self._shared_census_start = len(self._shared_parent.source_censuses)
+            self.instrumentation_backend = self._shared_parent.instrumentation_backend
+            self._active = True
+            return self
+        if sys.getprofile() is not None:
             raise OfflineSessionError("Offline observation requires an exclusive profiler slot")
         self._active = True
         if hasattr(sys, "monitoring"):
@@ -108,6 +139,10 @@ class OfflineOperationObserver:
                     code = getattr(module, name).__code__
                     self._code_keys[code] = key
                     self._monitoring_codes.append(code)
+                for (module_name, name), key in self._PARSER_CLASSES.items():
+                    code = getattr(importlib.import_module(module_name), name).__init__.__code__
+                    self._code_keys[code] = key
+                    self._monitoring_codes.append(code)
                 parser = importlib.import_module("vnext.table_grid")._AllTablesParser
                 code = parser.__init__.__code__
                 self._code_keys[code] = "source_materializations"
@@ -118,6 +153,8 @@ class OfflineOperationObserver:
                 self._monitoring_codes.append(parser.close.__code__)
                 monitor.register_callback(4, monitor.events.PY_RETURN, self._monitor_parser_return)
                 monitor.set_local_events(4, parser.close.__code__, monitor.events.PY_RETURN)
+                self._monitoring_codes.append(json.loads.__code__)
+                monitor.set_local_events(4, json.loads.__code__, monitor.events.PY_RETURN)
             except BaseException:
                 if acquired:
                     for code in self._monitoring_codes:
@@ -141,9 +178,19 @@ class OfflineOperationObserver:
             raise OfflineSessionError("Offline operation attempted forbidden egress: " + key)
 
     def _monitor_parser_return(self, code, offset, value):
+        if code is json.loads.__code__:
+            if isinstance(value, dict) and value.get("record_type") == "DERIVED_ASSET":
+                self.counts["derived_asset_json_decodes"] += 1
+            return
         self._capture_parser(sys._getframe(1).f_locals.get("self"))
 
     def __exit__(self, error_type, error, traceback):
+        if self._shared_parent is not None:
+            self.counts = {key: count - self._shared_before[key]
+                           for key, count in self._shared_parent.counts.items()}
+            self.source_censuses = list(self._shared_parent.source_censuses[self._shared_census_start:])
+            self._active = False
+            return False
         if self.instrumentation_backend == "SELECTIVE_SYS_MONITORING_PY_START":
             monitor = sys.monitoring
             for code in self._monitoring_codes:
@@ -337,6 +384,53 @@ class OfflineExecutionSession:
         self.counts["canonicalizations"] += 1
         return canonical_json_bytes(value=value)
 
+    def _pin_authority_chain(self, requirement: Mapping) -> None:
+        """Pin the already-verified chain, not just one immediate parent.
+
+        A revision may add another parent layer. Walking the returned
+        immutable authority tree avoids rebuilding it and keeps every old
+        snapshot/retained engine dependency in the child drift guard.
+        """
+        snapshots, engine_paths = set(), set()
+        current = requirement
+        while current is not None:
+            identifier = current["requirement_id"]
+            if identifier in snapshots:
+                raise OfflineSessionError("Session authority contains a repeated parent")
+            snapshots.add(identifier)
+            baseline = current["baseline"]
+            validator = baseline.get("validator")
+            if validator is not None:
+                engine_paths.add(validator["path"])
+                engine_paths.update(validator["dependencies"])
+            # The retained issue_15 reconstruction intentionally does not
+            # rebuild its foundation adapter, but still records its identity.
+            recorded_foundation = baseline.get("parent_requirement_id")
+            if recorded_foundation is not None:
+                snapshots.add(recorded_foundation)
+            current = current.get("parent_snapshot")
+        paths = []
+        for identifier in sorted(snapshots):
+            directory = self.repo_root / "requirements" / identifier
+            if not directory.is_dir() or directory.is_symlink():
+                raise OfflineSessionError("Session authority snapshot is unavailable or unsafe")
+            entries = list(directory.rglob("*"))
+            self._authority_directory_pins[directory] = {
+                path.relative_to(directory).as_posix() for path in entries
+            }
+            paths.extend(entries)
+        paths.extend(self.repo_root / p for p in requirement["execution_authority"]["files"])
+        paths.extend(self.repo_root / p for p in sorted(engine_paths))
+        for path in paths:
+            if path.is_dir() and not path.is_symlink():
+                continue
+            relative = path.relative_to(self.repo_root).as_posix()
+            regular = resolve_repository_file(repo_root=self.repo_root,
+                                              repo_relative_path=relative)
+            data = regular.read_bytes()
+            binding = FileBinding(relative, sha256_bytes(content=data), len(data))
+            self._authority_files[binding] = data
+
     def prepare(self) -> SessionInputs:
         """Materialize the full source and parent/Requirement exactly once."""
         if self.state == "OPEN":
@@ -360,29 +454,8 @@ class OfflineExecutionSession:
             self.state = "FAILED"
             raise OfflineSessionError("Session Requirement closure differs")
         validate_execution_authority(repo_root=self.repo_root, requirement=requirement)
-        # Pin the complete recorded snapshot family and execution-authority
-        # inputs. A source/authority mutation never gets an mtime-based hit.
-        snapshots = [self.requirement_id, requirement["parent_requirement_id"]]
-        snapshots.append("ai_first_v3_3_1")
-        paths = []
-        for identifier in snapshots:
-            directory = self.repo_root / "requirements" / identifier
-            entries = list(directory.rglob("*"))
-            self._authority_directory_pins[directory] = {
-                path.relative_to(directory).as_posix() for path in entries
-            }
-            paths.extend(entries)
-        paths.extend(self.repo_root / p for p in requirement["execution_authority"]["files"])
-        paths.append(self.repo_root / requirement["baseline"]["validator"]["path"])
-        for path in paths:
-            if path.is_dir() and not path.is_symlink():
-                continue
-            relative = path.relative_to(self.repo_root).as_posix()
-            regular = resolve_repository_file(repo_root=self.repo_root,
-                                              repo_relative_path=relative)
-            data = regular.read_bytes()
-            binding = FileBinding(relative, sha256_bytes(content=data), len(data))
-            self._authority_files[binding] = data
+        # A source/authority mutation never gets an mtime-based cache hit.
+        self._pin_authority_chain(requirement)
         self.counts["source_materializations"] += 1
         if self.materialization_mode == "GUARDED_PRODUCTION_PARSER":
             from .r4_materialization import materialize_full_source
@@ -450,6 +523,7 @@ class OfflineExecutionSession:
 
             value = self._measure(execute)
             for key in ("source_materializations", "derived_asset_builds", "requirement_builds",
+                        "revision_requirement_builds",
                         "parent_authority_builds", "requirement_load_calls", "legacy_parent_authority_builds",
                         "native_prior_run_loads", "portable_prior_run_loads"):
                 if self._observed_counts[key] != before[key]:

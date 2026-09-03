@@ -68,7 +68,7 @@ a distinct file and entrypoint; it never reinterprets the historical eight tasks
 | `tools/acquire_r4_fixture_filings.py` | only if inventory proves need; existing SecHttpClient; maximum two filings |
 | `config/r4_fixture_matrix_v1.json` | source-specific audited successor fixture authority |
 | `config/r4_fixture_acquisitions_v1.json` | two permitted future filing identities; locator metadata only, no qualification credit |
-| `config/release_plans/issue_28_r4_offline_v1.json` | six-metric successor plan, offline evidence only |
+| `config/release_plans/issue_28_r4_offline_v1.json`, `config/release_plans/issue_28_r4_offline_v2.json` | six-metric successor plans; v1 B0 evidence remains historical, v2 binds the unactivated policy revision |
 | `tests/vnext/test_source_scope.py` | scope identity and full tamper matrix |
 | `tests/vnext/r4_b0_fixture_support.py` | small complete-file synthetic B0 fixture, using the real A03 task/Evidence path |
 | `tests/vnext/test_scoped_reader.py` | scoped transport/Candidate/Evidence replay negatives |
@@ -84,12 +84,12 @@ a distinct file and entrypoint; it never reinterprets the historical eight tasks
 | `evidence/requests_log.csv` | conditional legal append only; exact old ordered prefix remains unchanged |
 | `evidence/requests_log_manifest.json` | conditional existing-client ledger append manifest, not historical receipt re-signing |
 | `AGENTS.md`, `architecture.md`, `interact.md`, `TESTING.md`, `SOP.md`, `capability_contract.json` | additive documentation/anchors for actually implemented offline behavior |
-| `tools/run_fast_tests.py` | add short deterministic B0 smoke only; no timeout increase or old-case removal |
+| `tools/run_fast_tests.py` | add short deterministic B0 and v2 revision smokes only; no timeout increase or old-case removal |
 
 The map must be extended before editing an unlisted path. Existing ReaderInputManifest,
-`build_reader_payload`, Evidence, legacy Run/publication schemas, provider opener,
-and canonical/runtime semantics remain unchanged. New modules reuse those
-implementations through explicit successor entrypoints.
+`build_reader_payload`, native Evidence and legacy Run/publication semantics,
+the provider opener and canonical/runtime semantics remain unchanged. Additive
+successor Evidence entrypoints below reuse the native verifier, not a second one.
 
 ## Evidence boundaries
 
@@ -102,7 +102,8 @@ author, timestamps and exact body hash. This is policy-content approval only.
 - B remains immutable: `requirements/issue_28_v1/**` and retained V1/V2 engines.
 - Add `requirements/issue_28_v2/**` (five files), a new versioned profile engine,
   registry dispatch and revision tests. The revision stays NOT_ACTIVATED.
-- Add generic source-bound composite scope support for A12 only; update
+- Add generic source-bound composite scope support only for approved A12 and
+  A03 dimensions (owner comments 5524085182 / 5524746204); update
   `source_scope.py`, `scoped_reader.py`, and the existing Reader/Evidence/record
   validation paths only where successor evidence requires it. Legacy behavior
   stays unchanged. New modules/tests cover all source/span/section conflicts.
@@ -122,6 +123,9 @@ author, timestamps and exact body hash. This is policy-content approval only.
   dispatch in `deterministic_router.py` reuse native accession-XBRL for an
   owner-pinned single-filing fixture, without inventing submissions inventory
   or changing the normal production SourceSetManifest validator.
+- The same `deterministic_router.py` may factor native XML parse/claim stages
+  for a source-SHA/size-owned immutable session context; legacy adapter
+  outputs and validation stay identical, with no selector or global cache.
 - Add versioned R4 fixture/scope and economic-measure authority, source audit,
   qualification/replay tools and tests. If a C path needs a change it binds v2,
   never a rewritten v1; prefer additive task/policy files.
@@ -129,9 +133,19 @@ author, timestamps and exact body hash. This is policy-content approval only.
   `requirements/issue_28_v2/{CONTRACT.md,decision_register.json,invariant_profile.json,transfer_manifest.json,baseline_manifest.json}`,
   `tests/vnext/test_issue28_v2.py`, `tools/create_issue28_v2_snapshot.py`;
   only registry dispatch changes in `requirement_profile.py`.
+- `tests/vnext/issue28_fixture_support.py` and `test_issue28_rework.py` may
+  choose a distinct test-only Requirement revision for the retained V2-engine
+  evolution scenario now that a real `issue_28_v2` directory exists. They must
+  not overwrite/delete the real snapshot or change its loaded identity.
+- `PR_Checklist.md` may replace the obsolete PR-A-only v1 wording with the
+  actual separate policy-content, same-Issue revision and exact-head activation
+  stages. This never marks a Draft PR ready or grants merge/live authority.
 - Exact acquisition additions: `tools/acquire_r4_fixture_filings.py`,
   `tests/vnext/test_r4_fixture_acquisitions.py` and
   `docs/evidence/issue_28_prb_policy_revision.json`.
+- `docs/evidence/issue_28_a03_policy_revision.json` binds the explicit A03
+  entity/aggregation and Citi disclosed-quarter alternate approval. It does
+  not authorize other metric-period changes or any additional SEC request.
 - `resource_limits.py` may change only max_total_cells, after measuring all
   three sources, with an absolute ceiling of 250000. Worker/session/benchmark
   code and tests change to use the identical production parser without an

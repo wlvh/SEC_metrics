@@ -18,7 +18,8 @@
 
 `source_scope.py` binds a source-specific audited window certificate to the
 complete RawBlob/SourceReference, full DerivedAsset, full ReaderInputManifest,
-exact task contract and activated Requirement closure. The fixture authority
+exact task contract and explicitly selected Requirement closure. Offline v2
+construction uses the NOT_ACTIVATED proposal, not a live grant. The fixture authority
 pins its content ID. `scoped_reader.py` provides a separate request subtype;
 legacy ReaderInputManifest and `build_reader_payload` are unchanged. Only the
 certified tables are packed, retaining original IDs/order/grid hashes. Audit
@@ -34,6 +35,17 @@ wall/peak-RSS observations are exposed; the B0 tests are not a real-source
 performance benchmark or an implementation of live authorization. No legacy
 provider opener, qualification cycle or publication path is changed.
 <!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
+
+The versioned R4 matrix contains six production/alternate pairs and four
+zero-call classes. A03/A12 composite source spans supply only the approved
+checker-side scope dimensions; value and scale remain original-table evidence.
+The scoped request never includes those narrative spans or reference answers.
+Native XBRL runs first for A09/A13; direct structured successes do not create
+Reader attempts. A13 currently implements direct international net revenue,
+not the optional regional-sum branch. All 16 offline cases retain zero live
+credit; exact native Evidence and complete source/recipe binding are replayed.
+See `docs/r4_offline/current_source_task_audit.md` for source-specific proofs.
+<!-- capability-anchor: CAPABILITY.r4_offline_source_bound_evidence -->
 
 以下变化必须同步更新本文档：
 

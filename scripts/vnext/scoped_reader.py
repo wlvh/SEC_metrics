@@ -11,7 +11,8 @@ from pathlib import Path
 from typing import Dict, Mapping
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
-from .evidence import check_evidence
+from .evidence import check_evidence, OfflineEvidenceContext, _plain_owned
+from .evidence import check_evidence_in_offline_session
 from .reader import validate_reader_output, validate_source_bound_reader_output
 from .reader_input import READER_SYSTEM_CONTRACT
 from .records import validate_record
@@ -48,10 +49,12 @@ ATTEMPT_FIELDS = IDENTITY_FIELDS | frozenset({
     "execution_mode", "provider_call_count", "paid_model_call_count", "sec_call_count",
     "actual_provider_usage", "qualification_credit",
 })
-V2_IDENTITY_FIELDS = frozenset({"task_contract_generation", "source_bound_proof_id"})
+V2_IDENTITY_FIELDS = frozenset({"task_contract_generation", "source_bound_proof_id", "task_period"})
+V2_REQUEST_FIELDS = REQUEST_FIELDS | V2_IDENTITY_FIELDS | frozenset({"scoped_transport_contract"})
 ARTIFACT_FILENAMES = frozenset({
     "source_scope.json", "scoped_plan.json", "scoped_request.json", "scoped_attempt.json",
 })
+_SCOPED_CONTEXT_FACTORY = object()
 
 
 def _exact(value: object, fields: frozenset, label: str) -> Mapping:
@@ -65,7 +68,8 @@ def _identity(scope: Mapping) -> Dict[str, object]:
     if scope["schema_version"] == 2:
         proof = scope["source_bound_proof"]
         identity.update(task_contract_generation=scope["task_contract_generation"],
-                        source_bound_proof_id=None if proof is None else proof["source_bound_proof_id"])
+                        source_bound_proof_id=None if proof is None else proof["source_bound_proof_id"],
+                        task_period=scope["task_period"])
     return identity
 
 
@@ -103,6 +107,71 @@ class PreparedScopedReaderRequest:
     plan_id: str
 
 
+class OfflineScopedContext:
+    """A source-local set of exact on-disk scope certificates, never a cache API."""
+
+    __slots__ = ("_evidence", "_scope_files", "_scope_bytes", "_factory")
+
+    def __init__(self, *, evidence_context, scope_files, scope_bytes, factory):
+        if factory is not _SCOPED_CONTEXT_FACTORY:
+            raise ScopedReaderError("Scoped context requires its verified factory")
+        self._evidence = evidence_context
+        self._scope_files = {key: dict(value) for key, value in scope_files.items()}
+        self._scope_bytes = dict(scope_bytes)
+        self._factory = factory
+
+    def _scope(self, *, source_scope_manifest_id):
+        if self._factory is not _SCOPED_CONTEXT_FACTORY or source_scope_manifest_id not in self._scope_files:
+            raise ScopedReaderError("Scope is not in the verified process-local file set")
+        binding = self._scope_files[source_scope_manifest_id]
+        read_scope_repository_bytes(path=Path(binding["path"]), repo_root=self._evidence._repo_root,
+                                    expected_sha256=binding["sha256"], expected_size=binding["size"])
+        self._evidence._check_files()
+        return strict_json_loads(text=self._scope_bytes[source_scope_manifest_id].decode("utf-8"))
+
+    def _authority(self, *, source_scope_manifest_id):
+        scope = self._scope(source_scope_manifest_id=source_scope_manifest_id)
+        return scope, self._evidence._scope_authority(task_contract_id=scope["task_contract_id"])
+
+    def _assert_inputs(self, *, scope, expected_manifest_id, requirement, raw_blob,
+                       source_reference, full_derived_asset, reader_manifest,
+                       task_contract, evidence_authority_payload, source_bytes, repo_root):
+        certified = self._scope(source_scope_manifest_id=expected_manifest_id)
+        expected = self._evidence._scope_authority(task_contract_id=certified["task_contract_id"])
+        if (canonical_json_bytes(value=scope) != self._scope_bytes[expected_manifest_id]
+                or requirement is not expected["requirement"]
+                or full_derived_asset is not expected["full_derived_asset"]
+                or reader_manifest is not expected["reader_manifest"]
+                or raw_blob != expected["raw_blob"] or source_reference != expected["source_reference"]
+                or task_contract != expected["task_contract"]
+                or source_bytes != expected["source_bytes"] or repo_root != expected["repo_root"]):
+            raise ScopedReaderError("Scoped session rejects caller-owned or drifting authority")
+        self._evidence._owns(derived_asset=full_derived_asset, reader_manifest=reader_manifest,
+                              reader_payload_body=evidence_authority_payload)
+        return certified
+
+
+def prepare_offline_scoped_context(*, evidence_context: OfflineEvidenceContext,
+                                  scope_files: Mapping) -> OfflineScopedContext:
+    """Verify each pinned scope once with the existing native validator/Checker."""
+    if type(evidence_context) is not OfflineEvidenceContext or type(scope_files) is not dict or not scope_files:
+        raise ScopedReaderError("Scoped context requires one explicit Evidence context and file set")
+    encoded = {}
+    for identity, binding in scope_files.items():
+        _exact(binding, frozenset({"path", "sha256", "size"}), "Scoped session file binding")
+        data = read_scope_repository_bytes(path=Path(binding["path"]), repo_root=evidence_context._repo_root,
+                                           expected_sha256=binding["sha256"], expected_size=binding["size"])
+        scope = strict_json_loads(text=data.decode("utf-8"))
+        if type(scope) is not dict or scope.get("task_contract_id") not in evidence_context._tasks:
+            raise ScopedReaderError("Scoped file task is not in the source-local context")
+        authority = evidence_context._scope_authority(task_contract_id=scope["task_contract_id"])
+        verified = validate_source_scope_manifest(manifest=scope, expected_manifest_id=identity,
+            _offline_context=evidence_context, **authority)
+        encoded[identity] = canonical_json_bytes(value=verified)
+    return OfflineScopedContext(evidence_context=evidence_context, scope_files=scope_files,
+                                scope_bytes=encoded, factory=_SCOPED_CONTEXT_FACTORY)
+
+
 def build_scoped_reader_plan(*, source_scope_manifest: Mapping,
                             expected_manifest_id: str, **authority) -> Dict[str, object]:
     """Build an offline eligibility/identity plan, never an execution grant."""
@@ -121,22 +190,36 @@ def prepare_scoped_reader_request(
     full_derived_asset: Mapping, reader_manifest: Mapping, task_contract: Mapping,
     evidence_authority_payload: Mapping,
     source_bytes: bytes = None, repo_root: Path = None,
+    _verified_scope_context: OfflineScopedContext = None,
+    _offline_evidence_context: OfflineEvidenceContext = None,
 ) -> PreparedScopedReaderRequest:
     """Pack only certified original-order tables; never fall back to a filing."""
-    scope = validate_source_scope_manifest(
-        manifest=source_scope_manifest, expected_manifest_id=expected_manifest_id,
-        requirement=requirement, raw_blob=raw_blob, source_reference=source_reference,
-        full_derived_asset=full_derived_asset, reader_manifest=reader_manifest,
-        task_contract=task_contract, evidence_authority_payload=evidence_authority_payload,
-        source_bytes=source_bytes, repo_root=repo_root,
-    )
+    if _verified_scope_context is None:
+        scope = validate_source_scope_manifest(manifest=source_scope_manifest, expected_manifest_id=expected_manifest_id,
+            requirement=requirement, raw_blob=raw_blob, source_reference=source_reference,
+            full_derived_asset=full_derived_asset, reader_manifest=reader_manifest,
+            task_contract=task_contract, evidence_authority_payload=evidence_authority_payload,
+            source_bytes=source_bytes, repo_root=repo_root, _offline_context=_offline_evidence_context)
+    else:
+        if type(_verified_scope_context) is not OfflineScopedContext:
+            raise ScopedReaderError("Scoped context type is not exact")
+        scope = _verified_scope_context._assert_inputs(scope=source_scope_manifest,
+            expected_manifest_id=expected_manifest_id, requirement=requirement, raw_blob=raw_blob,
+            source_reference=source_reference, full_derived_asset=full_derived_asset,
+            reader_manifest=reader_manifest, task_contract=task_contract,
+            evidence_authority_payload=evidence_authority_payload, source_bytes=source_bytes, repo_root=repo_root)
     policy = policy_choice(requirement=requirement, kind="SOURCE_SCOPE_POLICY")
     if scope["fixture_class"] not in policy["positive_fixture_classes"]:
         raise ScopedReaderError("ZERO_CALL_FIXTURE: scoped provider planning is forbidden")
     selected = scope_tables(windows=scope["windows"], full_derived_asset=full_derived_asset)
-    compact = [_compact_table(table=t) for t in selected]
-    if [_decode_compact_table(compact=t) for t in compact] != selected:
-        raise ScopedReaderError("Scoped compact round trip differs from full authority")
+    evidence_session = _offline_evidence_context if _verified_scope_context is None else _verified_scope_context._evidence
+    if evidence_session is None:
+        compact = [_compact_table(table=t) for t in selected]
+        if [_decode_compact_table(compact=t) for t in compact] != selected:
+            raise ScopedReaderError("Scoped compact round trip differs from full authority")
+    else:
+        compact = [_plain_owned(evidence_session._transport["tables"][order])
+                   for order in scope["ordered_table_orders"]]
     plan_body = _plan_body(scope=scope, raw_blob=raw_blob, reader_manifest=reader_manifest,
                            task_contract=task_contract)
     plan_bytes = canonical_json_bytes(value=plan_body)
@@ -155,6 +238,25 @@ def prepare_scoped_reader_request(
             "tables": compact,
         },
     }
+    if scope["schema_version"] == 2:
+        proof = scope["source_bound_proof"]
+        composite = None if proof is None else proof["composite_scope"]
+        body["scoped_transport_contract"] = {
+            "model_evidence_scope": "ORIGINAL_TABLE_WINDOWS_ONLY",
+            "requested_period": scope["task_period"],
+            "reported_unit_contract": next(iter(scope["synthetic_candidate"]["selected"].values()))["claimed_reported_unit"],
+            "report_only_table_native_scope_locators": True,
+            "do_not_fabricate_missing_scope_labels": True,
+            "locally_proven_scope_dimensions": [] if composite is None else [
+                item["dimension"] for item in composite["selected_scope_spans"]],
+            "locally_proven_dimensions_may_be_omitted": True,
+            "empty_scope_arrays_are_valid_for_locally_proven_dimensions": True,
+            "unproven_scope_omissions_fail_closed": True,
+            "missing_scope_instruction": "Omit unavailable table-native scope claims and locators; only the certified local source proof may supply those dimensions.",
+            "preserve_exact_raw_value_without_rescaling": True,
+            "do_not_invent_reported_unit_labels": True,
+            "audit_reference_values_are_not_provider_input": True,
+        }
     request_bytes = canonical_json_bytes(value=body)
     context = policy_choice(requirement=requirement, kind="TRANSPORT_RETRY_POLICY")
     if len(request_bytes) > context["context_ceiling_tokens"]:
@@ -192,7 +294,7 @@ def load_scoped_reader_request(*, path: Path, repo_root: Path, expected_request_
         body = strict_json_loads(text=data.decode("utf-8"))
     except (ValueError, UnicodeError) as error:
         raise ScopedReaderError("Scoped request is not strict UTF-8 JSON") from error
-    _exact(body, REQUEST_FIELDS | V2_IDENTITY_FIELDS if body.get("schema_version") == 2 else REQUEST_FIELDS, "Scoped Reader request")
+    _exact(body, V2_REQUEST_FIELDS if body.get("schema_version") == 2 else REQUEST_FIELDS, "Scoped Reader request")
     expected = prepare_scoped_reader_request(**authority)
     if data != expected.request_bytes or content_hash(value=body) != expected_request_id:
         raise ScopedReaderError("Scoped request bytes/identity differ")
@@ -207,6 +309,8 @@ def validate_scoped_reader_response(
     reader_manifest: Mapping, task_contract: Mapping,
     evidence_authority_payload: Mapping,
     source_bytes: bytes = None, repo_root: Path = None,
+    _verified_scope_context: OfflineScopedContext = None,
+    _offline_evidence_context: OfflineEvidenceContext = None,
 ) -> Dict[str, object]:
     """Certify an offline synthetic response with the existing native checker.
 
@@ -222,6 +326,8 @@ def validate_scoped_reader_response(
         full_derived_asset=full_derived_asset, reader_manifest=reader_manifest,
         task_contract=task_contract, evidence_authority_payload=evidence_authority_payload,
         source_bytes=source_bytes, repo_root=repo_root,
+        _verified_scope_context=_verified_scope_context,
+        _offline_evidence_context=_offline_evidence_context,
     )
     if (not isinstance(prepared_request, PreparedScopedReaderRequest)
             or expected_request != prepared_request):
@@ -232,6 +338,7 @@ def validate_scoped_reader_response(
         raise ScopedReaderError("Scoped response is not UTF-8 text")
     source_proof = source_scope_manifest.get("source_bound_proof")
     evidence_context = None
+    evidence_session = _offline_evidence_context if _verified_scope_context is None else _verified_scope_context._evidence
     if source_proof is None:
         candidate = validate_reader_output(response_text=response_text, attempt_id=attempt_id,
             required_roles=task_contract["required_roles"], scope_contract=task_contract["scope_contract"],
@@ -243,7 +350,8 @@ def validate_scoped_reader_response(
         candidate = validate_source_bound_reader_output(response_text=response_text, attempt_id=attempt_id,
             source_bound_proof=source_proof, expected_proof_id=source_proof["source_bound_proof_id"],
             requirement=requirement, repo_root=root, source_bytes=exact_source, raw_blob=raw_blob,
-            source_reference=source_reference, full_derived_asset=full_derived_asset, task_contract=task_contract)
+            source_reference=source_reference, full_derived_asset=full_derived_asset, task_contract=task_contract,
+            _offline_context=evidence_session)
         evidence_context = {"proof": source_proof, "expected_proof_id": source_proof["source_bound_proof_id"],
             "requirement": requirement, "repo_root": root, "source_bytes": exact_source,
             "raw_blob": raw_blob, "task_contract": task_contract}
@@ -257,15 +365,26 @@ def validate_scoped_reader_response(
                or l["derived_asset_id"] != full_derived_asset["derived_asset_id"]
                for l in locators):
             raise ScopedReaderError("Response locator leaves certified windows")
-    evidence = check_evidence(
-        candidate=candidate, derived_asset=full_derived_asset,
-        reader_manifest=reader_manifest,
-        reader_payload_body=evidence_authority_payload,
-        source_references=[source_reference],
-        identity_constraints=task_contract["identity_constraints"],
-        scope_contract=task_contract["scope_contract"],
-        source_bound_context=evidence_context,
-    )
+        if claim["locator"] != source_scope_manifest["target_locator"]:
+            raise ScopedReaderError("SCOPED_CERTIFIED_TARGET_MISMATCH: response selected a different in-window cell")
+    if evidence_session is None:
+        evidence = check_evidence(candidate=candidate, derived_asset=full_derived_asset,
+            reader_manifest=reader_manifest, reader_payload_body=evidence_authority_payload,
+            source_references=[source_reference], identity_constraints=task_contract["identity_constraints"],
+            scope_contract=task_contract["scope_contract"], source_bound_context=evidence_context)
+    else:
+        evidence = check_evidence_in_offline_session(context=evidence_session,
+            candidate=candidate, task_contract_id=task_contract["task_contract_id"], source_bound_context=evidence_context)
+    if evidence["status"] == "PASS":
+        reference = source_scope_manifest["reference"]
+        certified = source_scope_manifest["synthetic_candidate"]["selected"]
+        if (list(evidence["normalized_values"].values()) != [reference["value"]]
+                or evidence["normalized_scope"] != reference["scope"]
+                or evidence["system_approval_eligible"] is not True
+                or any(claim["claimed_period"] != reference["period"]
+                       or claim["claimed_reported_unit"] != certified[role]["claimed_reported_unit"]
+                       for role, claim in candidate["selected"].items())):
+            raise ScopedReaderError("SCOPED_REFERENCE_RECONCILIATION_FAILED: native Evidence differs from the certified value/unit/period/scope")
     link_body = {
         "record_type": "SCOPED_CANDIDATE_EVIDENCE_LINK", "schema_version": source_scope_manifest["schema_version"],
         **_identity(source_scope_manifest), "attempt_id": attempt_id,
@@ -319,6 +438,42 @@ def replay_scoped_offline_attempt(*, attempt: Mapping,
     if dict(attempt) != actual:
         raise ScopedReaderError("Scoped attempt/Candidate/Evidence identity differs")
     return actual
+
+
+def prepare_scoped_reader_request_in_session(*, context: OfflineScopedContext,
+                                            source_scope_manifest_id: str) -> PreparedScopedReaderRequest:
+    """Build the same request with certified immutable source-local inputs."""
+    if type(context) is not OfflineScopedContext:
+        raise ScopedReaderError("Scoped context type is not exact")
+    scope, authority = context._authority(source_scope_manifest_id=source_scope_manifest_id)
+    return prepare_scoped_reader_request(source_scope_manifest=scope, expected_manifest_id=source_scope_manifest_id,
+        _verified_scope_context=context, **authority)
+
+
+def validate_scoped_reader_response_in_session(*, context: OfflineScopedContext,
+                                              source_scope_manifest_id: str,
+                                              prepared_request: PreparedScopedReaderRequest,
+                                              response_text: str, attempt_id: str) -> Dict[str, object]:
+    """Parse a fresh response and run native Evidence; never reuse child results."""
+    if type(context) is not OfflineScopedContext:
+        raise ScopedReaderError("Scoped context type is not exact")
+    scope, authority = context._authority(source_scope_manifest_id=source_scope_manifest_id)
+    return validate_scoped_reader_response(prepared_request=prepared_request, response_text=response_text,
+        attempt_id=attempt_id, source_scope_manifest=scope, expected_manifest_id=source_scope_manifest_id,
+        _verified_scope_context=context, **authority)
+
+
+def replay_scoped_offline_attempt_in_session(*, context: OfflineScopedContext,
+                                            attempt: Mapping, expected_attempt_id: str = None) -> Dict[str, object]:
+    """Replay on a fresh disk-built context for the independent final session gate."""
+    if type(context) is not OfflineScopedContext:
+        raise ScopedReaderError("Scoped context type is not exact")
+    identity = attempt["source_scope_manifest_id"]
+    scope, authority = context._authority(source_scope_manifest_id=identity)
+    prepared = prepare_scoped_reader_request_in_session(context=context, source_scope_manifest_id=identity)
+    return replay_scoped_offline_attempt(attempt=attempt, prepared_request=prepared,
+        expected_attempt_id=expected_attempt_id, source_scope_manifest=scope, expected_manifest_id=identity,
+        _verified_scope_context=context, **authority)
 
 
 def load_scoped_offline_attempt(*, path: Path, repo_root: Path,
