@@ -23,7 +23,7 @@ evidence, not a runtime/live grant.
 
 - All five files in `requirements/issue_28_v1/**`.
 - `scripts/vnext/requirement_profile_v1.py` and its retained interpretation.
-- Retained V2 evolution harness and the historical Issue #15 adapter.
+- Retained V2 evolution harness; historical Issue #15 snapshot bytes stay fixed.
 
 ## C — issue_28_v1 current execution authority: no planned changes
 
@@ -92,6 +92,62 @@ and canonical/runtime semantics remain unchanged. New modules reuse those
 implementations through explicit successor entrypoints.
 
 ## Evidence boundaries
+
+## Owner-approved PR-B continuation (policy comment 5524085182)
+
+The owner requested the exact policy JSON be posted through the owner account;
+`docs/evidence/issue_28_prb_policy_revision.json` retains the verified URL,
+author, timestamps and exact body hash. This is policy-content approval only.
+
+- B remains immutable: `requirements/issue_28_v1/**` and retained V1/V2 engines.
+- Add `requirements/issue_28_v2/**` (five files), a new versioned profile engine,
+  registry dispatch and revision tests. The revision stays NOT_ACTIVATED.
+- Add generic source-bound composite scope support for A12 only; update
+  `source_scope.py`, `scoped_reader.py`, and the existing Reader/Evidence/record
+  validation paths only where successor evidence requires it. Legacy behavior
+  stays unchanged. New modules/tests cover all source/span/section conflicts.
+- Exact successor additions: `scripts/vnext/composite_scope.py`,
+  `tests/vnext/test_composite_scope.py`; successor-only extensions may touch
+  `scripts/vnext/evidence.py`, `reader.py`, `scope_contract.py`, `records.py`
+  and their schemas/tests, without weakening any legacy path.
+- `scripts/vnext/table_grid.py` may factor native locator checks into a shared
+  internal function used by an explicit immutable session context; normal
+  callers keep full validation. The context cannot skip path/hash/size drift
+  or final independent disk replay, and v2 binds the implementation bytes.
+- `scripts/vnext/r4_task_contracts.py`, `config/r4_task_contracts_v2.json`,
+  `config/r4_numeric_normalization_v1.json`, `catalog/r4_v2/**`,
+  `config/r4_fixture_matrix_v1.json`, `scripts/vnext/r4_fixture_authority.py`
+  and their tests provide additive successor task/fixture authority.
+- `scripts/vnext/r4_structured_sources.py` and a narrow explicit-subtype
+  dispatch in `deterministic_router.py` reuse native accession-XBRL for an
+  owner-pinned single-filing fixture, without inventing submissions inventory
+  or changing the normal production SourceSetManifest validator.
+- Add versioned R4 fixture/scope and economic-measure authority, source audit,
+  qualification/replay tools and tests. If a C path needs a change it binds v2,
+  never a rewritten v1; prefer additive task/policy files.
+- Exact authority additions: `scripts/vnext/requirement_profile_v3.py`,
+  `requirements/issue_28_v2/{CONTRACT.md,decision_register.json,invariant_profile.json,transfer_manifest.json,baseline_manifest.json}`,
+  `tests/vnext/test_issue28_v2.py`, `tools/create_issue28_v2_snapshot.py`;
+  only registry dispatch changes in `requirement_profile.py`.
+- Exact acquisition additions: `tools/acquire_r4_fixture_filings.py`,
+  `tests/vnext/test_r4_fixture_acquisitions.py` and
+  `docs/evidence/issue_28_prb_policy_revision.json`.
+- `resource_limits.py` may change only max_total_cells, after measuring all
+  three sources, with an absolute ceiling of 250000. Worker/session/benchmark
+  code and tests change to use the identical production parser without an
+  override. Other resource limits and SEMANTIC_VERSIONS remain unchanged.
+- Add the two planned BAC/Citi immutable requests through the native client,
+  retry zero, preserving the existing ledger's exact ordered prefix. New
+  request attempts and acquisition/measurement/offline evidence are additive.
+- `config/sec_config.json`, `scripts/sec_http.py`, the historical producer
+  inventory check and associated tests/docs have the separately approved
+  automatic-contact-reading correction; no historical snapshot bytes change.
+
+Owner-authorized SEC configuration simplification: `config/sec_config.json`
+and `scripts/sec_http.py` provide a default contact, overridden by the environment.
+`scripts/vnext/requirements.py` checks the frozen producer-source bindings, not
+current transport bytes; current execution/freeze authority checks stay intact.
+Existing identity tests and the operational docs are updated to match.
 
 B0 is an interface baseline, not production semantic freeze, a cycle, Stage-A,
 qualification/live authority or a publication. PR-B provider/paid calls are zero.

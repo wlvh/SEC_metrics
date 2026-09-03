@@ -1,8 +1,8 @@
-"""Prove the R3 SEC identity is fixed and environment-owned.
+"""Prove SEC config defaults and explicit environment overrides are validated.
 
 The production SEC loader and full/live prerequisite gate must both use the
 same identity validator.  The repository fixes the organization to ``axaxl``
-while the accountable contact address exists only in ``SEC_CONTACT_EMAIL``.
+while ``SEC_CONTACT_EMAIL`` overrides the repository contact address.
 """
 
 from __future__ import annotations
@@ -25,7 +25,9 @@ for import_path in (SCRIPTS_DIR, TOOLS_DIR):
         sys.path.insert(0, str(import_path))
 
 from run_acceptance import external_blockers  # noqa: E402
-from sec_http import SecIdentityError, load_config  # noqa: E402
+from sec_http import SecHttpClient, SecIdentityError, load_config  # noqa: E402
+from sec_http import validate_sec_identity  # noqa: E402
+from vnext.requirements import load_requirement_snapshot  # noqa: E402
 
 
 def write_sec_config(*, root: Path, organization: str = "axaxl") -> Path:
@@ -57,8 +59,8 @@ def write_sec_config(*, root: Path, organization: str = "axaxl") -> Path:
 class SecIdentityR3Test(unittest.TestCase):
     """Exercise fail-fast identity rules at both production entry points."""
 
-    def test_missing_environment_contact_has_stable_error_code(self) -> None:
-        """Reject an absent environment contact before any SEC request."""
+    def test_missing_contact_has_stable_error_code(self) -> None:
+        """Reject contact missing from both config and environment."""
         with tempfile.TemporaryDirectory() as directory, mock.patch.dict(
             os.environ,
             {},
@@ -69,20 +71,54 @@ class SecIdentityR3Test(unittest.TestCase):
                 load_config(config_path=config_path)
         self.assertEqual("SEC_CONTACT_EMAIL_REQUIRED", raised.exception.code)
 
-    def test_config_contact_is_never_a_production_fallback(self) -> None:
-        """Ignore neither authority nor failure by accepting a config email."""
+    def test_config_contact_is_the_production_default(self) -> None:
+        """Read repository config without an export or launcher; do not fetch."""
         with tempfile.TemporaryDirectory() as directory, mock.patch.dict(
             os.environ,
             {},
             clear=True,
         ):
-            config_path = write_sec_config(root=Path(directory))
-            payload = json.loads(config_path.read_text(encoding="utf-8"))
-            payload["contact_email"] = "ops@corp.co"
-            config_path.write_text(json.dumps(payload), encoding="utf-8")
-            with self.assertRaises(SecIdentityError) as raised:
-                load_config(config_path=config_path)
-        self.assertEqual("SEC_CONTACT_EMAIL_REQUIRED", raised.exception.code)
+            with mock.patch("sec_http.urlopen") as opener:
+                client = SecHttpClient(
+                    workdir=Path(directory),
+                    config_path=REPO_ROOT / "config/sec_config.json",
+                    log_path=Path(directory) / "evidence/requests_log.csv",
+                )
+            self.assertEqual("axaxl 12@qq.com", client.user_agent)
+            opener.assert_not_called()
+            self.assertNotIn("SEC_CONTACT_EMAIL", os.environ)
+
+    def test_explicit_environment_contact_overrides_config(self) -> None:
+        """An explicit override wins, but an invalid override never falls back."""
+        config = {"organization": "axaxl", "contact_email": "12@qq.com"}
+        for email, error in (
+            ("ops@corp.co", None),
+            ("", "SEC_CONTACT_EMAIL_REQUIRED"),
+            ("bad", "SEC_CONTACT_EMAIL_INVALID"),
+        ):
+            with self.subTest(email=email), mock.patch.dict(
+                os.environ, {"SEC_CONTACT_EMAIL": email}, clear=True,
+            ):
+                if error:
+                    with self.assertRaises(SecIdentityError) as raised:
+                        validate_sec_identity(config=config)
+                    self.assertEqual(error, raised.exception.code)
+                else:
+                    self.assertEqual(
+                        ("axaxl", email), validate_sec_identity(config=config),
+                    )
+
+    def test_invalid_config_contacts_fail_closed(self) -> None:
+        """Apply the same validation to configured contacts, including types."""
+        for email in (None, 12, [], "bad", "ops@example.com", "ops@corp.test"):
+            with self.subTest(email=email), mock.patch.dict(
+                os.environ, {}, clear=True,
+            ):
+                with self.assertRaises(SecIdentityError) as raised:
+                    validate_sec_identity(config={
+                        "organization": "axaxl", "contact_email": email,
+                    })
+                self.assertEqual("SEC_CONTACT_EMAIL_INVALID", raised.exception.code)
 
     def test_environment_contact_and_fixed_organization_load(self) -> None:
         """Build the runtime User-Agent identity only from approved sources."""
@@ -131,6 +167,9 @@ class SecIdentityR3Test(unittest.TestCase):
 
     def test_full_prerequisite_reuses_missing_contact_code(self) -> None:
         """Expose the production identity error unchanged in full readiness."""
+        requirement = load_requirement_snapshot(
+            snapshot_dir=REPO_ROOT / "requirements/issue_15_v1",
+        )
         with tempfile.TemporaryDirectory() as directory, mock.patch.dict(
             os.environ,
             {},
@@ -140,18 +179,26 @@ class SecIdentityR3Test(unittest.TestCase):
             write_sec_config(root=root)
             with mock.patch(
                 "run_acceptance.load_requirement_snapshot",
-                return_value={"pending_decision_ids": []},
+                return_value=requirement,
             ), mock.patch(
                 "run_acceptance.capture_source_snapshot",
                 return_value={},
             ):
                 blockers = external_blockers(repo_root=root)
+                (root / "config/sec_config.json").write_bytes(
+                    (REPO_ROOT / "config/sec_config.json").read_bytes()
+                )
+                configured_blockers = external_blockers(repo_root=root)
         self.assertEqual(
             [
-                "OPENAI_API_KEY_REQUIRED",
+                "DEEPSEEK_API_KEY_REQUIRED",
                 "SEC_CONTACT_EMAIL_REQUIRED",
             ],
             [blocker["code"] for blocker in blockers],
+        )
+        self.assertEqual(
+            ["DEEPSEEK_API_KEY_REQUIRED"],
+            [blocker["code"] for blocker in configured_blockers],
         )
 
 

@@ -223,7 +223,7 @@ Issue #28 / `issue_28_v1` 是待激活的 R4–Rf successor authority；PR #29�
 ## 4. SEC 与数据规则
 
 1. 所有生产网络请求只允许访问官方 SEC 域名，并统一经过 `SecHttpClient`。
-2. live 请求的 organization 固定为 `axaxl`；contact email 只从 `SEC_CONTACT_EMAIL` 环境变量读取。缺失、畸形或 example/reserved-domain 邮箱必须在联网前以稳定错误失败。
+2. live 请求的 organization 固定为 `axaxl`；自动读取 `config/sec_config.json` 的 `contact_email`，显式 `SEC_CONTACT_EMAIL` 环境变量优先。选中值缺失、畸形或使用 reserved domain 时必须在联网前以稳定错误失败。
 3. 所有请求尝试保留 UTC 日志；有响应体时保存 immutable raw bytes、headers 与 SHA-256。
 4. `requests_log.csv` 与 `requests_log_manifest.json` 共同构成 ledger publication；row count/hash、CSV schema、HEAD/base 有序前缀、下游 locator 与 sidecar 任一失配都不能 PASS。
 5. 禁止使用第三方数据、新闻、搜索结果或模型记忆为 SEC 指标补数。

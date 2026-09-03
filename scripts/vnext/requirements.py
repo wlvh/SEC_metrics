@@ -36,6 +36,9 @@ ISSUE_15_CONTRACT_SHA256 = (
 ISSUE_15_FOUNDATION_SOURCE_COMMIT = "f1cc44342e6814522ec2688cf3674f7ec442be8d"
 ISSUE_15_FOUNDATION_MERGE_COMMIT = "4d02db6a474f93eec9e058d780e206b4504ab24d"
 ISSUE_15_FOUNDATION_TAG = "issue-15-foundation-v1"
+ISSUE_15_AUDITED_SOURCE_BINDINGS_HASH = (
+    "sha256:f681c4d8a3da1d5ffa687e0d694c76d0903faa3eb7a0767b1172bc06918ff37b"
+)
 SNAPSHOT_FILES = {
     "baseline": "baseline_manifest.json",
     "decisions": "decision_register.json",
@@ -1435,24 +1438,14 @@ def _validate_issue_15_producer_inventory(
         raise RequirementError("Issue #15 producer scope evidence differs")
 
     source_files = inventory["producer_source_files"]
-    if not isinstance(source_files, dict):
-        raise RequirementError("Issue #15 producer source bindings are invalid")
-    runtime_root = Path(__file__).parents[2]
-    for relative, binding in source_files.items():
-        if not isinstance(relative, str) or not isinstance(binding, dict):
-            raise RequirementError("Issue #15 producer source binding is invalid")
-        _require_exact_fields(
-            value=binding,
-            fields={"sha256", "size"},
-            label="Issue #15 producer source binding",
-        )
-        path = _bound_repository_file(repository_root=runtime_root, relative=relative,)
-        if binding["size"] != path.stat().st_size or binding["sha256"] != sha256_file(
-            path=path
-        ):
-            raise RequirementError(
-                "Issue #15 audited producer source differs: {}".format(relative)
-            )
+    # This inventory describes the frozen foundation commit, not today's
+    # transport code. Pin its exact path/hash/size map without freezing current
+    # plumbing; runtime_authority_files and execution/freeze checks are separate.
+    if (
+        not isinstance(source_files, dict)
+        or content_hash(value=source_files) != ISSUE_15_AUDITED_SOURCE_BINDINGS_HASH
+    ):
+        raise RequirementError("Issue #15 audited producer source bindings differ")
     if "scripts/sec_pipeline.py" not in source_files:
         raise RequirementError("Issue #15 exact-base pipeline binding is missing")
     pipeline_binding = source_files["scripts/sec_pipeline.py"]

@@ -52,7 +52,7 @@ Neither this request, code nor tests will activate it.
 
 ## External prerequisite, not additional spending authority
 
-The two allowed BAC/Citi acquisitions were not attempted because this task's
-environment has no valid `SEC_CONTACT_EMAIL`. No provider key is needed or
-requested. Supplying that existing SEC identity prerequisite does not increase
+The original missing SEC contact prerequisite is resolved: the client reads
+`config/sec_config.json.contact_email` automatically, with an optional explicit
+`SEC_CONTACT_EMAIL` override. No acquisition was run. This does not increase
 the two-filing quota or authorize any provider/paid-model call.

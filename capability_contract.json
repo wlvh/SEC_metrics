@@ -249,7 +249,7 @@
         "anchor_id": "RESPONSIBILITY.operator_owns_sec_identity_and_run",
         "type": "responsibility_boundary",
         "status": "active",
-        "statement": "运行负责人维护 company registry，在 clean source-input closure 中运行正式流程；SEC organization 固定 axaxl，contact email 只从 SEC_CONTACT_EMAIL 读取，DeepSeek key 只从 DEEPSEEK_API_KEY 读取。具名 HUMAN 可决定 ReviewUnit；缺失时只有D-06固定SYSTEM身份可写入审计 approval。",
+        "statement": "运行负责人维护 company registry，在 clean source-input closure 中运行正式流程；SEC organization 固定 axaxl，contact email 自动读取 config/sec_config.json.contact_email，显式 SEC_CONTACT_EMAIL 优先；DeepSeek key 只从 DEEPSEEK_API_KEY 读取。具名 HUMAN 可决定 ReviewUnit；缺失时只有D-06固定SYSTEM身份可写入审计 approval。",
         "audience": ["operator", "reviewer"],
         "test_anchor": null,
         "test_status": "not_automated",

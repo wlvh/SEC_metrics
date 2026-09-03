@@ -19,6 +19,7 @@ import unittest
 from collections import Counter
 from pathlib import Path
 from typing import Dict, Sequence, Set
+from unittest import mock
 
 from tests.vnext.common import REPO_ROOT
 from vnext.canonical import content_hash, sha256_file
@@ -48,6 +49,7 @@ from vnext.requirements import (
     ISSUE_15_POST_FREEZE_EFFECTIVE_TIP_HASHES,
     RequirementError,
     load_requirement_snapshot,
+    _validate_issue_15_producer_inventory,
 )
 
 
@@ -389,6 +391,43 @@ def internally_rebind_inventory_records(
 
 class Issue15AuthorityTest(unittest.TestCase):
     """Prove WB-1 bytes, Decision history, and frozen inventories close."""
+
+    def test_historical_inventory_does_not_hash_current_transport(self) -> None:
+        """Current contact configuration cannot invalidate historical authority."""
+        def authority_hash(*, path: Path) -> str:
+            """Reject current transport reads while hashing actual authority."""
+            self.assertNotEqual(REPO_ROOT / "scripts/sec_http.py", path)
+            return sha256_file(path=path)
+
+        with mock.patch(
+            "vnext.requirements.sha256_file", side_effect=authority_hash,
+        ):
+            snapshot = load_requirement_snapshot(snapshot_dir=ISSUE_15_DIR)
+        self.assertEqual("issue_15_v1", snapshot["requirement_id"])
+
+    def test_historical_producer_source_bindings_still_reject_tampering(
+        self,
+    ) -> None:
+        """Retain exact historical paths, hashes and sizes, not arbitrary claims."""
+        original = read_json(
+            path=ISSUE_15_DIR / "legacy_semantic_producer_inventory.json",
+        )
+        parent = read_json(path=PARENT_DIR / "legacy_path_inventory.json")
+        strategy = read_json(
+            path=ISSUE_15_DIR / "source_strategy_baseline_receipt.json",
+        )
+        for field, value in (("sha256", "0" * 64), ("size", 1), ("extra", True)):
+            with self.subTest(field=field):
+                inventory = copy.deepcopy(original)
+                binding = inventory["producer_source_files"]["scripts/sec_http.py"]
+                binding[field] = value
+                with self.assertRaisesRegex(
+                    RequirementError, "source bindings differ",
+                ):
+                    _validate_issue_15_producer_inventory(
+                        inventory=inventory, parent_inventory=parent,
+                        source_strategy=strategy,
+                    )
 
     def test_issue15_requirement_snapshot_fast_smoke(self) -> None:
         """Load exact parent/child Requirement authority without publication I/O."""

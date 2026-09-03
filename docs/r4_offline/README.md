@@ -63,8 +63,10 @@ test is not substituted for the missing full R4 replay.
 
 Provider/paid/SEC calls are `0/0/0`; new immutable SEC attempt IDs are `[]`.
 BAC/Citi source insufficiency is proven. Both acquisition slots remain unused:
-native SEC preflight returns `SEC_CONTACT_EMAIL_REQUIRED` before any opener or
-ledger mutation ([preflight](source_acquisition_preflight.json)). The exact
+the original preflight returned `SEC_CONTACT_EMAIL_REQUIRED` before any opener or
+ledger mutation ([historical preflight](source_acquisition_preflight.json)).
+Contact now loads automatically from repository config; no acquisition was run.
+The exact
 future filing identities are recorded as metadata only, not reused bodies.
 
 Historical R1–R3 / Issue #15 bytes, retained V1/V2 engine and all nine execution-

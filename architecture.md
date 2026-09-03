@@ -216,7 +216,7 @@ flowchart LR
 - 运行时代码当前只使用 Python 标准库与本地模块；支持边界为 POSIX 本地文件系统上的 Python 3.9+，由 `TESTING.md` 的专项回归维护。仓库唯一 CI 是以固定 Python 3.14 运行 fast suite 的 PR check；其 pinned GitHub Actions 依赖不进入产品 runtime，仓库仍无第三方运行时依赖清单。
 - recorded acceptance 的强离线执行目前有额外的 macOS operator 前提：`/usr/bin/sandbox-exec` 对整个子进程树应用 `(deny network*)`，并保护正式 pointer/mirrors/sidecar 不可写；Python audit hook 只是纵深保护。缺少该 OS primitive 时 runner fail closed，不声明跨平台弱等价实现。
 - 外部网络依赖仅为 `www.sec.gov`、`data.sec.gov`，以及 explicit live vNext 的 `api.deepseek.com`。
-- SEC organization 固定为 `axaxl`；contact email 只从 `SEC_CONTACT_EMAIL` 读取。`SecHttpClient` 与 acceptance runner 共用同一个 identity validator，缺失、畸形或 example/reserved-domain email 在联网前失败；运行时凭据只在进程环境中存在。
+- SEC organization 固定为 `axaxl`；contact email 默认自动读取 `config/sec_config.json.contact_email`，显式 `SEC_CONTACT_EMAIL` 环境变量优先。`SecHttpClient` 与 acceptance runner 共用同一个 identity validator，选中值缺失、畸形或使用 reserved domain 时在联网前失败。邮箱是公开 User-Agent 身份；API key 仍只从环境读取。
 <!-- capability-anchor: BEHAVIOR.sec_identity_shared_fail_fast -->
 - Issue #15 effective D-01 固定 DeepSeek OpenAI-compatible Chat Completions、`deepseek-v4-flash`、`api.deepseek.com`、120 秒、transport 内部 retry 0、8 MiB、公开 SEC table-grid only；API key 只从 `DEEPSEEK_API_KEY` 读取并不得进入 artifact。只有 WB-3 orchestrator 可按 D-35 对 429/timeout/recoverable 5xx 追加最多一次独立 attempt。
 - 限速状态保存在单个 `SecHttpClient` 实例中，只提供进程内 pacing，不是跨阶段进程或多进程协调器；request-ledger publication 的 POSIX 锁只防丢行，不提供全局限速，也不承诺网络文件系统锁语义。

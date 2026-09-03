@@ -188,9 +188,9 @@ class OperatorCliTest(unittest.TestCase):
             del arguments[recorded_index:recorded_index + 2]
             arguments.append("--execute-live")
             environment = dict(os.environ)
-            environment.pop("SEC_CONTACT_EMAIL", None)
+            environment["SEC_CONTACT_EMAIL"] = ""
             with mock.patch.dict(os.environ, environment, clear=True), mock.patch(
-                "tools.vnext_operator.build_approved_transport_adapter",
+                "tools.vnext_operator.build_invocation_controlled_transport_adapter",
                 side_effect=AssertionError("OpenAI adapter built before SEC preflight"),
             ) as adapter_builder:
                 return_code, stdout, stderr = run_operator(*arguments)

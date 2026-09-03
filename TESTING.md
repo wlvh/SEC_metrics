@@ -79,7 +79,7 @@ Fresh三轮必须按全family ordinal-major顺序执行：Occupancy 1 → RevPAR
 - 仓库没有 `pyproject.toml`、requirements 或 tox；唯一 CI workflow 是在 `pull_request` 上以 Python 3.14 运行本节 fast suite。Python 3.9 下限仍由本测试契约和专项回归维护，不由这个单解释器 CI job 证明。
 - 快速测试建议设置 `PYTHONDONTWRITEBYTECODE=1`，避免在仓库生成 `__pycache__`。
 - live SEC 命令读取 `config/sec_config.json`，只允许官方 SEC 域名，并写入请求日志和 raw evidence。阶段 11 也可能在 C04 AuditorName 本地材料缺失时条件式联网。
-- SEC organization 固定为 `axaxl`，contact email 只从 `SEC_CONTACT_EMAIL` 读取；缺失、畸形或 example/reserved-domain 值返回 `SEC_CONTACT_EMAIL_REQUIRED`/对应稳定错误。不得把邮箱写回配置或 receipt。
+- SEC organization 固定为 `axaxl`；自动读取 `config/sec_config.json.contact_email`，显式 `SEC_CONTACT_EMAIL` 优先，非法覆盖值不得回退。选中值缺失、畸形或使用 reserved domain 时返回既有稳定错误。`python3 -m unittest tests.vnext.test_sec_identity -v` 离线验证配置、覆盖、客户端和 acceptance 共用规则；不发起请求。
 - stage 12 full 模式要求 provenance source-input closure clean；closure 内 tracked、staged 或 untracked 改动会在主 gate 前失败。生成的 evidence/outputs 不属于 source closure。
 - vNext 快速测试只使用 recorded response/test double，并在 replay、Reader 或 report input 边界阻断 socket；它不需要 AI 或 SEC 凭据，也不能证明 live 稳定性。
 - `tools/run_acceptance.py --scope recorded` 的离线边界覆盖整个子进程树：当前 macOS 支持路径必须经 `/usr/bin/sandbox-exec` 执行 `(deny network*)`，Python `sitecustomize` audit hook 只作为第二道诊断保护。`sandbox-exec` 缺失时稳定返回 `OFFLINE_PROCESS_SANDBOX_REQUIRED`，不得降级成较弱的同进程 socket monkeypatch；recorded gates 及 full 的 terminal-validation 子进程都会剥离 `DEEPSEEK_API_KEY`、旧`OPENAI_API_KEY`和`SEC_CONTACT_EMAIL`。

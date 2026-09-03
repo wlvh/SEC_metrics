@@ -120,14 +120,14 @@ def validate_sec_identity(*, config: dict) -> tuple[str, str]:
     """Validate and normalize the accountable SEC User-Agent identity.
 
     Args:
-        config: Repository configuration containing the fixed organization.
+        config: Repository configuration containing organization and contact.
 
     Returns:
-        Fixed organization and the validated environment-owned contact email.
+        Fixed organization and contact; an explicit environment value wins.
 
     Raises:
         SecIdentityError: When the organization differs from ``axaxl`` or
-            ``SEC_CONTACT_EMAIL`` is missing, malformed, or reserved.
+            the selected contact is missing, malformed, or reserved.
     """
     # The approved organization is repository-owned; changing its spelling is
     # an authority change and therefore fails before any network operation.
@@ -143,14 +143,15 @@ def validate_sec_identity(*, config: dict) -> tuple[str, str]:
             detail=f"SEC organization must equal {SEC_ORGANIZATION}",
         )
 
-    # The config file is not a credential authority. Reading the process
-    # environment here keeps the SEC client and live-acceptance gate identical.
-    if SEC_CONTACT_EMAIL_ENV not in os.environ:
+    # Contact is public User-Agent identity, not an API secret. Both the client
+    # and acceptance gate use this fallback; explicit invalid overrides fail.
+    email = os.environ.get(SEC_CONTACT_EMAIL_ENV, config.get("contact_email", ""))
+    if not isinstance(email, str):
         raise SecIdentityError(
-            code="SEC_CONTACT_EMAIL_REQUIRED",
-            detail=f"{SEC_CONTACT_EMAIL_ENV} is required",
+            code="SEC_CONTACT_EMAIL_INVALID",
+            detail="SEC contact_email must be a string",
         )
-    email = os.environ[SEC_CONTACT_EMAIL_ENV].strip()
+    email = email.strip()
     if not email:
         raise SecIdentityError(
             code="SEC_CONTACT_EMAIL_REQUIRED",
@@ -218,9 +219,8 @@ def load_config(*, config_path: Path) -> dict:
     """Load centralized SEC HTTP configuration.
 
     Args:
-        config_path: UTF-8 JSON path with the fixed organization, request rate,
-            retry count, and backoff. The contact comes only from the process
-            ``SEC_CONTACT_EMAIL`` environment variable.
+        config_path: UTF-8 JSON path with organization, contact_email, request
+            rate, retries and backoff. ``SEC_CONTACT_EMAIL`` overrides contact.
 
     Returns:
         Parsed configuration dictionary.

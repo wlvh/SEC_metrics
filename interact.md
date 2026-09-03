@@ -94,7 +94,7 @@ repair validation 的 status 只允许 `PASS`、`FAIL`、`SKIPPED_LIGHT_PACKAGE`
 
 ## 6. 责任边界
 
-- 运行负责人维护 registry、提供环境凭据并控制 clean checkout 运行。SEC organization 固定 `axaxl`，contact email 只从 `SEC_CONTACT_EMAIL` 读取；DeepSeek key 只从 `DEEPSEEK_API_KEY` 读取。缺失、畸形或 example/reserved-domain email 会在联网前失败，secret 不写入 artifact。
+- 运行负责人维护 registry、提供环境凭据并控制 clean checkout 运行。SEC organization 固定 `axaxl`，程序自动读取 `config/sec_config.json.contact_email`，可用 `SEC_CONTACT_EMAIL` 显式覆盖；DeepSeek key 仍只从 `DEEPSEEK_API_KEY` 读取。选中邮箱缺失、畸形或使用 reserved domain 时会在联网前失败，secret 不写入 artifact。
   <!-- capability-anchor: RESPONSIBILITY.operator_owns_sec_identity_and_run -->
 - 业务与方法负责人复核近似、定性、缺失、解析失败和 `NEEDS_REVIEW`，并承担最终决策。
   <!-- capability-anchor: RESPONSIBILITY.human_reviews_caveats_and_decides -->
