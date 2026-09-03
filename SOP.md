@@ -10,6 +10,12 @@
 
 ## Issue #28 successor Requirement transition
 
+PR-A has merged; its exact activation receipt is separately persisted as
+governance evidence. PR-B first tests and commits the additive SourceScopeManifest,
+scoped Reader and offline-session B0 interfaces. Source-specific audit, transport
+tamper and real performance work follow that interface baseline. B0 is never a
+production semantic freeze, cycle, Stage-A or live execution authority.
+
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 加载五文件snapshot、固定版本engine与记录parent | `requirements/issue_28_v1/`；`scripts/vnext/requirement_profile.py` | exact files/hash/size、engine及其dependencies、parent recorded hashes/snapshot bytes一致；parent不读取current root authority |

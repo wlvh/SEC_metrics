@@ -8,6 +8,13 @@
 
 ## 2. 当前定位
 
+PR-B B0 is an offline developer/reviewer interface baseline. A scoped request
+contains only certified windows, while the complete filing and native Evidence
+checks stay local. Its synthetic PASS never means a provider answered correctly,
+a fixture earned live qualification credit, or R4 was published. Deterministic
+token estimates are labeled estimates; actual provider usage remains NOT_RUN.
+<!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
+
 SEC_metrics 是配置驱动、SEC-only、单财年批处理研究流程。它能为 `config/company_registry.csv` 中配置的逻辑公司生成最新年度申报的指标、治理、风险与事件结果，并保留可审计证据。
 <!-- capability-anchor: CAPABILITY.sec_latest_fiscal_batch -->
 <!-- capability-anchor: CAPABILITY.sec_governance_risk_event_signals -->

@@ -65,6 +65,7 @@ a distinct file and entrypoint; it never reinterprets the historical eight tasks
 | `config/r4_fixture_matrix_v1.json` | source-specific audited successor fixture authority |
 | `config/release_plans/issue_28_r4_offline_v1.json` | six-metric successor plan, offline evidence only |
 | `tests/vnext/test_source_scope.py` | scope identity and full tamper matrix |
+| `tests/vnext/r4_b0_fixture_support.py` | small complete-file synthetic B0 fixture, using the real A03 task/Evidence path |
 | `tests/vnext/test_scoped_reader.py` | scoped transport/Candidate/Evidence replay negatives |
 | `tests/vnext/test_offline_execution_session.py` | exact cache keys, mutation/crash/UNKNOWN boundaries and counters |
 | `tests/vnext/test_r4_fixture_authority.py` | fixture/structured-first/classification/ReleasePlan gates |

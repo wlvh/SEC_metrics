@@ -70,6 +70,19 @@ Issue #28 / `issue_28_v1` 是待激活的 R4–Rf successor authority；PR #29�
 
 ## 1. 文件简介
 
+### PR-B additive offline interfaces
+
+- `scripts/vnext/source_scope.py`: pinned source/window certificate over full
+  source/asset/task authority, with native synthetic Evidence replay.
+- `scripts/vnext/scoped_reader.py`: separate successor scoped request/attempt
+  entrypoints; no legacy Reader semantics or provider opener changes.
+- `scripts/vnext/offline_execution_session.py`: process-local exact immutable
+  bytes, deterministic operation counters and one final independent disk replay.
+- `docs/r4_offline/closure_impact_map.md`: pre-edit A/B/C/D path classification;
+  B0 is not freeze/cycle/Stage-A or live authority.
+- `docs/evidence/issue_28_transition_activation.json`: persisted exact PR #29
+  merge-governance receipt, not a provider/SEC execution grant.
+
 ### 核心治理与工作流文档
 
 - `AGENTS.md`：agent 入口、文件地图、项目规则与文档关系。

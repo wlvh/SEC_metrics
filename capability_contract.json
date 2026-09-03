@@ -14,6 +14,16 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.r4_offline_b0_interfaces",
+        "type": "capability",
+        "status": "active",
+        "statement": "PR-B B0提供独立SourceScopeManifest、scoped Reader与process-local offline session接口。窗口保留完整DerivedAsset中的原始坐标，synthetic Candidate仍经过既有check_evidence；完整本地Evidence authority不冒充scoped outbound，audit reference/答案不进入request。B0仅是接口基线，不是生产semantic freeze、cycle、Stage-A或live资格，真实来源资格与10倍性能必须另有离线证据。",
+        "audience": ["developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_scoped_reader.py::ScopedReaderTest.test_scoped_request_keeps_full_authority_without_leaking_audit_answers",
+        "test_status": "automated_recorded",
+        "since": "2026-09-03"
+      },
+      {
         "anchor_id": "CAPABILITY.sec_latest_fiscal_batch",
         "type": "capability",
         "status": "active",

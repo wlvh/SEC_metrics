@@ -14,6 +14,27 @@
 
 ## 0. 更新触发条件
 
+### PR-B B0 successor offline interfaces
+
+`source_scope.py` binds a source-specific audited window certificate to the
+complete RawBlob/SourceReference, full DerivedAsset, full ReaderInputManifest,
+exact task contract and activated Requirement closure. The fixture authority
+pins its content ID. `scoped_reader.py` provides a separate request subtype;
+legacy ReaderInputManifest and `build_reader_payload` are unchanged. Only the
+certified tables are packed, retaining original IDs/order/grid hashes. Audit
+references and synthetic answers never enter outbound bytes. Response locators
+are constrained to those windows, then the existing `check_evidence` replays
+them against the complete local authority. That full authority representation
+is explicitly distinct from the scoped outbound request.
+
+`offline_execution_session.py` owns one source/DerivedAsset/Requirement build,
+shares immutable byte objects only within the process, and gives its final
+independent replay disk locators rather than cached data. Boundary counters and
+wall/peak-RSS observations are exposed; the B0 tests are not a real-source
+performance benchmark or an implementation of live authorization. No legacy
+provider opener, qualification cycle or publication path is changed.
+<!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
+
 以下变化必须同步更新本文档：
 
 - 新增、删除或重排 `scripts/00_*.py` 至 `scripts/12_*.py` 的阶段
