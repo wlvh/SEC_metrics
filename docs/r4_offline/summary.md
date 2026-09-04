@@ -1,5 +1,9 @@
 # PR-B R4 offline implementation — review evidence
 
+For the current reworked proposal, see [the live-seam review summary](live_seam_review_summary.md)
+and [the current one-page summary](README.md). The following report is retained
+for the earlier rejected candidate; its closure and benchmark are historical.
+
 > Historical offline report for rejected review head `f4158590336f65c44ba0916ada1b50af922ad44e`.
 > These measurements and old identities remain historical evidence, not current
 > rework acceptance. The new production seam is under validation; PR30 stays

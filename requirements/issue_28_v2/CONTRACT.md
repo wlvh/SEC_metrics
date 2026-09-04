@@ -10,10 +10,19 @@ The parent and all R1–R3 history retain their bytes and interpretation.
 engine generation 3 are separate identities. V1/V2 engines are not edited.
 
 Policy-content authority is the Decision Register, bound to exact owner
-comments 5524085182 and 5524746204 and their author/timestamp/body hashes.
+comments 5524085182, 5524746204 and 5536668333 and their author/timestamp/body hashes.
 Neither those comments nor this implementation activate this closure. A later
 owner exact-head/closure activation is required before merging PR-B; live
 provider authorization remains a separate PR-C action.
+
+The SEC contact policy uses the repository default unless SEC_CONTACT_EMAIL is
+explicitly present. An invalid explicit value fails closed without fallback.
+The selected contact is public User-Agent/audit identity, not a provider secret.
+The exact default stays in the owner-approved Decision and frozen configuration
+evidence; the engine enforces format, precedence, visibility and no live grant.
+Historical loading uses those frozen bytes; current execution still requires
+the separately bound configuration bytes. This policy does not authorize SEC
+acquisition, provider/paid calls, qualification or publication.
 
 ## Exact R4 scope
 

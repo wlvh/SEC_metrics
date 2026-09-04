@@ -25,6 +25,13 @@ COMMENT_COMPONENT_KINDS = {
     "a13_product_semantics": "INTERNATIONAL_NET_REVENUE_POLICY",
     "parser_resource_policy": "BOUNDED_PARSER_RESOURCE_POLICY",
     "sec_acquisition": "OFFLINE_FIXTURE_ACQUISITION_POLICY",
+    "sec_contact_authority": "SEC_CONTACT_AUTHORITY_POLICY",
+}
+CONTACT_CHOICE_FIELDS = {
+    "default_contact_email", "environment_override", "precedence",
+    "invalid_explicit_environment_override", "contact_is_public_user_agent_identity",
+    "provider_calls_authorized", "paid_model_calls_authorized",
+    "live_qualification_authorized", "publication_authorized",
 }
 SCOPE_DIMENSIONS = {
     "A03": {"entity_scope", "aggregation"},
@@ -158,6 +165,40 @@ def _acquisition(*, choice: Mapping) -> dict:
     return dict(choice)
 
 
+def _sec_contact(*, choice: Mapping) -> dict:
+    """Stable identity/precedence bounds; the approved email remains policy data."""
+    v1._exact_fields(value=choice, expected=CONTACT_CHOICE_FIELDS | {"kind"},
+                     label="SEC contact authority policy")
+    address = choice["default_contact_email"]
+    _require(type(address) is str and address == address.strip() and re.fullmatch(
+        r"[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@"
+        r"[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?"
+        r"(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+", address) is not None,
+        "SEC contact policy email is invalid")
+    domain = address.rsplit("@", 1)[1].casefold()
+    _require(domain not in {"example.com", "example.net", "example.org", "localhost"}
+             and not domain.endswith((".example", ".invalid", ".test")),
+             "SEC contact policy uses a reserved domain")
+    _require(choice["environment_override"] == "SEC_CONTACT_EMAIL"
+             and choice["precedence"] == "EXPLICIT_ENVIRONMENT_IF_PRESENT_ELSE_REPOSITORY_DEFAULT"
+             and choice["invalid_explicit_environment_override"] == "FAIL_CLOSED_NO_DEFAULT_FALLBACK",
+             "SEC contact authority precedence/fail-closed policy differs")
+    _booleans(choice, true_fields=("contact_is_public_user_agent_identity",), false_fields=(
+        "provider_calls_authorized", "paid_model_calls_authorized",
+        "live_qualification_authorized", "publication_authorized"))
+    return dict(choice)
+
+
+def sec_contact_policy_choice(*, document: Mapping) -> dict:
+    """Project the flat owner comment without inventing approval or mirroring it."""
+    v1._exact_fields(value=document, expected=CONTACT_CHOICE_FIELDS | {"decision", "scope"},
+                     label="SEC contact owner comment")
+    _require(document["decision"] == "APPROVE_SEC_CONTACT_AUTHORITY"
+             and document["scope"] == "POLICY_CONTENT_ONLY", "SEC contact approval scope differs")
+    return _sec_contact(choice={"kind": "SEC_CONTACT_AUTHORITY_POLICY",
+                                **{k: document[k] for k in sorted(CONTACT_CHOICE_FIELDS)}})
+
+
 def single_table_scope_rule() -> dict:
     """Keep the default rule, with only the two explicitly approved exceptions."""
     return {"default_same_target_table_required": True,
@@ -182,6 +223,7 @@ EVALUATORS = {**v1.INVARIANT_EVALUATORS,
     "INTERNATIONAL_NET_REVENUE_POLICY": _international_revenue,
     "BOUNDED_PARSER_RESOURCE_POLICY": _parser_resource,
     "OFFLINE_FIXTURE_ACQUISITION_POLICY": _acquisition,
+    "SEC_CONTACT_AUTHORITY_POLICY": _sec_contact,
     "PARENT_POLICY_CARRY_FORWARD": _inherited_semantics,
 }
 
@@ -213,12 +255,16 @@ def _owner_documents(*, baseline: Mapping, parent: Mapping) -> dict:
         v1.parse_utc_timestamp(value=source["published_at_utc"])
         document = strict_json_loads(text=source["text"])
         _require(isinstance(document, dict) and document.get("decision") in {
-            "APPROVE_R4_PRB_POLICY_REVISION", "APPROVE_R4_A03_COMPOSITE_SCOPE_AND_ALTERNATE_PERIOD"},
+            "APPROVE_R4_PRB_POLICY_REVISION", "APPROVE_R4_A03_COMPOSITE_SCOPE_AND_ALTERNATE_PERIOD",
+            "APPROVE_SEC_CONTACT_AUTHORITY"},
             "Unknown owner policy approval")
-        _require(document["scope"] == "PR_B_OFFLINE_IMPLEMENTATION_ONLY"
-                 and ancestors.get(document["predecessor_requirement_id"])
-                 == document["predecessor_requirement_closure_hash"]
-                 and document["active_publication_must_remain"] == "R3", "Owner policy predecessor/scope differs")
+        if document["decision"] == "APPROVE_SEC_CONTACT_AUTHORITY":
+            sec_contact_policy_choice(document=document)
+        else:
+            _require(document["scope"] == "PR_B_OFFLINE_IMPLEMENTATION_ONLY"
+                     and ancestors.get(document["predecessor_requirement_id"])
+                     == document["predecessor_requirement_closure_hash"]
+                     and document["active_publication_must_remain"] == "R3", "Owner policy predecessor/scope differs")
         _booleans(document, false_fields=("provider_calls_authorized", "paid_model_calls_authorized",
                                           "live_qualification_authorized", "publication_authorized"))
         if document["decision"].startswith("APPROVE_R4_A03_"):
@@ -226,7 +272,10 @@ def _owner_documents(*, baseline: Mapping, parent: Mapping) -> dict:
                                               "transition_activation_authorized", "merge_authorized"))
         documents[source["source_id"]] = (source, document)
     _require(source_ids == sorted(set(source_ids)), "Policy source IDs are not exact/unique")
-    _require(len(documents) == 2 and set(inherited).issubset(source_ids), "Owner policy evidence is incomplete")
+    _require(len(documents) == 3 and set(inherited).issubset(source_ids), "Owner policy evidence is incomplete")
+    _require({doc["decision"] for _, doc in documents.values()} == {
+        "APPROVE_R4_PRB_POLICY_REVISION", "APPROVE_R4_A03_COMPOSITE_SCOPE_AND_ALTERNATE_PERIOD",
+        "APPROVE_SEC_CONTACT_AUTHORITY"}, "Owner policy approval kinds are incomplete")
     approvals = list(documents.values())
     _require(len({source["source_url"] for source, _ in approvals}) == len(approvals),
              "Different policy captures cannot claim the same immutable comment")
@@ -296,6 +345,13 @@ def _validate_decisions(*, decisions: Mapping, chains: Mapping, parent: Mapping,
                      and provenance["section"] == "a03_scope_policy", "Inherited scope revision differs")
             continue
         section = provenance["section"]
+        if section == "sec_contact_authority":
+            _require(decision_id == "S-SEC-CONTACT-AUTHORITY"
+                     and decision_id not in parent["effective_decisions"]
+                     and decision["supersedes_decision_id"] is None and len(chains[decision_id]) == 1
+                     and choice == sec_contact_policy_choice(document=document),
+                     "SEC contact Decision is not approved by its policy-content evidence")
+            continue
         _require(section in COMMENT_COMPONENT_KINDS and section in document
                  and choice["kind"] == COMMENT_COMPONENT_KINDS[section], "Policy component differs")
         _require(decision_id not in parent["effective_decisions"]
@@ -306,6 +362,26 @@ def _validate_decisions(*, decisions: Mapping, chains: Mapping, parent: Mapping,
             _require(claimed.pop("metric_id", None) == document["a03_scope_policy"]["metric_id"],
                      "Period approval was applied to another metric")
         _require(claimed == document[section], "Decision content is not approved by its evidence")
+
+
+def _validate_sec_contact_configuration(*, baseline: Mapping, documents: Mapping,
+                                        repo_root: Path) -> None:
+    """Validate frozen config bytes, not the future mutable root at history load."""
+    source, document = next((s, d) for s, d in documents.values()
+                            if d["decision"] == "APPROVE_SEC_CONTACT_AUTHORITY")
+    capture = v1.read_requirement_object(path=repo_root / source["evidence_path"])
+    frozen = v1._mapping(value=capture.get("repository_configuration_evidence"), label="SEC contact config evidence")
+    v1._exact_fields(value=frozen, expected={"path", "sha256", "size", "raw_text"},
+                     label="SEC contact config evidence")
+    raw = v1._text(value=frozen["raw_text"], label="Frozen SEC config").encode("utf-8")
+    _require(frozen["path"] == "config/sec_config.json" and type(frozen["size"]) is int
+             and frozen["size"] == len(raw) and frozen["sha256"] == v1.sha256_bytes(content=raw)
+             and baseline["execution_authority"]["files"].get(frozen["path"])
+             == {"sha256": frozen["sha256"], "size": frozen["size"]},
+             "SEC contact configuration is not bound by execution authority")
+    configuration = strict_json_loads(text=frozen["raw_text"])
+    _require(configuration.get("contact_email") == document["default_contact_email"],
+             "Repository SEC default differs from owner policy")
 
 
 def _load_profile_requirement_snapshot(*, snapshot_dir: Path,
@@ -365,6 +441,8 @@ def _load_profile_requirement_snapshot(*, snapshot_dir: Path,
         scopes.add((kind, scope)); values.setdefault(kind, []).append(value)
     _require(v1.SUPPORTED_INVARIANT_KINDS.issubset(values)
              and set(COMMENT_COMPONENT_KINDS.values()).issubset(values), "Required safety invariant is absent")
+    _validate_sec_contact_configuration(baseline=baseline, documents=documents,
+                                        repo_root=snapshot_dir.parent.parent)
     _require({v["metric_id"] for v in values["SOURCE_BOUND_COMPOSITE_SCOPE_POLICY"]} == set(SCOPE_DIMENSIONS),
              "Composite approval set differs")
     for kind in ("PROVIDER_TRANSPORT_POLICY", "TEST_POLICY", "HISTORICAL_EVIDENCE_POLICY",

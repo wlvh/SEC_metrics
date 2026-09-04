@@ -5,7 +5,7 @@
   "requirement_generation": "PROFILE_DRIVEN_V3",
   "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
   "contract_revision": "ISSUE_28_V2",
-  "created_at_utc": "2026-09-03T11:05:07Z",
+  "created_at_utc": "2026-09-04T06:33:01Z",
   "issue": {
     "number": 28,
     "url": "https://github.com/wlvh/SEC_metrics/issues/28",
@@ -71,16 +71,16 @@
   },
   "snapshot_files": {
     "CONTRACT.md": {
-      "sha256": "a1ea5e358ea8979c75458fa7a3ce54de547f5c1f53bfea687c30fdc8069a6fd1",
-      "size": 6039
+      "sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+      "size": 6667
     },
     "decision_register.json": {
-      "sha256": "cca8c1cd34408fef9c5c3f93b0f7e96a7594de0e60fd135d297eb18836ab4ae4",
-      "size": 91297
+      "sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+      "size": 92341
     },
     "invariant_profile.json": {
-      "sha256": "dfedb575ea49ff8379dd18d8d64c36504679594fa6193b3721249d1794c5fe52",
-      "size": 2270
+      "sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+      "size": 2381
     },
     "transfer_manifest.json": {
       "sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
@@ -90,7 +90,7 @@
   "validator": {
     "path": "scripts/vnext/requirement_profile_v3.py",
     "semantic_version": "3",
-    "sha256": "0ea6de0c0fe65fd0bfec78e95b45fc4f118696751a71779fb5e063f431c9c4ce",
+    "sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309",
     "dependencies": {
       "scripts/vnext/requirement_profile_v1.py": {
         "sha256": "575ad8e14c41f2835087583b66a3bbb5886ce5f0816fb500e29a35184c895e48",
@@ -137,6 +137,16 @@
       "published_at_utc": "2026-09-03T10:08:54Z",
       "text": "{\n  \"decision\": \"APPROVE_R4_PRB_POLICY_REVISION\",\n  \"scope\": \"PR_B_OFFLINE_IMPLEMENTATION_ONLY\",\n  \"predecessor_requirement_id\": \"issue_28_v1\",\n  \"predecessor_requirement_closure_hash\": \"sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac\",\n  \"a12_scope_policy\": {\n    \"metric_id\": \"A12\",\n    \"mechanism\": \"SOURCE_BOUND_COMPOSITE_SCOPE_PROOF_V1\",\n    \"numeric_value_locator\": \"SAME_TARGET_TABLE_CELL_REQUIRED\",\n    \"amount_scale_locator\": \"SAME_TARGET_TABLE_HEADER_REQUIRED\",\n    \"scope_dimensions_allowed_from_text_span\": [\n      \"confidence_level\",\n      \"holding_period\"\n    ],\n    \"required_scope\": {\n      \"confidence_level\": \"ninety_five_percent\",\n      \"holding_period\": \"one_day\"\n    },\n    \"text_span_requirements\": {\n      \"same_source_sha_and_accession\": true,\n      \"exact_byte_offsets_and_span_sha256\": true,\n      \"same_named_market_risk_section\": true,\n      \"deterministic_target_table_association\": true,\n      \"all_competing_scope_spans_dispositioned\": true,\n      \"conflicting_scope_blocks_auto_certification\": true\n    },\n    \"provider_payload_remains_table_window_only\": true,\n    \"ai_or_fuzzy_span_selection_allowed\": false,\n    \"cross_source_scope_evidence_allowed\": false,\n    \"copying_text_into_table_or_caption_allowed\": false\n  },\n  \"a13_product_semantics\": {\n    \"metric_id\": \"A13\",\n    \"economic_measure\": \"INTERNATIONAL_NET_REVENUE\",\n    \"explicitly_not_net_income\": true,\n    \"geography_scope\": \"ISSUER_DISCLOSED_NON_US_OR_INTERNATIONAL\",\n    \"period\": \"FULL_FISCAL_YEAR_DURATION\",\n    \"canonical_unit\": \"USD\",\n    \"preferred_selection\": \"DIRECT_ISSUER_DISCLOSED_INTERNATIONAL_TOTAL\",\n    \"regional_sum_allowed_only_when\": {\n      \"leaf_regions_are_mutually_exclusive\": true,\n      \"concept_unit_period_and_non_geography_context_match\": true,\n      \"no_parent_child_geography_overlap\": true,\n      \"reconciles_to_global_total_minus_us_total\": true\n    },\n    \"excluded_measure_families\": [\n      \"NET_INCOME\",\n      \"ASSETS\",\n      \"LOANS\",\n      \"DEPOSITS\",\n      \"MATURITY_SCHEDULES\",\n      \"SEGMENT_ONLY_TOTALS\",\n      \"GLOBAL_TOTAL\"\n    ],\n    \"no_independent_legacy_anchor_controls_remain_required\": true\n  },\n  \"parser_resource_policy\": {\n    \"production_max_total_cells_may_increase\": true,\n    \"maximum_authorized_total_cells\": 250000,\n    \"actual_limit_must_be_minimum_sufficient_after_jpm_bac_citi_measurement\": true,\n    \"same_production_parser_must_parse_all_r4_sources\": true,\n    \"runtime_or_caller_limit_override_allowed\": false,\n    \"guarded_worker_must_stop_overriding_production_resource_limits\": true,\n    \"other_resource_limits_must_remain_unchanged\": true,\n    \"all_sources_must_pass_512_mib_no_swap_measurement\": true,\n    \"over_250000_or_unsafe_memory_requires_new_owner_escalation\": true\n  },\n  \"sec_acquisition\": {\n    \"existing_two_filing_quota_may_proceed\": true,\n    \"sources\": [\n      \"bank_of_america_fy2025_10k\",\n      \"citigroup_fy2025_10k\"\n    ],\n    \"automatic_retry_count\": 0,\n    \"contact_environment_prerequisite_is_now_available\": true\n  },\n  \"provider_calls_authorized\": false,\n  \"paid_model_calls_authorized\": false,\n  \"live_qualification_authorized\": false,\n  \"publication_authorized\": false,\n  \"active_publication_must_remain\": \"R3\"\n}",
       "evidence_path": "docs/evidence/issue_28_prb_policy_revision.json"
+    },
+    {
+      "source_id": "OWNER_SEC_CONTACT_POLICY",
+      "kind": "OWNER_ISSUE_COMMENT_POLICY",
+      "source_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5536668333",
+      "source_sha256": "a4cbf288a968a3e829f703bc89b2ba7c8e54be78eb66c5c476e6a28bbe898de8",
+      "author": "github:wlvh",
+      "published_at_utc": "2026-09-04T06:33:01Z",
+      "text": "{\n  \"decision\": \"APPROVE_SEC_CONTACT_AUTHORITY\",\n  \"scope\": \"POLICY_CONTENT_ONLY\",\n  \"default_contact_email\": \"12@qq.com\",\n  \"environment_override\": \"SEC_CONTACT_EMAIL\",\n  \"precedence\": \"EXPLICIT_ENVIRONMENT_IF_PRESENT_ELSE_REPOSITORY_DEFAULT\",\n  \"invalid_explicit_environment_override\": \"FAIL_CLOSED_NO_DEFAULT_FALLBACK\",\n  \"contact_is_public_user_agent_identity\": true,\n  \"provider_calls_authorized\": false,\n  \"paid_model_calls_authorized\": false,\n  \"live_qualification_authorized\": false,\n  \"publication_authorized\": false\n}\n",
+      "evidence_path": "docs/evidence/issue_28_sec_contact_authority.json"
     },
     {
       "source_id": "PARENT_D-01",
@@ -244,6 +254,10 @@
         "sha256": "55b7d04ab71ccb968e7976f686b019532efa44acfb653ac85bd29965166965bd",
         "size": 1597
       },
+      "config/sec_config.json": {
+        "sha256": "6c8be0ba4acefbaf7edc0acbf76a9bc0db143970e3654f1d8bb32d13fb5a83fb",
+        "size": 143
+      },
       "config/source_strategy_registry.json": {
         "sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
         "size": 12801
@@ -255,6 +269,10 @@
       "docs/evidence/issue_28_prb_policy_revision.json": {
         "sha256": "e7479ebe9cf2f75488659114118d903a3c19ea0f3ce65b3a06349d0a8cf86e28",
         "size": 4070
+      },
+      "docs/evidence/issue_28_sec_contact_authority.json": {
+        "sha256": "b1252e59349acf8a4624ea711258468e8ab977822dc2030f095d89594b59a283",
+        "size": 1531
       },
       "docs/r4_offline/fixture_acquisition_receipt.json": {
         "sha256": "4ab6dee512eb93b8636d53bad141db1c434e0be30d1e94c27a94fe8954acda11",
@@ -373,8 +391,8 @@
         "size": 14565
       },
       "scripts/vnext/r4_structured_run.py": {
-        "sha256": "a354478b3171578a20497d0971b64aee55857cc9eccd3707df59537daacb3796",
-        "size": 21323
+        "sha256": "456231677e12e692c1025191724c658b62a82349882106e1a5ab943faf1c653b",
+        "size": 23090
       },
       "scripts/vnext/r4_structured_sources.py": {
         "sha256": "f9739f622097ce3b1ab7aee0a07dd6b57048e9f13caf47252e363a926402028e",
@@ -421,8 +439,8 @@
         "size": 1548
       },
       "scripts/vnext/requirement_profile_v3.py": {
-        "sha256": "0ea6de0c0fe65fd0bfec78e95b45fc4f118696751a71779fb5e063f431c9c4ce",
-        "size": 27955
+        "sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309",
+        "size": 33032
       },
       "scripts/vnext/requirements.py": {
         "sha256": "dea17304a2685a70162cdc7cc555ec4aa56764352ad09ba1dd0d57b8f56acbbc",

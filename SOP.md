@@ -16,7 +16,7 @@ scoped Reader and offline-session B0 interfaces. Source-specific audit, transpor
 tamper and real performance work follow that interface baseline. B0 is never a
 production semantic freeze, cycle, Stage-A or live execution authority.
 
-PR-B 当前另有未激活的`requirements/issue_28_v2/`与保留的V3 engine，绑定两条owner政策评论。真实六指标fixture、source-bound scope、独立回放及aggregate性能只作离线证据；验收入口见`TESTING.md`，当前结果见`docs/r4_offline/README.md`。两个SEC acquisition slot已耗尽，provider/paid未授权。只有独立exact-head/closure审核才可激活v2及合并PR-B；不得据此开始PR-C。
+PR-B 当前另有未激活的`requirements/issue_28_v2/`与保留的V3 engine，绑定三条owner政策评论（scope/resource、A03、SEC contact authority）。真实六指标fixture、source-bound scope、独立回放及aggregate性能只作离线证据；验收入口见`TESTING.md`，当前结果见`docs/r4_offline/README.md`。两个SEC acquisition slot已耗尽，provider/paid未授权。只有独立exact-head/closure审核才可激活v2及合并PR-B；不得据此开始PR-C。
 
 PR-B必须交付可供未来PR-C调用、但当前未授权的生产接缝，不能把补Python推迟到发布PR。审核时运行`TESTING.md`的dormant R4集成与portable gate：12个recorded scoped execution、3个native structured Run、4类zero-call和失败前缀/usage/UNKNOWN/tamper。`tools/vnext_r4_qualification.py`的`plan`/`execute`只属于未来明确授权的PR-C；当前只可运行`draft`和隔离recorded测试，不得请求或签发live grant。新head/closure须独立审核后激活，保持PR30 Draft。
 <!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
@@ -26,7 +26,7 @@ PR-B必须交付可供未来PR-C调用、但当前未授权的生产接缝，不
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 加载五文件snapshot、固定版本engine与记录parent | `requirements/issue_28_v1/`；`scripts/vnext/requirement_profile.py` | exact files/hash/size、engine及其dependencies、parent recorded hashes/snapshot bytes一致；parent不读取current root authority |
-| 2 | 执行fragment transfer和typed safety bounds | `transfer_manifest.json`；`decision_register.json`；`invariant_profile.json` | 每个parent叶级义务唯一分类；D-01/D-24/D-26语义不可错配；同kind按ratchet独立；未知kind/fork/detached/tamper失败 |
+| 2 | 执行fragment transfer和typed safety bounds | `requirements/issue_28_v1/transfer_manifest.json`；`requirements/issue_28_v1/decision_register.json`；`requirements/issue_28_v1/invariant_profile.json` | 每个parent叶级义务唯一分类；D-01/D-24/D-26语义不可错配；同kind按ratchet独立；未知kind/fork/detached/tamper失败 |
 | 3 | 重验真实artifact与历史兼容 | `tests/vnext/test_issue28_rework.py`；`tests/vnext/test_issue28_requirement_transition.py` | successor三个subtype的generation和完整identity均必填；真实round-trip及删字段负例通过；root drift不破坏R1–R3；0/0/0 egress |
 | 4 | 保持Draft并提交返工证据 | PR-A一页summary与rework audit | 被拒head/closure不再请求批准；policy-content evidence不是activation。后续有效exact-head approval才可形成单独activation receipt；合并前不开始R4、不关闭#15/#24 |
 

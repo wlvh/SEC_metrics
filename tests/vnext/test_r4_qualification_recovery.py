@@ -123,7 +123,31 @@ class R4StructuredNamespaceTest(unittest.TestCase):
 def assert_completed_r4_run_recovery(
     testcase: unittest.TestCase, *, repo_root: Path, context, plan, recorded_transports, clock,
 ) -> list:
-    """Simulate the last child crash after Run persistence, with no new send.
+    """Simulate the last scoped child crash after Run persistence, with no new send."""
+    entry = plan["entries"][-1]
+    parent = repo_root / qualification.RUNTIME_ROOT / plan["pending_plan_id"][7:]
+    root = parent / "entries" / entry["entry_id"][7:]
+    return _assert_completed_run_recovery(testcase, repo_root=repo_root, root=root,
+        context=context, plan=plan, recorded_transports=recorded_transports, clock=clock)
+
+
+def assert_completed_r4_structured_run_recovery(
+    testcase: unittest.TestCase, *, repo_root: Path, context, plan, recorded_transports, clock,
+) -> list:
+    """Resume the same last structured Run before sealing its zero-call terminal."""
+    fixtures = [fixture for fixture in plan["zero_call_fixtures"]
+                if fixture["artifact_kind"] == "STRUCTURED_PRIMARY"]
+    testcase.assertEqual(len(fixtures), 3)
+    parent = repo_root / qualification.RUNTIME_ROOT / plan["pending_plan_id"][7:]
+    root = parent / "structured" / fixtures[-1]["fixture_id"]
+    return _assert_completed_run_recovery(testcase, repo_root=repo_root, root=root,
+        context=context, plan=plan, recorded_transports=recorded_transports, clock=clock)
+
+
+def _assert_completed_run_recovery(
+    testcase: unittest.TestCase, *, repo_root: Path, root: Path, context, plan, recorded_transports, clock,
+) -> list:
+    """Exercise both durable Run states using the shared immutable source context.
 
     The caller must supply the real isolated integration workspace after its
     complete execution.  All changed temporary bytes are restored in ``finally``.
@@ -131,9 +155,7 @@ def assert_completed_r4_run_recovery(
     from vnext import ai_adapter
     if repo_root.resolve() == REPO_ROOT.resolve():
         raise AssertionError("Recovery probe may only mutate the isolated integration copy")
-    entry = plan["entries"][-1]
     parent = repo_root / qualification.RUNTIME_ROOT / plan["pending_plan_id"][7:]
-    root = parent / "entries" / entry["entry_id"][7:]
     terminal_path, manifest_path = root / "qualification_terminal.json", root / "run/manifest.json"
     summary_path = parent / "execution_summary.json"
     saved = {path: path.read_bytes() for path in (terminal_path, manifest_path, summary_path)}

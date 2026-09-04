@@ -1,5 +1,10 @@
 # R4 offline session performance: PASS
 
+Historical measurement at rejected candidate `f415859`. The receipt and raw
+progress stream remain byte-identical. Current rework results are tracked in
+[the live-seam review summary](live_seam_review_summary.md); this older 21.79x
+measurement does not validate a later Requirement closure.
+
 The actual same-input comparison achieved **21.789879× aggregate improvement**.
 It replayed all 16 certified cases, including nine scoped extractions, three
 native structured successes and four zero-call classes. There were no provider,

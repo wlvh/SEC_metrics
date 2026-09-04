@@ -483,15 +483,42 @@ class OfflineBenchmarkBoundaryTest(unittest.TestCase):
 
 
 class RecordedOfflineBenchmarkTest(unittest.TestCase):
-    """Check recorded measurement integrity, not rerun or manufacture timings."""
+    """Check historical and current measurements without executing any replay."""
 
-    def test_complete_recorded_gate_and_current_inputs_remain_bound(self):
-        receipt = strict_json_file(path=REPO_ROOT / "docs/r4_offline/performance_session_benchmark.json")
+    HISTORICAL_COMMIT = "f4158590336f65c44ba0916ada1b50af922ad44e"
+    HISTORICAL_STEM = "performance_session_benchmark"
+    CURRENT_STEM = "performance_session_benchmark_live_seam_final"
+
+    def _receipt(self, stem):
+        return strict_json_file(path=REPO_ROOT / "docs/r4_offline" / (stem + ".json"))
+
+    def _historical_blob(self, relative):
+        from git_workspace import sanitized_git_environment
+
+        return subprocess.run(
+            ["git", "cat-file", "blob", self.HISTORICAL_COMMIT + ":" + relative],
+            cwd=REPO_ROOT, env=sanitized_git_environment(), capture_output=True,
+            check=True, timeout=10,
+        ).stdout
+
+    def _assert_recorded_gate(self, receipt):
         self.assertEqual(receipt["benchmark_receipt_id"],
             content_hash(value={k: v for k, v in receipt.items() if k != "benchmark_receipt_id"}))
+        workload = receipt["workload"]
+        self.assertEqual(workload["workload_id"],
+            content_hash(value={k: v for k, v in workload.items() if k != "workload_id"}))
         self.assertEqual("PASSED", receipt["status"])
+        self.assertEqual("NONE_OFFLINE_BENCHMARK", receipt["qualification_credit"])
         self.assertEqual(1, receipt["final_independent_disk_replay_executions"])
+        self.assertEqual("ONE_SHARED_FRESH_REPLAY_CHARGED_EQUALLY_TO_BOTH_ALTERNATIVES",
+                         receipt["final_replay_cost_accounting"])
         self.assertEqual([0, 0, 0], receipt["provider_paid_sec_calls"])
+        self.assertEqual({"SCOPED_EXTRACTION": 9, "STRUCTURED_PRIMARY": 3,
+                          "ZERO_CALL_CLASSIFICATION": 4},
+                         {kind: sum(case["artifact_kind"] == kind for case in workload["cases"])
+                          for kind in {case["artifact_kind"] for case in workload["cases"]}})
+        self.assertEqual(6, workload["prior_history"]["selected_run_count"])
+        self.assertEqual(6, len({row["run_id"] for row in workload["prior_history"]["selected_runs"]}))
         reports = receipt["reports"]
         self.assertEqual({"baseline", "optimized", "independent-replay"}, set(reports))
         self.assertEqual(3, len({r["worker_pid"] for r in reports.values()}))
@@ -526,14 +553,37 @@ class RecordedOfflineBenchmarkTest(unittest.TestCase):
                                 "provider_calls", "paid_model_calls", "sec_calls"):
                         self.assertEqual(0, child["operation_counts"][key], (mode, child["fixture_id"], key))
         self.assertEqual(reports["optimized"]["operation_counts"], reports["independent-replay"]["operation_counts"])
+
+    def test_historical_measurement_and_inputs_remain_commit_bound(self):
+        receipt = self._receipt(self.HISTORICAL_STEM)
+        self._assert_recorded_gate(receipt)
+        relative = "docs/r4_offline/" + self.HISTORICAL_STEM + ".json"
+        self.assertEqual(self._historical_blob(relative), (REPO_ROOT / relative).read_bytes())
         for binding in receipt["workload"]["input_bindings"]:
-            data = resolve_repository_file(repo_root=REPO_ROOT, repo_relative_path=binding["path"]).read_bytes()
+            data = self._historical_blob(binding["path"])
             self.assertEqual(binding["size"], len(data), binding["path"])
             self.assertEqual(binding["sha256"], sha256_bytes(content=data), binding["path"])
 
-    def test_streamed_progress_contains_the_exact_measured_case_set_and_times(self):
-        receipt = strict_json_file(path=REPO_ROOT / "docs/r4_offline/performance_session_benchmark.json")
-        path = REPO_ROOT / "docs/r4_offline/performance_session_benchmark.stdout.jsonl"
+    def test_complete_recorded_gate_and_current_inputs_remain_bound(self):
+        from tools.benchmark_r4_offline_session import _workload
+
+        receipt = self._receipt(self.CURRENT_STEM)
+        self._assert_recorded_gate(receipt)
+        requirement = load_requirement_snapshot(snapshot_dir=REPO_ROOT / "requirements/issue_28_v2")
+        # Reconstruct the entire current set, so added/deleted files are drift
+        # too. Missing final evidence fails; historical evidence is no fallback.
+        expected = _workload(requirement_id=requirement["requirement_id"],
+                             closure=requirement["requirement_closure_hash"])
+        self.assertEqual(expected, receipt["workload"])
+        historical = self._receipt(self.HISTORICAL_STEM)
+        self.assertEqual(historical["workload"]["cases"], receipt["workload"]["cases"])
+        self.assertEqual(historical["workload"]["prior_history"], receipt["workload"]["prior_history"])
+        self.assertEqual(historical["reports"]["baseline"]["interpreter"],
+                         receipt["reports"]["baseline"]["interpreter"])
+
+    def _assert_streamed_progress(self, stem):
+        receipt = self._receipt(stem)
+        path = REPO_ROOT / "docs/r4_offline" / (stem + ".stdout.jsonl")
         rows = [json.loads(line) for line in path.read_text().splitlines()]
         expected_ids = {r["fixture_id"] for r in receipt["workload"]["cases"]}
         for mode, report in receipt["reports"].items():
@@ -547,3 +597,11 @@ class RecordedOfflineBenchmarkTest(unittest.TestCase):
                 {row["completed_fixture"]: row["fixture_wall_seconds"] for row in completed})
         self.assertEqual(receipt["aggregate_improvement_factor"], rows[-1]["factor"])
         self.assertEqual(receipt["status"], rows[-1]["status"])
+
+    def test_historical_streamed_progress_remains_commit_bound(self):
+        self._assert_streamed_progress(self.HISTORICAL_STEM)
+        relative = "docs/r4_offline/" + self.HISTORICAL_STEM + ".stdout.jsonl"
+        self.assertEqual(self._historical_blob(relative), (REPO_ROOT / relative).read_bytes())
+
+    def test_streamed_progress_contains_the_exact_measured_case_set_and_times(self):
+        self._assert_streamed_progress(self.CURRENT_STEM)

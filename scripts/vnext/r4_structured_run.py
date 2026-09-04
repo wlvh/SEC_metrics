@@ -299,30 +299,57 @@ def validate_structured_record_graph(*, repo_root: Path, run_dir: Path, manifest
 
 def create_and_freeze_r4_structured_run(*, repo_root: Path, run_dir: Path,
                                       fixture_id: str, plan: Mapping, execution_context):
-    from .run_store import create_run, append_run_records_atomically, validate_and_freeze_run
+    from .run_store import create_run, append_run_records_atomically, validate_and_freeze_run, load_open_run
     context = prepare_r4_structured_run_context(repo_root=repo_root, fixture_id=fixture_id,
                                                 plan=plan, execution_context=execution_context)
     graph = context._native_graph()
     binding = _binding(graph)
     requirement, subject = graph["requirement"], graph["subject"]
     runtime = graph["task_plan"]["runtime_task_contract"]
-    manifest = create_run(run_dir=run_dir,
-        run_id="run:r4:structured:" + content_hash(value=binding).split(":", 1)[1],
-        company_id=subject["company_id"], company_traits=subject["company_traits"],
-        target_period=graph["target_period"], source_references=[graph["route"]["source_reference"]],
-        missing_required_source_roles=[], task_contract_bindings=[graph["task_plan"]["run_binding"]],
-        spec_file_hashes={relative: sha256_file(path=repo_root / relative)
-                          for relative in runtime["metric_spec_paths"]},
-        requirement_hashes=requirement["hashes"], requirement_id=requirement["requirement_id"],
-        requirement_closure_hash=requirement["requirement_closure_hash"],
-        artifact_requirement_generation=EXPLICIT_ARTIFACT_GENERATION,
-        run_record_type=R4_STRUCTURED_RUN_TYPE, r4_structured_binding=binding)
+    identity = {"run_id": "run:r4:structured:" + content_hash(value=binding).split(":", 1)[1],
+        "company_id": subject["company_id"], "company_traits": subject["company_traits"],
+        "target_period": graph["target_period"], "source_references": [graph["route"]["source_reference"]],
+        "missing_required_source_roles": [], "task_contract_bindings": [graph["task_plan"]["run_binding"]],
+        "spec_file_hashes": {relative: sha256_file(path=repo_root / relative) for relative in runtime["metric_spec_paths"]},
+        "requirement_hashes": requirement["hashes"], "requirement_id": requirement["requirement_id"],
+        "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
+        "r4_structured_binding": binding}
+    existing_records = []
+    if run_dir.exists():
+        if run_dir.is_symlink() or not run_dir.is_dir() or (run_dir / "manifest.json").is_symlink():
+            raise R4StructuredRunError("Existing structured Run is unsafe")
+        manifest = validate_record(record=strict_json_file(path=run_dir / "manifest.json"))
+        if (manifest["record_type"] != R4_STRUCTURED_RUN_TYPE
+                or any(manifest[key] != value for key, value in identity.items())):
+            raise R4StructuredRunError("Existing structured Run belongs to a different source/plan/Requirement")
+        if manifest["status"] == "FROZEN":
+            replay_r4_structured_run(repo_root=repo_root, run_dir=run_dir, structured_context=context)
+            return manifest
+        if manifest["status"] != "OPEN":
+            raise R4StructuredRunError("Structured recovery only accepts owned OPEN/FROZEN Runs")
+        manifest, existing_records, decisions = load_open_run(run_dir=run_dir)
+        if decisions or (existing_records and existing_records != graph["records"]):
+            raise R4StructuredRunError("Existing structured Run records are partial or differ from native source replay")
+    else:
+        manifest = create_run(run_dir=run_dir, run_record_type=R4_STRUCTURED_RUN_TYPE, **identity)
     for kind, value in (("plan", graph["plan"]), ("structured_route", graph["route"])):
-        atomic_write_bytes(path=run_dir / binding["artifact_files"][kind]["path"],
-                           content=canonical_json_bytes(value=value))
-    append_run_records_atomically(run_dir=run_dir, records=graph["records"],
-        expected_records_file_hash=manifest["records_file_hash"],
-        expected_review_decisions_file_hash=manifest["review_decisions_file_hash"])
+        path = run_dir / binding["artifact_files"][kind]["path"]
+        cursor = run_dir
+        for part in Path(binding["artifact_files"][kind]["path"]).parts:
+            cursor /= part
+            if cursor.is_symlink():
+                raise R4StructuredRunError("Structured recovery artifact contains a symlink")
+        data = canonical_json_bytes(value=value)
+        if path.exists():
+            if not path.is_file() or path.read_bytes() != data:
+                raise R4StructuredRunError("Structured recovery will not overwrite different artifact bytes")
+        else:
+            atomic_write_bytes(path=path, content=data)
+    if not existing_records:
+        append_run_records_atomically(run_dir=run_dir, records=graph["records"],
+            expected_records_file_hash=manifest["records_file_hash"],
+            expected_review_decisions_file_hash=manifest["review_decisions_file_hash"])
     return validate_and_freeze_run(run_dir=run_dir, repo_root=repo_root, r4_replay_context=context)
 
 

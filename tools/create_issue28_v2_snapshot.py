@@ -37,6 +37,7 @@ NEW_COMPONENTS = (
     ("S-A13-INTERNATIONAL-NET-REVENUE", "OWNER_PRB_POLICY", "a13_product_semantics"),
     ("S-BOUNDED-PARSER-RESOURCE", "OWNER_PRB_POLICY", "parser_resource_policy"),
     ("S-OFFLINE-FIXTURE-ACQUISITION", "OWNER_PRB_POLICY", "sec_acquisition"),
+    ("S-SEC-CONTACT-AUTHORITY", "OWNER_SEC_CONTACT_POLICY", "sec_contact_authority"),
 )
 
 
@@ -110,7 +111,8 @@ def write_proposal(*, repo_root: Path) -> dict:
     old_register = strict_json_file(path=parent_dir / "decision_register.json")
     sources = deepcopy(parent["baseline"]["policy_evidence"])
     for source_id, filename in (("OWNER_PRB_POLICY", "issue_28_prb_policy_revision.json"),
-                                ("OWNER_A03_POLICY", "issue_28_a03_policy_revision.json")):
+                                ("OWNER_A03_POLICY", "issue_28_a03_policy_revision.json"),
+                                ("OWNER_SEC_CONTACT_POLICY", "issue_28_sec_contact_authority.json")):
         evidence = strict_json_file(path=repo_root / "docs/evidence" / filename)
         sources.append({"source_id": source_id, "kind": v3.OWNER_COMMENT_KIND,
             "source_url": evidence["owner_comment_url"], "source_sha256": evidence["body_sha256"],
@@ -121,8 +123,9 @@ def write_proposal(*, repo_root: Path) -> dict:
     records = deepcopy(old_register["decisions"])
     for decision_id, source_id, component in NEW_COMPONENTS:
         source = by_source[source_id]
-        choice = {"kind": v3.COMMENT_COMPONENT_KINDS[component],
-                  **json.loads(source["text"])[component]}
+        document = json.loads(source["text"])
+        choice = (v3.sec_contact_policy_choice(document=document) if component == "sec_contact_authority"
+                  else {"kind": v3.COMMENT_COMPONENT_KINDS[component], **document[component]})
         if component == "a03_alternate_period_policy":
             choice["metric_id"] = "A03"
         records.append(approved_record(decision_id=decision_id, choice=choice,
@@ -182,7 +185,7 @@ def write_proposal(*, repo_root: Path) -> dict:
             for key, row in parent["effective_decisions"].items() if row["status"] == "PENDING_EXTERNAL_APPROVAL"]}
     baseline = deepcopy(parent["baseline"])
     baseline.update({"requirement_id": REQUIREMENT_ID, "requirement_generation": v3.PROFILE_REQUIREMENT_GENERATION,
-        "contract_revision": "ISSUE_28_V2", "created_at_utc": by_source["OWNER_A03_POLICY"]["published_at_utc"],
+        "contract_revision": "ISSUE_28_V2", "created_at_utc": by_source["OWNER_SEC_CONTACT_POLICY"]["published_at_utc"],
         "repository": {"identity": "wlvh/SEC_metrics", "commit": BASE_COMMIT, "tree": BASE_TREE},
         "parent": {"requirement_id": PARENT_ID, "requirement_closure_hash": parent["requirement_closure_hash"],
             "hashes": parent["hashes"], "snapshot_files": parent_files,
@@ -201,7 +204,8 @@ def write_proposal(*, repo_root: Path) -> dict:
     execution_paths.update({"config/r4_task_contracts_v2.json", "config/r4_numeric_normalization_v1.json",
         "config/r4_fixture_acquisitions_v1.json", "docs/evidence/issue_28_prb_policy_revision.json",
         "docs/evidence/issue_28_a03_policy_revision.json", "docs/r4_offline/fixture_acquisition_receipt.json",
-        "config/r4_fixture_company_authority_v1.json"})
+        "config/r4_fixture_company_authority_v1.json", "config/sec_config.json",
+        "docs/evidence/issue_28_sec_contact_authority.json"})
     execution_paths.update(path.relative_to(repo_root).as_posix() for path in (repo_root / "catalog/r4_v2").glob("*.md"))
     for name in ("composite_scope", "source_scope", "scoped_reader", "offline_execution_session", "r4_materialization",
                  "r4_task_contracts", "r4_structured_sources", "r4_source_audit", "r4_fixture_authority",

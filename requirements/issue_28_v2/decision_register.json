@@ -1366,6 +1366,31 @@
       }
     },
     {
+      "decision_id": "S-SEC-CONTACT-AUTHORITY",
+      "status": "APPROVED",
+      "choice": {
+        "kind": "SEC_CONTACT_AUTHORITY_POLICY",
+        "contact_is_public_user_agent_identity": true,
+        "default_contact_email": "12@qq.com",
+        "environment_override": "SEC_CONTACT_EMAIL",
+        "invalid_explicit_environment_override": "FAIL_CLOSED_NO_DEFAULT_FALLBACK",
+        "live_qualification_authorized": false,
+        "paid_model_calls_authorized": false,
+        "precedence": "EXPLICIT_ENVIRONMENT_IF_PRESENT_ELSE_REPOSITORY_DEFAULT",
+        "provider_calls_authorized": false,
+        "publication_authorized": false
+      },
+      "approved_by": "github:wlvh",
+      "approved_at_utc": "2026-09-04T06:33:01Z",
+      "supersedes_decision_id": null,
+      "evidence": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5536668333",
+      "policy_provenance": {
+        "source_id": "OWNER_SEC_CONTACT_POLICY",
+        "section": "sec_contact_authority",
+        "scope": "POLICY_CONTENT_ONLY"
+      }
+    },
+    {
       "decision_id": "S-INHERITED-SEMANTICS",
       "status": "APPROVED",
       "choice": {

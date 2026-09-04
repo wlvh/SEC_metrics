@@ -1,0 +1,1453 @@
+{
+  "record_type": "SUCCESSOR_RELEASE_PLAN",
+  "schema_version": 3,
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "requirement_id": "issue_28_v2",
+  "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+  "requirement_hashes": {
+    "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+    "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+    "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+    "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+    "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+    "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+    "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+  },
+  "release_plan_id": "issue_28_r4_scoped_engine_v2",
+  "release_stage": "R4",
+  "parent_release_plan_id": "issue_15_lodging_r3",
+  "parent_release_plan_content_id": "sha256:9d0ddddfb58b6dccf91d53cca3dabdc6c8aad3e3366390c930c5deaed5319132",
+  "added_metric_ids": [
+    "A03",
+    "A04",
+    "A09",
+    "A11",
+    "A12",
+    "A13"
+  ],
+  "cumulative_metric_ids": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "C01",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "cumulative_vnext_result_keys": [
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "E05"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A01"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A02"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A03"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A04"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A05"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A06"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A07"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A08"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A09"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A10"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A11"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A12"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "A13"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B01"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B02"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B03"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B04"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B05"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B07"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B08"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B09"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B10"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B11"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B12"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "C01"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E01"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E02"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E03"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E04"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "E05"
+    }
+  ],
+  "retired_legacy_producer_ids": [
+    "scripts/sec_pipeline.py::annual_duration_ok",
+    "scripts/sec_pipeline.py::apply_8k_event_metrics_from_events",
+    "scripts/sec_pipeline.py::apply_lodging_kpi_metrics",
+    "scripts/sec_pipeline.py::apply_rpo_crpo_metric",
+    "scripts/sec_pipeline.py::apply_stub_period_metric_semantics",
+    "scripts/sec_pipeline.py::basel_candidate_role",
+    "scripts/sec_pipeline.py::basel_ratio_candidate_rows",
+    "scripts/sec_pipeline.py::basel_ratio_candidates_from_rows",
+    "scripts/sec_pipeline.py::candidate_fact_hits",
+    "scripts/sec_pipeline.py::company_continuity_status",
+    "scripts/sec_pipeline.py::company_extractors",
+    "scripts/sec_pipeline.py::compatible_b07_component_hits",
+    "scripts/sec_pipeline.py::compatible_component_hits",
+    "scripts/sec_pipeline.py::concept_has_cet1_semantics",
+    "scripts/sec_pipeline.py::concept_has_rwa_ratio_semantics",
+    "scripts/sec_pipeline.py::concept_is_basel_threshold_or_requirement",
+    "scripts/sec_pipeline.py::concept_matches_basel_metric",
+    "scripts/sec_pipeline.py::concept_matches_rpo",
+    "scripts/sec_pipeline.py::custom_da_observation_note",
+    "scripts/sec_pipeline.py::derived_metric",
+    "scripts/sec_pipeline.py::dimensions_have_basel_methodology",
+    "scripts/sec_pipeline.py::eight_k_event_update_specs",
+    "scripts/sec_pipeline.py::entity_continuity_yoy_result",
+    "scripts/sec_pipeline.py::event_inventory_coverage_errors",
+    "scripts/sec_pipeline.py::event_rows_for_metric",
+    "scripts/sec_pipeline.py::event_rows_from_document",
+    "scripts/sec_pipeline.py::fact_is_annual_duration",
+    "scripts/sec_pipeline.py::fact_is_instant",
+    "scripts/sec_pipeline.py::fi_metric_rows",
+    "scripts/sec_pipeline.py::governance_risk_event_placeholders",
+    "scripts/sec_pipeline.py::has_extractor",
+    "scripts/sec_pipeline.py::legacy_non_migrated_metric_rows",
+    "scripts/sec_pipeline.py::lodging_candidate_from_cells",
+    "scripts/sec_pipeline.py::lodging_header_order",
+    "scripts/sec_pipeline.py::lodging_identity_error",
+    "scripts/sec_pipeline.py::lodging_kpi_fact_from_text",
+    "scripts/sec_pipeline.py::lodging_metric_orders",
+    "scripts/sec_pipeline.py::lodging_numeric_cells",
+    "scripts/sec_pipeline.py::lodging_quote_text",
+    "scripts/sec_pipeline.py::lodging_scope_matches",
+    "scripts/sec_pipeline.py::lodging_scope_row_labels",
+    "scripts/sec_pipeline.py::lodging_section_before",
+    "scripts/sec_pipeline.py::lodging_table_segments",
+    "scripts/sec_pipeline.py::metric_from_fact",
+    "scripts/sec_pipeline.py::normalize_item_code",
+    "scripts/sec_pipeline.py::normalized_concept_name",
+    "scripts/sec_pipeline.py::normalized_scope_text",
+    "scripts/sec_pipeline.py::optional_b_metric_ids",
+    "scripts/sec_pipeline.py::optional_b_metric_is_main_applicable",
+    "scripts/sec_pipeline.py::parse_items_from_hdr",
+    "scripts/sec_pipeline.py::parse_items_from_primary_text",
+    "scripts/sec_pipeline.py::prior_10k_for_company",
+    "scripts/sec_pipeline.py::prune_non_applicable_optional_b_metrics",
+    "scripts/sec_pipeline.py::repair_basel_capital_ratios",
+    "scripts/sec_pipeline.py::repair_lodging_kpis",
+    "scripts/sec_pipeline.py::repair_rpo_crpo_metrics",
+    "scripts/sec_pipeline.py::resolve_b07_operating_income_component",
+    "scripts/sec_pipeline.py::resolve_da_component",
+    "scripts/sec_pipeline.py::resolve_operating_income_component",
+    "scripts/sec_pipeline.py::rpo_instance_fact",
+    "scripts/sec_pipeline.py::rpo_instance_fact_from_rows",
+    "scripts/sec_pipeline.py::rpo_text_fact",
+    "scripts/sec_pipeline.py::scope_pattern",
+    "scripts/sec_pipeline.py::select_component",
+    "scripts/sec_pipeline.py::select_fact",
+    "scripts/sec_pipeline.py::select_target_component",
+    "scripts/sec_pipeline.py::selected_basel_ratio_fact",
+    "scripts/sec_pipeline.py::special_metric_placeholders",
+    "scripts/sec_pipeline.py::stage_compute_standard_metrics",
+    "scripts/sec_pipeline.py::stage_extract_8k_events",
+    "scripts/sec_pipeline.py::stage_extract_mda_and_risk_text",
+    "scripts/sec_pipeline.py::stub_period_bounds",
+    "scripts/sec_pipeline.py::stub_period_fact_hits",
+    "scripts/sec_pipeline.py::target_10k_for_company",
+    "scripts/sec_pipeline.py::text_has_lodging_kpi_keywords",
+    "scripts/sec_pipeline.py::text_has_rpo_keywords",
+    "scripts/sec_pipeline.py::upsert_lodging_text_metric"
+  ],
+  "reader_family_versions": {
+    "corporate_events": "corporate_events_v1",
+    "financial_statement": "R4_SCOPED_ENGINE_V1",
+    "lodging_kpi_table": "lodging_kpi_table_v1"
+  },
+  "authority_hashes": {
+    "catalog/company_traits.yaml": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
+    "catalog/deterministic_metrics.json": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+    "catalog/event_routes.json": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+    "catalog/r4_v2/A03_liquidity_coverage_ratio.md": "43620d35bd01d38fa65425c548d6b5ee184daa98f3402ed515ad18b5c61e4755",
+    "catalog/r4_v2/A04_net_interest_margin.md": "fa5f38fc1e06159dd1058a638785a144cac7c2b760200df16b0eda3fd696f32b",
+    "catalog/r4_v2/A09_nonperforming_loan_ratio.md": "100fbdb78122565097379b54ebd1e4cd7bff7621007d74c5ceceb8cd15490452",
+    "catalog/r4_v2/A11_assets_under_management.md": "f76e908820a2ce10dca9f0601c7a48c81bbde93769e45c4d89d5de497bd9dbc8",
+    "catalog/r4_v2/A12_trading_exposure.md": "b0aa4a0b6da8f6a58f297af4a4ebdec6a602b72cc5fc5c8c3e6a71652aca26b2",
+    "catalog/r4_v2/A13_geographic_exposure.md": "1768014b3ea9f412386a855bc1af957eb496f75b9276ec040b23d01cb932ff8c",
+    "catalog/table_task_contracts.json": "ece72e72a93d52fc82370d5cc2c7c72a3fc3ba79ba20c91ccdf230718986a8f9",
+    "catalog/zero_ai_public_projection.json": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+    "config/company_registry.csv": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "config/metric_applicability.yaml": "09457bfa3170149f2e86af52d5013605f04c7b13ec4724792993660cc5dbcf94",
+    "config/provider_model_runtime.json": "6cd3fd098d32b3d0b56d91755f7c0e7de1af24b32994b6d99b067b0a1f486c32",
+    "config/r4_fixture_acquisitions_v1.json": "cf2aa15c35f4b82f6e8e6ae1685b2eab05641d1705422fb8f667f5d038256f86",
+    "config/r4_fixture_company_authority_v1.json": "8844f7e6f366bb19efc75690ad38a9130d9d10d9b5ec2ca52bcb63b603093150",
+    "config/r4_fixture_matrix_v1.json": "04a75b8584299524038f7d39d250049b79a9bbf3455454bcf49ccece6e2c289c",
+    "config/r4_numeric_normalization_v1.json": "b52cadf1317ec5a758a063e4519a39f76afc35f5ecbc07f455a0cb9dfe0a554e",
+    "config/r4_task_contracts_v2.json": "55b7d04ab71ccb968e7976f686b019532efa44acfb653ac85bd29965166965bd",
+    "config/sec_config.json": "6c8be0ba4acefbaf7edc0acbf76a9bc0db143970e3654f1d8bb32d13fb5a83fb",
+    "config/source_strategy_registry.json": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+    "docs/evidence/issue_28_a03_policy_revision.json": "265f9705b912633e893fd3229a103a6c55eb7eeee6f0fa78adb6ccfb194040b2",
+    "docs/evidence/issue_28_prb_policy_revision.json": "e7479ebe9cf2f75488659114118d903a3c19ea0f3ce65b3a06349d0a8cf86e28",
+    "docs/evidence/issue_28_sec_contact_authority.json": "b1252e59349acf8a4624ea711258468e8ab977822dc2030f095d89594b59a283",
+    "docs/r4_offline/fixture_acquisition_receipt.json": "4ab6dee512eb93b8636d53bad141db1c434e0be30d1e94c27a94fe8954acda11",
+    "scripts/git_workspace.py": "cda230f8e7ec722c038e3fbbfb098408e609e014adfe7e3d0bfcbe7bf9d7a2f7",
+    "scripts/sec_http.py": "4a18bea988045280b9cf4745e65edb3b738d97c779cf750ac9f495ead2e0bb01",
+    "scripts/validation_provenance.py": "056909b78fb772b1a97e9ef061ae277c3993a47974bc900c8a5ea49146ae1f7a",
+    "scripts/vnext/__init__.py": "a36dc7448c250e89c5a77fcd2c2e5aae2a39caaa6a16d06b1020c52b94e7671a",
+    "scripts/vnext/ai_adapter.py": "d3d8403432bafe54962fb62951b3129499557a35d4705009dbdda9036e9d0b4d",
+    "scripts/vnext/batch_workflow.py": "201b5b8b489176a39411a5205b486f87401d955a0550149a0424a049891663e2",
+    "scripts/vnext/calculator.py": "75c31bb5245437ea9ff4e64f4d0b6671d3bb98452a44b149257a6d0149c0b674",
+    "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+    "scripts/vnext/composite_scope.py": "10ece04209863e74197ca1304441090b41d473d62fb5113f4c65d4caa391ca66",
+    "scripts/vnext/constraints.py": "ca1ad35457fd1e3506f9b2722d19135a0b3eec70cef4a382fbd8e9a69a3a06f9",
+    "scripts/vnext/deterministic_router.py": "4b2867c017f1f770e1a61b8c435114c69eb0c793298d17147a11615698d9aa7c",
+    "scripts/vnext/evidence.py": "fb5a7a99e2f062c9ce0fb5910521fa9efef9a6e02af5a499ad9c057bf4981cca",
+    "scripts/vnext/invocation_control.py": "04e864831415f0d529a0afb69b619c6d45243f2292f6eccb96f1062e02f98264",
+    "scripts/vnext/live_scoped_reader.py": "1cf3d5ba2c7e8c3371c1130ca98b5485092ae175617b54a0f87a3a1145dc1759",
+    "scripts/vnext/observations.py": "35a40eac1c90c40b905e72a4120c85f4f7dfc0737552952dc611618537d24fcb",
+    "scripts/vnext/offline_execution_session.py": "67a7b1fd7b5d8443fcffb3c4fffd08f122efd1748b02565aaabaae9236457f58",
+    "scripts/vnext/projector.py": "be1589e558c991d9f525adea334a1d86984d6824785ea5624ed7938197568b7d",
+    "scripts/vnext/provider_runtime.py": "863631a82feb7f328d08671bf6b8a4a8d6c6192f9a6484d7381a8460b9547e01",
+    "scripts/vnext/publication.py": "566ebc18695a4cfa92ff9ddd3489f9f79a2c00f0baf7013e857593807c627c97",
+    "scripts/vnext/qualification.py": "b5e5d011b9eb12c92c2f50add9efbcb5734aeb29c53cf9866d6689bdb363ef86",
+    "scripts/vnext/r4_fixture_authority.py": "3baf895119ee1a75b84111793733f8afd7a04686f60e54937e6566a873fdc94d",
+    "scripts/vnext/r4_live_authority.py": "4c952deeecadf59415f1d4dabd8523123dfbb72dc378d9bf1a033f8543421cef",
+    "scripts/vnext/r4_live_plan.py": "694d038ed989c5221fb781442cb0848cc7c470f18270c8626b60512be47d88d4",
+    "scripts/vnext/r4_live_qualification.py": "d0bf7bcae1299a6b1000e110210aede7cdd23b7de744d1d7e10e5cecb6bf0532",
+    "scripts/vnext/r4_materialization.py": "e4b3352c7efe0b96eb7ae68fcc1ab18c2f1984ded63771e02a571344bd8872fc",
+    "scripts/vnext/r4_offline_qualification.py": "7ae5383a9b411a484d0b71e7a9aaaa7b6f4cf729984668ac765db3f1102061f7",
+    "scripts/vnext/r4_run_store.py": "255fa61527d4c717d1aad33f93d8e407cc3b3fdab161a2570f7e459f40c0e256",
+    "scripts/vnext/r4_source_audit.py": "73a2770f0b2e3c4ac6f86046b35c751a249511bd689fa466dbbcf1c1abbbefd3",
+    "scripts/vnext/r4_structured_run.py": "456231677e12e692c1025191724c658b62a82349882106e1a5ab943faf1c653b",
+    "scripts/vnext/r4_structured_sources.py": "f9739f622097ce3b1ab7aee0a07dd6b57048e9f13caf47252e363a926402028e",
+    "scripts/vnext/r4_task_contracts.py": "c66cea64596f6c0e514d296b00d8279265e071ea41d968eaf01af95fc6fade3e",
+    "scripts/vnext/ratchet_release.py": "bf53ff41e22c4ee0d3e5f15ac579f0133a62c213bc3981d631adf5c7c212263a",
+    "scripts/vnext/reader.py": "20720efd18067ff6ec614a4c25ec84bf6094f544e268fe28cb09f520d3ae8c2b",
+    "scripts/vnext/reader_input.py": "12618a72311a28983bde6378270a0743cec933dc648e4c7e868a124192b3d74f",
+    "scripts/vnext/records.py": "929a81ce23d4e7678fae83e2f816184efa47585fc5e1826e6377eaf56e88fe39",
+    "scripts/vnext/render.py": "a8b6f065d5e8772829d177f8bb3ee2ec2dd894d5d76c0219e6f7823f8e4793ca",
+    "scripts/vnext/replay.py": "e128d6888c44914b31b20fb83759c2d7ae8116e6c1ce54601f444ad61c2b5b30",
+    "scripts/vnext/requirement_profile.py": "82306e0f762159be734d65549d3f48ac2fa0e77cb66fde69d6708d6198a389af",
+    "scripts/vnext/requirement_profile_v1.py": "575ad8e14c41f2835087583b66a3bbb5886ce5f0816fb500e29a35184c895e48",
+    "scripts/vnext/requirement_profile_v2.py": "a814bdddf0a54e239b0322e07df342a05bd12c907e1e79edbeba5500986bb2dc",
+    "scripts/vnext/requirement_profile_v3.py": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309",
+    "scripts/vnext/requirements.py": "dea17304a2685a70162cdc7cc555ec4aa56764352ad09ba1dd0d57b8f56acbbc",
+    "scripts/vnext/resource_limits.py": "2be2aab001242107db8ffe877d9a7e16ea0bd8dc04e0fa40481b28a65732187b",
+    "scripts/vnext/review.py": "c15b0a253c919b59682afbbd8ee41a2973cd0992f1b67d9def26197a5259349d",
+    "scripts/vnext/run_store.py": "4f0f74ff4e5e389dae3136093809f1c73c18f70068515667e056930491491e6b",
+    "scripts/vnext/scope_contract.py": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1",
+    "scripts/vnext/scoped_reader.py": "14ef76be1da8cfda93e1f9697c5408bb250e3b60f362c20938ed58b0e07f6a59",
+    "scripts/vnext/source_scope.py": "6e50dfc25c028c097772f63b6e69ff89045e7fa5c6ece78d3e4af2debc0afe51",
+    "scripts/vnext/source_strategy.py": "f8d07a2013043c825a4bb61b9e743284b54c1fc6c7b19bf21030aad29c8bce65",
+    "scripts/vnext/sources.py": "53eeef067c450bd5bb7a92daab88bc437546b2d95355186a6464d2222bf23c31",
+    "scripts/vnext/specs.py": "977dea8bdf8e9a1c6156592ec98c6525ca6758dd62b5f185ed8ccee1f2469c3f",
+    "scripts/vnext/stage_a_snapshot.py": "7edc9ae82203093492171dd98764180a2f7294eaf81495236aa518de45bec640",
+    "scripts/vnext/states.py": "53d1b7e0f3bda67e04197a20ad7524aeb99553cbf430a82a30dcbaa563ca1f30",
+    "scripts/vnext/table_context_attestation.py": "adc7507250a64a325672c5e35233715c75b5abbc4ed63ecb11e3ab7bf4bcd3e1",
+    "scripts/vnext/table_context_measurement.py": "b70114cb3932fa877101f249275ef74bd92a86b3d1c51096ec15db084d2fe751",
+    "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+    "scripts/vnext/table_payload.py": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+    "scripts/vnext/table_qualification_freeze.py": "5dfa60adf4a98d100d396cc5983491d687cd39ad5040b48a8468568e6644f8af",
+    "scripts/vnext/table_task_contracts.py": "0d37253149a7ba269556dbffaf0e9b027b7d692efcb7f9b9c0cc4ae6350082bd",
+    "scripts/vnext/traits.py": "44f6c1f6b032e956c85d54423e88a552ec742e2d6b13435cd91fd53512418303",
+    "scripts/vnext/workflow.py": "28f81b55b98919a14e05ceeabb23f6cba4887c9ec9a7e8b6166f51e10aa1bc6c",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a03_alternate.json": "8e04f01d45bac2777c7b318193041508881abdd9438ef853fc650ac4874543a1",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a03_production.json": "87b1d0448a4da3121502122ae436a6bd8dfa5e34b4cde6e0b45c6615d158b218",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a04_alternate.json": "8793f0d2089ecc807cadb6054aad8e174c4b94324f4b0b53e5ac16feeca66e54",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a04_production.json": "08926bf08c7879e62fcd0a904f44018944a02b8e51603ebb01c6faa8b1085d78",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a09_alternate.json": "70727710c99e1cf7540e8591dbda65d66fc6ed4a8c1275017e947933478650b6",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a09_production.json": "d1025a849be9511dc6027bad36c55a7bd04ca4101c924facea792e0e300a12e9",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a11_alternate.json": "d7550ec3ab40ec78237e47700f621ef1865babb356e9af92e4c30a5e64023fa4",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a11_production.json": "29194d02a488f771b546672624d593a43ef488b3bed4a7f10e7b2648c349b6b6",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a12_alternate.json": "e7ec312cb484224ba2a9b6f67e87cae9fea8127ebfaf18bf2d8d11aabf1cf185",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a12_production.json": "4c5fca3e88bec5b760fd5711f0d77720517f23da023b853709db3a0d0c8e3d55",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a13_alternate.json": "1c2096fe0847f574a858431b57b054103356c26d73fac52997ddf4bc7fcbc014",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_a13_production.json": "e776b9ef20a55f5ec3e61a0a1473787e67873d78f35f94a3dd41d8d8a1900568",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_zero_ambiguous_excluded.json": "d6ce9d8ba13c68b344a17427cfb5f2ac871787724941af2d85293a558549c712",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_zero_negative_expected.json": "8c43ca1506b196ee8c1bd8f7d718453b2632de8474ff7e930a1c24311d21d0d8",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_zero_not_applicable.json": "7e4ecc8c5f34aae4f21c753d2d8f0c0fb56878767bf1fee3191986f645ce3217",
+    "tests/fixtures/vnext/r4_offline/inputs/r4_zero_qualitative_only.json": "2150f5db856f985f9c9ac622c5df8e248aa8a3eb13fe625cb9e086f00620c1f1",
+    "tools/r4_materialization_worker.py": "af27d8ffa96d9f206580d2a0d4649954391db1127247d5a7d372d168a95cee4b",
+    "tools/vnext_r4_qualification.py": "9c3f7d0f0aadac5d06ae14d0560ff4437a478233f862efd38c6a98cc68c06ef5"
+  },
+  "release_plan_content_id": "sha256:d1394f0adbf63e79cf9fa081c352e087a5c95bc53e2f138613610b4b61b38a9a"
+}

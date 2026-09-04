@@ -1,5 +1,8 @@
 # PR30 dormant execution seam — development checkpoint, not approval candidate
 
+Historical checkpoint at `1e5c907`. The missing policy and validation items below
+describe that checkpoint, not current status. See [current rework evidence](live_seam_review_summary.md).
+
 PR30 remains Draft. `issue_28_v2` remains NOT_ACTIVATED. No Ready, merge,
 PR-C, live cycle, production freeze, Stage-A, R4 publication or new SEC
 acquisition is authorized or performed.
