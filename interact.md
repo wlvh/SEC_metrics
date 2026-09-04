@@ -16,6 +16,9 @@ token estimates are labeled estimates; actual provider usage remains NOT_RUN.
 <!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
 
 PR-B 的真实来源离线结果区分9个scoped positive、3个structured positive和4个zero-call class；不是16次或12次模型执行。Citi A03显示真实`2025Q4`，A13显示international net revenue而非net income。数值/scale/窗口及同源scope证明可按原始locator独立核验，旧原型失败报告保留为历史，不伪装成当前成功。v2尚未激活；可读结果与边界见`docs/r4_offline/README.md`。
+
+PR-B另提供dormant执行接缝：`tools/vnext_r4_qualification.py draft`只输出12-call形状，不能用于live。未来`plan`生成独立pending-live对象，`execute`必须先核验真实owner评论、当前exact head/tree和plan ID；普通非空token、自签JSON或旧offline plan均不能开socket。structured与四类zero-call仍为0调用；任何前序失败/UNKNOWN会阻断后序。recorded完整执行与portable回放只证明实现连接正确，不代表模型准确率、真实usage、Requirement激活或R4发布。当前阶段不要执行`plan`/`execute`。
+<!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
 <!-- capability-anchor: CAPABILITY.r4_offline_source_bound_evidence -->
 
 SEC_metrics 是配置驱动、SEC-only、单财年批处理研究流程。它能为 `config/company_registry.csv` 中配置的逻辑公司生成最新年度申报的指标、治理、风险与事件结果，并保留可审计证据。

@@ -14,6 +14,16 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.r4_dormant_execution_seam",
+        "type": "capability",
+        "status": "active",
+        "statement": "PR-B提供独立pending-live/request/authorization类型与冻结后可由PR-C调用的R4执行接缝。九个scoped base加三个risk stability形成12次新execution，三个structured positive生成原生零调用Run，四类排除样例不进入provider计划。socket前重建v2/source/task/Spec/scope/envelope并读取S-PROVIDER-TRANSPORT；真实owner-comment预检生成私有exact-head能力，caller自签receipt或recorded transport不能变成live。既有reservation、UNKNOWN停止、retry=0、200000 usage gate、原生check_evidence/Review/Calculator、raw-wire同execution恢复和portable replay继续执行；前序失败阻止后序直调。内部Result的PUBLISHED枚举和任何单Run均没有R4 publication/qualification credit。实现及recorded测试不激活Requirement、不授权provider/paid/SEC、不创建Stage-A或production freeze、不改变active R3。",
+        "audience": ["developer", "operator", "reviewer"],
+        "test_anchor": "tests/vnext/test_r4_live_qualification.py::R4RecordedQualificationIntegrationTest.test_full_live_shaped_native_execution_has_zero_sockets_and_no_reuse",
+        "test_status": "automated_recorded",
+        "since": "2026-09-04"
+      },
+      {
         "anchor_id": "CAPABILITY.r4_offline_b0_interfaces",
         "type": "capability",
         "status": "active",

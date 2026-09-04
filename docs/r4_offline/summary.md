@@ -1,5 +1,11 @@
 # PR-B R4 offline implementation — review evidence
 
+> Historical offline report for rejected review head `f4158590336f65c44ba0916ada1b50af922ad44e`.
+> These measurements and old identities remain historical evidence, not current
+> rework acceptance. The new production seam is under validation; PR30 stays
+> Draft and `issue_28_v2` is NOT_ACTIVATED. See `live_seam_rework_plan.md` and
+> `live_seam_validation_attempts.json` for the rework boundary and failed probes.
+
 This report concerns PR #30 only. Active publication remains R3. Offline
 fixtures, synthetic Candidates and benchmark history earn no live qualification,
 publication or archived-response reuse credit. PR stays Draft until independent

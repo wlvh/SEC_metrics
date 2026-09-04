@@ -95,6 +95,8 @@ PR body 只能记录本 PR 已完成的事实。变更文件清单必须来自�
 
 当前仓库只有在 `pull_request` 上运行 fast suite 的 CI workflow，没有生产部署、业务自动调度、UI 或 API。PR body 必须区分本地 fast PASS、GitHub CI green 与 full acceptance；未真实实现和运行的其他能力仍写“不适用/未实现”。vNext formal代码存在也不等于active切换完成。
 
+PR-B的dormant执行接缝必须用真实source/corpus的recorded完整Run图和portable新进程验证；这不是live资格。开发检查点、较早proposal closure上的测试与最终exact-head结果分开记录。新contact policy须有真实owner评论provenance后才可封存最终v2 closure；旧benchmark仍可保留为历史，但不能替代新代码/closure的完整benchmark与唯一最终offline replay。PR30继续Draft，不请求live授权。
+
 R1–R3历史声明必须回到Issue #15 exact Requirement与原Publication closure；successor实现/Cutover必须使用owner批准的Issue #28 exact Requirement closure。PR-A transition在owner以exact head+closure批准前保持Draft，且不得写R4实现或任何live credit。后续live声明仍须有有效SEC/provider环境、clean committed checkout、acquisition/inventory、source attempt、family qualification、portable audit、staging、active/previous、fault、rollback/restore和final full receipt；public generic formal入口继续fail closed。
 
 root CSV/报告是active bundle compatibility mirrors；PR body必须说明active与latest分离、mirrors不向任意无PublicationView reader承诺组原子、rollback不启用旧parser、OpenAI不是SEC evidence source。

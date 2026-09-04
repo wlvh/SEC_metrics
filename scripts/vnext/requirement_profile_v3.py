@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Callable, Mapping
 
 from . import requirement_profile_v1 as v1
+from . import canonical
 from .canonical import content_hash, sha256_file, strict_json_loads
 
 PROFILE_REQUIREMENT_GENERATION = "PROFILE_DRIVEN_V3"
@@ -320,7 +321,7 @@ def _load_profile_requirement_snapshot(*, snapshot_dir: Path,
     core_view = {**baseline, "policy_evidence": [s for s in baseline["policy_evidence"] if s["kind"] != OWNER_COMMENT_KIND]}
     v1._validate_baseline(baseline=core_view, snapshot_dir=snapshot_dir,
         generation=PROFILE_REQUIREMENT_GENERATION, semantic_version=PROFILE_SEMANTIC_VERSION,
-        engine_file=Path(__file__), engine_dependencies=(Path(v1.__file__),))
+        engine_file=Path(__file__), engine_dependencies=(Path(v1.__file__), Path(canonical.__file__)))
     parent_binding = baseline["parent"]
     parent_id = parent_binding["requirement_id"]
     requirement_id = baseline["requirement_id"]

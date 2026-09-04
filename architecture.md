@@ -32,8 +32,8 @@ is explicitly distinct from the scoped outbound request.
 shares immutable byte objects only within the process, and gives its final
 independent replay disk locators rather than cached data. Boundary counters and
 wall/peak-RSS observations are exposed; the B0 tests are not a real-source
-performance benchmark or an implementation of live authorization. No legacy
-provider opener, qualification cycle or publication path is changed.
+performance benchmark or an implementation of live authorization. Legacy
+Reader semantics and historical qualification/publication evidence stay unchanged.
 <!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
 
 The versioned R4 matrix contains six production/alternate pairs and four
@@ -46,6 +46,37 @@ not the optional regional-sum branch. All 16 offline cases retain zero live
 credit; exact native Evidence and complete source/recipe binding are replayed.
 See `docs/r4_offline/current_source_task_audit.md` for source-specific proofs.
 <!-- capability-anchor: CAPABILITY.r4_offline_source_bound_evidence -->
+
+### PR-B dormant production execution seam
+
+`r4_live_plan.py` derives nine scoped positives plus three distinct risk-based
+stability ordinals. `r4_live_authority.py` binds a separate pending-live plan
+and private request/authorization types to exact v2/source/task/Spec/scope and
+provider bytes. A real GitHub owner-comment preflight binds the current
+execution head/tree and plan; socket checks use its immutable process-local
+capability, not a caller-written approval dictionary. The implementation head
+must remain an unchanged ancestor; PR-C evidence commits need not re-sign the
+plan itself. This governance preflight is not a per-call GitHub API dependency.
+
+`live_scoped_reader.py` and explicit `ai_adapter.py` dispatch connect those
+requests to the existing reservation-owned opener and native source-bound
+checker. Effective `S-PROVIDER-TRANSPORT` supplies the successor policy; legacy
+requests retain Issue #15 behavior. Full local assets are built once per source
+session, not per call. R4 always enforces 200000 even when the provider's
+technical capacity is greater. Native raw-wire journaling recovers only the
+same sealed execution; retries and cross-execution response reuse are forbidden.
+
+`r4_live_qualification.py` composes three native structured Runs, twelve scoped
+Runs, usage/UNKNOWN/prefix-stop gates and independent disk replay. The four
+exclusion classes receive no provider entry. `r4_run_store.py` and
+`r4_structured_run.py` reuse the native Run graph, calculator and replay, with
+explicit subtypes rather than globally permitting unreviewed table results.
+No individual Run, internal Result `PUBLISHED` enum, or recorded test implies
+R4 publication. The engine never changes active R3, creates Stage-A/production
+freeze, acquires SEC data or grants live authority. CLI:
+`tools/vnext_r4_qualification.py`; recorded full-path tests run only in isolated
+release copies and portable fresh processes.
+<!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
 
 以下变化必须同步更新本文档：
 

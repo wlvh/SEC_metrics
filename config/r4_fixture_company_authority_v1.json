@@ -1,0 +1,103 @@
+{
+  "record_type": "R4_FIXTURE_COMPANY_AUTHORITY",
+  "schema_version": 1,
+  "authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+  "scope": "R4_SUCCESSOR_FIXTURE_IDENTITY_ONLY",
+  "target_period_resolution": "SOURCE_SCOPE_DISCLOSED_PERIOD_ELSE_NATIVE_DEFAULT",
+  "annual_reinterpretation_allowed": false,
+  "profile_catalog": {
+    "path": "catalog/company_traits.yaml",
+    "sha256": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
+    "size": 649
+  },
+  "company_registry": {
+    "path": "config/company_registry.csv",
+    "sha256": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+    "size": 1562
+  },
+  "owner_source_designation": {
+    "path": "docs/evidence/issue_28_prb_policy_revision.json",
+    "sha256": "e7479ebe9cf2f75488659114118d903a3c19ea0f3ce65b3a06349d0a8cf86e28",
+    "size": 4070,
+    "body_sha256": "ab5babbe06719e3aafa9d4ce9e56b7c8d65fdd0216d1df8af2ae11f53959c5d3",
+    "json_pointer": "/sec_acquisition/sources"
+  },
+  "entries": [
+    {
+      "source_id": "jpmorgan_fy2025_10k",
+      "company_id": "jpmorgan_chase",
+      "cik": "19617",
+      "profile_id": "financial_institution",
+      "company_traits": [
+        "financial"
+      ],
+      "profile_authority": "CANONICAL_COMPANY_REGISTRY",
+      "source_binding": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "default_fiscal_period": {
+        "period_label": "FY2025",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "authority": "NATIVE_SOURCE_BOUND_DEI_FISCAL_CONTEXT"
+      },
+      "financial_nature_span": null
+    },
+    {
+      "source_id": "bank_of_america_fy2025_10k",
+      "company_id": "bank_of_america_corp",
+      "cik": "70858",
+      "profile_id": "financial_institution",
+      "company_traits": [
+        "financial"
+      ],
+      "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+      "source_binding": {
+        "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "size": 12819060
+      },
+      "default_fiscal_period": {
+        "period_label": "FY2025",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "authority": "NATIVE_SOURCE_BOUND_DEI_FISCAL_CONTEXT"
+      },
+      "financial_nature_span": {
+        "byte_start": 1521144,
+        "byte_end": 1521260,
+        "span_sha256": "a3b63b40bc9765e93fcbc7252b640629fdc1eac7a8b5d2bb92e90cd60ea4ed27",
+        "exact_text": "Bank of America Corporation is a Delaware corporation, a bank holding company (BHC) and a financial holding company."
+      }
+    },
+    {
+      "source_id": "citigroup_fy2025_10k",
+      "company_id": "citigroup",
+      "cik": "831001",
+      "profile_id": "financial_institution",
+      "company_traits": [
+        "financial"
+      ],
+      "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+      "source_binding": {
+        "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+        "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "size": 16150764
+      },
+      "default_fiscal_period": {
+        "period_label": "FY2025",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "authority": "NATIVE_SOURCE_BOUND_DEI_FISCAL_CONTEXT"
+      },
+      "financial_nature_span": {
+        "byte_start": 1899995,
+        "byte_end": 1900063,
+        "span_sha256": "48238093334b20653cbe670eb92b0467f2ba13ccad005a0d19c4fa0c68fcc603",
+        "exact_text": "Citigroup is a global diversified financial services holding company"
+      }
+    }
+  ]
+}

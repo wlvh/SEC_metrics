@@ -71,6 +71,34 @@ Runs. No child may replay full prior Runs or rebuild full source/DerivedAsset
 or authority. Include one independent final full R4 disk replay. Component
 microbenchmarks do not establish the aggregate gate.
 
+## Dormant production execution seam
+
+PR-B supplies the implementation which PR-C may later authorize without new
+production Python. The existing offline plans remain OFFLINE_ONLY. Distinct
+pending-live requests/plans bind this Requirement's generation, ID, closure and
+hashes, immutable source attempt, full asset/Reader, certified scope, task/Spec
+and exact provider envelope. At the reservation-owner socket boundary the
+repository rebuilds these bindings and takes transport policy only from the
+effective S-PROVIDER-TRANSPORT Decision.
+
+The current corpus produces nine base scoped calls and three deterministic,
+predeclared risk-stability entries: twelve fresh executions. Three structured
+positives and four zero-call classes never enter the provider set. Structured
+results use the same native accession-XBRL route and calculator; scoped native
+Candidate/Evidence/Review/Result chains retain source-bound proof. No individual
+Run or recorded execution confers qualification/publication credit.
+
+A real owner-comment preflight must bind the current execution head/tree,
+plan ID and this closure before any live capability is issued. A caller-written
+receipt dictionary, offline record, or recorded test transport cannot issue it.
+The plan's implementation commit/tree must remain an exact ancestor with no
+production Python change; evidence-only commits do not create a self-referential
+plan hash. A prior failure/UNKNOWN or incomplete Run blocks every later entry
+at the socket boundary. Retry is zero, reuse is forbidden, actual usage must
+fit 200000, and native raw-wire journaling permits only same-execution crash
+recovery. Independent portable replay retains the original wire, reservation,
+marker, acceptance, full source and versioned authority closure.
+
 The two previously authorized BAC/Citi acquisitions are exhausted. No further
 SEC, provider or paid-model call, actual token measurement, live cycle/freeze,
 Stage-A, R4 publication, rollback/restore or archived-response reuse is allowed

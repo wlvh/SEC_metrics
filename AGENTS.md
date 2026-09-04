@@ -80,6 +80,21 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
   bytes, deterministic operation counters and one final independent disk replay.
 - `docs/r4_offline/closure_impact_map.md`: pre-edit A/B/C/D path classification;
   B0 is not freeze/cycle/Stage-A or live authority.
+- `scripts/vnext/live_scoped_reader.py`, `r4_live_plan.py`,
+  `r4_live_authority.py`, `r4_live_qualification.py`: dormant R4 production
+  request/plan/owner-capability/invocation composition. Offline records cannot
+  be relabelled live; successor transport policy is Requirement-bound.
+  Nine base calls plus three risk-stability ordinals require twelve fresh
+  executions; structured positives and four zero-call classes never enter the
+  provider set. Prior failed/UNKNOWN/incomplete terminals block later sockets.
+- `scripts/vnext/r4_run_store.py`, `r4_structured_run.py`,
+  `config/r4_fixture_company_authority_v1.json`: explicit native scoped and
+  structured Run/replay with source-bound subject/period authority, original
+  wire/marker/reservation closure and no individual qualification/publication
+  credit. Large immutable source contexts are process-local, not general caches.
+- `tools/vnext_r4_qualification.py`: `draft` is offline-only; `plan`/`execute`
+  belong to a separately authorized future PR-C. Current PR-B only runs
+  isolated recorded tests and portable replay, not live qualification.
 - `docs/evidence/issue_28_transition_activation.json`: persisted exact PR #29
   merge-governance receipt, not a provider/SEC execution grant.
 - `requirements/issue_28_v2/`, `scripts/vnext/requirement_profile_v3.py`: pending

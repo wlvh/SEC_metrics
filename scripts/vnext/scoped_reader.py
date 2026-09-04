@@ -301,7 +301,7 @@ def load_scoped_reader_request(*, path: Path, repo_root: Path, expected_request_
     return expected
 
 
-def validate_scoped_reader_response(
+def check_scoped_reader_response(
     *, prepared_request: PreparedScopedReaderRequest, response_text: str,
     attempt_id: str, source_scope_manifest: Mapping,
     expected_manifest_id: str, requirement: Mapping, raw_blob: Mapping,
@@ -312,7 +312,7 @@ def validate_scoped_reader_response(
     _verified_scope_context: OfflineScopedContext = None,
     _offline_evidence_context: OfflineEvidenceContext = None,
 ) -> Dict[str, object]:
-    """Certify an offline synthetic response with the existing native checker.
+    """Verify scoped Candidate/Evidence without creating execution metadata.
 
     The exact scoped request is verified separately. The full Reader payload
     passed to check_evidence is explicitly local Evidence authority, not a
@@ -385,6 +385,31 @@ def validate_scoped_reader_response(
                        or claim["claimed_reported_unit"] != certified[role]["claimed_reported_unit"]
                        for role, claim in candidate["selected"].items())):
             raise ScopedReaderError("SCOPED_REFERENCE_RECONCILIATION_FAILED: native Evidence differs from the certified value/unit/period/scope")
+    return {"candidate": candidate, "evidence": evidence}
+
+
+def validate_scoped_reader_response(
+    *, prepared_request: PreparedScopedReaderRequest, response_text: str,
+    attempt_id: str, source_scope_manifest: Mapping,
+    expected_manifest_id: str, requirement: Mapping, raw_blob: Mapping,
+    source_reference: Mapping, full_derived_asset: Mapping,
+    reader_manifest: Mapping, task_contract: Mapping,
+    evidence_authority_payload: Mapping,
+    source_bytes: bytes = None, repo_root: Path = None,
+    _verified_scope_context: OfflineScopedContext = None,
+    _offline_evidence_context: OfflineEvidenceContext = None,
+) -> Dict[str, object]:
+    """Keep the offline attempt schema and results separate from live execution."""
+    checked = check_scoped_reader_response(prepared_request=prepared_request,
+        response_text=response_text, attempt_id=attempt_id,
+        source_scope_manifest=source_scope_manifest, expected_manifest_id=expected_manifest_id,
+        requirement=requirement, raw_blob=raw_blob, source_reference=source_reference,
+        full_derived_asset=full_derived_asset, reader_manifest=reader_manifest,
+        task_contract=task_contract, evidence_authority_payload=evidence_authority_payload,
+        source_bytes=source_bytes, repo_root=repo_root,
+        _verified_scope_context=_verified_scope_context,
+        _offline_evidence_context=_offline_evidence_context)
+    candidate, evidence = checked["candidate"], checked["evidence"]
     link_body = {
         "record_type": "SCOPED_CANDIDATE_EVIDENCE_LINK", "schema_version": source_scope_manifest["schema_version"],
         **_identity(source_scope_manifest), "attempt_id": attempt_id,
