@@ -18,6 +18,7 @@ import subprocess
 import sys
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(REPO_ROOT / "scripts"))
 
 from git_workspace import sanitized_git_environment  # noqa: E402
@@ -205,7 +206,8 @@ def write_proposal(*, repo_root: Path) -> dict:
         "config/r4_fixture_acquisitions_v1.json", "docs/evidence/issue_28_prb_policy_revision.json",
         "docs/evidence/issue_28_a03_policy_revision.json", "docs/r4_offline/fixture_acquisition_receipt.json",
         "config/r4_fixture_company_authority_v1.json", "config/sec_config.json",
-        "docs/evidence/issue_28_sec_contact_authority.json"})
+        "docs/evidence/issue_28_sec_contact_authority.json", "config/r4_public_projection_v1.json",
+        "config/vnext_release_plan.json"})
     execution_paths.update(path.relative_to(repo_root).as_posix() for path in (repo_root / "catalog/r4_v2").glob("*.md"))
     for name in ("composite_scope", "source_scope", "scoped_reader", "offline_execution_session", "r4_materialization",
                  "r4_task_contracts", "r4_structured_sources", "r4_source_audit", "r4_fixture_authority",
@@ -223,7 +225,29 @@ def write_proposal(*, repo_root: Path) -> dict:
         "scripts/vnext/r4_live_authority.py", "scripts/vnext/r4_live_qualification.py",
         "scripts/vnext/r4_run_store.py", "scripts/vnext/requirement_profile_v3.py",
         "tools/vnext_r4_qualification.py", "tools/r4_materialization_worker.py",
+        "scripts/vnext/r4_release.py", "scripts/vnext/r4_projection.py", "scripts/vnext/r4_publication.py",
+        "tools/vnext_r4_release.py", "tools/check_vnext_semantics.py", "tools/check_no_company_literals.py",
     }))
+    # Publication runs both production-tree scanners, so the scanned Python
+    # exact set and their static authority data are execution dependencies too.
+    # Keeping only imported files would silently shrink a portable audit.
+    for prefix in ('scripts', 'tools'):
+        for path in (repo_root / prefix).rglob('*.py'):
+            if path.is_symlink():
+                raise ValueError('Production scan authority contains a symlink')
+            execution_paths.add(path.relative_to(repo_root).as_posix())
+    from tools.check_vnext_semantics import GATE_SOURCE_PATHS
+    execution_paths.update(GATE_SOURCE_PATHS)
+    # The retained Issue15 adapter also reads its frozen foundation receipts
+    # when a successor resolves the historical R3 ReleasePlan. Do not let a
+    # warm checkout fallback hide these inputs from portable publication.
+    # The mutable public scalability mirror is already captured from R3 by
+    # the publication closure; only content-addressed historical receipts are
+    # current execution dependencies here.
+    foundation = strict_json_file(path=repo_root / "requirements/issue_15_v1/foundation_verification_receipt.json")
+    for row in foundation["receipt_bindings"]:
+        if row["path"].startswith("outputs/acceptance_receipts/"):
+            execution_paths.add(row["path"])
     baseline["execution_authority"]["files"] = {name: binding(repo_root / name) for name in sorted(execution_paths)}
     for filename, payload in (("decision_register.json", register), ("invariant_profile.json", profile),
                               ("transfer_manifest.json", transfer)):

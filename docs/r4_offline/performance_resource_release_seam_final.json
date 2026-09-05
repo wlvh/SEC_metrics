@@ -1,0 +1,166 @@
+{
+  "record_type": "R4_RELEASE_SEAM_PARSER_PARITY",
+  "schema_version": 1,
+  "status": "PASSED_OFFLINE_ONLY",
+  "sources": [
+    {
+      "source": "jpm",
+      "receipt_path": "docs/r4_offline/performance_resource_release_seam_jpm.json",
+      "receipt_sha256": "8813a2c75feddce740e83fa5699a2194fa89a08203e2a0d4df2c990e72a0d4ca",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "source_size": 12927325,
+      "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+      "table_count": 679,
+      "expanded_cells": 124761,
+      "raw_source_cells": 60348,
+      "canonical_asset_sha256": "b10c09730d894910ff4ff849c1b2928e1149d1223975d1d98e6f0801a2a8a341",
+      "canonical_asset_size": 22174348,
+      "ordered_table_grid_exact_set_hash": "sha256:59b4fe48d84f4ccba89d38b9ce961dbc03de900a00a1554e90e475fa96306498",
+      "worker_wall_seconds": "3.323348",
+      "cgroup_memory_peak_bytes": 305590272,
+      "guard": {
+        "memory_max_bytes": 536870912,
+        "memory_swap_max_bytes": 0,
+        "network_interfaces": [
+          "erspan0",
+          "gre0",
+          "gretap0",
+          "ip6_vti0",
+          "ip6gre0",
+          "ip6tnl0",
+          "ip_vti0",
+          "lo",
+          "sit0",
+          "tunl0"
+        ],
+        "non_loopback_active_interfaces": [],
+        "ipv4_routes": [],
+        "root_mount_read_only": true
+      },
+      "code_sha256": {
+        "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+        "scripts/vnext/resource_limits.py": "2be2aab001242107db8ffe877d9a7e16ea0bd8dc04e0fa40481b28a65732187b",
+        "scripts/vnext/records.py": "d59a937b06e922449dbc6027480e84a3704f2452b9e76b93784f10ffb58d4f02",
+        "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+        "scripts/vnext/offline_execution_session.py": "67a7b1fd7b5d8443fcffb3c4fffd08f122efd1748b02565aaabaae9236457f58",
+        "scripts/vnext/r4_materialization.py": "e4b3352c7efe0b96eb7ae68fcc1ab18c2f1984ded63771e02a571344bd8872fc",
+        "tools/r4_materialization_worker.py": "af27d8ffa96d9f206580d2a0d4649954391db1127247d5a7d372d168a95cee4b"
+      }
+    },
+    {
+      "source": "bac",
+      "receipt_path": "docs/r4_offline/performance_resource_release_seam_bac.json",
+      "receipt_sha256": "de0d731510455158c074e6ab76904499eb9f0570a298ead018268e71a623215f",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "source_size": 12819060,
+      "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+      "table_count": 369,
+      "expanded_cells": 200229,
+      "raw_source_cells": 78980,
+      "canonical_asset_sha256": "b2c6c1e2d2227a4be7d60e4c3f28887dc0c1d23a61c5b25943e4a6d300f23543",
+      "canonical_asset_size": 34204729,
+      "ordered_table_grid_exact_set_hash": "sha256:df10ba2c228cc2e6deb7533300a638cb2618ffb57cffcd795ea9f0e47f2542a6",
+      "worker_wall_seconds": "4.814087",
+      "cgroup_memory_peak_bytes": 383426560,
+      "guard": {
+        "memory_max_bytes": 536870912,
+        "memory_swap_max_bytes": 0,
+        "network_interfaces": [
+          "erspan0",
+          "gre0",
+          "gretap0",
+          "ip6_vti0",
+          "ip6gre0",
+          "ip6tnl0",
+          "ip_vti0",
+          "lo",
+          "sit0",
+          "tunl0"
+        ],
+        "non_loopback_active_interfaces": [],
+        "ipv4_routes": [],
+        "root_mount_read_only": true
+      },
+      "code_sha256": {
+        "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+        "scripts/vnext/resource_limits.py": "2be2aab001242107db8ffe877d9a7e16ea0bd8dc04e0fa40481b28a65732187b",
+        "scripts/vnext/records.py": "d59a937b06e922449dbc6027480e84a3704f2452b9e76b93784f10ffb58d4f02",
+        "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+        "scripts/vnext/offline_execution_session.py": "67a7b1fd7b5d8443fcffb3c4fffd08f122efd1748b02565aaabaae9236457f58",
+        "scripts/vnext/r4_materialization.py": "e4b3352c7efe0b96eb7ae68fcc1ab18c2f1984ded63771e02a571344bd8872fc",
+        "tools/r4_materialization_worker.py": "af27d8ffa96d9f206580d2a0d4649954391db1127247d5a7d372d168a95cee4b"
+      }
+    },
+    {
+      "source": "citi",
+      "receipt_path": "docs/r4_offline/performance_resource_release_seam_citi.json",
+      "receipt_sha256": "c3c177a056cb1cab3ffc266a652b61ce1c64abb582c1a55eb1bb5cbd01e52be8",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "source_size": 16150764,
+      "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+      "table_count": 330,
+      "expanded_cells": 95463,
+      "raw_source_cells": 54404,
+      "canonical_asset_sha256": "f84ff620375214ce5bebdf0502cf4dcb03fd6863cc78e40bfe2ecd9bdd5c34ca",
+      "canonical_asset_size": 17007791,
+      "ordered_table_grid_exact_set_hash": "sha256:cc9739cae1b4553dbd2ef51cb80268726ed62148fafde142374a85d7d819d379",
+      "worker_wall_seconds": "2.780129",
+      "cgroup_memory_peak_bytes": 268144640,
+      "guard": {
+        "memory_max_bytes": 536870912,
+        "memory_swap_max_bytes": 0,
+        "network_interfaces": [
+          "erspan0",
+          "gre0",
+          "gretap0",
+          "ip6_vti0",
+          "ip6gre0",
+          "ip6tnl0",
+          "ip_vti0",
+          "lo",
+          "sit0",
+          "tunl0"
+        ],
+        "non_loopback_active_interfaces": [],
+        "ipv4_routes": [],
+        "root_mount_read_only": true
+      },
+      "code_sha256": {
+        "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+        "scripts/vnext/resource_limits.py": "2be2aab001242107db8ffe877d9a7e16ea0bd8dc04e0fa40481b28a65732187b",
+        "scripts/vnext/records.py": "d59a937b06e922449dbc6027480e84a3704f2452b9e76b93784f10ffb58d4f02",
+        "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+        "scripts/vnext/offline_execution_session.py": "67a7b1fd7b5d8443fcffb3c4fffd08f122efd1748b02565aaabaae9236457f58",
+        "scripts/vnext/r4_materialization.py": "e4b3352c7efe0b96eb7ae68fcc1ab18c2f1984ded63771e02a571344bd8872fc",
+        "tools/r4_materialization_worker.py": "af27d8ffa96d9f206580d2a0d4649954391db1127247d5a7d372d168a95cee4b"
+      }
+    }
+  ],
+  "production_limits": {
+    "max_html_bytes": 67108864,
+    "max_tables": 2048,
+    "max_rows_per_table": 4096,
+    "max_columns_per_table": 256,
+    "max_span_attribute_chars": 32,
+    "max_entity_reference_chars": 64,
+    "max_cells_per_table": 25000,
+    "max_total_cells": 210000,
+    "max_cell_text_chars": 1048576,
+    "max_table_text_chars": 16777216,
+    "max_total_table_text_chars": 33554432,
+    "max_expanded_text_chars": 67108864,
+    "max_rendered_review_bytes": 67108864,
+    "max_rendered_line_bytes": 8192
+  },
+  "prior_parity_file": "docs/r4_offline/performance_resource_live_seam_final.json",
+  "all_native_assets_byte_identical_to_prior": true,
+  "runtime_limit_override": false,
+  "provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "qualification_credit": "NONE",
+  "aggregate_performance_benchmark": "SEPARATE_NOT_CLAIMED_HERE",
+  "receipt_id": "sha256:f59bac5b0c42c5f3255f6847ecbeef09e83782e96914ce6f7a9c1ffd624954c9"
+}

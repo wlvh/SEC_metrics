@@ -42,7 +42,7 @@ def main(argv=None):
     execute = sub.add_parser("execute", help="Future PR-C: exact-head verified owner comment is mandatory")
     execute.add_argument("--plan-id", required=True)
     execute.add_argument("--owner-comment-url", required=True)
-    replay = sub.add_parser("replay", help="Independent read-only disk replay; provider/paid/SEC = 0/0/0")
+    replay = sub.add_parser("replay", help="Independent disk replay and append-only replay receipt; no network")
     replay.add_argument("--plan-id", required=True)
     args = parser.parse_args(argv)
     try:
@@ -66,6 +66,12 @@ def main(argv=None):
                 result = execute_r4_qualification(repo_root=REPO_ROOT, plan=plan, owner_comment=owner, context=context)
             else:
                 result = replay_r4_qualification(repo_root=REPO_ROOT, plan=plan, context=context)
+                replay_path = REPO_ROOT / RUNTIME_ROOT / "replays" / (result["replay_id"][7:] + ".json")
+                if replay_path.exists():
+                    if replay_path.is_symlink() or strict_json_file(path=replay_path) != result:
+                        raise ValueError("Existing R4 replay receipt has divergent bytes")
+                else:
+                    _exclusive_write_json(path=replay_path, value=result)
     except (ValueError, OSError, KeyError, TypeError) as error:
         print(json.dumps({"status": "BLOCKED", "error": str(error)}, ensure_ascii=False), file=sys.stderr)
         return 1

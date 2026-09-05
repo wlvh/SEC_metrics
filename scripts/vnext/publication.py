@@ -44,7 +44,7 @@ from .projector import load_projection_used_source_references
 from .projector import projection_file_hashes
 from .qualification import QualificationError, qualification_closure_paths
 from .qualification import validate_cutover_qualifications
-from .records import validate_record
+from .records import R4_PUBLICATION_MANIFEST_TYPE, validate_record
 from .requirements import RequirementError, SNAPSHOT_FILES
 from .requirements import load_requirement_snapshot
 from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
@@ -991,6 +991,22 @@ def _write_prepared_publication_bundle(
     validate_record(record=manifest)
     if requirement is not None:
         validate_artifact_requirement_identity(artifact=manifest, requirement=requirement)
+    return _persist_prepared_publication_bundle(
+        publications_dir=publications_dir, files=files, manifest=manifest,
+    )
+
+
+def _persist_prepared_publication_bundle(
+    *, publications_dir: Path, files: Mapping[str, bytes],
+    manifest: Mapping[str, object],
+) -> Dict[str, object]:
+    """Persist already-bound bytes through the shared immutable write path."""
+    manifest = validate_record(record=manifest)
+    if manifest["record_type"] not in {
+        "PUBLICATION_MANIFEST", "SUCCESSOR_PUBLICATION_MANIFEST", R4_PUBLICATION_MANIFEST_TYPE,
+    }:
+        raise PublicationError("Publication persistence requires a manifest subtype")
+    publication_id = str(manifest["publication_id"])
     publications_dir.mkdir(parents=True, exist_ok=True)
     final_dir = publications_dir / publication_id
     if final_dir.exists():
@@ -4639,11 +4655,14 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         raise PublicationError(
             "Publication manifest record is invalid"
         ) from error
-    if manifest["record_type"] not in {"PUBLICATION_MANIFEST", "SUCCESSOR_PUBLICATION_MANIFEST"}:
+    if manifest["record_type"] not in {
+        "PUBLICATION_MANIFEST", "SUCCESSOR_PUBLICATION_MANIFEST", R4_PUBLICATION_MANIFEST_TYPE,
+    }:
         raise PublicationError("Publication artifact subtype differs")
+    is_r4 = manifest["record_type"] == R4_PUBLICATION_MANIFEST_TYPE
     projection_requirement_hashes = (
         manifest["projection_requirement_hashes"]
-        if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST"
+        if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST" or is_r4
         else manifest["requirement_hashes"]
     )
     if manifest[
@@ -4669,7 +4688,7 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
     internal_paths = expected_paths - public_paths
     legacy_import = LEGACY_BASELINE_IMPORT_MANIFEST in internal_paths
     zero_ai_formal = ZERO_AI_FORMAL_MANIFEST in internal_paths
-    if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST" and (legacy_import or zero_ai_formal):
+    if (manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST" or is_r4) and (legacy_import or zero_ai_formal):
         raise PublicationError("Historical release cannot be relabelled as successor")
     if (
         public_paths != REQUIRED_BUNDLE_FILES
@@ -4677,6 +4696,7 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         or (
             not legacy_import
             and not zero_ai_formal
+            and not is_r4
             and INTERNAL_CLOSURE_MANIFEST not in internal_paths
         )
     ):
@@ -4740,15 +4760,21 @@ def verify_publication_bundle(*, bundle_dir: Path) -> Dict[str, object]:
         "ledger_binding": manifest["ledger_binding"],
         "previous_publication_id": manifest["previous_publication_id"],
     }
-    if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST":
+    if manifest["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST" or is_r4:
         for field in ("artifact_requirement_generation", "requirement_id",
                       "requirement_closure_hash", "projection_requirement_hashes"):
+            identity[field] = manifest[field]
+    if is_r4:
+        for field in ("r4_release_receipt_id", "publication_credit"):
             identity[field] = manifest[field]
     expected_id = (
         "publication_" + content_hash(value=identity).split(":", 1)[1]
     )
     if manifest["publication_id"] != expected_id:
         raise PublicationError("Publication manifest identity differs")
+    if is_r4:
+        _r4_publication_hooks().verify_r4_bundle(bundle_dir=bundle_dir, manifest=manifest)
+        return manifest
     if legacy_import:
         _verify_legacy_baseline_import(
             bundle_dir=bundle_dir,
@@ -5461,6 +5487,14 @@ def _recover_switch_intent_locked(
         return None
     previous_pointer = intent["previous_pointer"]
     proposed_pointer = intent["proposed_pointer"]
+    if any(
+        pointer is not None and _r4_bundle_manifest(
+            bundle_dir=publications_dir / str(pointer["publication_id"]),
+            pointer=pointer,
+        ) is not None
+        for pointer in (previous_pointer, proposed_pointer)
+    ):
+        _r4_publication_hooks().guard_recovery(pointer_path=pointer_path, intent=intent)
     current_pointer = _read_pointer(pointer_path=pointer_path)
     if current_pointer == proposed_pointer:
         bundle_dir = publications_dir / str(
@@ -5616,6 +5650,34 @@ def _validate_utc_timestamp(*, value: str) -> None:
         raise PublicationError("Publication timestamp is invalid") from error
 
 
+def _r4_publication_hooks():
+    """Load the additive R4 boundary only when an R4 artifact is involved."""
+    from . import r4_publication
+
+    return r4_publication
+
+
+def _r4_bundle_manifest(
+    *, bundle_dir: Path, pointer: Optional[Mapping[str, object]] = None,
+) -> Optional[Dict[str, object]]:
+    """Detect R4 from an exact manifest without importing its runtime for legacy."""
+    path = bundle_dir / "publication_manifest.json"
+    if (bundle_dir.is_symlink() or not bundle_dir.is_dir()
+            or path.is_symlink() or not path.is_file()):
+        raise PublicationError("Publication guard manifest is unavailable or unsafe")
+    try:
+        content = path.read_bytes()
+        manifest = validate_record(record=strict_json_loads(text=content.decode("utf-8")))
+    except (OSError, UnicodeError, CanonicalError, ValueError, TypeError) as error:
+        raise PublicationError("Publication guard manifest is invalid") from error
+    if pointer is not None and (
+        manifest.get("publication_id") != pointer["publication_id"]
+        or sha256_bytes(content=content) != pointer["bundle_manifest_sha256"]
+    ):
+        raise PublicationError("Publication guard pointer/manifest binding differs")
+    return manifest if manifest["record_type"] == R4_PUBLICATION_MANIFEST_TYPE else None
+
+
 def _publication_commit_authority(*, bundle_dir: Path) -> str:
     """Classify one verified bundle's only legal forward-commit authority.
 
@@ -5625,6 +5687,14 @@ def _publication_commit_authority(*, bundle_dir: Path) -> str:
     Returns:
         ``FORMAL``, ``RECORDED``, or ``LEGACY_BASELINE``.
     """
+    r4_manifest = _r4_bundle_manifest(bundle_dir=bundle_dir)
+    if r4_manifest is not None:
+        authority = _r4_publication_hooks().commit_authority(
+            bundle_dir=bundle_dir, manifest=r4_manifest,
+        )
+        if type(authority) is not str or authority not in {FORMAL_COMMIT_AUTHORITY, RECORDED_COMMIT_AUTHORITY}:
+            raise PublicationError("R4 publication commit authority is invalid")
+        return authority
     if (bundle_dir / LEGACY_BASELINE_IMPORT_MANIFEST).is_file():
         return LEGACY_COMMIT_AUTHORITY
     if (bundle_dir / ZERO_AI_FORMAL_MANIFEST).is_file():
@@ -5786,6 +5856,16 @@ def _switch_publication_locked(
     ):
         raise PublicationError(
             "Rollback target is not the committed predecessor"
+        )
+    if manifest["record_type"] == R4_PUBLICATION_MANIFEST_TYPE or (
+        previous_pointer is not None and _r4_bundle_manifest(
+            bundle_dir=publications_dir / str(previous_pointer["publication_id"]),
+            pointer=previous_pointer,
+        ) is not None
+    ):
+        _r4_publication_hooks().guard_switch(
+            pointer_path=pointer_path, manifest=manifest,
+            expected_active_id=expected_previous_publication_id, switch_mode=switch_mode,
         )
     manifest_bytes = (bundle_dir / "publication_manifest.json").read_bytes()
     pointer = {
@@ -6296,6 +6376,8 @@ def recover_publication_mirrors(
         view = PublicationView._open_paths(
             publications_dir=publications_dir, pointer_path=pointer_path,
         )
+        if view.manifest["record_type"] == R4_PUBLICATION_MANIFEST_TYPE:
+            _r4_publication_hooks().guard_mirror_repair(publication_root=publication_root)
         for relative in mirror_paths:
             atomic_write_bytes(
                 path=mirror_paths[relative],

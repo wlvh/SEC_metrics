@@ -78,6 +78,32 @@ freeze, acquires SEC data or grants live authority. CLI:
 release copies and portable fresh processes.
 <!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
 
+### PR-B dormant successor release seam
+
+`r4_release.py` issues a private context from the complete independently
+replayed aggregate, not individual FROZEN children. It binds the exact v2
+ReleasePlan, `catalog/r4_v2` Specs/tasks, registry, predecessor, activation and
+merged implementation. `r4_projection.py` selects six production Results and
+uses native Calculator/Run semantics for 54 zero-source structural terminals.
+Alternate and stability Runs remain qualification evidence. Presentation data
+is separately bound; original Spec hashes are not rewritten. Four independent
+anchors and all non-R4 public rows stay exact; A09/A13 are classified native
+backfills, not invented legacy-compatible observations.
+
+`r4_publication.py` prepares an explicit `R4_SUCCESSOR_PUBLICATION_MANIFEST`.
+Its nested immutable authority retains the original R3 pointer/chain while
+the mutable publication root can later switch R3→R4→R3→R4. Cold read-back
+reruns native qualification and projection using frozen inputs. A private
+process-local pin avoids repeating that semantic replay inside one transaction;
+exact file-set/hash/size checks still run on every bundle verification.
+Generic commit/rollback/recovery hooks require a private R4 capability. Real
+switches additionally verify a separate exact-head release-owner comment;
+recorded capabilities are restricted to independent non-Git test roots and
+keep `NONE_RECORDED_REHEARSAL`. Legacy Projector entrypoints remain unchanged.
+The frozen CLI and receipt sequence are documented in
+`docs/r4_offline/pr_c_release_entrypoints.md`; this PR does not execute them live.
+<!-- capability-anchor: CAPABILITY.r4_dormant_release_seam -->
+
 以下变化必须同步更新本文档：
 
 - 新增、删除或重排 `scripts/00_*.py` 至 `scripts/12_*.py` 的阶段

@@ -1,89 +1,66 @@
-# R4 offline one-page summary
+# R4 PR-B review summary
 
-PR #30 is **Draft / reworked candidate for independent review**. The six-task
-offline corpus and dormant production execution seam have passed their native
-recorded, portable and recovery checks; the new benchmark passed at 21.903657x.
-The previous head/closure is not an approval candidate. This page is not an
-activation, merge, model-call or publication grant.
+PR #30 contains the dormant R4 execution and release implementation. Required
+local gates pass, including the complete recorded publication rehearsal and
+the current 21.308919× aggregate benchmark. PR30 stays **Draft** and
+`issue_28_v2` stays **NOT_ACTIVATED** pending independent review. Final Git
+head/tree and GitHub CI are recorded in the PR body.
 
-## Requirement and scope
+The current proposal closure is `sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e`. It binds 181 execution files and
+retains activated v1, the historical engines and R1–R3 bytes. The
+[current review report](release_seam_review_summary.md),
+[validation ledger](release_seam_validation_results.json) and
+[complete changed-file list](release_seam_changed_files.txt) identify this
+candidate; the earlier `summary.md` and `live_seam_review_summary.md` retain
+historical results for their own rejected heads.
 
-The unactivated five-file `issue_28_v2` supersedes the unchanged activated v1.
-The current proposal closure is
-`sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3`.
-Requirement revision 2 uses retained engine V3; old V1/V2 and R1–R3 bytes stay
-immutable. All three exact owner policy comments are recorded:
-[A12/A13/resources](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524085182)
-and [A03 scope/quarter](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524746204),
-plus [SEC contact authority](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5536668333).
-Policy comments are distinct from a future exact-head/closure activation.
-Read the current proposal identity from `requirements/issue_28_v2`; it remains
-NOT_ACTIVATED pending independent review and a separate owner decision.
-
-[The current six-metric ReleasePlan](../../config/release_plans/issue_28_r4_scoped_engine_v2.json)
-adds only **A03 A04 A09 A11 A12 A13** to R3, giving 30 metrics/300 planned keys;
-B06/B13 are absent. [The final offline index](qualified_cases/index.json)
-contains 12 production/alternate positives and all four zero-call classes:
-nine scoped native Evidence PASS, three structured-primary and four zero-call
-results. There were no provider executions.
-
-[The dry-run schedule](live_plan_draft_final.json) has nine base requests and
-three risk-selected stability ordinals (A03 alternate, A09 production, A12
-alternate), total 12 / hard cap 24 / no reuse. The full recorded execution formed
-12 native scoped Runs and three native structured Runs; its six integration
-tests passed, including full-record tamper, OPEN/FROZEN recovery and new-process
-portable replay with the original engine/canonical deliberately broken.
-
-## Source-specific outcomes
+The six-metric successor ReleasePlan loads Specs from `catalog/r4_v2`.
+Registry/applicability yields six JPM production values and 54 unique native
+`N_A_STRUCTURAL` Runs with no source or model evidence: 60 new coordinates,
+300 cumulative vNext coordinates and 381 public matrix rows. Alternate/stability
+Runs stay qualification evidence. The existing Issue15 Projector API is unchanged.
 
 | Metric | JPM production | Different-issuer alternate |
 |---|---:|---:|
-| A03 LCR | 1.11 | Citi 1.15, explicitly 2025Q4 |
+| A03 LCR | 1.11 | Citi 1.15, disclosed 2025Q4 |
 | A04 FTE NIM | 0.025 | Citi 0.0247 |
-| A09 nonperforming ratio | 0.0066 | BAC 0.0049, structured-first |
+| A09 nonperforming ratio | 0.0066 | BAC 0.0049, structured |
 | A11 AUM, USD | 4,791,000,000,000 | BAC 2,177,708,000,000 |
 | A12 total VaR, USD | 40,000,000 | BAC 34,000,000 |
 | A13 international net revenue, USD | 42,758,000,000 | Citi 42,295,000,000 |
 
-[The source/task audit](current_source_task_audit.md) supplies exact table/span
-locators, legacy reconciliation, two-path/no-anchor and outside-window closure.
-A03/A12 narrative is same-source checker evidence, never provider context.
-A09/A11/A12 scale comes from original table markers/headers. A13 uses direct
-issuer-disclosed totals, not net income; optional regional summation is not
-implemented or credited. Total-VaR comparisons do not claim identical issuer
-portfolio composition or model methodology.
+[Source/task evidence](current_source_task_audit.md) and the
+[current 16-case index](qualified_cases/index.json) preserve the approved
+A03/A12 composite scope, A09/A11 unit/scale and A13 direct international net
+revenue semantics. Four strict legacy anchors and two native backfills pass
+compatibility. [The current draft](live_plan_draft_release_seam_final.json)
+still has nine base requests plus three risk-selected stability ordinals;
+three structured positives and four zero-call classes receive zero model calls.
 
-## Resource, performance and call accounting
+The [recorded release rehearsal](release_seam_rehearsal_evidence.json) passed
+all seven integration tests: 12 scoped executions, three structured Runs,
+native 6+54 composition, immutable cold read-back, temporary R4→R3→R4,
+two transaction crash recoveries and 14 mirrors. Its qualification/publication
+credit is `NONE_RECORDED_REHEARSAL`; the real active remains exact R3.
+The committed [PR-C CLI sequence](pr_c_release_entrypoints.md) covers staging,
+validation, publication, read-back, rollback/restore and active-terminal.
+Real execution and switches still require the separate future owner receipts.
 
-JPM/BAC/Citi have 124761/200229/95463 expanded cells. All pass the same unchanged
-production parser in a 512 MiB/no-swap/network-none worker; production cap is
-210000, other limits unchanged, no override. [Current-code parity](performance_resource_live_seam_final.json)
-and [current benchmark result](performance_live_seam_results.md) distinguish
-guarded parser evidence from host-side aggregate timing. The new measurement
-achieved **21.903657×** after charging the one 64.286819s final fresh-process replay
-to both alternatives (2812.665847s / 128.410783s). All three processes produced
-the same 16-result semantic ID with egress 0/0/0. Full-process RSS peaked at
-2.412GB/2.137GB/1.835GB; the 512MiB claim applies only to the parser worker,
-not the complete host-side Evidence process. The previous 21.789879x receipt
-and raw log remain byte-identical historical evidence.
+The [complete benchmark](performance_session_benchmark_release_seam_final.json)
+uses the same 16 cases, six prior terminal Runs and interpreter in three
+independent processes. Including one fresh replay in both alternatives gives
+2805.928456s / 131.678594s =
+**21.308919×**. [Measurements and counters](performance_release_seam_results.md)
+include full-process RSS. The 512 MiB/no-swap claim applies to the guarded
+parser worker; [all three source measurements](performance_resource_release_seam_final.json)
+use production `max_total_cells=210000` with no override. The sleep-interrupted
+attempt is explicitly invalid and retained in the validation ledger.
 
-Whole PR-B provider/paid/SEC = **0/0/2**; the two exact immutable BAC/Citi attempts
-are in [the acquisition receipt](fixture_acquisition_receipt.json), retry zero.
-Quota is exhausted and repeated acquisition is rejected before native fetch.
-
-## Review boundary
-
-Fast is now 29 entries with the original 30-second cap. Full artifact, policy,
-transport, native Evidence, history and source tests are separate integrations.
-Final local fast 29/29 passed in 8.744s; benchmark receipt checks 4/4 and post-benchmark
-R3/R2/R1/14-mirror read-back passed. The [validation ledger](live_seam_validation_results.json)
-retains commands, original-log hashes, portable-rendered traces and failures.
-Twelve unchanged tests of the disabled legacy uncontrolled adapter also fail at
-the exact PR base; they are explicitly BASELINE_FAILURE, not claimed PASS.
-[Current rework evidence](live_seam_review_summary.md) records identities/commands and honest
-intermediate failures. Historical R3/R2/R1 read-back and all 14 mirrors remain
-unchanged; arbitrary owner-token financial execution stops before the opener.
-No new live Run/cycle/freeze/Stage-A, R4 publication, rollback, actual token
-measurement, archived response reuse or PR-C work occurred. Next owner action,
-after the complete rework gates pass, is independent review and v2 activation—not live
-authorization.
+Local fast passes 32/32 at the original 30-second per-entry cap. Targeted
+regressions pass 226/226, the additional cold/substitution suite 2/2 and full
+historical regressions 231/231; these counts overlap and are not summed.
+Twelve unchanged `test_ai_reader_contract` failures remain disclosed baseline
+debt. [Preservation proof](release_seam_preservation.json) records 2,396
+unchanged historical files and zero ledger additions in this rework.
+Provider/paid/SEC = **0/0/0 this rework**, **0/0/2 for all PR-B**; the two
+previous immutable BAC/Citi acquisitions remain the only new filings.

@@ -11,6 +11,7 @@ from __future__ import annotations
 from contextlib import ExitStack
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 import shutil
 import socket
@@ -67,7 +68,15 @@ class R4RecordedQualificationIntegrationTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.temp = tempfile.TemporaryDirectory(prefix="r4-recorded-live-seam-")
-        cls.addClassCleanup(cls.temp.cleanup)
+        def cleanup_workspace():
+            # Optional developer evidence retention, never a runtime cache or
+            # a CLI execution capability. CI/default runs still remove it.
+            if os.environ.get('R4_TEST_RETAIN_WORKSPACE') == '1':
+                cls.temp._finalizer.detach()
+                print('R4_RETAINED_TEST_WORKSPACE=' + cls.temp.name, flush=True)
+            else:
+                cls.temp.cleanup()
+        cls.addClassCleanup(cleanup_workspace)
         cls.network_guards = ExitStack()
         cls.addClassCleanup(cls.network_guards.close)
         cls.provider_opener = cls.network_guards.enter_context(mock.patch.object(
@@ -82,7 +91,7 @@ class R4RecordedQualificationIntegrationTest(unittest.TestCase):
             socket.socket, "connect_ex", side_effect=AssertionError("forbidden socket connect_ex")))
         cls.root = Path(cls.temp.name).resolve() / "release"
         copy_r4_release_workspace(cls.root)
-        print("R4_LIVE_SHAPED: copied isolated release workspace", flush=True)
+        print("R4_LIVE_SHAPED: copied isolated release workspace " + str(cls.root), flush=True)
         cls.context = prepare_r4_execution_context(repo_root=cls.root)
         cls.plan = build_r4_recorded_test_plan(context=cls.context)
         cls.transports = recorded_r4_transports(context=cls.context, plan=cls.plan)
@@ -203,6 +212,17 @@ class R4RecordedQualificationIntegrationTest(unittest.TestCase):
         self.assertEqual(replay["verified_fixture_count"], 16)
         self.assertEqual(replay["provider_paid_sec_calls"], [0, 0, 0])
         self.assertEqual(replay["qualification_credit"], "NONE_RECORDED_TEST")
+        type(self).independent_disk_replay = replay
+
+    def test_z_isolated_successor_release_readback_rollback_restore_no_credit(self):
+        from tests.vnext.r4_release_rehearsal import exercise_recorded_release
+        replay = getattr(type(self), "independent_disk_replay", None)
+        if replay is None:
+            from vnext.r4_live_qualification import replay_r4_qualification
+            replay = replay_r4_qualification(repo_root=self.root, plan=self.plan)
+        result = exercise_recorded_release(self, root=self.root, plan=self.plan,
+                                           replay=replay, real_root=REPO_ROOT)
+        self.assertEqual(result["status"], "PASS")
 
 
 if __name__ == "__main__":

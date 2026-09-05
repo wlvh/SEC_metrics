@@ -1,5 +1,8 @@
 # PR30 live-scoped execution seam — offline rework evidence
 
+> Historical report for rejected head `19847e1f3f2d666b131422cd93f0c1230ef4c19e`.
+> See [the current release review](release_seam_review_summary.md) for the new candidate.
+
 This report records completed offline rework against the unactivated `issue_28_v2` proposal.
 PR30 remains Draft. Policy-content approval is not transition activation,
 live execution permission or publication authority. Exact final Git identities

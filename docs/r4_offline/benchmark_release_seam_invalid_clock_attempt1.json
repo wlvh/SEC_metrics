@@ -1,0 +1,29 @@
+{
+  "clock_difference_seconds": 300.2768645732722,
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "tools/benchmark_r4_offline_session.py",
+    "--benchmark",
+    "--requirement-id",
+    "issue_28_v2",
+    "--requirement-closure",
+    "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+    "--output",
+    "docs/r4_offline/performance_session_benchmark_release_seam_final.json"
+  ],
+  "elapsed_monotonic_seconds": 2600.4642972500005,
+  "elapsed_wall_seconds": 2900.7411618232727,
+  "finished_at_utc": "2026-09-04T16:25:00.550783+00:00",
+  "monotonic_implementation": "mach_absolute_time()",
+  "provider_paid_sec_authorization": [
+    false,
+    false,
+    false
+  ],
+  "quiet_window_required": true,
+  "record_type": "R4_BENCHMARK_EXTERNAL_CLOCK_GUARD",
+  "return_code": -15,
+  "schema_version": 1,
+  "started_at_utc": "2026-09-04T15:36:39.809613+00:00",
+  "status": "INVALID_SYSTEM_SLEEP_OR_WALL_CLOCK_JUMP"
+}

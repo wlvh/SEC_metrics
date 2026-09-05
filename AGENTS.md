@@ -95,6 +95,13 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `tools/vnext_r4_qualification.py`: `draft` is offline-only; `plan`/`execute`
   belong to a separately authorized future PR-C. Current PR-B only runs
   isolated recorded tests and portable replay, not live qualification.
+- `scripts/vnext/r4_release.py`, `r4_projection.py`, `r4_publication.py`,
+  `config/r4_public_projection_v1.json`: private successor release authority,
+  native 6+54 projection and typed immutable R4 bundle. Frozen R3 authority is
+  separate from mutable switch state; recorded rehearsal has no live credit.
+- `tools/vnext_r4_release.py`: future authorized PR-C stage/validate/publish/
+  read-back/rollback/restore/active-terminal. Current PR-B uses only isolated
+  private rehearsal and must not activate v2 or change the actual R3 pointer.
 - `docs/evidence/issue_28_transition_activation.json`: persisted exact PR #29
   merge-governance receipt, not a provider/SEC execution grant.
 - `requirements/issue_28_v2/`, `scripts/vnext/requirement_profile_v3.py`: pending

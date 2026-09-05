@@ -14,6 +14,16 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.r4_dormant_release_seam",
+        "type": "capability",
+        "status": "active",
+        "statement": "R4独立release context使用successor ReleasePlan与catalog/r4_v2，从完整LIVE aggregate/independent replay选择六个production结果，原生Calculator/Run再生成54个无source/AI的structural N/A，形成60个delta及300个cumulative keys。alternate/stability/fixture issuer不得进入公共值。真实stage要求v2 transition、merged implementation和exact owner live receipt；真实指针操作另需exact-head release-owner评论。recorded rehearsal仅在私有隔离root运行，始终NONE_RECORDED_REHEARSAL；旧Projector/commit/rollback接口不能替它授予LIVE credit。新typed PublicationManifest冻结完整来源、15-Run closure与独立R3 authority root；冷read-back、CAS/mirrors及rollback/restore复用原有底层primitive。该能力是PR-C的休眠实现，不表示本轮激活Requirement、调用provider/SEC、发布R4或完成最终Cutover。",
+        "audience": ["developer", "operator", "reviewer"],
+        "test_anchor": "tests/vnext/test_r4_live_qualification.py::R4RecordedQualificationIntegrationTest.test_z_isolated_successor_release_readback_rollback_restore_no_credit",
+        "test_status": "automated_recorded",
+        "since": "2026-09-04"
+      },
+      {
         "anchor_id": "CAPABILITY.r4_dormant_execution_seam",
         "type": "capability",
         "status": "active",

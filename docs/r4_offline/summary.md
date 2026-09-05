@@ -1,6 +1,6 @@
 # PR-B R4 offline implementation — review evidence
 
-For the current reworked proposal, see [the live-seam review summary](live_seam_review_summary.md)
+For the current reworked proposal, see [the release-seam review summary](release_seam_review_summary.md)
 and [the current one-page summary](README.md). The following report is retained
 for the earlier rejected candidate; its closure and benchmark are historical.
 

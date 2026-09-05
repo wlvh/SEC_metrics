@@ -487,16 +487,18 @@ class RecordedOfflineBenchmarkTest(unittest.TestCase):
 
     HISTORICAL_COMMIT = "f4158590336f65c44ba0916ada1b50af922ad44e"
     HISTORICAL_STEM = "performance_session_benchmark"
-    CURRENT_STEM = "performance_session_benchmark_live_seam_final"
+    EXECUTION_SEAM_COMMIT = "19847e1f3f2d666b131422cd93f0c1230ef4c19e"
+    EXECUTION_SEAM_STEM = "performance_session_benchmark_live_seam_final"
+    CURRENT_STEM = "performance_session_benchmark_release_seam_final"
 
     def _receipt(self, stem):
         return strict_json_file(path=REPO_ROOT / "docs/r4_offline" / (stem + ".json"))
 
-    def _historical_blob(self, relative):
+    def _historical_blob(self, relative, *, commit):
         from git_workspace import sanitized_git_environment
 
         return subprocess.run(
-            ["git", "cat-file", "blob", self.HISTORICAL_COMMIT + ":" + relative],
+            ["git", "cat-file", "blob", commit + ":" + relative],
             cwd=REPO_ROOT, env=sanitized_git_environment(), capture_output=True,
             check=True, timeout=10,
         ).stdout
@@ -554,15 +556,21 @@ class RecordedOfflineBenchmarkTest(unittest.TestCase):
                         self.assertEqual(0, child["operation_counts"][key], (mode, child["fixture_id"], key))
         self.assertEqual(reports["optimized"]["operation_counts"], reports["independent-replay"]["operation_counts"])
 
-    def test_historical_measurement_and_inputs_remain_commit_bound(self):
-        receipt = self._receipt(self.HISTORICAL_STEM)
+    def _assert_historical_measurement(self, *, stem, commit):
+        receipt = self._receipt(stem)
         self._assert_recorded_gate(receipt)
-        relative = "docs/r4_offline/" + self.HISTORICAL_STEM + ".json"
-        self.assertEqual(self._historical_blob(relative), (REPO_ROOT / relative).read_bytes())
+        relative = "docs/r4_offline/" + stem + ".json"
+        self.assertEqual(self._historical_blob(relative, commit=commit), (REPO_ROOT / relative).read_bytes())
         for binding in receipt["workload"]["input_bindings"]:
-            data = self._historical_blob(binding["path"])
+            data = self._historical_blob(binding["path"], commit=commit)
             self.assertEqual(binding["size"], len(data), binding["path"])
             self.assertEqual(binding["sha256"], sha256_bytes(content=data), binding["path"])
+
+    def test_historical_measurement_and_inputs_remain_commit_bound(self):
+        self._assert_historical_measurement(stem=self.HISTORICAL_STEM, commit=self.HISTORICAL_COMMIT)
+
+    def test_execution_seam_measurement_and_inputs_remain_commit_bound(self):
+        self._assert_historical_measurement(stem=self.EXECUTION_SEAM_STEM, commit=self.EXECUTION_SEAM_COMMIT)
 
     def test_complete_recorded_gate_and_current_inputs_remain_bound(self):
         from tools.benchmark_r4_offline_session import _workload
@@ -575,11 +583,13 @@ class RecordedOfflineBenchmarkTest(unittest.TestCase):
         expected = _workload(requirement_id=requirement["requirement_id"],
                              closure=requirement["requirement_closure_hash"])
         self.assertEqual(expected, receipt["workload"])
-        historical = self._receipt(self.HISTORICAL_STEM)
-        self.assertEqual(historical["workload"]["cases"], receipt["workload"]["cases"])
-        self.assertEqual(historical["workload"]["prior_history"], receipt["workload"]["prior_history"])
-        self.assertEqual(historical["reports"]["baseline"]["interpreter"],
-                         receipt["reports"]["baseline"]["interpreter"])
+        for stem in (self.HISTORICAL_STEM, self.EXECUTION_SEAM_STEM):
+            with self.subTest(historical_benchmark=stem):
+                historical = self._receipt(stem)
+                self.assertEqual(historical["workload"]["cases"], receipt["workload"]["cases"])
+                self.assertEqual(historical["workload"]["prior_history"], receipt["workload"]["prior_history"])
+                self.assertEqual(historical["reports"]["baseline"]["interpreter"],
+                                 receipt["reports"]["baseline"]["interpreter"])
 
     def _assert_streamed_progress(self, stem):
         receipt = self._receipt(stem)
@@ -598,10 +608,16 @@ class RecordedOfflineBenchmarkTest(unittest.TestCase):
         self.assertEqual(receipt["aggregate_improvement_factor"], rows[-1]["factor"])
         self.assertEqual(receipt["status"], rows[-1]["status"])
 
+    def _assert_historical_streamed_progress(self, *, stem, commit):
+        self._assert_streamed_progress(stem)
+        relative = "docs/r4_offline/" + stem + ".stdout.jsonl"
+        self.assertEqual(self._historical_blob(relative, commit=commit), (REPO_ROOT / relative).read_bytes())
+
     def test_historical_streamed_progress_remains_commit_bound(self):
-        self._assert_streamed_progress(self.HISTORICAL_STEM)
-        relative = "docs/r4_offline/" + self.HISTORICAL_STEM + ".stdout.jsonl"
-        self.assertEqual(self._historical_blob(relative), (REPO_ROOT / relative).read_bytes())
+        self._assert_historical_streamed_progress(stem=self.HISTORICAL_STEM, commit=self.HISTORICAL_COMMIT)
+
+    def test_execution_seam_streamed_progress_remains_commit_bound(self):
+        self._assert_historical_streamed_progress(stem=self.EXECUTION_SEAM_STEM, commit=self.EXECUTION_SEAM_COMMIT)
 
     def test_streamed_progress_contains_the_exact_measured_case_set_and_times(self):
         self._assert_streamed_progress(self.CURRENT_STEM)

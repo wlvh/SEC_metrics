@@ -19,6 +19,14 @@ PR-B 的真实来源离线结果区分9个scoped positive、3个structured posit
 
 PR-B另提供dormant执行接缝：`tools/vnext_r4_qualification.py draft`只输出12-call形状，不能用于live。未来`plan`生成独立pending-live对象，`execute`必须先核验真实owner评论、当前exact head/tree和plan ID；普通非空token、自签JSON或旧offline plan均不能开socket。structured与四类zero-call仍为0调用；任何前序失败/UNKNOWN会阻断后序。recorded完整执行与portable回放只证明实现连接正确，不代表模型准确率、真实usage、Requirement激活或R4发布。当前阶段不要执行`plan`/`execute`。
 <!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
+
+`tools/vnext_r4_release.py`提供未来PR-C的stage/validate/publish/read-back/
+rollback-to-R3/restore-R4/active-terminal入口。stage不切换active；缺少真实
+activation、merged implementation、owner live及aggregate replay时返回BLOCKED。
+真实指针操作另需exact-head release-owner评论。隔离recorded演练不提供CLI开关，
+不授予任何live/publication资格。六个生产值与54个N/A构成60个新增坐标；
+15个qualification Runs不是15个公共结果。当前用户读取的正式active仍是R3。
+<!-- capability-anchor: CAPABILITY.r4_dormant_release_seam -->
 <!-- capability-anchor: CAPABILITY.r4_offline_source_bound_evidence -->
 
 SEC_metrics 是配置驱动、SEC-only、单财年批处理研究流程。它能为 `config/company_registry.csv` 中配置的逻辑公司生成最新年度申报的指标、治理、风险与事件结果，并保留可审计证据。
