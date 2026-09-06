@@ -20,6 +20,12 @@ PR-B 的真实来源离线结果区分9个scoped positive、3个structured posit
 PR-B另提供dormant执行接缝：`tools/vnext_r4_qualification.py draft`只输出12-call形状，不能用于live。未来`plan`生成独立pending-live对象，`execute`必须先核验真实owner评论、当前exact head/tree和plan ID；普通非空token、自签JSON或旧offline plan均不能开socket。structured与四类zero-call仍为0调用；任何前序失败/UNKNOWN会阻断后序。recorded完整执行与portable回放只证明实现连接正确，不代表模型准确率、真实usage、Requirement激活或R4发布。当前阶段不要执行`plan`/`execute`。
 <!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
 
+R4 的失败收尾使用合法 FAIL check，具体错误继续见 Attempt/execution
+receipt。标签双表示规则目前只供显式离线候选验证：仅接受同一已验证单元格
+已有的 `raw_text` 或 `text`，caption 与现有 live 默认规则不变。本次历史失败
+仍为失败，原响应仅作为 `OFFLINE_REGRESSION` 样本；新规则未激活。
+<!-- capability-anchor: CAPABILITY.r4_label_offline_candidate -->
+
 `tools/vnext_r4_release.py`提供未来PR-C的stage/validate/publish/read-back/
 rollback-to-R3/restore-R4/active-terminal入口。stage不切换active；缺少真实
 activation、merged implementation、owner live及aggregate replay时返回BLOCKED。

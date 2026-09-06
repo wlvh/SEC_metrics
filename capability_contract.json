@@ -194,6 +194,19 @@
         "test_anchor": "tests/vnext/test_recorded_fixture_operator.py::RecordedFixtureOperatorTest.test_public_recorded_cold_start_review_resume_and_readback",
         "test_status": "automated_recorded_scenario",
         "since": "2026-08-07"
+      },
+      {
+        "anchor_id": "CAPABILITY.r4_label_offline_candidate",
+        "type": "capability",
+        "status": "active",
+        "statement": "R4失败收尾使用现有合法FAIL check，错误类别保留在Attempt/execution receipt。显式离线标签候选仅接受同一已验证单元格现有raw_text或text，再从来源恢复原文；caption和默认/live调用保持exact-raw。候选Evidence身份含政策标记，旧Requirement/Run/响应不改写，原付费响应只作OFFLINE_REGRESSION。候选不激活接受政策，不提供live或publication credit。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_r4_label_representation.py::R4LabelRepresentationIntegrationTest.test_real_response_old_failure_and_candidate_full_native_result",
+        "test_status": "automated_recorded",
+        "since": "2026-09-06"
       }
     ],
     "capability_boundaries": [

@@ -12,7 +12,7 @@ from typing import Dict, Mapping
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
 from .evidence import check_evidence, OfflineEvidenceContext, _plain_owned
-from .evidence import check_evidence_in_offline_session
+from .evidence import check_evidence_in_offline_session, RAW_LABEL_POLICY
 from .reader import validate_reader_output, validate_source_bound_reader_output
 from .reader_input import READER_SYSTEM_CONTRACT
 from .records import validate_record
@@ -311,6 +311,7 @@ def check_scoped_reader_response(
     source_bytes: bytes = None, repo_root: Path = None,
     _verified_scope_context: OfflineScopedContext = None,
     _offline_evidence_context: OfflineEvidenceContext = None,
+    _label_policy: str = RAW_LABEL_POLICY,
 ) -> Dict[str, object]:
     """Verify scoped Candidate/Evidence without creating execution metadata.
 
@@ -318,6 +319,9 @@ def check_scoped_reader_response(
     passed to check_evidence is explicitly local Evidence authority, not a
     claim that the full filing was sent to a provider. No second value verifier
     or selector is introduced.
+
+    ``_label_policy`` is an explicit offline candidate experiment. Production
+    acceptance does not set it; historical/default checks remain exact-raw.
     """
     expected_request = prepare_scoped_reader_request(
         source_scope_manifest=source_scope_manifest,
@@ -371,10 +375,12 @@ def check_scoped_reader_response(
         evidence = check_evidence(candidate=candidate, derived_asset=full_derived_asset,
             reader_manifest=reader_manifest, reader_payload_body=evidence_authority_payload,
             source_references=[source_reference], identity_constraints=task_contract["identity_constraints"],
-            scope_contract=task_contract["scope_contract"], source_bound_context=evidence_context)
+            scope_contract=task_contract["scope_contract"], source_bound_context=evidence_context,
+            _label_policy=_label_policy)
     else:
         evidence = check_evidence_in_offline_session(context=evidence_session,
-            candidate=candidate, task_contract_id=task_contract["task_contract_id"], source_bound_context=evidence_context)
+            candidate=candidate, task_contract_id=task_contract["task_contract_id"],
+            source_bound_context=evidence_context, _label_policy=_label_policy)
     if evidence["status"] == "PASS":
         reference = source_scope_manifest["reference"]
         certified = source_scope_manifest["synthetic_candidate"]["selected"]

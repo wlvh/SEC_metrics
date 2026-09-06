@@ -78,6 +78,15 @@ freeze, acquires SEC data or grants live authority. CLI:
 release copies and portable fresh processes.
 <!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
 
+R4 failure finalization writes the existing legal FAIL check and retains the
+error category in Attempt/execution receipts. An explicit offline label
+candidate accepts only the verified cell's stored `raw_text` or `text`, then
+recovers authoritative raw text for all scope checks. Captions and default/live
+callers retain exact-raw behavior. Candidate Evidence hashes include the policy
+marker; no historical Requirement, Run or request is rewritten. Policy review
+and a new authorized execution version are still required before live wiring.
+<!-- capability-anchor: CAPABILITY.r4_label_offline_candidate -->
+
 ### PR-B dormant successor release seam
 
 `r4_release.py` issues a private context from the complete independently

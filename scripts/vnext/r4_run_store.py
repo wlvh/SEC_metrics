@@ -1017,7 +1017,6 @@ def finalize_r4_scoped_run(
             checks=[{
                 "check": "R4_SCOPED_TERMINAL_EXECUTION",
                 "status": "FAIL",
-                "error_class": attempt["error_class"],
             }],
         )
         return fail_run(run_dir=run_dir)
