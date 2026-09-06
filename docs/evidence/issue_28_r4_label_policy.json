@@ -1,0 +1,28 @@
+{
+  "record_type": "OWNER_TASK_POLICY_EVIDENCE",
+  "evidence_scope": "POLICY_CONTENT_ONLY",
+  "source_kind": "CURRENT_CODEX_USER_INSTRUCTION",
+  "task_id": "01a07737-3379-7a32-84c1-32ff6a7c6066",
+  "author": "repository-owner:current-codex-user",
+  "observed_at_utc": "2026-09-06T16:22:07.498049+00:00",
+  "approval_text": "同意新版本的表格 scope 证据标签，在来源和单元格位置验证通过后，精确接受该单元格已经保存的 `raw_text` 或 `text`；后续证据仍恢复来源原文。caption、数值、单位、期间、口径、跨表和歧义规则不变。允许 Codex 在本次独立修复中完成正式接入及必要版本绑定；不追认历史失败，不沿用旧调用授权。",
+  "choice": {
+    "kind": "R4_SOURCE_LABEL_REPRESENTATION",
+    "ratchet_id": "R4",
+    "policy": "EXACT_SOURCE_RAW_OR_TEXT_V2",
+    "accepted_cell_fields": [
+      "raw_text",
+      "text"
+    ],
+    "authoritative_cell_field": "raw_text",
+    "caption_policy": "EXACT_RAW_TEXT_V1",
+    "source_and_geometry_verification_required": true,
+    "value_unit_period_scope_cross_table_ambiguity_rules": "UNCHANGED",
+    "response_rewrite_allowed": false,
+    "historical_reinterpretation_allowed": false,
+    "fuzzy_matching_or_locator_search_allowed": false,
+    "old_call_authorization_reuse_allowed": false
+  },
+  "transition_activation": "NOT_ISSUED",
+  "provider_paid_sec_publication_authorized": false
+}

@@ -51,7 +51,7 @@ def main():
             result = build_offline_case(repo_root=root, requirement=requirement,
                 fixture_id=fixture["fixture_id"], source_bundle=bundles[source_id],
                 evidence_context=contexts[source_id])
-            results.append(write_offline_case(repo_root=root, fixture=fixture, result=result))
+            results.append(write_offline_case(repo_root=root, fixture=fixture, result=result, requirement=requirement))
             print(json.dumps(result["summary"], ensure_ascii=False), flush=True)
         else:
             summary = replay_case_artifacts(repo_root=root, requirement=requirement,

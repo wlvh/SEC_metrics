@@ -18,7 +18,8 @@ from .evidence import prepare_offline_evidence_context_from_asset_bytes
 from .evidence import _plain_owned
 from .r4_fixture_authority import load_r4_fixture_authority
 from .r4_materialization import materialize_full_source
-from .r4_offline_qualification import INDEX_PATH, INDEX_FIELDS, CASE_FIELDS
+from .r4_offline_qualification import INDEX_FIELDS, CASE_FIELDS
+from .r4_label_policy import corpus_root, corpus_index, label_policy as bound_label_policy, RAW_LABEL_POLICY
 from .r4_offline_qualification import prepare_source_bundle_from_context, replay_case_artifacts
 from .r4_source_audit import source_authority
 from .r4_task_contracts import resolve_r4_task_contract
@@ -91,7 +92,7 @@ def _source_ledger_paths(*, repo_root: Path, authority: Mapping) -> set:
 
 
 def _read_corpus(*, repo_root: Path, requirement: Mapping, authority: Mapping) -> dict:
-    path = resolve_repository_file(repo_root=repo_root, repo_relative_path=INDEX_PATH)
+    path = resolve_repository_file(repo_root=repo_root, repo_relative_path=corpus_index(requirement["requirement_id"]))
     index = strict_json_loads(text=path.read_text(encoding="utf-8"))
     if (type(index) is not dict or set(index) != INDEX_FIELDS
             or index["record_type"] != "R4_OFFLINE_QUALIFICATION_INDEX"
@@ -120,7 +121,7 @@ def _read_corpus(*, repo_root: Path, requirement: Mapping, authority: Mapping) -
             "scoped_request.json", "scoped_attempt.json"},
             "STRUCTURED_PRIMARY": {"structured_route.json", "source_audit.json"},
             "ZERO_CALL_CLASSIFICATION": {"zero_call_result.json"}}[fixture["artifact_kind"]]
-        directory = "docs/r4_offline/qualified_cases/" + fixture["fixture_id"]
+        directory = corpus_root(requirement["requirement_id"]) + "/" + fixture["fixture_id"]
         if (row["directory"] != directory or type(row["files"]) is not dict
                 or set(row["files"]) != filenames
                 or (repo_root / directory).is_symlink()
@@ -200,7 +201,7 @@ class LiveScopedReaderSession:
                     continue
                 if entry["fixture_class"] not in {"POSITIVE_PRODUCTION", "POSITIVE_ALTERNATE_LAYOUT"}:
                     raise LiveScopedReaderError("Non-positive fixture entered scoped certificate set")
-                expected_directory = "docs/r4_offline/qualified_cases/" + entry["fixture_id"]
+                expected_directory = corpus_root(self._requirement["requirement_id"]) + "/" + entry["fixture_id"]
                 if (entry["directory"] != expected_directory
                         or set(entry["files"]) != {"source_scope.json", "scoped_plan.json",
                                                   "scoped_request.json", "scoped_attempt.json"}):
@@ -272,7 +273,7 @@ def prepare_live_scoped_reader_session(*, repo_root: Path,
     from .r4_run_store import load_r4_fixture_company_authority
     company_authority = load_r4_fixture_company_authority(repo_root=root, requirement=requirement)
     paths = set(requirement_authority_paths(repo_root=root, requirement=requirement))
-    paths.add(INDEX_PATH)
+    paths.add(corpus_index(requirement["requirement_id"]))
     paths.add("outputs/active_publication.json")
     paths.update(_source_ledger_paths(repo_root=root, authority=authority))
     paths.update(entry["directory"] + "/" + name for entry in index["cases"]
@@ -537,11 +538,12 @@ def validate_scoped_invocation_acceptance(*, response_body: bytes, execution_id:
         request, (fixture, entry, source, scope, authority) = _acceptance_inputs(context=context)
         prepared = prepare_scoped_reader_request_in_session(context=source["scoped"],
             source_scope_manifest_id=scope["source_scope_manifest_id"])
+        label_rule = bound_label_policy(request._session._requirement)
         checked = check_scoped_reader_response(prepared_request=prepared,
             response_text=response_body.decode("utf-8"),
             attempt_id="attempt:" + execution_id.split(":", maxsplit=1)[1],
             source_scope_manifest=scope, expected_manifest_id=scope["source_scope_manifest_id"],
-            _verified_scope_context=source["scoped"], **authority)
+            _verified_scope_context=source["scoped"], _label_policy=label_rule, **authority)
         candidate, evidence = checked["candidate"], checked["evidence"]
         if evidence["status"] != "PASS" or evidence["system_approval_eligible"] is not True:
             raise LiveScopedReaderError("Native scoped Evidence did not certify the response")
@@ -554,8 +556,10 @@ def validate_scoped_invocation_acceptance(*, response_body: bytes, execution_id:
             "candidate_hash": candidate["candidate_hash"], "candidate_record": candidate,
             "evidence_check_id": evidence["evidence_check_id"], "evidence_record": evidence,
             "evidence_candidate_hash": evidence["candidate_hash"], "evidence_status": evidence["status"],
-            "validator_semantic_version": SCOPED_ACCEPTANCE_VERSION,
-            "validator_semantic_hash": SCOPED_ACCEPTANCE_HASH,
+            "validator_semantic_version": (SCOPED_ACCEPTANCE_VERSION if label_rule == RAW_LABEL_POLICY
+                else "source-bound-scoped-reader-acceptance-v2"),
+            "validator_semantic_hash": (SCOPED_ACCEPTANCE_HASH if label_rule == RAW_LABEL_POLICY
+                else content_hash(value={"parent":SCOPED_ACCEPTANCE_HASH,"label_policy":label_rule})),
         }
     except (ValueError, UnicodeError, KeyError, IndexError, TypeError) as error:
         raise EvidenceFailureError("Native scoped Evidence rejected the response") from error

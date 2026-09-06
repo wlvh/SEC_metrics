@@ -18,10 +18,11 @@ from .canonical import canonical_json_bytes, content_hash, parse_utc_timestamp
 from .canonical import sha256_bytes, strict_json_loads
 from .records import EXPLICIT_ARTIFACT_GENERATION
 from .sources import resolve_repository_file
+from .r4_label_policy import CURRENT_R4_REQUIREMENT, corpus_root
 
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-REQUIREMENT_ID = "issue_28_v2"
+REQUIREMENT_ID = CURRENT_R4_REQUIREMENT
 RUNTIME_ROOT = "artifacts/vnext/qualification/r4_scoped"
 _PLAN_FACTORY = object()
 _AUTH_FACTORY = object()
@@ -209,16 +210,19 @@ class R4ExecutionPlanContext:
             _check_files(repo_root=self._root, bindings=request.identity["file_bindings"])
 
 
-def prepare_r4_execution_context(*, repo_root: Path, session=None) -> R4ExecutionPlanContext:
+def prepare_r4_execution_context(*, repo_root: Path, session=None, requirement_id=None) -> R4ExecutionPlanContext:
     """Rebuild nine unique requests from certified source bytes, offline only."""
     from .live_scoped_reader import LiveScopedReaderSession, prepare_live_scoped_reader_session
     from .live_scoped_reader import prepare_live_scoped_reader_request
     from .r4_live_plan import _derive_r4_repository_schedule_from_requirement
     root = repo_root.resolve(strict=True)
+    if requirement_id is None:
+        requirement_id = REQUIREMENT_ID if session is None else session._requirement["requirement_id"]
+    corpus_root(requirement_id)
     if session is None:
-        session = prepare_live_scoped_reader_session(repo_root=root, requirement_id=REQUIREMENT_ID)
+        session = prepare_live_scoped_reader_session(repo_root=root, requirement_id=requirement_id)
     if (type(session) is not LiveScopedReaderSession or session._root != root
-            or session._requirement["requirement_id"] != REQUIREMENT_ID):
+            or session._requirement["requirement_id"] != requirement_id):
         raise R4AuthorizationError("R4 execution source session differs")
     schedule = _derive_r4_repository_schedule_from_requirement(
         repo_root=root, requirement=session._requirement,
@@ -228,7 +232,7 @@ def prepare_r4_execution_context(*, repo_root: Path, session=None) -> R4Executio
         fixture = entry["fixture_id"]
         if fixture not in requests:
             requests[fixture] = prepare_live_scoped_reader_request(
-                repo_root=root, fixture_id=fixture, session=session)
+                repo_root=root, fixture_id=fixture, session=session, requirement_id=requirement_id)
     if len(requests) != 9 or len(schedule["entries"]) != 12:
         raise R4AuthorizationError("R4 exact base/stability call set differs")
     # A copied release workspace may replay recorded data without borrowed Git.
@@ -343,7 +347,7 @@ def validate_r4_live_authorization_receipt(*, receipt, plan, requirement, exact_
             or receipt["exact_head"] != exact_head or receipt["exact_tree"] != exact_tree
             or receipt["owner"] != owner or any(receipt[key] != plan[key] for key in IDENTITY_FIELDS)
             or receipt["requirement_hashes"] != requirement["hashes"]
-            or receipt["requirement_id"] != REQUIREMENT_ID
+            or receipt["requirement_id"] != requirement["requirement_id"]
             or receipt["requirement_closure_hash"] != requirement["requirement_closure_hash"]
             or receipt["pending_plan_id"] != plan["pending_plan_id"]
             or receipt["authorized_entry_ids"] != [e["entry_id"] for e in plan["entries"]]

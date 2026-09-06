@@ -13,6 +13,7 @@ from typing import Dict, Mapping
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
 from .evidence import check_evidence, OfflineEvidenceContext, _plain_owned
 from .evidence import check_evidence_in_offline_session, RAW_LABEL_POLICY
+from .r4_label_policy import label_policy as bound_label_policy, SOURCE_LABEL_POLICY
 from .reader import validate_reader_output, validate_source_bound_reader_output
 from .reader_input import READER_SYSTEM_CONTRACT
 from .records import validate_record
@@ -257,6 +258,8 @@ def prepare_scoped_reader_request(
             "do_not_invent_reported_unit_labels": True,
             "audit_reference_values_are_not_provider_input": True,
         }
+        if bound_label_policy(requirement) == SOURCE_LABEL_POLICY:
+            body["scoped_transport_contract"]["scope_label_representation_policy"] = SOURCE_LABEL_POLICY
     request_bytes = canonical_json_bytes(value=body)
     context = policy_choice(requirement=requirement, kind="TRANSPORT_RETRY_POLICY")
     if len(request_bytes) > context["context_ceiling_tokens"]:
@@ -311,7 +314,7 @@ def check_scoped_reader_response(
     source_bytes: bytes = None, repo_root: Path = None,
     _verified_scope_context: OfflineScopedContext = None,
     _offline_evidence_context: OfflineEvidenceContext = None,
-    _label_policy: str = RAW_LABEL_POLICY,
+    _label_policy: str = None,
 ) -> Dict[str, object]:
     """Verify scoped Candidate/Evidence without creating execution metadata.
 
@@ -320,8 +323,9 @@ def check_scoped_reader_response(
     claim that the full filing was sent to a provider. No second value verifier
     or selector is introduced.
 
-    ``_label_policy`` is an explicit offline candidate experiment. Production
-    acceptance does not set it; historical/default checks remain exact-raw.
+    Normal calls select the record-bound Requirement policy. ``_label_policy``
+    is retained for explicit historical offline experiments, never model data
+    or a live CLI/environment override. Old Requirements remain exact-raw.
     """
     expected_request = prepare_scoped_reader_request(
         source_scope_manifest=source_scope_manifest,
@@ -333,6 +337,8 @@ def check_scoped_reader_response(
         _verified_scope_context=_verified_scope_context,
         _offline_evidence_context=_offline_evidence_context,
     )
+    if _label_policy is None:
+        _label_policy = bound_label_policy(requirement)
     if (not isinstance(prepared_request, PreparedScopedReaderRequest)
             or expected_request != prepared_request):
         raise ScopedReaderError("Scoped request bytes/identity differ")

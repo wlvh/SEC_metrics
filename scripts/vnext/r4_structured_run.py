@@ -182,7 +182,7 @@ def prepare_r4_structured_run_context(*, repo_root: Path, fixture_id: str,
                                      plan: Mapping, execution_context=None):
     from .r4_live_authority import R4ExecutionPlanContext, prepare_r4_execution_context
     if execution_context is None:
-        execution_context = prepare_r4_execution_context(repo_root=repo_root)
+        execution_context = prepare_r4_execution_context(repo_root=repo_root, requirement_id=plan["requirement_id"])
     if type(execution_context) is not R4ExecutionPlanContext or execution_context._root != repo_root.resolve():
         raise R4StructuredRunError("Structured context belongs to another repository")
     context = R4StructuredRunContext(factory=_FACTORY, execution=execution_context,

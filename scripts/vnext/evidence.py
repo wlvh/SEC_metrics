@@ -247,18 +247,18 @@ def prepare_offline_evidence_context_from_asset_bytes(
         task_generation=task_generation)
 
 
-RAW_LABEL_POLICY = "EXACT_RAW_TEXT_V1"
-SOURCE_LABEL_POLICY_CANDIDATE = "EXACT_SOURCE_RAW_OR_TEXT_V2_OFFLINE_CANDIDATE"
+from .r4_label_policy import (RAW_LABEL_POLICY, SOURCE_LABEL_POLICY,
+    SOURCE_LABEL_POLICY_CANDIDATE, label_policy as bound_label_policy)
 
 
 def check_evidence_in_offline_session(*, context: OfflineEvidenceContext,
                                     candidate: Mapping, task_contract_id: str,
                                     source_bound_context: Mapping = None,
-                                    _label_policy: str = RAW_LABEL_POLICY) -> Dict[str, object]:
-    """Run the Checker on owned authority, with an opt-in offline label candidate.
+                                    _label_policy: str = None) -> Dict[str, object]:
+    """Select normal label rules from owned Requirement authority.
 
-    No request, model field or current live caller selects the candidate policy.
-    It is pending policy review; it is not a new authorized execution version.
+    The explicit candidate argument remains for historical offline experiments;
+    normal controller and replay calls use the record-bound approved policy.
     """
     if type(context) is not OfflineEvidenceContext or task_contract_id not in context._tasks:
         raise EvidenceError("Offline Evidence context/task is invalid")
@@ -424,10 +424,10 @@ def _verify_local_labels(
     Why:
         The Checker proves that claimed labels exist locally; it never searches
         the filing or decides what those labels mean economically.
-        The offline candidate additionally accepts the same cell's stored text;
+        The approved new policy also accepts the same cell's stored text;
         captions retain exact-raw matching. Both return authoritative raw text.
     """
-    if label_policy not in {RAW_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE}:
+    if label_policy not in {RAW_LABEL_POLICY, SOURCE_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE}:
         raise EvidenceError("Unknown source label representation policy")
     selected_table = claim["locator"]["table_id"]
     raw_text_by_id: Dict[str, str] = {}
@@ -451,7 +451,7 @@ def _verify_local_labels(
             )
             actual_text = str(cell["raw_text"])
             accepted_texts = ((actual_text, str(cell["text"]))
-                if label_policy == SOURCE_LABEL_POLICY_CANDIDATE else (actual_text,))
+                if label_policy in {SOURCE_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE} else (actual_text,))
         if str(label["raw_text"]) not in accepted_texts:
             raise ConstraintError("SCOPE_LABEL_TEXT_MISMATCH")
         # Always recover source bytes; never replace them with model text.
@@ -627,7 +627,7 @@ def check_evidence(
     scope_contract: Mapping[str, object],
     source_bound_context: Mapping[str, object] = None,
     _offline_context: OfflineEvidenceContext = None,
-    _label_policy: str = RAW_LABEL_POLICY,
+    _label_policy: str = None,
 ) -> Dict[str, object]:
     """Run the asymmetric mechanical Evidence Checker.
 
@@ -644,9 +644,12 @@ def check_evidence(
         Strict EVIDENCE_CHECK. A wrong locator or raw value is rejected; the
         Checker never searches another cell to repair the AI claim.
     """
-    if _label_policy not in {RAW_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE}:
+    if _label_policy is None:
+        _label_policy = (RAW_LABEL_POLICY if _offline_context is None
+                         else bound_label_policy(_offline_context._requirement))
+    if _label_policy not in {RAW_LABEL_POLICY, SOURCE_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE}:
         raise EvidenceError("Unknown source label representation policy")
-    if _label_policy != RAW_LABEL_POLICY and _offline_context is None:
+    if _label_policy == SOURCE_LABEL_POLICY_CANDIDATE and _offline_context is None:
         raise EvidenceError("Candidate label policy requires an offline source context")
     validate_record(record=candidate)
     if _offline_context is None:

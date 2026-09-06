@@ -230,8 +230,10 @@ def _prepare_successor_invocation_authority_from_requirement(
     from .requirement_profile import requirement_authority_paths, validate_execution_authority
     from .sources import resolve_repository_file
 
-    if requirement.get("requirement_id") != "issue_28_v2":
-        raise InvocationControlError("Scoped R4 invocation requires issue_28_v2")
+    from .r4_label_policy import CURRENT_R4_REQUIREMENT, label_policy
+    if requirement.get("requirement_id") not in {"issue_28_v2", CURRENT_R4_REQUIREMENT}:
+        raise InvocationControlError("Scoped R4 invocation requires a registered R4 revision")
+    label_policy(requirement)
     root = repo_root.resolve(strict=True)
     validate_execution_authority(repo_root=root, requirement=requirement)
     decisions = requirement["effective_decisions"]
@@ -283,9 +285,13 @@ def prepare_successor_invocation_authority(
 
 
 @contextmanager
-def _successor_plan_context(*, repo_root: Path, requirement_id: str = "issue_28_v2",
+def _successor_plan_context(*, repo_root: Path, requirement_id: str = None,
                             authority=None):
     context = authority
+    if requirement_id is None:
+        if context is not None and type(context) is not SuccessorInvocationAuthority:
+            raise InvocationControlError("Successor invocation context differs")
+        requirement_id = "issue_28_v2" if context is None else context._check()[0]["requirement_id"]
     if context is None:
         context = prepare_successor_invocation_authority(
             repo_root=repo_root, requirement_id=requirement_id)

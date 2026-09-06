@@ -14,7 +14,8 @@ from typing import Mapping
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
 from .evidence import prepare_offline_evidence_context_from_asset_bytes
 from .r4_fixture_authority import FIXTURE_FIELDS, MATRIX_PATH, load_r4_fixture_authority
-from .r4_offline_qualification import CASE_FIELDS, INDEX_FIELDS, INDEX_PATH
+from .r4_offline_qualification import CASE_FIELDS, INDEX_FIELDS
+from .r4_label_policy import corpus_root, corpus_index
 from .r4_offline_qualification import prepare_source_bundle, prepare_source_bundle_from_context
 from .r4_offline_qualification import replay_case_artifacts
 from .r4_task_contracts import resolve_r4_task_contract
@@ -158,7 +159,7 @@ def _basis(root: Path, requirement: Mapping, *, company_authority=None):
             "qualification_credit": "NONE_INDIVIDUAL_RUN"}
         if type(company_authority) is not dict or company_authority != expected_company:
             raise R4DraftPlanError("Reused subject authority differs from its exact repository file")
-    index, index_binding = _object(root, INDEX_PATH)
+    index, index_binding = _object(root, corpus_index(requirement["requirement_id"]))
     _exact(index, INDEX_FIELDS, "Offline corpus index")
     _self_id(index, "index_id")
     if (index["record_type"] != "R4_OFFLINE_QUALIFICATION_INDEX" or index["schema_version"] != 1
@@ -175,7 +176,7 @@ def _basis(root: Path, requirement: Mapping, *, company_authority=None):
             or any(type(entry) is not dict or set(entry) != CASE_FIELDS for entry in index["cases"])
             or {entry["fixture_id"] for entry in index["cases"]} != set(expected)):
         raise R4DraftPlanError("Corpus fixture exact set differs")
-    bindings = {INDEX_PATH: index_binding}
+    bindings = {corpus_index(requirement["requirement_id"]): index_binding}
     directories = {}
     eligible, zero = [], []
     for entry in index["cases"]:
@@ -183,7 +184,7 @@ def _basis(root: Path, requirement: Mapping, *, company_authority=None):
         recipe = authority["recipes"][fixture["fixture_id"]]
         if any(entry[key] != fixture[key] for key in FIXTURE_FIELDS):
             raise R4DraftPlanError("Corpus fixture fields differ from repository inputs")
-        directory = "docs/r4_offline/qualified_cases/" + fixture["fixture_id"]
+        directory = corpus_root(requirement["requirement_id"]) + "/" + fixture["fixture_id"]
         filenames = {"SCOPED_EXTRACTION": set(ARTIFACT_FILENAMES),
             "STRUCTURED_PRIMARY": {"structured_route.json", "source_audit.json"},
             "ZERO_CALL_CLASSIFICATION": {"zero_call_result.json"}}[fixture["artifact_kind"]]
@@ -342,7 +343,7 @@ def _body(root: Path, requirement: Mapping, authority, index, eligible, zero):
             or policy["response_reuse"] != "NOT_AUTHORIZED"):
         raise R4DraftPlanError("Draft call bounds or no-reuse policy differ")
     entries, selection = _schedule(eligible)
-    _, corpus_binding = _read(root, INDEX_PATH)
+    _, corpus_binding = _read(root, corpus_index(requirement["requirement_id"]))
     _, planner_binding = _read(root, PLANNER_PATH)
     return {"record_type": DRAFT_TYPE, "schema_version": 1,
         "artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
@@ -352,7 +353,7 @@ def _body(root: Path, requirement: Mapping, authority, index, eligible, zero):
         "owner_authorization": "NOT_ISSUED", "provider_paid_sec_authorized": False,
         "qualification_credit": "NONE_DRAFT_ONLY", "publication_credit": "NONE",
         "response_reuse_authorized": False,
-        "corpus_binding": {"path": INDEX_PATH, "index_id": index["index_id"], **corpus_binding},
+        "corpus_binding": {"path": corpus_index(requirement["requirement_id"]), "index_id": index["index_id"], **corpus_binding},
         "fixture_matrix_id": authority["matrix_id"], "planner_binding": {"path": PLANNER_PATH, **planner_binding},
         "selection_policy": {"algorithm": ALGORITHM, "risk_priority": list(RISK_PRIORITY),
             "base_order": ["metric_id", "production_before_alternate", "fixture_id"],

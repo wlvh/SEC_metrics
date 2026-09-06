@@ -57,7 +57,7 @@ class R4LabelRepresentationIntegrationTest(unittest.TestCase):
             for owner, name in [(ai_adapter, '_open_provider_request'),
                 (sec_http.SecHttpClient, 'fetch'), (sec_http, 'urlopen'),
                 (socket.socket, 'connect'), (socket.socket, 'connect_ex')]]
-        cls.context = prepare_r4_execution_context(repo_root=cls.root)
+        cls.context = prepare_r4_execution_context(repo_root=cls.root, requirement_id="issue_28_v2")
         cls.plan = build_r4_recorded_test_plan(context=cls.context)
         cls.provenance = strict_json_file(path=FIXTURE / 'provenance.json')
         for name, binding in cls.provenance['files'].items():

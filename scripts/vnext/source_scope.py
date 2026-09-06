@@ -15,6 +15,7 @@ from .canonical import canonical_json_bytes, content_hash
 from .canonical import sha256_bytes, strict_json_loads
 from .evidence import check_evidence, _verify_payload, _plain_owned
 from .evidence import OfflineEvidenceContext, check_evidence_in_offline_session
+from .r4_label_policy import label_policy as bound_label_policy
 from .reader import validate_reader_output
 from .reader_input import verify_reader_table_set
 from .records import EXPLICIT_ARTIFACT_GENERATION, validate_record
@@ -358,6 +359,7 @@ def _native_evidence(*, candidate: object, full_derived_asset: Mapping,
         identity_constraints=task_contract["identity_constraints"],
         scope_contract=task_contract["scope_contract"],
         source_bound_context=context,
+        _label_policy=bound_label_policy(requirement),
     )
 
 

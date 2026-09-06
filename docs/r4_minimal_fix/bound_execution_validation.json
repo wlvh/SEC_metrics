@@ -1,0 +1,185 @@
+{
+  "classification": "RECORDED_NORMAL_CONTROLLER_FREEZE_AND_INDEPENDENT_REPLAY",
+  "status": "PASSED",
+  "observed_at_utc": "2026-09-06T16:57:03.730707+00:00",
+  "requirement_id": "issue_28_v3",
+  "requirement_closure_hash": "sha256:58e821a4987cb65042570008021ea41819d5bd9071af66aa4f394eccac5940b7",
+  "requirement_hashes": {
+    "baseline_sha256": "dc8475bcd0b05e39814f4dcba8b6031d338d54db6b1db9dba5bdd568bfd2d117",
+    "contract_sha256": "c03169edf31fb0a83df986d5a1715fed8531b2797c5bd10f6471ad9e9928e9d2",
+    "decision_register_sha256": "c374eadd2ef3e96b2ec98ff25b4c7abb52a5168be23bb69c0a5095cfd7cb0403",
+    "invariant_profile_sha256": "d33abb8a4c2e26de77f717e3b649e2bdab0c01b19bce1401369b9664befed122",
+    "transfer_manifest_sha256": "030fc1685721806e83f552b29c64d5281855eca60ffa816c81394d19358904f0",
+    "parent_requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+    "validator_sha256": "35ea4e7727af07114d7a57e0d9d0da5241f051f8c59ac278d36200f38367000d"
+  },
+  "execution_files": 185,
+  "carried_parent_fragments": 719,
+  "owner_policy": "APPROVED_IN_CURRENT_TASK",
+  "exact_head_transition_activation": "NOT_ISSUED",
+  "new_live_plan": "NOT_ISSUED_BEFORE_IMPLEMENTATION_MERGE",
+  "provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "historical_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "normal_path_result": {
+    "historical_request_differs": true,
+    "historical_response_classification": "OFFLINE_REGRESSION_ONLY",
+    "independent_replay": {
+      "execution_mode": "RECORDED_TEST",
+      "publication_credit": "NONE",
+      "qualification_credit": "NONE_INDIVIDUAL_RUN",
+      "replay_content_hash": "sha256:8df70961ef5b6e68e5873313c69f63de8b2af78b9986d067e1cf1bade222c9dd",
+      "response_reuse_authorized": false,
+      "results": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "jpmorgan_chase",
+          "metric_id": "A03",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:b7970df2f5bdc4fe95782a5f467b5ef730ff37a5503d40b6a6c5f82cb4c51acb",
+          "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae",
+          "spec_closure_hash": "sha256:7763849a520073bc419094126dba415374ccdba885b4d9d0b5b1e60135983b39",
+          "trace_id": "sha256:c7abf6bd1044d69524c5eb660b433545f20c4cc15e331a6813f529e45d284d82",
+          "unit": "ratio",
+          "value": "1.11"
+        }
+      ],
+      "run_id": "run:r4:78e78cce1a5e67949dd1793a52780e3118022e545d30bd8b8c5a972d76a6d3c1",
+      "run_status": "FROZEN",
+      "traces": [
+        {
+          "calculation_target": {
+            "accession": null,
+            "company_id": "jpmorgan_chase",
+            "entity": null,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01",
+            "scope": {
+              "aggregation": "average",
+              "entity_scope": "firm"
+            },
+            "scope_key": "sha256:52a3afe8a1f454da0ecd9d15015edb398398ee229608f56fbf4ee664f87e33ae"
+          },
+          "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9",
+          "input_observation_ids": [
+            "sha256:ef055739d1a4937772d01f6985ec8d0887a5cf73cd8f22436924fa57fbbffaab"
+          ],
+          "metric_id": "A03",
+          "quality": "EXACT",
+          "record_type": "EXECUTION_TRACE",
+          "result": "1.11",
+          "result_contract_hash": "sha256:7b880439f149a78e620a84ff5f31408d0dac4f71c337770852f2e2e3f3aa7021",
+          "spec_closure_hash": "sha256:7763849a520073bc419094126dba415374ccdba885b4d9d0b5b1e60135983b39",
+          "steps": [
+            {
+              "event": "REUSED_OBSERVATION",
+              "observation_id": "sha256:ef055739d1a4937772d01f6985ec8d0887a5cf73cd8f22436924fa57fbbffaab",
+              "role": "liquidity_coverage_ratio",
+              "value": "1.11"
+            },
+            {
+              "event": "FORMULA_RESULT",
+              "formula": "liquidity_coverage_ratio",
+              "quality": "EXACT",
+              "resolved_values": {
+                "liquidity_coverage_ratio": "1.11"
+              },
+              "value": "1.11"
+            }
+          ],
+          "trace_id": "sha256:c7abf6bd1044d69524c5eb660b433545f20c4cc15e331a6813f529e45d284d82"
+        }
+      ]
+    },
+    "provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "publication_version_readback": "PASS",
+    "request_sha256": "2596d76136c79cd0578a385d40be352133b43d76cce8ac43e69789083411cd2f",
+    "requirement_closure_hash": "sha256:58e821a4987cb65042570008021ea41819d5bd9071af66aa4f394eccac5940b7",
+    "requirement_id": "issue_28_v3",
+    "response_classification": "NEW_REQUEST_RECORDED_FIXTURE",
+    "run_status": "FROZEN",
+    "status": "PASSED"
+  },
+  "source_policy_selection": "Loaded record-bound Requirement; no Checker test switch, environment switch or model-selected policy",
+  "new_test_source_binding": "Current new Python and new Requirement copied byte-for-byte; no old Python restoration or hash-validator replacement",
+  "checks": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_bound_label_execution -v",
+      "tests": 1,
+      "return_code": 0,
+      "duration_seconds": "341.003"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_label_representation -v",
+      "tests": 8,
+      "nested_composite_tests": 10,
+      "negative_variants": 13,
+      "return_code": 0,
+      "duration_seconds": "227.692"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_evidence_checker tests.vnext.test_scoped_reader tests.vnext.test_composite_scope.OfflineEvidenceContextTest tests.vnext.test_r4_qualification_recovery tests.vnext.test_r4_run_store.R4RunSchemaTest tests.vnext.test_r4_run_store.R4InheritedReviewPolicyTest -v",
+      "tests": 33,
+      "return_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4",
+      "groups": 32,
+      "return_code": 0,
+      "duration_seconds": "9.346"
+    }
+  ],
+  "regenerated": "16 existing source fixtures into separate v3 corpus; no SEC source reacquisition or benchmark",
+  "preserved": "PR31 d3babd0 clean and all 52 archived files unchanged; old Requirements, V1-V3 engines and v2 corpus unchanged; active R3",
+  "fixed_integration_findings": [
+    "Invocation authority initially rejected all versions except v2",
+    "Invocation context defaulted to v2 even with new typed authority; now derives the bound version"
+  ],
+  "not_run": [
+    "live/provider calls",
+    "12-call qualification aggregate",
+    "candidate stage/publish/rollback/restore",
+    "performance benchmark",
+    "full acceptance",
+    "WB-7/R5/R6/Rf features"
+  ],
+  "log_bindings": {
+    "v3-bound-execution.log": {
+      "sha256": "1f2a62cd4c39093d0a1e70e1bd4c7f5bff819baf84dc80730fc201adf730b5ed",
+      "size": 3282
+    },
+    "v3-historical-regression.log": {
+      "sha256": "8c76773bbaf7e751dc1b79d45f2a07220a2e417cf7287cf231c1379879955dbe",
+      "size": 2118
+    },
+    "v3-targeted.log": {
+      "sha256": "91b79669b915b9f80df5b4a6b8f4daadb562cd4017604ace80d8dccd0525f1b6",
+      "size": 6797
+    },
+    "v3-fast.json": {
+      "sha256": "c2ae14cb6eff9c03043b7ee8df951afe4061f596225277b7a2c56dd26136ce3d",
+      "size": 9628
+    }
+  },
+  "test_source_bindings": {
+    "tests/vnext/test_r4_bound_label_execution.py": "f538da3ad85908dd4fc667e8622038cc8cbc79a8f8d7f6522fcd5c7352bba6f1",
+    "tests/vnext/test_r4_label_representation.py": "0bb944708d69d82d4706761c7b624da6e83c52b6b7b67f852b07401651a25c06"
+  },
+  "validation_id": "sha256:3e8b031aca1425ab394c9bc283a761b446148d7bf3fb682bb430118a471a55fe"
+}

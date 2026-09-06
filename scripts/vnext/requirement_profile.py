@@ -12,6 +12,7 @@ from typing import Callable, Mapping
 from . import requirement_profile_v1 as v1
 from . import requirement_profile_v2 as v2
 from . import requirement_profile_v3 as v3
+from . import requirement_profile_v4 as v4
 from .requirement_profile_v1 import CONTENT_HASH_PATTERN
 from .requirement_profile_v1 import EXPLICIT_ARTIFACT_GENERATION
 from .requirement_profile_v1 import LEGACY_ARTIFACT_GENERATION
@@ -29,6 +30,7 @@ PROFILE_ENGINES = {
     v1.PROFILE_REQUIREMENT_GENERATION: v1,
     v2.PROFILE_REQUIREMENT_GENERATION: v2,
     v3.PROFILE_REQUIREMENT_GENERATION: v3,
+    v4.PROFILE_REQUIREMENT_GENERATION: v4,
 }
 _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
 
