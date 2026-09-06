@@ -1,0 +1,437 @@
+{
+  "record_type": "R4_V3_RELEASE_PLAN_PREPARATION_REVIEW",
+  "status": "PASSED",
+  "implementation_merge": "f6117862093c78865be0f112cdf8a264f202ca27",
+  "implementation_merge_tree": "0b6b65fc10f8b090447e2c256b70fd2311d0c065",
+  "approved_head": "0605a312710cd3347b6b67d94c805faeb045a846",
+  "approved_head_is_merge_parent": true,
+  "merge_tree_matches_approved_tree": true,
+  "activation_comment_url": "https://github.com/wlvh/SEC_metrics/pull/32#issuecomment-5560878827",
+  "activation_receipt_id": "sha256:e4e6247b3310c4f62c74a0f4de8af74687ff2e46d131a43743a793f8044ee189",
+  "requirement_id": "issue_28_v3",
+  "requirement_closure_hash": "sha256:58e821a4987cb65042570008021ea41819d5bd9071af66aa4f394eccac5940b7",
+  "pending_plan_id": "sha256:1f6447b2040586d2bb67662b65150478c9ff996a799076df8e07813cdd931c86",
+  "plan_generator": "PYTHONDONTWRITEBYTECODE=1 python3 tools/vnext_r4_qualification.py plan",
+  "plan_generation_head": "f3120997d0de0876dae1737b84661b821615283a",
+  "provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "historical_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "historical_failed_plan_id": "sha256:215277ae679bde123e51cf3ce839445e9ef152c5a9f5d0c72f74a2b6618658bd",
+  "actual_usage": "NOT_RUN",
+  "live_authorization": "NOT_ISSUED",
+  "publication_authorized": false,
+  "automatic_retry_count": 0,
+  "response_reuse_authorized": false,
+  "source_selection_specs_scope_reference_and_schedule_unchanged": true,
+  "all_twelve_entry_ids_new": true,
+  "all_nine_unique_provider_requests_new": true,
+  "first_request_matches_merged_normal_path_regression": true,
+  "source_python_unchanged_since_merge": true,
+  "predecessor_readback": {
+    "chain": [
+      {
+        "manifest": {
+          "path": "outputs/publications/publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8/publication_manifest.json",
+          "sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a",
+          "size": 89007
+        },
+        "previous_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+        "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8"
+      },
+      {
+        "manifest": {
+          "path": "outputs/publications/publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f/publication_manifest.json",
+          "sha256": "a7b26dfd48600e14815de58abcdba56a4ad6d0e901f135f236f536e32931205c",
+          "size": 64953
+        },
+        "previous_publication_id": "publication_81eb84764bb3b3f10b44e588e522cdd5a15681f5ae024ebf6921589a70b91538",
+        "publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f"
+      },
+      {
+        "manifest": {
+          "path": "outputs/publications/publication_81eb84764bb3b3f10b44e588e522cdd5a15681f5ae024ebf6921589a70b91538/publication_manifest.json",
+          "sha256": "a8a3a5a6e54251fd4269ce941ce518d0074155c56f651823bb5eed64850fd18b",
+          "size": 17266
+        },
+        "previous_publication_id": "publication_5668341b23a16895a9e4d3c62657e0d541c80b766b6a2b8d4d98374c5042a6e0",
+        "publication_id": "publication_81eb84764bb3b3f10b44e588e522cdd5a15681f5ae024ebf6921589a70b91538"
+      }
+    ],
+    "receipt_index_id": "sha256:fcaca01e14859d9479173616cdad96a41541a472590af41175accb9d7b5a19ac",
+    "root_mirror_count": 14,
+    "verified_files_hash": "sha256:dd7584366072ace4c2be74f4451ff3e3089440a98b345f8458998e76276badf0"
+  },
+  "entries": [
+    {
+      "ordinal": 1,
+      "metric_id": "A03",
+      "company_id": "jpmorgan_chase",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:1f1945d7959a20d1e42087b59b1e81fcc4c34056e73af01b28c3db5d8d244130",
+      "provider_request_body_sha256": "2596d76136c79cd0578a385d40be352133b43d76cce8ac43e69789083411cd2f",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "aggregation": "average",
+          "entity_scope": "firm"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "1.11"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id"
+      ]
+    },
+    {
+      "ordinal": 2,
+      "metric_id": "A03",
+      "company_id": "citigroup",
+      "period": "2025Q4",
+      "phase": "BASE",
+      "entry_id": "sha256:d9f649277f974229bfd2f08166be3f2b1e57b8ad6029ae8d9c16e77736fc9c0e",
+      "provider_request_body_sha256": "282d99ae5a2ee0b202c373181751542fa75f66fb11c0b81bf41eb0597bc1eb62",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "2025Q4",
+        "scope": {
+          "aggregation": "average",
+          "entity_scope": "firm"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "ratio",
+        "value": "1.15"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 3,
+      "metric_id": "A04",
+      "company_id": "jpmorgan_chase",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:bee78b65ae5dabd0e6cc12bbdb74d5b3d0e1c864d671f02739999ef4fc73c477",
+      "provider_request_body_sha256": "588a80414fa3fc0807995b6f1c9739c003a03987d7220ad187a4fe49fa9be0cb",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "basis": "managed_basis"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "0.025"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id"
+      ]
+    },
+    {
+      "ordinal": 4,
+      "metric_id": "A04",
+      "company_id": "citigroup",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:dd8a339ae0bf8bf11d1655a8848608faec9ff50c222f68f7cfbc0e2b63126d40",
+      "provider_request_body_sha256": "5e5194222274047982ad90217b11f0de015179b9f14cc1e1eca693ad262b9ece",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "basis": "managed_basis"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "ratio",
+        "value": "0.0247"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id"
+      ]
+    },
+    {
+      "ordinal": 5,
+      "metric_id": "A09",
+      "company_id": "jpmorgan_chase",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:b7b1de7efc74aad8ec942712d90c6c40598b515f24c64ccb475ce7caa4b82827",
+      "provider_request_body_sha256": "96fcfdc844151ef5d559da3b9c9fc979ee0fbe0504b15ae299067f454b61d202",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "reference": {
+        "evidence": "No independent legacy anchor is claimed; native structured source and independent full-document navigation are required.",
+        "period": "FY2025",
+        "scope": {
+          "loan_population": "firmwide"
+        },
+        "status": "NO_INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "0.0066"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 6,
+      "metric_id": "A11",
+      "company_id": "jpmorgan_chase",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:3a1d9cdd6df291e8dc1b4bf9b83935f52286d1e49fd1541790a339086cf68d26",
+      "provider_request_body_sha256": "d087bd3835b394a5010fb3f04f7ac02da7c558a4060f68e3e5f0d191ed7c2978",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "asset_scope": "total_assets_under_management"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "USD",
+        "value": "4791000000000"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 7,
+      "metric_id": "A11",
+      "company_id": "bank_of_america_corp",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:1509b05f90c307a5e7021af1b0076c7ab09958fc890d7972e57a18214298d876",
+      "provider_request_body_sha256": "20f76f34f5184f02c2374e48b7c1b536c867745392a5b0ca21d0a94695591508",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "asset_scope": "total_assets_under_management"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "USD",
+        "value": "2177708000000"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 8,
+      "metric_id": "A12",
+      "company_id": "jpmorgan_chase",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:f71fe8341da856fcb3bd6b0e267fc93a3f3add05d8b783e0ac7d6e536fcd6f96",
+      "provider_request_body_sha256": "31c9c90dec985c4647c61905f4418b08c5e71da52cdf27c5f56623fbd7a266fa",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "confidence_level": "ninety_five_percent",
+          "holding_period": "one_day"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "USD",
+        "value": "40000000"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 9,
+      "metric_id": "A12",
+      "company_id": "bank_of_america_corp",
+      "period": "FY2025",
+      "phase": "BASE",
+      "entry_id": "sha256:b47e544990d77259dfbc7140813094c710660645016cbc63cb5ea6251ed1c6b2",
+      "provider_request_body_sha256": "ee280a9031173c709b15ec2c2546b88e2cea21e9fc46d7e51bf2421ebf591db4",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "confidence_level": "ninety_five_percent",
+          "holding_period": "one_day"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "USD",
+        "value": "34000000"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 10,
+      "metric_id": "A03",
+      "company_id": "citigroup",
+      "period": "2025Q4",
+      "phase": "STABILITY",
+      "entry_id": "sha256:ad75f65a23fe0674b72935dd12d34385751e6dca4bfdda37892a429d8d9152c5",
+      "provider_request_body_sha256": "282d99ae5a2ee0b202c373181751542fa75f66fb11c0b81bf41eb0597bc1eb62",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "2025Q4",
+        "scope": {
+          "aggregation": "average",
+          "entity_scope": "firm"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "ratio",
+        "value": "1.15"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 11,
+      "metric_id": "A09",
+      "company_id": "jpmorgan_chase",
+      "period": "FY2025",
+      "phase": "STABILITY",
+      "entry_id": "sha256:fdb2d3c6348c4bcb2d445f3ed1e7ac839cb4d1d33968c6fddbd010e1c711ab62",
+      "provider_request_body_sha256": "96fcfdc844151ef5d559da3b9c9fc979ee0fbe0504b15ae299067f454b61d202",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "reference": {
+        "evidence": "No independent legacy anchor is claimed; native structured source and independent full-document navigation are required.",
+        "period": "FY2025",
+        "scope": {
+          "loan_population": "firmwide"
+        },
+        "status": "NO_INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "0.0066"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    },
+    {
+      "ordinal": 12,
+      "metric_id": "A12",
+      "company_id": "bank_of_america_corp",
+      "period": "FY2025",
+      "phase": "STABILITY",
+      "entry_id": "sha256:589e030f79259e355ecf69b4119cb0026b4838c4e0386a77a5bb3f8f2db7e85c",
+      "provider_request_body_sha256": "ee280a9031173c709b15ec2c2546b88e2cea21e9fc46d7e51bf2421ebf591db4",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "confidence_level": "ninety_five_percent",
+          "holding_period": "one_day"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "USD",
+        "value": "34000000"
+      },
+      "changed_request_identity_fields": [
+        "live_scoped_reader_request_id",
+        "provider_request_body_sha256",
+        "reader_payload_sha256",
+        "requirement_closure_hash",
+        "requirement_hashes",
+        "requirement_id",
+        "source_scope_manifest_id",
+        "target_period_identity"
+      ]
+    }
+  ],
+  "tests_reused": "Reviewed implementation tests and successful fast CI; merge tree identical; no long suite or benchmark repeated"
+}
