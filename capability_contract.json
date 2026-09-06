@@ -194,6 +194,19 @@
         "test_anchor": "tests/vnext/test_recorded_fixture_operator.py::RecordedFixtureOperatorTest.test_public_recorded_cold_start_review_resume_and_readback",
         "test_status": "automated_recorded_scenario",
         "since": "2026-08-07"
+      },
+      {
+        "anchor_id": "CAPABILITY.r4_label_offline_candidate",
+        "type": "capability",
+        "status": "active",
+        "statement": "R4失败收尾使用合法FAIL check。issue_28_v3绑定owner批准的同一已验证单元格raw_text/text精确接受规则，正常controller acceptance、freeze与独立replay按记录所属Requirement自动选择；后续证据仍恢复来源raw_text。caption及来源、位置、值、单位、期间、scope和歧义规则不变。旧v2按原规则解释，原付费响应只作OFFLINE_REGRESSION。正常recorded路径不提供live/publication credit，不自动激活Requirement或沿用旧调用授权。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_r4_bound_label_execution.py::R4BoundLabelExecutionTest.test_normal_acceptance_freeze_and_independent_replay",
+        "test_status": "automated_recorded",
+        "since": "2026-09-06"
       }
     ],
     "capability_boundaries": [

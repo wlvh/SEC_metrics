@@ -425,7 +425,7 @@ def _check_switch_authority(authority):
                  'Release owner exact head/tree changed')
         from .requirement_profile import validate_execution_authority
         from .requirements import load_requirement_snapshot
-        requirement = load_requirement_snapshot(snapshot_dir=authority.root / 'requirements/issue_28_v2')
+        requirement = load_requirement_snapshot(snapshot_dir=authority.root / 'requirements' / manifest['requirement_id'])
         validate_execution_authority(repo_root=authority.root, requirement=requirement)
         _require(requirement['requirement_closure_hash'] == manifest['requirement_closure_hash'],
                  'Release current Requirement closure changed')
@@ -522,8 +522,8 @@ def verify_release_owner_comment(*, publication_root, pin, source_url):
     # Recheck the merged implementation from actual Git, not portable claims.
     from .requirements import load_requirement_snapshot
     from .r4_release import _merged_implementation
-    requirement = load_requirement_snapshot(snapshot_dir=root / 'requirements/issue_28_v2')
-    _require(strict_json_file(path=_file(root, ACTIVATION_PATH)) == document['activation'],
+    requirement = load_requirement_snapshot(snapshot_dir=root / 'requirements' / manifest['requirement_id'])
+    _require(strict_json_file(path=_file(root, 'docs/evidence/' + manifest['requirement_id'] + '_transition_activation.json')) == document['activation'],
              'Current transition activation differs from the frozen release')
     merged = _merged_implementation(root, requirement, document['activation'],
         document['proof']['implementation']['commit'], document['owner'], require_clean=False)

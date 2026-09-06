@@ -1,0 +1,83 @@
+{
+  "classification": "OFFLINE_REGRESSION_AND_FAST_LOCAL_ONLY",
+  "status": "PASSED",
+  "observed_at_utc": "2026-09-06T15:52:17.335847+00:00",
+  "candidate_id": "sha256:f4aec2b4eb0a93e5e878c32269faef4d7bb3393f92ea11c18bdcfbad157a4801",
+  "python_version": "3.14.7",
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "historical_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "checks": [
+    {
+      "name": "real_response_and_finalizer_integration",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_label_representation -v",
+      "return_code": 0,
+      "top_level_tests": 8,
+      "nested_legacy_composite_tests": 10,
+      "negative_variants": 13,
+      "unique_requests_checked_in_raw_and_text_forms": 9,
+      "duration_seconds": 224.544,
+      "actual_result": "Reader/Evidence/SYSTEM Review/Observation/Calculator: 1.11 ratio; failure Run FAILED; later transport sends 0",
+      "log": "integration.log"
+    },
+    {
+      "name": "affected_existing_modules",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_evidence_checker tests.vnext.test_scoped_reader tests.vnext.test_composite_scope.OfflineEvidenceContextTest tests.vnext.test_r4_qualification_recovery tests.vnext.test_r4_run_store.R4RunSchemaTest tests.vnext.test_r4_run_store.R4InheritedReviewPolicyTest -v",
+      "return_code": 0,
+      "tests": 33,
+      "duration_seconds": 1.785,
+      "log": "targeted.log"
+    },
+    {
+      "name": "fast",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4",
+      "return_code": 0,
+      "groups": 32,
+      "duration_seconds": 9.398,
+      "log": "fast.json"
+    }
+  ],
+  "pr31_preservation": {
+    "head": "d3babd0ac0300d68dd58007e38caa2d7b2c27ab4",
+    "clean": true,
+    "archived_files_rechecked": 52,
+    "all_original_bytes_unchanged": true,
+    "active": "R3"
+  },
+  "test_harness_boundary": "Candidate Python is tested with exact frozen source inputs in disposable copies; no native semantic/hash validator is mocked. This does not establish a new live execution authority.",
+  "earlier_attempts": [
+    "Two integration attempts exposed test-harness mistakes: immutable mapping passed to strict record renderer, then wrong Result key status instead of publication. Only the harness was corrected; final full suite passed.",
+    "Direct composite-scope tests on changed current source correctly rejected old execution-authority hashes; those unchanged tests were then run with frozen input authority inside the integration suite. An initial mistyped test_evidence module was replaced by actual test_evidence_checker."
+  ],
+  "not_run": [
+    "performance benchmark",
+    "full acceptance",
+    "live qualification",
+    "new candidate Run freeze/publication",
+    "WB-7/R5/R6/Rf feature work"
+  ],
+  "policy_activation": "NOT_APPROVED_NOT_ACTIVATED",
+  "log_bindings": {
+    "integration.log": {
+      "sha256": "472972d27806ab10949438fb89901e06bb288a2540f14a756473e91455103646",
+      "size": 2118
+    },
+    "targeted.log": {
+      "sha256": "73c2589ed0ec1382cf74613a2440a9aab1b9086b8d86594ddb1f42ff4d269ea9",
+      "size": 6797
+    },
+    "fast.json": {
+      "sha256": "c8bc1fd672cac3fc0e698f250b9998bfbdc5007bd0bb00922d70b09ba89dc779",
+      "size": 9626
+    }
+  }
+}

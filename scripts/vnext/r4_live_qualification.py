@@ -295,7 +295,7 @@ def execute_r4_qualification(*, repo_root: Path, plan: Mapping, owner_comment=No
     from .live_scoped_reader import build_scoped_invocation_acceptance_context
     from .r4_run_store import create_r4_scoped_run, finalize_r4_scoped_run
     if context is None:
-        context = prepare_r4_execution_context(repo_root=repo_root)
+        context = prepare_r4_execution_context(repo_root=repo_root, requirement_id=plan["requirement_id"])
     if type(context) is not R4ExecutionPlanContext or context._root != repo_root.resolve():
         raise R4QualificationError("R4 execution repository/context differs")
     mode = plan.get("execution_mode")
@@ -365,7 +365,7 @@ def execute_r4_qualification(*, repo_root: Path, plan: Mapping, owner_comment=No
 def replay_r4_qualification(*, repo_root: Path, plan, context=None):
     """Independent disk replay; caller must supply a new disk-owned source session."""
     if context is None:
-        context = prepare_r4_execution_context(repo_root=repo_root)
+        context = prepare_r4_execution_context(repo_root=repo_root, requirement_id=plan["requirement_id"])
     if context._terminal_pins:
         raise R4QualificationError("Independent R4 replay cannot reuse an execution prefix cache")
     validate_r4_execution_plan(plan=plan, context=context,

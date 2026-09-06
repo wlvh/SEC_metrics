@@ -31,6 +31,8 @@ from .traits import repository_company_traits
 from .specs import compile_spec_file
 
 
+from .r4_label_policy import corpus_root, corpus_index
+
 INDEX_PATH = "docs/r4_offline/qualified_cases/index.json"
 INDEX_FIELDS = {"record_type", "schema_version", "status", "requirement_id",
     "requirement_closure_hash", "matrix_id", "metric_ids", "cases", "provider_paid_sec_calls",
@@ -608,9 +610,9 @@ def build_offline_case(*, repo_root: Path, requirement: Mapping, fixture_id: str
             "structured_route": route, "summary": summary}
 
 
-def write_offline_case(*, repo_root: Path, fixture: Mapping, result: Mapping) -> dict:
+def write_offline_case(*, repo_root: Path, fixture: Mapping, result: Mapping, requirement=None) -> dict:
     """Write only the additive offline case directory; never historical evidence."""
-    directory = repo_root / "docs/r4_offline/qualified_cases" / fixture["fixture_id"]
+    directory = repo_root / corpus_root("issue_28_v2" if requirement is None else requirement["requirement_id"]) / fixture["fixture_id"]
     if directory.is_symlink():
         raise R4OfflineQualificationError("Offline output directory is a symlink")
     directory.mkdir(parents=True, exist_ok=True)
@@ -650,7 +652,7 @@ def write_offline_index(*, repo_root: Path, requirement: Mapping, cases: list) -
         "provider_paid_sec_calls": [0, 0, 0], "qualification_credit": "NONE_OFFLINE_SYNTHETIC",
         "live_authorization": "NOT_AUTHORIZED"}
     index = {**body, "index_id": content_hash(value=body)}
-    atomic_write_bytes(path=repo_root / INDEX_PATH, content=canonical_json_bytes(value=index))
+    atomic_write_bytes(path=repo_root / corpus_index(requirement["requirement_id"]), content=canonical_json_bytes(value=index))
     return index
 
 
@@ -665,7 +667,7 @@ def replay_case_artifacts(*, repo_root: Path, requirement: Mapping, fixture: Map
     if fixture not in authority["fixtures"] or fixture["source_id"] != source_bundle["source_id"]:
         raise R4OfflineQualificationError("Replay fixture/source is not execution-bound")
     source_bundle["repo_root"] = str(repo_root)
-    index = strict_json_file(path=resolve_repository_file(repo_root=repo_root, repo_relative_path=INDEX_PATH))
+    index = strict_json_file(path=resolve_repository_file(repo_root=repo_root, repo_relative_path=corpus_index(requirement["requirement_id"])))
     if (type(index) is not dict or set(index) != INDEX_FIELDS
             or index["record_type"] != "R4_OFFLINE_QUALIFICATION_INDEX"
             or type(index["schema_version"]) is not int or index["schema_version"] != 1
@@ -693,7 +695,7 @@ def replay_case_artifacts(*, repo_root: Path, requirement: Mapping, fixture: Map
     expected_files = {"SCOPED_EXTRACTION": {"source_scope.json", "scoped_plan.json", "scoped_request.json", "scoped_attempt.json"},
                       "STRUCTURED_PRIMARY": {"structured_route.json", "source_audit.json"},
                       "ZERO_CALL_CLASSIFICATION": {"zero_call_result.json"}}[fixture["artifact_kind"]]
-    if (entry["directory"] != "docs/r4_offline/qualified_cases/" + fixture["fixture_id"]
+    if (entry["directory"] != corpus_root(requirement["requirement_id"]) + "/" + fixture["fixture_id"]
             or type(entry["files"]) is not dict or set(entry["files"]) != expected_files
             or any(type(binding) is not dict or set(binding) != {"sha256", "size"}
                    or type(binding["size"]) is not int or binding["size"] <= 0

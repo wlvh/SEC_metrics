@@ -1,0 +1,16 @@
+OFFLINE_REGRESSION: frozen inputs and original request/response verified
+test_all_nine_requests_old_and_candidate_keep_exact_certified_results (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_all_nine_requests_old_and_candidate_keep_exact_certified_results) ... ok
+test_candidate_is_not_activated_by_changed_python (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_candidate_is_not_activated_by_changed_python) ... ok
+test_exact_representations_recover_source_raw_and_do_not_mutate_response (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_exact_representations_recover_source_raw_and_do_not_mutate_response) ... ok
+test_failure_finalizer_seals_failed_run_and_stops_before_second_transport (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_failure_finalizer_seals_failed_run_and_stops_before_second_transport) ... OFFLINE_REGRESSION: real failure finalizer sealed FAILED; later sends=0
+ok
+test_legacy_composite_scope_checks_with_frozen_input_authority (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_legacy_composite_scope_checks_with_frozen_input_authority) ... ok
+test_real_response_old_failure_and_candidate_full_native_result (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_real_response_old_failure_and_candidate_full_native_result) ... OFFLINE_REGRESSION: original response -> Reader/Evidence/SYSTEM Review/Calculator = 1.11 ratio; no live credit
+ok
+test_unrecognized_policy_or_model_policy_field_cannot_enable_candidate (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_unrecognized_policy_or_model_policy_field_cannot_enable_candidate) ... ok
+test_wrong_subject_value_period_scope_unit_and_locator_still_reject (tests.vnext.test_r4_label_representation.R4LabelRepresentationIntegrationTest.test_wrong_subject_value_period_scope_unit_and_locator_still_reject) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 227.692s
+
+OK

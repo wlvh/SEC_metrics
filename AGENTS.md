@@ -49,6 +49,11 @@ architecture.md
 
 ### 开发、复核 successor vNext Ratchet
 
+当前 PR32 的正常 R4 接线首先读取 `requirements/issue_28_v3/` 与
+`docs/r4_minimal_fix/README.md`。标签政策已获 owner 批准；exact-head
+激活、implementation merge、新 live plan/grant 仍按既有顺序独立完成。
+旧 v2 快照、engine 与证书目录只按原规则解释，不改历史失败。
+
 ```text
 requirements/issue_28_v1/CONTRACT.md（successor outcome/boundary）
 → requirements/issue_28_v1/decision_register.json（policy-content authority）

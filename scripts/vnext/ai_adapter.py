@@ -1027,6 +1027,14 @@ def build_scoped_provider_request_body(
         "claim or reconstruct narrative text that was not supplied. No full-document "
         "fallback, additional source selection, tools, or extra JSON fields are allowed."
     )
+    from .r4_label_policy import SOURCE_LABEL_POLICY
+    label_policy = contract.get("scope_label_representation_policy")
+    if label_policy is not None:
+        if label_policy != SOURCE_LABEL_POLICY:
+            raise AIAdapterError("Unknown bound scope label representation")
+        prompt = prompt.replace("Copy table-native scope raw text exactly, including whitespace; do not ",
+            "For cell scope labels, copy exactly the same located cell's supplied raw_text or text. "
+            "The checker recovers source raw_text. Captions still require exact caption_raw_text. Do not ")
     if policy.provider == "deepseek":
         envelope["messages"][0]["content"] = prompt
     elif policy.provider == "openai":

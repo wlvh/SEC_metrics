@@ -24,6 +24,7 @@ from vnext.r4_live_authority import (  # noqa: E402
     verify_r4_live_owner_comment,
 )
 from vnext.r4_live_plan import build_r4_draft_plan  # noqa: E402
+from vnext.r4_label_policy import CURRENT_R4_REQUIREMENT  # noqa: E402
 from vnext.r4_live_qualification import execute_r4_qualification, replay_r4_qualification  # noqa: E402
 
 
@@ -47,7 +48,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         if args.command == "draft":
-            result = build_r4_draft_plan(repo_root=REPO_ROOT)
+            result = build_r4_draft_plan(repo_root=REPO_ROOT, requirement_id=CURRENT_R4_REQUIREMENT)
         elif args.command == "plan":
             result = build_r4_pending_live_plan(repo_root=REPO_ROOT)
             _exclusive_write_json(path=_plan_path(result["pending_plan_id"]), value=result)
@@ -58,7 +59,7 @@ def main(argv=None):
             plan = strict_json_file(path=path)
             if plan.get("pending_plan_id") != args.plan_id:
                 raise ValueError("Pending plan path and content ID differ")
-            context = prepare_r4_execution_context(repo_root=REPO_ROOT)
+            context = prepare_r4_execution_context(repo_root=REPO_ROOT, requirement_id=plan["requirement_id"])
             if args.command == "execute":
                 owner = verify_r4_live_owner_comment(context=context, plan=plan, source_url=args.owner_comment_url)
                 _exclusive_write_json(path=REPO_ROOT / RUNTIME_ROOT / "authorizations"

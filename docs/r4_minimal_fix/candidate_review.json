@@ -1,0 +1,223 @@
+{
+  "record_type": "R4_OFFLINE_REPAIR_CANDIDATE_REVIEW",
+  "status": "PENDING_OWNER_POLICY_REVIEW",
+  "base_commit": "75002a861555c91aeadd72260d98707225d96f49",
+  "policy_id": "EXACT_SOURCE_RAW_OR_TEXT_V2_OFFLINE_CANDIDATE",
+  "policy_delta": {
+    "accepted_cell_labels": [
+      "same_verified_cell.raw_text",
+      "same_verified_cell.text"
+    ],
+    "authoritative_label": "same_verified_cell.raw_text",
+    "caption_policy": "UNCHANGED_EXACT_CAPTION_RAW_TEXT",
+    "default_and_live_policy": "EXACT_RAW_TEXT_V1",
+    "source_geometry_value_unit_period_scope_ambiguity_checks": "UNCHANGED",
+    "response_mutation": false,
+    "fuzzy_search_or_locator_repair": false
+  },
+  "candidate_sources": {
+    "scripts/vnext/evidence.py": {
+      "sha256": "be6eb4bd535112394bbc24f3004e928eb1f3b5b0285a95b2a9238076db92e02b",
+      "size": 42033
+    },
+    "scripts/vnext/scoped_reader.py": {
+      "sha256": "598aa4a2fbd7f207bdff06c2027c40e4b141662f4d744ce639ff4200d7eb7daa",
+      "size": 34055
+    },
+    "scripts/vnext/r4_run_store.py": {
+      "sha256": "ad44790d0858ba07ccdc0e33b4f89e2a26096a74b1326b9e3ba471d4e6f87db0",
+      "size": 59299
+    },
+    "tests/vnext/test_r4_label_representation.py": {
+      "sha256": "79177f267fc39bc3fd543d1b1f32670240ecf94c9ce0a10a4090de5a21d6f2b3",
+      "size": 18318
+    },
+    "tests/fixtures/r4_label_representation/provenance.json": {
+      "sha256": "0d922661015fafd22abc792d7597a3afed72ba4a50bba9f4c7295dd3302375d6",
+      "size": 681
+    },
+    "tests/fixtures/r4_label_representation/provider_request.json": {
+      "sha256": "1bfd2ee4f2e3f6c555c07bd91d3295ad8d85955e7b1a5e32a3d87eff7f1e6b28",
+      "size": 35972
+    },
+    "tests/fixtures/r4_label_representation/provider_response.json": {
+      "sha256": "7c35fbe68d73142d59008d62e32d9edda924f35566af439a1154d53a574a5937",
+      "size": 2480
+    }
+  },
+  "historical_live_plan": "sha256:215277ae679bde123e51cf3ce839445e9ef152c5a9f5d0c72f74a2b6618658bd",
+  "historical_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "historical_execution_status": "FAILED_TERMINAL",
+  "current_new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "qualification_credit": "NONE_OFFLINE_REGRESSION",
+  "publication_credit": "NONE",
+  "next_call_schedule": {
+    "status": "PROPOSED_SHAPE_ONLY_NOT_A_CLI_PLAN",
+    "pending_live_plan_id": null,
+    "request_identities": "NOT_GENERATED_PENDING_POLICY_AND_VERSION_APPROVAL",
+    "authorization": "NOT_ISSUED",
+    "provider_call_count": 12,
+    "automatic_retry_count": 0,
+    "response_reuse_authorized": false,
+    "sec_calls_authorized": false,
+    "publication_authorized": false,
+    "entries": [
+      {
+        "ordinal": 1,
+        "fixture_id": "r4_a03_production",
+        "metric_id": "A03",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 2,
+        "fixture_id": "r4_a03_alternate",
+        "metric_id": "A03",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-10-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 3,
+        "fixture_id": "r4_a04_production",
+        "metric_id": "A04",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 4,
+        "fixture_id": "r4_a04_alternate",
+        "metric_id": "A04",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 5,
+        "fixture_id": "r4_a09_production",
+        "metric_id": "A09",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 6,
+        "fixture_id": "r4_a11_production",
+        "metric_id": "A11",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 7,
+        "fixture_id": "r4_a11_alternate",
+        "metric_id": "A11",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 8,
+        "fixture_id": "r4_a12_production",
+        "metric_id": "A12",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 9,
+        "fixture_id": "r4_a12_alternate",
+        "metric_id": "A12",
+        "phase": "BASE",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": null
+      },
+      {
+        "ordinal": 10,
+        "fixture_id": "r4_a03_alternate",
+        "metric_id": "A03",
+        "phase": "STABILITY",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-10-01"
+        },
+        "repeats_base_ordinal": 2
+      },
+      {
+        "ordinal": 11,
+        "fixture_id": "r4_a09_production",
+        "metric_id": "A09",
+        "phase": "STABILITY",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": 5
+      },
+      {
+        "ordinal": 12,
+        "fixture_id": "r4_a12_alternate",
+        "metric_id": "A12",
+        "phase": "STABILITY",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "repeats_base_ordinal": 9
+      }
+    ],
+    "structured_positive_count": 3,
+    "zero_call_class_count": 4,
+    "expected_cumulative_provider_calls_if_all_twelve_execute": 13
+  },
+  "candidate_id": "sha256:f4aec2b4eb0a93e5e878c32269faef4d7bb3393f92ea11c18bdcfbad157a4801"
+}

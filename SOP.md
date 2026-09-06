@@ -1,5 +1,10 @@
 # SEC_metrics 标准操作流程导航
 
+PR32 的 R4 标签修复使用 `issue_28_v3` 和独立的 `docs/r4_v3/qualified_cases`。
+正常 controller→freeze→独立 replay 的定向回归见 TESTING.md。
+产品规则批准不代替 exact-head transition activation 或新 live grant。
+
+
 ## 使用原则
 
 每一步只包含动作、权威引用和验收。SOP 不复制会变化的脚本清单、测试命令或指标规范；发生冲突时，以代码、测试、能力契约和被引用的专项文档为准。`config/validation_source_policy.json` 必须把每个权威引用分类为运行/验收 source、snapshot artifact 或非批次治理角色；解释性非权威文档不能作为本表的运行权威。

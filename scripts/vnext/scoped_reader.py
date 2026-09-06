@@ -12,7 +12,8 @@ from typing import Dict, Mapping
 
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_json_loads
 from .evidence import check_evidence, OfflineEvidenceContext, _plain_owned
-from .evidence import check_evidence_in_offline_session
+from .evidence import check_evidence_in_offline_session, RAW_LABEL_POLICY
+from .r4_label_policy import label_policy as bound_label_policy, SOURCE_LABEL_POLICY
 from .reader import validate_reader_output, validate_source_bound_reader_output
 from .reader_input import READER_SYSTEM_CONTRACT
 from .records import validate_record
@@ -257,6 +258,8 @@ def prepare_scoped_reader_request(
             "do_not_invent_reported_unit_labels": True,
             "audit_reference_values_are_not_provider_input": True,
         }
+        if bound_label_policy(requirement) == SOURCE_LABEL_POLICY:
+            body["scoped_transport_contract"]["scope_label_representation_policy"] = SOURCE_LABEL_POLICY
     request_bytes = canonical_json_bytes(value=body)
     context = policy_choice(requirement=requirement, kind="TRANSPORT_RETRY_POLICY")
     if len(request_bytes) > context["context_ceiling_tokens"]:
@@ -311,6 +314,7 @@ def check_scoped_reader_response(
     source_bytes: bytes = None, repo_root: Path = None,
     _verified_scope_context: OfflineScopedContext = None,
     _offline_evidence_context: OfflineEvidenceContext = None,
+    _label_policy: str = None,
 ) -> Dict[str, object]:
     """Verify scoped Candidate/Evidence without creating execution metadata.
 
@@ -318,6 +322,10 @@ def check_scoped_reader_response(
     passed to check_evidence is explicitly local Evidence authority, not a
     claim that the full filing was sent to a provider. No second value verifier
     or selector is introduced.
+
+    Normal calls select the record-bound Requirement policy. ``_label_policy``
+    is retained for explicit historical offline experiments, never model data
+    or a live CLI/environment override. Old Requirements remain exact-raw.
     """
     expected_request = prepare_scoped_reader_request(
         source_scope_manifest=source_scope_manifest,
@@ -329,6 +337,8 @@ def check_scoped_reader_response(
         _verified_scope_context=_verified_scope_context,
         _offline_evidence_context=_offline_evidence_context,
     )
+    if _label_policy is None:
+        _label_policy = bound_label_policy(requirement)
     if (not isinstance(prepared_request, PreparedScopedReaderRequest)
             or expected_request != prepared_request):
         raise ScopedReaderError("Scoped request bytes/identity differ")
@@ -371,10 +381,12 @@ def check_scoped_reader_response(
         evidence = check_evidence(candidate=candidate, derived_asset=full_derived_asset,
             reader_manifest=reader_manifest, reader_payload_body=evidence_authority_payload,
             source_references=[source_reference], identity_constraints=task_contract["identity_constraints"],
-            scope_contract=task_contract["scope_contract"], source_bound_context=evidence_context)
+            scope_contract=task_contract["scope_contract"], source_bound_context=evidence_context,
+            _label_policy=_label_policy)
     else:
         evidence = check_evidence_in_offline_session(context=evidence_session,
-            candidate=candidate, task_contract_id=task_contract["task_contract_id"], source_bound_context=evidence_context)
+            candidate=candidate, task_contract_id=task_contract["task_contract_id"],
+            source_bound_context=evidence_context, _label_policy=_label_policy)
     if evidence["status"] == "PASS":
         reference = source_scope_manifest["reference"]
         certified = source_scope_manifest["synthetic_candidate"]["selected"]

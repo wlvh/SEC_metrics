@@ -247,10 +247,19 @@ def prepare_offline_evidence_context_from_asset_bytes(
         task_generation=task_generation)
 
 
+from .r4_label_policy import (RAW_LABEL_POLICY, SOURCE_LABEL_POLICY,
+    SOURCE_LABEL_POLICY_CANDIDATE, label_policy as bound_label_policy)
+
+
 def check_evidence_in_offline_session(*, context: OfflineEvidenceContext,
                                     candidate: Mapping, task_contract_id: str,
-                                    source_bound_context: Mapping = None) -> Dict[str, object]:
-    """Run the same Checker on context-owned authority; accept no table override."""
+                                    source_bound_context: Mapping = None,
+                                    _label_policy: str = None) -> Dict[str, object]:
+    """Select normal label rules from owned Requirement authority.
+
+    The explicit candidate argument remains for historical offline experiments;
+    normal controller and replay calls use the record-bound approved policy.
+    """
     if type(context) is not OfflineEvidenceContext or task_contract_id not in context._tasks:
         raise EvidenceError("Offline Evidence context/task is invalid")
     task = context._tasks[task_contract_id]
@@ -262,7 +271,7 @@ def check_evidence_in_offline_session(*, context: OfflineEvidenceContext,
             "untrusted_table_data": context._transport},
         source_references=[context._source_reference], identity_constraints=task["identity_constraints"],
         scope_contract=task["scope_contract"], source_bound_context=source_bound_context,
-        _offline_context=context)
+        _offline_context=context, _label_policy=_label_policy)
 
 
 def _verify_source_bindings(
@@ -398,6 +407,7 @@ def _verify_claim_cell(
 def _verify_local_labels(
     *, claim: Mapping[str, object], derived_asset: Mapping[str, object],
     offline_context: OfflineEvidenceContext = None,
+    label_policy: str = RAW_LABEL_POLICY,
 ) -> Dict[str, str]:
     """Re-read exact raw scope text from local target-table locators.
 
@@ -409,12 +419,16 @@ def _verify_local_labels(
         Exact raw text keyed by Reader-declared scope evidence locator ID.
 
     Raises:
-        ConstraintError: On cross-table label or raw-text mismatch.
+        ConstraintError: On cross-table label or representation mismatch.
 
     Why:
         The Checker proves that claimed labels exist locally; it never searches
         the filing or decides what those labels mean economically.
+        The approved new policy also accepts the same cell's stored text;
+        captions retain exact-raw matching. Both return authoritative raw text.
     """
+    if label_policy not in {RAW_LABEL_POLICY, SOURCE_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE}:
+        raise EvidenceError("Unknown source label representation policy")
     selected_table = claim["locator"]["table_id"]
     raw_text_by_id: Dict[str, str] = {}
     for label in claim["scope_evidence_locators"]:
@@ -429,14 +443,18 @@ def _verify_local_labels(
             if len(tables) != 1:
                 raise ConstraintError("SCOPE_CAPTION_TABLE_MISSING")
             actual_text = str(tables[0]["caption_raw_text"])
+            accepted_texts = (actual_text,)
         else:
             resolver = resolve_cell if offline_context is None else offline_context.resolve_cell
             cell = resolver(
                 derived_asset=derived_asset, locator=label["locator"],
             )
             actual_text = str(cell["raw_text"])
-        if str(label["raw_text"]) != actual_text:
+            accepted_texts = ((actual_text, str(cell["text"]))
+                if label_policy in {SOURCE_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE} else (actual_text,))
+        if str(label["raw_text"]) not in accepted_texts:
             raise ConstraintError("SCOPE_LABEL_TEXT_MISMATCH")
+        # Always recover source bytes; never replace them with model text.
         raw_text_by_id[str(label["id"])] = actual_text
     return raw_text_by_id
 
@@ -555,6 +573,7 @@ def _normalize_scope(
     *, claim: Mapping[str, object], scope_contract: Mapping[str, object],
     derived_asset: Mapping[str, object],
     offline_context: OfflineEvidenceContext = None,
+    label_policy: str = RAW_LABEL_POLICY,
 ) -> tuple[Dict[str, str], list[str]]:
     """Normalize scope only through exact aliases after raw locator replay.
 
@@ -572,6 +591,7 @@ def _normalize_scope(
     """
     raw_text_by_id = _verify_local_labels(
         claim=claim, derived_asset=derived_asset, offline_context=offline_context,
+        label_policy=label_policy,
     )
     normalized: Dict[str, str] = {}
     unresolved = []
@@ -607,6 +627,7 @@ def check_evidence(
     scope_contract: Mapping[str, object],
     source_bound_context: Mapping[str, object] = None,
     _offline_context: OfflineEvidenceContext = None,
+    _label_policy: str = None,
 ) -> Dict[str, object]:
     """Run the asymmetric mechanical Evidence Checker.
 
@@ -623,6 +644,13 @@ def check_evidence(
         Strict EVIDENCE_CHECK. A wrong locator or raw value is rejected; the
         Checker never searches another cell to repair the AI claim.
     """
+    if _label_policy is None:
+        _label_policy = (RAW_LABEL_POLICY if _offline_context is None
+                         else bound_label_policy(_offline_context._requirement))
+    if _label_policy not in {RAW_LABEL_POLICY, SOURCE_LABEL_POLICY, SOURCE_LABEL_POLICY_CANDIDATE}:
+        raise EvidenceError("Unknown source label representation policy")
+    if _label_policy == SOURCE_LABEL_POLICY_CANDIDATE and _offline_context is None:
+        raise EvidenceError("Candidate label policy requires an offline source context")
     validate_record(record=candidate)
     if _offline_context is None:
         validate_record(record=derived_asset)
@@ -727,6 +755,7 @@ def check_evidence(
                 scope_contract=validated_scope_contract,
                 derived_asset=derived_asset,
                 offline_context=_offline_context,
+                label_policy=_label_policy,
             )
             if proof is not None:
                 from .composite_scope import source_bound_scope, validate_table_scope_disambiguation
@@ -817,6 +846,9 @@ def check_evidence(
         reasons.append("LOCATOR_REJECTED:" + str(error))
     except ConstraintError as error:
         reasons.append(str(error))
+    if _label_policy != RAW_LABEL_POLICY:
+        # Distinguish candidate evidence identities even when both rules pass.
+        checks.append({"check": _label_policy, "status": "FAIL" if reasons else "PASS"})
     status = "REJECTED" if reasons else "PASS"
     substantive = {
         "candidate_hash": candidate["candidate_hash"],

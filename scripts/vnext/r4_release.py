@@ -27,10 +27,12 @@ from .calculator import metric_is_applicable
 from .traits import repository_company_traits
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
-REQUIREMENT_ID = 'issue_28_v2'
-RELEASE_PLAN_ID = 'issue_28_r4_scoped_engine_v2'
+from .r4_label_policy import CURRENT_R4_REQUIREMENT, release_plan_id as version_release_plan_id
+
+REQUIREMENT_ID = CURRENT_R4_REQUIREMENT
+RELEASE_PLAN_ID = version_release_plan_id(REQUIREMENT_ID)
 RELEASE_PLAN_PATH = 'config/release_plans/' + RELEASE_PLAN_ID + '.json'
-ACTIVATION_PATH = 'docs/evidence/issue_28_v2_transition_activation.json'
+ACTIVATION_PATH = 'docs/evidence/' + REQUIREMENT_ID + '_transition_activation.json'
 RELEASE_RUNTIME = 'artifacts/vnext/qualification/r4_release'
 _FACTORY = object()
 _PORTABLE = object()
@@ -128,7 +130,7 @@ def _merged_implementation(root, requirement, activation, commit, owner, *, requ
         raw = _git_bytes(root, 'show', commit + ':' + relative)
         _require(expected == {'sha256': sha256_bytes(content=raw), 'size': len(raw)},
                  'Merged implementation execution authority differs: ' + relative)
-    for path in sorted((root / 'requirements' / REQUIREMENT_ID).iterdir()):
+    for path in sorted((root / 'requirements' / requirement['requirement_id']).iterdir()):
         relative = path.relative_to(root).as_posix()
         raw = _git_bytes(root, 'show', commit + ':' + relative)
         _require(raw == path.read_bytes(), 'Merged Requirement snapshot differs')
@@ -136,13 +138,13 @@ def _merged_implementation(root, requirement, activation, commit, owner, *, requ
             'approved_head': activation['exact_head']}
 
 
-def _release_authority(root):
-    requirement = load_requirement_snapshot(snapshot_dir=root / 'requirements' / REQUIREMENT_ID)
+def _release_authority(root, requirement_id=REQUIREMENT_ID):
+    requirement = load_requirement_snapshot(snapshot_dir=root / 'requirements' / requirement_id)
     validate_execution_authority(repo_root=root, requirement=requirement)
-    plan = load_release_plan_artifact(repo_root=root, release_plan_id=RELEASE_PLAN_ID)
+    plan = load_release_plan_artifact(repo_root=root, release_plan_id=version_release_plan_id(requirement_id))
     _require(plan['record_type'] == 'SUCCESSOR_RELEASE_PLAN' and plan['schema_version'] == 3
              and plan['artifact_requirement_generation'] == EXPLICIT_ARTIFACT_GENERATION
-             and plan['requirement_id'] == REQUIREMENT_ID
+             and plan['requirement_id'] == requirement_id
              and plan['requirement_closure_hash'] == requirement['requirement_closure_hash']
              and plan['requirement_hashes'] == requirement['hashes']
              and plan['release_stage'] == 'R4'
@@ -312,9 +314,9 @@ def _construct(*, root, pending, replay, mode, activation=None, implementation=N
     parse_utc_timestamp(value=started)
     source_commit = (recorded_proof['source_commit'] if read_only else
                      _git(root, 'rev-parse', 'HEAD') if mode == 'LIVE' else 'RECORDED_VNEXT_NO_SOURCE_COMMIT')
-    authority = _release_authority(root)
+    authority = _release_authority(root, pending['requirement_id'])
     requirement, release, registry, specs, tasks, spec_paths, expected = authority
-    _require(pending['requirement_id'] == REQUIREMENT_ID
+    _require(pending['requirement_id'] == requirement['requirement_id']
              and pending['requirement_closure_hash'] == requirement['requirement_closure_hash']
              and pending['requirement_hashes'] == requirement['hashes'], 'R4 pending plan Requirement differs')
     namespace = RUNTIME_ROOT + '/' + _oid(pending['pending_plan_id'])
@@ -341,7 +343,7 @@ def _construct(*, root, pending, replay, mode, activation=None, implementation=N
             _git(root, 'merge-base', '--is-ancestor', pending['implementation_head'], owner['exact_head'])
             _require(_git(root, 'rev-parse', pending['implementation_head'] + '^{tree}')
                      == pending['implementation_tree'], 'Pending implementation tree differs')
-    execution = prepare_r4_execution_context(repo_root=root)
+    execution = prepare_r4_execution_context(repo_root=root, requirement_id=requirement['requirement_id'])
     computed = replay_r4_qualification(repo_root=root, plan=pending, context=execution)
     _require(computed == replay, 'Release aggregate receipt differs from independent native disk replay')
     # The fresh execution context already opened and fully verified R3/R2/R1.
@@ -364,10 +366,12 @@ def _construct(*, root, pending, replay, mode, activation=None, implementation=N
     definitions = {row['fixture_id']: row for row in execution._session._authority['fixtures']}
     scoped = {entry['fixture_id']: entry for entry in pending['entries'] if entry['fixture_execution_ordinal'] == 1}
     production = []
-    pins = {RELEASE_PLAN_PATH: _binding(_file(root, RELEASE_PLAN_PATH)),
+    release_path = 'config/release_plans/' + release['release_plan_id'] + '.json'
+    activation_path = 'docs/evidence/' + requirement['requirement_id'] + '_transition_activation.json'
+    pins = {release_path: _binding(_file(root, release_path)),
             namespace + '/execution_summary.json': _binding(_file(root, namespace + '/execution_summary.json'))}
     if mode == 'LIVE':
-        pins[ACTIVATION_PATH] = _binding(_file(root, ACTIVATION_PATH))
+        pins[activation_path] = _binding(_file(root, activation_path))
     from .live_scoped_reader import build_scoped_invocation_acceptance_context
     from .r4_structured_run import prepare_r4_structured_run_context
     from .run_store import load_frozen_run
@@ -417,10 +421,10 @@ def _construct(*, root, pending, replay, mode, activation=None, implementation=N
     period = strict_json_loads(text=next(iter(periods)).decode())
     body = {'record_type': 'R4_RELEASE_CONTEXT', 'schema_version': 1,
         'artifact_requirement_generation': EXPLICIT_ARTIFACT_GENERATION,
-        'requirement_id': REQUIREMENT_ID, 'requirement_closure_hash': requirement['requirement_closure_hash'],
+        'requirement_id': requirement['requirement_id'], 'requirement_closure_hash': requirement['requirement_closure_hash'],
         'requirement_hashes': requirement['hashes'], 'release_mode': mode,
         'validation_started_at_utc': started, 'source_commit': source_commit,
-        'release_plan_id': RELEASE_PLAN_ID, 'release_plan_content_id': release['release_plan_content_id'],
+        'release_plan_id': release['release_plan_id'], 'release_plan_content_id': release['release_plan_content_id'],
         'pending_plan_id': pending['pending_plan_id'], 'summary_id': summary['summary_id'], 'replay_id': replay['replay_id'],
         'transition_activation_receipt_id': None if activation is None else activation['receipt_id'],
         'owner_live_receipt_id': None if owner is None else owner['receipt_id'],
@@ -450,8 +454,8 @@ def prepare_r4_release_context(*, repo_root: Path, plan_id: str, replay_id: str,
     """LIVE staging factory: no caller-selected Requirement, plan or policy map."""
     from .r4_live_authority import RUNTIME_ROOT
     root = repo_root.resolve(strict=True)
-    activation = _json(root, ACTIVATION_PATH)
     plan = _json(root, RUNTIME_ROOT + '/plans/' + _oid(plan_id) + '.json')
+    activation = _json(root, 'docs/evidence/' + plan['requirement_id'] + '_transition_activation.json')
     replay = _json(root, RUNTIME_ROOT + '/replays/' + _oid(replay_id) + '.json')
     _require(plan['pending_plan_id'] == plan_id and replay['replay_id'] == replay_id, 'Plan/replay file identity differs')
     first = plan['entries'][0]
