@@ -1,0 +1,1426 @@
+{
+  "record_type": "R4_PENDING_LIVE_PLAN_REVIEW",
+  "schema_version": 1,
+  "status": "PENDING_OWNER_LIVE_AUTHORIZATION",
+  "pending_plan_id": "sha256:215277ae679bde123e51cf3ce839445e9ef152c5a9f5d0c72f74a2b6618658bd",
+  "implementation_merge": "75002a861555c91aeadd72260d98707225d96f49",
+  "plan_implementation_head": "c11911b6f9a0ac4b0cc9952fbf49828dac6145a2",
+  "plan_implementation_tree": "a3e19d3e2b012bd5c19a51b7786b8be328dec93a",
+  "requirement_id": "issue_28_v2",
+  "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+  "transition_activation_receipt_id": "sha256:2ef83cc98563975a536120b302c7b6427a89e8fa773de1276a83445f451bd108",
+  "owner_approval_url": "https://github.com/wlvh/SEC_metrics/pull/30#issuecomment-5556855154",
+  "provider": "deepseek",
+  "model": "deepseek-v4-flash",
+  "api": "chat_completions",
+  "entries": [
+    {
+      "ordinal": 1,
+      "entry_id": "sha256:10aa8faf5171b631b8cdcbb2e9c27d87a354e127a8d3d10c69cdf25ff79ff263",
+      "fixture_id": "r4_a03_production",
+      "metric_id": "A03",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "jpmorgan_fy2025_10k",
+      "cik": "19617",
+      "source_binding": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "source_reference": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "document_name": "jpm-20251231.htm",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 64,
+          "start_order": 64
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000065"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38"
+      ],
+      "source_scope_manifest_id": "sha256:2bbd05336e0c27c8be723aa2ea81677c67b7ddd17f9442bd3e1667de36ef0c66",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a03_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "live_scoped_reader_request_id": "sha256:bf0eff45cd3fdc5292e782bcd82b47212645f025e94fc3c971ea175056bae55a",
+        "provider_request_body_sha256": "1bfd2ee4f2e3f6c555c07bd91d3295ad8d85955e7b1a5e32a3d87eff7f1e6b28",
+        "reader_payload_sha256": "c15172a0f0c86a05bf006650e4930dbc128d2d97ac682294d708458faf4974c8",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:2bbd05336e0c27c8be723aa2ea81677c67b7ddd17f9442bd3e1667de36ef0c66",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:2a2c0aa82d7d5cf15d7380321ea59ee6fe45a11daabd566c7627bcb7d2343d83",
+        "task_contract_hash": "sha256:026b346da55051daacc69a95d4d19527283a6a10c02ffbc55fdf05792d1adf27",
+        "task_contract_id": "r4_liquidity_coverage_ratio_table_v2"
+      },
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "aggregation": "average",
+          "entity_scope": "firm"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "1.11"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:045ffd1d7fc011b9ebe2ad8a7f3790cef61d3fd87b7cda1a5d0d057b571f523a",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:40e9df57f54c0bf07dada52ee4ce966e0726682d6417083089729c13649c414b",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a03_production/source_scope.json",
+      "estimated_context_tokens": 35972,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 35972,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 263077
+      },
+      "risk_features": []
+    },
+    {
+      "ordinal": 2,
+      "entry_id": "sha256:4ddf68a29375cf1fecea8f1dc33b6b1df4d7a2ebb3cb21f4ad9da42140458c9f",
+      "fixture_id": "r4_a03_alternate",
+      "metric_id": "A03",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "citigroup_fy2025_10k",
+      "cik": "831001",
+      "source_binding": {
+        "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+        "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "size": 16150764
+      },
+      "source_reference": {
+        "accession": "0000831001-26-000011",
+        "company_id": "citigroup",
+        "document_name": "c-20251231.htm",
+        "raw_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2ca17e95050d85613ce264edcd8d1c05bd0aa8e39f00adcfa3d786e925defa95",
+        "source_reference_id": "sha256:fe437cdc44a92932ebe716b35ddc1fe400233c6e3cb3e63aeb650764d7c74352",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/831001/000083100126000011/c-20251231.htm"
+      },
+      "period": "2025Q4",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-10-01"
+      },
+      "windows": [
+        {
+          "end_order": 74,
+          "start_order": 74
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000075"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:7ce8e22c0d645a727e8b3dfc47137cc1b82085196102cd847f278ec007af0348"
+      ],
+      "source_scope_manifest_id": "sha256:420b5c836fc5f479c3e2091b17fe965593877869200ee6267f1e56649e2c8f44",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a03_alternate",
+        "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "full_reader_input_manifest_id": "sha256:6a58298a6ed4680feb7182321cb35459d44104190d9c1b2605a2e33a15feaf53",
+        "live_scoped_reader_request_id": "sha256:673f6e0650f2e8f54711599ed73562ad78a1194efe60cda8c65a8648ff555b33",
+        "provider_request_body_sha256": "0b4e0d2eee24902e0c6a9ff2df10a239175386ae58ba42b3c53e5a7f05926efe",
+        "reader_payload_sha256": "84e210d2097400d5465b035edd43c190ea4694b8ba49508e2aeca21c08357467",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:420b5c836fc5f479c3e2091b17fe965593877869200ee6267f1e56649e2c8f44",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-10-01"
+        },
+        "target_period_identity": "sha256:599c45de3e5f50a6d395b203044a4f5f3bcc3cc41eaa7d4b762ef98f62df8b35",
+        "task_contract_hash": "sha256:026b346da55051daacc69a95d4d19527283a6a10c02ffbc55fdf05792d1adf27",
+        "task_contract_id": "r4_liquidity_coverage_ratio_table_v2"
+      },
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "2025Q4",
+        "scope": {
+          "aggregation": "average",
+          "entity_scope": "firm"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "ratio",
+        "value": "1.15"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:8c1c0056091d215dfbfa6d8f55b6a75ba82cc373dbaed2cd83b8cb507c4fa4ee",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:5dd8f5858d9baf3ccc2b5b014da03ab100aa72e9f5232a56320a6939919d4b58",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a03_alternate/source_scope.json",
+      "estimated_context_tokens": 14065,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 14065,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 12715
+      },
+      "risk_features": [
+        {
+          "kind": "ALTERNATE_DISCLOSED_PERIOD"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        }
+      ]
+    },
+    {
+      "ordinal": 3,
+      "entry_id": "sha256:04fbb7088e932efc6577b359b39f824b31d4f2d058daac0e9c6d1ba92b27849c",
+      "fixture_id": "r4_a04_production",
+      "metric_id": "A04",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "jpmorgan_fy2025_10k",
+      "cik": "19617",
+      "source_binding": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "source_reference": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "document_name": "jpm-20251231.htm",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 99,
+          "start_order": 99
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000100"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b"
+      ],
+      "source_scope_manifest_id": "sha256:1feea62a8378d7561a0083bf21d4730bdffff868cb1684c4697d3c299f616df9",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a04_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "live_scoped_reader_request_id": "sha256:11b5cca30cd3ced44fe57e930e8880a9640c0ffe973d6d5d019622954ec2ca24",
+        "provider_request_body_sha256": "a28d994feb2aafe6232426c39b4b806cb2c80bd703b8bdeda354aa7f8a3ee3d6",
+        "reader_payload_sha256": "667c237122d2f0784dd7b733b4760975b1c1aa013f532f4b13aea5e97b690f3d",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:1feea62a8378d7561a0083bf21d4730bdffff868cb1684c4697d3c299f616df9",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:2a2c0aa82d7d5cf15d7380321ea59ee6fe45a11daabd566c7627bcb7d2343d83",
+        "task_contract_hash": "sha256:76975a167cdf392f670f07a37695e33214c2d1e08d81b4e1c31366c33bd8f459",
+        "task_contract_id": "r4_net_interest_margin_table_v2"
+      },
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "basis": "managed_basis"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "0.025"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:1041c55c735b86dd576630fd168c929157cdb20adfceafd38bf8993f8d35ff6b",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:f461df61bf009fa77252a69330d4cef9b226118e3beefd59177fa8d50f720221",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a04_production/source_scope.json",
+      "estimated_context_tokens": 17451,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 17451,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 42205
+      },
+      "risk_features": []
+    },
+    {
+      "ordinal": 4,
+      "entry_id": "sha256:64aca36519a47a73c10d13d38845864afa065de5ba2c4904ea082dee52296913",
+      "fixture_id": "r4_a04_alternate",
+      "metric_id": "A04",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "citigroup_fy2025_10k",
+      "cik": "831001",
+      "source_binding": {
+        "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+        "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "size": 16150764
+      },
+      "source_reference": {
+        "accession": "0000831001-26-000011",
+        "company_id": "citigroup",
+        "document_name": "c-20251231.htm",
+        "raw_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2ca17e95050d85613ce264edcd8d1c05bd0aa8e39f00adcfa3d786e925defa95",
+        "source_reference_id": "sha256:fe437cdc44a92932ebe716b35ddc1fe400233c6e3cb3e63aeb650764d7c74352",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/831001/000083100126000011/c-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 83,
+          "start_order": 83
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000084"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:ed77951e3096844749dee55058f55dba0316be88de28f29b4ddfa6adc210b4bf"
+      ],
+      "source_scope_manifest_id": "sha256:43699c4fc705e3f4f81587b522ff6c95901724b5ba722bf88262bf8ddaf94292",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a04_alternate",
+        "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "full_reader_input_manifest_id": "sha256:6a58298a6ed4680feb7182321cb35459d44104190d9c1b2605a2e33a15feaf53",
+        "live_scoped_reader_request_id": "sha256:036b83270e000bd52735e62b2dafd324a593b7009d4591e250c4d13cf21128a3",
+        "provider_request_body_sha256": "738a265649eb40f431e1ca7582ff53f79496f6005d3cb99bd4b340e6a62f1ef2",
+        "reader_payload_sha256": "3ff8e9e8f707d752ecf000d50e8f6b9d9a2910c8cbed21c359c1db432813be37",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:43699c4fc705e3f4f81587b522ff6c95901724b5ba722bf88262bf8ddaf94292",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:2a2c0aa82d7d5cf15d7380321ea59ee6fe45a11daabd566c7627bcb7d2343d83",
+        "task_contract_hash": "sha256:76975a167cdf392f670f07a37695e33214c2d1e08d81b4e1c31366c33bd8f459",
+        "task_contract_id": "r4_net_interest_margin_table_v2"
+      },
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "basis": "managed_basis"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "ratio",
+        "value": "0.0247"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:d4292279b2d748f31c2a1c2a7d742435b6ea27b874b410495a799526ea1fc625",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:99869253df65ea5021301a5e1db93e755dd8b30fba061e619eeb5d7ffcc0e21e",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a04_alternate/source_scope.json",
+      "estimated_context_tokens": 19172,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 19172,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 68126
+      },
+      "risk_features": []
+    },
+    {
+      "ordinal": 5,
+      "entry_id": "sha256:c3fc8573804aad47fe0775fe4fd060c7a30007772c92c27f962c7a888d6d78f1",
+      "fixture_id": "r4_a09_production",
+      "metric_id": "A09",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "jpmorgan_fy2025_10k",
+      "cik": "19617",
+      "source_binding": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "source_reference": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "document_name": "jpm-20251231.htm",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 221,
+          "start_order": 221
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000222"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:c81c36d8b4dc9f414a4f6be7154afe172f7d999b450fbac94b71678ce3ac2b79"
+      ],
+      "source_scope_manifest_id": "sha256:0b2d930743c432d128a9ce0696042dfe5789887289f43f32399483f61267bf13",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a09_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "live_scoped_reader_request_id": "sha256:68ae04602b34c14c7a4a834bc93b73995a3b21cd2c2aaffc8edb5ee2165a8dca",
+        "provider_request_body_sha256": "e77edc037340994a989598ba874b4099daf2245f7df34649188be96b432b83ba",
+        "reader_payload_sha256": "671d93717535dca099edf761b50fe9400988ab799f926e2d56360c86a086a7d7",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:0b2d930743c432d128a9ce0696042dfe5789887289f43f32399483f61267bf13",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:fdd3d48b48c916b24f720edee8643f6b9b67d810925422b996d23fc218f6f7ad",
+        "task_contract_hash": "sha256:03c801b1e6fe52294b28f42bcecf623a54110fab82301f4bb6b9ffd713d6cdc2",
+        "task_contract_id": "r4_nonperforming_loan_ratio_table_v2"
+      },
+      "reference": {
+        "evidence": "No independent legacy anchor is claimed; native structured source and independent full-document navigation are required.",
+        "period": "FY2025",
+        "scope": {
+          "loan_population": "firmwide"
+        },
+        "status": "NO_INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "0.0066"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:6c308912cb691031241159a0fcb9da7e514f3fb5be8bd270e0c3d102c16700bd",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:3ea57d223b403530822c3b183181dc30b99efc893dc7f7eb4d354e57d1de2172",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a09_production/source_scope.json",
+      "estimated_context_tokens": 13464,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 13464,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 10857
+      },
+      "risk_features": [
+        {
+          "kind": "NO_INDEPENDENT_LEGACY_ANCHOR"
+        },
+        {
+          "canonical_unit": "ratio",
+          "factor": "0.01",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_ROW_PERCENT_MARKER",
+          "reported_unit": "ratio"
+        }
+      ]
+    },
+    {
+      "ordinal": 6,
+      "entry_id": "sha256:186a6f563609f44642c4de9e543badbb55777a0397d09b6e05e6d8e7765bfaf3",
+      "fixture_id": "r4_a11_production",
+      "metric_id": "A11",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "jpmorgan_fy2025_10k",
+      "cik": "19617",
+      "source_binding": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "source_reference": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "document_name": "jpm-20251231.htm",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 148,
+          "start_order": 148
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000149"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1"
+      ],
+      "source_scope_manifest_id": "sha256:3b25bf130ed4a6d77652dab416c3b7fe7a8a44fcbc94925b4d0b46f7da39c5d2",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a11_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "live_scoped_reader_request_id": "sha256:edac49fdbeb5cc5c014fede8ee61f382bf7bf2ed05be4518a20ab0bac5fa050f",
+        "provider_request_body_sha256": "46ab43b8bd10ac2d0d27938735cbde29fda6a6514764ab7b7af72e7a0004ad5b",
+        "reader_payload_sha256": "4fd239b00aef7d6fc70e196bd65f7f0a4d526b726b685ae584eb2c16e804fedf",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:3b25bf130ed4a6d77652dab416c3b7fe7a8a44fcbc94925b4d0b46f7da39c5d2",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:97b142d7d734eb27e7c995fc943ab110d722b4116cddad95b73dcfd7243732cd",
+        "task_contract_hash": "sha256:1cfd0217e8ed892d05062972e9961fc3ed06432c36d1688c642c229b37e6de33",
+        "task_contract_id": "r4_assets_under_management_table_v2"
+      },
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "asset_scope": "total_assets_under_management"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "USD",
+        "value": "4791000000000"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:b36db72d2bab8117bb7c7f63dc8fac59f04a4670e9c8deaaeefbf85cffa727cd",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:31172180bda8b198b82f578158d8c446e29f86ab4e4841e9fc9346efc878b42e",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a11_production/source_scope.json",
+      "estimated_context_tokens": 18311,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 18311,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 50583
+      },
+      "risk_features": [
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ]
+    },
+    {
+      "ordinal": 7,
+      "entry_id": "sha256:baa10d500cd276add400c19c675563c6dac10a7a7ebde63e2a97ef89b22c8d98",
+      "fixture_id": "r4_a11_alternate",
+      "metric_id": "A11",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "bank_of_america_fy2025_10k",
+      "cik": "70858",
+      "source_binding": {
+        "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "size": 12819060
+      },
+      "source_reference": {
+        "accession": "0000070858-26-000157",
+        "company_id": "bank_of_america_corp",
+        "document_name": "bac-20251231.htm",
+        "raw_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:e531f356a6a06facbfbf9d3dc506144e80c80d3a0e46909772f80d420727eed6",
+        "source_reference_id": "sha256:ca389fe7897d766abc80bc5673785c168d32701dbd3b60a8dfb91f3fa8064efa",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 68,
+          "start_order": 68
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000069"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:802b3d524bd36d053046b7e74001b45f2801c16b0a4c243c4185ab607a15b286"
+      ],
+      "source_scope_manifest_id": "sha256:42b471afd0f143d536f142672fef85a5229f2b013dda420e4c8e849723fa610c",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a11_alternate",
+        "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "full_reader_input_manifest_id": "sha256:ba8766d350614ee4fa2a7c507e45f342e7bbbbe922a097cf08362e631cc5a2cb",
+        "live_scoped_reader_request_id": "sha256:4a8631dc85642bf270f6602e3c934f78e22628fb8d47aef0933d0863c2be9fe3",
+        "provider_request_body_sha256": "d5fe1f357bb95e9041620572b695210039d53d8b08e3dc536d72759220d128c3",
+        "reader_payload_sha256": "2752e3e7d89f4b6818b1fd8b05c88b346321d4a3fb00ea93c3cc4a23c290a8f7",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:42b471afd0f143d536f142672fef85a5229f2b013dda420e4c8e849723fa610c",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:de25cdec0b780efdfaf7acc6db1926920c81eff7f2fef82f816f05a0255feba8",
+        "task_contract_hash": "sha256:1cfd0217e8ed892d05062972e9961fc3ed06432c36d1688c642c229b37e6de33",
+        "task_contract_id": "r4_assets_under_management_table_v2"
+      },
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "asset_scope": "total_assets_under_management"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "USD",
+        "value": "2177708000000"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:605ecf46fead2de357b4bac540012feb53b11addd8abc63a1d74f7045ae48493",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:1b9cff69e84ad189ae021f181e5ff8c6b49af677707c690057a37ae0948962b3",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a11_alternate/source_scope.json",
+      "estimated_context_tokens": 26197,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 26197,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 188130
+      },
+      "risk_features": [
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ]
+    },
+    {
+      "ordinal": 8,
+      "entry_id": "sha256:890866f77f17bd9095e2fffd390db0daae7313633ff57851585f77c0d7b43996",
+      "fixture_id": "r4_a12_production",
+      "metric_id": "A12",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "jpmorgan_fy2025_10k",
+      "cik": "19617",
+      "source_binding": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "source_reference": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "document_name": "jpm-20251231.htm",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 279,
+          "start_order": 279
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000280"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088"
+      ],
+      "source_scope_manifest_id": "sha256:00339fb426a20581be2feba8accf88cb21b8edc6537ca6e94cf8e98ade98b093",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a12_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "live_scoped_reader_request_id": "sha256:215674901d623b9f00c7a731746fd1610aaf33c657d1e050fc7b6a6d69a0457f",
+        "provider_request_body_sha256": "dba578df06b3a59e8b93b3124c0cc7e058157512bf012903786993d3445edc18",
+        "reader_payload_sha256": "9600c1701720eec368449cb2d86bcf318730f0c1a2638cab6ba110c476098e46",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:00339fb426a20581be2feba8accf88cb21b8edc6537ca6e94cf8e98ade98b093",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:9e8c1f0e4a1fe94c2bad65ccd3f2f5bd11c305b4c9b2eaa3351c58a296ece484",
+        "task_contract_hash": "sha256:1184fd693c7cfd41cea0329dd83a937b8dbcc1c303ad908213a715a1dfe40be8",
+        "task_contract_id": "r4_value_at_risk_table_v2"
+      },
+      "reference": {
+        "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors.",
+        "period": "FY2025",
+        "scope": {
+          "confidence_level": "ninety_five_percent",
+          "holding_period": "one_day"
+        },
+        "status": "INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "USD",
+        "value": "40000000"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:57a1763f750b0f9a13c388a9e4487a3b44eccbe4d83c5409b843199fceeed1c8",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:86c71e71d8a0280db362f6aabab6ff0fe1bf6c6811f648f8ead3d19c9b77fa32",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a12_production/source_scope.json",
+      "estimated_context_tokens": 24883,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 24883,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 148129
+      },
+      "risk_features": [
+        {
+          "kind": "COMPOSITE_SCOPE"
+        },
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ]
+    },
+    {
+      "ordinal": 9,
+      "entry_id": "sha256:63359ad8c88ac6400cf8c0c9881cb3bb2881167ce9b48f175b63c0b82bff06eb",
+      "fixture_id": "r4_a12_alternate",
+      "metric_id": "A12",
+      "phase": "BASE",
+      "repeats_base_ordinal": null,
+      "source_id": "bank_of_america_fy2025_10k",
+      "cik": "70858",
+      "source_binding": {
+        "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "size": 12819060
+      },
+      "source_reference": {
+        "accession": "0000070858-26-000157",
+        "company_id": "bank_of_america_corp",
+        "document_name": "bac-20251231.htm",
+        "raw_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:e531f356a6a06facbfbf9d3dc506144e80c80d3a0e46909772f80d420727eed6",
+        "source_reference_id": "sha256:ca389fe7897d766abc80bc5673785c168d32701dbd3b60a8dfb91f3fa8064efa",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 146,
+          "start_order": 146
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000147"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:5917e41d811778ac190f4b19663ede5537c73c8812a33077faab4595662bc61e"
+      ],
+      "source_scope_manifest_id": "sha256:3a40bf0e797b8cfddd4cd9b5e80b4a4640571d81cc0e6a90512fc6e58c267106",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a12_alternate",
+        "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "full_reader_input_manifest_id": "sha256:ba8766d350614ee4fa2a7c507e45f342e7bbbbe922a097cf08362e631cc5a2cb",
+        "live_scoped_reader_request_id": "sha256:bfe1fef2697306585288508ff24503a05ff869a4714c1220e8568b7310880854",
+        "provider_request_body_sha256": "8936e9de376de816b2f9244466e22d2343c3a98d17d3c101498c95aa2a6d0b60",
+        "reader_payload_sha256": "f80f4e2ba259f46606d16a26d26bdd26e8ff7e2310cb097f910fcd43f65e81f4",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:3a40bf0e797b8cfddd4cd9b5e80b4a4640571d81cc0e6a90512fc6e58c267106",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:9e0386ebad8a2fe76718c9864756870b2cb6743999e4328c3f56077765e5d22f",
+        "task_contract_hash": "sha256:1184fd693c7cfd41cea0329dd83a937b8dbcc1c303ad908213a715a1dfe40be8",
+        "task_contract_id": "r4_value_at_risk_table_v2"
+      },
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "confidence_level": "ninety_five_percent",
+          "holding_period": "one_day"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "USD",
+        "value": "34000000"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:180b6ebf945170702a92eccf457562ea99162bb0c9a5ad980001c1cac5c06846",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:07931583931ef216ea1f99756147587822834364c90b625fe721963574292c76",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a12_alternate/source_scope.json",
+      "estimated_context_tokens": 26276,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 26276,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 174071
+      },
+      "risk_features": [
+        {
+          "kind": "MIXED_TABLE_NARRATIVE_SCOPE"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        },
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ]
+    },
+    {
+      "ordinal": 10,
+      "entry_id": "sha256:822fdf0693a3342575978f4b8096445c857c13444b17102d6dc9d787d86e3c54",
+      "fixture_id": "r4_a03_alternate",
+      "metric_id": "A03",
+      "phase": "STABILITY",
+      "repeats_base_ordinal": 2,
+      "source_id": "citigroup_fy2025_10k",
+      "cik": "831001",
+      "source_binding": {
+        "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+        "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "size": 16150764
+      },
+      "source_reference": {
+        "accession": "0000831001-26-000011",
+        "company_id": "citigroup",
+        "document_name": "c-20251231.htm",
+        "raw_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2ca17e95050d85613ce264edcd8d1c05bd0aa8e39f00adcfa3d786e925defa95",
+        "source_reference_id": "sha256:fe437cdc44a92932ebe716b35ddc1fe400233c6e3cb3e63aeb650764d7c74352",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/831001/000083100126000011/c-20251231.htm"
+      },
+      "period": "2025Q4",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-10-01"
+      },
+      "windows": [
+        {
+          "end_order": 74,
+          "start_order": 74
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000075"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:7ce8e22c0d645a727e8b3dfc47137cc1b82085196102cd847f278ec007af0348"
+      ],
+      "source_scope_manifest_id": "sha256:420b5c836fc5f479c3e2091b17fe965593877869200ee6267f1e56649e2c8f44",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a03_alternate",
+        "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "full_reader_input_manifest_id": "sha256:6a58298a6ed4680feb7182321cb35459d44104190d9c1b2605a2e33a15feaf53",
+        "live_scoped_reader_request_id": "sha256:673f6e0650f2e8f54711599ed73562ad78a1194efe60cda8c65a8648ff555b33",
+        "provider_request_body_sha256": "0b4e0d2eee24902e0c6a9ff2df10a239175386ae58ba42b3c53e5a7f05926efe",
+        "reader_payload_sha256": "84e210d2097400d5465b035edd43c190ea4694b8ba49508e2aeca21c08357467",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:420b5c836fc5f479c3e2091b17fe965593877869200ee6267f1e56649e2c8f44",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-10-01"
+        },
+        "target_period_identity": "sha256:599c45de3e5f50a6d395b203044a4f5f3bcc3cc41eaa7d4b762ef98f62df8b35",
+        "task_contract_hash": "sha256:026b346da55051daacc69a95d4d19527283a6a10c02ffbc55fdf05792d1adf27",
+        "task_contract_id": "r4_liquidity_coverage_ratio_table_v2"
+      },
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "2025Q4",
+        "scope": {
+          "aggregation": "average",
+          "entity_scope": "firm"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "ratio",
+        "value": "1.15"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:8c1c0056091d215dfbfa6d8f55b6a75ba82cc373dbaed2cd83b8cb507c4fa4ee",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:5dd8f5858d9baf3ccc2b5b014da03ab100aa72e9f5232a56320a6939919d4b58",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a03_alternate/source_scope.json",
+      "estimated_context_tokens": 14065,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 14065,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 12715
+      },
+      "risk_features": [
+        {
+          "kind": "ALTERNATE_DISCLOSED_PERIOD"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        }
+      ]
+    },
+    {
+      "ordinal": 11,
+      "entry_id": "sha256:8b396b91bb170a34c5565adb37037f7a06b5c6720d4fcd02fff3d12f0f9eddde",
+      "fixture_id": "r4_a09_production",
+      "metric_id": "A09",
+      "phase": "STABILITY",
+      "repeats_base_ordinal": 5,
+      "source_id": "jpmorgan_fy2025_10k",
+      "cik": "19617",
+      "source_binding": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "source_reference": {
+        "accession": "0001628280-26-008131",
+        "company_id": "jpmorgan_chase",
+        "document_name": "jpm-20251231.htm",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+        "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 221,
+          "start_order": 221
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000222"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:c81c36d8b4dc9f414a4f6be7154afe172f7d999b450fbac94b71678ce3ac2b79"
+      ],
+      "source_scope_manifest_id": "sha256:0b2d930743c432d128a9ce0696042dfe5789887289f43f32399483f61267bf13",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a09_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "live_scoped_reader_request_id": "sha256:68ae04602b34c14c7a4a834bc93b73995a3b21cd2c2aaffc8edb5ee2165a8dca",
+        "provider_request_body_sha256": "e77edc037340994a989598ba874b4099daf2245f7df34649188be96b432b83ba",
+        "reader_payload_sha256": "671d93717535dca099edf761b50fe9400988ab799f926e2d56360c86a086a7d7",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:0b2d930743c432d128a9ce0696042dfe5789887289f43f32399483f61267bf13",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:fdd3d48b48c916b24f720edee8643f6b9b67d810925422b996d23fc218f6f7ad",
+        "task_contract_hash": "sha256:03c801b1e6fe52294b28f42bcecf623a54110fab82301f4bb6b9ffd713d6cdc2",
+        "task_contract_id": "r4_nonperforming_loan_ratio_table_v2"
+      },
+      "reference": {
+        "evidence": "No independent legacy anchor is claimed; native structured source and independent full-document navigation are required.",
+        "period": "FY2025",
+        "scope": {
+          "loan_population": "firmwide"
+        },
+        "status": "NO_INDEPENDENT_LEGACY_ANCHOR",
+        "unit": "ratio",
+        "value": "0.0066"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:6c308912cb691031241159a0fcb9da7e514f3fb5be8bd270e0c3d102c16700bd",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:3ea57d223b403530822c3b183181dc30b99efc893dc7f7eb4d354e57d1de2172",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a09_production/source_scope.json",
+      "estimated_context_tokens": 13464,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 13464,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 10857
+      },
+      "risk_features": [
+        {
+          "kind": "NO_INDEPENDENT_LEGACY_ANCHOR"
+        },
+        {
+          "canonical_unit": "ratio",
+          "factor": "0.01",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_ROW_PERCENT_MARKER",
+          "reported_unit": "ratio"
+        }
+      ]
+    },
+    {
+      "ordinal": 12,
+      "entry_id": "sha256:9b5c704311f5779ee82049a3aff26006e0e410c55a721ec1d8a237af8c0691bb",
+      "fixture_id": "r4_a12_alternate",
+      "metric_id": "A12",
+      "phase": "STABILITY",
+      "repeats_base_ordinal": 9,
+      "source_id": "bank_of_america_fy2025_10k",
+      "cik": "70858",
+      "source_binding": {
+        "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "size": 12819060
+      },
+      "source_reference": {
+        "accession": "0000070858-26-000157",
+        "company_id": "bank_of_america_corp",
+        "document_name": "bac-20251231.htm",
+        "raw_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:e531f356a6a06facbfbf9d3dc506144e80c80d3a0e46909772f80d420727eed6",
+        "source_reference_id": "sha256:ca389fe7897d766abc80bc5673785c168d32701dbd3b60a8dfb91f3fa8064efa",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm"
+      },
+      "period": "FY2025",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "windows": [
+        {
+          "end_order": 146,
+          "start_order": 146
+        }
+      ],
+      "ordered_table_ids": [
+        "table_000147"
+      ],
+      "ordered_grid_hashes": [
+        "sha256:5917e41d811778ac190f4b19663ede5537c73c8812a33077faab4595662bc61e"
+      ],
+      "source_scope_manifest_id": "sha256:3a40bf0e797b8cfddd4cd9b5e80b4a4640571d81cc0e6a90512fc6e58c267106",
+      "request_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "fixture_id": "r4_a12_alternate",
+        "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "full_reader_input_manifest_id": "sha256:ba8766d350614ee4fa2a7c507e45f342e7bbbbe922a097cf08362e631cc5a2cb",
+        "live_scoped_reader_request_id": "sha256:bfe1fef2697306585288508ff24503a05ff869a4714c1220e8568b7310880854",
+        "provider_request_body_sha256": "8936e9de376de816b2f9244466e22d2343c3a98d17d3c101498c95aa2a6d0b60",
+        "reader_payload_sha256": "f80f4e2ba259f46606d16a26d26bdd26e8ff7e2310cb097f910fcd43f65e81f4",
+        "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+        "requirement_hashes": {
+          "baseline_sha256": "9e6d88adb00d50042be652d8bda7ae92169c76ec57007c7a384374113d33f289",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_scope_manifest_id": "sha256:3a40bf0e797b8cfddd4cd9b5e80b4a4640571d81cc0e6a90512fc6e58c267106",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01"
+        },
+        "target_period_identity": "sha256:9e0386ebad8a2fe76718c9864756870b2cb6743999e4328c3f56077765e5d22f",
+        "task_contract_hash": "sha256:1184fd693c7cfd41cea0329dd83a937b8dbcc1c303ad908213a715a1dfe40be8",
+        "task_contract_id": "r4_value_at_risk_table_v2"
+      },
+      "reference": {
+        "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value.",
+        "period": "FY2025",
+        "scope": {
+          "confidence_level": "ninety_five_percent",
+          "holding_period": "one_day"
+        },
+        "status": "AUDITED_ALTERNATE_REFERENCE",
+        "unit": "USD",
+        "value": "34000000"
+      },
+      "check_evidence_result": {
+        "evidence_check_id": "sha256:180b6ebf945170702a92eccf457562ea99162bb0c9a5ad980001c1cac5c06846",
+        "status": "PASS"
+      },
+      "full_check_evidence_result_hash": "sha256:07931583931ef216ea1f99756147587822834364c90b625fe721963574292c76",
+      "scope_artifact_path": "docs/r4_offline/qualified_cases/r4_a12_alternate/source_scope.json",
+      "estimated_context_tokens": 26276,
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "provider_request_bytes": 26276,
+      "actual_provider_usage": "NOT_RUN",
+      "automatic_retry_count": 0,
+      "scope_grid_estimate": {
+        "actual_provider_usage": "NOT_RUN",
+        "method": "WINDOW_GRID_UTF8_BYTE_UPPER_BOUND",
+        "value": 174071
+      },
+      "risk_features": [
+        {
+          "kind": "MIXED_TABLE_NARRATIVE_SCOPE"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        },
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ]
+    }
+  ],
+  "zero_call_fixtures": [
+    {
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_id": "r4_a09_alternate",
+      "metric_id": "A09",
+      "planned_provider_calls": 0,
+      "reason": "STRUCTURED_PRIMARY_RESOLVED"
+    },
+    {
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_id": "r4_a13_alternate",
+      "metric_id": "A13",
+      "planned_provider_calls": 0,
+      "reason": "STRUCTURED_PRIMARY_RESOLVED"
+    },
+    {
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_id": "r4_a13_production",
+      "metric_id": "A13",
+      "planned_provider_calls": 0,
+      "reason": "STRUCTURED_PRIMARY_RESOLVED"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "AMBIGUOUS_EXCLUDED",
+      "fixture_id": "r4_zero_ambiguous_excluded",
+      "metric_id": "A04",
+      "planned_provider_calls": 0,
+      "reason": "AMBIGUOUS_EXCLUDED"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "NEGATIVE_EXPECTED",
+      "fixture_id": "r4_zero_negative_expected",
+      "metric_id": "A03",
+      "planned_provider_calls": 0,
+      "reason": "NEGATIVE_EXPECTED"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "NOT_APPLICABLE",
+      "fixture_id": "r4_zero_not_applicable",
+      "metric_id": "A03",
+      "planned_provider_calls": 0,
+      "reason": "NOT_APPLICABLE"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "QUALITATIVE_ONLY",
+      "fixture_id": "r4_zero_qualitative_only",
+      "metric_id": "A03",
+      "planned_provider_calls": 0,
+      "reason": "QUALITATIVE_ONLY"
+    }
+  ],
+  "counts": {
+    "actual_paid_calls": 0,
+    "actual_provider_calls": 0,
+    "actual_sec_calls": 0,
+    "base_provider_calls": 9,
+    "planned_provider_calls": 12,
+    "stability_provider_calls": 3,
+    "structured_positive_zero_calls": 3,
+    "zero_class_fixtures": 4
+  },
+  "context_limit": 200000,
+  "call_bounds": {
+    "hard_maximum": 24,
+    "target_maximum": 18,
+    "target_minimum": 12
+  },
+  "automatic_retry_count": 0,
+  "response_reuse_authorized": false,
+  "provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "live_authorization": "NOT_ISSUED",
+  "publication_authorization": "NOT_ISSUED",
+  "qualification_credit": "NONE_PLAN_ONLY",
+  "publication_credit": "NONE",
+  "estimate_note": "Native UTF-8-byte upper bound over the exact provider envelope; actual provider usage NOT_RUN. Scope grid estimates describe a different local representation.",
+  "review_id": "sha256:9e4493cf9c17255859f742cf760399b49d642f6ffccb58c516b66ba0239ec1ae"
+}
