@@ -1,0 +1,1459 @@
+{
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "call_bounds": {
+    "hard_maximum": 24,
+    "target_maximum": 18,
+    "target_minimum": 12
+  },
+  "corpus_binding": {
+    "index_id": "sha256:68483a5f1550d6d05880323449d775c1dda7de7910bd6f845487c6957abbf369",
+    "path": "docs/r4_offline/qualified_cases/index.json",
+    "sha256": "30ab619a612c5042472369678291110fb565550fb7d1ea2a02ef351b71216671",
+    "size": 117924
+  },
+  "counts": {
+    "actual_paid_calls": 0,
+    "actual_provider_calls": 0,
+    "actual_sec_calls": 0,
+    "base_provider_calls": 9,
+    "planned_provider_calls": 12,
+    "stability_provider_calls": 3,
+    "structured_positive_zero_calls": 3,
+    "zero_class_fixtures": 4
+  },
+  "draft_plan_id": "sha256:a36a6bdb0c92391480c734c8b6ca478773e54796f04688ae2ddd07502339d727",
+  "entries": [
+    {
+      "draft_entry_id": "sha256:9bb3fc49ecc8301109e5046aa44fc52240ab57f8a8633bcf306d709b0913217b",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a03_production",
+      "fixture_subject_identity": {
+        "cik": "19617",
+        "company_id": "jpmorgan_chase",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": null,
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "CANONICAL_COMPANY_REGISTRY",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+          "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "size": 12927325
+        },
+        "source_id": "jpmorgan_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A03",
+      "ordinal": 1,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a03_production.json",
+        "sha256": "87b1d0448a4da3121502122ae436a6bd8dfa5e34b4cde6e0b45c6615d158b218"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_PRODUCTION",
+        "fixture_id": "r4_a03_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": null,
+        "source_reference_ids": [
+          "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff"
+        ],
+        "source_scope_manifest_id": "sha256:b49947911075270d9a51c44f393ec4174aacd2300b889f710a01e509b949ed75",
+        "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:026b346da55051daacc69a95d4d19527283a6a10c02ffbc55fdf05792d1adf27",
+        "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:a65f39c2b7344330ae4b8c840c42783bdd4e0819362bd268ad50ff81e34020d1",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38"
+          ],
+          "ordered_table_ids": [
+            "table_000065"
+          ],
+          "ordered_table_orders": [
+            64
+          ],
+          "windows": [
+            {
+              "end_order": 64,
+              "start_order": 64
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "jpmorgan_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:5f356c98cb38c41f8e3285bf0711cc08763794f70d59db677bb084b24db3c62d",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a03_alternate",
+      "fixture_subject_identity": {
+        "cik": "831001",
+        "company_id": "citigroup",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": {
+          "byte_end": 1900063,
+          "byte_start": 1899995,
+          "span_sha256": "48238093334b20653cbe670eb92b0467f2ba13ccad005a0d19c4fa0c68fcc603"
+        },
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+          "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+          "size": 16150764
+        },
+        "source_id": "citigroup_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A03",
+      "ordinal": 2,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a03_alternate.json",
+        "sha256": "8e04f01d45bac2777c7b318193041508881abdd9438ef853fc650ac4874543a1"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "kind": "ALTERNATE_DISCLOSED_PERIOD"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+        "fixture_id": "r4_a03_alternate",
+        "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "full_reader_input_manifest_id": "sha256:6a58298a6ed4680feb7182321cb35459d44104190d9c1b2605a2e33a15feaf53",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:2564db3d97dc65b2a884c4fa59764f490910daa8f6e2138a89df79a0098397e6",
+        "source_reference_ids": [
+          "sha256:fe437cdc44a92932ebe716b35ddc1fe400233c6e3cb3e63aeb650764d7c74352"
+        ],
+        "source_scope_manifest_id": "sha256:0b9aea29547be95344e92ff1636196af27179beee4a56d4263b3a0600edc26fa",
+        "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:026b346da55051daacc69a95d4d19527283a6a10c02ffbc55fdf05792d1adf27",
+        "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+        "task_period": "2025Q4",
+        "task_spec_semantic_hash": "sha256:a65f39c2b7344330ae4b8c840c42783bdd4e0819362bd268ad50ff81e34020d1",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:7ce8e22c0d645a727e8b3dfc47137cc1b82085196102cd847f278ec007af0348"
+          ],
+          "ordered_table_ids": [
+            "table_000075"
+          ],
+          "ordered_table_orders": [
+            74
+          ],
+          "windows": [
+            {
+              "end_order": 74,
+              "start_order": 74
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "citigroup_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-10-01"
+      },
+      "target_period_identity": {
+        "period_label": "2025Q4",
+        "resolution": "SOURCE_BOUND_DISCLOSED_PERIOD",
+        "source_bound_proof_id": "sha256:2564db3d97dc65b2a884c4fa59764f490910daa8f6e2138a89df79a0098397e6"
+      },
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:8aee47906b4d8b3a5f881d302d839e5fb3ad4e59afe7a70e1167324cffe78744",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a04_production",
+      "fixture_subject_identity": {
+        "cik": "19617",
+        "company_id": "jpmorgan_chase",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": null,
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "CANONICAL_COMPANY_REGISTRY",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+          "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "size": 12927325
+        },
+        "source_id": "jpmorgan_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A04",
+      "ordinal": 3,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a04_production.json",
+        "sha256": "08926bf08c7879e62fcd0a904f44018944a02b8e51603ebb01c6faa8b1085d78"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_PRODUCTION",
+        "fixture_id": "r4_a04_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": null,
+        "source_reference_ids": [
+          "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff"
+        ],
+        "source_scope_manifest_id": "sha256:4d4af4776ab08285b9cd6e199b81590d3b781da32b46d4ac6303c25646014b54",
+        "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:76975a167cdf392f670f07a37695e33214c2d1e08d81b4e1c31366c33bd8f459",
+        "task_contract_id": "r4_net_interest_margin_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:29f8451eb952ec660fdbc135ca609a20ddf93e576848194548677cc070bdc288",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b"
+          ],
+          "ordered_table_ids": [
+            "table_000100"
+          ],
+          "ordered_table_orders": [
+            99
+          ],
+          "windows": [
+            {
+              "end_order": 99,
+              "start_order": 99
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "jpmorgan_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_net_interest_margin_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:0f0c3e23edc3a0b97281f10aa74bf4fc9e633717917f5da773c015a297bacc78",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a04_alternate",
+      "fixture_subject_identity": {
+        "cik": "831001",
+        "company_id": "citigroup",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": {
+          "byte_end": 1900063,
+          "byte_start": 1899995,
+          "span_sha256": "48238093334b20653cbe670eb92b0467f2ba13ccad005a0d19c4fa0c68fcc603"
+        },
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+          "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+          "size": 16150764
+        },
+        "source_id": "citigroup_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A04",
+      "ordinal": 4,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a04_alternate.json",
+        "sha256": "8793f0d2089ecc807cadb6054aad8e174c4b94324f4b0b53e5ac16feeca66e54"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+        "fixture_id": "r4_a04_alternate",
+        "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "full_reader_input_manifest_id": "sha256:6a58298a6ed4680feb7182321cb35459d44104190d9c1b2605a2e33a15feaf53",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": null,
+        "source_reference_ids": [
+          "sha256:fe437cdc44a92932ebe716b35ddc1fe400233c6e3cb3e63aeb650764d7c74352"
+        ],
+        "source_scope_manifest_id": "sha256:005a1091361952eb95c06d09dba3689ed93207447e4f576650aee9554b118810",
+        "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:76975a167cdf392f670f07a37695e33214c2d1e08d81b4e1c31366c33bd8f459",
+        "task_contract_id": "r4_net_interest_margin_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:29f8451eb952ec660fdbc135ca609a20ddf93e576848194548677cc070bdc288",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:ed77951e3096844749dee55058f55dba0316be88de28f29b4ddfa6adc210b4bf"
+          ],
+          "ordered_table_ids": [
+            "table_000084"
+          ],
+          "ordered_table_orders": [
+            83
+          ],
+          "windows": [
+            {
+              "end_order": 83,
+              "start_order": 83
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "citigroup_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_net_interest_margin_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:e3edd9f7a5eb37f0a7f60a7dfcc2667697849fdbf44f548589629f9ce9fe6d18",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a09_production",
+      "fixture_subject_identity": {
+        "cik": "19617",
+        "company_id": "jpmorgan_chase",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": null,
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "CANONICAL_COMPANY_REGISTRY",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+          "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "size": 12927325
+        },
+        "source_id": "jpmorgan_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A09",
+      "ordinal": 5,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a09_production.json",
+        "sha256": "d1025a849be9511dc6027bad36c55a7bd04ca4101c924facea792e0e300a12e9"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "kind": "NO_INDEPENDENT_LEGACY_ANCHOR"
+        },
+        {
+          "canonical_unit": "ratio",
+          "factor": "0.01",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_ROW_PERCENT_MARKER",
+          "reported_unit": "ratio"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_PRODUCTION",
+        "fixture_id": "r4_a09_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:ca4814a231ff5fc3d087f2000cf88172880a47d99ae0deafd4e43407e8ba96c4",
+        "source_reference_ids": [
+          "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff"
+        ],
+        "source_scope_manifest_id": "sha256:610992505794c3ca96e937d2183aa864fbdcb1eb9ea37cb92775f949738c85a9",
+        "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:03c801b1e6fe52294b28f42bcecf623a54110fab82301f4bb6b9ffd713d6cdc2",
+        "task_contract_id": "r4_nonperforming_loan_ratio_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:bca0df4ebceca26bc400572d13a2b2835e09320ad991e08991bfb45a2dac23ac",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:c81c36d8b4dc9f414a4f6be7154afe172f7d999b450fbac94b71678ce3ac2b79"
+          ],
+          "ordered_table_ids": [
+            "table_000222"
+          ],
+          "ordered_table_orders": [
+            221
+          ],
+          "windows": [
+            {
+              "end_order": 221,
+              "start_order": 221
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "jpmorgan_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_nonperforming_loan_ratio_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:e94dbc2c7891d39233c3b0797e521443849c728b583d5e17f091308757695706",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a11_production",
+      "fixture_subject_identity": {
+        "cik": "19617",
+        "company_id": "jpmorgan_chase",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": null,
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "CANONICAL_COMPANY_REGISTRY",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+          "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "size": 12927325
+        },
+        "source_id": "jpmorgan_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A11",
+      "ordinal": 6,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a11_production.json",
+        "sha256": "29194d02a488f771b546672624d593a43ef488b3bed4a7f10e7b2648c349b6b6"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_PRODUCTION",
+        "fixture_id": "r4_a11_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:ab7785f0154f002c9932b31c4418117dbdd53b15fd21132e3871c0944db60e81",
+        "source_reference_ids": [
+          "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff"
+        ],
+        "source_scope_manifest_id": "sha256:62e9356ce48b5597c97afc87725d5b13e27cd94a64e93ca882c6a26ed95a64d0",
+        "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:1cfd0217e8ed892d05062972e9961fc3ed06432c36d1688c642c229b37e6de33",
+        "task_contract_id": "r4_assets_under_management_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:fb74bee1d90c6b3cda7ff025dd010e3de7899f4d7b14acef75216c03748dfbe5",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1"
+          ],
+          "ordered_table_ids": [
+            "table_000149"
+          ],
+          "ordered_table_orders": [
+            148
+          ],
+          "windows": [
+            {
+              "end_order": 148,
+              "start_order": 148
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "jpmorgan_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_assets_under_management_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:4a22aca67bdf9b0cdf6fa0d92079e278362ff7913061f18c5195f5147000b1f6",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a11_alternate",
+      "fixture_subject_identity": {
+        "cik": "70858",
+        "company_id": "bank_of_america_corp",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": {
+          "byte_end": 1521260,
+          "byte_start": 1521144,
+          "span_sha256": "a3b63b40bc9765e93fcbc7252b640629fdc1eac7a8b5d2bb92e90cd60ea4ed27"
+        },
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+          "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+          "size": 12819060
+        },
+        "source_id": "bank_of_america_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A11",
+      "ordinal": 7,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a11_alternate.json",
+        "sha256": "d7550ec3ab40ec78237e47700f621ef1865babb356e9af92e4c30a5e64023fa4"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+        "fixture_id": "r4_a11_alternate",
+        "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "full_reader_input_manifest_id": "sha256:ba8766d350614ee4fa2a7c507e45f342e7bbbbe922a097cf08362e631cc5a2cb",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:f7406b0320ea4ed1a38993fa4adbe551fd2cccd36517974bb4053a19f9a97aee",
+        "source_reference_ids": [
+          "sha256:ca389fe7897d766abc80bc5673785c168d32701dbd3b60a8dfb91f3fa8064efa"
+        ],
+        "source_scope_manifest_id": "sha256:c8bb56c2e6a42b0e53eed169eb9809a910abb9d51d6920cbbcc51a1db3004644",
+        "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:1cfd0217e8ed892d05062972e9961fc3ed06432c36d1688c642c229b37e6de33",
+        "task_contract_id": "r4_assets_under_management_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:fb74bee1d90c6b3cda7ff025dd010e3de7899f4d7b14acef75216c03748dfbe5",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:802b3d524bd36d053046b7e74001b45f2801c16b0a4c243c4185ab607a15b286"
+          ],
+          "ordered_table_ids": [
+            "table_000069"
+          ],
+          "ordered_table_orders": [
+            68
+          ],
+          "windows": [
+            {
+              "end_order": 68,
+              "start_order": 68
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "bank_of_america_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_assets_under_management_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:4dc081f7964af41037c0cf1bb9d673c66b054fc67d89668025c31b1fe61b5c63",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a12_production",
+      "fixture_subject_identity": {
+        "cik": "19617",
+        "company_id": "jpmorgan_chase",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": null,
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "CANONICAL_COMPANY_REGISTRY",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+          "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "size": 12927325
+        },
+        "source_id": "jpmorgan_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A12",
+      "ordinal": 8,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a12_production.json",
+        "sha256": "4c5fca3e88bec5b760fd5711f0d77720517f23da023b853709db3a0d0c8e3d55"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "kind": "COMPOSITE_SCOPE"
+        },
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_PRODUCTION",
+        "fixture_id": "r4_a12_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:a0ef8de5926d065e0a8fe01b97d83d0d647df65e1319017b16c8833d2e799193",
+        "source_reference_ids": [
+          "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff"
+        ],
+        "source_scope_manifest_id": "sha256:aade82e7776abb286a405deb62fc2729850f7a36d9d75cf8d3ac28bc5c9482e3",
+        "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:1184fd693c7cfd41cea0329dd83a937b8dbcc1c303ad908213a715a1dfe40be8",
+        "task_contract_id": "r4_value_at_risk_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:68f12a9a9a4fddbb9104f2c77dec05387ed4d43cfd074916ec9db1fa5ccf68f8",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088"
+          ],
+          "ordered_table_ids": [
+            "table_000280"
+          ],
+          "ordered_table_orders": [
+            279
+          ],
+          "windows": [
+            {
+              "end_order": 279,
+              "start_order": 279
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "jpmorgan_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_value_at_risk_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:d094bf3b56a19cb58d05cbda5c0b9b0450bcb0c39e3279198480c522556a3a4f",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_execution_ordinal": 1,
+      "fixture_id": "r4_a12_alternate",
+      "fixture_subject_identity": {
+        "cik": "70858",
+        "company_id": "bank_of_america_corp",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": {
+          "byte_end": 1521260,
+          "byte_start": 1521144,
+          "span_sha256": "a3b63b40bc9765e93fcbc7252b640629fdc1eac7a8b5d2bb92e90cd60ea4ed27"
+        },
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+          "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+          "size": 12819060
+        },
+        "source_id": "bank_of_america_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A12",
+      "ordinal": 9,
+      "phase": "BASE",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a12_alternate.json",
+        "sha256": "e7ec312cb484224ba2a9b6f67e87cae9fea8127ebfaf18bf2d8d11aabf1cf185"
+      },
+      "repeats_base_ordinal": null,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "kind": "MIXED_TABLE_NARRATIVE_SCOPE"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        },
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+        "fixture_id": "r4_a12_alternate",
+        "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "full_reader_input_manifest_id": "sha256:ba8766d350614ee4fa2a7c507e45f342e7bbbbe922a097cf08362e631cc5a2cb",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:8273e703c1b61ccc7e9eea6230b1cb811366db2f641bc90ae53b68eeba2747e4",
+        "source_reference_ids": [
+          "sha256:ca389fe7897d766abc80bc5673785c168d32701dbd3b60a8dfb91f3fa8064efa"
+        ],
+        "source_scope_manifest_id": "sha256:5fa0b90a9bfee2d8c23d57649faadaf1017a03b9d0514ab312e2b4b423390345",
+        "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:1184fd693c7cfd41cea0329dd83a937b8dbcc1c303ad908213a715a1dfe40be8",
+        "task_contract_id": "r4_value_at_risk_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:68f12a9a9a4fddbb9104f2c77dec05387ed4d43cfd074916ec9db1fa5ccf68f8",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:5917e41d811778ac190f4b19663ede5537c73c8812a33077faab4595662bc61e"
+          ],
+          "ordered_table_ids": [
+            "table_000147"
+          ],
+          "ordered_table_orders": [
+            146
+          ],
+          "windows": [
+            {
+              "end_order": 146,
+              "start_order": 146
+            }
+          ]
+        }
+      },
+      "selection_reason": "EVERY_CERTIFIED_SCOPED_POSITIVE_ONCE",
+      "source_id": "bank_of_america_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_value_at_risk_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:8c3ba35c1287c1a34d6ca5cff540822be3eded5251e8a22b599ded71ade4087b",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_execution_ordinal": 2,
+      "fixture_id": "r4_a03_alternate",
+      "fixture_subject_identity": {
+        "cik": "831001",
+        "company_id": "citigroup",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": {
+          "byte_end": 1900063,
+          "byte_start": 1899995,
+          "span_sha256": "48238093334b20653cbe670eb92b0467f2ba13ccad005a0d19c4fa0c68fcc603"
+        },
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+          "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+          "size": 16150764
+        },
+        "source_id": "citigroup_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A03",
+      "ordinal": 10,
+      "phase": "STABILITY",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a03_alternate.json",
+        "sha256": "8e04f01d45bac2777c7b318193041508881abdd9438ef853fc650ac4874543a1"
+      },
+      "repeats_base_ordinal": 2,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "kind": "ALTERNATE_DISCLOSED_PERIOD"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+        "fixture_id": "r4_a03_alternate",
+        "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "full_reader_input_manifest_id": "sha256:6a58298a6ed4680feb7182321cb35459d44104190d9c1b2605a2e33a15feaf53",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:2564db3d97dc65b2a884c4fa59764f490910daa8f6e2138a89df79a0098397e6",
+        "source_reference_ids": [
+          "sha256:fe437cdc44a92932ebe716b35ddc1fe400233c6e3cb3e63aeb650764d7c74352"
+        ],
+        "source_scope_manifest_id": "sha256:0b9aea29547be95344e92ff1636196af27179beee4a56d4263b3a0600edc26fa",
+        "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:026b346da55051daacc69a95d4d19527283a6a10c02ffbc55fdf05792d1adf27",
+        "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+        "task_period": "2025Q4",
+        "task_spec_semantic_hash": "sha256:a65f39c2b7344330ae4b8c840c42783bdd4e0819362bd268ad50ff81e34020d1",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:7ce8e22c0d645a727e8b3dfc47137cc1b82085196102cd847f278ec007af0348"
+          ],
+          "ordered_table_ids": [
+            "table_000075"
+          ],
+          "ordered_table_orders": [
+            74
+          ],
+          "windows": [
+            {
+              "end_order": 74,
+              "start_order": 74
+            }
+          ]
+        }
+      },
+      "selection_reason": "MARGINAL_CERTIFIED_RISK_COVERAGE",
+      "source_id": "citigroup_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-10-01"
+      },
+      "target_period_identity": {
+        "period_label": "2025Q4",
+        "resolution": "SOURCE_BOUND_DISCLOSED_PERIOD",
+        "source_bound_proof_id": "sha256:2564db3d97dc65b2a884c4fa59764f490910daa8f6e2138a89df79a0098397e6"
+      },
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:4e5b544beaee2ead71944f47f19cea79ddae1ae7b47803f86a9df8592f054bc6",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_execution_ordinal": 2,
+      "fixture_id": "r4_a09_production",
+      "fixture_subject_identity": {
+        "cik": "19617",
+        "company_id": "jpmorgan_chase",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": null,
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "CANONICAL_COMPANY_REGISTRY",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+          "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "size": 12927325
+        },
+        "source_id": "jpmorgan_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A09",
+      "ordinal": 11,
+      "phase": "STABILITY",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a09_production.json",
+        "sha256": "d1025a849be9511dc6027bad36c55a7bd04ca4101c924facea792e0e300a12e9"
+      },
+      "repeats_base_ordinal": 5,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "kind": "NO_INDEPENDENT_LEGACY_ANCHOR"
+        },
+        {
+          "canonical_unit": "ratio",
+          "factor": "0.01",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_ROW_PERCENT_MARKER",
+          "reported_unit": "ratio"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_PRODUCTION",
+        "fixture_id": "r4_a09_production",
+        "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "full_reader_input_manifest_id": "sha256:3ecbc0d9c2ba9478ab342bd1d157bcc64d3e83bd8cc8cfc44cd8ee639aaa49c8",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:ca4814a231ff5fc3d087f2000cf88172880a47d99ae0deafd4e43407e8ba96c4",
+        "source_reference_ids": [
+          "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff"
+        ],
+        "source_scope_manifest_id": "sha256:610992505794c3ca96e937d2183aa864fbdcb1eb9ea37cb92775f949738c85a9",
+        "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:03c801b1e6fe52294b28f42bcecf623a54110fab82301f4bb6b9ffd713d6cdc2",
+        "task_contract_id": "r4_nonperforming_loan_ratio_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:bca0df4ebceca26bc400572d13a2b2835e09320ad991e08991bfb45a2dac23ac",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:c81c36d8b4dc9f414a4f6be7154afe172f7d999b450fbac94b71678ce3ac2b79"
+          ],
+          "ordered_table_ids": [
+            "table_000222"
+          ],
+          "ordered_table_orders": [
+            221
+          ],
+          "windows": [
+            {
+              "end_order": 221,
+              "start_order": 221
+            }
+          ]
+        }
+      },
+      "selection_reason": "MARGINAL_CERTIFIED_RISK_COVERAGE",
+      "source_id": "jpmorgan_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_nonperforming_loan_ratio_table_v2"
+    },
+    {
+      "draft_entry_id": "sha256:84cb64abd11f31bba1c0bf85367a8af6edda27006509f6d2d6a281a3b8f10365",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_execution_ordinal": 2,
+      "fixture_id": "r4_a12_alternate",
+      "fixture_subject_identity": {
+        "cik": "70858",
+        "company_id": "bank_of_america_corp",
+        "company_traits": [
+          "financial"
+        ],
+        "financial_nature_span_binding": {
+          "byte_end": 1521260,
+          "byte_start": 1521144,
+          "span_sha256": "a3b63b40bc9765e93fcbc7252b640629fdc1eac7a8b5d2bb92e90cd60ea4ed27"
+        },
+        "fixture_company_authority_id": "sha256:729245888f01adb4d41bd2655d14896fbfb13955d5dc13ed5250d962e0d8afdf",
+        "profile_authority": "OWNER_PINNED_SOURCE_EXACT_FINANCIAL_NATURE_SPAN",
+        "profile_id": "financial_institution",
+        "source_binding": {
+          "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+          "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+          "size": 12819060
+        },
+        "source_id": "bank_of_america_fy2025_10k"
+      },
+      "fresh_response_required": true,
+      "metric_id": "A12",
+      "ordinal": 12,
+      "phase": "STABILITY",
+      "recipe_binding": {
+        "path": "tests/fixtures/vnext/r4_offline/inputs/r4_a12_alternate.json",
+        "sha256": "e7ec312cb484224ba2a9b6f67e87cae9fea8127ebfaf18bf2d8d11aabf1cf185"
+      },
+      "repeats_base_ordinal": 9,
+      "response_reuse_authorized": false,
+      "risk_features": [
+        {
+          "kind": "MIXED_TABLE_NARRATIVE_SCOPE"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        },
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ],
+      "scope_certificate_identity": {
+        "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+        "fixture_id": "r4_a12_alternate",
+        "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "full_reader_input_manifest_id": "sha256:ba8766d350614ee4fa2a7c507e45f342e7bbbbe922a097cf08362e631cc5a2cb",
+        "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+        "raw_asset_id": "sha256:c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+        "requirement_hashes": {
+          "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+          "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+          "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+          "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+          "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+          "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+          "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+        },
+        "requirement_id": "issue_28_v2",
+        "source_bound_proof_id": "sha256:8273e703c1b61ccc7e9eea6230b1cb811366db2f641bc90ae53b68eeba2747e4",
+        "source_reference_ids": [
+          "sha256:ca389fe7897d766abc80bc5673785c168d32701dbd3b60a8dfb91f3fa8064efa"
+        ],
+        "source_scope_manifest_id": "sha256:5fa0b90a9bfee2d8c23d57649faadaf1017a03b9d0514ab312e2b4b423390345",
+        "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "system_prompt_hash": "sha256:75dece000df441f30c8ed25bb39657c5839015e57ef7891165bb5336a11a8e33",
+        "task_contract_generation": "R4_TASK_CONTRACTS_V2",
+        "task_contract_hash": "sha256:1184fd693c7cfd41cea0329dd83a937b8dbcc1c303ad908213a715a1dfe40be8",
+        "task_contract_id": "r4_value_at_risk_table_v2",
+        "task_period": "FY2025",
+        "task_spec_semantic_hash": "sha256:68f12a9a9a4fddbb9104f2c77dec05387ed4d43cfd074916ec9db1fa5ccf68f8",
+        "window_binding": {
+          "ordered_grid_hashes": [
+            "sha256:5917e41d811778ac190f4b19663ede5537c73c8812a33077faab4595662bc61e"
+          ],
+          "ordered_table_ids": [
+            "table_000147"
+          ],
+          "ordered_table_orders": [
+            146
+          ],
+          "windows": [
+            {
+              "end_order": 146,
+              "start_order": 146
+            }
+          ]
+        }
+      },
+      "selection_reason": "MARGINAL_CERTIFIED_RISK_COVERAGE",
+      "source_id": "bank_of_america_fy2025_10k",
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01"
+      },
+      "target_period_identity": {
+        "period_label": "FY2025",
+        "resolution": "NATIVE_DEFAULT_FISCAL_PERIOD",
+        "source_bound_proof_id": null
+      },
+      "task_contract_id": "r4_value_at_risk_table_v2"
+    }
+  ],
+  "exact_head": null,
+  "fixture_matrix_id": "sha256:a14b2442f09703e57d8fc12b1d4478e98efe57fa0fd881628d1ac35080db9762",
+  "native_validation": {
+    "guarded_source_ids": [
+      "bank_of_america_fy2025_10k",
+      "citigroup_fy2025_10k",
+      "jpmorgan_fy2025_10k",
+      "marriott_fy2025_10k"
+    ],
+    "live_accuracy_credit": "NONE",
+    "materialization_boundary": "PINNED_DOCKER_512_MIB_NETWORK_NONE_READ_ONLY",
+    "model_responses_reused_for_planning": false,
+    "tier": "EXISTING_OFFLINE_CORPUS_NATIVE_REPLAY",
+    "verified_case_count": 16
+  },
+  "owner_authorization": "NOT_ISSUED",
+  "planner_binding": {
+    "path": "scripts/vnext/r4_live_plan.py",
+    "sha256": "694d038ed989c5221fb781442cb0848cc7c470f18270c8626b60512be47d88d4",
+    "size": 33958
+  },
+  "planning_mode": "DRAFT_SHAPE_ONLY",
+  "provider_paid_sec_authorized": false,
+  "publication_credit": "NONE",
+  "qualification_credit": "NONE_DRAFT_ONLY",
+  "ratchet_id": "R4",
+  "record_type": "R4_CALL_SCHEDULE_DRAFT",
+  "required_future_binding": "DISTINCT_PENDING_LIVE_FACTORY_REQUEST_ENVELOPE_EXACT_HEAD_AND_OWNER_GRANT",
+  "requirement_closure_hash": "sha256:ae1cd0cc3c59ae6ad7ef099d6661b5ec7604f7b385fedcbab41b2d7dd6df9bb3",
+  "requirement_hashes": {
+    "baseline_sha256": "b8c4f8a7fafd70e7805310a91277857fbbc2dacc4cf0b52cd4cc1ebbc98a8276",
+    "contract_sha256": "d938b39ebf117586b1b118a46cf7b09dae03e7153f8590baf7d05ab75fd9e344",
+    "decision_register_sha256": "576518fa1de7b208a8f8076a2959e9c7ac77b88b4828b1457b3dbb14f07904f9",
+    "invariant_profile_sha256": "f60ee7fd847a67fe0e2af41f2bd6813f01f9d3ed957ffc0fe0f277fbc090671e",
+    "parent_requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+    "transfer_manifest_sha256": "d9f37642d44ed915622e24a37791265fb87f8211597ff15c9e3f5ad5ea4325ed",
+    "validator_sha256": "2817ba724ff102f175a4c0ba120bee440c0b4978b4719d1427e34423cbb50309"
+  },
+  "requirement_id": "issue_28_v2",
+  "response_reuse_authorized": false,
+  "schema_version": 1,
+  "selection_policy": {
+    "algorithm": "R4_MARGINAL_RISK_COVERAGE_V1",
+    "base_order": [
+      "metric_id",
+      "production_before_alternate",
+      "fixture_id"
+    ],
+    "distinct_repeat_fixtures": true,
+    "risk_priority": [
+      "ALTERNATE_DISCLOSED_PERIOD",
+      "NO_INDEPENDENT_LEGACY_ANCHOR",
+      "MIXED_TABLE_NARRATIVE_SCOPE",
+      "COMPOSITE_SCOPE",
+      "NUMERIC_NORMALIZATION"
+    ],
+    "stability_tie_breaker": "LOWEST_BASE_ORDINAL"
+  },
+  "stability_selection": [
+    {
+      "base_ordinal": 2,
+      "fixture_id": "r4_a03_alternate",
+      "new_risk_features": [
+        {
+          "kind": "ALTERNATE_DISCLOSED_PERIOD"
+        },
+        {
+          "kind": "COMPOSITE_SCOPE"
+        }
+      ],
+      "ordinal": 10
+    },
+    {
+      "base_ordinal": 5,
+      "fixture_id": "r4_a09_production",
+      "new_risk_features": [
+        {
+          "kind": "NO_INDEPENDENT_LEGACY_ANCHOR"
+        },
+        {
+          "canonical_unit": "ratio",
+          "factor": "0.01",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_ROW_PERCENT_MARKER",
+          "reported_unit": "ratio"
+        }
+      ],
+      "ordinal": 11
+    },
+    {
+      "base_ordinal": 9,
+      "fixture_id": "r4_a12_alternate",
+      "new_risk_features": [
+        {
+          "kind": "MIXED_TABLE_NARRATIVE_SCOPE"
+        },
+        {
+          "canonical_unit": "USD",
+          "factor": "1000000",
+          "kind": "NUMERIC_NORMALIZATION",
+          "mechanism": "SAME_TABLE_HEADER_SCALE",
+          "reported_unit": "USD"
+        }
+      ],
+      "ordinal": 12
+    }
+  ],
+  "zero_call_fixtures": [
+    {
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_id": "r4_a09_alternate",
+      "metric_id": "A09",
+      "planned_provider_calls": 0,
+      "reason": "STRUCTURED_PRIMARY_RESOLVED"
+    },
+    {
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "fixture_id": "r4_a13_alternate",
+      "metric_id": "A13",
+      "planned_provider_calls": 0,
+      "reason": "STRUCTURED_PRIMARY_RESOLVED"
+    },
+    {
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "fixture_id": "r4_a13_production",
+      "metric_id": "A13",
+      "planned_provider_calls": 0,
+      "reason": "STRUCTURED_PRIMARY_RESOLVED"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "AMBIGUOUS_EXCLUDED",
+      "fixture_id": "r4_zero_ambiguous_excluded",
+      "metric_id": "A04",
+      "planned_provider_calls": 0,
+      "reason": "AMBIGUOUS_EXCLUDED"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "NEGATIVE_EXPECTED",
+      "fixture_id": "r4_zero_negative_expected",
+      "metric_id": "A03",
+      "planned_provider_calls": 0,
+      "reason": "NEGATIVE_EXPECTED"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "NOT_APPLICABLE",
+      "fixture_id": "r4_zero_not_applicable",
+      "metric_id": "A03",
+      "planned_provider_calls": 0,
+      "reason": "NOT_APPLICABLE"
+    },
+    {
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "fixture_class": "QUALITATIVE_ONLY",
+      "fixture_id": "r4_zero_qualitative_only",
+      "metric_id": "A03",
+      "planned_provider_calls": 0,
+      "reason": "QUALITATIVE_ONLY"
+    }
+  ]
+}

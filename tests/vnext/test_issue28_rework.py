@@ -690,7 +690,11 @@ class Issue28PublicationReworkTest(unittest.TestCase):
                     with self.assertRaises(PublicationError):
                         verify_publication_bundle(bundle_dir=bundle)
             atomic_write_json(path=bundle / "publication_manifest.json", value=manifest)
-            evolve_to_v2(snapshot=snapshot)
+            retained_revision = snapshot.parent / "issue_28_v2"
+            retained_bytes = {p.name: p.read_bytes() for p in retained_revision.iterdir()}
+            evolve_to_v2(snapshot=snapshot, successor_requirement_id="issue_28_v3")
+            self.assertEqual(retained_bytes,
+                             {p.name: p.read_bytes() for p in retained_revision.iterdir()})
             self.assertEqual(manifest, verify_publication_bundle(bundle_dir=bundle))
             self.assertEqual(
                 requirement["requirement_closure_hash"],

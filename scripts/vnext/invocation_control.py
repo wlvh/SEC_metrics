@@ -9,6 +9,8 @@ no repository-enforced monetary caps or monetary preflight blocker.
 from __future__ import annotations
 
 import os
+from contextlib import contextmanager
+from contextvars import ContextVar
 from decimal import Decimal
 from pathlib import Path
 from typing import Callable, Dict, List, Mapping, Optional, Sequence
@@ -40,6 +42,17 @@ PLAN_FIELDS = {
     "source_identity_hash",
     "task_contract_hash",
 }
+SUCCESSOR_PLAN_FIELDS = PLAN_FIELDS | {
+    "artifact_requirement_generation", "requirement_id",
+    "requirement_closure_hash", "requirement_hashes",
+}
+SUCCESSOR_INVOCATION_POLICY_FIELDS = {
+    "provider_transport_decision_hash", "transport_retry_decision_hash",
+    "live_call_bound_decision_hash", "automatic_retry_count",
+    "response_reuse_authorized", "requirement_closure_hash",
+}
+_SUCCESSOR_AUTHORITY_FACTORY = object()
+_SUCCESSOR_AUTHORITY = ContextVar("successor_invocation_authority", default=None)
 RESOURCE_LIMIT_FIELDS = {"maximum_context_tokens", "maximum_payload_bytes"}
 OBSERVABILITY_FIELDS = {
     "context_authority_hash",
@@ -177,6 +190,314 @@ class EvidenceFailureError(ValueError):
 
 
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+
+
+class SuccessorInvocationAuthority:
+    """One process-local, byte-pinned policy; not permission to open a socket."""
+
+    __slots__ = ("_factory", "root", "_identity", "_policy", "_transport", "_files")
+
+    def __init__(self, *, factory, root, identity, policy, transport, files):
+        if factory is not _SUCCESSOR_AUTHORITY_FACTORY:
+            raise InvocationControlError("Successor invocation authority requires its factory")
+        self._factory = factory
+        self.root = root
+        self._identity = canonical_json_bytes(value=identity)
+        self._policy = canonical_json_bytes(value=policy)
+        self._transport = canonical_json_bytes(value=transport)
+        self._files = canonical_json_bytes(value=files)
+
+    def _check(self):
+        from .canonical import strict_json_loads
+        from .sources import resolve_repository_file
+
+        if self._factory is not _SUCCESSOR_AUTHORITY_FACTORY:
+            raise InvocationControlError("Successor invocation authority factory differs")
+        for relative, binding in strict_json_loads(text=self._files.decode("utf-8")).items():
+            data = resolve_repository_file(repo_root=self.root,
+                repo_relative_path=relative).read_bytes()
+            if {"sha256": sha256_bytes(content=data), "size": len(data)} != binding:
+                raise InvocationControlError("Successor invocation authority drift: " + relative)
+        return tuple(strict_json_loads(text=data.decode("utf-8")) for data in
+                     (self._identity, self._policy, self._transport))
+
+
+def _prepare_successor_invocation_authority_from_requirement(
+    *, repo_root: Path, requirement: Mapping[str, object],
+) -> SuccessorInvocationAuthority:
+    """Repository bridge for an already verified session; never an egress grant."""
+    from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
+    from .requirement_profile import requirement_authority_paths, validate_execution_authority
+    from .sources import resolve_repository_file
+
+    if requirement.get("requirement_id") != "issue_28_v2":
+        raise InvocationControlError("Scoped R4 invocation requires issue_28_v2")
+    root = repo_root.resolve(strict=True)
+    validate_execution_authority(repo_root=root, requirement=requirement)
+    decisions = requirement["effective_decisions"]
+    transport = decisions.get("S-PROVIDER-TRANSPORT", {})
+    retries = decisions.get("S-TRANSPORT-RETRY", {})
+    bounds = [r for r in decisions.values() if r.get("status") == "APPROVED"
+              and r.get("choice", {}).get("kind") == "LIVE_CALL_BOUND"
+              and r["choice"].get("ratchet_id") == "R4"]
+    if (transport.get("status") != "APPROVED" or retries.get("status") != "APPROVED"
+            or len(bounds) != 1):
+        raise InvocationControlError("Successor transport/retry/call policy is absent")
+    policy = retries["choice"]
+    if (transport["choice"].get("kind") != "PROVIDER_TRANSPORT_POLICY"
+            or transport["choice"].get("retry_count") != 0
+            or policy.get("kind") != "TRANSPORT_RETRY_POLICY"
+            or type(policy.get("automatic_retry_count")) is not int
+            or policy["automatic_retry_count"] != 0
+            or policy.get("unknown_remote_outcome_retry_allowed") is not False
+            or policy.get("http_402_automatic_retry_count") != 0
+            or policy.get("http_402_stops_execution") is not True
+            or policy.get("http_402_stops_batch") is not True
+            or policy.get("actual_usage_required") is not True
+            or policy.get("context_ceiling_tokens") != 200000
+            or bounds[0]["choice"].get("response_reuse") != "NOT_AUTHORIZED"):
+        raise InvocationControlError("Successor invocation safety policy differs")
+    identity = {"artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
+                **{k: requirement[k] for k in ("requirement_id", "requirement_closure_hash",
+                                               )}, "requirement_hashes": requirement["hashes"]}
+    bound_policy = {"provider_transport_decision_hash": content_hash(value=transport),
+        "transport_retry_decision_hash": content_hash(value=retries),
+        "live_call_bound_decision_hash": content_hash(value=bounds[0]),
+        "automatic_retry_count": 0, "response_reuse_authorized": False,
+        "requirement_closure_hash": requirement["requirement_closure_hash"]}
+    files = {}
+    for relative in requirement_authority_paths(repo_root=root, requirement=requirement):
+        data = resolve_repository_file(repo_root=root, repo_relative_path=relative).read_bytes()
+        files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
+    return SuccessorInvocationAuthority(factory=_SUCCESSOR_AUTHORITY_FACTORY, root=root,
+        identity=identity, policy=bound_policy, transport=transport["choice"], files=files)
+
+
+def prepare_successor_invocation_authority(
+    *, repo_root: Path, requirement_id: str = "issue_28_v2",
+) -> SuccessorInvocationAuthority:
+    """Validate one repository Requirement once for an invocation session."""
+    requirement = load_requirement_snapshot(snapshot_dir=repo_root / "requirements" / requirement_id)
+    return _prepare_successor_invocation_authority_from_requirement(
+        repo_root=repo_root, requirement=requirement)
+
+
+@contextmanager
+def _successor_plan_context(*, repo_root: Path, requirement_id: str = "issue_28_v2",
+                            authority=None):
+    context = authority
+    if context is None:
+        context = prepare_successor_invocation_authority(
+            repo_root=repo_root, requirement_id=requirement_id)
+    if (type(context) is not SuccessorInvocationAuthority
+            or context.root != repo_root.resolve(strict=True)
+            or context._check()[0]["requirement_id"] != requirement_id):
+        raise InvocationControlError("Successor invocation context differs")
+    token = _SUCCESSOR_AUTHORITY.set(context)
+    try:
+        yield context
+    finally:
+        _SUCCESSOR_AUTHORITY.reset(token)
+
+
+def build_successor_ai_invocation_plan(*, repo_root: Path,
+                                     requirement_id: str = "issue_28_v2",
+                                     authority=None, **fields) -> Dict[str, object]:
+    """Build the explicit successor subtype from repository policy only."""
+    if {"requirement_identity", "invocation_policy"}.intersection(fields):
+        raise InvocationControlError("Caller-selected successor policy is forbidden")
+    with _successor_plan_context(repo_root=repo_root, requirement_id=requirement_id,
+                                 authority=authority) as context:
+        identity, policy, _ = context._check()
+        return _build_ai_invocation_plan(**fields, requirement_identity=identity,
+                                         invocation_policy=policy)
+
+
+def validate_successor_ai_invocation_plan(*, plan, repo_root: Path, authority=None):
+    """Validate an explicit successor in its portable repository context."""
+    if plan.get("record_type") != "SUCCESSOR_AI_INVOCATION_PLAN":
+        raise InvocationControlError("A legacy/offline plan is not a successor invocation")
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        return validate_ai_invocation_plan(plan=plan)
+
+
+def execute_successor_invocation(*, repo_root: Path, authority=None, **fields):
+    """Use the existing controller with successor retry/reuse policy intact."""
+    if fields.get("plan", {}).get("record_type") != "SUCCESSOR_AI_INVOCATION_PLAN":
+        raise InvocationControlError("Successor execution requires its explicit plan")
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        return execute_invocation(**fields)
+
+
+def load_successor_successful_response(*, repo_root: Path, authority=None, **fields):
+    """Read this invocation's terminal bytes; it grants no response reuse."""
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        return load_successful_response(**fields)
+
+
+def capture_successor_execution_bundle(*, repo_root: Path, workspace_dir: Path,
+                                      plan, execution_receipt, authority=None):
+    """Capture native durable terminals for a self-contained, socket-free Run."""
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        validated = validate_successor_ai_invocation_plan(plan=plan, repo_root=repo_root,
+                                                          authority=_SUCCESSOR_AUTHORITY.get())
+        root = workspace_dir / "invocation_control"
+        execution_id = execution_receipt["execution_id"]
+        receipt = _load_execution_receipt(root=root,
+            path=_execution_path(root=root, execution_id=execution_id), execution_id=execution_id)
+        if receipt != execution_receipt:
+            raise InvocationControlError("Captured successor execution differs from disk")
+        markers = _egress_markers_for_execution(root=root, execution_id=execution_id)
+        archive = _read_json_object(path=root / "reservation_archive"
+            / _identity_name(identity=validated["provider_request_identity"])
+            / (_identity_name(identity=execution_id) + ".json"), label="reservation archive")
+        if _reservation_path(root=root, request_identity=validated["provider_request_identity"]).exists():
+            raise InvocationControlError("Successor terminal still has an active reservation")
+        success = _load_success_response(root=root, plan=validated)
+        if success is not None:
+            success = {key: success[key] for key in SUCCESS_RESPONSE_FIELDS}
+        journal_path = workspace_dir / "scoped_wire" / _identity_name(identity=execution_id) / "journal.json"
+        journal = _read_json_object(path=journal_path, label="scoped raw wire journal") if journal_path.exists() else None
+        body = {"record_type": "R4_INVOCATION_TERMINAL_BUNDLE", "schema_version": 1,
+                "execution_receipt": receipt, "egress_markers": markers,
+                "reservation_archive": archive, "success_response_receipt": success,
+                "wire_journal": journal}
+        return {**body, "terminal_bundle_id": content_hash(value=body)}
+
+
+def validate_successor_execution_receipt(*, receipt, plan, authorization_binding,
+                                        response_body, acceptance_receipt, terminal_bundle,
+                                        repo_root: Path, authority=None):
+    """Replay native one-shot terminal identities, usage, markers and ownership.
+
+    This grants no execution permission and needs neither the original absolute
+    invocation workspace nor the reservation token. Candidate/Evidence replay
+    remains the existing source-bound checker, composed by the scoped adapter.
+    """
+    validated = validate_successor_ai_invocation_plan(plan=plan, repo_root=repo_root, authority=authority)
+    def self_id(value, field):
+        if value.get(field) != content_hash(value={k: v for k, v in value.items() if k != field}):
+            raise InvocationControlError("Portable successor content identity differs: " + field)
+    bundle = _object(value=terminal_bundle, label="successor terminal bundle")
+    _exact_fields(value=bundle, expected={"record_type", "schema_version", "terminal_bundle_id",
+        "execution_receipt", "egress_markers", "reservation_archive", "success_response_receipt", "wire_journal"},
+        label="successor terminal bundle")
+    self_id(bundle, "terminal_bundle_id")
+    if (bundle["record_type"] != "R4_INVOCATION_TERMINAL_BUNDLE"
+            or type(bundle["schema_version"]) is not int or bundle["schema_version"] != 1
+            or bundle["execution_receipt"] != receipt):
+        raise InvocationControlError("Portable successor terminal generation differs")
+    expected_execution = content_hash(value={"ai_invocation_plan_id": validated["ai_invocation_plan_id"],
+        "owner_token_hash": _sha256_identity(value=authorization_binding.get("owner_token_hash"), label="owner token hash"),
+        "authorized_at_utc": _utc(value=authorization_binding.get("authorized_at_utc"), label="owner authorization time")})
+    status = receipt.get("status")
+    fields = {"schema_version", "record_type", "execution_id", "ai_invocation_plan_id",
+        "provider_request_identity", "status", "batch_terminal", "attempts", "success_response_receipt_id",
+        "counters", "authorized_at_utc", "finished_at_utc", "execution_receipt_id"}
+    if status == "UNKNOWN_REMOTE_OUTCOME":
+        fields.add("unknown_egress_marker_id")
+    _exact_fields(value=receipt, expected=fields, label="successor execution receipt")
+    self_id(receipt, "execution_receipt_id")
+    if (type(receipt["schema_version"]) is not int or receipt["schema_version"] != 1
+            or receipt["record_type"] != "AI_EXECUTION_RECEIPT" or receipt["execution_id"] != expected_execution
+            or receipt["ai_invocation_plan_id"] != validated["ai_invocation_plan_id"]
+            or receipt["provider_request_identity"] != validated["provider_request_identity"]
+            or receipt["authorized_at_utc"] != authorization_binding["authorized_at_utc"]
+            or status not in {"SUCCEEDED", "FAILED_TERMINAL", "FAILED_RETRYABLE_FINAL", "UNKNOWN_REMOTE_OUTCOME"}
+            or receipt["batch_terminal"] is not (status != "SUCCEEDED")):
+        raise InvocationControlError("Portable successor execution ownership/status differs")
+    _utc(value=receipt["finished_at_utc"], label="execution finish time")
+    markers = bundle["egress_markers"]
+    if type(markers) is not list or len(markers) != 1:
+        raise InvocationControlError("Successor execution must have exactly one egress marker")
+    marker = markers[0]
+    _exact_fields(value=marker, expected={"schema_version", "record_type", "execution_id",
+        "ai_invocation_plan_id", "provider_request_identity", "attempt_ordinal", "egress_started_at_utc",
+        "transport_kind", "billing_class", "paid_call_observation_source",
+        "paid_model_provider_call_observed", "egress_marker_id"}, label="successor marker")
+    self_id(marker, "egress_marker_id")
+    expected_kind = "REAL_MODEL_PROVIDER" if authorization_binding.get("execution_mode") == "LIVE" else "MOCK"
+    if (authorization_binding.get("execution_mode") not in {"LIVE", "RECORDED_TEST"}
+            or marker["record_type"] != "PROVIDER_EGRESS_MARKER" or marker["schema_version"] != 1
+            or marker["execution_id"] != expected_execution or type(marker["attempt_ordinal"]) is not int
+            or marker["attempt_ordinal"] != 1 or marker["transport_kind"] != expected_kind
+            or marker["billing_class"] != validated["billing_policy"]["billing_class"]
+            or marker["paid_call_observation_source"] != validated["billing_policy"]["paid_call_observation_source"]
+            or marker["paid_model_provider_call_observed"] is not (expected_kind == "REAL_MODEL_PROVIDER")):
+        raise InvocationControlError("Successor marker mode/ownership/billing differs")
+    _utc(value=marker["egress_started_at_utc"], label="egress time")
+    journal = bundle["wire_journal"]
+    if journal is not None:
+        self_id(journal, "wire_journal_id")
+        if (journal.get("record_type") != "R4_SCOPED_RAW_WIRE_JOURNAL"
+                or journal.get("execution_id") != expected_execution
+                or journal.get("ai_invocation_plan_id") != validated["ai_invocation_plan_id"]
+                or journal.get("provider_request_identity") != validated["provider_request_identity"]
+                or journal.get("provider_request_body_sha256") != validated["provider_request_body_sha256"]
+                or journal.get("egress_marker_id") != marker["egress_marker_id"]
+                or journal.get("egress_started_at_utc") != marker["egress_started_at_utc"]):
+            raise InvocationControlError("Scoped raw-wire journal differs from its native invocation marker")
+    expected_counters = _counters_from_egress_markers(markers=markers, plan=validated)
+    _add_counters(target=_empty_counters(), source=receipt["counters"])
+    if receipt["counters"] != expected_counters:
+        raise InvocationControlError("Successor counters differ from native markers")
+    archive = bundle["reservation_archive"]
+    _exact_fields(value=archive, expected={"schema_version", "record_type", "execution_id",
+        "provider_request_identity", "reservation_hash", "terminal_status", "reservation_archive_id"},
+        label="successor reservation archive")
+    self_id(archive, "reservation_archive_id")
+    _sha256_identity(value=archive["reservation_hash"], label="archived reservation")
+    if (archive["record_type"] != "SINGLE_FLIGHT_RESERVATION_ARCHIVE" or archive["schema_version"] != 1
+            or archive["execution_id"] != expected_execution
+            or archive["provider_request_identity"] != validated["provider_request_identity"]
+            or archive["terminal_status"] != status):
+        raise InvocationControlError("Successor reservation terminal differs")
+    attempts = receipt["attempts"]
+    if type(attempts) is not list or len(attempts) != (0 if status == "UNKNOWN_REMOTE_OUTCOME" else 1):
+        raise InvocationControlError("Successor attempt count implies a retry or incomplete terminal")
+    if status == "UNKNOWN_REMOTE_OUTCOME":
+        if receipt["unknown_egress_marker_id"] != marker["egress_marker_id"]:
+            raise InvocationControlError("Successor UNKNOWN marker differs")
+    else:
+        attempt = attempts[0]
+        _exact_fields(value=attempt, expected={"schema_version", "record_type", "execution_id",
+            "ai_invocation_plan_id", "provider_request_identity", "attempt_ordinal", "status", "error_class",
+            "status_code", "egress_marker_id", "response_body_sha256", "provider_request_id", "billing_class",
+            "paid_call_observation_source", "paid_model_provider_call_observed", "transport_kind", "usage",
+            "finished_at_utc", "attempt_receipt_id"}, label="successor attempt receipt")
+        self_id(attempt, "attempt_receipt_id")
+        if (attempt["record_type"] != "AI_INVOCATION_ATTEMPT_RECEIPT" or attempt["schema_version"] != 1
+                or attempt["status"] != status or attempt["execution_id"] != expected_execution
+                or attempt["ai_invocation_plan_id"] != validated["ai_invocation_plan_id"]
+                or attempt["provider_request_identity"] != validated["provider_request_identity"]
+                or any(attempt[key] != marker[key] for key in ("attempt_ordinal", "egress_marker_id", "transport_kind",
+                    "billing_class", "paid_call_observation_source", "paid_model_provider_call_observed"))
+                or attempt["response_body_sha256"] != sha256_bytes(content=response_body)):
+            raise InvocationControlError("Successor attempt identity/bytes differs")
+        usage = _usage(value=attempt["usage"])
+        _utc(value=attempt["finished_at_utc"], label="attempt finish time")
+        if status == "SUCCEEDED" and (attempt["status_code"] != 200 or attempt["error_class"] != ""
+                or usage["input_tokens"] > validated["resource_limits"]["maximum_context_tokens"]):
+            raise InvocationControlError("Successor success HTTP/usage context gate differs")
+    success = bundle["success_response_receipt"]
+    if status != "SUCCEEDED":
+        if success is not None or acceptance_receipt is not None or receipt["success_response_receipt_id"] is not None:
+            raise InvocationControlError("Failed successor execution cannot contain reusable success")
+    else:
+        _exact_fields(value=success, expected=SUCCESS_RESPONSE_FIELDS, label="successor success receipt")
+        self_id(success, "success_response_receipt_id")
+        accepted = _validate_acceptance_receipt(value=acceptance_receipt, plan=validated, response_body=response_body)
+        if (success["record_type"] != "SUCCESS_RESPONSE_RECEIPT" or success["schema_version"] != 1
+                or success["success_response_receipt_id"] != receipt["success_response_receipt_id"]
+                or success["acceptance_receipt_id"] != accepted["acceptance_receipt_id"]
+                or success["attempt_receipt_id"] != attempts[0]["attempt_receipt_id"]
+                or success["response_body_sha256"] != sha256_bytes(content=response_body)
+                or success["response_body_size"] != len(response_body)
+                or success["usage"] != attempts[0]["usage"]
+                or any(success[key] != validated[key] for key in ("ai_invocation_plan_id", "provider_request_identity",
+                    "provider_request_body_sha256", "provider", "model", "api"))):
+            raise InvocationControlError("Successor success/acceptance terminal binding differs")
+    return dict(receipt)
 
 
 def effective_invocation_policy() -> Dict[str, object]:
@@ -332,6 +653,28 @@ def build_ai_invocation_plan(
     pricing_snapshot_hash: str,
     estimated_cost: str,
 ) -> Dict[str, object]:
+    """Build the historical plan contract, unchanged by successor dispatch."""
+    return _build_ai_invocation_plan(
+        release_input_plan_id=release_input_plan_id, source_identity_hash=source_identity_hash,
+        selected_representation_hash=selected_representation_hash,
+        task_contract_hash=task_contract_hash, output_schema_hash=output_schema_hash,
+        serialization_version=serialization_version, provider=provider, model=model, api=api,
+        request_body=request_body, maximum_payload_bytes=maximum_payload_bytes,
+        maximum_context_tokens=maximum_context_tokens, estimated_context_tokens=estimated_context_tokens,
+        context_authority_hash=context_authority_hash, estimator_id=estimator_id,
+        estimator_version=estimator_version, estimator_method=estimator_method,
+        billing_class=billing_class, paid_call_observation_source=paid_call_observation_source,
+        pricing_snapshot_hash=pricing_snapshot_hash, estimated_cost=estimated_cost)
+
+
+def _build_ai_invocation_plan(
+    *, release_input_plan_id, source_identity_hash, selected_representation_hash,
+    task_contract_hash, output_schema_hash, serialization_version, provider, model, api,
+    request_body, maximum_payload_bytes, maximum_context_tokens, estimated_context_tokens,
+    context_authority_hash, estimator_id, estimator_version, estimator_method,
+    billing_class, paid_call_observation_source, pricing_snapshot_hash, estimated_cost,
+    requirement_identity=None, invocation_policy=None,
+) -> Dict[str, object]:
     """Build one exact AI invocation plan without a monetary hard stop.
 
     Args:
@@ -413,8 +756,8 @@ def build_ai_invocation_plan(
         }
     )
     body = {
-        "schema_version": 1,
-        "record_type": "AI_INVOCATION_PLAN",
+        "schema_version": 1 if requirement_identity is None else 2,
+        "record_type": "AI_INVOCATION_PLAN" if requirement_identity is None else "SUCCESSOR_AI_INVOCATION_PLAN",
         "release_input_plan_id": release_input_plan_id,
         "source_identity_hash": source_identity_hash,
         "selected_representation_hash": selected_representation_hash,
@@ -424,7 +767,7 @@ def build_ai_invocation_plan(
         "provider": provider,
         "model": model,
         "api": api,
-        "invocation_policy": effective_invocation_policy(),
+        "invocation_policy": effective_invocation_policy() if requirement_identity is None else invocation_policy,
         "provider_request_body_sha256": request_sha256,
         "provider_request_identity": provider_request_identity,
         "semantic_invocation_id": semantic_invocation_id,
@@ -448,6 +791,8 @@ def build_ai_invocation_plan(
             ),
         },
     }
+    if requirement_identity is not None:
+        body.update(requirement_identity)
     _reject_monetary_fields(value=body, path="ai_invocation_plan")
     plan = dict(body)
     plan["ai_invocation_plan_id"] = content_hash(value=body)
@@ -457,10 +802,22 @@ def build_ai_invocation_plan(
 def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, object]:
     """Validate one exact AI invocation plan and all three identities."""
     value = _object(value=plan, label="AI invocation plan")
-    _exact_fields(value=value, expected=PLAN_FIELDS, label="AI invocation plan")
+    successor = value.get("record_type") == "SUCCESSOR_AI_INVOCATION_PLAN"
+    _exact_fields(value=value, expected=SUCCESSOR_PLAN_FIELDS if successor else PLAN_FIELDS,
+                  label="AI invocation plan")
     _reject_monetary_fields(value=value, path="ai_invocation_plan")
-    if value["schema_version"] != 1 or value["record_type"] != "AI_INVOCATION_PLAN":
+    if (type(value["schema_version"]) is not int
+            or value["schema_version"] != (2 if successor else 1)
+            or value["record_type"] != ("SUCCESSOR_AI_INVOCATION_PLAN" if successor else "AI_INVOCATION_PLAN")):
         raise InvocationControlError("AI invocation plan identity differs")
+    successor_transport = None
+    if successor:
+        context = _SUCCESSOR_AUTHORITY.get()
+        if context is None:
+            context = prepare_successor_invocation_authority(repo_root=_REPOSITORY_ROOT)
+        identity, expected_policy, successor_transport = context._check()
+        if any(value[field] != expected for field, expected in identity.items()):
+            raise InvocationControlError("Successor invocation Requirement identity differs")
     for field in (
         "ai_invocation_plan_id",
         "release_input_plan_id",
@@ -479,12 +836,18 @@ def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, obje
     )
     _exact_fields(
         value=invocation_policy,
-        expected=INVOCATION_POLICY_FIELDS,
+        expected=SUCCESSOR_INVOCATION_POLICY_FIELDS if successor else INVOCATION_POLICY_FIELDS,
         label="invocation policy",
     )
-    for field in INVOCATION_POLICY_FIELDS:
-        _sha256_identity(value=invocation_policy[field], label=field)
-    if invocation_policy != effective_invocation_policy():
+    if successor:
+        if (invocation_policy != expected_policy
+                or type(invocation_policy["automatic_retry_count"]) is not int
+                or invocation_policy["response_reuse_authorized"] is not False):
+            raise InvocationControlError("Successor invocation policy binding differs")
+    else:
+        for field in INVOCATION_POLICY_FIELDS:
+            _sha256_identity(value=invocation_policy[field], label=field)
+    if not successor and invocation_policy != effective_invocation_policy():
         raise InvocationControlError("Invocation policy binding differs")
     request_hash = _text(
         value=value["provider_request_body_sha256"],
@@ -500,6 +863,12 @@ def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, obje
     )
     if any(type(limits[field]) is not int or limits[field] <= 0 for field in limits):
         raise InvocationControlError("Resource limits are invalid")
+    if successor and (
+        any(value[field] != successor_transport[field] for field in ("provider", "model", "api"))
+        or limits["maximum_context_tokens"] != 200000
+        or limits["maximum_payload_bytes"] != successor_transport["maximum_payload_bytes"]
+    ):
+        raise InvocationControlError("Successor invocation transport/resource policy differs")
     billing_policy = _object(
         value=value["billing_policy"], label="billing policy"
     )
@@ -1410,6 +1779,8 @@ def _reused_success_execution(
     reusable: Mapping[str, object],
 ) -> Dict[str, object]:
     """Persist a marker-free execution that reuses an already sealed success."""
+    if plan["record_type"] == "SUCCESSOR_AI_INVOCATION_PLAN":
+        raise InvocationControlError("Successor qualification response reuse is not authorized")
     if _egress_markers_for_execution(root=root, execution_id=execution_id):
         raise InvocationControlError(
             "REUSED_SUCCESS cannot carry an egress marker"
@@ -2390,7 +2761,8 @@ def execute_invocation(
                     ),
                 },
             )
-        retryable = classification == "RETRYABLE" and attempt_ordinal == 1
+        retryable = (classification == "RETRYABLE" and attempt_ordinal == 1
+                     and validated_plan["record_type"] != "SUCCESSOR_AI_INVOCATION_PLAN")
         attempt_status = (
             "FAILED_RETRYABLE"
             if retryable

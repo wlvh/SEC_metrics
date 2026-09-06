@@ -1,0 +1,49 @@
+{
+  "record_type": "R4_LIVE_SEAM_DEVELOPMENT_VALIDATION_LOG",
+  "schema_version": 1,
+  "evidence_tier": "DEVELOPMENT_NOT_FINAL_ACCEPTANCE",
+  "provider_paid_sec_calls": [0, 0, 0],
+  "attempts": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -p python3 -m unittest tests.vnext.test_r4_live_qualification -v",
+      "requirement_closure_hash": "sha256:329397e3c975a7f7e7a3b277f1ac8c1e516df52942b048c58a03241b9357b5d8",
+      "return_code": 1,
+      "unittest_elapsed_seconds": "163.235",
+      "external_time_real_seconds": "1387.59",
+      "external_time_user_seconds": "129.67",
+      "external_time_sys_seconds": "18.84",
+      "completed_tests": 0,
+      "status": "SETUP_FAILED_BEFORE_FIRST_RECORDED_TRANSPORT",
+      "stdout_summary": [
+        "R4_LIVE_SHAPED: copied isolated release workspace",
+        "R4_LIVE_SHAPED: verified immutable requests and exact12 plan"
+      ],
+      "stderr_summary": "AIAdapterError: R4 provider runtime does not support the approved context ceiling",
+      "root_cause": "The adapter incorrectly required provider technical capacity 1000000 to equal the approved R4 ceiling 200000. It must support at least the ceiling while the invocation and usage gate remain exactly 200000.",
+      "timing_caveat": "External wall time and unittest active elapsed differ substantially. This failed development attempt is not a performance measurement or acceptance result.",
+      "publication_or_qualification_credit": "NONE"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 /usr/bin/time -p python3 -m unittest tests.vnext.test_r4_live_qualification -v",
+      "requirement_closure_hash": "sha256:4d467e9a3157ee6397011a1789c54af83977a2233a6126ba267088f67184f34e",
+      "return_code": 0,
+      "unittest_elapsed_seconds": "1936.859",
+      "external_time_real_seconds": "42535.38",
+      "external_time_user_seconds": "1664.46",
+      "external_time_sys_seconds": "211.12",
+      "completed_tests": 4,
+      "status": "DEVELOPMENT_INTEGRATION_PASSED",
+      "stdout_summary": [
+        "Twelve native recorded scoped executions and three native structured Runs completed",
+        "Provider opener instrumentation count zero; provider/paid/SEC = 0/0/0",
+        "Full persisted scoped Run rebound-tamper matrix passed",
+        "Fresh-process portable fifteen-Run replay passed",
+        "Native structured Run rebound-tamper matrix passed"
+      ],
+      "stderr_summary": "Ran 4 tests in 1936.859s; OK",
+      "timing_caveat": "The host slept during this development run. Active test elapsed and external wall time are both retained; neither is the offline performance benchmark.",
+      "candidate_caveat": "This isolated copy predates the final summary-consistency, runtime-ancestor, complete-Run crash-gap fixes and added original-checkout-mutation/recovery tests. It is not final new-head acceptance.",
+      "publication_or_qualification_credit": "NONE"
+    }
+  ]
+}

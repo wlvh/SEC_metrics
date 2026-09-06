@@ -1,0 +1,233 @@
+{
+  "aggregate_benchmark_executed": false,
+  "all_other_resource_limits_unchanged": true,
+  "changed_dependencies_since_previous_parity": {
+    "scripts/vnext/records.py": {
+      "current": "929a81ce23d4e7678fae83e2f816184efa47585fc5e1826e6377eaf56e88fe39",
+      "previous": "215ab95e626bf5058dfd412d904999cb3cd7d38bfaa665a5f5fc71268e12811f"
+    }
+  },
+  "code_sha256": {
+    "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+    "scripts/vnext/offline_execution_session.py": "67a7b1fd7b5d8443fcffb3c4fffd08f122efd1748b02565aaabaae9236457f58",
+    "scripts/vnext/r4_materialization.py": "e4b3352c7efe0b96eb7ae68fcc1ab18c2f1984ded63771e02a571344bd8872fc",
+    "scripts/vnext/records.py": "929a81ce23d4e7678fae83e2f816184efa47585fc5e1826e6377eaf56e88fe39",
+    "scripts/vnext/resource_limits.py": "2be2aab001242107db8ffe877d9a7e16ea0bd8dc04e0fa40481b28a65732187b",
+    "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+    "tools/r4_materialization_worker.py": "af27d8ffa96d9f206580d2a0d4649954391db1127247d5a7d372d168a95cee4b"
+  },
+  "current_production_max_total_cells": 210000,
+  "final_independent_r4_disk_replay_executed": false,
+  "guard": {
+    "ipv4_routes": [],
+    "memory_max_bytes": 536870912,
+    "memory_swap_max_bytes": 0,
+    "network_interfaces": [
+      "erspan0",
+      "gre0",
+      "gretap0",
+      "ip6_vti0",
+      "ip6gre0",
+      "ip6tnl0",
+      "ip_vti0",
+      "lo",
+      "sit0",
+      "tunl0"
+    ],
+    "non_loopback_active_interfaces": [],
+    "root_mount_read_only": true
+  },
+  "guard_pid_limit": 32,
+  "guard_wall_ceiling_seconds": 120,
+  "guards_identical_across_measurements": true,
+  "image_id": "sha256:6bb4a52297019add65df37d3abcd37819ea4e247adeaff276d03343b05b94b17",
+  "measurements": [
+    {
+      "cgroup_memory_peak_bytes": 312340480,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/benchmark_r4_offline_session.py",
+        "--source",
+        "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "--sha256",
+        "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "--size",
+        "12927325",
+        "--output",
+        "docs/r4_offline/performance_resource_live_seam_jpm.json"
+      ],
+      "command_rc": 0,
+      "command_wall_seconds": "5.65",
+      "derived_asset_builds": 1,
+      "exact_current_dependencies_match": true,
+      "host_materialization_wall_seconds": "5.525952",
+      "host_process_peak_rss_bytes": 375422976,
+      "native_asset": {
+        "canonical_asset_sha256": "b10c09730d894910ff4ff849c1b2928e1149d1223975d1d98e6f0801a2a8a341",
+        "canonical_asset_size": 22174348,
+        "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+        "expanded_cells": 124761,
+        "ordered_table_grid_exact_set_hash": "sha256:59b4fe48d84f4ccba89d38b9ce961dbc03de900a00a1554e90e475fa96306498",
+        "raw_source_cells": 60348,
+        "raw_table_text_characters": 319392,
+        "table_count": 679
+      },
+      "prior_native_asset_bytes_equal": true,
+      "receipt": {
+        "path": "docs/r4_offline/performance_resource_live_seam_jpm.json",
+        "sha256": "808b2e349067a12704e67888348cc671d9f1c2ac5ec53ff27539ec031063a09f",
+        "size": 9275
+      },
+      "run_receipt_id": "sha256:b07f410f5ede61797045f4f4b88f2d0a7735301634354b42f592904b3d465234",
+      "source": {
+        "path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+        "sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+        "size": 12927325
+      },
+      "source_label": "JPM",
+      "source_materializations": 1,
+      "worker_process_peak_rss_bytes": 304664576,
+      "worker_wall_seconds": "3.351139"
+    },
+    {
+      "cgroup_memory_peak_bytes": 383119360,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/benchmark_r4_offline_session.py",
+        "--source",
+        "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "--sha256",
+        "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "--size",
+        "12819060",
+        "--output",
+        "docs/r4_offline/performance_resource_live_seam_bac.json"
+      ],
+      "command_rc": 0,
+      "command_wall_seconds": "8.12",
+      "derived_asset_builds": 1,
+      "exact_current_dependencies_match": true,
+      "host_materialization_wall_seconds": "7.992517",
+      "host_process_peak_rss_bytes": 537280512,
+      "native_asset": {
+        "canonical_asset_sha256": "b2c6c1e2d2227a4be7d60e4c3f28887dc0c1d23a61c5b25943e4a6d300f23543",
+        "canonical_asset_size": 34204729,
+        "derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+        "expanded_cells": 200229,
+        "ordered_table_grid_exact_set_hash": "sha256:df10ba2c228cc2e6deb7533300a638cb2618ffb57cffcd795ea9f0e47f2542a6",
+        "raw_source_cells": 78980,
+        "raw_table_text_characters": 252239,
+        "table_count": 369
+      },
+      "prior_native_asset_bytes_equal": true,
+      "receipt": {
+        "path": "docs/r4_offline/performance_resource_live_seam_bac.json",
+        "sha256": "9ad6d232217a62cae3c64c8f9ac27e8e57a8ba3d03f13142728815897861ae6d",
+        "size": 9275
+      },
+      "run_receipt_id": "sha256:1a36fe046fe224965c325244e8a80a47aaddcc3b4a7057c657f6b6c7dbb5665b",
+      "source": {
+        "path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+        "sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+        "size": 12819060
+      },
+      "source_label": "BAC",
+      "source_materializations": 1,
+      "worker_process_peak_rss_bytes": 376205312,
+      "worker_wall_seconds": "4.815198"
+    },
+    {
+      "cgroup_memory_peak_bytes": 258043904,
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/benchmark_r4_offline_session.py",
+        "--source",
+        "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+        "--sha256",
+        "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "--size",
+        "16150764",
+        "--output",
+        "docs/r4_offline/performance_resource_live_seam_citi.json"
+      ],
+      "command_rc": 0,
+      "command_wall_seconds": "4.72",
+      "derived_asset_builds": 1,
+      "exact_current_dependencies_match": true,
+      "host_materialization_wall_seconds": "4.593101",
+      "host_process_peak_rss_bytes": 271335424,
+      "native_asset": {
+        "canonical_asset_sha256": "f84ff620375214ce5bebdf0502cf4dcb03fd6863cc78e40bfe2ecd9bdd5c34ca",
+        "canonical_asset_size": 17007791,
+        "derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+        "expanded_cells": 95463,
+        "ordered_table_grid_exact_set_hash": "sha256:cc9739cae1b4553dbd2ef51cb80268726ed62148fafde142374a85d7d819d379",
+        "raw_source_cells": 54404,
+        "raw_table_text_characters": 326205,
+        "table_count": 330
+      },
+      "prior_native_asset_bytes_equal": true,
+      "receipt": {
+        "path": "docs/r4_offline/performance_resource_live_seam_citi.json",
+        "sha256": "8ef8e1fdfc66986d6a179902785f3c0674bd3f9493f476987137b8b3b7810e25",
+        "size": 9272
+      },
+      "run_receipt_id": "sha256:be7f02eb0b79a3f678462b4f1bcf4aaa420a363cb19bed81af1c83ba37ca4222",
+      "source": {
+        "path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+        "sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+        "size": 16150764
+      },
+      "source_label": "CITI",
+      "source_materializations": 1,
+      "worker_process_peak_rss_bytes": 247308288,
+      "worker_wall_seconds": "2.839319"
+    }
+  ],
+  "observed_maximum_cells": 200229,
+  "previous_parity": {
+    "path": "docs/r4_offline/performance_resource_final_parity.json",
+    "sha256": "714396d2b30f5f9157ac3e7ad848d81e37bd57eded3eca425d3c907cda375e42",
+    "size": 14005
+  },
+  "previous_parity_bytes_unchanged": true,
+  "previous_parity_receipt_id": "sha256:fb7041d69d225e31a2961ccffb00599021393acfe4ca0083b935747dde42afec",
+  "provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "qualification_credit": "NONE",
+  "receipt_id": "sha256:779d17cc7dc5c8b478b591fac74b31e4c072cc11281fdd6ea657005af0a7d7dd",
+  "record_type": "R4_LIVE_SEAM_PRODUCTION_PARSER_PARITY_RECEIPT",
+  "remeasurement_reason": "R4_NATIVE_RECORD_SCHEMA_DEPENDENCY_CHANGED;_PARSER_AND_ALL_NATIVE_ASSET_BYTES_UNCHANGED",
+  "resource_limit_baseline": {
+    "path": "docs/r4_offline/performance_resource_measurement_initial.json",
+    "sha256": "f148188164c0497ad5b8679fd31e086fb476c075c753d851e3968b5575c94fc8",
+    "size": 11706
+  },
+  "resource_limits": {
+    "max_cell_text_chars": 1048576,
+    "max_cells_per_table": 25000,
+    "max_columns_per_table": 256,
+    "max_entity_reference_chars": 64,
+    "max_expanded_text_chars": 67108864,
+    "max_html_bytes": 67108864,
+    "max_rendered_line_bytes": 8192,
+    "max_rendered_review_bytes": 67108864,
+    "max_rows_per_table": 4096,
+    "max_span_attribute_chars": 32,
+    "max_table_text_chars": 16777216,
+    "max_tables": 2048,
+    "max_total_cells": 210000,
+    "max_total_table_text_chars": 33554432
+  },
+  "runtime_limit_override": false,
+  "schema_version": 1,
+  "status": "PASSED_OFFLINE_RESOURCE_ONLY",
+  "wall_time_role": "OBSERVED_RESOURCE_RUN_ONLY;_NOT_AGGREGATE_PERFORMANCE_ACCEPTANCE",
+  "worker_interpreter": {
+    "implementation": "CPython",
+    "version": "3.12.11"
+  }
+}

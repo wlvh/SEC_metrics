@@ -12,10 +12,12 @@ from __future__ import annotations
 import json
 import re
 import unicodedata
+from dataclasses import dataclass
 from datetime import date
 from decimal import Decimal, InvalidOperation
 from html.parser import HTMLParser
 from pathlib import Path
+from types import MappingProxyType
 from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .calculator import calculate_observation_metric
@@ -694,7 +696,19 @@ def verified_claim(
     """
     kind = _text(value=claim_kind, label="claim kind")
     reference = _reference(value=source_reference)
-    manifest = validate_source_set_manifest(manifest=source_set_manifest)
+    if source_set_manifest.get("record_type") == "PINNED_SINGLE_FILING_FIXTURE_SOURCE_SET":
+        # This additive subtype is never accepted by normal source-role or
+        # release-input planners. It only carries owner-pinned offline fixture
+        # facts through the existing accession parser; it claims no complete
+        # submissions inventory, latest source or qualification credit.
+        from .r4_structured_sources import validate_fixture_source_set
+        if kind not in {"ACCESSION_XBRL_NUMERIC_FACT", "ACCESSION_XBRL_TEXT_FACT"}:
+            raise DeterministicRouterError("Fixture source set is accession-audit only")
+        manifest = validate_fixture_source_set(manifest=source_set_manifest)
+        if reference != manifest["source_reference"]:
+            raise DeterministicRouterError("Fixture claim source/attempt differs")
+    else:
+        manifest = validate_source_set_manifest(manifest=source_set_manifest)
     reference_id = str(reference["source_reference_id"])
     if (
         reference["company_id"] != manifest["company_id"]
@@ -1057,20 +1071,8 @@ def _numeric_xbrl_value(*, text: str, scale: str, sign: str) -> str:
     return decimal_text(value=value)
 
 
-def _adapt_xbrl(
-    *,
-    raw_bytes: bytes,
-    source_reference: Mapping[str, object],
-    source_set_manifest: Mapping[str, object],
-    fact_names: Sequence[str],
-    adapter_id: str,
-) -> List[Dict[str, object]]:
-    """Adapt exact XBRL bytes through one generic declarative fact matcher."""
-    reference = _reference(value=source_reference)
-    _require_raw_bytes(source_reference=reference, raw_bytes=raw_bytes)
-    names = _text_list(
-        value=list(fact_names), label="XBRL fact names", allow_empty=False,
-    )
+def _parse_xbrl_parts(*, raw_bytes: bytes) -> Tuple[Dict[str, Dict[str, object]], List[Dict[str, object]]]:
+    """Run the unchanged native context/fact parsers once over exact bytes."""
     try:
         text = raw_bytes.decode("utf-8")
     except UnicodeDecodeError as error:
@@ -1082,9 +1084,60 @@ def _adapt_xbrl(
     parser = _XbrlFactParser()
     parser.feed(text)
     parser.close()
+    return contexts, parser.facts()
+
+
+_PARSED_XBRL_FACTORY = object()
+
+
+def _freeze_xbrl_owned(value):
+    if type(value) is dict:
+        return MappingProxyType({key: _freeze_xbrl_owned(item) for key, item in value.items()})
+    if type(value) is list:
+        return tuple(_freeze_xbrl_owned(item) for item in value)
+    return value
+
+
+@dataclass(frozen=True, init=False)
+class ParsedAccessionXbrlSource:
+    """Exact-source-owned immutable parsed facts; no global/persistent cache."""
+
+    source_sha256: str
+    source_size: int
+    parsed_source_id: str
+    contexts: Mapping
+    facts: Tuple
+    _factory: object
+
+    def __init__(self, *, source_sha256, source_size, contexts, facts, factory):
+        if factory is not _PARSED_XBRL_FACTORY:
+            raise DeterministicRouterError("Parsed XBRL source requires its native factory")
+        identity = {"source_sha256": source_sha256, "source_size": source_size,
+                    "contexts": contexts, "facts": facts, "parser_generation": "NATIVE_XBRL_PARTS_V1"}
+        object.__setattr__(self, "source_sha256", source_sha256)
+        object.__setattr__(self, "source_size", source_size)
+        object.__setattr__(self, "parsed_source_id", content_hash(value=identity))
+        object.__setattr__(self, "contexts", _freeze_xbrl_owned(contexts))
+        object.__setattr__(self, "facts", _freeze_xbrl_owned(facts))
+        object.__setattr__(self, "_factory", factory)
+
+
+def parse_accession_xbrl_source(*, raw_bytes: bytes) -> ParsedAccessionXbrlSource:
+    """Create one exact SHA/size/content-ID-bound process-local native parse."""
+    if type(raw_bytes) is not bytes:
+        raise DeterministicRouterError("Parsed XBRL source must be immutable bytes")
+    contexts, facts = _parse_xbrl_parts(raw_bytes=raw_bytes)
+    return ParsedAccessionXbrlSource(source_sha256=sha256_bytes(content=raw_bytes),
+        source_size=len(raw_bytes), contexts=contexts, facts=facts, factory=_PARSED_XBRL_FACTORY)
+
+
+def _claims_from_xbrl_parts(*, reference: Mapping, source_set_manifest: Mapping,
+                           names: Sequence[str], contexts: Mapping, facts: Sequence[Mapping],
+                           adapter_id: str) -> List[Dict[str, object]]:
+    """The shared native fact matcher/normalizer, independent of parse reuse."""
     claims = []
     folded_names = {name.casefold() for name in names}
-    for fact in parser.facts():
+    for fact in facts:
         qualified_name = str(fact["qualified_name"])
         if (
             qualified_name.casefold() not in folded_names
@@ -1119,6 +1172,9 @@ def _adapt_xbrl(
         context_ref = str(fact["context_ref"])
         if context_ref not in contexts:
             raise DeterministicRouterError("XBRL fact context is absent")
+        context = contexts[context_ref]
+        if type(context) is not dict:
+            context = {**context, "dimensions": dict(context["dimensions"])}
         claims.append(
             verified_claim(
                 claim_kind=(
@@ -1138,12 +1194,47 @@ def _adapt_xbrl(
                 attributes={
                     "adapter_id": adapter_id,
                     "canonical_name": canonical_names[0],
-                    "context": contexts[context_ref],
+                    "context": context,
                     "lexical_value": fact_text,
                 },
             )
         )
     return sorted(claims, key=lambda claim: str(claim["verified_claim_id"]))
+
+
+def _adapt_xbrl(
+    *, raw_bytes: bytes, source_reference: Mapping[str, object],
+    source_set_manifest: Mapping[str, object], fact_names: Sequence[str], adapter_id: str,
+) -> List[Dict[str, object]]:
+    """Adapt exact XBRL bytes through the unchanged native parse/claim path."""
+    reference = _reference(value=source_reference)
+    _require_raw_bytes(source_reference=reference, raw_bytes=raw_bytes)
+    names = _text_list(value=list(fact_names), label="XBRL fact names", allow_empty=False)
+    contexts, facts = _parse_xbrl_parts(raw_bytes=raw_bytes)
+    return _claims_from_xbrl_parts(reference=reference, source_set_manifest=source_set_manifest,
+                                  names=names, contexts=contexts, facts=facts, adapter_id=adapter_id)
+
+
+def adapt_accession_xbrl_from_parsed(
+    *, parsed_source: ParsedAccessionXbrlSource, raw_bytes: bytes,
+    source_reference: Mapping[str, object], source_set_manifest: Mapping[str, object],
+    fact_names: Sequence[str],
+) -> List[Dict[str, object]]:
+    """Re-evaluate native claims without reparsing an exact immutable source.
+
+    Raw bytes and SourceReference are still re-bound on every call. Callers
+    retain responsibility for the exact disk path/hash/size and Requirement
+    pins that own this context; no stored response or claim result is reused.
+    """
+    if type(parsed_source) is not ParsedAccessionXbrlSource or getattr(parsed_source, "_factory", None) is not _PARSED_XBRL_FACTORY:
+        raise DeterministicRouterError("Parsed XBRL context is not factory-owned")
+    reference = _reference(value=source_reference)
+    _require_raw_bytes(source_reference=reference, raw_bytes=raw_bytes)
+    if len(raw_bytes) != parsed_source.source_size or sha256_bytes(content=raw_bytes) != parsed_source.source_sha256:
+        raise DeterministicRouterError("Parsed XBRL source SHA/size differs")
+    names = _text_list(value=list(fact_names), label="XBRL fact names", allow_empty=False)
+    return _claims_from_xbrl_parts(reference=reference, source_set_manifest=source_set_manifest,
+        names=names, contexts=parsed_source.contexts, facts=parsed_source.facts, adapter_id="ACCESSION_XBRL")
 
 
 def adapt_accession_xbrl(

@@ -241,15 +241,7 @@ def system_review_allowed(*, requirement: Mapping[str, object]) -> bool:
     Returns:
         True only for the user-authorized optional-review policy.
     """
-    if "effective_decisions" not in requirement:
-        return False
-    decisions = requirement["effective_decisions"]
-    if not isinstance(decisions, dict) or "D-06" not in decisions:
-        return False
-    decision = decisions["D-06"]
-    if not isinstance(decision, dict) or decision["status"] != "APPROVED":
-        return False
-    choice = decision["choice"]
+    choice = inherited_optional_review_policy(requirement=requirement)
     return (
         isinstance(choice, dict)
         and set(choice) == _OPTIONAL_REVIEW_POLICY_FIELDS
@@ -262,6 +254,98 @@ def system_review_allowed(*, requirement: Mapping[str, object]) -> bool:
         and choice["system_approval_policy"]
         == "EVIDENCE_BOUND_AUTO_APPROVE"
     )
+
+
+def _choice_leaf_fragments(*, value: object, path: str = "") -> Dict[str, object]:
+    """Enumerate exact JSON leaves without interpreting their values."""
+    if type(value) is dict and value:
+        output: Dict[str, object] = {}
+        for key in sorted(value):
+            token = str(key).replace("~", "~0").replace("/", "~1")
+            output.update(_choice_leaf_fragments(
+                value=value[key], path=path + "/" + token,
+            ))
+        return output
+    if type(value) is list and value:
+        output = {}
+        for index, item in enumerate(value):
+            output.update(_choice_leaf_fragments(
+                value=item, path=path + "/" + str(index),
+            ))
+        return output
+    return {path: value}
+
+
+def inherited_optional_review_policy(
+    *, requirement: Mapping[str, object],
+) -> Optional[Dict[str, object]]:
+    """Resolve D-06 only through a mechanically complete carry-forward chain.
+
+    A successor Requirement does not rename the historical D-06 Decision.
+    Instead, its typed ``PARENT_POLICY_CARRY_FORWARD`` choice records every
+    semantic leaf by JSON pointer and value hash.  This resolver deliberately
+    accepts neither the mere presence of a parent snapshot nor a prose claim
+    that the policy was inherited.
+
+    Args:
+        requirement: Verified historical or profile-driven Requirement.
+
+    Returns:
+        A fresh copy of the exact historical D-06 choice, or ``None`` when the
+        current Requirement has no complete approved carry-forward proof.
+    """
+    seen = set()
+    current: object = requirement
+    chain = []
+    while type(current) is dict:
+        identity = (
+            current.get("requirement_id"),
+            current.get("requirement_closure_hash"),
+        )
+        if identity in seen:
+            return None
+        seen.add(identity)
+        decisions = current.get("effective_decisions")
+        if type(decisions) is not dict:
+            return None
+        direct = decisions.get("D-06")
+        if direct is not None:
+            if (
+                type(direct) is not dict
+                or direct.get("status") != "APPROVED"
+                or type(direct.get("choice")) is not dict
+            ):
+                return None
+            choice = dict(direct["choice"])
+            fragments = _choice_leaf_fragments(value=choice)
+            expected = [
+                {
+                    "decision_id": "D-06",
+                    "source_path": path,
+                    "source_value_hash": content_hash(value=value),
+                }
+                for path, value in sorted(fragments.items())
+            ]
+            for obligations in reversed(chain):
+                actual = [
+                    row for row in obligations
+                    if type(row) is dict and row.get("decision_id") == "D-06"
+                ]
+                if actual != expected:
+                    return None
+            return choice
+        inherited = decisions.get("S-INHERITED-SEMANTICS")
+        if (
+            type(inherited) is not dict
+            or inherited.get("status") != "APPROVED"
+            or type(inherited.get("choice")) is not dict
+            or inherited["choice"].get("kind") != "PARENT_POLICY_CARRY_FORWARD"
+            or type(inherited["choice"].get("obligations")) is not list
+        ):
+            return None
+        chain.append(list(inherited["choice"]["obligations"]))
+        current = current.get("parent_snapshot")
+    return None
 
 
 def _create_review_decision(

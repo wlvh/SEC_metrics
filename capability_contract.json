@@ -14,6 +14,46 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.r4_dormant_release_seam",
+        "type": "capability",
+        "status": "active",
+        "statement": "R4独立release context使用successor ReleasePlan与catalog/r4_v2，从完整LIVE aggregate/independent replay选择六个production结果，原生Calculator/Run再生成54个无source/AI的structural N/A，形成60个delta及300个cumulative keys。alternate/stability/fixture issuer不得进入公共值。真实stage要求v2 transition、merged implementation和exact owner live receipt；真实指针操作另需exact-head release-owner评论。recorded rehearsal仅在私有隔离root运行，始终NONE_RECORDED_REHEARSAL；旧Projector/commit/rollback接口不能替它授予LIVE credit。新typed PublicationManifest冻结完整来源、15-Run closure与独立R3 authority root；冷read-back、CAS/mirrors及rollback/restore复用原有底层primitive。该能力是PR-C的休眠实现，不表示本轮激活Requirement、调用provider/SEC、发布R4或完成最终Cutover。",
+        "audience": ["developer", "operator", "reviewer"],
+        "test_anchor": "tests/vnext/test_r4_live_qualification.py::R4RecordedQualificationIntegrationTest.test_z_isolated_successor_release_readback_rollback_restore_no_credit",
+        "test_status": "automated_recorded",
+        "since": "2026-09-04"
+      },
+      {
+        "anchor_id": "CAPABILITY.r4_dormant_execution_seam",
+        "type": "capability",
+        "status": "active",
+        "statement": "PR-B提供独立pending-live/request/authorization类型与冻结后可由PR-C调用的R4执行接缝。九个scoped base加三个risk stability形成12次新execution，三个structured positive生成原生零调用Run，四类排除样例不进入provider计划。socket前重建v2/source/task/Spec/scope/envelope并读取S-PROVIDER-TRANSPORT；真实owner-comment预检生成私有exact-head能力，caller自签receipt或recorded transport不能变成live。既有reservation、UNKNOWN停止、retry=0、200000 usage gate、原生check_evidence/Review/Calculator、raw-wire同execution恢复和portable replay继续执行；前序失败阻止后序直调。内部Result的PUBLISHED枚举和任何单Run均没有R4 publication/qualification credit。实现及recorded测试不激活Requirement、不授权provider/paid/SEC、不创建Stage-A或production freeze、不改变active R3。",
+        "audience": ["developer", "operator", "reviewer"],
+        "test_anchor": "tests/vnext/test_r4_live_qualification.py::R4RecordedQualificationIntegrationTest.test_full_live_shaped_native_execution_has_zero_sockets_and_no_reuse",
+        "test_status": "automated_recorded",
+        "since": "2026-09-04"
+      },
+      {
+        "anchor_id": "CAPABILITY.r4_offline_b0_interfaces",
+        "type": "capability",
+        "status": "active",
+        "statement": "PR-B B0提供独立SourceScopeManifest、scoped Reader与process-local offline session接口。窗口保留完整DerivedAsset中的原始坐标，synthetic Candidate仍经过既有check_evidence；完整本地Evidence authority不冒充scoped outbound，audit reference/答案不进入request。B0仅是接口基线，不是生产semantic freeze、cycle、Stage-A或live资格，真实来源资格与10倍性能必须另有离线证据。",
+        "audience": ["developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_scoped_reader.py::ScopedReaderTest.test_scoped_request_keeps_full_authority_without_leaking_audit_answers",
+        "test_status": "automated_recorded",
+        "since": "2026-09-03"
+      },
+      {
+        "anchor_id": "CAPABILITY.r4_offline_source_bound_evidence",
+        "type": "capability",
+        "status": "active",
+        "statement": "PR-B以独立六指标task/fixture authority生成十二个positive和四个zero-call离线case。A03只允许owner批准的firm/average同源span与Citi真实季度；A12数值/scale留在原表，95%/one-day可按完整同源关联/冲突证明补全。A09绑定原百分号、A11/A12绑定原表scale，使用既有check_evidence而不是第二verifier。A09/A13先运行native accession XBRL并保留完整claim dispositions；A13仅实现直接发行人披露international net revenue，regional-sum分支未实现且无该路径credit。当前九个scoped positive和三个structured positive不等于十二次provider调用；synthetic PASS只证明离线证据路径，不是模型准确率、live资格、v2 activation或R4发布。",
+        "audience": ["developer", "reviewer"],
+        "test_anchor": "tests/vnext/test_r4_offline_qualification.py::R4CompleteOfflineArtifactTest.test_all_pairs_remain_offline_and_structured_success_does_not_get_ai_plan",
+        "test_status": "automated_recorded",
+        "since": "2026-09-03"
+      },
+      {
         "anchor_id": "CAPABILITY.sec_latest_fiscal_batch",
         "type": "capability",
         "status": "active",
@@ -69,7 +109,7 @@
         "anchor_id": "CAPABILITY.issue_28_profile_requirement_authority",
         "type": "capability",
         "status": "active",
-        "statement": "五文件successor Requirement由版本注册表选择保留的requirement_profile_v1/v2 engine，支持同Issue revision与按invariant_id/ratchet区分的多实例。V1机械执行R4 exact set、24-call上限、12-18 target范围、零调用fixture classes、200000 context、10x性能下限、SourceScopeManifest必需bindings及provider/security/test政策；477个parent choice叶级义务各有唯一disposition，189 carry-forward、278 historical-only、10 superseded。parent closure只由已记录hashes与冻结snapshot bytes重建，不重跑Issue #15 adapter的live root检查。SUCCESSOR_RUN/RELEASE_PLAN/PUBLICATION_MANIFEST独立subtype强制generation与id/closure/hashes三联绑定，并进入真实builder/load/freeze/replay/read-back；旧RUN/Publication hashes必须与所选历史Requirement相等，旧ISSUE_15_RELEASE_PLAN保留其原id/closure schema。policy provenance、候选closure、exact-head activation及live授权相互分离；当前NOT_ACTIVATED，不实现R4或授权provider/paid/SEC。",
+        "statement": "五文件successor Requirement由版本注册表选择保留的V1/V2/V3 engine，支持同Issue revision与按invariant_id/ratchet区分的多实例。V1机械执行R4 exact set、24-call上限、12-18 target范围、零调用classes、200000 context、10x性能下限及provider/security/test政策；v1的477个parent叶级义务逐项分类。issue_28_v1已由PR-A治理receipt激活；新的issue_28_v2使用V3 engine、保留v1和全部历史bytes，以622个parent fragments（619 carry-forward、3 scoped superseded）绑定三条真实owner政策评论，包含公开SEC联系身份的仓库默认值/显式环境优先及非法不回退，状态仍NOT_ACTIVATED。parent解释不依赖current root authority；当前执行必须通过自身execution绑定。三个SUCCESSOR artifact subtype强制generation与id/closure/hashes完整身份，并进入builder/load/freeze/replay/read-back；legacy identity与选择的历史Requirement精确比较。policy-content、候选closure、exact-head activation和live授权分别验证，任何离线实现或测试都不签发provider/paid/live/publication权限。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_issue28_rework.py::Issue28ArtifactReworkTest.test_version_evolution_preserves_old_closure_and_resolves_pending_r5",
         "test_status": "validation_gate",
@@ -239,7 +279,7 @@
         "anchor_id": "RESPONSIBILITY.operator_owns_sec_identity_and_run",
         "type": "responsibility_boundary",
         "status": "active",
-        "statement": "运行负责人维护 company registry，在 clean source-input closure 中运行正式流程；SEC organization 固定 axaxl，contact email 只从 SEC_CONTACT_EMAIL 读取，DeepSeek key 只从 DEEPSEEK_API_KEY 读取。具名 HUMAN 可决定 ReviewUnit；缺失时只有D-06固定SYSTEM身份可写入审计 approval。",
+        "statement": "运行负责人维护 company registry，在 clean source-input closure 中运行正式流程；SEC organization 固定 axaxl，contact email 自动读取 config/sec_config.json.contact_email，显式 SEC_CONTACT_EMAIL 优先；DeepSeek key 只从 DEEPSEEK_API_KEY 读取。具名 HUMAN 可决定 ReviewUnit；缺失时只有D-06固定SYSTEM身份可写入审计 approval。",
         "audience": ["operator", "reviewer"],
         "test_anchor": null,
         "test_status": "not_automated",
@@ -925,7 +965,7 @@
         "anchor_id": "BEHAVIOR.vnext_table_stage_c_financial_materialization",
         "type": "agent_behavior",
         "status": "active",
-        "statement": "Stage C-A提供exact JPM full-expanded-grid benchmark runner：唯一test-only override为child内max_total_cells=187142，production resource_limits.py保持100000且逐byte before/after相等；runner要求512 MiB硬RSS/address-space边界、120秒wall watchdog和macOS process-tree deny-network sandbox，semantic receipt与run-observation receipt分离并绑定Stage-B 124761-cell census、parser/canonicalizer/tool hashes及active/root equality。当前Darwin Python因系统共享映射无法可靠设置512 MiB RLIMIT_AS/RSS；runner按owner规则在materialization child启动前停止，诚实记录NOT_RUN_RSS_GUARD_UNAVAILABLE，peak RSS、wall time、canonical bytes和DerivedAsset ID均为null，三种egress为0/0/0。该状态是BLOCKER，不是completed benchmark。",
+        "statement": "历史Stage C-A提供exact JPM full-expanded-grid benchmark runner：唯一test-only override为child内max_total_cells=187142，该历史运行的production resource_limits.py为100000且逐byte before/after相等；runner要求512 MiB硬RSS/address-space边界、120秒wall watchdog和macOS process-tree deny-network sandbox，semantic receipt与run-observation receipt分离并绑定Stage-B 124761-cell census、parser/canonicalizer/tool hashes及active/root equality。该次Darwin Python因系统共享映射无法可靠设置512 MiB RLIMIT_AS/RSS；runner按owner规则在materialization child启动前停止，诚实记录NOT_RUN_RSS_GUARD_UNAVAILABLE，peak RSS、wall time、canonical bytes和DerivedAsset ID均为null，三种egress为0/0/0。该历史状态是BLOCKER，不是completed benchmark。当前PR-B经owner policy comment 5524085182和三份完整source测量，把生产max_total_cells单独提高到210000，worker不再覆盖生产限制；其他limits不变。该离线修订没有live资格或publication credit。",
         "audience": ["operator", "developer", "reviewer"],
         "test_anchor": "tests/vnext/test_table_stage_c_financial_materialization.py::TableStageCFinancialMaterializationTest.test_current_receipt_is_census_bound_and_resource_safe",
         "test_status": "automated_recorded_real_bytes",

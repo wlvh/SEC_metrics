@@ -14,6 +14,96 @@
 
 ## 0. 更新触发条件
 
+### PR-B B0 successor offline interfaces
+
+`source_scope.py` binds a source-specific audited window certificate to the
+complete RawBlob/SourceReference, full DerivedAsset, full ReaderInputManifest,
+exact task contract and explicitly selected Requirement closure. Offline v2
+construction uses the NOT_ACTIVATED proposal, not a live grant. The fixture authority
+pins its content ID. `scoped_reader.py` provides a separate request subtype;
+legacy ReaderInputManifest and `build_reader_payload` are unchanged. Only the
+certified tables are packed, retaining original IDs/order/grid hashes. Audit
+references and synthetic answers never enter outbound bytes. Response locators
+are constrained to those windows, then the existing `check_evidence` replays
+them against the complete local authority. That full authority representation
+is explicitly distinct from the scoped outbound request.
+
+`offline_execution_session.py` owns one source/DerivedAsset/Requirement build,
+shares immutable byte objects only within the process, and gives its final
+independent replay disk locators rather than cached data. Boundary counters and
+wall/peak-RSS observations are exposed; the B0 tests are not a real-source
+performance benchmark or an implementation of live authorization. Legacy
+Reader semantics and historical qualification/publication evidence stay unchanged.
+<!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
+
+The versioned R4 matrix contains six production/alternate pairs and four
+zero-call classes. A03/A12 composite source spans supply only the approved
+checker-side scope dimensions; value and scale remain original-table evidence.
+The scoped request never includes those narrative spans or reference answers.
+Native XBRL runs first for A09/A13; direct structured successes do not create
+Reader attempts. A13 currently implements direct international net revenue,
+not the optional regional-sum branch. All 16 offline cases retain zero live
+credit; exact native Evidence and complete source/recipe binding are replayed.
+See `docs/r4_offline/current_source_task_audit.md` for source-specific proofs.
+<!-- capability-anchor: CAPABILITY.r4_offline_source_bound_evidence -->
+
+### PR-B dormant production execution seam
+
+`r4_live_plan.py` derives nine scoped positives plus three distinct risk-based
+stability ordinals. `r4_live_authority.py` binds a separate pending-live plan
+and private request/authorization types to exact v2/source/task/Spec/scope and
+provider bytes. A real GitHub owner-comment preflight binds the current
+execution head/tree and plan; socket checks use its immutable process-local
+capability, not a caller-written approval dictionary. The implementation head
+must remain an unchanged ancestor; PR-C evidence commits need not re-sign the
+plan itself. This governance preflight is not a per-call GitHub API dependency.
+
+`live_scoped_reader.py` and explicit `ai_adapter.py` dispatch connect those
+requests to the existing reservation-owned opener and native source-bound
+checker. Effective `S-PROVIDER-TRANSPORT` supplies the successor policy; legacy
+requests retain Issue #15 behavior. Full local assets are built once per source
+session, not per call. R4 always enforces 200000 even when the provider's
+technical capacity is greater. Native raw-wire journaling recovers only the
+same sealed execution; retries and cross-execution response reuse are forbidden.
+
+`r4_live_qualification.py` composes three native structured Runs, twelve scoped
+Runs, usage/UNKNOWN/prefix-stop gates and independent disk replay. The four
+exclusion classes receive no provider entry. `r4_run_store.py` and
+`r4_structured_run.py` reuse the native Run graph, calculator and replay, with
+explicit subtypes rather than globally permitting unreviewed table results.
+No individual Run, internal Result `PUBLISHED` enum, or recorded test implies
+R4 publication. The engine never changes active R3, creates Stage-A/production
+freeze, acquires SEC data or grants live authority. CLI:
+`tools/vnext_r4_qualification.py`; recorded full-path tests run only in isolated
+release copies and portable fresh processes.
+<!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
+
+### PR-B dormant successor release seam
+
+`r4_release.py` issues a private context from the complete independently
+replayed aggregate, not individual FROZEN children. It binds the exact v2
+ReleasePlan, `catalog/r4_v2` Specs/tasks, registry, predecessor, activation and
+merged implementation. `r4_projection.py` selects six production Results and
+uses native Calculator/Run semantics for 54 zero-source structural terminals.
+Alternate and stability Runs remain qualification evidence. Presentation data
+is separately bound; original Spec hashes are not rewritten. Four independent
+anchors and all non-R4 public rows stay exact; A09/A13 are classified native
+backfills, not invented legacy-compatible observations.
+
+`r4_publication.py` prepares an explicit `R4_SUCCESSOR_PUBLICATION_MANIFEST`.
+Its nested immutable authority retains the original R3 pointer/chain while
+the mutable publication root can later switch R3→R4→R3→R4. Cold read-back
+reruns native qualification and projection using frozen inputs. A private
+process-local pin avoids repeating that semantic replay inside one transaction;
+exact file-set/hash/size checks still run on every bundle verification.
+Generic commit/rollback/recovery hooks require a private R4 capability. Real
+switches additionally verify a separate exact-head release-owner comment;
+recorded capabilities are restricted to independent non-Git test roots and
+keep `NONE_RECORDED_REHEARSAL`. Legacy Projector entrypoints remain unchanged.
+The frozen CLI and receipt sequence are documented in
+`docs/r4_offline/pr_c_release_entrypoints.md`; this PR does not execute them live.
+<!-- capability-anchor: CAPABILITY.r4_dormant_release_seam -->
+
 以下变化必须同步更新本文档：
 
 - 新增、删除或重排 `scripts/00_*.py` 至 `scripts/12_*.py` 的阶段
@@ -195,7 +285,7 @@ flowchart LR
 - 运行时代码当前只使用 Python 标准库与本地模块；支持边界为 POSIX 本地文件系统上的 Python 3.9+，由 `TESTING.md` 的专项回归维护。仓库唯一 CI 是以固定 Python 3.14 运行 fast suite 的 PR check；其 pinned GitHub Actions 依赖不进入产品 runtime，仓库仍无第三方运行时依赖清单。
 - recorded acceptance 的强离线执行目前有额外的 macOS operator 前提：`/usr/bin/sandbox-exec` 对整个子进程树应用 `(deny network*)`，并保护正式 pointer/mirrors/sidecar 不可写；Python audit hook 只是纵深保护。缺少该 OS primitive 时 runner fail closed，不声明跨平台弱等价实现。
 - 外部网络依赖仅为 `www.sec.gov`、`data.sec.gov`，以及 explicit live vNext 的 `api.deepseek.com`。
-- SEC organization 固定为 `axaxl`；contact email 只从 `SEC_CONTACT_EMAIL` 读取。`SecHttpClient` 与 acceptance runner 共用同一个 identity validator，缺失、畸形或 example/reserved-domain email 在联网前失败；运行时凭据只在进程环境中存在。
+- SEC organization 固定为 `axaxl`；contact email 默认自动读取 `config/sec_config.json.contact_email`，显式 `SEC_CONTACT_EMAIL` 环境变量优先。`SecHttpClient` 与 acceptance runner 共用同一个 identity validator，选中值缺失、畸形或使用 reserved domain 时在联网前失败。邮箱是公开 User-Agent 身份；API key 仍只从环境读取。
 <!-- capability-anchor: BEHAVIOR.sec_identity_shared_fail_fast -->
 - Issue #15 effective D-01 固定 DeepSeek OpenAI-compatible Chat Completions、`deepseek-v4-flash`、`api.deepseek.com`、120 秒、transport 内部 retry 0、8 MiB、公开 SEC table-grid only；API key 只从 `DEEPSEEK_API_KEY` 读取并不得进入 artifact。只有 WB-3 orchestrator 可按 D-35 对 429/timeout/recoverable 5xx 追加最多一次独立 attempt。
 - 限速状态保存在单个 `SecHttpClient` 实例中，只提供进程内 pacing，不是跨阶段进程或多进程协调器；request-ledger publication 的 POSIX 锁只防丢行，不提供全局限速，也不承诺网络文件系统锁语义。

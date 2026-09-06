@@ -59,6 +59,11 @@ ALLOWED_REMOTE_ADAPTER_CONSTRUCTORS = {
         "scripts/vnext/ai_adapter.py",
         "build_table_context_measurement_transport",
     ),
+    ("scripts/vnext/ai_adapter.py", "build_scoped_qualification_transport_adapter"),
+}
+ALLOWED_REPOSITORY_TRANSPORT_FACTORIES = {
+    ("scripts/vnext/ai_adapter.py", "_ApprovedTransportAdapter._complete_repository_transport"),
+    ("scripts/vnext/ai_adapter.py", "_ScopedInvocationControllerTransport.send"),
 }
 ALLOWED_EGRESS_CAPABILITY_REFERENCES = {
     ("scripts/vnext/ai_adapter.py", "_open_provider_request"),
@@ -74,6 +79,7 @@ ALLOWED_EGRESS_CAPABILITY_REFERENCES = {
         "scripts/vnext/ai_adapter.py",
         "_TableContextMeasurementTransport.send",
     ),
+    ("scripts/vnext/ai_adapter.py", "_ScopedInvocationControllerTransport.send"),
 }
 FAIL_CLOSED_CONSTANTS = {
     (
@@ -121,6 +127,7 @@ class _CallVisitor(ast.NodeVisitor):
         self.boundary_callers: List[Tuple[str, str]] = []
         self.repository_transport_callers: List[Tuple[str, str]] = []
         self.remote_adapter_constructors: List[Tuple[str, str]] = []
+        self.transport_factories: List[Tuple[str, str]] = []
         self.capability_references: List[Tuple[str, str]] = []
         self.function_constants: Dict[str, set[str]] = {}
         self.provider_host_literals: List[Tuple[str, str]] = []
@@ -171,10 +178,12 @@ class _CallVisitor(ast.NodeVisitor):
             self.repository_transport_callers.append(
                 (self.relative_path, symbol)
             )
-        if target.split(".")[-1] == "_ApprovedTransportAdapter":
+        if target.split(".")[-1] in {"_ApprovedTransportAdapter", "_ScopedQualificationTransportAdapter"}:
             self.remote_adapter_constructors.append(
                 (self.relative_path, symbol)
             )
+        if target.split(".")[-1] == "_build_repository_transport":
+            self.transport_factories.append((self.relative_path, symbol))
         self.generic_visit(node)
 
     def visit_Name(self, node: ast.Name) -> None:
@@ -232,6 +241,7 @@ def check_provider_egress(*, repo_root: Path) -> Dict[str, object]:
     boundary_callers = []
     repository_callers = []
     constructors = []
+    transport_factories = []
     capability_references = []
     function_constants: Dict[str, set[str]] = {}
     host_literals = []
@@ -252,6 +262,7 @@ def check_provider_egress(*, repo_root: Path) -> Dict[str, object]:
         boundary_callers.extend(visitor.boundary_callers)
         repository_callers.extend(visitor.repository_transport_callers)
         constructors.extend(visitor.remote_adapter_constructors)
+        transport_factories.extend(visitor.transport_factories)
         capability_references.extend(visitor.capability_references)
         for symbol in visitor.function_constants:
             function_constants[
@@ -274,6 +285,8 @@ def check_provider_egress(*, repo_root: Path) -> Dict[str, object]:
         errors.append("repository transport caller exact set differs")
     if set(constructors) != ALLOWED_REMOTE_ADAPTER_CONSTRUCTORS:
         errors.append("remote adapter constructor exact set differs")
+    if set(transport_factories) != ALLOWED_REPOSITORY_TRANSPORT_FACTORIES:
+        errors.append("repository transport factory exact set differs")
     if set(capability_references) != ALLOWED_EGRESS_CAPABILITY_REFERENCES:
         errors.append("egress capability reference exact set differs")
     unexpected_hosts = sorted({
@@ -325,6 +338,9 @@ def check_provider_egress(*, repo_root: Path) -> Dict[str, object]:
         "remote_adapter_constructors": [
             "{}::{}".format(path, symbol)
             for path, symbol in sorted(constructors)
+        ],
+        "repository_transport_factories": [
+            "{}::{}".format(path, symbol) for path, symbol in sorted(transport_factories)
         ],
         "egress_capability_references": [
             "{}::{}".format(path, symbol)

@@ -652,7 +652,7 @@ class CutoverOrchestratorTest(unittest.TestCase):
         """Fail before source planning when either live identity is absent."""
         with tempfile.TemporaryDirectory() as directory, mock.patch.dict(
             os.environ,
-            {},
+            {"SEC_CONTACT_EMAIL": ""},
             clear=True,
         ), mock.patch(
             "vnext.cutover.build_release_input_plan"
@@ -672,7 +672,7 @@ class CutoverOrchestratorTest(unittest.TestCase):
                 )
         self.assertEqual("LIVE_PREREQUISITES_MISSING", raised.exception.code)
         self.assertEqual(
-            ["OPENAI_API_KEY_REQUIRED", "SEC_CONTACT_EMAIL_REQUIRED"],
+            ["DEEPSEEK_API_KEY_REQUIRED", "SEC_CONTACT_EMAIL_REQUIRED"],
             raised.exception.details["error_codes"],
         )
         planner.assert_not_called()

@@ -19,6 +19,22 @@ from .requirement_profile_v1 import SUCCESSOR_RECORD_TYPES
 
 
 IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9:_./-]{2,255}$")
+SOURCE_BOUND_CANDIDATE_TYPE = "SOURCE_BOUND_OBSERVATION_CANDIDATE"
+SOURCE_BOUND_CANDIDATE_FIELDS = (
+    "artifact_requirement_generation", "requirement_id", "requirement_closure_hash",
+    "requirement_hashes", "native_candidate_hash", "source_bound_proof_id",
+)
+R4_SCOPED_RUN_TYPE = "R4_SCOPED_RUN"
+R4_SCOPED_ATTEMPT_TYPE = "R4_SCOPED_EXTRACTION_ATTEMPT"
+R4_SCOPED_PROTOCOL = "R4_SCOPED_TRANSPORT_V1"
+R4_STRUCTURED_RUN_TYPE = "R4_STRUCTURED_RUN"
+R4_STRUCTURED_PROTOCOL = "R4_STRUCTURED_PRIMARY_V1"
+R4_PUBLICATION_MANIFEST_TYPE = "R4_SUCCESSOR_PUBLICATION_MANIFEST"
+R4_STRUCTURED_ARTIFACT_KINDS = ("plan", "structured_route")
+R4_EXECUTION_ARTIFACT_KINDS = (
+    "request_record", "invocation_plan", "execution_receipt",
+    "acceptance_receipt", "authorization_binding", "terminal_bundle",
+)
 
 
 @dataclass(frozen=True)
@@ -348,6 +364,40 @@ SCHEMAS["SUCCESSOR_PUBLICATION_MANIFEST"] = RecordSchema(
         "projection_requirement_hashes",
     ),
 )
+SCHEMAS[R4_PUBLICATION_MANIFEST_TYPE] = RecordSchema(
+    required=SCHEMAS["SUCCESSOR_PUBLICATION_MANIFEST"].required + (
+        "r4_release_receipt_id", "publication_credit",
+    ),
+)
+
+
+SCHEMAS[SOURCE_BOUND_CANDIDATE_TYPE] = RecordSchema(
+    required=SCHEMAS["OBSERVATION_CANDIDATE"].required + SOURCE_BOUND_CANDIDATE_FIELDS,
+)
+
+SCHEMAS[R4_SCOPED_RUN_TYPE] = RecordSchema(
+    required=SCHEMAS["SUCCESSOR_RUN"].required + ("r4_execution_binding", "task_contract_bindings"),
+    optional=tuple(field for field in SCHEMAS["SUCCESSOR_RUN"].optional
+                   if field not in {"task_contract_bindings", "qualification_authorization"}),
+)
+SCHEMAS[R4_STRUCTURED_RUN_TYPE] = RecordSchema(
+    required=SCHEMAS["SUCCESSOR_RUN"].required + ("r4_structured_binding", "task_contract_bindings"),
+    optional=tuple(field for field in SCHEMAS["SUCCESSOR_RUN"].optional
+                   if field not in {"task_contract_bindings", "qualification_authorization"}),
+)
+_R4_ATTEMPT_CATALOG_FIELDS = (
+    "task_contract_id", "catalog_task_contract_hash",
+    "catalog_output_schema_hash", "system_prompt_hash",
+)
+SCHEMAS[R4_SCOPED_ATTEMPT_TYPE] = RecordSchema(
+    required=SCHEMAS["AI_EXTRACTION_ATTEMPT"].required + (
+        "artifact_requirement_generation", "requirement_id", "requirement_closure_hash",
+        "requirement_hashes", "r4_binding",
+    ) + _R4_ATTEMPT_CATALOG_FIELDS,
+    optional=tuple(field for field in SCHEMAS["AI_EXTRACTION_ATTEMPT"].optional
+                   if field not in _R4_ATTEMPT_CATALOG_FIELDS
+                   and field != "qualification_authorization"),
+)
 
 
 TEXT_FIELDS = {
@@ -359,6 +409,8 @@ TEXT_FIELDS = {
     "audit_manifest_hash",
     "batch_manifest_id",
     "candidate_hash",
+    "native_candidate_hash",
+    "source_bound_proof_id",
     "candidate_status",
     "claim_kind",
     "company_id",
@@ -391,9 +443,11 @@ TEXT_FIELDS = {
     "provider_request_id",
     "provider_ledger_entry_id",
     "publication",
+    "publication_credit",
     "publication_id",
     "projection_manifest_id",
     "quality",
+    "r4_release_receipt_id",
     "raw_asset_id",
     "raw_response_sha256",
     "raw_response_path",
@@ -492,6 +546,9 @@ LIST_FIELDS = {
     "unresolved_scope_dimensions",
 }
 MAPPING_FIELDS = {
+    "r4_structured_binding",
+    "r4_binding",
+    "r4_execution_binding",
     "projection_requirement_hashes",
     "approved_claims",
     "artifact_hashes",
@@ -809,6 +866,10 @@ def _expected_identifier(
                 "unresolved_competing_claims",
             )
         }
+        if record["record_type"] == SOURCE_BOUND_CANDIDATE_TYPE:
+            if record["native_candidate_hash"] != content_hash(value=body):
+                raise RecordError("Source-bound Candidate native identity differs")
+            body.update({key: record[key] for key in SOURCE_BOUND_CANDIDATE_FIELDS})
         return "candidate_hash", content_hash(value=body)
     if record_type == "EVIDENCE_CHECK":
         fields = [
@@ -946,9 +1007,14 @@ def _expected_identifier(
                 "previous_publication_id",
             )
         }
-        if record["record_type"] == "SUCCESSOR_PUBLICATION_MANIFEST":
+        if record["record_type"] in {
+            "SUCCESSOR_PUBLICATION_MANIFEST", R4_PUBLICATION_MANIFEST_TYPE,
+        }:
             for field in ("artifact_requirement_generation", "requirement_id",
                           "requirement_closure_hash", "projection_requirement_hashes"):
+                body[field] = record[field]
+        if record["record_type"] == R4_PUBLICATION_MANIFEST_TYPE:
+            for field in ("r4_release_receipt_id", "publication_credit"):
                 body[field] = record[field]
         expected = "publication_" + content_hash(value=body).split(":", 1)[1]
         return "publication_id", expected
@@ -1599,6 +1665,102 @@ def _validate_record_semantics(
             raise RecordError("Null published MetricResult state is invalid")
 
 
+def _validate_r4_binding_shape(*, record: Mapping[str, object]) -> None:
+    """Require explicit protocol and full persisted execution-artifact identity.
+
+    This is shape/self-binding validation only. Run loading replays the actual
+    request, owner authorization, invocation/acceptance and native evidence.
+    """
+    kind = record["record_type"]
+    if kind == R4_SCOPED_RUN_TYPE:
+        bound = record["r4_execution_binding"]
+        if (set(bound) != {"protocol", "identity_hashes", "artifact_files", "qualification_credit"}
+                or bound["protocol"] != R4_SCOPED_PROTOCOL
+                or bound["qualification_credit"] != "NONE_INDIVIDUAL_RUN"
+                or type(bound["identity_hashes"]) is not dict
+                or type(bound["artifact_files"]) is not dict):
+            raise RecordError("R4 Run execution binding fields differ")
+        identity = bound["identity_hashes"]
+        files = bound["artifact_files"]
+        if set(files) != set(R4_EXECUTION_ARTIFACT_KINDS):
+            raise RecordError("R4 Run execution artifact exact set differs")
+        for artifact_kind in R4_EXECUTION_ARTIFACT_KINDS:
+            binding = files[artifact_kind]
+            if binding is None and artifact_kind == "acceptance_receipt":
+                if identity.get("acceptance_receipt_hash") is not None:
+                    raise RecordError("R4 missing acceptance artifact differs from identity")
+                continue
+            if (type(binding) is not dict or set(binding) != {"path", "sha256", "size"}
+                    or type(binding["path"]) is not str
+                    or type(binding["sha256"]) is not str
+                    or re.fullmatch(r"[0-9a-f]{64}", binding["sha256"]) is None
+                    or type(binding["size"]) is not int or binding["size"] < 1
+                    or binding["path"] != "r4_execution/{}_{}.json".format(artifact_kind, binding["sha256"])):
+                raise RecordError("R4 execution artifact file binding is invalid")
+            if identity.get(artifact_kind + "_hash") != "sha256:" + binding["sha256"]:
+                raise RecordError("R4 execution artifact content/file identity differs")
+    else:
+        identity = record["r4_binding"]
+    if (set(identity) != {"protocol"} | {name + "_hash" for name in R4_EXECUTION_ARTIFACT_KINDS}
+            or identity["protocol"] != R4_SCOPED_PROTOCOL):
+        raise RecordError("R4 attempt protocol/identity fields differ")
+    for key, value in identity.items():
+        if key == "protocol":
+            continue
+        if value is None and key == "acceptance_receipt_hash":
+            if kind == R4_SCOPED_ATTEMPT_TYPE and record["status"] != "FAILED":
+                raise RecordError("Successful R4 attempt lacks acceptance")
+            continue
+        if type(value) is not str or re.fullmatch(r"sha256:[0-9a-f]{64}", value) is None:
+            raise RecordError("R4 execution artifact identity is invalid")
+
+
+def _validate_r4_structured_binding_shape(*, record: Mapping[str, object]) -> None:
+    bound = record["r4_structured_binding"]
+    if (set(bound) != {"protocol", "fixture_id", "source_id", "artifact_hashes", "artifact_files",
+                       "fixture_company_authority_id", "execution_mode", "qualification_credit",
+                       "publication_credit", "provider_paid_sec_calls"}
+            or bound["protocol"] != R4_STRUCTURED_PROTOCOL
+            or bound["execution_mode"] not in {"LIVE", "RECORDED_TEST"}
+            or bound["qualification_credit"] != "NONE_INDIVIDUAL_RUN"
+            or bound["publication_credit"] != "NONE"
+            or bound["provider_paid_sec_calls"] != [0, 0, 0]
+            or any(type(value) is not int for value in bound["provider_paid_sec_calls"])
+            or type(bound["artifact_hashes"]) is not dict
+            or type(bound["artifact_files"]) is not dict
+            or set(bound["artifact_hashes"]) != {kind + "_hash" for kind in R4_STRUCTURED_ARTIFACT_KINDS}
+            or set(bound["artifact_files"]) != set(R4_STRUCTURED_ARTIFACT_KINDS)):
+        raise RecordError("R4 structured binding fields differ")
+    for name in ("fixture_id", "source_id"):
+        validate_identifier(value=bound[name], field=name)
+    if re.fullmatch(r"sha256:[0-9a-f]{64}", str(bound["fixture_company_authority_id"])) is None:
+        raise RecordError("R4 structured company authority identity is invalid")
+    for kind in R4_STRUCTURED_ARTIFACT_KINDS:
+        binding = bound["artifact_files"][kind]
+        if (type(binding) is not dict or set(binding) != {"path", "sha256", "size"}
+                or type(binding["sha256"]) is not str
+                or re.fullmatch(r"[0-9a-f]{64}", binding["sha256"]) is None
+                or type(binding["size"]) is not int or binding["size"] <= 0
+                or binding["path"] != "r4_structured/{}_{}.json".format(kind, binding["sha256"])
+                or bound["artifact_hashes"][kind + "_hash"] != "sha256:" + binding["sha256"]):
+            raise RecordError("R4 structured artifact identity/path differs")
+
+
+def _validate_r4_publication_binding_shape(*, record: Mapping[str, object]) -> None:
+    """Validate the additive R4 shape without changing retained V1 dispatch."""
+    if (record["publication_credit"] not in {"LIVE", "NONE_RECORDED_REHEARSAL"}
+            or re.fullmatch(r"sha256:[0-9a-f]{64}", record["r4_release_receipt_id"]) is None):
+        raise RecordError("R4 publication release identity or credit is invalid")
+    for field in ("requirement_hashes", "projection_requirement_hashes"):
+        hashes = record[field]
+        if not hashes or any(
+            type(key) is not str or not key or type(value) is not str
+            or re.fullmatch(r"(?:sha256:)?[0-9a-f]{64}", value) is None
+            for key, value in hashes.items()
+        ):
+            raise RecordError("R4 publication Requirement hashes are invalid")
+
+
 def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
     """Validate an exact vNext record and return an isolated copy.
 
@@ -1625,14 +1787,26 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
         canonical_json_bytes(value=dict(record))
     except CanonicalError as error:
         raise RecordError("Record is not canonical JSON data") from error
-    semantic_type = SUCCESSOR_RECORD_TYPES.get(record_type, record_type)
-    if record_type in SUCCESSOR_RECORD_TYPES:
+    semantic_type = ({SOURCE_BOUND_CANDIDATE_TYPE: "OBSERVATION_CANDIDATE",
+                      R4_SCOPED_RUN_TYPE: "RUN", R4_STRUCTURED_RUN_TYPE: "RUN",
+                      R4_PUBLICATION_MANIFEST_TYPE: "PUBLICATION_MANIFEST",
+                      R4_SCOPED_ATTEMPT_TYPE: "AI_EXTRACTION_ATTEMPT"}.get(
+                          record_type, SUCCESSOR_RECORD_TYPES.get(record_type, record_type)))
+    if record_type in SUCCESSOR_RECORD_TYPES or record_type in {
+            SOURCE_BOUND_CANDIDATE_TYPE, R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE,
+            R4_SCOPED_ATTEMPT_TYPE, R4_PUBLICATION_MANIFEST_TYPE}:
         if (record["artifact_requirement_generation"] != EXPLICIT_ARTIFACT_GENERATION
                 or re.fullmatch(r"issue_[0-9]+_v[1-9][0-9]*", str(record["requirement_id"])) is None
                 or type(record["requirement_hashes"]) is not dict
                 or not record["requirement_hashes"]
                 or record["requirement_closure_hash"] != content_hash(value=record["requirement_hashes"])):
             raise RecordError("Successor artifact Requirement identity differs")
+    if record_type in {R4_SCOPED_RUN_TYPE, R4_SCOPED_ATTEMPT_TYPE}:
+        _validate_r4_binding_shape(record=record)
+    if record_type == R4_STRUCTURED_RUN_TYPE:
+        _validate_r4_structured_binding_shape(record=record)
+    if record_type == R4_PUBLICATION_MANIFEST_TYPE:
+        _validate_r4_publication_binding_shape(record=record)
     _validate_record_status(record_type=semantic_type, record=record)
     _validate_enums(record_type=semantic_type, record=record)
     _validate_record_semantics(record_type=semantic_type, record=record)

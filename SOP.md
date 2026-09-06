@@ -10,10 +10,23 @@
 
 ## Issue #28 successor Requirement transition
 
+PR-A has merged; its exact activation receipt is separately persisted as
+governance evidence. PR-B first tests and commits the additive SourceScopeManifest,
+scoped Reader and offline-session B0 interfaces. Source-specific audit, transport
+tamper and real performance work follow that interface baseline. B0 is never a
+production semantic freeze, cycle, Stage-A or live execution authority.
+
+PR-B 当前另有未激活的`requirements/issue_28_v2/`与保留的V3 engine，绑定三条owner政策评论（scope/resource、A03、SEC contact authority）。真实六指标fixture、source-bound scope、独立回放及aggregate性能只作离线证据；验收入口见`TESTING.md`，当前结果见`docs/r4_offline/README.md`。两个SEC acquisition slot已耗尽，provider/paid未授权。只有独立exact-head/closure审核才可激活v2及合并PR-B；不得据此开始PR-C。
+
+PR-B必须交付可供未来PR-C调用、但当前未授权的生产接缝，不能把补Python推迟到发布PR。审核时运行`TESTING.md`的dormant R4集成与portable gate：12个recorded scoped execution、3个native structured Run、4类zero-call和失败前缀/usage/UNKNOWN/tamper。`tools/vnext_r4_qualification.py`的`plan`/`execute`只属于未来明确授权的PR-C；当前只可运行`draft`和隔离recorded测试，不得请求或签发live grant。新head/closure须独立审核后激活，保持PR30 Draft。
+<!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
+
+下面是已完成的PR-A transition流程，不是重新打开Issue #15/#24或重做历史snapshot的指令。
+
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 加载五文件snapshot、固定版本engine与记录parent | `requirements/issue_28_v1/`；`scripts/vnext/requirement_profile.py` | exact files/hash/size、engine及其dependencies、parent recorded hashes/snapshot bytes一致；parent不读取current root authority |
-| 2 | 执行fragment transfer和typed safety bounds | `transfer_manifest.json`；`decision_register.json`；`invariant_profile.json` | 每个parent叶级义务唯一分类；D-01/D-24/D-26语义不可错配；同kind按ratchet独立；未知kind/fork/detached/tamper失败 |
+| 2 | 执行fragment transfer和typed safety bounds | `requirements/issue_28_v1/transfer_manifest.json`；`requirements/issue_28_v1/decision_register.json`；`requirements/issue_28_v1/invariant_profile.json` | 每个parent叶级义务唯一分类；D-01/D-24/D-26语义不可错配；同kind按ratchet独立；未知kind/fork/detached/tamper失败 |
 | 3 | 重验真实artifact与历史兼容 | `tests/vnext/test_issue28_rework.py`；`tests/vnext/test_issue28_requirement_transition.py` | successor三个subtype的generation和完整identity均必填；真实round-trip及删字段负例通过；root drift不破坏R1–R3；0/0/0 egress |
 | 4 | 保持Draft并提交返工证据 | PR-A一页summary与rework audit | 被拒head/closure不再请求批准；policy-content evidence不是activation。后续有效exact-head approval才可形成单独activation receipt；合并前不开始R4、不关闭#15/#24 |
 
@@ -87,7 +100,7 @@ Freeze 保存不可变审计与 replay 事实，不代表 validation 通过；pu
 | 步骤 | 动作 | 权威引用 | 验收 |
 |---|---|---|---|
 | 1 | 对现有 inherited operator 读取父 FSD/R2/R3 与历史实现闭包；对任何后续开发先读取 Issue #15 authority | `requirements/issue_15_v1/`；`requirements/ai_first_v3_3_1/` | 新开发只以 Issue #15 / `issue_15_v1` 为入口；WB-1 未把新 D-01/D-26 语义提前接入现有 Reader/Cutover runtime |
-| 2 | 用同一 operator 创建、查看并推进 Run；recorded 只替换 transport/source acquisition | `python3 tools/vnext_operator.py --help`；`interact.md` | recorded 时 socket=0、root/active 不变；live 必须显式 `--execute-live`，只读 `DEEPSEEK_API_KEY`，SEC organization 固定 `axaxl` 且 email 只读 `SEC_CONTACT_EMAIL` |
+| 2 | 用同一 operator 创建、查看并推进 Run；recorded 只替换 transport/source acquisition | `python3 tools/vnext_operator.py --help`；`interact.md` | recorded 时 socket=0、root/active 不变；live 必须显式 `--execute-live`，key 只读 `DEEPSEEK_API_KEY`；SEC organization 固定 `axaxl`，email 自动读 `config/sec_config.json.contact_email`，`SEC_CONTACT_EMAIL` 可显式覆盖 |
 | 3 | HUMAN 可选地复核 `review.md` 和完整 ReviewUnit，并通过 `review list/show/decide` 追加单链决定 | `tools/vnext_operator.py review`；`tools/vnext_review.py` | 已有 HUMAN 决定优先；缺决定时 D-06 写入可审计 SYSTEM approval，SYSTEM 不得伪装为 HUMAN，Evidence/compatibility publication gates不放宽 |
 | 4 | release input plan先绑定exact source的latest verified request attempt及locator class；finalize/freeze 后做无网络 replay，再由 complete BatchManifest 与 Projector 形成 strict-compatible staging | `architecture.md`；`TESTING.md` | recorded legacy locator必须逐path/hash/headers/size验证并在closure显式绑定tier/class；formal live只允许immutable attempt并拒绝legacy。所有 Run 都是 `PASSED/FROZEN`；十公司×四指标 exact set、N/A、期间、字段/evidence/reconciliation parity 全部通过；WITHHELD 阻止整批发布 |
 | 5 | WB-4+获准后才可恢复受控capture、第二布局与holdout资格顺序；PR-2保持入口关闭 | `tools/vnext_capture_qualification_fixture.py`；`tools/vnext_qualification.py` | 当前capture在SEC/provider构造前稳定返回`AI_QUALIFICATION_EGRESS_NOT_ENABLED`；未来恢复时必须接入完整WB-3 plan/execution/reservation/acceptance，且仍满足second→freeze→holdout顺序与独立company/CIK/accession/source |

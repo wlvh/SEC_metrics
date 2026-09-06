@@ -22,6 +22,8 @@ from .observations import ObservationError, reviewed_observation
 from .records import RecordError, metric_result_contract_hash
 from .records import validate_identifier, validate_record
 from .records import validate_run_coordinates
+from .records import R4_SCOPED_RUN_TYPE, R4_SCOPED_ATTEMPT_TYPE, SOURCE_BOUND_CANDIDATE_TYPE
+from .records import R4_STRUCTURED_RUN_TYPE
 from .render import RenderError, build_review_context
 from .render import render_review_markdown
 from .reader import validate_reader_output
@@ -45,6 +47,8 @@ from .traits import repository_company_traits
 
 
 MANIFEST_FIELDS = {
+    "r4_execution_binding",
+    "r4_structured_binding",
     "artifact_requirement_generation",
     "audit_manifest_hash",
     "company_id",
@@ -68,6 +72,8 @@ MANIFEST_FIELDS = {
     "validation_file_hash",
 }
 RUN_VALIDATION_VIEW_FIELDS = (
+    "r4_execution_binding",
+    "r4_structured_binding",
     "artifact_requirement_generation",
     "company_id",
     "company_traits",
@@ -199,6 +205,36 @@ def _read_jsonl(*, path: Path) -> List[Dict[str, object]]:
     return records
 
 
+def _r4_context_for_run(
+    *, repo_root: Path, run_dir: Path, manifest: Mapping[str, object],
+    replay_context: object,
+) -> object:
+    """Prepare or recheck only the explicit R4 protocol's native context."""
+    if manifest["record_type"] == R4_STRUCTURED_RUN_TYPE:
+        from .r4_structured_run import prepare_r4_structured_disk_context, structured_context_requirement
+        if replay_context is None:
+            replay_context = prepare_r4_structured_disk_context(
+                repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+            )
+        structured_context_requirement(
+            repo_root=repo_root, manifest=manifest, replay_context=replay_context,
+        )
+        return replay_context
+    if manifest["record_type"] != R4_SCOPED_RUN_TYPE:
+        if replay_context is not None:
+            raise RunStoreError("A scoped replay context cannot alter a legacy Run")
+        return None
+    from .r4_run_store import prepare_r4_run_replay_context, r4_context_requirement
+    if replay_context is None:
+        replay_context = prepare_r4_run_replay_context(
+            repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+        )
+    r4_context_requirement(
+        repo_root=repo_root, manifest=manifest, replay_context=replay_context,
+    )
+    return replay_context
+
+
 def _run_validation_view_id(*, manifest: Mapping[str, object]) -> str:
     """Return the non-self-referential immutable Run validation view.
 
@@ -208,13 +244,10 @@ def _run_validation_view_id(*, manifest: Mapping[str, object]) -> str:
     Returns:
         Content-addressed view ID stable across the OPEN-to-FROZEN update.
     """
-    return "run:" + content_hash(
-        value={
-            field: manifest[field]
-            for field in RUN_VALIDATION_VIEW_FIELDS
-            if field in manifest
-        }
-    )
+    value = {field: manifest[field] for field in RUN_VALIDATION_VIEW_FIELDS if field in manifest}
+    if manifest.get("record_type") in {R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE}:
+        value["record_type"] = manifest["record_type"]
+    return "run:" + content_hash(value=value)
 
 
 def _jsonl_bytes(*, records: Sequence[Mapping[str, object]]) -> bytes:
@@ -249,6 +282,9 @@ def create_run(
     requirement_id: Optional[str] = None,
     requirement_closure_hash: Optional[str] = None,
     artifact_requirement_generation: str = LEGACY_ARTIFACT_GENERATION,
+    run_record_type: Optional[str] = None,
+    r4_execution_binding: Optional[Mapping[str, object]] = None,
+    r4_structured_binding: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Create a new OPEN Run with explicit empty data files.
 
@@ -271,6 +307,9 @@ def create_run(
         requirement_closure_hash: Exact successor Requirement closure.
         artifact_requirement_generation: Explicitly selects SUCCESSOR_RUN;
             retained callers default to the historical RUN schema.
+        run_record_type: Explicit R4_SCOPED_RUN protocol subtype, or None for
+            retained legacy/successor contracts; never inferred from fields.
+        r4_execution_binding: Required persisted artifact closure for R4 only.
 
     Returns:
         Initial strict RUN manifest.
@@ -281,6 +320,22 @@ def create_run(
     """
     if run_dir.exists():
         raise RunStoreError("Run directory already exists")
+    if run_record_type not in {None, R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE}:
+        raise RunStoreError("Run protocol subtype is unsupported")
+    if run_record_type == R4_SCOPED_RUN_TYPE:
+        if artifact_requirement_generation != EXPLICIT_ARTIFACT_GENERATION or type(r4_execution_binding) is not dict:
+            raise RunStoreError("R4 Run requires explicit successor identity and execution binding")
+        if qualification_authorization is not None:
+            raise RunStoreError("R4 Run cannot carry legacy qualification authorization")
+    elif r4_execution_binding is not None:
+        raise RunStoreError("Non-R4 Run cannot carry R4 execution authority")
+    if run_record_type == R4_STRUCTURED_RUN_TYPE:
+        if (artifact_requirement_generation != EXPLICIT_ARTIFACT_GENERATION
+                or type(r4_structured_binding) is not dict
+                or qualification_authorization is not None):
+            raise RunStoreError("R4 structured Run requires explicit successor identity without AI authorization")
+    elif r4_structured_binding is not None:
+        raise RunStoreError("Non-structured Run cannot carry structured R4 authority")
     try:
         validate_identifier(value=run_id, field="run_id")
         validate_identifier(value=company_id, field="company_id")
@@ -354,6 +409,8 @@ def create_run(
         key=lambda value: str(value["task_contract_id"]),
     ):
         raise RunStoreError("Run task contract bindings are not ordered")
+    if run_record_type in {R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE} and len(normalized_task_bindings) != 1:
+        raise RunStoreError("R4 scoped Run requires exactly one successor task")
     if qualification_authorization is not None and not isinstance(
         qualification_authorization, Mapping,
     ):
@@ -403,6 +460,12 @@ def create_run(
         ),
         "execution_semantics_hash": execution_semantics_hash(),
     }
+    if run_record_type == R4_SCOPED_RUN_TYPE:
+        stable_manifest.update(record_type=R4_SCOPED_RUN_TYPE,
+                               r4_execution_binding=dict(r4_execution_binding))
+    elif run_record_type == R4_STRUCTURED_RUN_TYPE:
+        stable_manifest.update(record_type=R4_STRUCTURED_RUN_TYPE,
+                               r4_structured_binding=dict(r4_structured_binding))
     run_dir.mkdir(parents=True)
     paths = _run_paths(run_dir=run_dir)
     atomic_write_bytes(path=paths["records"], content=b"")
@@ -424,6 +487,8 @@ def create_run(
     atomic_write_json(path=paths["validation"], value=validation)
     manifest = {
         "record_type": (
+            R4_STRUCTURED_RUN_TYPE if run_record_type == R4_STRUCTURED_RUN_TYPE else
+            R4_SCOPED_RUN_TYPE if run_record_type == R4_SCOPED_RUN_TYPE else
             "SUCCESSOR_RUN" if artifact_requirement_generation == EXPLICIT_ARTIFACT_GENERATION
             else "RUN"
         ),
@@ -456,7 +521,7 @@ def _run_validation_artifacts(*, run_dir: Path) -> Dict[str, object]:
     records = _read_jsonl(path=paths["records"])
     expected = {"records.jsonl", "review_decisions.jsonl"}
     for record in records:
-        if record["record_type"] == "AI_EXTRACTION_ATTEMPT":
+        if record["record_type"] in {"AI_EXTRACTION_ATTEMPT", R4_SCOPED_ATTEMPT_TYPE}:
             expected.add(str(record["request_body_path"]))
             expected.add(str(record["reader_payload_path"]))
             expected.add(str(record["task_contract_path"]))
@@ -469,6 +534,13 @@ def _run_validation_artifacts(*, run_dir: Path) -> Dict[str, object]:
             review_root = "review/{}".format(record["review_unit_hash"])
             expected.add(review_root + "/review_context.json")
             expected.add(review_root + "/review.md")
+    manifest = _read_manifest(run_dir=run_dir)
+    if manifest["record_type"] == R4_SCOPED_RUN_TYPE:
+        expected.update(binding["path"] for binding in
+            manifest["r4_execution_binding"]["artifact_files"].values() if binding is not None)
+    elif manifest["record_type"] == R4_STRUCTURED_RUN_TYPE:
+        expected.update(binding["path"] for binding in
+            manifest["r4_structured_binding"]["artifact_files"].values())
     actual = set()
     for path in run_dir.rglob("*"):
         relative = path.relative_to(run_dir).as_posix()
@@ -619,8 +691,12 @@ def write_attempt_payloads(
     if manifest["status"] != "OPEN":
         raise RunStoreError("Only an OPEN Run accepts attempt payloads")
     validated = validate_record(record=attempt)
-    if validated["record_type"] != "AI_EXTRACTION_ATTEMPT":
+    if validated["record_type"] not in {"AI_EXTRACTION_ATTEMPT", R4_SCOPED_ATTEMPT_TYPE}:
         raise RunStoreError("Attempt payload owner is not an AI attempt")
+    if manifest["record_type"] == R4_STRUCTURED_RUN_TYPE:
+        raise RunStoreError("R4 structured Run cannot persist an AI attempt")
+    if (validated["record_type"] == R4_SCOPED_ATTEMPT_TYPE) != (manifest["record_type"] == R4_SCOPED_RUN_TYPE):
+        raise RunStoreError("Attempt protocol differs from Run subtype")
     if not isinstance(payloads, AttemptPayloads):
         raise RunStoreError("Attempt payload bundle type is invalid")
     if (
@@ -943,6 +1019,7 @@ def load_run_bound_specs(
 
 def _run_table_task_plans(
     *, repo_root: Path, manifest: Mapping[str, object],
+    r4_replay_context: object = None,
 ) -> Dict[str, Dict[str, object]]:
     """Rebuild every catalog task declared by one formal Run manifest.
 
@@ -959,6 +1036,17 @@ def _run_table_task_plans(
         manifest, request bytes, response validation, and replay share one
         single-table authority.
     """
+    if manifest.get("record_type") == R4_SCOPED_RUN_TYPE:
+        from .r4_run_store import load_r4_run_task_plans
+        return load_r4_run_task_plans(
+            repo_root=repo_root, manifest=manifest,
+            replay_context=r4_replay_context,
+        )
+    if manifest.get("record_type") == R4_STRUCTURED_RUN_TYPE:
+        from .r4_structured_run import structured_task_plans
+        return structured_task_plans(
+            repo_root=repo_root, manifest=manifest, replay_context=r4_replay_context,
+        )
     bindings = (
         manifest["task_contract_bindings"]
         if "task_contract_bindings" in manifest
@@ -996,6 +1084,7 @@ def _run_table_task_plans(
 
 def load_run_bound_task_specs(
     *, repo_root: Path, manifest: Mapping[str, object],
+    r4_replay_context: object = None,
 ) -> Dict[str, Dict[str, object]]:
     """Return catalog task Specs whose identities are bound by one Run.
 
@@ -1006,7 +1095,10 @@ def load_run_bound_task_specs(
     Returns:
         Task semantic hash to executable single-table Spec wrapper.
     """
-    plans = _run_table_task_plans(repo_root=repo_root, manifest=manifest)
+    plans = _run_table_task_plans(
+        repo_root=repo_root, manifest=manifest,
+        r4_replay_context=r4_replay_context,
+    )
     specs = {
         str(plan["task_spec"]["spec_semantic_hash"]): plan["task_spec"]
         for plan in plans.values()
@@ -1120,7 +1212,8 @@ def _qualification_fixture_traits(
 
 
 def _run_company_authority(
-    *, repo_root: Path, manifest: Mapping[str, object],
+    *, repo_root: Path, manifest: Mapping[str, object], run_dir: Optional[Path] = None,
+    r4_replay_context: object = None,
 ) -> Tuple[List[str], List[str]]:
     """Resolve traits/CIKs without letting registry membership mask a fixture.
 
@@ -1130,6 +1223,19 @@ def _run_company_authority(
     still use the registry first; historical external fixture Runs without an
     authorization retain the existing registry-miss fallback.
     """
+    if manifest.get("record_type") == R4_SCOPED_RUN_TYPE:
+        from .r4_run_store import r4_run_company_authority
+        if run_dir is None:
+            raise RunStoreError("R4 company authority requires persisted execution bindings")
+        return r4_run_company_authority(
+            repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+            replay_context=r4_replay_context,
+        )
+    if manifest.get("record_type") == R4_STRUCTURED_RUN_TYPE:
+        from .r4_structured_run import structured_company_authority
+        return structured_company_authority(
+            repo_root=repo_root, manifest=manifest, replay_context=r4_replay_context,
+        )
     authorization = manifest.get("qualification_authorization")
     if (
         type(authorization) is dict
@@ -1164,6 +1270,7 @@ def _verify_repository_bindings(
     run_dir: Path,
     manifest: Mapping[str, object],
     records: Sequence[Mapping[str, object]],
+    r4_replay_context: object = None,
 ) -> Tuple[
     Dict[str, Dict[str, object]],
     Dict[str, bytes],
@@ -1194,6 +1301,7 @@ def _verify_repository_bindings(
     task_specs_by_hash = load_run_bound_task_specs(
         repo_root=repo_root,
         manifest=manifest,
+        r4_replay_context=r4_replay_context,
     )
     for spec_hash, wrapper in task_specs_by_hash.items():
         if spec_hash in compiled_by_hash:
@@ -1215,15 +1323,28 @@ def _verify_repository_bindings(
         else []
     )
     try:
-        requirement = load_run_requirement_snapshot(
-            repo_root=repo_root,
-            task_contract_bindings=task_contract_bindings,
-            requirement_id=manifest.get("requirement_id"),
-            requirement_closure_hash=manifest.get("requirement_closure_hash"),
-            requirement_hashes=manifest["requirement_hashes"],
-            artifact_requirement_generation=manifest.get("artifact_requirement_generation"),
-            record_type=str(manifest["record_type"]),
-        )
+        if manifest["record_type"] == R4_SCOPED_RUN_TYPE:
+            from .r4_run_store import r4_context_requirement
+            requirement = r4_context_requirement(
+                repo_root=repo_root, manifest=manifest,
+                replay_context=r4_replay_context,
+            )
+        elif manifest["record_type"] == R4_STRUCTURED_RUN_TYPE:
+            from .r4_structured_run import structured_context_requirement
+            requirement = structured_context_requirement(
+                repo_root=repo_root, manifest=manifest,
+                replay_context=r4_replay_context,
+            )
+        else:
+            requirement = load_run_requirement_snapshot(
+                repo_root=repo_root,
+                task_contract_bindings=task_contract_bindings,
+                requirement_id=manifest.get("requirement_id"),
+                requirement_closure_hash=manifest.get("requirement_closure_hash"),
+                requirement_hashes=manifest["requirement_hashes"],
+                artifact_requirement_generation=manifest.get("artifact_requirement_generation"),
+                record_type=str(manifest["record_type"]),
+            )
     except ValueError as error:
         raise RunStoreError("Run Requirement Snapshot is invalid") from error
     if manifest["requirement_hashes"] != requirement["hashes"]:
@@ -1238,16 +1359,35 @@ def _verify_repository_bindings(
     raw_ids = {str(record["raw_asset_id"]) for record in raw_blobs}
     if len(raw_ids) != len(raw_blobs):
         raise RunStoreError("Run contains duplicate RawBlob identity")
-    raw_bytes_by_id = {}
-    for raw_blob in raw_blobs:
+    if manifest["record_type"] == R4_SCOPED_RUN_TYPE:
+        from .r4_run_store import verify_r4_context_sources
         try:
-            raw_bytes_by_id[str(raw_blob["raw_asset_id"])] = (
-                load_raw_blob_bytes(
-                    repo_root=repo_root, raw_blob=dict(raw_blob),
-                )
+            raw_bytes_by_id = verify_r4_context_sources(
+                repo_root=repo_root, manifest=manifest, records=records,
+                replay_context=r4_replay_context,
             )
         except ValueError as error:
-            raise RunStoreError("Run RawBlob bytes changed") from error
+            raise RunStoreError("R4 native source context differs") from error
+    elif manifest["record_type"] == R4_STRUCTURED_RUN_TYPE:
+        from .r4_structured_run import verify_structured_sources
+        try:
+            raw_bytes_by_id = verify_structured_sources(
+                repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+                records=records, replay_context=r4_replay_context,
+            )
+        except ValueError as error:
+            raise RunStoreError("R4 native structured source differs") from error
+    else:
+        raw_bytes_by_id = {}
+        for raw_blob in raw_blobs:
+            try:
+                raw_bytes_by_id[str(raw_blob["raw_asset_id"])] = (
+                    load_raw_blob_bytes(
+                        repo_root=repo_root, raw_blob=dict(raw_blob),
+                    )
+                )
+            except ValueError as error:
+                raise RunStoreError("Run RawBlob bytes changed") from error
     source_references = manifest["source_references"]
     for reference in source_references:
         validate_record(record=reference)
@@ -1264,20 +1404,23 @@ def _verify_repository_bindings(
             raise RunStoreError("DerivedAsset parent RawBlob is absent")
         if len(parent_ids) != 1:
             raise RunStoreError("Table-grid requires one parent RawBlob")
-        try:
-            replayed = build_table_grid(
-                html_bytes=raw_bytes_by_id[str(parent_ids[0])],
-                parent_raw_asset_ids=list(parent_ids),
-                storage_uri=str(asset["storage_uri"]),
-            )
-        except (TableGridError, ValueError) as error:
-            raise RunStoreError("DerivedAsset cannot be replayed") from error
-        if replayed != asset:
-            raise RunStoreError("DerivedAsset bytes differ from parent")
+        if manifest["record_type"] not in {R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE}:
+            try:
+                replayed = build_table_grid(
+                    html_bytes=raw_bytes_by_id[str(parent_ids[0])],
+                    parent_raw_asset_ids=list(parent_ids),
+                    storage_uri=str(asset["storage_uri"]),
+                )
+            except (TableGridError, ValueError) as error:
+                raise RunStoreError("DerivedAsset cannot be replayed") from error
+            if replayed != asset:
+                raise RunStoreError("DerivedAsset bytes differ from parent")
     try:
         repository_traits, repository_ciks = _run_company_authority(
             repo_root=repo_root,
             manifest=manifest,
+            run_dir=run_dir,
+            r4_replay_context=r4_replay_context,
         )
     except TraitError as qualification_error:
         raise RunStoreError(
@@ -1285,7 +1428,7 @@ def _verify_repository_bindings(
         ) from qualification_error
     if manifest["company_traits"] != repository_traits:
         raise RunStoreError("Run company traits differ from repository")
-    if (
+    if manifest["record_type"] not in {R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE} and (
         "qualification_authorization" in manifest
         or manifest.get("task_contract_bindings")
     ):
@@ -1887,6 +2030,7 @@ def _validate_record_graph(
     raw_bytes_by_id: Mapping[str, bytes],
     company_ciks: Sequence[str],
     requirement: Mapping[str, object],
+    r4_replay_context: object = None,
 ) -> None:
     """Validate cross-record identities used by calculation and review.
 
@@ -1906,6 +2050,21 @@ def _validate_record_graph(
         RunStoreError: On duplicate primary IDs, detached trace/evidence,
         missing source/asset binding, or Candidate/ReviewUnit drift.
     """
+    r4_run = manifest["record_type"] == R4_SCOPED_RUN_TYPE
+    r4_structured_run = manifest["record_type"] == R4_STRUCTURED_RUN_TYPE
+    if any((record["record_type"] == R4_SCOPED_ATTEMPT_TYPE and not r4_run)
+           or (record["record_type"] == "AI_EXTRACTION_ATTEMPT" and r4_run) for record in records):
+        raise RunStoreError("Run and attempt protocol subtypes differ")
+    if r4_run:
+        from .r4_run_store import validate_r4_record_set
+        validate_r4_record_set(manifest=manifest, records=records)
+    elif r4_structured_run:
+        from .r4_structured_run import validate_structured_record_graph
+        validate_structured_record_graph(
+            repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+            records=records, effective_decisions=effective_decisions,
+            replay_context=r4_replay_context,
+        )
     system_decisions = [
         decision
         for decision in effective_decisions.values()
@@ -1923,6 +2082,8 @@ def _validate_record_graph(
         ):
             raise RunStoreError("SYSTEM review record differs from D-06")
     primary_fields = {
+        R4_SCOPED_ATTEMPT_TYPE: "attempt_id",
+        SOURCE_BOUND_CANDIDATE_TYPE: "candidate_hash",
         "AI_EXTRACTION_ATTEMPT": "attempt_id",
         "DETERMINISTIC_VERIFIED_CLAIM": "verified_claim_id",
         "DERIVED_ASSET": "derived_asset_id",
@@ -2018,6 +2179,7 @@ def _validate_record_graph(
         str(record["candidate_hash"]): record
         for record in records
         if record["record_type"] == "OBSERVATION_CANDIDATE"
+        or (r4_run and record["record_type"] == SOURCE_BOUND_CANDIDATE_TYPE)
     }
     evidence_checks = {
         str(record["evidence_check_id"]): record
@@ -2027,12 +2189,12 @@ def _validate_record_graph(
     attempts = {
         str(record["attempt_id"]): record
         for record in records
-        if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+        if record["record_type"] in {"AI_EXTRACTION_ATTEMPT", R4_SCOPED_ATTEMPT_TYPE}
     }
     if len(attempts) != len([
         record
         for record in records
-        if record["record_type"] == "AI_EXTRACTION_ATTEMPT"
+        if record["record_type"] in {"AI_EXTRACTION_ATTEMPT", R4_SCOPED_ATTEMPT_TYPE}
     ]):
         raise RunStoreError("AI attempt identity is duplicated")
     if any(
@@ -2053,6 +2215,7 @@ def _validate_record_graph(
     table_task_plans = _run_table_task_plans(
         repo_root=repo_root,
         manifest=manifest,
+        r4_replay_context=r4_replay_context,
     )
     specs_by_semantic_hash = {
         str(wrapper["spec_semantic_hash"]): wrapper
@@ -2118,6 +2281,19 @@ def _validate_record_graph(
         derived_id = str(reader_manifest["derived_asset_id"])
         if derived_id not in derived_assets:
             raise RunStoreError("AI attempt DerivedAsset is absent")
+        if r4_run:
+            from .r4_run_store import replay_r4_persisted_attempt
+            context = replay_r4_persisted_attempt(
+                repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+                attempt=attempt, stored_payloads=attempt_payloads[attempt_id],
+                task_plan=table_task_plans[catalog_task_id],
+                reader_manifest=reader_manifest, derived_asset=derived_assets[derived_id],
+                replay_context=r4_replay_context,
+            )
+            attempt_contexts[attempt_id] = context
+            if attempt["status"] == "SUCCEEDED":
+                replayed_attempt_candidates[attempt_id] = context["replayed_candidate"]
+            continue
         payload = build_reader_payload(
             manifest=reader_manifest,
             derived_asset=derived_assets[derived_id],
@@ -2237,7 +2413,7 @@ def _validate_record_graph(
             source_mode = compiled_specs[metric_id]["compiled"][
                 "source_mode"
             ]
-            if source_mode not in {
+            if not r4_structured_run and source_mode not in {
                 "structured",
                 "structured_and_derived",
             }:
@@ -2719,17 +2895,23 @@ def _validate_record_graph(
             str(candidate["candidate_hash"])
         ]
         try:
-            replayed_evidence = check_evidence(
-                candidate=candidate,
-                derived_asset=derived_asset,
-                reader_manifest=reader_manifest,
-                reader_payload_body=reader_payload_body,
-                source_references=source_bindings,
-                identity_constraints=evidence["identity_constraints"],
-                scope_contract=attempt_contexts[
-                    str(candidate["attempt_id"])
-                ]["task_contract"]["scope_contract"],
-            )
+            if r4_run:
+                # The R4 protocol replay above invokes the same native Checker
+                # with the reconstructed source-bound proof and full authority.
+                # It is not the legacy full-document transport interpretation.
+                replayed_evidence = attempt_contexts[str(candidate["attempt_id"])]["replayed_evidence"]
+            else:
+                replayed_evidence = check_evidence(
+                    candidate=candidate,
+                    derived_asset=derived_asset,
+                    reader_manifest=reader_manifest,
+                    reader_payload_body=reader_payload_body,
+                    source_references=source_bindings,
+                    identity_constraints=evidence["identity_constraints"],
+                    scope_contract=attempt_contexts[
+                        str(candidate["attempt_id"])
+                    ]["task_contract"]["scope_contract"],
+                )
         except ValueError as error:
             raise RunStoreError("EvidenceCheck cannot be replayed") from error
         if replayed_evidence != evidence:
@@ -2865,10 +3047,18 @@ def _run_content_and_audit_hashes(
         "decisions": list(decisions),
         "validation": dict(validation),
     }
-    if manifest["record_type"] == "SUCCESSOR_RUN":
+    if manifest["record_type"] in {"SUCCESSOR_RUN", R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE}:
         for field in ("artifact_requirement_generation", "requirement_closure_hash", "requirement_id"):
             content_value[field] = manifest[field]
             audit_value[field] = manifest[field]
+    if manifest["record_type"] == R4_SCOPED_RUN_TYPE:
+        for value in (content_value, audit_value):
+            value["record_type"] = R4_SCOPED_RUN_TYPE
+            value["r4_execution_binding"] = manifest["r4_execution_binding"]
+    elif manifest["record_type"] == R4_STRUCTURED_RUN_TYPE:
+        for value in (content_value, audit_value):
+            value["record_type"] = R4_STRUCTURED_RUN_TYPE
+            value["r4_structured_binding"] = manifest["r4_structured_binding"]
     return content_hash(value=content_value), content_hash(value=audit_value)
 
 
@@ -2955,6 +3145,7 @@ def _mechanically_replay_open_run(
     run_dir: Path,
     repo_root: Path,
     require_complete_results: bool,
+    r4_replay_context: object = None,
 ) -> Tuple[
     Dict[str, object], List[Dict[str, object]], List[Dict[str, object]]
 ]:
@@ -2971,6 +3162,10 @@ def _mechanically_replay_open_run(
         Reloaded manifest, records, and decisions proven by current bytes.
     """
     manifest = _read_manifest(run_dir=run_dir)
+    r4_replay_context = _r4_context_for_run(
+        repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+        replay_context=r4_replay_context,
+    )
     try:
         validate_transition(
             object_type="RUN",
@@ -2996,6 +3191,7 @@ def _mechanically_replay_open_run(
             run_dir=run_dir,
             manifest=manifest,
             records=records,
+            r4_replay_context=r4_replay_context,
         )
     )
     _validate_record_graph(
@@ -3008,6 +3204,7 @@ def _mechanically_replay_open_run(
         raw_bytes_by_id=raw_bytes_by_id,
         company_ciks=company_ciks,
         requirement=requirement,
+        r4_replay_context=r4_replay_context,
     )
     if require_complete_results:
         _validate_formal_result_exact_set(
@@ -3018,7 +3215,9 @@ def _mechanically_replay_open_run(
     return manifest, records, decisions
 
 
-def validate_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
+def validate_run(
+    *, run_dir: Path, repo_root: Path, r4_replay_context: object = None,
+) -> Dict[str, object]:
     """Mechanically validate one complete OPEN Run and issue PASSED.
 
     Args:
@@ -3033,6 +3232,7 @@ def validate_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
         run_dir=run_dir,
         repo_root=repo_root,
         require_complete_results=True,
+        r4_replay_context=r4_replay_context,
     )
     paths = _run_paths(run_dir=run_dir)
     current_payload = strict_json_file(path=paths["validation"])
@@ -3058,7 +3258,7 @@ def validate_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
 
 
 def validate_and_freeze_run(
-    *, run_dir: Path, repo_root: Path
+    *, run_dir: Path, repo_root: Path, r4_replay_context: object = None,
 ) -> Dict[str, object]:
     """Validate complete current bytes and atomically freeze their receipt.
 
@@ -3069,11 +3269,23 @@ def validate_and_freeze_run(
     Returns:
         FROZEN manifest bound to the mechanically issued PASSED receipt.
     """
-    validate_run(run_dir=run_dir, repo_root=repo_root)
-    return freeze_run(run_dir=run_dir, repo_root=repo_root)
+    r4_replay_context = _r4_context_for_run(
+        repo_root=repo_root, run_dir=run_dir,
+        manifest=_read_manifest(run_dir=run_dir), replay_context=r4_replay_context,
+    )
+    validate_run(
+        run_dir=run_dir, repo_root=repo_root,
+        r4_replay_context=r4_replay_context,
+    )
+    return freeze_run(
+        run_dir=run_dir, repo_root=repo_root,
+        r4_replay_context=r4_replay_context,
+    )
 
 
-def freeze_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
+def freeze_run(
+    *, run_dir: Path, repo_root: Path, r4_replay_context: object = None,
+) -> Dict[str, object]:
     """Revalidate disk bytes and atomically freeze one Run.
 
     Args:
@@ -3093,6 +3305,7 @@ def freeze_run(*, run_dir: Path, repo_root: Path) -> Dict[str, object]:
         run_dir=run_dir,
         repo_root=repo_root,
         require_complete_results=False,
+        r4_replay_context=r4_replay_context,
     )
     paths = _run_paths(run_dir=run_dir)
     validation_payload = strict_json_file(path=paths["validation"])
@@ -3233,7 +3446,7 @@ def load_failed_run(
 
 
 def load_frozen_run(
-    *, run_dir: Path, repo_root: Path
+    *, run_dir: Path, repo_root: Path, r4_replay_context: object = None,
 ) -> Tuple[
     Dict[str, object], List[Dict[str, object]], List[Dict[str, object]]
 ]:
@@ -3252,6 +3465,10 @@ def load_frozen_run(
     manifest = _read_manifest(run_dir=run_dir)
     if manifest["status"] != "FROZEN":
         raise RunStoreError("Replay requires a FROZEN Run")
+    r4_replay_context = _r4_context_for_run(
+        repo_root=repo_root, run_dir=run_dir, manifest=manifest,
+        replay_context=r4_replay_context,
+    )
     paths = _run_paths(run_dir=run_dir)
     expected = {
         "records_file_hash": sha256_file(path=paths["records"]),
@@ -3278,6 +3495,7 @@ def load_frozen_run(
             run_dir=run_dir,
             manifest=manifest,
             records=records,
+            r4_replay_context=r4_replay_context,
         )
     )
     _validate_record_graph(
@@ -3290,6 +3508,7 @@ def load_frozen_run(
         raw_bytes_by_id=raw_bytes_by_id,
         company_ciks=company_ciks,
         requirement=requirement,
+        r4_replay_context=r4_replay_context,
     )
     if manifest["execution_semantics_hash"] != execution_semantics_hash():
         raise RunStoreError("Frozen Run semantic runtime differs")

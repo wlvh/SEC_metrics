@@ -8,11 +8,32 @@
 
 ## 2. 当前定位
 
+PR-B B0 is an offline developer/reviewer interface baseline. A scoped request
+contains only certified windows, while the complete filing and native Evidence
+checks stay local. Its synthetic PASS never means a provider answered correctly,
+a fixture earned live qualification credit, or R4 was published. Deterministic
+token estimates are labeled estimates; actual provider usage remains NOT_RUN.
+<!-- capability-anchor: CAPABILITY.r4_offline_b0_interfaces -->
+
+PR-B 的真实来源离线结果区分9个scoped positive、3个structured positive和4个zero-call class；不是16次或12次模型执行。Citi A03显示真实`2025Q4`，A13显示international net revenue而非net income。数值/scale/窗口及同源scope证明可按原始locator独立核验，旧原型失败报告保留为历史，不伪装成当前成功。v2尚未激活；可读结果与边界见`docs/r4_offline/README.md`。
+
+PR-B另提供dormant执行接缝：`tools/vnext_r4_qualification.py draft`只输出12-call形状，不能用于live。未来`plan`生成独立pending-live对象，`execute`必须先核验真实owner评论、当前exact head/tree和plan ID；普通非空token、自签JSON或旧offline plan均不能开socket。structured与四类zero-call仍为0调用；任何前序失败/UNKNOWN会阻断后序。recorded完整执行与portable回放只证明实现连接正确，不代表模型准确率、真实usage、Requirement激活或R4发布。当前阶段不要执行`plan`/`execute`。
+<!-- capability-anchor: CAPABILITY.r4_dormant_execution_seam -->
+
+`tools/vnext_r4_release.py`提供未来PR-C的stage/validate/publish/read-back/
+rollback-to-R3/restore-R4/active-terminal入口。stage不切换active；缺少真实
+activation、merged implementation、owner live及aggregate replay时返回BLOCKED。
+真实指针操作另需exact-head release-owner评论。隔离recorded演练不提供CLI开关，
+不授予任何live/publication资格。六个生产值与54个N/A构成60个新增坐标；
+15个qualification Runs不是15个公共结果。当前用户读取的正式active仍是R3。
+<!-- capability-anchor: CAPABILITY.r4_dormant_release_seam -->
+<!-- capability-anchor: CAPABILITY.r4_offline_source_bound_evidence -->
+
 SEC_metrics 是配置驱动、SEC-only、单财年批处理研究流程。它能为 `config/company_registry.csv` 中配置的逻辑公司生成最新年度申报的指标、治理、风险与事件结果，并保留可审计证据。
 <!-- capability-anchor: CAPABILITY.sec_latest_fiscal_batch -->
 <!-- capability-anchor: CAPABILITY.sec_governance_risk_event_signals -->
 
-它不是自然语言问答系统，不会在运行时追问公司、日期或指标；也不是实时行情、生产API、daily scheduler或报价模型。vNext formal Cutover与full acquisition编排已实现，本轮SEC acquisition已通过，但live Reader因provider余额失败，committed active pointer/full receipt仍不存在，不能称为已切换产品。
+它不是自然语言问答系统，不会在运行时追问公司、日期或指标；也不是实时行情、生产API、daily scheduler或报价模型。当前committed active为R3，含24指标/240个vNext结果keys/327行public matrix，previous精确为R2。历史provider余额失败不是当前R3不存在的证据；但R3仍不代表financial/text完成或39指标最终full acceptance。
 <!-- capability-anchor: BOUNDARY.configured_batch_not_interactive -->
 <!-- capability-anchor: BOUNDARY.sec_only_point_in_time -->
 <!-- capability-anchor: BOUNDARY.not_production_service -->
@@ -87,7 +108,7 @@ repair validation 的 status 只允许 `PASS`、`FAIL`、`SKIPPED_LIGHT_PACKAGE`
 
 ## 6. 责任边界
 
-- 运行负责人维护 registry、提供环境凭据并控制 clean checkout 运行。SEC organization 固定 `axaxl`，contact email 只从 `SEC_CONTACT_EMAIL` 读取；DeepSeek key 只从 `DEEPSEEK_API_KEY` 读取。缺失、畸形或 example/reserved-domain email 会在联网前失败，secret 不写入 artifact。
+- 运行负责人维护 registry、提供环境凭据并控制 clean checkout 运行。SEC organization 固定 `axaxl`，程序自动读取 `config/sec_config.json.contact_email`，可用 `SEC_CONTACT_EMAIL` 显式覆盖；DeepSeek key 仍只从 `DEEPSEEK_API_KEY` 读取。选中邮箱缺失、畸形或使用 reserved domain 时会在联网前失败，secret 不写入 artifact。
   <!-- capability-anchor: RESPONSIBILITY.operator_owns_sec_identity_and_run -->
 - 业务与方法负责人复核近似、定性、缺失、解析失败和 `NEEDS_REVIEW`，并承担最终决策。
   <!-- capability-anchor: RESPONSIBILITY.human_reviews_caveats_and_decides -->

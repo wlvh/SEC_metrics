@@ -1,0 +1,23 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_zero_qualitative_only",
+  "metric_id": "A03",
+  "source_id": "bank_of_america_fy2025_10k",
+  "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+  "fixture_class": "QUALITATIVE_ONLY",
+  "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+  "period": "FY2025",
+  "target": null,
+  "reference": null,
+  "scope_labels": [],
+  "numeric_locator": null,
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [],
+  "structured_route_input": null,
+  "windows": [],
+  "navigation_paths": [],
+  "zero_call_reason": "BAC consolidated average LCR is disclosed only in prose; no numeric original-table LCR value exists.",
+  "negative_probe": null
+}

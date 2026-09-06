@@ -1,0 +1,163 @@
+{
+  "record_type": "R4_OFFLINE_MATERIALIZATION_EXPLORATION",
+  "schema_version": 1,
+  "generator_sha256": "69125b57e1a571485f932e85d41a9f6e40afdb0aa06aa03cea4115bd43e8d055",
+  "source_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+  "materialization": {
+    "status": "PASSED_OFFLINE_ONLY",
+    "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "source_size": 12927325,
+    "derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+    "table_count": 679,
+    "expanded_cells": 124761,
+    "canonical_asset_sha256": "b10c09730d894910ff4ff849c1b2928e1149d1223975d1d98e6f0801a2a8a341",
+    "canonical_asset_size": 22174348,
+    "guard": {
+      "memory_max_bytes": 536870912,
+      "memory_swap_max_bytes": 0,
+      "network_interfaces": [
+        "erspan0",
+        "gre0",
+        "gretap0",
+        "ip6_vti0",
+        "ip6gre0",
+        "ip6tnl0",
+        "ip_vti0",
+        "lo",
+        "sit0",
+        "tunl0"
+      ],
+      "non_loopback_active_interfaces": [],
+      "ipv4_routes": [],
+      "root_mount_read_only": true
+    },
+    "cgroup_memory_peak_bytes": 304685056,
+    "process_peak_rss_bytes": 297115648,
+    "wall_seconds": "3.118114",
+    "interpreter": {
+      "implementation": "CPython",
+      "version": "3.12.11"
+    },
+    "production_max_total_cells": 100000,
+    "offline_worker_max_total_cells": 250000,
+    "source_materializations": 1,
+    "derived_asset_builds": 1,
+    "observed_operation_counts": {
+      "execution_semantics_hashes": 0,
+      "portable_prior_run_loads": 0,
+      "provider_calls": 0,
+      "requirement_builds": 0,
+      "parent_authority_builds": 0,
+      "legacy_parent_authority_builds": 0,
+      "requirement_load_calls": 0,
+      "sec_calls": 0,
+      "canonicalizations": 683,
+      "native_prior_run_loads": 0,
+      "evidence_checks": 0,
+      "derived_asset_builds": 1,
+      "semantic_hashes": 681,
+      "source_materializations": 1,
+      "paid_model_calls": 0
+    },
+    "instrumentation_backend": "SELECTIVE_SYS_MONITORING_PY_START",
+    "provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "qualification_credit": "NONE",
+    "code_sha256": {
+      "scripts/vnext/table_grid.py": "f8113502c8036c1a54435634517adc1e7dd86b708e2dad3315c245c54ce13352",
+      "scripts/vnext/resource_limits.py": "b9b337e31168c73371a9f27fe2a5349e8a5308b1aaee117fbab6f86bee8e3f04",
+      "scripts/vnext/records.py": "9eaba0e673d7964a4f146f1e8bd760ffc0faedb9ca8af64ea9770995e5cc37ca",
+      "scripts/vnext/canonical.py": "7eec279a9bf09150ba2ee5886b7ec6a43192c5299d91cceb1f04d510044462aa",
+      "scripts/vnext/offline_execution_session.py": "225d34be2bd7a58e15c4a48dd565ff11771989eb7166f6a0a7a6c5c5aa98b996",
+      "scripts/vnext/r4_materialization.py": "096919a28c48a1cc832f7a1edd81cf854a7b86ae56ed97c0010d179269eb782f",
+      "tools/r4_materialization_worker.py": "87d529afd784468d3087fad871eb462ff9746d7d5f5fc201059a0f3be7bd347f"
+    },
+    "host_wall_seconds": "5.109096",
+    "host_process_peak_rss_bytes": 375980032,
+    "image_id": "sha256:6bb4a52297019add65df37d3abcd37819ea4e247adeaff276d03343b05b94b17",
+    "worker_sha256": "87d529afd784468d3087fad871eb462ff9746d7d5f5fc201059a0f3be7bd347f",
+    "ordered_table_grid_exact_set_hash": "sha256:59b4fe48d84f4ccba89d38b9ce961dbc03de900a00a1554e90e475fa96306498"
+  },
+  "prior_terminal_inventory": {
+    "frozen_run_count": 18,
+    "selected_cycle_id": "sha256:0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448",
+    "selected_run_count": 6,
+    "selected_runs": [
+      {
+        "run_id": "run:qualification:table:0799ec7f91b6bc0472fd80c6c655beb90ddd7db583dcd13cae0bfab506e6412c",
+        "manifest_path": "artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/0799ec7f91b6bc0472fd80c6c655beb90ddd7db583dcd13cae0bfab506e6412c/manifest.json",
+        "manifest_sha256": "70fb5e16c6df63c02d9422adf90d8eaf0855ea0dd69a9ef4ad751fd0ccd72f5f",
+        "manifest_size": 10046,
+        "content_manifest_hash": "sha256:ba24e2491630e0ec40b89ab00fa59ce5fa1ebf9c440807c0be12ff9d4a77b1e6",
+        "audit_manifest_hash": "sha256:87c2e4d6c60d593be1f0c0b734657c8ebd3964ded544ba23528a91dbc49c8424",
+        "status": "FROZEN",
+        "replay_status": "NOT_RUN_INVENTORY_ONLY"
+      },
+      {
+        "run_id": "run:qualification:table:0a0f57b9860464260ddbb9c96257637e21cd73df1d40d65bc2d14e984da3a37a",
+        "manifest_path": "artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/0a0f57b9860464260ddbb9c96257637e21cd73df1d40d65bc2d14e984da3a37a/manifest.json",
+        "manifest_sha256": "f70d7eda18a19d8101ef229eeb75471a5a13999e65344375b56100b8cd028d51",
+        "manifest_size": 10046,
+        "content_manifest_hash": "sha256:ba24e2491630e0ec40b89ab00fa59ce5fa1ebf9c440807c0be12ff9d4a77b1e6",
+        "audit_manifest_hash": "sha256:4474a75ecefe32abc0315fcfd38aeb4f2ca1b4363e922f423458c9aa271ecd28",
+        "status": "FROZEN",
+        "replay_status": "NOT_RUN_INVENTORY_ONLY"
+      },
+      {
+        "run_id": "run:qualification:table:0d790e325de331d3d2213946611647cce06fd6dc843c6f18483c34492ff36995",
+        "manifest_path": "artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/0d790e325de331d3d2213946611647cce06fd6dc843c6f18483c34492ff36995/manifest.json",
+        "manifest_sha256": "30091c6fe77067b54cca3bf781fb346ad5ae695e8c5572e8309eb6e51fec097e",
+        "manifest_size": 10034,
+        "content_manifest_hash": "sha256:c9ccc83f1ddca3135a18e09a9d33febd452f6436925cf8ed46e2a8200d20d498",
+        "audit_manifest_hash": "sha256:7b66025e209870a19cb90b9df9cf6da39b8ec198fbd84f25d34f4cb5b993e1d4",
+        "status": "FROZEN",
+        "replay_status": "NOT_RUN_INVENTORY_ONLY"
+      },
+      {
+        "run_id": "run:qualification:table:184617d6af89d3bc50385f5b9833834ab17ef9059e76c0d22c19c3144c0088e4",
+        "manifest_path": "artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/184617d6af89d3bc50385f5b9833834ab17ef9059e76c0d22c19c3144c0088e4/manifest.json",
+        "manifest_sha256": "2480969909b844a160b1d3b4c6ba48aff9b05d27494df3738bca26126717f1a5",
+        "manifest_size": 10034,
+        "content_manifest_hash": "sha256:c9ccc83f1ddca3135a18e09a9d33febd452f6436925cf8ed46e2a8200d20d498",
+        "audit_manifest_hash": "sha256:6030dfdb7057541eba1f1a735d9c1d1b32a68b49258b0c4fa1ab7c99531e95b8",
+        "status": "FROZEN",
+        "replay_status": "NOT_RUN_INVENTORY_ONLY"
+      },
+      {
+        "run_id": "run:qualification:table:36a092a14fecca373f018991292c72b12fab63dd3acc5c8127b2c47acee8aea9",
+        "manifest_path": "artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/36a092a14fecca373f018991292c72b12fab63dd3acc5c8127b2c47acee8aea9/manifest.json",
+        "manifest_sha256": "701fa52c6b4c946fcda0f339bde651b1fc8df9fae55d1ab5236baf3b0f8eda0b",
+        "manifest_size": 10046,
+        "content_manifest_hash": "sha256:f0a1ec4eacd094cde9f135b564eb23f234c0f06e941ae3ba4514e1f2ca2d1a9d",
+        "audit_manifest_hash": "sha256:9118111699a4999086ac8746e02de35ae58fda05df9449e71f0cffdb84333f48",
+        "status": "FROZEN",
+        "replay_status": "NOT_RUN_INVENTORY_ONLY"
+      },
+      {
+        "run_id": "run:qualification:table:54158dc972f2b04435db7981950a2b58625f349bee93eade51c5ed708081c2f6",
+        "manifest_path": "artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/54158dc972f2b04435db7981950a2b58625f349bee93eade51c5ed708081c2f6/manifest.json",
+        "manifest_sha256": "14f36c8c3f354b7cb242d5f42a0c1ec9a24013e5a953c23414473250316158a4",
+        "manifest_size": 10034,
+        "content_manifest_hash": "sha256:c9ccc83f1ddca3135a18e09a9d33febd452f6436925cf8ed46e2a8200d20d498",
+        "audit_manifest_hash": "sha256:1110977fccba50e69ea80cd57b9e0fb3167a5b2c653b0accfb4be8fe9c3dea64",
+        "status": "FROZEN",
+        "replay_status": "NOT_RUN_INVENTORY_ONLY"
+      }
+    ],
+    "purpose": "PERFORMANCE_INPUT_ONLY; no current or successor qualification credit"
+  },
+  "aggregate_performance_benchmark": "NOT_RUN_PENDING_AUTO_CERTIFIED_SIX_TASK_WORKLOAD",
+  "minimum_10x_gate": "NOT_RUN",
+  "final_independent_r4_disk_replay": "NOT_RUN",
+  "qualification_credit": "NONE",
+  "production_resource_policy_changed": false,
+  "provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "receipt_id": "sha256:452594ab065a39f6b907327faa8b0a1c9f844baf7bd3ae3d8f1ccf381a226064"
+}

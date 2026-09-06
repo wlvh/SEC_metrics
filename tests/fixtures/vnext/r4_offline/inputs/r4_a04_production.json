@@ -1,0 +1,101 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_a04_production",
+  "metric_id": "A04",
+  "source_id": "jpmorgan_fy2025_10k",
+  "task_contract_id": "r4_net_interest_margin_table_v2",
+  "fixture_class": "POSITIVE_PRODUCTION",
+  "artifact_kind": "SCOPED_EXTRACTION",
+  "period": "FY2025",
+  "target": {
+    "table_order": 99,
+    "row_index": 10,
+    "column_index": 3
+  },
+  "reference": {
+    "status": "INDEPENDENT_LEGACY_ANCHOR",
+    "value": "0.025",
+    "unit": "ratio",
+    "scope": {
+      "basis": "managed_basis"
+    },
+    "evidence": "JPM independent legacy public anchor re-read from unchanged R3 mirrors."
+  },
+  "scope_labels": [
+    {
+      "coordinate": {
+        "table_order": 99,
+        "row_index": 10,
+        "column_index": 0
+      },
+      "claims": {
+        "basis": "managed basis"
+      }
+    }
+  ],
+  "numeric_locator": null,
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [
+    {
+      "table_order": 99,
+      "row_index": 10,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 99,
+      "row_index": 11,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 99,
+      "row_index": 12,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 119,
+      "row_index": 34,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 658,
+      "row_index": 41,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 662,
+      "row_index": 45,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 662,
+      "row_index": 46,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 662,
+      "row_index": 47,
+      "disposition": "REFERENCE_ONLY"
+    }
+  ],
+  "structured_route_input": null,
+  "windows": [
+    {
+      "start_order": 99,
+      "end_order": 99
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path_id": "A",
+      "method": "NAMED_SECTION_AND_DOCUMENT_STRUCTURE",
+      "evidence": "Original table_000100 r10c3=2.50, row label net yield on average interest-earning assets managed basis; 2025 header is r1c3."
+    },
+    {
+      "path_id": "B",
+      "method": "INDEPENDENT_REFERENCE_AND_WHOLE_DOCUMENT_RECONCILIATION",
+      "evidence": "Independent legacy anchor 0.025 and FTE numerator/denominator check: 95,443 reported NII + 425 FTE = 95,868; divided by 3,834,359 average interest-earning assets gives 2.500235 percent. Tables 659/663 duplicate the same measure; Markets, ex-Markets and loan yield are different scope."
+    }
+  ]
+}

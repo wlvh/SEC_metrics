@@ -1,0 +1,65 @@
+{
+  "source": {
+    "company_id": "jpmorgan_chase",
+    "cik": "19617",
+    "accession": "0001628280-26-008131",
+    "document_name": "jpm-20251231.htm",
+    "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+    "source_repo_relative_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "source_size": 12927325,
+    "media_type": "text/html"
+  },
+  "probes": [
+    {
+      "metric_id": "A03",
+      "task_contract_id": "financial_liquidity_coverage_ratio_table_v1",
+      "target": {"table_order": 64, "row_index": 28, "column_index": 6},
+      "claimed_period": "FY2025",
+      "reported_unit_variants": ["percent"],
+      "header_coordinates": [{"table_order": 64, "row_index": 1, "column_index": 0}, {"table_order": 64, "row_index": 2, "column_index": 6}],
+      "scope_labels": [{"id": "scope", "coordinate": {"table_order": 64, "row_index": 28, "column_index": 0}, "claims": {"entity_scope": "Firm", "aggregation": "average"}}],
+      "reference": {"status": "INDEPENDENT_LEGACY_ANCHOR", "value": "1.11", "unit": "ratio"}
+    },
+    {
+      "metric_id": "A04",
+      "task_contract_id": "financial_net_interest_margin_table_v1",
+      "target": {"table_order": 99, "row_index": 10, "column_index": 3},
+      "claimed_period": "FY2025",
+      "reported_unit_variants": ["percent"],
+      "header_coordinates": [{"table_order": 99, "row_index": 1, "column_index": 0}, {"table_order": 99, "row_index": 1, "column_index": 3}, {"table_order": 99, "row_index": 10, "column_index": 5}],
+      "scope_labels": [{"id": "scope", "coordinate": {"table_order": 99, "row_index": 10, "column_index": 0}, "claims": {"basis": "managed basis"}}],
+      "reference": {"status": "INDEPENDENT_LEGACY_ANCHOR", "value": "0.025", "unit": "ratio"}
+    },
+    {
+      "metric_id": "A09",
+      "task_contract_id": "financial_nonperforming_loan_ratio_table_v1",
+      "target": {"table_order": 221, "row_index": 4, "column_index": 3},
+      "claimed_period": "FY2025",
+      "reported_unit_variants": ["ratio", "percent"],
+      "header_coordinates": [{"table_order": 221, "row_index": 1, "column_index": 0}, {"table_order": 221, "row_index": 1, "column_index": 3}, {"table_order": 221, "row_index": 4, "column_index": 5}],
+      "scope_labels": [{"id": "scope", "coordinate": {"table_order": 221, "row_index": 4, "column_index": 0}, "claims": {"loan_population": "Firmwide"}}],
+      "reference": {"status": "NO_INDEPENDENT_LEGACY_ANCHOR", "value": "0.0066", "unit": "ratio"}
+    },
+    {
+      "metric_id": "A11",
+      "task_contract_id": "financial_assets_under_management_table_v1",
+      "target": {"table_order": 148, "row_index": 9, "column_index": 3},
+      "claimed_period": "FY2025",
+      "reported_unit_variants": ["USD", "USD billion", "USD billions", "billion"],
+      "header_coordinates": [{"table_order": 148, "row_index": 2, "column_index": 0}, {"table_order": 148, "row_index": 2, "column_index": 3}],
+      "scope_labels": [{"id": "scope", "coordinate": {"table_order": 148, "row_index": 9, "column_index": 0}, "claims": {"asset_scope": "Total assets under management"}}],
+      "reference": {"status": "INDEPENDENT_LEGACY_ANCHOR", "value": "4791000000000", "unit": "USD"}
+    },
+    {
+      "metric_id": "A12",
+      "task_contract_id": "financial_value_at_risk_table_v1",
+      "target": {"table_order": 279, "row_index": 20, "column_index": 4},
+      "claimed_period": "FY2025",
+      "reported_unit_variants": ["USD", "USD million"],
+      "header_coordinates": [{"table_order": 279, "row_index": 2, "column_index": 3}, {"table_order": 279, "row_index": 3, "column_index": 0}, {"table_order": 279, "row_index": 3, "column_index": 3}],
+      "scope_labels": [],
+      "reference": {"status": "INDEPENDENT_LEGACY_ANCHOR", "value": "40000000", "unit": "USD"}
+    }
+  ]
+}

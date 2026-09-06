@@ -1,0 +1,72 @@
+{
+  "record_type": "R4_PRB_PRESERVATION_CHECK",
+  "schema_version": 1,
+  "status": "PASSED",
+  "base": "c45338567700e3048f4cf32d251369e4521e9444",
+  "rejected_previous_candidate": "19847e1f3f2d666b131422cd93f0c1230ef4c19e",
+  "immutable_vs_main_paths": [
+    "requirements/issue_15_v1",
+    "requirements/ai_first_v3_3_1",
+    "requirements/issue_28_v1",
+    "scripts/vnext/requirement_profile_v1.py",
+    "scripts/vnext/requirement_profile_v2.py",
+    "outputs",
+    "artifacts",
+    "REPORT_十公司财务指标.md"
+  ],
+  "immutable_vs_main_diff": [],
+  "retained_vs_previous_candidate_paths": [
+    "evidence",
+    "outputs",
+    "artifacts",
+    "scripts/vnext/canonical.py",
+    "scripts/vnext/resource_limits.py",
+    "config/sec_config.json",
+    "docs/r4_offline/performance_session_benchmark.json",
+    "docs/r4_offline/performance_session_benchmark.stdout.jsonl",
+    "docs/r4_offline/performance_session_benchmark_live_seam_final.json",
+    "docs/r4_offline/performance_session_benchmark_live_seam_final.stdout.jsonl",
+    "requirements/issue_28_v2/CONTRACT.md",
+    "requirements/issue_28_v2/decision_register.json",
+    "requirements/issue_28_v2/transfer_manifest.json",
+    "requirements/issue_28_v2/invariant_profile.json",
+    "scripts/vnext/live_scoped_reader.py",
+    "scripts/vnext/ai_adapter.py",
+    "scripts/vnext/r4_live_qualification.py",
+    "scripts/vnext/r4_live_plan.py",
+    "scripts/vnext/r4_run_store.py",
+    "scripts/vnext/r4_structured_run.py",
+    "scripts/vnext/invocation_control.py",
+    "scripts/vnext/requirement_profile_v3.py"
+  ],
+  "retained_diff": [],
+  "protected_regular_file_count": 2396,
+  "protected_file_bindings_hash": "sha256:78515f744bf28cb2bba52d392a802de4c232a7a2f4b6b0216e15bfabce5d4f06",
+  "execution_authority_file_count": 181,
+  "requirement_id": "issue_28_v2",
+  "requirement_closure_hash": "sha256:5b7a386b7c95f8b9542a2251a94ec8d98876e7c833d49132364c77024b27ff9e",
+  "activation_state": "NOT_ACTIVATED",
+  "active_publication": {
+    "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "bundle_manifest_sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a",
+    "previous_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+    "committed_at_utc": "2026-08-28T07:19:20Z"
+  },
+  "root_r4_runtime_namespace_present": false,
+  "sec_ledger": {
+    "row_count": 983,
+    "base_row_count": 981,
+    "base_prefix_exact": true,
+    "whole_prb_new_rows": 2,
+    "rework_new_rows": 0,
+    "sha256": "f60c48c64b1552494087a12e7f7e9b54e93aed1b4c43f963dea10ce9bd041eec"
+  },
+  "immutable_generic_whitespace": "NOT_APPLICABLE_PRESERVE_BYTES_AND_VERIFY_HASHES",
+  "qualification_credit": "NONE",
+  "provider_paid_sec_this_rework": [
+    0,
+    0,
+    0
+  ],
+  "preservation_receipt_id": "sha256:afdcf14e987fa950428fd60f1083b1350eca5a655221a5c0e6d62375493c1f3f"
+}

@@ -1,0 +1,134 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_a13_alternate",
+  "metric_id": "A13",
+  "source_id": "citigroup_fy2025_10k",
+  "task_contract_id": "r4_international_net_revenue_table_v2",
+  "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+  "artifact_kind": "STRUCTURED_PRIMARY",
+  "period": "FY2025",
+  "target": {
+    "table_order": 121,
+    "row_index": 4,
+    "column_index": 3
+  },
+  "reference": {
+    "status": "NO_INDEPENDENT_LEGACY_ANCHOR",
+    "value": "42295000000",
+    "unit": "USD",
+    "scope": {
+      "geography_scope": "international"
+    },
+    "evidence": "No independent legacy anchor is claimed; native structured source and independent full-document navigation are required."
+  },
+  "scope_labels": [
+    {
+      "coordinate": {
+        "table_order": 121,
+        "row_index": 4,
+        "column_index": 0
+      },
+      "claims": {
+        "geography_scope": "International"
+      }
+    }
+  ],
+  "numeric_locator": null,
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [
+    {
+      "table_order": 121,
+      "row_index": 3,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 121,
+      "row_index": 4,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 121,
+      "row_index": 5,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 121,
+      "row_index": 6,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 121,
+      "row_index": 9,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 121,
+      "row_index": 10,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 121,
+      "row_index": 11,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 121,
+      "row_index": 12,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 18,
+      "row_index": 5,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 20,
+      "row_index": 6,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 22,
+      "row_index": 8,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 24,
+      "row_index": 3,
+      "disposition": "DIFFERENT_SCOPE"
+    }
+  ],
+  "structured_route_input": {
+    "route_id": "accession_xbrl_v1",
+    "fact_names": [
+      "us-gaap:Revenues"
+    ],
+    "measure": "INTERNATIONAL_NET_REVENUE",
+    "direct_concepts": [
+      "us-gaap:Revenues"
+    ],
+    "direct_geography_members": [
+      "c:InternationalMember"
+    ],
+    "expected_outcome": "STRUCTURED_PRIMARY_RESOLVED"
+  },
+  "windows": [
+    {
+      "start_order": 121,
+      "end_order": 121
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path_id": "A",
+      "method": "NAMED_SECTION_AND_DOCUMENT_STRUCTURE",
+      "evidence": "Original consolidated geographic table_000122 r4c3=42,295, International, Revenues net of interest expense, in millions of dollars, 2025 header; 2024/2023 and asset rows are separate."
+    },
+    {
+      "path_id": "B",
+      "method": "INDEPENDENT_REFERENCE_AND_WHOLE_DOCUMENT_RECONCILIATION",
+      "evidence": "Independent native inline us-gaap:Revenues context c-174, sole c:InternationalMember, full 2025 duration, USD resolves 42,295,000,000. Tables 19/21/23/25 are segment-only; 42 percent in table 44, international credit cards/loans and assets are different units/measures. The direct international total is used, not global minus North America."
+    }
+  ]
+}

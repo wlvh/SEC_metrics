@@ -88,7 +88,7 @@ def _verify_trace_observations(
 
 
 def replay_frozen_results(
-    *, run_dir: Path, repo_root: Path
+    *, run_dir: Path, repo_root: Path, r4_replay_context: object = None,
 ) -> Dict[str, object]:
     """Return frozen MetricResults after validating their Trace bindings.
 
@@ -105,6 +105,7 @@ def replay_frozen_results(
     try:
         manifest, records, _decisions = load_frozen_run(
             run_dir=run_dir, repo_root=repo_root,
+            r4_replay_context=r4_replay_context,
         )
     except RunStoreError as error:
         raise ReplayError("Frozen Run verification failed") from error

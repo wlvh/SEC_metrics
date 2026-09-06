@@ -563,6 +563,18 @@ def resolve_cell(
             out-of-range coordinate. The function never searches elsewhere.
     """
     validate_record(record=derived_asset)
+    return _resolve_verified_cell(derived_asset=derived_asset, locator=locator)
+
+
+def _resolve_verified_cell(
+    *, derived_asset: Mapping[str, object], locator: Mapping[str, object]
+) -> Dict[str, object]:
+    """Apply the same exact locator checks to an already verified immutable grid.
+
+    Only the explicit process-local Evidence context uses this internal seam.
+    Public resolve_cell always performs full record verification before calling
+    it; locator/range/origin/span behavior is shared, not reimplemented.
+    """
     required = {
         "derived_asset_id",
         "table_id",

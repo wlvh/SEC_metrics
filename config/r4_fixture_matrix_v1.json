@@ -1,0 +1,353 @@
+{
+  "record_type": "R4_FIXTURE_INPUT_MATRIX",
+  "schema_version": 1,
+  "ratchet_id": "R4",
+  "task_catalog_path": "config/r4_task_contracts_v2.json",
+  "metric_ids": [
+    "A03",
+    "A04",
+    "A09",
+    "A11",
+    "A12",
+    "A13"
+  ],
+  "sources": [
+    {
+      "company_id": "jpmorgan_chase",
+      "cik": "19617",
+      "accession": "0001628280-26-008131",
+      "document_name": "jpm-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "source_size": 12927325,
+      "media_type": "text/html",
+      "source_id": "jpmorgan_fy2025_10k",
+      "full_derived_asset_id": "sha256:694e176416c50b28974e8fa9844bd0d8e6ee772bd3915b2819aa708bab288110",
+      "table_count": 679,
+      "target_table_metadata": {
+        "A03": {
+          "table_id": "table_000065",
+          "order": 64,
+          "grid_sha256": "sha256:968cf9096933f3c77a1f22f17a7f3f5ae781a87126e2ae437ed4655c034e6c38",
+          "row_count": 51,
+          "column_count": 30
+        },
+        "A04": {
+          "table_id": "table_000100",
+          "order": 99,
+          "grid_sha256": "sha256:749ee7acc9d1f62bbebda3c6a9a24efafb0aa0fb4d1a8ca83b33155aad11619b",
+          "row_count": 13,
+          "column_count": 18
+        },
+        "A09": {
+          "table_id": "table_000222",
+          "order": 221,
+          "grid_sha256": "sha256:c81c36d8b4dc9f414a4f6be7154afe172f7d999b450fbac94b71678ce3ac2b79",
+          "row_count": 5,
+          "column_count": 12
+        },
+        "A11": {
+          "table_id": "table_000149",
+          "order": 148,
+          "grid_sha256": "sha256:d7eccefc4b25a741d65ab3fdd0a6cdf853a1977ae3d497b475db8f64606467c1",
+          "row_count": 24,
+          "column_count": 12
+        },
+        "A12": {
+          "table_id": "table_000280",
+          "order": 279,
+          "grid_sha256": "sha256:25df1c2f84588a2a43bf3ab73de546498d74f50d90b8ea25c1fe338997e99088",
+          "row_count": 21,
+          "column_count": 42
+        },
+        "A13": {
+          "table_id": "table_000640",
+          "order": 639,
+          "grid_sha256": "sha256:aec7db8b1853f840394ae70676196a440aa26d90efe43426ccb030b8246eb89d",
+          "row_count": 25,
+          "column_count": 36
+        }
+      },
+      "structured_source_authority": {
+        "record_type": "PINNED_NATIVE_SUBMISSIONS_FILING",
+        "accession_xbrl": {
+          "path": "evidence/request_attempts/9f/9fe211a6d6f7ec3af368f81c820868b54d7ea02ca2fe9776e72d7a41e2472126/jpm-20251231_htm.xml",
+          "sha256": "9fe211a6d6f7ec3af368f81c820868b54d7ea02ca2fe9776e72d7a41e2472126",
+          "size": 14885065,
+          "source_reference_id": "sha256:4a8673f903bdeefec0127fecf3a60ea3bce51c5df70fab29a51cf74502c87e66",
+          "request_attempt_id": "request:attempt:8accac90715d58fd5d6639712c38d896f686dfb544c09e372045a95f0bf8c270"
+        },
+        "submissions": {
+          "path": "evidence/request_attempts/99/9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71/CIK0000019617.json",
+          "sha256": "9934fad8ed422e3078b0a0026437ad83755a3fe623eb899462fee05a877dad71",
+          "size": 4570834,
+          "request_attempt_id": "request:attempt:64a91151c5d535eaf20bfd1f6c182a65fb8851d5f77691cf9204f13d9c54dfb0",
+          "accession": "SUBMISSIONS-2025",
+          "source_url": "https://data.sec.gov/submissions/CIK0000019617.json"
+        },
+        "source_set_manifest_id": "sha256:dcec6459982bf0518612d05b9bb3c93e99cd69ea8ef2b10316b50f7e0f29e88b",
+        "filing_date_window": {
+          "period_start": "2026-02-13",
+          "period_end": "2026-02-13"
+        }
+      }
+    },
+    {
+      "company_id": "bank_of_america_corp",
+      "cik": "70858",
+      "accession": "0000070858-26-000157",
+      "document_name": "bac-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "source_size": 12819060,
+      "source_id": "bank_of_america_fy2025_10k",
+      "media_type": "text/html",
+      "full_derived_asset_id": "sha256:5417fee3903f636a6aeae3eda65a262c551fa4e355316a3273f3276262e08519",
+      "table_count": 369,
+      "target_table_metadata": {
+        "A09": {
+          "table_id": "table_000219",
+          "order": 218,
+          "grid_sha256": "sha256:946329f130a4ead17463131d0b06dead76b983baf64101d11ff7ad59197bc2f1",
+          "row_count": 24,
+          "column_count": 36
+        },
+        "A11": {
+          "table_id": "table_000069",
+          "order": 68,
+          "grid_sha256": "sha256:802b3d524bd36d053046b7e74001b45f2801c16b0a4c243c4185ab607a15b286",
+          "row_count": 47,
+          "column_count": 24
+        },
+        "A12": {
+          "table_id": "table_000147",
+          "order": 146,
+          "grid_sha256": "sha256:5917e41d811778ac190f4b19663ede5537c73c8812a33077faab4595662bc61e",
+          "row_count": 24,
+          "column_count": 42
+        }
+      },
+      "structured_source_authority": null
+    },
+    {
+      "company_id": "citigroup",
+      "cik": "831001",
+      "accession": "0000831001-26-000011",
+      "document_name": "c-20251231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/831001/000083100126000011/c-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "source_size": 16150764,
+      "source_id": "citigroup_fy2025_10k",
+      "media_type": "text/html",
+      "full_derived_asset_id": "sha256:20b20f8b98999c1002a8040c006f603f94faa06529cc0b4004f214f16ffac196",
+      "table_count": 330,
+      "target_table_metadata": {
+        "A03": {
+          "table_id": "table_000075",
+          "order": 74,
+          "grid_sha256": "sha256:7ce8e22c0d645a727e8b3dfc47137cc1b82085196102cd847f278ec007af0348",
+          "row_count": 6,
+          "column_count": 12
+        },
+        "A04": {
+          "table_id": "table_000084",
+          "order": 83,
+          "grid_sha256": "sha256:ed77951e3096844749dee55058f55dba0316be88de28f29b4ddfa6adc210b4bf",
+          "row_count": 12,
+          "column_count": 33
+        },
+        "A13": {
+          "table_id": "table_000122",
+          "order": 121,
+          "grid_sha256": "sha256:58686b9cf12cc3f1438d5912e2ef610fd1ddc74fd78038c059aa7afe16ff82ad",
+          "row_count": 13,
+          "column_count": 12
+        }
+      },
+      "structured_source_authority": null
+    },
+    {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "source_id": "marriott_fy2025_10k",
+      "source_size": 2048661,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "media_type": "text/html",
+      "full_derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+      "table_count": 68,
+      "target_table_metadata": {},
+      "structured_source_authority": null
+    }
+  ],
+  "fixtures": [
+    {
+      "fixture_id": "r4_a03_production",
+      "metric_id": "A03",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a03_production.json",
+      "recipe_sha256": "87b1d0448a4da3121502122ae436a6bd8dfa5e34b4cde6e0b45c6615d158b218"
+    },
+    {
+      "fixture_id": "r4_a03_alternate",
+      "metric_id": "A03",
+      "source_id": "citigroup_fy2025_10k",
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a03_alternate.json",
+      "recipe_sha256": "8e04f01d45bac2777c7b318193041508881abdd9438ef853fc650ac4874543a1"
+    },
+    {
+      "fixture_id": "r4_a04_production",
+      "metric_id": "A04",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_net_interest_margin_table_v2",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a04_production.json",
+      "recipe_sha256": "08926bf08c7879e62fcd0a904f44018944a02b8e51603ebb01c6faa8b1085d78"
+    },
+    {
+      "fixture_id": "r4_a04_alternate",
+      "metric_id": "A04",
+      "source_id": "citigroup_fy2025_10k",
+      "task_contract_id": "r4_net_interest_margin_table_v2",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a04_alternate.json",
+      "recipe_sha256": "8793f0d2089ecc807cadb6054aad8e174c4b94324f4b0b53e5ac16feeca66e54"
+    },
+    {
+      "fixture_id": "r4_a09_production",
+      "metric_id": "A09",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_nonperforming_loan_ratio_table_v2",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a09_production.json",
+      "recipe_sha256": "d1025a849be9511dc6027bad36c55a7bd04ca4101c924facea792e0e300a12e9"
+    },
+    {
+      "fixture_id": "r4_a09_alternate",
+      "metric_id": "A09",
+      "source_id": "bank_of_america_fy2025_10k",
+      "task_contract_id": "r4_nonperforming_loan_ratio_table_v2",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a09_alternate.json",
+      "recipe_sha256": "70727710c99e1cf7540e8591dbda65d66fc6ed4a8c1275017e947933478650b6"
+    },
+    {
+      "fixture_id": "r4_a11_production",
+      "metric_id": "A11",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_assets_under_management_table_v2",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a11_production.json",
+      "recipe_sha256": "29194d02a488f771b546672624d593a43ef488b3bed4a7f10e7b2648c349b6b6"
+    },
+    {
+      "fixture_id": "r4_a11_alternate",
+      "metric_id": "A11",
+      "source_id": "bank_of_america_fy2025_10k",
+      "task_contract_id": "r4_assets_under_management_table_v2",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a11_alternate.json",
+      "recipe_sha256": "d7550ec3ab40ec78237e47700f621ef1865babb356e9af92e4c30a5e64023fa4"
+    },
+    {
+      "fixture_id": "r4_a12_production",
+      "metric_id": "A12",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_value_at_risk_table_v2",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a12_production.json",
+      "recipe_sha256": "4c5fca3e88bec5b760fd5711f0d77720517f23da023b853709db3a0d0c8e3d55"
+    },
+    {
+      "fixture_id": "r4_a12_alternate",
+      "metric_id": "A12",
+      "source_id": "bank_of_america_fy2025_10k",
+      "task_contract_id": "r4_value_at_risk_table_v2",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "artifact_kind": "SCOPED_EXTRACTION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a12_alternate.json",
+      "recipe_sha256": "e7ec312cb484224ba2a9b6f67e87cae9fea8127ebfaf18bf2d8d11aabf1cf185"
+    },
+    {
+      "fixture_id": "r4_a13_production",
+      "metric_id": "A13",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_international_net_revenue_table_v2",
+      "fixture_class": "POSITIVE_PRODUCTION",
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a13_production.json",
+      "recipe_sha256": "e776b9ef20a55f5ec3e61a0a1473787e67873d78f35f94a3dd41d8d8a1900568"
+    },
+    {
+      "fixture_id": "r4_a13_alternate",
+      "metric_id": "A13",
+      "source_id": "citigroup_fy2025_10k",
+      "task_contract_id": "r4_international_net_revenue_table_v2",
+      "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+      "artifact_kind": "STRUCTURED_PRIMARY",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_a13_alternate.json",
+      "recipe_sha256": "1c2096fe0847f574a858431b57b054103356c26d73fac52997ddf4bc7fcbc014"
+    },
+    {
+      "fixture_id": "r4_zero_negative_expected",
+      "metric_id": "A03",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+      "fixture_class": "NEGATIVE_EXPECTED",
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_zero_negative_expected.json",
+      "recipe_sha256": "8c43ca1506b196ee8c1bd8f7d718453b2632de8474ff7e930a1c24311d21d0d8"
+    },
+    {
+      "fixture_id": "r4_zero_not_applicable",
+      "metric_id": "A03",
+      "source_id": "marriott_fy2025_10k",
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+      "fixture_class": "NOT_APPLICABLE",
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_zero_not_applicable.json",
+      "recipe_sha256": "7e4ecc8c5f34aae4f21c753d2d8f0c0fb56878767bf1fee3191986f645ce3217"
+    },
+    {
+      "fixture_id": "r4_zero_qualitative_only",
+      "metric_id": "A03",
+      "source_id": "bank_of_america_fy2025_10k",
+      "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+      "fixture_class": "QUALITATIVE_ONLY",
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_zero_qualitative_only.json",
+      "recipe_sha256": "2150f5db856f985f9c9ac622c5df8e248aa8a3eb13fe625cb9e086f00620c1f1"
+    },
+    {
+      "fixture_id": "r4_zero_ambiguous_excluded",
+      "metric_id": "A04",
+      "source_id": "jpmorgan_fy2025_10k",
+      "task_contract_id": "r4_net_interest_margin_table_v2",
+      "fixture_class": "AMBIGUOUS_EXCLUDED",
+      "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+      "recipe_path": "tests/fixtures/vnext/r4_offline/inputs/r4_zero_ambiguous_excluded.json",
+      "recipe_sha256": "d6ce9d8ba13c68b344a17427cfb5f2ac871787724941af2d85293a558549c712"
+    }
+  ],
+  "qualification_credit": "NONE_INPUTS_ONLY",
+  "provider_paid_sec_authorized": false
+}

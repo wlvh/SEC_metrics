@@ -28,6 +28,23 @@ from typing import Dict, Sequence
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FAST_TESTS = (
+    "tests.vnext.test_r4_release_gate.R4ReleaseAggregateGateTest",
+    "tests.vnext.test_r4_publication_boundaries",
+    "tests.vnext.test_r4_projection.R4ProjectionBoundaryTest."
+    "test_complete_grid_rejects_missing_duplicate_extra_and_false_applicability",
+    "tests.vnext.test_successor_invocation_control",
+    "tests.vnext.test_live_scoped_reader.LiveScopedEnvelopeTest",
+    "tests.vnext.test_r4_live_authority.R4LiveAuthorityShapeTest",
+    "tests.vnext.test_r4_live_authority.R4ExecutionPrefixTest",
+    "tests.vnext.test_r4_live_plan.R4DraftPlanRiskTest",
+    "tests.vnext.test_issue28_v2.Issue28V2FastTest."
+    "test_real_five_file_revision_has_exact_parent_and_no_activation",
+    "tests.vnext.test_source_scope.SourceScopeTest."
+    "test_complete_native_candidate_and_evidence_are_bound",
+    "tests.vnext.test_scoped_reader.ScopedReaderTest."
+    "test_all_four_zero_call_classes_cannot_prepare_requests",
+    "tests.vnext.test_offline_execution_session.OfflineExecutionSessionTest."
+    "test_unknown_is_terminal_and_cannot_be_retried",
     "tests.vnext.test_cutover_qualification.CutoverQualificationTest."
     "test_layout_terminal_requires_approval_publish_and_validation",
     "tests.vnext.test_ai_reader_contract.AiReaderContractTest."

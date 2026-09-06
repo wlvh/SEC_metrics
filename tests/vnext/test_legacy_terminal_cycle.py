@@ -16,6 +16,7 @@ from unittest import mock
 from tests.vnext.common import REPO_ROOT
 from tests.vnext.projection_fixture_support import scoped_repository
 from tests.vnext.test_publication import complete_projection_fixture
+from validation_provenance import _full_artifact_directory_paths, load_source_policy
 from vnext.canonical import canonical_json_bytes
 from vnext.publication import REQUIRED_BUNDLE_FILES
 from vnext.publication import ROOT_MIRROR_RELATIVE_PATHS
@@ -92,9 +93,24 @@ def _write_legacy_terminal_artifacts(*, root: Path) -> None:
         Every legacy-visible public artifact exists while the three vNext-only
         metadata roles remain absent for honest import synthesis.
     """
+    if root.resolve() == REPO_ROOT.resolve():
+        raise AssertionError("Legacy terminal artifacts require an isolated test fixture")
     readme = root / "README_RUN.md"
     if not readme.exists():
         shutil.copy2(REPO_ROOT / "README_RUN.md", readme)
+    # This public mirror is also an immutable Issue #15 foundation receipt.
+    # Keep the exact copied authority bytes while fabricating other legacy rows.
+    scalability_relative = "outputs/scalability_audit.csv"
+    scalability_bytes = (root / scalability_relative).read_bytes()
+    foundation = json.loads((root / "requirements/issue_15_v1"
+        / "foundation_verification_receipt.json").read_text(encoding="utf-8"))
+    bindings = [binding for binding in foundation["receipt_bindings"]
+                if binding["path"] == scalability_relative]
+    if (len(bindings) != 1
+            or scalability_bytes != (REPO_ROOT / scalability_relative).read_bytes()
+            or bindings[0]["sha256"] != hashlib.sha256(scalability_bytes).hexdigest()
+            or bindings[0]["size"] != len(scalability_bytes)):
+        raise AssertionError("Legacy fixture must preserve exact foundation scalability bytes")
     manifest = {
         "run_id": "legacy-frozen-run",
         "source_commit": OLD_LEGACY_SOURCE_COMMIT,
@@ -122,7 +138,7 @@ def _write_legacy_terminal_artifacts(*, root: Path) -> None:
         "metric_evidence.csv": b"company,metric_id\nFixture,B01\n",
         "metrics_matrix.csv": b"company,metric_id,value\nFixture,B01,1\n",
         "repair_validation_results.csv": b"check,status\nlegacy,PASS\n",
-        "scalability_audit.csv": b"check,status\nlegacy,PASS\n",
+        "scalability_audit.csv": scalability_bytes,
         "semantic_audit_receipt.json": b'{"status":"PASSED"}\n',
         "stratified_audit.csv": b"check,status\nlegacy,PASS\n",
         "validation_run_manifest.json": (
@@ -140,17 +156,20 @@ def _write_legacy_terminal_artifacts(*, root: Path) -> None:
     failure_dir = root / "outputs" / "failure_first_receipts"
     failure_dir.mkdir(parents=True, exist_ok=True)
     (failure_dir / "legacy.json").write_bytes(b'{"legacy":true}\n')
-    for relative in (
-        "artifacts/vnext/qualification",
-        "outputs/publication_fault_receipts",
-        "outputs/vnext_cutover_audits",
-    ):
-        audit_dir = root / relative
-        audit_dir.mkdir(parents=True, exist_ok=True)
-        (audit_dir / "legacy.json").write_bytes(b'{"legacy":true}\n')
     attempt_dir = root / "evidence" / "request_attempts" / "legacy"
     attempt_dir.mkdir(parents=True, exist_ok=True)
     (attempt_dir / "attempt.bin").write_bytes(b"legacy attempt\n")
+    policy = load_source_policy(workdir=root)
+    for relative in policy.full_artifact_directories:
+        audit_dir = root / relative
+        audit_dir.mkdir(parents=True, exist_ok=True)
+        if not any(path.is_file() for path in audit_dir.rglob("*")):
+            # These bytes exercise the legacy snapshot file census only;
+            # they are synthetic test fixtures with no qualification credit.
+            (audit_dir / "legacy.json").write_bytes(
+                b'{"legacy":true,"test_fixture_only":true,"qualification_credit":"NONE"}\n')
+    _full_artifact_directory_paths(workdir=root,
+        directories=policy.full_artifact_directories)
 
 
 def _bind_legacy_authority(*, authority_root: Path, legacy_root: Path) -> None:
