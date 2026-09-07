@@ -1,0 +1,265 @@
+{
+  "record_type": "R4_INTERFACE_OFFLINE_VALIDATION",
+  "classification": "OFFLINE_DEVELOPMENT_NO_QUALIFICATION_CREDIT",
+  "source_input_commit": "f6117862093c78865be0f112cdf8a264f202ca27",
+  "source_requirement_closure_hash": "sha256:58e821a4987cb65042570008021ea41819d5bd9071af66aa4f394eccac5940b7",
+  "execution_note": "Current Python with immutable historical source/proof inputs; not current formal v3 execution qualification. No Checker override, hash-check bypass or source-certificate rewrite. Existing formal entry continues to reject changed execution files.",
+  "new_interface_test_groups": 6,
+  "synthetic_base_request_passes": 9,
+  "historical_scoped_request_bytes_unchanged": 9,
+  "historical_paid_wire_still_rejected": true,
+  "affected_path_tests": 23,
+  "fast_entries": 32,
+  "independent_replay": {
+    "independent_replay": "PASS",
+    "value": "1.15",
+    "unit": "ratio",
+    "qualification_credit": "NONE",
+    "provider_paid_sec": [
+      0,
+      0,
+      0
+    ]
+  },
+  "negative_results": {
+    "cross-table": "Reader claim locator leaves the target table",
+    "fabricated-caption": [
+      "SCOPE_LABEL_TEXT_MISMATCH"
+    ],
+    "r4_a03_production:missing-labels": "SCOPED_REFERENCE_RECONCILIATION_FAILED: native Evidence differs from the certified value/unit/period/scope",
+    "r4_a12_alternate:missing-labels": "Combined source/table scope differs from the owner-required scope",
+    "real-unresolved-conflict": "SCOPED_REFERENCE_RECONCILIATION_FAILED: native Evidence differs from the certified value/unit/period/scope",
+    "same-115-wrong-column": "Source-bound response does not name the certified target",
+    "unresolved-array-is-not-cleaned": "SCOPED_REFERENCE_RECONCILIATION_FAILED: native Evidence differs from the certified value/unit/period/scope",
+    "wrong-selected-period": "Source-bound response changed the exact disclosed quarter period",
+    "wrong-value": [
+      "AI_CLAIMED_VALUE_CELL_MISMATCH"
+    ]
+  },
+  "actual_new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "prior_real_r4_calls_retained": 3,
+  "run_freeze_live_qualification_publication": "NOT_RUN",
+  "active_predecessor": "R3_UNCHANGED",
+  "production_files_changed": [
+    "scripts/vnext/scoped_reader.py",
+    "scripts/vnext/ai_adapter.py"
+  ],
+  "implementation_files": {
+    "scripts/vnext/scoped_reader.py": {
+      "sha256": "b45240acabded2a0732b0523e6619519279c0f2c245493bec3b8edfc8baead47",
+      "size": 39120
+    },
+    "scripts/vnext/ai_adapter.py": {
+      "sha256": "d70364c6756ba46734b11e7052f2de341f411feb705b1ce5d9be71b0c3639d4d",
+      "size": 186000
+    },
+    "tests/vnext/test_r4_reader_responsibilities.py": {
+      "sha256": "66226e28acaa0c11789f14f917035767697b0b0a6da86389a2d30aec4cfe534b",
+      "size": 22138
+    }
+  },
+  "validation_logs": {
+    "final-verified.log": {
+      "sha256": "49a649e0e3b219d6a24c502edcfacda8d6a64c779d86ea08192a4587c7a9576b",
+      "size": 1777
+    },
+    "affected-paths.log": {
+      "sha256": "94dd20a57002853c37d544043a5643b741434d76f2863b7b9a70aa69731c793f",
+      "size": 4591
+    },
+    "final-fast.json": {
+      "sha256": "97a917824417a2d159fc1a48ed2199d941a449c73dcc99958dd8ea6ca6fda9ab",
+      "size": 9631
+    },
+    "negative_results.json": {
+      "sha256": "c0da1895fd3ea98f387e2a38ea2b304bd9fe4ad9b014f07a7c2856cc3f6fb874",
+      "size": 862
+    },
+    "independent_replay.json": {
+      "sha256": "ce5a0b5b7d2952f128b6cc86f83b5a5e4b8c00a628a326cf41a127d3235f1567",
+      "size": 129
+    }
+  },
+  "diagnostic_request_set_id": "sha256:c8608d448f3591c56d79057159e143aaf2506f8d550d9ae2101c98ae6408c42d",
+  "diagnostic_authorization": "NOT_ISSUED",
+  "diagnostic_runtime": "NOT_IMPLEMENTED_PENDING_BOUNDARY_APPROVAL",
+  "diagnostic_entries": [
+    {
+      "final_required_dimensions": [
+        "entity_scope",
+        "aggregation"
+      ],
+      "fixture_id": "r4_a03_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "aggregation",
+        "entity_scope"
+      ],
+      "output_schema_sha256": "9bc75676af495be9029324c08fbc3affac81acc182ae1839af7df9c70b24ab85",
+      "request_bytes": 38558,
+      "request_sha256": "94f4235c1e7b3bde1a2ae392cf3a1498ea7ccd72e0205951689b4a905262bfa7",
+      "source_scope_manifest_id": "sha256:b9bb7d348236a6e78850fe26ed079f9b994db58dc968ef2af474588961806b73",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "entity_scope",
+        "aggregation"
+      ],
+      "fixture_id": "r4_a03_alternate",
+      "local_only_scope_dimensions": [
+        "aggregation",
+        "entity_scope"
+      ],
+      "model_scope_dimensions": [],
+      "output_schema_sha256": "209642f7f3dad7b275cd1fb0b57c151cdf64bef8372d3cc0c066e83326d06763",
+      "request_bytes": 16584,
+      "request_sha256": "1cab1e500dec4e505395428da017f31cd7dd6bfe683dee864b6e59b9d7381ae0",
+      "source_scope_manifest_id": "sha256:71bda2b375223d059770c7bc0a3f00b150da7213c3e08eeec3559916c444ea98",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "table_disambiguation_dimensions": [],
+      "task_period": "2025Q4"
+    },
+    {
+      "final_required_dimensions": [
+        "basis"
+      ],
+      "fixture_id": "r4_a04_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "basis"
+      ],
+      "output_schema_sha256": "f9e556d76249e7b344ff4b2277696bde3c5ccdf966457b60f1e45387b65f769b",
+      "request_bytes": 19899,
+      "request_sha256": "49d579f79ea09a2f107f0659d76f98fad117f9e9c104932d104040fd7e9b1601",
+      "source_scope_manifest_id": "sha256:e8420aae2fe5fbdf2745692f43df0132a816d4c6ada045639d617d0ca54c4b5d",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "basis"
+      ],
+      "fixture_id": "r4_a04_alternate",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "basis"
+      ],
+      "output_schema_sha256": "f9e556d76249e7b344ff4b2277696bde3c5ccdf966457b60f1e45387b65f769b",
+      "request_bytes": 21620,
+      "request_sha256": "90b3b22ba7b66f1aaa226c893bf89c5166b790bcbe1d67b66f7838b3e175de96",
+      "source_scope_manifest_id": "sha256:98ea543e93a7e514eb814ca0f03945678c4e756c58d4e4fad40777d05c794c75",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "loan_population"
+      ],
+      "fixture_id": "r4_a09_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "loan_population"
+      ],
+      "output_schema_sha256": "39e3ec3d3959bcf694363a4aded6b28cffa71eb813bd9855d9c54d8ac8af81a3",
+      "request_bytes": 15972,
+      "request_sha256": "f66a021295380005b51540075006a81c92b5262e68282fe38f4307af3e8fb7a8",
+      "source_scope_manifest_id": "sha256:c3b1032020d1ab8cd66a3717bc694b4d6d05cdfac316b2faa69e9b0787ee2b71",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "asset_scope"
+      ],
+      "fixture_id": "r4_a11_production",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "asset_scope"
+      ],
+      "output_schema_sha256": "aa0d2808e54d884318331b77cf2a13e297a8c8e52470ac8b417ed3149bf42e77",
+      "request_bytes": 20795,
+      "request_sha256": "b8e1cb973f0a99e69a1a1dd898f24ad0cabda65ec7b4473f60ceda7d0a140665",
+      "source_scope_manifest_id": "sha256:b9bc9776848b42572e948867aa8b1268204e62179485fb4aaeffd74739f21c2f",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "asset_scope"
+      ],
+      "fixture_id": "r4_a11_alternate",
+      "local_only_scope_dimensions": [],
+      "model_scope_dimensions": [
+        "asset_scope"
+      ],
+      "output_schema_sha256": "aa0d2808e54d884318331b77cf2a13e297a8c8e52470ac8b417ed3149bf42e77",
+      "request_bytes": 28681,
+      "request_sha256": "5791dea45a619f308f2a591eeeee68caa30b1cc663cf3c22f8942a37f919d659",
+      "source_scope_manifest_id": "sha256:3065b093ef156ea4711d48f9415cd598a9adf7b7ad95b6aa08efe37d59cccecc",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "confidence_level",
+        "holding_period"
+      ],
+      "fixture_id": "r4_a12_production",
+      "local_only_scope_dimensions": [
+        "confidence_level",
+        "holding_period"
+      ],
+      "model_scope_dimensions": [],
+      "output_schema_sha256": "b5f01b3141168a01138e54fcf4075ca6b5bdabcd124f20354665773d0bd52321",
+      "request_bytes": 27416,
+      "request_sha256": "d6c397207c63d4d73d79b92ac5ab537b593256d10be811a24c2183d5bdfa9fb6",
+      "source_scope_manifest_id": "sha256:fe03ce3e99b989640cff83d571ab8c5a19d5e003cbbc36432f950606afad13d8",
+      "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+      "table_disambiguation_dimensions": [],
+      "task_period": "FY2025"
+    },
+    {
+      "final_required_dimensions": [
+        "confidence_level",
+        "holding_period"
+      ],
+      "fixture_id": "r4_a12_alternate",
+      "local_only_scope_dimensions": [
+        "holding_period"
+      ],
+      "model_scope_dimensions": [
+        "confidence_level"
+      ],
+      "output_schema_sha256": "8f12942d09d98390fbd384840836fb251c6f7d9461d04726749658c5f07440fe",
+      "request_bytes": 28847,
+      "request_sha256": "a3b711ff25bdaf85ee27ffd46ea1eba34756f728d24c7eb39016b05d92e09bd0",
+      "source_scope_manifest_id": "sha256:72b292fe1274b841763834cc7bae2ada55acce27337701307d27b10c447e534c",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "table_disambiguation_dimensions": [
+        "confidence_level"
+      ],
+      "task_period": "FY2025"
+    }
+  ],
+  "reused_evidence": [
+    "PR33 actual failure finalizer terminal; unchanged in this patch",
+    "PR32 original label policy approval; unchanged"
+  ],
+  "not_rerun": [
+    "performance benchmark",
+    "formal Run freeze/live qualification/publication rehearsal",
+    "unrelated full-repository suites"
+  ]
+}

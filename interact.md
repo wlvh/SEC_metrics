@@ -27,6 +27,12 @@ receipt。新 v3 Requirement 已绑定 owner 批准的同位置 raw_text/text �
 此版本接线不自动完成 exact-head 激活，也不沿用旧调用授权。
 <!-- capability-anchor: CAPABILITY.r4_label_offline_candidate -->
 
+R4 开发接口可明确区分模型要识别的口径与本地证明负责的口径；无需模型口径时，
+输出 Schema 要求空数组。竞争项期间说明不再复制目标期间，真实未决冲突仍阻断。
+新请求只走离线接受、保存与回放，原始付费响应仍是失败回归样本。
+本次未启用九次真实诊断：旧十二次授权不适用，正式失败即停规则与 active R3 保留。
+<!-- capability-anchor: CAPABILITY.r4_reader_development_interface -->
+
 `tools/vnext_r4_release.py`提供未来PR-C的stage/validate/publish/read-back/
 rollback-to-R3/restore-R4/active-terminal入口。stage不切换active；缺少真实
 activation、merged implementation、owner live及aggregate replay时返回BLOCKED。

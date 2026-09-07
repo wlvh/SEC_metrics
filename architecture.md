@@ -88,6 +88,19 @@ policy extension through the existing engine registry; V1–V3 are immutable.
 Exact-head activation and live/release grants remain separate.
 <!-- capability-anchor: CAPABILITY.r4_label_offline_candidate -->
 
+The separate offline request revision `SOURCE_BOUND_MODEL_RESPONSIBILITIES_V1`
+partitions final scope into model and local-only dimensions from the verified
+source proof, retaining every table-disambiguation obligation. Its request
+schema requires empty arrays when no model scope is needed; selected-period
+instructions no longer apply to competing cells, and excluded candidates are
+distinguished from unresolved conflicts. Native Evidence does not clean model
+responses. The revision is persisted in offline attempts and rebuilt on disk
+replay. Historical requests and the formal 12-call executor retain their old
+bindings. This is an offline development interface, not a new live grant or
+Requirement engine; a proposed nine-sample diagnostic needs separately approved
+execution binding and failure-continuation rules before any provider call.
+<!-- capability-anchor: CAPABILITY.r4_reader_development_interface -->
+
 ### PR-B dormant successor release seam
 
 `r4_release.py` issues a private context from the complete independently

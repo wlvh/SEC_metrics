@@ -56,6 +56,33 @@ ARTIFACT_FILENAMES = frozenset({
     "source_scope.json", "scoped_plan.json", "scoped_request.json", "scoped_attempt.json",
 })
 _SCOPED_CONTEXT_FACTORY = object()
+MODEL_RESPONSIBILITIES_V1 = "SOURCE_BOUND_MODEL_RESPONSIBILITIES_V1"
+
+
+def model_scope_responsibilities(*, scope: Mapping, task_contract: Mapping) -> dict:
+    """Partition a verified certificate's final scope; never export its answers.
+
+    A locally proven dimension can still need a target-column label. That
+    disambiguation obligation takes precedence over local proof coverage.
+    """
+    required = task_contract["scope_contract"]["required_dimensions"]
+    proof = scope.get("source_bound_proof")
+    composite = None if proof is None else proof["composite_scope"]
+    covered = set() if composite is None else set(composite["normalized_scope"])
+    disambiguation = set() if composite is None else set(composite["table_disambiguation_dimensions"])
+    model = (set(required) - covered) | disambiguation
+    return {"final_required_dimensions": list(required),
+        "model_scope_dimensions": sorted(model),
+        "local_only_scope_dimensions": sorted(covered - disambiguation),
+        "table_disambiguation_dimensions": sorted(disambiguation)}
+
+
+def _request_interface_revision(request_bytes: bytes):
+    body = strict_json_loads(text=request_bytes.decode("utf-8"))
+    revision = body.get("scoped_transport_contract", {}).get("interface_revision")
+    if revision not in (None, MODEL_RESPONSIBILITIES_V1):
+        raise ScopedReaderError("Unknown scoped Reader interface revision")
+    return revision
 
 
 def _exact(value: object, fields: frozenset, label: str) -> Mapping:
@@ -193,8 +220,18 @@ def prepare_scoped_reader_request(
     source_bytes: bytes = None, repo_root: Path = None,
     _verified_scope_context: OfflineScopedContext = None,
     _offline_evidence_context: OfflineEvidenceContext = None,
+    interface_revision: str = None,
 ) -> PreparedScopedReaderRequest:
-    """Pack only certified original-order tables; never fall back to a filing."""
+    """Pack certified windows, optionally using the new offline development interface.
+
+    The historical default is retained for frozen requests/qualification. The
+    explicit revision is persisted in request/attempt bytes and independently
+    reconstructed on replay; it is not a Checker or environment switch.
+    """
+    if interface_revision not in (None, MODEL_RESPONSIBILITIES_V1):
+        raise ScopedReaderError("Unknown scoped Reader interface revision")
+    if interface_revision is not None and source_scope_manifest["schema_version"] != 2:
+        raise ScopedReaderError("Model responsibilities require source-bound scope v2")
     if _verified_scope_context is None:
         scope = validate_source_scope_manifest(manifest=source_scope_manifest, expected_manifest_id=expected_manifest_id,
             requirement=requirement, raw_blob=raw_blob, source_reference=source_reference,
@@ -260,6 +297,19 @@ def prepare_scoped_reader_request(
         }
         if bound_label_policy(requirement) == SOURCE_LABEL_POLICY:
             body["scoped_transport_contract"]["scope_label_representation_policy"] = SOURCE_LABEL_POLICY
+        if interface_revision is not None:
+            contract = body["scoped_transport_contract"]
+            for field in ("locally_proven_dimensions_may_be_omitted",
+                          "empty_scope_arrays_are_valid_for_locally_proven_dimensions",
+                          "missing_scope_instruction"):
+                del contract[field]
+            contract.update(interface_revision=interface_revision,
+                interface_use="DEVELOPMENT_NO_QUALIFICATION_CREDIT",
+                **model_scope_responsibilities(scope=scope, task_contract=task_contract),
+                missing_scope_instruction="Generate scope claims and labels only for model_scope_dimensions. Never generate local_only_scope_dimensions; the verified local source proof supplies them. If model_scope_dimensions is empty, selected and competing claimed_scope and scope_evidence_locators must be empty.",
+                selected_period_rule="EXACT_REQUESTED_PERIOD",
+                competing_period_rule="OWN_HEADER_PERIOD_OR_EXPLICIT_UNKNOWN",
+                unresolved_rule="ONLY_CONFLICTS_NOT_RESOLVED_BY_SUPPLIED_EVIDENCE")
     request_bytes = canonical_json_bytes(value=body)
     context = policy_choice(requirement=requirement, kind="TRANSPORT_RETRY_POLICY")
     if len(request_bytes) > context["context_ceiling_tokens"]:
@@ -298,7 +348,7 @@ def load_scoped_reader_request(*, path: Path, repo_root: Path, expected_request_
     except (ValueError, UnicodeError) as error:
         raise ScopedReaderError("Scoped request is not strict UTF-8 JSON") from error
     _exact(body, V2_REQUEST_FIELDS if body.get("schema_version") == 2 else REQUEST_FIELDS, "Scoped Reader request")
-    expected = prepare_scoped_reader_request(**authority)
+    expected = prepare_scoped_reader_request(interface_revision=_request_interface_revision(data), **authority)
     if data != expected.request_bytes or content_hash(value=body) != expected_request_id:
         raise ScopedReaderError("Scoped request bytes/identity differ")
     return expected
@@ -327,6 +377,8 @@ def check_scoped_reader_response(
     is retained for explicit historical offline experiments, never model data
     or a live CLI/environment override. Old Requirements remain exact-raw.
     """
+    if not isinstance(prepared_request, PreparedScopedReaderRequest):
+        raise ScopedReaderError("Scoped request bytes/identity differ")
     expected_request = prepare_scoped_reader_request(
         source_scope_manifest=source_scope_manifest,
         expected_manifest_id=expected_manifest_id, requirement=requirement,
@@ -336,6 +388,7 @@ def check_scoped_reader_response(
         source_bytes=source_bytes, repo_root=repo_root,
         _verified_scope_context=_verified_scope_context,
         _offline_evidence_context=_offline_evidence_context,
+        interface_revision=_request_interface_revision(prepared_request.request_bytes),
     )
     if _label_policy is None:
         _label_policy = bound_label_policy(requirement)
@@ -388,6 +441,16 @@ def check_scoped_reader_response(
             candidate=candidate, task_contract_id=task_contract["task_contract_id"],
             source_bound_context=evidence_context, _label_policy=_label_policy)
     if evidence["status"] == "PASS":
+        if _request_interface_revision(prepared_request.request_bytes) is not None:
+            dimensions = set(model_scope_responsibilities(scope=source_scope_manifest,
+                task_contract=task_contract)["model_scope_dimensions"])
+            for claim in candidate["selected"].values():
+                claims = [claim, *claim["competing_candidates"]]
+                if (any(item["dimension"] not in dimensions
+                        for c in claims for item in c["claimed_scope"])
+                        or any(d not in dimensions for label in claim["scope_evidence_locators"]
+                               for d in label["supports_dimensions"])):
+                    raise ScopedReaderError("MODEL_SCOPE_RESPONSIBILITY_MISMATCH: local-only evidence must not be model-generated")
         reference = source_scope_manifest["reference"]
         certified = source_scope_manifest["synthetic_candidate"]["selected"]
         if (list(evidence["normalized_values"].values()) != [reference["value"]]
@@ -451,6 +514,9 @@ def validate_scoped_reader_response(
         "provider_call_count": 0, "paid_model_call_count": 0, "sec_call_count": 0,
         "actual_provider_usage": "NOT_RUN", "qualification_credit": "NONE",
     }
+    revision = _request_interface_revision(prepared_request.request_bytes)
+    if revision is not None:
+        body["interface_revision"] = revision
     return {**body, "scoped_attempt_id": content_hash(value=body)}
 
 
@@ -459,7 +525,10 @@ def replay_scoped_offline_attempt(*, attempt: Mapping,
                                   expected_attempt_id: str = None,
                                   **authority) -> Dict[str, object]:
     """Rebuild the complete attempt, Candidate and Evidence graph from disk data."""
-    _exact(attempt, ATTEMPT_FIELDS | V2_IDENTITY_FIELDS if attempt.get("schema_version") == 2 else ATTEMPT_FIELDS,
+    fields = ATTEMPT_FIELDS | V2_IDENTITY_FIELDS if attempt.get("schema_version") == 2 else ATTEMPT_FIELDS
+    if "interface_revision" in attempt:
+        fields = fields | {"interface_revision"}
+    _exact(attempt, fields,
            "Scoped offline extraction attempt")
     validate_scope_requirement_identity(artifact=attempt, requirement=authority["requirement"])
     if (attempt["record_type"] != "SCOPED_OFFLINE_EXTRACTION_ATTEMPT"
@@ -478,13 +547,14 @@ def replay_scoped_offline_attempt(*, attempt: Mapping,
 
 
 def prepare_scoped_reader_request_in_session(*, context: OfflineScopedContext,
-                                            source_scope_manifest_id: str) -> PreparedScopedReaderRequest:
+                                            source_scope_manifest_id: str,
+                                            interface_revision: str = None) -> PreparedScopedReaderRequest:
     """Build the same request with certified immutable source-local inputs."""
     if type(context) is not OfflineScopedContext:
         raise ScopedReaderError("Scoped context type is not exact")
     scope, authority = context._authority(source_scope_manifest_id=source_scope_manifest_id)
     return prepare_scoped_reader_request(source_scope_manifest=scope, expected_manifest_id=source_scope_manifest_id,
-        _verified_scope_context=context, **authority)
+        _verified_scope_context=context, interface_revision=interface_revision, **authority)
 
 
 def validate_scoped_reader_response_in_session(*, context: OfflineScopedContext,
@@ -507,7 +577,8 @@ def replay_scoped_offline_attempt_in_session(*, context: OfflineScopedContext,
         raise ScopedReaderError("Scoped context type is not exact")
     identity = attempt["source_scope_manifest_id"]
     scope, authority = context._authority(source_scope_manifest_id=identity)
-    prepared = prepare_scoped_reader_request_in_session(context=context, source_scope_manifest_id=identity)
+    prepared = prepare_scoped_reader_request_in_session(context=context, source_scope_manifest_id=identity,
+        interface_revision=attempt.get("interface_revision"))
     return replay_scoped_offline_attempt(attempt=attempt, prepared_request=prepared,
         expected_attempt_id=expected_attempt_id, source_scope_manifest=scope, expected_manifest_id=identity,
         _verified_scope_context=context, **authority)
