@@ -222,7 +222,7 @@
         "anchor_id": "CAPABILITY.r4_cell_selection_adapter",
         "type": "capability",
         "status": "active",
-        "statement": "离线短引用适配器只让模型选择目标/标签/其他候选位置并交叉声明目标值；程序恢复本请求内的来源身份、跨度、原文和候选值。期间/单位/置信水平/统计口径的排除依据进入原生Evidence追踪；无法证明者未决，历史DIFFERENT_SCOPE标签本身不放行。原始模型SHA保留，恢复后的内部投影另绑定哈希。当前代码通过正常controller、隔离recorded Run freeze及按保存版本的新进程回放；旧记录不追认，selection-draft只输出待新授权九请求，LIVE准备拒绝此offline候选。",
+        "statement": "离线短引用适配器只让模型选择目标/标签/其他候选位置并交叉声明目标值；程序恢复本请求内的来源身份、跨度、原文和候选值。期间/单位/置信水平/统计口径的排除依据进入原生Evidence追踪；无法证明者未决，历史DIFFERENT_SCOPE标签本身不放行。原始模型SHA保留，恢复后的内部投影另绑定哈希。当前代码通过正常controller、隔离recorded Run freeze及按保存版本的新进程回放；旧记录不追认。新登记请求集可经diagnostic-plan准备九项LIVE计划、diagnostic-authorization生成精确授权文本；执行与回放从保存计划恢复接口/集合并重验。真实调用仍需独立owner评论，offline实验开关继续禁止LIVE。",
         "audience": ["developer", "reviewer"],
         "test_anchor": "tests/vnext/test_r4_cell_selection.py::CellSelectionRunIntegrationTest.test_normal_nine_acceptance_run_freeze_and_fresh_process_replay",
         "test_status": "automated_recorded",

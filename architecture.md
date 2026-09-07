@@ -109,7 +109,7 @@ NONE credit and are rejected by formal qualification entrypoints. R3 bytes stay
 pinned; diagnostics never invoke Run freeze or publication.
 <!-- capability-anchor: CAPABILITY.r4_reader_development_interface -->
 
-`cell_selection.py` adds the offline `REQUEST_LOCAL_CELL_SELECTION_V1` adapter.
+`cell_selection.py` adds the `REQUEST_LOCAL_CELL_SELECTION_V1` adapter.
 The model selects request-local cell refs plus one target value string and
 necessary label refs; source IDs, geometry, raw labels and other-cell values
 are recovered locally. Refs encode namespace/table/row/column and the provider
@@ -122,8 +122,15 @@ limited to the existing source certificate and exact source literals.
 The native Candidate keeps the original model digest; a hashed Evidence detail
 records the separate recovered projection and all exclusion sources. Normal
 acceptance, isolated recorded Run freeze and cold replay use the saved request
-revision. `selection-draft` emits a new nine-request proposal; LIVE preparation
-is blocked for this offline revision. Old requests/receipts keep old semantics.
+revision. `selection-draft` remains an offline proposal. The separate committed
+cell-selection diagnostic scope pins its reviewed nine-request set; the normal
+`diagnostic-plan --request-set-id` selects that scope without granting calls.
+`diagnostic-authorization` prints the exact saved-plan owner text. Execute and
+disk replay restore the interface and request set from that plan's implementation
+binding, then rebuild all source/request/code identities. Offline experimental
+overrides still cannot prepare LIVE plans or enter the diagnostic CLI loader.
+Only the existing real GitHub exact-head preflight can authorize a new set;
+historical scope/approval files and default old request generation stay unchanged.
 <!-- capability-anchor: CAPABILITY.r4_cell_selection_adapter -->
 
 ### PR-B dormant successor release seam

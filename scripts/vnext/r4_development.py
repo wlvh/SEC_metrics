@@ -16,6 +16,8 @@ from .sources import resolve_repository_file
 REQUEST_SET_ID = "sha256:c8608d448f3591c56d79057159e143aaf2506f8d550d9ae2101c98ae6408c42d"
 SCOPE_PATH = "docs/evidence/r4_development_diagnostic_scope.json"
 TASK_APPROVAL_PATH = "docs/evidence/r4_development_task_approval.json"
+SELECTION_REQUEST_SET_ID = "sha256:670d566388cd68843a97eaef3858eee74b75586fcb323951e82aeaf0c88a95c0"
+SELECTION_SCOPE_PATH = "docs/evidence/r4_cell_selection_diagnostic_scope.json"
 PLAN_TYPE = "R4_DEVELOPMENT_DIAGNOSTIC_PLAN"
 PURPOSE = "R4_DEVELOPMENT_DIAGNOSTIC_NO_CREDIT"
 RUNTIME_ROOT = "artifacts/vnext/qualification/r4_scoped/development"
@@ -36,7 +38,34 @@ def is_diagnostic(plan):
     return plan.get("record_type") == PLAN_TYPE
 
 
-def approved_scope(root):
+def approved_scope(root, request_set_id=REQUEST_SET_ID):
+    # The new scope is an execution proposal, not a captured owner approval.
+    # Only the real exact-head comment preflight can authorize its calls.
+    if request_set_id == SELECTION_REQUEST_SET_ID:
+        from .cell_selection import REVISION
+        scope = strict_json_file(path=resolve_repository_file(repo_root=root, repo_relative_path=SELECTION_SCOPE_PATH))
+        historical = approved_scope(root)
+        if (scope.get('request_set_id') != SELECTION_REQUEST_SET_ID
+                or content_hash(value=scope.get('entries')) != SELECTION_REQUEST_SET_ID
+                or scope.get('interface_revision') != REVISION
+                or scope.get('authorization_state') != 'NOT_ISSUED'
+                or scope.get('authorization_source') != 'EXACT_HEAD_GITHUB_OWNER_COMMENT_REQUIRED'
+                or any(scope.get(k) != historical[k] for k in (
+                    'source_requirement_id', 'source_requirement_closure_hash', 'provider', 'model',
+                    'maximum_provider_calls', 'maximum_paid_model_calls', 'execution_order',
+                    'automatic_retry_count', 'response_reuse_authorized', 'sec_calls_authorized',
+                    'publication_authorized', 'qualification_credit', 'publication_credit',
+                    'context_ceiling_tokens', 'stability_repeats', 'continue_only_if', 'stop_on'))
+                or len(scope['entries']) != len(historical['entries'])):
+            raise ValueError('Cell-selection diagnostic scope differs from its bound proposal')
+        for row, old in zip(scope['entries'], historical['entries']):
+            if any(row.get(k) != old[old_key] for k, old_key in (
+                    ('fixture_id','fixture_id'), ('period','task_period'),
+                    ('source_sha256','source_sha256'), ('source_scope_manifest_id','source_scope_manifest_id'))):
+                raise ValueError('Cell-selection source/order differs from the nine base requests')
+        return scope
+    if request_set_id != REQUEST_SET_ID:
+        raise ValueError('Unknown diagnostic request set')
     scope = strict_json_file(path=resolve_repository_file(repo_root=root, repo_relative_path=SCOPE_PATH))
     if (scope.get("request_set_id") != REQUEST_SET_ID
             or content_hash(value=scope.get("entries")) != REQUEST_SET_ID
@@ -60,15 +89,17 @@ def approved_scope(root):
 
 
 class _Implementation:
-    def __init__(self, root, requirement, factory, offline_interface_revision=None):
+    def __init__(self, root, requirement, factory, offline_interface_revision=None, request_set_id=REQUEST_SET_ID):
         if factory is not _FACTORY:
             raise ValueError("Diagnostic implementation requires its factory")
         from .r4_live_authority import _git_state
         self.root, self.requirement_id = root, requirement["requirement_id"]
-        self.scope = approved_scope(root)
+        self.scope = approved_scope(root, request_set_id)
         from .cell_selection import REVISION
         if offline_interface_revision not in (None, REVISION):
             raise ValueError('Unknown offline selection interface')
+        if offline_interface_revision is not None and request_set_id != REQUEST_SET_ID:
+            raise ValueError('Offline interface experiments cannot select a live diagnostic scope')
         self.offline_only = offline_interface_revision is not None
         self.interface_revision = offline_interface_revision or self.scope['interface_revision']
         if requirement["requirement_closure_hash"] != self.scope["source_requirement_closure_hash"]:
@@ -87,16 +118,22 @@ class _Implementation:
                 relative = path.relative_to(root).as_posix()
                 data = resolve_repository_file(repo_root=root, repo_relative_path=relative).read_bytes()
                 self.files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
-        for relative in (SCOPE_PATH, TASK_APPROVAL_PATH):
+        scope_files = (SCOPE_PATH, TASK_APPROVAL_PATH)
+        if request_set_id == SELECTION_REQUEST_SET_ID:
+            scope_files += (SELECTION_SCOPE_PATH,)
+        for relative in scope_files:
             data = (root / relative).read_bytes()
             self.files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
-        body = {"purpose": PURPOSE, "request_set_id": REQUEST_SET_ID,
+        body = {"purpose": PURPOSE, "request_set_id": request_set_id,
             "source_requirement_id": self.requirement_id,
             "source_requirement_closure_hash": requirement["requirement_closure_hash"],
             "files": self.files, "semantic_runtime_versions_hash": requirement["execution_authority"]["semantic_runtime_versions_hash"]}
         if self.offline_only:
             body.update(offline_interface_revision=self.interface_revision,
                 live_authorization_eligible=False, source_request_set_role='HISTORICAL_SOURCE_SET_ONLY')
+        elif request_set_id == SELECTION_REQUEST_SET_ID:
+            body.update(interface_revision=self.interface_revision, scope_path=SELECTION_SCOPE_PATH,
+                scope_sha256=self.files[SELECTION_SCOPE_PATH]['sha256'])
         self.record = {**body, "development_execution_binding_id": content_hash(value=body)}
 
     def check(self):
@@ -117,19 +154,39 @@ def current_implementation(root, requirement):
 
 
 @contextmanager
-def diagnostic_implementation(root, *, offline_interface_revision=None):
+def diagnostic_implementation(root, *, offline_interface_revision=None, request_set_id=REQUEST_SET_ID):
     from .requirements import load_requirement_snapshot
     if _CURRENT.get() is not None:
         raise ValueError("Diagnostic implementation contexts cannot be nested")
     root = root.resolve(strict=True)
     requirement = load_requirement_snapshot(snapshot_dir=root / "requirements/issue_28_v3")
-    bound = _Implementation(root, requirement, _FACTORY, offline_interface_revision)
+    bound = _Implementation(root, requirement, _FACTORY, offline_interface_revision, request_set_id)
     token = _CURRENT.set(bound)
     try:
         bound.check()
         yield bound
     finally:
         _CURRENT.reset(token)
+
+
+@contextmanager
+def diagnostic_implementation_for_plan(root, plan):
+    """Restore the finite interface/scope binding from a saved plan, then revalidate.
+
+    A caller cannot supply an interface override or turn an offline experiment
+    into a live plan. Full plan/request/file rebuilding still precedes replay
+    or owner preflight; this loader does not issue any execution capability.
+    """
+    if (not is_diagnostic(plan) or plan.get('pending_plan_id') != content_hash(
+            value={k:v for k,v in plan.items() if k != 'pending_plan_id'})):
+        raise ValueError('Diagnostic saved plan identity differs')
+    binding = plan['implementation_authority']
+    if 'offline_interface_revision' in binding:
+        raise ValueError('Offline experimental plans are not diagnostic CLI execution plans')
+    with diagnostic_implementation(root, request_set_id=binding['request_set_id']) as implementation:
+        if binding != implementation.record:
+            raise ValueError('Saved diagnostic implementation/interface binding differs')
+        yield implementation
 
 
 def verify_request_set(context):
@@ -140,7 +197,8 @@ def verify_request_set(context):
         request = context._requests[row['fixture_id']]
         capture = request.identity
         for field, expected in (("source_scope_manifest_id", row["source_scope_manifest_id"]),
-                ("source_sha256", row["source_sha256"]), ("task_period", row["task_period"]),
+                ("source_sha256", row["source_sha256"]),
+                ("task_period", row['period'] if context._session._development.scope['request_set_id'] == SELECTION_REQUEST_SET_ID else row['task_period']),
                 ("provider_request_body_sha256", row["request_sha256"]),
                 ("provider_request_body_size", row["request_bytes"]),
                 ("provider_output_schema_sha256", row["output_schema_sha256"])):

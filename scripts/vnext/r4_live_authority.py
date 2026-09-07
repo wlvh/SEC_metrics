@@ -362,7 +362,7 @@ def validate_r4_execution_plan(*, plan, context, expected_plan_id, mode):
 
 def expected_r4_owner_approval(*, plan, exact_head, exact_tree):
     """Return the PR-C review format, not an approval or live grant."""
-    from .r4_development import is_diagnostic, REQUEST_SET_ID
+    from .r4_development import is_diagnostic, SELECTION_REQUEST_SET_ID
     diagnostic = is_diagnostic(plan)
     body = {"decision": "AUTHORIZE_R4_DEVELOPMENT_DIAGNOSTIC_EXACT_HEAD" if diagnostic else "AUTHORIZE_R4_LIVE_EXACT_HEAD",
         "scope": authorization_scope(plan),
@@ -376,9 +376,12 @@ def expected_r4_owner_approval(*, plan, exact_head, exact_tree):
         "automatic_retry_count": 0, "response_reuse_authorized": False,
         "publication_authorized": False}
     if diagnostic:
-        body.update(request_set_id=REQUEST_SET_ID, qualification_credit="NONE",
+        binding = plan['implementation_authority']
+        body.update(request_set_id=binding['request_set_id'], qualification_credit="NONE",
             content_failure_continuation="ONLY_VERIFIED_CONTENT_FAILURE_WITH_COMPLETE_DURABLE_TERMINAL",
             other_failure_action="STOP")
+        if binding['request_set_id'] == SELECTION_REQUEST_SET_ID:
+            body['interface_revision'] = binding['interface_revision']
     return body
 
 

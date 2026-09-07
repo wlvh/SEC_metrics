@@ -91,6 +91,7 @@ Fresh三轮必须按全family ordinal-major顺序执行：Occupancy 1 → RevPAR
 
 | 层级 | 命令 / 入口 | 网络 | 仓库写入 | 通过条件 | 不能替代 |
 |---|---|---:|---:|---|---|
+| R4 新请求集诊断接入 | `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r4_selection_diagnostic_wiring -v` | GitHub 响应明确 mock；provider/SEC/socket 禁止 | 当前代码临时 clean Git checkout，CLI计划与三个 recorded 终态 | 正常CLI选择九请求；精确owner preflight测试、旧/篡改授权拒绝；内容失败→接受→UNKNOWN停止；新进程CLI从保存身份恢复并回放；旧请求、offline LIVE拒绝、身份篡改 | 不执行真实调用，不重跑既有九项完整Run或benchmark，不生成正式资格 |
 | R4 新绑定正常执行路径 | `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_r4_bound_label_execution -v` | 无 provider/SEC；worker network-none | 仅当前新版本的临时副本及一个 recorded scoped Run/三个零调用前置 Run | 正常 acceptance→FROZEN→新进程 replay；当前源码哈希真实校验；发布侧版本读取 | live 资格、完整12次aggregate、发布、性能benchmark |
 | R4 模型职责开发接口 | `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r4_reader_responsibilities -v` | provider/SEC/socket 禁止 | 临时不可变 v3 输入归档及新离线请求/结果 | 当前 Python 正常 scoped acceptance→四文件保存→原生 Review/Calculator→新进程磁盘 replay；九类职责与原始 Citi 失败、期间/同值错列/真实歧义负例 | 不证明当前代码符合旧 v3 formal execution 绑定；不生成 Run FROZEN/live qualification/publication；不重签旧证书。候选必须仍被旧正式入口拒绝 |
 | R4 九项开发诊断接线 | `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r4_development_diagnostic -v` | provider/SEC/socket 禁止 | 当前代码完整副本、既有 source proof、新诊断执行身份；无旧 Python 替换 | 同一控制器连续九项 mock，内容失败隔离后继续，新进程磁盘回放；UNKNOWN/验收收据持久化失败各一项后停止；重复启动、封存篡改与正式资格混用拒绝 | mock 无实际 usage、provider 或正式资格；不是全仓审计或性能 benchmark |

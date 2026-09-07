@@ -395,7 +395,8 @@ def _capture(*, session: LiveScopedReaderSession, fixture_id: str) -> LiveScoped
         "fixture_company_authority_id": record["fixture_company_authority_id"]})
     if session._development is not None:
         record["development_execution_binding_id"] = session._development.record["development_execution_binding_id"]
-        if session._development.offline_only:
+        from .cell_selection import REVISION
+        if session._development.interface_revision == REVISION:
             record['request_interface_revision'] = session._development.interface_revision
     record["live_scoped_reader_request_id"] = content_hash(value=record)
     return LiveScopedReaderRequest(factory=_REQUEST_FACTORY, record_bytes=canonical_json_bytes(value=record),

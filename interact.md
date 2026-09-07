@@ -41,6 +41,12 @@ R4 开发接口可明确区分模型要识别的口径与本地证明负责的�
 比较项的数值、期间、单位及排除依据从来源读取，未知关系保持未决。
 模型原文及其哈希不改，恢复过程另存入 Evidence 追踪信息。
 `selection-draft` 生成下一轮九类复测的精确请求清单，尚无新调用授权。
+`diagnostic-plan --request-set-id <已登记集合ID>` 可生成对应九项的可执行计划，
+`diagnostic-authorization --plan-id <ID>` 输出完整授权模板；模板本身不是批准。
+`diagnostic-execute` 与 `diagnostic-replay` 从保存的计划恢复同一接口和请求集合，
+不能通过参数切换接口。新集合仍须取得真实 exact-head owner 评论，旧评论不适用。
+原 offline 实验开关继续禁止 LIVE；JPM A03 银行子公司与 BAC A11 同值披露等
+无法证明可排除的比较项继续保留未决，属于复测观察项。
 旧九次诊断仍为5个原生接受、4个内容失败；分层核对另确认 Citi A03、JPM A09
 的辅助证据矛盾，以及被首个错误遮住的值/位置/标签问题，不能称为5项完整合格。
 <!-- capability-anchor: CAPABILITY.r4_cell_selection_adapter -->

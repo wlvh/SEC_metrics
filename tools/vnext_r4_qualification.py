@@ -45,7 +45,11 @@ def main(argv=None):
     execute.add_argument("--owner-comment-url", required=True)
     replay = sub.add_parser("replay", help="Independent disk replay and append-only replay receipt; no network")
     replay.add_argument("--plan-id", required=True)
-    sub.add_parser("diagnostic-plan", help="Prepare the approved nine development requests; no qualification credit")
+    diagnostic_plan = sub.add_parser("diagnostic-plan", help="Prepare a bound nine-request diagnostic plan; owner permission still required")
+    from vnext.r4_development import REQUEST_SET_ID, SELECTION_REQUEST_SET_ID
+    diagnostic_plan.add_argument('--request-set-id', choices=(REQUEST_SET_ID, SELECTION_REQUEST_SET_ID), default=REQUEST_SET_ID)
+    diagnostic_approval = sub.add_parser('diagnostic-authorization', help='Print exact owner approval text for a saved diagnostic plan; does not authorize')
+    diagnostic_approval.add_argument('--plan-id', required=True)
     sub.add_parser("selection-draft", help="Build nine short-cell request artifacts for a NEW authorization; never execute")
     diagnostic = sub.add_parser("diagnostic-execute", help="Run the approved diagnostic through the existing one-shot controller")
     diagnostic.add_argument("--plan-id", required=True)
@@ -82,23 +86,33 @@ def main(argv=None):
                     _exclusive_write_bytes(path=directory/(entry['fixture_id']+'.request.json'),
                         content=context._requests[entry['fixture_id']].provider_request_body_bytes)
         elif args.command.startswith('diagnostic-'):
-            from vnext.r4_development import diagnostic_implementation, prepare_diagnostic_context
+            from vnext.r4_development import diagnostic_implementation, diagnostic_implementation_for_plan, prepare_diagnostic_context
             from vnext.r4_development import build_diagnostic_plan, execute_diagnostic, replay_diagnostic
             from vnext.r4_development import RUNTIME_ROOT as diagnostic_root
-            with diagnostic_implementation(REPO_ROOT):
+            plan = None
+            if args.command == 'diagnostic-plan':
+                implementation = diagnostic_implementation(REPO_ROOT, request_set_id=args.request_set_id)
+            else:
+                _plan_path(args.plan_id)  # Same strict content-ID syntax.
+                path = REPO_ROOT / diagnostic_root / 'plans' / (args.plan_id[7:]+'.json')
+                if path.is_symlink() or not path.is_file():
+                    raise ValueError('Diagnostic plan is missing or unsafe')
+                plan = strict_json_file(path=path)
+                if plan.get('pending_plan_id') != args.plan_id:
+                    raise ValueError('Diagnostic plan path/content differ')
+                implementation = diagnostic_implementation_for_plan(REPO_ROOT, plan)
+            with implementation:
                 context = prepare_diagnostic_context(REPO_ROOT)
                 if args.command == 'diagnostic-plan':
                     result = build_diagnostic_plan(context)
                     _exclusive_write_json(path=REPO_ROOT / diagnostic_root / 'plans' / (result['pending_plan_id'][7:]+'.json'), value=result)
                 else:
-                    _plan_path(args.plan_id)  # Same strict content-ID syntax.
-                    path = REPO_ROOT / diagnostic_root / 'plans' / (args.plan_id[7:]+'.json')
-                    if path.is_symlink() or not path.is_file():
-                        raise ValueError('Diagnostic plan is missing or unsafe')
-                    plan = strict_json_file(path=path)
-                    if plan.get('pending_plan_id') != args.plan_id:
-                        raise ValueError('Diagnostic plan path/content differ')
-                    if args.command == 'diagnostic-execute':
+                    if args.command == 'diagnostic-authorization':
+                        from vnext.r4_live_authority import validate_r4_execution_plan, expected_r4_owner_approval, _validate_live_implementation
+                        validate_r4_execution_plan(plan=plan, context=context, expected_plan_id=args.plan_id, mode='LIVE')
+                        state = _validate_live_implementation(repo_root=REPO_ROOT, plan=plan)
+                        result = expected_r4_owner_approval(plan=plan, exact_head=state['head'], exact_tree=state['tree'])
+                    elif args.command == 'diagnostic-execute':
                         owner = verify_r4_live_owner_comment(context=context, plan=plan, source_url=args.owner_comment_url)
                         _exclusive_write_json(path=REPO_ROOT / diagnostic_root / 'authorizations'
                             / (owner.receipt['receipt_id'][7:]+'.json'), value=owner.receipt)
