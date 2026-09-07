@@ -275,6 +275,8 @@ def _build_plan(context, *, mode, state):
     context._check()
     schedule = strict_json_loads(text=context._schedule.decode("utf-8"))
     development = context._session._development
+    if development is not None and development.offline_only and mode == 'LIVE':
+        raise R4AuthorizationError('Offline cell-selection implementation cannot grant provider calls')
     if development is not None:
         from .r4_development import verify_request_set
         verify_request_set(context)

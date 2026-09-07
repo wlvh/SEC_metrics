@@ -1008,6 +1008,17 @@ def build_scoped_provider_request_body(
         policy=policy, reader_request_bytes=reader_request_bytes,
     )
     envelope = strict_json_loads(text=ordinary.decode("utf-8"))
+    from .cell_selection import REVISION as CELL_SELECTION_V1
+    if contract.get('interface_revision') == CELL_SELECTION_V1:
+        from .cell_selection import model_input, output_schema, PROMPT
+        schema = canonical_json_bytes(value=output_schema(request))
+        prompt = PROMPT + ' Output JSON Schema: ' + schema.decode()
+        content = canonical_json_bytes(value=model_input(request)).decode()
+        if policy.provider == 'deepseek':
+            envelope['messages'] = [{'role':'system','content':prompt},{'role':'user','content':content}]
+        else:
+            raise AIAdapterError('Cell-selection development retains the approved DeepSeek channel')
+        return canonical_json_bytes(value=envelope), schema
     from .scoped_reader import MODEL_RESPONSIBILITIES_V1
     revision = contract.get("interface_revision")
     if revision is not None:

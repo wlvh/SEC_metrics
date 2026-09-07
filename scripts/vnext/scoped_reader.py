@@ -22,6 +22,7 @@ from .source_scope import load_source_scope_manifest, read_scope_repository_byte
 from .source_scope import validate_source_scope_manifest, validate_scope_requirement_identity
 from .sources import load_raw_blob_bytes
 from .table_payload import _compact_table, _decode_compact_table
+from .cell_selection import REVISION as CELL_SELECTION_V1
 
 
 class ScopedReaderError(ValueError):
@@ -80,7 +81,7 @@ def model_scope_responsibilities(*, scope: Mapping, task_contract: Mapping) -> d
 def _request_interface_revision(request_bytes: bytes):
     body = strict_json_loads(text=request_bytes.decode("utf-8"))
     revision = body.get("scoped_transport_contract", {}).get("interface_revision")
-    if revision not in (None, MODEL_RESPONSIBILITIES_V1):
+    if revision not in (None, MODEL_RESPONSIBILITIES_V1, CELL_SELECTION_V1):
         raise ScopedReaderError("Unknown scoped Reader interface revision")
     return revision
 
@@ -228,7 +229,7 @@ def prepare_scoped_reader_request(
     explicit revision is persisted in request/attempt bytes and independently
     reconstructed on replay; it is not a Checker or environment switch.
     """
-    if interface_revision not in (None, MODEL_RESPONSIBILITIES_V1):
+    if interface_revision not in (None, MODEL_RESPONSIBILITIES_V1, CELL_SELECTION_V1):
         raise ScopedReaderError("Unknown scoped Reader interface revision")
     if interface_revision is not None and source_scope_manifest["schema_version"] != 2:
         raise ScopedReaderError("Model responsibilities require source-bound scope v2")
@@ -400,17 +401,24 @@ def check_scoped_reader_response(
     if type(response_text) is not str:
         raise ScopedReaderError("Scoped response is not UTF-8 text")
     source_proof = source_scope_manifest.get("source_bound_proof")
+    projection = None
+    native_response_text = response_text
+    if _request_interface_revision(prepared_request.request_bytes) == CELL_SELECTION_V1:
+        from .cell_selection import expand_response
+        native_response_text, projection = expand_response(
+            request=strict_json_loads(text=prepared_request.request_bytes.decode()),
+            response_text=response_text, scope=source_scope_manifest)
     evidence_context = None
     evidence_session = _offline_evidence_context if _verified_scope_context is None else _verified_scope_context._evidence
     if source_proof is None:
-        candidate = validate_reader_output(response_text=response_text, attempt_id=attempt_id,
+        candidate = validate_reader_output(response_text=native_response_text, attempt_id=attempt_id,
             required_roles=task_contract["required_roles"], scope_contract=task_contract["scope_contract"],
             source_reference_ids=[source_reference["source_reference_id"]],
             derived_asset_ids=[full_derived_asset["derived_asset_id"]])
     else:
         root = repo_root or Path(__file__).resolve().parents[2]
         exact_source = source_bytes if source_bytes is not None else load_raw_blob_bytes(repo_root=root, raw_blob=raw_blob)
-        candidate = validate_source_bound_reader_output(response_text=response_text, attempt_id=attempt_id,
+        candidate = validate_source_bound_reader_output(response_text=native_response_text, attempt_id=attempt_id,
             source_bound_proof=source_proof, expected_proof_id=source_proof["source_bound_proof_id"],
             requirement=requirement, repo_root=root, source_bytes=exact_source, raw_blob=raw_blob,
             source_reference=source_reference, full_derived_asset=full_derived_asset, task_contract=task_contract,
@@ -418,6 +426,11 @@ def check_scoped_reader_response(
         evidence_context = {"proof": source_proof, "expected_proof_id": source_proof["source_bound_proof_id"],
             "requirement": requirement, "repo_root": root, "source_bytes": exact_source,
             "raw_blob": raw_blob, "task_contract": task_contract}
+    if projection is not None:
+        # The model bytes stay original. The source-recovered projection and
+        # its separate hash are disclosed in the native Evidence trace.
+        candidate["assistant_output_sha256"] = projection["original_response_sha256"]
+        validate_record(record=candidate)
     if candidate["disclosure_group"] != task_contract["disclosure_group"]:
         raise ScopedReaderError("Scoped response task/disclosure group differs")
     for claim in candidate["selected"].values():
@@ -440,6 +453,9 @@ def check_scoped_reader_response(
         evidence = check_evidence_in_offline_session(context=evidence_session,
             candidate=candidate, task_contract_id=task_contract["task_contract_id"],
             source_bound_context=evidence_context, _label_policy=_label_policy)
+    if projection is not None:
+        from .cell_selection import attach_evidence_trace
+        evidence = attach_evidence_trace(evidence, projection)
     if evidence["status"] == "PASS":
         if _request_interface_revision(prepared_request.request_bytes) is not None:
             dimensions = set(model_scope_responsibilities(scope=source_scope_manifest,

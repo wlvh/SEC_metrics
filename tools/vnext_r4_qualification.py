@@ -46,6 +46,7 @@ def main(argv=None):
     replay = sub.add_parser("replay", help="Independent disk replay and append-only replay receipt; no network")
     replay.add_argument("--plan-id", required=True)
     sub.add_parser("diagnostic-plan", help="Prepare the approved nine development requests; no qualification credit")
+    sub.add_parser("selection-draft", help="Build nine short-cell request artifacts for a NEW authorization; never execute")
     diagnostic = sub.add_parser("diagnostic-execute", help="Run the approved diagnostic through the existing one-shot controller")
     diagnostic.add_argument("--plan-id", required=True)
     diagnostic.add_argument("--owner-comment-url", required=True)
@@ -53,7 +54,34 @@ def main(argv=None):
     diagnostic_replay.add_argument("--plan-id", required=True)
     args = parser.parse_args(argv)
     try:
-        if args.command.startswith('diagnostic-'):
+        if args.command == 'selection-draft':
+            from vnext.r4_development import diagnostic_implementation, prepare_diagnostic_context, RUNTIME_ROOT as diagnostic_root
+            from vnext.cell_selection import REVISION
+            from vnext.canonical import content_hash
+            from vnext.invocation_control import _exclusive_write_bytes
+            with diagnostic_implementation(REPO_ROOT, offline_interface_revision=REVISION):
+                context=prepare_diagnostic_context(REPO_ROOT)
+                entries=[]
+                for source in context._session._development.scope['entries']:
+                    request=context._requests[source['fixture_id']];identity=request.identity
+                    entries.append({'fixture_id':source['fixture_id'],'period':identity['task_period'],
+                        'source_sha256':identity['source_sha256'],'source_scope_manifest_id':identity['source_scope_manifest_id'],
+                        'request_sha256':identity['provider_request_body_sha256'],
+                        'request_bytes':identity['provider_request_body_size'],
+                        'output_schema_sha256':identity['provider_output_schema_sha256']})
+                body={'record_type':'R4_CELL_SELECTION_RETEST_PROPOSAL','authorization':'NOT_ISSUED',
+                    'interface_revision':REVISION,'head':context._state['head'],'tree':context._state['tree'],
+                    'request_set_id':content_hash(value=entries),'entries':entries,
+                    'maximum_provider_calls_proposed':9,'automatic_retry_count':0,'response_reuse':False,
+                    'SEC':False,'publication':False,'qualification_credit':'NONE','execution_eligible':False,
+                    'continuation':'SEALED_INDEPENDENT_CONTENT_FAILURE_ONLY_OTHER_FAILURES_STOP'}
+                result={**body,'proposal_id':content_hash(value=body)}
+                directory=REPO_ROOT/diagnostic_root/'selection_proposals'/result['proposal_id'][7:]
+                _exclusive_write_json(path=directory/'proposal.json',value=result)
+                for entry in entries:
+                    _exclusive_write_bytes(path=directory/(entry['fixture_id']+'.request.json'),
+                        content=context._requests[entry['fixture_id']].provider_request_body_bytes)
+        elif args.command.startswith('diagnostic-'):
             from vnext.r4_development import diagnostic_implementation, prepare_diagnostic_context
             from vnext.r4_development import build_diagnostic_plan, execute_diagnostic, replay_diagnostic
             from vnext.r4_development import RUNTIME_ROOT as diagnostic_root

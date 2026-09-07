@@ -36,6 +36,15 @@ R4 开发接口可明确区分模型要识别的口径与本地证明负责的�
 或远端结果不明时停止，已启动计划不能重复启动。旧十二次授权不适用，active R3 保留。
 <!-- capability-anchor: CAPABILITY.r4_reader_development_interface -->
 
+开发候选的模型输出缩为五项：目标单元格引用、目标数值文本、必要 scope 标签引用、
+其他候选引用和未决事项。来源身份和跨度从本次请求恢复，不由模型重复声明；
+比较项的数值、期间、单位及排除依据从来源读取，未知关系保持未决。
+模型原文及其哈希不改，恢复过程另存入 Evidence 追踪信息。
+`selection-draft` 生成下一轮九类复测的精确请求清单，尚无新调用授权。
+旧九次诊断仍为5个原生接受、4个内容失败；分层核对另确认 Citi A03、JPM A09
+的辅助证据矛盾，以及被首个错误遮住的值/位置/标签问题，不能称为5项完整合格。
+<!-- capability-anchor: CAPABILITY.r4_cell_selection_adapter -->
+
 `tools/vnext_r4_release.py`提供未来PR-C的stage/validate/publish/read-back/
 rollback-to-R3/restore-R4/active-terminal入口。stage不切换active；缺少真实
 activation、merged implementation、owner live及aggregate replay时返回BLOCKED。

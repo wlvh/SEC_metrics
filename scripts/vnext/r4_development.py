@@ -60,12 +60,17 @@ def approved_scope(root):
 
 
 class _Implementation:
-    def __init__(self, root, requirement, factory):
+    def __init__(self, root, requirement, factory, offline_interface_revision=None):
         if factory is not _FACTORY:
             raise ValueError("Diagnostic implementation requires its factory")
         from .r4_live_authority import _git_state
         self.root, self.requirement_id = root, requirement["requirement_id"]
         self.scope = approved_scope(root)
+        from .cell_selection import REVISION
+        if offline_interface_revision not in (None, REVISION):
+            raise ValueError('Unknown offline selection interface')
+        self.offline_only = offline_interface_revision is not None
+        self.interface_revision = offline_interface_revision or self.scope['interface_revision']
         if requirement["requirement_closure_hash"] != self.scope["source_requirement_closure_hash"]:
             raise ValueError("Diagnostic source Requirement changed")
         self.state = _git_state(repo_root=root, clean=False) if (root / '.git').exists() else {"head": None, "tree": None}
@@ -89,6 +94,9 @@ class _Implementation:
             "source_requirement_id": self.requirement_id,
             "source_requirement_closure_hash": requirement["requirement_closure_hash"],
             "files": self.files, "semantic_runtime_versions_hash": requirement["execution_authority"]["semantic_runtime_versions_hash"]}
+        if self.offline_only:
+            body.update(offline_interface_revision=self.interface_revision,
+                live_authorization_eligible=False, source_request_set_role='HISTORICAL_SOURCE_SET_ONLY')
         self.record = {**body, "development_execution_binding_id": content_hash(value=body)}
 
     def check(self):
@@ -109,13 +117,13 @@ def current_implementation(root, requirement):
 
 
 @contextmanager
-def diagnostic_implementation(root):
+def diagnostic_implementation(root, *, offline_interface_revision=None):
     from .requirements import load_requirement_snapshot
     if _CURRENT.get() is not None:
         raise ValueError("Diagnostic implementation contexts cannot be nested")
     root = root.resolve(strict=True)
     requirement = load_requirement_snapshot(snapshot_dir=root / "requirements/issue_28_v3")
-    bound = _Implementation(root, requirement, _FACTORY)
+    bound = _Implementation(root, requirement, _FACTORY, offline_interface_revision)
     token = _CURRENT.set(bound)
     try:
         bound.check()
@@ -136,6 +144,11 @@ def verify_request_set(context):
                 ("provider_request_body_sha256", row["request_sha256"]),
                 ("provider_request_body_size", row["request_bytes"]),
                 ("provider_output_schema_sha256", row["output_schema_sha256"])):
+            if context._session._development.offline_only and field in {
+                    'provider_request_body_sha256','provider_request_body_size','provider_output_schema_sha256'}:
+                # New bytes are bound by their new request/plan identity; old
+                # paid-request hashes remain historical, never a new grant.
+                continue
             if capture[field] != expected:
                 raise ValueError("Approved diagnostic request changed: " + row['fixture_id'] + ':' + field)
 
@@ -153,6 +166,8 @@ def build_diagnostic_plan(context, *, mode="LIVE"):
     from .r4_live_authority import _build_plan, _git_state
     if context._session._development is None:
         raise ValueError("Diagnostic plan requires its explicit purpose")
+    if mode == 'LIVE' and context._session._development.offline_only:
+        raise ValueError('New cell-selection requests have no live authorization')
     state = _git_state(repo_root=context._root, clean=True) if mode == "LIVE" else context._state
     return _build_plan(context, mode=mode, state=state)
 
@@ -191,6 +206,7 @@ def _check_response(acceptance, response, execution_id):
     from .reader import ReaderError
     from .scoped_reader import ScopedReaderError
     from .composite_scope import CompositeScopeError
+    from .cell_selection import CellSelectionError
     try:
         parse_scoped_invocation_candidate(response_body=response, execution_id=execution_id, context=acceptance)
         draft = validate_scoped_invocation_acceptance(response_body=response, execution_id=execution_id, context=acceptance)
@@ -198,7 +214,7 @@ def _check_response(acceptance, response, execution_id):
                 'candidate': draft['candidate_record'], 'evidence': draft['evidence_record']}
     except (SchemaViolationError, EvidenceFailureError) as error:
         cause = error.__cause__
-        known = isinstance(cause, (ReaderError, UnicodeDecodeError))
+        known = isinstance(cause, (ReaderError, UnicodeDecodeError, CellSelectionError))
         known = known or (isinstance(cause, ScopedReaderError) and str(cause).startswith((
             'SCOPED_CERTIFIED_TARGET_MISMATCH:', 'SCOPED_REFERENCE_RECONCILIATION_FAILED:',
             'MODEL_SCOPE_RESPONSIBILITY_MISMATCH:')))

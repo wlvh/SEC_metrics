@@ -334,7 +334,7 @@ def _capture(*, session: LiveScopedReaderSession, fixture_id: str) -> LiveScoped
     from .scoped_reader import MODEL_RESPONSIBILITIES_V1
     scoped = prepare_scoped_reader_request_in_session(context=source["scoped"],
         source_scope_manifest_id=scope["source_scope_manifest_id"],
-        interface_revision=MODEL_RESPONSIBILITIES_V1 if session._development is not None else None)
+        interface_revision=session._development.interface_revision if session._development is not None else None)
     body = strict_json_loads(text=scoped.request_bytes.decode("utf-8"))
     body.pop("scoped_plan_id")
     body["record_type"] = INPUT_RECORD_TYPE
@@ -395,6 +395,8 @@ def _capture(*, session: LiveScopedReaderSession, fixture_id: str) -> LiveScoped
         "fixture_company_authority_id": record["fixture_company_authority_id"]})
     if session._development is not None:
         record["development_execution_binding_id"] = session._development.record["development_execution_binding_id"]
+        if session._development.offline_only:
+            record['request_interface_revision'] = session._development.interface_revision
     record["live_scoped_reader_request_id"] = content_hash(value=record)
     return LiveScopedReaderRequest(factory=_REQUEST_FACTORY, record_bytes=canonical_json_bytes(value=record),
         request_bytes=reader_bytes, provider_request_body_bytes=outbound, output_schema_bytes=schema,
@@ -516,6 +518,12 @@ def parse_scoped_invocation_candidate(*, response_body: bytes, execution_id: str
             raise LiveScopedReaderError("Scoped response must be exact bytes")
         attempt_id = "attempt:" + execution_id.split(":", maxsplit=1)[1]
         text = response_body.decode("utf-8")
+        original_digest = sha256_bytes(content=response_body)
+        from .cell_selection import REVISION, expand_response
+        projected = request._session._development is not None and request._session._development.interface_revision == REVISION
+        if projected:
+            text, _projection = expand_response(request=strict_json_loads(text=request.request_bytes.decode()),
+                response_text=text, scope=scope)
         proof = scope["source_bound_proof"]
         if proof is None:
             task = authority["task_contract"]
@@ -532,6 +540,8 @@ def parse_scoped_invocation_candidate(*, response_body: bytes, execution_id: str
                 task_contract=authority["task_contract"], _offline_context=source["evidence"])
         if candidate["disclosure_group"] != authority["task_contract"]["disclosure_group"]:
             raise LiveScopedReaderError("Scoped response disclosure task differs")
+        if projected:
+            candidate['assistant_output_sha256'] = original_digest
         return candidate
     except (ValueError, UnicodeError, KeyError, IndexError, TypeError) as error:
         raise SchemaViolationError("Native scoped Reader rejected the response") from error
@@ -547,7 +557,7 @@ def validate_scoped_invocation_acceptance(*, response_body: bytes, execution_id:
         from .scoped_reader import MODEL_RESPONSIBILITIES_V1
         prepared = prepare_scoped_reader_request_in_session(context=source["scoped"],
             source_scope_manifest_id=scope["source_scope_manifest_id"],
-            interface_revision=MODEL_RESPONSIBILITIES_V1 if request._session._development is not None else None)
+            interface_revision=request._session._development.interface_revision if request._session._development is not None else None)
         label_rule = bound_label_policy(request._session._requirement)
         checked = check_scoped_reader_response(prepared_request=prepared,
             response_text=response_body.decode("utf-8"),
@@ -566,11 +576,12 @@ def validate_scoped_invocation_acceptance(*, response_body: bytes, execution_id:
             "candidate_hash": candidate["candidate_hash"], "candidate_record": candidate,
             "evidence_check_id": evidence["evidence_check_id"], "evidence_record": evidence,
             "evidence_candidate_hash": evidence["candidate_hash"], "evidence_status": evidence["status"],
-            "validator_semantic_version": ("scoped-development-acceptance-v1" if request._session._development is not None
+            "validator_semantic_version": ("scoped-cell-selection-acceptance-v1" if request.identity.get('request_interface_revision')
+                else "scoped-development-acceptance-v1" if request._session._development is not None
                 else SCOPED_ACCEPTANCE_VERSION if label_rule == RAW_LABEL_POLICY
                 else "source-bound-scoped-reader-acceptance-v2"),
             "validator_semantic_hash": (content_hash(value={"parent":SCOPED_ACCEPTANCE_HASH,
-                "interface_revision":MODEL_RESPONSIBILITIES_V1, "label_policy":label_rule})
+                "interface_revision":request._session._development.interface_revision, "label_policy":label_rule})
                 if request._session._development is not None else SCOPED_ACCEPTANCE_HASH if label_rule == RAW_LABEL_POLICY
                 else content_hash(value={"parent":SCOPED_ACCEPTANCE_HASH,"label_policy":label_rule})),
         }
