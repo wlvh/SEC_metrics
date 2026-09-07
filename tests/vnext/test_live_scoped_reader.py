@@ -127,6 +127,7 @@ class LiveScopedEnvelopeTest(unittest.TestCase):
         # This pure ownership-branch test complements the real four-source
         # integration; it neither creates an authorization nor claims Evidence.
         session = object.__new__(LiveScopedReaderSession)
+        session._development = None
         session._factory, session._root = _SESSION_FACTORY, REPO_ROOT
         session._requirement, session._base_files, session._sources = {}, {}, {}
         session._authority = {"sources": {"not_applicable_source": {

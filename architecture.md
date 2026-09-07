@@ -96,9 +96,17 @@ instructions no longer apply to competing cells, and excluded candidates are
 distinguished from unresolved conflicts. Native Evidence does not clean model
 responses. The revision is persisted in offline attempts and rebuilt on disk
 replay. Historical requests and the formal 12-call executor retain their old
-bindings. This is an offline development interface, not a new live grant or
-Requirement engine; a proposed nine-sample diagnostic needs separately approved
-execution binding and failure-continuation rules before any provider call.
+bindings. The owner-approved nine-sample diagnostic uses `r4_development.py`
+through `diagnostic-plan/diagnostic-execute/diagnostic-replay` on the existing
+CLI. Its private implementation binding retains immutable v3 source semantics
+and pins current code separately, without a new Requirement engine. The same
+owner-comment capability, WB-3 reservation/opener, wire journal, native acceptance
+and disk replay execute each sample. Only complete, independently revalidated
+content failures permit continuation at both the loop and socket-adjacent gate;
+UNKNOWN, source/authority/usage or persistence failures stop. Atomic batch-start
+exclusion prevents duplicate starts. Diagnostic terminals and aggregates carry
+NONE credit and are rejected by formal qualification entrypoints. R3 bytes stay
+pinned; diagnostics never invoke Run freeze or publication.
 <!-- capability-anchor: CAPABILITY.r4_reader_development_interface -->
 
 ### PR-B dormant successor release seam

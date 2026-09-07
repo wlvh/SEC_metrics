@@ -29,8 +29,11 @@ receipt。新 v3 Requirement 已绑定 owner 批准的同位置 raw_text/text �
 
 R4 开发接口可明确区分模型要识别的口径与本地证明负责的口径；无需模型口径时，
 输出 Schema 要求空数组。竞争项期间说明不再复制目标期间，真实未决冲突仍阻断。
-新请求只走离线接受、保存与回放，原始付费响应仍是失败回归样本。
-本次未启用九次真实诊断：旧十二次授权不适用，正式失败即停规则与 active R3 保留。
+原始付费响应仍是失败回归样本。owner 已批准最多九次新开发诊断，使用
+`diagnostic-plan/diagnostic-execute/diagnostic-replay`；实际调用仍经真实 exact-head
+评论预检。每项显示 ACCEPTED、CONTENT_FAILED 或 STOP，全部无正式资格。
+内容失败必须封存完整并经独立重验才能继续；账本、持久化、来源、权限、用量异常
+或远端结果不明时停止，已启动计划不能重复启动。旧十二次授权不适用，active R3 保留。
 <!-- capability-anchor: CAPABILITY.r4_reader_development_interface -->
 
 `tools/vnext_r4_release.py`提供未来PR-C的stage/validate/publish/read-back/

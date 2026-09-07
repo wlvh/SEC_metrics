@@ -212,9 +212,9 @@
         "anchor_id": "CAPABILITY.r4_reader_development_interface",
         "type": "capability",
         "status": "active",
-        "statement": "独立离线请求revision按已验证source proof与table_disambiguation_dimensions划分模型/本地scope职责，使用每请求Schema约束；selected期间与competing自身期间、已排除候选与真实未决冲突明确区分。正常scoped acceptance、保存、原生Review/Calculator与新进程回放保留原始响应和NONE credit。历史请求默认、Requirement、formal十二次执行器及失败收尾不改；当前源码不冒充旧v3 execution绑定。最多九次真实开发诊断及内容失败后继续尚未授权、尚未接入live。",
+        "statement": "独立请求revision按已验证source proof及表内消歧要求划分模型/本地scope职责，区分selected与competing期间、已排除与真实未决项。owner批准的九项开发诊断通过既有CLI、真实owner-comment能力、WB-3 reservation/provider、原始wire与原生接受/回放运行；当前实现独立绑定，v3来源Requirement不改。只有完整封存且重新确认的内容失败可继续；UNKNOWN、用量、来源、权限、账本或持久化异常停止，重复启动拒绝。诊断terminal/aggregate均NONE credit，正式资格入口拒绝诊断plan；active R3不变。",
         "audience": ["developer", "reviewer"],
-        "test_anchor": "tests/vnext/test_r4_reader_responsibilities.py::R4ReaderResponsibilitiesTest.test_c_normal_accept_save_result_and_fresh_process_replay",
+        "test_anchor": "tests/vnext/test_r4_development_diagnostic.py::R4DevelopmentDiagnosticTest.test_nine_controller_samples_continue_content_only_and_independent_replay",
         "test_status": "automated_recorded",
         "since": "2026-09-07"
       }

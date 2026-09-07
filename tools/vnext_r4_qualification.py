@@ -45,9 +45,42 @@ def main(argv=None):
     execute.add_argument("--owner-comment-url", required=True)
     replay = sub.add_parser("replay", help="Independent disk replay and append-only replay receipt; no network")
     replay.add_argument("--plan-id", required=True)
+    sub.add_parser("diagnostic-plan", help="Prepare the approved nine development requests; no qualification credit")
+    diagnostic = sub.add_parser("diagnostic-execute", help="Run the approved diagnostic through the existing one-shot controller")
+    diagnostic.add_argument("--plan-id", required=True)
+    diagnostic.add_argument("--owner-comment-url", required=True)
+    diagnostic_replay = sub.add_parser("diagnostic-replay", help="Rebuild diagnostic terminals from disk; no provider/SEC")
+    diagnostic_replay.add_argument("--plan-id", required=True)
     args = parser.parse_args(argv)
     try:
-        if args.command == "draft":
+        if args.command.startswith('diagnostic-'):
+            from vnext.r4_development import diagnostic_implementation, prepare_diagnostic_context
+            from vnext.r4_development import build_diagnostic_plan, execute_diagnostic, replay_diagnostic
+            from vnext.r4_development import RUNTIME_ROOT as diagnostic_root
+            with diagnostic_implementation(REPO_ROOT):
+                context = prepare_diagnostic_context(REPO_ROOT)
+                if args.command == 'diagnostic-plan':
+                    result = build_diagnostic_plan(context)
+                    _exclusive_write_json(path=REPO_ROOT / diagnostic_root / 'plans' / (result['pending_plan_id'][7:]+'.json'), value=result)
+                else:
+                    _plan_path(args.plan_id)  # Same strict content-ID syntax.
+                    path = REPO_ROOT / diagnostic_root / 'plans' / (args.plan_id[7:]+'.json')
+                    if path.is_symlink() or not path.is_file():
+                        raise ValueError('Diagnostic plan is missing or unsafe')
+                    plan = strict_json_file(path=path)
+                    if plan.get('pending_plan_id') != args.plan_id:
+                        raise ValueError('Diagnostic plan path/content differ')
+                    if args.command == 'diagnostic-execute':
+                        owner = verify_r4_live_owner_comment(context=context, plan=plan, source_url=args.owner_comment_url)
+                        _exclusive_write_json(path=REPO_ROOT / diagnostic_root / 'authorizations'
+                            / (owner.receipt['receipt_id'][7:]+'.json'), value=owner.receipt)
+                        result = execute_diagnostic(context=context, plan=plan, owner=owner)
+                    else:
+                        result = replay_diagnostic(context, plan)
+                        from vnext.canonical import content_hash
+                        _exclusive_write_json(path=REPO_ROOT / diagnostic_root / 'replays'
+                            / (content_hash(value=result)[7:]+'.json'), value=result)
+        elif args.command == "draft":
             result = build_r4_draft_plan(repo_root=REPO_ROOT, requirement_id=CURRENT_R4_REQUIREMENT)
         elif args.command == "plan":
             result = build_r4_pending_live_plan(repo_root=REPO_ROOT)
@@ -77,7 +110,7 @@ def main(argv=None):
         print(json.dumps({"status": "BLOCKED", "error": str(error)}, ensure_ascii=False), file=sys.stderr)
         return 1
     print(json.dumps(result, ensure_ascii=False, sort_keys=True, indent=2))
-    return 0
+    return 1 if result.get('status') == 'STOPPED' else 0
 
 
 if __name__ == "__main__":
