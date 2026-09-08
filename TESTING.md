@@ -63,6 +63,31 @@ Fresh三轮必须按全family ordinal-major顺序执行：Occupancy 1 → RevPAR
 
 新freeze/Stage-A/packet生成后运行`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_table_stage_b_owner_packet -v`。测试从current pointer回读并按packet自己的UTC重建同一ID，要求旧packet仍存在；`OWNER_APPROVED`只含200k/full-table/family scope/shared drift，`STILL_UNDECIDED`五项均为null；context/census exact IDs、lodging/financial blockers、空live-ready set、NOT_RUN actual tokens、R2 active/309 rows/root equality与0/0/0 egress全部闭合，不得出现qualification/Issue completion claim。
 
+## 普通 B10 候选接入定向验收
+
+冻结本轮代码和新 snapshot 后，在 clean committed checkout 执行：
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_candidate -v
+```
+
+此组只模拟 `_github` 的外部批准来源和 DeepSeek opener 的 HTTP 返回；真实执行
+授权 validator、输入准备、catalog request、WB-3 reservation/terminal、Evidence、
+SYSTEM Review 和 Calculator。HTTP mock 使用仅与 FY2025 exact request 相等的
+历史 answer bytes 构造模拟新 envelope/usage，不能作为真实新响应或理解能力证明。
+测试中的 LIVE-shaped marker/counter 是模拟路径记录，不是项目真实付费调用。
+新进程重入通过独立 Python 子进程检验，禁止所有真实 socket connect。
+
+覆盖正常 B10 native Result、FY2024/FY2025 来源与计划区别、错误批准作者/内容/编辑、
+错误来源/期间/task/request/代码/Run/目录、qualification 许可互用拒绝、缺失/矛盾/
+超限 usage、内容失败、429 与 UNKNOWN 后单次 HTTP 上限、controller 证据缺失拒绝
+及正式 active/matrix/SEC ledger 不变。旧 qualification 和 controller 采用差异回归。
+所有模拟批准和业务候选仅在临时目录，不写真实激活、授权或历史记录。
+
+适用但未执行的真实步骤：新 Requirement exact-head 激活、独立一次调用批准、
+provider/paid 执行及实际 usage、真实候选内容检查。SEC 刷新、完整 qualification、
+正式发布及 full acceptance 均不属于本轮。历史冻结源码/响应/收据不为此重签。
+
 ## 保存的年度输入局部回归
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_input -v`

@@ -535,6 +535,8 @@ def _run_validation_artifacts(*, run_dir: Path) -> Dict[str, object]:
             expected.add(review_root + "/review_context.json")
             expected.add(review_root + "/review.md")
     manifest = _read_manifest(run_dir=run_dir)
+    if manifest["record_type"] == "SUCCESSOR_RUN" and manifest.get("requirement_id") == "issue_28_v4":
+        expected.add("annual_candidate_binding.json")
     if manifest["record_type"] == R4_SCOPED_RUN_TYPE:
         expected.update(binding["path"] for binding in
             manifest["r4_execution_binding"]["artifact_files"].values() if binding is not None)

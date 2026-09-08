@@ -14,6 +14,34 @@
 
 ## 0. 更新触发条件
 
+### 普通 B10 候选的受控执行
+
+`tools/vnext_annual_candidate.py plan --output-root <absolute-outside-checkout> --plan-file <external-json>`
+从 `annual_input` 正常选择保存年报，重建完整表集合及当前 catalog 请求，固定
+来源证明、实际期间、task/request、clean head/tree、Requirement 和隔离目录。
+指定 `--fiscal-year` 可核对历史输入；年度、accession 和表格位置不进入新政策。
+`execute` 只接受计划文件及两个真实 owner PR comment URL：先验证同一 open PR
+的 exact-head transition，再验证该计划最多一次执行的独立批准。JSON 计划和
+调用者自报的批准字段都不是运行能力；每个新进程重新核对真实 GitHub 来源。
+
+`requirement_profile_v5` 复用原有五文件、Decision、parent、transfer 与 activation
+校验，只新增 `ORDINARY_ANNUAL_CANDIDATE_POLICY`。`issue_28_v4` 当前为
+NOT_ACTIVATED。普通路径使用 native SUCCESSOR_RUN，旧资格路径继续原样分派。
+`annual_candidate → workflow.create_table_task_review_run → controlled adapter →
+successor WB-3 → 当前 lodging_occupancy_table_v2 → Evidence → SYSTEM Review →
+Calculator` 共用原实现。调用控制算法不变；仅提供普通政策身份和该模型的事前
+上下文硬上限，本次 actual input<=200000 是成功记录之前的必要接受条件。
+保守字节估算、payload/model/resource 限制不变；没有 measurement、裁表或重试。
+
+Run ID、目录和 controller namespace 从计划机械派生；相同批准重新加载或重启
+不能换坐标产生另一请求。有既存 Run 时只读取，未完成本地落盘也不触发第二次调用。
+原始响应、usage、Evidence、Review、Result/失败保持原生记录；Run 附带小型执行
+绑定，并重验同一 namespace 的原始 controller plan/egress/attempt/execution/response。
+候选保留 OPEN 状态；内部 Result PUBLISHED 不改变正式 active。新路径无 freeze
+资格、release 或 publication 入口。控制层兼容差异仅适用于普通候选；历史冻结
+校验不放宽，未变 Reader/解析/序列化/Spec/Evidence/审核/计算文件逐字节列入新政策。
+<!-- capability-anchor: CAPABILITY.ordinary_annual_b10_candidate -->
+
 ### 保存的年度原始材料输入准备
 
 `annual_input.prepare_annual_input(repo_root=..., company_id=..., fiscal_year=...)`
@@ -31,8 +59,8 @@ XBRL context 起止日交叉核对，不能将次年 filingDate 当成财年。
 旧 `build_release_input_plan(legacy_snapshot_dir=...)` 继续承担历史迁移。
 本地测试只在原 source/reader request/task/schema 逐字节一致时使用历史
 recorded 响应，并走现有 Evidence、D-06 SYSTEM Review 和 Calculator。
-LIVE catalog 入口仍由 qualification matrix 绑定 source/period/Run/目录，
-不能以这份输入替换其授权。没有新增发布包或 active 更新入口。
+LIVE qualification 入口仍由 matrix 绑定 source/period/Run/目录；普通 B10 另由
+上述 annual_candidate 执行计划和独立许可接入。annual_input 本身不授予调用许可。
 <!-- capability-anchor: CAPABILITY.saved_annual_input_candidate -->
 
 ### PR-B B0 successor offline interfaces
