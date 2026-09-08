@@ -47,6 +47,7 @@ ALLOWED_REPOSITORY_TRANSPORT_CALLERS = {
     ),
 }
 ALLOWED_REMOTE_ADAPTER_CONSTRUCTORS = {
+    ("scripts/vnext/ai_adapter.py", "build_annual_candidate_transport_adapter"),
     (
         "scripts/vnext/ai_adapter.py",
         "build_invocation_controlled_transport_adapter",

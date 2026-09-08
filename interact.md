@@ -5,9 +5,19 @@
 current submissions block内唯一未修订10-K；缺失、歧义、修订、跨补充
 分片或原始期间冲突均明确失败。函数不写正式结果，也不发起网络调用。
 Marriott recorded候选沿既有审核链产生；其中Result的 `PUBLISHED` 字段
-不代表候选已经进入正式active。独立新来源的LIVE调用仍须解决现有
-matrix/source/period授权绑定，不由此入口授予。
+不代表候选已经进入正式active。普通 B10 的 LIVE 调用另需 annual_candidate 的输入/执行绑定、
+exact-head 激活与独立的一次调用批准，不由此入口授予。
 <!-- capability-anchor: CAPABILITY.saved_annual_input_candidate -->
+
+开发者可用 `tools/vnext_annual_candidate.py plan` 生成未授权的普通 B10 计划。
+计划给出真实来源、期间、完整请求哈希/大小/估算、代码身份及外部隔离目录；
+它不查询 GitHub、不调用 SEC/provider、不签发许可。执行需要分别批准新
+Requirement 的 exact head 和该计划的一次模型请求；本轮尚未激活或调用。
+usage 缺失、矛盾、输入超200000或内容失败均停止，无额外请求。成功后只能读取
+本次已存结果；同一计划的失败/未知/本地落盘未完成也不会自动新增执行。
+候选的原始响应、usage、原生 Run 和调用记录保存在计划固定的外部目录。
+它没有资格或正式发布信用，不更新 active，也不声称在线发现或未见材料泛化。
+<!-- capability-anchor: CAPABILITY.ordinary_annual_b10_candidate -->
 
 ## 1. 文档关系与读者
 

@@ -275,6 +275,39 @@ def _prepare_successor_invocation_authority_from_requirement(
         identity=identity, policy=bound_policy, transport=transport["choice"], files=files)
 
 
+def prepare_annual_candidate_invocation_authority(*, requirement, repo_root):
+    """Use the same successor controller policy shape for the ordinary kind."""
+    from .requirement_profile_v5 import REQUIREMENT_ID, DECISION_ID, candidate_choice
+    from .requirement_profile import validate_execution_authority, requirement_authority_paths
+    from .sources import resolve_repository_file
+    if requirement["requirement_id"] != REQUIREMENT_ID or repo_root.resolve() != _REPOSITORY_ROOT:
+        raise InvocationControlError("Ordinary candidate Requirement differs")
+    validate_execution_authority(repo_root=repo_root, requirement=requirement)
+    decisions = requirement["effective_decisions"]
+    choice = candidate_choice(choice=decisions[DECISION_ID]["choice"])
+    identity = {"artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "requirement_id": REQUIREMENT_ID, "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "requirement_hashes": requirement["hashes"]}
+    policy = {"provider_transport_decision_hash": content_hash(value=decisions["S-PROVIDER-TRANSPORT"]),
+        "transport_retry_decision_hash": content_hash(value=decisions["S-TRANSPORT-RETRY"]),
+        "live_call_bound_decision_hash": content_hash(value=decisions[DECISION_ID]),
+        "automatic_retry_count": choice["automatic_retry_count"], "response_reuse_authorized": False,
+        "requirement_closure_hash": requirement["requirement_closure_hash"]}
+    files = {}
+    for relative in requirement_authority_paths(repo_root=repo_root, requirement=requirement):
+        data = resolve_repository_file(repo_root=repo_root, repo_relative_path=relative).read_bytes()
+        files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
+    from .provider_runtime import load_provider_runtime_authority
+    transport = dict(decisions["S-PROVIDER-TRANSPORT"]["choice"])
+    runtime = load_provider_runtime_authority(repo_root=repo_root,
+        **{key:transport[key] for key in ("provider", "model", "api")})
+    # This ordinary policy keeps the model's pre-egress hard limit. The new
+    # response's actual 200000-input-token acceptance gate lives in the adapter.
+    transport["pre_execution_context_tokens_max"] = runtime["maximum_context_tokens"]
+    return SuccessorInvocationAuthority(factory=_SUCCESSOR_AUTHORITY_FACTORY, root=repo_root,
+        identity=identity, policy=policy, transport=transport, files=files)
+
+
 def prepare_successor_invocation_authority(
     *, repo_root: Path, requirement_id: str = "issue_28_v2",
 ) -> SuccessorInvocationAuthority:
@@ -871,7 +904,7 @@ def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, obje
         raise InvocationControlError("Resource limits are invalid")
     if successor and (
         any(value[field] != successor_transport[field] for field in ("provider", "model", "api"))
-        or limits["maximum_context_tokens"] != 200000
+        or limits["maximum_context_tokens"] != successor_transport.get("pre_execution_context_tokens_max", 200000)
         or limits["maximum_payload_bytes"] != successor_transport["maximum_payload_bytes"]
     ):
         raise InvocationControlError("Successor invocation transport/resource policy differs")

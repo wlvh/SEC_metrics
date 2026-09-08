@@ -549,6 +549,7 @@ class InvocationControllerContext:
     workspace_dir: Path
     owner_token: str
     qualification_usage_policy: Optional[Mapping[str, object]] = None
+    annual_candidate_authorization: Optional[object] = None
 
     def __post_init__(self) -> None:
         """Reject incomplete controller coordinates before source replay."""
@@ -561,6 +562,13 @@ class InvocationControllerContext:
             raise AIAdapterError("Invocation workspace is unsafe")
         if not isinstance(self.owner_token, str) or not self.owner_token:
             raise AIAdapterError("Invocation owner token is invalid")
+        if self.annual_candidate_authorization is not None:
+            from .annual_candidate import authorization_fields
+            fields = authorization_fields(self.annual_candidate_authorization)
+            if (self.qualification_usage_policy is not None
+                    or self.release_input_plan_id != fields["plan"]["plan_id"]
+                    or self.workspace_dir != fields["workspace_dir"] or self.owner_token != fields["owner_token"]):
+                raise AIAdapterError("Ordinary candidate controller coordinates differ")
         usage_policy = self.qualification_usage_policy
         if usage_policy is not None:
             if (
@@ -2323,10 +2331,20 @@ class _InvocationControllerTransport:
             raise AIAdapterError(
                 "Qualification provider request differs from context gate"
             )
+        before_socket = None
+        if context is not None and context.annual_candidate_authorization is not None:
+            from .annual_candidate import authorization_fields
+            def before_socket():
+                fields = authorization_fields(context.annual_candidate_authorization)
+                if (attempt_ordinal != 1 or plan["release_input_plan_id"] != fields["plan"]["plan_id"]
+                        or plan["provider_request_body_sha256"] != fields["plan"]["request"]["provider_request_body_sha256"]):
+                    raise AIAdapterError("Ordinary candidate request differs before socket")
+            before_socket()
         try:
             result = self.adapter._complete_repository_transport(
                 prepared_request=self.prepared_request,
                 egress_capability=_RESERVATION_OWNER_EGRESS_CAPABILITY,
+                **({"before_socket_open": before_socket} if before_socket is not None else {}),
             )
             self.last_result = result
             self.last_error = None
@@ -2344,6 +2362,9 @@ class _InvocationControllerTransport:
                 )
                 if qualification_policy is not None else ""
             )
+            if context is not None and context.annual_candidate_authorization is not None:
+                from .annual_candidate import usage_error as candidate_usage_error
+                usage_error = candidate_usage_error(result.raw_response_bytes)
             return {
                 "status_code": 200 if not usage_error else 0,
                 "error_class": usage_error,
@@ -2714,7 +2735,25 @@ def _execute_controlled_transport(
             outbound_request_bytes=outbound,
             output_schema_bytes=output_schema,
         )
-    invocation_plan = build_ai_invocation_plan(
+    build_plan = build_ai_invocation_plan
+    execute_plan = execute_invocation
+    load_response = load_successful_response
+    if context.annual_candidate_authorization is not None:
+        from functools import partial
+        from .annual_candidate import authorization_fields
+        from .invocation_control import (prepare_annual_candidate_invocation_authority,
+            build_successor_ai_invocation_plan, execute_successor_invocation, load_successor_successful_response)
+        fields = authorization_fields(context.annual_candidate_authorization)
+        if sha256_bytes(content=outbound) != fields["plan"]["request"]["provider_request_body_sha256"]:
+            raise AIAdapterError("Ordinary candidate exact request differs")
+        authority = prepare_annual_candidate_invocation_authority(
+            requirement=fields["requirement"], repo_root=_REPOSITORY_ROOT)
+        build_plan = partial(build_successor_ai_invocation_plan, repo_root=_REPOSITORY_ROOT,
+                             requirement_id=fields["requirement"]["requirement_id"], authority=authority)
+        execute_plan = partial(execute_successor_invocation, repo_root=_REPOSITORY_ROOT, authority=authority)
+        load_response = partial(load_successor_successful_response, repo_root=_REPOSITORY_ROOT, authority=authority)
+        authorized_at_utc = fields["authorized_at_utc"]
+    invocation_plan = build_plan(
         release_input_plan_id=context.release_input_plan_id,
         source_identity_hash=str(
             prepared["manifest"]["reader_input_manifest_id"]
@@ -2767,7 +2806,7 @@ def _execute_controlled_transport(
         prepared_request=prepared_request,
         outbound_request_bytes=outbound,
     )
-    execution = execute_invocation(
+    execution = execute_plan(
         workspace_dir=context.workspace_dir,
         plan=invocation_plan,
         request_body=outbound,
@@ -2791,7 +2830,7 @@ def _execute_controlled_transport(
         ),
     )
     if execution["status"] in {"SUCCEEDED", "REUSED_SUCCESS"}:
-        reusable = load_successful_response(
+        reusable = load_response(
             workspace_dir=context.workspace_dir, plan=invocation_plan,
         )
         response_body = reusable["response_body"]
@@ -2895,6 +2934,16 @@ def build_invocation_controlled_transport_adapter(
             owner_token=owner_token,
         ),
     )
+
+
+def build_annual_candidate_transport_adapter(*, authorization: object) -> AIAdapter:
+    """Build the existing transport only from verified ordinary candidate authority."""
+    from .annual_candidate import authorization_fields
+    fields = authorization_fields(authorization)
+    return _ApprovedTransportAdapter(authority=_ADAPTER_AUTHORITY,
+        invocation_context=InvocationControllerContext(
+            release_input_plan_id=fields["plan"]["plan_id"], workspace_dir=fields["workspace_dir"],
+            owner_token=fields["owner_token"], annual_candidate_authorization=authorization))
 
 
 def build_table_qualification_transport_adapter(

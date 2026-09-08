@@ -1824,6 +1824,13 @@ def validate_table_qualification_run_bindings(
     records: Sequence[Mapping[str, object]],
 ) -> None:
     """Revalidate persisted catalog-LIVE authority and its sole evidence path."""
+    if manifest.get("record_type") == "SUCCESSOR_RUN" and manifest.get("requirement_id") == "issue_28_v4":
+        from .annual_candidate import validate_run_binding, AnnualCandidateError
+        try:
+            validate_run_binding(repo_root=repo_root, run_dir=run_dir, manifest=manifest, records=records)
+        except (AnnualCandidateError, ValueError) as error:
+            raise QualificationError(code="ORDINARY_CANDIDATE_BINDING_INVALID", message=str(error)) from error
+        return
     authorization = manifest.get("qualification_authorization")
     attempts = [
         record for record in records

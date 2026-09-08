@@ -8,6 +8,7 @@ from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
 from .ai_adapter import READER_OUTPUT_JSON_SCHEMA, approved_transport_policy
+from .ai_adapter import approved_scoped_transport_policy
 from .ai_adapter import build_provider_request_body
 from .ai_adapter import transport_observation_mismatch
 from .canonical import atomic_write_bytes, atomic_write_json, content_hash
@@ -535,6 +536,8 @@ def _run_validation_artifacts(*, run_dir: Path) -> Dict[str, object]:
             expected.add(review_root + "/review_context.json")
             expected.add(review_root + "/review.md")
     manifest = _read_manifest(run_dir=run_dir)
+    if manifest["record_type"] == "SUCCESSOR_RUN" and manifest.get("requirement_id") == "issue_28_v4":
+        expected.add("annual_candidate_binding.json")
     if manifest["record_type"] == R4_SCOPED_RUN_TYPE:
         expected.update(binding["path"] for binding in
             manifest["r4_execution_binding"]["artifact_files"].values() if binding is not None)
@@ -1578,6 +1581,13 @@ def _structured_concepts(
     return sorted(set(concepts))
 
 
+def _run_transport_policy(*, requirement):
+    """Read the explicit ordinary successor's carried transport Decision."""
+    if requirement.get("requirement_id") == "issue_28_v4":
+        return approved_scoped_transport_policy(requirement=requirement)
+    return approved_transport_policy(requirement=requirement)
+
+
 def _validate_successful_attempt_transport(
     *,
     attempt: Mapping[str, object],
@@ -1631,7 +1641,7 @@ def _validate_successful_attempt_transport(
             )
         return
     try:
-        policy = approved_transport_policy(requirement=requirement)
+        policy = _run_transport_policy(requirement=requirement)
     except AIAdapterError as error:
         raise RunStoreError(
             "Successful remote attempt lacks approved D-01"
@@ -2310,7 +2320,7 @@ def _validate_record_graph(
             value=attempt["transport_observation"]
         )
         if observation.egress_attempted:
-            policy = approved_transport_policy(requirement=requirement)
+            policy = _run_transport_policy(requirement=requirement)
             expected_request, expected_schema = (
                 build_provider_request_body(
                     policy=policy,

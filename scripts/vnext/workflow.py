@@ -569,6 +569,7 @@ def create_table_task_review_run(
     adapter: AIAdapter,
     clock: Optional[Callable[[], datetime]],
     qualification_authorization: Optional[object] = None,
+    candidate_authorization: Optional[object] = None,
     resume_existing: bool = False,
 ) -> Dict[str, object]:
     """Create one formal single-table catalog task Run.
@@ -589,7 +590,9 @@ def create_table_task_review_run(
         task_contract_id: Explicit matrix-authorized catalog single-table task.
         adapter: Recorded or repository-approved AI transport.
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
-        qualification_authorization: Opaque authority required for LIVE use.
+        qualification_authorization: Opaque qualification-only LIVE authority.
+        candidate_authorization: Verified ordinary-candidate authority; mutually
+            exclusive with qualification authorization and recovery mode.
         resume_existing: Internal executor-only opt-in to materialize an
             interrupted deterministic LIVE qualification Run in place.
 
@@ -637,6 +640,7 @@ def create_table_task_review_run(
         clock=clock,
         task_contract_id=task_contract_id,
         qualification_authorization=qualification_authorization,
+        candidate_authorization=candidate_authorization,
         resume_existing=resume_existing,
     )
 
@@ -922,6 +926,7 @@ def _create_review_run_with_traits(
     clock: Optional[Callable[[], datetime]],
     task_contract_id: Optional[str],
     qualification_authorization: Optional[object] = None,
+    candidate_authorization: Optional[object] = None,
     resume_existing: bool = False,
 ) -> Dict[str, object]:
     """Create one OPEN Run from already repository-resolved company traits.
@@ -945,8 +950,8 @@ def _create_review_run_with_traits(
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
         task_contract_id: Explicit catalog task identity, or ``None`` only for
             the retained historical disclosure-group path.
-        qualification_authorization: Opaque current repository authorization
-            required before a LIVE catalog task can read source bytes.
+        qualification_authorization: Qualification-only authority for LIVE catalog tasks.
+        candidate_authorization: Separately verified ordinary-candidate permission.
         resume_existing: Internal deterministic-terminal recovery mode.  It
             is accepted only for a LIVE catalog task carrying the same
             module-revalidated qualification authorization.
@@ -964,6 +969,19 @@ def _create_review_run_with_traits(
         raise WorkflowError("Qualification recovery mode is invalid")
     task_run_bindings = []
     qualification_binding = None
+    candidate_fields = None
+    if candidate_authorization is not None:
+        from .annual_candidate import validate_workflow_authorization
+        if qualification_authorization is not None or adapter_mode != "LIVE" or resume_existing:
+            raise WorkflowError("CANDIDATE_AUTHORIZATION_PURPOSE_MISMATCH")
+        candidate_fields = validate_workflow_authorization(
+            authorization=candidate_authorization, adapter=adapter, repo_root=repo_root,
+            run_dir=run_dir, run_id=run_id, task_contract_id=task_contract_id,
+            company_id=company_id, target_period=dict(target_period), source_repo_relative_path=source_repo_relative_path,
+            source_media_type=source_media_type, source_url=source_url, accession=accession,
+            document_name=document_name, source_role=source_role, request_attempt_id=request_attempt_id)
+    elif getattr(getattr(adapter, "invocation_context", None), "annual_candidate_authorization", None) is not None:
+        raise WorkflowError("CANDIDATE_WORKFLOW_AUTHORIZATION_REQUIRED")
     if task_contract_id is None:
         compiled_spec, spec_paths, metric_specs = _load_disclosure_plan(
             repo_root=repo_root,
@@ -985,7 +1003,7 @@ def _create_review_run_with_traits(
             task_plan["runtime_task_contract"]["metric_spec_paths"]
         )
         task_run_bindings = [task_plan["run_binding"]]
-        if adapter_mode == "LIVE":
+        if adapter_mode == "LIVE" and candidate_fields is None:
             try:
                 qualification_binding = (
                     validate_live_table_qualification_authorization(
@@ -1029,10 +1047,11 @@ def _create_review_run_with_traits(
         relative: sha256_file(path=repo_root / relative)
         for relative in spec_paths
     }
-    requirement = load_run_requirement_snapshot(
-        repo_root=repo_root,
-        task_contract_bindings=task_run_bindings,
-    )
+    requirement = (candidate_fields["requirement"] if candidate_fields is not None else load_run_requirement_snapshot(
+        repo_root=repo_root, task_contract_bindings=task_run_bindings))
+    successor_identity = ({"artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "requirement_id": requirement["requirement_id"],
+        "requirement_closure_hash": requirement["requirement_closure_hash"]} if candidate_fields is not None else {})
     if not required_traits.issubset(supplied_traits) or (
         forbidden_traits & supplied_traits
     ):
@@ -1079,7 +1098,7 @@ def _create_review_run_with_traits(
             spec_file_hashes=spec_file_hashes,
             requirement_hashes=requirement["hashes"],
             task_contract_bindings=task_run_bindings,
-            qualification_authorization=qualification_binding,
+            qualification_authorization=qualification_binding, **successor_identity,
         )
         for record in records:
             append_run_record(run_dir=run_dir, record=record)
@@ -1169,8 +1188,11 @@ def _create_review_run_with_traits(
             spec_file_hashes=spec_file_hashes,
             requirement_hashes=requirement["hashes"],
             task_contract_bindings=task_run_bindings,
-            qualification_authorization=qualification_binding,
+            qualification_authorization=qualification_binding, **successor_identity,
         )
+        if candidate_fields is not None:
+            from .annual_candidate import write_run_binding
+            write_run_binding(run_dir=run_dir, authorization=candidate_authorization)
     _ensure_open_run_record(
         run_dir=run_dir, existing_records=existing_records, record=raw_blob,
     )
@@ -1577,6 +1599,10 @@ def finalize_reviewed_direct_results(
             requirement = load_run_requirement_snapshot(
                 repo_root=repo_root,
                 task_contract_bindings=task_contract_bindings,
+                record_type=manifest["record_type"], requirement_id=manifest.get("requirement_id"),
+                requirement_closure_hash=manifest.get("requirement_closure_hash"),
+                requirement_hashes=manifest["requirement_hashes"],
+                artifact_requirement_generation=manifest.get("artifact_requirement_generation"),
             )
             system_decision = create_system_review_decision(
                 review_unit=unit,

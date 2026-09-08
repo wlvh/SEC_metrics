@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.ordinary_annual_b10_candidate",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通annual_candidate计划固定annual_input来源/实际期间、完整catalog B10请求、clean代码、Requirement和外部隔离Run；真实GitHub exact-head激活与独立owner批准后才可进入既有successor WB-3零重试控制、Evidence/SYSTEM Review/Calculator。当前issue_28_v4未激活且无调用许可。actual input<=200000及一致usage是接受条件；旧资格许可不可借用，成功/失败/UNKNOWN重入不新增执行，无qualification或publication信用。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_annual_candidate.py::AnnualCandidateTest.test_success_native_chain_and_new_process_reentry",
+        "test_status": "automated_recorded",
+        "since": "2026-09-08"
+      },
+      {
         "anchor_id": "CAPABILITY.saved_annual_input_candidate",
         "type": "capability",
         "status": "active",
