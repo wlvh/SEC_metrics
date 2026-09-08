@@ -16,6 +16,7 @@ from unittest import mock
 
 from vnext import annual_runtime as runtime, annual_update as update
 from vnext.canonical import sha256_bytes
+from vnext.batch_workflow import BatchWorkflowError
 from tests.vnext.test_annual_update import OLD_RUN
 from tests.vnext.test_annual_candidate import provider_boundary
 
@@ -165,7 +166,9 @@ print('NEW_PROCESS_ZERO_HTTP')
         )
         original = source.read_bytes()
         source.write_bytes(original + b"\n")
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegex(
+            BatchWorkflowError, "Request-ledger locator evidence is invalid"
+        ):
             self.plan()
         source.write_bytes(original)
         self.comment["user"]["login"] = "not-owner"
@@ -208,6 +211,40 @@ print('NEW_PROCESS_ZERO_HTTP')
         result = runtime.run_update(approval_url=URL)
         self.assertEqual("STAGE_STOPPED", result["status"])
         self.assertEqual([0, 0, 0], result["stage_provider_paid_sec_calls"])
+
+    def test_missing_key_preserves_stage_slot_and_old_success(self):
+        with mock.patch.dict(os.environ, {"DEEPSEEK_API_KEY": ""}):
+            result = runtime.run_update(approval_url=URL)
+        self.assertEqual("STAGE_BLOCKED", result["status"])
+        self.assertEqual("DEEPSEEK_API_KEY_REQUIRED", result["error"])
+        self.assertEqual([0, 0, 0], result["stage_provider_paid_sec_calls"])
+        self.assertFalse(
+            (Path(self.stage["stage_root"]) / "execution-slot.json").exists()
+        )
+        with mock.patch.dict(
+            os.environ, {"DEEPSEEK_API_KEY": "test-only-not-a-secret"}
+        ):
+            self.assertEqual("", runtime._credential_error())
+
+    def test_runtime_wrapper_cannot_use_generic_adapter(self):
+        from vnext.ai_adapter import (
+            build_invocation_controlled_transport_adapter,
+            run_ai_attempt,
+        )
+
+        authorization = runtime.RuntimeAuthorization(
+            factory=runtime._FACTORY, binding={}
+        )
+        request = runtime._RuntimeLiveRequest(
+            factory=runtime._FACTORY, request=object(), authorization=authorization
+        )
+        adapter = build_invocation_controlled_transport_adapter(
+            release_input_plan_id="sha256:" + "a" * 64,
+            workspace_dir=self.root / "unrelated-controller",
+            owner_token="test-only-owner",
+        )
+        with self.assertRaisesRegex(ValueError, "RUNTIME_REQUEST_ADAPTER_MISMATCH"):
+            run_ai_attempt(adapter=adapter, prepared_request=request, clock=None)
 
     def test_uncommitted_new_input_bytes_do_not_change_code_identity(self):
         import sec_http

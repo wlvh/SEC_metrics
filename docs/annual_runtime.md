@@ -11,7 +11,8 @@ Evidence、SYSTEM Review 和 Calculator 的业务语义不变。B01 的原生入
 ## 运行入口
 
 以下目录均须为原 checkout 外的绝对路径。`initialize` 只复制当前已保存输入，
-不会访问 SEC，也不会创建另一个开发 checkout。
+不会访问 SEC，也不会创建另一个开发 checkout。缺少模型凭据时明确返回
+`STAGE_BLOCKED / DEEPSEEK_API_KEY_REQUIRED`，调用为0，且不消耗阶段执行名额。
 
 ```bash
 python3 tools/vnext_annual_runtime.py initialize \

@@ -822,6 +822,17 @@ def _exclusive_slot(stage, plan):
         os.fsync(out.fileno())
 
 
+def _credential_error():
+    """Missing local credentials do not consume the stage's execution slot."""
+    from .ai_adapter import _load_transport_policy, api_key_environment_name
+    from .ai_adapter import api_key_required_error_code
+
+    policy, _ = _load_transport_policy()
+    if not os.environ.get(api_key_environment_name(policy=policy), "").strip():
+        return api_key_required_error_code(policy=policy)
+    return ""
+
+
 def run_update(*, approval_url):
     """Inspect, prepare, execute if needed, and retain explicit candidate refs."""
     from .ai_adapter import build_annual_candidate_transport_adapter
@@ -923,6 +934,15 @@ def run_update(*, approval_url):
         plan["prepared_input"] == report["prepared_input"],
         "RUNTIME_INPUT_CHANGED_DURING_CHECK",
     )
+    credential_error = _credential_error()
+    if credential_error:
+        report.update(
+            status="STAGE_BLOCKED",
+            execution="NOT_EXECUTED",
+            error=credential_error,
+            stage_provider_paid_sec_calls=stage_counts(root),
+        )
+        return report
     _exclusive_slot(stage, plan)
     _copy_inputs(
         source_root=Path(stage["data_root"]),
