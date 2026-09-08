@@ -152,6 +152,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `scripts/vnext/annual_update.py` / `tools/vnext_annual_update.py`：Marriott 年报申报身份检查、显式历史成功/正式对照及受限来源刷新；默认离线，新输入经原有 annual_input 准备，最多可生成未授权普通候选计划。真实 SEC 需另行许可，清单1次、条件式缺少来源至多2次、retry=0；不执行指标、不改变active。入口与示例见 `docs/annual_update.md`。
 - `scripts/vnext/annual_input.py`：只读准备连续primary实体、日历财年、current submissions block内唯一未修订10-K的既有Run入口参数；用原始DEI/context核对期间、复用request ledger绑定，不读取旧结果，不提供LIVE授权或发布。
 - `scripts/vnext/annual_candidate.py` / `tools/vnext_annual_candidate.py`：普通 B10 的未授权计划、真实 owner comment 核对与原生执行接线；仅隔离候选，无 qualification/publication credit。`requirement_profile_v5.py` 在既有注册表增加该政策类型，`issue_28_v4` 仍未激活。
 
