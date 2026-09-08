@@ -971,7 +971,7 @@ def _create_review_run_with_traits(
     qualification_binding = None
     candidate_fields = None
     if candidate_authorization is not None:
-        from .annual_candidate import validate_workflow_authorization
+        from .candidate_permission import validate_workflow_authorization
         if qualification_authorization is not None or adapter_mode != "LIVE" or resume_existing:
             raise WorkflowError("CANDIDATE_AUTHORIZATION_PURPOSE_MISMATCH")
         candidate_fields = validate_workflow_authorization(
@@ -1191,7 +1191,7 @@ def _create_review_run_with_traits(
             qualification_authorization=qualification_binding, **successor_identity,
         )
         if candidate_fields is not None:
-            from .annual_candidate import write_run_binding
+            from .candidate_permission import write_run_binding
             write_run_binding(run_dir=run_dir, authorization=candidate_authorization)
     _ensure_open_run_record(
         run_dir=run_dir, existing_records=existing_records, record=raw_blob,
@@ -1249,6 +1249,9 @@ def _create_review_run_with_traits(
         if adapter_mode == "LIVE"
         else prepared_request
     )
+    if candidate_authorization is not None:
+        from .candidate_permission import wrap_live_request
+        attempt_request = wrap_live_request(authorization=candidate_authorization, request=attempt_request)
     reader_payload_body = strict_json_loads(
         text=prepared_request.request_bytes.decode("utf-8")
     )
