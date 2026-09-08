@@ -326,15 +326,23 @@ def _validate_controller_terminal(*, binding, attempt, run_dir):
         _require(invocation["release_input_plan_id"] == plan["plan_id"]
             and invocation["provider_request_body_sha256"] == plan["request"]["provider_request_body_sha256"]
             and invocation["source_identity_hash"] == plan["request"]["reader_input_manifest_id"]
-            and invocation["selected_representation_hash"] == plan["request"]["derived_asset_id"],
+            and invocation["selected_representation_hash"] == plan["request"]["derived_asset_id"]
+            and invocation["task_contract_hash"] == "sha256:" + attempt["task_contract_sha256"]
+            and invocation["output_schema_hash"] == "sha256:" + attempt["output_schema_sha256"],
             "CANDIDATE_CONTROLLER_PLAN_MISMATCH")
         execution_id = controller.execution_identity(ai_invocation_plan_id=invocation["ai_invocation_plan_id"],
             owner_token=plan["plan_id"], authorized_at_utc=binding["owner_comment"]["created_at"])
         receipt = controller._load_execution_receipt(root=root,
             path=controller._execution_path(root=root, execution_id=execution_id), execution_id=execution_id)
         markers = controller._egress_markers_for_execution(root=root, execution_id=execution_id)
-        _require(len(markers) == 1 and markers[0]["attempt_ordinal"] == 1,
-                 "CANDIDATE_CONTROLLER_EGRESS_COUNT_INVALID")
+        _require(receipt["ai_invocation_plan_id"] == invocation["ai_invocation_plan_id"]
+            and receipt["provider_request_identity"] == invocation["provider_request_identity"]
+            and receipt["authorized_at_utc"] == binding["owner_comment"]["created_at"]
+            and len(markers) == 1 and markers[0]["attempt_ordinal"] == 1
+            and markers[0]["ai_invocation_plan_id"] == invocation["ai_invocation_plan_id"]
+            and markers[0]["provider_request_identity"] == invocation["provider_request_identity"]
+            and receipt["counters"] == controller._counters_from_egress_markers(markers=markers, plan=invocation),
+            "CANDIDATE_CONTROLLER_EGRESS_BINDING_INVALID")
         if attempt["status"] == "SUCCEEDED":
             saved = controller.load_successful_response(workspace_dir=workspace, plan=invocation)
             _require(receipt["status"] == "SUCCEEDED" and len(receipt["attempts"]) == 1
@@ -371,14 +379,14 @@ def execute_candidate(*, plan, authorization):
     """Enter the existing workflow, or return a saved local terminal without egress."""
     from .ai_adapter import build_annual_candidate_transport_adapter
     from .workflow import create_table_task_review_run, finalize_reviewed_direct_results
-    from .run_store import load_open_run
+    from .run_store import _mechanically_replay_open_run
     fields = authorization_fields(authorization)
     _require(fields["plan"] == plan, "CANDIDATE_EXECUTION_PLAN_MISMATCH")
     run_dir = fields["run_dir"]
     if run_dir.exists():
-        manifest, records, _ = load_open_run(run_dir=run_dir)
-        validate_run_binding(repo_root=REPO_ROOT, run_dir=run_dir, manifest=manifest, records=records)
-        # Partial local materialization is inspectable, never grounds for another request.
+        _mechanically_replay_open_run(run_dir=run_dir, repo_root=REPO_ROOT, require_complete_results=False)
+        # Incomplete/corrupt local materialization may reject read-back; neither
+        # case authorizes another request. Original records remain available.
         return candidate_status(plan=plan, status="SAVED_RUN_ONLY")
     adapter = build_annual_candidate_transport_adapter(authorization=authorization)
     created = create_table_task_review_run(repo_root=REPO_ROOT, run_dir=run_dir, run_id=fields["run_id"],
@@ -401,4 +409,3 @@ def candidate_status(*, plan, status):
             for r in records if r["record_type"] == "AI_EXTRACTION_ATTEMPT"],
         "results": [r for r in records if r["record_type"] == "METRIC_RESULT"],
         "reviewers": [d["reviewer_type"] for d in decisions]}
-

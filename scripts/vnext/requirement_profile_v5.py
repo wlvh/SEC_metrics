@@ -14,7 +14,7 @@ REQUIREMENT_ID = "issue_28_v4"
 PARENT_ID = "issue_28_v3"
 DECISION_ID = "S-ANNUAL-CANDIDATE"
 POLICY_PATH = "docs/evidence/issue_28_annual_candidate_policy.json"
-POLICY_SHA256 = "3b2b14cbbab41261713ab0004ff67b2cb3cf7cf69ce5bfef004769104f31f1fa"
+POLICY_SHA256 = "ad5aecf0352358e433a0fceb3a311d560571b2b4a7ce5b36c9305a6f13130946"
 DEPENDENCIES = (Path(v1.__file__), Path(v3.__file__), Path(v4.__file__), Path(canonical.__file__))
 
 

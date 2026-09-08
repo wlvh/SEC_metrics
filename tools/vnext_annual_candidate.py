@@ -26,6 +26,8 @@ def main(argv=None):
         if args.command == "plan":
             from vnext.annual_candidate import _output_root
             _output_root(args.plan_file.absolute().parent)
+            if args.plan_file.is_symlink():
+                raise ValueError("CANDIDATE_PLAN_FILE_ALIAS_FORBIDDEN")
             pending = prepare_candidate_plan(output_root=args.output_root, fiscal_year=args.fiscal_year)
             if args.plan_file.exists() and strict_json_file(path=args.plan_file) != pending:
                 raise ValueError("CANDIDATE_PLAN_FILE_ALREADY_EXISTS")

@@ -72,10 +72,13 @@ def provider_boundary(plan, *, usage='valid', failure=None, bad_content=False):
     elif usage == 'inconsistent':
         envelope['usage']={'prompt_tokens':160000,'completion_tokens':500,'total_tokens':160501}
     raw = canonical_json_bytes(value=envelope)
+    errors = []
     def http(*, fullurl, timeout):
         assert fullurl.data == expected, 'Mock response cannot be rebound to another request'
         if failure == '429':
-            raise HTTPError(fullurl.full_url,429,'test retryable response',{},io.BytesIO(b'{"error":"test-only"}'))
+            error=HTTPError(fullurl.full_url,429,'test retryable response',{},io.BytesIO(b'{"error":"test-only"}'))
+            errors.append(error)
+            raise error
         if failure == 'unknown':
             raise OSError('test-only connection lost after egress')
         result = io.BytesIO(raw);result.headers={'x-request-id':'mock-http-ordinary-b10'}
@@ -83,7 +86,10 @@ def provider_boundary(plan, *, usage='valid', failure=None, bad_content=False):
     with mock.patch.object(socket.socket,'connect',side_effect=AssertionError('REAL_NETWORK_FORBIDDEN')), \
          mock.patch.dict(os.environ,{'DEEPSEEK_API_KEY':'test-only-not-a-secret'}), \
          mock.patch.object(ai_adapter._DEEPSEEK_OPENER,'open',side_effect=http) as opened:
-        yield opened
+        try:
+            yield opened
+        finally:
+            for error in errors:error.close()
 
 
 class AnnualCandidateTest(unittest.TestCase):
@@ -107,6 +113,10 @@ class AnnualCandidateTest(unittest.TestCase):
         self.assertNotEqual(current['request']['provider_request_body_sha256'],previous['request']['provider_request_body_sha256'])
         self.assertGreater(current['request']['estimated_context_tokens'],200000)
         self.assertEqual(current['request']['provider_request_bytes'],current['request']['estimated_context_tokens'])
+        successor=candidate._requirement()
+        parent=load_requirement_snapshot(snapshot_dir=REPO_ROOT/'requirements/issue_15_v1')
+        self.assertEqual(ai_adapter.approved_transport_policy(requirement=parent),
+                         ai_adapter.approved_scoped_transport_policy(requirement=successor))
         self.assertEqual('NOT_ACTIVATED',candidate._requirement()['activation_state'])
         self.assertFalse(candidate.execution_paths(current)[0].exists())
 
@@ -148,6 +158,19 @@ print('NEW_PROCESS_ZERO_HTTP')
         self.assertEqual(0,checked.returncode,checked.stdout+checked.stderr)
         self.assertIn('NEW_PROCESS_ZERO_HTTP',checked.stdout)
         self.assertEqual(before,[p.read_bytes() for p in watched])
+        # Read-back must verify real payload bytes and replay the native graph,
+        # not simply print a mutable OPEN Run's claimed values.
+        output_path=run_dir/attempt['assistant_output_path'];original_output=output_path.read_bytes()
+        output_path.write_bytes(b'{}')
+        try:
+            with self.assertRaises((ValueError,RuntimeError)):
+                candidate.execute_candidate(plan=plan,authorization=authority)
+        finally:
+            output_path.write_bytes(original_output)
+        changed=copy.deepcopy(records)
+        next(r for r in changed if r['record_type']=='AI_EXTRACTION_ATTEMPT')['task_contract_sha256']='0'*64
+        with self.assertRaisesRegex(ValueError,'CANDIDATE_CONTROLLER_PLAN_MISMATCH'):
+            candidate.validate_run_binding(repo_root=REPO_ROOT,run_dir=run_dir,manifest=manifest,records=changed)
         # Missing original controller evidence cannot be replaced by native response files alone.
         executions=next((candidate.execution_paths(plan)[0]/'invocation_control/executions').glob('*.json'))
         saved=executions.read_bytes();executions.unlink()

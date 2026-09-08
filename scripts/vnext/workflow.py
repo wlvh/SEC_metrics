@@ -590,7 +590,9 @@ def create_table_task_review_run(
         task_contract_id: Explicit matrix-authorized catalog single-table task.
         adapter: Recorded or repository-approved AI transport.
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
-        qualification_authorization: Opaque authority required for LIVE use.
+        qualification_authorization: Opaque qualification-only LIVE authority.
+        candidate_authorization: Verified ordinary-candidate authority; mutually
+            exclusive with qualification authorization and recovery mode.
         resume_existing: Internal executor-only opt-in to materialize an
             interrupted deterministic LIVE qualification Run in place.
 
@@ -948,8 +950,8 @@ def _create_review_run_with_traits(
         clock: Explicit UTC clock or ``None`` for real UTC audit time.
         task_contract_id: Explicit catalog task identity, or ``None`` only for
             the retained historical disclosure-group path.
-        qualification_authorization: Opaque current repository authorization
-            required before a LIVE catalog task can read source bytes.
+        qualification_authorization: Qualification-only authority for LIVE catalog tasks.
+        candidate_authorization: Separately verified ordinary-candidate permission.
         resume_existing: Internal deterministic-terminal recovery mode.  It
             is accepted only for a LIVE catalog task carrying the same
             module-revalidated qualification authorization.

@@ -8,6 +8,7 @@ from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
 from .ai_adapter import AIAdapterError, AttemptPayloads, TransportObservation
 from .ai_adapter import READER_OUTPUT_JSON_SCHEMA, approved_transport_policy
+from .ai_adapter import approved_scoped_transport_policy
 from .ai_adapter import build_provider_request_body
 from .ai_adapter import transport_observation_mismatch
 from .canonical import atomic_write_bytes, atomic_write_json, content_hash
@@ -1580,6 +1581,13 @@ def _structured_concepts(
     return sorted(set(concepts))
 
 
+def _run_transport_policy(*, requirement):
+    """Read the explicit ordinary successor's carried transport Decision."""
+    if requirement.get("requirement_id") == "issue_28_v4":
+        return approved_scoped_transport_policy(requirement=requirement)
+    return approved_transport_policy(requirement=requirement)
+
+
 def _validate_successful_attempt_transport(
     *,
     attempt: Mapping[str, object],
@@ -1633,7 +1641,7 @@ def _validate_successful_attempt_transport(
             )
         return
     try:
-        policy = approved_transport_policy(requirement=requirement)
+        policy = _run_transport_policy(requirement=requirement)
     except AIAdapterError as error:
         raise RunStoreError(
             "Successful remote attempt lacks approved D-01"
@@ -2312,7 +2320,7 @@ def _validate_record_graph(
             value=attempt["transport_observation"]
         )
         if observation.egress_attempted:
-            policy = approved_transport_policy(requirement=requirement)
+            policy = _run_transport_policy(requirement=requirement)
             expected_request, expected_schema = (
                 build_provider_request_body(
                     policy=policy,
