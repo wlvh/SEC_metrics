@@ -2109,6 +2109,8 @@ class _ApprovedTransportAdapter(AIAdapter):
                 invoked transport lacking actual observation facts.
             TransportAttemptError: On an observed transport/policy failure.
         """
+        from .annual_runtime import validate_runtime_request_pair
+        validate_runtime_request_pair(adapter=self, request=prepared_request)
         if egress_capability is not _RESERVATION_OWNER_EGRESS_CAPABILITY:
             raise AIAdapterError("RESERVATION_OWNER_EGRESS_REQUIRED")
         rebuilt_request = _validate_live_prepared_request(
@@ -2697,6 +2699,8 @@ def _execute_controlled_transport(
     acceptance_context: Optional[InvocationAcceptanceContext],
 ) -> TransportResult:
     """Execute the exact live provider envelope through WB-3."""
+    from .annual_runtime import validate_runtime_request_pair
+    validate_runtime_request_pair(adapter=adapter, request=prepared_request)
     context = adapter.invocation_context
     if context is None:
         raise AIAdapterError("Invocation controller context is absent")
@@ -3504,6 +3508,8 @@ def run_ai_attempt(
         record, and all exact payload bytes. A schema failure returns ``None``
         for usable output while preserving provider and extracted bytes.
     """
+    from .annual_runtime import validate_runtime_request_pair
+    validate_runtime_request_pair(adapter=adapter, request=prepared_request)
     adapter_implementation = _authorized_adapter_implementation(
         adapter=adapter,
     )
