@@ -1,0 +1,72 @@
+test_authority_input_and_owner_tamper_fail_before_provider (tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_authority_input_and_owner_tamper_fail_before_provider) ... ERROR
+test_complete_runtime_and_same_input_new_process_no_pr (tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_complete_runtime_and_same_input_new_process_no_pr) ... ok
+test_failure_retains_old_success_and_consumes_stage (tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_failure_retains_old_success_and_consumes_stage) ... ok
+test_forged_success_reference_and_saved_owner_are_rejected (tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_forged_success_reference_and_saved_owner_are_rejected) ... ok
+test_stage_slot_is_global_to_input_plan_and_restart (tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_stage_slot_is_global_to_input_plan_and_restart) ... ok
+test_uncommitted_new_input_bytes_do_not_change_code_identity (tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_uncommitted_new_input_bytes_do_not_change_code_identity) ... ok
+
+======================================================================
+ERROR: test_authority_input_and_owner_tamper_fail_before_provider (tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_authority_input_and_owner_tamper_fail_before_provider)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 91, in _verified_request_locator
+    expected_body, expected_headers = legacy_response_snapshot_paths(
+                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        workdir=repo_root,
+        ^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+        timestamp_utc=str(row["timestamp_utc"]),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/sec_http.py", line 813, in legacy_response_snapshot_paths
+    raise ValueError(
+        f"Legacy immutable response body identity mismatch: {body_path}"
+    )
+ValueError: Legacy immutable response body identity mismatch: /private/var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/annual-runtime-test-gbm4b9en/data/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_runtime.py", line 169, in test_authority_input_and_owner_tamper_fail_before_provider
+    self.plan()
+    ~~~~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_runtime.py", line 83, in plan
+    return runtime.prepare_plan(binding=runtime.verify_stage(approval_url=URL))
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_runtime.py", line 438, in prepare_plan
+    prepared = annual_input.prepare_annual_input(
+        repo_root=data, company_id=policy["company_id"]
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_input.py", line 182, in prepare_annual_input
+    primary, raw = _saved_source(
+                   ~~~~~~~~~~~~~^
+        repo_root=repo_root, rows=rows,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        accession=accession,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_input.py", line 35, in _saved_source
+    binding = request_attempt_binding(
+        repo_root=repo_root, source_url=url,
+        content_sha256=row["content_sha256"], accession=accession,
+        document_name=row["document_name"],
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 227, in request_attempt_binding
+    proof = _verified_request_locator(
+        repo_root=repo_root,
+    ...<3 lines>...
+        document_name=document_name,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/batch_workflow.py", line 113, in _verified_request_locator
+    raise BatchWorkflowError(
+        "Request-ledger locator evidence is invalid"
+    ) from error
+vnext.batch_workflow.BatchWorkflowError: Request-ledger locator evidence is invalid
+
+----------------------------------------------------------------------
+Ran 6 tests in 522.779s
+
+FAILED (errors=1)

@@ -66,3 +66,23 @@ Calculator和原生重验。模拟审阅和历史answer封装只证明连接行�
 代码审阅或新模型反馈。真实运行结果、调用数和提交身份以最终交付证据为准。
 
 <!-- capability-anchor: CAPABILITY.marriott_annual_candidate_runtime -->
+
+## 本次交付状态
+
+受审代码为 `0a764b9dfd9976ec28a4ba9782229c5dbcf93306`。独立代码审阅与增量
+保护检查通过，现有fast 32入口和年度输入/变化检查22项通过。新runtime的完整
+模拟链、失败保留、新进程去重等5项通过；来源篡改用例因测试捕获了错误异常类型
+曾ERROR，随后用精确原生异常重跑通过，并新增缺key/adapter混用两项PASS。
+最终guard之外的长场景没有重跑为“一次最终head全套PASS”；准确命令、head和
+日志见 `docs/evidence/annual_runtime/verification.json`。
+
+[本次委托阶段批准](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5588519734)
+已绑定代码、政策和累计1/1/0上限。在尚无本分支PR时，真实GitHub批准核对和原始
+FY2025输入准备已进入同一 `run` 命令，但因执行环境缺少DeepSeek key，以
+`STAGE_BLOCKED / DEEPSEEK_API_KEY_REQUIRED`停止。真实provider/paid/SEC均为0，
+永久执行名额未消费，没有新候选，也没有声称完成真实端到端更新。
+
+原始FY2024 B01/B10与当前正式FY2025的来源、期间和完整Result对照见
+`docs/evidence/annual_runtime/candidate-comparison.json`。35项正式root/ledger
+文件与阶段开始及基线main逐字节一致。真实新响应、原文核对、合并/main同步仍
+待凭据解决和其余条件通过；不是新的权限批准问题。

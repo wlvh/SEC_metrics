@@ -1,0 +1,203 @@
+{
+  "status": "OFFLINE_IMPLEMENTATION_READY_LIVE_BLOCKED_MISSING_CREDENTIAL",
+  "base_main": "b48fe12ad802d886bcc67d7cc369cab109d9b4cb",
+  "reviewed_head": "0a764b9dfd9976ec28a4ba9782229c5dbcf93306",
+  "runtime_tree": "sha256:1d67af355a536faac4b33ca14abc80708adbfe4a6d25390ae01e806fc0f98150",
+  "requirement_id": "issue_28_v5",
+  "requirement_closure_hash": "sha256:017160bf0afa5029c37ac42ab309a40affa9b2687dc9d6e9e05e67437f7562a4",
+  "stage_id": "sha256:f509fae1fbbcedff1b2e406afe84d8e507a5a4477927d37467bd5d9c56670bf0",
+  "stage_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5588519734",
+  "real_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "maximum_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "stage_slot_consumed": false,
+  "active_unchanged": true,
+  "no_active_development_pr_at_preflight": true,
+  "actual_preflight": {
+    "status": "STAGE_BLOCKED",
+    "error": "DEEPSEEK_API_KEY_REQUIRED",
+    "execution": "NOT_EXECUTED",
+    "prepared_input_id": "sha256:ea7fc372dd6562a6b2f7d89c5e77b473ae48ffd5b24f12aee708eb7196fc38b8",
+    "discovered_filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "primary_document": "mar-20251231.htm",
+      "filing_date": "2026-02-10",
+      "period_basis": "PRIMARY_DEI_AND_CONTEXT"
+    }
+  },
+  "test_evidence": [
+    {
+      "head": "0a40736aa0d6b11cc6e6c49b6eb1e9f1c776e256",
+      "command": "env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_runtime -v",
+      "result": "5 passed; 1 test harness ERROR because expected native source rejection is BatchWorkflowError, not ValueError",
+      "duration_seconds": 522.779,
+      "log": "runtime-suite-1.log"
+    },
+    {
+      "head": "0a764b9dfd9976ec28a4ba9782229c5dbcf93306",
+      "command": "env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_authority_input_and_owner_tamper_fail_before_provider tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_missing_key_preserves_stage_slot_and_old_success tests.vnext.test_annual_runtime.AnnualRuntimeTest.test_runtime_wrapper_cannot_use_generic_adapter -v",
+      "result": "3 PASS, including exact source-error assertion repair and both added guards",
+      "duration_seconds": 65.19,
+      "log": "final-guards.log"
+    },
+    {
+      "head": "0a40736aa0d6b11cc6e6c49b6eb1e9f1c776e256",
+      "command": "env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_input tests.vnext.test_annual_update -v",
+      "result": "22 PASS",
+      "duration_seconds": 85.687,
+      "log": "annual-regression-1.log"
+    },
+    {
+      "head": "0a764b9dfd9976ec28a4ba9782229c5dbcf93306",
+      "command": "env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY PYTHONDONTWRITEBYTECODE=1 python3 tools/run_fast_tests.py --jobs 4",
+      "result": "32 fast entries PASS",
+      "duration_seconds": 9.135,
+      "log": "fast-final.log"
+    }
+  ],
+  "testing_limit": "The long native scenarios passed before the final missing-key-only guard. That guard and repaired negative test were retested on the final reviewed code; the entire long suite was not rerun or relabeled as a single final-head PASS.",
+  "not_run": [
+    "Real provider response",
+    "Live original-text comparison of a new response",
+    "Qualification",
+    "Measurement",
+    "Stage12/root refresh",
+    "Publication/rollback/restore",
+    "Merge/main sync"
+  ],
+  "next_delivery_gap": "Connect this same candidate path to existing formal publication qualification/version comparison/publication/rollback-restore checks. Remaining 15 metrics, WB-7 and legacy-path exit remain outstanding.",
+  "evidence_files": {
+    "final-guards.log": {
+      "sha256": "2f9bd5fc4318c13aae5b0028b21f7a452ae7d9246432662b9babf607acd7800c",
+      "size": 598
+    },
+    "candidate-comparison.json": {
+      "sha256": "bff545f38e4ec595bc8aad9a43647252b994f71d50665e20f9735b482dd085c4",
+      "size": 9887
+    },
+    "protected-after.json": {
+      "sha256": "99d2f65ffa89048e1411852388d53f35fea724d3fe8214ae93d03e2eb0d5258d",
+      "size": 5425
+    },
+    "stage-approved-proposal.log": {
+      "sha256": "56614351733dd57bd73658662c439ad9423f6c93410f19fdf53d998363a1fcaa",
+      "size": 6507
+    },
+    "independent-review.json": {
+      "sha256": "13615dde7e5da45fa4e66520e67972903a81a656ab165df5665d87aa6acc0b7a",
+      "size": 1631
+    },
+    "initial-test.log": {
+      "sha256": "df9b7209244567ff19f096d081f177c5665023a151ec91447f3fd1bffbd42ef4",
+      "size": 1750
+    },
+    "independent-review-final.json": {
+      "sha256": "1b712f79bb40df1f5a9e624da2ed718b074cc3b93462105e6c1f4b3f595ef972",
+      "size": 2171
+    },
+    "format.log": {
+      "sha256": "bea67f2a6536729b95ee5241c6defec672f5ea3c1cd80805c1705241d0d340c4",
+      "size": 391
+    },
+    "format-final.log": {
+      "sha256": "72e9c05ec2d0f491a87274e5df27bb2a9d1d1abcee045279bdbc6fcff5ebfeef",
+      "size": 154
+    },
+    "stage-proposal.log": {
+      "sha256": "6b0712010d39c51634154c29146673a3a03b8c941b15e91e8a1efb456d565596",
+      "size": 5928
+    },
+    "seed-reviewed.json": {
+      "sha256": "295603e90a378be8cfb418ef16815aa6a06df2e3cc4a58a3c73c7ed23a46e39f",
+      "size": 467
+    },
+    "tamper-case.log": {
+      "sha256": "fb3bb882eeb5205068f742ee89eba5d35bb17c2d4a1ff7dcf7e14eda480e70a1",
+      "size": 3571
+    },
+    "stage-approved-proposal.json": {
+      "sha256": "56614351733dd57bd73658662c439ad9423f6c93410f19fdf53d998363a1fcaa",
+      "size": 6507
+    },
+    "semantics-final.json": {
+      "sha256": "d4ce6ca71e5268fb45a379f2e475d796534924394fefe285550283b1e86b376f",
+      "size": 12157
+    },
+    "runtime-suite-1.log": {
+      "sha256": "07acdecd9c634b5f3f0f88329bcfb025a3754f251058a2d9034653ef0ae54d81",
+      "size": 4426
+    },
+    "stage-proposal.json": {
+      "sha256": "6b0712010d39c51634154c29146673a3a03b8c941b15e91e8a1efb456d565596",
+      "size": 5928
+    },
+    "preflight-missing-key.json": {
+      "sha256": "996c00ce3069ad3706af628d89af7748a1c2957f59099a0c5a4dd7e01d7e7e37",
+      "size": 13286
+    },
+    "fast-final.log": {
+      "sha256": "b148046a97880af78e3721dcf36c735849eb37bf0e7c957d8cc083e1896a38b9",
+      "size": 9630
+    },
+    "annual-regression-1.log": {
+      "sha256": "f909856f96f6fc4701f209137f6c91e10ae5df3f76e459a5a039db62d3b96140",
+      "size": 3902
+    },
+    "semantics.json": {
+      "sha256": "bc337cf85bd10395ebbcccb77cab249d1569c90dc8af395f6e8555594eecc932",
+      "size": 12157
+    },
+    "third-test.log": {
+      "sha256": "906d62ab9f26f98654cee2373f2a0b361255564736be4f251399e32f5fc73837",
+      "size": 1093
+    },
+    "fast-1.log": {
+      "sha256": "410f572ccc3e942b9364d7a46791a331d5462c38bbcf563f5f9210dcc52878d0",
+      "size": 9630
+    },
+    "preflight-missing-key.log": {
+      "sha256": "996c00ce3069ad3706af628d89af7748a1c2957f59099a0c5a4dd7e01d7e7e37",
+      "size": 13286
+    },
+    "pr-state-before-preflight.json": {
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "size": 3
+    },
+    "alignment-final.log": {
+      "sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb",
+      "size": 108
+    },
+    "seed-reviewed.log": {
+      "sha256": "295603e90a378be8cfb418ef16815aa6a06df2e3cc4a58a3c73c7ed23a46e39f",
+      "size": 467
+    },
+    "provider-egress-final.json": {
+      "sha256": "fe1b12f1e1a49f69291112205008a03ae8b6859fba1800a4cb00ba8b0bd813fc",
+      "size": 1873
+    },
+    "second-test.log": {
+      "sha256": "45590452ab6ff3890dcc8b3c756876f0c32827c00e9d8b0c2ee7cbd638091b9a",
+      "size": 4161
+    },
+    "seed.json": {
+      "sha256": "953ef76ff2b24f3d5247da4d3e8db86accb60f8cb2c5bc3aa57263a39111715c",
+      "size": 458
+    },
+    "protected-before.json": {
+      "sha256": "efcb84fa88b2534d3269e4ad31732a711607d537bb4094b4edbaaf854f66034d",
+      "size": 5090
+    }
+  }
+}
