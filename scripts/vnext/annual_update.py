@@ -91,6 +91,8 @@ def _select_filing(*, company, payload):
     _require(int(payload["cik"]) == cik, "SUBMISSIONS_CIK_MISMATCH")
     filings = annual_input.filing_rows_from_submission_payloads(
         company=company["display_name"], cik=cik, entity_role="primary", payloads=[payload])
+    _require(all(type(f["form"]) is str and bool(f["form"])
+                 and f["form"].strip() == f["form"] for f in filings), "FILING_FORM_UNKNOWN")
     annual = [f for f in filings if f["form"] in {"10-K", "10-K/A"}]
     _require(bool(annual), "ANNUAL_FILING_MISSING_IN_SAVED_BLOCK")
     for filing in annual:
@@ -247,14 +249,21 @@ def _facts_cover(*, raw, cik, filing):
     payload = annual_input._json(raw=raw)
     _require(int(payload["cik"]) == cik, "COMPANYFACTS_CIK_MISMATCH")
     # Source readiness only: do not select a concept, value or B01 answer.
+    _require(type(payload.get("facts")) is dict, "COMPANYFACTS_STRUCTURE_INVALID")
+    covered = False
     for namespace in payload["facts"].values():
+        _require(type(namespace) is dict, "COMPANYFACTS_STRUCTURE_INVALID")
         for concept in namespace.values():
+            _require(type(concept) is dict and type(concept.get("units")) is dict,
+                     "COMPANYFACTS_STRUCTURE_INVALID")
             for facts in concept["units"].values():
+                _require(type(facts) is list, "COMPANYFACTS_STRUCTURE_INVALID")
                 for fact in facts:
+                    _require(type(fact) is dict, "COMPANYFACTS_STRUCTURE_INVALID")
                     if (fact.get("accn") == filing["accession"] and fact.get("form") == "10-K"
                             and fact.get("start") == filing["period_start"] and fact.get("end") == filing["period_end"]):
-                        return True
-    return False
+                        covered = True
+    return covered
 
 
 def inspect_annual_update(*, repo_root, company, successful_candidate=None, published=None):
@@ -366,7 +375,7 @@ def refresh_annual_update(*, repo_root, company, successful_candidate=None, publ
         try:
             result = client.fetch(url=item["url"], purpose="annual_update_" + item["kind"].lower(),
                 local_path=repo_root / "evidence/annual_refresh" / uuid4().hex / item["document_name"])
-        except (ValueError, OSError):
+        except (ValueError, OSError, RuntimeError, TypeError):
             # A local persistence failure can happen after the socket. Do not
             # manufacture an exact call count when fetch returned no receipt.
             uncertain_fetch = True
@@ -391,7 +400,7 @@ def refresh_annual_update(*, repo_root, company, successful_candidate=None, publ
                 attempted.add(item["url"])
                 fetch(item)
                 report = inspect_annual_update(repo_root=repo_root, company=company, successful_candidate=candidate, published=published)
-    except (ValueError, KeyError, TypeError, OSError) as error:
+    except (ValueError, KeyError, TypeError, OSError, RuntimeError) as error:
         report = report or {"latest_successful_candidate": candidate, "current_published": published,
             "checked_at_utc": datetime.now(timezone.utc).isoformat(), "check_scope": "ANNUAL_FILING_IDENTITY_ONLY",
             "discovered_filing": None, "submissions": None, "filing_change": "UNKNOWN",

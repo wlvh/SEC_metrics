@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check Marriott annual filing identity and prepare inputs without execution."""
 import argparse
+from contextlib import redirect_stdout
 import json
 from pathlib import Path
 import sys
@@ -11,8 +12,6 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 from sec_http import write_immutable_bytes
 from vnext.annual_candidate import _output_root, prepare_candidate_plan
 from vnext.annual_update import check_annual_update
-from vnext.batch_workflow import BatchWorkflowError
-from vnext.publication import PublicationError
 
 
 def _external_file(path):
@@ -43,8 +42,11 @@ def main(argv=None):
             _output_root(args.candidate_output_root)
             if args.output and args.output.absolute() == args.candidate_plan_file.absolute():
                 raise ValueError("OUTPUT_PATHS_OVERLAP")
-        report = check_annual_update(repo_root=REPO_ROOT, candidate_run=args.candidate_run,
-            refresh=args.refresh, sec_request_limit=args.sec_request_limit)
+        # The retained SEC client writes retry diagnostics to stdout. Keep
+        # this CLI's stdout as one JSON document even on a failed GET.
+        with redirect_stdout(sys.stderr):
+            report = check_annual_update(repo_root=REPO_ROOT, candidate_run=args.candidate_run,
+                refresh=args.refresh, sec_request_limit=args.sec_request_limit)
         if args.candidate_plan_file and report["status"] == "INPUT_READY":
             try:
                 pending = prepare_candidate_plan(output_root=args.candidate_output_root,
@@ -60,7 +62,7 @@ def main(argv=None):
             write_immutable_bytes(path=args.output, content=raw)
         print(raw.decode(), end="")
         return 0 if report["status"] in {"NO_NEW_ANNUAL_FILING", "INPUT_READY"} else 2
-    except (ValueError, KeyError, TypeError, OSError, BatchWorkflowError, PublicationError) as error:
+    except (ValueError, KeyError, TypeError, OSError, RuntimeError) as error:
         failure = {"status": "CHECK_FAILED", "error": str(error), "execution": "NOT_EXECUTED"}
         if report is not None:
             failure["check_result"] = report

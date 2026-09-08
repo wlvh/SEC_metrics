@@ -20,6 +20,8 @@ env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY -u SEC_CONTACT_EMAIL PYTHONDONTWRITEBY
 
 比较使用公司/CIK、accession、报告起止日和主文档身份，已有原文时另核对字节哈希。
 两个成功基线同期间但来源不同会阻断；较新成功候选不使较旧正式结果被登记为已更新。
+任何清单行的表单字段未知时，不能可靠排除它是年报，因此检查失败；格式错误的
+Company Facts也返回明确失败。HTTP诊断写stderr，stdout始终保持单个JSON报告。
 检查文件本身不能用作成功基线。原生候选仅复核保存的成功 attempt、证据、审核和
 结果来源链接；不重新认证其内容，不把 OPEN 或内部 PUBLISHED 改成正式发布。
 

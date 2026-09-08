@@ -11,7 +11,7 @@ import socket
 import subprocess
 import tempfile
 import unittest
-from contextlib import ExitStack
+from contextlib import ExitStack, redirect_stdout, redirect_stderr
 from pathlib import Path
 from unittest.mock import patch
 
@@ -160,6 +160,40 @@ class AnnualUpdateTest(unittest.TestCase):
                 self.assertIn(reason, report["error"])
                 self.assertIsNone(report["prepared_input"])
 
+    def test_unknown_form_cannot_hide_a_possible_new_annual(self):
+        self.seed()
+        for form in (None, "", " ", 10, [], {}):
+            def mutate(payload):
+                recent = payload["filings"]["recent"]
+                index = recent["form"].index("10-K")
+                for values in recent.values():
+                    values.append(values[index])
+                recent["accessionNumber"][-1] = "0001048286-27-009999"
+                recent["reportDate"][-1] = "2026-12-31"
+                recent["filingDate"][-1] = "2027-02-10"
+                recent["form"][-1] = form
+            with self.subTest(form=form):
+                self.save(self.inventory_url, self.mutated_inventory(mutate))
+                report = self.inspect(self.new)
+                self.assertEqual("CHECK_FAILED", report["status"])
+                self.assertEqual("FILING_FORM_UNKNOWN", report["error"])
+                self.assertEqual("UNKNOWN", report["filing_change"])
+
+    def test_malformed_companyfacts_containers_report_failure(self):
+        self.seed()
+        shapes = [[], None, {"test": []}, {"test": {"concept": []}},
+                  {"test": {"concept": {"units": []}}},
+                  {"test": {"concept": {"units": {"USD": {}}}}},
+                  {"test": {"concept": {"units": {"USD": [None]}}}}]
+        for facts in shapes:
+            with self.subTest(facts=facts):
+                raw = json.dumps({"cik": int(self.company["primary_cik"]), "facts": facts}).encode()
+                self.save(self.facts_url, raw)
+                report = self.inspect()
+                self.assertEqual("CHECK_FAILED", report["status"])
+                self.assertEqual("COMPANYFACTS_STRUCTURE_INVALID", report["error"])
+                self.assertEqual(self.old, report["latest_successful_candidate"])
+
     def test_preparation_failure_keeps_baselines_and_repeats_pending(self):
         self.seed(primary=False)
         self.save(self.primary_url, b"<html>SIMULATED invalid new primary</html>")
@@ -229,6 +263,84 @@ class AnnualUpdateTest(unittest.TestCase):
                                      (self.primary_url, b"SIMULATED invalid primary")])
         self.assertEqual("CHECK_FAILED", report["status"], report)
         self.assertEqual(2, len(urls))
+
+    def test_real_persistence_conflict_keeps_failure_and_unknown_count(self):
+        self.seed()
+        raw = self.sources[self.inventory_url]
+        digest = sha256_bytes(content=raw)
+        snapshot = self.root / "evidence/request_attempts" / digest[:2] / digest / self.inventory_url.rsplit("/", 1)[1]
+        count = []
+        def opened(**kwargs):
+            count.append(kwargs["request"].full_url)
+            # Simulate a conflicting on-disk observation at the HTTP boundary.
+            # The unmodified client's real immutable writer raises RuntimeError.
+            snapshot.write_bytes(b"SIMULATED immutable disk conflict")
+            return Response(raw)
+        before_rows = update._rows(self.root)
+        with patch.object(sec_http, "urlopen", side_effect=opened):
+            report = update.refresh_annual_update(repo_root=self.root, company=self.company,
+                successful_candidate=self.old, refresh="missing", sec_request_limit=3)
+        self.assertEqual("CHECK_FAILED", report["status"])
+        self.assertIn("Immutable request artifact changed", report["error"])
+        self.assertEqual([self.inventory_url], count)
+        self.assertEqual([0, 0, None], report["provider_paid_sec_calls"])
+        self.assertEqual(1, report["sec_fetch_invocations"])
+        tail = update._rows(self.root)[len(before_rows):]
+        self.assertEqual(1, len(tail))
+        self.assertIn("PersistenceError: RuntimeError", tail[0]["error"])
+        self.assertEqual(self.old, report["latest_successful_candidate"])
+
+    def test_cli_http_failure_stdout_is_one_json_document(self):
+        from tools import vnext_annual_update as cli
+        self.seed()
+        # Real immutable publication fixture; only its file root is supplied
+        # to the CLI. No publication, selection or HTTP-client behavior stub.
+        output_root = self.root / "outputs"
+        output_root.mkdir()
+        for name in ("active_publication.json", "active_publication.json.lock"):
+            shutil.copyfile(ROOT / "outputs" / name, output_root / name)
+        shutil.copytree(ROOT / "outputs/publication_switch_receipts", output_root / "publication_switch_receipts")
+        pointer = json.loads((output_root / "active_publication.json").read_text())
+        publication = pointer["publication_id"]
+        shutil.copytree(ROOT / "outputs/publications" / publication, output_root / "publications" / publication)
+        stdout, stderr = io.StringIO(), io.StringIO()
+        calls = []
+        def opened(**kwargs):
+            calls.append(kwargs["request"].full_url)
+            return Response(b"SIMULATED HTTP 503", status=503)
+        original_root = cli.REPO_ROOT
+        cli.REPO_ROOT = self.root
+        try:
+            with patch.object(sec_http, "urlopen", side_effect=opened), redirect_stdout(stdout), redirect_stderr(stderr):
+                code = cli.main(["--refresh", "missing", "--sec-request-limit", "3"])
+        finally:
+            cli.REPO_ROOT = original_root
+        report = json.loads(stdout.getvalue())
+        self.assertEqual(2, code)
+        self.assertEqual("CHECK_FAILED", report["status"], report)
+        self.assertEqual([0, 0, 1], report["provider_paid_sec_calls"])
+        self.assertEqual([self.inventory_url], calls)
+        self.assertIn("SEC retry exhausted", stderr.getvalue())
+
+    def test_http_metadata_serialization_failure_keeps_unknown_count(self):
+        self.seed()
+        calls = []
+        def opened(**kwargs):
+            calls.append(kwargs["request"].full_url)
+            response = Response(self.sources[self.inventory_url])
+            response.headers = {"X-Test-Invalid-Header": object()}
+            return response
+        before_rows = update._rows(self.root)
+        with patch.object(sec_http, "urlopen", side_effect=opened):
+            report = update.refresh_annual_update(repo_root=self.root, company=self.company,
+                successful_candidate=self.old, refresh="missing", sec_request_limit=3)
+        self.assertEqual("CHECK_FAILED", report["status"])
+        self.assertEqual([self.inventory_url], calls)
+        self.assertEqual([0, 0, None], report["provider_paid_sec_calls"])
+        self.assertEqual(1, report["sec_fetch_invocations"])
+        tail = update._rows(self.root)[len(before_rows):]
+        self.assertEqual(1, len(tail))
+        self.assertIn("PersistenceError: TypeError", tail[0]["error"])
 
     def test_source_tamper_and_failed_baseline_rejected(self):
         self.seed()

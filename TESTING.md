@@ -76,6 +76,10 @@ env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY -u SEC_CONTACT_EMAIL PYTHONDONTWRITEBY
 body/header 保存与追加 ledger，真实 `annual_input` 准备参数。所有 socket 禁止。
 模拟清单明确标注，临时来源目录和少量测试 Git 对象不成为真实历史证据。
 这些测试不生成 B10 响应、不重跑资格、不写 active 或 root 结果。
+PR37阶段收口增加未知form（含可能的新年报）、Company Facts嵌套容器错误、真实
+immutable写入冲突/headers序列化故障、完整CLI的503失败JSON反例。CLI测试只复制
+已发布bundle作只读基线并配置临时来源根，不替换判断或客户端；只模拟外部HTTP。
+失败诊断走stderr，stdout仍为一个JSON；持久化无法完整确认时保留未知SEC计数。
 
 本轮按用户限定只运行此定向验收、适用静态 gates 与现有 fast；不全仓重验、不运行
 Stage12/root刷新或重签历史 source drift，不把这些 NOT_RUN 写成 full PASS。
