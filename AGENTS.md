@@ -152,6 +152,8 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `scripts/vnext/annual_input.py`：只读准备连续primary实体、日历财年、current submissions block内唯一未修订10-K的既有Run入口参数；用原始DEI/context核对期间、复用request ledger绑定，不读取旧结果，不提供LIVE授权或发布。
+
 - `scripts/sec_pipeline.py`：阶段调度、解析、计算、富化、repair、验证、审计与报告的单体内核。
 - `scripts/sec_http.py`：集中验证有效 SEC organization/contact email，并负责精确官方 SEC origin、无隐式 redirect、进程内节流、重试、immutable attempt body/header、request ledger、整表 manifest 与 cooperating-process publication lock。
 - `scripts/sec_urls.py`：集中构造 SEC 官方 endpoint。
