@@ -14,6 +14,27 @@
 
 ## 0. 更新触发条件
 
+### 保存的年度原始材料输入准备
+
+`annual_input.prepare_annual_input(repo_root=..., company_id=..., fiscal_year=...)`
+返回 `companyfacts_input`、`table_input` 与原始请求证明。省略年度时取保存的
+submissions 中最近报告期；指定年度用于历史材料回归。范围限于配置中的
+continuous primary 实体、日历财年与 current submissions block。它按
+reportDate 选择唯一未修订10-K，再用原始年报的 DEI 财年、表单、主体和
+XBRL context 起止日交叉核对，不能将次年 filingDate 当成财年。
+原始来源按最新成功 ledger 行选择并复用 request_attempt_binding；
+缺失、修订、歧义或需要 supplemental history 时停止，不请求外部材料。
+
+返回参数直接传给 `batch_workflow.create_companyfacts_release_run` 和
+`workflow.create_table_task_review_run`；前者原生附带 B03，后者仍由调用方
+指定既有单角色 task。新函数无写入、模型调用或结果输入。
+旧 `build_release_input_plan(legacy_snapshot_dir=...)` 继续承担历史迁移。
+本地测试只在原 source/reader request/task/schema 逐字节一致时使用历史
+recorded 响应，并走现有 Evidence、D-06 SYSTEM Review 和 Calculator。
+LIVE catalog 入口仍由 qualification matrix 绑定 source/period/Run/目录，
+不能以这份输入替换其授权。没有新增发布包或 active 更新入口。
+<!-- capability-anchor: CAPABILITY.saved_annual_input_candidate -->
+
 ### PR-B B0 successor offline interfaces
 
 `source_scope.py` binds a source-specific audited window certificate to the

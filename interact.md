@@ -1,5 +1,14 @@
 # SEC_metrics 用户可观察行为
 
+本地开发可调用 `vnext.annual_input.prepare_annual_input`，从保存的原始材料
+取得既有Run函数的输入参数。当前仅支持连续primary实体、日历财年及
+current submissions block内唯一未修订10-K；缺失、歧义、修订、跨补充
+分片或原始期间冲突均明确失败。函数不写正式结果，也不发起网络调用。
+Marriott recorded候选沿既有审核链产生；其中Result的 `PUBLISHED` 字段
+不代表候选已经进入正式active。独立新来源的LIVE调用仍须解决现有
+matrix/source/period授权绑定，不由此入口授予。
+<!-- capability-anchor: CAPABILITY.saved_annual_input_candidate -->
+
 ## 1. 文档关系与读者
 
 `capability_contract.json` 是能力、限制、责任与行为承诺的机器可读真相源；本文档把这些契约翻译成业务人员、运行负责人和 reviewer 可以直接验收的 CLI 与文件行为。`docs/business_user_guide.md` 只负责首次使用教学，不得扩展本文档未声明的能力。

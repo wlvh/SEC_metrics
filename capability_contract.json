@@ -14,6 +14,16 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.saved_annual_input_candidate",
+        "type": "capability",
+        "status": "active",
+        "statement": "annual_input.prepare_annual_input从registry、保存的submissions、request ledger、原始10-K的DEI事实和Company Facts准备既有Run入口参数，不读取旧指标/证据表。当前仅支持continuous primary实体、日历财年、current submissions block内唯一未修订10-K；跨补充分片、歧义、缺失或期间冲突明确失败。Marriott FY2023/2024/2025结构化候选及FY2025 exact-request recorded B10只证明本地接线；不提供LIVE授权、在线发现、去重服务或正式发布。",
+        "audience": ["developer", "operator", "reviewer"],
+        "test_anchor": "tests/vnext/test_annual_input.py::AnnualInputTest.test_raw_inputs_reach_b01_and_exact_recorded_b10",
+        "test_status": "automated_recorded",
+        "since": "2026-09-08"
+      },
+      {
         "anchor_id": "CAPABILITY.r4_dormant_release_seam",
         "type": "capability",
         "status": "active",

@@ -63,6 +63,28 @@ Fresh三轮必须按全family ordinal-major顺序执行：Occupancy 1 → RevPAR
 
 新freeze/Stage-A/packet生成后运行`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_table_stage_b_owner_packet -v`。测试从current pointer回读并按packet自己的UTC重建同一ID，要求旧packet仍存在；`OWNER_APPROVED`只含200k/full-table/family scope/shared drift，`STILL_UNDECIDED`五项均为null；context/census exact IDs、lodging/financial blockers、空live-ready set、NOT_RUN actual tokens、R2 active/309 rows/root equality与0/0/0 egress全部闭合，不得出现qualification/Issue completion claim。
 
+## 保存的年度输入局部回归
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_input -v`
+验证Marriott FY2023/2024/2025原始submissions/10-K/Company Facts独立准备输入，
+通过既有结构化Run产生B01（原生附带B03），并以FY2025原始绑定响应验证B10。
+recorded adapter消费响应前必须逐字节比较reader request，随后比较task/schema。
+测试拦截实际文件读取，禁止metrics/evidence旧表；沿实际调用栈仅允许
+sec_pipeline的通用submissions解析，不允许其语义生产函数。缺失原文、
+重复/修订申报、原始期间矛盾和同目录重复触发必须失败；所有Run写到临时目录。
+参考值与历史响应只在测试端，不进入生产输入准备函数。
+
+年报日期负例在合成原始submissions parallel arrays中注入空值、null和无效
+日期，保留真实清单转换路径。较新10-K不得静默回退，10-K/A不得在默认或
+显式年度下消失；均须以ANNUAL_REPORT_DATE_INVALID在目标原文与Company
+Facts读取前停止。合成输入不改写任何历史原始材料或收据。
+
+相关未变机制可定向复用：
+`tests.vnext.test_scope_contract.ScopeContractTest.test_unknown_alias_requires_human_and_never_system_approval`
+与 `tests.vnext.test_invocation_control.InvocationControlTest.test_cutover_success_reuses_exact_accepted_response`。
+后者使用mock transport，不能证明真实付费去重。上述证据均不证明新材料
+上的模型正确性、在线发现、正式更新或qualification；不运行full live验收。
+
 ## 1. 测试原则
 
 - 测行为与契约，不用脆弱的源码字符串或固定数量断言替代真实结果。
