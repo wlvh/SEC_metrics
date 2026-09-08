@@ -1,0 +1,45 @@
+{
+  "purpose": "PR37 code-review record; not a runtime policy, model grant, human review or GitHub APPROVE",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/pr37_independent_review",
+  "initial_head": "45b8ca768421dcc449bbf40c6518792b669faf1a",
+  "findings": [
+    {
+      "priority": "P2",
+      "finding": "Unknown form values can hide a possible new annual and return no change",
+      "resolution": "Reject missing, empty or non-string form before filtering annual filings"
+    },
+    {
+      "priority": "P2",
+      "finding": "Client persistence RuntimeError escapes failure report; TypeError misses uncertain-count handling",
+      "resolution": "Catch the actual client failure types in the added boundary; preserve CHECK_FAILED and unknown SEC count"
+    },
+    {
+      "priority": "P2",
+      "finding": "Malformed Company Facts containers cause uncaught AttributeError",
+      "resolution": "Validate the accessed object/list structure and report a typed source failure"
+    },
+    {
+      "priority": "P2",
+      "finding": "HTTP failure diagnostics contaminate CLI stdout JSON",
+      "resolution": "Redirect retained-client diagnostics to stderr at the added CLI boundary"
+    }
+  ],
+  "verified_head": "0e3e3ed0db447706d01cf2bbc58396a52ea92400",
+  "rereview_conclusion": "NO_REMAINING_BLOCKERS",
+  "independent_tests": {
+    "passed": 6,
+    "scope": "Five new failure cases and existing conditional refresh test",
+    "real_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "verified_boundaries": [
+    "No frozen client, Reader, provider-call control or policy change",
+    "One submissions GET; at most two conditionally missing sources; zero retries",
+    "Failures stop subsequent requests",
+    "No project provider or paid-model invocation"
+  ]
+}

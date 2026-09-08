@@ -14,6 +14,36 @@
 
 ## 0. 更新触发条件
 
+### Marriott 年报变化检测与受限输入刷新
+
+`tools/vnext_annual_update.py` 默认只读本地请求清单。`annual_update` 从既有普通
+候选政策取得公司范围，从 registry 取得 CIK；先按 submissions 的报告期、表单及
+accession 判断，再调用原字节保留的 `annual_input` 验证原文 DEI/context 和准备
+B01/B10 输入。执行计划 ID、代码版本、目录及获取 attempt 均不参与财报变化比较。
+PR35/PR36 的输入和执行文件受历史 execution authority 绑定，新增模块只作元数据
+预检并复用其原始读取、解析与输入接口，不重签旧政策或扩大 Reader 语义。
+
+正式对照从 `PublicationView` 固定的 bundle 内原生 B10 Run/Result 取得；可选的
+历史候选从指定 Run 的成功 attempt、Candidate、Evidence、Review、Observation、
+Trace、Result 和 SourceReference 读取相互绑定的申报身份。这里只复核保存记录及
+来源链接，不重跑历史资格，也不把 OPEN 候选当正式发布。比较取两者较新的成功
+期间；同期间来源不一致则失败。检查输出本身不成为下一次的成功基线。
+
+显式 `--refresh submissions --sec-request-limit 1` 只获取一份清单。
+`--refresh missing --sec-request-limit 3` 在此之后，仅对待处理新年报补缺少的
+primary 和 Company Facts，最多再各一次；原文校验失败即停止后续获取。
+每个 `SecHttpClient` 实例将 retry 缩为 0，正常节流、原始 body/header 和 ledger
+证据保存保持原实现。新增 working path 使用独立目录，immutable bytes 只追加。
+PR37阶段已在本次owner许可下真实读取清单一次，HTTP200、无新年报、0/0/1；
+CLI的显式范围/上限不代替owner许可。
+
+输入齐备时可直接消费 `prepared_input`，或选择生成既有普通候选 plan；后者仍
+要求 clean code 和原有执行批准。真实刷新追加 ledger 可能使 checkout 尚未干净，
+此时输入可准备而候选 plan 明确 BLOCKED；获阶段授权时可提交明确列出的新来源
+证据，但本轮不建设正常运行授权。
+详见 `docs/annual_update.md` 的运行入口、示例证据和最小真实检查请求。
+<!-- capability-anchor: CAPABILITY.marriott_annual_update_inputs -->
+
 ### 普通 B10 候选的受控执行
 
 `tools/vnext_annual_candidate.py plan --output-root <absolute-outside-checkout> --plan-file <external-json>`

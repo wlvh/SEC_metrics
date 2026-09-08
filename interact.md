@@ -1,5 +1,20 @@
 # SEC_metrics 用户可观察行为
 
+`tools/vnext_annual_update.py` 输出本次检查时间、submissions 保存时间和原始请求
+证明，分别列出 `discovered_filing`、`latest_successful_candidate`、
+`current_published`。候选未提供时明确为 `NOT_SUPPLIED`，不表示历史上没有成功候选。
+对照范围是原生 B10 的申报身份；不据此宣称其他指标已经更新或所有原文/Company Facts
+均未变化。同年报和重复获取返回 `NO_NEW_ANNUAL_FILING`，不生成候选计划或计算；
+新年报返回 `INPUT_READY` 或 `INPUTS_MISSING`；异常返回 `CHECK_FAILED`，不能冒充无变化。
+后两类未就绪结果退出码为 2，前两类可用结果退出码为 0。可选 plan 受阻时在
+`candidate_plan` 独立报告，不抹掉已经准备好的输入。
+
+默认无网络，显式 SEC 刷新需要另外获准，最多 1 份清单及条件式 2 份缺少材料，
+零重试。输出中的 `execution=NOT_EXECUTED` 始终保留；本轮新输入准备失败不会
+改写历史成功或正式期间。输出 JSON 只能写入新的外部文件，不覆盖旧检查记录。
+内部 Result 的 PUBLISHED 与正式 active 仍分开，正常无人值守运行权限尚未解决。
+<!-- capability-anchor: CAPABILITY.marriott_annual_update_inputs -->
+
 本地开发可调用 `vnext.annual_input.prepare_annual_input`，从保存的原始材料
 取得既有Run函数的输入参数。当前仅支持连续primary实体、日历财年及
 current submissions block内唯一未修订10-K；缺失、歧义、修订、跨补充

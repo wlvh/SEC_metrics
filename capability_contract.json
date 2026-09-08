@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.marriott_annual_update_inputs",
+        "type": "capability",
+        "status": "active",
+        "statement": "annual_update仅检查现有普通候选政策限定公司的年报申报身份，以原生B10成功候选或pinned正式结果作显式对照；发现、候选成功、正式发布分别输出。默认只读本地submissions及请求证明，不以plan/head/目录/attempt变化触发更新；修订、未知日期、来源冲突、清单不足或获取失败明确失败。新年报仅准备annual_input输入，可选生成既有未授权候选计划。明确SEC许可后可用SecHttpClient先读1份清单、条件式补至多2份缺少来源，每请求retry=0；PR37阶段一次真实清单检查为NO_NEW_ANNUAL_FILING，provider/paid/SEC=0/0/1；无模型执行、调度、长期授权或发布。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_annual_update.py::AnnualUpdateTest.test_conditional_refresh_uses_real_client_and_appends_evidence",
+        "test_status": "automated_recorded",
+        "since": "2026-09-08"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_annual_b10_candidate",
         "type": "capability",
         "status": "active",
