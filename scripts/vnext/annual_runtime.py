@@ -74,7 +74,8 @@ def _external(path):
 
 
 def _authority_files(requirement):
-    return requirement_authority_paths(repo_root=CODE_ROOT, requirement=requirement)
+    return sorted(set(requirement_authority_paths(repo_root=CODE_ROOT, requirement=requirement))
+                  | set(_git('ls-files', 'catalog', 'config').splitlines()))
 
 
 def verify_data_root(data_root, requirement=None):
@@ -205,19 +206,27 @@ def _github(path):
     return prior._github(path)
 
 
+def _validate_owner_comment(*, comment, stage, approval_url=None):
+    repository=_requirement()['baseline']['repository']['identity']
+    url=approval_url or comment.get('html_url','')
+    match=re.fullmatch(r'https://github\.com/'+re.escape(repository)+r'/issues/28#issuecomment-([1-9][0-9]*)',url)
+    require(match is not None,'RUNTIME_STAGE_APPROVAL_URL_INVALID')
+    require(comment.get('html_url')==url and str(comment.get('id'))==match[1]
+        and comment.get('issue_url')=='https://api.github.com/repos/'+repository+'/issues/28'
+        and comment.get('user',{}).get('login')==repository.split('/')[0]
+        and comment.get('created_at')==comment.get('updated_at')
+        and strict_json_loads(text=comment.get('body',''))==stage,'RUNTIME_STAGE_OWNER_PROVENANCE_INVALID')
+    parse_utc_timestamp(value=comment['created_at'])
+
+
 def verify_stage(*, approval_url):
     """Reload a real owner issue comment; no PR existence or state dependency."""
-    requirement=_requirement()
-    repository=requirement['baseline']['repository']['identity']
+    repository=_requirement()['baseline']['repository']['identity']
     match=re.fullmatch(r'https://github\.com/'+re.escape(repository)+r'/issues/28#issuecomment-([1-9][0-9]*)',approval_url)
     require(match is not None,'RUNTIME_STAGE_APPROVAL_URL_INVALID')
     comment=_github('repos/'+repository+'/issues/comments/'+match[1])
-    require(comment['html_url']==approval_url and str(comment['id'])==match[1]
-        and comment['issue_url']=='https://api.github.com/repos/'+repository+'/issues/28'
-        and comment['user']['login']==repository.split('/')[0]
-        and comment['created_at']==comment['updated_at'],'RUNTIME_STAGE_OWNER_PROVENANCE_INVALID')
-    parse_utc_timestamp(value=comment['created_at'])
     stage=strict_json_loads(text=comment['body'])
+    _validate_owner_comment(comment=comment,stage=stage,approval_url=approval_url)
     _validate_stage(stage)
     return {'stage':stage,'owner_comment':comment}
 
@@ -262,6 +271,7 @@ def _paths(plan):
 def authorization_fields(authorization):
     binding=_binding(authorization); stage=binding['stage']; plan=binding['plan']
     requirement=_validate_stage(stage)
+    _validate_owner_comment(comment=binding['owner_comment'],stage=stage)
     require(plan==prepare_plan(binding=binding),'RUNTIME_PINNED_INPUT_CHANGED')
     workspace,run_dir,run_id=_paths(plan)
     slot=resolve_repository_file(repo_root=Path(stage['stage_root']),repo_relative_path='execution-slot.json')
@@ -382,13 +392,22 @@ def stage_counts(stage_root):
     """Count durable WB-3 markers, including terminals without a Run."""
     root=_external(stage_root)
     markers=list(root.glob('candidates/*/invocation_control/egress/*/*.json'))
-    # Controller's storage layout is verified in tests and final evidence.
-    return [len(markers),len(markers),0]
+    provider,paid=0,0
+    for path in markers:
+        marker=strict_json_file(path=resolve_repository_file(repo_root=root,repo_relative_path=path.relative_to(root).as_posix()))
+        require(marker.get('egress_marker_id')==content_hash(value={k:v for k,v in marker.items() if k!='egress_marker_id'})
+            and marker.get('transport_kind')=='REAL_MODEL_PROVIDER'
+            and marker.get('paid_model_provider_call_observed') is True,'RUNTIME_STAGE_COUNT_UNCERTAIN')
+        provider+=1;paid+=1
+    require(provider<=1 and paid<=1,'RUNTIME_STAGE_BUDGET_EXCEEDED')
+    return [provider,paid,0]
 
 
 def _exclusive_slot(stage,plan):
     root=_external(Path(stage['stage_root'])); root.mkdir(parents=True,exist_ok=True)
     path=root/'execution-slot.json'
+    require(not (root/'candidates').exists() and not (root/'stage-approval.json').exists(),
+            'RUNTIME_CONSUMPTION_EVIDENCE_WITHOUT_SLOT')
     try:
         descriptor=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
     except FileExistsError as error:
@@ -412,7 +431,18 @@ def run_update(*, approval_url):
     if success.exists():
         ref=strict_json_file(path=resolve_repository_file(repo_root=root,repo_relative_path=success.name))
         baseline=update.candidate_baseline(company=company,run_dir=Path(ref['run_directory']))
-        require(baseline['run_id']==ref['run_id'],'RUNTIME_SUCCESS_REFERENCE_CHANGED')
+        saved=strict_json_file(path=resolve_repository_file(repo_root=root,repo_relative_path='stage-approval.json'))
+        plan=saved['plan'];workspace,b10,expected_id=_paths(plan)
+        require(saved['stage']==stage and saved['owner_comment']==binding['owner_comment']
+            and ref=={'run_directory':str(b10),'run_id':expected_id,'stage_id':stage['stage_id'],
+                      'b01_run_directory':str(workspace/'b01')}
+            and baseline['run_id']==expected_id,'RUNTIME_SUCCESS_REFERENCE_CHANGED')
+        _mechanically_replay_open_run(run_dir=b10,repo_root=Path(stage['data_root']),require_complete_results=False)
+        _mechanically_replay_open_run(run_dir=workspace/'b01',repo_root=Path(stage['data_root']),require_complete_results=False)
+        _,structured_records,_=load_run_for_status(run_dir=workspace/'b01',repo_root=Path(stage['data_root']))
+        b01=[r for r in structured_records if r['record_type']=='METRIC_RESULT' and r['metric_id']=='B01']
+        require(len(b01)==1 and b01[0]['reason_code']=='PASS' and b01[0]['publication']=='PUBLISHED'
+            and b01[0]['period_end']==baseline['filing']['period_end'],'RUNTIME_BOTH_METRICS_SUCCESS_REQUIRED')
     report=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,successful_candidate=baseline)
     report.update(stage_id=stage['stage_id'],baseline_mode=stage['baseline_mode'],old_successful_candidate=old,
         current_published=published,new_candidate=None,execution_code=code_identity(),reviewed_code=stage['reviewed_code'])
