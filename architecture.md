@@ -34,11 +34,13 @@ Trace、Result 和 SourceReference 读取相互绑定的申报身份。这里只
 primary 和 Company Facts，最多再各一次；原文校验失败即停止后续获取。
 每个 `SecHttpClient` 实例将 retry 缩为 0，正常节流、原始 body/header 和 ledger
 证据保存保持原实现。新增 working path 使用独立目录，immutable bytes 只追加。
-本轮未真实获取，CLI 的显式范围/上限不代替 owner 许可。
+PR37阶段已在本次owner许可下真实读取清单一次，HTTP200、无新年报、0/0/1；
+CLI的显式范围/上限不代替owner许可。
 
 输入齐备时可直接消费 `prepared_input`，或选择生成既有普通候选 plan；后者仍
 要求 clean code 和原有执行批准。真实刷新追加 ledger 可能使 checkout 尚未干净，
-此时输入可准备而候选 plan 明确 BLOCKED；本轮不自动提交来源或建设正常运行授权。
+此时输入可准备而候选 plan 明确 BLOCKED；获阶段授权时可提交明确列出的新来源
+证据，但本轮不建设正常运行授权。
 详见 `docs/annual_update.md` 的运行入口、示例证据和最小真实检查请求。
 <!-- capability-anchor: CAPABILITY.marriott_annual_update_inputs -->
 

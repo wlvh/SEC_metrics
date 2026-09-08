@@ -53,38 +53,54 @@ Company Facts也返回明确失败。HTTP诊断写stderr，stdout始终保持单
 另以 `candidate_plan.status=BLOCKED` 给出原因；不能误称计划已可执行。
 
 当前普通候选仍要求 clean code、同一 open/unmerged PR 的 exact head 和独立执行
-批准。真实刷新追加 ledger 可能使工作区不再干净，从而暂时不能生成计划；本轮
-不自动提交新来源，不放宽冻结身份。正常运行权限及正式新旧版本衔接属于后续任务，
+批准。真实刷新追加 ledger 可能使工作区不再干净，从而暂时不能生成计划；本轮按阶段授权提交明确列出的新来源证据，不放宽冻结身份。正常运行权限及正式新旧版本衔接属于后续任务，
 不能把每份新年报开一个 PR 当成最终产品流程。
 
-## 一次最小真实 SEC 检查：待审阅、未执行
+## 请求范围与本次真实检查
 
 最小许可只需要：对 Marriott current submissions 发起 **1 次 GET，retry=0**，
 通过已有 SEC 客户端保存响应和请求记录，provider/paid=0/0，不执行指标或发布。
 
 | 顺序 | 请求 | 条件与上限 |
 |---|---|---|
-| 1 | `https://data.sec.gov/submissions/CIK0001048286.json` | 首次真实验证只批准这一项，最多1次 |
-| 2 | 从该清单选出的 exact accession/primaryDocument 官方 Archives URL | 只有新年报且本地缺少主文档才考虑，另获准后最多1次 |
-| 3 | `https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json` | 只有新年报且缺少文件或目标申报年度事实才考虑，另获准后最多1次 |
+| 1 | `https://data.sec.gov/submissions/CIK0001048286.json` | 任何检查先读这一项，最多1次 |
+| 2 | 从该清单选出的 exact accession/primaryDocument 官方 Archives URL | 只有新年报且本地缺少主文档才考虑，在明确许可范围内最多1次 |
+| 3 | `https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json` | 只有新年报且缺少文件或目标申报年度事实才考虑，在明确许可范围内最多1次 |
 
-代码审阅后、获得上述第1项许可才可运行（**本次未运行**）：
+仅批准一份清单时的命令（本次阶段使用下述条件式入口）：
 
 ```bash
 python3 tools/vnext_annual_update.py --refresh submissions --sec-request-limit 1 --output <新的外部JSON>
 ```
 
-如将来明确批准完整条件式输入刷新，已有接线为 `--refresh missing
+本次owner明确批准完整条件式输入刷新，已运行的接线为 `--refresh missing
 --sec-request-limit 3`：包含一次新清单读取，后续只补缺少项，不预先下载全部来源。
 每请求零重试；HTTP失败、未知结果或原文不符合当前支持范围即停止后续请求。
-CLI 参数只限制本次命令，不是新的许可签发系统。本轮真实 provider/paid/SEC=0/0/0。
+CLI参数只限制本次命令，不是新的许可签发系统。阶段累计上限不因重启或换head
+重置。实际仅1次GET、零重试，provider/paid/SEC=0/0/1；没有运行第二次刷新。
 
 新增来源通过原 `SecHttpClient` 写入独立 `evidence/annual_refresh/<唯一目录>/...`
 working path，以及既有 immutable body/header 和追加 ledger；不覆盖历史材料。
 如果落盘异常导致真实请求数无法确定，SEC 计数为 null，保留 fetch 次数与错误，
 不会用零调用掩盖未知结果。
 
-## 定向证据与输出示例
+## 实际验证与定向证据
+
+在独立模型子任务审阅并修正4个失败分支后，精确head
+`0e3e3ed0db447706d01cf2bbc58396a52ea92400` 于
+`2026-09-08T15:06:43.698100+00:00` 保存真实SEC响应。HTTP200，清单SHA为
+`e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8`，
+147714 bytes；它与旧清单bytes不同，但最新受支持年报仍为FY2025
+`0001048286-26-000007`，故返回 `NO_NEW_ANNUAL_FILING`。
+没有获取主文档或Company Facts，没有准备计划、计算B10或更新正式版本。
+ledger从983行追加至984行，原有前缀不变；15个正式root文件与23个历史B10文件
+哈希保持不变。保存报告见 `docs/evidence/pr37_annual_update_live_check.json`，
+原始响应/headers/ledger核对见 `docs/evidence/pr37_annual_update_verification.json`，
+独立模型审阅记录见 `docs/evidence/pr37_annual_update_review.json`。
+该审阅不是GitHub正式APPROVE；本次结果仅证明真实入口及无新申报分支，不能
+声称已在线验证新年度执行或全部Company Facts变化。
+
+### 离线行为示例（此前开发证据）
 
 `tests/vnext/test_annual_update.py` 只在外部 HTTP 边界注入标注为
 `SIMULATED_HTTP_BOUNDARY` 的响应，底下的选择、SEC客户端、来源保存和输入准备
@@ -99,11 +115,13 @@ working path，以及既有 immutable body/header 和追加 ledger；不覆盖�
 
 旧到新例子证明对保存材料的前向比较和输入准备；没有声称拥有 FY2024 当时的真实
 历史清单，也不证明未来在线发现。重复获取、无关8-K、代码 head 和目录变更均不会
-被当成新年报。正式 pointer、root矩阵/证据/报告与原始 ledger 前后哈希保持不变。
+被当成新年报。此前离线开发的正式pointer、root矩阵/证据/报告与原始ledger前后哈希保持不变；
+本阶段真实检查则按上述事实只追加了1行ledger和新来源证明。
 
 完整运行日志与输出保存在本地
 `/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-update/`。
-这些是离线开发证据，不能代替真实在线检查、长期运行、正式发布或 full acceptance。
+旧示例是离线开发证据；本次新增真实检查记录见其 `stage-closeout/` 子目录。
+两者均不能替代长期运行、正式发布或full acceptance。
 未改 Reader/prompt/schema/审核/计算/调用控制/Run业务状态/Requirement；未重跑旧
 资格、未恢复 PR34，也未新增调度、数据库、修订引擎或发布机制。
 

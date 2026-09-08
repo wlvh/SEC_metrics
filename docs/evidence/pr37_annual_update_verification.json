@@ -1,0 +1,125 @@
+{
+  "purpose": "Read-only verification of the one authorized PR37 SEC check; not a publication receipt",
+  "execution": {
+    "execution_head": "0e3e3ed0db447706d01cf2bbc58396a52ea92400",
+    "execution_tree": "ccd66c559ba35e1058ce165750085d6c5e223d61",
+    "started_at_utc": "2026-09-08T15:06:05.539902+00:00",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/vnext_annual_update.py",
+      "--candidate-run",
+      "/Users/lyuhongwang/Documents/Codex/2026-09-08/b10-live-candidate/candidates/690b697f5d837af68e13b29ce86b48733f0caf9c2353b5ad75ce1b37988e530b/run",
+      "--refresh",
+      "missing",
+      "--sec-request-limit",
+      "3",
+      "--output",
+      "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-update/stage-closeout/live-check.json"
+    ],
+    "authorization_basis": "Current user stage authorization: total maximum 3 conditional SEC GETs, zero retries, no project provider/paid calls",
+    "ledger_before_sha256": "f60c48c64b1552494087a12e7f7e9b54e93aed1b4c43f963dea10ce9bd041eec",
+    "ledger_before_row_count": 983,
+    "reviewer": "independent model subtask /root/pr37_independent_review",
+    "reviewed_head": "0e3e3ed0db447706d01cf2bbc58396a52ea92400",
+    "independent_review": "NO_REMAINING_BLOCKERS; 6 targeted cases PASS; not GitHub APPROVE"
+  },
+  "completion": {
+    "finished_at_utc": "2026-09-08T15:06:43.808679+00:00",
+    "exit_code": 0,
+    "execution_head": "0e3e3ed0db447706d01cf2bbc58396a52ea92400"
+  },
+  "check_status": "NO_NEW_ANNUAL_FILING",
+  "actual_provider_paid_sec_calls": [
+    0,
+    0,
+    1
+  ],
+  "sec_gets_used": 1,
+  "automatic_retries": 0,
+  "further_live_requests": "STOPPED_AFTER_NO_NEW_ANNUAL_FILING",
+  "ledger_before": {
+    "sha256": "f60c48c64b1552494087a12e7f7e9b54e93aed1b4c43f963dea10ce9bd041eec",
+    "row_count": 983
+  },
+  "ledger_after": {
+    "sha256": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "row_count": 984,
+    "manifest_sha256": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2"
+  },
+  "ledger_prefix_unchanged": true,
+  "appended_rows": [
+    {
+      "timestamp_utc": "2026-09-08T15:06:43.720509+00:00",
+      "method": "GET",
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "status_code": "200",
+      "purpose": "annual_update_submissions",
+      "repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+      "headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+      "content_length": "147714",
+      "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "accession": "",
+      "document_name": "CIK0001048286.json",
+      "user_agent": "axaxl 12@qq.com",
+      "retry_attempt": "0",
+      "error": ""
+    }
+  ],
+  "submissions_proof": {
+    "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+    "accession": "",
+    "document_name": "CIK0001048286.json",
+    "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+    "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+    "request_body_size": 147714,
+    "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+    "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+    "request_headers_size": 736,
+    "request_locator_kind": "IMMUTABLE_ATTEMPT",
+    "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+    "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+  },
+  "saved_at_utc": "2026-09-08T15:06:43.698100+00:00",
+  "latest_annual_identity_checked_directly_from_raw_arrays": {
+    "company_id": "marriott_international",
+    "cik": "1048286",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "primary_document": "mar-20251231.htm",
+    "filing_date": "2026-02-10",
+    "period_basis": "SUBMISSIONS_REPORT_DATE"
+  },
+  "existing_primary_dei_period_confirmed_offline": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "protected_root_files_unchanged": {
+    "README_RUN.md": "eea0c8104352741fb91502eb40cb205e6a1103f8cc778b1af097d87f97557920",
+    "REPORT_十公司财务指标.md": "4d180dd96fbb29e35dfefee4a78b97c33decd13f51b8518dfd5f91e10c84def9",
+    "outputs/active_publication.json": "c7cf04edb11b8e5f19fbc3d2caf65bd8136e218dfc31eced00d21b93e1308e80",
+    "outputs/coverage_matrix.csv": "935390dccf22538c5f3afe9f80e781952b2e0e785398cd7479ab2b69ad0790d3",
+    "outputs/golden_results.csv": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+    "outputs/legacy_invariant_migration_receipt.json": "b0ddea8be8d29493c61bc62e74a85939f9f4e07817bfdaa8d708289ab80ad6d2",
+    "outputs/metric_evidence.csv": "da505166e60adaa7909b4185cd3c6c96f80df711db0c76ec57037ebf853509a2",
+    "outputs/metrics_matrix.csv": "b390121cdc75c0e9eff50b3c896191731ec7c6102061cb61ff677a4f6a588b72",
+    "outputs/projection_manifest.json": "b984193c984bf4006e7df7678a0c1296fa61183b3986fc295bfd0d7974ca0c2a",
+    "outputs/publication_validation_receipt.json": "e9740037fb01d4f3218b2e5cbe43e71e129bdda2fd1f64afd95700a701d0c81c",
+    "outputs/repair_validation_results.csv": "93e7e24adba4e7ae1e796de8f031ba356dc420527e6c0e7b36e555071f4fb6ca",
+    "outputs/scalability_audit.csv": "58da0356044a3374ba9228a415a8dc0c91a91cd556f8464c2583b6850a4aeb52",
+    "outputs/semantic_audit_receipt.json": "efe2eaab173e86576ac1b0dc03f3c2c0f723d9ff2f92b74dd21f80a93210d2cd",
+    "outputs/stratified_audit.csv": "0701e26fde2355f56fcd7598d951b8a401fabceaee9d402327a90bc11b2947e7",
+    "outputs/validation_run_manifest.json": "8071495865f29555428b8be797255250e2781bacccd56349bd77dbb98a72fa72"
+  },
+  "historical_b10_files_unchanged": 23,
+  "stash_ids_unchanged": true,
+  "input_prepared": false,
+  "model_executed": false,
+  "formal_publication_changed": false,
+  "limitations": [
+    "Annual filing identity only; no claim of all Company Facts or same-accession file changes",
+    "No new-year model execution, normal unattended permissions or formal update publication"
+  ]
+}
