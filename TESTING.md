@@ -1,5 +1,24 @@
 # SEC_metrics 测试与验证流程
 
+## 固定代码年度候选运行定向验收
+
+在clean committed checkout执行：
+
+```bash
+env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_runtime -v
+```
+
+测试仅模拟GitHub/provider外部返回，禁止真实socket；新data目录无Git，实际代码
+始终从原目录执行。覆盖真实FY2024起点到FY2025的原生B01/B10链、新进程去重、
+失败不覆盖成功、总额度不因计划改变复位、owner/来源/规则副本篡改、伪造成功引用。
+新增清单字节通过模拟SEC客户端写入外部data root；它是行为证据，不是实时发现。
+保留旧annual_input/update定向回归和fast/static gates。旧PR36执行测试因历史
+execution-authority bytes绑定在其受审提交，不能在新代码重签后冒充历史重验。
+真实SEC=0、B10最多一次反馈只在本阶段独立代码审阅通过且新批准登记后执行。
+不运行Stage12/root刷新、qualification、measurement或正式发布，不声称full PASS。
+
+<!-- capability-anchor: CAPABILITY.marriott_annual_candidate_runtime -->
+
 本文件是项目测试策略、真实命令、full/light 边界和测试副作用的权威入口。所有命令默认在仓库根目录执行；完整阶段顺序以 `README_RUN.md` 为准。
 
 ## Issue #15 D-26 快速验收执行政策

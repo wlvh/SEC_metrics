@@ -74,8 +74,10 @@ def _external(path):
 
 
 def _authority_files(requirement):
+    foundation=strict_json_file(path=CODE_ROOT/'requirements/issue_15_v1/foundation_verification_receipt.json')
     return sorted(set(requirement_authority_paths(repo_root=CODE_ROOT, requirement=requirement))
-                  | set(_git('ls-files', 'catalog', 'config').splitlines()))
+                  | set(_git('ls-files', 'catalog', 'config').splitlines())
+                  | {row['path'] for row in foundation['receipt_bindings']})
 
 
 def verify_data_root(data_root, requirement=None):
@@ -103,19 +105,24 @@ def initialize_data_root(*, data_root):
     require(not data_root.exists(), "RUNTIME_DATA_ROOT_ALREADY_EXISTS")
     company = update.supported_company(repo_root=CODE_ROOT)
     prepared = annual_input.prepare_annual_input(repo_root=CODE_ROOT, company_id=company['company_id'])
-    paths = set(_authority_files(requirement)) | {"evidence/requests_log.csv", "evidence/requests_log_manifest.json"}
-    for proof in prepared['source_proofs']:
-        paths.update((proof['request_repo_relative_path'], proof['request_headers_repo_relative_path']))
-    for relative in sorted(paths):
-        source = resolve_repository_file(repo_root=CODE_ROOT, repo_relative_path=relative)
-        target = data_root / relative
-        target.parent.mkdir(parents=True, exist_ok=True)
-        with target.open('xb') as output:
-            output.write(source.read_bytes())
+    _copy_inputs(source_root=CODE_ROOT, data_root=data_root, prepared=prepared, requirement=requirement)
     verify_data_root(data_root, requirement)
     require(code_identity() == before, "RUNTIME_CODE_CHANGED_DURING_SEED")
     return {'status':'SAVED_INPUTS_COPIED', 'data_root':str(data_root), 'code_identity':before,
             'input_id':prepared['input_id'], 'provider_paid_sec_calls':[0,0,0]}
+
+
+def _copy_inputs(*, source_root, data_root, prepared, requirement):
+    """Preserve the exact ledger and source bytes as one Run input snapshot."""
+    paths = set(_authority_files(requirement)) | {"evidence/requests_log.csv", "evidence/requests_log_manifest.json"}
+    for proof in prepared['source_proofs']:
+        paths.update((proof['request_repo_relative_path'], proof['request_headers_repo_relative_path']))
+    for relative in sorted(paths):
+        source = resolve_repository_file(repo_root=source_root, repo_relative_path=relative)
+        target = data_root / relative
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with target.open('xb') as output:
+            output.write(source.read_bytes())
 
 
 def _request(prepared, data_root, task_id):
@@ -235,13 +242,22 @@ def prepare_plan(*, binding):
     stage=binding['stage']; requirement=_validate_stage(stage)
     data=Path(stage['data_root']); policy=stage['policy']
     prepared=annual_input.prepare_annual_input(repo_root=data, company_id=policy['company_id'])
+    return _plan(stage=stage,requirement=requirement,prepared=prepared,source_root=data)
+
+
+def _plan(*, stage, requirement, prepared, source_root):
+    policy=stage['policy']
+    input_root=Path(stage['stage_root'])/'inputs'/prepared['input_id'].split(':')[1]
     task=table_task_execution_plan(repo_root=CODE_ROOT,task_contract_id=policy['task_contract_id'])
     body={'record_type':'ANNUAL_RUNTIME_EXECUTION_PLAN','schema_version':1,'stage_id':stage['stage_id'],
         'requirement_id':REQUIREMENT_ID,'requirement_closure_hash':requirement['requirement_closure_hash'],
         'requirement_hashes':requirement['hashes'],'reviewed_code':stage['reviewed_code'],
-        'data_root':stage['data_root'],'stage_root':stage['stage_root'],'prepared_input':prepared,
+        'data_root':str(input_root),'stage_root':stage['stage_root'],'prepared_input':prepared,
+        'source_ledger':{name:{'sha256':sha256_file(path=source_root/'evidence'/name),
+                              'size':(source_root/'evidence'/name).stat().st_size}
+                         for name in ('requests_log.csv','requests_log_manifest.json')},
         'task_contract_id':policy['task_contract_id'],'task_binding':task['run_binding'],
-        'request':_request(prepared,data,policy['task_contract_id']), 'maximum_new_executions':1,
+        'request':_request(prepared,source_root,policy['task_contract_id']), 'maximum_new_executions':1,
         'automatic_retry_count':0,'actual_input_tokens_max':200000,'qualification_credit':'NONE','publication_credit':'NONE'}
     return {**body,'plan_id':content_hash(value=body)}
 
@@ -272,13 +288,18 @@ def authorization_fields(authorization):
     binding=_binding(authorization); stage=binding['stage']; plan=binding['plan']
     requirement=_validate_stage(stage)
     _validate_owner_comment(comment=binding['owner_comment'],stage=stage)
-    require(plan==prepare_plan(binding=binding),'RUNTIME_PINNED_INPUT_CHANGED')
+    input_root=Path(stage['stage_root'])/'inputs'/plan['prepared_input']['input_id'].split(':')[1]
+    require(plan['data_root']==str(input_root),'RUNTIME_INPUT_ROOT_MISMATCH')
+    verify_data_root(input_root,requirement)
+    prepared=annual_input.prepare_annual_input(repo_root=input_root,company_id=stage['policy']['company_id'])
+    require(plan==_plan(stage=stage,requirement=requirement,prepared=prepared,source_root=input_root),
+            'RUNTIME_PINNED_INPUT_CHANGED')
     workspace,run_dir,run_id=_paths(plan)
     slot=resolve_repository_file(repo_root=Path(stage['stage_root']),repo_relative_path='execution-slot.json')
     require(strict_json_file(path=slot)=={'stage_id':stage['stage_id'],'plan_id':plan['plan_id']},'RUNTIME_STAGE_ALREADY_CONSUMED')
     return {'binding':binding,'plan':plan,'requirement':requirement,'workspace_dir':workspace,
         'run_dir':run_dir,'run_id':run_id,'owner_token':stage['stage_id'],
-        'authorized_at_utc':binding['owner_comment']['created_at'],'data_root':Path(stage['data_root'])}
+        'authorized_at_utc':binding['owner_comment']['created_at'],'data_root':input_root}
 
 
 @dataclass(frozen=True, init=False)
@@ -406,7 +427,7 @@ def stage_counts(stage_root):
 def _exclusive_slot(stage,plan):
     root=_external(Path(stage['stage_root'])); root.mkdir(parents=True,exist_ok=True)
     path=root/'execution-slot.json'
-    require(not (root/'candidates').exists() and not (root/'stage-approval.json').exists(),
+    require(not (root/'candidates').exists() and not (root/'stage-approval.json').exists() and not (root/'inputs').exists(),
             'RUNTIME_CONSUMPTION_EVIDENCE_WITHOUT_SLOT')
     try:
         descriptor=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
@@ -437,9 +458,9 @@ def run_update(*, approval_url):
             and ref=={'run_directory':str(b10),'run_id':expected_id,'stage_id':stage['stage_id'],
                       'b01_run_directory':str(workspace/'b01')}
             and baseline['run_id']==expected_id,'RUNTIME_SUCCESS_REFERENCE_CHANGED')
-        _mechanically_replay_open_run(run_dir=b10,repo_root=Path(stage['data_root']),require_complete_results=False)
-        _mechanically_replay_open_run(run_dir=workspace/'b01',repo_root=Path(stage['data_root']),require_complete_results=False)
-        _,structured_records,_=load_run_for_status(run_dir=workspace/'b01',repo_root=Path(stage['data_root']))
+        _mechanically_replay_open_run(run_dir=b10,repo_root=Path(plan['data_root']),require_complete_results=False)
+        _mechanically_replay_open_run(run_dir=workspace/'b01',repo_root=Path(plan['data_root']),require_complete_results=False)
+        _,structured_records,_=load_run_for_status(run_dir=workspace/'b01',repo_root=Path(plan['data_root']))
         b01=[r for r in structured_records if r['record_type']=='METRIC_RESULT' and r['metric_id']=='B01']
         require(len(b01)==1 and b01[0]['reason_code']=='PASS' and b01[0]['publication']=='PUBLISHED'
             and b01[0]['period_end']==baseline['filing']['period_end'],'RUNTIME_BOTH_METRICS_SUCCESS_REQUIRED')
@@ -455,23 +476,26 @@ def run_update(*, approval_url):
         report.update(status='STAGE_STOPPED',execution='NOT_EXECUTED',error='RUNTIME_STAGE_ALREADY_CONSUMED',
                       stage_provider_paid_sec_calls=stage_counts(root))
         return report
+    require(plan['prepared_input']==report['prepared_input'],'RUNTIME_INPUT_CHANGED_DURING_CHECK')
     _exclusive_slot(stage,plan)
+    _copy_inputs(source_root=Path(stage['data_root']),data_root=Path(plan['data_root']),
+                 prepared=plan['prepared_input'],requirement=_requirement())
     workspace.mkdir(parents=True,exist_ok=True)
     atomic_write_json(path=workspace/'plan.json',value=plan)
     atomic_write_json(path=root/'stage-approval.json',value=binding)
     authorization=RuntimeAuthorization(factory=_FACTORY,binding=binding)
-    structured=create_companyfacts_release_run(repo_root=Path(stage['data_root']),run_dir=workspace/'b01',
+    structured=create_companyfacts_release_run(repo_root=Path(plan['data_root']),run_dir=workspace/'b01',
         run_id=run_id+':structured',**plan['prepared_input']['companyfacts_input'])
     report['structured_candidate']={'run_directory':str(workspace/'b01'),'B01':structured['results']['B01'],
         'native_attached_metric_ids':sorted(k for k in structured['results'] if k!='B01')}
     adapter=build_annual_candidate_transport_adapter(authorization=authorization)
-    created=create_table_task_review_run(repo_root=Path(stage['data_root']),run_dir=b10,run_id=run_id,
+    created=create_table_task_review_run(repo_root=Path(plan['data_root']),run_dir=b10,run_id=run_id,
         task_contract_id=plan['task_contract_id'],adapter=adapter,clock=None,candidate_authorization=authorization,
         **plan['prepared_input']['table_input'])
     if created['status']=='PENDING_HUMAN_REVIEW':
-        finalize_reviewed_direct_results(repo_root=Path(stage['data_root']),run_dir=b10)
-    _mechanically_replay_open_run(run_dir=b10,repo_root=Path(stage['data_root']),require_complete_results=False)
-    manifest,records,decisions=load_run_for_status(run_dir=b10,repo_root=Path(stage['data_root']))
+        finalize_reviewed_direct_results(repo_root=Path(plan['data_root']),run_dir=b10)
+    _mechanically_replay_open_run(run_dir=b10,repo_root=Path(plan['data_root']),require_complete_results=False)
+    manifest,records,decisions=load_run_for_status(run_dir=b10,repo_root=Path(plan['data_root']))
     results=[r for r in records if r['record_type']=='METRIC_RESULT']
     good=[r for r in results if r['metric_id']=='B10' and r['reason_code']=='PASS' and r['publication']=='PUBLISHED']
     success_b01=structured['results']['B01']['reason_code']=='PASS'

@@ -114,6 +114,18 @@ print('NEW_PROCESS_ZERO_HTTP')
         with self.assertRaisesRegex(ValueError,'OWNER_PROVENANCE'):runtime.verify_stage(approval_url=URL)
         with self.assertRaisesRegex(ValueError,'AUTHORIZATION_REQUIRED'):runtime.authorization_fields({})
 
+    def test_forged_success_reference_and_saved_owner_are_rejected(self):
+        from tests.vnext.test_annual_update import NEW_RUN
+        root=Path(self.stage['stage_root']);root.mkdir()
+        wrong={'run_directory':str(NEW_RUN),'run_id':update.candidate_baseline(
+            company=update.supported_company(repo_root=ROOT),run_dir=NEW_RUN)['run_id'],
+            'stage_id':'WRONG_STAGE','b01_run_directory':'/does/not/exist'}
+        (root/'successful-candidate.json').write_text(json.dumps(wrong))
+        with self.assertRaises((ValueError,OSError)):runtime.run_update(approval_url=URL)
+        bad=copy.deepcopy(self.comment);bad['user']['login']='not-owner';bad['body']='{}'
+        with self.assertRaisesRegex(ValueError,'OWNER_PROVENANCE'):
+            runtime._validate_owner_comment(comment=bad,stage=self.stage)
+
     def test_stage_slot_is_global_to_input_plan_and_restart(self):
         plan=self.plan();runtime._exclusive_slot(self.stage,plan)
         with self.assertRaisesRegex(ValueError,'ALREADY_CONSUMED'):runtime._exclusive_slot(self.stage,plan)

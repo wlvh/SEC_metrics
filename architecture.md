@@ -1,5 +1,21 @@
 # SEC_metrics 架构说明
 
+### 固定代码版本的年度候选运行
+
+`annual_runtime` 复用 `annual_update`、`annual_input` 与现有原生 Run/调用控制，
+在新 `issue_28_v5` / V6 薄政策下增加阶段许可及代码/数据身份核对。
+旧 `annual_candidate` 和 V1–V5 engine 字节保持不变；`candidate_permission` 按
+实际 opaque 类型分派。新请求包装只携带经重验的来源根，原 provider opener、
+Reader、Evidence、Review与Calculator保持既有语义。
+
+外部数据根保存逐字节核对的规则副本和请求证据，Python只从原checkout执行。
+每输入形成绑定ledger快照和原始body/header的计划，Run读取自己的固定快照。
+阶段许可由真实owner Issue评论绑定受审代码、政策和固定目录，独占额度文件
+贯穿所有输入/进程。成功引用必须原生重验B01/B10，失败不推进成功引用。
+隔离FY2024起点和正式FY2025对照明确分开。入口与限制见 `docs/annual_runtime.md`。
+
+<!-- capability-anchor: CAPABILITY.marriott_annual_candidate_runtime -->
+
 本文档描述当前SEC-only单财年批处理、已正式发布到R3的Issue #15 ratchet、后续vNext Cutover与full acquisition/inventory编排。它严格区分R3 partial active、后续未完成scope与full acceptance。
 
 本文档不负责：

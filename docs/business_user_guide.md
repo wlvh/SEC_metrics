@@ -1,5 +1,13 @@
 # SEC_metrics：业务人员首次使用指南
 
+年度候选运行可通过 `tools/vnext_annual_runtime.py` 在一次受限阶段许可内完成
+检查、输入准备和必要的B01/B10计算，无须为每份来源创建开发PR。输出中的
+“新候选成功”只表示候选已保存；正式版本仍以当前PublicationView为准。
+本阶段用隔离FY2024起点验证到已有FY2025材料的连接，不代表线上发现了新年报。
+具体命令和调用限制见 `docs/annual_runtime.md`。
+
+<!-- capability-anchor: CAPABILITY.marriott_annual_candidate_runtime -->
+
 > Status: active
 >
 > Audience: 读取结果的业务、财务方法与审核人员
