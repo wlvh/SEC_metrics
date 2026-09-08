@@ -74,6 +74,11 @@ sec_pipeline的通用submissions解析，不允许其语义生产函数。缺失
 重复/修订申报、原始期间矛盾和同目录重复触发必须失败；所有Run写到临时目录。
 参考值与历史响应只在测试端，不进入生产输入准备函数。
 
+年报日期负例在合成原始submissions parallel arrays中注入空值、null和无效
+日期，保留真实清单转换路径。较新10-K不得静默回退，10-K/A不得在默认或
+显式年度下消失；均须以ANNUAL_REPORT_DATE_INVALID在目标原文与Company
+Facts读取前停止。合成输入不改写任何历史原始材料或收据。
+
 相关未变机制可定向复用：
 `tests.vnext.test_scope_contract.ScopeContractTest.test_unknown_alias_requires_human_and_never_system_approval`
 与 `tests.vnext.test_invocation_control.InvocationControlTest.test_cutover_success_reuses_exact_accepted_response`。

@@ -112,6 +112,66 @@ def recorded_candidate(*, prepared, run_dir):
 
 
 class AnnualInputTest(unittest.TestCase):
+    def _assert_invalid_raw_annual_date(self, *, form, report_date, fiscal_year):
+        """Inject raw parallel arrays; retain the real submissions converter."""
+        payload = json.loads(
+            (REPO_ROOT / "evidence/submissions/CIK0001048286.json").read_text())
+        recent = payload["filings"]["recent"]
+        payload["filings"]["recent"] = {
+            field: [values[0], values[0]] for field, values in recent.items()
+        }
+        recent = payload["filings"]["recent"]
+        recent.update({
+            "form": [form, "10-K"],
+            "accessionNumber": ["0001048286-26-000099", "0001048286-25-000099"],
+            "filingDate": ["2026-03-01", "2025-02-11" if form == "10-K" else "2026-02-10"],
+            "reportDate": [report_date, "2024-12-31" if form == "10-K" else "2025-12-31"],
+            "primaryDocument": ["synthetic-new.htm", "synthetic-original.htm"],
+        })
+        raw = json.dumps(payload).encode("utf-8")
+
+        def inventory_only(**kwargs):
+            self.assertEqual(
+                "https://data.sec.gov/submissions/CIK0001048286.json",
+                kwargs["url"],
+                "Invalid annual metadata reached target/Company Facts reads",
+            )
+            return {}, raw
+
+        with mock.patch.object(
+            annual_input, "_saved_source", side_effect=inventory_only,
+        ) as saved, mock.patch.object(
+            annual_input, "filing_rows_from_submission_payloads",
+            wraps=annual_input.filing_rows_from_submission_payloads,
+        ) as convert, mock.patch.object(
+            socket.socket, "connect", side_effect=AssertionError("network"),
+        ):
+            with self.assertRaisesRegex(
+                annual_input.AnnualInputError, "ANNUAL_REPORT_DATE_INVALID",
+            ):
+                annual_input.prepare_annual_input(
+                    repo_root=REPO_ROOT, company_id="marriott_international",
+                    fiscal_year=fiscal_year,
+                )
+            convert.assert_called_once()
+            saved.assert_called_once()
+
+    def test_unknown_new_annual_date_cannot_fall_back_to_older_year(self):
+        for report_date in ("", None, "2025-02-30"):
+            with self.subTest(report_date=report_date):
+                self._assert_invalid_raw_annual_date(
+                    form="10-K", report_date=report_date, fiscal_year=None,
+                )
+
+    def test_unknown_amendment_date_blocks_default_and_explicit_year(self):
+        for report_date in ("", None, "not-a-date"):
+            for fiscal_year in (None, 2025):
+                with self.subTest(report_date=report_date, fiscal_year=fiscal_year):
+                    self._assert_invalid_raw_annual_date(
+                        form="10-K/A", report_date=report_date,
+                        fiscal_year=fiscal_year,
+                    )
+
     def test_raw_inputs_reach_b01_and_exact_recorded_b10(self):
         with tempfile.TemporaryDirectory() as temporary, independent_inputs() as observed:
             prepared = annual_input.prepare_annual_input(

@@ -145,8 +145,19 @@ def prepare_annual_input(*, repo_root: Path, company_id: str,
         company=company["display_name"], cik=cik, entity_role="primary",
         payloads=[submissions],
     )
-    annual = [f for f in filings if f["form"] in {"10-K", "10-K/A"}
-              and f["reportDate"]]
+    annual = [f for f in filings if f["form"] in {"10-K", "10-K/A"}]
+    # An unknown annual period cannot safely be excluded from selection,
+    # including when the caller explicitly requests a historical year.
+    for filing in annual:
+        report_date = filing["reportDate"]
+        try:
+            if (not isinstance(report_date, str)
+                    or date.fromisoformat(report_date).isoformat() != report_date):
+                raise ValueError("Expected YYYY-MM-DD")
+        except ValueError as error:
+            raise AnnualInputError(
+                "ANNUAL_REPORT_DATE_INVALID: " + filing["accessionNumber"]
+            ) from error
     if fiscal_year is None:
         if not annual:
             raise AnnualInputError("ANNUAL_FILING_MISSING_IN_SAVED_BLOCK")
