@@ -20,6 +20,7 @@ from unittest import mock
 from vnext import annual_publication as annual, annual_adoption as adoption
 from vnext import publication as pub, invocation_control as controller
 from vnext.canonical import canonical_json_bytes, content_hash
+from vnext.run_store import RunStoreError
 
 
 class HardCrash(BaseException):
@@ -157,7 +158,8 @@ class AnnualPublicationRehearsalTest(unittest.TestCase):
                 if case == 'wrong_source':
                     source = context['origin']['plan']['prepared_input']['companyfacts_input']['source_repo_relative_path']
                     path = snapshot / 'data' / source
-                    value = json.loads(path.read_text()); value['cik'] = 1; save(path, value)
+                    value = json.loads(path.read_text()); value['cik'] = 1
+                    path.write_text(json.dumps(value) + '\n')
                     context['data_files'][source] = proof(path); save(snapshot / 'context.json', context)
                 elif case in {'foreign_b01_run', 'missing_b10_result'}:
                     if case == 'foreign_b01_run':
@@ -166,7 +168,7 @@ class AnnualPublicationRehearsalTest(unittest.TestCase):
                     else:
                         path = snapshot / 'candidate/b10/records.jsonl'
                         values = [json.loads(line) for line in path.read_text().splitlines()]
-                        path.write_bytes(b''.join(canonical_json_bytes(value=v) + b'\n' for v in values if v['record_type'] != 'METRIC_RESULT'))
+                        path.write_bytes(b''.join(canonical_json_bytes(value=v) for v in values if v['record_type'] != 'METRIC_RESULT'))
                     relative = path.relative_to(snapshot / 'candidate').as_posix()
                     context['candidate_files'][relative] = proof(path); save(snapshot / 'context.json', context)
                 elif case == 'runtime_code':
@@ -191,8 +193,9 @@ class AnnualPublicationRehearsalTest(unittest.TestCase):
                 body = {k: v for k, v in manifest.items() if k not in {'record_type', 'publication_id'}}
                 manifest['publication_id'] = 'publication_' + content_hash(value=body)[7:]
                 save(directory / 'publication_manifest.json', manifest)
-                with self.assertRaises((ValueError, pub.PublicationError, KeyError)) as caught:
+                with self.assertRaises((ValueError, pub.PublicationError, KeyError, RunStoreError)) as caught:
                     pub.verify_publication_bundle(bundle_dir=directory)
+                self.assertNotIn('JSONL contains an empty record', str(caught.exception))
                 self.assertFalse((Path(temporary) / 'BUNDLE_CODE_EXECUTED').exists())
                 self.log.append({'check': 'REBOUND_' + case.upper(), 'status': 'PASS', 'rejection': str(caught.exception)})
         with annual._verified(self.pin):
