@@ -177,7 +177,7 @@ def _prior_for_second(
     from .sources import resolve_repository_file
     from .annual_runtime import CODE_ROOT
     from .requirements import load_requirement_snapshot
-    from .invocation_control import execution_identity
+    from .invocation_control import execution_identity, _load_execution_receipt
 
     def read(root, relative):
         return strict_json_file(
@@ -267,6 +267,14 @@ def _prior_for_second(
         owner_token=stage["stage_id"],
         authorized_at_utc=owner["created_at"],
     )
+    receipt = _load_execution_receipt(
+        root=workspace / "invocation_control",
+        path=resolve_repository_file(
+            repo_root=workspace,
+            repo_relative_path=executions[0].relative_to(workspace).as_posix(),
+        ),
+        execution_id=expected_execution,
+    )
     need(
         self_id(receipt, "execution_receipt_id")
         and receipt["execution_id"] == expected_execution
@@ -287,6 +295,12 @@ def _prior_for_second(
     )
     marker = read(workspace, markers[0].relative_to(workspace).as_posix())
     attempt = receipt["attempts"][0]
+    need(
+        receipt.get("success_response_receipt_id") is None
+        and attempt["status"] == receipt["status"]
+        and bool(attempt.get("error_class")),
+        "REPAIR_PRIOR_FAILURE_INCONSISTENT",
+    )
     need(
         self_id(marker, "egress_marker_id")
         and self_id(attempt, "attempt_receipt_id")

@@ -276,6 +276,30 @@ class AnnualRepairRuntimeTest(unittest.TestCase):
         # Disk evidence cannot silently fall back to old raw-only replay.
         approval = json.loads((self.stage_root / "stage-approval.json").read_text())
         plan = approval["plan"]
+        # Rehashing only a successful terminal's top-level status must not make
+        # its successful immutable attempt eligible for a second request.
+        execution_file = next(
+            (run.parent / "invocation_control/executions").glob("*.json")
+        )
+        saved_execution = execution_file.read_bytes()
+        forged_execution = json.loads(saved_execution)
+        forged_execution["status"] = "FAILED_TERMINAL"
+        forged_execution["execution_receipt_id"] = content_hash(
+            value={
+                k: v for k, v in forged_execution.items()
+                if k != "execution_receipt_id"
+            }
+        )
+        execution_file.write_text(json.dumps(forged_execution))
+        try:
+            with self.assertRaisesRegex(ValueError, "PRIOR_FAILURE_INCONSISTENT"):
+                budget._prior_for_second(
+                    self.budget_root,
+                    self.stage["repair"],
+                    {"runtime_tree": "different"},
+                )
+        finally:
+            execution_file.write_bytes(saved_execution)
         with self.assertRaisesRegex(ValueError, "REPAIR_SLOT_ALREADY_CONSUMED"):
             budget.claim_slot(self.stage, plan, runtime._requirement())
         with self.assertRaisesRegex(ValueError, "ROOT_NOT_BUDGET_OWNED"):
@@ -296,6 +320,24 @@ class AnnualRepairRuntimeTest(unittest.TestCase):
             self.assertEqual("RUNTIME_STAGE_ALREADY_CONSUMED", repeat["error"])
             self.assertEqual(1, opened.call_count)
         self.assertFalse((self.stage_root / "successful-candidate.json").exists())
+        attempt_file = next(
+            (self.stage_root / "candidates").glob(
+                "*/invocation_control/attempts/*/*.json"
+            )
+        )
+        saved_attempt = attempt_file.read_bytes()
+        tampered_attempt = json.loads(saved_attempt)
+        tampered_attempt["error_class"] = "DIFFERENT_ERROR"
+        attempt_file.write_text(json.dumps(tampered_attempt))
+        try:
+            with self.assertRaisesRegex(ValueError, "Attempt receipt bytes differ"):
+                budget._prior_for_second(
+                    self.budget_root,
+                    self.stage["repair"],
+                    {"runtime_tree": "different"},
+                )
+        finally:
+            attempt_file.write_bytes(saved_attempt)
         approval_file = self.stage_root / "stage-approval.json"
         saved = approval_file.read_bytes()
         forged = json.loads(saved)
