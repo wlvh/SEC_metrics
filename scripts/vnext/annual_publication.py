@@ -56,7 +56,10 @@ def _marker(root):
     need(marker['purpose'] == 'ISOLATED_ANNUAL_PUBLICATION_REHEARSAL'
          and marker['publication_root'] == str(root)
          and marker['official_root'] == str(ROOT)
-         and marker['formal_publication_authorized'] is False, 'ANNUAL_REHEARSAL_ROOT_INVALID')
+         and marker['formal_publication_authorized'] is False
+         and marker['predecessor_publication_id'] == policy()['baseline_publication']['publication_id']
+         and marker['predecessor_manifest_sha256'] == policy()['baseline_publication']['manifest_sha256'],
+         'ANNUAL_REHEARSAL_ROOT_INVALID')
     return marker
 
 
@@ -234,6 +237,7 @@ def _compose(snapshot, context, predecessor_dir, meta, runtime_root):
 
 def prepare(*, candidate_dir, publication_root):
     need(not git('status', '--porcelain', '--untracked-files=all').strip(), 'ANNUAL_PUBLICATION_CLEAN_CODE_REQUIRED')
+    implementation_head = git('rev-parse', 'HEAD').decode().strip()
     marker = initialize(publication_root=publication_root)
     root = safe_root(publication_root)
     candidate_dir = safe_root(candidate_dir)
@@ -252,18 +256,19 @@ def prepare(*, candidate_dir, publication_root):
     prepare_snapshot(candidate_dir=candidate_dir, output_root=snapshot)
     context = read(snapshot, 'context.json')
     runtime = workspace / 'runtime'; runtime.mkdir()
-    source_paths = sorted(_implementation_files(git('rev-parse', 'HEAD').decode().strip()))
+    source_paths = sorted(_implementation_files(implementation_head))
     for relative in source_paths:
         source = ROOT / relative
         need(source.is_file() and not source.is_symlink(), 'ANNUAL_RUNTIME_SOURCE_UNSAFE')
         target = runtime / relative; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(source.read_bytes())
     scans = {'semantic': pub._execute_semantic_audit(repo_root=ROOT), 'scalability': pub._execute_scalability_audit(repo_root=ROOT)}
-    meta = {'schema_version': 1, 'implementation_head': git('rev-parse', 'HEAD').decode().strip(),
+    meta = {'schema_version': 1, 'implementation_head': implementation_head,
         'implementation_tree': implementation_tree,
         'prepared_at_utc': utc(), 'policy': policy(), 'scans': scans,
         'predecessor_publication_id': marker['predecessor_publication_id'],
         'predecessor_manifest_sha256': marker['predecessor_manifest_sha256'],
         'runtime_files': _tree_files(root=runtime)}
+    need(meta['runtime_files'] == _implementation_files(implementation_head), 'ANNUAL_PREPARE_CODE_BYTES_CHANGED')
     predecessor = root / 'outputs/publications' / marker['predecessor_publication_id']
     public, projection, adoption, requirement, ledger, provenance, projection_manifest, validation = _compose(snapshot, context, predecessor, meta, runtime)
     files = {**public, META: json_bytes(meta), BATCH: json_bytes(projection['batch']), PROOF: json_bytes(projection['proof']),
@@ -281,6 +286,8 @@ def prepare(*, candidate_dir, publication_root):
         'files': [{'path': p, 'sha256': sha256_bytes(content=b), 'size': len(b)} for p, b in sorted(files.items())]}
     manifest = validate_record(record={'record_type': ANNUAL_PUBLICATION_MANIFEST_TYPE,
         'publication_id': 'publication_' + content_hash(value=body)[7:], **body})
+    need(not git('status', '--porcelain', '--untracked-files=all').strip()
+         and git('rev-parse', 'HEAD').decode().strip() == implementation_head, 'ANNUAL_CODE_CHANGED_DURING_PREPARE')
     pin = _Verified(_FACTORY, manifest)
     with _verified(pin):
         pub._persist_prepared_publication_bundle(publications_dir=root / 'outputs/publications', files=files, manifest=manifest)
@@ -301,7 +308,9 @@ def verify_annual_bundle(*, bundle_dir, manifest):
          'ANNUAL_FORMAL_CREDIT_FORBIDDEN')
     meta = read(bundle_dir, META)
     need(meta['policy'] == policy() and _tree_files(root=bundle_dir / 'internal/annual_runtime') == meta['runtime_files']
-         and meta['runtime_files'] == _implementation_files(meta['implementation_head']),
+         and meta['runtime_files'] == _implementation_files(meta['implementation_head'])
+         and meta['implementation_tree'] == content_hash(value=git('ls-tree', '-r', meta['implementation_head'],
+             'scripts', 'tools', 'config', 'catalog', 'requirements').decode()),
          'ANNUAL_RELEASE_RUNTIME_CHANGED')
     snapshot = bundle_dir / SNAPSHOT; context = read(snapshot, 'context.json')
     predecessor = bundle_dir / 'internal/predecessor' / manifest['previous_publication_id']
@@ -347,6 +356,10 @@ def guard_switch(*, pointer_path, manifest, expected_active_id, switch_mode):
     need((switch_mode == 'COMMIT' and manifest == annual and expected_active_id == annual['previous_publication_id'])
          or (switch_mode == 'ROLLBACK' and manifest['publication_id'] == annual['previous_publication_id']
              and expected_active_id == annual['publication_id']), 'ANNUAL_SWITCH_EDGE_CHANGED')
+    current = root / 'outputs/publications' / expected_active_id
+    pub.verify_publication_bundle(bundle_dir=current)
+    for relative, target in pub.ROOT_MIRROR_RELATIVE_PATHS.items():
+        need((root / target).read_bytes() == (current / relative).read_bytes(), 'ANNUAL_SWITCH_ACTIVE_MIRROR_DRIFT')
 
 
 def guard_recovery(*, pointer_path, intent):
@@ -403,8 +416,24 @@ def read_version(*, publication_root):
     registry = list(csv.DictReader((ROOT / 'config/company_registry.csv').read_text().splitlines()))
     display = next(r['display_name'] for r in registry if r['company_id'] == company)
     selected = [r for r in metrics if r['company'] == display and r['metric_id'] in policy()['metric_ids']]
+    source_locations = []
+    if view.manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE:
+        batch = json.loads(view.read_bytes(relative_path=BATCH))
+        for binding in batch['cumulative_result_bindings']:
+            if binding['origin'] != 'ADOPTED_NATIVE_CANDIDATE':
+                continue
+            records = [json.loads(line) for line in view.read_bytes(relative_path=SNAPSHOT + '/' + binding['snapshot_run_path'] + '/records.jsonl').decode().splitlines() if line]
+            raw = {r['raw_asset_id']: r for r in records if r['record_type'] == 'RAW_BLOB'}
+            for source in (r for r in records if r['record_type'] == 'SOURCE_REFERENCE'):
+                blob = raw[source['raw_asset_id']]
+                relative = SNAPSHOT + '/data/' + blob['storage_uri']
+                content = view.read_bytes(relative_path=relative)
+                need(sha256_bytes(content=content) == blob['raw_asset_id'].split(':')[1], 'ANNUAL_READ_SOURCE_BYTES_CHANGED')
+                source_locations.append({'metric_id': binding['metric_id'], 'source_reference': source,
+                    'original_storage_uri': blob['storage_uri'], 'bundle_relative_path': relative,
+                    'sha256': sha256_bytes(content=content), 'size': len(content), 'verified_via': 'PublicationView.read_bytes'})
     return {'status': 'READABLE_COMPLETE_ISOLATED_VERSION', 'publication_id': view.publication_id,
         'previous_publication_id': view.manifest['previous_publication_id'], 'public_row_count': len(metrics),
-        'selected_rows': selected, 'selected_evidence': [r for r in evidence if r['company'] == display and r['metric_id'] in policy()['metric_ids']],
+        'selected_rows': selected, 'verified_source_locations': source_locations, 'selected_evidence': [r for r in evidence if r['company'] == display and r['metric_id'] in policy()['metric_ids']],
         'publication_credit': view.manifest.get('publication_credit', 'HISTORICAL_PREDECESSOR_COPY'),
         'new_provider_paid_sec_calls': [0, 0, 0]}

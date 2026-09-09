@@ -35,7 +35,7 @@ def main():
         else:
             result = annual.switch(publication_root=args.publication_root, publication_id=args.publication_id, operation=args.operation)
         code = 0
-    except (ValueError, OSError, RuntimeError) as error:
+    except (ValueError, OSError, RuntimeError, KeyError, TypeError) as error:
         result = {'status': 'BLOCKED', 'error': str(error), 'error_type': type(error).__name__,
                   'new_provider_paid_sec_calls': [0, 0, 0], 'formal_publication_authorized': False}
         code = 2

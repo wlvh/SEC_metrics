@@ -455,6 +455,7 @@ TEXT_FIELDS = {
     "projection_manifest_id",
     "quality",
     "r4_release_receipt_id",
+    "annual_adoption_receipt_id",
     "raw_asset_id",
     "raw_response_sha256",
     "raw_response_path",
