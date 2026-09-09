@@ -13141,14 +13141,14 @@ def build_companyfacts_crosscheck() -> list[dict]:
     return output
 
 
-def company_identity_literals() -> list[tuple[str, str]]:
+def company_identity_literals(*, registry: list[dict] | None = None) -> list[tuple[str, str]]:
     """Return forbidden identity literals loaded from company registry.
 
     Returns:
         Tuples of literal text and type.
     """
     literals: list[tuple[str, str]] = []
-    for company_config in load_company_registry():
+    for company_config in (load_company_registry() if registry is None else registry):
         literals.append((str(company_config["company"]), "company_name"))
         literals.append((str(company_config["primary_cik"]), "cik"))
         if str(company_config["ticker"]):
@@ -13202,6 +13202,7 @@ def audit_python_literal(
     file_path: Path,
     line_number: int,
     literal_value: object,
+    identity_literals: list[tuple[str, str]] | None = None,
 ) -> list[dict]:
     """Audit one AST literal for forbidden production identities.
 
@@ -13215,7 +13216,8 @@ def audit_python_literal(
         literals found anywhere in production Python source.
     """
     rows = []
-    for forbidden_literal, literal_type in company_identity_literals():
+    identities = company_identity_literals() if identity_literals is None else identity_literals
+    for forbidden_literal, literal_type in identities:
         if literal_value_matches_identity(
             literal_value=literal_value,
             forbidden_literal=forbidden_literal,

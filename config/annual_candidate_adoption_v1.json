@@ -4,9 +4,18 @@
   "status": "PROPOSED_FOR_FORMAL_ADOPTION",
   "execution_mode": "ISOLATED_REHEARSAL_ONLY",
   "company_id": "marriott_international",
-  "metric_ids": ["B01", "B10"],
-  "candidate_requirement_ids": ["issue_28_v6"],
-  "new_provider_paid_sec_calls": [0, 0, 0],
+  "metric_ids": [
+    "B01",
+    "B10"
+  ],
+  "candidate_requirement_ids": [
+    "issue_28_v6"
+  ],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
   "original_runs_mutable": false,
   "formal_publication_authorized": false,
   "source_rule": "Exact immutable SEC attempts and native source/period/subject/scope replay",
@@ -17,5 +26,9 @@
     "Owner adopts the ordinary-candidate publication rule and its evidence requirements",
     "Bind approved adoption policy to reviewed release implementation and exact candidate",
     "Explicit authorization for the actual complete publication and rollback/restore edge"
-  ]
+  ],
+  "baseline_publication": {
+    "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "manifest_sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a"
+  }
 }

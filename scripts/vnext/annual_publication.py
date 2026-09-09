@@ -7,6 +7,8 @@ from contextlib import contextmanager
 from contextvars import ContextVar
 from pathlib import Path
 import json
+import io
+import tarfile
 import shutil
 from datetime import datetime, timezone
 
@@ -106,6 +108,37 @@ def _ledger(snapshot, indexes):
     return binding, provenance
 
 
+def _scalability_snapshot(runtime_root):
+    """Trusted scanner reads frozen Python as data; no bundle code executes."""
+    from sec_pipeline import load_company_registry_from_path, company_identity_literals
+    from sec_pipeline import python_literal_values, audit_python_literal
+    registry = load_company_registry_from_path(path=runtime_root / 'config/company_registry.csv')
+    identities = company_identity_literals(registry=registry)
+    rows = []
+    for prefix in ('scripts', 'tools'):
+        for path in sorted((runtime_root / prefix).rglob('*.py')):
+            for line, literal in python_literal_values(path=path):
+                rows.extend(audit_python_literal(file_path=ROOT / path.relative_to(runtime_root),
+                    line_number=line, literal_value=literal, identity_literals=identities))
+    return rows
+
+
+def _implementation_files(head):
+    need(type(head) is str and len(head) == 40 and all(c in '0123456789abcdef' for c in head), 'ANNUAL_IMPLEMENTATION_HEAD_INVALID')
+    need(git('merge-base', head, 'HEAD').decode().strip() == head, 'ANNUAL_IMPLEMENTATION_NOT_ANCESTOR')
+    paths = git('ls-tree', '-r', '--name-only', head, 'scripts', 'tools', 'config', 'catalog', 'requirements').decode().splitlines()
+    foundation = json.loads(git('show', head + ':requirements/issue_15_v1/foundation_verification_receipt.json'))
+    paths = sorted(set(paths) | {r['path'] for r in foundation['receipt_bindings']})
+    files = {}
+    with tarfile.open(fileobj=io.BytesIO(git('archive', '--format=tar', head, *paths))) as archive:
+        for member in archive:
+            need(member.isdir() or member.isfile(), 'ANNUAL_IMPLEMENTATION_ALIAS')
+            if member.isfile():
+                data = archive.extractfile(member).read()
+                files[member.name] = {'sha256': sha256_bytes(content=data), 'size': len(data)}
+    return files
+
+
 def _public_files(projection, adoption, requirement, ledger, meta, runtime_root, predecessor):
     metrics, evidence = projection['metrics'], projection['evidence']
     batch = projection['batch']
@@ -121,7 +154,8 @@ def _public_files(projection, adoption, requirement, ledger, meta, runtime_root,
     from tools.check_vnext_semantics import run_audit
     need(run_audit(repo_root=runtime_root, secret_roots=[], secret_token='') == scans['semantic'],
          'ANNUAL_SEMANTIC_REPLAY_CHANGED')
-    pub._semantic_gate_evidence(receipt=scans['semantic'], repo_root=runtime_root)
+    pub._semantic_gate_evidence(receipt=scans['semantic'], repo_root=None)
+    need(_scalability_snapshot(runtime_root) == scans['scalability'], 'ANNUAL_SCALABILITY_REPLAY_CHANGED')
     need(not any(row['allowed'] not in {'1', 'true', 'True'} for row in scans['scalability']), 'ANNUAL_SCALABILITY_FAILED')
     files = dict(projection['files'])
     files['coverage_matrix.csv'] = pub._csv_bytes(rows=pub._expected_coverage_rows(metrics=metrics, evidence=evidence), fieldnames=pub.COVERAGE_FIELDS)
@@ -180,6 +214,10 @@ def _verified(pin):
 
 
 def _compose(snapshot, context, predecessor_dir, meta, runtime_root):
+    baseline = policy()['baseline_publication']
+    need(predecessor_dir.name == baseline['publication_id']
+         and sha256_file(path=predecessor_dir / 'publication_manifest.json') == baseline['manifest_sha256'],
+         'ANNUAL_TRUSTED_PREDECESSOR_CHANGED')
     predecessor_manifest = pub.verify_publication_bundle(bundle_dir=predecessor_dir)
     need(predecessor_manifest['publication_id'] == meta['predecessor_publication_id']
          and sha256_file(path=predecessor_dir / 'publication_manifest.json') == meta['predecessor_manifest_sha256'],
@@ -214,7 +252,7 @@ def prepare(*, candidate_dir, publication_root):
     prepare_snapshot(candidate_dir=candidate_dir, output_root=snapshot)
     context = read(snapshot, 'context.json')
     runtime = workspace / 'runtime'; runtime.mkdir()
-    source_paths = git('ls-files', 'scripts', 'tools', 'config', 'catalog', 'requirements').decode().splitlines()
+    source_paths = sorted(_implementation_files(git('rev-parse', 'HEAD').decode().strip()))
     for relative in source_paths:
         source = ROOT / relative
         need(source.is_file() and not source.is_symlink(), 'ANNUAL_RUNTIME_SOURCE_UNSAFE')
@@ -262,7 +300,8 @@ def verify_annual_bundle(*, bundle_dir, manifest):
     need(manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE and manifest['publication_credit'] == CREDIT,
          'ANNUAL_FORMAL_CREDIT_FORBIDDEN')
     meta = read(bundle_dir, META)
-    need(meta['policy'] == policy() and _tree_files(root=bundle_dir / 'internal/annual_runtime') == meta['runtime_files'],
+    need(meta['policy'] == policy() and _tree_files(root=bundle_dir / 'internal/annual_runtime') == meta['runtime_files']
+         and meta['runtime_files'] == _implementation_files(meta['implementation_head']),
          'ANNUAL_RELEASE_RUNTIME_CHANGED')
     snapshot = bundle_dir / SNAPSHOT; context = read(snapshot, 'context.json')
     predecessor = bundle_dir / 'internal/predecessor' / manifest['previous_publication_id']
