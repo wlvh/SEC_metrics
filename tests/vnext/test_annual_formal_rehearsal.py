@@ -249,7 +249,7 @@ class AnnualFormalRehearsalTest(unittest.TestCase):
     def test_rehashed_package_policy_mixing_is_rejected(self):
         for case in ('unknown_id', 'changed_content', 'mixed_version'):
             with self.subTest(case=case):
-                directory = Path(self.material.name) / case
+                directory = Path(self.material.name) / ('.' + case)
                 shutil.copytree(self.directory, directory)
                 meta = read(directory, annual.META)
                 if case == 'unknown_id':
@@ -266,7 +266,10 @@ class AnnualFormalRehearsalTest(unittest.TestCase):
                 body = {k: v for k, v in manifest.items() if k not in {'record_type', 'publication_id'}}
                 manifest['publication_id'] = 'publication_' + content_hash(value=body)[7:]
                 save(directory / 'publication_manifest.json', manifest)
-                with self.assertRaises(ValueError):
+                expected = {'unknown_id': 'ANNUAL_UNKNOWN_ADOPTION_POLICY',
+                    'changed_content': 'ANNUAL_ADOPTION_POLICY_CHANGED',
+                    'mixed_version': 'ANNUAL_FORMAL_CREDIT_FORBIDDEN'}
+                with self.assertRaisesRegex(ValueError, expected[case]):
                     pub.verify_publication_bundle(bundle_dir=directory)
         self.log.append({'check': 'UNKNOWN_CHANGED_OR_MIXED_POLICY_AFTER_OUTER_REHASH', 'status': 'PASS', 'case_count': 3})
 

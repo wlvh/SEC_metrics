@@ -146,6 +146,10 @@ class AnnualPublicationRehearsalTest(unittest.TestCase):
     def test_rebound_bundle_counterexamples(self):
         # Every negative uses a copy, recomputes outer file/manifest identities,
         # and must still fail native reconstruction before it can be activated.
+        original_view = annual.read_version(publication_root=self.root)
+        original_pointer = (self.root / 'outputs/active_publication.json').read_bytes()
+        original_mirrors = {target: (self.root / target).read_bytes() for target in pub.ROOT_MIRROR_RELATIVE_PATHS.values()}
+        original_bundle = adoption._tree_files(root=self.directory)
         cases = ['wrong_source', 'foreign_b01_run', 'missing_b10_result', 'runtime_code',
                  'implementation_tree', 'formal_credit', 'disguised_type', 'missing_evidence']
         for case in cases:
@@ -210,8 +214,10 @@ class AnnualPublicationRehearsalTest(unittest.TestCase):
                 self.assertNotIn('JSONL contains an empty record', str(caught.exception))
                 self.assertFalse((Path(temporary) / 'BUNDLE_CODE_EXECUTED').exists())
                 self.log.append({'check': 'REBOUND_' + case.upper(), 'status': 'PASS', 'rejection': str(caught.exception)})
-        with annual._verified(self.pin):
-            self.assertEqual(self.identity, annual.read_version(publication_root=self.root)['publication_id'])
+            self.assertEqual(original_pointer, (self.root / 'outputs/active_publication.json').read_bytes())
+            self.assertTrue(all((self.root / path).read_bytes() == data for path, data in original_mirrors.items()))
+            self.assertEqual(original_bundle, adoption._tree_files(root=self.directory))
+        self.assertEqual(original_view, annual.read_version(publication_root=self.root))
 
     def test_repeated_prepare_does_not_publish_or_query_approval(self):
         before_pointer = (self.root / 'outputs/active_publication.json').read_bytes()
