@@ -1,8 +1,35 @@
 # SEC_metrics 测试与验证流程
 
+## 确切年度候选正式采纳接线
+
+fast白名单共35入口，保留v1发布模块，并加入`tests.vnext.test_annual_publication_authority`。
+短测试覆盖冻结政策解析、pending Requirement、真实评论边界与无本地JSON权限。
+完整材料集成独立运行，不把SKIP或模板成功视为正式发布。
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_annual_publication_authority -v
+```
+
+在clean final implementation上先用真实候选prepare v2，再设置
+`ANNUAL_FORMAL_TEST_ROOT`、`ANNUAL_FORMAL_TEST_ID`、`ANNUAL_FORMAL_TEST_REPORT`、
+`ANNUAL_FORMAL_V1_ROOT`和`ANNUAL_FORMAL_PR39_MERGE`，执行
+`python3 -m unittest tests.vnext.test_annual_formal_rehearsal -v`。整个进程树禁网，
+实际仓库/原运行历史/v1材料禁写；独立临时目标根允许原生发布、故障、回退/恢复。
+只在`annual_candidate._github`注入明确TEST_ONLY返回，并使用原生fault callback，
+不mock核心validator成功或构造权限对象。新“操作预留后、native intent前”checkpoint
+验证仍旧active且不自动重试；原指针前后checkpoint验证同一authority绑定的恢复。
+用真实PR39 Git merge对象单独证明关闭PR的合并关系，不据此签发B的生产权限。
+
+新schema2原生切换日志必须带plan/action/permission IDs；旧schema1与v1包兼容。
+来源/Run等原有深度反例可另对本次v2完整包运行
+`AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples`，保留实际退出状态。
+完整包验证/内容审核、隔离TEST_ONLY授权和实际生产激活/发布是三个不同证据层。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_formal_adoption -->
+
 ## 普通年度候选完整发布链隔离验收
 
-`tools/run_fast_tests.py` 的34个白名单入口包括
+`tools/run_fast_tests.py` 的白名单入口包括
 `tests.vnext.test_annual_publication` 整个模块（4项短边界测试）。GitHub fast CI
 执行同一入口；CI日志中的模块名、实际测试数、退出码和非SKIP结果共同证明覆盖。
 完整真实包演练仍是单独集成层，不能用fast绿色替代。

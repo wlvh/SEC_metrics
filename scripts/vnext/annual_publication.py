@@ -15,6 +15,7 @@ from datetime import datetime, timezone
 from . import publication as pub
 from .annual_adoption import ROOT, POLICY, need, read, record, check_id, git, policy
 from .annual_adoption import prepare_snapshot, replay_snapshot
+from .annual_adoption_policy import V1, V2, resolve_embedded, credit as policy_credit
 from .annual_projection import build_projection
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, sha256_file, strict_json_file
 from .ratchet_release import _tree_files, _copy_exact_tree
@@ -89,7 +90,7 @@ def initialize(*, publication_root):
     return marker
 
 
-def _ledger(snapshot, indexes):
+def _ledger(snapshot, indexes, validation_tier=pub.RECORDED_VALIDATION_MODE):
     from sec_http import parse_request_log_rows, request_log_attempt_id, request_log_prefix_bytes, validate_request_log_manifest
     data = snapshot / 'data'
     path = data / 'evidence/requests_log.csv'; validate_request_log_manifest(log_path=path)
@@ -97,14 +98,14 @@ def _ledger(snapshot, indexes):
     attempts = {request_log_attempt_id(row_index=i, row=row): (i, row) for i, row in enumerate(rows)}
     sources = [indexes['sources'][key] for key in sorted(indexes['used_source_reference_ids'])]
     verified = [pub._request_row_for_source(repo_root=data, source=source, attempt_rows=attempts,
-        validation_tier=pub.RECORDED_VALIDATION_MODE) for source in sources]
+        validation_tier=validation_tier) for source in sources]
     need(verified and all(proof['locator_class'] == 'IMMUTABLE_ATTEMPT' for _, proof in verified), 'ANNUAL_IMMUTABLE_SOURCE_REQUIRED')
     used = sorted({(row, source['request_attempt_id']) for source, (row, _) in zip(sources, verified)})
     count = max(row for row, _ in used) + 1
-    provenance = pub._request_locator_provenance(validation_tier=pub.RECORDED_VALIDATION_MODE,
+    provenance = pub._request_locator_provenance(validation_tier=validation_tier,
         source_proofs=[p for _, p in verified])
     binding = {'request_locator_classes': provenance['request_locator_classes'],
-        'request_locator_proof_id': provenance['request_locator_proof_id'], 'request_locator_tier': pub.RECORDED_VALIDATION_MODE,
+        'request_locator_proof_id': provenance['request_locator_proof_id'], 'request_locator_tier': validation_tier,
         'requests_log_prefix_sha256': sha256_bytes(content=request_log_prefix_bytes(text=text, row_count=count)),
         'row_count': count, 'source_reference_ids': [s['source_reference_id'] for s in sources],
         'used_request_attempt_ids': [identity for _, identity in used]}
@@ -143,12 +144,16 @@ def _scalability_snapshot(runtime_root):
     return rows
 
 
-def _implementation_files(head):
+def _implementation_files(head, policy_id=V1):
     need(type(head) is str and len(head) == 40 and all(c in '0123456789abcdef' for c in head), 'ANNUAL_IMPLEMENTATION_HEAD_INVALID')
     need(git('merge-base', head, 'HEAD').decode().strip() == head, 'ANNUAL_IMPLEMENTATION_NOT_ANCESTOR')
     paths = git('ls-tree', '-r', '--name-only', head, 'scripts', 'tools', 'config', 'catalog', 'requirements').decode().splitlines()
     foundation = json.loads(git('show', head + ':requirements/issue_15_v1/foundation_verification_receipt.json'))
     paths = sorted(set(paths) | {r['path'] for r in foundation['receipt_bindings']})
+    if policy_id == V2:
+        chosen = policy(policy_id=policy_id)
+        baseline = json.loads(git('show', head + ':requirements/' + chosen['adoption_requirement_id'] + '/baseline_manifest.json'))
+        paths = sorted(set(paths) | set(baseline['execution_authority']['files']))
     files = {}
     with tarfile.open(fileobj=io.BytesIO(git('archive', '--format=tar', head, *paths))) as archive:
         for member in archive:
@@ -160,13 +165,17 @@ def _implementation_files(head):
 
 
 def _public_files(projection, adoption, requirement, ledger, meta, runtime_root, predecessor):
+    chosen = resolve_embedded(meta['policy'])
+    credit = policy_credit(chosen)
+    mode = pub.RECORDED_VALIDATION_MODE if chosen['policy_id'] == V1 else pub.FORMAL_VALIDATION_MODE
+    verdict = pub.RECORDED_VALIDATION_RESULT if chosen['policy_id'] == V1 else 'PASSED'
     metrics, evidence = projection['metrics'], projection['evidence']
     batch = projection['batch']
     checks = {'COMPLETE_CUMULATIVE_KEYS': batch['selected_result_count'] + batch['inherited_result_count'] == len(batch['cumulative_result_bindings']),
         'EXACT_SELECTED_ADOPTION': batch['selected_result_count'] == len(adoption['selected_results']),
         'UNCHANGED_ROWS_AND_PERIODS': projection['proof']['periods_not_relabelled'],
         'UNIQUE_PUBLIC_KEYS': len({(r['company'], r['metric_id']) for r in metrics}) == len(metrics),
-        'NATIVE_GRAPH_AND_SOURCE_REPLAY': adoption['status'] == 'PASSED_ISOLATED_ADOPTION',
+        'NATIVE_GRAPH_AND_SOURCE_REPLAY': adoption['status'] == ('PASSED_ISOLATED_ADOPTION' if chosen['policy_id'] == V1 else 'VERIFIED_CANDIDATE_SPECIFIC_ADOPTION'),
         'NUMERIC_ROWS_HAVE_EVIDENCE': all(not r['value'] or (r['company'], r['metric_id']) in {
             (e['company'], e['metric_id']) for e in evidence} for r in metrics)}
     need(all(checks.values()), 'ANNUAL_COMPLETE_PUBLICATION_CHECK_FAILED')
@@ -194,24 +203,29 @@ def _public_files(projection, adoption, requirement, ledger, meta, runtime_root,
         'batch_manifest_id': batch['batch_manifest_id'], 'adoption_receipt_id': adoption['adoption_receipt_id'],
         'projection_receipt_id': projection['proof']['projection_receipt_id'],
         'requirement_id': requirement['requirement_id'], 'requirement_hashes': requirement['hashes'],
-        'requirement_closure_hash': requirement['requirement_closure_hash'], 'publication_credit': CREDIT,
+        'requirement_closure_hash': requirement['requirement_closure_hash'], 'publication_credit': credit,
         'native_requirement_identities': adoption['native_requirement_hashes']}, 'projection_manifest_id')
     files['projection_manifest.json'] = json_bytes(projection_manifest)
     files['validation_run_manifest.json'] = json_bytes({'run_id': 'validation:' + projection_manifest['projection_manifest_id'],
-        'mode': pub.RECORDED_VALIDATION_MODE, 'result': pub.RECORDED_VALIDATION_RESULT,
+        'mode': mode, 'result': verdict,
         'source_commit': meta['implementation_head'], 'started_at_utc': meta['prepared_at_utc'],
         'refreshed_artifacts': sorted(pub.REQUIRED_BUNDLE_FILES - {'legacy_invariant_migration_receipt.json'}),
         'not_refreshed_artifacts': ['legacy_invariant_migration_receipt.json']})
-    files.update(pub._expected_documents(metrics=metrics, projection=projection_manifest, validation_mode=pub.RECORDED_VALIDATION_MODE))
-    files['README_RUN.md'] += ('\nAnnual adoption rehearsal: use PublicationView.open(publication_root=<isolated-root>).\n'
-        'Original Runs remain OPEN; new immutable adoption is not formal qualification.\n'
-        'Read internal/annual_complete_version.json for every selected/inherited coordinate and source period.\n').encode()
+    files.update(pub._expected_documents(metrics=metrics, projection=projection_manifest, validation_mode=mode))
+    if chosen['policy_id'] == V1:
+        files['README_RUN.md'] += ('\nAnnual adoption rehearsal: use PublicationView.open(publication_root=<isolated-root>).\n'
+            'Original Runs remain OPEN; new immutable adoption is not formal qualification.\n'
+            'Read internal/annual_complete_version.json for every selected/inherited coordinate and source period.\n').encode()
+    else:
+        files['README_RUN.md'] += ('\nCandidate-specific content validation; production authority is external to this immutable package.\n'
+            'Original OPEN Runs keep their execution rules. No Reader qualification or inherited-coordinate recertification.\n'
+            'Use PublicationView and internal/annual_complete_version.json for all 2 selected / 238 inherited bindings.\n').encode()
     receipt = record({'record_type': 'ANNUAL_PUBLICATION_VALIDATION_RECEIPT', 'schema_version': 1,
-        'status': pub.RECORDED_VALIDATION_RESULT, 'publication_credit': CREDIT,
+        'status': verdict, 'publication_credit': credit,
         'adoption_receipt_id': adoption['adoption_receipt_id'], 'batch_manifest_id': batch['batch_manifest_id'],
         'projection_manifest_id': projection_manifest['projection_manifest_id'], 'checks': checks,
         'ledger_binding': ledger, 'artifacts': {p: {'sha256': sha256_bytes(content=b), 'size': len(b)} for p, b in sorted(files.items())},
-        'formal_remaining_conditions': policy()['formal_remaining_conditions']}, 'validation_receipt_id')
+        'formal_remaining_conditions': chosen['formal_remaining_conditions']}, 'validation_receipt_id')
     files['publication_validation_receipt.json'] = json_bytes(receipt)
     need(set(files) == pub.REQUIRED_BUNDLE_FILES, 'ANNUAL_FULL_PUBLIC_FILE_SET_INVALID')
     return files, projection_manifest, receipt
@@ -234,7 +248,9 @@ def _verified(pin):
 
 
 def _compose(snapshot, context, predecessor_dir, meta, runtime_root):
-    baseline = policy()['baseline_publication']
+    chosen = resolve_embedded(meta['policy'])
+    need(context['policy'] == chosen, 'ANNUAL_PACKAGE_POLICY_MIXED')
+    baseline = chosen['baseline_publication']
     need(predecessor_dir.name == baseline['publication_id']
          and sha256_file(path=predecessor_dir / 'publication_manifest.json') == baseline['manifest_sha256'],
          'ANNUAL_TRUSTED_PREDECESSOR_CHANGED')
@@ -244,16 +260,19 @@ def _compose(snapshot, context, predecessor_dir, meta, runtime_root):
          'ANNUAL_PREDECESSOR_CHANGED')
     predecessor = pub.PublicationView(publication_id=predecessor_manifest['publication_id'],
         bundle_dir=predecessor_dir, manifest=predecessor_manifest)
-    adoption, runs, requirement = replay_snapshot(snapshot, context)
+    adoption, runs, requirement = replay_snapshot(snapshot, context, policy_id=chosen['policy_id'], adoption_root=runtime_root)
     need(read(snapshot, 'adoption.json') == adoption, 'ANNUAL_ADOPTION_RECEIPT_CHANGED')
     projection = build_projection(snapshot_root=snapshot, context=context, adoption=adoption, runs=runs, predecessor=predecessor)
-    ledger, provenance = _ledger(snapshot, projection['indexes'])
+    ledger, provenance = _ledger(snapshot, projection['indexes'],
+        pub.RECORDED_VALIDATION_MODE if chosen['policy_id'] == V1 else pub.FORMAL_VALIDATION_MODE)
     public, projection_manifest, validation = _public_files(projection, adoption, requirement, ledger, meta, runtime_root, predecessor)
     return public, projection, adoption, requirement, ledger, provenance, projection_manifest, validation
 
 
-def prepare(*, candidate_dir, publication_root):
+def prepare(*, candidate_dir, publication_root, policy_id=V1):
     need(not git('status', '--porcelain', '--untracked-files=all').strip(), 'ANNUAL_PUBLICATION_CLEAN_CODE_REQUIRED')
+    chosen = policy(policy_id=policy_id)
+    credit = policy_credit(chosen)
     implementation_head = git('rev-parse', 'HEAD').decode().strip()
     marker = initialize(publication_root=publication_root)
     root = safe_root(publication_root)
@@ -261,7 +280,7 @@ def prepare(*, candidate_dir, publication_root):
     candidate_hash = content_hash(value=_tree_files(root=candidate_dir))
     implementation_tree = content_hash(value=git('ls-tree', '-r', 'HEAD', 'scripts', 'tools', 'config', 'catalog', 'requirements').decode())
     key = content_hash(value={'candidate_files': candidate_hash, 'predecessor': marker['predecessor_publication_id'],
-        'policy': policy(), 'implementation_tree': implementation_tree})[7:]
+        'policy': chosen, 'implementation_tree': implementation_tree})[7:]
     workspace = root / 'annual_preparation' / key
     completed = workspace / 'prepared.json'
     if completed.exists():
@@ -269,10 +288,10 @@ def prepare(*, candidate_dir, publication_root):
         pub.verify_publication_bundle(bundle_dir=root / 'outputs/publications' / saved['publication_id'])
         return {**saved, 'status': 'REUSED_PREPARED_PUBLICATION', 'new_provider_paid_sec_calls': [0, 0, 0]}
     snapshot = workspace / 'snapshot'
-    prepare_snapshot(candidate_dir=candidate_dir, output_root=snapshot)
+    prepare_snapshot(candidate_dir=candidate_dir, output_root=snapshot, policy_id=policy_id)
     context = read(snapshot, 'context.json')
     runtime = workspace / 'runtime'; runtime.mkdir()
-    source_paths = sorted(_implementation_files(implementation_head))
+    source_paths = sorted(_implementation_files(implementation_head, policy_id))
     for relative in source_paths:
         source = ROOT / relative
         need(source.is_file() and not source.is_symlink(), 'ANNUAL_RUNTIME_SOURCE_UNSAFE')
@@ -280,11 +299,11 @@ def prepare(*, candidate_dir, publication_root):
     scans = {'semantic': pub._execute_semantic_audit(repo_root=ROOT), 'scalability': pub._execute_scalability_audit(repo_root=ROOT)}
     meta = {'schema_version': 1, 'implementation_head': implementation_head,
         'implementation_tree': implementation_tree,
-        'prepared_at_utc': utc(), 'policy': policy(), 'scans': scans,
+        'prepared_at_utc': utc(), 'policy': chosen, 'scans': scans,
         'predecessor_publication_id': marker['predecessor_publication_id'],
         'predecessor_manifest_sha256': marker['predecessor_manifest_sha256'],
         'runtime_files': _tree_files(root=runtime)}
-    need(meta['runtime_files'] == _implementation_files(implementation_head), 'ANNUAL_PREPARE_CODE_BYTES_CHANGED')
+    need(meta['runtime_files'] == _implementation_files(implementation_head, policy_id), 'ANNUAL_PREPARE_CODE_BYTES_CHANGED')
     predecessor = root / 'outputs/publications' / marker['predecessor_publication_id']
     public, projection, adoption, requirement, ledger, provenance, projection_manifest, validation = _compose(snapshot, context, predecessor, meta, runtime)
     files = {**public, META: json_bytes(meta), BATCH: json_bytes(projection['batch']), PROOF: json_bytes(projection['proof']),
@@ -298,7 +317,7 @@ def prepare(*, candidate_dir, publication_root):
         'batch_manifest_id': projection['batch']['batch_manifest_id'], 'projection_manifest_id': projection_manifest['projection_manifest_id'],
         'validation_receipt_id': validation['validation_receipt_id'], 'ledger_binding': ledger,
         'previous_publication_id': marker['predecessor_publication_id'],
-        'annual_adoption_receipt_id': adoption['adoption_receipt_id'], 'publication_credit': CREDIT,
+        'annual_adoption_receipt_id': adoption['adoption_receipt_id'], 'publication_credit': credit,
         'files': [{'path': p, 'sha256': sha256_bytes(content=b), 'size': len(b)} for p, b in sorted(files.items())]}
     manifest = validate_record(record={'record_type': ANNUAL_PUBLICATION_MANIFEST_TYPE,
         'publication_id': 'publication_' + content_hash(value=body)[7:], **body})
@@ -307,11 +326,11 @@ def prepare(*, candidate_dir, publication_root):
     pin = _Verified(_FACTORY, manifest)
     with _verified(pin):
         pub._persist_prepared_publication_bundle(publications_dir=root / 'outputs/publications', files=files, manifest=manifest)
-    result = {'status': 'PREPARED_ISOLATED_COMPLETE_PUBLICATION', 'publication_id': manifest['publication_id'],
+    result = {'status': 'PREPARED_ISOLATED_COMPLETE_PUBLICATION' if policy_id == V1 else 'PREPARED_COMPLETE_ADOPTION_CANDIDATE', 'publication_id': manifest['publication_id'],
         'previous_publication_id': manifest['previous_publication_id'], 'adoption_receipt_id': adoption['adoption_receipt_id'],
         'cumulative_result_count': len(projection['batch']['cumulative_result_bindings']),
         'public_row_count': projection['batch']['public_row_count'], 'selected_result_count': projection['batch']['selected_result_count'],
-        'publication_credit': CREDIT, 'new_provider_paid_sec_calls': [0, 0, 0]}
+        'publication_credit': credit, 'new_provider_paid_sec_calls': [0, 0, 0]}
     completed.write_bytes(json_bytes(result))
     return result
 
@@ -320,11 +339,12 @@ def verify_annual_bundle(*, bundle_dir, manifest):
     pin = _pin.get()
     if type(pin) is _Verified and pin.manifest == canonical_json_bytes(value=manifest):
         return manifest
-    need(manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE and manifest['publication_credit'] == CREDIT,
-         'ANNUAL_FORMAL_CREDIT_FORBIDDEN')
     meta = read(bundle_dir, META)
-    need(meta['policy'] == policy() and _tree_files(root=bundle_dir / 'internal/annual_runtime') == meta['runtime_files']
-         and meta['runtime_files'] == _implementation_files(meta['implementation_head'])
+    chosen = resolve_embedded(meta['policy'])
+    need(manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE and manifest['publication_credit'] == policy_credit(chosen),
+         'ANNUAL_FORMAL_CREDIT_FORBIDDEN')
+    need(meta['policy'] == chosen and _tree_files(root=bundle_dir / 'internal/annual_runtime') == meta['runtime_files']
+         and meta['runtime_files'] == _implementation_files(meta['implementation_head'], chosen['policy_id'])
          and meta['implementation_tree'] == content_hash(value=git('ls-tree', '-r', meta['implementation_head'],
              'scripts', 'tools', 'config', 'catalog', 'requirements').decode()),
          'ANNUAL_RELEASE_RUNTIME_CHANGED')
@@ -353,7 +373,15 @@ def verify_annual_bundle(*, bundle_dir, manifest):
 
 def commit_authority(*, bundle_dir, manifest):
     verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    if manifest['publication_credit'] != CREDIT:
+        from .annual_publication_authority import commit_authority as formal_authority
+        return formal_authority(bundle_dir=bundle_dir, manifest=manifest)
     return pub.RECORDED_COMMIT_AUTHORITY
+
+
+def switch_binding():
+    from . import annual_publication_authority as authority
+    return authority.switch_binding() if authority.has_context() else None
 
 
 def _edge():
@@ -376,6 +404,9 @@ def _guard_edge(*, pointer_path, manifest, expected_active_id, switch_mode):
 
 
 def guard_switch(*, pointer_path, manifest, expected_active_id, switch_mode):
+    from . import annual_publication_authority as authority
+    if authority.has_context():
+        return authority.guard_switch(pointer_path=pointer_path, manifest=manifest, expected_active_id=expected_active_id, switch_mode=switch_mode)
     root = _guard_edge(pointer_path=pointer_path, manifest=manifest,
         expected_active_id=expected_active_id, switch_mode=switch_mode)
     current = root / 'outputs/publications' / expected_active_id
@@ -385,6 +416,9 @@ def guard_switch(*, pointer_path, manifest, expected_active_id, switch_mode):
 
 
 def guard_recovery(*, pointer_path, intent):
+    from . import annual_publication_authority as authority
+    if authority.has_context():
+        return authority.guard_recovery(pointer_path=pointer_path, intent=intent)
     root, _ = _edge()
     target = intent['proposed_pointer']['publication_id']
     _guard_edge(pointer_path=pointer_path, manifest=read(root / 'outputs/publications' / target, 'publication_manifest.json'),
@@ -393,6 +427,9 @@ def guard_recovery(*, pointer_path, intent):
 
 
 def guard_mirror_repair(*, publication_root):
+    from . import annual_publication_authority as authority
+    if authority.has_context():
+        return authority.guard_mirror_repair(publication_root=publication_root)
     root, _ = _edge()
     need(publication_root == root, 'ANNUAL_REPAIR_ROOT_CHANGED')
 
@@ -426,18 +463,31 @@ def switch(*, publication_root, publication_id, operation):
         _switch.reset(token)
 
 
-def read_version(*, publication_root):
-    root = safe_root(publication_root); _marker(root)
-    view = pub.PublicationView.open(publication_root=root)
-    for relative, target in pub.ROOT_MIRROR_RELATIVE_PATHS.items():
-        need((root / target).read_bytes() == view.read_bytes(relative_path=relative), 'ANNUAL_PUBLIC_MIRROR_CHANGED')
+def read_version(*, publication_root, publication_id=None):
+    if publication_root == ROOT:
+        need(not any(p.is_symlink() for p in (ROOT, *ROOT.parents)), 'ANNUAL_READ_ROOT_ALIAS')
+        root = ROOT
+    else:
+        root = safe_root(publication_root); _marker(root)
+    if publication_id is None:
+        view = pub.PublicationView.open(publication_root=root)
+        for relative, target in pub.ROOT_MIRROR_RELATIVE_PATHS.items():
+            need((root / target).read_bytes() == view.read_bytes(relative_path=relative), 'ANNUAL_PUBLIC_MIRROR_CHANGED')
+    else:
+        import re
+        need(type(publication_id) is str and re.fullmatch('publication_[0-9a-f]{64}', publication_id), 'ANNUAL_READ_PUBLICATION_ID_INVALID')
+        directory = root / 'outputs/publications' / publication_id
+        manifest = pub.verify_publication_bundle(bundle_dir=directory)
+        need(manifest['publication_id'] == publication_id, 'ANNUAL_READ_PUBLICATION_CHANGED')
+        view = pub.PublicationView(publication_id=publication_id, bundle_dir=directory, manifest=manifest)
     metrics = pub._csv_rows(content=view.read_bytes(relative_path='metrics_matrix.csv'), fieldnames=pub.METRIC_FIELDS, label='Active version')
     evidence = pub._csv_rows(content=view.read_bytes(relative_path='metric_evidence.csv'), fieldnames=pub.EVIDENCE_FIELDS, label='Active evidence')
-    company = policy()['company_id']
+    chosen = resolve_embedded(read(view.bundle_dir, META)['policy']) if view.manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE else policy()
+    company = chosen['company_id']
     import csv
     registry = list(csv.DictReader((ROOT / 'config/company_registry.csv').read_text().splitlines()))
     display = next(r['display_name'] for r in registry if r['company_id'] == company)
-    selected = [r for r in metrics if r['company'] == display and r['metric_id'] in policy()['metric_ids']]
+    selected = [r for r in metrics if r['company'] == display and r['metric_id'] in chosen['metric_ids']]
     source_locations = []
     if view.manifest['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE:
         batch = json.loads(view.read_bytes(relative_path=BATCH))
@@ -454,8 +504,10 @@ def read_version(*, publication_root):
                 source_locations.append({'metric_id': binding['metric_id'], 'source_reference': source,
                     'original_storage_uri': blob['storage_uri'], 'bundle_relative_path': relative,
                     'sha256': sha256_bytes(content=content), 'size': len(content), 'verified_via': 'PublicationView.read_bytes'})
-    return {'status': 'READABLE_COMPLETE_ISOLATED_VERSION', 'publication_id': view.publication_id,
+    status = 'READABLE_PREPARED_CONTENT_VERSION' if publication_id else (
+        'READABLE_COMPLETE_VERSION' if root == ROOT else 'READABLE_COMPLETE_ISOLATED_VERSION')
+    return {'status': status, 'publication_id': view.publication_id,
         'previous_publication_id': view.manifest['previous_publication_id'], 'public_row_count': len(metrics),
-        'selected_rows': selected, 'verified_source_locations': source_locations, 'selected_evidence': [r for r in evidence if r['company'] == display and r['metric_id'] in policy()['metric_ids']],
+        'selected_rows': selected, 'verified_source_locations': source_locations, 'selected_evidence': [r for r in evidence if r['company'] == display and r['metric_id'] in chosen['metric_ids']],
         'publication_credit': view.manifest.get('publication_credit', 'HISTORICAL_PREDECESSOR_COPY'),
         'new_provider_paid_sec_calls': [0, 0, 0]}

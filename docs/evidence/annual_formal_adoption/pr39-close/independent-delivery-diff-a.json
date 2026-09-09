@@ -1,0 +1,45 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_PUBLICATION_A_DELIVERY_DIFF_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "reviewed_at_utc": "2026-09-09T10:45:18.651550+00:00",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "implementation_head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+  "delivery_head": "21afb282074ddfa22867d0dbf239c28962acb2df",
+  "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc",
+  "scope": "Documentation and evidence archival delta only; no repeated implementation review or long integration execution.",
+  "checks": {
+    "changed_file_count": 33,
+    "changed_paths_exactly_match_delivery_diff": true,
+    "only_TESTING_and_docs_changed": true,
+    "scripts_tools_config_catalog_requirements_tests_unchanged": true,
+    "archive_manifest_matches_all_non_manifest_files": true,
+    "archived_non_manifest_file_count": 29,
+    "external_copies_byte_identical_count": 28,
+    "generated_readme_identity_and_evidence_tier_checked": true,
+    "fast_entry_count_verified_from_AST": 34,
+    "test_module_count_of_four_supported_by_already_reviewed_execution_and_CI": true,
+    "original_delivery_readme_retains_historical_identity_and_links_current_close": true,
+    "checkout_clean": true
+  },
+  "archive_evidence_manifest": {
+    "sha256": "52d8783c1db78d698913f29bb17101f8d639a7210c654cadb62c7fa89413926b",
+    "size": 3873
+  },
+  "prior_independent_review": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/independent-review-a.json",
+    "sha256": "2ac4ddb38f8bf3c030defc6d19ed9cdbf0b60caadf82c0e6fb825b88313556ac",
+    "size": 12267
+  },
+  "limits": [
+    "README.md is generated explanatory material, not an external evidence byte copy; it was checked against the reviewed binding and execution history. evidence-manifest.json is excluded from its own file map.",
+    "Final delivery CI is delegated to the parent task and was still pending at review request; this record does not claim its completion.",
+    "No GitHub APPROVE, merge action, formal publication authority, provider/SEC request, or B review is produced."
+  ],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

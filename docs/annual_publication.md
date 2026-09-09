@@ -1,7 +1,8 @@
 # 普通年度候选接入完整发布链
 
-本阶段把保存的 Marriott B01/B10 普通候选接到现有 Projector、完整发布包、
-PublicationView 和切换/回退/恢复原语。产物明确是隔离演练，实际 R3 不切换。
+保存的 Marriott B01/B10 候选沿同一 Projector、完整发布包、PublicationView 和
+切换/回退/恢复原语运行。冻结v1保留隔离演练含义；v2增加确切候选的正式采纳待审批
+包与实际发布权限接线。当前新Requirement未激活、无生产grant，实际R3不切换。
 PR38 已合并为 `1e97cd08ad26edc1e7a720550811240af1889cb3`；其原失败、新成功、
 批准、预算及原运行现场保留，累计调用仍为 2/2/0，剩余额度不转给本阶段。
 
@@ -38,7 +39,7 @@ report_bytes = view.read_bytes(relative_path="REPORT_十公司财务指标.md")
 source_bytes = view.read_bytes(relative_path=source_location["bundle_relative_path"])
 ```
 
-切换、回退和恢复只对带本阶段marker的隔离根开放。实际仓库、其他Git checkout、
+上面的v1 switch命令只对带本阶段marker的隔离根开放。实际仓库、其他Git checkout、
 别名路径及没有本阶段标记的active根均拒绝。每份CLI输出使用新文件，不覆盖旧报告。
 
 ## 采纳与完整继承
@@ -76,24 +77,74 @@ B03记录完整保留在源Run快照，但不被当作本次新增正式结果�
 - 同一候选、政策和实现版本重复prepare复用原包，不查询新的批准、不重新计算模型，
   不自动发布。实际代码改变会形成不同准备身份，旧失败准备现场不删除。
 
-## 正式发布还缺什么
+## v2：完整待审批包与正式接线
 
-`config/annual_candidate_adoption_v1.json`是明确提出的最小采纳规则，状态为
-`PROPOSED_FOR_FORMAL_ADOPTION`，本阶段只允许`ISOLATED_REHEARSAL_ONLY`。
-新包始终标记`NONE_ISOLATED_ADOPTION_REHEARSAL`；即使内层Result写PUBLISHED、
-或Result ID与R3相同，也不获得正式资格或发布信用。
+`annual_adoption_policy.POLICIES`显式登记v1/v2路径及文件SHA。读取context/meta/采纳
+对象各处policy_id后必须命中同一冻结规则，未知ID、错hash或混绑一律拒绝；不按
+“最新政策”解释旧包。v1原字节不改，新v2不含自授批准布尔值。
 
-正式运行仍需集中决定并落实：
+v2只覆盖已保存的确切成功候选：完整文件集、原Run/执行、来源证明、所选Result集合
+及独立内容审核均精确绑定。B01原foundation及B10 issue_28_v6执行身份保留，新的
+`issue_28_v7`/V8只拥有采纳/发布提案，S-ANNUAL-ADOPTION仍待外部批准。历史repair
+槽位只证明那次执行，不能变成未来每年必须经过的运行规则。B03不选中，238项仅继承。
 
-1. 是否接受完整原生重放、原始执行/usage及来源证明作为普通候选的采纳条件；
-   不能把旧R3资格自动借给新的普通执行或Evidence规则。
-2. 将批准的采纳规则绑定到受审发布实现与明确候选的正式Requirement/激活身份。
-3. 授予实际完整发布及回退/恢复边的明确权限。当前工具设计上仍拒绝实际R3根，
-   合并本PR本身不会打开生产开关。
+```bash
+python3 tools/vnext_annual_publication.py prepare --policy-id annual_candidate_adoption_v2 \
+  --candidate-dir <saved-candidate> --publication-root <new-isolated-root> --output-json <prepare-json>
+python3 tools/vnext_annual_publication.py read --publication-root <isolated-root> \
+  --publication-id <prepared-id> --output-json <content-read-json>
+python3 tools/vnext_annual_publication.py plan --bundle-dir <complete-bundle> \
+  --target-root <actual-root> --pull-number <implementation-pr> --output-json <plan-json>
+python3 tools/vnext_annual_publication.py approval-template --plan <plan-json> --output-json <templates-json>
+```
 
-没有发现为本次隔离接线必须新增模型或SEC请求的材料缺口。正式规则是否另需
-额外资格验证属于上述明确决定，本轮不擅自增加调用。剩余15指标、WB-7、39指标
-统一生产与旧路径退出仍由Issue #28跟踪，不在本工作包继续开发。
+这些步骤不激活规则、不签发权限、不写actual-root。首次prepare通过同一`_github`
+边界读取原执行批准，不属于模型/SEC调用，但确实是网络读取。完整包的内容验证
+PASS只证明这个规则范围内的源图和完整包检查；PENDING信用不是正式更新或39指标
+full acceptance。explicit read用同一个PublicationView读取待批包，不切active。
+
+正式动作已接好，最终审核后按以下顺序执行：
+
+1. 将固定计划对应的Requirement transition模板与独立publication decision提交为
+   真实Owner评论；包和计划不因追加批准而改写。计划明确原生两项与完整238继承、
+   原Run/执行、来源快照、政策/Requirement、包/manifest、实际根及精确R3前驱。
+2. 按计划关系合并受审实现。生产入口核对真实GitHub PR的merge commit及其第二父
+   head，受审提交仍为祖先，实施文件和tests树与受审版本相同。不是要求PR永远open，
+   也不是任意祖先都有效。新增功能或规则变化需要新的包/计划与审核。
+3. `activate --plan ... --activation-url ... --output-json ...`核对真实未编辑Owner
+   评论后保存单独激活收据。它不改冻结规则文件，也不签发模型执行许可。
+4. `release --plan ... --activation-url ... --owner-url ... --operation deploy ...`
+   核对全部真实外部批准、当前代码、候选/完整包和预期前驱，再复用原生包持久化部署
+   inactive包。已有相同包验证后复用，不改active。
+5. 同一release入口的`--operation publish`使用既有正式提交原语，随后用`read`
+   核对完整新版本及两项原文。rollback、restore分别最多一次，方向在计划中固定。
+
+每个release命令重新从真实GitHub核对批准；本地JSON、旧模型执行批准或模板不能
+产生`PublicationPermission`。测试批准的decision与activation类型带TEST_ONLY，
+绑定marker隔离根，不能被实际根接受。命令输出总是新文件；发生错误先查看当前
+PublicationView和pending intent，不能仅从命令退出码猜测指针是否已提交。
+
+## 同一笔切换与失败保护
+
+源包准备/验证失败不触及实际根。部署采用既有完整包持久化；发布前再次核对预期
+active指针及其manifest。正式操作只保留一次操作预留，完成事实来自原生发布历史；
+没有第二套结果数据库。新的schema2 intent/receipt另绑plan/action/permission ID，
+旧schema1按原字节解释，公开读取不执行包内Python。
+
+- 有pending intent：`release --operation recover`只接受同一计划/操作/许可和原
+  指针、目标及时间绑定。沿原指针提交点撤销未提交切换或完成已提交切换，不能开始新边。
+- intent已关闭且同一native收据已提交：recover确认该笔完成，不再发布一次。
+- 预留后、intent前中断，或软失败已补偿并清除intent：旧完整版保留，本次预留消费。
+  recover返回NO_PENDING，重复publish返回ALREADY_RESERVED；两者都不是发布成功。
+  若以后决定再试，可生成新的实际时间计划并取得新批准，无需为此开发新代码。
+- 重复publish/rollback/restore不再写一笔切换；批准不授无限自由切换。
+
+本轮仅在隔离根以明确模拟的GitHub I/O验证这些边界，实际生产规则激活和grant仍待
+集中审核。最终填好实际身份的计划、模板及完整包见交付材料，不以以上教学占位符
+替代最终计划。后续正常新输入、持续运行许可/触发与剩余迁移仍由Issue #28负责；
+本次候选特定审核不作为未来每份年报永久开开发PR的产品设计。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_formal_adoption -->
 
 ## 本轮交付
 

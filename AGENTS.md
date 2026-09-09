@@ -152,6 +152,11 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `scripts/vnext/annual_adoption_policy.py` / `annual_publication_authority.py`：显式冻结v1/v2
+  政策解析、确切候选的待批计划、真实GitHub激活/发布核对及有限发布/回退/恢复；
+  V8/issue_28_v7保持新采纳决定待外部批准。共享现有发布核心，schema2切换日志另绑
+  plan/action/permission，旧schema1与原Run不改。TEST_ONLY许可不得写实际R3。
+
 - `scripts/vnext/annual_adoption.py` / `annual_projection.py` / `annual_publication.py`：普通候选历史只读采纳、完整结果继承与既有发布原语的隔离演练；原Run不改、无正式信用。CLI为 `tools/vnext_annual_publication.py`，入口说明见 `docs/annual_publication.md`。
 
 - `annual_evidence.py` / `annual_repair_budget.py` / `annual_regression.py`：PR38普通B10同格标签与来源归属修复、固定两次新增修复预算及未改原响应的离线回归；入口见 `docs/annual_label_repair.md`，仍无自动merge或正式发布许可。

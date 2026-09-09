@@ -16,6 +16,7 @@ from . import requirement_profile_v4 as v4
 from . import requirement_profile_v5 as v5
 from . import requirement_profile_v6 as v6
 from . import requirement_profile_v7 as v7
+from . import requirement_profile_v8 as v8
 from .requirement_profile_v1 import CONTENT_HASH_PATTERN
 from .requirement_profile_v1 import EXPLICIT_ARTIFACT_GENERATION
 from .requirement_profile_v1 import LEGACY_ARTIFACT_GENERATION
@@ -37,6 +38,7 @@ PROFILE_ENGINES = {
     v5.PROFILE_REQUIREMENT_GENERATION: v5,
     v6.PROFILE_REQUIREMENT_GENERATION: v6,
     v7.PROFILE_REQUIREMENT_GENERATION: v7,
+    v8.PROFILE_REQUIREMENT_GENERATION: v8,
 }
 _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
 

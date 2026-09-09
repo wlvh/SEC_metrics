@@ -250,6 +250,7 @@ SWITCH_INTENT_FIELDS = {
     "switch_mode",
 }
 SWITCH_INTENT_MIRROR_FIELDS = {"sha256", "size"}
+ANNUAL_SWITCH_AUTHORITY_FIELD = "annual_authority"
 PUBLICATION_ID_PATTERN = re.compile(r"^publication_[0-9a-f]{64}$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 SHA1_PATTERN = re.compile(r"^[0-9a-f]{40}$")
@@ -4975,6 +4976,13 @@ def _validate_switch_mirror_state(*, state: object) -> None:
             )
 
 
+def _validate_annual_switch_authority(value):
+    """Optional new edge binding; historical journals retain their old shape."""
+    if (type(value) is not dict or set(value) != {"plan_id", "action_id", "permission_id"}
+            or any(type(v) is not str or CONTENT_ID_PATTERN.fullmatch(v) is None for v in value.values())):
+        raise PublicationError("Annual switch authority binding is invalid")
+
+
 def _load_switch_intent(
     *, pointer_path: Path
 ) -> Optional[Dict[str, object]]:
@@ -5006,17 +5014,19 @@ def _load_switch_intent(
         raise PublicationError("Publication switch recovery intent is unsafe")
     try:
         payload = strict_json_file(
-            path=path, allowed_fields=SWITCH_INTENT_FIELDS,
+            path=path, allowed_fields=SWITCH_INTENT_FIELDS | {ANNUAL_SWITCH_AUTHORITY_FIELD},
         )
     except CanonicalError as error:
         raise PublicationError(
             "Publication switch recovery intent is invalid"
         ) from error
-    if not isinstance(payload, dict) or set(payload) != SWITCH_INTENT_FIELDS:
+    if not isinstance(payload, dict) or set(payload) not in (SWITCH_INTENT_FIELDS, SWITCH_INTENT_FIELDS | {ANNUAL_SWITCH_AUTHORITY_FIELD}):
         raise PublicationError(
             "Publication switch recovery intent fields differ"
         )
     intent = dict(payload)
+    if ANNUAL_SWITCH_AUTHORITY_FIELD in intent:
+        _validate_annual_switch_authority(intent[ANNUAL_SWITCH_AUTHORITY_FIELD])
     previous_pointer = intent["previous_pointer"]
     proposed_pointer = intent["proposed_pointer"]
     if previous_pointer is not None:
@@ -5037,7 +5047,7 @@ def _load_switch_intent(
     }
     intent_id = intent["intent_id"]
     if (
-        intent["schema_version"] != 1
+        intent["schema_version"] != (2 if ANNUAL_SWITCH_AUTHORITY_FIELD in intent else 1)
         or intent["record_type"] != "PUBLICATION_SWITCH_INTENT"
         or intent["switch_mode"] not in {"COMMIT", "ROLLBACK"}
         or type(intent_id) is not str
@@ -5064,6 +5074,7 @@ def _write_switch_intent(
     proposed_pointer: Mapping[str, object], switch_mode: str,
     previous_switch_receipt_id: Optional[str],
     previous_mirror_state: Mapping[str, object],
+    annual_authority=None,
 ) -> Dict[str, object]:
     """Persist recovery authority before the first mirror mutation.
 
@@ -5090,6 +5101,10 @@ def _write_switch_intent(
         "previous_switch_receipt_id": previous_switch_receipt_id,
         "previous_mirror_state": dict(previous_mirror_state),
     }
+    if annual_authority is not None:
+        _validate_annual_switch_authority(annual_authority)
+        body[ANNUAL_SWITCH_AUTHORITY_FIELD] = annual_authority
+        body["schema_version"] = 2
     intent = {**body, "intent_id": content_hash(value=body)}
     intent_dir = _switch_intents_dir(pointer_path=pointer_path)
     if intent_dir.is_symlink() or (
@@ -5174,17 +5189,19 @@ def _load_switch_receipts(
         try:
             payload = strict_json_file(
                 path=path,
-                allowed_fields=SWITCH_RECEIPT_FIELDS,
+                allowed_fields=SWITCH_RECEIPT_FIELDS | {ANNUAL_SWITCH_AUTHORITY_FIELD},
             )
         except CanonicalError as error:
             raise PublicationError(
                 "Publication switch receipt is invalid"
             ) from error
-        if not isinstance(payload, dict) or set(payload) != (
-            SWITCH_RECEIPT_FIELDS
+        if not isinstance(payload, dict) or set(payload) not in (
+            SWITCH_RECEIPT_FIELDS, SWITCH_RECEIPT_FIELDS | {ANNUAL_SWITCH_AUTHORITY_FIELD}
         ):
             raise PublicationError("Publication switch fields are not exact")
         receipt = dict(payload)
+        if ANNUAL_SWITCH_AUTHORITY_FIELD in receipt:
+            _validate_annual_switch_authority(receipt[ANNUAL_SWITCH_AUTHORITY_FIELD])
         pointer = receipt["pointer"]
         if not isinstance(pointer, dict):
             raise PublicationError("Publication switch pointer is invalid")
@@ -5197,7 +5214,7 @@ def _load_switch_receipts(
         }
         switch_id = receipt["switch_receipt_id"]
         if (
-            receipt["schema_version"] != 1
+            receipt["schema_version"] != (2 if ANNUAL_SWITCH_AUTHORITY_FIELD in receipt else 1)
             or receipt["record_type"] != "PUBLICATION_SWITCH"
             or receipt["switch_mode"] not in {"COMMIT", "ROLLBACK"}
             or type(switch_id) is not str
@@ -5293,7 +5310,7 @@ def _switch_receipt_for_pointer(
 
 def _write_switch_receipt(
     *, pointer_path: Path, pointer: Mapping[str, object], switch_mode: str,
-    previous_switch_receipt_id: Optional[str]
+    previous_switch_receipt_id: Optional[str], annual_authority=None
 ) -> Dict[str, object]:
     """Persist one content-addressed edge after the pointer commit point.
 
@@ -5325,6 +5342,10 @@ def _write_switch_receipt(
         "previous_switch_receipt_id": previous_switch_receipt_id,
         "pointer": dict(pointer),
     }
+    if annual_authority is not None:
+        _validate_annual_switch_authority(annual_authority)
+        body[ANNUAL_SWITCH_AUTHORITY_FIELD] = annual_authority
+        body["schema_version"] = 2
     receipt = {**body, "switch_receipt_id": content_hash(value=body)}
     receipt_dir = _switch_receipts_dir(pointer_path=pointer_path)
     if receipt_dir.is_symlink() or (
@@ -5358,7 +5379,7 @@ def _switch_receipt_from_intent(
         Exact content-addressed switch receipt mapping.
     """
     body = {
-        "schema_version": 1,
+        "schema_version": intent["schema_version"],
         "record_type": "PUBLICATION_SWITCH",
         "switch_mode": intent["switch_mode"],
         "previous_switch_receipt_id": intent[
@@ -5366,6 +5387,8 @@ def _switch_receipt_from_intent(
         ],
         "pointer": dict(intent["proposed_pointer"]),
     }
+    if ANNUAL_SWITCH_AUTHORITY_FIELD in intent:
+        body[ANNUAL_SWITCH_AUTHORITY_FIELD] = intent[ANNUAL_SWITCH_AUTHORITY_FIELD]
     return {**body, "switch_receipt_id": content_hash(value=body)}
 
 
@@ -5518,6 +5541,7 @@ def _recover_switch_intent_locked(
             previous_switch_receipt_id=intent[
                 "previous_switch_receipt_id"
             ],
+            annual_authority=intent.get(ANNUAL_SWITCH_AUTHORITY_FIELD),
         )
         _switch_receipt_for_pointer(
             pointer_path=pointer_path, pointer=proposed_pointer,
@@ -5908,6 +5932,10 @@ def _switch_publication_locked(
             if content is not None
             else None
         )
+    annual_authority = None
+    if any(m is not None and m['record_type'] == ANNUAL_PUBLICATION_MANIFEST_TYPE for m in extension_manifests):
+        from .annual_publication import switch_binding
+        annual_authority = switch_binding()
     intent = _write_switch_intent(
         pointer_path=pointer_path,
         previous_pointer=previous_pointer,
@@ -5919,6 +5947,7 @@ def _switch_publication_locked(
             else None
         ),
         previous_mirror_state=previous_mirror_state,
+        annual_authority=annual_authority,
     )
     switch_receipt: Optional[Dict[str, object]] = None
     try:
@@ -5955,6 +5984,7 @@ def _switch_publication_locked(
                 if previous_switch is not None
                 else None
             ),
+            annual_authority=intent.get(ANNUAL_SWITCH_AUTHORITY_FIELD),
         )
         opened = PublicationView._open_paths(
             publications_dir=publications_dir, pointer_path=pointer_path,

@@ -1820,7 +1820,7 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
     if record_type == R4_PUBLICATION_MANIFEST_TYPE:
         _validate_r4_publication_binding_shape(record=record)
     if record_type == ANNUAL_PUBLICATION_MANIFEST_TYPE:
-        if (record["publication_credit"] != "NONE_ISOLATED_ADOPTION_REHEARSAL"
+        if (record["publication_credit"] not in {"NONE_ISOLATED_ADOPTION_REHEARSAL", "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY"}
                 or re.fullmatch(r"sha256:[0-9a-f]{64}", record["annual_adoption_receipt_id"]) is None):
             raise RecordError("Annual adoption has no formal publication credit")
     _validate_record_status(record_type=semantic_type, record=record)

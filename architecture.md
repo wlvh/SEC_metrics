@@ -1,5 +1,28 @@
 # SEC_metrics 架构说明
 
+### 确切年度候选的正式采纳接线
+
+`annual_adoption_policy`按有限已知ID核对冻结政策字节；历史v1仍是隔离规则，v2只
+覆盖已有确切候选。共享`annual_adoption/replay_snapshot`分别核对原执行Requirement
+与新的待激活`issue_28_v7`，保持原Run和原响应字节不变。新规则绑定完整候选文件集、
+原Run/执行、两项结果及独立内容核对，不能由同值Result替代来源身份。
+
+`annual_publication`继续使用同一Projector、完整包、PublicationView与发布核心。
+v2内容校验使用完整包验证层，其PENDING信用不赋予写权限。`annual_publication_authority`
+生成固定包之后的计划和待批模板，复用`annual_candidate._github`核对独立激活/发布
+评论；生产操作核对指定PR的merge commit第二父提交、受审实现/测试内容与当前执行
+关系。已合并PR可以运行，任意祖先提交不构成批准。代码和测试保持干净；实际镜像/
+指针作为运行数据按预期完整版本逐字节核对，不要求发布后提交这些数据才能回退。
+
+权限工厂只接受核实的外部事实；保存的权限JSON仅供审计，不能作为工厂输入。
+TEST_ONLY正文与激活记录使用独立形状，目标根严格隔离。操作预留文件只记录本次
+尝试，完成事实来自既有native switch history。新schema2 intent/receipt绑定
+plan/action/permission三个内容ID，旧schema1不改。recover只能处理同一笔intent，
+或确认该笔已经提交的原生收据；预留后无intent而仍是旧版时不自动重发。
+完整待审批包、激活收据和切换收据单向引用，批准不会反过来改变包的身份。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_formal_adoption -->
+
 ### 普通年度候选的完整发布演练
 
 `annual_adoption`把原stage/plan/代码与Source/Run/controller作为历史输入重验，

@@ -1,0 +1,15 @@
+{
+  "incident": "Standalone check_vnext_semantics.py default output overwrote the tracked semantic audit compatibility mirror. stdout redirection did not redirect that file output.",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_vnext_semantics.py > external/semantics-development.json",
+  "observed_at_utc": "2026-09-09T12:55:22.474470+00:00",
+  "affected_path": "/Users/lyuhongwang/Developer/SEC_metrics/outputs/semantic_audit_receipt.json",
+  "generated_file_sha256": "654a53c0e099ed646642a47a89ab71c1d915f489cf418316349510c844e36f0d",
+  "restored_file_sha256": "efe2eaab173e86576ac1b0dc03f3c2c0f723d9ff2f92b74dd21f80a93210d2cd",
+  "restored_size": 7629,
+  "restoration_source": "Exact HEAD blob, independently equal to A protection-before hash and size",
+  "status": "RESTORED_EXACT_PREEXISTING_BYTES",
+  "actual_active_pointer_changed": false,
+  "historical_publication_packages_changed": false,
+  "claim_boundary": "A transient actual-root mirror write occurred; do not describe B as never writing any actual-root file.",
+  "prevention": "All subsequent executable validation/preparation/rehearsal commands use OS-level actual-publication output/evidence/report write denial, with explicit external outputs or pure read audit functions."
+}

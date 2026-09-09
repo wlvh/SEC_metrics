@@ -146,6 +146,10 @@ publication switch在修改mirror前于独占锁内写`outputs/publication_switc
 PublicationView回读，测试按 `TESTING.md` 对应章节；实际R3和正式root不切换。
 本入口不代替正式采纳政策、Requirement激活或实际发布决定。
 
+确切候选的v2正式采纳接线也沿同一入口：先prepare/只读内容验证/固定plan与模板，
+集中审核后才允许真实activate与release。测试批准、文件模板与代码合并本身均
+不能签发实际根权限。有限操作及同intent恢复顺序见`docs/annual_publication.md`。
+
 ## SOP 3：PR 发布（仅用户明确要求时）
 
 | 步骤 | 动作 | 权威引用 | 验收 |
