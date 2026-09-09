@@ -1,0 +1,51 @@
+{
+  "command": [
+    "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+    "prepare"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "code": {
+    "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+    "git_tree_oid": "d5cc73965d7801338aad4bbbcf84b71ebbf82022",
+    "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc",
+    "implementation_tree_definition": "canonical content_hash of UTF-8 git ls-tree -r HEAD scripts tools config catalog requirements output",
+    "tests": {
+      "tools/run_fast_tests.py": {
+        "sha256": "f2b085013792496d6afa687a1790dbb0f768cf8b78d379f911014949093484ca",
+        "size": 9089
+      },
+      "tests/vnext/test_annual_publication.py": {
+        "sha256": "1834f7d33611883a73e02d3a6a0df6c74b12daf390f4a44c842592e87d25b550",
+        "size": 4085
+      },
+      "tests/vnext/test_annual_publication_rehearsal.py": {
+        "sha256": "ea595c79528fd8c9dbad1fc333b794e5e8622638b4f9de178f1d51dcdda6eb16",
+        "size": 15239
+      }
+    }
+  },
+  "started_at_utc": "2026-09-09T10:15:39.915257+00:00",
+  "finished_at_utc": "2026-09-09T10:16:55.344592+00:00",
+  "exit_status": 1,
+  "log": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/prepare.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "size": 0
+  },
+  "harness": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+    "sha256": "8d3a708bb42dee38cd3534f88c1f5e76f850d41adb89f4fa7a061a8b6d5ca962",
+    "size": 6146
+  },
+  "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/final-rehearsal",
+  "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+  "github_reads": [],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "protection_equal": true,
+  "failure": "External evidence logger hashlib.sha256 received decoded str from gh text=True after a successful comment read; native prepare stopped before snapshot creation.",
+  "github_reads_unlogged_due_to_harness_failure": 1
+}

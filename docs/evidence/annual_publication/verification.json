@@ -1,0 +1,140 @@
+{
+  "status": "COMPLETE_ISOLATED_PUBLICATION_REHEARSAL_VERIFIED",
+  "pr38_merge": {
+    "pr": 38,
+    "state": "MERGED",
+    "merge_commit": "1e97cd08ad26edc1e7a720550811240af1889cb3",
+    "head_commit": "535947e8487a7e0808cab1ec338d62f2605bdba8",
+    "merge_tree_equals_reviewed_delivery": true,
+    "main_origin_difference": [
+      0,
+      0
+    ],
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "new_pr": 39,
+  "new_pr_draft": true,
+  "implementation_head": "9b40c9c7c1d7b30f1597a078559242ab1222a663",
+  "implementation_tree": "sha256:b4670a5ea719e4a3a7cd3dfd89a3186b962c3ba51db6e63c5f64b200c472cebb",
+  "independent_review": "NO_BLOCKING_FINDINGS",
+  "publication_id": "publication_2003618f263e3eee42d42c03ceb49d8c5986fee9fb03f231adaad6b12f09b280",
+  "predecessor_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+  "adoption_receipt_id": "sha256:10e90490973883cce4d6ade1367512e2dc5e79eb4b26216c9c2c7d4200a683e7",
+  "selected_results": {
+    "B01": {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "metric_id": "B01",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:3e637913536d24349f51c6525c3061c8a2969bb89013ccddb000736c3cc4dba5",
+      "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+      "unit": "USD",
+      "value": "26186000000"
+    },
+    "B10": {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+      "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+      "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+      "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+      "unit": "ratio",
+      "value": "0.693"
+    }
+  },
+  "cumulative_result_count": 240,
+  "selected_count": 2,
+  "inherited_count": 238,
+  "public_row_count": 327,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "pr38_cumulative_calls": [
+    2,
+    2,
+    0
+  ],
+  "source_runs_still_open": {
+    "b01": "OPEN",
+    "b10": "OPEN"
+  },
+  "formal_publication_credit": "NONE_ISOLATED_ADOPTION_REHEARSAL",
+  "actual_r3_changed": false,
+  "original_failed_and_successful_records_changed": false,
+  "positive_flow": {
+    "status": "PASS",
+    "head": "f44c665d841ff5e7899df22ee21a0f807bbad076",
+    "log": "rehearsal-tests-1.log",
+    "scope": [
+      "soft failure old view",
+      "hard pre/post pointer recovery",
+      "240/327 complete view",
+      "source byte reads",
+      "rollback/restore",
+      "cold no writes",
+      "historical view cannot execute",
+      "repeat prepare/publish"
+    ],
+    "first_full_suite_status": "FAILED_TEST_HARNESS_ERRORS; original log retained"
+  },
+  "negative_retest": {
+    "status": "PASS",
+    "case_count": 8,
+    "log": "rehearsal-negative-tests-3.log",
+    "duration_seconds": 229.582,
+    "corrections": [
+      "raw SEC JSON uses its own serialization, not semantic float-forbidding serializer",
+      "JSONL keeps exactly one LF",
+      "exact native RunStoreError/BatchWorkflowError and exact rejection messages"
+    ]
+  },
+  "final_artifact": {
+    "prepare": "PASS",
+    "switch_and_source_read": "PASS",
+    "relocated_export_cold_read": "PASS_READ_ONLY_WITH_NETWORK_AND_WRITES_FORBIDDEN"
+  },
+  "pipeline_ci_fix": "Frozen scripts/sec_pipeline.py restored byte-identically; no baseline test expectation changed.",
+  "formal_remaining_conditions": [
+    "Owner adopts the ordinary-candidate publication rule and its evidence requirements",
+    "Bind approved adoption policy to reviewed release implementation and exact candidate",
+    "Explicit authorization for the actual complete publication and rollback/restore edge"
+  ],
+  "formal_path_currently_available": false,
+  "formal_path_note": "This adapter intentionally accepts isolated roots and no formal credit. Real adoption/Requirement activation and production-edge authority remain a separate approved change; no usable production grant is fabricated.",
+  "not_proven": [
+    "fresh online annual discovery",
+    "unseen-material generalization",
+    "long-term scheduling",
+    "actual formal update",
+    "39-metric full acceptance"
+  ],
+  "export": {
+    "archive": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/annual-publication-review.zip",
+    "sha256": "44db974f2530398baf29370d59ce6d8ca5eca4ab3da6728c8bad9b64352bb189",
+    "size": 14683026,
+    "exported_files": 1173,
+    "zip_test": "PASS",
+    "publication_id": "publication_2003618f263e3eee42d42c03ceb49d8c5986fee9fb03f231adaad6b12f09b280",
+    "previous_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8"
+  }
+}

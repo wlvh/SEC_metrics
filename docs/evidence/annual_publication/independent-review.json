@@ -1,0 +1,76 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_PUBLICATION_CODE_AND_BUNDLE_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "review_source": "Actual independent collaboration-subtask code inspection and bounded offline checks, not a human review or execution grant.",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "reviewed_at_utc": "2026-09-09T07:22:04.509687+00:00",
+  "reviewed_head": "f44c665d841ff5e7899df22ee21a0f807bbad076",
+  "implementation_tree": "sha256:414d2c5c1f12fb7e372a230ed11eaca41bf331939f9d96cbbe031fbd3e633867",
+  "reviewed_scope": "Historical read-only candidate adoption, native graph/source/controller replay, full inherited version projection, NONE rehearsal publication subtype and switch/recovery boundary.",
+  "verified_latest_publication_id": "publication_da8fb7564cd143b7b86009abc5d71806174c9d8a368e156f8f7fde8812f1072f",
+  "verified_checkpoint_publication_id": "publication_a1843186d05096cbb2e5d9241d5023c88c24e9b5259538b27549f9d9cf2fe03f",
+  "adoption_receipt_id": "sha256:10e90490973883cce4d6ade1367512e2dc5e79eb4b26216c9c2c7d4200a683e7",
+  "independently_observed_checks": [
+    {
+      "check": "LATEST_AND_CHECKPOINT_COLD_BUNDLE_REPLAY_WITHOUT_VERIFICATION_PIN",
+      "status": "PASS"
+    },
+    {
+      "check": "COMPLETE_240_BINDINGS_2_ADOPTED_238_INHERITED_327_PUBLIC_ROWS",
+      "status": "PASS"
+    },
+    {
+      "check": "COLD_READ_DOES_NOT_CHANGE_BUNDLE_FILES_OR_DIRECTORY_SET",
+      "status": "PASS"
+    },
+    {
+      "check": "REBOUND_OUTER_MANIFEST_RUNTIME_SCRIPT_CANARY",
+      "status": "REJECTED",
+      "reason": "ANNUAL_RELEASE_RUNTIME_CHANGED",
+      "canary_executed": false
+    },
+    {
+      "check": "REBOUND_OUTER_MANIFEST_FOREIGN_B01_RUN",
+      "status": "REJECTED",
+      "reason": "ANNUAL_STRUCTURED_RUN_OR_SOURCE_CHANGED"
+    },
+    {
+      "check": "HISTORICAL_INVOCATION_VIEW_VALIDATES_ORIGINAL_PLAN",
+      "status": "PASS"
+    },
+    {
+      "check": "HISTORICAL_VIEW_REJECTED_BY_SUCCESSOR_EXECUTION_AND_PROVIDER_ADAPTER",
+      "status": "PASS",
+      "reasons": [
+        "Successor invocation context differs",
+        "CANDIDATE_AUTHORIZATION_REQUIRED"
+      ]
+    }
+  ],
+  "resolved_review_findings": [
+    "Historical owner/request/controller reconstruction no longer relies on live/current code authorization.",
+    "B01 is bound to the original stage run id and exact CompanyFacts source.",
+    "Isolated active roots are accepted only under their own marker; actual repository roots remain forbidden.",
+    "Runtime and historical authority are bound to exact code/file identities.",
+    "Bundle verification does not execute Python from the bundle; trusted scanners recompute results from its data bytes.",
+    "New manifest id fields are registered and cold implementation_tree is verified.",
+    "Historical response reading no longer creates empty controller directories.",
+    "Recovery validates the approved edge without requiring already-repaired mirrors."
+  ],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "formal_publication_authorized": false,
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE_ISOLATED_ADOPTION_REHEARSAL",
+  "limitations": [
+    "Independent negative copies were removed and original bundles were unchanged. The reviewer did not change any active pointer.",
+    "The parent agent is executing the complete fault-injection, hard-crash, rollback/restore and remaining tamper suite; this review does not claim those full tests were independently rerun.",
+    "This review does not activate the proposed adoption policy or authorize a real R3 publication/switch."
+  ],
+  "checkout_clean_at_completion": true
+}

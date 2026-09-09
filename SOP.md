@@ -142,6 +142,10 @@ publication switch在修改mirror前于独占锁内写`outputs/publication_switc
 | 4 | 修复真实原因并重跑受影响层及下游 gate | `TESTING.md`；`architecture.md` 的阶段依赖与错误模型 | 没有放宽断言、静默跳过、重签旧证据或以 light 结果冒充 full |
 | 5 | 核对生成 artifact 与工作区范围 | `TESTING.md` 的写入副作用；`PR_Checklist.md` 的变更范围 | `git status` 只包含预期文件，失败证据与处置可复核 |
 
+普通年度候选的完整发布链隔离演练：按 `docs/annual_publication.md` 准备完整包并用
+PublicationView回读，测试按 `TESTING.md` 对应章节；实际R3和正式root不切换。
+本入口不代替正式采纳政策、Requirement激活或实际发布决定。
+
 ## SOP 3：PR 发布（仅用户明确要求时）
 
 | 步骤 | 动作 | 权威引用 | 验收 |

@@ -1,0 +1,114 @@
+test_complete_flow_faults_and_cold_source_reads (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_complete_flow_faults_and_cold_source_reads) ... ok
+test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) ... 
+  test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) (case='wrong_source') ... ERROR
+  test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) (case='missing_b10_result') ... ERROR
+  test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) (case='missing_evidence') ... ERROR
+test_repeated_prepare_does_not_publish_or_query_approval (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_repeated_prepare_does_not_publish_or_query_approval) ... ok
+
+======================================================================
+ERROR: test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) (case='wrong_source')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_publication_rehearsal.py", line 160, in test_rebound_bundle_counterexamples
+    value = json.loads(path.read_text()); value['cik'] = 1; save(path, value)
+                                                            ~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_publication_rehearsal.py", line 35, in save
+    path.write_bytes(canonical_json_bytes(value=value) + b'\n')
+                     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 415, in canonical_json_bytes
+    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  [Previous line repeated 2 more times]
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 371, in _canonicalize
+    _canonicalize(value=item, path=path + ("*",), set_paths=set_paths,)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 350, in _canonicalize
+    raise CanonicalError("Binary float is forbidden; use Decimal")
+vnext.canonical.CanonicalError: Binary float is forbidden; use Decimal
+
+======================================================================
+ERROR: test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) (case='missing_b10_result')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_publication_rehearsal.py", line 195, in test_rebound_bundle_counterexamples
+    pub.verify_publication_bundle(bundle_dir=directory)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4779, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 316, in verify_annual_bundle
+    values = _compose(snapshot, context, predecessor, meta, bundle_dir / 'internal/annual_runtime')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 230, in _compose
+    adoption, runs, requirement = replay_snapshot(snapshot, context)
+                                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_adoption.py", line 217, in replay_snapshot
+    manifests, requirement, execution = _source_proof(root, context)
+                                        ~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_adoption.py", line 166, in _source_proof
+    attempts = [r for r in _records(candidate / 'b10') if r['record_type'] == 'AI_EXTRACTION_ATTEMPT']
+                           ~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_adoption.py", line 181, in _records
+    return _read_jsonl(path=directory / 'records.jsonl')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 196, in _read_jsonl
+    raise RunStoreError("Run JSONL contains an empty record")
+vnext.run_store.RunStoreError: Run JSONL contains an empty record
+
+======================================================================
+ERROR: test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) (case='missing_evidence')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_publication_rehearsal.py", line 195, in test_rebound_bundle_counterexamples
+    pub.verify_publication_bundle(bundle_dir=directory)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4779, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 316, in verify_annual_bundle
+    values = _compose(snapshot, context, predecessor, meta, bundle_dir / 'internal/annual_runtime')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 230, in _compose
+    adoption, runs, requirement = replay_snapshot(snapshot, context)
+                                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_adoption.py", line 223, in replay_snapshot
+    manifest, records, decisions = _mechanically_replay_open_run(run_dir=root / 'candidate' / name,
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        repo_root=root / 'data', require_complete_results=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3193, in _mechanically_replay_open_run
+    effective_decisions = _validate_review_bindings(
+        records=records, decisions=decisions,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3114, in _validate_review_bindings
+    raise RunStoreError("Review unit has no effective decision")
+vnext.run_store.RunStoreError: Review unit has no effective decision
+
+----------------------------------------------------------------------
+Ran 3 tests in 925.440s
+
+FAILED (errors=3)

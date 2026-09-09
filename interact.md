@@ -1,5 +1,15 @@
 # SEC_metrics 用户可观察行为
 
+普通年度候选现在有完整发布链的隔离入口：`tools/vnext_annual_publication.py`
+prepare、switch、read。read使用既有PublicationView固定整个版本，返回完整行数、
+两项选定结果与原始来源在包内的路径/hash。原OPEN Run不改，采纳收据另有身份。
+软失败恢复旧完整版本；进程中断留下pending intent时拒绝不一致读取，由现有
+恢复机制按指针提交点收口。重复准备不重算模型，重复切换同版本不再发布。
+实际R3根被拒绝，产物只有隔离演练信用；正式采纳政策与实际发布仍需集中决定。
+见 `docs/annual_publication.md`。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_publication_rehearsal -->
+
 PR38补充修复使用同格raw_text/text精确比较，并验证标签属于该数值行、分组和
 指标/期间列。布局不受支持、未知范围或错误定位均不能自动放行。原失败保留，
 新修复阶段另存候选；新增最多2/2/0、总计最多3/3/0，第二次禁止原样重抽。

@@ -1,0 +1,95 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_PUBLICATION_INCREMENTAL_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "review_source": "Actual independent collaboration-subtask source inspection and bounded offline checks. This is not human review or an execution/publication grant.",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "reviewed_at_utc": "2026-09-09T07:49:42.369850+00:00",
+  "reviewed_head": "9b40c9c7c1d7b30f1597a078559242ab1222a663",
+  "implementation_tree": "sha256:b4670a5ea719e4a3a7cd3dfd89a3186b962c3ba51db6e63c5f64b200c472cebb",
+  "review_mode": "INCREMENTAL_REVIEW_AFTER_PRIOR_COMPLETE_SCOPE_REVIEW",
+  "prior_review": {
+    "reviewed_head": "f44c665d841ff5e7899df22ee21a0f807bbad076",
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/independent-review.json",
+    "sha256": "45ae1a40f0b1eaabcb1c14fef52a73b2383a56e9ca1c5bd7b2587b12cf0fa9d1"
+  },
+  "reviewed_delta": "Restore sec_pipeline.py to exact origin/main bytes; replace only annual publication scalability snapshot adapter with frozen-registry identity enumeration plus trusted existing AST/matching/accession/date helpers; inspect negative-fixture serializer and precise exception assertions. Other changes are documentation.",
+  "independently_observed_checks": [
+    {
+      "check": "FROZEN_PIPELINE_EXACT_ORIGIN_MAIN_BYTES",
+      "status": "PASS",
+      "sha256": "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438"
+    },
+    {
+      "check": "CURRENT_BOUNDARY_UNIT_TESTS",
+      "status": "PASS",
+      "command": "PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_publication -v",
+      "test_count": 4
+    },
+    {
+      "check": "SCANNER_COMPLETE_ROW_PARITY_WITH_ORIGINAL_NATIVE_HELPERS",
+      "status": "PASS",
+      "matching_rows": 7,
+      "covered_types": [
+        "accession",
+        "cik",
+        "company_name",
+        "fixed_fiscal_date",
+        "ticker"
+      ]
+    },
+    {
+      "check": "TEMPORARY_FROZEN_REGISTRY_OVERRIDE",
+      "status": "PASS",
+      "detail": "Synthetic snapshot company/ticker/CIK detected; replaced live-registry identities excluded; accession/date rows retained."
+    },
+    {
+      "check": "PYTHON_SOURCE_TREATED_AS_AST_DATA",
+      "status": "PASS",
+      "canary_executed": false
+    },
+    {
+      "check": "ONLY_TWO_PRODUCTION_SOURCE_FILES_CHANGED_SINCE_PRIOR_REVIEW",
+      "status": "PASS",
+      "files": [
+        "scripts/sec_pipeline.py",
+        "scripts/vnext/annual_publication.py"
+      ]
+    },
+    {
+      "check": "NEGATIVE_TEST_FIXTURE_AND_EXCEPTION_DIFF",
+      "status": "PASS",
+      "detail": "Raw CompanyFacts serialization and JSONL construction corrected; precise native exception/reason assertions added; production validation guards not weakened."
+    }
+  ],
+  "parent_execution_evidence_inspected_not_rerun": {
+    "initial_log": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/rehearsal-tests-1.log",
+    "initial_log_result": "FAILED (errors=3) in rebound-counterexample method; complete-flow faults/cold-reads and repeated-prepare methods independently marked ok in the log.",
+    "counterexample_rerun_log": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/rehearsal-negative-tests-3.log",
+    "counterexample_rerun_result": "1 method, 8 specified rebound cases PASS; 229.582 seconds.",
+    "counterexample_check_record": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/rehearsal-negative-checks-3.json",
+    "latest_prepare_record": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/prepare-final.json",
+    "latest_prepare_reported_publication_id": "publication_2003618f263e3eee42d42c03ceb49d8c5986fee9fb03f231adaad6b12f09b280",
+    "latest_prepare_reported_counts": {
+      "cumulative_results": 240,
+      "public_rows": 327,
+      "selected_results": 2
+    }
+  },
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "formal_publication_authorized": false,
+  "publication_credit": "NONE_ISOLATED_ADOPTION_REHEARSAL",
+  "qualification_credit": "NONE",
+  "limitations": [
+    "The prior complete-scope review and its independent cold-bundle replay/negative-copy checks remain recorded separately. This incremental review does not claim another full code audit.",
+    "The reviewer did not rerun the parent complete fault/recovery/rollback/restore suite or cold replay of the latest prepared package; those executed test logs and precise status are separately attributed above.",
+    "No original Run, repository file, bundle, active pointer, or credential was modified or read as a credential; temporary scanner fixtures were removed.",
+    "No SEC/provider calls were made, and no formal R3 switch or activation authority is conferred."
+  ],
+  "checkout_clean_at_completion": true
+}
