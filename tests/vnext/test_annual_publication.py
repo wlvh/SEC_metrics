@@ -38,6 +38,17 @@ class AnnualPublicationBoundaryTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'CAPABILITY_REQUIRED'):
             annual.guard_mirror_repair(publication_root=ROOT)
 
+    def test_frozen_registry_scanner_reads_code_as_data(self):
+        import shutil
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            (root / 'config').mkdir()
+            shutil.copyfile(ROOT / 'config/company_registry.csv', root / 'config/company_registry.csv')
+            (root / 'scripts').mkdir(); (root / 'tools').mkdir()
+            (root / 'scripts/example.py').write_text("company = '1048286'\n")
+            rows = annual._scalability_snapshot(root)
+            self.assertTrue(any(r['type'] == 'cik' and r['allowed'] == '0' for r in rows))
+
     def test_annual_manifest_cannot_acquire_formal_credit_or_disguise_type(self):
         requirement = load_requirement_snapshot(snapshot_dir=ROOT / 'requirements/issue_28_v6')
         pointer = json.loads((ROOT / 'outputs/active_publication.json').read_text())

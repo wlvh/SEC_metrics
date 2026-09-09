@@ -21,6 +21,7 @@ from vnext import annual_publication as annual, annual_adoption as adoption
 from vnext import publication as pub, invocation_control as controller
 from vnext.canonical import canonical_json_bytes, content_hash
 from vnext.run_store import RunStoreError
+from vnext.batch_workflow import BatchWorkflowError
 
 
 class HardCrash(BaseException):
@@ -193,8 +194,19 @@ class AnnualPublicationRehearsalTest(unittest.TestCase):
                 body = {k: v for k, v in manifest.items() if k not in {'record_type', 'publication_id'}}
                 manifest['publication_id'] = 'publication_' + content_hash(value=body)[7:]
                 save(directory / 'publication_manifest.json', manifest)
-                with self.assertRaises((ValueError, pub.PublicationError, KeyError, RunStoreError)) as caught:
+                with self.assertRaises((ValueError, pub.PublicationError, KeyError, RunStoreError, BatchWorkflowError)) as caught:
                     pub.verify_publication_bundle(bundle_dir=directory)
+                expected = {
+                    'wrong_source': 'Request-ledger locator evidence is invalid',
+                    'foreign_b01_run': 'ANNUAL_STRUCTURED_RUN_OR_SOURCE_CHANGED',
+                    'missing_b10_result': 'Reviewed Result exact set differs',
+                    'missing_evidence': 'Review unit has no effective decision',
+                    'runtime_code': 'ANNUAL_RELEASE_RUNTIME_CHANGED',
+                    'implementation_tree': 'ANNUAL_RELEASE_RUNTIME_CHANGED',
+                    'formal_credit': 'Publication manifest record is invalid',
+                    'disguised_type': 'Publication bundle file exact set differs',
+                }
+                self.assertIn(expected[case], str(caught.exception))
                 self.assertNotIn('JSONL contains an empty record', str(caught.exception))
                 self.assertFalse((Path(temporary) / 'BUNDLE_CODE_EXECUTED').exists())
                 self.log.append({'check': 'REBOUND_' + case.upper(), 'status': 'PASS', 'rejection': str(caught.exception)})

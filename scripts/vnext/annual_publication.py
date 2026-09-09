@@ -112,17 +112,34 @@ def _ledger(snapshot, indexes):
 
 
 def _scalability_snapshot(runtime_root):
-    """Trusted scanner reads frozen Python as data; no bundle code executes."""
-    from sec_pipeline import load_company_registry_from_path, company_identity_literals
+    """Reuse trusted matchers while leaving the frozen pipeline byte-identical."""
+    from sec_pipeline import load_company_registry_from_path, literal_value_matches_identity
     from sec_pipeline import python_literal_values, audit_python_literal
     registry = load_company_registry_from_path(path=runtime_root / 'config/company_registry.csv')
-    identities = company_identity_literals(registry=registry)
+    identities = []
+    for company in registry:
+        candidates = [(str(company['company']), 'company_name'), (str(company['primary_cik']), 'cik')]
+        if company['ticker']:
+            candidates.append((str(company['ticker']), 'ticker'))
+        candidates.extend((str(role['cik']), 'cik') for role in company['roles'])
+        for candidate in candidates:
+            if candidate not in identities:
+                identities.append(candidate)
     rows = []
     for prefix in ('scripts', 'tools'):
         for path in sorted((runtime_root / prefix).rglob('*.py')):
+            relative = path.relative_to(runtime_root)
             for line, literal in python_literal_values(path=path):
-                rows.extend(audit_python_literal(file_path=ROOT / path.relative_to(runtime_root),
-                    line_number=line, literal_value=literal, identity_literals=identities))
+                for forbidden, kind in identities:
+                    if literal_value_matches_identity(literal_value=literal, forbidden_literal=forbidden, literal_type=kind):
+                        rows.append({'file': relative.as_posix(), 'line': str(line), 'literal': forbidden,
+                            'type': kind, 'allowed': '0', 'reason': 'identity literal appears in production Python',
+                            'replacement_plan': 'Move identity to config or fixtures and branch on profile, SEC metadata, dimensions, or registry rules.'})
+                # The native helper owns the accession/date matching rules.
+                # Its current-registry company matches are replaced above by
+                # the snapshot registry, preserving historical interpretation.
+                rows.extend(row for row in audit_python_literal(file_path=ROOT / relative,
+                    line_number=line, literal_value=literal) if row['type'] in {'accession', 'fixed_fiscal_date'})
     return rows
 
 
