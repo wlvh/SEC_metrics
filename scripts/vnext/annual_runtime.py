@@ -462,6 +462,9 @@ def verify_stage(*, approval_url):
         stage["repair"]["delegation_comment"] == load_delegation(requirement),
         "REPAIR_CURRENT_DELEGATION_CHANGED",
     )
+    from .annual_repair_budget import refresh_previous_comment
+
+    refresh_previous_comment(stage)
     return {"stage": stage, "owner_comment": comment}
 
 

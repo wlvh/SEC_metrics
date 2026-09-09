@@ -10,6 +10,7 @@ from .evidence import check_evidence
 from .records import validate_record
 from .r4_label_policy import RAW_LABEL_POLICY, SOURCE_LABEL_POLICY
 from .table_grid import resolve_cell
+from .constraints import parse_numeric_claim, ConstraintError
 from .requirement_profile_v7 import REQUIREMENT_ID, DECISION_ID, candidate_choice
 
 
@@ -121,13 +122,51 @@ def _ownership(*, candidate, derived_asset, target_period, choice, task_contract
                 )
                 group_rows.append(cell["origin_row_index"])
         _need(len(set(group_rows)) == 1, "ANNUAL_SCOPE_GROUP_AMBIGUOUS")
-        top = group_rows[0]
-        headers = [
-            c
-            for source_row in table["rows"][:top]
-            for c in source_row["cells"]
-            if c["is_origin"] and c["text"] and _covers(c, column)
-        ]
+        # This supported layout has a row-label column and two header levels.
+        # Only a separate row label plus numeric source-unit cell is a data row.
+        # Inspect every such row before the value, so a later overlapping year
+        # or role cannot be hidden by an earlier matching header.
+        label_columns = {
+            c["origin_column_index"] for cells in resolved.values() for c in cells
+        }
+        _need(len(label_columns) == 1, "ANNUAL_LABEL_COLUMN_AMBIGUOUS")
+        label_column = next(iter(label_columns))
+        headers = []
+        for source_row in table["rows"][:row]:
+            nonempty = [c for c in source_row["cells"] if c["is_origin"] and c["text"]]
+            row_labels = [
+                c
+                for c in nonempty
+                if _covers(c, label_column)
+                and c["origin_column_index"] + c["colspan"] <= column
+            ]
+            covered = [c for c in nonempty if _covers(c, column)]
+            is_data = False
+            if row_labels and len(covered) == 1 and not covered[0]["header"]:
+                numeric = covered[0]
+                unit_cells = [
+                    c
+                    for c in nonempty
+                    if c["origin_column_index"]
+                    == numeric["origin_column_index"] + numeric["colspan"]
+                ]
+                source_unit = (
+                    numeric["text"].endswith(rule["visible_unit"])
+                    or len(unit_cells) == 1
+                    and unit_cells[0]["text"] == rule["visible_unit"]
+                )
+                if source_unit:
+                    try:
+                        parse_numeric_claim(
+                            raw_value=numeric["text"],
+                            reported_unit=rule["reported_unit"],
+                        )
+                        is_data = True
+                    except ConstraintError:
+                        pass
+            if not is_data:
+                headers.extend(covered)
+        _need(len(headers) == 2, "ANNUAL_VALUE_HEADER_AMBIGUOUS")
         role = claim["role"]
         _need(role in task_contract["required_roles"], "ANNUAL_ROLE_MISMATCH")
         metric_headers = [

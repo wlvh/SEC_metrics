@@ -27,10 +27,16 @@ CASE_NAMES = [
     "caller_added_whitespace",
     "conflicting_claims",
     "wrong_source_identity",
+    "synthetic_supported_header",
+    "conflicting_year_header",
+    "conflicting_role_header",
+    "same_value_prior_year",
+    "conflicting_year_with_row_stub",
 ]
 CODE_FILES = [
     "scripts/vnext/annual_evidence.py",
     "scripts/vnext/annual_regression.py",
+    "scripts/vnext/annual_regression_synthetic.py",
     "scripts/vnext/evidence.py",
     "scripts/vnext/reader.py",
     "scripts/vnext/table_grid.py",
@@ -224,6 +230,37 @@ def build_regression_receipt(*, repo_root):
         ),
     )
     evaluate("wrong_source_identity", original, source_override=[])
+    from .annual_regression_synthetic import header_case
+
+    for name in [
+        "synthetic_supported_header",
+        "conflicting_year_header",
+        "conflicting_role_header",
+        "same_value_prior_year",
+        "conflicting_year_with_row_stub",
+    ]:
+        args = header_case(
+            repo_root=repo_root,
+            records=records,
+            attempt=attempt,
+            original=original,
+            period=period,
+            variant=name,
+        )
+        result = check_annual_evidence(
+            requirement=requirement, target_period=period, **args
+        )
+        cases.append(
+            {
+                "case": name,
+                "expected": "PASS"
+                if name == "synthetic_supported_header"
+                else "REJECTED",
+                "observed": result["status"],
+                "reason_codes": result["reason_codes"],
+                "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT",
+            }
+        )
     if [c["case"] for c in cases] != CASE_NAMES:
         raise ValueError("REGRESSION_CASE_SET_INVALID")
     body = {
@@ -255,7 +292,21 @@ def verify_regression_receipt(receipt):
         or receipt.get("status") != "PASS"
         or receipt.get("requirement_id") != REQUIREMENT_ID
         or [c["case"] for c in receipt["cases"]] != CASE_NAMES
-        or any(c["expected"] != c["observed"] for c in receipt["cases"])
+        or any(
+            c["expected"]
+            != (
+                "PASS"
+                if c["case"]
+                in {
+                    "original_new_rule",
+                    "existing_correct_label",
+                    "synthetic_supported_header",
+                }
+                else "REJECTED"
+            )
+            or c["expected"] != c["observed"]
+            for c in receipt["cases"]
+        )
         or receipt["code_files"] != {s: sha256_file(path=root / s) for s in CODE_FILES}
     ):
         raise ValueError("REPAIR_REGRESSION_STALE_OR_FAILED")

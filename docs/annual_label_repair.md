@@ -18,7 +18,8 @@
 
 - geography标签与数值必须属于同一个原始行；不能借其他行相同标签。
 - population/operating_scope必须来自标签列上最近的、仅一个非空原格的分组标题行。
-- 数值列必须被既有task角色表头和Run实际财年表头覆盖；单位还需在数值原格或
+- 数值列只接受明确的角色/年份两级表头，额外覆盖该列的年份、指标或不支持的表头
+  均拒绝；单位还需在数值原格或
   紧邻原格可见，不能借另一指标或变化率列。
 - 未知范围或未解决冲突不进入自动成功；不符合此行/组/列表布局的材料明确拒绝。
 
@@ -33,7 +34,9 @@ V1–V6 engines原字节保留。`annual_evidence`从Run绑定的Requirement选�
 归属规则；controller acceptance、workflow生成及run_store独立重验使用同一入口。
 R4原授权不参与，旧普通候选仍按raw-only解释，不追认原失败Run。
 
-`annual_runtime`继续使用同一个原生B01/B10执行器。阶段许可新增修复回归ID、
+`annual_runtime`继续使用同一个原生B01/B10执行器。第二次资格先校验本轮第一次stage、真实owner正文、plan、两个永久名额和原生
+invocation/receipt/marker的完整关联，并重新读取第一次owner评论；不能借旧失败或
+篡改一份自报的旧代码字段冒充新修复。阶段许可新增修复回归ID、
 独立复核、明确根因及精确input/request绑定。新
 [预算委托](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5595412960)
 只固定唯一预算目录和上限，本身不允许开socket。每次受审阶段仍由既有Issue

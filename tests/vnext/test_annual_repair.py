@@ -70,6 +70,55 @@ class AnnualLabelRegressionTest(unittest.TestCase):
             cases["conflicting_claims"]["reason_codes"],
         )
         annual_regression.verify_regression_receipt(receipt)
+        rewritten = copy.deepcopy(receipt)
+        bad = next(c for c in rewritten["cases"] if c["case"] == "wrong_unit")
+        bad.update(expected="PASS", observed="PASS")
+        rewritten["receipt_id"] = content_hash(
+            value={k: v for k, v in rewritten.items() if k != "receipt_id"}
+        )
+        with self.assertRaisesRegex(ValueError, "REGRESSION_STALE_OR_FAILED"):
+            annual_regression.verify_regression_receipt(rewritten)
+        self.assertIn(
+            "ANNUAL_VALUE_HEADER_AMBIGUOUS",
+            cases["conflicting_year_header"]["reason_codes"],
+        )
+        self.assertIn(
+            "ANNUAL_VALUE_HEADER_AMBIGUOUS",
+            cases["conflicting_role_header"]["reason_codes"],
+        )
+        self.assertIn(
+            "ANNUAL_VALUE_HEADER_PERIOD_MISMATCH",
+            cases["same_value_prior_year"]["reason_codes"],
+        )
+
+    def test_old_failure_cannot_be_counted_as_a_repair_attempt(self):
+        import shutil
+
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            first = root / "stages/1"
+            candidate = first / "candidates/borrowed"
+            shutil.copytree(
+                ROOT
+                / "docs/evidence/annual_runtime/live/native-candidate/invocation_control",
+                candidate / "invocation_control",
+            )
+            shutil.copyfile(
+                ROOT / "docs/evidence/annual_runtime/live/native-candidate/plan.json",
+                candidate / "plan.json",
+            )
+            (first / "stage-approval.json").write_text(
+                json.dumps({"stage": {"reviewed_code": {"runtime_tree": "forged"}}})
+            )
+            with self.assertRaisesRegex(ValueError, "FIRST_APPROVAL_INVALID"):
+                budget._prior_for_second(
+                    root,
+                    {
+                        "previous_failure_execution_id": "unused",
+                        "new_failure_fixed": True,
+                    },
+                    {"runtime_tree": "different"},
+                )
 
     def test_text_generation_preserves_business_and_footnotes(self):
         from vnext.table_grid import _semantic_text
@@ -247,6 +296,23 @@ class AnnualRepairRuntimeTest(unittest.TestCase):
             self.assertEqual("RUNTIME_STAGE_ALREADY_CONSUMED", repeat["error"])
             self.assertEqual(1, opened.call_count)
         self.assertFalse((self.stage_root / "successful-candidate.json").exists())
+        approval_file = self.stage_root / "stage-approval.json"
+        saved = approval_file.read_bytes()
+        forged = json.loads(saved)
+        forged["stage"]["reviewed_code"]["runtime_tree"] = "sha256:" + "0" * 64
+        approval_file.write_text(json.dumps(forged))
+        try:
+            with self.assertRaisesRegex(ValueError, "FIRST_STAGE_PLAN_ID_CHANGED"):
+                runtime.stage_proposal(
+                    stage_root=self.budget_root / "stages/2",
+                    data_root=self.data,
+                    baseline_run=OLD_RUN,
+                    review_path=self.review,
+                    repair_evidence_path=self.evidence,
+                    repair_ordinal=2,
+                )
+        finally:
+            approval_file.write_bytes(saved)
         with self.assertRaisesRegex(ValueError, "UNCHANGED_REROLL"):
             runtime.stage_proposal(
                 stage_root=self.budget_root / "stages/2",

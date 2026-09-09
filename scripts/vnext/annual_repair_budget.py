@@ -171,47 +171,135 @@ def counts(budget_root):
     return total
 
 
-def _prior_for_second(budget_root, repair, reviewed_code):
+def _prior_for_second(
+    budget_root, repair, reviewed_code, *, require_current_comment=True
+):
     from .sources import resolve_repository_file
+    from .annual_runtime import CODE_ROOT
+    from .requirements import load_requirement_snapshot
+    from .invocation_control import execution_identity
+
+    def read(root, relative):
+        return strict_json_file(
+            path=resolve_repository_file(repo_root=root, repo_relative_path=relative)
+        )
+
+    def self_id(record, field):
+        return record.get(field) == content_hash(
+            value={k: v for k, v in record.items() if k != field}
+        )
 
     first = budget_root / "stages/1"
-    approval = strict_json_file(
-        path=resolve_repository_file(
-            repo_root=first, repo_relative_path="stage-approval.json"
-        )
+    approval = read(first, "stage-approval.json")
+    need(
+        type(approval) is dict and set(approval) == {"stage", "plan", "owner_comment"},
+        "REPAIR_FIRST_APPROVAL_INVALID",
+    )
+    stage, plan, owner = approval["stage"], approval["plan"], approval["owner_comment"]
+    need(
+        self_id(stage, "stage_id") and self_id(plan, "plan_id"),
+        "REPAIR_FIRST_STAGE_PLAN_ID_CHANGED",
+    )
+    prior_requirement = load_requirement_snapshot(
+        snapshot_dir=CODE_ROOT / "requirements" / plan["requirement_id"]
+    )
+    body = validate_comment(
+        owner,
+        repository=prior_requirement["baseline"]["repository"]["identity"],
+        url=owner.get("html_url", ""),
+    )
+    need(
+        body == stage
+        and stage["decision"] == "AUTHORIZE_ANNUAL_RUNTIME_STAGE"
+        and stage["repair"]["ordinal"] == 1
+        and stage["repair"]["delegation_comment"] == repair["delegation_comment"]
+        and stage["stage_root"] == str(first)
+        and plan["stage_root"] == str(first)
+        and plan["stage_id"] == stage["stage_id"]
+        and plan["reviewed_code"] == stage["reviewed_code"]
+        and plan["requirement_id"]
+        == stage["requirement_id"]
+        == prior_requirement["requirement_id"]
+        and stage["policy"]
+        == prior_requirement["effective_decisions"]["S-ANNUAL-REPAIR"]["choice"]
+        and plan["requirement_hashes"] == prior_requirement["hashes"]
+        and plan["requirement_closure_hash"]
+        == stage["requirement_closure_hash"]
+        == prior_requirement["requirement_closure_hash"]
+        and stage["reviewed_input_request"]
+        == {"input_id": plan["prepared_input"]["input_id"], "request": plan["request"]},
+        "REPAIR_FIRST_STAGE_BINDING_INVALID",
+    )
+    expected_slot = {"stage_id": stage["stage_id"], "plan_id": plan["plan_id"]}
+    need(
+        read(first, "execution-slot.json") == expected_slot
+        and read(budget_root, "repair-slot-1.json")
+        == {
+            **expected_slot,
+            "ordinal": 1,
+            "delegation_url": stage["policy"]["repair_budget_delegation_url"],
+        },
+        "REPAIR_FIRST_SLOT_BINDING_INVALID",
     )
     plans = list((first / "candidates").glob("*/plan.json"))
-    need(len(plans) == 1, "REPAIR_FIRST_PLAN_MISSING")
-    executions = list(
-        (plans[0].parent / "invocation_control/executions").glob("*.json")
-    )
-    need(len(executions) == 1, "REPAIR_FIRST_OUTCOME_UNKNOWN")
-    receipt = strict_json_file(path=executions[0])
     need(
-        receipt.get("execution_receipt_id")
-        == content_hash(
-            value={k: v for k, v in receipt.items() if k != "execution_receipt_id"}
-        ),
+        len(plans) == 1
+        and plans[0].parent.name == plan["plan_id"].split(":")[1]
+        and read(first, plans[0].relative_to(first).as_posix()) == plan,
+        "REPAIR_FIRST_PLAN_MISSING",
+    )
+    workspace = plans[0].parent
+    invocations = list((workspace / "invocation_control/plans").glob("*.json"))
+    executions = list((workspace / "invocation_control/executions").glob("*.json"))
+    need(len(invocations) == len(executions) == 1, "REPAIR_FIRST_OUTCOME_UNKNOWN")
+    invocation = read(workspace, invocations[0].relative_to(workspace).as_posix())
+    receipt = read(workspace, executions[0].relative_to(workspace).as_posix())
+    need(
+        self_id(invocation, "ai_invocation_plan_id")
+        and invocation["release_input_plan_id"] == plan["plan_id"]
+        and invocation["provider_request_body_sha256"]
+        == plan["request"]["provider_request_body_sha256"]
+        and invocation["requirement_id"] == plan["requirement_id"],
+        "REPAIR_FIRST_INVOCATION_BINDING_INVALID",
+    )
+    expected_execution = execution_identity(
+        ai_invocation_plan_id=invocation["ai_invocation_plan_id"],
+        owner_token=stage["stage_id"],
+        authorized_at_utc=owner["created_at"],
+    )
+    need(
+        self_id(receipt, "execution_receipt_id")
+        and receipt["execution_id"] == expected_execution
+        and receipt["ai_invocation_plan_id"] == invocation["ai_invocation_plan_id"]
+        and receipt["provider_request_identity"]
+        == invocation["provider_request_identity"]
+        and receipt["authorized_at_utc"] == owner["created_at"],
         "REPAIR_PRIOR_RECEIPT_INVALID",
     )
     need(
         receipt["status"] in {"FAILED_TERMINAL", "FAILED_RETRYABLE_FINAL"},
         "REPAIR_SECOND_REQUIRES_KNOWN_FAILURE",
     )
-    markers = list((plans[0].parent / "invocation_control/egress").glob("*/*.json"))
+    markers = list((workspace / "invocation_control/egress").glob("*/*.json"))
     need(
         len(markers) == 1 and len(receipt["attempts"]) == 1,
         "REPAIR_PRIOR_COUNT_UNCERTAIN",
     )
-    marker = strict_json_file(path=markers[0])
+    marker = read(workspace, markers[0].relative_to(workspace).as_posix())
+    attempt = receipt["attempts"][0]
     need(
-        marker["egress_marker_id"]
-        == content_hash(
-            value={k: v for k, v in marker.items() if k != "egress_marker_id"}
-        )
-        and receipt["attempts"][0]["egress_marker_id"] == marker["egress_marker_id"]
-        and marker["execution_id"] == receipt["execution_id"]
-        and marker["attempt_ordinal"] == 1
+        self_id(marker, "egress_marker_id")
+        and self_id(attempt, "attempt_receipt_id")
+        and attempt["egress_marker_id"] == marker["egress_marker_id"]
+        and marker["execution_id"] == attempt["execution_id"] == expected_execution
+        and marker["ai_invocation_plan_id"]
+        == attempt["ai_invocation_plan_id"]
+        == invocation["ai_invocation_plan_id"]
+        and marker["provider_request_identity"]
+        == invocation["provider_request_identity"]
+        and marker["attempt_ordinal"] == attempt["attempt_ordinal"] == 1
+        and marker["transport_kind"] == "REAL_MODEL_PROVIDER"
+        and marker["paid_model_provider_call_observed"] is True
         and receipt["counters"]
         == {
             "mock_transport_invocation_count": 0,
@@ -221,8 +309,7 @@ def _prior_for_second(budget_root, repair, reviewed_code):
         "REPAIR_PRIOR_COUNT_UNCERTAIN",
     )
     need(
-        reviewed_code["runtime_tree"]
-        != approval["stage"]["reviewed_code"]["runtime_tree"],
+        reviewed_code["runtime_tree"] != plan["reviewed_code"]["runtime_tree"],
         "REPAIR_UNCHANGED_REROLL_FORBIDDEN",
     )
     need(
@@ -230,6 +317,24 @@ def _prior_for_second(budget_root, repair, reviewed_code):
         and repair["new_failure_fixed"] is True,
         "REPAIR_SECOND_FIX_EVIDENCE_REQUIRED",
     )
+    if require_current_comment:
+        need(
+            repair.get("previous_stage_comment") == owner,
+            "REPAIR_PREVIOUS_OWNER_COMMENT_CHANGED",
+        )
+    return owner
+
+
+def refresh_previous_comment(stage):
+    """A second real entry must still match the first immutable owner approval."""
+    if stage["repair"]["ordinal"] != 2:
+        return
+    from .annual_runtime import _github
+
+    owner = stage["repair"]["previous_stage_comment"]
+    repository = owner["issue_url"].split("/repos/")[1].split("/issues/")[0]
+    current = _github("repos/" + repository + "/issues/comments/" + str(owner["id"]))
+    need(current == owner, "REPAIR_PREVIOUS_OWNER_COMMENT_CHANGED")
 
 
 def proposal_fields(
@@ -267,7 +372,19 @@ def proposal_fields(
         "new_failure_fixed": review.get("new_failure_fixed", False),
     }
     if ordinal == 2:
-        _prior_for_second(root, repair, reviewed_code)
+        owner = _prior_for_second(
+            root, repair, reviewed_code, require_current_comment=False
+        )
+        from .annual_runtime import _github
+
+        repository = requirement["baseline"]["repository"]["identity"]
+        repair["previous_stage_comment"] = _github(
+            "repos/" + repository + "/issues/comments/" + str(owner["id"])
+        )
+        need(
+            repair["previous_stage_comment"] == owner,
+            "REPAIR_PREVIOUS_OWNER_COMMENT_CHANGED",
+        )
     return repair
 
 
