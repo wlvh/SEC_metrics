@@ -1894,10 +1894,13 @@ def load_successful_response(
         Receipt metadata plus exact response bytes.
     """
     validated_plan = validate_ai_invocation_plan(plan=plan, _historical_view=_historical_view)
-    response = _load_success_response(
-        root=_state_root(workspace_dir=workspace_dir),
-        plan=validated_plan,
-    )
+    if _historical_view is not None:
+        root = workspace_dir / "invocation_control"
+        if workspace_dir.is_symlink() or root.is_symlink() or not root.is_dir():
+            raise InvocationControlError("Historical invocation state root is unavailable")
+    else:
+        root = _state_root(workspace_dir=workspace_dir)
+    response = _load_success_response(root=root, plan=validated_plan)
     if response is None:
         raise InvocationControlError("Successful exact response is absent")
     return response
