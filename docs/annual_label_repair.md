@@ -3,7 +3,9 @@
 本补充修复由同一任务中的owner明确委托，仍保持PR38 Draft、正式R3不变。
 原1/1/0失败按原身份保留；新增最多2/2/0、整个相关过程最多3/3/0。第二次仅在
 第一次修复验证暴露新问题、完成实际代码修正及新离线回归和独立复核后可用。
-本文件的实现说明不代表已经签发具体执行许可或真实验证成功。
+修复后的首次真实验证已经成功，新候选 B01 为261.86亿美元、B10为69.3%；
+同输入重入新增0调用，累计2/2/0，第二次修复名额未使用。PR38仍为Draft、不自动
+合并。[完整交付与边界](evidence/annual_runtime/repair/README.md)集中列明实际证据。
 
 ## 确定性规则与取舍
 
@@ -66,7 +68,17 @@ proposal先重建回归并核对review，再形成明确请求；不能用自报
 验证同一完整原生运行、重复输入零新增、失败保留及第二名额不能原样重抽。
 测试批准和LIVE形状计数均明确是模拟记录，不能被真实额度或资格引用。
 
-本阶段新增真实调用、最终独立复核和候选结果须在完成后另记实际事实；目前未以
-离线PASS冒充真实候选或正式发布。
+最终受审和执行代码同为 `bb7e3f35198c662b9f36dbd433e6fd7b30284526`，独立代码
+复核和独立原文核对均通过。23项正反回归、两项原生运行回归、26项标签及输入/
+检测测试、Python3.9标签四项、本地33项fast及该head CI通过；细项与重叠范围见
+[测试记录](evidence/annual_runtime/repair/test-verification.json)。
+
+本次[具体阶段记录](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5596431062)
+由Codex依用户委托在复核及测试通过后登记。新请求HTTP200，实际输入161707、
+输出580；assistant正文与原失败完全相同，仍未带前导换行，但原生新Evidence、
+SYSTEM Review与Result成功。新request ID、原始响应envelope及execution分别保存，
+原失败未追认成功。再入返回NO_NEW_ANNUAL_FILING/NOT_EXECUTED，新增0/0/0。
+新旧普通候选的OPEN状态、R3的独立正式状态和来源字节区别均如实列入对照；
+这不是未见材料泛化、长期运行许可或正式发布证明。
 
 <!-- capability-anchor: CAPABILITY.annual_b10_label_repair -->

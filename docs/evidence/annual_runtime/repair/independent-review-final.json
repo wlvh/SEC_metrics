@@ -1,0 +1,53 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_REPAIR_CODE_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "reviewed_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+  "runtime_tree": "sha256:9e4552a242f7ce9af14d36dcbe1aa1e46ca42005d7234f680e844bcd1310c113",
+  "repair_regression_id": "sha256:ea026dbc4fa16ddefb21206004a89ba2a443a7177bc7303d113123f15f6455de",
+  "root_cause": "The retained raw-only ordinary B10 label rule rejected the source cell text representation solely because the parser raw_text contains a leading LF. The original native checker also did not bind same-table scope labels to the selected numeric row, nearest group, or actual year column. The repair accepts only the verified same-cell raw_text or text and adds bounded deterministic row, group, column, period and unit ownership; no source search or response rewrite.",
+  "necessity_and_business_counterexamples_reviewed": true,
+  "reviewed_at_utc": "2026-09-09T05:36:39.758933+00:00",
+  "review_source": {
+    "kind": "ACTUAL_CODEX_COLLABORATION_SUBTASK_REVIEW",
+    "subtask_identity": "/root/runtime_boundary_review",
+    "parent_task_identity": "/root",
+    "codex_task": "01a081bb-9220-7de3-a311-b481906b3146",
+    "description": "Independent reviewer inspected actual code and diffs, reproduced counterexamples and verified corrections in this subtask. This is not a claim of human review or a GitHub approval."
+  },
+  "scope": "Bounded PR38 ordinary B10 label/source-ownership repair and additional execution budget. Final delta review checks immutable attempt and terminal consistency over prior focused reviews.",
+  "findings_resolved": [
+    "Conflicting later year or metric headers cannot borrow an earlier matching header.",
+    "Second repair eligibility binds the actual first-stage owner approval, exact plan, both permanent slots, invocation, marker, derived execution identity and terminal.",
+    "Runtime regression verification enforces the fixed expected outcomes.",
+    "Second repair eligibility uses the native receipt loader to compare the independent saved attempt, requires a failed attempt matching the failed execution, a nonempty error and no successful response receipt."
+  ],
+  "independent_validation": {
+    "business_regression_independently_executed_at_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+    "business_regression_case_count": 23,
+    "business_regression_all_expected_outcomes_matched": true,
+    "regression_source_and_code_bindings_revalidated_at_final_head": true,
+    "original_raw_rule_still_rejects_unmodified_old_failure": true,
+    "original_response_new_policy_acceptance_is_offline_only": true,
+    "independent_conflicting_header_rejected": "ANNUAL_VALUE_HEADER_AMBIGUOUS",
+    "fixed_expected_matrix_tamper_rejected": "REPAIR_REGRESSION_STALE_OR_FAILED",
+    "native_loader_accepted_untouched_copied_historical_execution": true,
+    "native_loader_rejected_modified_independent_attempt_copy": "Attempt receipt bytes differ",
+    "final_checkout_clean_and_identity_stable": true
+  },
+  "additional_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "merge_authorized": false,
+  "limitations": [
+    "This is independent code and counterexample review, not real provider acceptance.",
+    "The parent agent is rerunning complete native simulated pipeline tests including the final negative cases; this record does not claim the reviewer reran those long tests.",
+    "Each additional real execution still requires its exact reviewed input/request approval and bounded budget checks; this review itself does not issue a provider grant.",
+    "No original source, model response, historical Run, formal active pointer or repository file was changed by this review."
+  ]
+}

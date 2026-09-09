@@ -1,0 +1,210 @@
+{
+  "record_type": "ANNUAL_REPAIR_REGRESSION",
+  "schema_version": 1,
+  "requirement_id": "issue_28_v6",
+  "status": "PASS",
+  "evidence_scope": "OFFLINE_UNMODIFIED_ORIGINAL_RESPONSE_AND_NEGATIVES_NO_RUN_CREDIT",
+  "original_response_sha256": "aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb",
+  "original_records_sha256": "b27785715111a96b4ff76f781cee70eb0a6997782d4d6e35cde5e6fd133ccf03",
+  "historical_correct_response_sha256": "5264b703b76a86e0d19d0cb776570abd5d40e684fcf344ce2ac531e05817abdf",
+  "code_files": {
+    "scripts/vnext/annual_evidence.py": "aee386ab6ad697fd39b3ef56950029ef7b94149762f3853eef044e8cadc14c80",
+    "scripts/vnext/annual_regression.py": "14b3231f53da6a791d5723b159fc6b0be532784d4dfa50546ad149b49917df32",
+    "scripts/vnext/annual_regression_synthetic.py": "0db29d185dcfb15ce025e2aa82e7da9f19348e8e8e2d75e15d79127a52a0a95e",
+    "scripts/vnext/evidence.py": "3cd27fcf90e0b432ca48cf7464c276734aef0e6af9ad8fd731bc0cd3ad197b09",
+    "scripts/vnext/reader.py": "20720efd18067ff6ec614a4c25ec84bf6094f544e268fe28cb09f520d3ae8c2b",
+    "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+    "scripts/vnext/scope_contract.py": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1"
+  },
+  "cases": [
+    {
+      "case": "original_raw_rule",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_LABEL_TEXT_MISMATCH"
+      ]
+    },
+    {
+      "case": "original_new_rule",
+      "expected": "PASS",
+      "observed": "PASS",
+      "reason_codes": []
+    },
+    {
+      "case": "existing_correct_label",
+      "expected": "PASS",
+      "observed": "PASS",
+      "reason_codes": []
+    },
+    {
+      "case": "wrong_numeric_value",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "AI_CLAIMED_VALUE_CELL_MISMATCH"
+      ]
+    },
+    {
+      "case": "wrong_unit",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_UNIT_MISMATCH"
+      ]
+    },
+    {
+      "case": "wrong_claim_period",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_CLAIM_PERIOD_MISMATCH"
+      ]
+    },
+    {
+      "case": "wrong_period_column",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "Cell is not a supported numeric claim"
+      ]
+    },
+    {
+      "case": "wrong_table",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "Reader claim locator leaves the target table"
+      ]
+    },
+    {
+      "case": "wrong_origin_geometry",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "LOCATOR_REJECTED:Cell locator span/origin differs"
+      ]
+    },
+    {
+      "case": "wrong_scope_footnote",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_LABEL_TEXT_MISMATCH"
+      ]
+    },
+    {
+      "case": "unknown_scope_alias",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_UNRESOLVED_OR_UNSUPPORTED"
+      ]
+    },
+    {
+      "case": "wrong_operating_scope",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_RAW_VALUE_LOCATOR_MISMATCH"
+      ]
+    },
+    {
+      "case": "different_row_same_label",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_ROW_MISMATCH"
+      ]
+    },
+    {
+      "case": "wrong_region_value",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_ROW_MISMATCH"
+      ]
+    },
+    {
+      "case": "same_numeric_value_wrong_group",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_GROUP_MISMATCH"
+      ]
+    },
+    {
+      "case": "caller_added_whitespace",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_LABEL_TEXT_MISMATCH"
+      ]
+    },
+    {
+      "case": "conflicting_claims",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_UNRESOLVED_OR_UNSUPPORTED"
+      ]
+    },
+    {
+      "case": "wrong_source_identity",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "Candidate SourceReference exact set/order differs"
+      ]
+    },
+    {
+      "case": "synthetic_supported_header",
+      "expected": "PASS",
+      "observed": "PASS",
+      "reason_codes": [],
+      "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+    },
+    {
+      "case": "conflicting_year_header",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+    },
+    {
+      "case": "conflicting_role_header",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+    },
+    {
+      "case": "same_value_prior_year",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_PERIOD_MISMATCH"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+    },
+    {
+      "case": "conflicting_year_with_row_stub",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+    }
+  ],
+  "additional_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "receipt_id": "sha256:ea026dbc4fa16ddefb21206004a89ba2a443a7177bc7303d113123f15f6455de"
+}

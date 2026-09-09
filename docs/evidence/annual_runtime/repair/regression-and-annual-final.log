@@ -1,0 +1,33 @@
+test_old_failure_cannot_be_counted_as_a_repair_attempt (tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_old_failure_cannot_be_counted_as_a_repair_attempt) ... ok
+test_policy_selects_new_requirement_only (tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_policy_selects_new_requirement_only) ... ok
+test_text_generation_preserves_business_and_footnotes (tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_text_generation_preserves_business_and_footnotes) ... ok
+test_unmodified_response_and_business_counterexamples (tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_unmodified_response_and_business_counterexamples) ... ok
+test_ambiguous_and_amended_metadata_fail (tests.vnext.test_annual_input.AnnualInputTest.test_ambiguous_and_amended_metadata_fail) ... ok
+test_historical_annual_progression_uses_distinct_source_periods (tests.vnext.test_annual_input.AnnualInputTest.test_historical_annual_progression_uses_distinct_source_periods) ... ok
+test_missing_original_stops_without_fallback (tests.vnext.test_annual_input.AnnualInputTest.test_missing_original_stops_without_fallback) ... ok
+test_raw_inputs_reach_b01_and_exact_recorded_b10 (tests.vnext.test_annual_input.AnnualInputTest.test_raw_inputs_reach_b01_and_exact_recorded_b10) ... ok
+test_raw_period_contradiction_fails (tests.vnext.test_annual_input.AnnualInputTest.test_raw_period_contradiction_fails) ... ok
+test_unknown_amendment_date_blocks_default_and_explicit_year (tests.vnext.test_annual_input.AnnualInputTest.test_unknown_amendment_date_blocks_default_and_explicit_year) ... ok
+test_unknown_new_annual_date_cannot_fall_back_to_older_year (tests.vnext.test_annual_input.AnnualInputTest.test_unknown_new_annual_date_cannot_fall_back_to_older_year) ... ok
+test_cli_http_failure_stdout_is_one_json_document (tests.vnext.test_annual_update.AnnualUpdateTest.test_cli_http_failure_stdout_is_one_json_document) ... ok
+test_code_head_and_output_location_do_not_define_filing_change (tests.vnext.test_annual_update.AnnualUpdateTest.test_code_head_and_output_location_do_not_define_filing_change) ... ok
+test_conditional_refresh_uses_real_client_and_appends_evidence (tests.vnext.test_annual_update.AnnualUpdateTest.test_conditional_refresh_uses_real_client_and_appends_evidence) ... ok
+test_http_metadata_serialization_failure_keeps_unknown_count (tests.vnext.test_annual_update.AnnualUpdateTest.test_http_metadata_serialization_failure_keeps_unknown_count) ... ok
+test_later_failed_request_and_same_accession_conflict (tests.vnext.test_annual_update.AnnualUpdateTest.test_later_failed_request_and_same_accession_conflict) ... ok
+test_malformed_companyfacts_containers_report_failure (tests.vnext.test_annual_update.AnnualUpdateTest.test_malformed_companyfacts_containers_report_failure) ... ok
+test_metadata_failures_never_report_no_change (tests.vnext.test_annual_update.AnnualUpdateTest.test_metadata_failures_never_report_no_change) ... ok
+test_missing_sources_and_stale_facts_are_not_ready (tests.vnext.test_annual_update.AnnualUpdateTest.test_missing_sources_and_stale_facts_are_not_ready) ... ok
+test_no_change_repeat_download_and_unrelated_filing (tests.vnext.test_annual_update.AnnualUpdateTest.test_no_change_repeat_download_and_unrelated_filing) ... ok
+test_preparation_failure_keeps_baselines_and_repeats_pending (tests.vnext.test_annual_update.AnnualUpdateTest.test_preparation_failure_keeps_baselines_and_repeats_pending) ... ok
+test_real_persistence_conflict_keeps_failure_and_unknown_count (tests.vnext.test_annual_update.AnnualUpdateTest.test_real_persistence_conflict_keeps_failure_and_unknown_count) ... ok
+test_real_saved_old_to_new_prepares_existing_inputs (tests.vnext.test_annual_update.AnnualUpdateTest.test_real_saved_old_to_new_prepares_existing_inputs) ... ok
+test_refresh_bound_failures_stop_without_fallback_or_retry (tests.vnext.test_annual_update.AnnualUpdateTest.test_refresh_bound_failures_stop_without_fallback_or_retry) ... ok
+test_source_tamper_and_failed_baseline_rejected (tests.vnext.test_annual_update.AnnualUpdateTest.test_source_tamper_and_failed_baseline_rejected) ... ok
+test_unknown_form_cannot_hide_a_possible_new_annual (tests.vnext.test_annual_update.AnnualUpdateTest.test_unknown_form_cannot_hide_a_possible_new_annual) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 107.531s
+
+OK
+SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286.json; status=503; error=
+SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286.json; status=503; error=

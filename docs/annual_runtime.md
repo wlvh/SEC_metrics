@@ -4,8 +4,9 @@
 B01 结构化计算、B10 原生模型候选及成功引用接在一起。正常运行使用 Issue #28 上
 真实 owner 的阶段批准记录，不查询开发 PR 状态，也不要求把每份新来源提交 Git。
 
-本阶段限 Marriott B01/B10。已有模型、完整表集合、prompt/schema、MetricSpec、
-Evidence、SYSTEM Review 和 Calculator 的业务语义不变。B01 的原生入口自然附带
+本阶段限 Marriott B01/B10。当前修复版本仅增加明确的B10标签表示与来源归属
+校验，见[修复说明](annual_label_repair.md)。已有模型、完整表集合、prompt/schema、
+MetricSpec、SYSTEM Review 和 Calculator 的业务语义不变。B01 的原生入口自然附带
 其他指标；这些记录保留并列明，不扩大本轮修复责任。
 
 ## 运行入口
@@ -21,7 +22,8 @@ python3 tools/vnext_annual_runtime.py initialize \
 python3 tools/vnext_annual_runtime.py stage-proposal \
   --data-root <absolute-data-root> --stage-root <absolute-stage-root> \
   --baseline-run <existing-successful-FY2024-run> \
-  --review-file <independent-review.json> --output-json <new-stage-proposal.json>
+  --review-file <independent-review.json> --repair-evidence <new-external-regression.json> \
+  --repair-ordinal 1 --output-json <new-stage-proposal.json>
 
 python3 tools/vnext_annual_runtime.py run \
   --approval-url <Issue-28-owner-stage-comment-url> --output-json <new-run-report.json>
@@ -30,7 +32,10 @@ python3 tools/vnext_annual_runtime.py run \
 `stage-proposal` 是可核对的批准草稿，不授予执行能力。真实执行重新读取 GitHub
 owner 评论，验证评论未编辑、Issue/作者/正文及受审代码、政策和目录绑定。
 批准明确标记为用户委托的条件式阶段批准，不声称用户逐字审阅了未来提交。
-每份输入自动形成精确计划；年度、accession、正确数值或表格位置不进入许可。
+每份输入自动形成精确计划；调用者不输入正确年度、accession、数值或表格位置
+来选择答案。本次修复许可由程序绑定实际发现的输入与精确请求，不能借此切换
+未受审来源。修复回归先由 `tools/check_annual_label_repair.py --output <new-file>`
+生成；stage-root须为预算委托目录下的 `stages/1`（第二次需另满足修复条件）。
 
 源代码必须保持干净，实际 runtime 文件集合与受审代码逐字节一致。后续仅增加
 交付证据的提交或 merge，可以保持同一个 runtime tree；报告同时给出受审提交和
@@ -40,9 +45,10 @@ owner 评论，验证评论未编辑、Issue/作者/正文及受审代码、政�
 
 ## 本阶段许可与输出
 
-整个阶段累计 SEC=0，provider/paid 至多1/1，retry=0。阶段开始执行前用独占文件
-永久保留这一额度；换年度、计划、head、目录或进程均不会复位。HTTP失败、内容
-失败、UNKNOWN、usage缺失/矛盾或实际输入超过200000均停止真实请求。usage是
+原阶段1/1/0已消费并保持失败。用户补充修复委托新增最多2/2/0，总计最多3/3/0；
+每个具体修复阶段最多1/1/0、retry=0，第二次需新的已修正问题及回归/独立复核。
+固定预算目录和永久名额防止换年度、计划、head、目录或进程复位。HTTP失败、内容
+失败、UNKNOWN、usage缺失/矛盾或实际输入超过200000均停止该真实执行。usage是
 执行后的接受条件，估算值不能代替 provider 实际报告值。
 
 输出分别展示发现的申报、隔离测试的旧成功候选、新候选和当前正式结果。当前
@@ -60,14 +66,22 @@ rollback/restore验收；不另造两指标发布包。其余15指标、WB-7和�
 
 ## 验证范围
 
-`tests/vnext/test_annual_runtime.py` 只模拟 GitHub 和 provider HTTP 返回，禁用全部
+当前 `tests/vnext/test_annual_repair.py`（原阶段记录见 `test_annual_runtime.py`）
+只模拟 GitHub 和 provider HTTP 返回，禁用全部
 真实 socket。它执行真实新许可校验、输入解析、WB-3、Evidence、SYSTEM Review、
 Calculator和原生重验。模拟审阅和历史answer封装只证明连接行为，不能充当独立
 代码审阅或新模型反馈。真实运行结果、调用数和提交身份以最终交付证据为准。
 
 <!-- capability-anchor: CAPABILITY.marriott_annual_candidate_runtime -->
 
-## 本次交付状态
+## 当前修复交付
+
+一次新增真实请求完成B01/B10候选更新，随后同输入零调用重入；新请求1/1/0，
+加原失败累计2/2/0。受审与执行代码同为 `bb7e3f3`，原文和原生记录独立核对通过。
+全部原始失败、调用和新候选证据见[修复交付](evidence/annual_runtime/repair/README.md)。
+PR38继续Draft，等待用户最终审核；没有正式发布或自动合并。
+
+## 原阶段失败记录（修复之前，按原身份保留）
 
 **本阶段真实验证失败，PR38继续Draft、未合并。** 本次唯一新响应已真实执行，
 B01生成成功候选，B10在原生证据门失败；不能把部分成功写成整年更新成功。

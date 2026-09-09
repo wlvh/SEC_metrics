@@ -1,0 +1,459 @@
+{
+  "decision": "AUTHORIZE_ANNUAL_RUNTIME_STAGE",
+  "approval_kind": "USER_DELEGATED_CONDITIONAL_STAGE_APPROVAL",
+  "delegation_source": "codex-task:01a081bb-9220-7de3-a311-b481906b3146",
+  "statement": "Recorded by Codex under the user stage delegation after independent code review; not a claim that the user personally reviewed this future head.",
+  "requirement_id": "issue_28_v6",
+  "requirement_closure_hash": "sha256:ae514fce489eaef055e4c2c38d915d00954ef38734c9550cb5a433e83ec644de",
+  "reviewed_code": {
+    "exact_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+    "runtime_tree": "sha256:9e4552a242f7ce9af14d36dcbe1aa1e46ca42005d7234f680e844bcd1310c113"
+  },
+  "independent_review": {
+    "record_type": "INDEPENDENT_ANNUAL_REPAIR_CODE_REVIEW",
+    "schema_version": 1,
+    "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+    "conclusion": "NO_BLOCKING_FINDINGS",
+    "reviewed_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+    "runtime_tree": "sha256:9e4552a242f7ce9af14d36dcbe1aa1e46ca42005d7234f680e844bcd1310c113",
+    "repair_regression_id": "sha256:ea026dbc4fa16ddefb21206004a89ba2a443a7177bc7303d113123f15f6455de",
+    "root_cause": "The retained raw-only ordinary B10 label rule rejected the source cell text representation solely because the parser raw_text contains a leading LF. The original native checker also did not bind same-table scope labels to the selected numeric row, nearest group, or actual year column. The repair accepts only the verified same-cell raw_text or text and adds bounded deterministic row, group, column, period and unit ownership; no source search or response rewrite.",
+    "necessity_and_business_counterexamples_reviewed": true,
+    "reviewed_at_utc": "2026-09-09T05:36:39.758933+00:00",
+    "review_source": {
+      "kind": "ACTUAL_CODEX_COLLABORATION_SUBTASK_REVIEW",
+      "subtask_identity": "/root/runtime_boundary_review",
+      "parent_task_identity": "/root",
+      "codex_task": "01a081bb-9220-7de3-a311-b481906b3146",
+      "description": "Independent reviewer inspected actual code and diffs, reproduced counterexamples and verified corrections in this subtask. This is not a claim of human review or a GitHub approval."
+    },
+    "scope": "Bounded PR38 ordinary B10 label/source-ownership repair and additional execution budget. Final delta review checks immutable attempt and terminal consistency over prior focused reviews.",
+    "findings_resolved": [
+      "Conflicting later year or metric headers cannot borrow an earlier matching header.",
+      "Second repair eligibility binds the actual first-stage owner approval, exact plan, both permanent slots, invocation, marker, derived execution identity and terminal.",
+      "Runtime regression verification enforces the fixed expected outcomes.",
+      "Second repair eligibility uses the native receipt loader to compare the independent saved attempt, requires a failed attempt matching the failed execution, a nonempty error and no successful response receipt."
+    ],
+    "independent_validation": {
+      "business_regression_independently_executed_at_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+      "business_regression_case_count": 23,
+      "business_regression_all_expected_outcomes_matched": true,
+      "regression_source_and_code_bindings_revalidated_at_final_head": true,
+      "original_raw_rule_still_rejects_unmodified_old_failure": true,
+      "original_response_new_policy_acceptance_is_offline_only": true,
+      "independent_conflicting_header_rejected": "ANNUAL_VALUE_HEADER_AMBIGUOUS",
+      "fixed_expected_matrix_tamper_rejected": "REPAIR_REGRESSION_STALE_OR_FAILED",
+      "native_loader_accepted_untouched_copied_historical_execution": true,
+      "native_loader_rejected_modified_independent_attempt_copy": "Attempt receipt bytes differ",
+      "final_checkout_clean_and_identity_stable": true
+    },
+    "additional_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "qualification_credit": "NONE",
+    "publication_credit": "NONE",
+    "merge_authorized": false,
+    "limitations": [
+      "This is independent code and counterexample review, not real provider acceptance.",
+      "The parent agent is rerunning complete native simulated pipeline tests including the final negative cases; this record does not claim the reviewer reran those long tests.",
+      "Each additional real execution still requires its exact reviewed input/request approval and bounded budget checks; this review itself does not issue a provider grant.",
+      "No original source, model response, historical Run, formal active pointer or repository file was changed by this review."
+    ]
+  },
+  "independent_review_sha256": "51ff817d66823785d049cf9d82f1c0e88b8aafb6dee979fee76108e5bba04aba",
+  "stage_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1",
+  "data_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/data-reviewed",
+  "initial_candidate": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "primary_document": "mar-20241231.htm"
+    },
+    "primary_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+    "metric_id": "B10",
+    "result_id": "sha256:0ce634fe86af4451ec080b7a9c7b035cd9590790d6c5d31fa8b54f10fad65b7c",
+    "run_id": "run:qualification:table:6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d",
+    "run_status": "FROZEN",
+    "provenance": {
+      "kind": "RECORDED_CANDIDATE_RESULT_LINKS",
+      "run_directory": "/Users/lyuhongwang/Developer/SEC_metrics/artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d",
+      "qualification_credit": "NONE",
+      "publication_credit": "NONE"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "0e829488b6489703cd04505634bdecba6750fa7ab74a293a95a8858b6b53984a",
+    "records_sha256": "7ee75c3f86c6b45f99146d1d32e24a77f1cda8c52e2c913f28db83b27fbe4d99",
+    "reviews_sha256": "44aed986fe88c174a673447230243557d445249494c81b716d585f0bb0694616"
+  },
+  "baseline_mode": "ISOLATED_HISTORICAL_START_NOT_PRODUCTION",
+  "policy": {
+    "kind": "ANNUAL_CANDIDATE_REPAIR_POLICY",
+    "company_id": "marriott_international",
+    "metric_id": "B10",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "source_policy": "ANNUAL_INPUT_CONTINUOUS_PRIMARY_CALENDAR_UNAMENDED_CURRENT_BLOCK",
+    "source_proof": "IMMUTABLE_SEC_REQUEST_ATTEMPT",
+    "request_scope": "COMPLETE_DOCUMENT_TABLES_IN_ORIGINAL_ORDER",
+    "automatic_retry_count": 0,
+    "actual_input_tokens_max": 200000,
+    "context_acceptance": "REVIEWED_CODE_POLICY_WITH_CURRENT_TERMINAL_USAGE",
+    "estimated_context_override": "NONE_MODEL_LIMIT_AND_PAYLOAD_LIMIT_RETAINED",
+    "missing_inconsistent_or_excess_usage": "FAIL_AND_STOP",
+    "unknown_or_failure": "NO_NEW_EXECUTION",
+    "successful_reentry": "READ_SAVED_RUN_ONLY",
+    "historical_response_reuse": false,
+    "measurement_calls": 0,
+    "qualification_credit": "NONE",
+    "publication_credit": "NONE",
+    "sec_calls": 0,
+    "reader_compatibility": "UNCHANGED_READER_FILES_ONLY_CONTROL_WIRING_DOES_NOT_RECERTIFY_HISTORY",
+    "metric_ids": [
+      "B01",
+      "B10"
+    ],
+    "maximum_new_executions_per_stage": 1,
+    "authorization": "DELEGATED_STAGE_APPROVAL_AFTER_INDEPENDENT_CODE_REVIEW",
+    "open_pr_required": false,
+    "input_git_commit_required": false,
+    "code_identity": "CLEAN_CHECKOUT_REVIEWED_RUNTIME_TREE",
+    "data_identity": "VERIFIED_AUTHORITY_COPY_AND_IMMUTABLE_SEC_ATTEMPTS",
+    "stage_counter": "PERMANENT_EXCLUSIVE_SLOT_AT_APPROVED_STAGE_ROOT",
+    "new_year_policy_revision_required": false,
+    "repair_budget_delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5595412960",
+    "maximum_additional_executions": 2,
+    "maximum_total_executions": 3,
+    "merge_authorized": false,
+    "label_comparison": {
+      "policy": "EXACT_SOURCE_RAW_OR_TEXT_V2",
+      "accepted_cell_fields": [
+        "raw_text",
+        "text"
+      ],
+      "authoritative_cell_field": "raw_text",
+      "caption_policy": "EXACT_RAW_TEXT_V1",
+      "response_rewrite_allowed": false,
+      "fuzzy_matching_or_locator_search_allowed": false
+    },
+    "source_ownership": {
+      "row_dimensions": [
+        "geography"
+      ],
+      "group_dimensions": [
+        "property_population",
+        "operating_scope"
+      ],
+      "group_rule": "NEAREST_PRECEDING_SINGLE_NONEMPTY_ORIGIN_ROW_IN_LABEL_COLUMN",
+      "metric_header": "EXACT_TASK_ROLE_CASEFOLD",
+      "period_header": "EXACT_RUN_FISCAL_YEAR",
+      "reported_unit": "percent",
+      "visible_unit": "%"
+    }
+  },
+  "maximum_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "automatic_retry_count": 0,
+  "publication_authorized": false,
+  "long_running_schedule_authorized": false,
+  "repair": {
+    "ordinal": 1,
+    "delegation_comment": {
+      "url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/comments/5595412960",
+      "html_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5595412960",
+      "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/28",
+      "id": 5595412960,
+      "node_id": "IC_kwDOTRXl_M8AAAABTYM54A",
+      "user": {
+        "login": "wlvh",
+        "id": 30534800,
+        "node_id": "MDQ6VXNlcjMwNTM0ODAw",
+        "avatar_url": "https://avatars.githubusercontent.com/u/30534800?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/wlvh",
+        "html_url": "https://github.com/wlvh",
+        "followers_url": "https://api.github.com/users/wlvh/followers",
+        "following_url": "https://api.github.com/users/wlvh/following{/other_user}",
+        "gists_url": "https://api.github.com/users/wlvh/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/wlvh/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/wlvh/subscriptions",
+        "organizations_url": "https://api.github.com/users/wlvh/orgs",
+        "repos_url": "https://api.github.com/users/wlvh/repos",
+        "events_url": "https://api.github.com/users/wlvh/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/wlvh/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "created_at": "2026-09-09T03:38:41Z",
+      "updated_at": "2026-09-09T03:38:41Z",
+      "author_association": "OWNER",
+      "body": "{\n  \"record_type\": \"ANNUAL_REPAIR_BUDGET_DELEGATION\",\n  \"approval_kind\": \"USER_DELEGATED_POLICY_AND_BUDGET_ONLY\",\n  \"source\": \"codex-task:01a081bb-9220-7de3-a311-b481906b3146\",\n  \"purpose\": \"PR38 bounded B10 label representation repair; independent reviewed exact-request approval required before each new execution.\",\n  \"budget_root\": \"/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget\",\n  \"original_stage_id\": \"sha256:f509fae1fbbcedff1b2e406afe84d8e507a5a4477927d37467bd5d9c56670bf0\",\n  \"original_stage_root\": \"/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/stage\",\n  \"original_stage_approval_url\": \"https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5588519734\",\n  \"maximum_additional_provider_paid_sec_calls\": [\n    2,\n    2,\n    0\n  ],\n  \"maximum_total_provider_paid_sec_calls\": [\n    3,\n    3,\n    0\n  ],\n  \"automatic_retry_count\": 0,\n  \"original_failure_credit\": \"NONE\",\n  \"execution_authorized_by_this_record\": false,\n  \"per_request_requirements\": [\n    \"Root cause documented\",\n    \"Actual in-scope code repair\",\n    \"Positive and negative offline regression passed\",\n    \"Independent model code review passed\",\n    \"Exact reviewed code, policy and request binding\"\n  ],\n  \"second_request_condition\": \"Only after first repair attempt exposes a new in-scope problem, a new actual code correction and new passed regression/review; no unchanged reroll.\",\n  \"unknown_or_uncertain_count\": \"STOP_FURTHER_REAL_REQUESTS\",\n  \"formal_publication_authorized\": false,\n  \"merge_authorized\": false\n}\n",
+      "reactions": {
+        "url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/comments/5595412960/reactions",
+        "total_count": 0,
+        "+1": 0,
+        "-1": 0,
+        "laugh": 0,
+        "hooray": 0,
+        "confused": 0,
+        "heart": 0,
+        "rocket": 0,
+        "eyes": 0
+      },
+      "performed_via_github_app": null,
+      "minimized": null,
+      "pin": null
+    },
+    "regression_receipt": {
+      "record_type": "ANNUAL_REPAIR_REGRESSION",
+      "schema_version": 1,
+      "requirement_id": "issue_28_v6",
+      "status": "PASS",
+      "evidence_scope": "OFFLINE_UNMODIFIED_ORIGINAL_RESPONSE_AND_NEGATIVES_NO_RUN_CREDIT",
+      "original_response_sha256": "aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb",
+      "original_records_sha256": "b27785715111a96b4ff76f781cee70eb0a6997782d4d6e35cde5e6fd133ccf03",
+      "historical_correct_response_sha256": "5264b703b76a86e0d19d0cb776570abd5d40e684fcf344ce2ac531e05817abdf",
+      "code_files": {
+        "scripts/vnext/annual_evidence.py": "aee386ab6ad697fd39b3ef56950029ef7b94149762f3853eef044e8cadc14c80",
+        "scripts/vnext/annual_regression.py": "14b3231f53da6a791d5723b159fc6b0be532784d4dfa50546ad149b49917df32",
+        "scripts/vnext/annual_regression_synthetic.py": "0db29d185dcfb15ce025e2aa82e7da9f19348e8e8e2d75e15d79127a52a0a95e",
+        "scripts/vnext/evidence.py": "3cd27fcf90e0b432ca48cf7464c276734aef0e6af9ad8fd731bc0cd3ad197b09",
+        "scripts/vnext/reader.py": "20720efd18067ff6ec614a4c25ec84bf6094f544e268fe28cb09f520d3ae8c2b",
+        "scripts/vnext/table_grid.py": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+        "scripts/vnext/scope_contract.py": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1"
+      },
+      "cases": [
+        {
+          "case": "original_raw_rule",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "SCOPE_LABEL_TEXT_MISMATCH"
+          ]
+        },
+        {
+          "case": "original_new_rule",
+          "expected": "PASS",
+          "observed": "PASS",
+          "reason_codes": []
+        },
+        {
+          "case": "existing_correct_label",
+          "expected": "PASS",
+          "observed": "PASS",
+          "reason_codes": []
+        },
+        {
+          "case": "wrong_numeric_value",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "AI_CLAIMED_VALUE_CELL_MISMATCH"
+          ]
+        },
+        {
+          "case": "wrong_unit",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_UNIT_MISMATCH"
+          ]
+        },
+        {
+          "case": "wrong_claim_period",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_CLAIM_PERIOD_MISMATCH"
+          ]
+        },
+        {
+          "case": "wrong_period_column",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "Cell is not a supported numeric claim"
+          ]
+        },
+        {
+          "case": "wrong_table",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "Reader claim locator leaves the target table"
+          ]
+        },
+        {
+          "case": "wrong_origin_geometry",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "LOCATOR_REJECTED:Cell locator span/origin differs"
+          ]
+        },
+        {
+          "case": "wrong_scope_footnote",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "SCOPE_LABEL_TEXT_MISMATCH"
+          ]
+        },
+        {
+          "case": "unknown_scope_alias",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_SCOPE_UNRESOLVED_OR_UNSUPPORTED"
+          ]
+        },
+        {
+          "case": "wrong_operating_scope",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "SCOPE_RAW_VALUE_LOCATOR_MISMATCH"
+          ]
+        },
+        {
+          "case": "different_row_same_label",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_SCOPE_VALUE_ROW_MISMATCH"
+          ]
+        },
+        {
+          "case": "wrong_region_value",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_SCOPE_VALUE_ROW_MISMATCH"
+          ]
+        },
+        {
+          "case": "same_numeric_value_wrong_group",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_SCOPE_VALUE_GROUP_MISMATCH"
+          ]
+        },
+        {
+          "case": "caller_added_whitespace",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "SCOPE_LABEL_TEXT_MISMATCH"
+          ]
+        },
+        {
+          "case": "conflicting_claims",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_SCOPE_UNRESOLVED_OR_UNSUPPORTED"
+          ]
+        },
+        {
+          "case": "wrong_source_identity",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "Candidate SourceReference exact set/order differs"
+          ]
+        },
+        {
+          "case": "synthetic_supported_header",
+          "expected": "PASS",
+          "observed": "PASS",
+          "reason_codes": [],
+          "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+        },
+        {
+          "case": "conflicting_year_header",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+          ],
+          "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+        },
+        {
+          "case": "conflicting_role_header",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+          ],
+          "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+        },
+        {
+          "case": "same_value_prior_year",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_VALUE_HEADER_PERIOD_MISMATCH"
+          ],
+          "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+        },
+        {
+          "case": "conflicting_year_with_row_stub",
+          "expected": "REJECTED",
+          "observed": "REJECTED",
+          "reason_codes": [
+            "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+          ],
+          "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_OR_RUN_CREDIT"
+        }
+      ],
+      "additional_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "receipt_id": "sha256:ea026dbc4fa16ddefb21206004a89ba2a443a7177bc7303d113123f15f6455de"
+    },
+    "root_cause": "The retained raw-only ordinary B10 label rule rejected the source cell text representation solely because the parser raw_text contains a leading LF. The original native checker also did not bind same-table scope labels to the selected numeric row, nearest group, or actual year column. The repair accepts only the verified same-cell raw_text or text and adds bounded deterministic row, group, column, period and unit ownership; no source search or response rewrite.",
+    "previous_failure_execution_id": null,
+    "new_failure_fixed": false
+  },
+  "reviewed_input_request": {
+    "input_id": "sha256:ea7fc372dd6562a6b2f7d89c5e77b473ae48ffd5b24f12aee708eb7196fc38b8",
+    "request": {
+      "source_reference": {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+      },
+      "reader_input_manifest_id": "sha256:a850c91569998465b7e45d26a7919bb92ec1e2d8695dc39f3333fb31e718efe4",
+      "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+      "table_count": 68,
+      "reader_request_sha256": "117c2935cb68ed77f64eb597da1e5beed7f096cb40a82cdcb7cfa7e89eaf950f",
+      "provider_request_body_sha256": "93678dcb57574234ba51fc5af975a2f315724284dbefacd82f1e8eef83f36c14",
+      "provider_request_bytes": 395905,
+      "output_schema_sha256": "a258d219eae2bb7afb5a9632fc04f5423b1ac398b592d6d49c107e3d75fd4ad9",
+      "estimated_context_tokens": 395905,
+      "maximum_payload_bytes": 8388608,
+      "model_context_tokens_max": 1000000,
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
+      "api": "chat_completions"
+    }
+  },
+  "stage_id": "sha256:8af69d5a2d6bfedef3768f0ec57ded2a049c1c030ded0b2bc3e4e78447981902"
+}
