@@ -1,0 +1,24 @@
+{
+  "record_type": "EVIDENCE_CHECK",
+  "evidence_check_id": "sha256:a171bbd61d18c66184be5f3dfe3abb30024ed96ec34b207afd6db997e13a10dc",
+  "candidate_hash": "sha256:e2bb71da2d7531142640167d436e1a323911661dee32580a95da9d27400f207d",
+  "status": "REJECTED",
+  "normalized_values": {},
+  "checks": [
+    {
+      "check": "SOURCE_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "READER_TABLE_EXACT_SET",
+      "status": "PASS"
+    }
+  ],
+  "reason_codes": [
+    "SCOPE_LABEL_TEXT_MISMATCH"
+  ],
+  "identity_constraints": [],
+  "normalized_scope": {},
+  "unresolved_scope_dimensions": [],
+  "system_approval_eligible": false
+}

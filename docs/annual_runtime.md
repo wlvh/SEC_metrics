@@ -69,20 +69,52 @@ Calculator和原生重验。模拟审阅和历史answer封装只证明连接行�
 
 ## 本次交付状态
 
-受审代码为 `0a764b9dfd9976ec28a4ba9782229c5dbcf93306`。独立代码审阅与增量
-保护检查通过，现有fast 32入口和年度输入/变化检查22项通过。新runtime的完整
-模拟链、失败保留、新进程去重等5项通过；来源篡改用例因测试捕获了错误异常类型
-曾ERROR，随后用精确原生异常重跑通过，并新增缺key/adapter混用两项PASS。
-最终guard之外的长场景没有重跑为“一次最终head全套PASS”；准确命令、head和
-日志见 `docs/evidence/annual_runtime/verification.json`。
+**本阶段真实验证失败，PR38继续Draft、未合并。** 本次唯一新响应已真实执行，
+B01生成成功候选，B10在原生证据门失败；不能把部分成功写成整年更新成功。
+
+受审代码为 `0a764b9dfd9976ec28a4ba9782229c5dbcf93306`，实际执行head为
+`d196e49dbda6cfe341772a05f15c669d7efadb3d`，运行代码相同。独立代码审阅通过；
+此前fast 32入口、年度输入/变化检查22项通过。新runtime完整模拟链等5项通过；
+来源篡改测试捕获异常类型的错误已修正并重跑通过，另有缺key/adapter混用两项
+PASS。准确命令、head和重跑范围保留在原`verification.json`检查点，不改写成
+一次最终head全套PASS。
 
 [本次委托阶段批准](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5588519734)
-已绑定代码、政策和累计1/1/0上限。在尚无本分支PR时，真实GitHub批准核对和原始
-FY2025输入准备已进入同一 `run` 命令，但因执行环境缺少DeepSeek key，以
-`STAGE_BLOCKED / DEEPSEEK_API_KEY_REQUIRED`停止。真实provider/paid/SEC均为0，
-永久执行名额未消费，没有新候选，也没有声称完成真实端到端更新。
+最初在本分支尚无PR时，已由真实GitHub核对进入正常run入口并准备FY2025输入；
+缺key的初次preflight当时没有消耗执行名额。用户随后提供凭据，沿同一批准继续，
+没有新增政策或逐输入批准。实际运行命令：
 
-原始FY2024 B01/B10与当前正式FY2025的来源、期间和完整Result对照见
-`docs/evidence/annual_runtime/candidate-comparison.json`。35项正式root/ledger
-文件与阶段开始及基线main逐字节一致。真实新响应、原文核对、合并/main同步仍
-待凭据解决和其余条件通过；不是新的权限批准问题。
+```bash
+python3 tools/vnext_annual_runtime.py run \
+  --approval-url https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5588519734 \
+  --output-json /Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/live-run.json
+```
+
+本次HTTP200，provider/paid/SEC=`1/1/0`，retry=0，actual usage为
+161707 input + 580 output = 162287 total；输入未超过200000。程序给出
+`CANDIDATE_UPDATE_FAILED`。B01原生候选为26186000000 USD；B10新响应给出69.3%，
+但范围标签遗漏原格raw_text开头的换行：
+
+| 字段 | 原始固定表示 | 模型返回 |
+|---|---|---|
+| Worldwide范围标签 | `"\nWorldwide (2)"` | `"Worldwide (2)"` |
+
+离线原生Evidence重建返回`REJECTED / SCOPE_LABEL_TEXT_MISMATCH`。独立原文核对
+确认正确表格、2025列、Worldwide范围和69.3%，但本次没有B10 Result或Review，
+成功引用未推进。仅在隔离诊断副本补回该换行后，原生检查通过；这不修改原响应、
+不创建新Run、不提供成功/资格/发布信用。模型、prompt、schema和Evidence规则均未修改。
+
+失败后再次运行同一输入返回`STAGE_STOPPED / RUNTIME_STAGE_ALREADY_CONSUMED`，
+新增调用0/0/0，阶段累计仍1/1/0。名额已消费，不能通过换head、目录或计划补一次。
+35项正式root/ledger及原FY2024成功记录均未变化，正式R3仍是原FY2025结果。
+
+[本次真实运行证据](evidence/annual_runtime/live/live-verification.json)、
+[新旧与正式对照](evidence/annual_runtime/live/candidate-comparison-after-live.json)和
+[独立原文核对](evidence/annual_runtime/live/source-audit-independent.json)均已提交。
+同目录`native-candidate/`是原生Run/controller/请求/响应的逐字节审计副本，
+`live-native-manifest.json`列出原目录与全部文件hash；副本不是新的执行根或批准。
+原目录保留在外部阶段workspace，没有覆盖历史成功。
+
+本阶段“新B01/B10均成功”的真实验收条件未达到，因此不自动合并/main同步。
+没有继续provider/SEC调用、改提示词或放宽校验。正式发布接入、其余15指标、
+WB-7和旧路径退出仍保留后续责任，不在本轮展开。
