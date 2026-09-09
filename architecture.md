@@ -1,5 +1,32 @@
 # SEC_metrics 架构说明
 
+### 普通 B10 标签表示与来源归属修复
+
+`annual_evidence`在新issue_28_v6/V7政策下复用既有同格raw_text/text比较，
+并约束数值与范围标签的原始行、分组及指标/期间列归属；不改原始响应或Spec。
+controller、workflow与Run replay使用同一政策选择，旧版本仍raw-only。
+`annual_repair_budget`在现有annual_runtime/WB-3之前增加固定委托目录的两个
+永久修复名额，连同原失败最多3/3/0；第二次要求已修正的新问题，零自动重试。
+见 `docs/annual_label_repair.md` 的有界布局、不变事实和执行步骤。
+
+<!-- capability-anchor: CAPABILITY.annual_b10_label_repair -->
+
+### 固定代码版本的年度候选运行
+
+`annual_runtime` 复用 `annual_update`、`annual_input` 与现有原生 Run/调用控制，
+在新 `issue_28_v5` / V6 薄政策下增加阶段许可及代码/数据身份核对。
+旧 `annual_candidate` 和 V1–V5 engine 字节保持不变；`candidate_permission` 按
+实际 opaque 类型分派。新请求包装只携带经重验的来源根，原 provider opener、
+Reader、Evidence、Review与Calculator保持既有语义。
+
+外部数据根保存逐字节核对的规则副本和请求证据，Python只从原checkout执行。
+每输入形成绑定ledger快照和原始body/header的计划，Run读取自己的固定快照。
+阶段许可由真实owner Issue评论绑定受审代码、政策和固定目录，独占额度文件
+贯穿所有输入/进程。成功引用必须原生重验B01/B10，失败不推进成功引用。
+隔离FY2024起点和正式FY2025对照明确分开。入口与限制见 `docs/annual_runtime.md`。
+
+<!-- capability-anchor: CAPABILITY.marriott_annual_candidate_runtime -->
+
 本文档描述当前SEC-only单财年批处理、已正式发布到R3的Issue #15 ratchet、后续vNext Cutover与full acquisition/inventory编排。它严格区分R3 partial active、后续未完成scope与full acceptance。
 
 本文档不负责：

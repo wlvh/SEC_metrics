@@ -1,0 +1,119 @@
+{
+  "status": "LIVE_FAILED_OFFLINE_DIAGNOSIS_COMPLETE",
+  "original_evidence": {
+    "record_type": "EVIDENCE_CHECK",
+    "evidence_check_id": "sha256:a171bbd61d18c66184be5f3dfe3abb30024ed96ec34b207afd6db997e13a10dc",
+    "candidate_hash": "sha256:e2bb71da2d7531142640167d436e1a323911661dee32580a95da9d27400f207d",
+    "status": "REJECTED",
+    "normalized_values": {},
+    "checks": [
+      {
+        "check": "SOURCE_BINDINGS",
+        "status": "PASS"
+      },
+      {
+        "check": "READER_TABLE_EXACT_SET",
+        "status": "PASS"
+      }
+    ],
+    "reason_codes": [
+      "SCOPE_LABEL_TEXT_MISMATCH"
+    ],
+    "identity_constraints": [],
+    "normalized_scope": {},
+    "unresolved_scope_dimensions": [],
+    "system_approval_eligible": false
+  },
+  "scope_text_comparison": [
+    {
+      "id": "scope_evidence_1",
+      "locator": {
+        "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+        "table_id": "table_000011",
+        "row_index": 18,
+        "column_index": 0,
+        "origin_row_index": 18,
+        "origin_column_index": 0,
+        "rowspan": 1,
+        "colspan": 3
+      },
+      "response_raw_text": "Comparable Systemwide Properties",
+      "source_raw_text": "Comparable Systemwide Properties",
+      "source_normalized_text": "Comparable Systemwide Properties",
+      "exact_match": true
+    },
+    {
+      "id": "scope_evidence_2",
+      "locator": {
+        "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+        "table_id": "table_000011",
+        "row_index": 26,
+        "column_index": 0,
+        "origin_row_index": 26,
+        "origin_column_index": 0,
+        "rowspan": 1,
+        "colspan": 3
+      },
+      "response_raw_text": "Worldwide (2)",
+      "source_raw_text": "\nWorldwide (2)",
+      "source_normalized_text": "Worldwide (2)",
+      "exact_match": false
+    }
+  ],
+  "counterfactual": {
+    "scope": "DIAGNOSTIC_ONLY_NOT_A_PROVIDER_RESPONSE_OR_CANDIDATE",
+    "change": "Replace only mismatching scope raw_text with exact same-cell source raw_text",
+    "evidence_status": "PASS",
+    "qualification_credit": "NONE",
+    "publication_credit": "NONE",
+    "native_run_created": false,
+    "original_response_or_records_modified": false
+  },
+  "provider_request_id": "06d99bd9-eb2d-4829-a0ae-f5afab5c56de",
+  "raw_response_sha256": "ef9467d74bb8bb33e02d742b15e6e221f25b813c0f29ed5a7c7d008289e842f9",
+  "assistant_output_sha256": "aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb",
+  "usage": {
+    "prompt_tokens": 161707,
+    "completion_tokens": 580,
+    "total_tokens": 162287,
+    "prompt_tokens_details": {
+      "cached_tokens": 161664
+    },
+    "prompt_cache_hit_tokens": 161664,
+    "prompt_cache_miss_tokens": 43
+  },
+  "new_b10_result_count": 0,
+  "new_success_reference_exists": false,
+  "b01": {
+    "applicability": "APPLICABLE",
+    "company_id": "marriott_international",
+    "metric_id": "B01",
+    "period_end": "2025-12-31",
+    "period_start": "2025-01-01",
+    "publication": "PUBLISHED",
+    "quality": "EXACT",
+    "reason_code": "PASS",
+    "record_type": "METRIC_RESULT",
+    "result_id": "sha256:3e637913536d24349f51c6525c3061c8a2969bb89013ccddb000736c3cc4dba5",
+    "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+    "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+    "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+    "unit": "USD",
+    "value": "26186000000"
+  },
+  "real_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "additional_diagnostic_calls": [
+    0,
+    0,
+    0
+  ],
+  "run_records_sha256": "b27785715111a96b4ff76f781cee70eb0a6997782d4d6e35cde5e6fd133ccf03",
+  "execution_code": {
+    "exact_head": "d196e49dbda6cfe341772a05f15c669d7efadb3d",
+    "runtime_tree": "sha256:1d67af355a536faac4b33ca14abc80708adbfe4a6d25390ae01e806fc0f98150"
+  }
+}

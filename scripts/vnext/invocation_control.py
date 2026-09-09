@@ -278,6 +278,10 @@ def _prepare_successor_invocation_authority_from_requirement(
 def prepare_annual_candidate_invocation_authority(*, requirement, repo_root):
     """Use the same successor controller policy shape for the ordinary kind."""
     from .requirement_profile_v5 import REQUIREMENT_ID, DECISION_ID, candidate_choice
+    if requirement["requirement_id"] == "issue_28_v5":
+        from .requirement_profile_v6 import REQUIREMENT_ID, DECISION_ID, candidate_choice
+    if requirement["requirement_id"] == "issue_28_v6":
+        from .requirement_profile_v7 import REQUIREMENT_ID, DECISION_ID, candidate_choice
     from .requirement_profile import validate_execution_authority, requirement_authority_paths
     from .sources import resolve_repository_file
     if requirement["requirement_id"] != REQUIREMENT_ID or repo_root.resolve() != _REPOSITORY_ROOT:

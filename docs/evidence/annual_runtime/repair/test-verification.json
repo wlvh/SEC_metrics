@@ -1,0 +1,88 @@
+{
+  "tested_code": {
+    "exact_head": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+    "runtime_tree": "sha256:9e4552a242f7ce9af14d36dcbe1aa1e46ca42005d7234f680e844bcd1310c113"
+  },
+  "tests": [
+    {
+      "command": "PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_annual_repair.AnnualRepairRuntimeTest -v",
+      "log": "runtime-tests-3.log",
+      "log_binding": {
+        "sha256": "9a323db4c6fa7a7851ba1b7bb85f6b7685f511b73b618d67ba90b8a2e1bc2d2c",
+        "size": 472
+      },
+      "status": "PASS",
+      "tests_or_fast_entries": 2,
+      "duration_seconds": 522.523
+    },
+    {
+      "command": "PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_annual_repair.AnnualLabelRegressionTest tests.vnext.test_annual_input tests.vnext.test_annual_update -v",
+      "log": "regression-and-annual-final.log",
+      "log_binding": {
+        "sha256": "fc9aff705c34ef48cf20c0a9c72c6be1a9b0ec2b55d1c61359aad012be492e4f",
+        "size": 4575
+      },
+      "status": "PASS",
+      "tests_or_fast_entries": 26,
+      "duration_seconds": 107.531
+    },
+    {
+      "command": "PYTHONPATH=scripts:. python3.9 -m unittest tests.vnext.test_annual_repair.AnnualLabelRegressionTest -v",
+      "log": "python39-label-final.log",
+      "log_binding": {
+        "sha256": "113cc732dc8d0a2ceea38565d89e0845d8e06e3a12a2f0032e1ceeeaadc4ef99",
+        "size": 567
+      },
+      "status": "PASS",
+      "tests_or_fast_entries": 4,
+      "duration_seconds": 47.966
+    },
+    {
+      "command": "python3 tools/run_fast_tests.py",
+      "log": "fast-3.log",
+      "log_binding": {
+        "sha256": "febfc2da7e05ec48915060832e3e9880a20927191fcc958f8faa9ab66d5c20e7",
+        "size": 9922
+      },
+      "status": "PASS",
+      "tests_or_fast_entries": 33,
+      "duration_seconds": 8.63
+    }
+  ],
+  "default_python": "Python 3.14.7",
+  "compatibility_python": "Python 3.9.12",
+  "network_scope": "GitHub/provider boundaries mocked and raw sockets forbidden in native tests; no real SEC/provider calls in offline tests.",
+  "fixed_source_regression": "sha256:ea026dbc4fa16ddefb21206004a89ba2a443a7177bc7303d113123f15f6455de",
+  "fixed_source_case_count": 23,
+  "github_ci": {
+    "headRefOid": "bb7e3f35198c662b9f36dbd433e6fd7b30284526",
+    "isDraft": true,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-09-09T05:35:40Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/wlvh/SEC_metrics/actions/runs/34315467345/job/102350633384",
+        "name": "vNext fast suite",
+        "startedAt": "2026-09-09T05:35:05Z",
+        "status": "COMPLETED",
+        "workflowName": "vNext fast suite"
+      }
+    ]
+  },
+  "not_run": [
+    "Qualification",
+    "Measurement",
+    "Formal Stage12/publication/rollback/restore",
+    "Full acceptance",
+    "Merge/main sync"
+  ],
+  "independent_audit_assembly_note": {
+    "reported_generation_exit_code": 1,
+    "reason": "After all substantive checks and JSON write, a final Python dict versus JSON readback comparison differed because tuple source_headers deserialize as lists.",
+    "independent_reviewer_post_write_recheck": "PASS; reviewer independently re-read and checked saved artifact without changing source, response or candidate.",
+    "root_agent_json_readback": "PASS",
+    "no_additional_real_requests": true
+  }
+}

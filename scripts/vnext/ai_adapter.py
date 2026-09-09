@@ -484,6 +484,7 @@ class InvocationAcceptanceContext:
     reader_manifest: Mapping[str, object]
     reader_payload_body: Mapping[str, object]
     source_references: Tuple[Mapping[str, object], ...]
+    candidate_authorization: Optional[object] = None
 
     def __post_init__(self) -> None:
         """Reject an incomplete or internally divergent acceptance graph."""
@@ -519,6 +520,7 @@ def build_invocation_acceptance_context(
     reader_manifest: Mapping[str, object],
     reader_payload_body: Mapping[str, object],
     source_references: Sequence[Mapping[str, object]],
+    candidate_authorization: Optional[object] = None,
 ) -> InvocationAcceptanceContext:
     """Build one explicit full-Evidence validation input contract.
 
@@ -538,6 +540,7 @@ def build_invocation_acceptance_context(
         reader_manifest=dict(reader_manifest),
         reader_payload_body=dict(reader_payload_body),
         source_references=tuple(dict(value) for value in source_references),
+        candidate_authorization=candidate_authorization,
     )
 
 
@@ -563,7 +566,7 @@ class InvocationControllerContext:
         if not isinstance(self.owner_token, str) or not self.owner_token:
             raise AIAdapterError("Invocation owner token is invalid")
         if self.annual_candidate_authorization is not None:
-            from .annual_candidate import authorization_fields
+            from .candidate_permission import authorization_fields
             fields = authorization_fields(self.annual_candidate_authorization)
             if (self.qualification_usage_policy is not None
                     or self.release_input_plan_id != fields["plan"]["plan_id"]
@@ -2109,6 +2112,8 @@ class _ApprovedTransportAdapter(AIAdapter):
                 invoked transport lacking actual observation facts.
             TransportAttemptError: On an observed transport/policy failure.
         """
+        from .annual_runtime import validate_runtime_request_pair
+        validate_runtime_request_pair(adapter=self, request=prepared_request)
         if egress_capability is not _RESERVATION_OWNER_EGRESS_CAPABILITY:
             raise AIAdapterError("RESERVATION_OWNER_EGRESS_REQUIRED")
         rebuilt_request = _validate_live_prepared_request(
@@ -2333,7 +2338,7 @@ class _InvocationControllerTransport:
             )
         before_socket = None
         if context is not None and context.annual_candidate_authorization is not None:
-            from .annual_candidate import authorization_fields
+            from .candidate_permission import authorization_fields
             def before_socket():
                 fields = authorization_fields(context.annual_candidate_authorization)
                 if (attempt_ordinal != 1 or plan["release_input_plan_id"] != fields["plan"]["plan_id"]
@@ -2626,7 +2631,13 @@ def _controlled_acceptance_validator(
         if set(prepared["task_contract"]) == RUNTIME_TASK_CONTRACT_FIELDS
         else context.compiled_spec["compiled"]["identity_constraints"]
     )
-    evidence = check_evidence(
+    from .annual_evidence import check_annual_evidence
+    from .candidate_permission import authorization_fields
+    annual_fields = (authorization_fields(context.candidate_authorization)
+                     if context.candidate_authorization is not None else None)
+    evidence = check_annual_evidence(
+        requirement=annual_fields["requirement"] if annual_fields else None,
+        target_period=annual_fields["plan"]["prepared_input"]["table_input"]["target_period"] if annual_fields else None,
         candidate=candidate,
         derived_asset=context.derived_asset,
         reader_manifest=context.reader_manifest,
@@ -2697,11 +2708,15 @@ def _execute_controlled_transport(
     acceptance_context: Optional[InvocationAcceptanceContext],
 ) -> TransportResult:
     """Execute the exact live provider envelope through WB-3."""
+    from .annual_runtime import validate_runtime_request_pair
+    validate_runtime_request_pair(adapter=adapter, request=prepared_request)
     context = adapter.invocation_context
     if context is None:
         raise AIAdapterError("Invocation controller context is absent")
     if not isinstance(acceptance_context, InvocationAcceptanceContext):
         raise AIAdapterError("Invocation acceptance context is absent")
+    if acceptance_context.candidate_authorization is not context.annual_candidate_authorization:
+        raise AIAdapterError("Annual acceptance authorization differs from adapter")
     rebuilt_request = _validate_live_prepared_request(
         prepared_request=prepared_request,
     )
@@ -2740,7 +2755,7 @@ def _execute_controlled_transport(
     load_response = load_successful_response
     if context.annual_candidate_authorization is not None:
         from functools import partial
-        from .annual_candidate import authorization_fields
+        from .candidate_permission import authorization_fields
         from .invocation_control import (prepare_annual_candidate_invocation_authority,
             build_successor_ai_invocation_plan, execute_successor_invocation, load_successor_successful_response)
         fields = authorization_fields(context.annual_candidate_authorization)
@@ -2938,7 +2953,7 @@ def build_invocation_controlled_transport_adapter(
 
 def build_annual_candidate_transport_adapter(*, authorization: object) -> AIAdapter:
     """Build the existing transport only from verified ordinary candidate authority."""
-    from .annual_candidate import authorization_fields
+    from .candidate_permission import authorization_fields
     fields = authorization_fields(authorization)
     return _ApprovedTransportAdapter(authority=_ADAPTER_AUTHORITY,
         invocation_context=InvocationControllerContext(
@@ -3036,9 +3051,8 @@ def validate_adapter_repository_authority(
     # physical repository; accepting two caller-composable roots would make
     # an APPROVED decision govern unrelated payload content.
     if workflow_root != authority_root:
-        raise AIAdapterError(
-            "Approved workflow repository authority differs from D-01"
-        )
+        from .annual_runtime import validate_runtime_adapter_root
+        validate_runtime_adapter_root(adapter=adapter, data_root=workflow_root)
     return "LIVE"
 
 
@@ -3156,6 +3170,8 @@ def _validate_live_prepared_request(
         therefore reopens the fixed append-only ledger and immutable artifacts,
         reparses the filing, and reconstructs the complete outbound payload.
     """
+    from .annual_runtime import unwrap_live_request
+    prepared_request, runtime_root = unwrap_live_request(request=prepared_request)
     try:
         fields = live_reader_authority_fields(
             prepared_request=prepared_request,
@@ -3164,7 +3180,7 @@ def _validate_live_prepared_request(
         raise AIAdapterError(
             "Remote Reader requires factory-produced live source authority"
         ) from error
-    repo_root = _REPOSITORY_ROOT
+    repo_root = runtime_root or _REPOSITORY_ROOT
     if not isinstance(repo_root, Path) or repo_root.is_symlink():
         raise AIAdapterError("Live source repository authority is unsafe")
     try:
@@ -3503,6 +3519,8 @@ def run_ai_attempt(
         record, and all exact payload bytes. A schema failure returns ``None``
         for usable output while preserving provider and extracted bytes.
     """
+    from .annual_runtime import validate_runtime_request_pair
+    validate_runtime_request_pair(adapter=adapter, request=prepared_request)
     adapter_implementation = _authorized_adapter_implementation(
         adapter=adapter,
     )

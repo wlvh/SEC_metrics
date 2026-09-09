@@ -1,0 +1,89 @@
+[
+  {
+    "metric_id": "B01",
+    "representation": "PINNED_R3_PUBLIC_ROW_INHERITED_FROM_PRIOR_RELEASE",
+    "public_row": {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "26186000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "FY",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "filed_date": "2026-02-10",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "companyfacts:USD:CY2025",
+      "confidence": "0.95",
+      "notes": "Revenue candidate chain from metric definition."
+    },
+    "source_evidence_rows": [
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B01",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "repo_relative_path": "evidence/companyfacts/CIK0001048286.json",
+        "content_sha256": "8767de512c8459483681137b5e9e5c97d3e16adea30d5345028e0ce75577599d",
+        "accession": "0001048286-26-000007",
+        "document_name": "CIK0001048286.json",
+        "concept_or_section": "Revenues",
+        "context_or_dimension": "companyfacts:USD:CY2025:2025-01-01:2025-12-31",
+        "unit": "USD",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "value_raw": "26186000000",
+        "value_normalized": "26186000000",
+        "evidence_quote": "us-gaap:Revenues unit=USD accn=0001048286-26-000007 filed=2026-02-10",
+        "extraction_method": "companyfacts_direct",
+        "parser_version": "sec_pipeline_v1"
+      }
+    ],
+    "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "verification_scope": "PINNED_PUBLIC_ROW_AND_EVIDENCE_BYTES_NOT_NEW_NATIVE_RESULT_RECERTIFICATION",
+    "bundled_source_bytes_verified": false
+  },
+  {
+    "metric_id": "B10",
+    "result": {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+      "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+      "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+      "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+      "unit": "ratio",
+      "value": "0.693"
+    },
+    "run_id": "run:qualification:table:0799ec7f91b6bc0472fd80c6c655beb90ddd7db583dcd13cae0bfab506e6412c",
+    "source_references": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+      }
+    ],
+    "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "verification_scope": "PINNED_PUBLICATION_BYTES_AND_RESULT_LINKS_NOT_RECERTIFICATION"
+  }
+]

@@ -1,5 +1,20 @@
 # SEC_metrics 用户可观察行为
 
+PR38补充修复使用同格raw_text/text精确比较，并验证标签属于该数值行、分组和
+指标/期间列。布局不受支持、未知范围或错误定位均不能自动放行。原失败保留，
+新修复阶段另存候选；新增最多2/2/0、总计最多3/3/0，第二次禁止原样重抽。
+仍保持Draft并由owner最终审核；入口见 `docs/annual_label_repair.md`。
+
+<!-- capability-anchor: CAPABILITY.annual_b10_label_repair -->
+
+`tools/vnext_annual_runtime.py run` 使用一份受审代码的阶段许可，自动连接年度
+检查、准备和必要候选执行。新来源不需要Git提交或open PR；每次来源与请求仍
+单独验证。报告明确区分隔离历史起点、发现的申报、新候选及正式结果。只有B01
+与B10都成功才推进本地成功引用；重复同一输入不新增模型请求。本阶段限一次
+B10新响应、SEC=0、retry=0；不会更新正式R3。见 `docs/annual_runtime.md`。
+
+<!-- capability-anchor: CAPABILITY.marriott_annual_candidate_runtime -->
+
 `tools/vnext_annual_update.py` 输出本次检查时间、submissions 保存时间和原始请求
 证明，分别列出 `discovered_filing`、`latest_successful_candidate`、
 `current_published`。候选未提供时明确为 `NOT_SUPPLIED`，不表示历史上没有成功候选。

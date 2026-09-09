@@ -1,0 +1,76 @@
+{
+  "status": "LIVE_VALIDATION_FAILED_TERMINAL",
+  "pr": 38,
+  "merge_allowed": false,
+  "reviewed_code": {
+    "exact_head": "0a764b9dfd9976ec28a4ba9782229c5dbcf93306",
+    "runtime_tree": "sha256:1d67af355a536faac4b33ca14abc80708adbfe4a6d25390ae01e806fc0f98150"
+  },
+  "executed_code": {
+    "exact_head": "d196e49dbda6cfe341772a05f15c669d7efadb3d",
+    "runtime_tree": "sha256:1d67af355a536faac4b33ca14abc80708adbfe4a6d25390ae01e806fc0f98150"
+  },
+  "stage_id": "sha256:f509fae1fbbcedff1b2e406afe84d8e507a5a4477927d37467bd5d9c56670bf0",
+  "stage_approval_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5588519734",
+  "stage_slot_consumed": true,
+  "provider_request_id": "06d99bd9-eb2d-4829-a0ae-f5afab5c56de",
+  "actual_usage": {
+    "prompt_tokens": 161707,
+    "completion_tokens": 580,
+    "total_tokens": 162287,
+    "prompt_tokens_details": {
+      "cached_tokens": 161664
+    },
+    "prompt_cache_hit_tokens": 161664,
+    "prompt_cache_miss_tokens": 43
+  },
+  "real_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "automatic_retry_count": 0,
+  "native_stage_status": "CANDIDATE_UPDATE_FAILED",
+  "b01_status": "CANDIDATE_SUCCESS_ONLY",
+  "b10_status": "FAILED_EVIDENCE_NO_RESULT",
+  "reason_codes": [
+    "SCOPE_LABEL_TEXT_MISMATCH"
+  ],
+  "source_label_raw": "\nWorldwide (2)",
+  "response_label_raw": "Worldwide (2)",
+  "same_input_reentry": {
+    "status": "STAGE_STOPPED",
+    "reason": "RUNTIME_STAGE_ALREADY_CONSUMED",
+    "incremental_calls": [
+      0,
+      0,
+      0
+    ],
+    "stage_calls": [
+      1,
+      1,
+      0
+    ]
+  },
+  "counterfactual_scope": "One-character diagnostic copy only; never persisted as a new Run or accepted response. Original terminal remains failed.",
+  "independent_source_audit": "source-audit-independent.json",
+  "formal_r3_changed": false,
+  "protected_file_count": 35,
+  "old_successful_candidate_changed": false,
+  "live_successful_candidate_update_proven": false,
+  "successful_reentry_after_live_success": "NOT_REACHED_BECAUSE_LIVE_B10_FAILED",
+  "continued_actions": [
+    "Offline native Evidence diagnosis",
+    "Independent raw HTML/CompanyFacts/source/ledger audit",
+    "Failure reentry without new calls",
+    "Evidence archival and Draft PR/Issue update"
+  ],
+  "not_performed": [
+    "Additional provider requests",
+    "SEC requests",
+    "Prompt/schema/Reader/Evidence changes",
+    "Qualification/measurement",
+    "Formal publication",
+    "Merge/main sync"
+  ]
+}
