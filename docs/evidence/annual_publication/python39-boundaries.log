@@ -1,0 +1,16 @@
+test_actual_repository_and_unowned_active_roots_are_rejected (tests.vnext.test_annual_publication.AnnualPublicationBoundaryTest) ... ok
+test_annual_manifest_cannot_acquire_formal_credit_or_disguise_type (tests.vnext.test_annual_publication.AnnualPublicationBoundaryTest) ... ok
+test_historical_views_cannot_be_forged_or_sent_to_execution (tests.vnext.test_annual_publication.AnnualPublicationBoundaryTest) ... ok
+test_explicit_identity_and_credit_are_hashed_and_not_legacy_fields (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+test_locked_switch_guards_target_or_active_r4_before_any_intent (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+test_native_envelope_checks_run_before_the_r4_semantic_hook (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+test_plain_mirror_repair_guards_an_r4_view_before_writing (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+test_r4_commit_authority_is_typed_and_legacy_paths_do_not_load_hooks (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+test_rebound_historical_marker_grafts_never_select_legacy_authority (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+test_recovery_guards_r4_on_either_intent_side_before_mutation (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+test_shared_persistence_uses_real_file_verification_and_exact_reuse (tests.vnext.test_r4_publication_boundaries.R4PublicationBoundaryTest) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.886s
+
+OK
