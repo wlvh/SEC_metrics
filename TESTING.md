@@ -1,5 +1,20 @@
 # SEC_metrics 测试与验证流程
 
+## PR38 标签表示修复回归
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_annual_repair -v
+python3 tools/check_annual_label_repair.py --output <new-external-regression.json>
+```
+
+原失败原文/response字节不改，旧RAW拒绝、新政策PASS和业务错误反例分别报告。
+原生集成只模拟外部GitHub/provider HTTP，真实socket禁用；使用临时新预算目录，
+原失败只读并继续作为历史1次计数，模拟记录不消费真实新增额度。
+fast新增V7政策隔离smoke（33入口）；18项原始材料回归及完整原生模拟单独运行，
+不将长回归加入30秒fast单例限制。旧V6阶段历史测试不在新代码追认旧执行许可。
+
+<!-- capability-anchor: CAPABILITY.annual_b10_label_repair -->
+
 ## 固定代码年度候选运行定向验收
 
 在clean committed checkout执行：

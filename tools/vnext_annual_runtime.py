@@ -20,6 +20,8 @@ def main(argv=None):
     proposal.add_argument("--stage-root", type=Path, required=True)
     proposal.add_argument("--baseline-run", type=Path, required=True)
     proposal.add_argument("--review-file", type=Path, required=True)
+    proposal.add_argument("--repair-evidence", type=Path, required=True)
+    proposal.add_argument("--repair-ordinal", type=int, choices=[1, 2], default=1)
     run = commands.add_parser("run")
     run.add_argument("--approval-url", required=True)
     for command in (seed, proposal, run):
@@ -38,6 +40,8 @@ def main(argv=None):
                     stage_root=args.stage_root,
                     baseline_run=args.baseline_run,
                     review_path=args.review_file,
+                    repair_evidence_path=args.repair_evidence,
+                    repair_ordinal=args.repair_ordinal,
                 )
             else:
                 result = runtime.run_update(approval_url=args.approval_url)

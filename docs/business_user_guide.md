@@ -1,5 +1,11 @@
 # SEC_metrics：业务人员首次使用指南
 
+普通B10标签允许使用已定位原格的原始或显示文本，并继续核对范围与数值归属。
+这解决排版差异，不接受不同脚注、地区或经营范围。修复阶段结果仍是候选，
+原失败和正式R3都保留；具体支持边界见 `docs/annual_label_repair.md`。
+
+<!-- capability-anchor: CAPABILITY.annual_b10_label_repair -->
+
 年度候选运行可通过 `tools/vnext_annual_runtime.py` 在一次受限阶段许可内完成
 检查、输入准备和必要的B01/B10计算，无须为每份来源创建开发PR。输出中的
 “新候选成功”只表示候选已保存；正式版本仍以当前PublicationView为准。

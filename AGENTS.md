@@ -152,6 +152,8 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `annual_evidence.py` / `annual_repair_budget.py` / `annual_regression.py`：PR38普通B10同格标签与来源归属修复、固定两次新增修复预算及未改原响应的离线回归；入口见 `docs/annual_label_repair.md`，仍无自动merge或正式发布许可。
+
 - `scripts/vnext/annual_runtime.py` / `tools/vnext_annual_runtime.py`：固定代码与外部输入目录下的Marriott B01/B10阶段候选运行；V6/issue_28_v5独立许可不依赖open PR，复用原生Run与WB-3，总额1/1/0、零重试，成功引用重验两指标，不改变R3。见 `docs/annual_runtime.md`。
 
 - `scripts/vnext/annual_update.py` / `tools/vnext_annual_update.py`：Marriott 年报申报身份检查、显式历史成功/正式对照及受限来源刷新；默认离线，新输入经原有 annual_input 准备，最多可生成未授权普通候选计划。真实 SEC 需另行许可，清单1次、条件式缺少来源至多2次、retry=0；不执行指标、不改变active。入口与示例见 `docs/annual_update.md`。

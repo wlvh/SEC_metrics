@@ -1824,7 +1824,7 @@ def validate_table_qualification_run_bindings(
     records: Sequence[Mapping[str, object]],
 ) -> None:
     """Revalidate persisted catalog-LIVE authority and its sole evidence path."""
-    if manifest.get("record_type") == "SUCCESSOR_RUN" and manifest.get("requirement_id") == "issue_28_v5":
+    if manifest.get("record_type") == "SUCCESSOR_RUN" and manifest.get("requirement_id") in {"issue_28_v5", "issue_28_v6"}:
         from .annual_runtime import validate_run_binding
         try:
             validate_run_binding(repo_root=repo_root, run_dir=run_dir, manifest=manifest, records=records)

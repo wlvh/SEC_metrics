@@ -484,6 +484,7 @@ class InvocationAcceptanceContext:
     reader_manifest: Mapping[str, object]
     reader_payload_body: Mapping[str, object]
     source_references: Tuple[Mapping[str, object], ...]
+    candidate_authorization: Optional[object] = None
 
     def __post_init__(self) -> None:
         """Reject an incomplete or internally divergent acceptance graph."""
@@ -519,6 +520,7 @@ def build_invocation_acceptance_context(
     reader_manifest: Mapping[str, object],
     reader_payload_body: Mapping[str, object],
     source_references: Sequence[Mapping[str, object]],
+    candidate_authorization: Optional[object] = None,
 ) -> InvocationAcceptanceContext:
     """Build one explicit full-Evidence validation input contract.
 
@@ -538,6 +540,7 @@ def build_invocation_acceptance_context(
         reader_manifest=dict(reader_manifest),
         reader_payload_body=dict(reader_payload_body),
         source_references=tuple(dict(value) for value in source_references),
+        candidate_authorization=candidate_authorization,
     )
 
 
@@ -2628,7 +2631,13 @@ def _controlled_acceptance_validator(
         if set(prepared["task_contract"]) == RUNTIME_TASK_CONTRACT_FIELDS
         else context.compiled_spec["compiled"]["identity_constraints"]
     )
-    evidence = check_evidence(
+    from .annual_evidence import check_annual_evidence
+    from .candidate_permission import authorization_fields
+    annual_fields = (authorization_fields(context.candidate_authorization)
+                     if context.candidate_authorization is not None else None)
+    evidence = check_annual_evidence(
+        requirement=annual_fields["requirement"] if annual_fields else None,
+        target_period=annual_fields["plan"]["prepared_input"]["table_input"]["target_period"] if annual_fields else None,
         candidate=candidate,
         derived_asset=context.derived_asset,
         reader_manifest=context.reader_manifest,
@@ -2706,6 +2715,8 @@ def _execute_controlled_transport(
         raise AIAdapterError("Invocation controller context is absent")
     if not isinstance(acceptance_context, InvocationAcceptanceContext):
         raise AIAdapterError("Invocation acceptance context is absent")
+    if acceptance_context.candidate_authorization is not context.annual_candidate_authorization:
+        raise AIAdapterError("Annual acceptance authorization differs from adapter")
     rebuilt_request = _validate_live_prepared_request(
         prepared_request=prepared_request,
     )

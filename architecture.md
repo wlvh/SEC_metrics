@@ -1,5 +1,16 @@
 # SEC_metrics 架构说明
 
+### 普通 B10 标签表示与来源归属修复
+
+`annual_evidence`在新issue_28_v6/V7政策下复用既有同格raw_text/text比较，
+并约束数值与范围标签的原始行、分组及指标/期间列归属；不改原始响应或Spec。
+controller、workflow与Run replay使用同一政策选择，旧版本仍raw-only。
+`annual_repair_budget`在现有annual_runtime/WB-3之前增加固定委托目录的两个
+永久修复名额，连同原失败最多3/3/0；第二次要求已修正的新问题，零自动重试。
+见 `docs/annual_label_repair.md` 的有界布局、不变事实和执行步骤。
+
+<!-- capability-anchor: CAPABILITY.annual_b10_label_repair -->
+
 ### 固定代码版本的年度候选运行
 
 `annual_runtime` 复用 `annual_update`、`annual_input` 与现有原生 Run/调用控制，

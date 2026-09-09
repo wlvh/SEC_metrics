@@ -1261,6 +1261,7 @@ def _create_review_run_with_traits(
         reader_manifest=reader_manifest,
         reader_payload_body=reader_payload_body,
         source_references=[source_reference],
+        candidate_authorization=candidate_authorization,
     )
 
     _checkpoint_recovery_phase(phase="AFTER_CREATE_RUN")
@@ -1437,7 +1438,10 @@ def _create_review_run_with_traits(
     )
     if candidate["disclosure_group"] != semantic["disclosure_group"]:
         raise WorkflowError("Reader disclosure group differs from Spec")
-    evidence = check_evidence(
+    from .annual_evidence import check_annual_evidence
+    evidence = check_annual_evidence(
+        requirement=requirement if candidate_fields is not None else None,
+        target_period=dict(target_period),
         candidate=candidate,
         derived_asset=derived_asset,
         reader_manifest=reader_manifest,

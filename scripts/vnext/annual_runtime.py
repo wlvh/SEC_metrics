@@ -24,7 +24,7 @@ from .requirement_profile import (
     requirement_authority_paths,
     validate_execution_authority,
 )
-from .requirement_profile_v6 import REQUIREMENT_ID, DECISION_ID
+from .requirement_profile_v7 import REQUIREMENT_ID, DECISION_ID
 from .requirements import load_requirement_snapshot
 from .sources import (
     raw_blob_record,
@@ -79,6 +79,7 @@ def code_identity():
         "config",
         "requirements",
         "docs/evidence/issue_28_annual_runtime_policy.json",
+        "docs/evidence/issue_28_annual_repair_policy.json",
     ).splitlines()
     files = {}
     for relative in paths:
@@ -292,7 +293,15 @@ def _request(prepared, data_root, task_id):
     }
 
 
-def stage_proposal(*, stage_root, data_root, baseline_run, review_path):
+def stage_proposal(
+    *,
+    stage_root,
+    data_root,
+    baseline_run,
+    review_path,
+    repair_evidence_path=None,
+    repair_ordinal=1
+):
     """Reviewable delegation template, not an execution capability."""
     requirement = _requirement()
     identity = code_identity()
@@ -328,6 +337,23 @@ def stage_proposal(*, stage_root, data_root, baseline_run, review_path):
         "automatic_retry_count": 0,
         "publication_authorized": False,
         "long_running_schedule_authorized": False,
+    }
+    from .annual_repair_budget import proposal_fields
+
+    body["repair"] = proposal_fields(
+        requirement=requirement,
+        stage_root=root,
+        reviewed_code=identity,
+        review=review,
+        evidence_path=repair_evidence_path,
+        ordinal=repair_ordinal,
+    )
+    prepared = annual_input.prepare_annual_input(
+        repo_root=data, company_id=policy["company_id"]
+    )
+    body["reviewed_input_request"] = {
+        "input_id": prepared["input_id"],
+        "request": _request(prepared, data, policy["task_contract_id"]),
     }
     return {**body, "stage_id": content_hash(value=body)}
 
@@ -383,6 +409,9 @@ def _validate_stage(stage):
         == old,
         "RUNTIME_INITIAL_SUCCESS_CHANGED",
     )
+    from .annual_repair_budget import validate_stage
+
+    validate_stage(stage, requirement)
     return requirement
 
 
@@ -426,7 +455,13 @@ def verify_stage(*, approval_url):
     comment = _github("repos/" + repository + "/issues/comments/" + match[1])
     stage = strict_json_loads(text=comment["body"])
     _validate_owner_comment(comment=comment, stage=stage, approval_url=approval_url)
-    _validate_stage(stage)
+    requirement = _validate_stage(stage)
+    from .annual_repair_budget import load_delegation
+
+    require(
+        stage["repair"]["delegation_comment"] == load_delegation(requirement),
+        "REPAIR_CURRENT_DELEGATION_CHANGED",
+    )
     return {"stage": stage, "owner_comment": comment}
 
 
@@ -537,6 +572,14 @@ def authorization_fields(authorization):
         ),
         "RUNTIME_PINNED_INPUT_CHANGED",
     )
+    require(
+        stage["reviewed_input_request"]
+        == {"input_id": prepared["input_id"], "request": plan["request"]},
+        "REPAIR_EXACT_REVIEWED_REQUEST_CHANGED",
+    )
+    from .annual_repair_budget import validate_slot
+
+    validate_slot(stage, plan, requirement)
     workspace, run_dir, run_id = _paths(plan)
     slot = resolve_repository_file(
         repo_root=Path(stage["stage_root"]), repo_relative_path="execution-slot.json"
@@ -833,6 +876,21 @@ def _credential_error():
     return ""
 
 
+def _repair_report(report, stage):
+    from .annual_repair_budget import counts
+
+    delegation = strict_json_loads(text=stage["repair"]["delegation_comment"]["body"])
+    total = counts(Path(delegation["budget_root"]))
+    report["process_provider_paid_sec_calls"] = total
+    report["additional_repair_provider_paid_sec_calls"] = [
+        total[0] - 1,
+        total[1] - 1,
+        0,
+    ]
+    report["historical_failed_provider_paid_sec_calls"] = [1, 1, 0]
+    return report
+
+
 def run_update(*, approval_url):
     """Inspect, prepare, execute if needed, and retain explicit candidate refs."""
     from .ai_adapter import build_annual_candidate_transport_adapter
@@ -918,7 +976,7 @@ def run_update(*, approval_url):
     )
     if report["status"] != "INPUT_READY":
         report["stage_provider_paid_sec_calls"] = stage_counts(root)
-        return report
+        return _repair_report(report, stage)
     plan = prepare_plan(binding=binding)
     binding = {**binding, "plan": plan}
     workspace, b10, run_id = _paths(plan)
@@ -929,7 +987,7 @@ def run_update(*, approval_url):
             error="RUNTIME_STAGE_ALREADY_CONSUMED",
             stage_provider_paid_sec_calls=stage_counts(root),
         )
-        return report
+        return _repair_report(report, stage)
     require(
         plan["prepared_input"] == report["prepared_input"],
         "RUNTIME_INPUT_CHANGED_DURING_CHECK",
@@ -942,7 +1000,15 @@ def run_update(*, approval_url):
             error=credential_error,
             stage_provider_paid_sec_calls=stage_counts(root),
         )
-        return report
+        return _repair_report(report, stage)
+    require(
+        stage["reviewed_input_request"]
+        == {"input_id": plan["prepared_input"]["input_id"], "request": plan["request"]},
+        "REPAIR_EXACT_REVIEWED_REQUEST_CHANGED",
+    )
+    from .annual_repair_budget import claim_slot
+
+    claim_slot(stage, plan, _requirement())
     _exclusive_slot(stage, plan)
     _copy_inputs(
         source_root=Path(stage["data_root"]),
@@ -1036,5 +1102,6 @@ def run_update(*, approval_url):
                 "b01_run_directory": str(workspace / "b01"),
             },
         )
+    _repair_report(report, stage)
     atomic_write_json(path=workspace / "outcome.json", value=report)
-    return report
+    return _repair_report(report, stage)

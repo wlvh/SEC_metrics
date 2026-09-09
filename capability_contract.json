@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.annual_b10_label_repair",
+        "type": "capability",
+        "status": "active",
+        "statement": "新issue_28_v6政策只允许B10同一已定位单元格的raw_text或text精确匹配，保留原始证据并验证数值行、分组、指标与实际期间列归属；脚注、范围、单位、来源与冲突不放宽。既有原生controller/workflow/replay使用同一新规则，旧RAW失败不追认。固定委托目录新增至多2/2/0且含旧失败累计至多3/3/0，第二次必须有新问题的实际修复及离线/独立复核，零重试、不自动合并、不改R3。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_annual_repair.py::AnnualLabelRegressionTest.test_unmodified_response_and_business_counterexamples",
+        "test_status": "automated_recorded",
+        "since": "2026-09-09"
+      },
+      {
         "anchor_id": "CAPABILITY.marriott_annual_candidate_runtime",
         "type": "capability",
         "status": "active",
