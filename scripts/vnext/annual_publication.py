@@ -249,8 +249,7 @@ def prepare(*, candidate_dir, publication_root):
     completed = workspace / 'prepared.json'
     if completed.exists():
         saved = read(workspace, 'prepared.json')
-        verify_annual_bundle(bundle_dir=root / 'outputs/publications' / saved['publication_id'],
-            manifest=pub.verify_publication_bundle(bundle_dir=root / 'outputs/publications' / saved['publication_id']))
+        pub.verify_publication_bundle(bundle_dir=root / 'outputs/publications' / saved['publication_id'])
         return {**saved, 'status': 'REUSED_PREPARED_PUBLICATION', 'new_provider_paid_sec_calls': [0, 0, 0]}
     snapshot = workspace / 'snapshot'
     prepare_snapshot(candidate_dir=candidate_dir, output_root=snapshot)
@@ -350,12 +349,18 @@ def _edge():
     return root, manifest
 
 
-def guard_switch(*, pointer_path, manifest, expected_active_id, switch_mode):
+def _guard_edge(*, pointer_path, manifest, expected_active_id, switch_mode):
     root, annual = _edge()
     need(pointer_path == root / 'outputs/active_publication.json', 'ANNUAL_SWITCH_ROOT_CHANGED')
     need((switch_mode == 'COMMIT' and manifest == annual and expected_active_id == annual['previous_publication_id'])
          or (switch_mode == 'ROLLBACK' and manifest['publication_id'] == annual['previous_publication_id']
              and expected_active_id == annual['publication_id']), 'ANNUAL_SWITCH_EDGE_CHANGED')
+    return root
+
+
+def guard_switch(*, pointer_path, manifest, expected_active_id, switch_mode):
+    root = _guard_edge(pointer_path=pointer_path, manifest=manifest,
+        expected_active_id=expected_active_id, switch_mode=switch_mode)
     current = root / 'outputs/publications' / expected_active_id
     pub.verify_publication_bundle(bundle_dir=current)
     for relative, target in pub.ROOT_MIRROR_RELATIVE_PATHS.items():
@@ -365,7 +370,7 @@ def guard_switch(*, pointer_path, manifest, expected_active_id, switch_mode):
 def guard_recovery(*, pointer_path, intent):
     root, _ = _edge()
     target = intent['proposed_pointer']['publication_id']
-    guard_switch(pointer_path=pointer_path, manifest=read(root / 'outputs/publications' / target, 'publication_manifest.json'),
+    _guard_edge(pointer_path=pointer_path, manifest=read(root / 'outputs/publications' / target, 'publication_manifest.json'),
         expected_active_id=None if intent['previous_pointer'] is None else intent['previous_pointer']['publication_id'],
         switch_mode=intent['switch_mode'])
 
