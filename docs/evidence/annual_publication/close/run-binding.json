@@ -1,0 +1,349 @@
+{
+  "status": "VERIFIED_CODE_EXECUTION_PACKAGE_BINDING",
+  "code": {
+    "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+    "git_tree_oid": "d5cc73965d7801338aad4bbbcf84b71ebbf82022",
+    "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc",
+    "implementation_tree_definition": "canonical content_hash of UTF-8 git ls-tree -r HEAD scripts tools config catalog requirements output",
+    "tests": {
+      "tools/run_fast_tests.py": {
+        "sha256": "f2b085013792496d6afa687a1790dbb0f768cf8b78d379f911014949093484ca",
+        "size": 9089
+      },
+      "tests/vnext/test_annual_publication.py": {
+        "sha256": "1834f7d33611883a73e02d3a6a0df6c74b12daf390f4a44c842592e87d25b550",
+        "size": 4085
+      },
+      "tests/vnext/test_annual_publication_rehearsal.py": {
+        "sha256": "ea595c79528fd8c9dbad1fc333b794e5e8622638b4f9de178f1d51dcdda6eb16",
+        "size": 15239
+      }
+    }
+  },
+  "executions": {
+    "prepare": {
+      "command": [
+        "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+        "prepare"
+      ],
+      "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "code": {
+        "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+        "git_tree_oid": "d5cc73965d7801338aad4bbbcf84b71ebbf82022",
+        "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc",
+        "implementation_tree_definition": "canonical content_hash of UTF-8 git ls-tree -r HEAD scripts tools config catalog requirements output",
+        "tests": {
+          "tools/run_fast_tests.py": {
+            "sha256": "f2b085013792496d6afa687a1790dbb0f768cf8b78d379f911014949093484ca",
+            "size": 9089
+          },
+          "tests/vnext/test_annual_publication.py": {
+            "sha256": "1834f7d33611883a73e02d3a6a0df6c74b12daf390f4a44c842592e87d25b550",
+            "size": 4085
+          },
+          "tests/vnext/test_annual_publication_rehearsal.py": {
+            "sha256": "ea595c79528fd8c9dbad1fc333b794e5e8622638b4f9de178f1d51dcdda6eb16",
+            "size": 15239
+          }
+        }
+      },
+      "started_at_utc": "2026-09-09T10:17:53.374316+00:00",
+      "finished_at_utc": "2026-09-09T10:20:17.567707+00:00",
+      "exit_status": 0,
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/prepare.log",
+        "sha256": "882ebb3b6ec8b59f8969923da77b99c95f1aee2f68834d34c6aae61e94edbda2",
+        "size": 577
+      },
+      "harness": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+        "sha256": "000e4e14a424084ced35bd8f6d4c12a62f12590875ece2f402e86e8d306e1c46",
+        "size": 6348
+      },
+      "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/final-rehearsal-2",
+      "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "github_reads": [
+        {
+          "argv": [
+            "gh",
+            "api",
+            "repos/wlvh/SEC_metrics/issues/comments/5596431062"
+          ],
+          "response_sha256": "b6ba07cdd647e62f5e1e4544ccb635ed3bd4c326a17758ac6a4aa09c409e9e26",
+          "response_size": 25191
+        }
+      ],
+      "new_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "protection_equal": true
+    },
+    "validate-switch-read": {
+      "command": [
+        "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+        "validate-switch-read"
+      ],
+      "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "code": {
+        "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+        "git_tree_oid": "d5cc73965d7801338aad4bbbcf84b71ebbf82022",
+        "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc",
+        "implementation_tree_definition": "canonical content_hash of UTF-8 git ls-tree -r HEAD scripts tools config catalog requirements output",
+        "tests": {
+          "tools/run_fast_tests.py": {
+            "sha256": "f2b085013792496d6afa687a1790dbb0f768cf8b78d379f911014949093484ca",
+            "size": 9089
+          },
+          "tests/vnext/test_annual_publication.py": {
+            "sha256": "1834f7d33611883a73e02d3a6a0df6c74b12daf390f4a44c842592e87d25b550",
+            "size": 4085
+          },
+          "tests/vnext/test_annual_publication_rehearsal.py": {
+            "sha256": "ea595c79528fd8c9dbad1fc333b794e5e8622638b4f9de178f1d51dcdda6eb16",
+            "size": 15239
+          }
+        }
+      },
+      "started_at_utc": "2026-09-09T10:20:55.498915+00:00",
+      "finished_at_utc": "2026-09-09T10:23:56.197802+00:00",
+      "exit_status": 0,
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/validate-switch-read.log",
+        "sha256": "a79f7cd3ef1adaa5735267998d3fb41a346d4a30404d8bb4127f7d91a79c5bd9",
+        "size": 6327
+      },
+      "harness": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+        "sha256": "000e4e14a424084ced35bd8f6d4c12a62f12590875ece2f402e86e8d306e1c46",
+        "size": 6348
+      },
+      "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/final-rehearsal-2",
+      "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "github_reads": [],
+      "new_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "protection_equal": true
+    },
+    "integration": {
+      "command": [
+        "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+        "integration"
+      ],
+      "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "code": {
+        "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+        "git_tree_oid": "d5cc73965d7801338aad4bbbcf84b71ebbf82022",
+        "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc",
+        "implementation_tree_definition": "canonical content_hash of UTF-8 git ls-tree -r HEAD scripts tools config catalog requirements output",
+        "tests": {
+          "tools/run_fast_tests.py": {
+            "sha256": "f2b085013792496d6afa687a1790dbb0f768cf8b78d379f911014949093484ca",
+            "size": 9089
+          },
+          "tests/vnext/test_annual_publication.py": {
+            "sha256": "1834f7d33611883a73e02d3a6a0df6c74b12daf390f4a44c842592e87d25b550",
+            "size": 4085
+          },
+          "tests/vnext/test_annual_publication_rehearsal.py": {
+            "sha256": "ea595c79528fd8c9dbad1fc333b794e5e8622638b4f9de178f1d51dcdda6eb16",
+            "size": 15239
+          }
+        }
+      },
+      "started_at_utc": "2026-09-09T10:24:14.473116+00:00",
+      "finished_at_utc": "2026-09-09T10:39:14.061529+00:00",
+      "exit_status": 0,
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/integration.log",
+        "sha256": "2005077fff49007296b0310dd35eed6a4b7aac39b9b36f833a199ef61a5d2749",
+        "size": 482
+      },
+      "harness": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+        "sha256": "000e4e14a424084ced35bd8f6d4c12a62f12590875ece2f402e86e8d306e1c46",
+        "size": 6348
+      },
+      "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/final-rehearsal-2",
+      "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "github_reads": [],
+      "new_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "protection_equal": true
+    }
+  },
+  "original_archive": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/annual-publication-review.zip",
+    "sha256": "44db974f2530398baf29370d59ce6d8ca5eca4ab3da6728c8bad9b64352bb189",
+    "size": 14683026,
+    "zip_test": "PASS",
+    "contexts": [
+      "outputs/publications/publication_2003618f263e3eee42d42c03ceb49d8c5986fee9fb03f231adaad6b12f09b280/internal/annual_snapshot/context.json"
+    ]
+  },
+  "input": {
+    "context_object_id": "sha256:dae69afa5033c75a86ceecbf7520254f6491ce412c512a4454801de2b0c90a29",
+    "candidate_file_set_id": "sha256:4af14ac84329cb4227c204fa9cd8204d87af3a337e7ca53500f2ebff7e94d797",
+    "candidate_file_count": 28,
+    "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+    "original_plan_id": "sha256:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+    "native_run_ids": {
+      "b01": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030:structured",
+      "b10": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030"
+    },
+    "execution_id": "sha256:e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c",
+    "policy_id": "annual_candidate_adoption_v1",
+    "policy_hash": "sha256:b2792c134a398bc411da02f20a9eabedf29d491446a6ad9af56c010d0138bba0",
+    "selected_results": {
+      "B01": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B01",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3e637913536d24349f51c6525c3061c8a2969bb89013ccddb000736c3cc4dba5",
+        "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+        "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+        "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+        "unit": "USD",
+        "value": "26186000000"
+      },
+      "B10": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+        "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+        "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+        "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+        "unit": "ratio",
+        "value": "0.693"
+      }
+    }
+  },
+  "package": {
+    "directory": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/final-rehearsal-2/outputs/publications/publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+    "publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+    "manifest_file": {
+      "sha256": "e2767d023c24874e3f993cda6970400b74bf649c4e2da91b1e7a15259e53eb80",
+      "size": 235926
+    },
+    "implementation_metadata_path": "internal/annual_release.json",
+    "implementation_metadata_file": {
+      "sha256": "45723e12d2b1cc1121dee62c882a77b650bc7603d687731c8bc531864be3a262",
+      "size": 47151
+    },
+    "adoption_receipt_object_id": "sha256:10e90490973883cce4d6ade1367512e2dc5e79eb4b26216c9c2c7d4200a683e7",
+    "adoption_receipt_file": {
+      "sha256": "2f6d7756ac785263779c4fc41d181ab04ab64550d49530a4d151a04a499d959c",
+      "size": 4177
+    },
+    "complete_version_file": {
+      "sha256": "535488cb77a19cd1c7ad7ec0c83805fd41178d9e6c64a68776cac1256d755734",
+      "size": 100566
+    },
+    "selected_count": 2,
+    "inherited_count": 238,
+    "public_row_count": 327
+  },
+  "ci": {
+    "run_id": 34339168060,
+    "url": "https://github.com/wlvh/SEC_metrics/actions/runs/34339168060",
+    "actual_module_result": {
+      "duration_seconds": "6.505",
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 4.817s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_annual_publication"
+    },
+    "suite_status": "PASSED",
+    "checkout_ref": "refs/pull/39/merge",
+    "merge_message_log_line": "vNext fast suite\tCheck out repository\t2026-09-09T10:14:56.7604543Z HEAD is now at 06524f6 Merge 77dd7f3407d09bec3e5d19356f11028a9038326f into 1e97cd08ad26edc1e7a720550811240af1889cb3",
+    "checkout_commit": "06524f6b2a35efb27c69f05cdc307aacad22a8a4",
+    "log_file": {
+      "sha256": "4427c341272e7c42bfb9ff5551a03d62d62e23163735bdca6d43045ed74cdc41",
+      "size": 38375
+    }
+  },
+  "integration_checks": {
+    "actual_r3_and_original_candidate_unchanged": true,
+    "checks": [
+      {
+        "check": "SOFT_SWITCH_FAILURE_OLD_COMPLETE_VIEW",
+        "status": "PASS"
+      },
+      {
+        "check": "LOW_LEVEL_AND_FORMAL_AUTHORITY_REFUSED",
+        "status": "PASS"
+      },
+      {
+        "check": "MIRRORS_WRITTEN_BEFORE_POINTER_COMMIT",
+        "recovered_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+        "status": "PASS"
+      },
+      {
+        "check": "POINTER_WRITTEN_BEFORE_SWITCH_RECEIPT",
+        "recovered_publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+        "status": "PASS"
+      },
+      {
+        "check": "COMPLETE_240_327_SOURCE_READ_ROLLBACK_RESTORE_AND_DEDUP",
+        "status": "PASS"
+      },
+      {
+        "check": "COLD_REPLAY_NO_WRITES_HISTORICAL_VIEW_CANNOT_EXECUTE",
+        "status": "PASS"
+      },
+      {
+        "check": "REPEAT_PREPARE_NO_NEW_APPROVAL_CALL_OR_PUBLICATION",
+        "status": "PASS"
+      }
+    ],
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+    "status": "COMPLETED_CHECK_LOG"
+  },
+  "identity_definitions": {
+    "object_id": "canonical content_hash excluding the object own id field",
+    "file_sha256": "SHA-256 of complete file bytes including whitespace and id",
+    "git_tree_oid": "Git tree object identifier, not implementation_tree"
+  },
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "historical_pr38_calls": [
+    2,
+    2,
+    0
+  ],
+  "network_scope": "Two real GitHub comment reads: first external logging failure and successful fresh prepare. Integration and cold reads deny all network. GitHub CI/Issue/PR operations are separate from business calls.",
+  "historical_failure": "harness-attempt-1/failure-explanation.json",
+  "verifier": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/bind_a.py",
+    "sha256": "ddcf0e3f501d8d9694783e92ba4da30589d475ff5ebdca9af427b50d93af5dac",
+    "size": 6708
+  }
+}

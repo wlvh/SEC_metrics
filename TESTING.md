@@ -2,6 +2,11 @@
 
 ## 普通年度候选完整发布链隔离验收
 
+`tools/run_fast_tests.py` 的34个白名单入口包括
+`tests.vnext.test_annual_publication` 整个模块（4项短边界测试）。GitHub fast CI
+执行同一入口；CI日志中的模块名、实际测试数、退出码和非SKIP结果共同证明覆盖。
+完整真实包演练仍是单独集成层，不能用fast绿色替代。
+
 ```bash
 PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_annual_publication tests.vnext.test_invocation_control tests.vnext.test_successor_invocation_control tests.vnext.test_r4_publication_boundaries -v
 ```
@@ -34,7 +39,7 @@ python3 tools/check_annual_label_repair.py --output <new-external-regression.jso
 原失败原文/response字节不改，旧RAW拒绝、新政策PASS和业务错误反例分别报告。
 原生集成只模拟外部GitHub/provider HTTP，真实socket禁用；使用临时新预算目录，
 原失败只读并继续作为历史1次计数，模拟记录不消费真实新增额度。
-fast新增V7政策隔离smoke（33入口）；18项原始材料回归及完整原生模拟单独运行，
+fast保留V7政策隔离smoke；18项原始材料回归及完整原生模拟单独运行，
 不将长回归加入30秒fast单例限制。旧V6阶段历史测试不在新代码追认旧执行许可。
 
 <!-- capability-anchor: CAPABILITY.annual_b10_label_repair -->

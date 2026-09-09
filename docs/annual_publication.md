@@ -98,4 +98,5 @@ B03记录完整保留在源Run快照，但不被当作本次新增正式结果�
 ## 本轮交付
 
 完整版本、独立审阅、实际故障演练、测试失败及修正、调用计数和原始包索引见
-[集中交付记录](evidence/annual_publication/README.md)。本PR保持Draft，实际R3不变。
+[集中交付记录](evidence/annual_publication/README.md)。最终实施补验及条件合并门禁见
+[PR39收口记录](evidence/annual_publication/close/README.md)；合并代码不切换实际R3。

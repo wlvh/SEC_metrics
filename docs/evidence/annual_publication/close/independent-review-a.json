@@ -1,0 +1,256 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_PUBLICATION_A_CLOSE_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "review_source": "Actual independent collaboration subtask review and bounded local execution. This is model review, not human review, GitHub APPROVE, provider authorization, or formal publication authorization.",
+  "reviewed_at_utc": "2026-09-09T10:42:50.793112+00:00",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "review_mode": "A_INCREMENTAL_REVIEW_WITH_CURRENT_EXECUTION_EVIDENCE",
+  "reviewed_head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+  "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc",
+  "git_tree_oid": "d5cc73965d7801338aad4bbbcf84b71ebbf82022",
+  "scope": "The single fast-CI whitelist addition since PR39 head 4532628, external run/binding harnesses, and the fresh prepare/validate-switch-read/two-positive-integration evidence for the fixed implementation. B and any formal activation are outside this review.",
+  "inherited_reviews": [
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/independent-review.json",
+      "sha256": "45ae1a40f0b1eaabcb1c14fef52a73b2383a56e9ca1c5bd7b2587b12cf0fa9d1",
+      "size": 3722,
+      "reviewed_head": "f44c665d841ff5e7899df22ee21a0f807bbad076",
+      "scope": "Prior complete-scope code review and independent cold-bundle/negative-copy checks."
+    },
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/independent-review-final.json",
+      "sha256": "3e67bcc5a5ddac11762f7171edc60632d4e2c50835008f4da1d7333195776030",
+      "size": 4929,
+      "reviewed_head": "9b40c9c7c1d7b30f1597a078559242ab1222a663",
+      "scope": "Frozen pipeline restoration and trusted snapshot scanner incremental review."
+    }
+  ],
+  "independently_executed_checks": [
+    {
+      "check": "FOUR_LIGHTWEIGHT_BOUNDARY_TESTS",
+      "status": "PASS",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v tests.vnext.test_annual_publication",
+      "test_count": 4,
+      "reported_test_seconds": "0.884",
+      "execution_note": "Actually run by this reviewer during the first A incremental review at the same fixed head."
+    },
+    {
+      "check": "BIND_A_ACTUAL_EXECUTION",
+      "status": "PASS",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 /Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/bind_a.py",
+      "exit_status": 0,
+      "result": "VERIFIED_CODE_EXECUTION_PACKAGE_BINDING",
+      "verifier": {
+        "sha256": "ddcf0e3f501d8d9694783e92ba4da30589d475ff5ebdca9af427b50d93af5dac",
+        "size": 6708
+      }
+    },
+    {
+      "check": "INDEPENDENT_GIT_ARCHIVE_METADATA_AND_FILE_BYTES",
+      "status": "PASS",
+      "runtime_file_count": 251,
+      "candidate_file_count": 28,
+      "detail": "Git tree OID, implementation-tree content hash, three test/runner files, runtime Git archive exact file map, original candidate and bundled copies, and adoption content identity were independently recomputed."
+    },
+    {
+      "check": "FINAL_ALL_PROTECTED_BYTES_AND_GIT_RESIDUE",
+      "status": "PASS",
+      "counts": {
+        "official_files": 35,
+        "official_publication_files": 891,
+        "candidate_files": 28,
+        "historical_runtime_files": 1530,
+        "stash_entries": 8,
+        "historical_worktrees": 17
+      },
+      "comparison_base": "protection-before.json"
+    },
+    {
+      "check": "FAILED_HARNESS_PRESERVED",
+      "status": "PASS",
+      "detail": "Old harness and empty prepare log hashes match the failed execution record; failed isolated root retains only the baseline R3 publication and no completed candidate snapshot."
+    },
+    {
+      "check": "ORIGINAL_REVIEW_ARCHIVE_BYTES",
+      "status": "PASS",
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-integration/annual-publication-review.zip",
+      "sha256": "44db974f2530398baf29370d59ce6d8ca5eca4ab3da6728c8bad9b64352bb189",
+      "detail": "Archive byte hash and size checked; archive extraction/test was not repeated."
+    }
+  ],
+  "current_run_material_read_and_cross_checked": {
+    "run_binding": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run-binding.json",
+      "sha256": "fc9f7723e75ebcd8e73179d4da893e57e079324e5039f9c44e996fe76f519dc0",
+      "size": 15396
+    },
+    "publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+    "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/final-rehearsal-2",
+    "adoption_receipt_id": "sha256:10e90490973883cce4d6ade1367512e2dc5e79eb4b26216c9c2c7d4200a683e7",
+    "native_run_ids": {
+      "b01": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030:structured",
+      "b10": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030"
+    },
+    "retained_controller_execution_id": "sha256:e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c",
+    "complete_counts": {
+      "cumulative_results": 240,
+      "adopted_results": 2,
+      "inherited_results": 238,
+      "public_rows": 327
+    },
+    "execution_modes": {
+      "prepare": {
+        "exit_status": 0,
+        "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+        "protection_equal": true,
+        "log": {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/prepare.log",
+          "sha256": "882ebb3b6ec8b59f8969923da77b99c95f1aee2f68834d34c6aae61e94edbda2",
+          "size": 577
+        },
+        "harness": {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+          "sha256": "000e4e14a424084ced35bd8f6d4c12a62f12590875ece2f402e86e8d306e1c46",
+          "size": 6348
+        }
+      },
+      "validate-switch-read": {
+        "exit_status": 0,
+        "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+        "protection_equal": true,
+        "log": {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/validate-switch-read.log",
+          "sha256": "a79f7cd3ef1adaa5735267998d3fb41a346d4a30404d8bb4127f7d91a79c5bd9",
+          "size": 6327
+        },
+        "harness": {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+          "sha256": "000e4e14a424084ced35bd8f6d4c12a62f12590875ece2f402e86e8d306e1c46",
+          "size": 6348
+        }
+      },
+      "integration": {
+        "exit_status": 0,
+        "head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+        "protection_equal": true,
+        "log": {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/integration.log",
+          "sha256": "2005077fff49007296b0310dd35eed6a4b7aac39b9b36f833a199ef61a5d2749",
+          "size": 482
+        },
+        "harness": {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-publication-close/run_a.py",
+          "sha256": "000e4e14a424084ced35bd8f6d4c12a62f12590875ece2f402e86e8d306e1c46",
+          "size": 6348
+        }
+      }
+    },
+    "integration": {
+      "methods": [
+        "test_complete_flow_faults_and_cold_source_reads",
+        "test_repeated_prepare_does_not_publish_or_query_approval"
+      ],
+      "test_count": 2,
+      "duration_seconds": "899.201",
+      "status": "OK",
+      "skipped": false,
+      "checks": [
+        {
+          "check": "SOFT_SWITCH_FAILURE_OLD_COMPLETE_VIEW",
+          "status": "PASS"
+        },
+        {
+          "check": "LOW_LEVEL_AND_FORMAL_AUTHORITY_REFUSED",
+          "status": "PASS"
+        },
+        {
+          "check": "MIRRORS_WRITTEN_BEFORE_POINTER_COMMIT",
+          "recovered_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+          "status": "PASS"
+        },
+        {
+          "check": "POINTER_WRITTEN_BEFORE_SWITCH_RECEIPT",
+          "recovered_publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+          "status": "PASS"
+        },
+        {
+          "check": "COMPLETE_240_327_SOURCE_READ_ROLLBACK_RESTORE_AND_DEDUP",
+          "status": "PASS"
+        },
+        {
+          "check": "COLD_REPLAY_NO_WRITES_HISTORICAL_VIEW_CANNOT_EXECUTE",
+          "status": "PASS"
+        },
+        {
+          "check": "REPEAT_PREPARE_NO_NEW_APPROVAL_CALL_OR_PUBLICATION",
+          "status": "PASS"
+        }
+      ],
+      "reviewer_reran_complete_integration": false
+    },
+    "ci": {
+      "run_id": 34339168060,
+      "url": "https://github.com/wlvh/SEC_metrics/actions/runs/34339168060",
+      "checkout_ref": "refs/pull/39/merge",
+      "checkout_commit": "06524f6b2a35efb27c69f05cdc307aacad22a8a4",
+      "implementation_head_in_merge_log": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+      "suite_status": "PASSED",
+      "module": "tests.vnext.test_annual_publication",
+      "module_test_count": 4,
+      "module_status": "OK",
+      "raw_log": {
+        "sha256": "4427c341272e7c42bfb9ff5551a03d62d62e23163735bdca6d43045ed74cdc41",
+        "size": 38375
+      },
+      "evidence_scope": "Saved actual CI log read and exact module result cross-checked; reviewer did not query GitHub or trigger CI."
+    }
+  },
+  "harness_correction": {
+    "status": "REVIEWED",
+    "changes": [
+      "Encode decoded gh output only for response byte hashing, retaining the returned value.",
+      "Use a fresh isolated final-rehearsal-2 root while preserving the failed root.",
+      "Use actual verified_source_locations result field.",
+      "Append actual exception traceback to the external log."
+    ],
+    "production_source_changed": false
+  },
+  "call_accounting": {
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "historical_pr38_calls_unchanged": [
+      2,
+      2,
+      0
+    ],
+    "successful_fresh_prepare_github_reads": 1,
+    "failed_first_prepare_disclosed_unlogged_github_reads": 1,
+    "total_disclosed_github_comment_reads": 2,
+    "evidence_level": "Successful fresh prepare records one exact GitHub comment read with response hash; the first successful read followed by logging failure is disclosed in the retained failure explanation and supported by the retained failing wrapper code, not by a response hash. GitHub reads are separate from business calls. Zero business calls are supported by the read/adopt/publish paths, socket denial, unchanged source/request/controller files and execution records; this review did not create a fresh provider controller execution."
+  },
+  "current_actual_formal_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+  "formal_publication_authorized": false,
+  "publication_credit": "NONE_ISOLATED_ADOPTION_REHEARSAL",
+  "qualification_credit": "NONE",
+  "checkout_state_at_review_completion": {
+    "implementation_head_unchanged": true,
+    "production_and_test_bytes_unchanged": true,
+    "pending_documentation_files": [
+      "TESTING.md",
+      "docs/annual_publication.md",
+      "docs/evidence/annual_publication/README.md"
+    ],
+    "note": "All three execution records establish clean-start/end checks for their runs. Parent documentation archival began during final review; the current checkout is therefore not represented as clean."
+  },
+  "limitations": [
+    "The reviewer did not rerun the 899-second full integration, latest complete native bundle replay, or the historical eight-case tamper suite. Their executed artifacts are attributed separately from the reviewer own checks.",
+    "No original Run, original bundle, real active pointer or production file was modified by the reviewer. The only output mutation was re-execution of the authorized external binding report and this review record.",
+    "This conclusion covers the fixed implementation and current A evidence. The forthcoming documentation-only archival diff and final CI still require the requested pre-merge check; no GitHub approval or production grant is made here.",
+    "Work package B has not been reviewed or authorized by this record."
+  ]
+}
