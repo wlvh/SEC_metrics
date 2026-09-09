@@ -1,5 +1,29 @@
 # SEC_metrics 测试与验证流程
 
+## 普通年度候选完整发布链隔离验收
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. python3 -m unittest tests.vnext.test_annual_publication tests.vnext.test_invocation_control tests.vnext.test_successor_invocation_control tests.vnext.test_r4_publication_boundaries -v
+```
+
+完整演练测试消费由真实成功候选准备出的完整隔离包；不模拟核心validator或采纳
+成功。设置 `ANNUAL_PUBLICATION_TEST_ROOT`、`ANNUAL_PUBLICATION_TEST_ID` 和可选
+`ANNUAL_PUBLICATION_TEST_REPORT` 后运行：
+
+```bash
+env -u DEEPSEEK_API_KEY -u OPENAI_API_KEY PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts:. GIT_OPTIONAL_LOCKS=0 python3 -m unittest tests.vnext.test_annual_publication_rehearsal -v
+```
+
+测试没有上述真实材料时明确SKIP，不能当作验收成功。完整运行以进程树网络禁止、
+实际仓库及PR38原现场禁止写入的sandbox执行，具体完整命令在本轮交付记录中。
+只在现有fault checkpoint注入软失败/模拟进程中断，所有来源、原生图和发布门禁
+均实际执行。覆盖240/327完整继承、错来源/外来Run/缺Result与Review、重签外层
+的包内脚本和假身份、正式权限拒绝、指针前后恢复、回退/恢复和重复准备。
+每个输出文件独立，不覆盖原始失败；不运行真实SEC/provider、旧生产函数或实际
+Stage12/正式切换。原R3、旧候选和原失败的保护hash在运行前后核对。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_publication_rehearsal -->
+
 ## PR38 标签表示修复回归
 
 ```bash

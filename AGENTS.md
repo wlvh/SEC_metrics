@@ -152,6 +152,8 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `scripts/vnext/annual_adoption.py` / `annual_projection.py` / `annual_publication.py`：普通候选历史只读采纳、完整结果继承与既有发布原语的隔离演练；原Run不改、无正式信用。CLI为 `tools/vnext_annual_publication.py`，入口说明见 `docs/annual_publication.md`。
+
 - `annual_evidence.py` / `annual_repair_budget.py` / `annual_regression.py`：PR38普通B10同格标签与来源归属修复、固定两次新增修复预算及未改原响应的离线回归；入口见 `docs/annual_label_repair.md`，仍无自动merge或正式发布许可。
 
 - `scripts/vnext/annual_runtime.py` / `tools/vnext_annual_runtime.py`：固定代码与外部输入目录下的Marriott B01/B10阶段候选运行；V6/issue_28_v5独立许可不依赖open PR，复用原生Run与WB-3，总额1/1/0、零重试，成功引用重验两指标，不改变R3。见 `docs/annual_runtime.md`。

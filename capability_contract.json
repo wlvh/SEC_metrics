@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.annual_candidate_publication_rehearsal",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通年度B01/B10成功候选可通过历史只读重放形成独立采纳收据，保留原OPEN Run及各自Requirement、B03附带记录和执行身份；复用Projector构造2项替换/238项继承、240坐标/327行完整隔离包，经PublicationView读取原始来源与统一版本。仅允许标记隔离根的既有CAS、回退/恢复和重复准备；新provider/paid/SEC=0/0/0。采纳政策仍待正式批准，包无正式信用，不改变实际R3。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_annual_publication_rehearsal.py::AnnualPublicationRehearsalTest.test_complete_flow_faults_and_cold_source_reads",
+        "test_status": "automated_recorded",
+        "since": "2026-09-09"
+      },
+      {
         "anchor_id": "CAPABILITY.annual_b10_label_repair",
         "type": "capability",
         "status": "active",

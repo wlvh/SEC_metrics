@@ -1,5 +1,22 @@
 # SEC_metrics 架构说明
 
+### 普通年度候选的完整发布演练
+
+`annual_adoption`把原stage/plan/代码与Source/Run/controller作为历史输入重验，
+只读InvocationView不能进入执行器。原生OPEN图完整重放后另发不可变采纳收据，
+不改原Run状态或借用旧qualification。`annual_projection`复用Projector生成两项
+原生公共行，再原位替换完整前驱；每项分别保存原Requirement和来源，余下238坐标
+以及非本轮公开行/期间/证据保持原值。
+
+`annual_publication`只增加明确的NONE_ISOLATED_ADOPTION_REHEARSAL类型与薄适配，
+共享publication.py的exact-tree/persistence/PublicationView/CAS/intent/recovery。
+新旧类型的目标和当前边都经过各自guard，不能改manifest类型借旧权限。验证器用
+可信代码读取包内Python作为数据；Git对象、语义与公司常量扫描独立重算。整个
+原R3包和原候选/来源/旧规则字节都在包内，读写根分离。正式采纳/激活仍待决定，
+没有实际R3开关。具体接口与限制见 `docs/annual_publication.md`。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_publication_rehearsal -->
+
 ### 普通 B10 标签表示与来源归属修复
 
 `annual_evidence`在新issue_28_v6/V7政策下复用既有同格raw_text/text比较，

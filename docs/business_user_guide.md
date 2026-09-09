@@ -1,5 +1,13 @@
 # SEC_metrics：业务人员首次使用指南
 
+普通年度候选的完整版本可在隔离目录演练。使用
+`tools/vnext_annual_publication.py read`读取一个固定完整版本，结果与证据不会从
+不同版本拼接；输出同时给出原始来源文件的位置和hash。原R3仍通过原入口读取，
+不会因候选准备或本轮代码合并而改变。此功能仍无正式发布许可，详见
+`docs/annual_publication.md`。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_publication_rehearsal -->
+
 普通B10标签允许使用已定位原格的原始或显示文本，并继续核对范围与数值归属。
 这解决排版差异，不接受不同脚注、地区或经营范围。修复阶段结果仍是候选，
 原失败和正式R3都保留；具体支持边界见 `docs/annual_label_repair.md`。
