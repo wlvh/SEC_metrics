@@ -276,6 +276,33 @@ def _prepare_successor_invocation_authority_from_requirement(
 
 
 def prepare_annual_candidate_invocation_authority(*, requirement, repo_root):
+    """Live policy factory retains its exact repository boundary."""
+    if repo_root.resolve() != _REPOSITORY_ROOT:
+        raise InvocationControlError("Ordinary candidate Requirement differs")
+    return _annual_candidate_policy_view(requirement=requirement, repo_root=repo_root)
+
+
+class HistoricalAnnualInvocationView:
+    """A validation-only wrapper; every execution entry rejects its type."""
+    __slots__ = ("__authority",)
+
+    def __init__(self, *, factory, authority):
+        if factory is not _SUCCESSOR_AUTHORITY_FACTORY:
+            raise InvocationControlError("Historical invocation view requires its factory")
+        self.__authority = authority
+
+    def _check(self):
+        return self.__authority._check()
+
+
+def prepare_historical_annual_invocation_view(*, repo_root, requirement_id):
+    """Reload frozen policy bytes for a read; never return execution authority."""
+    requirement = load_requirement_snapshot(snapshot_dir=repo_root / "requirements" / requirement_id)
+    authority = _annual_candidate_policy_view(requirement=requirement, repo_root=repo_root)
+    return HistoricalAnnualInvocationView(factory=_SUCCESSOR_AUTHORITY_FACTORY, authority=authority)
+
+
+def _annual_candidate_policy_view(*, requirement, repo_root):
     """Use the same successor controller policy shape for the ordinary kind."""
     from .requirement_profile_v5 import REQUIREMENT_ID, DECISION_ID, candidate_choice
     if requirement["requirement_id"] == "issue_28_v5":
@@ -284,7 +311,7 @@ def prepare_annual_candidate_invocation_authority(*, requirement, repo_root):
         from .requirement_profile_v7 import REQUIREMENT_ID, DECISION_ID, candidate_choice
     from .requirement_profile import validate_execution_authority, requirement_authority_paths
     from .sources import resolve_repository_file
-    if requirement["requirement_id"] != REQUIREMENT_ID or repo_root.resolve() != _REPOSITORY_ROOT:
+    if requirement["requirement_id"] != REQUIREMENT_ID:
         raise InvocationControlError("Ordinary candidate Requirement differs")
     validate_execution_authority(repo_root=repo_root, requirement=requirement)
     decisions = requirement["effective_decisions"]
@@ -842,7 +869,7 @@ def _build_ai_invocation_plan(
     return validate_ai_invocation_plan(plan=plan)
 
 
-def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, object]:
+def validate_ai_invocation_plan(*, plan: Mapping[str, object], _historical_view=None) -> Dict[str, object]:
     """Validate one exact AI invocation plan and all three identities."""
     value = _object(value=plan, label="AI invocation plan")
     successor = value.get("record_type") == "SUCCESSOR_AI_INVOCATION_PLAN"
@@ -855,9 +882,14 @@ def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, obje
         raise InvocationControlError("AI invocation plan identity differs")
     successor_transport = None
     if successor:
-        context = _SUCCESSOR_AUTHORITY.get()
-        if context is None:
-            context = prepare_successor_invocation_authority(repo_root=_REPOSITORY_ROOT)
+        if _historical_view is not None:
+            if type(_historical_view) is not HistoricalAnnualInvocationView:
+                raise InvocationControlError("Historical invocation view type differs")
+            context = _historical_view
+        else:
+            context = _SUCCESSOR_AUTHORITY.get()
+            if context is None:
+                context = prepare_successor_invocation_authority(repo_root=_REPOSITORY_ROOT)
         identity, expected_policy, successor_transport = context._check()
         if any(value[field] != expected for field, expected in identity.items()):
             raise InvocationControlError("Successor invocation Requirement identity differs")
@@ -1850,7 +1882,7 @@ def _reused_success_execution(
 
 
 def load_successful_response(
-    *, workspace_dir: Path, plan: Mapping[str, object],
+    *, workspace_dir: Path, plan: Mapping[str, object], _historical_view=None,
 ) -> Dict[str, object]:
     """Return one verified exact reusable response after execution.
 
@@ -1861,7 +1893,7 @@ def load_successful_response(
     Returns:
         Receipt metadata plus exact response bytes.
     """
-    validated_plan = validate_ai_invocation_plan(plan=plan)
+    validated_plan = validate_ai_invocation_plan(plan=plan, _historical_view=_historical_view)
     response = _load_success_response(
         root=_state_root(workspace_dir=workspace_dir),
         plan=validated_plan,

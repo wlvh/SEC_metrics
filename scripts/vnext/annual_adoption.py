@@ -92,18 +92,20 @@ def _source_proof(root, context):
     check_id(stage, 'stage_id'); check_id(plan, 'plan_id')
     need(context['origin']['plan'] == plan and context['origin']['stage'] == stage
          and context['owner_comment'] == owner, 'ANNUAL_ORIGIN_BINDING_CHANGED')
-    runtime._validate_owner_comment(comment=owner, stage=stage)
     need(stage['publication_authorized'] is False and plan['publication_credit'] == 'NONE'
          and plan['qualification_credit'] == 'NONE' and stage['automatic_retry_count'] == 0,
          'ANNUAL_ORIGINAL_CREDIT_CHANGED')
     requirement = load_requirement_snapshot(snapshot_dir=data_root / 'requirements' / plan['requirement_id'])
     validate_execution_authority(repo_root=data_root, requirement=requirement)
+    from .annual_repair_budget import validate_comment
+    need(validate_comment(owner, repository=requirement['baseline']['repository']['identity'],
+                          url=owner['html_url']) == stage, 'ANNUAL_ORIGINAL_OWNER_CHANGED')
     need(plan['requirement_hashes'] == requirement['hashes']
          and plan['requirement_closure_hash'] == stage['requirement_closure_hash'] == requirement['requirement_closure_hash']
          and stage['policy'] == requirement['effective_decisions']['S-ANNUAL-REPAIR']['choice'],
          'ANNUAL_ORIGINAL_REQUIREMENT_CHANGED')
     prepared = annual_input.prepare_annual_input(repo_root=data_root, company_id=context['policy']['company_id'])
-    request = runtime._request(prepared, data_root, plan['task_contract_id'])
+    request = runtime._request(prepared, data_root, plan['task_contract_id'], code_root=data_root)
     need(prepared == plan['prepared_input'] and request == plan['request']
          and stage['reviewed_input_request'] == {'input_id': prepared['input_id'], 'request': request},
          'ANNUAL_INPUT_OR_REQUEST_CHANGED')
@@ -121,6 +123,17 @@ def _source_proof(root, context):
          and read(root, 'controls/repair-slot.json') == {**slot, 'ordinal': 1,
              'delegation_url': stage['policy']['repair_budget_delegation_url']}, 'ANNUAL_CONSUMED_SLOT_CHANGED')
     manifests = {name: read(candidate / name, 'manifest.json') for name in ('b01', 'b10')}
+    from .sources import raw_blob_record, source_reference_record
+    structured = prepared['companyfacts_input']
+    raw = raw_blob_record(repo_root=data_root, repo_relative_path=structured['source_repo_relative_path'], media_type='application/json')
+    source = source_reference_record(raw_blob=raw, source_role='companyfacts', **{
+        k: structured[k] for k in ('company_id', 'source_url', 'accession', 'document_name', 'request_attempt_id')})
+    structured_records = _records(candidate / 'b01')
+    need(manifests['b01']['run_id'] == original_run_id + ':structured'
+         and manifests['b01']['source_references'] == [source]
+         and [r for r in structured_records if r['record_type'] == 'RAW_BLOB'] == [raw]
+         and [r for r in structured_records if r['record_type'] == 'SOURCE_REFERENCE'] == [source],
+         'ANNUAL_STRUCTURED_RUN_OR_SOURCE_CHANGED')
     need(manifests['b10']['run_id'] == original_run_id
          and manifests['b10']['requirement_hashes'] == requirement['hashes']
          and manifests['b10']['source_references'] == [request['source_reference']]
@@ -134,33 +147,32 @@ def _source_proof(root, context):
     plans = list((logroot / 'plans').glob('*.json'))
     need(len(plans) == 1, 'ANNUAL_INVOCATION_SET_INVALID')
     invocation = strict_json_file(path=plans[0])
-    authority = controller.prepare_annual_candidate_invocation_authority(requirement=requirement, repo_root=data_root)
-    with controller._successor_plan_context(repo_root=data_root, authority=authority):
-        controller.validate_ai_invocation_plan(plan=invocation)
-        need(invocation['release_input_plan_id'] == plan['plan_id']
-             and invocation['provider_request_body_sha256'] == request['provider_request_body_sha256']
-             and invocation['source_identity_hash'] == request['reader_input_manifest_id']
-             and invocation['selected_representation_hash'] == request['derived_asset_id'], 'ANNUAL_INVOCATION_CHANGED')
-        execution_id = controller.execution_identity(ai_invocation_plan_id=invocation['ai_invocation_plan_id'],
-            owner_token=stage['stage_id'], authorized_at_utc=owner['created_at'])
-        execution = controller._load_execution_receipt(root=logroot,
-            path=controller._execution_path(root=logroot, execution_id=execution_id), execution_id=execution_id)
-        markers = controller._egress_markers_for_execution(root=logroot, execution_id=execution_id)
-        need(len(list((logroot / 'executions').glob('*.json'))) == len(markers) == len(execution['attempts']) == 1
-             and execution['status'] == execution['attempts'][0]['status'] == 'SUCCEEDED'
-             and execution['counters'] == controller._counters_from_egress_markers(markers=markers, plan=invocation)
-             and execution['counters'] == {'real_model_provider_egress_count': 1,
-                 'paid_model_provider_call_count': 1, 'mock_transport_invocation_count': 0}, 'ANNUAL_EXECUTION_NOT_ACCEPTED')
-        attempts = [r for r in _records(candidate / 'b10') if r['record_type'] == 'AI_EXTRACTION_ATTEMPT']
-        need(len(attempts) == 1 and attempts[0]['status'] == 'SUCCEEDED', 'ANNUAL_ATTEMPT_NOT_ACCEPTED')
-        attempt = attempts[0]
-        raw = resolve_repository_file(repo_root=candidate / 'b10', repo_relative_path=attempt['raw_response_path']).read_bytes()
-        need(runtime.prior.usage_error(raw) is None, 'ANNUAL_USAGE_NOT_ACCEPTED')
-        success = controller.load_successful_response(workspace_dir=candidate, plan=invocation)
-        need(success['provider_request_id'] == attempt['provider_request_id']
-             and sha256_bytes(content=success['response_body']) == attempt['assistant_output_sha256']
-             and execution['attempts'][0]['usage'] == _controller_usage(raw_response_bytes=raw),
-             'ANNUAL_RESPONSE_EXECUTION_CHANGED')
+    history = controller.prepare_historical_annual_invocation_view(repo_root=data_root, requirement_id=requirement['requirement_id'])
+    controller.validate_ai_invocation_plan(plan=invocation, _historical_view=history)
+    need(invocation['release_input_plan_id'] == plan['plan_id']
+         and invocation['provider_request_body_sha256'] == request['provider_request_body_sha256']
+         and invocation['source_identity_hash'] == request['reader_input_manifest_id']
+         and invocation['selected_representation_hash'] == request['derived_asset_id'], 'ANNUAL_INVOCATION_CHANGED')
+    execution_id = controller.execution_identity(ai_invocation_plan_id=invocation['ai_invocation_plan_id'],
+        owner_token=stage['stage_id'], authorized_at_utc=owner['created_at'])
+    execution = controller._load_execution_receipt(root=logroot,
+        path=controller._execution_path(root=logroot, execution_id=execution_id), execution_id=execution_id)
+    markers = controller._egress_markers_for_execution(root=logroot, execution_id=execution_id)
+    need(len(list((logroot / 'executions').glob('*.json'))) == len(markers) == len(execution['attempts']) == 1
+         and execution['status'] == execution['attempts'][0]['status'] == 'SUCCEEDED'
+         and execution['counters'] == controller._counters_from_egress_markers(markers=markers, plan=invocation)
+         and execution['counters'] == {'real_model_provider_egress_count': 1,
+             'paid_model_provider_call_count': 1, 'mock_transport_invocation_count': 0}, 'ANNUAL_EXECUTION_NOT_ACCEPTED')
+    attempts = [r for r in _records(candidate / 'b10') if r['record_type'] == 'AI_EXTRACTION_ATTEMPT']
+    need(len(attempts) == 1 and attempts[0]['status'] == 'SUCCEEDED', 'ANNUAL_ATTEMPT_NOT_ACCEPTED')
+    attempt = attempts[0]
+    raw = resolve_repository_file(repo_root=candidate / 'b10', repo_relative_path=attempt['raw_response_path']).read_bytes()
+    need(not runtime.prior.usage_error(raw), 'ANNUAL_USAGE_NOT_ACCEPTED')
+    success = controller.load_successful_response(workspace_dir=candidate, plan=invocation, _historical_view=history)
+    need(success['provider_request_id'] == attempt['provider_request_id']
+         and sha256_bytes(content=success['response_body']) == attempt['assistant_output_sha256']
+         and execution['attempts'][0]['usage'] == _controller_usage(raw_response_bytes=raw),
+         'ANNUAL_RESPONSE_EXECUTION_CHANGED')
     return manifests, requirement, execution
 
 
@@ -197,6 +209,11 @@ def replay_snapshot(root, context):
          and _tree_files(root=root / 'candidate') == context['candidate_files']
          and _tree_files(root=root / 'controls') == context['control_files'], 'ANNUAL_SNAPSHOT_BYTES_CHANGED')
     need(context['policy'] == policy(), 'ANNUAL_ADOPTION_POLICY_CHANGED')
+    need(content_hash(value=context['historical_code_files'])
+         == context['origin']['stage']['reviewed_code']['runtime_tree'], 'ANNUAL_HISTORICAL_CODE_MAP_CHANGED')
+    for path, proof in context['data_files'].items():
+        if path in context['historical_code_files']:
+            need(context['historical_code_files'][path] == proof, 'ANNUAL_HISTORICAL_AUTHORITY_CHANGED')
     manifests, requirement, execution = _source_proof(root, context)
     replay = _ReadOnlyReplay(_FACTORY, root, manifests)
     token = _active.set(replay)

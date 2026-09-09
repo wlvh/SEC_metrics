@@ -37,8 +37,14 @@ def utc():
 
 
 def safe_root(root):
-    from .annual_runtime import _external
-    return _external(root)
+    need(isinstance(root, Path) and root.is_absolute(), 'ANNUAL_ABSOLUTE_ROOT_REQUIRED')
+    for path in (root, *root.parents):
+        need(not path.is_symlink() and not (path / '.git').exists(), 'ANNUAL_ROOT_ALIAS_OR_CHECKOUT')
+    result = root.resolve()
+    need(result != ROOT and result not in ROOT.parents and ROOT not in result.parents, 'ANNUAL_OFFICIAL_ROOT_FORBIDDEN')
+    if (result / 'outputs/active_publication.json').exists():
+        need((result / 'annual_publication_workspace.json').is_file(), 'ANNUAL_UNOWNED_ACTIVE_ROOT_FORBIDDEN')
+    return result
 
 
 def _marker(root):

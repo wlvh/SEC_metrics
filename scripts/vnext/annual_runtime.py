@@ -215,7 +215,8 @@ def _copy_inputs(*, source_root, data_root, prepared, requirement):
             output.write(source.read_bytes())
 
 
-def _request(prepared, data_root, task_id):
+def _request(prepared, data_root, task_id, *, code_root=None):
+    code_root = CODE_ROOT if code_root is None else code_root
     # Same factories and full document as PR36. Only the verified byte root differs.
     from .ai_adapter import approved_transport_policy, build_provider_request_body
     from .provider_runtime import (
@@ -254,20 +255,20 @@ def _request(prepared, data_root, task_id):
         derived_asset=grid, source_reference_ids=[source["source_reference_id"]]
     )
     request = prepare_reader_request(
-        repo_root=CODE_ROOT,
+        repo_root=code_root,
         task_contract_id=task_id,
         manifest=manifest,
         derived_asset=grid,
     )
     parent = load_requirement_snapshot(
-        snapshot_dir=CODE_ROOT / "requirements/issue_15_v1"
+        snapshot_dir=code_root / "requirements/issue_15_v1"
     )
     transport = approved_transport_policy(requirement=parent)
     outbound, schema = build_provider_request_body(
         policy=transport, reader_request_bytes=request.request_bytes
     )
     runtime = load_provider_runtime_authority(
-        repo_root=CODE_ROOT,
+        repo_root=code_root,
         provider=transport.provider,
         model=transport.model,
         api=transport.api,
