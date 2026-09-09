@@ -1,0 +1,54 @@
+{
+  "mode": "deep-negatives",
+  "command": [
+    "tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "code": {
+    "head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+    "git_tree_oid": "8c0ca4334742c2d1ebae62612085d4395d440c93",
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "test_tree": "sha256:3e04deabcf8b7026842745326dbe523427517e0fc119708e15571759d1058a4e",
+    "test_files": {
+      "tests/vnext/test_annual_formal_rehearsal.py": {
+        "sha256": "71412d0d96f948439af11429c5cf54b67e97d8a3696ac5d22de52a3dfc758f48",
+        "size": 20494
+      },
+      "tests/vnext/test_annual_publication_authority.py": {
+        "sha256": "5d03202c19977e84dd8199b6853b4a91670987d68479b94d5d2805e5bb8ec288",
+        "size": 6903
+      },
+      "tools/run_fast_tests.py": {
+        "sha256": "d3e57b38f073e86df4996409645baad6007b268fec5e8fe0a459adb2c5a5cb36",
+        "size": 9142
+      }
+    }
+  },
+  "started_at_utc": "2026-09-09T13:27:54.075250+00:00",
+  "finished_at_utc": "2026-09-09T13:32:22.279570+00:00",
+  "exit_status": 1,
+  "github_reads": [],
+  "new_business_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "pr38_historical_calls": [
+    2,
+    2,
+    0
+  ],
+  "log": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-01/deep-negatives.log",
+    "sha256": "fd83e961a0b46d29a67a895c2ad524e66f1853193a5cd3efe3e8c96c53e010a7",
+    "size": 1685
+  },
+  "harness": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b.py",
+    "sha256": "e29200a37b7886ffdb222e61a387a6de7e10270439d490bc6ced80f25108975c",
+    "size": 5970
+  },
+  "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-01/publication",
+  "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+  "protection_equal": true
+}

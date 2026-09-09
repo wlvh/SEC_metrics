@@ -1,0 +1,243 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_FORMAL_ADOPTION_FINAL_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "human_review": false,
+  "review_source": "Actual independent collaboration-subtask source review, bounded offline test execution, Git/archive/file checks and original execution-log inspection. This is neither human approval nor production authorization.",
+  "reviewed_at_utc": "2026-09-09T14:12:37.091481+00:00",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "conclusion_scope": "B fixed implementation and corrected test delta, complete pending candidate package, accepted isolated execution evidence and concrete inert production plan are ready for review and the separately required real approvals.",
+  "reviewed_head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+  "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+  "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+  "requirement_id": "issue_28_v7",
+  "requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+  "policy_id": "annual_candidate_adoption_v2",
+  "policy_hash": "sha256:159044d6584ec288e25841e8e5a458d83ceb6d738a787178973390aee354540f",
+  "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "manifest_file_sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+  "plan_id": "sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339",
+  "adoption_receipt_id": "sha256:0ca14292d4ed0315cb144a2cdf37cb5680187acd820564b79a1a471e5ba99eef",
+  "source_snapshot_id": "sha256:7cbba0c09497b884b46cbc6be037680601a5fcb5e60a4adf5b6c50963c216829",
+  "prior_independent_reviews": [
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/content-review.json",
+      "sha256": "ba06a47d446c298fc7819db35a466166a6cee82bd411537adda133bd6b853a8b",
+      "size": 18353
+    },
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/core-review-implementation.json",
+      "sha256": "f2e37bb97412c16ad8ca86e6f155786ac69501d422050ba5b4d37c3d6a86d100",
+      "size": 9639
+    },
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/test-fix-review.json",
+      "sha256": "e55c81a60d4d0f4f2e2d8bb020e4816c7e54adcda4c893c877ad57fee951bb5f",
+      "size": 3352
+    },
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/pending-plan-review.json",
+      "sha256": "e863adc88d81cd7d3be3eeedcd2b1444f43850d6a8a7e232e4ae1c55dfe85157",
+      "size": 2566
+    }
+  ],
+  "independently_performed_during_B_review": [
+    "Inspected core permission/policy/Requirement/native switch integration and the exact two-method test correction; verified unchanged implementation tree between 73dfe052 and 8ca50dd.",
+    "Executed ten short authority/v1 boundary tests at 73dfe052: all PASS in 2.838s; those short test modules were unchanged by the final two long-test corrections.",
+    "Inspected actual CompanyFacts/HTML source content, native B01 direct calculation and B10 business scope/year/unit; linked exact original and bundled Run/response/controller/Result bytes.",
+    "Recomputed Git implementation/test identities, 287 runtime files against actual Git archive, all 906 package file hashes, policy/Requirement linkage and exact 28 candidate files. Loaded and validated the new Requirement execution authority from both source and frozen runtime roots.",
+    "Executed bind_b_final.py attempt-02 at the final 8ca50dd head: exit 0, VERIFIED_IMPLEMENTATION_EXECUTION_PACKAGE_AND_PENDING_PLAN.",
+    "Read raw CI log and recomputed its hash; compared both actual module results to the saved CI summary.",
+    "Recompared every final protected file, historical runtime, stash and historical worktree against the A protection baseline, and checked actual production permission/action/execution directories remain absent."
+  ],
+  "current_execution_evidence_read_not_reexecuted": {
+    "prepare": {
+      "status": "PREPARED_COMPLETE_ADOPTION_CANDIDATE",
+      "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+      "exit_status": 0,
+      "original_saved_comment_reads": 1
+    },
+    "read": {
+      "exit_status": 0,
+      "public_rows": 327,
+      "verified_source_locations": 2
+    },
+    "normal_and_policy_integration": {
+      "methods": [
+        "test_complete_version_permission_switch_and_finite_directions",
+        "test_rehashed_package_policy_mixing_is_rejected"
+      ],
+      "duration_seconds": "496.898",
+      "method_count": 2,
+      "status": "OK",
+      "skipped": false,
+      "coverage": "Complete pending package; isolated TEST_ONLY permission construction and stable reconstruction; inactive deploy, publish, rollback, restore, dedup, source read; three exact policy rejection reasons.",
+      "log": {
+        "sha256": "2a8ae908c6a543a46e589d3b0ef7e6e91e4ad069c1d74e968ead1cb4fad08f58",
+        "size": 472
+      }
+    },
+    "deep_negatives": {
+      "method_count": 1,
+      "case_count": 8,
+      "duration_seconds": "308.581",
+      "status": "OK",
+      "skipped": false,
+      "coverage": "Expected native wrong-source/foreign-Run/missing-Result/runtime/tree/credit/type/missing-Review rejections; per-case original pointer/mirrors/bundle preservation and final real view read.",
+      "log": {
+        "sha256": "b470080750d5fcac0be964c51bca355deedfee3a70ff0ca6cfd455d1a1ff8a20",
+        "size": 257
+      }
+    },
+    "repeat_prepare": {
+      "status": "REUSED_PREPARED_PUBLICATION",
+      "reported_publication_tree_file_count": 1821,
+      "github_reads": 0,
+      "business_calls": [
+        0,
+        0,
+        0
+      ],
+      "harness_read_and_hash_checked": true,
+      "native_full_replay_rerun_by_reviewer": false,
+      "record": {
+        "sha256": "fabdf65b9241e688f305a1de964ba7547afbb510c94b9f6c5863fbdc24eb1e7d",
+        "size": 1073
+      }
+    },
+    "binding_report": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/run-binding.json",
+      "sha256": "1664aeb4c442055206b55c1b7d39fb6f7efb0bffdf4320c86b52aa470bd3788b",
+      "size": 56666
+    },
+    "binding_verifier": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/bind_b_final.py",
+      "sha256": "405456a97f60dfd8876789b3d4aeefc05eae1992c8de261521d74f5a31307ca1",
+      "size": 9263
+    }
+  },
+  "prior_component_reuse": {
+    "head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+    "package_id": "publication_37d422855bc4c9626cbf2350602d4b60ea28b6432b63d1fe84b9ed60756e8749",
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "methods": [
+      "test_exact_approved_merge_relation_uses_real_git_objects_without_open_pr_rule",
+      "test_pre_and_post_pointer_recovery_is_bound_to_the_same_action",
+      "test_rebound_plan_and_approval_errors_never_write",
+      "test_reserved_action_without_native_intent_preserves_old_and_does_not_retry",
+      "test_soft_failure_retains_old_complete_version",
+      "test_v1_and_actual_r3_remain_readable_and_v1_cannot_be_adopted"
+    ],
+    "method_count": 6,
+    "basis": "Each method has its actual ... ok line; method AST/setup and all production/policy/Requirement bytes are unchanged. New normal chain replaces the old normal-chain evidence.",
+    "original_overall_suite_result": "FAILED (errors=3), retained unchanged",
+    "original_deep_overall_result": "FAILED (failures=1) after eight native rejections, retained unchanged",
+    "excluded_wrong_self_report": "The old integration.json UNKNOWN_CHANGED_OR_MIXED_POLICY_AFTER_OUTER_REHASH PASS row was appended after subTest errors. It has no passing credit; only the new corrected policy method supplies that credit.",
+    "long_fault_scenarios_rerun_by_reviewer": false
+  },
+  "ci": {
+    "run_id": 34359330612,
+    "url": "https://github.com/wlvh/SEC_metrics/actions/runs/34359330612",
+    "implementation_head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+    "checkout_ref": "refs/pull/40/merge",
+    "actual_checkout_commit": "c6eedf3955e4df78f14a3b63bdb7c05e1b629fe1",
+    "merge_base_head": "56610e03a2dc92daef172b62e93f021e18885229",
+    "module_test_counts": {
+      "tests.vnext.test_annual_publication": 4,
+      "tests.vnext.test_annual_publication_authority": 6
+    },
+    "suite_status": "PASSED",
+    "raw_log_file": {
+      "sha256": "117a13b88236b2b7fc5be41e51f1c6cc8f06462ae2a64c951c619c56e1f69d0b",
+      "size": 38418
+    },
+    "reviewer_triggered_or_reexecuted_ci": false
+  },
+  "pending_production_plan": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/pending-production-plan.json",
+    "file": {
+      "sha256": "f883be4a88e723bc2344195c60e42da8cc6625984f6ea8c2422833489001e9fb",
+      "size": 3740
+    },
+    "execution_steps": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/PENDING_EXECUTION_PLAN.md",
+      "sha256": "62079adc4baf367e8bac315551fc63a660ee13e80ba32960a4e1157a86f8858b",
+      "size": 7252
+    },
+    "approval_status": "NOT_ISSUED",
+    "target_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "predecessor": {
+      "manifest_sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a",
+      "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8"
+    },
+    "operations": {
+      "publish": 1,
+      "recover": "ONLY_THE_SAME_RESERVED_NATIVE_SWITCH",
+      "restore": 1,
+      "rollback": 1
+    },
+    "templates_status": "TEMPLATES_ONLY_NO_AUTHORITY",
+    "missing_future_information": "Two not-yet-issued real owner approval-comment URLs and their provenance/timestamps. All package, source, code, test, Requirement, target and predecessor identities and command paths are concrete.",
+    "test_permission_boundary": "Successful rehearsals use separate TEST_ONLY bodies/activation type and temporary isolated targets. Production-intent plan/templates do not constitute a permission, and no real activation or production grant is created by this review."
+  },
+  "safety_and_protection": {
+    "transient_actual_root_write_occurred": true,
+    "incident_file": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/safety/root-write-incident.json",
+      "sha256": "54e0967cceb0f0a42d88d4f7ac4a047c365f27fc79d5fb3f675d7679a4ded00b",
+      "size": 1260
+    },
+    "affected_path": "outputs/semantic_audit_receipt.json",
+    "generated_sha256": "654a53c0e099ed646642a47a89ab71c1d915f489cf418316349510c844e36f0d",
+    "restored_sha256": "efe2eaab173e86576ac1b0dc03f3c2c0f723d9ff2f92b74dd21f80a93210d2cd",
+    "restored_size": 7629,
+    "restoration_independently_verified_against_HEAD_and_A_baseline": true,
+    "final_protection_equal": true,
+    "final_counts": {
+      "official_files": 35,
+      "official_publication_files": 891,
+      "candidate_files": 28,
+      "historical_runtime_files": 1530,
+      "stash_entries": 8,
+      "historical_worktrees": 17
+    },
+    "claim_boundary": "Do not describe B as never writing actual-root files. The accidental mirror write was disclosed, preserved and restored; actual R3 pointer and historical packages remained unchanged. This was not a business network call."
+  },
+  "current_delivery_state": {
+    "A": "COMPLETED_MERGE_COMMIT_AND_POST_MERGE_READ",
+    "A_merge_commit": "74af2fd106c54938306d7c354323c45be861cbf2",
+    "A_post_merge_evidence": "Read saved PASSED_POST_MERGE_READ_ONLY_COMPATIBILITY for three actual bundles, with two source locations in each annual bundle; confirmed merge ancestor in current Git history.",
+    "B": "REVIEWABLE_DELIVERY_PENDING_REAL_APPROVAL",
+    "requirement_activation_state": "NOT_ACTIVATED",
+    "production_grant_issued": false,
+    "production_publication_actions_executed": false,
+    "actual_formal_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "candidate_counts": {
+      "adopted": 2,
+      "inherited": 238,
+      "complete_keys": 240,
+      "public_rows": 327
+    },
+    "B_new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "B_real_saved_execution_comment_reads": 2,
+    "PR38_historical_provider_paid_sec_calls": [
+      2,
+      2,
+      0
+    ]
+  },
+  "limitations": [
+    "This conclusion accepts the bounded development and isolated evidence package for review. It is not a GitHub APPROVE, Requirement activation, grant, merge instruction, or authorization to mutate actual R3.",
+    "Long native integration/fault tests and repeat prepare were inspected through actual immutable execution records and logs; the reviewer did not run them again.",
+    "The 238 inherited keys retain prior evidence levels, and the exact known FY2025 source audit does not prove unseen-input generalization or 39-metric migration.",
+    "The final export ZIP will be created after this review. Its byte checks and extracted-package cold read remain a separate final packaging check by the parent task; no future ZIP identity or completion is asserted here."
+  ],
+  "formal_publication_authorized_by_review": false,
+  "qualification_credit": "NONE",
+  "checkout_clean_at_completion": true
+}

@@ -1,0 +1,1143 @@
+{
+  "status": "VERIFIED_IMPLEMENTATION_EXECUTION_PACKAGE_AND_PENDING_PLAN",
+  "implementation": {
+    "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+    "git_tree_oid": "eba8445a16e3d111b5fbba8d0cf13586dfdd6b2f",
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+    "test_files": {
+      "tests/vnext/test_annual_formal_rehearsal.py": {
+        "sha256": "dd395f0991636bf9b65786d755582718a808991e96ebd9b0109292c844bc6270",
+        "size": 20743
+      },
+      "tests/vnext/test_annual_publication_authority.py": {
+        "sha256": "5d03202c19977e84dd8199b6853b4a91670987d68479b94d5d2805e5bb8ec288",
+        "size": 6903
+      },
+      "tools/run_fast_tests.py": {
+        "sha256": "d3e57b38f073e86df4996409645baad6007b268fec5e8fe0a459adb2c5a5cb36",
+        "size": 9142
+      }
+    }
+  },
+  "executions": {
+    "prepare": {
+      "mode": "prepare",
+      "command": [
+        "tools/vnext_annual_publication.py",
+        "prepare",
+        "--policy-id",
+        "annual_candidate_adoption_v2",
+        "--candidate-dir",
+        "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+        "--publication-root",
+        "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+        "--output-json",
+        "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/prepare.json"
+      ],
+      "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "code": {
+        "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+        "git_tree_oid": "eba8445a16e3d111b5fbba8d0cf13586dfdd6b2f",
+        "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+        "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+        "test_files": {
+          "tests/vnext/test_annual_formal_rehearsal.py": {
+            "sha256": "dd395f0991636bf9b65786d755582718a808991e96ebd9b0109292c844bc6270",
+            "size": 20743
+          },
+          "tests/vnext/test_annual_publication_authority.py": {
+            "sha256": "5d03202c19977e84dd8199b6853b4a91670987d68479b94d5d2805e5bb8ec288",
+            "size": 6903
+          },
+          "tools/run_fast_tests.py": {
+            "sha256": "d3e57b38f073e86df4996409645baad6007b268fec5e8fe0a459adb2c5a5cb36",
+            "size": 9142
+          }
+        }
+      },
+      "started_at_utc": "2026-09-09T13:47:12.333788+00:00",
+      "finished_at_utc": "2026-09-09T13:49:40.372452+00:00",
+      "exit_status": 0,
+      "github_reads": [
+        {
+          "path": "repos/wlvh/SEC_metrics/issues/comments/5596431062",
+          "comment_id": 5596431062,
+          "url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5596431062",
+          "value_content_id": "sha256:7bd4efac58baee9e9d06bd28202708e66ab1d30890995b3e5b9e5c40c26fad94"
+        }
+      ],
+      "new_business_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "pr38_historical_calls": [
+        2,
+        2,
+        0
+      ],
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/prepare.log",
+        "sha256": "51b249d0580d2133a055790a7c043547efbd7b72afb778d7f96c1850298833a4",
+        "size": 590
+      },
+      "harness": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b_final.py",
+        "sha256": "163d9bf834c4df63ea7ed641d81a04763b22397b7f870b61d971e34ff80fdf99",
+        "size": 6176
+      },
+      "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+      "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "protection_equal": true
+    },
+    "read": {
+      "mode": "read",
+      "command": [
+        "tools/vnext_annual_publication.py",
+        "read",
+        "--publication-root",
+        "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+        "--publication-id",
+        "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+        "--output-json",
+        "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/read.json"
+      ],
+      "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "code": {
+        "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+        "git_tree_oid": "eba8445a16e3d111b5fbba8d0cf13586dfdd6b2f",
+        "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+        "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+        "test_files": {
+          "tests/vnext/test_annual_formal_rehearsal.py": {
+            "sha256": "dd395f0991636bf9b65786d755582718a808991e96ebd9b0109292c844bc6270",
+            "size": 20743
+          },
+          "tests/vnext/test_annual_publication_authority.py": {
+            "sha256": "5d03202c19977e84dd8199b6853b4a91670987d68479b94d5d2805e5bb8ec288",
+            "size": 6903
+          },
+          "tools/run_fast_tests.py": {
+            "sha256": "d3e57b38f073e86df4996409645baad6007b268fec5e8fe0a459adb2c5a5cb36",
+            "size": 9142
+          }
+        }
+      },
+      "started_at_utc": "2026-09-09T13:50:47.510314+00:00",
+      "finished_at_utc": "2026-09-09T13:51:43.867732+00:00",
+      "exit_status": 0,
+      "github_reads": [],
+      "new_business_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "pr38_historical_calls": [
+        2,
+        2,
+        0
+      ],
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/read.log",
+        "sha256": "9da5cdf1d79dc6c2bff0afb7a681b8588088a743ee542f74742a946b7bff72d6",
+        "size": 6304
+      },
+      "harness": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b_final.py",
+        "sha256": "163d9bf834c4df63ea7ed641d81a04763b22397b7f870b61d971e34ff80fdf99",
+        "size": 6176
+      },
+      "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+      "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "protection_equal": true
+    },
+    "integration": {
+      "mode": "integration",
+      "command": [
+        "tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_complete_version_permission_switch_and_finite_directions",
+        "tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected"
+      ],
+      "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "code": {
+        "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+        "git_tree_oid": "eba8445a16e3d111b5fbba8d0cf13586dfdd6b2f",
+        "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+        "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+        "test_files": {
+          "tests/vnext/test_annual_formal_rehearsal.py": {
+            "sha256": "dd395f0991636bf9b65786d755582718a808991e96ebd9b0109292c844bc6270",
+            "size": 20743
+          },
+          "tests/vnext/test_annual_publication_authority.py": {
+            "sha256": "5d03202c19977e84dd8199b6853b4a91670987d68479b94d5d2805e5bb8ec288",
+            "size": 6903
+          },
+          "tools/run_fast_tests.py": {
+            "sha256": "d3e57b38f073e86df4996409645baad6007b268fec5e8fe0a459adb2c5a5cb36",
+            "size": 9142
+          }
+        }
+      },
+      "started_at_utc": "2026-09-09T13:50:47.510323+00:00",
+      "finished_at_utc": "2026-09-09T13:59:04.867707+00:00",
+      "exit_status": 0,
+      "github_reads": [],
+      "new_business_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "pr38_historical_calls": [
+        2,
+        2,
+        0
+      ],
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/integration.log",
+        "sha256": "2a8ae908c6a543a46e589d3b0ef7e6e91e4ad069c1d74e968ead1cb4fad08f58",
+        "size": 472
+      },
+      "harness": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b_final.py",
+        "sha256": "163d9bf834c4df63ea7ed641d81a04763b22397b7f870b61d971e34ff80fdf99",
+        "size": 6176
+      },
+      "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+      "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "protection_equal": true
+    },
+    "deep-negatives": {
+      "mode": "deep-negatives",
+      "command": [
+        "tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples"
+      ],
+      "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+      "code": {
+        "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+        "git_tree_oid": "eba8445a16e3d111b5fbba8d0cf13586dfdd6b2f",
+        "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+        "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+        "test_files": {
+          "tests/vnext/test_annual_formal_rehearsal.py": {
+            "sha256": "dd395f0991636bf9b65786d755582718a808991e96ebd9b0109292c844bc6270",
+            "size": 20743
+          },
+          "tests/vnext/test_annual_publication_authority.py": {
+            "sha256": "5d03202c19977e84dd8199b6853b4a91670987d68479b94d5d2805e5bb8ec288",
+            "size": 6903
+          },
+          "tools/run_fast_tests.py": {
+            "sha256": "d3e57b38f073e86df4996409645baad6007b268fec5e8fe0a459adb2c5a5cb36",
+            "size": 9142
+          }
+        }
+      },
+      "started_at_utc": "2026-09-09T13:50:47.510305+00:00",
+      "finished_at_utc": "2026-09-09T13:55:56.561494+00:00",
+      "exit_status": 0,
+      "github_reads": [],
+      "new_business_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "pr38_historical_calls": [
+        2,
+        2,
+        0
+      ],
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/deep-negatives.log",
+        "sha256": "b470080750d5fcac0be964c51bca355deedfee3a70ff0ca6cfd455d1a1ff8a20",
+        "size": 257
+      },
+      "harness": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b_final.py",
+        "sha256": "163d9bf834c4df63ea7ed641d81a04763b22397b7f870b61d971e34ff80fdf99",
+        "size": 6176
+      },
+      "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+      "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "protection_equal": true
+    }
+  },
+  "package": {
+    "directory": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication/outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "manifest_file": {
+      "sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+      "size": 243585
+    },
+    "metadata_path": "internal/annual_release.json",
+    "metadata_file": {
+      "sha256": "90961ffd8130f72923011355996134b132139817a09c4395a7fc3c0a491ed833",
+      "size": 54241
+    },
+    "adoption_receipt_object_id": "sha256:0ca14292d4ed0315cb144a2cdf37cb5680187acd820564b79a1a471e5ba99eef",
+    "adoption_receipt_file": {
+      "sha256": "cd8d10be27ae74153069cb1291203ad6c37197e2b79a44235c50fedb442ffada",
+      "size": 5251
+    },
+    "file_count": 906,
+    "selected": 2,
+    "inherited": 238,
+    "public_rows": 327
+  },
+  "pending_plan": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/pending-production-plan.json",
+    "object_id": "sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339",
+    "file": {
+      "sha256": "f883be4a88e723bc2344195c60e42da8cc6625984f6ea8c2422833489001e9fb",
+      "size": 3740
+    },
+    "binding": {
+      "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "manifest_sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+      "adoption_receipt_id": "sha256:0ca14292d4ed0315cb144a2cdf37cb5680187acd820564b79a1a471e5ba99eef",
+      "source_snapshot_id": "sha256:7cbba0c09497b884b46cbc6be037680601a5fcb5e60a4adf5b6c50963c216829",
+      "candidate_file_set_id": "sha256:4af14ac84329cb4227c204fa9cd8204d87af3a337e7ca53500f2ebff7e94d797",
+      "native_run_ids": {
+        "b01": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030:structured",
+        "b10": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030"
+      },
+      "original_execution_id": "sha256:e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c",
+      "selected_results_id": "sha256:602c70831a372dbd976795fd8a0fc0d744d8439795d25b2471205dd587ffcd86",
+      "policy_id": "annual_candidate_adoption_v2",
+      "policy_hash": "sha256:159044d6584ec288e25841e8e5a458d83ceb6d738a787178973390aee354540f",
+      "requirement_id": "issue_28_v7",
+      "requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+      "requirement_hashes": {
+        "baseline_sha256": "bcfe57cdb91eea71fddf40e4449ebfde44fc83da8ba22479f47d3034086a59f6",
+        "contract_sha256": "7b0652878887bf6be0771b8fe1687e19dfc206a4d492cea595e7b202453fa67a",
+        "decision_register_sha256": "30cf77ef6aabd88201bbd3bfcd88b9905c20e08bced4fbd30a34c45494f49ef0",
+        "invariant_profile_sha256": "44a856d38b7569b1e183d58811d7379f5d32271c7ca94f3e44c3960e3d240086",
+        "transfer_manifest_sha256": "e2a9ac284840663b3e8ddb65de72a114c9d8435e71370aada8b802444bd24a37",
+        "parent_requirement_closure_hash": "sha256:ae514fce489eaef055e4c2c38d915d00954ef38734c9550cb5a433e83ec644de",
+        "validator_sha256": "84e787a388b242108625db861340f87908c83bade0eb3213181e35df54b48580"
+      }
+    },
+    "target_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "predecessor": {
+      "manifest_sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a",
+      "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8"
+    },
+    "operations": {
+      "publish": 1,
+      "recover": "ONLY_THE_SAME_RESERVED_NATIVE_SWITCH",
+      "restore": 1,
+      "rollback": 1
+    }
+  },
+  "repeat_prepare": {
+    "status": "REPEATED_V2_PREPARE_NO_WRITES_NO_GITHUB_NO_BUSINESS_CALLS",
+    "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+    "started_at_utc": "2026-09-09T14:07:06.592401+00:00",
+    "finished_at_utc": "2026-09-09T14:07:59.251037+00:00",
+    "result": {
+      "adoption_receipt_id": "sha256:0ca14292d4ed0315cb144a2cdf37cb5680187acd820564b79a1a471e5ba99eef",
+      "cumulative_result_count": 240,
+      "new_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "previous_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+      "public_row_count": 327,
+      "publication_credit": "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY",
+      "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "selected_result_count": 2,
+      "status": "REUSED_PREPARED_PUBLICATION"
+    },
+    "publication_tree_file_count": 1821,
+    "github_reads": 0,
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "harness_sha256": "9c017a89d9803d79f0f5c4aa12a84dd22f0bcbbbb60cc9fa26b96a5d3bf947dd"
+  },
+  "source_locations": [
+    {
+      "metric_id": "B01",
+      "source_reference": {
+        "accession": "0001048286-26-000007",
+        "company_id": "marriott_international",
+        "document_name": "CIK0001048286.json",
+        "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+        "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+      },
+      "original_storage_uri": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "size": 3269111,
+      "verified_via": "PublicationView.read_bytes"
+    },
+    {
+      "metric_id": "B10",
+      "source_reference": {
+        "accession": "0001048286-26-000007",
+        "company_id": "marriott_international",
+        "document_name": "mar-20251231.htm",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm"
+      },
+      "original_storage_uri": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "size": 2048661,
+      "verified_via": "PublicationView.read_bytes"
+    }
+  ],
+  "selected_results": {
+    "B01": {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "metric_id": "B01",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:3e637913536d24349f51c6525c3061c8a2969bb89013ccddb000736c3cc4dba5",
+      "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+      "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+      "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+      "unit": "USD",
+      "value": "26186000000"
+    },
+    "B10": {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "period_end": "2025-12-31",
+      "period_start": "2025-01-01",
+      "publication": "PUBLISHED",
+      "quality": "EXACT",
+      "reason_code": "PASS",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+      "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+      "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+      "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+      "unit": "ratio",
+      "value": "0.693"
+    }
+  },
+  "native_run_ids": {
+    "b01": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030:structured",
+    "b10": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030"
+  },
+  "native_requirement_hashes": {
+    "b01": {
+      "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+      "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+      "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+      "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+      "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+      "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+      "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+      "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+    },
+    "b10": {
+      "baseline_sha256": "2d92c3bed871c6b76f007af89dcccc74d130b917192ababd1b19abb5f018db23",
+      "contract_sha256": "efc751a414afc4315f99dd092ce2b4e66e6ecb9c2f117d286305c0eb91c7e4f4",
+      "decision_register_sha256": "ab87aa281f748bf64ea8ef9782754bc9a0b2d069b299a692393fa02749649a7f",
+      "invariant_profile_sha256": "136019dc2c927a96bfd65d56e4da8661761c36fc7f9fbe3b91180e7ce472d825",
+      "parent_requirement_closure_hash": "sha256:017160bf0afa5029c37ac42ab309a40affa9b2687dc9d6e9e05e67437f7562a4",
+      "transfer_manifest_sha256": "bd4abc2b3a1a8e25c492501fbd7dca3c1bd699ed75f6503c8ad649b5c972b7e3",
+      "validator_sha256": "5154d7b9d31ebed7764fc3d8967feb2761f692eb8aab34d5b297807ce2375b26"
+    }
+  },
+  "original_runs": {
+    "b01": "OPEN",
+    "b10": "OPEN"
+  },
+  "unselected_preserved": [
+    "sha256:7a0be47de491e27c761ec4b11c28d1274d6244f015ae752db0ffd79a33907ada"
+  ],
+  "ci": {
+    "run_id": 34359330612,
+    "url": "https://github.com/wlvh/SEC_metrics/actions/runs/34359330612",
+    "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+    "status": "PASSED",
+    "executed_modules": [
+      {
+        "duration_seconds": 6.764,
+        "return_code": 0,
+        "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 4.868s\n\nOK\n",
+        "stdout_tail": "",
+        "test": "tests.vnext.test_annual_publication"
+      },
+      {
+        "duration_seconds": 12.448,
+        "return_code": 0,
+        "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 9.988s\n\nOK\n",
+        "stdout_tail": "",
+        "test": "tests.vnext.test_annual_publication_authority"
+      }
+    ],
+    "log_sha256": "117a13b88236b2b7fc5be41e51f1c6cc8f06462ae2a64c951c619c56e1f69d0b",
+    "merge_ref_log": "vNext fast suite\tCheck out repository\t2026-09-09T13:47:34.1304754Z HEAD is now at c6eedf3 Merge 8ca50dd7342e5132e888abe58620c38a8cd994be into 56610e03a2dc92daef172b62e93f021e18885229"
+  },
+  "code_review": {
+    "record_type": "INDEPENDENT_ANNUAL_FORMAL_ADOPTION_IMPLEMENTATION_REVIEW",
+    "schema_version": 1,
+    "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+    "reviewer_identity": "/root/runtime_boundary_review",
+    "human_review": false,
+    "reviewed_at_utc": "2026-09-09T13:14:55.192012+00:00",
+    "conclusion": "NO_BLOCKING_FINDINGS",
+    "conclusion_scope": "Fixed implementation, short boundary tests, and immutable v2 package identity/Requirement association; not overall B acceptance.",
+    "overall_B_acceptance": "PENDING_COMPLETE_INTEGRATION_AND_FINAL_DELIVERY_EVIDENCE",
+    "reviewed_head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "test_tree": "sha256:3e04deabcf8b7026842745326dbe523427517e0fc119708e15571759d1058a4e",
+    "requirement_id": "issue_28_v7",
+    "requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+    "reviewed_file_proofs": {
+      "scripts/vnext/annual_adoption_policy.py": {
+        "sha256": "7c40c25d004af2b87553147897ccf1cf21dc953822f59d3a83509813e107fec5",
+        "size": 1990
+      },
+      "scripts/vnext/annual_adoption.py": {
+        "sha256": "fe1f261d2f2eda5369e0f2291f0a4eed1d1a494e91fcf5ad567b5570dd12c2ba",
+        "size": 20299
+      },
+      "scripts/vnext/annual_publication.py": {
+        "sha256": "1a3bcf8a4ded5ee357042cbe327679737d0e3fc1f41a81ffbaa6870a43b14f70",
+        "size": 34589
+      },
+      "scripts/vnext/annual_publication_authority.py": {
+        "sha256": "65683549c777e18a99471e1a2b46c244d9936cd4a7979b82309b5df56f79413a",
+        "size": 27054
+      },
+      "scripts/vnext/requirement_profile_v8.py": {
+        "sha256": "84e787a388b242108625db861340f87908c83bade0eb3213181e35df54b48580",
+        "size": 7970
+      },
+      "scripts/vnext/requirement_profile.py": {
+        "sha256": "ab5495acb5f0a202a164f6fc98769592e5ed9b1cbdee7a3a40e4bcf5001b3586",
+        "size": 4293
+      },
+      "scripts/vnext/publication.py": {
+        "sha256": "4dd55930e39cc89e951f4da92fb2cdfa0ed4635bcebc3664c9e6cad1c120c47b",
+        "size": 273813
+      },
+      "scripts/vnext/records.py": {
+        "sha256": "3c2abf23e1ea0205e8f9a35cfc9a7bdd83f5fc5c8271407887609fc5db1cf08c",
+        "size": 68811
+      },
+      "tools/vnext_annual_publication.py": {
+        "sha256": "e9a223171b9713bc5891e2c24d72b7ce5a85ca2fb2a1df0d078d8147c93949ae",
+        "size": 4752
+      },
+      "config/annual_candidate_adoption_v2.json": {
+        "sha256": "dd6f00aa361363cf12b8015f37c7eee5756df2dddb1b92964edb031f72bd5fff",
+        "size": 3092
+      }
+    },
+    "prior_wip_review": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/core-review-wip.json",
+      "sha256": "51425e8f4f71cc12479bd22144f9aa7f2551ce4c061ffdedbebd1c765c1692b2",
+      "size": 4776
+    },
+    "delta_from_wip": {
+      "changed_core_files": [
+        "scripts/vnext/annual_adoption.py",
+        "scripts/vnext/annual_publication.py",
+        "scripts/vnext/annual_publication_authority.py"
+      ],
+      "scope": [
+        "Reject wrong exact candidate and invalid original owner id before a fresh saved-approval read.",
+        "Separate v2 PREPARED_COMPLETE_ADOPTION_CANDIDATE status from historical v1 rehearsal wording.",
+        "Add the native fault checkpoint after immutable annual action reservation and before the native switch.",
+        "Freeze the pending Requirement execution hashes and add real-bundle authority/fault/compatibility tests and documentation."
+      ],
+      "retained_core_files_byte_identical_to_wip": [
+        "scripts/vnext/annual_adoption_policy.py",
+        "scripts/vnext/requirement_profile_v8.py",
+        "scripts/vnext/requirement_profile.py",
+        "scripts/vnext/publication.py",
+        "scripts/vnext/records.py",
+        "tools/vnext_annual_publication.py",
+        "config/annual_candidate_adoption_v2.json"
+      ]
+    },
+    "code_review_findings": {
+      "blocking_findings": [],
+      "permission_boundary": "A local plan/template or JSON cannot enter the typed permission factory. Production requires distinct externally verified owner activation and exact-plan publication comments plus reviewed implementation/test trees and the named merged PR second-parent relation. TEST_ONLY activation remains separately typed and isolated.",
+      "transaction_binding": "New schema2 native intent/receipt carries exact plan/action/permission IDs; recovery compares those IDs, previous pointer, target manifest hash and action timestamp. Repeated externally verified approval facts serialize into a stable permission proof; actual full-flow stability remains for the running integration to confirm.",
+      "no_intent_rule": "Reservation before intent or compensated soft failure consumes that operation. NO_PENDING_AUTHORIZED_SWITCH and ALREADY_RESERVED preserve the old complete version and are not publication success. This behavior is explicit in code, tests and documentation.",
+      "write_boundary_scope": "High-level deploy/execute reject missing or foreign permission before permission/action/bundle/pointer/mirror mutation. Existing native pointer locks and guarded transaction routines remain in use; this review does not recharacterize all low-level locking as no filesystem access.",
+      "historical_compatibility": "v1 policy bytes and original source-proof semantics remain preserved. Old B01 foundation/B10 issue_28_v6 Runs remain OPEN with their original execution meanings. No qualification transfer is inferred."
+    },
+    "independently_executed_checks": [
+      {
+        "check": "SHORT_AUTHORITY_AND_V1_BOUNDARY_TESTS",
+        "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_annual_publication_authority tests.vnext.test_annual_publication -v",
+        "test_count": 10,
+        "duration_seconds": "2.838",
+        "status": "PASS"
+      },
+      {
+        "check": "GIT_TREE_TEST_TREE_AND_RUNTIME_ARCHIVE",
+        "status": "PASS",
+        "runtime_file_count": 287
+      },
+      {
+        "check": "ALL_MANIFEST_FILE_HASHES_AND_CONTENT_ID",
+        "status": "PASS",
+        "manifest_file_count": 906
+      },
+      {
+        "check": "CURRENT_AND_FROZEN_REQUIREMENT_LOAD_AND_EXECUTION_AUTHORITY",
+        "status": "PASS",
+        "activation_state": "NOT_ACTIVATED"
+      },
+      {
+        "check": "EXACT_POLICY_SOURCE_REVIEW_SELECTED_RESULTS_AND_CANDIDATE_FILE_SET",
+        "status": "PASS",
+        "candidate_file_count": 28
+      },
+      {
+        "check": "INCIDENT_RESTORATION_AND_ALL_BASELINE_PROTECTIONS",
+        "status": "PASS",
+        "official_files": 35,
+        "official_publication_files": 891,
+        "historical_runtime_files": 1530,
+        "candidate_files": 28,
+        "stash_entries": 8,
+        "historical_worktrees": 17
+      }
+    ],
+    "prepared_package": {
+      "publication_id": "publication_37d422855bc4c9626cbf2350602d4b60ea28b6432b63d1fe84b9ed60756e8749",
+      "adoption_receipt_id": "sha256:0ca14292d4ed0315cb144a2cdf37cb5680187acd820564b79a1a471e5ba99eef",
+      "counts": {
+        "cumulative_results": 240,
+        "adopted": 2,
+        "inherited": 238,
+        "public_rows": 327
+      },
+      "publication_credit": "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY",
+      "prepared_execution_record": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-01/prepare-execution.json",
+        "sha256": "65a4a6dbe2ba7b2be4965c8ef2da6ae39c1246ce4793fe97eee1f77d9cf5f35f",
+        "size": 2855
+      },
+      "prepare_exit_status": 0,
+      "retained_original_comment_reads": 1,
+      "prepare_harness_log_hashes_checked": true,
+      "reviewer_reexecuted_complete_native_bundle_graph": false
+    },
+    "incident": {
+      "record": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/safety/root-write-incident.json",
+        "sha256": "54e0967cceb0f0a42d88d4f7ac4a047c365f27fc79d5fb3f675d7679a4ded00b",
+        "size": 1260
+      },
+      "transient_actual_root_write_occurred": true,
+      "generated_receipt_sha256": "654a53c0e099ed646642a47a89ab71c1d915f489cf418316349510c844e36f0d",
+      "restored_receipt_sha256": "efe2eaab173e86576ac1b0dc03f3c2c0f723d9ff2f92b74dd21f80a93210d2cd",
+      "restored_size": 7629,
+      "independent_verification": "Saved generated file hash checked. Restored actual file equals HEAD bytes and A pre-run protection; current active pointer and every baseline protected publication/candidate/history byte also match.",
+      "claim_boundary": "B was not a zero-actual-root-write phase. The accidental compatibility mirror write was retained as evidence and restored; it was not a SEC/provider call."
+    },
+    "pending_checks": [
+      "Read the completed eight-method real-v2-package integration log and per-check result, including exact production/test-only negatives and schema2 same-action recovery.",
+      "Read final cold read and any deep negative test result at this same fixed implementation; do not assume completion from preparation.",
+      "Check final documentation-only delivery diff and CI before any stage-close conclusion."
+    ],
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "formal_activation_or_production_grant_issued_by_reviewer": false,
+    "production_publication_authorized_by_review": false,
+    "qualification_credit": "NONE",
+    "checkout_clean_at_completion": true,
+    "limitations": [
+      "This is the independent fixed-code review requested while integration is still running. The reviewer did not rerun the full long integration or change any original Run, bundle, or active pointer.",
+      "The original known-source content review and prior A native replay are inherited evidence, explicitly separate from new B permission tests.",
+      "No claim of actual production release, activated Requirement, or complete B delivery is made."
+    ]
+  },
+  "test_fix": {
+    "old_head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+    "new_head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+    "changes": [
+      "tests/vnext/test_annual_formal_rehearsal.py",
+      "tests/vnext/test_annual_publication_rehearsal.py"
+    ],
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+    "status": "TEST_FIX_ONLY_PRODUCTION_POLICY_REQUIREMENT_UNCHANGED",
+    "first_suite": "FAILED_3_TEST_DIRECTORY_CONSTRUCTION_ERRORS",
+    "deep_suite": "FAILED_ACTIVE_ASSUMPTION_AFTER_NATIVE_REJECTIONS"
+  },
+  "reused_passed_components": {
+    "methods": [
+      "test_exact_approved_merge_relation_uses_real_git_objects_without_open_pr_rule",
+      "test_pre_and_post_pointer_recovery_is_bound_to_the_same_action",
+      "test_rebound_plan_and_approval_errors_never_write",
+      "test_reserved_action_without_native_intent_preserves_old_and_does_not_retry",
+      "test_soft_failure_retains_old_complete_version",
+      "test_v1_and_actual_r3_remain_readable_and_v1_cannot_be_adopted"
+    ],
+    "head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+    "package_id": "publication_37d422855bc4c9626cbf2350602d4b60ea28b6432b63d1fe84b9ed60756e8749",
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "original_suite_status": "FAILED_3_POLICY_TEST_CONSTRUCTION_ERRORS",
+    "log": {
+      "sha256": "63fa334f6766e8bbbd9d9d26bc69756cda23018c6e0836c58c8fc4696b7d39f8",
+      "size": 5392
+    }
+  },
+  "content_review": {
+    "record_type": "INDEPENDENT_ANNUAL_ADOPTION_CONTENT_REVIEW",
+    "schema_version": 1,
+    "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+    "reviewer_identity": "/root/runtime_boundary_review",
+    "human_review": false,
+    "reviewed_at_utc": "2026-09-09T10:55:42.385609+00:00",
+    "conclusion": "NO_CONTENT_BLOCKING_FINDINGS",
+    "current_source_checkout_head": "74af2fd106c54938306d7c354323c45be861cbf2",
+    "scope": "Exact retained Marriott FY2025 B01/B10 candidates proposed for B adoption; no reassessment of the 238 inherited keys.",
+    "reuse_conclusion": "The existing source/content audit is reusable unchanged for these exact source, native Run, controller execution and selected Result bytes. This record supplements the explicit B01 structured-content/calculation basis and exact B10 scope/year/unit links.",
+    "prior_source_review": {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/annual_runtime/repair/source-audit-independent.json",
+      "sha256": "69317fddd5a8d4d2c7efc1f0adfa5c77384246b34b462cd07ec2781f43835ca3",
+      "size": 30006,
+      "prior_conclusion": "SOURCE_AND_NATIVE_CANDIDATE_SUCCESS_CONFIRMED"
+    },
+    "a_package": {
+      "publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+      "manifest_file": {
+        "sha256": "e2767d023c24874e3f993cda6970400b74bf649c4e2da91b1e7a15259e53eb80",
+        "size": 235926
+      },
+      "adoption_receipt_id": "sha256:10e90490973883cce4d6ade1367512e2dc5e79eb4b26216c9c2c7d4200a683e7",
+      "snapshot_id": "sha256:dae69afa5033c75a86ceecbf7520254f6491ce412c512a4454801de2b0c90a29",
+      "candidate_file_set_id": "sha256:4af14ac84329cb4227c204fa9cd8204d87af3a337e7ca53500f2ebff7e94d797",
+      "candidate_file_count": 28,
+      "original_candidate_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "implementation_head": "77dd7f3407d09bec3e5d19356f11028a9038326f",
+      "implementation_tree": "sha256:8c1bbb8a9f0d06dbd37faf8d5c5913ac515b774f5be3b54d54e284dd870d9cbc"
+    },
+    "selected_results": {
+      "B01": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B01",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3e637913536d24349f51c6525c3061c8a2969bb89013ccddb000736c3cc4dba5",
+        "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+        "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+        "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+        "unit": "USD",
+        "value": "26186000000"
+      },
+      "B10": {
+        "applicability": "APPLICABLE",
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_end": "2025-12-31",
+        "period_start": "2025-01-01",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+        "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+        "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+        "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+        "unit": "ratio",
+        "value": "0.693"
+      }
+    },
+    "metrics": {
+      "B01": {
+        "result": {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B01",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:3e637913536d24349f51c6525c3061c8a2969bb89013ccddb000736c3cc4dba5",
+          "scope_key": "sha256:69aec5aa8565ed081911f0d334bc42e02afba1bf950ef5c8b3b635cf9d60551c",
+          "spec_closure_hash": "sha256:300424426d0397ce04f6ce6f6df3a2e12259904060d31e47d8664df6e5f3d8f8",
+          "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+          "unit": "USD",
+          "value": "26186000000"
+        },
+        "native_run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030:structured",
+        "native_run_status": "OPEN",
+        "run_file_proofs": {
+          "manifest.json": {
+            "sha256": "7b41a96e3157fe684ff8f0aed946b0160020b0b3e6076f1972c34e9e4183c5a1",
+            "size": 2743
+          },
+          "records.jsonl": {
+            "sha256": "78c6b1c0d60e9b9dc1e33325fc4ebd8a5880ce23ecfeb76bc61c41877d8f89da",
+            "size": 10186
+          },
+          "review_decisions.jsonl": {
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "size": 0
+          }
+        },
+        "source_reference": {
+          "accession": "0001048286-26-000007",
+          "company_id": "marriott_international",
+          "document_name": "CIK0001048286.json",
+          "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+          "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+          "source_role": "companyfacts",
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+        },
+        "source_file": {
+          "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+          "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "size": 3269111
+        },
+        "observation_id": "sha256:67c8e7d7d5e460749d911c99f60e025d077e3ef450cb3227f0c0012ce074b612",
+        "scope": {
+          "consolidation": "entity"
+        },
+        "trace_id": "sha256:e29b58eed1ce05e7df343b788b360378c91631a7717fd2121305f3b7bd87efff",
+        "trace_steps": [
+          {
+            "event": "DIRECT_STRUCTURED_SELECTED",
+            "observation_id": "sha256:67c8e7d7d5e460749d911c99f60e025d077e3ef450cb3227f0c0012ce074b612",
+            "quality": "EXACT",
+            "role": "revenue",
+            "value": "26186000000"
+          },
+          {
+            "event": "FORMULA_RESULT",
+            "formula": "revenue",
+            "quality": "EXACT",
+            "resolved_values": {
+              "revenue": "26186000000"
+            },
+            "value": "26186000000"
+          }
+        ],
+        "identity_and_value_checks": "PASS",
+        "independent_raw_source_check": {
+          "source_format": "CompanyFacts original JSON",
+          "entity_cik": 1048286,
+          "entity_name": "MARRIOTT INTERNATIONAL INC /MD/",
+          "taxonomy": "us-gaap",
+          "concept": "Revenues",
+          "unit": "USD",
+          "matching_fact_count": 1,
+          "fact": {
+            "start": "2025-01-01",
+            "end": "2025-12-31",
+            "val": 26186000000,
+            "accn": "0001048286-26-000007",
+            "fy": 2025,
+            "fp": "FY",
+            "form": "10-K",
+            "filed": "2026-02-10",
+            "frame": "CY2025"
+          },
+          "native_fact_id_recomputed": "fact:sha256:640d9a21651aece0a442d56ed33584b1de816baa0a4cbeb0b717c112ca0c878a",
+          "calculation": "Direct revenue; USD preserved without scaling.",
+          "content_review_basis": "Actual CompanyFacts bytes and native B01 observation/trace/Result, independently checked; not inferred from B10 or current R3."
+        }
+      },
+      "B10": {
+        "result": {
+          "applicability": "APPLICABLE",
+          "company_id": "marriott_international",
+          "metric_id": "B10",
+          "period_end": "2025-12-31",
+          "period_start": "2025-01-01",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+          "scope_key": "sha256:048bd50c50be5819de124da27afdb7c1709b57be2730492b5eb9118b6f127227",
+          "spec_closure_hash": "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424",
+          "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+          "unit": "ratio",
+          "value": "0.693"
+        },
+        "native_run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+        "native_run_status": "OPEN",
+        "run_file_proofs": {
+          "manifest.json": {
+            "sha256": "8f0e3cef6666c11514640f6a3f92803895bef1eb1d2fb5cf81da7473b86ee230",
+            "size": 3605
+          },
+          "records.jsonl": {
+            "sha256": "a14bd4ae2fc9c68eafa4a7223e4b058312e134ecdcbd1790ffef4fc1ab3d57ef",
+            "size": 3985645
+          },
+          "review_decisions.jsonl": {
+            "sha256": "d379e2dfd6640bc6192fa6d60352bca93a0345c7bd99aaba72a2da5722d6cee4",
+            "size": 1642
+          }
+        },
+        "source_reference": {
+          "accession": "0001048286-26-000007",
+          "company_id": "marriott_international",
+          "document_name": "mar-20251231.htm",
+          "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "record_type": "SOURCE_REFERENCE",
+          "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+          "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+          "source_role": "target_primary",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm"
+        },
+        "source_file": {
+          "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+          "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "size": 2048661
+        },
+        "observation_id": "sha256:65105fdce3e5183486de2542ff11f3595afe58a80d2c401a31fe1e54d91933a9",
+        "scope": {
+          "geography": "worldwide",
+          "operating_scope": "systemwide",
+          "period_role": "current_fiscal_year",
+          "property_population": "comparable"
+        },
+        "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+        "trace_steps": [
+          {
+            "event": "REUSED_OBSERVATION",
+            "observation_id": "sha256:65105fdce3e5183486de2542ff11f3595afe58a80d2c401a31fe1e54d91933a9",
+            "role": "occupancy",
+            "value": "0.693"
+          },
+          {
+            "event": "FORMULA_RESULT",
+            "formula": "occupancy",
+            "quality": "EXACT",
+            "resolved_values": {
+              "occupancy": "0.693"
+            },
+            "value": "0.693"
+          }
+        ],
+        "identity_and_value_checks": "PASS",
+        "independent_raw_source_check": {
+          "parser": "Reviewer stdlib HTMLParser over original HTML bytes, independent from production grid parser; table rows and spans reconstructed during this review.",
+          "table_count": 68,
+          "selected_table_id": "table_000011",
+          "metric_header": {
+            "row": 3,
+            "column": 15,
+            "text": "Occupancy"
+          },
+          "year_header": {
+            "row": 4,
+            "column": 15,
+            "text": "2025"
+          },
+          "group_header": {
+            "row": 18,
+            "column": 0,
+            "text": "Comparable Systemwide Properties"
+          },
+          "geography_label": {
+            "row": 26,
+            "column": 0,
+            "visible_text": "Worldwide (2)",
+            "saved_grid_raw_text": "\nWorldwide (2)",
+            "saved_grid_text": "Worldwide (2)"
+          },
+          "source_numeric_cell": {
+            "row": 26,
+            "column": 15,
+            "colspan": 2,
+            "value": "69.3"
+          },
+          "source_unit_cell": {
+            "row": 26,
+            "column": 17,
+            "text": "%"
+          },
+          "normalization": "69.3 / 100 = 0.693 ratio",
+          "footnote_2": "Includes U.S. & Canada and International - All.",
+          "nearby_wrong_scope_counterexample": {
+            "row": 17,
+            "group": "Comparable Company-Operated Properties",
+            "geography": "Worldwide (2)",
+            "occupancy_percent": "69.5"
+          },
+          "source_document_dei": {
+            "registrant_name": "MARRIOTT INTERNATIONAL INC /MD/",
+            "cik": "0001048286",
+            "document_type": "10-K",
+            "amendment_flag": "false",
+            "fiscal_year": "2025",
+            "period_end": "December 31, 2025",
+            "context_c1": {
+              "start": "2025-01-01",
+              "end": "2025-12-31",
+              "entity": "0001048286"
+            }
+          },
+          "content_review_basis": "Actual HTML row/group/header/unit and footnote inspected; labels retain footnote meaning; original response and saved graph were not changed."
+        },
+        "native_review_binding": {
+          "evidence_check_id": "sha256:baf5ac7af831f595a8a74bc469d4297e1576768ef8bab18a04ec51cf2f35d882",
+          "evidence_status": "PASS",
+          "review_unit_hash": "sha256:8e62c331f510c47de63b550df174f989b7a56c26c5b83dac848e8811afe07ecf",
+          "review_decision_id": "sha256:aac787297cff38c9f3a7f90920ce24ab3c2d4742944da59bb4e7906db556a601",
+          "reviewer_type": "SYSTEM",
+          "decision": "APPROVE",
+          "evidence_policy_check_names": [
+            "SOURCE_BINDINGS",
+            "READER_TABLE_EXACT_SET",
+            "SELECTED_LOCATOR:occupancy",
+            "SCOPE_EXACT_ENUM_NORMALIZATION",
+            "EXACT_SOURCE_RAW_OR_TEXT_V2",
+            "ANNUAL_SOURCE_OWNERSHIP_V1"
+          ]
+        }
+      }
+    },
+    "retained_execution": {
+      "execution_id": "sha256:e2e9361b656772608e760e1b46cc46945aa1bd7d62f3ee5c5c3b4829b59b5a9c",
+      "execution_receipt_id": "sha256:f0e929a121bf8c318d5d1abf823a9232ad8ee323b0b5ff5f1435f73140fbec89",
+      "provider_request_id": "7ac51432-8a8c-49ec-bc32-95f9b56d3b07",
+      "raw_response_sha256": "160343a61b1b2be521a61aae0940bf5f0ff3f3afe15dd6f3e68502e93e1729e3",
+      "assistant_output_sha256": "aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb",
+      "status": "SUCCEEDED",
+      "usage": {
+        "prompt_tokens": 161707,
+        "completion_tokens": 580,
+        "total_tokens": 162287,
+        "prompt_tokens_details": {
+          "cached_tokens": 161664
+        },
+        "prompt_cache_hit_tokens": 161664,
+        "prompt_cache_miss_tokens": 43
+      },
+      "execution_file_proof": {
+        "sha256": "1634a928b7bc887d03900a8dfa99ab4229d14da792d59cd018e85fa3f00b8f5e",
+        "size": 1974
+      },
+      "counters": {
+        "mock_transport_invocation_count": 0,
+        "paid_model_provider_call_count": 1,
+        "real_model_provider_egress_count": 1
+      },
+      "historical_provider_paid_sec_total": [
+        2,
+        2,
+        0
+      ]
+    },
+    "independently_checked_now": [
+      "Actual CompanyFacts bytes, entity, concept, USD unit, exact FY2025 fact and native fact identity.",
+      "Native B01 direct formula, observation, trace and Result content identities.",
+      "Original HTML table/header/year/group/geography/value/unit/footnote and document DEI/context using stdlib HTMLParser.",
+      "Original-vs-bundled source and all 28 candidate-file byte identities; prior audit Run/source/response/controller/marker hashes.",
+      "Selected Result equality across prior source audit, A adoption receipt, native records and reviewed A binding."
+    ],
+    "inherited_evidence_not_rerun": [
+      "The prior source audit complete native graph/Evidence/Review/Calculator replay.",
+      "A latest full package native validation and two full integration runs; not repeated in this content review.",
+      "238 inherited keys and R3 predecessor release evidence remain inherited; no new certification."
+    ],
+    "design_review": {
+      "conclusion": "NO_DESIGN_BLOCKER_SUBJECT_TO_EXPLICIT_IMPLEMENTATION_GATES",
+      "necessary_gates": [
+        "Select v1/v2 by explicit persisted policy identity and exact bytes; preserve v1 policy/old bundle interpretation.",
+        "The new pending Requirement owns adoption and publication rules; preserve original B01 foundation RUN and B10 issue_28_v6 RUN/execution identities and OPEN statuses.",
+        "Bind this exact candidate file set, selected Result/source/Run/execution identities and this review to the new policy; no caller-selected replacement content.",
+        "Keep the historical repair slot and consumed owner approval solely as proof of the original execution, without provider or qualification permission.",
+        "A complete pending immutable package does not activate policy or permit real pointer changes; independently verify external activation/plan/grant against exact reviewed code, policy, candidate, complete package and old/new publication edge.",
+        "Maintain zero new business requests and separate ordinary-candidate content acceptance from historical qualification and formal publication authorization."
+      ],
+      "implementation_review_status": "NOT_PERFORMED_FOR_B_YET"
+    },
+    "content_review_grants_production_authority": false,
+    "formal_publication_authorized": false,
+    "qualification_credit": "NONE",
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "limitations": [
+      "Run METRIC_RESULT publication=PUBLISHED remains native candidate state, not proof of actual formal release. Original Runs remain OPEN.",
+      "B10 Result content id matches R3, but the selected native Run/controller/request identity remains the retained PR38 repair execution; content identity does not transfer qualification.",
+      "B01 candidate CompanyFacts source af2fea... differs from the inherited formal row source 8767de...; the latter raw source is not newly certified by this content review.",
+      "This review is of known FY2025 materials and gives no unseen-input generalization or approval for new sources/models/metrics."
+    ],
+    "content_review_id": "sha256:1ce96c8072b5d609e7056536af541f228f5957b23ccc0eaddccef14e31d5f019"
+  },
+  "safety_incident": {
+    "incident": "Standalone check_vnext_semantics.py default output overwrote the tracked semantic audit compatibility mirror. stdout redirection did not redirect that file output.",
+    "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_vnext_semantics.py > external/semantics-development.json",
+    "observed_at_utc": "2026-09-09T12:55:22.474470+00:00",
+    "affected_path": "/Users/lyuhongwang/Developer/SEC_metrics/outputs/semantic_audit_receipt.json",
+    "generated_file_sha256": "654a53c0e099ed646642a47a89ab71c1d915f489cf418316349510c844e36f0d",
+    "restored_file_sha256": "efe2eaab173e86576ac1b0dc03f3c2c0f723d9ff2f92b74dd21f80a93210d2cd",
+    "restored_size": 7629,
+    "restoration_source": "Exact HEAD blob, independently equal to A protection-before hash and size",
+    "status": "RESTORED_EXACT_PREEXISTING_BYTES",
+    "actual_active_pointer_changed": false,
+    "historical_publication_packages_changed": false,
+    "claim_boundary": "A transient actual-root mirror write occurred; do not describe B as never writing any actual-root file.",
+    "prevention": "All subsequent executable validation/preparation/rehearsal commands use OS-level actual-publication output/evidence/report write denial, with explicit external outputs or pure read audit functions."
+  },
+  "current_state": {
+    "new_pr": 40,
+    "draft": true,
+    "production_requirement_activated": false,
+    "production_grant_issued": false,
+    "actual_r3_switched": false,
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
+    "pr38_historical_calls": [
+      2,
+      2,
+      0
+    ]
+  },
+  "identity_definitions": {
+    "implementation_tree": "content_hash of exact git ls-tree text over scripts/tools/config/catalog/requirements",
+    "test_tree": "content_hash of exact git ls-tree text over tests",
+    "object_id": "canonical content_hash excluding own ID",
+    "file_sha256": "SHA-256 of every file byte including whitespace and embedded IDs"
+  },
+  "verifier": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/bind_b_final.py",
+    "sha256": "405456a97f60dfd8876789b3d4aeefc05eae1992c8de261521d74f5a31307ca1",
+    "size": 9263
+  }
+}

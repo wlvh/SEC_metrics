@@ -1,0 +1,184 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_FORMAL_ADOPTION_IMPLEMENTATION_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "human_review": false,
+  "reviewed_at_utc": "2026-09-09T13:14:55.192012+00:00",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "conclusion_scope": "Fixed implementation, short boundary tests, and immutable v2 package identity/Requirement association; not overall B acceptance.",
+  "overall_B_acceptance": "PENDING_COMPLETE_INTEGRATION_AND_FINAL_DELIVERY_EVIDENCE",
+  "reviewed_head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+  "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+  "test_tree": "sha256:3e04deabcf8b7026842745326dbe523427517e0fc119708e15571759d1058a4e",
+  "requirement_id": "issue_28_v7",
+  "requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+  "reviewed_file_proofs": {
+    "scripts/vnext/annual_adoption_policy.py": {
+      "sha256": "7c40c25d004af2b87553147897ccf1cf21dc953822f59d3a83509813e107fec5",
+      "size": 1990
+    },
+    "scripts/vnext/annual_adoption.py": {
+      "sha256": "fe1f261d2f2eda5369e0f2291f0a4eed1d1a494e91fcf5ad567b5570dd12c2ba",
+      "size": 20299
+    },
+    "scripts/vnext/annual_publication.py": {
+      "sha256": "1a3bcf8a4ded5ee357042cbe327679737d0e3fc1f41a81ffbaa6870a43b14f70",
+      "size": 34589
+    },
+    "scripts/vnext/annual_publication_authority.py": {
+      "sha256": "65683549c777e18a99471e1a2b46c244d9936cd4a7979b82309b5df56f79413a",
+      "size": 27054
+    },
+    "scripts/vnext/requirement_profile_v8.py": {
+      "sha256": "84e787a388b242108625db861340f87908c83bade0eb3213181e35df54b48580",
+      "size": 7970
+    },
+    "scripts/vnext/requirement_profile.py": {
+      "sha256": "ab5495acb5f0a202a164f6fc98769592e5ed9b1cbdee7a3a40e4bcf5001b3586",
+      "size": 4293
+    },
+    "scripts/vnext/publication.py": {
+      "sha256": "4dd55930e39cc89e951f4da92fb2cdfa0ed4635bcebc3664c9e6cad1c120c47b",
+      "size": 273813
+    },
+    "scripts/vnext/records.py": {
+      "sha256": "3c2abf23e1ea0205e8f9a35cfc9a7bdd83f5fc5c8271407887609fc5db1cf08c",
+      "size": 68811
+    },
+    "tools/vnext_annual_publication.py": {
+      "sha256": "e9a223171b9713bc5891e2c24d72b7ce5a85ca2fb2a1df0d078d8147c93949ae",
+      "size": 4752
+    },
+    "config/annual_candidate_adoption_v2.json": {
+      "sha256": "dd6f00aa361363cf12b8015f37c7eee5756df2dddb1b92964edb031f72bd5fff",
+      "size": 3092
+    }
+  },
+  "prior_wip_review": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/core-review-wip.json",
+    "sha256": "51425e8f4f71cc12479bd22144f9aa7f2551ce4c061ffdedbebd1c765c1692b2",
+    "size": 4776
+  },
+  "delta_from_wip": {
+    "changed_core_files": [
+      "scripts/vnext/annual_adoption.py",
+      "scripts/vnext/annual_publication.py",
+      "scripts/vnext/annual_publication_authority.py"
+    ],
+    "scope": [
+      "Reject wrong exact candidate and invalid original owner id before a fresh saved-approval read.",
+      "Separate v2 PREPARED_COMPLETE_ADOPTION_CANDIDATE status from historical v1 rehearsal wording.",
+      "Add the native fault checkpoint after immutable annual action reservation and before the native switch.",
+      "Freeze the pending Requirement execution hashes and add real-bundle authority/fault/compatibility tests and documentation."
+    ],
+    "retained_core_files_byte_identical_to_wip": [
+      "scripts/vnext/annual_adoption_policy.py",
+      "scripts/vnext/requirement_profile_v8.py",
+      "scripts/vnext/requirement_profile.py",
+      "scripts/vnext/publication.py",
+      "scripts/vnext/records.py",
+      "tools/vnext_annual_publication.py",
+      "config/annual_candidate_adoption_v2.json"
+    ]
+  },
+  "code_review_findings": {
+    "blocking_findings": [],
+    "permission_boundary": "A local plan/template or JSON cannot enter the typed permission factory. Production requires distinct externally verified owner activation and exact-plan publication comments plus reviewed implementation/test trees and the named merged PR second-parent relation. TEST_ONLY activation remains separately typed and isolated.",
+    "transaction_binding": "New schema2 native intent/receipt carries exact plan/action/permission IDs; recovery compares those IDs, previous pointer, target manifest hash and action timestamp. Repeated externally verified approval facts serialize into a stable permission proof; actual full-flow stability remains for the running integration to confirm.",
+    "no_intent_rule": "Reservation before intent or compensated soft failure consumes that operation. NO_PENDING_AUTHORIZED_SWITCH and ALREADY_RESERVED preserve the old complete version and are not publication success. This behavior is explicit in code, tests and documentation.",
+    "write_boundary_scope": "High-level deploy/execute reject missing or foreign permission before permission/action/bundle/pointer/mirror mutation. Existing native pointer locks and guarded transaction routines remain in use; this review does not recharacterize all low-level locking as no filesystem access.",
+    "historical_compatibility": "v1 policy bytes and original source-proof semantics remain preserved. Old B01 foundation/B10 issue_28_v6 Runs remain OPEN with their original execution meanings. No qualification transfer is inferred."
+  },
+  "independently_executed_checks": [
+    {
+      "check": "SHORT_AUTHORITY_AND_V1_BOUNDARY_TESTS",
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_annual_publication_authority tests.vnext.test_annual_publication -v",
+      "test_count": 10,
+      "duration_seconds": "2.838",
+      "status": "PASS"
+    },
+    {
+      "check": "GIT_TREE_TEST_TREE_AND_RUNTIME_ARCHIVE",
+      "status": "PASS",
+      "runtime_file_count": 287
+    },
+    {
+      "check": "ALL_MANIFEST_FILE_HASHES_AND_CONTENT_ID",
+      "status": "PASS",
+      "manifest_file_count": 906
+    },
+    {
+      "check": "CURRENT_AND_FROZEN_REQUIREMENT_LOAD_AND_EXECUTION_AUTHORITY",
+      "status": "PASS",
+      "activation_state": "NOT_ACTIVATED"
+    },
+    {
+      "check": "EXACT_POLICY_SOURCE_REVIEW_SELECTED_RESULTS_AND_CANDIDATE_FILE_SET",
+      "status": "PASS",
+      "candidate_file_count": 28
+    },
+    {
+      "check": "INCIDENT_RESTORATION_AND_ALL_BASELINE_PROTECTIONS",
+      "status": "PASS",
+      "official_files": 35,
+      "official_publication_files": 891,
+      "historical_runtime_files": 1530,
+      "candidate_files": 28,
+      "stash_entries": 8,
+      "historical_worktrees": 17
+    }
+  ],
+  "prepared_package": {
+    "publication_id": "publication_37d422855bc4c9626cbf2350602d4b60ea28b6432b63d1fe84b9ed60756e8749",
+    "adoption_receipt_id": "sha256:0ca14292d4ed0315cb144a2cdf37cb5680187acd820564b79a1a471e5ba99eef",
+    "counts": {
+      "cumulative_results": 240,
+      "adopted": 2,
+      "inherited": 238,
+      "public_rows": 327
+    },
+    "publication_credit": "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY",
+    "prepared_execution_record": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-01/prepare-execution.json",
+      "sha256": "65a4a6dbe2ba7b2be4965c8ef2da6ae39c1246ce4793fe97eee1f77d9cf5f35f",
+      "size": 2855
+    },
+    "prepare_exit_status": 0,
+    "retained_original_comment_reads": 1,
+    "prepare_harness_log_hashes_checked": true,
+    "reviewer_reexecuted_complete_native_bundle_graph": false
+  },
+  "incident": {
+    "record": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/safety/root-write-incident.json",
+      "sha256": "54e0967cceb0f0a42d88d4f7ac4a047c365f27fc79d5fb3f675d7679a4ded00b",
+      "size": 1260
+    },
+    "transient_actual_root_write_occurred": true,
+    "generated_receipt_sha256": "654a53c0e099ed646642a47a89ab71c1d915f489cf418316349510c844e36f0d",
+    "restored_receipt_sha256": "efe2eaab173e86576ac1b0dc03f3c2c0f723d9ff2f92b74dd21f80a93210d2cd",
+    "restored_size": 7629,
+    "independent_verification": "Saved generated file hash checked. Restored actual file equals HEAD bytes and A pre-run protection; current active pointer and every baseline protected publication/candidate/history byte also match.",
+    "claim_boundary": "B was not a zero-actual-root-write phase. The accidental compatibility mirror write was retained as evidence and restored; it was not a SEC/provider call."
+  },
+  "pending_checks": [
+    "Read the completed eight-method real-v2-package integration log and per-check result, including exact production/test-only negatives and schema2 same-action recovery.",
+    "Read final cold read and any deep negative test result at this same fixed implementation; do not assume completion from preparation.",
+    "Check final documentation-only delivery diff and CI before any stage-close conclusion."
+  ],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "formal_activation_or_production_grant_issued_by_reviewer": false,
+  "production_publication_authorized_by_review": false,
+  "qualification_credit": "NONE",
+  "checkout_clean_at_completion": true,
+  "limitations": [
+    "This is the independent fixed-code review requested while integration is still running. The reviewer did not rerun the full long integration or change any original Run, bundle, or active pointer.",
+    "The original known-source content review and prior A native replay are inherited evidence, explicitly separate from new B permission tests.",
+    "No claim of actual production release, activated Requirement, or complete B delivery is made."
+  ]
+}

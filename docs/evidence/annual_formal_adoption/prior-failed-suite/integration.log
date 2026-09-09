@@ -1,0 +1,54 @@
+test_complete_version_permission_switch_and_finite_directions (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_complete_version_permission_switch_and_finite_directions) ... ok
+test_exact_approved_merge_relation_uses_real_git_objects_without_open_pr_rule (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_exact_approved_merge_relation_uses_real_git_objects_without_open_pr_rule) ... ok
+test_pre_and_post_pointer_recovery_is_bound_to_the_same_action (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_pre_and_post_pointer_recovery_is_bound_to_the_same_action) ... ok
+test_rebound_plan_and_approval_errors_never_write (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rebound_plan_and_approval_errors_never_write) ... ok
+test_rehashed_package_policy_mixing_is_rejected (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected) ... 
+  test_rehashed_package_policy_mixing_is_rejected (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected) (case='unknown_id') ... ERROR
+  test_rehashed_package_policy_mixing_is_rejected (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected) (case='changed_content') ... ERROR
+  test_rehashed_package_policy_mixing_is_rejected (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected) (case='mixed_version') ... ERROR
+test_reserved_action_without_native_intent_preserves_old_and_does_not_retry (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_reserved_action_without_native_intent_preserves_old_and_does_not_retry) ... ok
+test_soft_failure_retains_old_complete_version (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_soft_failure_retains_old_complete_version) ... ok
+test_v1_and_actual_r3_remain_readable_and_v1_cannot_be_adopted (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_v1_and_actual_r3_remain_readable_and_v1_cannot_be_adopted) ... ok
+
+======================================================================
+ERROR: test_rehashed_package_policy_mixing_is_rejected (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected) (case='unknown_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_formal_rehearsal.py", line 270, in test_rehashed_package_policy_mixing_is_rejected
+    pub.verify_publication_bundle(bundle_dir=directory)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4672, in verify_publication_bundle
+    raise PublicationError("Publication directory identity differs")
+vnext.publication.PublicationError: Publication directory identity differs
+
+======================================================================
+ERROR: test_rehashed_package_policy_mixing_is_rejected (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected) (case='changed_content')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_formal_rehearsal.py", line 270, in test_rehashed_package_policy_mixing_is_rejected
+    pub.verify_publication_bundle(bundle_dir=directory)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4672, in verify_publication_bundle
+    raise PublicationError("Publication directory identity differs")
+vnext.publication.PublicationError: Publication directory identity differs
+
+======================================================================
+ERROR: test_rehashed_package_policy_mixing_is_rejected (tests.vnext.test_annual_formal_rehearsal.AnnualFormalRehearsalTest.test_rehashed_package_policy_mixing_is_rejected) (case='mixed_version')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_formal_rehearsal.py", line 270, in test_rehashed_package_policy_mixing_is_rejected
+    pub.verify_publication_bundle(bundle_dir=directory)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4672, in verify_publication_bundle
+    raise PublicationError("Publication directory identity differs")
+vnext.publication.PublicationError: Publication directory identity differs
+
+----------------------------------------------------------------------
+Ran 8 tests in 2152.016s
+
+FAILED (errors=3)
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b.py", line 74, in <module>
+    assert result.wasSuccessful() and result.testsRun==(8 if mode=='integration' else 1) and not result.skipped
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

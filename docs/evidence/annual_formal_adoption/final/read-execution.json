@@ -1,0 +1,61 @@
+{
+  "mode": "read",
+  "command": [
+    "tools/vnext_annual_publication.py",
+    "read",
+    "--publication-root",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+    "--publication-id",
+    "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/read.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "code": {
+    "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+    "git_tree_oid": "eba8445a16e3d111b5fbba8d0cf13586dfdd6b2f",
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+    "test_files": {
+      "tests/vnext/test_annual_formal_rehearsal.py": {
+        "sha256": "dd395f0991636bf9b65786d755582718a808991e96ebd9b0109292c844bc6270",
+        "size": 20743
+      },
+      "tests/vnext/test_annual_publication_authority.py": {
+        "sha256": "5d03202c19977e84dd8199b6853b4a91670987d68479b94d5d2805e5bb8ec288",
+        "size": 6903
+      },
+      "tools/run_fast_tests.py": {
+        "sha256": "d3e57b38f073e86df4996409645baad6007b268fec5e8fe0a459adb2c5a5cb36",
+        "size": 9142
+      }
+    }
+  },
+  "started_at_utc": "2026-09-09T13:50:47.510314+00:00",
+  "finished_at_utc": "2026-09-09T13:51:43.867732+00:00",
+  "exit_status": 0,
+  "github_reads": [],
+  "new_business_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "pr38_historical_calls": [
+    2,
+    2,
+    0
+  ],
+  "log": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/read.log",
+    "sha256": "9da5cdf1d79dc6c2bff0afb7a681b8588088a743ee542f74742a946b7bff72d6",
+    "size": 6304
+  },
+  "harness": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b_final.py",
+    "sha256": "163d9bf834c4df63ea7ed641d81a04763b22397b7f870b61d971e34ff80fdf99",
+    "size": 6176
+  },
+  "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/attempt-02/publication",
+  "candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/repair/budget/stages/1/candidates/509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+  "protection_equal": true
+}
