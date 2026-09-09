@@ -30,6 +30,7 @@ R4_SCOPED_PROTOCOL = "R4_SCOPED_TRANSPORT_V1"
 R4_STRUCTURED_RUN_TYPE = "R4_STRUCTURED_RUN"
 R4_STRUCTURED_PROTOCOL = "R4_STRUCTURED_PRIMARY_V1"
 R4_PUBLICATION_MANIFEST_TYPE = "R4_SUCCESSOR_PUBLICATION_MANIFEST"
+ANNUAL_PUBLICATION_MANIFEST_TYPE = "ANNUAL_CANDIDATE_PUBLICATION_MANIFEST"
 R4_STRUCTURED_ARTIFACT_KINDS = ("plan", "structured_route")
 R4_EXECUTION_ARTIFACT_KINDS = (
     "request_record", "invocation_plan", "execution_receipt",
@@ -370,6 +371,12 @@ SCHEMAS[R4_PUBLICATION_MANIFEST_TYPE] = RecordSchema(
     ),
 )
 
+
+SCHEMAS[ANNUAL_PUBLICATION_MANIFEST_TYPE] = RecordSchema(
+    required=SCHEMAS["SUCCESSOR_PUBLICATION_MANIFEST"].required + (
+        "annual_adoption_receipt_id", "publication_credit",
+    ),
+)
 
 SCHEMAS[SOURCE_BOUND_CANDIDATE_TYPE] = RecordSchema(
     required=SCHEMAS["OBSERVATION_CANDIDATE"].required + SOURCE_BOUND_CANDIDATE_FIELDS,
@@ -1008,13 +1015,16 @@ def _expected_identifier(
             )
         }
         if record["record_type"] in {
-            "SUCCESSOR_PUBLICATION_MANIFEST", R4_PUBLICATION_MANIFEST_TYPE,
+            "SUCCESSOR_PUBLICATION_MANIFEST", R4_PUBLICATION_MANIFEST_TYPE, ANNUAL_PUBLICATION_MANIFEST_TYPE,
         }:
             for field in ("artifact_requirement_generation", "requirement_id",
                           "requirement_closure_hash", "projection_requirement_hashes"):
                 body[field] = record[field]
         if record["record_type"] == R4_PUBLICATION_MANIFEST_TYPE:
             for field in ("r4_release_receipt_id", "publication_credit"):
+                body[field] = record[field]
+        if record["record_type"] == ANNUAL_PUBLICATION_MANIFEST_TYPE:
+            for field in ("annual_adoption_receipt_id", "publication_credit"):
                 body[field] = record[field]
         expected = "publication_" + content_hash(value=body).split(":", 1)[1]
         return "publication_id", expected
@@ -1790,11 +1800,12 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
     semantic_type = ({SOURCE_BOUND_CANDIDATE_TYPE: "OBSERVATION_CANDIDATE",
                       R4_SCOPED_RUN_TYPE: "RUN", R4_STRUCTURED_RUN_TYPE: "RUN",
                       R4_PUBLICATION_MANIFEST_TYPE: "PUBLICATION_MANIFEST",
+                      ANNUAL_PUBLICATION_MANIFEST_TYPE: "PUBLICATION_MANIFEST",
                       R4_SCOPED_ATTEMPT_TYPE: "AI_EXTRACTION_ATTEMPT"}.get(
                           record_type, SUCCESSOR_RECORD_TYPES.get(record_type, record_type)))
     if record_type in SUCCESSOR_RECORD_TYPES or record_type in {
             SOURCE_BOUND_CANDIDATE_TYPE, R4_SCOPED_RUN_TYPE, R4_STRUCTURED_RUN_TYPE,
-            R4_SCOPED_ATTEMPT_TYPE, R4_PUBLICATION_MANIFEST_TYPE}:
+            R4_SCOPED_ATTEMPT_TYPE, R4_PUBLICATION_MANIFEST_TYPE, ANNUAL_PUBLICATION_MANIFEST_TYPE}:
         if (record["artifact_requirement_generation"] != EXPLICIT_ARTIFACT_GENERATION
                 or re.fullmatch(r"issue_[0-9]+_v[1-9][0-9]*", str(record["requirement_id"])) is None
                 or type(record["requirement_hashes"]) is not dict
@@ -1807,6 +1818,10 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
         _validate_r4_structured_binding_shape(record=record)
     if record_type == R4_PUBLICATION_MANIFEST_TYPE:
         _validate_r4_publication_binding_shape(record=record)
+    if record_type == ANNUAL_PUBLICATION_MANIFEST_TYPE:
+        if (record["publication_credit"] != "NONE_ISOLATED_ADOPTION_REHEARSAL"
+                or re.fullmatch(r"sha256:[0-9a-f]{64}", record["annual_adoption_receipt_id"]) is None):
+            raise RecordError("Annual adoption has no formal publication credit")
     _validate_record_status(record_type=semantic_type, record=record)
     _validate_enums(record_type=semantic_type, record=record)
     _validate_record_semantics(record_type=semantic_type, record=record)
