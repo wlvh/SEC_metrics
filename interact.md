@@ -1,6 +1,15 @@
 # SEC_metrics 用户可观察行为
 
-普通年度候选现在有完整发布链的隔离入口：`tools/vnext_annual_publication.py`
+确切年度候选可由`tools/vnext_annual_publication.py prepare --policy-id annual_candidate_adoption_v2`
+生成完整待审批包，再用`read --publication-id`通过同一PublicationView读取矩阵、证据
+与原文。没有实际批准也可以核对内容；实际写入必须走`release`的真实批准/激活与
+目标前驱核对。模板或测试批准不能写实际根，内容PASS不等于正式发布。
+动作已预留但没有native intent时返回保留旧版的停止状态，不将其描述为发布成功；
+pending intent则按原提交点恢复同一笔切换。说明见`docs/annual_publication.md`。
+
+<!-- capability-anchor: CAPABILITY.annual_candidate_formal_adoption -->
+
+普通年度候选保留完整发布链的v1隔离入口：`tools/vnext_annual_publication.py`
 prepare、switch、read。read使用既有PublicationView固定整个版本，返回完整行数、
 两项选定结果与原始来源在包内的路径/hash。原OPEN Run不改，采纳收据另有身份。
 软失败恢复旧完整版本；进程中断留下pending intent时拒绝不一致读取，由现有

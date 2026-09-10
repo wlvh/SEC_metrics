@@ -1,0 +1,23 @@
+test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples) ... FAIL
+
+======================================================================
+FAIL: test_rebound_bundle_counterexamples (tests.vnext.test_annual_publication_rehearsal.AnnualPublicationRehearsalTest.test_rebound_bundle_counterexamples)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_publication_rehearsal.py", line 214, in test_rebound_bundle_counterexamples
+    self.assertEqual(self.identity, annual.read_version(publication_root=self.root)['publication_id'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'publication_37d422855bc4c9626cbf2350602d4b60ea28b6432b63d1fe84b9ed60756e8749' != 'publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8'
+- publication_37d422855bc4c9626cbf2350602d4b60ea28b6432b63d1fe84b9ed60756e8749
++ publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8
+
+
+----------------------------------------------------------------------
+Ran 1 test in 268.194s
+
+FAILED (failures=1)
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/run_b.py", line 74, in <module>
+    assert result.wasSuccessful() and result.testsRun==(8 if mode=='integration' else 1) and not result.skipped
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

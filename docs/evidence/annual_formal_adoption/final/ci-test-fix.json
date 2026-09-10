@@ -1,0 +1,24 @@
+{
+  "run_id": 34359330612,
+  "url": "https://github.com/wlvh/SEC_metrics/actions/runs/34359330612",
+  "head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+  "status": "PASSED",
+  "executed_modules": [
+    {
+      "duration_seconds": 6.764,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 4.868s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_annual_publication"
+    },
+    {
+      "duration_seconds": 12.448,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 9.988s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_annual_publication_authority"
+    }
+  ],
+  "log_sha256": "117a13b88236b2b7fc5be41e51f1c6cc8f06462ae2a64c951c619c56e1f69d0b",
+  "merge_ref_log": "vNext fast suite\tCheck out repository\t2026-09-09T13:47:34.1304754Z HEAD is now at c6eedf3 Merge 8ca50dd7342e5132e888abe58620c38a8cd994be into 56610e03a2dc92daef172b62e93f021e18885229"
+}

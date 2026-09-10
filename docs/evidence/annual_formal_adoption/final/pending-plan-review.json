@@ -1,0 +1,46 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_FORMAL_PENDING_PLAN_REVIEW",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "reviewed_at_utc": "2026-09-09T14:05:14.228275+00:00",
+  "conclusion": "NO_BLOCKING_FINDINGS_IN_PENDING_PLAN_BINDINGS",
+  "reviewed_head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+  "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+  "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+  "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "plan_id": "sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339",
+  "requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+  "adoption_receipt_id": "sha256:0ca14292d4ed0315cb144a2cdf37cb5680187acd820564b79a1a471e5ba99eef",
+  "source_snapshot_id": "sha256:7cbba0c09497b884b46cbc6be037680601a5fcb5e60a4adf5b6c50963c216829",
+  "checks": {
+    "plan_content_id_and_all_bindings_recomputed": true,
+    "runtime_file_maps_same_at_73dfe_and_8ca": true,
+    "runtime_file_count": 287,
+    "all_manifest_file_bytes_checked": 906,
+    "native_context_and_adoption_same_as_prior_attempt": true,
+    "requirement_runtime_authority_and_pending_state_checked": true,
+    "new_prepare_read_deep_execution_log_and_harness_hashes_checked": true,
+    "deep_native_rejections_read": 8,
+    "deep_log_result": "Ran 1 test in 308.581s; OK",
+    "actual_predecessor_pointer_still_exact": true,
+    "no_production_permission_action_or_execution_directory": true,
+    "pending_markdown_actual_paths_and_identities_checked": true
+  },
+  "authority_boundary": "Production-intent templates are inert NOT_ISSUED plan material, not TEST_ONLY grants or real approval receipts. Isolated tests obtain separately worded TEST_ONLY approvals through the mocked GitHub I/O boundary. No real owner activation/publication comment URL or production capability was created by this review.",
+  "overall_B_acceptance": "PENDING_NEW_NORMAL_POLICY_INTEGRATION_AND_FINAL_BINDING",
+  "long_tests_rerun_by_reviewer": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorization": false,
+  "reviewed_plan_file": {
+    "sha256": "f883be4a88e723bc2344195c60e42da8cc6625984f6ea8c2422833489001e9fb",
+    "size": 3740
+  },
+  "reviewed_execution_markdown_file": {
+    "sha256": "62079adc4baf367e8bac315551fc63a660ee13e80ba32960a4e1157a86f8858b",
+    "size": 7252
+  }
+}

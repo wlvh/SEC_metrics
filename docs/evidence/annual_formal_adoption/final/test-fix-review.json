@@ -1,0 +1,62 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_FORMAL_TEST_FIX_REVIEW",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "reviewed_at_utc": "2026-09-09T13:49:44.270393+00:00",
+  "conclusion": "NO_BLOCKING_FINDINGS_IN_TEST_DIFF",
+  "old_head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+  "new_head": "8ca50dd7342e5132e888abe58620c38a8cd994be",
+  "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+  "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b",
+  "changed_files": [
+    "tests/vnext/test_annual_formal_rehearsal.py",
+    "tests/vnext/test_annual_publication_rehearsal.py"
+  ],
+  "changed_methods": {
+    "tests/vnext/test_annual_formal_rehearsal.py": [
+      "test_rehashed_package_policy_mixing_is_rejected"
+    ],
+    "tests/vnext/test_annual_publication_rehearsal.py": [
+      "test_rebound_bundle_counterexamples"
+    ]
+  },
+  "all_other_test_methods_and_setup_unchanged": true,
+  "runtime_policy_requirement_unchanged": true,
+  "test_fix_assessment": "Only hidden staging-directory selection and exact policy rejection assertion, plus original-view/pointer/mirror/bundle preservation assertions for deep negatives; native validators are unchanged.",
+  "reusable_prior_passed_methods": [
+    "test_complete_version_permission_switch_and_finite_directions",
+    "test_soft_failure_retains_old_complete_version",
+    "test_reserved_action_without_native_intent_preserves_old_and_does_not_retry",
+    "test_pre_and_post_pointer_recovery_is_bound_to_the_same_action",
+    "test_rebound_plan_and_approval_errors_never_write",
+    "test_v1_and_actual_r3_remain_readable_and_v1_cannot_be_adopted",
+    "test_exact_approved_merge_relation_uses_real_git_objects_without_open_pr_rule"
+  ],
+  "prior_evidence_identity": {
+    "publication_id": "publication_37d422855bc4c9626cbf2350602d4b60ea28b6432b63d1fe84b9ed60756e8749",
+    "head": "73dfe05223f2407fcffabf34d472f83daf3b390f",
+    "integration_log_sha256": "63fa334f6766e8bbbd9d9d26bc69756cda23018c6e0836c58c8fc4696b7d39f8",
+    "overall_result": "FAILED (errors=3)",
+    "deep_overall_result": "FAILED (failures=1) after eight native rejection checks"
+  },
+  "excluded_prior_credit": {
+    "check": "UNKNOWN_CHANGED_OR_MIXED_POLICY_AFTER_OUTER_REHASH",
+    "reason": "Its self-reported PASS in integration.json conflicts with actual unittest ERROR results; subTest suppresses exceptions to continue to the unconditional log append. Original row is preserved but must not count as passing evidence.",
+    "authority_for_case_status": "Actual native unittest method/subtest log plus execution exit status, not checks[] alone."
+  },
+  "required_new_evidence": [
+    "Fresh prepare on new head and its new test tree.",
+    "New-package normal complete permission/publish/rollback/restore/dedup/stable-reverification/source-read chain.",
+    "Three exact-reason policy mixing cases.",
+    "Eight deep native rejections with pointer/mirrors/original-package unchanged and final real view read.",
+    "Final CI and head/package/test-tree association."
+  ],
+  "overall_B_acceptance": "PENDING_NEW_PACKAGE_AND_TARGETED_RETEST_RESULTS",
+  "long_tests_rerun_by_reviewer": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorization": false
+}

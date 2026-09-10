@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.annual_candidate_formal_adoption",
+        "type": "capability",
+        "status": "active",
+        "statement": "已保存的确切Marriott B01/B10候选可按显式v2政策与待激活Requirement进行内容重验并构造2项采纳/238项继承、240坐标/327行完整待审批包。v1按冻结原字节解释且仍无正式信用。正式写入入口要求真实Owner GitHub激活与独立发布决定、exact plan、受审实现及指定PR合并关系、完整包/来源/Run/执行/目标根/预期前驱和有限操作绑定；本地JSON及TEST_ONLY批准不能赋予实际根权限。复用原生发布与schema2切换日志处理同一操作恢复，动作预留后无intent时保留旧版且不自动重发。实现和隔离测试不构成新生产激活或R3切换。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_annual_formal_rehearsal.py::AnnualFormalRehearsalTest.test_complete_version_permission_switch_and_finite_directions",
+        "test_status": "automated_recorded",
+        "since": "2026-09-09"
+      },
+      {
         "anchor_id": "CAPABILITY.annual_candidate_publication_rehearsal",
         "type": "capability",
         "status": "active",

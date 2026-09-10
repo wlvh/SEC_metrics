@@ -15,6 +15,7 @@ from git_workspace import sanitized_git_environment
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, sha256_file, strict_json_file
 from .ratchet_release import _tree_files, _copy_exact_tree
 from .sources import resolve_repository_file
+from .annual_adoption_policy import policy, resolve_embedded, V1, V2
 
 ROOT = Path(__file__).resolve().parents[2]
 POLICY = 'config/annual_candidate_adoption_v1.json'
@@ -38,19 +39,6 @@ def check_id(value, field):
 
 def read(root, path):
     return strict_json_file(path=resolve_repository_file(repo_root=root, repo_relative_path=path))
-
-
-def policy(root=ROOT):
-    value = read(root, POLICY)
-    need(value['schema_version'] == 1 and value['policy_id'] == 'annual_candidate_adoption_v1'
-         and value['status'] == 'PROPOSED_FOR_FORMAL_ADOPTION'
-         and value['execution_mode'] == 'ISOLATED_REHEARSAL_ONLY'
-         and value['metric_ids'] == ['B01', 'B10']
-         and value['new_provider_paid_sec_calls'] == [0, 0, 0]
-         and value['original_runs_mutable'] is False
-         and value['formal_publication_authorized'] is False,
-         'ANNUAL_ADOPTION_POLICY_INVALID')
-    return value
 
 
 def git(*args):
@@ -201,14 +189,15 @@ def validate_historical_run_binding(*, repo_root, run_dir, manifest, records):
     return True
 
 
-def replay_snapshot(root, context):
+def replay_snapshot(root, context, *, policy_id=None, adoption_root=ROOT):
     """Run every native OPEN graph gate without writing a validation or Run."""
     from .run_store import _mechanically_replay_open_run
     from .run_store import load_run_bound_specs
     need(_tree_files(root=root / 'data') == context['data_files']
          and _tree_files(root=root / 'candidate') == context['candidate_files']
          and _tree_files(root=root / 'controls') == context['control_files'], 'ANNUAL_SNAPSHOT_BYTES_CHANGED')
-    need(context['policy'] == policy(), 'ANNUAL_ADOPTION_POLICY_CHANGED')
+    chosen = resolve_embedded(context['policy'])
+    need(policy_id in (None, chosen['policy_id']), 'ANNUAL_ADOPTION_POLICY_MIXED')
     need(content_hash(value=context['historical_code_files'])
          == context['origin']['stage']['reviewed_code']['runtime_tree'], 'ANNUAL_HISTORICAL_CODE_MAP_CHANGED')
     for path, proof in context['data_files'].items():
@@ -247,17 +236,46 @@ def replay_snapshot(root, context):
         'checks': ['ORIGINAL_EXECUTION_AND_USAGE', 'IMMUTABLE_SOURCE_AND_LEDGER', 'ORIGINAL_REQUIREMENT_AND_SPEC',
                    'COMPLETE_NATIVE_GRAPH_REPLAY', 'EVIDENCE_REVIEW_CALCULATOR', 'EXACT_SELECTED_RESULT_SET'],
         'formal_remaining_conditions': context['policy']['formal_remaining_conditions']}, 'adoption_receipt_id')
+    if chosen['policy_id'] == V2:
+        from .requirements import load_requirement_snapshot
+        from .requirement_profile import validate_execution_authority
+        exact = chosen['exact_candidate']
+        need(content_hash(value=context['candidate_files']) == exact['file_set_id']
+             and context['origin']['plan']['plan_id'] == exact['original_plan_id']
+             and receipt['native_run_ids'] == exact['native_run_ids']
+             and receipt['execution_id'] == exact['execution_id']
+             and content_hash(value=selected) == exact['selected_results_id']
+             and content_hash(value=context['origin']['plan']['prepared_input']['source_proofs']) == exact['source_proofs_id'],
+             'ANNUAL_EXACT_ADOPTION_CANDIDATE_CHANGED')
+        review = chosen['content_review']
+        path = resolve_repository_file(repo_root=adoption_root, repo_relative_path=review['path'])
+        need(sha256_file(path=path) == review['sha256'] and path.stat().st_size == review['size'],
+             'ANNUAL_CONTENT_REVIEW_CHANGED')
+        requirement = load_requirement_snapshot(snapshot_dir=adoption_root / 'requirements' / chosen['adoption_requirement_id'])
+        validate_execution_authority(repo_root=adoption_root, requirement=requirement)
+        need(requirement['adoption_policy'] == chosen, 'ANNUAL_ADOPTION_REQUIREMENT_POLICY_CHANGED')
+        identity = {k: requirement[k] for k in ('requirement_id', 'requirement_closure_hash', 'hashes')}
+        need(context['adoption_requirement'] == identity, 'ANNUAL_ADOPTION_REQUIREMENT_CHANGED')
+        body = {k: v for k, v in receipt.items() if k != 'adoption_receipt_id'}
+        body.update(status='VERIFIED_CANDIDATE_SPECIFIC_ADOPTION', formal_publication_credit='PENDING_EXTERNAL_AUTHORITY',
+            adoption_requirement=identity, content_review=review)
+        receipt = record(body, 'adoption_receipt_id')
     return receipt, runs, requirement
 
 
-def prepare_snapshot(*, candidate_dir, output_root):
+def prepare_snapshot(*, candidate_dir, output_root, policy_id=V1):
     """Capture source identities and a real saved approval, then replay offline."""
     from .annual_runtime import _external
     candidate_dir, output_root = _external(candidate_dir), _external(output_root)
     need(not output_root.exists(), 'ANNUAL_ADOPTION_OUTPUT_EXISTS')
+    chosen_policy = policy(policy_id=policy_id)
+    if policy_id == V2:
+        need(content_hash(value=_tree_files(root=candidate_dir)) == chosen_policy['exact_candidate']['file_set_id'],
+             'ANNUAL_EXACT_ADOPTION_CANDIDATE_CHANGED')
     binding = read(candidate_dir / 'b10', 'annual_candidate_binding.json')
     stage, plan = binding['stage'], binding['plan']
     owner = binding['owner_comment']
+    need(type(owner.get('id')) is int and owner['id'] > 0, 'ANNUAL_ORIGINAL_OWNER_ID_INVALID')
     code_files = historical_code(stage)
     data_root = _external(Path(plan['data_root']))
     originals = _tree_files(root=data_root)
@@ -268,10 +286,9 @@ def prepare_snapshot(*, candidate_dir, output_root):
     historical_requirement = load_requirement_snapshot(snapshot_dir=data_root / 'requirements' / plan['requirement_id'])
     repository = historical_requirement['baseline']['repository']['identity']
     # Read the original consumed approval; this creates no new permission.
-    actual = json.loads(subprocess.check_output(['gh', 'api', 'repos/' + repository + '/issues/comments/' + str(owner['id'])],
-        cwd=ROOT, text=True))
+    from .annual_candidate import _github
+    actual = _github('repos/' + repository + '/issues/comments/' + str(owner['id']))
     need(actual == owner, 'ANNUAL_ORIGINAL_OWNER_COMMENT_CHANGED')
-    chosen_policy = policy()
     need(stage['policy']['company_id'] == chosen_policy['company_id']
          and plan['requirement_id'] in chosen_policy['candidate_requirement_ids'], 'ANNUAL_UNSUPPORTED_CANDIDATE')
     _copy_exact_tree(source=data_root, destination=output_root / 'data')
@@ -289,7 +306,10 @@ def prepare_snapshot(*, candidate_dir, output_root):
         'data_files': _tree_files(root=output_root / 'data'),
         'candidate_files': _tree_files(root=output_root / 'candidate'),
         'control_files': _tree_files(root=controls)}
-    receipt, _runs, _requirement = replay_snapshot(output_root, context)
+    if policy_id == V2:
+        requirement = load_requirement_snapshot(snapshot_dir=ROOT / 'requirements' / chosen_policy['adoption_requirement_id'])
+        context['adoption_requirement'] = {k: requirement[k] for k in ('requirement_id', 'requirement_closure_hash', 'hashes')}
+    receipt, _runs, _requirement = replay_snapshot(output_root, context, policy_id=policy_id)
     (output_root / 'context.json').write_bytes(canonical_json_bytes(value=context) + b'\n')
     (output_root / 'adoption.json').write_bytes(canonical_json_bytes(value=receipt) + b'\n')
     need(_tree_files(root=candidate_dir) == context['candidate_files'] and _tree_files(root=data_root) == originals,

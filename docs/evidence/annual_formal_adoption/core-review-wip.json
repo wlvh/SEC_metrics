@@ -1,0 +1,83 @@
+{
+  "record_type": "INDEPENDENT_ANNUAL_FORMAL_ADOPTION_WIP_CORE_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "reviewed_at_utc": "2026-09-09T11:26:11.539198+00:00",
+  "review_state": "WORK_IN_PROGRESS_NOT_FINAL_HEAD_APPROVAL",
+  "base_head": "74af2fd106c54938306d7c354323c45be861cbf2",
+  "reviewed_file_snapshot": {
+    "scripts/vnext/annual_adoption_policy.py": {
+      "sha256": "7c40c25d004af2b87553147897ccf1cf21dc953822f59d3a83509813e107fec5",
+      "size": 1990
+    },
+    "scripts/vnext/annual_adoption.py": {
+      "sha256": "90e8b501aaa696b726eb4e3c5a884e9e827aef2f6880e42d0a5ef13ccdb02f8c",
+      "size": 20007
+    },
+    "scripts/vnext/annual_publication.py": {
+      "sha256": "ff1ab7e3e326449703e5b437b71ded086f69f94867b0df9c312e56267a18b2c8",
+      "size": 34526
+    },
+    "scripts/vnext/annual_publication_authority.py": {
+      "sha256": "d537a2b15d1bd9101858e53b044130728d3a743266410119ba6f44be86497238",
+      "size": 26916
+    },
+    "scripts/vnext/requirement_profile_v8.py": {
+      "sha256": "84e787a388b242108625db861340f87908c83bade0eb3213181e35df54b48580",
+      "size": 7970
+    },
+    "scripts/vnext/requirement_profile.py": {
+      "sha256": "ab5495acb5f0a202a164f6fc98769592e5ed9b1cbdee7a3a40e4bcf5001b3586",
+      "size": 4293
+    },
+    "scripts/vnext/publication.py": {
+      "sha256": "4dd55930e39cc89e951f4da92fb2cdfa0ed4635bcebc3664c9e6cad1c120c47b",
+      "size": 273813
+    },
+    "scripts/vnext/records.py": {
+      "sha256": "3c2abf23e1ea0205e8f9a35cfc9a7bdd83f5fc5c8271407887609fc5db1cf08c",
+      "size": 68811
+    },
+    "tools/vnext_annual_publication.py": {
+      "sha256": "e9a223171b9713bc5891e2c24d72b7ce5a85ca2fb2a1df0d078d8147c93949ae",
+      "size": 4752
+    },
+    "config/annual_candidate_adoption_v2.json": {
+      "sha256": "dd6f00aa361363cf12b8015f37c7eee5756df2dddb1b92964edb031f72bd5fff",
+      "size": 3092
+    }
+  },
+  "blocking_findings": [],
+  "observations": [
+    "Explicit byte-bound v1/v2 policy routing preserves original v1 policy bytes. Native _source_proof AST is unchanged.",
+    "The candidate-specific path binds exact native file set, original plan/Run/execution/source-proof/selected-Result identities and independent content-review bytes. New pending Requirement is separate from historical execution Requirement.",
+    "Permission factory obtains distinct real owner activation and publication comments, revalidates plan/bundle/code/tests and requires the named PR merge relation before production authority. TEST_ONLY approval bodies/receipt type and isolated target cannot substitute for production permission.",
+    "Annual low-level commit, rollback and recovery guards bind the permitted target root and edge. New native schema2 intents/receipts retain plan/action/permission identity; historical schema1 branch is retained."
+  ],
+  "required_acceptance_checks_not_yet_observed": [
+    "Execute the real v2 complete-bundle native tests with only GitHub I/O substituted; no actual production writes.",
+    "Demonstrate exact production/test-only rejection, same-ID candidate/package/permission substitutions, and mixed policy rejection.",
+    "Demonstrate repeated fresh authorization reconstructs the same permission ID needed for native-intent recovery.",
+    "Demonstrate pre/post-pointer crashes and rollback/restore retain their original action/permission binding.",
+    "Explicitly test action reserved before native intent exists, and native soft-failure compensation with no intent: the current code permanently stops that operation rather than retrying. Old active/mirrors must remain correct, and no publication success may be claimed.",
+    "Run current-v1 frozen bundle cold-read/switch compatibility and final fixed-head tests after Requirement execution hashes are refreshed."
+  ],
+  "reserved_action_semantics": {
+    "file": "scripts/vnext/annual_publication_authority.py",
+    "lines_at_review": [
+      381,
+      408,
+      422,
+      423
+    ],
+    "classification": "Conservative terminal reservation behavior to document and test, not an established authorization bypass.",
+    "description": "Action is persisted before native switch. If native intent is absent after an interruption or compensation, repeat operation returns ALREADY_RESERVED and recover returns NO_PENDING; it cannot autonomously finish a new publish under that action."
+  },
+  "review_limit": "No final B implementation pass is issued; current uncommitted source and pending Requirement hashes are development state. No fabricated permission, business request, production pointer mutation, or full v2 package replay was performed by this reviewer.",
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}
