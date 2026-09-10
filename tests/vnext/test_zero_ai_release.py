@@ -532,10 +532,13 @@ class ZeroAiReleaseFastTest(unittest.TestCase):
     """Check the active edge while fully verifying only its R2 predecessor."""
 
     def test_r2_predecessor_bundle_fast_smoke(self) -> None:
-        """Bind the active R3 manifest edge, then fully verify exact R2."""
-        pointer = strict_json_file(
-            path=REPO_ROOT / "outputs" / "active_publication.json"
-        )
+        """Bind the historical R3 receipt edge, then fully verify exact R2."""
+        index = strict_json_file(path=REPO_ROOT/'outputs/ratchet_release_receipts/r3/index.json')
+        binding = index['receipts']['active_terminal']
+        path = REPO_ROOT/binding['path']
+        self.assertEqual(binding['sha256'],sha256_file(path=path))
+        self.assertEqual(binding['size'],path.stat().st_size)
+        pointer = strict_json_file(path=path)
         self.assertIsInstance(pointer, dict)
         self.assertEqual(ACTIVE_R3_PUBLICATION_ID, pointer["publication_id"])
         self.assertEqual(

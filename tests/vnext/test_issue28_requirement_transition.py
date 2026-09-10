@@ -11,6 +11,7 @@ import unittest
 from pathlib import Path
 
 from tests.vnext.common import REPO_ROOT
+from tests.vnext.historical_authority_support import historical_test_root
 from tests.vnext.test_issue15_authority import copy_test_repository
 from tests.vnext.issue28_fixture_support import copy_profile_repository, evolve_to_v2
 from vnext.canonical import atomic_write_json, content_hash, sha256_file
@@ -95,7 +96,7 @@ class Issue28RequirementTransitionFastTest(unittest.TestCase):
 
     def test_profile_snapshot_loads_with_historical_parent_fast_smoke(self) -> None:
         """Load profile authority and its exact Issue #15 parent locally."""
-        parent = load_requirement_snapshot(snapshot_dir=ISSUE_15_DIR)
+        parent = load_requirement_snapshot(snapshot_dir=historical_test_root()/'requirements/issue_15_v1')
         successor = load_requirement_snapshot(snapshot_dir=ISSUE_28_DIR)
 
         self.assertEqual("issue_15_v1", parent["requirement_id"])

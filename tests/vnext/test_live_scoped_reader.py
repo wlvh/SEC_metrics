@@ -30,6 +30,14 @@ CASE = REPO_ROOT / "docs/r4_offline/qualified_cases/r4_a03_alternate/scoped_requ
 
 
 class LiveScopedEnvelopeTest(unittest.TestCase):
+    def setUp(self):
+        from vnext import ai_adapter, invocation_control
+        from tests.vnext.historical_authority_support import historical_test_root
+        for module in (ai_adapter,invocation_control):
+            selected=mock.patch.object(module,'_REPOSITORY_ROOT',historical_test_root())
+            selected.start();self.addCleanup(selected.stop)
+
+
     @classmethod
     def setUpClass(cls):
         # v1 already carries the same inherited S-PROVIDER-TRANSPORT policy;

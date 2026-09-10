@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Dict
 
 from tests.vnext.common import REPO_ROOT
+from tests.vnext.historical_authority_support import historical_test_root
 from tests.vnext.test_issue15_authority import copy_test_repository
 from tests.vnext.test_issue15_authority import read_json, write_json
 from vnext.canonical import content_hash, sha256_file
@@ -114,9 +115,9 @@ class SourceStrategyRegistryTest(unittest.TestCase):
 
     def test_registry_covers_exact_39_without_migration_state(self) -> None:
         """Load every route and prove only ReleasePlan owns current state."""
-        loaded = load_source_strategy_registry(repo_root=REPO_ROOT)
+        loaded = load_source_strategy_registry(repo_root=historical_test_root())
         plan = load_issue15_release_plan(
-            repo_root=REPO_ROOT, release_plan_id="issue_15_zero_ai_r2",
+            repo_root=historical_test_root(), release_plan_id="issue_15_zero_ai_r2",
         )
         registry = loaded["registry"]
         metrics = loaded["metrics"]

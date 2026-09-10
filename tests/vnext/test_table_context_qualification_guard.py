@@ -10,6 +10,7 @@ from pathlib import Path
 from unittest import mock
 
 from tests.vnext.common import REPO_ROOT
+from tests.vnext.historical_authority_support import historical_test_root
 from tests.vnext.test_invocation_control import GENERIC_RESPONSE_BODY
 from tests.vnext.test_invocation_control import UTC, clock, execution, plan
 from tests.vnext.test_invocation_control import validate_evidence
@@ -71,23 +72,29 @@ class TableContextQualificationGuardTest(unittest.TestCase):
     def setUpClass(cls) -> None:
         """Build the two current lodging task/request measurements once."""
         cls.requirement = load_requirement_snapshot(
-            snapshot_dir=REPO_ROOT / "requirements/issue_15_v1",
+            snapshot_dir=historical_test_root() / "requirements/issue_15_v1",
         )
         cls.matrix = load_table_qualification_matrix(
-            repo_root=REPO_ROOT,
+            repo_root=historical_test_root(),
             family_id="lodging_kpi_table",
         )
         cls.contracts = load_table_task_contracts(
-            repo_root=REPO_ROOT,
+            repo_root=historical_test_root(),
             family_id="lodging_kpi_table",
         )
         cls.measurements = _family_measurement_receipts(
-            repo_root=REPO_ROOT,
+            repo_root=historical_test_root(),
             family_id="lodging_kpi_table",
             matrix=cls.matrix,
             task_contracts=cls.contracts,
             requirement=cls.requirement,
         )
+
+    def setUp(self):
+        from unittest import mock
+        from vnext import invocation_control
+        selected=mock.patch.object(invocation_control,'_REPOSITORY_ROOT',historical_test_root())
+        selected.start();self.addCleanup(selected.stop)
 
     def test_revised_requests_use_reviewed_qualification_usage_readiness(
         self,

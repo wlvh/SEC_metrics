@@ -15,7 +15,7 @@ from .canonical import atomic_write_json
 
 def _paths(approval_url):
     binding=continuity.verify_stage(approval_url=approval_url,execution=False)
-    root=Path(binding['stage']['stage_root'])/'trigger'
+    root=continuity._external(Path(binding['stage']['stage_root'])/'trigger')
     return binding,root,root/'current.json'
 
 

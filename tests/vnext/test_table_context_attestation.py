@@ -7,6 +7,7 @@ import json
 import unittest
 
 from tests.vnext.common import REPO_ROOT
+from tests.vnext.historical_authority_support import historical_test_root
 from vnext.canonical import content_hash
 from vnext.requirements import ISSUE_15_D07_ACCEPTED_CONTEXT_ATTESTATIONS
 from vnext.requirements import ISSUE_15_D07_CONTEXT_FEASIBILITY_POLICY
@@ -172,7 +173,7 @@ class TableContextAttestationTest(unittest.TestCase):
         """Keep old usage bytes while blocking current credit or measurement."""
         binding = exact_request_binding(attestation=self.attestation)
         result = evaluate_context_feasibility(
-            repo_root=REPO_ROOT,
+            repo_root=historical_test_root(),
             estimated_input_tokens=394837,
             max_estimated_input_tokens=200000,
             request_binding=binding,
@@ -188,7 +189,7 @@ class TableContextAttestationTest(unittest.TestCase):
             "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
         ):
             build_table_context_measurement_plan(
-                repo_root=REPO_ROOT,
+                repo_root=historical_test_root(),
                 task_contract_id="lodging_occupancy_table_v2",
             )
 
@@ -202,7 +203,7 @@ class TableContextAttestationTest(unittest.TestCase):
             / (row["attestation_id"].split(":", maxsplit=1)[1] + ".json")
         ).read_text(encoding="utf-8"))
         result = evaluate_context_feasibility(
-            repo_root=REPO_ROOT,
+            repo_root=historical_test_root(),
             estimated_input_tokens=394828,
             max_estimated_input_tokens=200000,
             request_binding=exact_request_binding(attestation=attestation),
@@ -226,7 +227,7 @@ class TableContextAttestationTest(unittest.TestCase):
         ))
         changed["provider_request_body_sha256"] = "0" * 64
         blocked = evaluate_context_feasibility(
-            repo_root=REPO_ROOT,
+            repo_root=historical_test_root(),
             estimated_input_tokens=394828,
             max_estimated_input_tokens=200000,
             request_binding=changed,

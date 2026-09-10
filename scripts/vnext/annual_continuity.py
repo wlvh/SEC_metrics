@@ -226,7 +226,7 @@ def stage_lock(stage):
 
 def _plan(stage, prepared, selection, source_root, predecessor, ordinal, *, authority_root=ROOT):
     from .table_task_contracts import table_task_execution_plan
-    requirement = _requirement(authority_root); task = table_task_execution_plan(repo_root=authority_root, task_contract_id=stage['policy']['task_contract_id'])
+    requirement = _requirement(authority_root); task = table_task_execution_plan(repo_root=source_root, task_contract_id=stage['policy']['task_contract_id'])
     body = {'record_type': 'CONTINUOUS_ANNUAL_EXECUTION_PLAN', 'schema_version': 1,
         'stage_id': stage['stage_id'], 'stage_root': stage['stage_root'],
         'requirement_id': REQUIREMENT_ID, 'requirement_closure_hash': requirement['requirement_closure_hash'],
@@ -236,7 +236,7 @@ def _plan(stage, prepared, selection, source_root, predecessor, ordinal, *, auth
         'source_ledger': {n: {'sha256': sha256_file(path=source_root / 'evidence' / n),
             'size': (source_root / 'evidence' / n).stat().st_size} for n in ('requests_log.csv', 'requests_log_manifest.json')},
         'task_contract_id': stage['policy']['task_contract_id'], 'task_binding': task['run_binding'],
-        'request': runtime._request(prepared, source_root, stage['policy']['task_contract_id'], code_root=authority_root),
+        'request': runtime._request(prepared, source_root, stage['policy']['task_contract_id'], code_root=source_root),
         'predecessor_pointer': predecessor, 'maximum_new_executions': 1, 'automatic_retry_count': 0,
         'actual_input_tokens_max': 200000, 'qualification_credit': 'NONE', 'publication_credit': 'NONE'}
     return record(body, 'plan_id')
@@ -478,17 +478,21 @@ def _publish_candidate(binding, candidate, *, seed=False):
         planned=publishing.plan(bundle_dir=root/'outputs/publications'/prepared['publication_id'],approval_url=binding['owner_comment']['html_url'])
         _write_once(path,planned)
     permission=publishing.verify_authorization(plan=planned,activation_url=binding['owner_comment']['html_url'],owner_url=binding['owner_comment']['html_url'])
-    current=pub.PublicationView.open(publication_root=root)
-    if current.publication_id==planned['binding']['publication_id']:
-        record_value=pub._switch_receipt_for_pointer(pointer_path=root/'outputs/active_publication.json',pointer=read(root,'outputs/active_publication.json'))
-        need(record_value.get('annual_authority',{}).get('plan_id')==planned['plan_id'],'CONTINUITY_EXISTING_PUBLICATION_NOT_THIS_PLAN')
-        return {'status':'ALREADY_COMMITTED_NO_NEW_PUBLICATION','publication_id':current.publication_id,'plan_id':planned['plan_id']}
-    result=authority.execute(permission=permission,operation='publish')
-    current=pub.PublicationView.open(publication_root=root)
-    need(result['status']=='AUTHORIZED_PUBLISH_COMPLETED' and current.publication_id==planned['binding']['publication_id'],
-         'CONTINUITY_PUBLICATION_NOT_COMMITTED')
-    _write_once(path.parent/('seed-publication-result.json' if seed else 'publication-result.json'),result)
-    return {**result,'plan_id':planned['plan_id']}
+    # Reuse the already fully validated exact manifest carried by the opaque
+    # permission. Generic bundle verification still checks every file byte.
+    pin=annual._Verified(annual._FACTORY,authority._permission(permission)['manifest'])
+    with annual._verified(pin):
+        current=pub.PublicationView.open(publication_root=root)
+        if current.publication_id==planned['binding']['publication_id']:
+            record_value=pub._switch_receipt_for_pointer(pointer_path=root/'outputs/active_publication.json',pointer=read(root,'outputs/active_publication.json'))
+            need(record_value.get('annual_authority',{}).get('plan_id')==planned['plan_id'],'CONTINUITY_EXISTING_PUBLICATION_NOT_THIS_PLAN')
+            return {'status':'ALREADY_COMMITTED_NO_NEW_PUBLICATION','publication_id':current.publication_id,'plan_id':planned['plan_id']}
+        result=authority.execute(permission=permission,operation='publish')
+        current=pub.PublicationView.open(publication_root=root)
+        need(result['status']=='AUTHORIZED_PUBLISH_COMPLETED' and current.publication_id==planned['binding']['publication_id'],
+             'CONTINUITY_PUBLICATION_NOT_COMMITTED')
+        _write_once(path.parent/('seed-publication-result.json' if seed else 'publication-result.json'),result)
+        return {**result,'plan_id':planned['plan_id']}
 
 
 def _recover_pending(binding):
@@ -595,7 +599,10 @@ def run_once(*, approval_url, refresh_submissions=False):
             return {**report,'counts':budget_counts(stage)}
         prepared,selection=select_saved_input(Path(stage['data_root']),visibility)
         need(prepared==report['prepared_input'],'CONTINUITY_INPUT_CHANGED_DURING_CHECK')
-        credential=runtime._credential_error()
+        from .ai_adapter import approved_transport_policy,api_key_environment_name,api_key_required_error_code
+        data=runtime.verify_data_root(Path(stage['data_root']),_requirement())
+        transport=approved_transport_policy(requirement=load_requirement_snapshot(snapshot_dir=data/'requirements/issue_15_v1'))
+        credential='' if os.environ.get(api_key_environment_name(policy=transport),'').strip() else api_key_required_error_code(policy=transport)
         if credential:return {**report,'status':'CREDENTIAL_REQUIRED','error':credential,'counts':budget_counts(stage)}
         predecessor=read(Path(stage['publication_root']),'outputs/active_publication.json')
         planned=_plan(stage,prepared,selection,Path(stage['data_root']),predecessor,counts['provider_reserved']+1)

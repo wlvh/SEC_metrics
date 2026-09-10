@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Callable, Dict, Optional
 
 from tests.vnext.common import REPO_ROOT
+from tests.vnext.historical_authority_support import historical_test_root
 from vnext.canonical import atomic_write_json, content_hash
 from vnext.invocation_control import UnknownRemoteOutcomeError
 from vnext.qualification import QualificationError
@@ -690,7 +691,7 @@ class TableContextMeasurementTerminalTest(unittest.TestCase):
             "TABLE_CONTEXT_MEASUREMENT_AUTHORIZATION_CONSUMED",
         ):
             build_table_context_measurement_plan(
-                repo_root=REPO_ROOT,
+                repo_root=historical_test_root(),
                 task_contract_id="lodging_revpar_table_v2",
             )
 

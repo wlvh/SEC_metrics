@@ -1871,8 +1871,8 @@ def api_key_required_error_code(*, policy: TransportPolicy) -> str:
     raise AIAdapterError("D-01 provider has no API key error code")
 
 
-def _load_transport_policy() -> Tuple[TransportPolicy, str]:
-    """Load effective D-01 only from the module-fixed repository authority.
+def _load_transport_policy(*, annual_authorization=None) -> Tuple[TransportPolicy, str]:
+    """Load D-01 from trusted code or its opaque continuity-bound authority.
 
     Returns:
         Immutable policy and Requirement closure hash.
@@ -1882,7 +1882,17 @@ def _load_transport_policy() -> Tuple[TransportPolicy, str]:
     """
     # Authority must follow this module's repository, because a caller-
     # selected root could replace the pending Decision Register wholesale.
+    # The continuity exception obtains its root only from an already verified
+    # opaque capability, with every authority byte checked against trusted code.
     repo_root = _REPOSITORY_ROOT
+    if annual_authorization is not None:
+        from .annual_runtime import RuntimeAuthorization, authorization_fields
+        if type(annual_authorization) is RuntimeAuthorization:
+            fields = authorization_fields(annual_authorization)
+            if fields['requirement']['requirement_id'] == 'issue_28_v8':
+                # Only this opaque stage capability selects a separately verified
+                # data authority. A caller cannot supply a directory or dictionary.
+                repo_root = fields['data_root']
     if not isinstance(repo_root, Path) or repo_root.is_symlink():
         raise AIAdapterError("D-01 repository root is unsafe")
     snapshot_dir = repo_root / "requirements" / "issue_15_v1"
@@ -2033,7 +2043,7 @@ class _ApprovedTransportAdapter(AIAdapter):
                 committed factory.
         """
         super().__init__(authority=authority)
-        policy, requirement_closure_hash = _load_transport_policy()
+        policy, requirement_closure_hash = _load_transport_policy(annual_authorization=None if invocation_context is None else invocation_context.annual_candidate_authorization)
         if policy.provider not in _TRANSPORT_FACTORIES:
             raise AIAdapterError(
                 "D-01 provider has no repository transport factory"
@@ -2120,7 +2130,7 @@ class _ApprovedTransportAdapter(AIAdapter):
             prepared_request=prepared_request,
         )
         request_bytes = rebuilt_request.request_bytes
-        current_policy, current_closure_hash = _load_transport_policy()
+        current_policy, current_closure_hash = _load_transport_policy(annual_authorization=self.invocation_context.annual_candidate_authorization if self.invocation_context is not None else None)
         if (
             current_policy != self.policy
             or current_closure_hash != self.requirement_closure_hash
@@ -2721,7 +2731,7 @@ def _execute_controlled_transport(
         prepared_request=prepared_request,
     )
     prepared = _validate_prepared_request(prepared_request=rebuilt_request)
-    current_policy, current_closure_hash = _load_transport_policy()
+    current_policy, current_closure_hash = _load_transport_policy(annual_authorization=context.annual_candidate_authorization)
     if (
         current_policy != adapter.policy
         or current_closure_hash != adapter.requirement_closure_hash

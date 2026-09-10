@@ -298,10 +298,9 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
             EXACT_R2_PUBLICATION_ID,
             self.r3_read_back["predecessor_publication_id"],
         )
-        self.assertEqual(
-            self.active_pointer,
-            self.r3_active_terminal,
-        )
+        # The historical R3 terminal remains an exact archived fact. Current
+        # publication identity is allowed to advance independently.
+        self.assertEqual(self.active_pointer,strict_json_file(path=REPO_ROOT/'outputs/active_publication.json'))
         self.assertEqual(
             ACTIVE_R3_PUBLICATION_ID,
             self.r3_active_terminal["publication_id"],
@@ -316,20 +315,19 @@ class TableStageCFinancialMaterializationTest(unittest.TestCase):
             / "publications"
             / ACTIVE_R3_PUBLICATION_ID
         )
-        for root_relative, bundle_relative in R3_ROOT_TO_BUNDLE.items():
-            current_hash = sha256_file(path=REPO_ROOT / root_relative)
-            self.assertEqual(
-                self.r3_read_back["mirror_hashes"][bundle_relative],
-                current_hash,
-            )
-            self.assertEqual(
-                self.r3_read_back["artifact_hashes"][bundle_relative],
-                current_hash,
-            )
-            self.assertEqual(
-                current_hash,
-                sha256_file(path=active_bundle / bundle_relative),
-            )
+        current_bundle=REPO_ROOT/'outputs/publications'/self.active_pointer['publication_id']
+        self.assertEqual(self.active_pointer['bundle_manifest_sha256'],sha256_file(path=current_bundle/'publication_manifest.json'))
+        from vnext.records import validate_record
+        current_manifest=validate_record(record=strict_json_file(path=current_bundle/'publication_manifest.json'))
+        self.assertEqual(self.active_pointer['publication_id'],current_manifest['publication_id'])
+        files={r['path']:r for r in current_manifest['files']}
+        for root_relative,bundle_relative in R3_ROOT_TO_BUNDLE.items():
+            historical_hash=sha256_file(path=active_bundle/bundle_relative)
+            self.assertEqual(self.r3_read_back['mirror_hashes'][bundle_relative],historical_hash)
+            self.assertEqual(self.r3_read_back['artifact_hashes'][bundle_relative],historical_hash)
+            current_hash=sha256_file(path=REPO_ROOT/root_relative)
+            self.assertEqual(files[bundle_relative]['sha256'],current_hash)
+            self.assertEqual(current_hash,sha256_file(path=current_bundle/bundle_relative))
 
     def test_semantic_preimage_excludes_process_and_temporary_noise(self) -> None:
         """Keep semantic identity free of PID, temp locators, and stderr lines."""
