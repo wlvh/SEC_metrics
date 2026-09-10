@@ -114,6 +114,27 @@ def _period_scope(start,end):
          and date.fromisoformat(end).isoformat()==end and start<=end, 'CONTINUITY_PERIOD_SCOPE_INVALID')
 
 
+def _register_unused_budget(root, data, budget, start):
+    """Preserve an inert registration after proposal output failure; never reset it."""
+    need(not root.exists(), 'CONTINUITY_STAGE_OR_BUDGET_ALREADY_REGISTERED')
+    path=budget/'registration.json'
+    fixed={'kind':'CONTINUITY_BUDGET_REGISTRATION','budget_root':str(budget),
+        'stage_root':str(root),'data_root':str(data),'policy_id':V3,
+        'sec_ledger_origin':{'row_count':len(update._rows(data)), 'rows_id':content_hash(value=update._rows(data))},
+        'limits':{'normal_provider':2,'conditional_provider':1,'provider':3,'paid':3,'sec':6,'retry':0}}
+    if budget.exists():
+        need(set(budget.iterdir())=={path}, 'CONTINUITY_BUDGET_HAS_EXECUTION_STATE')
+        value=_json(path);check_id(value,'registration_id')
+        need({k:v for k,v in value.items() if k not in {'nonce','created_at_utc','registration_id'}}==fixed
+             and re.fullmatch('[0-9a-f]{32}',value.get('nonce','')) is not None
+             and parse_utc_timestamp(value=value['created_at_utc'])<=start,
+             'CONTINUITY_BUDGET_REGISTRATION_CHANGED')
+        return value
+    value=record({**fixed,'nonce':uuid4().hex,'created_at_utc':start.isoformat()},'registration_id')
+    _write_once(path,value)
+    return value
+
+
 def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=None, seed_b10=None,
                    visibility_file=None, expires_at_utc, historical_period_start, historical_period_end):
     """Create one inert stage proposal. The review and original seed are explicit."""
@@ -134,14 +155,7 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=
     seed = None if seed_b01 is None else seed_descriptor(b01=Path(seed_b01), b10=Path(seed_b10), data_root=data)
     need(seed is None or (seed['period']['period_start'] >= historical_period_start
          and seed['period']['period_end'] <= historical_period_end), 'CONTINUITY_SEED_OUT_OF_SCOPE')
-    registration_path = budget / 'registration.json'
-    need(not root.exists() and not budget.exists(), 'CONTINUITY_STAGE_OR_BUDGET_ALREADY_REGISTERED')
-    registration = record({'kind': 'CONTINUITY_BUDGET_REGISTRATION', 'nonce': uuid4().hex,
-        'budget_root': str(budget), 'stage_root': str(root), 'data_root': str(data),
-        'policy_id': V3, 'created_at_utc': start.isoformat(),
-        'sec_ledger_origin': {'row_count':len(update._rows(data)), 'rows_id':content_hash(value=update._rows(data))},
-        'limits': {'normal_provider': 2, 'conditional_provider': 1, 'provider': 3, 'paid': 3, 'sec': 6, 'retry': 0}}, 'registration_id')
-    _write_once(registration_path, registration)
+    registration = _register_unused_budget(root,data,budget,start)
     from .publication import PublicationView
     PublicationView.open(publication_root=ROOT)
     initial_pointer = read(ROOT, 'outputs/active_publication.json')

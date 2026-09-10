@@ -17,6 +17,37 @@ ROOT=Path(__file__).resolve().parents[2]
 
 
 class AnnualContinuityBoundaryTest(unittest.TestCase):
+    def test_cli_result_preserves_decimal_identity_and_never_leaves_partial_json(self):
+        from decimal import Decimal
+        from contextlib import redirect_stdout
+        import io
+        from tools.vnext_annual_continuity import write_result
+        from vnext.canonical import strict_json_file
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();output=root/'result.json'
+            value=record({'review':{'duration':Decimal('3807.637')}},'stage_id')
+            with redirect_stdout(io.StringIO()):write_result(output,value)
+            found=strict_json_file(path=output)
+            continuity.check_id(found,'stage_id');self.assertEqual(content_hash(value=value),content_hash(value=found))
+            with self.assertRaises(FileExistsError):write_result(output,value)
+            with self.assertRaises(ValueError):write_result(root/'invalid.json',{'unsupported':1.2})
+            self.assertFalse((root/'invalid.json').exists())
+
+    def test_only_unused_identical_registration_can_resume_proposal(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();stage=root/'stage';data=root/'data';budget=root/'budget'
+            data.mkdir();start=datetime.now(timezone.utc)
+            first=continuity._register_unused_budget(stage,data,budget,start)
+            original=(budget/'registration.json').read_bytes()
+            self.assertEqual(first,continuity._register_unused_budget(stage,data,budget,start+timedelta(seconds=1)))
+            self.assertEqual(original,(budget/'registration.json').read_bytes())
+            with self.assertRaisesRegex(ValueError,'REGISTRATION_CHANGED'):
+                continuity._register_unused_budget(stage,root/'other-data',budget,start)
+            (budget/'provider-1.json').write_text('{}')
+            with self.assertRaisesRegex(ValueError,'HAS_EXECUTION_STATE'):
+                continuity._register_unused_budget(stage,data,budget,start)
+            self.assertEqual(original,(budget/'registration.json').read_bytes())
+
     def test_current_native_results_belong_to_current_annual_snapshot(self):
         pointer=json.loads((ROOT/'outputs/active_publication.json').read_text())
         directory=ROOT/'outputs/publications'/pointer['publication_id']

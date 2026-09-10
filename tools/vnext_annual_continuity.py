@@ -7,6 +7,16 @@ from pathlib import Path
 import sys
 ROOT=Path(__file__).resolve().parents[1];sys.path[:0]=[str(ROOT),str(ROOT/'scripts')]
 from vnext import annual_continuity as continuity
+from vnext.canonical import canonical_json_bytes
+
+
+def write_result(output, result):
+    # Serialize completely before opening the evidence file. Strict source
+    # records can contain Decimal; use the same identity encoding as storage.
+    payload=canonical_json_bytes(value=result)+b'\n'
+    output.parent.mkdir(parents=True,exist_ok=True)
+    with output.open('xb') as out:out.write(payload)
+    print(payload.decode('utf-8'),end='')
 
 
 def main(argv=None):
@@ -46,8 +56,6 @@ def main(argv=None):
         result={'status':'CONTINUITY_STOPPED','error':str(error),'error_type':type(error).__name__,
             'note':'Inspect the same stage budget, native candidate and publication intent; do not reset or retry unknown calls.'}
         code=2
-    output.parent.mkdir(parents=True,exist_ok=True)
-    with output.open('x') as out:json.dump(result,out,ensure_ascii=False,indent=2);out.write('\n')
-    print(json.dumps(result,ensure_ascii=False,indent=2));return code
+    write_result(output,result);return code
 
 if __name__=='__main__':raise SystemExit(main())
