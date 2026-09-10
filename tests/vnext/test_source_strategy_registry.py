@@ -232,7 +232,7 @@ class SourceStrategyRegistryTest(unittest.TestCase):
             r3["requirement_closure_hash"],
             loaded["requirement_closure_hash"],
         )
-        current = load_requirement_snapshot(snapshot_dir=ISSUE_15_DIR)
+        current = load_requirement_snapshot(snapshot_dir=historical_test_root()/'requirements/issue_15_v1')
         self.assertEqual(
             current["requirement_closure_hash"],
             loaded["current_requirement_closure_hash"],
