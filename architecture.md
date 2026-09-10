@@ -749,3 +749,7 @@ live core在任何业务read/write前exact要求module-owned repository、`artif
 只有candidate为`PASSED_RECORDED_ONLY`时，CLI边界才调用固定authority `complete_recorded_publication_sandbox()`；core从workspace内部派生唯一`recorded-publication` child。publication closure按tier验证Batch实际消费的request rows：recorded允许唯一且exact验证path/hash/headers/size的`LEGACY_WORKING_LOCATOR`，并把其原bytes与tier/class写入portable closure；formal只允许`IMMUTABLE_ATTEMPT`。随后sandbox prepare以lock/CAS提交其pointer、生成其root mirrors，并立即用PublicationView/read-back hashes重验。调用方不能传第二个publication root。CLI在前后读取repository formal publication state，任何正式active/root漂移以`RECORDED_FORMAL_STATE_CHANGED`失败；sandbox pointer不进入`outputs/active_publication.json`，也不供业务用户读取。自动场景中的`TEST_ONLY_EXPLICIT_REVIEW`仅证明显式review和transaction，不能迁移为formal HUMAN/full receipt；generic `publish --commit`与public formal mutation tombstone保持不变。该路径的socket canary、sandbox CAS/read-back和formal-state不变由recorded scenario覆盖，但不构成live、active或full运行证据；只有对应测试在当前closure真实通过时才能报告recorded scenario PASS。
 
 R3已在clean committed implementation上形成active successor，previous为R2，并保存R3→R2→修正版R3的真实switch/read-back证据。当前只证明24指标partial active；financial、text、39指标最终Cutover与full acceptance仍未完成，只有各后续scope真实receipt及最终full return code 0才可扩大声明。
+
+### 受限年度连续更新
+
+更新器通过PublicationView.native_result与authority_bytes取得结果所有者和覆盖权威，不在调用点猜内部目录；原R3未嵌入的原生内容明确拒绝。annual_continuity把三处进度、固定预算根与每输入计划接到annual_runtime共享执行器；annual_continuity_snapshot只增加新来源/旧起点的重放适配，annual_continuity_publication经既有PublicationPermission和intent/receipt提交明确前驱的隔离版本。旧v1/v2解释不变，不向实际根授连续写入。有限trigger直接调用同一run-once，未安装常驻调度。详见docs/annual_update_continuity.md。

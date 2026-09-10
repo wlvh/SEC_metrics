@@ -536,7 +536,7 @@ def _run_validation_artifacts(*, run_dir: Path) -> Dict[str, object]:
             expected.add(review_root + "/review_context.json")
             expected.add(review_root + "/review.md")
     manifest = _read_manifest(run_dir=run_dir)
-    if manifest["record_type"] == "SUCCESSOR_RUN" and manifest.get("requirement_id") in {"issue_28_v4", "issue_28_v5", "issue_28_v6"}:
+    if manifest["record_type"] == "SUCCESSOR_RUN" and manifest.get("requirement_id") in {"issue_28_v4", "issue_28_v5", "issue_28_v6", "issue_28_v8"}:
         expected.add("annual_candidate_binding.json")
     if manifest["record_type"] == R4_SCOPED_RUN_TYPE:
         expected.update(binding["path"] for binding in
@@ -1583,7 +1583,7 @@ def _structured_concepts(
 
 def _run_transport_policy(*, requirement):
     """Read the explicit ordinary successor's carried transport Decision."""
-    if requirement.get("requirement_id") in {"issue_28_v4", "issue_28_v5", "issue_28_v6"}:
+    if requirement.get("requirement_id") in {"issue_28_v4", "issue_28_v5", "issue_28_v6", "issue_28_v8"}:
         return approved_scoped_transport_policy(requirement=requirement)
     return approved_transport_policy(requirement=requirement)
 

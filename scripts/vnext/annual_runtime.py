@@ -554,6 +554,9 @@ def authorization_fields(authorization):
     binding = _binding(authorization)
     stage = binding["stage"]
     plan = binding["plan"]
+    if stage.get("decision") == "AUTHORIZE_ISOLATED_ANNUAL_CONTINUITY_STAGE":
+        from .annual_continuity import authorization_fields as continuity_fields
+        return continuity_fields(binding)
     requirement = _validate_stage(stage)
     _validate_owner_comment(comment=binding["owner_comment"], stage=stage)
     input_root = (
@@ -648,6 +651,8 @@ def validate_runtime_request_pair(*, adapter, request):
             and request.authorization is auth,
             "RUNTIME_REQUEST_ADAPTER_MISMATCH",
         )
+        from .annual_continuity import require_live_boundary
+        require_live_boundary(_binding(auth))
     elif type(auth) is RuntimeAuthorization:
         raise AnnualRuntimeError("RUNTIME_BOUND_REQUEST_REQUIRED")
 
@@ -705,7 +710,7 @@ def validate_run_binding(*, repo_root, run_dir, manifest, records):
         and run_dir == fields["run_dir"]
         and manifest["run_id"] == fields["run_id"]
         and manifest["record_type"] == "SUCCESSOR_RUN"
-        and manifest["requirement_id"] == REQUIREMENT_ID
+        and manifest["requirement_id"] == fields["requirement"]["requirement_id"]
         and manifest["requirement_hashes"] == plan["requirement_hashes"]
         and manifest["requirement_closure_hash"] == plan["requirement_closure_hash"]
         and manifest["company_id"]
@@ -895,6 +900,87 @@ def _repair_report(report, stage):
     return report
 
 
+
+def execute_native_candidate(*, authorization):
+    """Execute with an already verified opaque capability, never a caller dictionary."""
+    from .ai_adapter import build_annual_candidate_transport_adapter
+    from .batch_workflow import create_companyfacts_release_run
+    from .workflow import create_table_task_review_run, finalize_reviewed_direct_results
+    from .run_store import load_run_for_status, _mechanically_replay_open_run
+    fields = authorization_fields(authorization)
+    plan = fields["plan"]
+    workspace, b10, run_id = _paths(plan)
+    report = {}
+    structured = create_companyfacts_release_run(
+        repo_root=Path(plan["data_root"]),
+        run_dir=workspace / "b01",
+        run_id=run_id + ":structured",
+        **plan["prepared_input"]["companyfacts_input"]
+    )
+    structured_manifest, structured_records, _ = load_run_for_status(
+        run_dir=workspace / "b01", repo_root=Path(plan["data_root"])
+    )
+    b01_result = next(
+        r
+        for r in structured_records
+        if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == "B01"
+    )
+    report["structured_candidate"] = {
+        "run_directory": str(workspace / "b01"),
+        "B01": b01_result,
+        "source_references": structured_manifest["source_references"],
+        "native_attached_metric_ids": sorted(
+            k for k in structured["results"] if k != "B01"
+        ),
+    }
+    adapter = build_annual_candidate_transport_adapter(authorization=authorization)
+    created = create_table_task_review_run(
+        repo_root=Path(plan["data_root"]),
+        run_dir=b10,
+        run_id=run_id,
+        task_contract_id=plan["task_contract_id"],
+        adapter=adapter,
+        clock=None,
+        candidate_authorization=authorization,
+        **plan["prepared_input"]["table_input"]
+    )
+    if created["status"] == "PENDING_HUMAN_REVIEW":
+        finalize_reviewed_direct_results(repo_root=Path(plan["data_root"]), run_dir=b10)
+    _mechanically_replay_open_run(
+        run_dir=b10, repo_root=Path(plan["data_root"]), require_complete_results=False
+    )
+    manifest, records, decisions = load_run_for_status(
+        run_dir=b10, repo_root=Path(plan["data_root"])
+    )
+    results = [r for r in records if r["record_type"] == "METRIC_RESULT"]
+    good = [
+        r
+        for r in results
+        if r["metric_id"] == "B10"
+        and r["reason_code"] == "PASS"
+        and r["publication"] == "PUBLISHED"
+    ]
+    success_b01 = (
+        b01_result["reason_code"] == "PASS" and b01_result["publication"] == "PUBLISHED"
+    )
+    report.update(
+        status="CANDIDATE_UPDATE_SUCCEEDED"
+        if good and success_b01
+        else "CANDIDATE_UPDATE_FAILED",
+        execution="EXECUTED",
+        new_candidate={
+            "run_directory": str(b10),
+            "run_id": run_id,
+            "run_status": manifest["status"],
+            "results": results,
+            "attempts": [
+                r for r in records if r["record_type"] == "AI_EXTRACTION_ATTEMPT"
+            ],
+            "reviewers": [d["reviewer_type"] for d in decisions],
+        },
+    )
+    return report
+
 def run_update(*, approval_url):
     """Inspect, prepare, execute if needed, and retain explicit candidate refs."""
     from .ai_adapter import build_annual_candidate_transport_adapter
@@ -974,6 +1060,7 @@ def run_update(*, approval_url):
         baseline_mode=stage["baseline_mode"],
         old_successful_candidate=old,
         current_published=published,
+        publication_work="NOT_EVALUATED_HISTORICAL_CANDIDATE_STAGE",
         new_candidate=None,
         execution_code=code_identity(),
         reviewed_code=stage["reviewed_code"],
@@ -1023,76 +1110,8 @@ def run_update(*, approval_url):
     workspace.mkdir(parents=True, exist_ok=True)
     atomic_write_json(path=workspace / "plan.json", value=plan)
     atomic_write_json(path=root / "stage-approval.json", value=binding)
-    authorization = RuntimeAuthorization(factory=_FACTORY, binding=binding)
-    structured = create_companyfacts_release_run(
-        repo_root=Path(plan["data_root"]),
-        run_dir=workspace / "b01",
-        run_id=run_id + ":structured",
-        **plan["prepared_input"]["companyfacts_input"]
-    )
-    structured_manifest, structured_records, _ = load_run_for_status(
-        run_dir=workspace / "b01", repo_root=Path(plan["data_root"])
-    )
-    b01_result = next(
-        r
-        for r in structured_records
-        if r["record_type"] == "METRIC_RESULT" and r["metric_id"] == "B01"
-    )
-    report["structured_candidate"] = {
-        "run_directory": str(workspace / "b01"),
-        "B01": b01_result,
-        "source_references": structured_manifest["source_references"],
-        "native_attached_metric_ids": sorted(
-            k for k in structured["results"] if k != "B01"
-        ),
-    }
-    adapter = build_annual_candidate_transport_adapter(authorization=authorization)
-    created = create_table_task_review_run(
-        repo_root=Path(plan["data_root"]),
-        run_dir=b10,
-        run_id=run_id,
-        task_contract_id=plan["task_contract_id"],
-        adapter=adapter,
-        clock=None,
-        candidate_authorization=authorization,
-        **plan["prepared_input"]["table_input"]
-    )
-    if created["status"] == "PENDING_HUMAN_REVIEW":
-        finalize_reviewed_direct_results(repo_root=Path(plan["data_root"]), run_dir=b10)
-    _mechanically_replay_open_run(
-        run_dir=b10, repo_root=Path(plan["data_root"]), require_complete_results=False
-    )
-    manifest, records, decisions = load_run_for_status(
-        run_dir=b10, repo_root=Path(plan["data_root"])
-    )
-    results = [r for r in records if r["record_type"] == "METRIC_RESULT"]
-    good = [
-        r
-        for r in results
-        if r["metric_id"] == "B10"
-        and r["reason_code"] == "PASS"
-        and r["publication"] == "PUBLISHED"
-    ]
-    success_b01 = (
-        b01_result["reason_code"] == "PASS" and b01_result["publication"] == "PUBLISHED"
-    )
-    report.update(
-        status="CANDIDATE_UPDATE_SUCCEEDED"
-        if good and success_b01
-        else "CANDIDATE_UPDATE_FAILED",
-        execution="EXECUTED",
-        new_candidate={
-            "run_directory": str(b10),
-            "run_id": run_id,
-            "run_status": manifest["status"],
-            "results": results,
-            "attempts": [
-                r for r in records if r["record_type"] == "AI_EXTRACTION_ATTEMPT"
-            ],
-            "reviewers": [d["reviewer_type"] for d in decisions],
-        },
-        stage_provider_paid_sec_calls=stage_counts(root),
-    )
+    report.update(execute_native_candidate(authorization=RuntimeAuthorization(factory=_FACTORY, binding=binding)))
+    report["stage_provider_paid_sec_calls"] = stage_counts(root)
     report["provider_paid_sec_calls"] = report["stage_provider_paid_sec_calls"]
     if report["status"] == "CANDIDATE_UPDATE_SUCCEEDED":
         new = update.candidate_baseline(company=company, run_dir=b10)

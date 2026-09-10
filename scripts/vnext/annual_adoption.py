@@ -15,7 +15,7 @@ from git_workspace import sanitized_git_environment
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, sha256_file, strict_json_file
 from .ratchet_release import _tree_files, _copy_exact_tree
 from .sources import resolve_repository_file
-from .annual_adoption_policy import policy, resolve_embedded, V1, V2
+from .annual_adoption_policy import policy, resolve_embedded, V1, V2, V3
 
 ROOT = Path(__file__).resolve().parents[2]
 POLICY = 'config/annual_candidate_adoption_v1.json'
@@ -131,6 +131,15 @@ def _source_proof(root, context):
     need(all(m['company_id'] == context['policy']['company_id'] and m['status'] == 'OPEN'
              and m['target_period'] == prepared['table_input']['target_period'] for m in manifests.values()),
          'ANNUAL_RUN_SCOPE_OR_STATUS_CHANGED')
+    execution = verify_saved_execution(candidate=candidate, data_root=data_root, plan=plan,
+        stage=stage, owner=owner, requirement=requirement, request=request)
+    return manifests, requirement, execution
+
+
+def verify_saved_execution(*, candidate, data_root, plan, stage, owner, requirement, request):
+    """Shared immutable WB-3 request/response/usage proof for annual native Runs."""
+    from . import annual_runtime as runtime, invocation_control as controller
+    from .ai_adapter import _controller_usage
     logroot = candidate / 'invocation_control'
     plans = list((logroot / 'plans').glob('*.json'))
     need(len(plans) == 1, 'ANNUAL_INVOCATION_SET_INVALID')
@@ -161,7 +170,7 @@ def _source_proof(root, context):
          and sha256_bytes(content=success['response_body']) == attempt['assistant_output_sha256']
          and execution['attempts'][0]['usage'] == _controller_usage(raw_response_bytes=raw),
          'ANNUAL_RESPONSE_EXECUTION_CHANGED')
-    return manifests, requirement, execution
+    return execution
 
 
 def _records(directory):
@@ -193,6 +202,10 @@ def replay_snapshot(root, context, *, policy_id=None, adoption_root=ROOT):
     """Run every native OPEN graph gate without writing a validation or Run."""
     from .run_store import _mechanically_replay_open_run
     from .run_store import load_run_bound_specs
+    if context['policy']['policy_id'] == V3:
+        need(policy_id in (None, V3), 'ANNUAL_ADOPTION_POLICY_MIXED')
+        from .annual_continuity_snapshot import replay_snapshot as replay_continuity
+        return replay_continuity(root, context, adoption_root=adoption_root)
     need(_tree_files(root=root / 'data') == context['data_files']
          and _tree_files(root=root / 'candidate') == context['candidate_files']
          and _tree_files(root=root / 'controls') == context['control_files'], 'ANNUAL_SNAPSHOT_BYTES_CHANGED')
@@ -265,6 +278,9 @@ def replay_snapshot(root, context, *, policy_id=None, adoption_root=ROOT):
 
 def prepare_snapshot(*, candidate_dir, output_root, policy_id=V1):
     """Capture source identities and a real saved approval, then replay offline."""
+    if policy_id == V3:
+        from .annual_continuity_snapshot import prepare_snapshot as prepare_continuity
+        return prepare_continuity(candidate_dir=candidate_dir, output_root=output_root)
     from .annual_runtime import _external
     candidate_dir, output_root = _external(candidate_dir), _external(output_root)
     need(not output_root.exists(), 'ANNUAL_ADOPTION_OUTPUT_EXISTS')

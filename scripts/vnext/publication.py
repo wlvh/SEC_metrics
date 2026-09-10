@@ -6663,6 +6663,16 @@ class PublicationView:
             manifest=manifest,
         )
 
+    def native_result(self, *, company_id: str, metric_id: str):
+        """Resolve this version's native coordinate, following explicit inheritance."""
+        from .publication_results import native_result
+        return native_result(self, company_id, metric_id)
+
+    def authority_bytes(self, *, relative_path: str) -> bytes:
+        """Read retained coverage authority independently of result ownership."""
+        from .publication_results import authority_bytes
+        return authority_bytes(self, relative_path)
+
     def read_bytes(self, *, relative_path: str) -> bytes:
         """Read one file only from the pinned bundle.
 

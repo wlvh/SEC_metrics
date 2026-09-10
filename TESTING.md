@@ -530,3 +530,7 @@ legacy candidate publication开始时会使旧provenance失效；formal active�
 - vNext release input plan会从通过manifest验证的ledger选择latest verified request attempt并绑定locator class；recorded可保留唯一且exact验证path/hash/headers/size的legacy working locator，portable closure必须保存其tier/class和bytes，formal live只允许immutable attempt并拒绝legacy class。SourceReference 会重新校验 exact SEC origin、portable locator 与 raw/header hash，freeze 也会从 RawBlob bytes 重建 table-grid；recorded publication 从 verified Batch 的实际消费路径派生 SourceReference/attempt exact set，先验证 request-ledger 整表 manifest，再绑定截至最后一个已用 row 的最小有序前缀。该适配器尚未经过真实十公司 full staging，scoped recorded fixture 不能替代 full 闭包证明。
 - vNext freeze 负例必须覆盖 Candidate 缺成功 attempt/response binding、自报 PASS Evidence 与 cell/constraint 重放不一致、ReviewUnit required claims 脱离仓库 compiled Spec、Observation provenance 字段脱离 SourceReference，以及 MetricResult status/reason/value 脱离 Trace `result_contract_hash`；只验证各对象能自哈希不算通过。
 - vNext Run mutation primitive 当前按单 Run 单写者使用；publication commit 已有 POSIX lock/CAS 并发回归，但不能把它外推为 Run append/review/freeze 的跨进程编排证明。
+
+## 年度连续更新
+
+短测试：`python3 -m unittest -v tests.vnext.test_annual_continuity`；新增两项年度进度回归与该模块列入tools/run_fast_tests.py。完整真实材料/新进程流程另在checkout外运行，必须保护实际active、14兼容副本、原候选、旧包和原请求账；所有工具显式指定输出，禁用默认根审计副本写入。保存响应回放与模拟GitHub/provider边界不得算作新provider成功。独立review、固定实现、真实阶段许可通过前禁止业务请求。

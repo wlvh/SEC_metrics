@@ -30,6 +30,9 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 FAST_TESTS = (
     "tests.vnext.test_annual_publication_authority",
     "tests.vnext.test_annual_publication",
+    "tests.vnext.test_annual_continuity",
+    "tests.vnext.test_annual_update.AnnualUpdateTest.test_candidate_leading_publication_survives_discovery_failure",
+    "tests.vnext.test_annual_update.AnnualUpdateTest.test_publication_progress_is_explicit_and_run_specific",
     "tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_policy_selects_new_requirement_only",
     "tests.vnext.test_r4_release_gate.R4ReleaseAggregateGateTest",
     "tests.vnext.test_r4_publication_boundaries",

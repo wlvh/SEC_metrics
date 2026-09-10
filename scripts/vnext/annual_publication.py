@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from . import publication as pub
 from .annual_adoption import ROOT, POLICY, need, read, record, check_id, git, policy
 from .annual_adoption import prepare_snapshot, replay_snapshot
-from .annual_adoption_policy import V1, V2, resolve_embedded, credit as policy_credit
+from .annual_adoption_policy import V1, V2, V3, resolve_embedded, credit as policy_credit
 from .annual_projection import build_projection
 from .canonical import canonical_json_bytes, content_hash, sha256_bytes, sha256_file, strict_json_file
 from .ratchet_release import _tree_files, _copy_exact_tree
@@ -53,6 +53,9 @@ def safe_root(root):
 def _marker(root):
     root = safe_root(root)
     marker = read(root, 'annual_publication_workspace.json')
+    if marker.get('purpose') == 'ISOLATED_ANNUAL_CONTINUITY':
+        from .annual_continuity_publication import marker as continuity_marker
+        return continuity_marker(root)
     check_id(marker, 'workspace_id')
     need(marker['purpose'] == 'ISOLATED_ANNUAL_PUBLICATION_REHEARSAL'
          and marker['publication_root'] == str(root)
@@ -150,7 +153,7 @@ def _implementation_files(head, policy_id=V1):
     paths = git('ls-tree', '-r', '--name-only', head, 'scripts', 'tools', 'config', 'catalog', 'requirements').decode().splitlines()
     foundation = json.loads(git('show', head + ':requirements/issue_15_v1/foundation_verification_receipt.json'))
     paths = sorted(set(paths) | {r['path'] for r in foundation['receipt_bindings']})
-    if policy_id == V2:
+    if policy_id in {V2, V3}:
         chosen = policy(policy_id=policy_id)
         baseline = json.loads(git('show', head + ':requirements/' + chosen['adoption_requirement_id'] + '/baseline_manifest.json'))
         paths = sorted(set(paths) | set(baseline['execution_authority']['files']))
@@ -175,7 +178,7 @@ def _public_files(projection, adoption, requirement, ledger, meta, runtime_root,
         'EXACT_SELECTED_ADOPTION': batch['selected_result_count'] == len(adoption['selected_results']),
         'UNCHANGED_ROWS_AND_PERIODS': projection['proof']['periods_not_relabelled'],
         'UNIQUE_PUBLIC_KEYS': len({(r['company'], r['metric_id']) for r in metrics}) == len(metrics),
-        'NATIVE_GRAPH_AND_SOURCE_REPLAY': adoption['status'] == ('PASSED_ISOLATED_ADOPTION' if chosen['policy_id'] == V1 else 'VERIFIED_CANDIDATE_SPECIFIC_ADOPTION'),
+        'NATIVE_GRAPH_AND_SOURCE_REPLAY': adoption['status'] == {V1: 'PASSED_ISOLATED_ADOPTION', V2: 'VERIFIED_CANDIDATE_SPECIFIC_ADOPTION', V3: 'VERIFIED_ISOLATED_CONTINUITY_ADOPTION'}[chosen['policy_id']],
         'NUMERIC_ROWS_HAVE_EVIDENCE': all(not r['value'] or (r['company'], r['metric_id']) in {
             (e['company'], e['metric_id']) for e in evidence} for r in metrics)}
     need(all(checks.values()), 'ANNUAL_COMPLETE_PUBLICATION_CHECK_FAILED')
@@ -216,6 +219,10 @@ def _public_files(projection, adoption, requirement, ledger, meta, runtime_root,
         files['README_RUN.md'] += ('\nAnnual adoption rehearsal: use PublicationView.open(publication_root=<isolated-root>).\n'
             'Original Runs remain OPEN; new immutable adoption is not formal qualification.\n'
             'Read internal/annual_complete_version.json for every selected/inherited coordinate and source period.\n').encode()
+    elif chosen['policy_id'] == V3:
+        files['README_RUN.md'] += ('\nIsolated continuous-update content validation; no production authority.\n'
+            'Original Runs retain their own status and rules, including the explicitly historical test seed.\n'
+            'Read all selected and inherited periods through PublicationView; this is not unseen-source qualification.\n').encode()
     else:
         files['README_RUN.md'] += ('\nCandidate-specific content validation; production authority is external to this immutable package.\n'
             'Original OPEN Runs keep their execution rules. No Reader qualification or inherited-coordinate recertification.\n'
@@ -250,7 +257,12 @@ def _verified(pin):
 def _compose(snapshot, context, predecessor_dir, meta, runtime_root):
     chosen = resolve_embedded(meta['policy'])
     need(context['policy'] == chosen, 'ANNUAL_PACKAGE_POLICY_MIXED')
-    baseline = chosen['baseline_publication']
+    if chosen['policy_id'] == V3:
+        pointer = (context['origin']['stage']['initial_publication_pointer'] if context['kind'] == 'HISTORICAL_SEED'
+                   else context['origin']['plan']['predecessor_pointer'])
+        baseline = {'publication_id': pointer['publication_id'], 'manifest_sha256': pointer['bundle_manifest_sha256']}
+    else:
+        baseline = chosen['baseline_publication']
     need(predecessor_dir.name == baseline['publication_id']
          and sha256_file(path=predecessor_dir / 'publication_manifest.json') == baseline['manifest_sha256'],
          'ANNUAL_TRUSTED_PREDECESSOR_CHANGED')
@@ -274,9 +286,18 @@ def prepare(*, candidate_dir, publication_root, policy_id=V1):
     chosen = policy(policy_id=policy_id)
     credit = policy_credit(chosen)
     implementation_head = git('rev-parse', 'HEAD').decode().strip()
-    marker = initialize(publication_root=publication_root)
-    root = safe_root(publication_root)
     candidate_dir = safe_root(candidate_dir)
+    if policy_id == V3:
+        from .annual_continuity_publication import initialize as initialize_continuity
+        seed = candidate_dir / 'continuity-seed.json'
+        binding = read(candidate_dir, seed.name) if seed.exists() else read(candidate_dir / 'b10', 'annual_candidate_binding.json')
+        marker = initialize_continuity(publication_root=publication_root, approval_url=binding['owner_comment']['html_url'])
+        pointer = binding['stage']['initial_publication_pointer'] if seed.exists() else binding['plan']['predecessor_pointer']
+        marker = {**marker, 'predecessor_publication_id': pointer['publication_id'],
+                  'predecessor_manifest_sha256': pointer['bundle_manifest_sha256']}
+    else:
+        marker = initialize(publication_root=publication_root)
+    root = safe_root(publication_root)
     candidate_hash = content_hash(value=_tree_files(root=candidate_dir))
     implementation_tree = content_hash(value=git('ls-tree', '-r', 'HEAD', 'scripts', 'tools', 'config', 'catalog', 'requirements').decode())
     key = content_hash(value={'candidate_files': candidate_hash, 'predecessor': marker['predecessor_publication_id'],
@@ -287,23 +308,38 @@ def prepare(*, candidate_dir, publication_root, policy_id=V1):
         saved = read(workspace, 'prepared.json')
         pub.verify_publication_bundle(bundle_dir=root / 'outputs/publications' / saved['publication_id'])
         return {**saved, 'status': 'REUSED_PREPARED_PUBLICATION', 'new_provider_paid_sec_calls': [0, 0, 0]}
+    if policy_id == V3:
+        need(read(root, 'outputs/active_publication.json') == pointer, 'CONTINUITY_PREDECESSOR_CHANGED_BEFORE_PREPARE')
     snapshot = workspace / 'snapshot'
-    prepare_snapshot(candidate_dir=candidate_dir, output_root=snapshot, policy_id=policy_id)
+    resume = policy_id == V3 and (workspace / 'preparation-metadata.json').exists()
+    if not resume:
+        prepare_snapshot(candidate_dir=candidate_dir, output_root=snapshot, policy_id=policy_id)
     context = read(snapshot, 'context.json')
-    runtime = workspace / 'runtime'; runtime.mkdir()
-    source_paths = sorted(_implementation_files(implementation_head, policy_id))
-    for relative in source_paths:
-        source = ROOT / relative
-        need(source.is_file() and not source.is_symlink(), 'ANNUAL_RUNTIME_SOURCE_UNSAFE')
-        target = runtime / relative; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(source.read_bytes())
-    scans = {'semantic': pub._execute_semantic_audit(repo_root=ROOT), 'scalability': pub._execute_scalability_audit(repo_root=ROOT)}
-    meta = {'schema_version': 1, 'implementation_head': implementation_head,
-        'implementation_tree': implementation_tree,
-        'prepared_at_utc': utc(), 'policy': chosen, 'scans': scans,
-        'predecessor_publication_id': marker['predecessor_publication_id'],
-        'predecessor_manifest_sha256': marker['predecessor_manifest_sha256'],
-        'runtime_files': _tree_files(root=runtime)}
-    need(meta['runtime_files'] == _implementation_files(implementation_head, policy_id), 'ANNUAL_PREPARE_CODE_BYTES_CHANGED')
+    runtime = workspace / 'runtime'
+    if resume:
+        meta = read(workspace, 'preparation-metadata.json')
+        need(meta['implementation_head'] == implementation_head and meta['implementation_tree'] == implementation_tree
+             and meta['policy'] == chosen and meta['predecessor_publication_id'] == marker['predecessor_publication_id']
+             and meta['predecessor_manifest_sha256'] == marker['predecessor_manifest_sha256']
+             and _tree_files(root=candidate_dir) == context['candidate_files'], 'CONTINUITY_PREPARATION_RESUME_CHANGED')
+    else:
+        runtime.mkdir()
+        source_paths = sorted(_implementation_files(implementation_head, policy_id))
+        for relative in source_paths:
+            source = ROOT / relative
+            need(source.is_file() and not source.is_symlink(), 'ANNUAL_RUNTIME_SOURCE_UNSAFE')
+            target = runtime / relative; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(source.read_bytes())
+        scans = {'semantic': pub._execute_semantic_audit(repo_root=ROOT), 'scalability': pub._execute_scalability_audit(repo_root=ROOT)}
+        meta = {'schema_version': 1, 'implementation_head': implementation_head,
+            'implementation_tree': implementation_tree,
+            'prepared_at_utc': utc(), 'policy': chosen, 'scans': scans,
+            'predecessor_publication_id': marker['predecessor_publication_id'],
+            'predecessor_manifest_sha256': marker['predecessor_manifest_sha256'],
+            'runtime_files': _tree_files(root=runtime)}
+        if policy_id == V3:
+            (workspace / 'preparation-metadata.json').write_bytes(json_bytes(meta))
+    need(_tree_files(root=runtime) == meta['runtime_files'] == _implementation_files(implementation_head, policy_id),
+         'ANNUAL_PREPARE_CODE_BYTES_CHANGED')
     predecessor = root / 'outputs/publications' / marker['predecessor_publication_id']
     public, projection, adoption, requirement, ledger, provenance, projection_manifest, validation = _compose(snapshot, context, predecessor, meta, runtime)
     files = {**public, META: json_bytes(meta), BATCH: json_bytes(projection['batch']), PROOF: json_bytes(projection['proof']),

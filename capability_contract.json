@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.annual_update_continuity",
+        "type": "capability",
+        "status": "active",
+        "statement": "受限连续更新入口分别表达发现、成功候选和完整发布进度，通过PublicationView原生绑定读取当前年度包及明确前驱。V3规则与最长七天真实隔离阶段许可分开，每输入精确计划、原生执行与前驱绑定，预算不因进程/目录重置；实际生产根不得写入。已知历史材料的S0与后续两轮使用同一候选/投影/发布核心，完整实际验收与调用证据另行登记；实现或短测试不表示已通过两次新模型执行、长期生产授权或39指标全量验收。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_annual_continuity.py::AnnualContinuityBoundaryTest.test_reservation_without_terminal_is_unknown_and_cannot_reset",
+        "test_status": "automated_recorded",
+        "since": "2026-09-10"
+      },
+      {
         "anchor_id": "CAPABILITY.annual_candidate_formal_adoption",
         "type": "capability",
         "status": "active",
