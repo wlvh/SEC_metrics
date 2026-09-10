@@ -92,6 +92,18 @@ class AnnualContinuationPermissionTest(unittest.TestCase):
             continuity.stage_proposal(stage_root=None,data_root=None,budget_root=None,review_file=None,
                 expires_at_utc='',historical_period_start='',historical_period_end='')
 
+    def test_failure_receipt_requires_consistent_native_terminal(self):
+        execution={'status':'FAILED_TERMINAL','success_response_receipt_id':None,
+                   'attempts':[{'status':'FAILED_TERMINAL','error_class':'DEEPSEEK_MODEL_IDENTITY_MISMATCH'}]}
+        continuity._validate_failed_terminal(execution)
+        changes=[{**execution,'status':'UNRECOGNIZED'},
+                 {**execution,'success_response_receipt_id':'sha256:'+'a'*64},
+                 {**execution,'attempts':[{'status':'SUCCEEDED','error_class':'x'}]},
+                 {**execution,'attempts':[{'status':'FAILED_TERMINAL','error_class':None}]}]
+        for changed in changes:
+            with self.assertRaisesRegex(ValueError,'KNOWN_FAILURE_REQUIRED|FAILURE_TERMINAL_INCONSISTENT'):
+                continuity._validate_failed_terminal(changed)
+
     def test_zero_sec_stops_before_client_construction_or_budget_write(self):
         import sec_http
         with tempfile.TemporaryDirectory() as directory:

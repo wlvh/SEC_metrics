@@ -380,6 +380,15 @@ def _plan(stage, prepared, selection, source_root, predecessor, ordinal, *, auth
     return record(body, 'plan_id')
 
 
+def _validate_failed_terminal(execution):
+    need(execution['status'] in {'FAILED_TERMINAL','FAILED_RETRYABLE_FINAL'},
+         'CONTINUITY_KNOWN_FAILURE_REQUIRED')
+    need(len(execution['attempts'])==1 and execution.get('success_response_receipt_id') is None
+         and execution['attempts'][0]['status']==execution['status']
+         and bool(execution['attempts'][0].get('error_class')),
+         'CONTINUITY_FAILURE_TERMINAL_INCONSISTENT')
+
+
 def _provider_terminal(stage, slot, workspace, *, allow_pending_plan=None):
     """Read native WB-3 identities; outcome flags cannot grant another socket."""
     from . import invocation_control as controller
@@ -439,7 +448,9 @@ def _provider_terminal(stage, slot, workspace, *, allow_pending_plan=None):
     if execution['status'] == 'UNKNOWN_REMOTE_OUTCOME': return pending
     need(len(markers) == 1 and execution['attempts'] == controller._attempt_receipts_for_execution(
         root=logroot, execution_id=execution_id, plan=invocation, markers=markers), 'CONTINUITY_ATTEMPT_SET_CHANGED')
-    if execution['status'] != 'SUCCEEDED': return {**pending, 'status': 'FAILED'}
+    if execution['status'] != 'SUCCEEDED':
+        _validate_failed_terminal(execution)
+        return {**pending, 'status': 'FAILED'}
     # A transport success alone is not an accepted annual result. Recheck saved
     # raw response/usage and both original native result records, never outcome.status.
     if current: return {**pending, 'status': 'IN_FLIGHT'}
