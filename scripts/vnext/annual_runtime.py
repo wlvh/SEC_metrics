@@ -219,7 +219,7 @@ def _copy_inputs(*, source_root, data_root, prepared, requirement):
             output.write(source.read_bytes())
 
 
-def _request(prepared, data_root, task_id, *, code_root=None):
+def _request(prepared, data_root, task_id, *, code_root=None, requirement=None):
     code_root = CODE_ROOT if code_root is None else code_root
     # Same factories and full document as PR36. Only the verified byte root differs.
     from .ai_adapter import approved_transport_policy, build_provider_request_body
@@ -264,10 +264,14 @@ def _request(prepared, data_root, task_id, *, code_root=None):
         manifest=manifest,
         derived_asset=grid,
     )
-    parent = load_requirement_snapshot(
-        snapshot_dir=code_root / "requirements/issue_15_v1"
-    )
-    transport = approved_transport_policy(requirement=parent)
+    if requirement is not None:
+        from .ai_adapter import configured_annual_transport_policy
+        transport = configured_annual_transport_policy(requirement=requirement, repo_root=code_root)
+    else:
+        parent = load_requirement_snapshot(
+            snapshot_dir=code_root / "requirements/issue_15_v1"
+        )
+        transport = approved_transport_policy(requirement=parent)
     outbound, schema = build_provider_request_body(
         policy=transport, reader_request_bytes=request.request_bytes
     )

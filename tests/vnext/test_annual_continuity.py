@@ -17,6 +17,56 @@ ROOT=Path(__file__).resolve().parents[2]
 
 
 class AnnualContinuityBoundaryTest(unittest.TestCase):
+    def test_current_model_configuration_changes_only_request_model(self):
+        from vnext import ai_adapter as ai, invocation_control as control, run_store
+        from vnext.canonical import strict_json_file, strict_json_loads
+        requirement=continuity._requirement()
+        policy=ai.configured_annual_transport_policy(requirement=requirement,repo_root=ROOT)
+        self.assertEqual('deepseek-flash',policy.model)
+        root=ROOT/'docs/evidence/annual_update_continuity/native-first/b10'
+        original=strict_json_file(path=next((root/'attempt_payloads').glob('request_*.bin')))
+        payload=original['messages'][1]['content'].encode()
+        body,_=ai.build_provider_request_body(policy=policy,reader_request_bytes=payload)
+        self.assertEqual({**original,'model':'deepseek-flash'},strict_json_loads(text=body.decode()))
+        authority=control.prepare_annual_candidate_invocation_authority(requirement=requirement,repo_root=ROOT)
+        self.assertEqual(policy.model,authority._check()[2]['model'])
+        self.assertEqual(policy,run_store._run_transport_policy(requirement=requirement,repo_root=ROOT))
+        with tempfile.TemporaryDirectory() as directory:
+            other=Path(directory).resolve();(other/'config').mkdir()
+            (other/'config/provider_model_runtime.json').write_bytes((ROOT/'config/provider_model_runtime.json').read_bytes()+b' ')
+            with self.assertRaisesRegex(ai.AIAdapterError,'bytes differ'):
+                ai.configured_annual_transport_policy(requirement=requirement,repo_root=other)
+
+    def test_model_configuration_does_not_accept_wrong_operating_scope(self):
+        from vnext.canonical import strict_json_file, strict_json_loads
+        from vnext.reader import validate_reader_output
+        from vnext.annual_evidence import check_annual_evidence
+        root=ROOT/'docs/evidence/annual_update_continuity/native-first/b10'
+        records=[strict_json_loads(text=line) for line in (root/'records.jsonl').read_text().splitlines()]
+        get=lambda kind:next(x for x in records if x['record_type']==kind)
+        attempt=get('AI_EXTRACTION_ATTEMPT');grid=get('DERIVED_ASSET');manifest=get('READER_INPUT_MANIFEST')
+        payload=strict_json_file(path=root/attempt['reader_payload_path']);task=payload['task_contract']
+        candidate=validate_reader_output(response_text=(root/attempt['assistant_output_path']).read_text(),
+            attempt_id=attempt['attempt_id'],required_roles=task['required_roles'],scope_contract=task['scope_contract'],
+            source_reference_ids=manifest['source_reference_ids'],derived_asset_ids=[grid['derived_asset_id']])
+        evidence=check_annual_evidence(requirement=continuity._requirement(),
+            target_period=strict_json_file(path=root/'manifest.json')['target_period'],candidate=candidate,
+            derived_asset=grid,reader_manifest=manifest,reader_payload_body=payload,
+            source_references=[x for x in records if x['record_type']=='SOURCE_REFERENCE'],
+            identity_constraints=task['identity_constraints'],scope_contract=task['scope_contract'])
+        self.assertEqual(['ANNUAL_SCOPE_VALUE_GROUP_MISMATCH'],evidence['reason_codes'])
+        self.assertEqual('REJECTED',evidence['status'])
+        self.assertEqual('FAILED',attempt['status'])
+
+    def test_inspection_counters_are_separate_from_run_execution(self):
+        from vnext.canonical import strict_json_file
+        previous=strict_json_file(path=ROOT/'docs/evidence/annual_update_continuity/checks/current-formal-baseline-03.json')
+        report=continuity._inspect_input_for_run(repo_root=ROOT,company=update.supported_company(repo_root=ROOT),
+            successful_candidate=None,published=previous['current_published'])
+        self.assertEqual('NO_NEW_ANNUAL_FILING',report['status'])
+        self.assertEqual({'execution':'NOT_EXECUTED','provider_paid_sec_calls':[0,0,0]},report['inspection'])
+        self.assertNotIn('provider_paid_sec_calls',report)
+
     def test_cli_result_preserves_decimal_identity_and_never_leaves_partial_json(self):
         from decimal import Decimal
         from contextlib import redirect_stdout

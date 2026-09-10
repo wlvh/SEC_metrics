@@ -2,9 +2,13 @@
 
 本入口限定 Marriott B01/B10、连续主体、完整自然年度普通10-K。B01 Revenue与B10全球、可比、全系统物业含义不变。实现复用原生候选执行、Evidence/SYSTEM Review/Calculator、完整Projector、PublicationView和原生切换日志。新规则是 `annual_candidate_adoption_v3`、`issue_28_v8`/V9；旧v1/v2文件与历史执行不改。本轮实际生产根只读，规则内容与真实阶段许可分开，代码存在不代表已完成两次真实执行或持续生产授权。
 
-## 本次交付状态（2026-09-10）
+## 当前模型配置（2026-09-10）
 
-[PR41集中记录](evidence/annual_update_continuity/README.md)：核心离线接续已通过，但真实两轮未完成。唯一新请求因供应商退役旧模型、实际返回另一模型而终态拒绝；原内容诊断也拒绝错业务分组。阶段已关闭，累计provider/paid/SEC为1/1/0、零重试，实际生产未变。输出仍有检查子步骤零计数混在顶层的歧义；应以原生累计`counts`和终态为准。该字段接线的未应用补丁与准确缺口已列入交付，不能把本PR视为已获持续生产资格。
+按用户“直接覆盖现有配置”的指令，`config/provider_model_runtime.json`已改为V4.1 Flash的API名称`deepseek-flash`，并更新现有issue_28_v8的执行文件绑定；没有新增政策、Requirement版本或审批步骤。年度计划、adapter、controller与Run校验统一读取这份经过文件哈希核对的模型设置。provider/API、原prompt/schema、1M模型容量、200000输入usage接受上限与零自动重试保持不变。
+
+[上一轮真实失败记录](evidence/annual_update_continuity/README.md)保留其发生时的身份：累计1/1/0，阶段已关闭，正式active未变。本次配置修改不重试、不重开旧阶段、不把旧响应改成成功。已有错误范围响应在当前规则下仍被拒绝。
+
+输出字段歧义也已修复：检查子步骤的execution和零调用现在位于`inspection`，顶层`execution`表示本次候选执行，`counts`仍表示原生阶段累计计数。原始历史JSON不改。尚不能据配置修改宣称两轮新模型执行已完成。
 
 ## 三个进度位置
 
@@ -21,7 +25,7 @@ python3 tools/vnext_annual_continuity.py run-once --approval-url <真实阶段�
 python3 tools/vnext_annual_continuity.py close-stage --approval-url <同一URL> --output-json <新记录>
 ```
 
-initialize-data只复制已有完整原文、真实request ledger/headers与必要规则，不联网。阶段提案固定受审实现和测试身份、独立审阅、外部来源/运行/预算/发布根、真实历史起点、期间范围与最长七天期限。提案自身不授权。实际账户在GitHub代登记时应另行说明用户委托与隔离用途；运行使用原 `_github` 边界回读作者、正文、时间、编辑状态与绑定。
+initialize-data只复制已有完整原文、真实request ledger/headers与必要规则，不联网。连续运行的模型从现有runtime配置读取，来源字节与配置字节分别核对。阶段提案固定受审实现和测试身份、独立审阅、外部来源/运行/预算/发布根、真实历史起点、期间范围与最长七天期限。提案自身不授权。实际账户在GitHub代登记时应另行说明用户委托与隔离用途；运行使用原 `_github` 边界回读作者、正文、时间、编辑状态与绑定。
 
 seed与visibility参数均可省略：正常阶段以当前active为起点，只有明确提供成对历史Run时才构造S0；只提供一个seed在任何阶段写入前拒绝。显式提供的visibility文件必须存在。一次run-once先检查同笔未完成事务和已成功待发布候选，再判断新输入；只有确无工作才返回NO_CHANGE。每份输入的计划、请求、原生Run、使用量、完整包及精确前驱由程序生成。B01/B10不齐全不前移完整成功引用和active；原B03附带记录不删除、不误采纳。
 

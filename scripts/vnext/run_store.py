@@ -1581,8 +1581,12 @@ def _structured_concepts(
     return sorted(set(concepts))
 
 
-def _run_transport_policy(*, requirement):
+def _run_transport_policy(*, requirement, repo_root=None):
     """Read the explicit ordinary successor's carried transport Decision."""
+    if requirement.get("requirement_id") == "issue_28_v8":
+        from .ai_adapter import configured_annual_transport_policy
+        return configured_annual_transport_policy(requirement=requirement,
+            repo_root=repo_root or Path(__file__).resolve().parents[2])
     if requirement.get("requirement_id") in {"issue_28_v4", "issue_28_v5", "issue_28_v6", "issue_28_v8"}:
         return approved_scoped_transport_policy(requirement=requirement)
     return approved_transport_policy(requirement=requirement)
@@ -1593,6 +1597,7 @@ def _validate_successful_attempt_transport(
     attempt: Mapping[str, object],
     request_bytes: bytes,
     requirement: Mapping[str, object],
+    repo_root: Optional[Path] = None,
 ) -> None:
     """Reapply successful transport authority at freeze/replay.
 
@@ -1641,7 +1646,7 @@ def _validate_successful_attempt_transport(
             )
         return
     try:
-        policy = _run_transport_policy(requirement=requirement)
+        policy = _run_transport_policy(requirement=requirement, repo_root=repo_root)
     except AIAdapterError as error:
         raise RunStoreError(
             "Successful remote attempt lacks approved D-01"
@@ -2320,7 +2325,7 @@ def _validate_record_graph(
             value=attempt["transport_observation"]
         )
         if observation.egress_attempted:
-            policy = _run_transport_policy(requirement=requirement)
+            policy = _run_transport_policy(requirement=requirement, repo_root=repo_root)
             expected_request, expected_schema = (
                 build_provider_request_body(
                     policy=policy,
@@ -2341,6 +2346,7 @@ def _validate_record_graph(
             attempt=attempt,
             request_bytes=stored["request_body"],
             requirement=requirement,
+            repo_root=repo_root,
         )
         if attempt["status"] == "SUCCEEDED":
             if "assistant_output" not in stored:

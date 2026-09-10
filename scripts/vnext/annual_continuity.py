@@ -267,7 +267,7 @@ def _plan(stage, prepared, selection, source_root, predecessor, ordinal, *, auth
         'source_ledger': {n: {'sha256': sha256_file(path=source_root / 'evidence' / n),
             'size': (source_root / 'evidence' / n).stat().st_size} for n in ('requests_log.csv', 'requests_log_manifest.json')},
         'task_contract_id': stage['policy']['task_contract_id'], 'task_binding': task['run_binding'],
-        'request': runtime._request(prepared, source_root, stage['policy']['task_contract_id'], code_root=source_root),
+        'request': runtime._request(prepared, source_root, stage['policy']['task_contract_id'], code_root=source_root, requirement=requirement),
         'predecessor_pointer': predecessor, 'maximum_new_executions': 1, 'automatic_retry_count': 0,
         'actual_input_tokens_max': 200000, 'qualification_credit': 'NONE', 'publication_credit': 'NONE'}
     return record(body, 'plan_id')
@@ -583,6 +583,17 @@ def _current_published(stage):
     return update.published_baseline(company=company,publication_root=Path(stage['publication_root']))
 
 
+def _inspect_input_for_run(**kwargs):
+    """Scope inspector-only counters; execution describes this invocation's candidate step."""
+    report = update.inspect_annual_update(**kwargs)
+    report["inspection"] = {
+        "execution": report.pop("execution"),
+        "provider_paid_sec_calls": report.pop("provider_paid_sec_calls"),
+    }
+    report["execution"] = "NOT_EXECUTED"
+    return report
+
+
 def run_once(*, approval_url, refresh_submissions=False):
     """Continue an unfinished input before selecting another; never update the actual root."""
     from . import publication as pub,annual_continuity_publication as publishing
@@ -592,7 +603,7 @@ def run_once(*, approval_url, refresh_submissions=False):
     with stage_lock(stage), _initial_version(stage):
         recovery=_recover_pending(binding)
         if recovery is not None:
-            return {'status':'RECOVERED_PRIOR_TRANSACTION','recovery':recovery,'counts':budget_counts(stage),
+            return {'status':'RECOVERED_PRIOR_TRANSACTION','execution':'NOT_EXECUTED','recovery':recovery,'counts':budget_counts(stage),
                 'current_published':_current_published(stage),'discovery_status':'NOT_RECHECKED_RECOVERY_FIRST'}
         validate_stage(stage,execution=True)
         if not (root/'stage-binding.json').exists():
@@ -613,7 +624,7 @@ def run_once(*, approval_url, refresh_submissions=False):
         success=_successful_candidate(stage)
         if success is not None and success['baseline']['run_id']!=published['run_id']:
             pending=_publish_candidate(binding,Path(success['reference']['candidate_directory']))
-            return {'status':'PENDING_CANDIDATE_PUBLISHED','publication':pending,'counts':budget_counts(stage),
+            return {'status':'PENDING_CANDIDATE_PUBLISHED','execution':'NOT_EXECUTED','publication':pending,'counts':budget_counts(stage),
                 'discovery_status':'NOT_RECHECKED_PENDING_CANDIDATE','discovered_filing':success['plan']['selection']['filing'],
                 'latest_successful_candidate':success['baseline'],'published_before':published,
                 'current_published':_current_published(stage),'candidate_work':'NONE','publication_work':'COMPLETE'}
@@ -625,12 +636,12 @@ def run_once(*, approval_url, refresh_submissions=False):
             _fetch_missing(stage,{'kind':'SUBMISSIONS','url':url,'document_name':url.rsplit('/',1)[-1]})
             _write_once(Path(stage['budget_root'])/'submissions-refreshed.json',{'stage_id':stage['stage_id'],'completed_at_utc':now().isoformat()})
         if refresh_submissions:
-            refreshed=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,successful_candidate=None,published=published)
+            refreshed=_inspect_input_for_run(repo_root=Path(stage['data_root']),company=company,successful_candidate=None,published=published)
             newest=refreshed.get('discovered_filing');scope=stage['historical_period_scope']
             if newest and not(scope['start']<=newest['period_start']<=newest['period_end']<=scope['end']):
                 return {**refreshed,'status':'DISCOVERED_OUTSIDE_STAGE_SCOPE_NOT_EXECUTED','counts':budget_counts(stage)}
         visibility=_visibility(stage)
-        report=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,
+        report=_inspect_input_for_run(repo_root=Path(stage['data_root']),company=company,
             successful_candidate=None if success is None else success['baseline'],published=published,visibility=visibility)
         report.update(stage_id=stage['stage_id'],publication_root=stage['publication_root'],recovery=None,
             start_mode='CURRENT_ACTIVE' if stage['seed'] is None else 'EXPLICIT_HISTORICAL_SEED')
@@ -642,7 +653,7 @@ def run_once(*, approval_url, refresh_submissions=False):
         while report['status']=='INPUTS_MISSING':
             item=report['missing_sources'][0];need(item['url'] not in attempted,'CONTINUITY_NO_AUTOMATIC_RETRY');attempted.add(item['url'])
             _fetch_missing(stage,item)
-            report=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,
+            report=_inspect_input_for_run(repo_root=Path(stage['data_root']),company=company,
                 successful_candidate=None if success is None else success['baseline'],published=published,visibility=visibility)
         if report['status']=='NO_NEW_ANNUAL_FILING':
             return {**report,'status':'NO_CHANGE','counts':budget_counts(stage)}
@@ -650,9 +661,10 @@ def run_once(*, approval_url, refresh_submissions=False):
             return {**report,'counts':budget_counts(stage)}
         prepared,selection=select_saved_input(Path(stage['data_root']),visibility)
         need(prepared==report['prepared_input'],'CONTINUITY_INPUT_CHANGED_DURING_CHECK')
-        from .ai_adapter import approved_transport_policy,api_key_environment_name,api_key_required_error_code
-        data=runtime.verify_data_root(Path(stage['data_root']),_requirement())
-        transport=approved_transport_policy(requirement=load_requirement_snapshot(snapshot_dir=data/'requirements/issue_15_v1'))
+        from .ai_adapter import configured_annual_transport_policy,api_key_environment_name,api_key_required_error_code
+        requirement=_requirement()
+        data=runtime.verify_data_root(Path(stage['data_root']),requirement)
+        transport=configured_annual_transport_policy(requirement=requirement,repo_root=data)
         credential='' if os.environ.get(api_key_environment_name(policy=transport),'').strip() else api_key_required_error_code(policy=transport)
         if credential:return {**report,'status':'CREDENTIAL_REQUIRED','error':credential,'counts':budget_counts(stage)}
         predecessor=read(Path(stage['publication_root']),'outputs/active_publication.json')
@@ -678,7 +690,7 @@ def run_once(*, approval_url, refresh_submissions=False):
         ref={'stage_id':stage['stage_id'],'plan_id':planned['plan_id'],'candidate_directory':str(candidate),'run_id':run_id}
         atomic_write_json(path=root/'successful-candidate.json',value=ref)
         published_result=_publish_candidate(binding,candidate)
-        return {**report,'status':'COMPLETE_UPDATE_COMMITTED','candidate':ref,'publication':published_result,
+        return {**report,'status':'COMPLETE_UPDATE_COMMITTED','execution':'EXECUTED','candidate':ref,'publication':published_result,
             'counts':budget_counts(stage),'execution_code':code_identity(),
             'published_before':published,'current_published':_current_published(stage),
             'latest_successful_candidate':update.candidate_baseline(company=company,run_dir=b10),

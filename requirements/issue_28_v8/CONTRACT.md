@@ -41,3 +41,5 @@ activation and long-term permission remain outside this work package. Old v1/v2
 rules, Requirements, failed/successful Runs and publication packages are immutable.
 After continuity, repeat/failure/budget/trigger acceptance, stop this pilot and
 hand off to bounded R5 migration with per-batch old producer/repair retirement.
+
+Owner update, 2026-09-10: overwrite the current model configuration with DeepSeek-V4.1-Flash (API model deepseek-flash), without a new policy or Requirement version. For ordinary continuity the execution-bound config/provider_model_runtime.json selects the model within the existing approved provider and API. Request generation, adapter, controller and Run replay use the same exact selection. This supersedes the carried model name for new continuity inputs only; no response identity mismatch is accepted as an alias. Existing scope, prompt/schema, 200000 input-usage ceiling, retries and call limits remain. No new calls or reopening of the already closed stage follow from this configuration edit.

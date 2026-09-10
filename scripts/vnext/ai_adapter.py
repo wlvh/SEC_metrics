@@ -898,7 +898,7 @@ def build_deepseek_chat_completions_body(
     """
     if (
         policy.provider != "deepseek"
-        or policy.model != "deepseek-v4-flash"
+        or policy.model not in {"deepseek-v4-flash", "deepseek-flash"}
         or policy.api != "chat_completions"
         or policy.endpoint_host != _DEEPSEEK_ENDPOINT_HOST
     ):
@@ -1843,6 +1843,34 @@ def approved_scoped_transport_policy(*, requirement: Mapping[str, object]) -> Tr
     return policy
 
 
+def configured_annual_transport_policy(*, requirement, repo_root):
+    """Use the existing runtime configuration for the ordinary continuity model.
+
+    Provider, API, resources and retries stay under the carried Decision. The
+    exact config file is part of this Requirement's execution identity.
+    """
+    policy = approved_scoped_transport_policy(requirement=requirement)
+    if requirement.get("requirement_id") != "issue_28_v8":
+        return policy
+    from dataclasses import replace
+    from .sources import resolve_repository_file
+    relative = "config/provider_model_runtime.json"
+    path = resolve_repository_file(repo_root=repo_root, repo_relative_path=relative)
+    bound = requirement["execution_authority"]["files"][relative]
+    raw = path.read_bytes()
+    if bound != {"sha256": sha256_bytes(content=raw), "size": len(raw)}:
+        raise AIAdapterError("Annual configured model bytes differ from Requirement")
+    config = strict_json_loads(text=raw.decode("utf-8"))
+    matches = [entry for entry in config["models"]
+               if entry["provider"] == policy.provider and entry["api"] == policy.api]
+    if len(matches) != 1:
+        raise AIAdapterError("Annual configured model is absent or ambiguous")
+    selected = replace(policy, model=matches[0]["model"])
+    load_provider_runtime_authority(repo_root=repo_root, provider=selected.provider,
+        model=selected.model, api=selected.api)
+    return selected
+
+
 def api_key_environment_name(*, policy: TransportPolicy) -> str:
     """Return the only environment variable allowed for one D-01 provider.
 
@@ -1893,6 +1921,9 @@ def _load_transport_policy(*, annual_authorization=None) -> Tuple[TransportPolic
                 # Only this opaque stage capability selects a separately verified
                 # data authority. A caller cannot supply a directory or dictionary.
                 repo_root = fields['data_root']
+                return (configured_annual_transport_policy(
+                    requirement=fields['requirement'], repo_root=repo_root),
+                    str(fields['requirement']['requirement_closure_hash']))
     if not isinstance(repo_root, Path) or repo_root.is_symlink():
         raise AIAdapterError("D-01 repository root is unsafe")
     snapshot_dir = repo_root / "requirements" / "issue_15_v1"

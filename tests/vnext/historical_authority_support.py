@@ -19,6 +19,20 @@ def copy_foundation_receipts(root):
     for relative,proof in frozen_foundation_receipts().items():
         target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
         target.write_bytes(proof['bytes'])
+    # These tests replay the already recorded model, not the current selection.
+    # Recover its exact bytes from the existing complete publication.
+    relative='config/provider_model_runtime.json'
+    expected=json.loads((REPO_ROOT/'requirements/issue_15_v1/baseline_manifest.json').read_text())['runtime_authority_files'][relative]
+    pointer=json.loads((REPO_ROOT/'outputs/active_publication.json').read_text())
+    bundle=REPO_ROOT/'outputs/publications'/pointer['publication_id']
+    manifest=json.loads((bundle/'publication_manifest.json').read_text())
+    matches=[entry for entry in manifest['files'] if entry['path'].endswith('/'+relative)
+             and entry['sha256']==expected['sha256'] and entry['size']==expected['size']]
+    assert matches, 'Recorded model configuration is missing'
+    raw=(bundle/matches[0]['path']).read_bytes()
+    import hashlib
+    assert hashlib.sha256(raw).hexdigest()==expected['sha256']
+    (root/relative).write_bytes(raw)
 
 
 @lru_cache(maxsize=1)
