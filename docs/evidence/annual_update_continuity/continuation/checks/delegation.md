@@ -1,0 +1,9 @@
+# PR41 two-run continuation delegation
+
+Source: current Codex conversation `01a081bb-9220-7de3-a311-b481906b3146`, user message dated 2026-09-10 entitled “PR41 模型切换后的增量复核与两轮续验”. This record identifies the user delegation; it is not a GitHub approval comment, human code review, or an execution grant.
+
+The user explicitly delegated incremental independent review of the model/configuration/history/output changes, final-implementation full offline continuity, and then one newly registered isolated stage with provider/paid/SEC maximum 2/2/0. The original closed stage remains at 1/1/0; the combined line maximum is 3/3/0. There is no repair slot and no automatic retry. FY2024 must complete successfully before the different FY2025 input may run, under unchanged implementation/model/prompt/schema/rule/stage. Any first-round identity/content/scope failure or UNKNOWN stops subsequent real calls; the second slot cannot retry or skip that first input.
+
+The user authorized Codex to register the bounded stage through the authenticated user account, with public delegation disclosure and verified real GitHub provenance. New permission must bind reviewed implementation, roots, model/rule, prior stage and expiry of no more than seven days. Stage registration follows successful offline validation and independent review. Current production remains read-only; PR41 remains Draft. No merge, main advancement, production write, R5 work, or extra provider/SEC budget is authorized. Delivery closes the continuation stage and stops the trigger.
+
+Historical input snapshots, raw requests/responses, native failures/successes, approvals and closed budget records are preserved. Offline replay and simulated historical visibility remain separately labelled; no claim of fresh model execution follows from them. No credential is part of this record.

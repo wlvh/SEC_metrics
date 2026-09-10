@@ -2,6 +2,10 @@
 
 本入口限定 Marriott B01/B10、连续主体、完整自然年度普通10-K。B01 Revenue与B10全球、可比、全系统物业含义不变。实现复用原生候选执行、Evidence/SYSTEM Review/Calculator、完整Projector、PublicationView和原生切换日志。新规则是 `annual_candidate_adoption_v3`、`issue_28_v8`/V9；旧v1/v2文件与历史执行不改。本轮实际生产根只读，规则内容与真实阶段许可分开，代码存在不代表已完成两次真实执行或持续生产授权。
 
+## 当前交付（2026-09-10续验）
+
+[模型切换后续验交付](evidence/annual_update_continuity/continuation/README.md)：同版完整离线接续和独立复核通过；新真实FY2024请求/返回模型一致，但仍错选Company-Operated的69.7并借Systemwide标签，原生Evidence拒绝。新增1/1/0，连同旧阶段累计2/2/0；FY2025未执行，两阶段均关闭，触发器停用，PR41保持Draft，正式active未变。此前段落与第一版README保留其当时快照。
+
 ## 当前模型配置（2026-09-10）
 
 按用户“直接覆盖现有配置”的指令，`config/provider_model_runtime.json`已改为V4.1 Flash的API名称`deepseek-flash`，并更新现有issue_28_v8的执行文件绑定；没有新增政策、Requirement版本或审批步骤。年度计划、adapter、controller与Run校验统一读取这份经过文件哈希核对的模型设置。provider/API、原prompt/schema、1M模型容量、200000输入usage接受上限与零自动重试保持不变。

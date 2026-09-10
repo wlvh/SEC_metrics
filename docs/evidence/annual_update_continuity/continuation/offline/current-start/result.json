@@ -1,0 +1,134 @@
+{
+  "status": "NO_CHANGE",
+  "checked_at_utc": "2026-09-10T11:30:09.350691+00:00",
+  "check_scope": "ANNUAL_FILING_IDENTITY_ONLY",
+  "submissions": {
+    "source_proof": {
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "accession": "",
+      "document_name": "CIK0001048286.json",
+      "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_size": 147714,
+      "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+      "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+    },
+    "saved_at_utc": "2026-09-08T15:06:43.698100+00:00",
+    "visibility": null
+  },
+  "discovered_filing": {
+    "company_id": "marriott_international",
+    "cik": "1048286",
+    "accession": "0001048286-26-000007",
+    "form": "10-K",
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31",
+    "primary_document": "mar-20251231.htm",
+    "filing_date": "2026-02-10",
+    "period_basis": "SUBMISSIONS_REPORT_DATE"
+  },
+  "latest_successful_candidate": null,
+  "current_published": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "primary_document": "mar-20251231.htm"
+    },
+    "primary_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "metric_id": "B10",
+    "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+    "run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+    "run_status": "OPEN",
+    "provenance": {
+      "kind": "PINNED_PUBLICATION",
+      "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "owner_publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "inheritance_chain": [
+        "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59"
+      ],
+      "bundle_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/current-start/stage/publication/outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "run_path": "internal/annual_snapshot/candidate/b10"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "8f0e3cef6666c11514640f6a3f92803895bef1eb1d2fb5cf81da7473b86ee230",
+    "records_sha256": "a14bd4ae2fc9c68eafa4a7223e4b058312e134ecdcbd1790ffef4fc1ab3d57ef",
+    "reviews_sha256": "d379e2dfd6640bc6192fa6d60352bca93a0345c7bd99aaba72a2da5722d6cee4"
+  },
+  "candidate_baseline_status": "NOT_SUPPLIED",
+  "comparison_baseline": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "primary_document": "mar-20251231.htm"
+    },
+    "primary_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "metric_id": "B10",
+    "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+    "run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+    "run_status": "OPEN",
+    "provenance": {
+      "kind": "PINNED_PUBLICATION",
+      "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "owner_publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "inheritance_chain": [
+        "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59"
+      ],
+      "bundle_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/current-start/stage/publication/outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "run_path": "internal/annual_snapshot/candidate/b10"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "8f0e3cef6666c11514640f6a3f92803895bef1eb1d2fb5cf81da7473b86ee230",
+    "records_sha256": "a14bd4ae2fc9c68eafa4a7223e4b058312e134ecdcbd1790ffef4fc1ab3d57ef",
+    "reviews_sha256": "d379e2dfd6640bc6192fa6d60352bca93a0345c7bd99aaba72a2da5722d6cee4"
+  },
+  "filing_change": "UNCHANGED",
+  "missing_sources": [],
+  "candidate_work": "NONE",
+  "publication_work": "CANDIDATE_NOT_SUPPLIED",
+  "source_availability": {
+    "primary_document_saved": true,
+    "companyfacts": "NOT_CHECKED_NO_NEW_FILING"
+  },
+  "candidate_plan": {
+    "status": "NOT_REQUESTED"
+  },
+  "prepared_input": null,
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "input_status": "NOT_PREPARED_NO_NEW_FILING",
+  "inspection": {
+    "execution": "NOT_EXECUTED",
+    "provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "execution": "NOT_EXECUTED",
+  "stage_id": "sha256:aa39d96dbf11a954dd8e485b1bef90a918fead775460be15df47cc22c1e2e4f4",
+  "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/current-start/stage/publication",
+  "recovery": null,
+  "start_mode": "CURRENT_ACTIVE",
+  "counts": {
+    "provider": 0,
+    "paid": 0,
+    "sec_reserved": 0,
+    "provider_reserved": 0,
+    "failed_plans": [],
+    "uncertain_plans": [],
+    "uncertain_sec": [],
+    "failed_sec": []
+  }
+}

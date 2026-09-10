@@ -1,0 +1,312 @@
+{
+  "status": "COMPLETE_UPDATE_COMMITTED",
+  "checked_at_utc": "2026-09-10T13:23:07.195098+00:00",
+  "check_scope": "ANNUAL_FILING_IDENTITY_ONLY",
+  "submissions": {
+    "source_proof": {
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "accession": "",
+      "document_name": "CIK0001048286.json",
+      "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_size": 147714,
+      "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+      "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+    },
+    "saved_at_utc": "2026-09-08T15:06:43.698100+00:00",
+    "visibility": {
+      "record_type": "DERIVED_SUBMISSIONS_VISIBILITY",
+      "evidence_scope": "SIMULATED_HISTORICAL_VISIBILITY_NOT_ONLINE_DISCOVERY",
+      "visibility": {
+        "record_type": "SIMULATED_HISTORICAL_SUBMISSIONS_VISIBILITY",
+        "as_of_utc": "2025-12-31T23:59:59Z"
+      },
+      "original_source_proof": {
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "accession": "",
+        "document_name": "CIK0001048286.json",
+        "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+        "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+        "request_body_size": 147714,
+        "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+        "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+        "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+      },
+      "original_payload_id": "sha256:04ad59aa6cbe799b5ccba9ce349851b81944d3b33d809f377f6122e9fd8c424e",
+      "visible_payload_id": "sha256:b387b119b9916bd6a356a84de52e85d3b34577bee6df280b9aea61f7fc0b18e2",
+      "visible_row_count": 894,
+      "raw_sec_bytes_modified": false,
+      "visibility_id": "sha256:75531138816abbc57249e7790d0f8aeaa3e1a024fb7e10703aa5d1e7c0c2aa43"
+    }
+  },
+  "discovered_filing": {
+    "company_id": "marriott_international",
+    "cik": "1048286",
+    "accession": "0001628280-25-004818",
+    "form": "10-K",
+    "period_start": "2024-01-01",
+    "period_end": "2024-12-31",
+    "primary_document": "mar-20241231.htm",
+    "filing_date": "2025-02-11",
+    "period_basis": "PRIMARY_DEI_AND_CONTEXT"
+  },
+  "latest_successful_candidate": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "primary_document": "mar-20241231.htm"
+    },
+    "primary_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+    "metric_id": "B10",
+    "result_id": "sha256:0ce634fe86af4451ec080b7a9c7b035cd9590790d6c5d31fa8b54f10fad65b7c",
+    "run_id": "run:annual-runtime:db151f051c1bd4d3f8d4c8dae8cf72775ac7f7ff1f99ba3797e3b65066b0a4a6",
+    "run_status": "OPEN",
+    "provenance": {
+      "kind": "RECORDED_CANDIDATE_RESULT_LINKS",
+      "run_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/stage/candidates/db151f051c1bd4d3f8d4c8dae8cf72775ac7f7ff1f99ba3797e3b65066b0a4a6/b10",
+      "qualification_credit": "NONE",
+      "publication_credit": "NONE"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "c11cb2a0262f80ae5c2aeeb59a38f31c80a5aa07dbfa4bdc05192452b2c53a63",
+    "records_sha256": "623efad0b53a6fc2de4b9af956e7c2c59d4ae6c38be46db6578f088a47ef39dc",
+    "reviews_sha256": "347cd8a38b358d20d80e6beb754e7b1f414898e9dcff24117dc0eb2b5c4b8b36"
+  },
+  "current_published": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "primary_document": "mar-20241231.htm"
+    },
+    "primary_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+    "metric_id": "B10",
+    "result_id": "sha256:0ce634fe86af4451ec080b7a9c7b035cd9590790d6c5d31fa8b54f10fad65b7c",
+    "run_id": "run:annual-runtime:db151f051c1bd4d3f8d4c8dae8cf72775ac7f7ff1f99ba3797e3b65066b0a4a6",
+    "run_status": "OPEN",
+    "provenance": {
+      "kind": "PINNED_PUBLICATION",
+      "publication_id": "publication_266cf47743a0a6a64444fb8e2850c015644f29a9ec49b534c9014ed12cbcd82d",
+      "owner_publication_id": "publication_266cf47743a0a6a64444fb8e2850c015644f29a9ec49b534c9014ed12cbcd82d",
+      "inheritance_chain": [
+        "publication_266cf47743a0a6a64444fb8e2850c015644f29a9ec49b534c9014ed12cbcd82d"
+      ],
+      "bundle_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/stage/publication/outputs/publications/publication_266cf47743a0a6a64444fb8e2850c015644f29a9ec49b534c9014ed12cbcd82d",
+      "run_path": "internal/annual_snapshot/candidate/b10"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "c11cb2a0262f80ae5c2aeeb59a38f31c80a5aa07dbfa4bdc05192452b2c53a63",
+    "records_sha256": "623efad0b53a6fc2de4b9af956e7c2c59d4ae6c38be46db6578f088a47ef39dc",
+    "reviews_sha256": "347cd8a38b358d20d80e6beb754e7b1f414898e9dcff24117dc0eb2b5c4b8b36"
+  },
+  "candidate_baseline_status": "NOT_SUPPLIED",
+  "comparison_baseline": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001628280-24-004372",
+      "form": "10-K",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "primary_document": "mar-20231231.htm"
+    },
+    "primary_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+    "metric_id": "B10",
+    "result_id": "sha256:effaa01a043d0e28503fdde3ac99e4ad7a5b7385d10019b06f633dfbcb03bdc1",
+    "run_id": "run:qualification:table:91bd5bcb776f88e59efba93a2559de47289e9c1c3903a347c6630d820c98e9d9",
+    "run_status": "FROZEN",
+    "provenance": {
+      "kind": "PINNED_PUBLICATION",
+      "publication_id": "publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438",
+      "owner_publication_id": "publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438",
+      "inheritance_chain": [
+        "publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438"
+      ],
+      "bundle_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/stage/publication/outputs/publications/publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438",
+      "run_path": "internal/annual_snapshot/candidate/b10"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "0bc68157468eff44fcbeb5ba0f597bd0eacebbdbb6c0af8c6e94c5f53f10cb05",
+    "records_sha256": "6c81aa1ac2d7514399bf0808bfdd57df39b68f89535a42c290c6827ef62f774d",
+    "reviews_sha256": "adab81b8434d4adb80b162f60f6c92155d26fd1e55b4f1b94ec97e9f27a122a5"
+  },
+  "filing_change": "NEW_ANNUAL_FILING",
+  "missing_sources": [],
+  "candidate_work": "COMPLETE",
+  "publication_work": "COMPLETE",
+  "source_availability": {
+    "primary_document_saved": true,
+    "companyfacts": "TARGET_ANNUAL_FACTS_PRESENT"
+  },
+  "candidate_plan": {
+    "status": "NOT_REQUESTED"
+  },
+  "prepared_input": {
+    "companyfacts_input": {
+      "company_id": "marriott_international",
+      "target_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "source_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "accession": "0001628280-25-004818",
+      "document_name": "CIK0001048286.json",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+    },
+    "table_input": {
+      "company_id": "marriott_international",
+      "target_period": {
+        "fiscal_year": 2024,
+        "period_start": "2024-01-01",
+        "period_end": "2024-12-31"
+      },
+      "source_repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+      "accession": "0001628280-25-004818",
+      "document_name": "mar-20241231.htm",
+      "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92",
+      "source_media_type": "text/html",
+      "source_role": "target_primary"
+    },
+    "source_proofs": [
+      {
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "accession": "",
+        "document_name": "CIK0001048286.json",
+        "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+        "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+        "request_body_size": 147714,
+        "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+        "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+        "request_headers_size": 736,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+        "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+      },
+      {
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+        "accession": "0001628280-25-004818",
+        "document_name": "mar-20241231.htm",
+        "content_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "request_body_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "request_body_size": 2047740,
+        "request_headers_repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm.91eb1545994f9c11e96630e16fbddb3e21bbdcb9dd0233c2e269195e40bddd6d.headers.json",
+        "request_headers_sha256": "91eb1545994f9c11e96630e16fbddb3e21bbdcb9dd0233c2e269195e40bddd6d",
+        "request_headers_size": 1087,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+        "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+      },
+      {
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "accession": "0001628280-25-004818",
+        "document_name": "CIK0001048286.json",
+        "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "request_body_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "request_body_size": 3269111,
+        "request_headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json",
+        "request_headers_sha256": "387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d",
+        "request_headers_size": 707,
+        "request_locator_kind": "IMMUTABLE_ATTEMPT",
+        "request_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+      }
+    ],
+    "input_id": "sha256:8eb6a4f61df410fc47dbeeb6ee50494191fd96537292c88a952e7601fcd67664"
+  },
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE",
+  "input_status": "PREPARED_AWAITING_EXECUTION",
+  "inspection": {
+    "execution": "NOT_EXECUTED",
+    "provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "execution": "EXECUTED",
+  "stage_id": "sha256:8c5c5c4af9eb664482db41fb73606b4d594ba9348f0b69e343a2a63fad8beeaa",
+  "publication_root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/stage/publication",
+  "recovery": null,
+  "start_mode": "EXPLICIT_HISTORICAL_SEED",
+  "candidate": {
+    "stage_id": "sha256:8c5c5c4af9eb664482db41fb73606b4d594ba9348f0b69e343a2a63fad8beeaa",
+    "plan_id": "sha256:db151f051c1bd4d3f8d4c8dae8cf72775ac7f7ff1f99ba3797e3b65066b0a4a6",
+    "candidate_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/stage/candidates/db151f051c1bd4d3f8d4c8dae8cf72775ac7f7ff1f99ba3797e3b65066b0a4a6",
+    "run_id": "run:annual-runtime:db151f051c1bd4d3f8d4c8dae8cf72775ac7f7ff1f99ba3797e3b65066b0a4a6"
+  },
+  "publication": {
+    "status": "AUTHORIZED_PUBLISH_COMPLETED",
+    "publication_id": "publication_266cf47743a0a6a64444fb8e2850c015644f29a9ec49b534c9014ed12cbcd82d",
+    "environment": "ISOLATED_TEST",
+    "action_id": "sha256:189c6fd0849b001220bdd0a82d835ca60d46188fc98d39f5cfdebf41eb2b98a2",
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "plan_id": "sha256:33b236e5325182a1cfa96e7152b88bc9f55559fb3bd71d45dd7c446599086bff"
+  },
+  "counts": {
+    "provider": 1,
+    "paid": 1,
+    "sec_reserved": 0,
+    "provider_reserved": 1,
+    "failed_plans": [],
+    "uncertain_plans": [],
+    "uncertain_sec": [],
+    "failed_sec": []
+  },
+  "execution_code": {
+    "exact_head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+    "runtime_tree": "sha256:e408d9cd4e802ac371babed23faed99adf189b1ed83b207f79eeee5160af8018",
+    "test_tree": "sha256:d50939591ed33789a3a10e293ea2f5c577e0e756f0ceb47912100608f0c710eb"
+  },
+  "published_before": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001628280-24-004372",
+      "form": "10-K",
+      "period_start": "2023-01-01",
+      "period_end": "2023-12-31",
+      "primary_document": "mar-20231231.htm"
+    },
+    "primary_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+    "metric_id": "B10",
+    "result_id": "sha256:effaa01a043d0e28503fdde3ac99e4ad7a5b7385d10019b06f633dfbcb03bdc1",
+    "run_id": "run:qualification:table:91bd5bcb776f88e59efba93a2559de47289e9c1c3903a347c6630d820c98e9d9",
+    "run_status": "FROZEN",
+    "provenance": {
+      "kind": "PINNED_PUBLICATION",
+      "publication_id": "publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438",
+      "owner_publication_id": "publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438",
+      "inheritance_chain": [
+        "publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438"
+      ],
+      "bundle_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/stage/publication/outputs/publications/publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438",
+      "run_path": "internal/annual_snapshot/candidate/b10"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "0bc68157468eff44fcbeb5ba0f597bd0eacebbdbb6c0af8c6e94c5f53f10cb05",
+    "records_sha256": "6c81aa1ac2d7514399bf0808bfdd57df39b68f89535a42c290c6827ef62f774d",
+    "reviews_sha256": "adab81b8434d4adb80b162f60f6c92155d26fd1e55b4f1b94ec97e9f27a122a5"
+  }
+}

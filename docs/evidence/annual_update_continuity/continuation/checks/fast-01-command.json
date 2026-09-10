@@ -1,0 +1,22 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/readonly.sb",
+    "python3",
+    "tools/run_fast_tests.py",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/fast-01-results.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "a289efa3fcc93ed2b415f11c29463c5a6e896842",
+  "head_after": "a289efa3fcc93ed2b415f11c29463c5a6e896842",
+  "started_at_utc": "2026-09-10T11:25:18.397308+00:00",
+  "finished_at_utc": "2026-09-10T11:25:18.473194+00:00",
+  "elapsed_seconds": 0.07578166702296585,
+  "exit_code": 2,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/fast-01-command.log",
+  "log_sha256": "2101f10101438ffbcc4bc84e6a7473259183abbc88647f4e0082265d184f0285",
+  "log_size": 222
+}

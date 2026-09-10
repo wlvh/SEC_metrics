@@ -1,0 +1,44 @@
+{
+  "record_type": "INDEPENDENT_PREVIOUS_TERMINAL_COUNTEREXAMPLE",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "scope": "Temporary copy of real original plan/controller only. No real record or byte changed; no provider/SEC. Exercises actual classifier used by previous-stage proof.",
+  "results": {
+    "original": {
+      "provider": 1,
+      "status": "FAILED"
+    },
+    "unknown_status": {
+      "accepted": {
+        "provider": 1,
+        "status": "FAILED"
+      },
+      "top_status": "INVALID_TERMINAL",
+      "attempt_status": "FAILED_TERMINAL",
+      "success_id": null
+    },
+    "terminal_attempt_disagree": {
+      "accepted": {
+        "provider": 1,
+        "status": "FAILED"
+      },
+      "top_status": "FAILED_RETRYABLE_FINAL",
+      "attempt_status": "FAILED_TERMINAL",
+      "success_id": null
+    },
+    "failed_claims_success": {
+      "accepted": {
+        "provider": 1,
+        "status": "FAILED"
+      },
+      "top_status": "FAILED_TERMINAL",
+      "attempt_status": "FAILED_TERMINAL",
+      "success_id": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+    }
+  },
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

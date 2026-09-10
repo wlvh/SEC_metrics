@@ -1,0 +1,25 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live-isolated.sb",
+    "python3",
+    "tools/vnext_annual_continuity.py",
+    "run-once",
+    "--approval-url",
+    "https://github.com/wlvh/SEC_metrics/pull/41#issuecomment-5619977072",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live-logs/failed-reentry.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+  "head_after": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+  "started_at_utc": "2026-09-10T14:15:37.939021+00:00",
+  "finished_at_utc": "2026-09-10T14:17:02.181483+00:00",
+  "elapsed_seconds": 84.243074292026,
+  "exit_code": 2,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live-logs/failed-reentry-command.log",
+  "log_sha256": "c0e7fe43652cd58aee20812e39c27f64732a04601c94868705bfe69e42e9767a",
+  "log_size": 236
+}

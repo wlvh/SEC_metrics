@@ -1,0 +1,24 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-readonly.sb",
+    "python3",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/inspect_complete.py",
+    "--root",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live/stage/publication",
+    "--output",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live-logs/cold-s0.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+  "head_after": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+  "started_at_utc": "2026-09-10T14:15:39.096601+00:00",
+  "finished_at_utc": "2026-09-10T14:16:47.667954+00:00",
+  "elapsed_seconds": 68.57182933297008,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live-logs/cold-s0-command.log",
+  "log_sha256": "d45bbb3c59ba48e5b6b977fd801df8e294248a359ce022eac37be850df1b9142",
+  "log_size": 92
+}
