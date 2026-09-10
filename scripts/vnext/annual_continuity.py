@@ -114,14 +114,103 @@ def _period_scope(start,end):
          and date.fromisoformat(end).isoformat()==end and start<=end, 'CONTINUITY_PERIOD_SCOPE_INVALID')
 
 
-def _register_unused_budget(root, data, budget, start):
+def _stage_limits(stage):
+    if stage.get('schema_version', 1) == 1:
+        return {'normal_provider':2,'conditional_provider':1,'provider':3,'paid':3,'sec':6,'retry':0}
+    need(stage['schema_version'] == 2
+         and stage['maximum_provider_paid_sec_calls'] == [2,2,0]
+         and all(type(x) is int for x in stage['maximum_provider_paid_sec_calls'])
+         and type(stage['normal_provider_calls']) is int and stage['normal_provider_calls']==2
+         and type(stage['conditional_repair_calls']) is int and stage['conditional_repair_calls']==0,
+         'CONTINUITY_CONTINUATION_LIMITS_CHANGED')
+    return {'normal_provider':2,'conditional_provider':0,'provider':2,'paid':2,'sec':0,'retry':0}
+
+
+def _previous_stage_proof(binding):
+    """Verify the closed original from its own saved authority, not current v8."""
+    from .annual_adoption import historical_code
+    old=binding['stage'];owner=binding['owner_comment']
+    check_id(old,'stage_id');validate_owner(old,owner)
+    need(old.get('schema_version')==1 and old['policy']==policy(policy_id=V3),
+         'CONTINUITY_PREVIOUS_STAGE_KIND_CHANGED')
+    root,budget,data=(_external(old[k]) for k in ('stage_root','budget_root','data_root'))
+    need(_json(root/'stage-binding.json')==binding,'CONTINUITY_PREVIOUS_BINDING_CHANGED')
+    requirement=_requirement(data)
+    need(requirement['requirement_closure_hash']==old['requirement_closure_hash'],
+         'CONTINUITY_PREVIOUS_REQUIREMENT_CHANGED')
+    code=historical_code(old)
+    need(all(name not in code or code[name]==proof for name,proof in requirement['execution_authority']['files'].items())
+         and all(code.get(p.relative_to(data).as_posix())=={'sha256':sha256_file(path=p),'size':p.stat().st_size}
+                 for p in (data/'requirements'/old['requirement_id']).iterdir()),
+         'CONTINUITY_PREVIOUS_CODE_AUTHORITY_CHANGED')
+    need(content_hash(value=git('ls-tree','-r',old['reviewed_code']['exact_head'],'tests').decode())
+         ==old['reviewed_code']['test_tree'],'CONTINUITY_PREVIOUS_TEST_ID_CHANGED')
+    closed=_json(budget/'closed.json');counts=budget_counts(old)
+    need(closed['stage_id']==old['stage_id'] and closed['counts']==counts
+         and counts['provider']==counts['paid']==counts['provider_reserved']==1
+         and counts['sec_reserved']==0 and not counts['uncertain_plans'] and not counts['uncertain_sec']
+         and len(counts['failed_plans'])==1 and not counts['failed_sec'],
+         'CONTINUITY_PREVIOUS_CLOSED_COUNTS_CHANGED')
+    need(_json(budget/'registration.json')==old['budget_registration'],
+         'CONTINUITY_PREVIOUS_REGISTRATION_CHANGED')
+    return {'approval_url':owner['html_url'],'stage_id':old['stage_id'],
+        'stage_root':str(root),'budget_root':str(budget),'data_root':str(data),
+        'binding_sha256':sha256_file(path=root/'stage-binding.json'),
+        'closed_sha256':sha256_file(path=budget/'closed.json'),
+        'registration_sha256':sha256_file(path=budget/'registration.json'),
+        'requirement_closure_hash':requirement['requirement_closure_hash'],'counts':counts}
+
+
+def _read_previous_stage(approval_url):
+    from .annual_candidate import _github
+    match=re.fullmatch(r'https://github\.com/([^/]+/[^/]+)/(?:issues|pull)/([1-9][0-9]*)#issuecomment-([1-9][0-9]*)',approval_url)
+    need(match is not None,'CONTINUITY_PREVIOUS_APPROVAL_URL_INVALID')
+    actual=_github('repos/'+match[1]+'/issues/comments/'+match[3])
+    old=strict_json_loads(text=actual['body']);validate_owner(old,actual)
+    need(actual['html_url']==approval_url,'CONTINUITY_PREVIOUS_APPROVAL_LOCATION_CHANGED')
+    binding=_json(_external(old['stage_root'])/'stage-binding.json')
+    comment={**{k:actual[k] for k in ('id','html_url','issue_url','body','created_at','updated_at')},
+             'user':{'login':actual['user']['login']}}
+    need(binding=={'stage':old,'owner_comment':comment},'CONTINUITY_PREVIOUS_APPROVAL_CHANGED')
+    return _previous_stage_proof(binding)
+
+
+def _validate_continuation(stage):
+    if stage.get('schema_version',1)!=2:return
+    _stage_limits(stage)
+    prior=stage['previous_stage'];root=_external(prior['stage_root'])
+    need(_previous_stage_proof(_json(root/'stage-binding.json'))==prior,
+         'CONTINUITY_PREVIOUS_STAGE_PROOF_CHANGED')
+    need(stage['cumulative_provider_paid_sec_limit']==[3,3,0]
+         and all(type(x) is int for x in stage['cumulative_provider_paid_sec_limit'])
+         and type(stage['delegation_source']) is str and stage['delegation_source'].strip()
+         and stage['delegation_source']!=_json(root/'stage-binding.json')['stage']['delegation_source'],
+         'CONTINUITY_CONTINUATION_DELEGATION_CHANGED')
+    periods=stage['update_period_ends']
+    need(type(periods) is list and len(periods)==2 and all(type(x) is str for x in periods)
+         and periods==sorted(set(periods)),
+         'CONTINUITY_UPDATE_SEQUENCE_INVALID')
+    for end in periods:
+        _period_scope(end,end)
+        need(end.endswith('-12-31') and stage['historical_period_scope']['start']<=end<=stage['historical_period_scope']['end'],
+             'CONTINUITY_UPDATE_SEQUENCE_OUTSIDE_SCOPE')
+    for name in ('stage_root','data_root','budget_root'):
+        current=_external(stage[name])
+        for old_name in ('stage_root','data_root','budget_root'):
+            old=_external(prior[old_name])
+            need(current!=old and current not in old.parents and old not in current.parents,
+                 'CONTINUITY_PREVIOUS_ROOT_OVERLAP')
+
+
+def _register_unused_budget(root, data, budget, start, *, limits=None, previous_stage=None):
     """Preserve an inert registration after proposal output failure; never reset it."""
     need(not root.exists(), 'CONTINUITY_STAGE_OR_BUDGET_ALREADY_REGISTERED')
     path=budget/'registration.json'
     fixed={'kind':'CONTINUITY_BUDGET_REGISTRATION','budget_root':str(budget),
         'stage_root':str(root),'data_root':str(data),'policy_id':V3,
         'sec_ledger_origin':{'row_count':len(update._rows(data)), 'rows_id':content_hash(value=update._rows(data))},
-        'limits':{'normal_provider':2,'conditional_provider':1,'provider':3,'paid':3,'sec':6,'retry':0}}
+        'limits':limits or _stage_limits({})}
+    if previous_stage is not None:fixed['previous_stage']=previous_stage
     if budget.exists():
         need(set(budget.iterdir())=={path}, 'CONTINUITY_BUDGET_HAS_EXECUTION_STATE')
         value=_json(path);check_id(value,'registration_id')
@@ -136,9 +225,12 @@ def _register_unused_budget(root, data, budget, start):
 
 
 def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=None, seed_b10=None,
-                   visibility_file=None, expires_at_utc, historical_period_start, historical_period_end):
+                   visibility_file=None, expires_at_utc, historical_period_start, historical_period_end,
+                   previous_approval_url=None, delegation_source=None, update_period_ends=None):
     """Create one inert stage proposal. The review and original seed are explicit."""
     need((seed_b01 is None)==(seed_b10 is None),'CONTINUITY_SEED_PARAMETERS_MUST_BE_PAIRED')
+    need(previous_approval_url and delegation_source and update_period_ends,
+         'CONTINUITY_EXPLICIT_CONTINUATION_SCOPE_REQUIRED')
     identity = code_identity(); requirement = _requirement(); chosen = policy(policy_id=V3)
     review = _json(Path(review_file))
     need(review['reviewer_kind'] == 'INDEPENDENT_MODEL_SUBTASK'
@@ -155,14 +247,22 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=
     seed = None if seed_b01 is None else seed_descriptor(b01=Path(seed_b01), b10=Path(seed_b10), data_root=data)
     need(seed is None or (seed['period']['period_start'] >= historical_period_start
          and seed['period']['period_end'] <= historical_period_end), 'CONTINUITY_SEED_OUT_OF_SCOPE')
-    registration = _register_unused_budget(root,data,budget,start)
+    previous=_read_previous_stage(previous_approval_url)
+    limits={'normal_provider':2,'conditional_provider':0,'provider':2,'paid':2,'sec':0,'retry':0}
+    scope={'schema_version':2,'maximum_provider_paid_sec_calls':[2,2,0],'normal_provider_calls':2,
+        'conditional_repair_calls':0,'previous_stage':previous,'cumulative_provider_paid_sec_limit':[3,3,0],
+        'delegation_source':delegation_source,'update_period_ends':list(update_period_ends),
+        'historical_period_scope':{'start':historical_period_start,'end':historical_period_end},
+        'stage_root':str(root),'data_root':str(data),'budget_root':str(budget)}
+    _validate_continuation(scope)
+    registration = _register_unused_budget(root,data,budget,start,limits=limits,previous_stage=previous)
     from .publication import PublicationView
     PublicationView.open(publication_root=ROOT)
     initial_pointer = read(ROOT, 'outputs/active_publication.json')
-    body = {'schema_version': 1, 'decision': DECISION,
+    body = {'schema_version': 2, 'decision': DECISION,
         'approval_kind': 'USER_DELEGATED_ISOLATED_STAGE_AFTER_INDEPENDENT_REVIEW',
-        'delegation_source': 'codex-task:01a081bb-9220-7de3-a311-b481906b3146',
-        'statement': 'Codex records this bounded isolated stage under explicit user delegation; this is not a new human code review or continuous production permission.',
+        'delegation_source': delegation_source,
+        'statement': 'User-delegated PR41 continuation: two ordered annual validations only; prior closed failure is retained, no repair slot, no SEC, no automatic retry or production publication. This is not a human code review.',
         'repository': requirement['baseline']['repository']['identity'],
         'requirement_id': REQUIREMENT_ID, 'requirement_closure_hash': requirement['requirement_closure_hash'],
         'policy': chosen, 'reviewed_code': identity, 'review': review,
@@ -172,8 +272,10 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=
         'visibility_file': None if visibility_file is None else str(_external(visibility_file)),
         'historical_period_scope': {'start': historical_period_start, 'end': historical_period_end},
         'created_at_utc': start.isoformat(), 'expires_at_utc': expiry.isoformat(),
-        'maximum_provider_paid_sec_calls': [3, 3, 6], 'normal_provider_calls': 2,
-        'conditional_repair_calls': 1, 'automatic_retry_count': 0,
+        'maximum_provider_paid_sec_calls': [2, 2, 0], 'normal_provider_calls': 2,
+        'conditional_repair_calls': 0, 'automatic_retry_count': 0,
+        'previous_stage':previous,'cumulative_provider_paid_sec_limit':[3,3,0],
+        'update_period_ends':list(update_period_ends),
         'production_publication_authorized': False, 'long_running_schedule_authorized': False}
     return record(body, 'stage_id')
 
@@ -187,9 +289,10 @@ def validate_lifetime(stage, *, execution=False):
 
 def validate_stage(stage, *, execution=False):
     check_id(stage, 'stage_id'); chosen = policy(policy_id=V3)
+    limits=_stage_limits(stage)
     need(stage['decision'] == DECISION and content_hash(value=stage['policy']) == content_hash(value=chosen)
-         and stage['maximum_provider_paid_sec_calls'] == [3, 3, 6]
-         and stage['normal_provider_calls'] == 2 and stage['conditional_repair_calls'] == 1
+         and stage['maximum_provider_paid_sec_calls'] == [limits['provider'],limits['paid'],limits['sec']]
+         and stage['normal_provider_calls'] == limits['normal_provider'] and stage['conditional_repair_calls'] == limits['conditional_provider']
          and stage['automatic_retry_count'] == 0 and stage['production_publication_authorized'] is False
          and stage['long_running_schedule_authorized'] is False, 'CONTINUITY_STAGE_SCOPE_CHANGED')
     review = stage['review']
@@ -213,6 +316,10 @@ def validate_stage(stage, *, execution=False):
     need(registration == stage['budget_registration'] and registration['stage_root'] == str(root)
          and registration['budget_root'] == str(budget) and registration['data_root'] == str(data),
          'CONTINUITY_BUDGET_REGISTRATION_CHANGED')
+    need(registration['limits']==limits,'CONTINUITY_REGISTERED_LIMITS_CHANGED')
+    if stage['schema_version']==2:
+        need(registration['previous_stage']==stage['previous_stage'],'CONTINUITY_REGISTERED_PREDECESSOR_CHANGED')
+        _validate_continuation(stage)
     validate_lifetime(stage, execution=execution)
     if execution:
         need(not (budget / 'closed.json').exists(), 'CONTINUITY_STAGE_CLOSED')
@@ -350,13 +457,14 @@ def _provider_terminal(stage, slot, workspace, *, allow_pending_plan=None):
 def budget_counts(stage, *, allow_pending_plan=None):
     """Reconcile permanent slots and native WB-3 terminals across all inputs."""
     root, budget = Path(stage['stage_root']), Path(stage['budget_root'])
+    limits=_stage_limits(stage)
     slots = sorted(budget.glob('provider-*.json'))
     ids = set(); observed = 0; failures = []; pending = []
     for index, path in enumerate(slots, 1):
         slot = _json(path); check_id(slot, 'slot_id')
         need(path.name == 'provider-' + str(index) + '.json'
              and slot['registration_id'] == stage['budget_registration']['registration_id']
-             and slot['ordinal'] == index and index <= 3, 'CONTINUITY_BUDGET_SLOT_CHANGED')
+             and slot['ordinal'] == index and index <= limits['provider'], 'CONTINUITY_BUDGET_SLOT_CHANGED')
         ids.add(slot['plan_id']); workspace = root / 'candidates' / slot['plan_id'][7:]
         state = _provider_terminal(stage, slot, workspace, allow_pending_plan=allow_pending_plan)
         observed += state['provider']
@@ -372,7 +480,7 @@ def budget_counts(stage, *, allow_pending_plan=None):
              'CONTINUITY_SEC_LEDGER_PREFIX_CHANGED')
     for index, path in enumerate(sec, 1):
         record_value = _json(path); check_id(record_value, 'sec_slot_id')
-        need(path.name == 'sec-' + str(index) + '.json' and index <= 6
+        need(path.name == 'sec-' + str(index) + '.json' and index <= limits['sec']
              and record_value['registration_id'] == stage['budget_registration']['registration_id']
              and record_value['ordinal']==index and record_value['stage_id']==stage['stage_id']
              and record_value['ledger_before_count']==offset+index-1
@@ -402,7 +510,7 @@ def budget_counts(stage, *, allow_pending_plan=None):
         accepted=row['status_code']=='200' and not row['error']
         need(terminal['status']==('SUCCEEDED' if accepted else 'FAILED'),'CONTINUITY_SEC_TERMINAL_CHANGED')
         if not accepted: sec_failed.append(path.name)
-    need(observed <= len(slots) <= 3 and len(sec) <= 6, 'CONTINUITY_BUDGET_EXCEEDED')
+    need(observed <= len(slots) <= limits['provider'] and len(sec) <= limits['sec'], 'CONTINUITY_BUDGET_EXCEEDED')
     return {'provider': observed, 'paid': observed, 'sec_reserved': len(sec), 'provider_reserved': len(slots),
             'failed_plans': failures, 'uncertain_plans': pending, 'uncertain_sec': sec_unknown, 'failed_sec': sec_failed}
 
@@ -439,11 +547,25 @@ def _visibility(stage):
     return None if value is None else _json(_external(Path(value)))
 
 
+def _validate_next_input(stage,plan,counts):
+    _stage_limits(stage)
+    need(counts['provider_reserved'] < stage['normal_provider_calls'],'CONTINUITY_NORMAL_BUDGET_EXHAUSTED')
+    need(plan['selection']['filing']['period_end']==stage['update_period_ends'][counts['provider_reserved']],
+         'CONTINUITY_UPDATE_SEQUENCE_CHANGED')
+    old=stage['previous_stage']['counts']
+    need(old['provider']+counts['provider']+1<=stage['cumulative_provider_paid_sec_limit'][0]
+         and old['paid']+counts['paid']+1<=stage['cumulative_provider_paid_sec_limit'][1],
+         'CONTINUITY_CUMULATIVE_BUDGET_EXCEEDED')
+
+
 def _reserve_provider(stage, plan):
     counts = budget_counts(stage)
     need(not counts['uncertain_plans'] and not counts['uncertain_sec'], 'CONTINUITY_COUNT_UNKNOWN')
     need(not counts['failed_plans'] and not counts['failed_sec'], 'CONTINUITY_REPAIRED_REBIND_REQUIRED')
     need(counts['provider_reserved'] < stage['normal_provider_calls'], 'CONTINUITY_NORMAL_BUDGET_EXHAUSTED')
+    if stage.get('schema_version',1)==2:
+        _validate_continuation(stage)
+        _validate_next_input(stage,plan,counts)
     for p in Path(stage['budget_root']).glob('provider-*.json'):
         prior = _json(p)
         need(prior['input_id'] != plan['prepared_input']['input_id']

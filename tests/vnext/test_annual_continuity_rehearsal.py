@@ -1,7 +1,8 @@
 """Complete historical sources; only GitHub and HTTP I/O are simulated.
 
 Run with CONTINUITY_REHEARSAL_ROOT (new external directory) and
-CONTINUITY_MATERIAL_AUDIT (the independently inspected original Run index).
+CONTINUITY_MATERIAL_AUDIT (the independently inspected original Run index) and
+CONTINUITY_PRIOR_STAGE_BINDING (the preserved closed original stage).
 These tests execute native validators and publication transactions. They do not
 claim a fresh provider execution, real Owner approval, or production publication.
 """
@@ -17,7 +18,7 @@ from unittest import mock
 
 from vnext import annual_continuity as flow, annual_publication as annual, publication as pub
 from vnext import annual_candidate, ai_adapter
-from vnext.canonical import sha256_bytes
+from vnext.canonical import sha256_bytes, canonical_json_bytes
 
 URL='https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-9999041'
 
@@ -31,13 +32,52 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         root=os.environ.get('CONTINUITY_REHEARSAL_ROOT');audit=os.environ.get('CONTINUITY_MATERIAL_AUDIT')
-        if not root or not audit:
+        prior=os.environ.get('CONTINUITY_PRIOR_STAGE_BINDING')
+        if not root or not audit or not prior:
             raise unittest.SkipTest('Requires saved complete historical materials and a new isolated root')
         cls.root=Path(root).resolve();cls.audit=json.loads(Path(audit).read_text())
+        cls.prior=json.loads(Path(prior).read_text())
         if cls.root.exists():raise ValueError('Rehearsal root already exists; preserve it and use a fresh offline test root')
         cls.root.mkdir(parents=True)
         cls.initial=(flow.ROOT/'outputs/active_publication.json').read_bytes()
         cls.log=[]
+
+    def proposal(self, **kwargs):
+        # The old real comment is replayed only at the external GitHub boundary.
+        # Native prior-budget/closed-stage/code/Requirement checks remain real.
+        comment=self.prior['owner_comment']
+        def github(path):
+            self.assertEqual('repos/wlvh/SEC_metrics/issues/comments/'+str(comment['id']),path)
+            return copy.deepcopy(comment)
+        with mock.patch.object(annual_candidate,'_github',side_effect=github):
+            return flow.stage_proposal(**kwargs,previous_approval_url=comment['html_url'],
+                delegation_source='SIMULATED_TEST_DELEGATION_PR41_CONTINUATION_NOT_OWNER_AUTHORITY',
+                update_period_ends=['2024-12-31','2025-12-31'])
+
+    def envelopes(self, root):
+        # Preserve the historical assistant content. Only the external model
+        # envelope follows the current request model; this is synthetic I/O,
+        # never a fresh model result or a modified historical response file.
+        model=ai_adapter.configured_annual_transport_policy(requirement=flow._requirement(),repo_root=flow.ROOT).model
+        envelopes={};proofs=[]
+        for item in self.audit['existing_real_provider_B10_runs']:
+            run=Path(item['run_directory'])
+            records=[json.loads(x) for x in (run/'records.jsonl').read_text().splitlines()]
+            attempt=next(x for x in records if x['record_type']=='AI_EXTRACTION_ATTEMPT')
+            request_raw=(run/attempt['request_body_path']).read_bytes()
+            response_raw=(run/attempt['raw_response_path']).read_bytes()
+            request=json.loads(request_raw);response=json.loads(response_raw)
+            expected=canonical_json_bytes(value={**request,'model':model})
+            raw=canonical_json_bytes(value={**response,'model':model,'id':'SIMULATED_MODEL_ENVELOPE'})
+            envelopes[sha256_bytes(content=expected)]=(expected,raw)
+            proofs.append({'run_directory':str(run),'original_request_sha256':sha256_bytes(content=request_raw),
+                'original_response_sha256':sha256_bytes(content=response_raw),
+                'synthetic_request_sha256':sha256_bytes(content=expected),'synthetic_response_sha256':sha256_bytes(content=raw),
+                'request_changes':['model'],'response_envelope_changes':['model','id'],
+                'assistant_content_unchanged':json.loads(raw)['choices']==response['choices']})
+        saved(root/'synthetic-io-binding.json',{'kind':'SAVED_ASSISTANT_CONTENT_WITH_SYNTHETIC_MODEL_ENVELOPE',
+            'new_business_calls':[0,0,0],'entries':proofs})
+        return envelopes
 
     def test_two_complete_updates_and_reentry(self):
         root=self.root
@@ -49,7 +89,7 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
         saved(root/'review.json',review)
         visibility=root/'visibility.json'
         saved(visibility,{'record_type':'SIMULATED_HISTORICAL_SUBMISSIONS_VISIBILITY','as_of_utc':'2025-12-31T23:59:59Z'})
-        stage=flow.stage_proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',
+        stage=self.proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',
             review_file=root/'review.json',seed_b01=self.audit['s0_feasibility']['B01']['run_directory'],
             seed_b10=self.audit['s0_feasibility']['B10']['run_directory'],visibility_file=visibility,
             expires_at_utc=(datetime.now(timezone.utc)+timedelta(days=1)).isoformat(),
@@ -58,21 +98,14 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
         comment={'id':9999041,'html_url':URL,'issue_url':'https://api.github.com/repos/wlvh/SEC_metrics/issues/28',
             'user':{'login':'wlvh'},'body':json.dumps(stage),'created_at':timestamp,'updated_at':timestamp}
         saved(root/'simulated-comment.json',comment)
-        # Exact request bytes must match a saved original full-document request.
-        envelopes={}
-        for item in self.audit['existing_real_provider_B10_runs']:
-            run=Path(item['run_directory'])
-            records=[json.loads(x) for x in (run/'records.jsonl').read_text().splitlines()]
-            attempt=next(x for x in records if x['record_type']=='AI_EXTRACTION_ATTEMPT')
-            expected=(run/attempt['request_body_path']).read_bytes()
-            envelopes[sha256_bytes(content=expected)]=(expected,(run/attempt['raw_response_path']).read_bytes())
+        envelopes=self.envelopes(root)
         requests=[]
         def github(path):
             self.assertEqual('repos/wlvh/SEC_metrics/issues/comments/9999041',path)
             return copy.deepcopy(comment)
         def http(*,fullurl,timeout):
             identity=sha256_bytes(content=fullurl.data)
-            self.assertIn(identity,envelopes,'Request does not match the immutable historical response fixture')
+            self.assertIn(identity,envelopes,'Request differs from historical full input except the approved model field')
             expected,raw=envelopes[identity];self.assertEqual(expected,fullurl.data)
             requests.append(identity)
             response=io.BytesIO(raw);response.headers={'x-request-id':'SIMULATED_HTTP_REPLAY'}
@@ -83,6 +116,10 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
              mock.patch.object(ai_adapter._DEEPSEEK_OPENER,'open',side_effect=http):
             first=flow.run_once(approval_url=URL);saved(root/'first.json',first)
             self.assertEqual('COMPLETE_UPDATE_COMMITTED',first['status'],first)
+            self.assertEqual('EXECUTED',first['execution'])
+            self.assertEqual({'execution':'NOT_EXECUTED','provider_paid_sec_calls':[0,0,0]},first['inspection'])
+            self.assertNotIn('provider_paid_sec_calls',first)
+            self.assertEqual(1,first['counts']['provider'])
             first_view=pub.PublicationView.open(publication_root=Path(stage['publication_root']))
             s1=first_view.publication_id;s0=first_view.manifest['previous_publication_id']
             self.assertEqual(s1,first['current_published']['provenance']['publication_id'])
@@ -119,7 +156,7 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
         saved(root/'review.json',review)
         visibility=root/'visibility.json'
         saved(visibility,{'record_type':'SIMULATED_HISTORICAL_SUBMISSIONS_VISIBILITY','as_of_utc':'2025-12-31T23:59:59Z'})
-        stage=flow.stage_proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',
+        stage=self.proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',
             review_file=root/'review.json',seed_b01=self.audit['s0_feasibility']['B01']['run_directory'],
             seed_b10=self.audit['s0_feasibility']['B10']['run_directory'],visibility_file=visibility,
             expires_at_utc=(datetime.now(timezone.utc)+timedelta(days=1)).isoformat(),
@@ -128,21 +165,14 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
         comment={'id':9999041,'html_url':URL,'issue_url':'https://api.github.com/repos/wlvh/SEC_metrics/issues/28',
             'user':{'login':'wlvh'},'body':json.dumps(stage),'created_at':timestamp,'updated_at':timestamp}
         saved(root/'simulated-comment.json',comment)
-        # Exact request bytes must match a saved original full-document request.
-        envelopes={}
-        for item in self.audit['existing_real_provider_B10_runs']:
-            run=Path(item['run_directory'])
-            records=[json.loads(x) for x in (run/'records.jsonl').read_text().splitlines()]
-            attempt=next(x for x in records if x['record_type']=='AI_EXTRACTION_ATTEMPT')
-            expected=(run/attempt['request_body_path']).read_bytes()
-            envelopes[sha256_bytes(content=expected)]=(expected,(run/attempt['raw_response_path']).read_bytes())
+        envelopes=self.envelopes(root)
         requests=[];bad={'enabled':False}
         def github(path):
             self.assertEqual('repos/wlvh/SEC_metrics/issues/comments/9999041',path)
             return copy.deepcopy(comment)
         def http(*,fullurl,timeout):
             identity=sha256_bytes(content=fullurl.data)
-            self.assertIn(identity,envelopes,'Request does not match the immutable historical response fixture')
+            self.assertIn(identity,envelopes,'Request differs from historical full input except the approved model field')
             expected,raw=envelopes[identity];self.assertEqual(expected,fullurl.data)
             requests.append(identity)
             if bad['enabled']:
@@ -207,7 +237,7 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
         saved(root/'review.json',{'reviewer_kind':'INDEPENDENT_MODEL_SUBTASK','conclusion':'NO_BLOCKING_FINDINGS',
             'reviewed_head':code['exact_head'],'runtime_tree':code['runtime_tree'],
             'evidence_scope':'SIMULATED_TEST_BOUNDARY_NOT_REAL_REVIEW'})
-        stage=flow.stage_proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',review_file=root/'review.json',
+        stage=self.proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',review_file=root/'review.json',
             expires_at_utc=(datetime.now(timezone.utc)+timedelta(days=1)).isoformat(),
             historical_period_start='2023-01-01',historical_period_end='2025-12-31')
         self.assertIsNone(stage['seed']);self.assertIsNone(stage['visibility_file'])

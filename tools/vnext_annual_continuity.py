@@ -30,6 +30,9 @@ def main(argv=None):
         stage.add_argument('--'+name,type=Path)
     for name in ('expires-at-utc','historical-period-start','historical-period-end'):
         stage.add_argument('--'+name,required=True)
+    stage.add_argument('--previous-approval-url',required=True)
+    stage.add_argument('--delegation-source',required=True)
+    stage.add_argument('--update-period-ends',nargs=2,required=True)
     run=commands.add_parser('run-once');run.add_argument('--refresh-submissions',action='store_true')
     close=commands.add_parser('close-stage')
     trigger=commands.add_parser('trigger');trigger.add_argument('--max-invocations',type=int,required=True);trigger.add_argument('--interval-seconds',type=float,default=1)

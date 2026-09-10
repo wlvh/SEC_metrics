@@ -68,6 +68,56 @@ class AnnualModelConfigurationTest(unittest.TestCase):
         self.assertNotIn('provider_paid_sec_calls',report)
 
 
+class AnnualContinuationPermissionTest(unittest.TestCase):
+    @staticmethod
+    def stage():
+        return {'schema_version':2,'maximum_provider_paid_sec_calls':[2,2,0],
+            'normal_provider_calls':2,'conditional_repair_calls':0,
+            'update_period_ends':['2024-12-31','2025-12-31'],
+            'previous_stage':{'counts':{'provider':1,'paid':1}},
+            'cumulative_provider_paid_sec_limit':[3,3,0]}
+
+    def test_new_permission_cannot_restore_old_limits_or_repair_slot(self):
+        stage=self.stage()
+        self.assertEqual({'normal_provider':2,'conditional_provider':0,'provider':2,'paid':2,'sec':0,'retry':0},
+                         continuity._stage_limits(stage))
+        for key,value in (('maximum_provider_paid_sec_calls',[3,3,6]),
+                          ('maximum_provider_paid_sec_calls',[2,2,False]),
+                          ('conditional_repair_calls',1),('normal_provider_calls',True)):
+            changed={**stage,key:value}
+            with self.assertRaisesRegex(ValueError,'CONTINUATION_LIMITS_CHANGED'):
+                continuity._stage_limits(changed)
+        self.assertEqual(3,continuity._stage_limits({'schema_version':1})['provider'])
+        with self.assertRaisesRegex(ValueError,'EXPLICIT_CONTINUATION_SCOPE_REQUIRED'):
+            continuity.stage_proposal(stage_root=None,data_root=None,budget_root=None,review_file=None,
+                expires_at_utc='',historical_period_start='',historical_period_end='')
+
+    def test_zero_sec_stops_before_client_construction_or_budget_write(self):
+        import sec_http
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();stage={**self.stage(),'stage_root':str(root/'stage'),
+                'data_root':str(root/'data'),'budget_root':str(root/'budget'),'budget_registration':{}}
+            with patch.object(sec_http,'SecHttpClient',side_effect=AssertionError('NO_SEC_CLIENT')):
+                with self.assertRaisesRegex(ValueError,'SEC_BUDGET_EXHAUSTED'):
+                    continuity._fetch_missing(stage,{'url':'https://data.sec.gov/forbidden'})
+            self.assertEqual([],list(root.iterdir()))
+
+    def test_ordered_inputs_and_prior_consumption_limit_new_calls(self):
+        stage=self.stage()
+        def plan(period):return {'selection':{'filing':{'period_end':period}}}
+        for ordinal,period in enumerate(stage['update_period_ends']):
+            counts={'provider_reserved':ordinal,'provider':ordinal,'paid':ordinal}
+            continuity._validate_next_input(stage,plan(period),counts)
+            other=stage['update_period_ends'][1-ordinal]
+            with self.assertRaisesRegex(ValueError,'UPDATE_SEQUENCE_CHANGED'):
+                continuity._validate_next_input(stage,plan(other),counts)
+        with self.assertRaisesRegex(ValueError,'NORMAL_BUDGET_EXHAUSTED'):
+            continuity._validate_next_input(stage,plan('2025-12-31'),{'provider_reserved':2,'provider':2,'paid':2})
+        changed=copy.deepcopy(stage);changed['previous_stage']['counts']['paid']=2
+        with self.assertRaisesRegex(ValueError,'CUMULATIVE_BUDGET_EXCEEDED'):
+            continuity._validate_next_input(changed,plan('2025-12-31'),{'provider_reserved':1,'provider':1,'paid':1})
+
+
 class AnnualContinuityBoundaryTest(unittest.TestCase):
     def test_cli_result_preserves_decimal_identity_and_never_leaves_partial_json(self):
         from decimal import Decimal
