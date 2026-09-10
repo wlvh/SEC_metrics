@@ -1,0 +1,60 @@
+{
+  "record_type": "R4_OFFLINE_FIXTURE_ACQUISITION_RECEIPT",
+  "schema_version": 1,
+  "status": "PASSED",
+  "owner_comment_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524085182",
+  "policy_body_sha256": "ab5babbe06719e3aafa9d4ce9e56b7c8d65fdd0216d1df8af2ae11f53959c5d3",
+  "before_ledger_row_count": 981,
+  "before_ledger_sha256": "fe49d7f8aa4fbb0618924f5e212e713604296be1c4e443476fe38cda6f57722d",
+  "after_ledger_row_count": 983,
+  "after_ledger_sha256": "f60c48c64b1552494087a12e7f7e9b54e93aed1b4c43f963dea10ce9bd041eec",
+  "provider_paid_sec": [
+    0,
+    0,
+    2
+  ],
+  "remaining_new_filing_slots": 0,
+  "sources": [
+    {
+      "source_id": "bank_of_america_fy2025_10k",
+      "company_id": "bank_of_america_corp",
+      "cik": "70858",
+      "accession": "0000070858-26-000157",
+      "document_name": "bac-20251231.htm",
+      "form": "10-K",
+      "fiscal_year": 2025,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/70858/000007085826000157/bac-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm",
+      "source_sha256": "c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134",
+      "source_size": 12819060,
+      "headers_repo_relative_path": "evidence/request_attempts/c8/c8725c7963d19cd6a2f3c1d0034b2a1068b4490124be6b6600a4db23be5ed134/bac-20251231.htm.bca18a6653fb8835e9509656d4861f80628d1282d60fa1d136cac352d4261f71.headers.json",
+      "headers_sha256": "bca18a6653fb8835e9509656d4861f80628d1282d60fa1d136cac352d4261f71",
+      "request_attempt_id": "request:attempt:e531f356a6a06facbfbf9d3dc506144e80c80d3a0e46909772f80d420727eed6",
+      "status_code": 200,
+      "retry_attempt": 0,
+      "timestamp_utc": "2026-09-03T10:35:07.327657+00:00"
+    },
+    {
+      "source_id": "citigroup_fy2025_10k",
+      "company_id": "citigroup",
+      "cik": "831001",
+      "accession": "0000831001-26-000011",
+      "document_name": "c-20251231.htm",
+      "form": "10-K",
+      "fiscal_year": 2025,
+      "source_url": "https://www.sec.gov/Archives/edgar/data/831001/000083100126000011/c-20251231.htm",
+      "source_repo_relative_path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm",
+      "source_sha256": "12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe",
+      "source_size": 16150764,
+      "headers_repo_relative_path": "evidence/request_attempts/12/12f5818d577a8b8022e25851849e8d6d453f05ab4f89d906f185593547fb67fe/c-20251231.htm.31e34cd4cce79f404b5e3978a6636ead4440094937ae07722f10638e957f7878.headers.json",
+      "headers_sha256": "31e34cd4cce79f404b5e3978a6636ead4440094937ae07722f10638e957f7878",
+      "request_attempt_id": "request:attempt:2ca17e95050d85613ce264edcd8d1c05bd0aa8e39f00adcfa3d786e925defa95",
+      "status_code": 200,
+      "retry_attempt": 0,
+      "timestamp_utc": "2026-09-03T10:35:07.771467+00:00"
+    }
+  ],
+  "qualification_credit": "NONE_OFFLINE_SOURCE_ONLY",
+  "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/acquire_r4_fixture_filings.py --execute",
+  "receipt_id": "sha256:8dce24dee9bc9f9d0b5f73032352e38b5d24706d05aa32ff70c54c4c551832fa"
+}

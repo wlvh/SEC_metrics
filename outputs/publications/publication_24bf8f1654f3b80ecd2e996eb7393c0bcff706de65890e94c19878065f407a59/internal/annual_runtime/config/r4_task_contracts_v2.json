@@ -1,0 +1,15 @@
+{
+  "record_type": "R4_SUCCESSOR_TASK_CATALOG",
+  "schema_version": 2,
+  "ratchet_id": "R4",
+  "policy_evidence_path": "docs/evidence/issue_28_prb_policy_revision.json",
+  "policy_body_sha256": "ab5babbe06719e3aafa9d4ce9e56b7c8d65fdd0216d1df8af2ae11f53959c5d3",
+  "tasks": [
+    {"task_contract_id": "r4_liquidity_coverage_ratio_table_v2", "metric_id": "A03", "legacy_task_contract_id": "financial_liquidity_coverage_ratio_table_v1", "metric_spec_path": "catalog/r4_v2/A03_liquidity_coverage_ratio.md"},
+    {"task_contract_id": "r4_net_interest_margin_table_v2", "metric_id": "A04", "legacy_task_contract_id": "financial_net_interest_margin_table_v1", "metric_spec_path": "catalog/r4_v2/A04_net_interest_margin.md"},
+    {"task_contract_id": "r4_nonperforming_loan_ratio_table_v2", "metric_id": "A09", "legacy_task_contract_id": "financial_nonperforming_loan_ratio_table_v1", "metric_spec_path": "catalog/r4_v2/A09_nonperforming_loan_ratio.md"},
+    {"task_contract_id": "r4_assets_under_management_table_v2", "metric_id": "A11", "legacy_task_contract_id": "financial_assets_under_management_table_v1", "metric_spec_path": "catalog/r4_v2/A11_assets_under_management.md"},
+    {"task_contract_id": "r4_value_at_risk_table_v2", "metric_id": "A12", "legacy_task_contract_id": "financial_value_at_risk_table_v1", "metric_spec_path": "catalog/r4_v2/A12_trading_exposure.md"},
+    {"task_contract_id": "r4_international_net_revenue_table_v2", "metric_id": "A13", "legacy_task_contract_id": "financial_geographic_exposure_table_v1", "metric_spec_path": "catalog/r4_v2/A13_geographic_exposure.md"}
+  ]
+}

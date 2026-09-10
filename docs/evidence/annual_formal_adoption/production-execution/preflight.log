@@ -1,0 +1,33 @@
+fatal: could not open '/dev/null' for reading and writing: Operation not permitted
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/production-execution/20260910T021408Z/preflight.py", line 21, in <module>
+    root,manifest,req=auth.validate_plan(plan)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication_authority.py", line 113, in validate_plan
+    manifest, meta, adoption = _bundle(directory)
+                               ~~~~~~~^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication_authority.py", line 54, in _bundle
+    manifest = pub.verify_publication_bundle(bundle_dir=directory)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4780, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 347, in verify_annual_bundle
+    and meta['runtime_files'] == _implementation_files(meta['implementation_head'], chosen['policy_id'])
+                                 ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 149, in _implementation_files
+    need(git('merge-base', head, 'HEAD').decode().strip() == head, 'ANNUAL_IMPLEMENTATION_NOT_ANCESTOR')
+         ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_adoption.py", line 45, in git
+    return subprocess.check_output(['git', *args], cwd=ROOT,
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+        env=sanitized_git_environment())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 473, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/subprocess.py", line 578, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['git', 'merge-base', '8ca50dd7342e5132e888abe58620c38a8cd994be', 'HEAD']' returned non-zero exit status 128.

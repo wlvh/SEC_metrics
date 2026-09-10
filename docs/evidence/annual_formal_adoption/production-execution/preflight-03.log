@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/production-execution/20260910T021408Z/preflight.py", line 41, in <module>
+    save('root-mirror-paths.json',mirrors)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/production-execution/20260910T021408Z/preflight.py", line 15, in save
+    if p.exists():assert p.read_text()==data, 'Existing evidence differs: '+n
+                         ^^^^^^^^^^^^^^^^^^^
+AssertionError: Existing evidence differs: root-mirror-paths.json

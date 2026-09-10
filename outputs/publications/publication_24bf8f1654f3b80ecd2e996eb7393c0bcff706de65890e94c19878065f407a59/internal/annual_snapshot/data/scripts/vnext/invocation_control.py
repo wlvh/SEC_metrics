@@ -1,0 +1,3109 @@
+"""Control exact model invocations with single-flight immutable audit state.
+
+The controller separates release-input, AI-invocation, and execution identity;
+reuses successful exact responses; reserves provider egress with ``O_EXCL``;
+and writes immutable egress, attempt, execution, and response receipts. It has
+no repository-enforced monetary caps or monetary preflight blocker.
+"""
+
+from __future__ import annotations
+
+import os
+from contextlib import contextmanager
+from contextvars import ContextVar
+from decimal import Decimal
+from pathlib import Path
+from typing import Callable, Dict, List, Mapping, Optional, Sequence
+
+from .canonical import CanonicalError, canonical_json_bytes, content_hash
+from .canonical import decimal_text, parse_decimal, parse_utc_timestamp
+from .canonical import sha256_bytes, strict_json_file
+from .requirements import load_requirement_snapshot
+
+
+PLAN_FIELDS = {
+    "ai_invocation_plan_id",
+    "api",
+    "billing_policy",
+    "invocation_policy",
+    "model",
+    "observability",
+    "output_schema_hash",
+    "provider",
+    "provider_request_body_sha256",
+    "provider_request_identity",
+    "record_type",
+    "release_input_plan_id",
+    "resource_limits",
+    "schema_version",
+    "selected_representation_hash",
+    "semantic_invocation_id",
+    "serialization_version",
+    "source_identity_hash",
+    "task_contract_hash",
+}
+SUCCESSOR_PLAN_FIELDS = PLAN_FIELDS | {
+    "artifact_requirement_generation", "requirement_id",
+    "requirement_closure_hash", "requirement_hashes",
+}
+SUCCESSOR_INVOCATION_POLICY_FIELDS = {
+    "provider_transport_decision_hash", "transport_retry_decision_hash",
+    "live_call_bound_decision_hash", "automatic_retry_count",
+    "response_reuse_authorized", "requirement_closure_hash",
+}
+_SUCCESSOR_AUTHORITY_FACTORY = object()
+_SUCCESSOR_AUTHORITY = ContextVar("successor_invocation_authority", default=None)
+RESOURCE_LIMIT_FIELDS = {"maximum_context_tokens", "maximum_payload_bytes"}
+OBSERVABILITY_FIELDS = {
+    "context_authority_hash",
+    "estimator_id",
+    "estimator_method",
+    "estimator_version",
+    "estimated_context_tokens",
+    "estimated_cost",
+    "pricing_snapshot_hash",
+}
+ACCEPTANCE_DRAFT_FIELDS = {
+    "candidate_hash",
+    "candidate_record",
+    "derived_asset_id",
+    "evidence_candidate_hash",
+    "evidence_check_id",
+    "evidence_record",
+    "evidence_status",
+    "reader_input_manifest_id",
+    "source_reference_ids",
+    "spec_semantic_hash",
+    "task_contract_hash",
+    "validator_semantic_hash",
+    "validator_semantic_version",
+}
+ACCEPTANCE_RECEIPT_FIELDS = ACCEPTANCE_DRAFT_FIELDS | {
+    "acceptance_receipt_id",
+    "ai_invocation_plan_id",
+    "provider_request_identity",
+    "record_type",
+    "response_body_sha256",
+    "schema_version",
+}
+TRANSPORT_RESULT_FIELDS = {
+    "error_class",
+    "provider_request_id",
+    "response_body",
+    "status_code",
+    "usage",
+}
+USAGE_FIELDS = {
+    "actual_cost",
+    "cache_hit_input_tokens",
+    "cache_miss_input_tokens",
+    "input_tokens",
+    "output_tokens",
+}
+TERMINAL_HTTP_STATUS = {400, 401, 402, 422}
+TERMINAL_ERROR_CLASSES = {
+    "SCHEMA_VIOLATION",
+    "EVIDENCE_FAILURE",
+    "PAYLOAD_LIMIT",
+    "CONTEXT_LIMIT",
+    "RESOURCE_LIMIT",
+}
+RETRYABLE_ERROR_CLASSES = {"HTTP_429", "TIMEOUT", "RECOVERABLE_5XX"}
+FORBIDDEN_MONETARY_FIELDS = {
+    "owner_absolute_total_cap",
+    "owner_absolute_per_request_cap",
+    "remaining_owner_cap",
+    "maximum_authorized_cost",
+    "per_call_monetary_cap",
+    "batch_monetary_cap",
+    "monetary_budget_preflight",
+}
+COUNTER_FIELDS = {
+    "mock_transport_invocation_count",
+    "paid_model_provider_call_count",
+    "real_model_provider_egress_count",
+}
+INVOCATION_POLICY_FIELDS = {
+    "d35_record_hash",
+    "d36_record_hash",
+    "requirement_closure_hash",
+}
+BILLING_POLICY_FIELDS = {
+    "billing_class",
+    "paid_call_observation_source",
+}
+SUCCESS_RESPONSE_FIELDS = {
+    "acceptance_receipt_id",
+    "ai_invocation_plan_id",
+    "api",
+    "attempt_receipt_id",
+    "model",
+    "billing_class",
+    "provider",
+    "provider_request_body_sha256",
+    "provider_request_id",
+    "provider_request_identity",
+    "paid_call_observation_source",
+    "paid_model_provider_call_observed",
+    "record_type",
+    "response_body_path",
+    "response_body_sha256",
+    "response_body_size",
+    "schema_version",
+    "success_response_receipt_id",
+    "usage",
+}
+INVOCATION_STATE_NAMESPACES = (
+    "abandoned",
+    "acceptances",
+    "attempts",
+    "egress",
+    "executions",
+    "plans",
+    "requests",
+    "reservation_archive",
+    "reservations",
+    "responses",
+)
+
+# This hook is deliberately module-private and only patched by focused crash
+# recovery tests.  It makes the two durable gaps around execution sealing
+# reproducible without allowing an operator to select a partial-production
+# state.
+_INVOCATION_TERMINAL_RECOVERY_HOOK: Optional[Callable[[str], None]] = None
+
+
+class InvocationControlError(ValueError):
+    """Report malformed identities, unsafe state, or forbidden policy."""
+
+
+class UnknownRemoteOutcomeError(RuntimeError):
+    """Signal that egress occurred but no terminal provider outcome exists."""
+
+
+class SchemaViolationError(ValueError):
+    """Signal a terminal structured-response schema violation."""
+
+
+class EvidenceFailureError(ValueError):
+    """Signal a terminal post-response evidence validation failure."""
+
+
+_REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+
+
+class SuccessorInvocationAuthority:
+    """One process-local, byte-pinned policy; not permission to open a socket."""
+
+    __slots__ = ("_factory", "root", "_identity", "_policy", "_transport", "_files")
+
+    def __init__(self, *, factory, root, identity, policy, transport, files):
+        if factory is not _SUCCESSOR_AUTHORITY_FACTORY:
+            raise InvocationControlError("Successor invocation authority requires its factory")
+        self._factory = factory
+        self.root = root
+        self._identity = canonical_json_bytes(value=identity)
+        self._policy = canonical_json_bytes(value=policy)
+        self._transport = canonical_json_bytes(value=transport)
+        self._files = canonical_json_bytes(value=files)
+
+    def _check(self):
+        from .canonical import strict_json_loads
+        from .sources import resolve_repository_file
+
+        if self._factory is not _SUCCESSOR_AUTHORITY_FACTORY:
+            raise InvocationControlError("Successor invocation authority factory differs")
+        for relative, binding in strict_json_loads(text=self._files.decode("utf-8")).items():
+            data = resolve_repository_file(repo_root=self.root,
+                repo_relative_path=relative).read_bytes()
+            if {"sha256": sha256_bytes(content=data), "size": len(data)} != binding:
+                raise InvocationControlError("Successor invocation authority drift: " + relative)
+        return tuple(strict_json_loads(text=data.decode("utf-8")) for data in
+                     (self._identity, self._policy, self._transport))
+
+
+def _prepare_successor_invocation_authority_from_requirement(
+    *, repo_root: Path, requirement: Mapping[str, object],
+) -> SuccessorInvocationAuthority:
+    """Repository bridge for an already verified session; never an egress grant."""
+    from .requirement_profile import EXPLICIT_ARTIFACT_GENERATION
+    from .requirement_profile import requirement_authority_paths, validate_execution_authority
+    from .sources import resolve_repository_file
+
+    from .r4_label_policy import CURRENT_R4_REQUIREMENT, label_policy
+    if requirement.get("requirement_id") not in {"issue_28_v2", CURRENT_R4_REQUIREMENT}:
+        raise InvocationControlError("Scoped R4 invocation requires a registered R4 revision")
+    label_policy(requirement)
+    root = repo_root.resolve(strict=True)
+    validate_execution_authority(repo_root=root, requirement=requirement)
+    decisions = requirement["effective_decisions"]
+    transport = decisions.get("S-PROVIDER-TRANSPORT", {})
+    retries = decisions.get("S-TRANSPORT-RETRY", {})
+    bounds = [r for r in decisions.values() if r.get("status") == "APPROVED"
+              and r.get("choice", {}).get("kind") == "LIVE_CALL_BOUND"
+              and r["choice"].get("ratchet_id") == "R4"]
+    if (transport.get("status") != "APPROVED" or retries.get("status") != "APPROVED"
+            or len(bounds) != 1):
+        raise InvocationControlError("Successor transport/retry/call policy is absent")
+    policy = retries["choice"]
+    if (transport["choice"].get("kind") != "PROVIDER_TRANSPORT_POLICY"
+            or transport["choice"].get("retry_count") != 0
+            or policy.get("kind") != "TRANSPORT_RETRY_POLICY"
+            or type(policy.get("automatic_retry_count")) is not int
+            or policy["automatic_retry_count"] != 0
+            or policy.get("unknown_remote_outcome_retry_allowed") is not False
+            or policy.get("http_402_automatic_retry_count") != 0
+            or policy.get("http_402_stops_execution") is not True
+            or policy.get("http_402_stops_batch") is not True
+            or policy.get("actual_usage_required") is not True
+            or policy.get("context_ceiling_tokens") != 200000
+            or bounds[0]["choice"].get("response_reuse") != "NOT_AUTHORIZED"):
+        raise InvocationControlError("Successor invocation safety policy differs")
+    identity = {"artifact_requirement_generation": EXPLICIT_ARTIFACT_GENERATION,
+                **{k: requirement[k] for k in ("requirement_id", "requirement_closure_hash",
+                                               )}, "requirement_hashes": requirement["hashes"]}
+    bound_policy = {"provider_transport_decision_hash": content_hash(value=transport),
+        "transport_retry_decision_hash": content_hash(value=retries),
+        "live_call_bound_decision_hash": content_hash(value=bounds[0]),
+        "automatic_retry_count": 0, "response_reuse_authorized": False,
+        "requirement_closure_hash": requirement["requirement_closure_hash"]}
+    files = {}
+    for relative in requirement_authority_paths(repo_root=root, requirement=requirement):
+        data = resolve_repository_file(repo_root=root, repo_relative_path=relative).read_bytes()
+        files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
+    return SuccessorInvocationAuthority(factory=_SUCCESSOR_AUTHORITY_FACTORY, root=root,
+        identity=identity, policy=bound_policy, transport=transport["choice"], files=files)
+
+
+def prepare_annual_candidate_invocation_authority(*, requirement, repo_root):
+    """Use the same successor controller policy shape for the ordinary kind."""
+    from .requirement_profile_v5 import REQUIREMENT_ID, DECISION_ID, candidate_choice
+    if requirement["requirement_id"] == "issue_28_v5":
+        from .requirement_profile_v6 import REQUIREMENT_ID, DECISION_ID, candidate_choice
+    if requirement["requirement_id"] == "issue_28_v6":
+        from .requirement_profile_v7 import REQUIREMENT_ID, DECISION_ID, candidate_choice
+    from .requirement_profile import validate_execution_authority, requirement_authority_paths
+    from .sources import resolve_repository_file
+    if requirement["requirement_id"] != REQUIREMENT_ID or repo_root.resolve() != _REPOSITORY_ROOT:
+        raise InvocationControlError("Ordinary candidate Requirement differs")
+    validate_execution_authority(repo_root=repo_root, requirement=requirement)
+    decisions = requirement["effective_decisions"]
+    choice = candidate_choice(choice=decisions[DECISION_ID]["choice"])
+    identity = {"artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+        "requirement_id": REQUIREMENT_ID, "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "requirement_hashes": requirement["hashes"]}
+    policy = {"provider_transport_decision_hash": content_hash(value=decisions["S-PROVIDER-TRANSPORT"]),
+        "transport_retry_decision_hash": content_hash(value=decisions["S-TRANSPORT-RETRY"]),
+        "live_call_bound_decision_hash": content_hash(value=decisions[DECISION_ID]),
+        "automatic_retry_count": choice["automatic_retry_count"], "response_reuse_authorized": False,
+        "requirement_closure_hash": requirement["requirement_closure_hash"]}
+    files = {}
+    for relative in requirement_authority_paths(repo_root=repo_root, requirement=requirement):
+        data = resolve_repository_file(repo_root=repo_root, repo_relative_path=relative).read_bytes()
+        files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
+    from .provider_runtime import load_provider_runtime_authority
+    transport = dict(decisions["S-PROVIDER-TRANSPORT"]["choice"])
+    runtime = load_provider_runtime_authority(repo_root=repo_root,
+        **{key:transport[key] for key in ("provider", "model", "api")})
+    # This ordinary policy keeps the model's pre-egress hard limit. The new
+    # response's actual 200000-input-token acceptance gate lives in the adapter.
+    transport["pre_execution_context_tokens_max"] = runtime["maximum_context_tokens"]
+    return SuccessorInvocationAuthority(factory=_SUCCESSOR_AUTHORITY_FACTORY, root=repo_root,
+        identity=identity, policy=policy, transport=transport, files=files)
+
+
+def prepare_successor_invocation_authority(
+    *, repo_root: Path, requirement_id: str = "issue_28_v2",
+) -> SuccessorInvocationAuthority:
+    """Validate one repository Requirement once for an invocation session."""
+    requirement = load_requirement_snapshot(snapshot_dir=repo_root / "requirements" / requirement_id)
+    return _prepare_successor_invocation_authority_from_requirement(
+        repo_root=repo_root, requirement=requirement)
+
+
+@contextmanager
+def _successor_plan_context(*, repo_root: Path, requirement_id: str = None,
+                            authority=None):
+    context = authority
+    if requirement_id is None:
+        if context is not None and type(context) is not SuccessorInvocationAuthority:
+            raise InvocationControlError("Successor invocation context differs")
+        requirement_id = "issue_28_v2" if context is None else context._check()[0]["requirement_id"]
+    if context is None:
+        context = prepare_successor_invocation_authority(
+            repo_root=repo_root, requirement_id=requirement_id)
+    if (type(context) is not SuccessorInvocationAuthority
+            or context.root != repo_root.resolve(strict=True)
+            or context._check()[0]["requirement_id"] != requirement_id):
+        raise InvocationControlError("Successor invocation context differs")
+    token = _SUCCESSOR_AUTHORITY.set(context)
+    try:
+        yield context
+    finally:
+        _SUCCESSOR_AUTHORITY.reset(token)
+
+
+def build_successor_ai_invocation_plan(*, repo_root: Path,
+                                     requirement_id: str = "issue_28_v2",
+                                     authority=None, **fields) -> Dict[str, object]:
+    """Build the explicit successor subtype from repository policy only."""
+    if {"requirement_identity", "invocation_policy"}.intersection(fields):
+        raise InvocationControlError("Caller-selected successor policy is forbidden")
+    with _successor_plan_context(repo_root=repo_root, requirement_id=requirement_id,
+                                 authority=authority) as context:
+        identity, policy, _ = context._check()
+        return _build_ai_invocation_plan(**fields, requirement_identity=identity,
+                                         invocation_policy=policy)
+
+
+def validate_successor_ai_invocation_plan(*, plan, repo_root: Path, authority=None):
+    """Validate an explicit successor in its portable repository context."""
+    if plan.get("record_type") != "SUCCESSOR_AI_INVOCATION_PLAN":
+        raise InvocationControlError("A legacy/offline plan is not a successor invocation")
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        return validate_ai_invocation_plan(plan=plan)
+
+
+def execute_successor_invocation(*, repo_root: Path, authority=None, **fields):
+    """Use the existing controller with successor retry/reuse policy intact."""
+    if fields.get("plan", {}).get("record_type") != "SUCCESSOR_AI_INVOCATION_PLAN":
+        raise InvocationControlError("Successor execution requires its explicit plan")
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        return execute_invocation(**fields)
+
+
+def load_successor_successful_response(*, repo_root: Path, authority=None, **fields):
+    """Read this invocation's terminal bytes; it grants no response reuse."""
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        return load_successful_response(**fields)
+
+
+def capture_successor_execution_bundle(*, repo_root: Path, workspace_dir: Path,
+                                      plan, execution_receipt, authority=None):
+    """Capture native durable terminals for a self-contained, socket-free Run."""
+    with _successor_plan_context(repo_root=repo_root, authority=authority):
+        validated = validate_successor_ai_invocation_plan(plan=plan, repo_root=repo_root,
+                                                          authority=_SUCCESSOR_AUTHORITY.get())
+        root = workspace_dir / "invocation_control"
+        execution_id = execution_receipt["execution_id"]
+        receipt = _load_execution_receipt(root=root,
+            path=_execution_path(root=root, execution_id=execution_id), execution_id=execution_id)
+        if receipt != execution_receipt:
+            raise InvocationControlError("Captured successor execution differs from disk")
+        markers = _egress_markers_for_execution(root=root, execution_id=execution_id)
+        archive = _read_json_object(path=root / "reservation_archive"
+            / _identity_name(identity=validated["provider_request_identity"])
+            / (_identity_name(identity=execution_id) + ".json"), label="reservation archive")
+        if _reservation_path(root=root, request_identity=validated["provider_request_identity"]).exists():
+            raise InvocationControlError("Successor terminal still has an active reservation")
+        success = _load_success_response(root=root, plan=validated)
+        if success is not None:
+            success = {key: success[key] for key in SUCCESS_RESPONSE_FIELDS}
+        journal_path = workspace_dir / "scoped_wire" / _identity_name(identity=execution_id) / "journal.json"
+        journal = _read_json_object(path=journal_path, label="scoped raw wire journal") if journal_path.exists() else None
+        body = {"record_type": "R4_INVOCATION_TERMINAL_BUNDLE", "schema_version": 1,
+                "execution_receipt": receipt, "egress_markers": markers,
+                "reservation_archive": archive, "success_response_receipt": success,
+                "wire_journal": journal}
+        return {**body, "terminal_bundle_id": content_hash(value=body)}
+
+
+def validate_successor_execution_receipt(*, receipt, plan, authorization_binding,
+                                        response_body, acceptance_receipt, terminal_bundle,
+                                        repo_root: Path, authority=None):
+    """Replay native one-shot terminal identities, usage, markers and ownership.
+
+    This grants no execution permission and needs neither the original absolute
+    invocation workspace nor the reservation token. Candidate/Evidence replay
+    remains the existing source-bound checker, composed by the scoped adapter.
+    """
+    validated = validate_successor_ai_invocation_plan(plan=plan, repo_root=repo_root, authority=authority)
+    def self_id(value, field):
+        if value.get(field) != content_hash(value={k: v for k, v in value.items() if k != field}):
+            raise InvocationControlError("Portable successor content identity differs: " + field)
+    bundle = _object(value=terminal_bundle, label="successor terminal bundle")
+    _exact_fields(value=bundle, expected={"record_type", "schema_version", "terminal_bundle_id",
+        "execution_receipt", "egress_markers", "reservation_archive", "success_response_receipt", "wire_journal"},
+        label="successor terminal bundle")
+    self_id(bundle, "terminal_bundle_id")
+    if (bundle["record_type"] != "R4_INVOCATION_TERMINAL_BUNDLE"
+            or type(bundle["schema_version"]) is not int or bundle["schema_version"] != 1
+            or bundle["execution_receipt"] != receipt):
+        raise InvocationControlError("Portable successor terminal generation differs")
+    expected_execution = content_hash(value={"ai_invocation_plan_id": validated["ai_invocation_plan_id"],
+        "owner_token_hash": _sha256_identity(value=authorization_binding.get("owner_token_hash"), label="owner token hash"),
+        "authorized_at_utc": _utc(value=authorization_binding.get("authorized_at_utc"), label="owner authorization time")})
+    status = receipt.get("status")
+    fields = {"schema_version", "record_type", "execution_id", "ai_invocation_plan_id",
+        "provider_request_identity", "status", "batch_terminal", "attempts", "success_response_receipt_id",
+        "counters", "authorized_at_utc", "finished_at_utc", "execution_receipt_id"}
+    if status == "UNKNOWN_REMOTE_OUTCOME":
+        fields.add("unknown_egress_marker_id")
+    _exact_fields(value=receipt, expected=fields, label="successor execution receipt")
+    self_id(receipt, "execution_receipt_id")
+    if (type(receipt["schema_version"]) is not int or receipt["schema_version"] != 1
+            or receipt["record_type"] != "AI_EXECUTION_RECEIPT" or receipt["execution_id"] != expected_execution
+            or receipt["ai_invocation_plan_id"] != validated["ai_invocation_plan_id"]
+            or receipt["provider_request_identity"] != validated["provider_request_identity"]
+            or receipt["authorized_at_utc"] != authorization_binding["authorized_at_utc"]
+            or status not in {"SUCCEEDED", "FAILED_TERMINAL", "FAILED_RETRYABLE_FINAL", "UNKNOWN_REMOTE_OUTCOME"}
+            or receipt["batch_terminal"] is not (status != "SUCCEEDED")):
+        raise InvocationControlError("Portable successor execution ownership/status differs")
+    _utc(value=receipt["finished_at_utc"], label="execution finish time")
+    markers = bundle["egress_markers"]
+    if type(markers) is not list or len(markers) != 1:
+        raise InvocationControlError("Successor execution must have exactly one egress marker")
+    marker = markers[0]
+    _exact_fields(value=marker, expected={"schema_version", "record_type", "execution_id",
+        "ai_invocation_plan_id", "provider_request_identity", "attempt_ordinal", "egress_started_at_utc",
+        "transport_kind", "billing_class", "paid_call_observation_source",
+        "paid_model_provider_call_observed", "egress_marker_id"}, label="successor marker")
+    self_id(marker, "egress_marker_id")
+    expected_kind = "REAL_MODEL_PROVIDER" if authorization_binding.get("execution_mode") == "LIVE" else "MOCK"
+    if (authorization_binding.get("execution_mode") not in {"LIVE", "RECORDED_TEST"}
+            or marker["record_type"] != "PROVIDER_EGRESS_MARKER" or marker["schema_version"] != 1
+            or marker["execution_id"] != expected_execution or type(marker["attempt_ordinal"]) is not int
+            or marker["attempt_ordinal"] != 1 or marker["transport_kind"] != expected_kind
+            or marker["billing_class"] != validated["billing_policy"]["billing_class"]
+            or marker["paid_call_observation_source"] != validated["billing_policy"]["paid_call_observation_source"]
+            or marker["paid_model_provider_call_observed"] is not (expected_kind == "REAL_MODEL_PROVIDER")):
+        raise InvocationControlError("Successor marker mode/ownership/billing differs")
+    _utc(value=marker["egress_started_at_utc"], label="egress time")
+    journal = bundle["wire_journal"]
+    if journal is not None:
+        self_id(journal, "wire_journal_id")
+        if (journal.get("record_type") != "R4_SCOPED_RAW_WIRE_JOURNAL"
+                or journal.get("execution_id") != expected_execution
+                or journal.get("ai_invocation_plan_id") != validated["ai_invocation_plan_id"]
+                or journal.get("provider_request_identity") != validated["provider_request_identity"]
+                or journal.get("provider_request_body_sha256") != validated["provider_request_body_sha256"]
+                or journal.get("egress_marker_id") != marker["egress_marker_id"]
+                or journal.get("egress_started_at_utc") != marker["egress_started_at_utc"]):
+            raise InvocationControlError("Scoped raw-wire journal differs from its native invocation marker")
+    expected_counters = _counters_from_egress_markers(markers=markers, plan=validated)
+    _add_counters(target=_empty_counters(), source=receipt["counters"])
+    if receipt["counters"] != expected_counters:
+        raise InvocationControlError("Successor counters differ from native markers")
+    archive = bundle["reservation_archive"]
+    _exact_fields(value=archive, expected={"schema_version", "record_type", "execution_id",
+        "provider_request_identity", "reservation_hash", "terminal_status", "reservation_archive_id"},
+        label="successor reservation archive")
+    self_id(archive, "reservation_archive_id")
+    _sha256_identity(value=archive["reservation_hash"], label="archived reservation")
+    if (archive["record_type"] != "SINGLE_FLIGHT_RESERVATION_ARCHIVE" or archive["schema_version"] != 1
+            or archive["execution_id"] != expected_execution
+            or archive["provider_request_identity"] != validated["provider_request_identity"]
+            or archive["terminal_status"] != status):
+        raise InvocationControlError("Successor reservation terminal differs")
+    attempts = receipt["attempts"]
+    if type(attempts) is not list or len(attempts) != (0 if status == "UNKNOWN_REMOTE_OUTCOME" else 1):
+        raise InvocationControlError("Successor attempt count implies a retry or incomplete terminal")
+    if status == "UNKNOWN_REMOTE_OUTCOME":
+        if receipt["unknown_egress_marker_id"] != marker["egress_marker_id"]:
+            raise InvocationControlError("Successor UNKNOWN marker differs")
+    else:
+        attempt = attempts[0]
+        _exact_fields(value=attempt, expected={"schema_version", "record_type", "execution_id",
+            "ai_invocation_plan_id", "provider_request_identity", "attempt_ordinal", "status", "error_class",
+            "status_code", "egress_marker_id", "response_body_sha256", "provider_request_id", "billing_class",
+            "paid_call_observation_source", "paid_model_provider_call_observed", "transport_kind", "usage",
+            "finished_at_utc", "attempt_receipt_id"}, label="successor attempt receipt")
+        self_id(attempt, "attempt_receipt_id")
+        if (attempt["record_type"] != "AI_INVOCATION_ATTEMPT_RECEIPT" or attempt["schema_version"] != 1
+                or attempt["status"] != status or attempt["execution_id"] != expected_execution
+                or attempt["ai_invocation_plan_id"] != validated["ai_invocation_plan_id"]
+                or attempt["provider_request_identity"] != validated["provider_request_identity"]
+                or any(attempt[key] != marker[key] for key in ("attempt_ordinal", "egress_marker_id", "transport_kind",
+                    "billing_class", "paid_call_observation_source", "paid_model_provider_call_observed"))
+                or attempt["response_body_sha256"] != sha256_bytes(content=response_body)):
+            raise InvocationControlError("Successor attempt identity/bytes differs")
+        usage = _usage(value=attempt["usage"])
+        _utc(value=attempt["finished_at_utc"], label="attempt finish time")
+        if status == "SUCCEEDED" and (attempt["status_code"] != 200 or attempt["error_class"] != ""
+                or usage["input_tokens"] > validated["resource_limits"]["maximum_context_tokens"]):
+            raise InvocationControlError("Successor success HTTP/usage context gate differs")
+    success = bundle["success_response_receipt"]
+    if status != "SUCCEEDED":
+        if success is not None or acceptance_receipt is not None or receipt["success_response_receipt_id"] is not None:
+            raise InvocationControlError("Failed successor execution cannot contain reusable success")
+    else:
+        _exact_fields(value=success, expected=SUCCESS_RESPONSE_FIELDS, label="successor success receipt")
+        self_id(success, "success_response_receipt_id")
+        accepted = _validate_acceptance_receipt(value=acceptance_receipt, plan=validated, response_body=response_body)
+        if (success["record_type"] != "SUCCESS_RESPONSE_RECEIPT" or success["schema_version"] != 1
+                or success["success_response_receipt_id"] != receipt["success_response_receipt_id"]
+                or success["acceptance_receipt_id"] != accepted["acceptance_receipt_id"]
+                or success["attempt_receipt_id"] != attempts[0]["attempt_receipt_id"]
+                or success["response_body_sha256"] != sha256_bytes(content=response_body)
+                or success["response_body_size"] != len(response_body)
+                or success["usage"] != attempts[0]["usage"]
+                or any(success[key] != validated[key] for key in ("ai_invocation_plan_id", "provider_request_identity",
+                    "provider_request_body_sha256", "provider", "model", "api"))):
+            raise InvocationControlError("Successor success/acceptance terminal binding differs")
+    return dict(receipt)
+
+
+def effective_invocation_policy() -> Dict[str, object]:
+    """Load and validate effective Issue #15 D-35/D-36 authority.
+
+    Returns:
+        Requirement closure and exact effective Decision record hashes.
+    """
+    requirement = load_requirement_snapshot(
+        snapshot_dir=_REPOSITORY_ROOT / "requirements" / "issue_15_v1"
+    )
+    d35 = requirement["effective_decisions"]["D-35"]
+    d36 = requirement["effective_decisions"]["D-36"]
+    d35_choice = d35["choice"]
+    d36_choice = d36["choice"]
+    if (
+        d35_choice["maximum_retries"] != 1
+        or d35_choice["http_402_automatic_retries"] != 0
+        or not d35_choice["http_402_stops_execution"]
+        or not d35_choice["http_402_stops_batch"]
+        or d36_choice["repository_monetary_budget_enforcement"] != "DISABLED"
+        or d36_choice["monetary_budget_preflight"]
+        or d36_choice["estimated_or_actual_cost_may_block_provider_call"]
+    ):
+        raise InvocationControlError("Effective invocation policy differs")
+    return {
+        "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "d35_record_hash": content_hash(value=d35),
+        "d36_record_hash": content_hash(value=d36),
+    }
+
+
+def _object(*, value: object, label: str) -> Dict[str, object]:
+    """Return one isolated mapping or fail fast.
+
+    Args:
+        value: Candidate object.
+        label: Stable diagnostic location.
+
+    Returns:
+        Shallow isolated mapping.
+    """
+    if not isinstance(value, dict):
+        raise InvocationControlError("{} must be an object".format(label))
+    return dict(value)
+
+
+def _text(*, value: object, label: str) -> str:
+    """Return one required non-empty text scalar."""
+    if not isinstance(value, str) or not value:
+        raise InvocationControlError("{} must be non-empty text".format(label))
+    return value
+
+
+def _sha256_identity(*, value: object, label: str) -> str:
+    """Return one required ``sha256:`` identity."""
+    text = _text(value=value, label=label)
+    if (
+        len(text) != 71
+        or not text.startswith("sha256:")
+        or any(character not in "0123456789abcdef" for character in text[7:])
+    ):
+        raise InvocationControlError("{} is not a SHA-256 identity".format(label))
+    return text
+
+
+def _utc(*, value: object, label: str) -> str:
+    """Return one required UTC timestamp."""
+    text = _text(value=value, label=label)
+    try:
+        parse_utc_timestamp(value=text)
+    except CanonicalError as error:
+        raise InvocationControlError("{} must be UTC".format(label)) from error
+    return text
+
+
+def _exact_fields(
+    *, value: Mapping[str, object], expected: set[str], label: str
+) -> None:
+    """Require one exact mapping schema."""
+    if set(value) != expected:
+        raise InvocationControlError("{} fields are not exact".format(label))
+
+
+def _reject_monetary_fields(*, value: object, path: str) -> None:
+    """Reject every repository monetary-cap or hard-stop field recursively.
+
+    Args:
+        value: Candidate plan or observability structure.
+        path: Stable diagnostic path.
+
+    Raises:
+        InvocationControlError: When a forbidden field appears at any depth.
+    """
+    if isinstance(value, dict):
+        forbidden = FORBIDDEN_MONETARY_FIELDS.intersection(value)
+        if forbidden:
+            raise InvocationControlError(
+                "Forbidden monetary field at {}: {}".format(
+                    path, sorted(forbidden)[0]
+                )
+            )
+        for key in value:
+            _reject_monetary_fields(
+                value=value[key], path="{}.{}".format(path, key)
+            )
+    elif isinstance(value, list):
+        for index, item in enumerate(value):
+            _reject_monetary_fields(
+                value=item, path="{}[{}]".format(path, index)
+            )
+
+
+def _decimal_observation(*, value: object, label: str) -> str:
+    """Return canonical non-negative monetary observability text.
+
+    Monetary observations are recorded but never compared with a cap.
+    """
+    if not isinstance(value, str):
+        raise InvocationControlError("{} must be decimal text".format(label))
+    try:
+        normalized = decimal_text(value=parse_decimal(value=value))
+    except CanonicalError as error:
+        raise InvocationControlError("{} is invalid".format(label)) from error
+    if normalized != value or Decimal(normalized) < 0:
+        raise InvocationControlError(
+            "{} is not canonical non-negative text".format(label)
+        )
+    return normalized
+
+
+def build_ai_invocation_plan(
+    *,
+    release_input_plan_id: str,
+    source_identity_hash: str,
+    selected_representation_hash: str,
+    task_contract_hash: str,
+    output_schema_hash: str,
+    serialization_version: str,
+    provider: str,
+    model: str,
+    api: str,
+    request_body: bytes,
+    maximum_payload_bytes: int,
+    maximum_context_tokens: int,
+    estimated_context_tokens: int,
+    context_authority_hash: str,
+    estimator_id: str,
+    estimator_version: str,
+    estimator_method: str,
+    billing_class: str,
+    paid_call_observation_source: str,
+    pricing_snapshot_hash: str,
+    estimated_cost: str,
+) -> Dict[str, object]:
+    """Build the historical plan contract, unchanged by successor dispatch."""
+    return _build_ai_invocation_plan(
+        release_input_plan_id=release_input_plan_id, source_identity_hash=source_identity_hash,
+        selected_representation_hash=selected_representation_hash,
+        task_contract_hash=task_contract_hash, output_schema_hash=output_schema_hash,
+        serialization_version=serialization_version, provider=provider, model=model, api=api,
+        request_body=request_body, maximum_payload_bytes=maximum_payload_bytes,
+        maximum_context_tokens=maximum_context_tokens, estimated_context_tokens=estimated_context_tokens,
+        context_authority_hash=context_authority_hash, estimator_id=estimator_id,
+        estimator_version=estimator_version, estimator_method=estimator_method,
+        billing_class=billing_class, paid_call_observation_source=paid_call_observation_source,
+        pricing_snapshot_hash=pricing_snapshot_hash, estimated_cost=estimated_cost)
+
+
+def _build_ai_invocation_plan(
+    *, release_input_plan_id, source_identity_hash, selected_representation_hash,
+    task_contract_hash, output_schema_hash, serialization_version, provider, model, api,
+    request_body, maximum_payload_bytes, maximum_context_tokens, estimated_context_tokens,
+    context_authority_hash, estimator_id, estimator_version, estimator_method,
+    billing_class, paid_call_observation_source, pricing_snapshot_hash, estimated_cost,
+    requirement_identity=None, invocation_policy=None,
+) -> Dict[str, object]:
+    """Build one exact AI invocation plan without a monetary hard stop.
+
+    Args:
+        release_input_plan_id: Complete source/result/authority plan identity.
+        source_identity_hash: Exact selected SEC source identity.
+        selected_representation_hash: Exact serialized source representation.
+        task_contract_hash: Exact task contract identity.
+        output_schema_hash: Exact structured output schema identity.
+        serialization_version: Explicit request serialization version.
+        provider: Provider identity.
+        model: Requested model identity.
+        api: Provider API identity.
+        request_body: Exact outbound provider request bytes.
+        maximum_payload_bytes: Non-monetary hard payload limit.
+        maximum_context_tokens: Non-monetary hard context limit.
+        estimated_context_tokens: Deterministic pre-egress token upper bound.
+        context_authority_hash: Versioned provider/model context authority.
+        estimator_id: Repository context-estimator identity.
+        estimator_version: Explicit estimator semantic version.
+        estimator_method: Honest exact or upper-bound method label.
+        billing_class: Provider-policy endpoint billing classification.
+        paid_call_observation_source: Mechanical paid-call count source.
+        pricing_snapshot_hash: Non-blocking pricing observability identity.
+        estimated_cost: Non-blocking canonical cost estimate.
+
+    Returns:
+        Content-addressed three-layer invocation plan.
+    """
+    for label, identity in (
+        ("release input plan id", release_input_plan_id),
+        ("source identity hash", source_identity_hash),
+        ("selected representation hash", selected_representation_hash),
+        ("task contract hash", task_contract_hash),
+        ("output schema hash", output_schema_hash),
+        ("pricing snapshot hash", pricing_snapshot_hash),
+        ("context authority hash", context_authority_hash),
+    ):
+        _sha256_identity(value=identity, label=label)
+    for label, value in (
+        ("serialization version", serialization_version),
+        ("provider", provider),
+        ("model", model),
+        ("api", api),
+        ("estimator id", estimator_id),
+        ("estimator version", estimator_version),
+        ("estimator method", estimator_method),
+        ("billing class", billing_class),
+        ("paid call observation source", paid_call_observation_source),
+    ):
+        _text(value=value, label=label)
+    if not isinstance(request_body, bytes) or not request_body:
+        raise InvocationControlError("Provider request body must be bytes")
+    if (
+        type(maximum_payload_bytes) is not int
+        or maximum_payload_bytes <= 0
+        or type(maximum_context_tokens) is not int
+        or maximum_context_tokens <= 0
+        or type(estimated_context_tokens) is not int
+        or estimated_context_tokens < 0
+    ):
+        raise InvocationControlError("Invocation resource limits are invalid")
+    request_sha256 = sha256_bytes(content=request_body)
+    provider_request_identity = content_hash(
+        value={
+            "provider_request_body_sha256": request_sha256,
+            "provider": provider,
+            "model": model,
+            "api": api,
+        }
+    )
+    semantic_invocation_id = content_hash(
+        value={
+            "source_identity_hash": source_identity_hash,
+            "selected_representation_hash": selected_representation_hash,
+            "task_contract_hash": task_contract_hash,
+            "output_schema_hash": output_schema_hash,
+            "serialization_version": serialization_version,
+            "model": model,
+        }
+    )
+    body = {
+        "schema_version": 1 if requirement_identity is None else 2,
+        "record_type": "AI_INVOCATION_PLAN" if requirement_identity is None else "SUCCESSOR_AI_INVOCATION_PLAN",
+        "release_input_plan_id": release_input_plan_id,
+        "source_identity_hash": source_identity_hash,
+        "selected_representation_hash": selected_representation_hash,
+        "task_contract_hash": task_contract_hash,
+        "output_schema_hash": output_schema_hash,
+        "serialization_version": serialization_version,
+        "provider": provider,
+        "model": model,
+        "api": api,
+        "invocation_policy": effective_invocation_policy() if requirement_identity is None else invocation_policy,
+        "provider_request_body_sha256": request_sha256,
+        "provider_request_identity": provider_request_identity,
+        "semantic_invocation_id": semantic_invocation_id,
+        "resource_limits": {
+            "maximum_payload_bytes": maximum_payload_bytes,
+            "maximum_context_tokens": maximum_context_tokens,
+        },
+        "billing_policy": {
+            "billing_class": billing_class,
+            "paid_call_observation_source": paid_call_observation_source,
+        },
+        "observability": {
+            "context_authority_hash": context_authority_hash,
+            "estimator_id": estimator_id,
+            "estimator_version": estimator_version,
+            "estimator_method": estimator_method,
+            "estimated_context_tokens": estimated_context_tokens,
+            "pricing_snapshot_hash": pricing_snapshot_hash,
+            "estimated_cost": _decimal_observation(
+                value=estimated_cost, label="estimated cost"
+            ),
+        },
+    }
+    if requirement_identity is not None:
+        body.update(requirement_identity)
+    _reject_monetary_fields(value=body, path="ai_invocation_plan")
+    plan = dict(body)
+    plan["ai_invocation_plan_id"] = content_hash(value=body)
+    return validate_ai_invocation_plan(plan=plan)
+
+
+def validate_ai_invocation_plan(*, plan: Mapping[str, object]) -> Dict[str, object]:
+    """Validate one exact AI invocation plan and all three identities."""
+    value = _object(value=plan, label="AI invocation plan")
+    successor = value.get("record_type") == "SUCCESSOR_AI_INVOCATION_PLAN"
+    _exact_fields(value=value, expected=SUCCESSOR_PLAN_FIELDS if successor else PLAN_FIELDS,
+                  label="AI invocation plan")
+    _reject_monetary_fields(value=value, path="ai_invocation_plan")
+    if (type(value["schema_version"]) is not int
+            or value["schema_version"] != (2 if successor else 1)
+            or value["record_type"] != ("SUCCESSOR_AI_INVOCATION_PLAN" if successor else "AI_INVOCATION_PLAN")):
+        raise InvocationControlError("AI invocation plan identity differs")
+    successor_transport = None
+    if successor:
+        context = _SUCCESSOR_AUTHORITY.get()
+        if context is None:
+            context = prepare_successor_invocation_authority(repo_root=_REPOSITORY_ROOT)
+        identity, expected_policy, successor_transport = context._check()
+        if any(value[field] != expected for field, expected in identity.items()):
+            raise InvocationControlError("Successor invocation Requirement identity differs")
+    for field in (
+        "ai_invocation_plan_id",
+        "release_input_plan_id",
+        "source_identity_hash",
+        "selected_representation_hash",
+        "task_contract_hash",
+        "output_schema_hash",
+        "provider_request_identity",
+        "semantic_invocation_id",
+    ):
+        _sha256_identity(value=value[field], label=field)
+    for field in ("serialization_version", "provider", "model", "api"):
+        _text(value=value[field], label=field)
+    invocation_policy = _object(
+        value=value["invocation_policy"], label="invocation policy"
+    )
+    _exact_fields(
+        value=invocation_policy,
+        expected=SUCCESSOR_INVOCATION_POLICY_FIELDS if successor else INVOCATION_POLICY_FIELDS,
+        label="invocation policy",
+    )
+    if successor:
+        if (invocation_policy != expected_policy
+                or type(invocation_policy["automatic_retry_count"]) is not int
+                or invocation_policy["response_reuse_authorized"] is not False):
+            raise InvocationControlError("Successor invocation policy binding differs")
+    else:
+        for field in INVOCATION_POLICY_FIELDS:
+            _sha256_identity(value=invocation_policy[field], label=field)
+    if not successor and invocation_policy != effective_invocation_policy():
+        raise InvocationControlError("Invocation policy binding differs")
+    request_hash = _text(
+        value=value["provider_request_body_sha256"],
+        label="provider request body SHA-256",
+    )
+    if len(request_hash) != 64 or any(
+        character not in "0123456789abcdef" for character in request_hash
+    ):
+        raise InvocationControlError("Provider request body digest is invalid")
+    limits = _object(value=value["resource_limits"], label="resource limits")
+    _exact_fields(
+        value=limits, expected=RESOURCE_LIMIT_FIELDS, label="resource limits"
+    )
+    if any(type(limits[field]) is not int or limits[field] <= 0 for field in limits):
+        raise InvocationControlError("Resource limits are invalid")
+    if successor and (
+        any(value[field] != successor_transport[field] for field in ("provider", "model", "api"))
+        or limits["maximum_context_tokens"] != successor_transport.get("pre_execution_context_tokens_max", 200000)
+        or limits["maximum_payload_bytes"] != successor_transport["maximum_payload_bytes"]
+    ):
+        raise InvocationControlError("Successor invocation transport/resource policy differs")
+    billing_policy = _object(
+        value=value["billing_policy"], label="billing policy"
+    )
+    _exact_fields(
+        value=billing_policy,
+        expected=BILLING_POLICY_FIELDS,
+        label="billing policy",
+    )
+    for field in BILLING_POLICY_FIELDS:
+        _text(value=billing_policy[field], label=field)
+    observability = _object(value=value["observability"], label="observability")
+    _exact_fields(
+        value=observability,
+        expected=OBSERVABILITY_FIELDS,
+        label="observability",
+    )
+    if (
+        type(observability["estimated_context_tokens"]) is not int
+        or observability["estimated_context_tokens"] < 0
+    ):
+        raise InvocationControlError("Estimated context tokens are invalid")
+    _sha256_identity(
+        value=observability["pricing_snapshot_hash"],
+        label="pricing snapshot hash",
+    )
+    _sha256_identity(
+        value=observability["context_authority_hash"],
+        label="context authority hash",
+    )
+    for field in ("estimator_id", "estimator_version", "estimator_method"):
+        _text(value=observability[field], label=field)
+    _decimal_observation(
+        value=observability["estimated_cost"], label="estimated cost"
+    )
+    request_identity = content_hash(
+        value={
+            "provider_request_body_sha256": request_hash,
+            "provider": value["provider"],
+            "model": value["model"],
+            "api": value["api"],
+        }
+    )
+    semantic_identity = content_hash(
+        value={
+            "source_identity_hash": value["source_identity_hash"],
+            "selected_representation_hash": value[
+                "selected_representation_hash"
+            ],
+            "task_contract_hash": value["task_contract_hash"],
+            "output_schema_hash": value["output_schema_hash"],
+            "serialization_version": value["serialization_version"],
+            "model": value["model"],
+        }
+    )
+    body = {field: value[field] for field in value if field != "ai_invocation_plan_id"}
+    if (
+        value["provider_request_identity"] != request_identity
+        or value["semantic_invocation_id"] != semantic_identity
+        or value["ai_invocation_plan_id"] != content_hash(value=body)
+    ):
+        raise InvocationControlError("AI invocation plan content identity differs")
+    return value
+
+
+def execution_identity(
+    *, ai_invocation_plan_id: str, owner_token: str, authorized_at_utc: str
+) -> str:
+    """Derive one explicit execution identity from authorization data."""
+    _sha256_identity(value=ai_invocation_plan_id, label="AI invocation plan id")
+    owner = _text(value=owner_token, label="execution owner token")
+    authorized = _utc(value=authorized_at_utc, label="execution authorization time")
+    return content_hash(
+        value={
+            "ai_invocation_plan_id": ai_invocation_plan_id,
+            "owner_token_hash": content_hash(value=owner),
+            "authorized_at_utc": authorized,
+        }
+    )
+
+
+def _state_root(*, workspace_dir: Path) -> Path:
+    """Create and validate the local invocation-control namespace."""
+    if workspace_dir.is_symlink():
+        raise InvocationControlError("Invocation workspace is a symlink")
+    workspace_dir.mkdir(parents=True, exist_ok=True)
+    if not workspace_dir.is_dir():
+        raise InvocationControlError("Invocation workspace is not a directory")
+    root = workspace_dir / "invocation_control"
+    root.mkdir(exist_ok=True)
+    if root.is_symlink() or not root.is_dir():
+        raise InvocationControlError("Invocation state root is unsafe")
+    for name in INVOCATION_STATE_NAMESPACES:
+        path = root / name
+        path.mkdir(exist_ok=True)
+        if path.is_symlink() or not path.is_dir():
+            raise InvocationControlError("Invocation state namespace is unsafe")
+    return root
+
+
+def _identity_name(*, identity: str) -> str:
+    """Return the lowercase digest component of one content identity."""
+    return _sha256_identity(value=identity, label="content identity").split(
+        ":", maxsplit=1
+    )[1]
+
+
+def _exclusive_write_bytes(*, path: Path, content: bytes) -> None:
+    """Publish exact bytes once with ``O_CREAT|O_EXCL``.
+
+    Args:
+        path: New immutable file below a validated namespace.
+        content: Exact bytes to persist.
+    """
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.parent.is_symlink() or not path.parent.is_dir():
+        raise InvocationControlError("Immutable receipt parent is unsafe")
+    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
+    try:
+        descriptor = os.open(path, flags, 0o600)
+    except FileExistsError:
+        if path.is_symlink() or not path.is_file() or path.read_bytes() != content:
+            raise InvocationControlError("Immutable receipt bytes differ")
+        return
+    try:
+        offset = 0
+        while offset < len(content):
+            written = os.write(descriptor, content[offset:])
+            if written <= 0:
+                raise InvocationControlError("Immutable receipt write stopped")
+            offset += written
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+
+def _exclusive_write_json(*, path: Path, value: Mapping[str, object]) -> None:
+    """Publish one canonical JSON object once."""
+    _exclusive_write_bytes(path=path, content=canonical_json_bytes(value=dict(value)))
+
+
+def _empty_counters() -> Dict[str, int]:
+    """Return isolated zeroed provider-call counters."""
+    return {
+        "real_model_provider_egress_count": 0,
+        "paid_model_provider_call_count": 0,
+        "mock_transport_invocation_count": 0,
+    }
+
+
+def _add_counters(
+    *, target: Dict[str, int], source: Mapping[str, object]
+) -> None:
+    """Add one exact counter mapping into an aggregate."""
+    if set(source) != COUNTER_FIELDS or any(
+        type(source[field]) is not int or source[field] < 0 for field in source
+    ):
+        raise InvocationControlError("Provider call counters are invalid")
+    for field in COUNTER_FIELDS:
+        target[field] += int(source[field])
+
+
+def _validate_request_resources(
+    *, plan: Mapping[str, object], request_body: bytes
+) -> None:
+    """Fail before reservation when payload or context exceeds hard limits."""
+    if sha256_bytes(content=request_body) != plan["provider_request_body_sha256"]:
+        raise InvocationControlError("Provider request body differs from plan")
+    limits = plan["resource_limits"]
+    observability = plan["observability"]
+    if len(request_body) > limits["maximum_payload_bytes"]:
+        raise InvocationControlError("PAYLOAD_LIMIT")
+    if observability["estimated_context_tokens"] > limits[
+        "maximum_context_tokens"
+    ]:
+        raise InvocationControlError("CONTEXT_LIMIT")
+
+
+def _reservation_path(*, root: Path, request_identity: str) -> Path:
+    """Return the unique provider-request reservation path."""
+    return root / "reservations" / (_identity_name(identity=request_identity) + ".json")
+
+
+def _execution_path(*, root: Path, execution_id: str) -> Path:
+    """Return the immutable terminal execution receipt path."""
+    return root / "executions" / (_identity_name(identity=execution_id) + ".json")
+
+
+def _persist_invocation_input(
+    *, root: Path, plan: Mapping[str, object], request_body: bytes,
+) -> None:
+    """Persist the exact immutable plan and provider request bytes."""
+    plan_path = (
+        root / "plans"
+        / (_identity_name(identity=str(plan["ai_invocation_plan_id"])) + ".json")
+    )
+    request_path = (
+        root / "requests"
+        / (
+            _identity_name(identity=str(plan["provider_request_identity"]))
+            + ".bin"
+        )
+    )
+    _exclusive_write_json(path=plan_path, value=plan)
+    _exclusive_write_bytes(path=request_path, content=request_body)
+
+
+def _process_is_alive(*, process_id: object) -> bool:
+    """Return whether one positive local reservation-owner PID still exists."""
+    if type(process_id) is not int or process_id <= 0:
+        raise InvocationControlError("Reservation owner process id is invalid")
+    try:
+        os.kill(process_id, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+    return True
+
+
+def _archive_reservation(
+    *, root: Path, reservation_path: Path,
+    reservation: Mapping[str, object], terminal_status: str,
+) -> Dict[str, object]:
+    """Archive one completed active reservation and release single-flight.
+
+    Args:
+        root: Validated invocation-control namespace.
+        reservation_path: Active request-identity reservation.
+        reservation: Exact immutable reservation bytes.
+        terminal_status: Execution state that permits release.
+
+    Returns:
+        Immutable reservation lifecycle receipt.
+    """
+    if terminal_status not in {
+        "FAILED_RETRYABLE_FINAL",
+        "FAILED_TERMINAL",
+        "SUCCEEDED",
+        "UNKNOWN_REMOTE_OUTCOME",
+    }:
+        raise InvocationControlError("Reservation terminal status is invalid")
+    execution_id = _text(
+        value=reservation["execution_id"], label="reservation execution id",
+    )
+    request_identity = _text(
+        value=reservation["provider_request_identity"],
+        label="reservation request identity",
+    )
+    body = {
+        "schema_version": 1,
+        "record_type": "SINGLE_FLIGHT_RESERVATION_ARCHIVE",
+        "execution_id": execution_id,
+        "provider_request_identity": request_identity,
+        "reservation_hash": content_hash(value=dict(reservation)),
+        "terminal_status": terminal_status,
+    }
+    receipt = {
+        **body,
+        "reservation_archive_id": content_hash(value=body),
+    }
+    destination = (
+        root / "reservation_archive"
+        / _identity_name(identity=request_identity)
+        / (_identity_name(identity=execution_id) + ".json")
+    )
+    _exclusive_write_json(path=destination, value=receipt)
+    if reservation_path.is_symlink() or not reservation_path.is_file():
+        raise InvocationControlError("Active reservation disappeared")
+    if _read_json_object(
+        path=reservation_path, label="active reservation",
+    ) != dict(reservation):
+        raise InvocationControlError("Active reservation bytes differ")
+    reservation_path.unlink()
+    return receipt
+
+
+def _terminal_and_release(
+    *, root: Path, reservation_path: Path,
+    reservation: Mapping[str, object], body: Mapping[str, object],
+) -> Dict[str, object]:
+    """Persist terminal execution before releasing its exact reservation."""
+    receipt = _terminal_execution(root=root, body=body)
+    _checkpoint_invocation_terminal_phase(phase="AFTER_EXECUTION_SEALED")
+    _archive_reservation(
+        root=root,
+        reservation_path=reservation_path,
+        reservation=reservation,
+        terminal_status=str(receipt["status"]),
+    )
+    return receipt
+
+
+def _checkpoint_invocation_terminal_phase(*, phase: str) -> None:
+    """Invoke a test-only hook after one durable WB-3 terminal boundary."""
+    hook = _INVOCATION_TERMINAL_RECOVERY_HOOK
+    if hook is not None:
+        hook(phase)
+
+
+def _read_json_object(*, path: Path, label: str) -> Dict[str, object]:
+    """Read one existing strict JSON object from a safe regular file."""
+    if path.is_symlink() or not path.is_file():
+        raise InvocationControlError("{} path is unsafe".format(label))
+    return _object(value=strict_json_file(path=path), label=label)
+
+
+def _attempt_receipt(
+    *, root: Path, execution_id: str, body: Mapping[str, object]
+) -> Dict[str, object]:
+    """Persist one immutable terminal/retryable attempt receipt."""
+    attempt_body = dict(body)
+    receipt = dict(attempt_body)
+    receipt["attempt_receipt_id"] = content_hash(value=attempt_body)
+    directory = root / "attempts" / _identity_name(identity=execution_id)
+    path = directory / (
+        "{:02d}_{}.json".format(
+            int(receipt["attempt_ordinal"]),
+            _identity_name(identity=str(receipt["attempt_receipt_id"])),
+        )
+    )
+    _exclusive_write_json(path=path, value=receipt)
+    return receipt
+
+
+def _usage(*, value: object) -> Dict[str, object]:
+    """Validate provider usage/token/cache/cost observability."""
+    usage = _object(value=value, label="provider usage")
+    _exact_fields(value=usage, expected=USAGE_FIELDS, label="provider usage")
+    for field in (
+        "input_tokens",
+        "output_tokens",
+        "cache_hit_input_tokens",
+        "cache_miss_input_tokens",
+    ):
+        if type(usage[field]) is not int or usage[field] < 0:
+            raise InvocationControlError("Provider usage tokens are invalid")
+    _decimal_observation(value=usage["actual_cost"], label="actual cost")
+    return usage
+
+
+def _transport_result(*, value: object) -> Dict[str, object]:
+    """Validate one injected transport observation."""
+    result = _object(value=value, label="transport result")
+    _exact_fields(
+        value=result,
+        expected=TRANSPORT_RESULT_FIELDS,
+        label="transport result",
+    )
+    if type(result["status_code"]) is not int or result["status_code"] < 0:
+        raise InvocationControlError("Transport status code is invalid")
+    if not isinstance(result["error_class"], str):
+        raise InvocationControlError("Transport error class is invalid")
+    if not isinstance(result["response_body"], bytes):
+        raise InvocationControlError("Transport response body must be bytes")
+    if not isinstance(result["provider_request_id"], str):
+        raise InvocationControlError("Provider request id is invalid")
+    result["usage"] = _usage(value=result["usage"])
+    return result
+
+
+def _classify(*, result: Mapping[str, object]) -> str:
+    """Return SUCCESS, TERMINAL, or RETRYABLE from effective D-35 policy."""
+    status_code = int(result["status_code"])
+    error_class = str(result["error_class"])
+    if status_code == 200 and not error_class:
+        return "SUCCESS"
+    if status_code in TERMINAL_HTTP_STATUS or error_class in TERMINAL_ERROR_CLASSES:
+        return "TERMINAL"
+    if (
+        status_code == 429
+        or 500 <= status_code <= 599
+        or error_class in RETRYABLE_ERROR_CLASSES
+    ):
+        return "RETRYABLE"
+    return "TERMINAL"
+
+
+def _error_class(*, result: Mapping[str, object]) -> str:
+    """Return one stable attempt error class."""
+    if result["error_class"]:
+        return str(result["error_class"])
+    status_code = int(result["status_code"])
+    return "HTTP_{}".format(status_code) if status_code else "TRANSPORT_FAILURE"
+
+
+def _egress_marker(
+    *, root: Path, execution_id: str, plan: Mapping[str, object],
+    attempt_ordinal: int, egress_started_at_utc: str, transport_kind: str,
+) -> Dict[str, object]:
+    """Persist proof that provider outcome may now be remote."""
+    if transport_kind not in {"MOCK", "REAL_MODEL_PROVIDER"}:
+        raise InvocationControlError("Transport kind is invalid")
+    billing_policy = plan["billing_policy"]
+    paid_observed = (
+        transport_kind == "REAL_MODEL_PROVIDER"
+        and billing_policy["billing_class"] == "PAID_MODEL_ENDPOINT"
+    )
+    body = {
+        "schema_version": 1,
+        "record_type": "PROVIDER_EGRESS_MARKER",
+        "execution_id": execution_id,
+        "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+        "provider_request_identity": plan["provider_request_identity"],
+        "attempt_ordinal": attempt_ordinal,
+        "egress_started_at_utc": _utc(
+            value=egress_started_at_utc, label="egress start time"
+        ),
+        "transport_kind": transport_kind,
+        "billing_class": billing_policy["billing_class"],
+        "paid_call_observation_source": billing_policy[
+            "paid_call_observation_source"
+        ],
+        "paid_model_provider_call_observed": paid_observed,
+    }
+    marker = dict(body)
+    marker["egress_marker_id"] = content_hash(value=body)
+    directory = root / "egress" / _identity_name(identity=execution_id)
+    path = directory / "{:02d}.json".format(attempt_ordinal)
+    _exclusive_write_json(path=path, value=marker)
+    return marker
+
+
+def _validate_acceptance_draft(
+    *, value: object, plan: Mapping[str, object], response_body: bytes,
+) -> Dict[str, object]:
+    """Validate the full Candidate/Evidence closure before success.
+
+    Args:
+        value: Module-owned acceptance result from the production validator.
+        plan: Exact invocation plan whose response was checked.
+        response_body: Exact structured assistant bytes.
+
+    Returns:
+        Isolated acceptance fields safe to persist content-addressably.
+    """
+    draft = _object(value=value, label="acceptance draft")
+    _exact_fields(
+        value=draft,
+        expected=ACCEPTANCE_DRAFT_FIELDS,
+        label="acceptance draft",
+    )
+    for field in (
+        "candidate_hash",
+        "derived_asset_id",
+        "evidence_candidate_hash",
+        "evidence_check_id",
+        "reader_input_manifest_id",
+        "spec_semantic_hash",
+        "task_contract_hash",
+        "validator_semantic_hash",
+    ):
+        _sha256_identity(value=draft[field], label=field)
+    _text(
+        value=draft["validator_semantic_version"],
+        label="validator semantic version",
+    )
+    source_ids = draft["source_reference_ids"]
+    if (
+        not isinstance(source_ids, list)
+        or not source_ids
+        or len(source_ids) != len(set(source_ids))
+    ):
+        raise InvocationControlError(
+            "Acceptance SourceReference identities are invalid"
+        )
+    for source_id in source_ids:
+        _sha256_identity(value=source_id, label="source reference id")
+    candidate = _object(
+        value=draft["candidate_record"], label="accepted Candidate"
+    )
+    evidence = _object(
+        value=draft["evidence_record"], label="accepted Evidence"
+    )
+    try:
+        from .records import validate_record
+
+        validate_record(record=candidate)
+        validate_record(record=evidence)
+    except ValueError as error:
+        raise InvocationControlError(
+            "Accepted Candidate/Evidence record is invalid"
+        ) from error
+    if (
+        draft["evidence_status"] != "PASS"
+        or draft["candidate_hash"] != draft["evidence_candidate_hash"]
+        or candidate["candidate_hash"] != draft["candidate_hash"]
+        or candidate["assistant_output_sha256"]
+        != sha256_bytes(content=response_body)
+        or candidate["source_reference_ids"] != source_ids
+        or candidate["derived_asset_ids"] != [draft["derived_asset_id"]]
+        or evidence["candidate_hash"] != draft["candidate_hash"]
+        or evidence["evidence_check_id"] != draft["evidence_check_id"]
+        or evidence["status"] != draft["evidence_status"]
+        or draft["reader_input_manifest_id"] != plan["source_identity_hash"]
+        or draft["derived_asset_id"]
+        != plan["selected_representation_hash"]
+        or draft["task_contract_hash"] != plan["task_contract_hash"]
+    ):
+        raise InvocationControlError("Acceptance binding differs")
+    return draft
+
+
+def _validate_acceptance_receipt(
+    *, value: object, plan: Mapping[str, object], response_body: bytes,
+) -> Dict[str, object]:
+    """Recompute one persisted full-acceptance identity and bindings."""
+    receipt = _object(value=value, label="acceptance receipt")
+    _exact_fields(
+        value=receipt,
+        expected=ACCEPTANCE_RECEIPT_FIELDS,
+        label="acceptance receipt",
+    )
+    if (
+        receipt["schema_version"] != 1
+        or receipt["record_type"] != "INVOCATION_ACCEPTANCE_RECEIPT"
+        or receipt["ai_invocation_plan_id"]
+        != plan["ai_invocation_plan_id"]
+        or receipt["provider_request_identity"]
+        != plan["provider_request_identity"]
+        or receipt["response_body_sha256"]
+        != sha256_bytes(content=response_body)
+    ):
+        raise InvocationControlError("Acceptance receipt binding differs")
+    draft = {
+        field: receipt[field] for field in ACCEPTANCE_DRAFT_FIELDS
+    }
+    _validate_acceptance_draft(
+        value=draft, plan=plan, response_body=response_body,
+    )
+    body = {
+        field: receipt[field]
+        for field in receipt
+        if field != "acceptance_receipt_id"
+    }
+    if receipt["acceptance_receipt_id"] != content_hash(value=body):
+        raise InvocationControlError("Acceptance receipt identity differs")
+    return receipt
+
+
+def _persist_acceptance_receipt(
+    *, root: Path, plan: Mapping[str, object], response_body: bytes,
+    acceptance_draft: object,
+) -> Dict[str, object]:
+    """Persist full Evidence PASS before any successful attempt receipt."""
+    draft = _validate_acceptance_draft(
+        value=acceptance_draft, plan=plan, response_body=response_body,
+    )
+    body = {
+        "schema_version": 1,
+        "record_type": "INVOCATION_ACCEPTANCE_RECEIPT",
+        "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+        "provider_request_identity": plan["provider_request_identity"],
+        "response_body_sha256": sha256_bytes(content=response_body),
+        **draft,
+    }
+    receipt = {**body, "acceptance_receipt_id": content_hash(value=body)}
+    request_name = _identity_name(
+        identity=str(plan["provider_request_identity"])
+    )
+    _exclusive_write_json(
+        path=root / "acceptances" / request_name / "receipt.json",
+        value=receipt,
+    )
+    return receipt
+
+
+def _load_acceptance_receipt(
+    *, root: Path, plan: Mapping[str, object], response_body: bytes,
+    acceptance_receipt_id: str,
+) -> Dict[str, object]:
+    """Load and revalidate Candidate/Evidence acceptance for exact reuse."""
+    request_name = _identity_name(
+        identity=str(plan["provider_request_identity"])
+    )
+    receipt = _read_json_object(
+        path=root / "acceptances" / request_name / "receipt.json",
+        label="acceptance receipt",
+    )
+    validated = _validate_acceptance_receipt(
+        value=receipt, plan=plan, response_body=response_body,
+    )
+    if validated["acceptance_receipt_id"] != acceptance_receipt_id:
+        raise InvocationControlError("Success acceptance identity differs")
+    return validated
+
+
+def _persist_success_response(
+    *, root: Path, plan: Mapping[str, object], result: Mapping[str, object],
+    attempt_receipt_id: str, acceptance_receipt: Mapping[str, object],
+    paid_model_provider_call_observed: bool,
+) -> Dict[str, object]:
+    """Persist one exact reusable response only after full acceptance."""
+    if type(paid_model_provider_call_observed) is not bool:
+        raise InvocationControlError("Paid-call observation must be bool")
+    request_name = _identity_name(identity=str(plan["provider_request_identity"]))
+    directory = root / "responses" / request_name
+    body_path = directory / "response.bin"
+    response_bytes = result["response_body"]
+    accepted = _validate_acceptance_receipt(
+        value=acceptance_receipt,
+        plan=plan,
+        response_body=response_bytes,
+    )
+    _exclusive_write_bytes(path=body_path, content=response_bytes)
+    body = {
+        "schema_version": 1,
+        "record_type": "SUCCESS_RESPONSE_RECEIPT",
+        "provider_request_identity": plan["provider_request_identity"],
+        "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+        "provider_request_body_sha256": plan["provider_request_body_sha256"],
+        "provider": plan["provider"],
+        "model": plan["model"],
+        "api": plan["api"],
+        "provider_request_id": result["provider_request_id"],
+        "response_body_sha256": sha256_bytes(content=response_bytes),
+        "response_body_size": len(response_bytes),
+        "response_body_path": "responses/{}/response.bin".format(request_name),
+        "usage": dict(result["usage"]),
+        "billing_class": plan["billing_policy"]["billing_class"],
+        "paid_call_observation_source": plan["billing_policy"][
+            "paid_call_observation_source"
+        ],
+        "paid_model_provider_call_observed": (
+            paid_model_provider_call_observed
+        ),
+        "attempt_receipt_id": attempt_receipt_id,
+        "acceptance_receipt_id": accepted["acceptance_receipt_id"],
+    }
+    receipt = dict(body)
+    receipt["success_response_receipt_id"] = content_hash(value=body)
+    _exclusive_write_json(path=directory / "receipt.json", value=receipt)
+    return receipt
+
+
+def _load_success_response(
+    *, root: Path, plan: Mapping[str, object]
+) -> Optional[Dict[str, object]]:
+    """Load and byte-verify a reusable exact success response if present."""
+    request_name = _identity_name(identity=str(plan["provider_request_identity"]))
+    directory = root / "responses" / request_name
+    receipt_path = directory / "receipt.json"
+    if not receipt_path.exists():
+        return None
+    receipt = _read_json_object(path=receipt_path, label="success response receipt")
+    _exact_fields(
+        value=receipt,
+        expected=SUCCESS_RESPONSE_FIELDS,
+        label="success response receipt",
+    )
+    if (
+        receipt["schema_version"] != 1
+        or receipt["record_type"] != "SUCCESS_RESPONSE_RECEIPT"
+        or type(receipt["paid_model_provider_call_observed"]) is not bool
+    ):
+        raise InvocationControlError("Success response receipt fields differ")
+    receipt_body = {
+        field: receipt[field]
+        for field in receipt
+        if field != "success_response_receipt_id"
+    }
+    if receipt["success_response_receipt_id"] != content_hash(
+        value=receipt_body
+    ):
+        raise InvocationControlError("Success response receipt identity differs")
+    body_path = directory / "response.bin"
+    if body_path.is_symlink() or not body_path.is_file():
+        raise InvocationControlError("Success response body is unsafe")
+    response_bytes = body_path.read_bytes()
+    if (
+        receipt["provider_request_identity"] != plan["provider_request_identity"]
+        or receipt["provider_request_body_sha256"]
+        != plan["provider_request_body_sha256"]
+        or receipt["provider"] != plan["provider"]
+        or receipt["model"] != plan["model"]
+        or receipt["api"] != plan["api"]
+        or receipt["billing_class"]
+        != plan["billing_policy"]["billing_class"]
+        or receipt["paid_call_observation_source"]
+        != plan["billing_policy"]["paid_call_observation_source"]
+        or receipt["response_body_sha256"] != sha256_bytes(content=response_bytes)
+        or receipt["response_body_size"] != len(response_bytes)
+        or receipt["response_body_path"]
+        != "responses/{}/response.bin".format(request_name)
+    ):
+        raise InvocationControlError("Success response binding differs")
+    _usage(value=receipt["usage"])
+    acceptance = _load_acceptance_receipt(
+        root=root,
+        plan=plan,
+        response_body=response_bytes,
+        acceptance_receipt_id=str(receipt["acceptance_receipt_id"]),
+    )
+    return {
+        **receipt,
+        "acceptance_receipt": acceptance,
+        "response_body": response_bytes,
+    }
+
+
+def _validate_active_reservation_for_plan(
+    *, reservation: Mapping[str, object], plan: Mapping[str, object],
+) -> Dict[str, object]:
+    """Validate one active reservation against its immutable invocation plan."""
+    value = dict(reservation)
+    expected = {
+        "schema_version",
+        "record_type",
+        "execution_id",
+        "ai_invocation_plan_id",
+        "provider_request_identity",
+        "owner_token_hash",
+        "owner_process_id",
+        "reserved_at_utc",
+        "egress_started_at_utc",
+        "attempt_ordinal",
+    }
+    if (
+        set(value) != expected
+        or value["schema_version"] != 1
+        or value["record_type"] != "SINGLE_FLIGHT_RESERVATION"
+        or value["ai_invocation_plan_id"] != plan["ai_invocation_plan_id"]
+        or value["provider_request_identity"]
+        != plan["provider_request_identity"]
+        or type(value["owner_process_id"]) is not int
+        or value["owner_process_id"] <= 0
+        or type(value["attempt_ordinal"]) is not int
+        or value["attempt_ordinal"] < 1
+    ):
+        raise InvocationControlError("Single-flight reservation differs")
+    _sha256_identity(value=value["execution_id"], label="reservation execution id")
+    _sha256_identity(value=value["owner_token_hash"], label="reservation owner")
+    _utc(value=value["reserved_at_utc"], label="reservation time")
+    if value["egress_started_at_utc"] is not None:
+        _utc(value=value["egress_started_at_utc"], label="egress start time")
+    return value
+
+
+def _counters_from_egress_markers(
+    *, markers: Sequence[Mapping[str, object]], plan: Mapping[str, object],
+) -> Dict[str, int]:
+    """Mechanically derive provider-call counters from persisted markers."""
+    counters = _empty_counters()
+    if not markers:
+        raise InvocationControlError("Egress counter reconstruction is empty")
+    for marker in markers:
+        if (
+            marker["ai_invocation_plan_id"] != plan["ai_invocation_plan_id"]
+            or marker["provider_request_identity"]
+            != plan["provider_request_identity"]
+            or type(marker["paid_model_provider_call_observed"]) is not bool
+        ):
+            raise InvocationControlError("Egress marker differs from plan")
+        if marker["transport_kind"] == "MOCK":
+            counters["mock_transport_invocation_count"] += 1
+            if marker["paid_model_provider_call_observed"]:
+                raise InvocationControlError("Mock egress cannot be paid")
+        elif marker["transport_kind"] == "REAL_MODEL_PROVIDER":
+            counters["real_model_provider_egress_count"] += 1
+        else:
+            raise InvocationControlError("Egress transport kind differs")
+        if marker["paid_model_provider_call_observed"]:
+            counters["paid_model_provider_call_count"] += 1
+    return counters
+
+
+def _attempt_receipts_for_execution(
+    *, root: Path, execution_id: str, plan: Mapping[str, object],
+    markers: Sequence[Mapping[str, object]],
+) -> List[Dict[str, object]]:
+    """Reload the exact marker-owned attempt sequence before terminal sealing."""
+    directory = root / "attempts" / _identity_name(identity=execution_id)
+    if directory.is_symlink() or not directory.is_dir():
+        raise InvocationControlError("Execution attempt receipts are absent")
+    paths = sorted(directory.iterdir(), key=lambda path: path.name)
+    if len(paths) != len(markers) or not paths:
+        raise InvocationControlError("Execution attempt receipt count differs")
+    attempts = []
+    for ordinal, (path, marker) in enumerate(zip(paths, markers), start=1):
+        if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+            raise InvocationControlError("Execution attempt receipt is unsafe")
+        attempt = _read_json_object(path=path, label="attempt receipt")
+        body = {
+            field: attempt[field]
+            for field in attempt
+            if field != "attempt_receipt_id"
+        }
+        if (
+            attempt.get("attempt_receipt_id") != content_hash(value=body)
+            or attempt.get("record_type") != "AI_INVOCATION_ATTEMPT_RECEIPT"
+            or attempt.get("execution_id") != execution_id
+            or attempt.get("ai_invocation_plan_id")
+            != plan["ai_invocation_plan_id"]
+            or attempt.get("provider_request_identity")
+            != plan["provider_request_identity"]
+            or attempt.get("attempt_ordinal") != ordinal
+            or attempt.get("egress_marker_id") != marker["egress_marker_id"]
+            or path.name != "{:02d}_{}.json".format(
+                ordinal,
+                _identity_name(identity=str(attempt["attempt_receipt_id"])),
+            )
+        ):
+            raise InvocationControlError("Execution attempt receipt differs")
+        attempts.append(attempt)
+    return attempts
+
+
+def _recover_persisted_success_before_execution_seal(
+    *, root: Path, reservation_path: Path, plan: Mapping[str, object],
+    reusable: Mapping[str, object], clock: Callable[[], str],
+) -> tuple[Optional[Dict[str, object]], bool]:
+    """Seal a dead owner's already-accepted success before reuse can occur.
+
+    The success receipt is durable before the execution receipt.  A crash in
+    that narrow interval must preserve the original egress terminal rather
+    than minting a marker-bearing ``REUSED_SUCCESS`` execution.
+
+    Returns:
+        ``(receipt, held)``. ``receipt`` is the original sealed terminal when
+        recovery/release completed; ``held`` means a still-live owner owns the
+        reservation and a caller must not create a reuse receipt yet.
+    """
+    if not reservation_path.exists():
+        return None, False
+    reservation = _validate_active_reservation_for_plan(
+        reservation=_read_json_object(
+            path=reservation_path, label="single-flight reservation",
+        ),
+        plan=plan,
+    )
+    original_execution_id = str(reservation["execution_id"])
+    original_path = _execution_path(
+        root=root, execution_id=original_execution_id,
+    )
+    if original_path.exists():
+        receipt = _load_execution_receipt(
+            root=root,
+            path=original_path,
+            execution_id=original_execution_id,
+        )
+        if (
+            receipt["status"] != "SUCCEEDED"
+            or receipt["batch_terminal"] is not False
+            or receipt["success_response_receipt_id"]
+            != reusable["success_response_receipt_id"]
+        ):
+            raise InvocationControlError("Persisted success execution differs")
+        _archive_reservation(
+            root=root,
+            reservation_path=reservation_path,
+            reservation=reservation,
+            terminal_status="SUCCEEDED",
+        )
+        return receipt, False
+    if _process_is_alive(process_id=reservation["owner_process_id"]):
+        return None, True
+    markers = _egress_markers_for_execution(
+        root=root, execution_id=original_execution_id,
+    )
+    attempts = _attempt_receipts_for_execution(
+        root=root,
+        execution_id=original_execution_id,
+        plan=plan,
+        markers=markers,
+    )
+    successful = attempts[-1]
+    if (
+        successful["status"] != "SUCCEEDED"
+        or successful["attempt_receipt_id"] != reusable["attempt_receipt_id"]
+        or successful["provider_request_id"] != reusable["provider_request_id"]
+        or successful["response_body_sha256"]
+        != reusable["response_body_sha256"]
+        or successful["usage"] != reusable["usage"]
+        or successful["paid_model_provider_call_observed"]
+        != reusable["paid_model_provider_call_observed"]
+    ):
+        raise InvocationControlError("Persisted success attempt differs")
+    for attempt in attempts[:-1]:
+        if attempt["status"] != "FAILED_RETRYABLE":
+            raise InvocationControlError("Persisted success retry sequence differs")
+    return _terminal_and_release(
+        root=root,
+        reservation_path=reservation_path,
+        reservation=reservation,
+        body={
+            "schema_version": 1,
+            "record_type": "AI_EXECUTION_RECEIPT",
+            "execution_id": original_execution_id,
+            "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+            "provider_request_identity": plan["provider_request_identity"],
+            "status": "SUCCEEDED",
+            "batch_terminal": False,
+            "attempts": attempts,
+            "success_response_receipt_id": reusable[
+                "success_response_receipt_id"
+            ],
+            "counters": _counters_from_egress_markers(
+                markers=markers, plan=plan,
+            ),
+            "authorized_at_utc": reservation["reserved_at_utc"],
+            "finished_at_utc": successful["finished_at_utc"],
+        },
+    ), False
+
+
+def _reused_success_execution(
+    *, root: Path, plan: Mapping[str, object], execution_id: str,
+    authorized_at_utc: str, clock: Callable[[], str],
+    reusable: Mapping[str, object],
+) -> Dict[str, object]:
+    """Persist a marker-free execution that reuses an already sealed success."""
+    if plan["record_type"] == "SUCCESSOR_AI_INVOCATION_PLAN":
+        raise InvocationControlError("Successor qualification response reuse is not authorized")
+    if _egress_markers_for_execution(root=root, execution_id=execution_id):
+        raise InvocationControlError(
+            "REUSED_SUCCESS cannot carry an egress marker"
+        )
+    return _terminal_execution(
+        root=root,
+        body={
+            "schema_version": 1,
+            "record_type": "AI_EXECUTION_RECEIPT",
+            "execution_id": execution_id,
+            "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+            "provider_request_identity": plan["provider_request_identity"],
+            "status": "REUSED_SUCCESS",
+            "batch_terminal": False,
+            "attempts": [],
+            "success_response_receipt_id": reusable[
+                "success_response_receipt_id"
+            ],
+            "counters": _empty_counters(),
+            "authorized_at_utc": authorized_at_utc,
+            "finished_at_utc": _utc(value=clock(), label="finish time"),
+        },
+    )
+
+
+def load_successful_response(
+    *, workspace_dir: Path, plan: Mapping[str, object],
+) -> Dict[str, object]:
+    """Return one verified exact reusable response after execution.
+
+    Args:
+        workspace_dir: Invocation-control workspace used by execution.
+        plan: Exact AI invocation plan whose response is required.
+
+    Returns:
+        Receipt metadata plus exact response bytes.
+    """
+    validated_plan = validate_ai_invocation_plan(plan=plan)
+    response = _load_success_response(
+        root=_state_root(workspace_dir=workspace_dir),
+        plan=validated_plan,
+    )
+    if response is None:
+        raise InvocationControlError("Successful exact response is absent")
+    return response
+
+
+def qualification_remote_egress_terminals(
+    *, workspace_dir: Path,
+) -> List[Dict[str, object]]:
+    """Return every actual WB-3 remote terminal for qualification task plans.
+
+    This is intentionally a read-only reconstruction of the invocation-control
+    namespace.  A Run may crash after WB-3 writes its marker/execution/success
+    evidence but before it materializes an ``AI_EXTRACTION_ATTEMPT``.  Callers
+    that derive their cycle closure only from Run records would otherwise miss
+    a real remote egress.  ``ABANDONED_BEFORE_EGRESS`` receipts are checked but
+    do not enter the returned set because they have no marker.
+
+    Args:
+        workspace_dir: Receipt-bound WB-3 workspace for one qualification
+            cycle.
+
+    Returns:
+        One strict mapping per terminal execution with at least one egress
+        marker, ordered by task plan and execution identity.
+
+    Raises:
+        InvocationControlError: On unsafe namespace entries, a receipt/marker
+        mismatch, or a terminal that cannot be tied to its exact plan.
+
+    The workspace is derived solely from the frozen qualification cycle.  It
+    is therefore not safe to begin this reconstruction with a set supplied by
+    materialized Run directories: a process can die after WB-3 persists an
+    egress marker but before that Run writes its first attempt record.  Scan
+    every invocation plan and egress marker in the cycle-owned workspace;
+    ``qualification.validate_table_qualification_cycle_exact_set`` later
+    proves every returned task-plan identity has a matching reconstructed Run
+    authorization.
+    """
+    if workspace_dir.is_symlink():
+        raise InvocationControlError("Qualification workspace is unsafe")
+    root = workspace_dir / "invocation_control"
+    if not root.exists():
+        return []
+    if root.is_symlink() or not root.is_dir():
+        raise InvocationControlError("Qualification invocation state is unsafe")
+    observed_names = {path.name for path in root.iterdir()}
+    if (
+        not observed_names
+        or not observed_names.issubset(set(INVOCATION_STATE_NAMESPACES))
+    ):
+        raise InvocationControlError(
+            "Qualification invocation namespace exact set differs"
+        )
+    for namespace in observed_names:
+        path = root / namespace
+        if path.is_symlink() or not path.is_dir():
+            raise InvocationControlError(
+                "Qualification invocation namespace is unsafe"
+            )
+
+    def namespace_entries(*, name: str) -> List[Path]:
+        """Return portable entries; Git cannot retain known empty directories."""
+        path = root / name
+        if not path.exists():
+            return []
+        if path.is_symlink() or not path.is_dir():
+            raise InvocationControlError(
+                "Qualification invocation namespace is unsafe"
+            )
+        return sorted(path.iterdir(), key=lambda item: item.name)
+
+    plans: Dict[str, Dict[str, object]] = {}
+    plan_ids_by_task_plan: Dict[str, str] = {}
+    for path in namespace_entries(name="plans"):
+        if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+            raise InvocationControlError("Qualification invocation plan is unsafe")
+        plan = validate_ai_invocation_plan(
+            plan=_read_json_object(path=path, label="invocation plan"),
+        )
+        plan_id = str(plan["ai_invocation_plan_id"])
+        if path.stem != _identity_name(identity=plan_id):
+            raise InvocationControlError("Invocation plan path differs")
+        task_plan_id = _sha256_identity(
+            value=plan["release_input_plan_id"],
+            label="qualification task plan identity",
+        )
+        if plan_id in plans:
+            raise InvocationControlError("Qualification invocation plan duplicates")
+        prior_plan_id = plan_ids_by_task_plan.get(task_plan_id)
+        if prior_plan_id is not None and prior_plan_id != plan_id:
+            raise InvocationControlError(
+                "Qualification task plan has multiple invocation plans"
+            )
+        plans[plan_id] = plan
+        plan_ids_by_task_plan[task_plan_id] = plan_id
+
+    terminal_rows = []
+    execution_ids_with_egress = set()
+    for path in namespace_entries(name="executions"):
+        if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+            raise InvocationControlError("Qualification execution receipt is unsafe")
+        preview = _read_json_object(path=path, label="execution receipt")
+        execution_id = _text(
+            value=preview.get("execution_id"), label="execution id",
+        )
+        if path.stem != _identity_name(identity=execution_id):
+            raise InvocationControlError("Execution receipt path differs")
+        receipt = _load_execution_receipt(
+            root=root,
+            path=path,
+            execution_id=execution_id,
+        )
+        plan = plans.get(str(receipt["ai_invocation_plan_id"]))
+        if plan is None:
+            raise InvocationControlError(
+                "Qualification execution has no invocation plan"
+            )
+        markers = _egress_markers_for_execution(
+            root=root,
+            execution_id=execution_id,
+        )
+        status = _text(value=receipt["status"], label="execution status")
+        if not markers:
+            if status == "UNKNOWN_REMOTE_OUTCOME":
+                raise InvocationControlError("Unknown outcome lacks egress marker")
+            if status not in {
+                "REUSED_SUCCESS",
+                "SUCCEEDED",
+                "FAILED_TERMINAL",
+                "FAILED_RETRYABLE_FINAL",
+            }:
+                raise InvocationControlError("Execution status is invalid")
+            continue
+        execution_ids_with_egress.add(execution_id)
+        if status not in {
+            "SUCCEEDED",
+            "FAILED_TERMINAL",
+            "FAILED_RETRYABLE_FINAL",
+            "UNKNOWN_REMOTE_OUTCOME",
+        }:
+            raise InvocationControlError("Egress execution status is invalid")
+        if type(receipt.get("batch_terminal")) is not bool:
+            raise InvocationControlError("Execution batch-terminal fact is invalid")
+        marker_ids = []
+        for marker in markers:
+            if (
+                marker["ai_invocation_plan_id"]
+                != receipt["ai_invocation_plan_id"]
+                or marker["provider_request_identity"]
+                != receipt["provider_request_identity"]
+                or marker["execution_id"] != execution_id
+                or marker["transport_kind"]
+                not in {"MOCK", "REAL_MODEL_PROVIDER"}
+                or type(marker["paid_model_provider_call_observed"]) is not bool
+            ):
+                raise InvocationControlError("Egress marker differs from execution")
+            marker_ids.append(str(marker["egress_marker_id"]))
+        receipt_marker_ids = [
+            str(item["egress_marker_id"])
+            for item in receipt["attempts"]
+        ]
+        if status == "UNKNOWN_REMOTE_OUTCOME":
+            unknown_marker = _text(
+                value=receipt.get("unknown_egress_marker_id"),
+                label="unknown egress marker",
+            )
+            if unknown_marker != marker_ids[-1] or receipt_marker_ids:
+                raise InvocationControlError("Unknown outcome marker differs")
+        elif receipt_marker_ids != marker_ids:
+            raise InvocationControlError("Execution attempt markers differ")
+        attempt_statuses = [item["status"] for item in receipt["attempts"]]
+        attempt_error_classes = [
+            item["error_class"] for item in receipt["attempts"]
+        ]
+        if (
+            status == "SUCCEEDED"
+            and attempt_statuses
+            not in (["SUCCEEDED"], ["FAILED_RETRYABLE", "SUCCEEDED"])
+        ) or (
+            status == "FAILED_TERMINAL"
+            and attempt_statuses != ["FAILED_TERMINAL"]
+        ) or (
+            status == "FAILED_RETRYABLE_FINAL"
+            and attempt_statuses
+            != ["FAILED_RETRYABLE", "FAILED_RETRYABLE_FINAL"]
+        ) or (
+            status == "UNKNOWN_REMOTE_OUTCOME" and attempt_statuses
+        ):
+            raise InvocationControlError("Execution terminal attempt sequence differs")
+        if status == "SUCCEEDED":
+            success = _load_success_response(root=root, plan=plan)
+            if (
+                success is None
+                or receipt["success_response_receipt_id"]
+                != success["success_response_receipt_id"]
+            ):
+                raise InvocationControlError("Success response receipt differs")
+        elif receipt["success_response_receipt_id"] is not None:
+            raise InvocationControlError("Failed execution claims success response")
+        body = {
+            "record_type": "QUALIFICATION_WB3_REMOTE_EGRESS_TERMINAL",
+            "qualification_task_plan_id": plan["release_input_plan_id"],
+            "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+            "provider_request_identity": plan["provider_request_identity"],
+            "provider_request_body_sha256": plan[
+                "provider_request_body_sha256"
+            ],
+            "provider": plan["provider"],
+            "model": plan["model"],
+            "api": plan["api"],
+            "execution_id": execution_id,
+            "execution_receipt_id": receipt["execution_receipt_id"],
+            "status": status,
+            "batch_terminal": receipt["batch_terminal"],
+            "egress_marker_ids": marker_ids,
+            "transport_kinds": [marker["transport_kind"] for marker in markers],
+            "paid_model_provider_call_observed": [
+                marker["paid_model_provider_call_observed"]
+                for marker in markers
+            ],
+            "attempt_statuses": [
+                item for item in attempt_statuses
+            ],
+            "attempt_error_classes": [
+                item for item in attempt_error_classes
+            ],
+            "attempt_usages": [
+                dict(item["usage"]) for item in receipt["attempts"]
+            ],
+            "provider_request_ids": [
+                item["provider_request_id"] for item in receipt["attempts"]
+            ],
+        }
+        terminal_rows.append({
+            **body,
+            "qualification_wb3_remote_egress_terminal_id": content_hash(
+                value=body,
+            ),
+        })
+
+    for directory in namespace_entries(name="egress"):
+        if directory.is_symlink() or not directory.is_dir():
+            raise InvocationControlError("Qualification egress directory is unsafe")
+        marker_paths = sorted(directory.iterdir(), key=lambda item: item.name)
+        if not marker_paths:
+            raise InvocationControlError("Qualification egress directory is empty")
+        preview = _read_json_object(
+            path=marker_paths[0], label="egress marker",
+        )
+        execution_id = _text(
+            value=preview.get("execution_id"), label="egress execution id",
+        )
+        if directory.name != _identity_name(identity=execution_id):
+            raise InvocationControlError("Egress marker directory differs")
+        markers = _egress_markers_for_execution(
+            root=root, execution_id=execution_id,
+        )
+        plan = plans.get(str(markers[0]["ai_invocation_plan_id"]))
+        if plan is None:
+            raise InvocationControlError(
+                "Qualification egress marker has no invocation plan"
+            )
+        if execution_id in execution_ids_with_egress:
+            continue
+        if any(
+            marker["ai_invocation_plan_id"]
+            != plan["ai_invocation_plan_id"]
+            or marker["provider_request_identity"]
+            != plan["provider_request_identity"]
+            for marker in markers
+        ):
+            raise InvocationControlError("Unsealed egress marker differs from plan")
+        body = {
+            "record_type": "QUALIFICATION_WB3_REMOTE_EGRESS_TERMINAL",
+            "qualification_task_plan_id": plan["release_input_plan_id"],
+            "ai_invocation_plan_id": plan["ai_invocation_plan_id"],
+            "provider_request_identity": plan["provider_request_identity"],
+            "provider_request_body_sha256": plan[
+                "provider_request_body_sha256"
+            ],
+            "provider": plan["provider"],
+            "model": plan["model"],
+            "api": plan["api"],
+            "execution_id": execution_id,
+            "execution_receipt_id": None,
+            "status": "PENDING_REMOTE_OUTCOME",
+            "batch_terminal": None,
+            "egress_marker_ids": [
+                marker["egress_marker_id"] for marker in markers
+            ],
+            "transport_kinds": [marker["transport_kind"] for marker in markers],
+            "paid_model_provider_call_observed": [
+                marker["paid_model_provider_call_observed"]
+                for marker in markers
+            ],
+            "attempt_statuses": [],
+            "attempt_error_classes": [],
+            "attempt_usages": [],
+            "provider_request_ids": [],
+        }
+        terminal_rows.append({
+            **body,
+            "qualification_wb3_remote_egress_terminal_id": content_hash(
+                value=body,
+            ),
+        })
+
+    for path in namespace_entries(name="abandoned"):
+        if path.is_symlink() or not path.is_file() or path.suffix != ".json":
+            raise InvocationControlError("Abandoned invocation receipt is unsafe")
+        value = _read_json_object(path=path, label="abandoned invocation receipt")
+        if value.get("record_type") != "ABANDONED_BEFORE_EGRESS_RECEIPT":
+            continue
+        execution_id = _text(
+            value=value.get("execution_id"), label="abandoned execution id",
+        )
+        if _egress_markers_for_execution(
+            root=root, execution_id=execution_id,
+        ):
+            raise InvocationControlError(
+                "Abandoned-before-egress receipt has egress marker"
+            )
+    return sorted(
+        terminal_rows,
+        key=lambda value: (
+            str(value["qualification_task_plan_id"]),
+            str(value["execution_id"]),
+        ),
+    )
+
+
+def _terminal_execution(
+    *, root: Path, body: Mapping[str, object]
+) -> Dict[str, object]:
+    """Persist one immutable execution summary over its attempt sequence."""
+    execution_body = dict(body)
+    receipt = dict(execution_body)
+    receipt["execution_receipt_id"] = content_hash(value=execution_body)
+    _exclusive_write_json(
+        path=_execution_path(
+            root=root, execution_id=str(receipt["execution_id"])
+        ),
+        value=receipt,
+    )
+    return receipt
+
+
+def _load_execution_receipt(
+    *, root: Path, path: Path, execution_id: str
+) -> Dict[str, object]:
+    """Reload one terminal execution and every immutable attempt receipt."""
+    receipt = _read_json_object(path=path, label="execution receipt")
+    if (
+        receipt["execution_id"] != execution_id
+        or "execution_receipt_id" not in receipt
+        or "attempts" not in receipt
+        or "counters" not in receipt
+    ):
+        raise InvocationControlError("Execution receipt fields are incomplete")
+    body = {
+        field: receipt[field] for field in receipt if field != "execution_receipt_id"
+    }
+    if receipt["execution_receipt_id"] != content_hash(value=body):
+        raise InvocationControlError("Execution receipt identity differs")
+    _add_counters(target=_empty_counters(), source=receipt["counters"])
+    if not isinstance(receipt["attempts"], list):
+        raise InvocationControlError("Execution attempts must be an array")
+    directory = root / "attempts" / _identity_name(identity=execution_id)
+    for attempt in receipt["attempts"]:
+        if not isinstance(attempt, dict) or "attempt_receipt_id" not in attempt:
+            raise InvocationControlError("Execution attempt receipt is invalid")
+        attempt_body = {
+            field: attempt[field]
+            for field in attempt
+            if field != "attempt_receipt_id"
+        }
+        if attempt["attempt_receipt_id"] != content_hash(value=attempt_body):
+            raise InvocationControlError("Attempt receipt identity differs")
+        attempt_path = directory / (
+            "{:02d}_{}.json".format(
+                int(attempt["attempt_ordinal"]),
+                _identity_name(identity=str(attempt["attempt_receipt_id"])),
+            )
+        )
+        persisted = _read_json_object(path=attempt_path, label="attempt receipt")
+        if persisted != attempt:
+            raise InvocationControlError("Attempt receipt bytes differ")
+    return receipt
+
+
+def _egress_markers_for_execution(
+    *, root: Path, execution_id: str,
+) -> List[Dict[str, object]]:
+    """Load the exact ordered egress marker set for one execution."""
+    directory = root / "egress" / _identity_name(identity=execution_id)
+    if not directory.exists():
+        return []
+    if directory.is_symlink() or not directory.is_dir():
+        raise InvocationControlError("Egress marker directory is unsafe")
+    markers = []
+    for path in sorted(directory.iterdir()):
+        marker = _read_json_object(path=path, label="egress marker")
+        if (
+            marker["record_type"] != "PROVIDER_EGRESS_MARKER"
+            or marker["execution_id"] != execution_id
+            or marker["egress_marker_id"] != content_hash(
+                value={
+                    field: marker[field]
+                    for field in marker
+                    if field != "egress_marker_id"
+                }
+            )
+        ):
+            raise InvocationControlError("Egress marker identity differs")
+        markers.append(marker)
+    ordinals = [int(marker["attempt_ordinal"]) for marker in markers]
+    if ordinals != list(range(1, len(markers) + 1)):
+        raise InvocationControlError("Egress marker sequence differs")
+    return markers
+
+
+def _unknown_remote_outcome_from_markers(
+    *, root: Path, reservation_path: Path,
+    reservation: Mapping[str, object], requested_execution_id: str,
+    clock: Callable[[], str],
+) -> Dict[str, object]:
+    """Persist crash recovery from egress markers without another call."""
+    abandoned_execution_id = str(reservation["execution_id"])
+    markers = _egress_markers_for_execution(
+        root=root, execution_id=abandoned_execution_id,
+    )
+    if not markers:
+        raise InvocationControlError("Unknown outcome requires egress proof")
+    plan = validate_ai_invocation_plan(
+        plan=_read_json_object(
+            path=(
+                root / "plans" / (
+                    _identity_name(
+                        identity=str(reservation["ai_invocation_plan_id"])
+                    ) + ".json"
+                )
+            ),
+            label="invocation plan",
+        )
+    )
+    counters = _counters_from_egress_markers(markers=markers, plan=plan)
+    receipt = _terminal_and_release(
+        root=root,
+        reservation_path=reservation_path,
+        reservation=reservation,
+        body={
+            "schema_version": 1,
+            "record_type": "AI_EXECUTION_RECEIPT",
+            "execution_id": abandoned_execution_id,
+            "ai_invocation_plan_id": reservation["ai_invocation_plan_id"],
+            "provider_request_identity": reservation[
+                "provider_request_identity"
+            ],
+            "status": "UNKNOWN_REMOTE_OUTCOME",
+            "batch_terminal": True,
+            "attempts": [],
+            "success_response_receipt_id": None,
+            "counters": counters,
+            "authorized_at_utc": reservation["reserved_at_utc"],
+            "finished_at_utc": _utc(value=clock(), label="recovery time"),
+            "unknown_egress_marker_id": markers[-1]["egress_marker_id"],
+        },
+    )
+    if requested_execution_id == abandoned_execution_id:
+        return receipt
+    return {
+        "schema_version": 1,
+        "record_type": "AI_EXECUTION_RESULT",
+        "execution_id": requested_execution_id,
+        "ai_invocation_plan_id": reservation["ai_invocation_plan_id"],
+        "provider_request_identity": reservation[
+            "provider_request_identity"
+        ],
+        "status": "UNKNOWN_REMOTE_OUTCOME",
+        "batch_terminal": True,
+        "attempts": [],
+        "success_response_receipt_id": None,
+        "unknown_execution_receipt_id": receipt["execution_receipt_id"],
+        "counters": counters,
+    }
+
+
+def execute_invocation(
+    *,
+    workspace_dir: Path,
+    plan: Mapping[str, object],
+    request_body: bytes,
+    execution_id: str,
+    owner_token: str,
+    authorized_at_utc: str,
+    clock: Callable[[], str],
+    transport: object,
+    response_validator: Callable[[bytes], None],
+    evidence_validator: Callable[[bytes], Mapping[str, object]],
+) -> Dict[str, object]:
+    """Execute or reuse one exact request under single-flight control.
+
+    Args:
+        workspace_dir: Local invocation-control workspace.
+        plan: Exact AI invocation plan.
+        request_body: Exact outbound provider request bytes.
+        execution_id: Explicit authorization identity.
+        owner_token: Reservation owner identity.
+        authorized_at_utc: UTC authorization time bound into execution ID.
+        clock: Injected UTC clock for egress/terminal audit timestamps.
+        transport: Injected object exposing ``transport_kind`` and ``send``.
+        response_validator: Injected strict response-schema validator.
+        evidence_validator: Injected full Candidate/Evidence validator that
+            returns the exact acceptance closure only when Evidence is PASS.
+
+    Returns:
+        Immutable execution receipt or reusable/single-flight result.
+    """
+    validated_plan = validate_ai_invocation_plan(plan=plan)
+    expected_execution_id = execution_identity(
+        ai_invocation_plan_id=str(validated_plan["ai_invocation_plan_id"]),
+        owner_token=owner_token,
+        authorized_at_utc=authorized_at_utc,
+    )
+    if execution_id != expected_execution_id:
+        raise InvocationControlError("Execution identity differs")
+    _validate_request_resources(plan=validated_plan, request_body=request_body)
+    root = _state_root(workspace_dir=workspace_dir)
+    _persist_invocation_input(
+        root=root, plan=validated_plan, request_body=request_body,
+    )
+    execution_path = _execution_path(root=root, execution_id=execution_id)
+    reservation_path = _reservation_path(
+        root=root,
+        request_identity=str(validated_plan["provider_request_identity"]),
+    )
+    if execution_path.exists():
+        receipt = _load_execution_receipt(
+            root=root, path=execution_path, execution_id=execution_id,
+        )
+        if reservation_path.exists():
+            reservation = _validate_active_reservation_for_plan(
+                reservation=_read_json_object(
+                    path=reservation_path,
+                    label="single-flight reservation",
+                ),
+                plan=validated_plan,
+            )
+            if reservation["execution_id"] != execution_id:
+                raise InvocationControlError(
+                    "Active reservation execution differs from terminal"
+                )
+            _archive_reservation(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=reservation,
+                terminal_status=str(receipt["status"]),
+            )
+        return receipt
+    reusable = _load_success_response(root=root, plan=validated_plan)
+    if reusable is not None:
+        recovered, held = _recover_persisted_success_before_execution_seal(
+            root=root,
+            reservation_path=reservation_path,
+            plan=validated_plan,
+            reusable=reusable,
+            clock=clock,
+        )
+        if held:
+            return {
+                "schema_version": 1,
+                "record_type": "AI_EXECUTION_RESULT",
+                "execution_id": execution_id,
+                "ai_invocation_plan_id": validated_plan[
+                    "ai_invocation_plan_id"
+                ],
+                "provider_request_identity": validated_plan[
+                    "provider_request_identity"
+                ],
+                "status": "SINGLE_FLIGHT_HELD",
+                "batch_terminal": False,
+                "attempts": [],
+                "success_response_receipt_id": None,
+                "counters": _empty_counters(),
+            }
+        if recovered is not None and recovered["execution_id"] == execution_id:
+            return recovered
+        return _reused_success_execution(
+            root=root,
+            plan=validated_plan,
+            execution_id=execution_id,
+            authorized_at_utc=authorized_at_utc,
+            clock=clock,
+            reusable=reusable,
+        )
+    counters = _empty_counters()
+    owner_hash = content_hash(value=_text(value=owner_token, label="owner token"))
+    reservation = {
+        "schema_version": 1,
+        "record_type": "SINGLE_FLIGHT_RESERVATION",
+        "execution_id": execution_id,
+        "ai_invocation_plan_id": validated_plan["ai_invocation_plan_id"],
+        "provider_request_identity": validated_plan["provider_request_identity"],
+        "owner_token_hash": owner_hash,
+        "owner_process_id": os.getpid(),
+        "reserved_at_utc": _utc(
+            value=authorized_at_utc, label="reservation time"
+        ),
+        "egress_started_at_utc": None,
+        "attempt_ordinal": 1,
+    }
+    try:
+        descriptor = os.open(
+            reservation_path,
+            os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+            0o600,
+        )
+    except FileExistsError:
+        try:
+            existing_reservation = _read_json_object(
+                path=reservation_path, label="single-flight reservation",
+            )
+        except InvocationControlError:
+            if reservation_path.exists():
+                raise
+            return execute_invocation(
+                workspace_dir=workspace_dir,
+                plan=validated_plan,
+                request_body=request_body,
+                execution_id=execution_id,
+                owner_token=owner_token,
+                authorized_at_utc=authorized_at_utc,
+                clock=clock,
+                transport=transport,
+                response_validator=response_validator,
+                evidence_validator=evidence_validator,
+            )
+        existing_reservation = _validate_active_reservation_for_plan(
+            reservation=existing_reservation,
+            plan=validated_plan,
+        )
+        reusable = _load_success_response(root=root, plan=validated_plan)
+        if reusable is not None:
+            recovered, held = _recover_persisted_success_before_execution_seal(
+                root=root,
+                reservation_path=reservation_path,
+                plan=validated_plan,
+                reusable=reusable,
+                clock=clock,
+            )
+            if held:
+                return {
+                    "schema_version": 1,
+                    "record_type": "AI_EXECUTION_RESULT",
+                    "execution_id": execution_id,
+                    "ai_invocation_plan_id": validated_plan[
+                        "ai_invocation_plan_id"
+                    ],
+                    "provider_request_identity": validated_plan[
+                        "provider_request_identity"
+                    ],
+                    "status": "SINGLE_FLIGHT_HELD",
+                    "batch_terminal": False,
+                    "attempts": [],
+                    "success_response_receipt_id": None,
+                    "counters": _empty_counters(),
+                }
+            if (
+                recovered is not None
+                and recovered["execution_id"] == execution_id
+            ):
+                return recovered
+            return _reused_success_execution(
+                root=root,
+                plan=validated_plan,
+                execution_id=execution_id,
+                authorized_at_utc=authorized_at_utc,
+                clock=clock,
+                reusable=reusable,
+            )
+        abandoned_execution_id = str(existing_reservation["execution_id"])
+        abandoned_execution_path = _execution_path(
+            root=root, execution_id=abandoned_execution_id,
+        )
+        if abandoned_execution_path.exists():
+            abandoned_receipt = _load_execution_receipt(
+                root=root,
+                path=abandoned_execution_path,
+                execution_id=abandoned_execution_id,
+            )
+            _archive_reservation(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=existing_reservation,
+                terminal_status=str(abandoned_receipt["status"]),
+            )
+            return execute_invocation(
+                workspace_dir=workspace_dir,
+                plan=validated_plan,
+                request_body=request_body,
+                execution_id=execution_id,
+                owner_token=owner_token,
+                authorized_at_utc=authorized_at_utc,
+                clock=clock,
+                transport=transport,
+                response_validator=response_validator,
+                evidence_validator=evidence_validator,
+            )
+        abandoned_markers = _egress_markers_for_execution(
+            root=root, execution_id=abandoned_execution_id,
+        )
+        abandoned_owner_is_dead = not _process_is_alive(
+            process_id=existing_reservation["owner_process_id"]
+        )
+        if abandoned_markers and abandoned_owner_is_dead:
+            return _unknown_remote_outcome_from_markers(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=existing_reservation,
+                requested_execution_id=execution_id,
+                clock=clock,
+            )
+        if not abandoned_markers and abandoned_owner_is_dead:
+            # A dead reservation with no egress marker is the one recovery
+            # case in which retrying the exact plan is safe.  The helper
+            # persists an abandonment receipt and verifies the marker absence
+            # again immediately before replacing the reservation.
+            recover_abandoned_before_egress(
+                workspace_dir=workspace_dir,
+                request_identity=str(validated_plan["provider_request_identity"]),
+                expected_execution_id=abandoned_execution_id,
+                recovered_at_utc=_utc(value=clock(), label="recovery time"),
+            )
+            return execute_invocation(
+                workspace_dir=workspace_dir,
+                plan=validated_plan,
+                request_body=request_body,
+                execution_id=execution_id,
+                owner_token=owner_token,
+                authorized_at_utc=authorized_at_utc,
+                clock=clock,
+                transport=transport,
+                response_validator=response_validator,
+                evidence_validator=evidence_validator,
+            )
+        return {
+            "schema_version": 1,
+            "record_type": "AI_EXECUTION_RESULT",
+            "execution_id": execution_id,
+            "ai_invocation_plan_id": validated_plan["ai_invocation_plan_id"],
+            "provider_request_identity": validated_plan[
+                "provider_request_identity"
+            ],
+            "status": "SINGLE_FLIGHT_HELD",
+            "batch_terminal": False,
+            "attempts": [],
+            "success_response_receipt_id": None,
+            "counters": counters,
+        }
+    try:
+        content = canonical_json_bytes(value=reservation)
+        offset = 0
+        while offset < len(content):
+            written = os.write(descriptor, content[offset:])
+            if written <= 0:
+                raise InvocationControlError("Reservation write stopped")
+            offset += written
+        os.fsync(descriptor)
+    finally:
+        os.close(descriptor)
+
+    transport_kind = _text(
+        value=getattr(transport, "transport_kind", None),
+        label="transport kind",
+    )
+    if transport_kind not in {"MOCK", "REAL_MODEL_PROVIDER"}:
+        raise InvocationControlError("Transport kind is invalid")
+    attempts = []
+    for attempt_ordinal in (1, 2):
+        marker = _egress_marker(
+            root=root,
+            execution_id=execution_id,
+            plan=validated_plan,
+            attempt_ordinal=attempt_ordinal,
+            egress_started_at_utc=clock(),
+            transport_kind=transport_kind,
+        )
+        if transport_kind == "MOCK":
+            counters["mock_transport_invocation_count"] += 1
+        else:
+            counters["real_model_provider_egress_count"] += 1
+        if marker["paid_model_provider_call_observed"]:
+            counters["paid_model_provider_call_count"] += 1
+        try:
+            raw_result = transport.send(
+                request_body=request_body,
+                plan=validated_plan,
+                execution_id=execution_id,
+                attempt_ordinal=attempt_ordinal,
+            )
+        except UnknownRemoteOutcomeError:
+            return _terminal_and_release(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=reservation,
+                body={
+                    "schema_version": 1,
+                    "record_type": "AI_EXECUTION_RECEIPT",
+                    "execution_id": execution_id,
+                    "ai_invocation_plan_id": validated_plan[
+                        "ai_invocation_plan_id"
+                    ],
+                    "provider_request_identity": validated_plan[
+                        "provider_request_identity"
+                    ],
+                    "status": "UNKNOWN_REMOTE_OUTCOME",
+                    "batch_terminal": True,
+                    "attempts": attempts,
+                    "success_response_receipt_id": None,
+                    "counters": counters,
+                    "authorized_at_utc": authorized_at_utc,
+                    "finished_at_utc": _utc(
+                        value=clock(), label="finish time"
+                    ),
+                    "unknown_egress_marker_id": marker["egress_marker_id"],
+                },
+            )
+        result = _transport_result(value=raw_result)
+        classification = _classify(result=result)
+        acceptance_draft: Optional[Mapping[str, object]] = None
+        if classification == "SUCCESS":
+            try:
+                response_validator(response_body=result["response_body"])
+            except SchemaViolationError:
+                classification = "TERMINAL"
+                result["error_class"] = "SCHEMA_VIOLATION"
+            if classification == "SUCCESS":
+                try:
+                    acceptance_draft = evidence_validator(
+                        response_body=result["response_body"]
+                    )
+                except EvidenceFailureError:
+                    classification = "TERMINAL"
+                    result["error_class"] = "EVIDENCE_FAILURE"
+        acceptance_receipt: Optional[Dict[str, object]] = None
+        if classification == "SUCCESS":
+            try:
+                acceptance_receipt = _persist_acceptance_receipt(
+                    root=root,
+                    plan=validated_plan,
+                    response_body=result["response_body"],
+                    acceptance_draft=acceptance_draft,
+                )
+            except InvocationControlError:
+                classification = "TERMINAL"
+                result["error_class"] = "EVIDENCE_FAILURE"
+        if classification == "SUCCESS":
+            if acceptance_receipt is None:
+                raise InvocationControlError(
+                    "Successful invocation lacks acceptance receipt"
+                )
+            attempt = _attempt_receipt(
+                root=root,
+                execution_id=execution_id,
+                body={
+                    "schema_version": 1,
+                    "record_type": "AI_INVOCATION_ATTEMPT_RECEIPT",
+                    "execution_id": execution_id,
+                    "ai_invocation_plan_id": validated_plan[
+                        "ai_invocation_plan_id"
+                    ],
+                    "provider_request_identity": validated_plan[
+                        "provider_request_identity"
+                    ],
+                    "attempt_ordinal": attempt_ordinal,
+                    "status": "SUCCEEDED",
+                    "error_class": "",
+                    "status_code": result["status_code"],
+                    "egress_marker_id": marker["egress_marker_id"],
+                    "response_body_sha256": sha256_bytes(
+                        content=result["response_body"]
+                    ),
+                    "provider_request_id": result["provider_request_id"],
+                    "billing_class": marker["billing_class"],
+                    "paid_call_observation_source": marker[
+                        "paid_call_observation_source"
+                    ],
+                    "paid_model_provider_call_observed": marker[
+                        "paid_model_provider_call_observed"
+                    ],
+                    "transport_kind": transport_kind,
+                    "usage": dict(result["usage"]),
+                    "finished_at_utc": _utc(
+                        value=clock(), label="attempt finish time"
+                    ),
+                },
+            )
+            attempts.append(attempt)
+            success = _persist_success_response(
+                root=root,
+                plan=validated_plan,
+                result=result,
+                attempt_receipt_id=str(attempt["attempt_receipt_id"]),
+                acceptance_receipt=acceptance_receipt,
+                paid_model_provider_call_observed=bool(
+                    marker["paid_model_provider_call_observed"]
+                ),
+            )
+            _checkpoint_invocation_terminal_phase(
+                phase="AFTER_SUCCESS_RESPONSE_PERSISTED"
+            )
+            return _terminal_and_release(
+                root=root,
+                reservation_path=reservation_path,
+                reservation=reservation,
+                body={
+                    "schema_version": 1,
+                    "record_type": "AI_EXECUTION_RECEIPT",
+                    "execution_id": execution_id,
+                    "ai_invocation_plan_id": validated_plan[
+                        "ai_invocation_plan_id"
+                    ],
+                    "provider_request_identity": validated_plan[
+                        "provider_request_identity"
+                    ],
+                    "status": "SUCCEEDED",
+                    "batch_terminal": False,
+                    "attempts": attempts,
+                    "success_response_receipt_id": success[
+                        "success_response_receipt_id"
+                    ],
+                    "counters": counters,
+                    "authorized_at_utc": authorized_at_utc,
+                    "finished_at_utc": _utc(
+                        value=clock(), label="finish time"
+                    ),
+                },
+            )
+        retryable = (classification == "RETRYABLE" and attempt_ordinal == 1
+                     and validated_plan["record_type"] != "SUCCESSOR_AI_INVOCATION_PLAN")
+        attempt_status = (
+            "FAILED_RETRYABLE"
+            if retryable
+            else "FAILED_RETRYABLE_FINAL"
+            if classification == "RETRYABLE"
+            else "FAILED_TERMINAL"
+        )
+        attempt = _attempt_receipt(
+            root=root,
+            execution_id=execution_id,
+            body={
+                "schema_version": 1,
+                "record_type": "AI_INVOCATION_ATTEMPT_RECEIPT",
+                "execution_id": execution_id,
+                "ai_invocation_plan_id": validated_plan[
+                    "ai_invocation_plan_id"
+                ],
+                "provider_request_identity": validated_plan[
+                    "provider_request_identity"
+                ],
+                "attempt_ordinal": attempt_ordinal,
+                "status": attempt_status,
+                "error_class": _error_class(result=result),
+                "status_code": result["status_code"],
+                "egress_marker_id": marker["egress_marker_id"],
+                "response_body_sha256": sha256_bytes(
+                    content=result["response_body"]
+                ),
+                "provider_request_id": result["provider_request_id"],
+                "billing_class": marker["billing_class"],
+                "paid_call_observation_source": marker[
+                    "paid_call_observation_source"
+                ],
+                "paid_model_provider_call_observed": marker[
+                    "paid_model_provider_call_observed"
+                ],
+                "transport_kind": transport_kind,
+                "usage": dict(result["usage"]),
+                "finished_at_utc": _utc(
+                    value=clock(), label="attempt finish time"
+                ),
+            },
+        )
+        attempts.append(attempt)
+        if retryable:
+            continue
+        return _terminal_and_release(
+            root=root,
+            reservation_path=reservation_path,
+            reservation=reservation,
+            body={
+                "schema_version": 1,
+                "record_type": "AI_EXECUTION_RECEIPT",
+                "execution_id": execution_id,
+                "ai_invocation_plan_id": validated_plan[
+                    "ai_invocation_plan_id"
+                ],
+                "provider_request_identity": validated_plan[
+                    "provider_request_identity"
+                ],
+                "status": attempt_status,
+                "batch_terminal": True,
+                "attempts": attempts,
+                "success_response_receipt_id": None,
+                "counters": counters,
+                "authorized_at_utc": authorized_at_utc,
+                "finished_at_utc": _utc(value=clock(), label="finish time"),
+            },
+        )
+    raise InvocationControlError("Invocation retry loop did not terminate")
+
+
+def execute_batch(
+    *, workspace_dir: Path, invocations: Sequence[Mapping[str, object]],
+    clock: Callable[[], str], transport: object,
+    response_validator: Callable[[bytes], None],
+    evidence_validator: Callable[[bytes], Mapping[str, object]],
+) -> Dict[str, object]:
+    """Execute ordered stability ordinals and stop on the first terminal.
+
+    Args:
+        workspace_dir: Local invocation-control workspace.
+        invocations: Ordered exact execution inputs with stability ordinals.
+        clock: Injected UTC clock.
+        transport: Injected mock or approved real transport.
+        response_validator: Strict response validator.
+        evidence_validator: Full Candidate/Evidence acceptance validator.
+
+    Returns:
+        Batch status, completed/skipped ordinals, receipts, and counters.
+    """
+    counters = _empty_counters()
+    receipts = []
+    completed = []
+    skipped = []
+    batch_status = "SUCCEEDED"
+    for index, invocation_value in enumerate(invocations):
+        invocation = _object(value=invocation_value, label="batch invocation")
+        expected_fields = {
+            "authorized_at_utc",
+            "execution_id",
+            "owner_token",
+            "plan",
+            "request_body",
+            "stability_ordinal",
+        }
+        _exact_fields(
+            value=invocation,
+            expected=expected_fields,
+            label="batch invocation",
+        )
+        if type(invocation["stability_ordinal"]) is not int or invocation[
+            "stability_ordinal"
+        ] <= 0:
+            raise InvocationControlError("Stability ordinal is invalid")
+        receipt = execute_invocation(
+            workspace_dir=workspace_dir,
+            plan=invocation["plan"],
+            request_body=invocation["request_body"],
+            execution_id=str(invocation["execution_id"]),
+            owner_token=str(invocation["owner_token"]),
+            authorized_at_utc=str(invocation["authorized_at_utc"]),
+            clock=clock,
+            transport=transport,
+            response_validator=response_validator,
+            evidence_validator=evidence_validator,
+        )
+        receipts.append(receipt)
+        _add_counters(target=counters, source=receipt["counters"])
+        completed.append(int(invocation["stability_ordinal"]))
+        if receipt["batch_terminal"]:
+            batch_status = "TERMINATED"
+            skipped = [
+                int(remaining["stability_ordinal"])
+                for remaining in invocations[index + 1:]
+            ]
+            break
+        if receipt["status"] == "SINGLE_FLIGHT_HELD":
+            batch_status = "BLOCKED_SINGLE_FLIGHT"
+            skipped = [
+                int(remaining["stability_ordinal"])
+                for remaining in invocations[index + 1:]
+            ]
+            break
+    return {
+        "schema_version": 1,
+        "record_type": "AI_INVOCATION_BATCH_RESULT",
+        "status": batch_status,
+        "completed_stability_ordinals": completed,
+        "skipped_stability_ordinals": skipped,
+        "execution_receipts": receipts,
+        "counters": counters,
+    }
+
+
+def structured_only_result(
+    *, repo_root: Path, workspace_dir: Path, release_input_plan_id: str,
+    cumulative_metric_ids: Sequence[str], result_coordinate_count: int,
+) -> Dict[str, object]:
+    """Derive zero-provider counts from routes and the exact disk namespace.
+
+    Args:
+        repo_root: Repository containing SourceStrategy authority.
+        workspace_dir: Release-specific invocation observation workspace.
+        release_input_plan_id: Exact release input plan identity.
+        cumulative_metric_ids: Exact structured-only release metric set.
+        result_coordinate_count: Complete deterministic result count.
+
+    Returns:
+        Content-addressed empty invocation closure and derived counters.
+    """
+    from .source_strategy import load_source_strategy_registry
+
+    _sha256_identity(value=release_input_plan_id, label="release input plan id")
+    if type(result_coordinate_count) is not int or result_coordinate_count < 0:
+        raise InvocationControlError("Structured-only result count is invalid")
+    if (
+        not isinstance(cumulative_metric_ids, (list, tuple))
+        or not cumulative_metric_ids
+        or any(
+            not isinstance(metric_id, str) or not metric_id
+            for metric_id in cumulative_metric_ids
+        )
+        or len(cumulative_metric_ids) != len(set(cumulative_metric_ids))
+    ):
+        raise InvocationControlError("Structured-only metric set is invalid")
+    registry = load_source_strategy_registry(repo_root=repo_root)
+    metrics = registry["metrics"]
+    if any(metric_id not in metrics for metric_id in cumulative_metric_ids):
+        raise InvocationControlError("Structured-only metric route is absent")
+    source_mode_by_metric = {
+        metric_id: metrics[metric_id]["source_mode"]
+        for metric_id in sorted(cumulative_metric_ids)
+    }
+    if set(source_mode_by_metric.values()) != {"structured_only"}:
+        raise InvocationControlError("Release contains a model-provider route")
+    root = _state_root(workspace_dir=workspace_dir)
+    observed_files = {}
+    namespaces = sorted(path.name for path in root.iterdir() if path.is_dir())
+    if tuple(namespaces) != INVOCATION_STATE_NAMESPACES:
+        raise InvocationControlError(
+            "Invocation observation namespace exact set differs"
+        )
+    for namespace in namespaces:
+        bindings = []
+        directory = root / namespace
+        for path in sorted(directory.rglob("*")):
+            if path.is_symlink() or (not path.is_file() and not path.is_dir()):
+                raise InvocationControlError(
+                    "Invocation observation namespace is unsafe"
+                )
+            if not path.is_file():
+                continue
+            content = path.read_bytes()
+            bindings.append(
+                {
+                    "path": path.relative_to(root).as_posix(),
+                    "sha256": sha256_bytes(content=content),
+                    "size": len(content),
+                }
+            )
+        observed_files[namespace] = bindings
+    emitted = [
+        binding
+        for bindings in observed_files.values()
+        for binding in bindings
+    ]
+    if emitted:
+        raise InvocationControlError(
+            "Structured-only release emitted invocation state"
+        )
+    counters = _empty_counters()
+    body = {
+        "schema_version": 1,
+        "record_type": "STRUCTURED_ONLY_INVOCATION_RESULT",
+        "release_input_plan_id": release_input_plan_id,
+        "source_mode_by_metric": source_mode_by_metric,
+        "result_coordinate_count": result_coordinate_count,
+        "status": "SUCCEEDED_ZERO_PROVIDER",
+        "observed_invocation_files": observed_files,
+        "observed_ai_invocation_plan_ids": [],
+        "observed_provider_request_identities": [],
+        "counters": counters,
+    }
+    return {
+        **body,
+        "invocation_observation_id": content_hash(value=body),
+    }
+
+
+def recover_abandoned_before_egress(
+    *, workspace_dir: Path, request_identity: str,
+    expected_execution_id: str, recovered_at_utc: str,
+) -> Dict[str, object]:
+    """Archive a proven pre-egress orphan so a new execution may reserve.
+
+    Args:
+        workspace_dir: Invocation-control workspace.
+        request_identity: Exact provider request identity.
+        expected_execution_id: Orphaned execution identity.
+        recovered_at_utc: Explicit UTC recovery time.
+
+    Returns:
+        Immutable ABANDONED_BEFORE_EGRESS recovery receipt.
+    """
+    root = _state_root(workspace_dir=workspace_dir)
+    reservation_path = _reservation_path(
+        root=root, request_identity=request_identity,
+    )
+    reservation = _read_json_object(
+        path=reservation_path, label="single-flight reservation"
+    )
+    if reservation["execution_id"] != expected_execution_id:
+        raise InvocationControlError("Abandoned reservation execution differs")
+    egress_dir = root / "egress" / _identity_name(identity=expected_execution_id)
+    if egress_dir.exists() and any(egress_dir.iterdir()):
+        raise InvocationControlError("UNKNOWN_REMOTE_OUTCOME")
+    body = {
+        "schema_version": 1,
+        "record_type": "ABANDONED_BEFORE_EGRESS_RECEIPT",
+        "execution_id": expected_execution_id,
+        "provider_request_identity": request_identity,
+        "reservation_hash": content_hash(value=reservation),
+        "status": "ABANDONED_BEFORE_EGRESS",
+        "recovered_at_utc": _utc(
+            value=recovered_at_utc, label="recovery time"
+        ),
+    }
+    receipt = dict(body)
+    receipt["recovery_receipt_id"] = content_hash(value=body)
+    destination = (
+        root
+        / "abandoned"
+        / (
+            _identity_name(identity=str(receipt["recovery_receipt_id"]))
+            + ".json"
+        )
+    )
+    _exclusive_write_json(path=destination, value=receipt)
+    os.replace(reservation_path, destination.with_suffix(".reservation.json"))
+    return receipt

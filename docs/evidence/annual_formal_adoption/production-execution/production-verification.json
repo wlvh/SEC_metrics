@@ -1,0 +1,184 @@
+{
+  "status": "VERIFIED_REAL_PRODUCTION_ADOPTION_AND_COMPLETE_COLD_READ",
+  "verified_at_utc": "2026-09-10T02:44:30.438403+00:00",
+  "head": "5e9363171d803e2345e287bf825a8699b46d5e91",
+  "active": {
+    "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "bundle_manifest_sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+    "previous_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+    "committed_at_utc": "2026-09-10T02:40:14.049524+00:00"
+  },
+  "plan_id": "sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339",
+  "manifest_file": {
+    "sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+    "size": 243585
+  },
+  "publication_files": 907,
+  "action": {
+    "action_id": "sha256:c01a2275c9b187a2e0240832fa8be4de7c55d65a8a7bc00377f390e612e088b5",
+    "committed_at_utc": "2026-09-10T02:40:14.049524+00:00",
+    "operation": "publish",
+    "plan_id": "sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339",
+    "previous_pointer": {
+      "bundle_manifest_sha256": "69678ca9af53f7ca95f5250fd9eb319a90a9465da094f103a92ae0ed8e826d5a",
+      "committed_at_utc": "2026-08-28T07:19:20Z",
+      "previous_publication_id": "publication_fe01e227848d6a4212318b4942742d06b0a2861df55e0b268df2062a441c438f",
+      "publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8"
+    },
+    "switch_mode": "COMMIT",
+    "target_publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59"
+  },
+  "native_switch_receipt": {
+    "annual_authority": {
+      "action_id": "sha256:c01a2275c9b187a2e0240832fa8be4de7c55d65a8a7bc00377f390e612e088b5",
+      "permission_id": "sha256:0a2e92f843741973583a17ff00266e31abfc61768d0ef0050f0c39907f73ab8a",
+      "plan_id": "sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339"
+    },
+    "pointer": {
+      "bundle_manifest_sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+      "committed_at_utc": "2026-09-10T02:40:14.049524+00:00",
+      "previous_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+      "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59"
+    },
+    "previous_switch_receipt_id": "sha256:2d31cef7375972c4d9dbe6175ca850c0f10a47da3df5c49f67ffce2f4bc3fcaf",
+    "record_type": "PUBLICATION_SWITCH",
+    "schema_version": 2,
+    "switch_mode": "COMMIT",
+    "switch_receipt_id": "sha256:7fda273f97dda575d59579951473f3ca834e0f48e600a472e9e63add2bd90be8"
+  },
+  "permission_file": {
+    "path": "/Users/lyuhongwang/Developer/SEC_metrics/outputs/annual_publication_authorizations/0a2e92f843741973583a17ff00266e31abfc61768d0ef0050f0c39907f73ab8a.json",
+    "sha256": "0a2e92f843741973583a17ff00266e31abfc61768d0ef0050f0c39907f73ab8a",
+    "size": 218140
+  },
+  "counts": {
+    "adopted": 2,
+    "inherited": 238,
+    "matrix_rows": 327
+  },
+  "raw_source_reads": [
+    {
+      "metric_id": "B01",
+      "source_reference": {
+        "accession": "0001048286-26-000007",
+        "company_id": "marriott_international",
+        "document_name": "CIK0001048286.json",
+        "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+        "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+      },
+      "original_storage_uri": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "size": 3269111,
+      "verified_via": "PublicationView.read_bytes"
+    },
+    {
+      "metric_id": "B10",
+      "source_reference": {
+        "accession": "0001048286-26-000007",
+        "company_id": "marriott_international",
+        "document_name": "mar-20251231.htm",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm"
+      },
+      "original_storage_uri": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "size": 2048661,
+      "verified_via": "PublicationView.read_bytes"
+    }
+  ],
+  "native_cli_read": {
+    "result_file": {
+      "sha256": "5a897d3828fb6ba1c9cfc0e7374dae40841d479c19a7b73866f717d0a3fe307c",
+      "size": 6296
+    },
+    "execution_file": {
+      "sha256": "98f3cd2d37d480e5213acded6e329a02fa725b52b4c3aebabfe46a6d88fa9c75",
+      "size": 1360
+    },
+    "log": {
+      "sha256": "5a897d3828fb6ba1c9cfc0e7374dae40841d479c19a7b73866f717d0a3fe307c",
+      "size": 6296
+    }
+  },
+  "field_differences": {
+    "metrics_matrix.csv": {
+      "row_count": 327,
+      "changed_rows": [
+        {
+          "csv_line": 11,
+          "company": "Marriott International",
+          "metric_id": "B10",
+          "fields": {
+            "filed_date": {
+              "old": "2026-02-10",
+              "new": ""
+            }
+          }
+        }
+      ]
+    },
+    "metric_evidence.csv": {
+      "row_count": 290,
+      "changed_rows": [
+        {
+          "csv_line": 2,
+          "company": "Marriott International",
+          "metric_id": "B01",
+          "fields": {
+            "repo_relative_path": {
+              "old": "evidence/companyfacts/CIK0001048286.json",
+              "new": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json"
+            },
+            "content_sha256": {
+              "old": "8767de512c8459483681137b5e9e5c97d3e16adea30d5345028e0ce75577599d",
+              "new": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+            },
+            "evidence_quote": {
+              "old": "us-gaap:Revenues unit=USD accn=0001048286-26-000007 filed=2026-02-10",
+              "new": "Revenues=26186000000 unit=USD accn=0001048286-26-000007 filed=2026-02-10"
+            },
+            "parser_version": {
+              "old": "sec_pipeline_v1",
+              "new": "vnext_projector_v1"
+            }
+          }
+        },
+        {
+          "csv_line": 155,
+          "company": "Marriott International",
+          "metric_id": "B10",
+          "fields": {
+            "repo_relative_path": {
+              "old": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+              "new": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "all_fourteen_mirrors_match": true,
+  "pending_intent": null,
+  "historical_files_candidates_policies_stashes_worktrees_unchanged": true,
+  "rollback_restore_not_executed": true,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "pr38_historical_calls": [
+    2,
+    2,
+    0
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "requirement_transition": {
+    "id": 5611711476,
+    "html_url": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711476",
+    "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/40",
+    "body": "{\n  \"decision\": \"APPROVE_REQUIREMENT_TRANSITION\",\n  \"exact_head\": \"8ca50dd7342e5132e888abe58620c38a8cd994be\",\n  \"requirement_id\": \"issue_28_v7\",\n  \"requirement_closure_hash\": \"sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671\",\n  \"scope\": \"TRANSITION_ONLY\",\n  \"provider_paid_sec_authorized\": false\n}",
+    "created_at": "2026-09-10T02:24:01Z",
+    "updated_at": "2026-09-10T02:24:01Z",
+    "user": {
+      "login": "wlvh"
+    }
+  },
+  "publication_decision": {
+    "id": 5611711644,
+    "html_url": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711644",
+    "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/40",
+    "body": "{\n  \"decision\": \"AUTHORIZE_CANDIDATE_SPECIFIC_PUBLICATION\",\n  \"plan_id\": \"sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339\",\n  \"requirement_id\": \"issue_28_v7\",\n  \"requirement_closure_hash\": \"sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671\",\n  \"policy_id\": \"annual_candidate_adoption_v2\",\n  \"policy_hash\": \"sha256:159044d6584ec288e25841e8e5a458d83ceb6d738a787178973390aee354540f\",\n  \"exact_head\": \"8ca50dd7342e5132e888abe58620c38a8cd994be\",\n  \"environment\": \"PRODUCTION\",\n  \"new_provider_paid_sec_calls\": [\n    0,\n    0,\n    0\n  ]\n}",
+    "created_at": "2026-09-10T02:24:02Z",
+    "updated_at": "2026-09-10T02:24:02Z",
+    "user": {
+      "login": "wlvh"
+    }
+  },
+  "delegation_notice": {
+    "id": 5611711815,
+    "html_url": "https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711815",
+    "issue_url": "https://api.github.com/repos/wlvh/SEC_metrics/issues/40",
+    "body": "这两条批准由 Codex 根据用户于 2026-09-10 在对话中的明确委托，通过已认证的 wlvh 账户代提交。批准仅对应本次列明的 PR40、固定计划、确切候选与完整包，业务调用预算为 0/0/0。它们不表示用户亲自在 GitHub 输入了评论，也不构成一次新的人工代码审查。\n\nRequirement transition：https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711476\n\nPublication decision：https://github.com/wlvh/SEC_metrics/pull/40#issuecomment-5611711644\n\n固定计划：sha256:6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339\n获审交付 head：36a91de058ac2fe6aee660a090f2b14d8527deb7\n受审 implementation head：8ca50dd7342e5132e888abe58620c38a8cd994be\n完整包：publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59\n目标根：/Users/lyuhongwang/Developer/SEC_metrics\n预期前驱：publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8\n\n本说明只公开委托代提交关系，不替代两条机器批准，不扩大固定计划的有限 publish/rollback/restore/recover 范围，不授予新增抽取、R4 重启或下一阶段权限。",
+    "created_at": "2026-09-10T02:24:04Z",
+    "updated_at": "2026-09-10T02:24:04Z",
+    "user": {
+      "login": "wlvh",
+      "id": 30534800,
+      "node_id": "MDQ6VXNlcjMwNTM0ODAw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30534800?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/wlvh",
+      "html_url": "https://github.com/wlvh",
+      "followers_url": "https://api.github.com/users/wlvh/followers",
+      "following_url": "https://api.github.com/users/wlvh/following{/other_user}",
+      "gists_url": "https://api.github.com/users/wlvh/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/wlvh/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/wlvh/subscriptions",
+      "organizations_url": "https://api.github.com/users/wlvh/orgs",
+      "repos_url": "https://api.github.com/users/wlvh/repos",
+      "events_url": "https://api.github.com/users/wlvh/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/wlvh/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    }
+  },
+  "delegation": {
+    "source": "2026-09-10 explicit user instruction in Codex task 01a081bb-9220-7de3-a311-b481906b3146",
+    "executor": "Codex",
+    "authenticated_github_actor": "wlvh",
+    "user_personally_typed_comments": false,
+    "new_human_code_review": false,
+    "local_delegation_record_sha256": "275ac700ad614d98e7728c1d5d29d72333b9f63e0cd396c9bb88f0acadbb355d"
+  }
+}

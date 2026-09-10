@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "record_type": "ZERO_AI_PUBLIC_PROJECTION_CATALOG",
+  "renderer_semantic_version": "1",
+  "event_window_policy_by_continuity": {
+    "continuous": "TARGET_PERIOD",
+    "successor_predecessor": "PRIOR_CALENDAR_YEAR_START_TO_TARGET_END"
+  },
+  "common_structural_projection": {
+    "formula": "$FORMULA",
+    "status": "N_A_STRUCTURAL",
+    "source_class": "STRUCTURAL",
+    "confidence": "1.00",
+    "notes_template": "Metric is structurally inapplicable to this company profile.",
+    "note_enrichment": null,
+    "fiscal_year_policy": "COORDINATE",
+    "fiscal_period": "FY",
+    "accession_policy": "EMPTY",
+    "form_policy": "EMPTY",
+    "filed_date_policy": "EMPTY",
+    "concept_policy": "STATIC:metric_applicability_v1",
+    "context_policy": "STATIC:company_traits"
+  },
+  "common_continuity_projection": {
+    "formula": "$FORMULA",
+    "status": "NOT_MEANINGFUL",
+    "source_class": "NOT_AVAILABLE",
+    "confidence": "0.00",
+    "notes_template": "successor stub period {period_start} to {period_end}; annual metric not comparable.",
+    "note_enrichment": null,
+    "fiscal_year_policy": "EMPTY",
+    "fiscal_period": "",
+    "accession_policy": "TRACE_ACCESSION",
+    "form_policy": "LITERAL:10-K",
+    "filed_date_policy": "EMPTY",
+    "concept_policy": "EMPTY",
+    "context_policy": "EMPTY"
+  },
+  "approved_deltas": [],
+  "metrics": {
+    "A01": {
+      "metric_name": "Tier 1 capital ratio",
+      "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "DIM_XBRL_OK", "source_class": "DIM_XBRL", "confidence": "0.90",
+        "notes_template": "Selected parent/consolidated standardized Basel ratio fact; candidate facts and regulatory thresholds are retained in outputs/basel_ratio_candidates.csv. {enrichment}",
+        "note_enrichment": {"kind": "UNSELECTED_XBRL_CANDIDATES"},
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EMPTY",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "A02": {
+      "metric_name": "CET1 ratio", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "DIM_XBRL_OK", "source_class": "DIM_XBRL", "confidence": "0.90",
+        "notes_template": "Selected parent/consolidated standardized Basel ratio fact; candidate facts and regulatory thresholds are retained in outputs/basel_ratio_candidates.csv. {enrichment}",
+        "note_enrichment": {"kind": "UNSELECTED_XBRL_CANDIDATES"},
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EMPTY",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "A05": {
+      "metric_name": "ROA", "formula": "net income / average total assets",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Average assets uses current and prior 10-K Assets.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "A06": {
+      "metric_name": "ROE", "formula": "net income / average shareholders' equity",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Uses total equity when common-shareholder denominator is absent.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "A07": {
+      "metric_name": "Net income trends", "formula": "NetIncome_t - NetIncome_t-1",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Single-year task trend is YoY pair.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "A08": {
+      "metric_name": "Fee income vs interest income", "formula": "NoninterestIncome / InterestIncomeExpenseNet",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "STD_XBRL", "confidence": "0.90",
+        "notes_template": "Per 02 §A08 definition, this uses noninterest income, not pure fee income; noninterest income may include trading, investment banking, asset-management and other noninterest revenue.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "A10": {
+      "metric_name": "Loan loss reserves", "formula": "FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest / FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "STD_XBRL", "confidence": "0.90",
+        "notes_template": "Primary allowance ratio uses retained loans before allowance for credit loss; securities credit-loss allowance is excluded.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "B01": {
+      "metric_name": "Revenue", "formula": "direct",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "STD_XBRL", "confidence": "0.95",
+        "notes_template": "Revenue candidate chain from metric definition.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null,
+      "continuity_overlay": {"formula": "direct companyfacts candidate chain", "form_policy": "EMPTY"},
+      "not_meaningful_overlay": {"formula": "direct companyfacts candidate chain", "form_policy": "EMPTY"},
+      "approximate_overlay": null, "role_overlays": []
+    },
+    "B02": {
+      "metric_name": "Revenue YoY growth", "formula": "(Revenue_t - Revenue_t-1) / Revenue_t-1",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Same revenue candidate chain YoY pair after continuity checks.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": {},
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "B03": {
+      "metric_name": "EBITDA margin", "formula": "(Operating income + D&A) / revenue",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Direct OperatingIncomeLoss selected. Direct D&A concept selected. GAAP EBITDA proxy; impairment is not added back.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE_ROLES:operating_income,depreciation_and_amortization,depreciation,amortization,revenue", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": {},
+      "not_meaningful_overlay": {},
+      "approximate_overlay": {"status": "OK_APPROX", "notes_template": "Operating income reconstructed from pretax continuing income less aggregate nonoperating income/expense; assumes the nonoperating aggregate is the complete operating-to-pretax bridge. CostsAndExpenses cross-check unavailable; assumes the nonoperating aggregate is the complete operating-to-pretax bridge. Direct D&A concept selected. GAAP EBITDA proxy; impairment is not added back.", "concept_policy": "EVIDENCE_ROLES:pretax,nonoperating,depreciation_and_amortization,revenue"},
+      "role_overlays": [
+        {
+          "semantic_roles_exact": ["amortization", "depreciation", "operating_income", "revenue"],
+          "overlay": {
+            "notes_template": "Direct OperatingIncomeLoss selected. D&A composed from standard Depreciation + AmortizationOfIntangibleAssets.{enrichment} GAAP EBITDA proxy; impairment is not added back.",
+            "note_enrichment": {
+          "kind": "ACCESSION_XBRL_CONCEPT_VALUES",
+              "concepts": ["DepreciationAmortizationAndOtherExcludingCapitalizedContractCostAmortization", "DepreciationAmortizationAndOther"],
+              "prefix": " custom DepreciationAmortizationAndOther observed (",
+              "separator": ";",
+              "suffix": ") but not added because \"and other\" is not cleanly attributable to D&A expense."
+            }
+          }
+        }
+      ]
+    },
+    "B04": {
+      "metric_name": "Net income", "formula": "direct",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "STD_XBRL", "confidence": "0.95",
+        "notes_template": "Net income candidate chain from metric definition.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null,
+      "continuity_overlay": {"formula": "direct companyfacts candidate chain", "form_policy": "EMPTY"},
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "B05": {
+      "metric_name": "Free cash flow", "formula": "operating cash flow - capital expenditures",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Capex chain allows PaymentsToAcquireProductiveAssets.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": {},
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "B07": {
+      "metric_name": "Interest coverage ratio", "formula": "operating income / interest expense",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Operating income divided by interest expense.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": {},
+      "not_meaningful_overlay": {"status": "NOT_MEANINGFUL", "source_class": "NOT_AVAILABLE", "confidence": "0.00", "notes_template": "Operating income is non-positive.", "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE", "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"},
+      "approximate_overlay": {"status": "OK_APPROX", "notes_template": "Interest coverage uses reconstructed operating income."},
+      "role_overlays": []
+    },
+    "B08": {
+      "metric_name": "Current ratio", "formula": "current assets / current liabilities",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "DERIVED", "confidence": "0.90",
+        "notes_template": "Financial-institution profiles handle current ratio as structural N/A.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null,
+      "structural_overlay": {
+        "formula": "not numeric in companyfacts stage", "source_class": "NOT_AVAILABLE", "confidence": "0.00",
+        "notes_template": "Bank current ratio is structurally not applicable.", "fiscal_year_policy": "EMPTY", "fiscal_period": "",
+        "concept_policy": "STATIC:Bank current ratio is structurally not applicable.", "context_policy": "EMPTY"
+      },
+      "continuity_overlay": null, "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "B09": {
+      "metric_name": "Cash reserves", "formula": "direct",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "OK", "source_class": "STD_XBRL", "confidence": "0.95",
+        "notes_template": "Cash and cash equivalents only; short-term investments not merged.", "note_enrichment": null,
+        "fiscal_year_policy": "COORDINATE", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EVIDENCE_UNIQUE",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "B12": {
+      "metric_name": "ARR / churn or RPO substitute", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "DIM_XBRL_OK", "source_class": "DIM_XBRL", "confidence": "0.90",
+        "notes_template": "RPO != ARR; cRPO != ARR. Selected accession instance fact.", "note_enrichment": null,
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "EVIDENCE", "form_policy": "EMPTY",
+        "filed_date_policy": "EVIDENCE", "concept_policy": "EVIDENCE", "context_policy": "EVIDENCE"
+      },
+      "zero_overlay": null, "structural_overlay": null, "continuity_overlay": null,
+      "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "C01": {
+      "metric_name": "CEO / CFO changes", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "8K_ITEM_OK", "source_class": "8K_ITEM", "confidence": "0.90",
+        "notes_template": "CEO/CFO or director/officer event.", "note_enrichment": null,
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "MATCHED_EVENTS", "form_policy": "EMPTY",
+        "filed_date_policy": "MATCHED_EVENTS", "concept_policy": "STATIC:8-K Item 5.02", "context_policy": "STATIC:FY window"
+      },
+      "zero_overlay": {"status": "NOT_AVAILABLE_SEC", "confidence": "0.80", "notes_template": "FY-window 8-K scanned; no item 5.02 found.", "accession_policy": "ALL_EVENTS", "filed_date_policy": "ALL_EVENTS", "context_policy": "STATIC:FY-window 8-K accessions scanned"},
+      "structural_overlay": null, "continuity_overlay": null, "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "E01": {
+      "metric_name": "M&A announcements", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "8K_ITEM_OK", "source_class": "8K_ITEM", "confidence": "0.75",
+        "notes_template": "M&A candidate from item mapping and keyword rule.", "note_enrichment": null,
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "MATCHED_EVENTS", "form_policy": "EMPTY",
+        "filed_date_policy": "EMPTY", "concept_policy": "STATIC:8-K Item 1.01/2.01/8.01", "context_policy": "STATIC:FY-window 8-K accessions scanned"
+      },
+      "zero_overlay": {"status": "NOT_AVAILABLE_SEC", "notes_template": "FY-window 8-K scanned; no M&A item rule matched.", "accession_policy": "ALL_EVENTS", "filed_date_policy": "ALL_EVENTS"},
+      "structural_overlay": null, "continuity_overlay": null, "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "E02": {
+      "metric_name": "Bankruptcy filings", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "8K_ITEM_OK", "source_class": "8K_ITEM", "confidence": "0.80",
+        "notes_template": "Bankruptcy event.", "note_enrichment": null,
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "MATCHED_EVENTS", "form_policy": "EMPTY",
+        "filed_date_policy": "MATCHED_EVENTS", "concept_policy": "STATIC:8-K Item 1.03", "context_policy": "STATIC:FY window"
+      },
+      "zero_overlay": {"status": "NOT_AVAILABLE_SEC", "notes_template": "No Item 1.03 in FY-window 8-K; zero is normal.", "accession_policy": "ALL_EVENTS", "filed_date_policy": "ALL_EVENTS", "context_policy": "STATIC:FY-window 8-K accessions scanned"},
+      "structural_overlay": null, "continuity_overlay": null, "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "E03": {
+      "metric_name": "Leadership departures", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "8K_ITEM_OK", "source_class": "8K_ITEM", "confidence": "0.90",
+        "notes_template": "Leadership event.", "note_enrichment": null,
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "MATCHED_EVENTS", "form_policy": "EMPTY",
+        "filed_date_policy": "MATCHED_EVENTS", "concept_policy": "STATIC:8-K Item 5.02", "context_policy": "STATIC:FY window"
+      },
+      "zero_overlay": {"status": "NOT_AVAILABLE_SEC", "confidence": "0.80", "notes_template": "FY-window 8-K scanned; no item 5.02 found.", "accession_policy": "ALL_EVENTS", "filed_date_policy": "ALL_EVENTS", "context_policy": "STATIC:FY-window 8-K accessions scanned"},
+      "structural_overlay": null, "continuity_overlay": null, "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "E04": {
+      "metric_name": "Financial restatements", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "8K_ITEM_OK", "source_class": "8K_ITEM", "confidence": "0.80",
+        "notes_template": "Financial restatement event.", "note_enrichment": null,
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "MATCHED_EVENTS", "form_policy": "EMPTY",
+        "filed_date_policy": "MATCHED_EVENTS", "concept_policy": "STATIC:8-K Item 4.02", "context_policy": "STATIC:FY window"
+      },
+      "zero_overlay": {"status": "NOT_AVAILABLE_SEC", "notes_template": "FY-window 8-K scanned; no item 4.02 found.", "accession_policy": "ALL_EVENTS", "filed_date_policy": "ALL_EVENTS", "context_policy": "STATIC:FY-window 8-K accessions scanned"},
+      "structural_overlay": null, "continuity_overlay": null, "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    },
+    "E05": {
+      "metric_name": "Material agreements", "formula": "text/event extraction",
+      "success_projection": {
+        "formula": "$FORMULA", "status": "8K_ITEM_OK", "source_class": "8K_ITEM", "confidence": "0.90",
+        "notes_template": "Material agreement event.", "note_enrichment": null,
+        "fiscal_year_policy": "EMPTY", "fiscal_period": "FY", "accession_policy": "MATCHED_EVENTS", "form_policy": "EMPTY",
+        "filed_date_policy": "MATCHED_EVENTS", "concept_policy": "STATIC:8-K Item 1.01", "context_policy": "STATIC:FY window"
+      },
+      "zero_overlay": {"status": "NOT_AVAILABLE_SEC", "confidence": "0.80", "notes_template": "FY-window 8-K scanned; no item 1.01 found.", "accession_policy": "ALL_EVENTS", "filed_date_policy": "ALL_EVENTS", "context_policy": "STATIC:FY-window 8-K accessions scanned"},
+      "structural_overlay": null, "continuity_overlay": null, "not_meaningful_overlay": null, "approximate_overlay": null, "role_overlays": []
+    }
+  }
+}

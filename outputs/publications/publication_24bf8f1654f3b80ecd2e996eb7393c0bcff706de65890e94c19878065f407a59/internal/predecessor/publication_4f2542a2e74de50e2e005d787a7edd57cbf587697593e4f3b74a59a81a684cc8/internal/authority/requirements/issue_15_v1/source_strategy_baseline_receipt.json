@@ -1,0 +1,2309 @@
+{
+  "schema_version": 1,
+  "record_type": "ISSUE_15_SOURCE_STRATEGY_BASELINE_RECEIPT",
+  "requirement_id": "issue_15_v1",
+  "generated_at_utc": "2026-08-19T04:02:38Z",
+  "generated_from": "outputs/metrics_matrix.csv",
+  "generation_method": "csv.DictReader exact row scan; counts and sets are computed from matrix bytes and are not copied from the Issue body",
+  "baseline_source_commit": "4d02db6a474f93eec9e058d780e206b4504ab24d",
+  "matrix_sha256": "0fdb969afe0bbc89c28a1f68d41c706ef2f1afc2c926302a04ee503ec12adb42",
+  "matrix_size": 85304,
+  "matrix_fieldnames": [
+    "company",
+    "cik",
+    "metric_id",
+    "metric_name",
+    "value",
+    "unit",
+    "status",
+    "source_class",
+    "formula",
+    "period_start",
+    "period_end",
+    "fiscal_year",
+    "fiscal_period",
+    "accession",
+    "form",
+    "filed_date",
+    "concept_or_section",
+    "context_or_dimension",
+    "confidence",
+    "notes"
+  ],
+  "row_count": 230,
+  "company_count": 10,
+  "company_set": [
+    "Enphase Energy",
+    "Ford Motor Company",
+    "JPMorgan Chase",
+    "Lumen Technologies",
+    "Macy's",
+    "Marriott International",
+    "Paramount Skydance / Paramount Global",
+    "Pfizer",
+    "Salesforce",
+    "Southwest Airlines"
+  ],
+  "company_set_hash": "sha256:a853919c7a599d6e5a3a2b0e41f9fa486034cf42a2e126767eb2f488ae4072cc",
+  "metric_id_count": 39,
+  "metric_id_set": [
+    "A01",
+    "A02",
+    "A03",
+    "A04",
+    "A05",
+    "A06",
+    "A07",
+    "A08",
+    "A09",
+    "A10",
+    "A11",
+    "A12",
+    "A13",
+    "B01",
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07",
+    "B08",
+    "B09",
+    "B10",
+    "B11",
+    "B12",
+    "B13",
+    "C01",
+    "C02",
+    "C03",
+    "C04",
+    "D01",
+    "D02",
+    "D03",
+    "D04",
+    "E01",
+    "E02",
+    "E03",
+    "E04",
+    "E05"
+  ],
+  "metric_id_set_hash": "sha256:470e340f0e7c35f4d6fe930ba9ef1cfcc0d057aa33d655a6c59810664550504a",
+  "rows_by_metric": {
+    "A01": 1,
+    "A02": 1,
+    "A03": 1,
+    "A04": 1,
+    "A05": 1,
+    "A06": 1,
+    "A07": 1,
+    "A08": 1,
+    "A09": 1,
+    "A10": 1,
+    "A11": 1,
+    "A12": 1,
+    "A13": 1,
+    "B01": 9,
+    "B02": 9,
+    "B03": 9,
+    "B04": 9,
+    "B05": 9,
+    "B06": 9,
+    "B07": 9,
+    "B08": 10,
+    "B09": 9,
+    "B10": 1,
+    "B11": 1,
+    "B12": 1,
+    "B13": 2,
+    "C01": 10,
+    "C02": 10,
+    "C03": 10,
+    "C04": 10,
+    "D01": 10,
+    "D02": 10,
+    "D03": 10,
+    "D04": 10,
+    "E01": 10,
+    "E02": 10,
+    "E03": 10,
+    "E04": 10,
+    "E05": 10
+  },
+  "rows_by_current_status": {
+    "8K_ITEM_OK": 30,
+    "DEF14A_OK": 8,
+    "DIM_XBRL_OK": 12,
+    "MDA_OK": 6,
+    "NEEDS_REVIEW": 2,
+    "NOT_AVAILABLE_SEC": 31,
+    "NOT_EXTRACTED": 5,
+    "NOT_MEANINGFUL": 10,
+    "N_A_STRUCTURAL": 1,
+    "OK": 73,
+    "OK_APPROX": 2,
+    "TEXT_QUAL": 50
+  },
+  "current_statuses_by_metric": {
+    "A01": [
+      "DIM_XBRL_OK"
+    ],
+    "A02": [
+      "DIM_XBRL_OK"
+    ],
+    "A03": [
+      "MDA_OK"
+    ],
+    "A04": [
+      "MDA_OK"
+    ],
+    "A05": [
+      "OK"
+    ],
+    "A06": [
+      "OK"
+    ],
+    "A07": [
+      "OK"
+    ],
+    "A08": [
+      "OK"
+    ],
+    "A09": [
+      "NOT_EXTRACTED"
+    ],
+    "A10": [
+      "OK"
+    ],
+    "A11": [
+      "MDA_OK"
+    ],
+    "A12": [
+      "MDA_OK"
+    ],
+    "A13": [
+      "NOT_EXTRACTED"
+    ],
+    "B01": [
+      "NOT_MEANINGFUL",
+      "OK"
+    ],
+    "B02": [
+      "NOT_MEANINGFUL",
+      "OK"
+    ],
+    "B03": [
+      "NOT_MEANINGFUL",
+      "OK",
+      "OK_APPROX"
+    ],
+    "B04": [
+      "NOT_MEANINGFUL",
+      "OK"
+    ],
+    "B05": [
+      "NOT_MEANINGFUL",
+      "OK"
+    ],
+    "B06": [
+      "NEEDS_REVIEW",
+      "NOT_MEANINGFUL",
+      "OK"
+    ],
+    "B07": [
+      "NOT_MEANINGFUL",
+      "OK",
+      "OK_APPROX"
+    ],
+    "B08": [
+      "N_A_STRUCTURAL",
+      "OK"
+    ],
+    "B09": [
+      "OK"
+    ],
+    "B10": [
+      "MDA_OK"
+    ],
+    "B11": [
+      "MDA_OK"
+    ],
+    "B12": [
+      "DIM_XBRL_OK"
+    ],
+    "B13": [
+      "TEXT_QUAL"
+    ],
+    "C01": [
+      "8K_ITEM_OK",
+      "NOT_AVAILABLE_SEC"
+    ],
+    "C02": [
+      "TEXT_QUAL"
+    ],
+    "C03": [
+      "DEF14A_OK",
+      "NOT_EXTRACTED"
+    ],
+    "C04": [
+      "DIM_XBRL_OK",
+      "NEEDS_REVIEW"
+    ],
+    "D01": [
+      "NOT_EXTRACTED",
+      "TEXT_QUAL"
+    ],
+    "D02": [
+      "NOT_AVAILABLE_SEC",
+      "TEXT_QUAL"
+    ],
+    "D03": [
+      "TEXT_QUAL"
+    ],
+    "D04": [
+      "TEXT_QUAL"
+    ],
+    "E01": [
+      "8K_ITEM_OK",
+      "NOT_AVAILABLE_SEC"
+    ],
+    "E02": [
+      "NOT_AVAILABLE_SEC"
+    ],
+    "E03": [
+      "8K_ITEM_OK",
+      "NOT_AVAILABLE_SEC"
+    ],
+    "E04": [
+      "NOT_AVAILABLE_SEC"
+    ],
+    "E05": [
+      "8K_ITEM_OK",
+      "NOT_AVAILABLE_SEC"
+    ]
+  },
+  "current_source_classes_by_metric": {
+    "A01": [
+      "DIM_XBRL"
+    ],
+    "A02": [
+      "DIM_XBRL"
+    ],
+    "A03": [
+      "MDA"
+    ],
+    "A04": [
+      "MDA"
+    ],
+    "A05": [
+      "DERIVED"
+    ],
+    "A06": [
+      "DERIVED"
+    ],
+    "A07": [
+      "DERIVED"
+    ],
+    "A08": [
+      "STD_XBRL"
+    ],
+    "A09": [
+      "NOT_AVAILABLE"
+    ],
+    "A10": [
+      "STD_XBRL"
+    ],
+    "A11": [
+      "MDA"
+    ],
+    "A12": [
+      "MDA"
+    ],
+    "A13": [
+      "NOT_AVAILABLE"
+    ],
+    "B01": [
+      "NOT_AVAILABLE",
+      "STD_XBRL"
+    ],
+    "B02": [
+      "DERIVED",
+      "NOT_AVAILABLE"
+    ],
+    "B03": [
+      "DERIVED",
+      "NOT_AVAILABLE"
+    ],
+    "B04": [
+      "NOT_AVAILABLE",
+      "STD_XBRL"
+    ],
+    "B05": [
+      "DERIVED",
+      "NOT_AVAILABLE"
+    ],
+    "B06": [
+      "DERIVED",
+      "NOT_AVAILABLE"
+    ],
+    "B07": [
+      "DERIVED",
+      "NOT_AVAILABLE"
+    ],
+    "B08": [
+      "DERIVED",
+      "NOT_AVAILABLE"
+    ],
+    "B09": [
+      "STD_XBRL"
+    ],
+    "B10": [
+      "MDA"
+    ],
+    "B11": [
+      "MDA"
+    ],
+    "B12": [
+      "DIM_XBRL"
+    ],
+    "B13": [
+      "TEXT"
+    ],
+    "C01": [
+      "8K_ITEM"
+    ],
+    "C02": [
+      "DEF14A"
+    ],
+    "C03": [
+      "DEF14A"
+    ],
+    "C04": [
+      "DIM_XBRL"
+    ],
+    "D01": [
+      "TEXT"
+    ],
+    "D02": [
+      "TEXT"
+    ],
+    "D03": [
+      "TEXT"
+    ],
+    "D04": [
+      "TEXT"
+    ],
+    "E01": [
+      "8K_ITEM"
+    ],
+    "E02": [
+      "8K_ITEM"
+    ],
+    "E03": [
+      "8K_ITEM"
+    ],
+    "E04": [
+      "8K_ITEM"
+    ],
+    "E05": [
+      "8K_ITEM"
+    ]
+  },
+  "metrics_by_target_source_mode": {
+    "structured_only": [
+      "A01",
+      "A02",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A10",
+      "B01",
+      "B02",
+      "B03",
+      "B04",
+      "B05",
+      "B07",
+      "B08",
+      "B09",
+      "B12",
+      "C01",
+      "C03",
+      "C04",
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E05"
+    ],
+    "structured_first_ai_fallback": [
+      "A09",
+      "A13",
+      "B06",
+      "D04"
+    ],
+    "ai_table": [
+      "A03",
+      "A04",
+      "A11",
+      "A12",
+      "B10",
+      "B11",
+      "B13"
+    ],
+    "ai_text": [
+      "C02",
+      "D01",
+      "D02",
+      "D03"
+    ]
+  },
+  "target_source_mode_basis": "Issue #15 CONTRACT sections 2, 6/WB-2, 6/WB-2B, and explicit A09/A13/D04 structured-first exception; this frozen mapping is a WB-1 baseline and is not the WB-2 runtime registry",
+  "frozen_legacy_public_key_count": 230,
+  "frozen_legacy_public_keys": [
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B13"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B13"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E05"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A05"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A06"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A07"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A08"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A09"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A10"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A11"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A12"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A13"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "B08"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B10"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B11"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B12"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E05"
+    }
+  ],
+  "frozen_legacy_keyset_hash": "sha256:60bd672094a7818a945fd2d125388413dcbf19206e2d7870c59b3927bf94d91e",
+  "row_order_keys": [
+    {
+      "company": "Marriott International",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B10"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "B11"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Marriott International",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Southwest Airlines",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "B13"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Ford Motor Company",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Pfizer",
+      "metric_id": "E05"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A08"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A09"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A10"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A11"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A12"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A13"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A05"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A06"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "A07"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "B08"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "C04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "D04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E01"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E02"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E03"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E04"
+    },
+    {
+      "company": "JPMorgan Chase",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "B12"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Salesforce",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Lumen Technologies",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Macy's",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Paramount Skydance / Paramount Global",
+      "metric_id": "E05"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B05"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B06"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B07"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B08"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B09"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "B13"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "C04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "D04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E01"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E02"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E03"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E04"
+    },
+    {
+      "company": "Enphase Energy",
+      "metric_id": "E05"
+    }
+  ],
+  "row_order_key_hash": "sha256:f09ab639c7352f3babe90d0684f7e256f3929488efcd306774f73a66bece925c",
+  "row_order_is_authoritative": false
+}

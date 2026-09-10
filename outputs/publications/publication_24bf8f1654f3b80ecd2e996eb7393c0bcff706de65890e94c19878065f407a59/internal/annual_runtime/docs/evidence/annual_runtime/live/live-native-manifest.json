@@ -1,0 +1,157 @@
+{
+  "purpose": "READ_ONLY_AUDIT_COPY_NOT_AN_EXECUTION_ROOT",
+  "original_candidate_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/stage/candidates/d0e5c084dde578af2c65dd8a412186ef6b95e59a5f91b48b27b06285f50c7cb2",
+  "stage_id": "sha256:f509fae1fbbcedff1b2e406afe84d8e507a5a4477927d37467bd5d9c56670bf0",
+  "plan_id": "sha256:d0e5c084dde578af2c65dd8a412186ef6b95e59a5f91b48b27b06285f50c7cb2",
+  "files": {
+    "outcome.json": {
+      "sha256": "11ba2b68760e437618f527e26cc30a1f0964c96d4b8cd90ef1cfb36b1d019d06",
+      "size": 19434
+    },
+    "plan.json": {
+      "sha256": "1cca217fc02f3323995b3d3133ea4c6b07dd48e6d50be74aaa6bbd7a052b4bb7",
+      "size": 9258
+    },
+    "b10/annual_candidate_binding.json": {
+      "sha256": "43c2fc835c93356feb64edb5631f22332a426bcf9b4f2056862ffc0c3fac42ce",
+      "size": 25248
+    },
+    "b10/review_decisions.jsonl": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "b10/records.jsonl": {
+      "sha256": "b27785715111a96b4ff76f781cee70eb0a6997782d4d6e35cde5e6fd133ccf03",
+      "size": 3973629
+    },
+    "b10/validation.json": {
+      "sha256": "ee8dc27e2cc48a29aa513663eace7e50aabd4629cd40c9b143b8f121442e469c",
+      "size": 300
+    },
+    "b10/manifest.json": {
+      "sha256": "fb54f4fb2c919e08bdbe2e161761a215f62f06c40e4841ff302a772b7e67eab4",
+      "size": 3605
+    },
+    "b01/review_decisions.jsonl": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size": 0
+    },
+    "b01/records.jsonl": {
+      "sha256": "78c6b1c0d60e9b9dc1e33325fc4ebd8a5880ce23ecfeb76bc61c41877d8f89da",
+      "size": 10186
+    },
+    "b01/validation.json": {
+      "sha256": "a84e300aee677756100288321aca73c9d9155a8f2bd8fb9dd495c7020e3b349d",
+      "size": 300
+    },
+    "b01/manifest.json": {
+      "sha256": "0db73d15711cbf6e704d896ac0791cd8877444a07cb6d451bb24068c721ffe3c",
+      "size": 2743
+    },
+    "invocation_control/plans/0b170cb812e745c883c7e00f0f13dd4ed5d585bc4de365b461ee04f1d0904cf5.json": {
+      "sha256": "8c4666bc12ac355995ae5d73de364b084453c4f5aa0ff6abab8501e4e17b3f17",
+      "size": 3044
+    },
+    "invocation_control/requests/5052b765390ebf55d267ab6a05087eb981614d9578d565be22b0c64bc89e1f2d.bin": {
+      "sha256": "93678dcb57574234ba51fc5af975a2f315724284dbefacd82f1e8eef83f36c14",
+      "size": 395905
+    },
+    "invocation_control/executions/53911b424e14d5ae43dd3f4f3c5880c9c89a5726da7b63e08c88297890617407.json": {
+      "sha256": "0ba35e762c61e4524a62e7288bdd758f40ce328e27717b1fcd75abe1c03f7aad",
+      "size": 1932
+    },
+    "invocation_control/attempts/53911b424e14d5ae43dd3f4f3c5880c9c89a5726da7b63e08c88297890617407/01_c3d9893fb87d6386f75941c1d402a5bcffaa7191e239073c9f385868aca8bd01.json": {
+      "sha256": "92712081eab4f5961553a6f57e506f7c5d30981838ebaad86a5e67f57946210d",
+      "size": 1174
+    },
+    "invocation_control/reservation_archive/5052b765390ebf55d267ab6a05087eb981614d9578d565be22b0c64bc89e1f2d/53911b424e14d5ae43dd3f4f3c5880c9c89a5726da7b63e08c88297890617407.json": {
+      "sha256": "c7cf74d6b0dfc69c947653d1d1e9983d8666bddb76a9ac100b1c06891dce813c",
+      "size": 490
+    },
+    "invocation_control/egress/53911b424e14d5ae43dd3f4f3c5880c9c89a5726da7b63e08c88297890617407/01.json": {
+      "sha256": "502e666978dfed1f3b56985c5a8d2f5b8c85d3a5bdc7581704d737b16b9775a7",
+      "size": 718
+    },
+    "b10/attempt_payloads/response_ef9467d74bb8bb33e02d742b15e6e221f25b813c0f29ed5a7c7d008289e842f9.bin": {
+      "sha256": "ef9467d74bb8bb33e02d742b15e6e221f25b813c0f29ed5a7c7d008289e842f9",
+      "size": 2374
+    },
+    "b10/attempt_payloads/task_contract_ac2cbf95e7d8373be3da0ed5ba102c0719a4ddb58e0f3b13abbb40970217966a.json": {
+      "sha256": "ac2cbf95e7d8373be3da0ed5ba102c0719a4ddb58e0f3b13abbb40970217966a",
+      "size": 3476
+    },
+    "b10/attempt_payloads/assistant_output_aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb.json": {
+      "sha256": "aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb",
+      "size": 1723
+    },
+    "b10/attempt_payloads/output_schema_a258d219eae2bb7afb5a9632fc04f5423b1ac398b592d6d49c107e3d75fd4ad9.json": {
+      "sha256": "a258d219eae2bb7afb5a9632fc04f5423b1ac398b592d6d49c107e3d75fd4ad9",
+      "size": 4931
+    },
+    "b10/attempt_payloads/reader_payload_117c2935cb68ed77f64eb597da1e5beed7f096cb40a82cdcb7cfa7e89eaf950f.json": {
+      "sha256": "117c2935cb68ed77f64eb597da1e5beed7f096cb40a82cdcb7cfa7e89eaf950f",
+      "size": 350252
+    },
+    "b10/attempt_payloads/request_93678dcb57574234ba51fc5af975a2f315724284dbefacd82f1e8eef83f36c14.bin": {
+      "sha256": "93678dcb57574234ba51fc5af975a2f315724284dbefacd82f1e8eef83f36c14",
+      "size": 395905
+    }
+  },
+  "pinned_input_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/stage/inputs/ea7fc372dd6562a6b2f7d89c5e77b473ae48ffd5b24f12aee708eb7196fc38b8",
+  "input_source_proofs": [
+    {
+      "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+      "accession": "",
+      "document_name": "CIK0001048286.json",
+      "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+      "request_body_size": 147714,
+      "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+      "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+      "request_headers_size": 736,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+      "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+    },
+    {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "request_body_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "request_body_size": 2048661,
+      "request_headers_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283.headers.json",
+      "request_headers_sha256": "d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283",
+      "request_headers_size": 1087,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+    },
+    {
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "accession": "0001048286-26-000007",
+      "document_name": "CIK0001048286.json",
+      "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "request_body_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "request_body_size": 3269111,
+      "request_headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json",
+      "request_headers_sha256": "387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d",
+      "request_headers_size": 707,
+      "request_locator_kind": "IMMUTABLE_ATTEMPT",
+      "request_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+    }
+  ],
+  "source_ledger": {
+    "requests_log.csv": {
+      "sha256": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+      "size": 534207
+    },
+    "requests_log_manifest.json": {
+      "sha256": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2",
+      "size": 134
+    }
+  },
+  "qualification_credit": "NONE",
+  "publication_credit": "NONE"
+}

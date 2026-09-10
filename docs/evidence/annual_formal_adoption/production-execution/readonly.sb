@@ -1,0 +1,4 @@
+(version 1)
+(allow default)
+(deny network*)
+(deny file-write* (require-not (require-any (subpath "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/production-execution/20260910T021408Z") (literal "/dev/null"))))

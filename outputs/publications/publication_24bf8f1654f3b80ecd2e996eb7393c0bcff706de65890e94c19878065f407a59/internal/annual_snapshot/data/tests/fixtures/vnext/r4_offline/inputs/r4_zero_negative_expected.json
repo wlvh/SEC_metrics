@@ -1,0 +1,44 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_zero_negative_expected",
+  "metric_id": "A03",
+  "source_id": "jpmorgan_fy2025_10k",
+  "task_contract_id": "r4_liquidity_coverage_ratio_table_v2",
+  "fixture_class": "NEGATIVE_EXPECTED",
+  "artifact_kind": "ZERO_CALL_CLASSIFICATION",
+  "period": "FY2025",
+  "target": null,
+  "reference": null,
+  "scope_labels": [],
+  "numeric_locator": null,
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [],
+  "structured_route_input": null,
+  "windows": [],
+  "navigation_paths": [],
+  "zero_call_reason": "Bank-subsidiary LCR is not the firm-average target; provider planning is prohibited.",
+  "negative_probe": {
+    "base_fixture_id": "r4_a03_production",
+    "target": {
+      "table_order": 64,
+      "row_index": 29,
+      "column_index": 6
+    },
+    "scope_labels": [
+      {
+        "coordinate": {
+          "table_order": 64,
+          "row_index": 29,
+          "column_index": 0
+        },
+        "claims": {
+          "entity_scope": "Firm",
+          "aggregation": "average"
+        }
+      }
+    ],
+    "unresolved_competing_claims": []
+  }
+}

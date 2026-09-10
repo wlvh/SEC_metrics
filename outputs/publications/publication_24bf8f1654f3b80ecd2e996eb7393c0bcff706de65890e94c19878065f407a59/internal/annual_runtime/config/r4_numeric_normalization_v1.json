@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "record_type": "SOURCE_BOUND_NUMERIC_POLICY",
+  "bindings": [
+    {"metric_id": "A09", "mechanism": "SAME_ROW_PERCENT_MARKER", "canonical_unit": "ratio", "reported_unit": "ratio"},
+    {"metric_id": "A11", "mechanism": "SAME_TABLE_HEADER_SCALE", "canonical_unit": "USD", "reported_unit": "USD"},
+    {"metric_id": "A12", "mechanism": "SAME_TABLE_HEADER_SCALE", "canonical_unit": "USD", "reported_unit": "USD"}
+  ]
+}

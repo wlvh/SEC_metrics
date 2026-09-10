@@ -1,0 +1,229 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_a13_production",
+  "metric_id": "A13",
+  "source_id": "jpmorgan_fy2025_10k",
+  "task_contract_id": "r4_international_net_revenue_table_v2",
+  "fixture_class": "POSITIVE_PRODUCTION",
+  "artifact_kind": "STRUCTURED_PRIMARY",
+  "period": "FY2025",
+  "target": {
+    "table_order": 639,
+    "row_index": 6,
+    "column_index": 6
+  },
+  "reference": {
+    "status": "NO_INDEPENDENT_LEGACY_ANCHOR",
+    "value": "42758000000",
+    "unit": "USD",
+    "scope": {
+      "geography_scope": "international"
+    },
+    "evidence": "No independent legacy anchor is claimed; native structured source and independent full-document navigation are required."
+  },
+  "scope_labels": [
+    {
+      "coordinate": {
+        "table_order": 639,
+        "row_index": 6,
+        "column_index": 0
+      },
+      "claims": {
+        "geography_scope": "Total international"
+      }
+    }
+  ],
+  "numeric_locator": null,
+  "composite_scope_recipe": null,
+  "disclosed_period_recipe": null,
+  "candidate_rows": [
+    {
+      "table_order": 639,
+      "row_index": 3,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 4,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 5,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 6,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 7,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 8,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 11,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 12,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 13,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 14,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 15,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 16,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 19,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 20,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 21,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 22,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 23,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 639,
+      "row_index": 24,
+      "disposition": "REFERENCE_ONLY"
+    },
+    {
+      "table_order": 139,
+      "row_index": 4,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 139,
+      "row_index": 5,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 139,
+      "row_index": 6,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 139,
+      "row_index": 7,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 139,
+      "row_index": 8,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 139,
+      "row_index": 9,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 152,
+      "row_index": 4,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 152,
+      "row_index": 5,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 152,
+      "row_index": 6,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 152,
+      "row_index": 7,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 152,
+      "row_index": 8,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 152,
+      "row_index": 9,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 152,
+      "row_index": 10,
+      "disposition": "DIFFERENT_SCOPE"
+    }
+  ],
+  "structured_route_input": {
+    "route_id": "accession_xbrl_v1",
+    "fact_names": [
+      "us-gaap:Revenues"
+    ],
+    "measure": "INTERNATIONAL_NET_REVENUE",
+    "direct_concepts": [
+      "us-gaap:Revenues"
+    ],
+    "direct_geography_members": [
+      "jpm:TotalInternationalMember"
+    ],
+    "expected_outcome": "STRUCTURED_PRIMARY_RESOLVED"
+  },
+  "windows": [
+    {
+      "start_order": 639,
+      "end_order": 639
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path_id": "A",
+      "method": "NAMED_SECTION_AND_DOCUMENT_STRUCTURE",
+      "evidence": "Original consolidated geographic disclosure table_000640 r6c6=42,758 million, Total international, 2025 Revenue column; Net income and Total assets columns are explicitly different measures."
+    },
+    {
+      "path_id": "B",
+      "method": "INDEPENDENT_REFERENCE_AND_WHOLE_DOCUMENT_RECONCILIATION",
+      "evidence": "Independent native accession XML us-gaap:Revenues context c-2126, sole geographical dimension jpm:TotalInternationalMember, full 2025 duration, USD resolves 42,758,000,000. EMEA 24,478 + Asia-Pacific 14,065 + Latin America 4,215 million reconciles the disclosed international total but is not used as a regional-sum fallback; North America is never equated with US. Tables 140/153 are segment-only."
+    }
+  ]
+}

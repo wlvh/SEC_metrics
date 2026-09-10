@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "PASS complete whitelist positive and protected negative paths\n",
+  "stderr": "",
+  "root_cause": "Seatbelt regex does not support the counted repetition form used in v1; expanded exact-length classes preserve the same whitelist",
+  "production_paths_written": false,
+  "allowed_test_cases": [
+    "outputs/annual_publication_authorizations/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+    "outputs/publications/.publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.tmp/internal/source.txt",
+    "outputs/.metrics_matrix.csv.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.tmp",
+    "outputs/metrics_matrix.csv",
+    "outputs/publication_switch_intents/.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.tmp",
+    "outputs/publication_switch_receipts/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json",
+    "outputs/annual_publication_actions/6b6c9d2a552fe39392ecf1c72afb0b9b6fe36a61b1a1fd406106b115cc7f0339-publish.json"
+  ],
+  "forbidden_test_cases": 4,
+  "scope_expanded": false
+}

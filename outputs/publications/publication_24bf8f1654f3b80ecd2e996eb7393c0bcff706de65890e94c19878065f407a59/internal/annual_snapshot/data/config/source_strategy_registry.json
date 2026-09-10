@@ -1,0 +1,385 @@
+{
+  "schema_version": 1,
+  "requirement_id": "issue_15_v1",
+  "allowed_source_modes": [
+    "structured_only",
+    "structured_first_ai_fallback",
+    "ai_table",
+    "ai_text"
+  ],
+  "migration_state_authority": "ReleasePlan.cumulative_metric_ids",
+  "families": {
+    "auditor_report": {
+      "reader_contract_id": "auditor_report_v1",
+      "forbidden_production_literals": [
+        "auditor tenure",
+        "substantial doubt"
+      ]
+    },
+    "corporate_events": {
+      "reader_contract_id": "corporate_events_v1",
+      "forbidden_production_literals": [
+        "Item 1.01",
+        "Item 2.01",
+        "Item 4.02",
+        "Item 5.02"
+      ]
+    },
+    "financial_statement": {
+      "reader_contract_id": "financial_statement_v1",
+      "forbidden_production_literals": [
+        "tier 1 capital ratio",
+        "non-performing loan",
+        "geographic exposure",
+        "capacity utilization"
+      ]
+    },
+    "governance_proxy": {
+      "reader_contract_id": "governance_proxy_v1",
+      "forbidden_production_literals": [
+        "named executive officer",
+        "independent director",
+        "pay ratio"
+      ]
+    },
+    "lodging_kpi_table": {
+      "reader_contract_id": "lodging_kpi_table_v1",
+      "forbidden_production_literals": [
+        "occupancy",
+        "revpar",
+        "available room",
+        "room night"
+      ]
+    },
+    "risk_legal_text": {
+      "reader_contract_id": "risk_legal_text_v1",
+      "forbidden_production_literals": [
+        "going concern",
+        "material weakness",
+        "regulatory investigation"
+      ]
+    }
+  },
+  "metrics": {
+    "A01": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "accession_xbrl_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A02": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "accession_xbrl_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A03": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "ai_table",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A04": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "ai_table",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A05": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A06": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A07": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A08": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A09": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_first_ai_fallback",
+      "structured_route_id": "accession_xbrl_v1",
+      "fallback_trigger_codes": [
+        "STRUCTURED_SOURCE_AMBIGUOUS"
+      ],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A10": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A11": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "ai_table",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A12": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "ai_table",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "A13": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_first_ai_fallback",
+      "structured_route_id": "accession_xbrl_v1",
+      "fallback_trigger_codes": [
+        "STRUCTURED_SOURCE_AMBIGUOUS"
+      ],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B01": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B02": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B03": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B04": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B05": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B06": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_first_ai_fallback",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [
+        "STRUCTURED_SOURCE_AMBIGUOUS"
+      ],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B07": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B08": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B09": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "companyfacts_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B10": {
+      "reader_family_id": "lodging_kpi_table",
+      "source_mode": "ai_table",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B11": {
+      "reader_family_id": "lodging_kpi_table",
+      "source_mode": "ai_table",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B12": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "structured_only",
+      "structured_route_id": "accession_xbrl_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "B13": {
+      "reader_family_id": "financial_statement",
+      "source_mode": "ai_table",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "C01": {
+      "reader_family_id": "corporate_events",
+      "source_mode": "structured_only",
+      "structured_route_id": "8k_item_index_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "C02": {
+      "reader_family_id": "governance_proxy",
+      "source_mode": "ai_text",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "C03": {
+      "reader_family_id": "governance_proxy",
+      "source_mode": "structured_only",
+      "structured_route_id": "ecd_xbrl_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "OPEN_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "C04": {
+      "reader_family_id": "auditor_report",
+      "source_mode": "structured_only",
+      "structured_route_id": "auditor_fact_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "D01": {
+      "reader_family_id": "risk_legal_text",
+      "source_mode": "ai_text",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "D02": {
+      "reader_family_id": "risk_legal_text",
+      "source_mode": "ai_text",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "D03": {
+      "reader_family_id": "risk_legal_text",
+      "source_mode": "ai_text",
+      "structured_route_id": null,
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "D04": {
+      "reader_family_id": "auditor_report",
+      "source_mode": "structured_first_ai_fallback",
+      "structured_route_id": "auditor_fact_v1",
+      "fallback_trigger_codes": [
+        "STRUCTURED_SOURCE_AMBIGUOUS"
+      ],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "E01": {
+      "reader_family_id": "corporate_events",
+      "source_mode": "structured_only",
+      "structured_route_id": "8k_item_index_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "E02": {
+      "reader_family_id": "corporate_events",
+      "source_mode": "structured_only",
+      "structured_route_id": "8k_item_index_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "E03": {
+      "reader_family_id": "corporate_events",
+      "source_mode": "structured_only",
+      "structured_route_id": "8k_item_index_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "E04": {
+      "reader_family_id": "corporate_events",
+      "source_mode": "structured_only",
+      "structured_route_id": "8k_item_index_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    },
+    "E05": {
+      "reader_family_id": "corporate_events",
+      "source_mode": "structured_only",
+      "structured_route_id": "8k_item_index_v1",
+      "fallback_trigger_codes": [],
+      "coverage_mode": "CLOSED_WORLD",
+      "applicability_rule_id": "metric_applicability_v1"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "runtime_source_directories": [
+    "catalog",
+    "scripts",
+    "tools",
+    "config",
+    "tests",
+    "requirements",
+    "fixtures"
+  ],
+  "acceptance_source_files": [
+    "01_SOP_SEC_10公司单年指标计算_直接SEC.md",
+    "02_指标定义_SEC_10公司单年指标.md",
+    "AGENTS.md",
+    "CIK变更应对方案.md",
+    "SOP.md",
+    "TESTING.md",
+    "architecture.md",
+    "capability_contract.json",
+    "docs/business_user_guide.md",
+    "docs/validation_snapshot_provenance.md",
+    "interact.md"
+  ],
+  "generated_artifacts": [
+    "README_RUN.md",
+    "REPORT_十公司财务指标.md"
+  ],
+  "full_artifact_directories": [
+    "artifacts/vnext/qualification",
+    "artifacts/vnext/table_stage_b_investigation",
+    "artifacts/vnext/table_stage_b_investigation/context_minimization",
+    "artifacts/vnext/table_stage_b_investigation/financial_grid_census",
+    "artifacts/vnext/table_stage_c_evidence",
+    "artifacts/vnext/table_qualification_freeze",
+    "artifacts/vnext/zero_ai_release",
+    "evidence/request_attempts",
+    "outputs/failure_first_receipts",
+    "outputs/publication_fault_receipts",
+    "outputs/zero_ai_release_receipts",
+    "outputs/vnext_cutover_audits"
+  ],
+  "publication_governance_files": [
+    ".github/pull_request_template.md",
+    "PR_Checklist.md"
+  ],
+  "repository_hygiene_files": [
+    ".gitignore"
+  ],
+  "explanatory_non_authoritative": [
+    "SEC_metrics_Project_Overview_and_Expert_Guide.md"
+  ]
+}

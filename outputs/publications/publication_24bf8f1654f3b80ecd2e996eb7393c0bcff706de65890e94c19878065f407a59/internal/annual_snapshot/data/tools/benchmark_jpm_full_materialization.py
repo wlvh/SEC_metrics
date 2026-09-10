@@ -1,0 +1,716 @@
+#!/usr/bin/env python3
+"""Run one guarded, offline full JPM expanded-grid materialization benchmark."""
+
+from __future__ import annotations
+
+import argparse
+import dataclasses
+import json
+import os
+import platform
+import resource
+import signal
+import subprocess
+import sys
+import time
+from decimal import Decimal
+from pathlib import Path
+from typing import Dict, Mapping, Optional, Sequence, Tuple
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS_DIR = REPO_ROOT / "scripts"
+if str(SCRIPTS_DIR) not in sys.path:
+    sys.path = [str(SCRIPTS_DIR), *sys.path]
+
+from vnext.canonical import atomic_write_json  # noqa: E402
+from vnext.canonical import canonical_json_bytes, content_hash  # noqa: E402
+from vnext.canonical import sha256_bytes, sha256_file  # noqa: E402
+from vnext.canonical import strict_json_file  # noqa: E402
+
+
+SOURCE_RELATIVE = Path(
+    "evidence/request_attempts/4d/"
+    "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/"
+    "jpm-20251231.htm"
+)
+SOURCE_SHA256 = (
+    "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23"
+)
+STAGE_B_CENSUS_RECEIPT_ID = (
+    "sha256:ea3d796f256a43ac5a6079de753d7d5456fc6d7485bb794ef4c9e27276ca6f2c"
+)
+STAGE_B_CENSUS_RELATIVE = Path(
+    "artifacts/vnext/table_stage_b_investigation/financial_grid_census/"
+    "ea3d796f256a43ac5a6079de753d7d5456fc6d7485bb794ef4c9e27276ca6f2c.json"
+)
+OUTPUT_ROOT = Path(
+    "artifacts/vnext/table_stage_c_evidence/"
+    "financial_materialization_benchmark"
+)
+SEMANTIC_ROOT = OUTPUT_ROOT / "semantic_receipts"
+RUN_ROOT = OUTPUT_ROOT / "run_receipts"
+CURRENT_POINTER = OUTPUT_ROOT / "current.json"
+TOOL_RELATIVE = Path("tools/benchmark_jpm_full_materialization.py")
+TABLE_GRID_RELATIVE = Path("scripts/vnext/table_grid.py")
+RESOURCE_LIMITS_RELATIVE = Path("scripts/vnext/resource_limits.py")
+CANONICAL_RELATIVE = Path("scripts/vnext/canonical.py")
+TEST_ONLY_MAX_TOTAL_CELLS = 187142
+EXPECTED_RECTANGULAR_CELLS = 124761
+EXPECTED_TABLE_COUNT = 679
+PRODUCTION_MAX_TOTAL_CELLS = 100000
+RSS_CEILING_BYTES = 512 * 1024 * 1024
+WALL_TIME_CEILING_SECONDS = 120
+RSS_POLL_INTERVAL_SECONDS = 0.02
+NETWORK_DENY_PROFILE = "(version 1) (allow default) (deny network*)"
+SANDBOX_EXECUTABLE = Path("/usr/bin/sandbox-exec")
+
+
+class FinancialMaterializationBenchmarkError(RuntimeError):
+    """Report an unavailable guard or invalid benchmark receipt."""
+
+
+def _root_state(*, repo_root: Path) -> Dict[str, object]:
+    """Hash the protected active pointer and three public business artifacts."""
+    paths = (
+        Path("outputs/active_publication.json"),
+        Path("outputs/metrics_matrix.csv"),
+        Path("outputs/metric_evidence.csv"),
+        Path("REPORT_十公司财务指标.md"),
+    )
+    return {
+        path.as_posix(): {
+            "sha256": sha256_file(path=repo_root / path),
+            "size": (repo_root / path).stat().st_size,
+        }
+        for path in paths
+    }
+
+
+def _normalize_peak_rss(*, raw_value: int) -> int:
+    """Normalize ru_maxrss to bytes on Darwin and Linux."""
+    if raw_value < 0:
+        raise FinancialMaterializationBenchmarkError(
+            "Peak RSS observation is invalid"
+        )
+    return raw_value if platform.system() == "Darwin" else raw_value * 1024
+
+
+def _runtime_identity() -> Dict[str, object]:
+    """Return portable interpreter/platform fields for semantic evidence."""
+    return {
+        "python_executable_name": Path(sys.executable).name,
+        "python_implementation": platform.python_implementation(),
+        "python_version": platform.python_version(),
+        "platform_system": platform.system(),
+        "platform_release": platform.release(),
+        "platform_machine": platform.machine(),
+    }
+
+
+def _production_source_hashes(*, repo_root: Path) -> Dict[str, str]:
+    """Bind exact parser, limits, canonicalizer, and benchmark tool bytes."""
+    return {
+        relative.as_posix(): sha256_file(path=repo_root / relative)
+        for relative in (
+            TABLE_GRID_RELATIVE,
+            RESOURCE_LIMITS_RELATIVE,
+            CANONICAL_RELATIVE,
+            TOOL_RELATIVE,
+        )
+    }
+
+
+def _stage_b_census(*, repo_root: Path) -> Dict[str, object]:
+    """Load and recompute the exact Stage-B census identity."""
+    receipt = strict_json_file(path=repo_root / STAGE_B_CENSUS_RELATIVE)
+    if type(receipt) is not dict or receipt.get("receipt_id") != (
+        STAGE_B_CENSUS_RECEIPT_ID
+    ):
+        raise FinancialMaterializationBenchmarkError(
+            "Stage-B census identity differs"
+        )
+    body = {key: receipt[key] for key in receipt if key != "receipt_id"}
+    if content_hash(value=body) != STAGE_B_CENSUS_RECEIPT_ID:
+        raise FinancialMaterializationBenchmarkError(
+            "Stage-B census bytes differ"
+        )
+    census = receipt.get("census")
+    if (
+        type(census) is not dict
+        or census.get("exact_table_count") != EXPECTED_TABLE_COUNT
+        or census.get("exact_total_rectangular_expanded_cell_count")
+        != EXPECTED_RECTANGULAR_CELLS
+    ):
+        raise FinancialMaterializationBenchmarkError(
+            "Stage-B census counts differ"
+        )
+    return dict(receipt)
+
+
+def _child_result() -> Dict[str, object]:
+    """Materialize and canonically serialize the exact full DerivedAsset."""
+    from vnext import resource_limits as production_limits
+    from vnext import table_grid
+    from vnext.records import validate_record
+
+    source_path = REPO_ROOT / SOURCE_RELATIVE
+    source_bytes = source_path.read_bytes()
+    if sha256_bytes(content=source_bytes) != SOURCE_SHA256:
+        raise FinancialMaterializationBenchmarkError(
+            "JPM source bytes differ"
+        )
+    if production_limits.RESOURCE_LIMITS.max_total_cells != (
+        PRODUCTION_MAX_TOTAL_CELLS
+    ):
+        raise FinancialMaterializationBenchmarkError(
+            "Production max_total_cells differs"
+        )
+    table_grid.RESOURCE_LIMITS = dataclasses.replace(
+        production_limits.RESOURCE_LIMITS,
+        max_total_cells=TEST_ONLY_MAX_TOTAL_CELLS,
+    )
+    asset = table_grid.build_table_grid(
+        html_bytes=source_bytes,
+        parent_raw_asset_ids=["sha256:" + SOURCE_SHA256],
+        storage_uri=(
+            "artifacts/vnext/table_stage_c_evidence/"
+            "financial_materialization_benchmark/derived_asset.json"
+        ),
+    )
+    validate_record(record=asset)
+    tables = asset["tables"]
+    table_hashes = []
+    rectangular_cells = 0
+    for order, table in enumerate(tables):
+        table_body = {
+            key: table[key] for key in table if key != "grid_sha256"
+        }
+        if (
+            table["order"] != order
+            or table["grid_sha256"] != content_hash(value=table_body)
+        ):
+            raise FinancialMaterializationBenchmarkError(
+                "Materialized table identity differs"
+            )
+        rectangular_cells += int(table["row_count"]) * int(
+            table["column_count"]
+        )
+        table_hashes.append({
+            "order": order,
+            "table_id": table["table_id"],
+            "grid_sha256": table["grid_sha256"],
+        })
+    identity = {
+        "parent_raw_asset_ids": asset["parent_raw_asset_ids"],
+        "transform_id": asset["transform_id"],
+        "transform_semantic_version": asset["transform_semantic_version"],
+        "content_type": asset["content_type"],
+        "tables": tables,
+    }
+    if (
+        len(tables) != EXPECTED_TABLE_COUNT
+        or rectangular_cells != EXPECTED_RECTANGULAR_CELLS
+        or asset["derived_asset_id"] != content_hash(value=identity)
+    ):
+        raise FinancialMaterializationBenchmarkError(
+            "Complete materialization counts or DerivedAsset identity differ"
+        )
+    canonical = canonical_json_bytes(value=asset)
+    usage = resource.getrusage(resource.RUSAGE_SELF)
+    return {
+        "status": "COMPLETED",
+        "final_expanded_cells": rectangular_cells,
+        "table_count": len(tables),
+        "canonical_json_bytes": len(canonical),
+        "canonical_json_sha256": "sha256:" + sha256_bytes(content=canonical),
+        "derived_asset_id": asset["derived_asset_id"],
+        "canonical_serialization_completed": True,
+        "table_grid_hashes": table_hashes,
+        "table_grid_hash_exact_set_hash": content_hash(value=table_hashes),
+        "child_peak_rss_bytes": _normalize_peak_rss(
+            raw_value=int(usage.ru_maxrss),
+        ),
+        "child_user_cpu_seconds": format(Decimal(str(usage.ru_utime)), "f"),
+        "child_system_cpu_seconds": format(Decimal(str(usage.ru_stime)), "f"),
+    }
+
+
+def _set_address_space_limit(*, limit_bytes: int) -> None:
+    """Apply a hard child address-space ceiling before exec."""
+    resource.setrlimit(resource.RLIMIT_AS, (limit_bytes, limit_bytes))
+    resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+
+
+def _guarded_argv(*, python_arguments: Sequence[str]) -> Sequence[str]:
+    """Wrap one child in the OS process-tree network-deny sandbox."""
+    return [
+        str(SANDBOX_EXECUTABLE),
+        "-p",
+        NETWORK_DENY_PROFILE,
+        sys.executable,
+        *python_arguments,
+    ]
+
+
+def _guard_probe() -> Tuple[bool, str]:
+    """Prove sandbox and RLIMIT_AS block a sub-512-MiB overflow probe."""
+    if (
+        platform.system() != "Darwin"
+        or not hasattr(resource, "RLIMIT_AS")
+        or SANDBOX_EXECUTABLE.is_symlink()
+        or not SANDBOX_EXECUTABLE.is_file()
+    ):
+        return False, "RSS_OR_NETWORK_GUARD_UNAVAILABLE"
+    try:
+        baseline = subprocess.run(
+            _guarded_argv(
+                python_arguments=["-c", "print('GUARD_BASELINE_OK')"],
+            ),
+            cwd=str(REPO_ROOT),
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=15,
+            start_new_session=True,
+            preexec_fn=lambda: _set_address_space_limit(
+                limit_bytes=RSS_CEILING_BYTES,
+            ),
+        )
+    except (OSError, subprocess.SubprocessError, subprocess.TimeoutExpired,
+            ValueError):
+        return False, "RSS_HARD_LIMIT_SETUP_FAILED"
+    if baseline.returncode != 0 or "GUARD_BASELINE_OK" not in baseline.stdout:
+        return False, "RSS_GUARD_BASELINE_FAILED"
+    probe_limit = 128 * 1024 * 1024
+    try:
+        probe = subprocess.run(
+            _guarded_argv(python_arguments=[
+                "-c",
+                (
+                    "import sys\n"
+                    "try:\n"
+                    "    bytearray(192 * 1024 * 1024)\n"
+                    "except MemoryError:\n"
+                    "    sys.exit(0)\n"
+                    "sys.exit(9)\n"
+                ),
+            ]),
+            cwd=str(REPO_ROOT),
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=15,
+            start_new_session=True,
+            preexec_fn=lambda: _set_address_space_limit(
+                limit_bytes=probe_limit,
+            ),
+        )
+    except (OSError, subprocess.SubprocessError, subprocess.TimeoutExpired,
+            ValueError):
+        return False, "RSS_HARD_LIMIT_PROBE_UNAVAILABLE"
+    if probe.returncode != 0:
+        return False, "RSS_HARD_LIMIT_PROBE_FAILED"
+    return True, "RLIMIT_AS_PROBE_AND_SANDBOX_PASS"
+
+
+def _process_group_rss_bytes(*, process_group_id: int) -> Optional[int]:
+    """Return current total RSS for the guarded process group, when observable."""
+    completed = subprocess.run(
+        ["ps", "-axo", "pgid=,rss="],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if completed.returncode != 0:
+        return None
+    total_kib = 0
+    matched = False
+    for line in completed.stdout.splitlines():
+        parts = line.split()
+        if len(parts) != 2:
+            continue
+        try:
+            pgid, rss_kib = int(parts[0]), int(parts[1])
+        except ValueError:
+            continue
+        if pgid == process_group_id:
+            matched = True
+            total_kib += rss_kib
+    return total_kib * 1024 if matched else None
+
+
+def _run_child() -> Dict[str, object]:
+    """Run the protected child and return normalized terminal observations."""
+    available, guard_status = _guard_probe()
+    if not available:
+        return {
+            "status": "NOT_RUN_RSS_GUARD_UNAVAILABLE",
+            "guard_status": guard_status,
+            "exit_code": None,
+            "wall_time_seconds": None,
+            "user_cpu_seconds": None,
+            "system_cpu_seconds": None,
+            "peak_rss_bytes": None,
+            "stdout_sha256": None,
+            "stdout_size": 0,
+            "stderr_sha256": None,
+            "stderr_size": 0,
+            "child_result": None,
+        }
+    started = time.monotonic()
+    process = subprocess.Popen(
+        _guarded_argv(
+            python_arguments=[str(Path(__file__).resolve()), "--child"],
+        ),
+        cwd=str(REPO_ROOT),
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=False,
+        start_new_session=True,
+        preexec_fn=lambda: _set_address_space_limit(
+            limit_bytes=RSS_CEILING_BYTES,
+        ),
+    )
+    observed_peak = 0
+    terminal_override: Optional[str] = None
+    deadline = started + WALL_TIME_CEILING_SECONDS
+    while process.poll() is None:
+        observed = _process_group_rss_bytes(process_group_id=process.pid)
+        if observed is not None:
+            observed_peak = max(observed_peak, observed)
+            if observed > RSS_CEILING_BYTES:
+                terminal_override = "KILLED_RSS_LIMIT"
+                os.killpg(process.pid, signal.SIGKILL)
+                break
+        if time.monotonic() >= deadline:
+            terminal_override = "KILLED_WALL_TIME_LIMIT"
+            os.killpg(process.pid, signal.SIGKILL)
+            break
+        time.sleep(RSS_POLL_INTERVAL_SECONDS)
+    stdout, stderr = process.communicate()
+    wall_time = time.monotonic() - started
+    stdout_hash = "sha256:" + sha256_bytes(content=stdout)
+    stderr_hash = "sha256:" + sha256_bytes(content=stderr)
+    child_result = None
+    if terminal_override is None and process.returncode == 0:
+        try:
+            child_result = json.loads(stdout.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            terminal_override = "FAILED_CHILD_OUTPUT"
+    if terminal_override is None and process.returncode != 0:
+        terminal_override = "FAILED_CHILD"
+    status = terminal_override or str(child_result.get("status"))
+    child_peak = (
+        int(child_result["child_peak_rss_bytes"])
+        if type(child_result) is dict
+        and type(child_result.get("child_peak_rss_bytes")) is int
+        else 0
+    )
+    peak = max(observed_peak, child_peak)
+    if peak > RSS_CEILING_BYTES and status == "COMPLETED":
+        status = "FAILED_RSS_OBSERVATION_EXCEEDED"
+    return {
+        "status": status,
+        "guard_status": guard_status,
+        "exit_code": process.returncode,
+        "wall_time_seconds": format(Decimal(str(round(wall_time, 6))), "f"),
+        "user_cpu_seconds": (
+            child_result.get("child_user_cpu_seconds")
+            if type(child_result) is dict else None
+        ),
+        "system_cpu_seconds": (
+            child_result.get("child_system_cpu_seconds")
+            if type(child_result) is dict else None
+        ),
+        "peak_rss_bytes": peak,
+        "stdout_sha256": stdout_hash,
+        "stdout_size": len(stdout),
+        "stderr_sha256": stderr_hash,
+        "stderr_size": len(stderr),
+        "child_result": child_result,
+    }
+
+
+def _semantic_receipt(
+    *,
+    repo_root: Path,
+    terminal: Mapping[str, object],
+    root_before: Mapping[str, object],
+    root_after: Mapping[str, object],
+    sources_before: Mapping[str, str],
+    sources_after: Mapping[str, str],
+) -> Dict[str, object]:
+    """Build the stable result identity without timing, PID, or temp locators."""
+    census = _stage_b_census(repo_root=repo_root)
+    child = terminal.get("child_result")
+    materialized = child if type(child) is dict else {}
+    body = {
+        "schema_version": 1,
+        "record_type": "TABLE_STAGE_C_FINANCIAL_MATERIALIZATION_BENCHMARK",
+        "status": terminal["status"],
+        "source": {
+            "repo_relative_path": SOURCE_RELATIVE.as_posix(),
+            "sha256": SOURCE_SHA256,
+            "size": (repo_root / SOURCE_RELATIVE).stat().st_size,
+        },
+        "stage_b_census_binding": {
+            "receipt_id": STAGE_B_CENSUS_RECEIPT_ID,
+            "exact_table_count": census["census"]["exact_table_count"],
+            "exact_total_rectangular_expanded_cell_count": census[
+                "census"
+            ]["exact_total_rectangular_expanded_cell_count"],
+        },
+        "runtime_identity": _runtime_identity(),
+        "production_source_code_hashes": dict(sources_after),
+        "test_only_override": {
+            "field": "max_total_cells",
+            "value": TEST_ONLY_MAX_TOTAL_CELLS,
+            "scope": "BENCHMARK_CHILD_PROCESS_ONLY",
+        },
+        "production_resource_policy": {
+            "max_total_cells": PRODUCTION_MAX_TOTAL_CELLS,
+            "resource_limits_sha256_before": sources_before[
+                RESOURCE_LIMITS_RELATIVE.as_posix()
+            ],
+            "resource_limits_sha256_after": sources_after[
+                RESOURCE_LIMITS_RELATIVE.as_posix()
+            ],
+            "unchanged": sources_before == sources_after,
+        },
+        "safety_ceilings": {
+            "hard_address_space_and_peak_rss_ceiling_bytes": RSS_CEILING_BYTES,
+            "hard_wall_time_ceiling_seconds": WALL_TIME_CEILING_SECONDS,
+            "guard_status": terminal["guard_status"],
+        },
+        "no_network_proof": {
+            "sandbox_executable": SANDBOX_EXECUTABLE.as_posix(),
+            "profile_sha256": "sha256:" + sha256_bytes(
+                content=NETWORK_DENY_PROFILE.encode("utf-8"),
+            ),
+            "policy": "DENY_NETWORK_STAR_PROCESS_TREE",
+            "benchmark_child_started": terminal["status"]
+            != "NOT_RUN_RSS_GUARD_UNAVAILABLE",
+            "real_model_provider_egress_count": 0,
+            "paid_model_provider_call_count": 0,
+            "real_SEC_egress_count": 0,
+        },
+        "materialization": {
+            "completed": terminal["status"] == "COMPLETED",
+            "final_expanded_cells": materialized.get("final_expanded_cells"),
+            "table_count": materialized.get("table_count"),
+            "canonical_json_bytes": materialized.get("canonical_json_bytes"),
+            "canonical_json_sha256": materialized.get("canonical_json_sha256"),
+            "derived_asset_id": materialized.get("derived_asset_id"),
+            "canonical_serialization_completed": materialized.get(
+                "canonical_serialization_completed", False,
+            ),
+            "table_grid_hashes": materialized.get("table_grid_hashes", []),
+            "table_grid_hash_exact_set_hash": materialized.get(
+                "table_grid_hash_exact_set_hash"
+            ),
+        },
+        "root_business_artifacts_before": dict(root_before),
+        "root_business_artifacts_after": dict(root_after),
+        "root_business_artifacts_byte_equal": root_before == root_after,
+    }
+    if (
+        sources_before != sources_after
+        or root_before != root_after
+        or body["production_resource_policy"]["unchanged"] is not True
+    ):
+        raise FinancialMaterializationBenchmarkError(
+            "Benchmark changed production or root authority bytes"
+        )
+    if terminal["status"] == "COMPLETED" and (
+        materialized.get("final_expanded_cells") != EXPECTED_RECTANGULAR_CELLS
+        or materialized.get("table_count") != EXPECTED_TABLE_COUNT
+        or materialized.get("canonical_serialization_completed") is not True
+        or len(materialized.get("table_grid_hashes", []))
+        != EXPECTED_TABLE_COUNT
+    ):
+        raise FinancialMaterializationBenchmarkError(
+            "Completed benchmark result differs from the exact census"
+        )
+    return {**body, "benchmark_receipt_id": content_hash(value=body)}
+
+
+def _run_receipt(
+    *, semantic: Mapping[str, object], terminal: Mapping[str, object],
+) -> Dict[str, object]:
+    """Build a separate observation identity for time, CPU, RSS, and rc."""
+    body = {
+        "schema_version": 1,
+        "record_type": "TABLE_STAGE_C_FINANCIAL_MATERIALIZATION_RUN",
+        "benchmark_receipt_id": semantic["benchmark_receipt_id"],
+        "status": terminal["status"],
+        "exit_code": terminal["exit_code"],
+        "wall_time_seconds": terminal["wall_time_seconds"],
+        "user_cpu_seconds": terminal["user_cpu_seconds"],
+        "system_cpu_seconds": terminal["system_cpu_seconds"],
+        "peak_rss_bytes": terminal["peak_rss_bytes"],
+        "rss_ceiling_bytes": RSS_CEILING_BYTES,
+        "wall_time_ceiling_seconds": WALL_TIME_CEILING_SECONDS,
+        "stdout_sha256": terminal["stdout_sha256"],
+        "stdout_size": terminal["stdout_size"],
+        "stderr_sha256": terminal["stderr_sha256"],
+        "stderr_size": terminal["stderr_size"],
+    }
+    return {**body, "run_receipt_id": content_hash(value=body)}
+
+
+def _write_receipts(
+    *, repo_root: Path, semantic: Mapping[str, object], run: Mapping[str, object],
+) -> Dict[str, object]:
+    """Persist semantic/run receipts and a content-bound current pointer."""
+    semantic_digest = str(semantic["benchmark_receipt_id"]).split(
+        ":", maxsplit=1,
+    )[1]
+    run_digest = str(run["run_receipt_id"]).split(":", maxsplit=1)[1]
+    semantic_relative = SEMANTIC_ROOT / (semantic_digest + ".json")
+    run_relative = RUN_ROOT / (run_digest + ".json")
+    atomic_write_json(path=repo_root / semantic_relative, value=semantic)
+    atomic_write_json(path=repo_root / run_relative, value=run)
+    pointer_body = {
+        "schema_version": 1,
+        "record_type": "TABLE_STAGE_C_FINANCIAL_MATERIALIZATION_POINTER",
+        "benchmark_receipt_id": semantic["benchmark_receipt_id"],
+        "benchmark_receipt_path": semantic_relative.as_posix(),
+        "run_receipt_id": run["run_receipt_id"],
+        "run_receipt_path": run_relative.as_posix(),
+    }
+    pointer = {**pointer_body, "pointer_id": content_hash(value=pointer_body)}
+    atomic_write_json(path=repo_root / CURRENT_POINTER, value=pointer)
+    return pointer
+
+
+def run_benchmark(*, repo_root: Path) -> Dict[str, object]:
+    """Run once under hard guards and persist honest terminal evidence."""
+    source = repo_root / SOURCE_RELATIVE
+    if source.is_symlink() or not source.is_file():
+        raise FinancialMaterializationBenchmarkError("JPM source is unavailable")
+    if sha256_file(path=source) != SOURCE_SHA256:
+        raise FinancialMaterializationBenchmarkError("JPM source hash differs")
+    _stage_b_census(repo_root=repo_root)
+    root_before = _root_state(repo_root=repo_root)
+    sources_before = _production_source_hashes(repo_root=repo_root)
+    terminal = _run_child()
+    sources_after = _production_source_hashes(repo_root=repo_root)
+    root_after = _root_state(repo_root=repo_root)
+    semantic = _semantic_receipt(
+        repo_root=repo_root,
+        terminal=terminal,
+        root_before=root_before,
+        root_after=root_after,
+        sources_before=sources_before,
+        sources_after=sources_after,
+    )
+    run = _run_receipt(semantic=semantic, terminal=terminal)
+    pointer = _write_receipts(repo_root=repo_root, semantic=semantic, run=run)
+    return {
+        "status": semantic["status"],
+        "benchmark_receipt_id": semantic["benchmark_receipt_id"],
+        "run_receipt_id": run["run_receipt_id"],
+        "pointer_id": pointer["pointer_id"],
+        "peak_rss_bytes": run["peak_rss_bytes"],
+        "wall_time_seconds": run["wall_time_seconds"],
+        "canonical_json_bytes": semantic["materialization"][
+            "canonical_json_bytes"
+        ],
+        "derived_asset_id": semantic["materialization"]["derived_asset_id"],
+    }
+
+
+def validate_current_receipts(*, repo_root: Path) -> Dict[str, object]:
+    """Recompute current pointer, semantic receipt, and run receipt identities."""
+    pointer = strict_json_file(path=repo_root / CURRENT_POINTER)
+    if type(pointer) is not dict:
+        raise FinancialMaterializationBenchmarkError(
+            "Benchmark pointer is invalid"
+        )
+    pointer_body = {key: pointer[key] for key in pointer if key != "pointer_id"}
+    if pointer.get("pointer_id") != content_hash(value=pointer_body):
+        raise FinancialMaterializationBenchmarkError(
+            "Benchmark pointer identity differs"
+        )
+    semantic = strict_json_file(
+        path=repo_root / Path(str(pointer["benchmark_receipt_path"])),
+    )
+    run = strict_json_file(
+        path=repo_root / Path(str(pointer["run_receipt_path"])),
+    )
+    if type(semantic) is not dict or type(run) is not dict:
+        raise FinancialMaterializationBenchmarkError(
+            "Benchmark receipt root is invalid"
+        )
+    semantic_body = {
+        key: semantic[key] for key in semantic if key != "benchmark_receipt_id"
+    }
+    run_body = {key: run[key] for key in run if key != "run_receipt_id"}
+    if (
+        semantic.get("benchmark_receipt_id") != content_hash(value=semantic_body)
+        or run.get("run_receipt_id") != content_hash(value=run_body)
+        or pointer["benchmark_receipt_id"] != semantic["benchmark_receipt_id"]
+        or pointer["run_receipt_id"] != run["run_receipt_id"]
+        or semantic["stage_b_census_binding"]["receipt_id"]
+        != STAGE_B_CENSUS_RECEIPT_ID
+        or semantic["production_source_code_hashes"]
+        != _production_source_hashes(repo_root=repo_root)
+        or semantic["root_business_artifacts_before"]
+        != semantic["root_business_artifacts_after"]
+        or semantic["root_business_artifacts_after"]
+        != _root_state(repo_root=repo_root)
+    ):
+        raise FinancialMaterializationBenchmarkError(
+            "Benchmark receipt binding differs"
+        )
+    return {
+        "status": semantic["status"],
+        "benchmark_receipt_id": semantic["benchmark_receipt_id"],
+        "run_receipt_id": run["run_receipt_id"],
+        "peak_rss_bytes": run["peak_rss_bytes"],
+        "wall_time_seconds": run["wall_time_seconds"],
+        "canonical_json_bytes": semantic["materialization"][
+            "canonical_json_bytes"
+        ],
+        "derived_asset_id": semantic["materialization"]["derived_asset_id"],
+    }
+
+
+def main(*, argv: Sequence[str]) -> int:
+    """Run parent benchmark, validate receipts, or execute the guarded child."""
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--child", action="store_true")
+    parser.add_argument("--validate", action="store_true")
+    arguments = parser.parse_args(list(argv))
+    if arguments.child and arguments.validate:
+        parser.error("--child and --validate are mutually exclusive")
+    try:
+        if arguments.child:
+            print(json.dumps(
+                _child_result(),
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ))
+            return 0
+        result = (
+            validate_current_receipts(repo_root=REPO_ROOT)
+            if arguments.validate
+            else run_benchmark(repo_root=REPO_ROOT)
+        )
+    except (FinancialMaterializationBenchmarkError, OSError, ValueError) as error:
+        print(json.dumps(
+            {"status": "FAILED", "error": str(error)},
+            ensure_ascii=False,
+            sort_keys=True,
+        ))
+        return 2
+    print(json.dumps(result, ensure_ascii=False, sort_keys=True))
+    if arguments.validate:
+        return 0
+    return 0 if result["status"] == "COMPLETED" else 3
+
+
+if __name__ == "__main__":
+    sys.exit(main(argv=sys.argv[1:]))

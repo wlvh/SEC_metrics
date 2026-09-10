@@ -1,0 +1,641 @@
+{
+  "batch_manifest_id": "sha256:918784f24383b5ad5aa5d29a540389ccc50d1fa82a94665b451e0e1345904946",
+  "candidate_artifact_hashes": {
+    "metric_evidence.csv": "da505166e60adaa7909b4185cd3c6c96f80df711db0c76ec57037ebf853509a2",
+    "metrics_matrix.csv": "b390121cdc75c0e9eff50b3c896191731ec7c6102061cb61ff677a4f6a588b72"
+  },
+  "derived_asset_ids": [
+    "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f"
+  ],
+  "expected_result_keys": [
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "applicability": "APPLICABLE"
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B11",
+      "applicability": "APPLICABLE"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B10",
+      "applicability": "N_A_STRUCTURAL"
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B11",
+      "applicability": "N_A_STRUCTURAL"
+    }
+  ],
+  "gate_receipt_hashes": {
+    "golden_results.csv": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+    "legacy_invariant_migration_receipt.json": "b0ddea8be8d29493c61bc62e74a85939f9f4e07817bfdaa8d708289ab80ad6d2",
+    "repair_validation_results.csv": "93e7e24adba4e7ae1e796de8f031ba356dc420527e6c0e7b36e555071f4fb6ca"
+  },
+  "legacy_input_hashes": {
+    "golden_results.csv": "6cd508eaab9e599af025af4e283c40c04ff85b3ee3f72705ffdc3af1f77feacc",
+    "metric_evidence.csv": "dbb742fd94ccf108df450e96ab0c08aceced837eaf217315b181d11c8708ffcb",
+    "metrics_matrix.csv": "0fdb969afe0bbc89c28a1f68d41c706ef2f1afc2c926302a04ee503ec12adb42"
+  },
+  "migrated_metric_ids": [
+    "B10",
+    "B11"
+  ],
+  "observation_ids": [
+    "sha256:65105fdce3e5183486de2542ff11f3595afe58a80d2c401a31fe1e54d91933a9",
+    "sha256:b5b951708d439542ce787b58943f3e37d45feae13ab633719e8c1f41559d8148"
+  ],
+  "publication_candidate_status": "PUBLISHABLE",
+  "release_id": "issue_15_lodging_r3",
+  "release_plan_sha256": "ba618c01f2deb7bcbc60d545758c8d71b38a361feb6ced3ef96a62c44b27321e",
+  "requirement_hashes": {
+    "baseline_sha256": "2646e81a8ac1c55f5faa15cf2859de32be234a1d7b4d9e44c2d5d55e1b8effcd",
+    "decision_register_sha256": "6471d3313748a266aa394ac5a8f2861ddb8c683ea1dc06787e20cbf4c3bd1f49",
+    "fsd_sha256": "1cf091812629648095119692c1742d12015e1012ccabf2173820e585e1d42b2b",
+    "issue_body_sha256": "a0c6f48c5df4f86a98d5615497477e85cbbdffaaf84ef35a97c805fa65a1e43a",
+    "r3_addendum_sha256": "99da847c034aba9c206b480d79d510ca64f9c622a79e6366567151e692307ca3",
+    "legacy_path_inventory_sha256": "a8186a5008f6474e852c4e05fe485263881f776cd0efb4a4cfd340c4f90dadb2",
+    "release_plan_sha256": "2c4a4c723460485e68d7d7a03e58ba1a3f61b08e5b3418911dba36d4241da8d8",
+    "semantic_runtime_versions_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  },
+  "result_bindings": [
+    {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "evidence_row_hashes": [
+        "sha256:ec8d70ad93fb468eed2b91bce75f68af4e706969dbe9d209b53ca1bc3e77b7fc"
+      ],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:0e785208ad2831ad366dab7ef091d5f1d88fad9dfad20b6ba27a48cbb49115d6",
+      "result_id": "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+      "trace_id": "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+      "unit": "ratio",
+      "value": "0.693"
+    },
+    {
+      "applicability": "APPLICABLE",
+      "company_id": "marriott_international",
+      "evidence_row_hashes": [
+        "sha256:10429c2cca9e26652c86408d467b0faf6d780bd8694b9493b2c1954a69510ede"
+      ],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:a3c02bff25993875442b0d4dcaf4c0a67db1bee1fbbb8f30e2120189e71b0381",
+      "result_id": "sha256:9d75669da8e2f9a97e5353c66ec8a3980ea506f2e97eaa91556c104301e4a748",
+      "trace_id": "sha256:e7df3d5db46279e8950dbcc307afca4bc48e61b9b35ff538e891bcee86bd888e",
+      "unit": "USD",
+      "value": "128.8"
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "southwest_airlines",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:c52d9becd8dfe1afc09cef0358f2c5132904041f6035803afa9cd1ec3ca430a5",
+      "result_id": "sha256:9be77a98e2be050bbc528e9165b45a6a9c75ff43811bcf6fc4b61fb6f1883ada",
+      "trace_id": "sha256:62846016d2e5065fc8a9c6cdc99749fb961c97ec23965e461226a8cced99760d",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "southwest_airlines",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:134777f3d574333c451987f7f9af1a0d5318d6277bc85e850d21a966011c7ddf",
+      "result_id": "sha256:5bd261ef9c2d3497fced0fa6b886b9b3dfc01bf02104a9db6a5ea23b8a151ceb",
+      "trace_id": "sha256:00110c38c0df6500c61686e083260589fe9b3837434bd7eedf2222b93d893169",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "ford_motor_company",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:a819b307ab27b8ab7615923052ecf115e9479252bd4ff0f0b512ab9e0a0ba6eb",
+      "result_id": "sha256:b5c9ef62b07ee3b98c7368357f56d8578f09ea922654f3a5ad6bf27cab160556",
+      "trace_id": "sha256:d2461649097121065b360147436e821b12582a4fc2a81f017fcfa0b45311f564",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "ford_motor_company",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:4c91efa2cd8d0bc3f579564e778750aa9f1a41f30f89dd4e51b7d51084c49432",
+      "result_id": "sha256:2bb7c70b05002a2e60d974f2205303a406a9e43395d2fe715f521e3c374d226f",
+      "trace_id": "sha256:7cbefe5a2aa32e81965f67c95259292006eb40e55223f0f1c59b71d48c98be08",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "pfizer",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:7c1e5a3150fe46fed43c79f55397472078c35426889c208bf6a60a8262700520",
+      "result_id": "sha256:ffeb9a9352d76e107be5bcce82fa804c0432e9d5e95acb9f4df5604b38d8b72e",
+      "trace_id": "sha256:42dc6bdf146c6aa3527e31dff74b62834c0d39f09687b7294c5ff820d190c9b0",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "pfizer",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:b2a67ca0ab306561b206a15a37431b750090bcbf7ba0f18ae59b5fe93b95aa2f",
+      "result_id": "sha256:650512fa71860d4c1f6ab87b5cb6bc81acf41be059c1d0ae65d9b610c9bfa013",
+      "trace_id": "sha256:5d25ab3eb3d9dea5205eb4042a1117cd1f608f1dd5bf93c383ac5ecbecd78d02",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "jpmorgan_chase",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:5d2ba365dd3c7d56b5ac4229f3dd45b3bf2f585f958c9f20cbe75876c508f904",
+      "result_id": "sha256:78ff3ec2d836d034e9a1c7e3a1a3afce894ea331f6f5488f51e63c9a1c6c0f6b",
+      "trace_id": "sha256:77fbda6d449da34763d6c6a9302106f289dbe56c731fa9a63b1a3a018aee95eb",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "jpmorgan_chase",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:d47f41e6a414ca9e2d9872ec9af39fb80c8598af1fd9f1501ca21d60b52360fe",
+      "result_id": "sha256:e5b620b354036d87f6cb864d9f653509902fa0fd1248ac33ca5248708c7e169f",
+      "trace_id": "sha256:9a6d983c3c3e7dd5ad963329461d6acc4aa61fc7eceea98945a1653be2e726f8",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "salesforce",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:8693f4794c1443002f4b543ee8ad2b39548efb5b20296834fa09a6dcad18c415",
+      "result_id": "sha256:12a477254fb7f450c12684f5d7e3f9aaac978a7f6d07b81feed9b2d24efc06a3",
+      "trace_id": "sha256:67c7c8037b3ff91187a639c45da5b3ca8f6f6624a4cb13c47daf35c8c39a19bd",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "salesforce",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:e7fbfd3c09d4aba05bf6b82f74101fd2c46f7b46054c6398374907e1692a72c9",
+      "result_id": "sha256:5837efbeead214cbeaeb73f726832111baf00c4ed7ea9d39337a293e48af64e0",
+      "trace_id": "sha256:bc706129c88db16608399dd87fc4b9dbae3305ba1cec7e9f5d3bccb2c40c61f6",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "lumen_technologies",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:e3dcf34ab71e5378479ee59bf0e59cfc286f9173a3750a54a2479238a15cdf56",
+      "result_id": "sha256:4f453081c6aac8f8b2c4b57ba65f6d0bee10020af99896acb7cf5d94f06b8160",
+      "trace_id": "sha256:de485668c86a45166a5f0fa996fdb81b9f6cc62f3baded91866772a7e8d75fce",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "lumen_technologies",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:53f2b13a83e3f0fc526e730d746b0e40786f5b4cecb8409bcbcbbb08db265474",
+      "result_id": "sha256:8a736e459bc4f6764986bbd27dfccaee36e4919bc7bf35493e5815480c3db0ed",
+      "trace_id": "sha256:b344af41c09ae46f3872de68e15e715f742882bf6780203f18476759f863ec7a",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "macys",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:9434a95b1c559eecb67021465efc64547042bd2d0f6fabb87d994141e89e039b",
+      "result_id": "sha256:bfabe62ef8fe550fbcce16cbd33e97f024a6691661d7cc260834e6d3c8eefe3f",
+      "trace_id": "sha256:4e0251e8bdbd33d87f23e2d83e74dd93164b370928d705c81234aa7d4569a78f",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "macys",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:5284436f2eb0742cac0145f672f6f9a9a17006ba33804360cc4f9a86f700a68b",
+      "result_id": "sha256:3a98a42fd86df79e130e16f7418a9ecba476d3cedd4ad541592d3fcec4a8c720",
+      "trace_id": "sha256:641f2abe01e4f08ff668043ac8c4e70f1049101a2f2c3e7d21c7a43792a89745",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "paramount_skydance_paramount_global",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:48bfa9eb4ab1a8e11eda4aa13875bda3243190f116a224a3212181ddc8d8c06d",
+      "result_id": "sha256:5fbe708aed1ab9c5296c3dd15138625a42d44ebb61547a6613e0c9c52d6fda4d",
+      "trace_id": "sha256:bdd871ee56be15649d8cd71733e057dc768bef91bbeed380618be9991eaa877d",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "paramount_skydance_paramount_global",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:6c484530d07fe6e95253282208f54ffd8a549a263e55a96cef02419b2bc3383f",
+      "result_id": "sha256:df4dd6918f08c0acb4babffa4b493354bb369f63a359c4d40238176ca2f4e196",
+      "trace_id": "sha256:fcca79bec4ef0a9097a3cb65f9f2b74ee2464e6000bc9e15083f4b1d6104f10f",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "enphase_energy",
+      "evidence_row_hashes": [],
+      "metric_id": "B10",
+      "metric_row_hash": "sha256:802e198ed036f4ae32b5f1f4127d1e0b47d59a77547d697d9b6cc88979249162",
+      "result_id": "sha256:7ce64682eb3e206920ad5b575d3846a0877419742b0fd17100feb71ec2940f0c",
+      "trace_id": "sha256:73218bb1e13ca2868c19e9c11baacb9eb163dbece5da65082be24f7beb30c156",
+      "unit": null,
+      "value": null
+    },
+    {
+      "applicability": "N_A_STRUCTURAL",
+      "company_id": "enphase_energy",
+      "evidence_row_hashes": [],
+      "metric_id": "B11",
+      "metric_row_hash": "sha256:7be80b8e066ce38b2d533d2d31b0c323718d3dc6244fce13e63f462008ceb506",
+      "result_id": "sha256:13c6f54a1f90c2dab0943040d238777a2a108a11ab736478177587b3ecd361be",
+      "trace_id": "sha256:cbb315d0ae32194d8abd8acc70ee952c832ff8e751412341620085b0fb7ee304",
+      "unit": null,
+      "value": null
+    }
+  ],
+  "result_ids": [
+    "sha256:12a477254fb7f450c12684f5d7e3f9aaac978a7f6d07b81feed9b2d24efc06a3",
+    "sha256:13c6f54a1f90c2dab0943040d238777a2a108a11ab736478177587b3ecd361be",
+    "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5",
+    "sha256:2bb7c70b05002a2e60d974f2205303a406a9e43395d2fe715f521e3c374d226f",
+    "sha256:3a98a42fd86df79e130e16f7418a9ecba476d3cedd4ad541592d3fcec4a8c720",
+    "sha256:4f453081c6aac8f8b2c4b57ba65f6d0bee10020af99896acb7cf5d94f06b8160",
+    "sha256:5837efbeead214cbeaeb73f726832111baf00c4ed7ea9d39337a293e48af64e0",
+    "sha256:5bd261ef9c2d3497fced0fa6b886b9b3dfc01bf02104a9db6a5ea23b8a151ceb",
+    "sha256:5fbe708aed1ab9c5296c3dd15138625a42d44ebb61547a6613e0c9c52d6fda4d",
+    "sha256:650512fa71860d4c1f6ab87b5cb6bc81acf41be059c1d0ae65d9b610c9bfa013",
+    "sha256:78ff3ec2d836d034e9a1c7e3a1a3afce894ea331f6f5488f51e63c9a1c6c0f6b",
+    "sha256:7ce64682eb3e206920ad5b575d3846a0877419742b0fd17100feb71ec2940f0c",
+    "sha256:8a736e459bc4f6764986bbd27dfccaee36e4919bc7bf35493e5815480c3db0ed",
+    "sha256:9be77a98e2be050bbc528e9165b45a6a9c75ff43811bcf6fc4b61fb6f1883ada",
+    "sha256:9d75669da8e2f9a97e5353c66ec8a3980ea506f2e97eaa91556c104301e4a748",
+    "sha256:b5c9ef62b07ee3b98c7368357f56d8578f09ea922654f3a5ad6bf27cab160556",
+    "sha256:bfabe62ef8fe550fbcce16cbd33e97f024a6691661d7cc260834e6d3c8eefe3f",
+    "sha256:df4dd6918f08c0acb4babffa4b493354bb369f63a359c4d40238176ca2f4e196",
+    "sha256:e5b620b354036d87f6cb864d9f653509902fa0fd1248ac33ca5248708c7e169f",
+    "sha256:ffeb9a9352d76e107be5bcce82fa804c0432e9d5e95acb9f4df5604b38d8b72e"
+  ],
+  "review_unit_hashes": [
+    "sha256:ac0257e70d539130afef05e79be9c10fc57b9d511305bfcf670660e0c6a7998b",
+    "sha256:e39887425f84690a26cfccd1cbb7c2abf66f978fbac16a40e704bdd3fb6d253f"
+  ],
+  "run_bindings": [
+    {
+      "audit_manifest_hash": "sha256:1c1d889e665348de740865030f4b6a4bbf580ea25614bfd16dcfc5477794eff0",
+      "company_id": "enphase_energy",
+      "content_manifest_hash": "sha256:fe65a9053c3921f4511a147705476875696f3ac26fb1e48e872ebe7e13c5b464",
+      "result_ids": [
+        "sha256:7ce64682eb3e206920ad5b575d3846a0877419742b0fd17100feb71ec2940f0c"
+      ],
+      "run_id": "run:ratchet:structural:ce6330fbd9f713b5669ea21ef44e6248db14bfa2ec9a0fb390d3bc6992abf1d0",
+      "run_path": "structural_runs/ce6330fbd9f713b5669ea21ef44e6248db14bfa2ec9a0fb390d3bc6992abf1d0",
+      "validation_receipt_id": "sha256:218bb1331d7c485bef15e96900d1818a66034bd012f7be1ae8c3637401d560de"
+    },
+    {
+      "audit_manifest_hash": "sha256:29077a9472ad297c3e322f5676b6f98ed41e05c6b41444e7dc3915da8b746fb9",
+      "company_id": "enphase_energy",
+      "content_manifest_hash": "sha256:43f2172f12cc100ac0a120a29e1e91a92040b91260decc212e04dd5fc83e548f",
+      "result_ids": [
+        "sha256:13c6f54a1f90c2dab0943040d238777a2a108a11ab736478177587b3ecd361be"
+      ],
+      "run_id": "run:ratchet:structural:fde85f2d9ec291e15913eac4787e8b39a640febf5cd5fdd85d15388a915325e2",
+      "run_path": "structural_runs/fde85f2d9ec291e15913eac4787e8b39a640febf5cd5fdd85d15388a915325e2",
+      "validation_receipt_id": "sha256:5ad490a3b89b9425c1edc557d4071909067c5b03c5bb9079ce97703fed5b6335"
+    },
+    {
+      "audit_manifest_hash": "sha256:cc260439d959fd63a1ec44462a833cc3e17fe683ae17f7d1aaf2d4c9922d4e96",
+      "company_id": "ford_motor_company",
+      "content_manifest_hash": "sha256:acf55027184f5e609965a17844f12dcf84676a33d7d770590029db10f3925c34",
+      "result_ids": [
+        "sha256:2bb7c70b05002a2e60d974f2205303a406a9e43395d2fe715f521e3c374d226f"
+      ],
+      "run_id": "run:ratchet:structural:7e0157b950c63738b0333771f2d2cddfdde2fc2a0bc2df978b1acb7e867a9ba3",
+      "run_path": "structural_runs/7e0157b950c63738b0333771f2d2cddfdde2fc2a0bc2df978b1acb7e867a9ba3",
+      "validation_receipt_id": "sha256:fd4e07ad7281140b1c902e315d30183897c055b79b16ca5a6f8b85feba4ad222"
+    },
+    {
+      "audit_manifest_hash": "sha256:c30d38d4ab8be3efe72415cf3f585642e8efbdec18e264ac9e9a9761a2721b40",
+      "company_id": "ford_motor_company",
+      "content_manifest_hash": "sha256:d7a243b8c3f15053baa99318ec277c864aea45b87c8f656b194bef6dc0af5452",
+      "result_ids": [
+        "sha256:b5c9ef62b07ee3b98c7368357f56d8578f09ea922654f3a5ad6bf27cab160556"
+      ],
+      "run_id": "run:ratchet:structural:860ce62bfb1ea2cd11d053559330a570f0f2d8accb0136c631436b1aa1702298",
+      "run_path": "structural_runs/860ce62bfb1ea2cd11d053559330a570f0f2d8accb0136c631436b1aa1702298",
+      "validation_receipt_id": "sha256:af0c1c2e959155cc352e43aff96222c20bfe2d805e08245ff2f5c20ffad3e8c6"
+    },
+    {
+      "audit_manifest_hash": "sha256:3b848f001441dc42d95cba0bbc0d16b7e09aae5dead15242cc3e4dfca1ef38a8",
+      "company_id": "jpmorgan_chase",
+      "content_manifest_hash": "sha256:ae0deb79132af98b72bb38e7016981b475647ba6fc08fa582dbab84a3b19b690",
+      "result_ids": [
+        "sha256:e5b620b354036d87f6cb864d9f653509902fa0fd1248ac33ca5248708c7e169f"
+      ],
+      "run_id": "run:ratchet:structural:68b118f0a28e7e98f56aa05d62356a10dee470e1e520255c6fa86c0195668716",
+      "run_path": "structural_runs/68b118f0a28e7e98f56aa05d62356a10dee470e1e520255c6fa86c0195668716",
+      "validation_receipt_id": "sha256:703c88a0f123ad9f92ecc871a8114966882578d38773c33d3fffdaa6052c4676"
+    },
+    {
+      "audit_manifest_hash": "sha256:14f734daec7c8eec792f05b4794dfbb3350854041e2721633c93e731a72f88da",
+      "company_id": "jpmorgan_chase",
+      "content_manifest_hash": "sha256:167bd0db723c0d44a08c934558093c48f7c35f647ec5db6ea66a1141b235b463",
+      "result_ids": [
+        "sha256:78ff3ec2d836d034e9a1c7e3a1a3afce894ea331f6f5488f51e63c9a1c6c0f6b"
+      ],
+      "run_id": "run:ratchet:structural:f8a3e2e51dfe6deaf4abf2c9a821febc9f5cff3f67a5853faca1ca55a02344b8",
+      "run_path": "structural_runs/f8a3e2e51dfe6deaf4abf2c9a821febc9f5cff3f67a5853faca1ca55a02344b8",
+      "validation_receipt_id": "sha256:b07b0f28057406c74f431c7ddfa8ed2fa1b1dc7b0dea36ba2d9a0e960d1e8994"
+    },
+    {
+      "audit_manifest_hash": "sha256:25a2965d3b3ac193328911c76317561263c5ed374253fe75bd6f663496a95230",
+      "company_id": "lumen_technologies",
+      "content_manifest_hash": "sha256:67d619b01f5b2b240c8c19f0c82ef07efd800b6483581ee6b524666090fd1f91",
+      "result_ids": [
+        "sha256:4f453081c6aac8f8b2c4b57ba65f6d0bee10020af99896acb7cf5d94f06b8160"
+      ],
+      "run_id": "run:ratchet:structural:82af468160c9f070fe00e1b334db42393f92b9e83808ffd07d47c280d67cde4d",
+      "run_path": "structural_runs/82af468160c9f070fe00e1b334db42393f92b9e83808ffd07d47c280d67cde4d",
+      "validation_receipt_id": "sha256:ba394ba65c496bf18da02b126a9c83743a6afc4814d805b5a97eec870a21bb00"
+    },
+    {
+      "audit_manifest_hash": "sha256:b93af47b71347452c9c86a29c645423201f8dc783966aa59f33ea46fedb8a9a7",
+      "company_id": "lumen_technologies",
+      "content_manifest_hash": "sha256:67b281f080b17a8b56d1031d2df8bc6ffcfef4881dc94db65ad8bbd4ef2901aa",
+      "result_ids": [
+        "sha256:8a736e459bc4f6764986bbd27dfccaee36e4919bc7bf35493e5815480c3db0ed"
+      ],
+      "run_id": "run:ratchet:structural:fc5d1f2776c8f46012faad7878ac2e0b4b9d3cd1ad9f4a73458a26bde6868eb9",
+      "run_path": "structural_runs/fc5d1f2776c8f46012faad7878ac2e0b4b9d3cd1ad9f4a73458a26bde6868eb9",
+      "validation_receipt_id": "sha256:5afb52dfc5b08a7c1444f627f5c637e297510a2755b596e5623bfe349c418bea"
+    },
+    {
+      "audit_manifest_hash": "sha256:3e782de8386d61dbd3f6a9539eba8d69c9d634873882cc11d0bdd699e5e620f7",
+      "company_id": "macys",
+      "content_manifest_hash": "sha256:35f79991216730cd89605084a65c9fab849c75f764dac63ebc3a83872cafe62a",
+      "result_ids": [
+        "sha256:bfabe62ef8fe550fbcce16cbd33e97f024a6691661d7cc260834e6d3c8eefe3f"
+      ],
+      "run_id": "run:ratchet:structural:54b7be5a87936e5288d581f095db25e3e7b1dbdaf133458286bb2f75233c7b16",
+      "run_path": "structural_runs/54b7be5a87936e5288d581f095db25e3e7b1dbdaf133458286bb2f75233c7b16",
+      "validation_receipt_id": "sha256:aab987c9841d280454342f668d0fad0596de86273d7a7a6cd66ac963775e5a0d"
+    },
+    {
+      "audit_manifest_hash": "sha256:fe1d9222547ca7057915ad5b28669893e7b718797bc8c6fee1e42aa41977c0fe",
+      "company_id": "macys",
+      "content_manifest_hash": "sha256:cfefb619e8b5ee618c209ca2861e55a15f054144635cd210adaee6ce3e57c76e",
+      "result_ids": [
+        "sha256:3a98a42fd86df79e130e16f7418a9ecba476d3cedd4ad541592d3fcec4a8c720"
+      ],
+      "run_id": "run:ratchet:structural:dd63ab90af87c0cca8ac2189dd12247f24b94e80f691542d27f8ef06e022bd25",
+      "run_path": "structural_runs/dd63ab90af87c0cca8ac2189dd12247f24b94e80f691542d27f8ef06e022bd25",
+      "validation_receipt_id": "sha256:08bc1fd340456a40e2da4d067bd8df46086664e16d7121fbdf4a752a7207d48d"
+    },
+    {
+      "audit_manifest_hash": "sha256:87c2e4d6c60d593be1f0c0b734657c8ebd3964ded544ba23528a91dbc49c8424",
+      "company_id": "marriott_international",
+      "content_manifest_hash": "sha256:ba24e2491630e0ec40b89ab00fa59ce5fa1ebf9c440807c0be12ff9d4a77b1e6",
+      "result_ids": [
+        "sha256:24d9c6a1f6aa35b856588f1d34dc0820eba50de2ad298afe323d23ae297c04a5"
+      ],
+      "run_id": "run:qualification:table:0799ec7f91b6bc0472fd80c6c655beb90ddd7db583dcd13cae0bfab506e6412c",
+      "run_path": "qualification_runs/0799ec7f91b6bc0472fd80c6c655beb90ddd7db583dcd13cae0bfab506e6412c",
+      "validation_receipt_id": "sha256:56f9d5f25f4d0251f278363c09531381423c341a6ce216c37ec1c4793cccd2fc"
+    },
+    {
+      "audit_manifest_hash": "sha256:7b66025e209870a19cb90b9df9cf6da39b8ec198fbd84f25d34f4cb5b993e1d4",
+      "company_id": "marriott_international",
+      "content_manifest_hash": "sha256:c9ccc83f1ddca3135a18e09a9d33febd452f6436925cf8ed46e2a8200d20d498",
+      "result_ids": [
+        "sha256:9d75669da8e2f9a97e5353c66ec8a3980ea506f2e97eaa91556c104301e4a748"
+      ],
+      "run_id": "run:qualification:table:0d790e325de331d3d2213946611647cce06fd6dc843c6f18483c34492ff36995",
+      "run_path": "qualification_runs/0d790e325de331d3d2213946611647cce06fd6dc843c6f18483c34492ff36995",
+      "validation_receipt_id": "sha256:b63f1cab034268dacc56bf931e443bff8f08b629c2d52cb7eb79d8590aa6bed6"
+    },
+    {
+      "audit_manifest_hash": "sha256:d87e1f715c02bbbdc6b937c61b759bf0596c3071fd6c3189c16a5bef6df0e0a5",
+      "company_id": "paramount_skydance_paramount_global",
+      "content_manifest_hash": "sha256:9a9ac0f846520b98eeabcf7653649890f0be281ad1962ac01655b0fa7471bab0",
+      "result_ids": [
+        "sha256:5fbe708aed1ab9c5296c3dd15138625a42d44ebb61547a6613e0c9c52d6fda4d"
+      ],
+      "run_id": "run:ratchet:structural:220b12e6d26585ddf3a78f4aede0201b9500fb8095ce008cf203079001dc80f9",
+      "run_path": "structural_runs/220b12e6d26585ddf3a78f4aede0201b9500fb8095ce008cf203079001dc80f9",
+      "validation_receipt_id": "sha256:ab4cdead106177bf51bd5afb02f1c827762fb15232d17e60d6b00a6a4f8d4e15"
+    },
+    {
+      "audit_manifest_hash": "sha256:524b8ce83b02d3533a6ddedbfb25c1bf7c1c3484cdbbeddccb0e31916899b7e0",
+      "company_id": "paramount_skydance_paramount_global",
+      "content_manifest_hash": "sha256:37155379abb6ad179212f37f364b17d22e04799804cbdc9e86629e327e102cfa",
+      "result_ids": [
+        "sha256:df4dd6918f08c0acb4babffa4b493354bb369f63a359c4d40238176ca2f4e196"
+      ],
+      "run_id": "run:ratchet:structural:d8ce8c369d66869e7eaa92ccd389e25335ae2431dca15593e52efa64669dad5c",
+      "run_path": "structural_runs/d8ce8c369d66869e7eaa92ccd389e25335ae2431dca15593e52efa64669dad5c",
+      "validation_receipt_id": "sha256:5ee536d45472622d608137b0314e3fc973a4c658a668d1319ff3bf7d271cdcdf"
+    },
+    {
+      "audit_manifest_hash": "sha256:11c368525ecd7447ae73d0388d305ec984be120b26cce11c850bf8fa92528714",
+      "company_id": "pfizer",
+      "content_manifest_hash": "sha256:8a23abbbcf86f09b457847d205996fbd4646be0e1cbbcb08c71ee53a24967eb1",
+      "result_ids": [
+        "sha256:ffeb9a9352d76e107be5bcce82fa804c0432e9d5e95acb9f4df5604b38d8b72e"
+      ],
+      "run_id": "run:ratchet:structural:5b1d0a288cf63f2bc845c7ba223f5013fea039f902ce7603d8f60035d56a7f09",
+      "run_path": "structural_runs/5b1d0a288cf63f2bc845c7ba223f5013fea039f902ce7603d8f60035d56a7f09",
+      "validation_receipt_id": "sha256:0d0ed494ee4802afe5ba3f05668be20a230c830da1aae8146907d4d98d71dc8e"
+    },
+    {
+      "audit_manifest_hash": "sha256:2d8c671611cddda0a78b92f70ac3f84ee241c0f51c4286160c8590028262a20b",
+      "company_id": "pfizer",
+      "content_manifest_hash": "sha256:89b7a76c7273e44704c0d9fbbdb669f79f3bbe7555702245b9cfec308dce8b20",
+      "result_ids": [
+        "sha256:650512fa71860d4c1f6ab87b5cb6bc81acf41be059c1d0ae65d9b610c9bfa013"
+      ],
+      "run_id": "run:ratchet:structural:f4e89fe5798bd618496ed81be7562625d17329e20c319effc75c875153b52b8c",
+      "run_path": "structural_runs/f4e89fe5798bd618496ed81be7562625d17329e20c319effc75c875153b52b8c",
+      "validation_receipt_id": "sha256:3ed3b5c35674383f458ed165a9bad81ab0008e2028b513ae5d3397c8a9d369fe"
+    },
+    {
+      "audit_manifest_hash": "sha256:78fbcc14345f3b2060ab7d4a18a2a6b86aedac64644c8d753dc4f5c85943feac",
+      "company_id": "salesforce",
+      "content_manifest_hash": "sha256:67f9349b704a6416142d1c75b119a10524de937544e705891148555b33054582",
+      "result_ids": [
+        "sha256:12a477254fb7f450c12684f5d7e3f9aaac978a7f6d07b81feed9b2d24efc06a3"
+      ],
+      "run_id": "run:ratchet:structural:66884abf0bbfed7a933dd006a443649c71ac0ad5377cb67728f9aaa9b7b23991",
+      "run_path": "structural_runs/66884abf0bbfed7a933dd006a443649c71ac0ad5377cb67728f9aaa9b7b23991",
+      "validation_receipt_id": "sha256:bb917780a4199709ae423518470f2f45af04e28f8bebe07b108c46b43bde5f7d"
+    },
+    {
+      "audit_manifest_hash": "sha256:e61a2baa49d93277fba846be101f33548392817a67f67cd593b1f94fd725d644",
+      "company_id": "salesforce",
+      "content_manifest_hash": "sha256:dcdada5591b1ed77292dc605fbefabacd1ff5e27ea69727ed4eb0b9121987fd5",
+      "result_ids": [
+        "sha256:5837efbeead214cbeaeb73f726832111baf00c4ed7ea9d39337a293e48af64e0"
+      ],
+      "run_id": "run:ratchet:structural:bea464f4c3ea7947b331eb1832586e22fe0bec7f30af14289bd0e2db5aced55c",
+      "run_path": "structural_runs/bea464f4c3ea7947b331eb1832586e22fe0bec7f30af14289bd0e2db5aced55c",
+      "validation_receipt_id": "sha256:8a7b59fe34875d22fadbfa1fd124f23703e1009e45d3c52e8df08cbf20884da6"
+    },
+    {
+      "audit_manifest_hash": "sha256:51a255fc0eb26db7255a552983f178b5eba4513d4d984a4ddea58dc85f81c0d6",
+      "company_id": "southwest_airlines",
+      "content_manifest_hash": "sha256:33e168f9608653d581bc166800c47e1187d6cd9778404b0f24c386798e8d5b6e",
+      "result_ids": [
+        "sha256:9be77a98e2be050bbc528e9165b45a6a9c75ff43811bcf6fc4b61fb6f1883ada"
+      ],
+      "run_id": "run:ratchet:structural:372868c61d1f0663256bb2cb32a694ddde26492321ddd6e67554047874650390",
+      "run_path": "structural_runs/372868c61d1f0663256bb2cb32a694ddde26492321ddd6e67554047874650390",
+      "validation_receipt_id": "sha256:59c3624ad9dd4e93d02a207d998131e351574173bd40c54e8f0af50aec218444"
+    },
+    {
+      "audit_manifest_hash": "sha256:914dd3ea14f87ae63e7a30aa83829826c0033333fda7d8fc3da57d362f2226ed",
+      "company_id": "southwest_airlines",
+      "content_manifest_hash": "sha256:e6f7578148a5c0b4985e8e10e0520b2376063a76affa9a00fb5f4d6cc6a8f58d",
+      "result_ids": [
+        "sha256:5bd261ef9c2d3497fced0fa6b886b9b3dfc01bf02104a9db6a5ea23b8a151ceb"
+      ],
+      "run_id": "run:ratchet:structural:772be2d009be45557dd97bf135438dd8314175ef6b831d5f64bd8e4fd6ddd76a",
+      "run_path": "structural_runs/772be2d009be45557dd97bf135438dd8314175ef6b831d5f64bd8e4fd6ddd76a",
+      "validation_receipt_id": "sha256:422e869997f9e723eeed16676935b755f21e766695010efc26c0119be7db8fa9"
+    }
+  ],
+  "trace_ids": [
+    "sha256:00110c38c0df6500c61686e083260589fe9b3837434bd7eedf2222b93d893169",
+    "sha256:42dc6bdf146c6aa3527e31dff74b62834c0d39f09687b7294c5ff820d190c9b0",
+    "sha256:4e0251e8bdbd33d87f23e2d83e74dd93164b370928d705c81234aa7d4569a78f",
+    "sha256:5d25ab3eb3d9dea5205eb4042a1117cd1f608f1dd5bf93c383ac5ecbecd78d02",
+    "sha256:62846016d2e5065fc8a9c6cdc99749fb961c97ec23965e461226a8cced99760d",
+    "sha256:641f2abe01e4f08ff668043ac8c4e70f1049101a2f2c3e7d21c7a43792a89745",
+    "sha256:67c7c8037b3ff91187a639c45da5b3ca8f6f6624a4cb13c47daf35c8c39a19bd",
+    "sha256:73218bb1e13ca2868c19e9c11baacb9eb163dbece5da65082be24f7beb30c156",
+    "sha256:77fbda6d449da34763d6c6a9302106f289dbe56c731fa9a63b1a3a018aee95eb",
+    "sha256:7cbefe5a2aa32e81965f67c95259292006eb40e55223f0f1c59b71d48c98be08",
+    "sha256:9a6d983c3c3e7dd5ad963329461d6acc4aa61fc7eceea98945a1653be2e726f8",
+    "sha256:a98f243d09081d98dd65b04691a2b36380d584b2c71b991ab5d5a1bea62ac4da",
+    "sha256:b344af41c09ae46f3872de68e15e715f742882bf6780203f18476759f863ec7a",
+    "sha256:bc706129c88db16608399dd87fc4b9dbae3305ba1cec7e9f5d3bccb2c40c61f6",
+    "sha256:bdd871ee56be15649d8cd71733e057dc768bef91bbeed380618be9991eaa877d",
+    "sha256:cbb315d0ae32194d8abd8acc70ee952c832ff8e751412341620085b0fb7ee304",
+    "sha256:d2461649097121065b360147436e821b12582a4fc2a81f017fcfa0b45311f564",
+    "sha256:de485668c86a45166a5f0fa996fdb81b9f6cc62f3baded91866772a7e8d75fce",
+    "sha256:e7df3d5db46279e8950dbcc307afca4bc48e61b9b35ff538e891bcee86bd888e",
+    "sha256:fcca79bec4ef0a9097a3cb65f9f2b74ee2464e6000bc9e15083f4b1d6104f10f"
+  ],
+  "schema_version": 2,
+  "projection_manifest_id": "sha256:09a151fb95d49a84e16f040303ae352f8310a91958c1359aecb44d7a5d650e07"
+}

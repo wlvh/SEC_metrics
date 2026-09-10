@@ -1,0 +1,13 @@
+{
+  "record_type": "OWNER_POLICY_COMMENT_EVIDENCE",
+  "evidence_scope": "POLICY_CONTENT_ONLY",
+  "owner_comment_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524746204",
+  "author": "github:wlvh",
+  "published_at_utc": "2026-09-03T11:05:07Z",
+  "updated_at_utc": "2026-09-03T11:05:07Z",
+  "raw_body": "{\n  \"decision\": \"APPROVE_R4_A03_COMPOSITE_SCOPE_AND_ALTERNATE_PERIOD\",\n  \"scope\": \"PR_B_OFFLINE_IMPLEMENTATION_ONLY\",\n  \"predecessor_policy_comment_url\": \"https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5524085182\",\n  \"predecessor_requirement_id\": \"issue_28_v1\",\n  \"predecessor_requirement_closure_hash\": \"sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac\",\n  \"a03_scope_policy\": {\n    \"metric_id\": \"A03\",\n    \"mechanism\": \"SOURCE_BOUND_COMPOSITE_SCOPE_PROOF_V1\",\n    \"numeric_value_locator\": \"SAME_TARGET_TABLE_CELL_REQUIRED\",\n    \"scope_dimensions_allowed_from_text_span\": [\n      \"entity_scope\",\n      \"aggregation\"\n    ],\n    \"required_scope\": {\n      \"entity_scope\": \"firm\",\n      \"aggregation\": \"average\"\n    },\n    \"text_span_requirements\": {\n      \"same_source_sha_and_accession\": true,\n      \"exact_byte_offsets_and_span_sha256\": true,\n      \"same_named_liquidity_section\": true,\n      \"deterministic_target_table_association\": true,\n      \"all_competing_scope_spans_dispositioned\": true,\n      \"conflicting_scope_blocks_auto_certification\": true\n    },\n    \"provider_payload_remains_table_window_only\": true,\n    \"ai_or_fuzzy_span_selection_allowed\": false,\n    \"cross_source_scope_evidence_allowed\": false,\n    \"copying_text_into_table_or_caption_allowed\": false\n  },\n  \"a03_alternate_period_policy\": {\n    \"source_id\": \"citigroup_fy2025_10k\",\n    \"fixture_class\": \"POSITIVE_ALTERNATE_LAYOUT\",\n    \"averaging_period\": \"AS_DISCLOSED_QUARTER_AVERAGE\",\n    \"exact_disclosed_period_must_be_bound\": true,\n    \"must_not_claim_annual_average\": true,\n    \"other_metric_period_semantics_unchanged\": true\n  },\n  \"additional_sec_acquisitions_authorized\": false,\n  \"provider_calls_authorized\": false,\n  \"paid_model_calls_authorized\": false,\n  \"live_qualification_authorized\": false,\n  \"publication_authorized\": false,\n  \"transition_activation_authorized\": false,\n  \"merge_authorized\": false,\n  \"active_publication_must_remain\": \"R3\"\n}",
+  "body_sha256": "ad1f616329c5ee54e0119a06064b8e8760ede71b3f4383a643b653d72f3e8b9c",
+  "posting_provenance": "OWNER_EXPLICIT_APPROVAL_RECORDED_BY_AUTHORIZED_AGENT",
+  "transition_activation": "NOT_ISSUED",
+  "provider_paid_live_publication_authorization": false
+}

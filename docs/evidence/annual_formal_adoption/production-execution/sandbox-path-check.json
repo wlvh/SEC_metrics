@@ -1,0 +1,16 @@
+[
+  {
+    "variant": "braces",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 3, in <module>\n    p.write_text(\"sandbox-only\")\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 809, in write_text\n    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:\n         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py\", line 771, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nPermissionError: [Errno 1] Operation not permitted: '/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/production-execution/20260910T021408Z/sandbox-path-check/braces/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.json'\n",
+    "production_paths_written": false
+  },
+  {
+    "variant": "expanded",
+    "returncode": 0,
+    "stdout": "allowed-exact-pattern-and-rejected-unrelated\n",
+    "stderr": "",
+    "production_paths_written": false
+  }
+]

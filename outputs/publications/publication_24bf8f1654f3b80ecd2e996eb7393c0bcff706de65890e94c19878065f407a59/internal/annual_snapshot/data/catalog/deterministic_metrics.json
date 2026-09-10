@@ -1,0 +1,343 @@
+{
+  "schema_version": 2,
+  "record_type": "DETERMINISTIC_METRIC_CATALOG",
+  "metrics": {
+    "A01": {
+      "name": "Tier 1 capital ratio",
+      "adapter_id": "accession_xbrl",
+      "source_role": "target_accession_instance",
+      "canonical_unit": "pure",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "DIM_XBRL_OK",
+      "source_class": "DIM_XBRL",
+      "branches": [
+        {
+          "branch_id": "basel_standardized_parent",
+          "formula_id": "direct",
+          "quality": "EXACT",
+          "components": [
+            {
+              "role": "tier_one_ratio",
+              "approved_concepts": ["TierOneRiskBasedCapitalToRiskWeightedAssets"],
+              "accession_role": "current",
+              "period_role": "current_instant",
+              "unit": "number",
+              "dimension_policy": "EXACT",
+              "required_dimensions": {
+                "srt:ConsolidatedEntitiesAxis": "srt:ParentCompanyMember",
+                "us-gaap:RiskWeightedAssetsCalculationMethodologyAxis": "jpm:BaselIIIStandardizedMember"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "A02": {
+      "name": "CET1 ratio",
+      "adapter_id": "accession_xbrl",
+      "source_role": "target_accession_instance",
+      "canonical_unit": "pure",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "DIM_XBRL_OK",
+      "source_class": "DIM_XBRL",
+      "branches": [
+        {
+          "branch_id": "basel_standardized_parent",
+          "formula_id": "direct",
+          "quality": "EXACT",
+          "components": [
+            {
+              "role": "cet1_ratio",
+              "approved_concepts": ["CommonEquityTier1CapitaltoRiskWeightedAssets"],
+              "accession_role": "current",
+              "period_role": "current_instant",
+              "unit": "number",
+              "dimension_policy": "EXACT",
+              "required_dimensions": {
+                "srt:ConsolidatedEntitiesAxis": "srt:ParentCompanyMember",
+                "us-gaap:RiskWeightedAssetsCalculationMethodologyAxis": "jpm:BaselIIIStandardizedMember"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "A05": {
+      "name": "ROA",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "ratio",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "OK",
+      "source_class": "DERIVED",
+      "branches": [
+        {
+          "branch_id": "average_assets",
+          "formula_id": "average_denominator_ratio",
+          "quality": "EXACT",
+          "components": [
+            {"role": "net_income", "approved_concepts": ["NetIncomeLoss", "ProfitLoss", "NetIncomeLossAvailableToCommonStockholdersBasic"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "assets_current", "approved_concepts": ["Assets"], "accession_role": "current", "period_role": "current_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "assets_prior", "approved_concepts": ["Assets"], "accession_role": "prior", "period_role": "prior_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "A06": {
+      "name": "ROE",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "ratio",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "OK",
+      "source_class": "DERIVED",
+      "branches": [
+        {
+          "branch_id": "average_equity",
+          "formula_id": "average_denominator_ratio",
+          "quality": "EXACT",
+          "components": [
+            {"role": "net_income", "approved_concepts": ["NetIncomeLoss", "ProfitLoss", "NetIncomeLossAvailableToCommonStockholdersBasic"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "equity_current", "approved_concepts": ["StockholdersEquity"], "accession_role": "current", "period_role": "current_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "equity_prior", "approved_concepts": ["StockholdersEquity"], "accession_role": "prior", "period_role": "prior_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "A07": {
+      "name": "Net income trends",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "USD",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "OK",
+      "source_class": "DERIVED",
+      "branches": [
+        {
+          "branch_id": "year_over_year_difference",
+          "formula_id": "difference",
+          "quality": "EXACT",
+          "components": [
+            {"role": "net_income_current", "approved_concepts": ["NetIncomeLoss", "ProfitLoss", "NetIncomeLossAvailableToCommonStockholdersBasic"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "net_income_prior", "approved_concepts": ["NetIncomeLoss", "ProfitLoss", "NetIncomeLossAvailableToCommonStockholdersBasic"], "accession_role": "prior", "period_role": "prior_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "A08": {
+      "name": "Fee income vs interest income",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "ratio",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "OK",
+      "source_class": "STD_XBRL",
+      "branches": [
+        {
+          "branch_id": "noninterest_over_net_interest",
+          "formula_id": "ratio",
+          "quality": "EXACT",
+          "components": [
+            {"role": "noninterest_income", "approved_concepts": ["NoninterestIncome"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "net_interest_income", "approved_concepts": ["InterestIncomeExpenseNet"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "A10": {
+      "name": "Loan loss reserves",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "ratio",
+      "result_period_role": "current_instant",
+      "applicability": {"all": ["financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "OK",
+      "source_class": "STD_XBRL",
+      "branches": [
+        {
+          "branch_id": "retained_loans_before_allowance",
+          "formula_id": "ratio",
+          "quality": "EXACT",
+          "components": [
+            {"role": "allowance", "approved_concepts": ["FinancingReceivableAllowanceForCreditLossExcludingAccruedInterest"], "accession_role": "current", "period_role": "current_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "loans_before_allowance", "approved_concepts": ["FinancingReceivableExcludingAccruedInterestBeforeAllowanceForCreditLoss"], "accession_role": "current", "period_role": "current_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "B02": {
+      "name": "Revenue YoY growth",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "ratio",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["non_financial"], "none": []},
+      "continuity_policy": "REQUIRE_CONTINUOUS",
+      "success_status": "OK",
+      "source_class": "DERIVED",
+      "branches": [
+        {
+          "branch_id": "comparable_annual_revenue",
+          "formula_id": "growth",
+          "quality": "EXACT",
+          "components": [
+            {"role": "revenue_current", "approved_concepts": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenueFromContractWithCustomerIncludingAssessedTax"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "revenue_prior", "approved_concepts": ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenueFromContractWithCustomerIncludingAssessedTax"], "accession_role": "prior", "period_role": "prior_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "B04": {
+      "name": "Net income",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "USD",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["non_financial"], "none": []},
+      "continuity_policy": "REQUIRE_CONTINUOUS",
+      "success_status": "OK",
+      "source_class": "STD_XBRL",
+      "branches": [
+        {
+          "branch_id": "reported_net_income",
+          "formula_id": "direct",
+          "quality": "EXACT",
+          "components": [
+            {"role": "net_income", "approved_concepts": ["NetIncomeLoss", "ProfitLoss", "NetIncomeLossAvailableToCommonStockholdersBasic"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "B05": {
+      "name": "Free cash flow",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "USD",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["non_financial"], "none": []},
+      "continuity_policy": "REQUIRE_CONTINUOUS",
+      "success_status": "OK",
+      "source_class": "DERIVED",
+      "branches": [
+        {
+          "branch_id": "operating_cash_flow_less_capex",
+          "formula_id": "difference",
+          "quality": "EXACT",
+          "components": [
+            {"role": "operating_cash_flow", "approved_concepts": ["NetCashProvidedByUsedInOperatingActivities"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "capital_expenditures", "approved_concepts": ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "B07": {
+      "name": "Interest coverage ratio",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "ratio",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["non_financial"], "none": []},
+      "continuity_policy": "REQUIRE_CONTINUOUS",
+      "success_status": "OK",
+      "source_class": "DERIVED",
+      "branches": [
+        {
+          "branch_id": "reported_operating_income",
+          "formula_id": "interest_coverage",
+          "quality": "EXACT",
+          "components": [
+            {"role": "operating_income", "approved_concepts": ["OperatingIncomeLoss"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "interest_expense", "approved_concepts": ["InterestExpense", "InterestExpenseNonoperating", "InterestExpenseDebt"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        },
+        {
+          "branch_id": "reconstructed_operating_income",
+          "formula_id": "interest_coverage",
+          "quality": "APPROX",
+          "components": [
+            {"role": "pretax_income", "approved_concepts": ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest", "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "aggregate_nonoperating", "approved_concepts": ["NonoperatingIncomeExpense", "OtherNonoperatingIncomeExpense"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "interest_expense", "approved_concepts": ["InterestExpense", "InterestExpenseNonoperating", "InterestExpenseDebt"], "accession_role": "current", "period_role": "current_annual", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "B08": {
+      "name": "Current ratio",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "ratio",
+      "result_period_role": "current_instant",
+      "applicability": {"all": ["non_financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "OK",
+      "source_class": "DERIVED",
+      "branches": [
+        {
+          "branch_id": "current_assets_over_liabilities",
+          "formula_id": "ratio",
+          "quality": "EXACT",
+          "components": [
+            {"role": "current_assets", "approved_concepts": ["AssetsCurrent"], "accession_role": "current", "period_role": "current_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}},
+            {"role": "current_liabilities", "approved_concepts": ["LiabilitiesCurrent"], "accession_role": "current", "period_role": "current_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "B09": {
+      "name": "Cash reserves",
+      "adapter_id": "companyfacts",
+      "source_role": "companyfacts",
+      "canonical_unit": "USD",
+      "result_period_role": "current_instant",
+      "applicability": {"all": ["non_financial"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "OK",
+      "source_class": "STD_XBRL",
+      "branches": [
+        {
+          "branch_id": "cash_and_equivalents",
+          "formula_id": "direct",
+          "quality": "EXACT",
+          "components": [
+            {"role": "cash", "approved_concepts": ["CashAndCashEquivalentsAtCarryingValue"], "accession_role": "current", "period_role": "current_instant", "unit": "USD", "dimension_policy": "NONE", "required_dimensions": {}}
+          ]
+        }
+      ]
+    },
+    "B12": {
+      "name": "ARR / churn or RPO substitute",
+      "adapter_id": "accession_xbrl",
+      "source_role": "target_accession_instance",
+      "canonical_unit": "USD",
+      "result_period_role": "current_annual",
+      "applicability": {"all": ["subscription_or_contract_revenue"], "none": []},
+      "continuity_policy": "ALLOW",
+      "success_status": "DIM_XBRL_OK",
+      "source_class": "DIM_XBRL",
+      "branches": [
+        {
+          "branch_id": "undimensioned_total_rpo",
+          "formula_id": "direct",
+          "quality": "EXACT",
+          "components": [
+            {"role": "remaining_performance_obligation", "approved_concepts": ["RevenueRemainingPerformanceObligation"], "accession_role": "current", "period_role": "current_instant", "unit": "usd", "dimension_policy": "EXACT", "required_dimensions": {}}
+          ]
+        }
+      ]
+    }
+  }
+}

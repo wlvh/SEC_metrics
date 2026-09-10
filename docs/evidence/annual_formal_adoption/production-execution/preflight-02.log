@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/production-execution/20260910T021408Z/preflight.py", line 40, in <module>
+    save('formal-namespaces-before.json',{n:_tree_files(root=R/'outputs'/n) if (R/'outputs'/n).exists() else {} for n in ['annual_publication_authorizations','annual_publication_actions','publication_switch_intents','publication_switch_receipts']})
+                                            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ratchet_release.py", line 124, in _tree_files
+    raise RatchetReleaseError("Ratchet tree is empty")
+vnext.ratchet_release.RatchetReleaseError: Ratchet tree is empty

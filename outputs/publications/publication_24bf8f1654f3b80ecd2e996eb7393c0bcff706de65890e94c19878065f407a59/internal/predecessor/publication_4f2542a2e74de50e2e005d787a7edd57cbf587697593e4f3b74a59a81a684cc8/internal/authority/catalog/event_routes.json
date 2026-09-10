@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "record_type": "DETERMINISTIC_EVENT_ROUTE_CATALOG",
+  "text_normalization": "UNICODE_NFKC_CASEFOLD_COLLAPSE_WHITESPACE",
+  "match_mode": "SUBSTRING_ANY",
+  "brief_source_priority": [
+    "HDR_SGML_ITEM_CODE",
+    "PRIMARY_DOCUMENT_HEADING_FALLBACK"
+  ],
+  "routes": {
+    "C01": {
+      "metric_name": "CEO / CFO changes",
+      "direct_item_codes": [
+        "5.02"
+      ],
+      "keyword_item_rules": [],
+      "shared_claim_group_id": "leadership_item_5_02",
+      "legacy_projection": {
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM"
+      }
+    },
+    "E01": {
+      "metric_name": "M&A announcements",
+      "direct_item_codes": [
+        "1.01",
+        "2.01"
+      ],
+      "keyword_item_rules": [
+        {
+          "item_code": "8.01",
+          "aliases": [
+            "merger",
+            "acquisition",
+            "combine",
+            "transaction"
+          ]
+        }
+      ],
+      "shared_claim_group_id": "merger_acquisition_items",
+      "legacy_projection": {
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM"
+      }
+    },
+    "E02": {
+      "metric_name": "Bankruptcy filings",
+      "direct_item_codes": [
+        "1.03"
+      ],
+      "keyword_item_rules": [],
+      "shared_claim_group_id": "bankruptcy_item_1_03",
+      "legacy_projection": {
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM"
+      }
+    },
+    "E03": {
+      "metric_name": "Leadership departures",
+      "direct_item_codes": [
+        "5.02"
+      ],
+      "keyword_item_rules": [],
+      "shared_claim_group_id": "leadership_item_5_02",
+      "legacy_projection": {
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM"
+      }
+    },
+    "E04": {
+      "metric_name": "Financial restatements",
+      "direct_item_codes": [
+        "4.02"
+      ],
+      "keyword_item_rules": [],
+      "shared_claim_group_id": "restatement_item_4_02",
+      "legacy_projection": {
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM"
+      }
+    },
+    "E05": {
+      "metric_name": "Material agreements",
+      "direct_item_codes": [
+        "1.01"
+      ],
+      "keyword_item_rules": [],
+      "shared_claim_group_id": "agreement_item_1_01",
+      "legacy_projection": {
+        "status": "8K_ITEM_OK",
+        "source_class": "8K_ITEM"
+      }
+    }
+  }
+}

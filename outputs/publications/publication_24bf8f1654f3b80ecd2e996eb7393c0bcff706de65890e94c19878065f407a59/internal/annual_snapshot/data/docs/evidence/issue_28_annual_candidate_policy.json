@@ -1,0 +1,135 @@
+{
+  "record_type": "OWNER_TASK_POLICY_EVIDENCE",
+  "source_kind": "CURRENT_CODEX_USER_INSTRUCTION",
+  "evidence_scope": "POLICY_CONTENT_ONLY",
+  "timestamp_note": "Observed policy capture time; not a claimed GitHub publication timestamp.",
+  "transition_activation": "NOT_ISSUED",
+  "provider_paid_sec_publication_authorized": false,
+  "source": {
+    "source_id": "OWNER_ANNUAL_CANDIDATE_POLICY",
+    "kind": "OWNER_TASK_POLICY",
+    "source_url": "codex-task:01a07f31-2cbe-7b40-8bf3-b891550e0087",
+    "source_sha256": "edf799a3125f3102f897461006cee59634a14d2a59ea470ed2f932795174ab25",
+    "author": "repository-owner:current-codex-user",
+    "published_at_utc": "2026-09-08T05:36:41Z",
+    "text": "本条批准以下政策内容的开发表达和有限实现，\n不签发exact-head激活、真实调用或正式发布许可。\n\n范围仅为Marriott B10、现有lodging_occupancy_table_v2，\n使用annual_input当前支持的主体和年度材料范围。\n\n公司/指标/来源类别与核对规则属于政策；\n具体来源、期间、请求、代码和Run属于执行计划。\n不得把某个年度或正确accession硬编码进生产校验器，\n不得要求每份新年报新增Requirement版本或资格fixture。\n\n首次真实验证的待审批计划：\n至多一次新的模型执行，零自动重试；\n本次不执行，具体许可另行办理。\n\n许可必须绑定经重验的输入计划、任务、实际请求、代码身份、\nRun及隔离输出位置。执行时不能重新选择另一份“最新”材料。\n\n同一许可不能通过换Run ID、目录、重启进程或重建计划再消费。\n成功后重入只能按现有机制读取该次已保存结果；\n失败或未知远端结果不得自动产生第二次调用。\n不能用历史模型响应冒充本次新响应。\n\n对于审阅后精确绑定的首次请求，允许在新政策中表达：\n保守估算超过200000时，仍可经独立的新调用许可执行一次；\n以本次provider实际报告的输入usage是否不超过200000，\n作为结果接受的必要条件。\n\n这是执行后的接受条件，不是事前实际用量保证。\nusage缺失、超限、无法一致核对或内容失败，本次失败并停止。\n不得伪造usage、使用估算值代替actual，或以历史usage替代本次。\n\n若现有冻结校验把这类控制层变化也视为资格失效，\n本条允许在新政策版本中明确批准：\n仅上述普通候选接线变更不要求重跑整套历史资格批次；\n旧规则与历史验证行为不改，本次候选仍无正式资格信用。\n\n不能用这项有限兼容决定覆盖Reader或内容判断变化。",
+    "evidence_path": "docs/evidence/issue_28_annual_candidate_policy.json"
+  },
+  "choice": {
+    "kind": "ORDINARY_ANNUAL_CANDIDATE_POLICY",
+    "company_id": "marriott_international",
+    "metric_id": "B10",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "source_policy": "ANNUAL_INPUT_CONTINUOUS_PRIMARY_CALENDAR_UNAMENDED_CURRENT_BLOCK",
+    "source_proof": "IMMUTABLE_SEC_REQUEST_ATTEMPT",
+    "request_scope": "COMPLETE_DOCUMENT_TABLES_IN_ORIGINAL_ORDER",
+    "maximum_new_executions_per_grant": 1,
+    "automatic_retry_count": 0,
+    "actual_input_tokens_max": 200000,
+    "context_acceptance": "EXACT_REVIEWED_CANDIDATE_REQUEST_WITH_CURRENT_TERMINAL_USAGE",
+    "estimated_context_override": "NONE_MODEL_LIMIT_AND_PAYLOAD_LIMIT_RETAINED",
+    "missing_inconsistent_or_excess_usage": "FAIL_AND_STOP",
+    "unknown_or_failure": "NO_NEW_EXECUTION",
+    "successful_reentry": "READ_SAVED_RUN_ONLY",
+    "historical_response_reuse": false,
+    "measurement_calls": 0,
+    "qualification_credit": "NONE",
+    "publication_credit": "NONE",
+    "sec_calls": 0,
+    "reader_compatibility": "UNCHANGED_READER_FILES_ONLY_CONTROL_WIRING_DOES_NOT_RECERTIFY_HISTORY"
+  },
+  "unchanged_reader_files": {
+    "scripts/vnext/reader.py": {
+      "sha256": "20720efd18067ff6ec614a4c25ec84bf6094f544e268fe28cb09f520d3ae8c2b",
+      "size": 21776
+    },
+    "scripts/vnext/reader_input.py": {
+      "sha256": "12618a72311a28983bde6378270a0743cec933dc648e4c7e868a124192b3d74f",
+      "size": 25890
+    },
+    "scripts/vnext/evidence.py": {
+      "sha256": "3cd27fcf90e0b432ca48cf7464c276734aef0e6af9ad8fd731bc0cd3ad197b09",
+      "size": 42264
+    },
+    "scripts/vnext/review.py": {
+      "sha256": "c15b0a253c919b59682afbbd8ee41a2973cd0992f1b67d9def26197a5259349d",
+      "size": 24443
+    },
+    "scripts/vnext/calculator.py": {
+      "sha256": "75c31bb5245437ea9ff4e64f4d0b6671d3bb98452a44b149257a6d0149c0b674",
+      "size": 45377
+    },
+    "scripts/vnext/specs.py": {
+      "sha256": "977dea8bdf8e9a1c6156592ec98c6525ca6758dd62b5f185ed8ccee1f2469c3f",
+      "size": 33362
+    },
+    "scripts/vnext/sources.py": {
+      "sha256": "53eeef067c450bd5bb7a92daab88bc437546b2d95355186a6464d2222bf23c31",
+      "size": 19156
+    },
+    "scripts/vnext/table_grid.py": {
+      "sha256": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+      "size": 22873
+    },
+    "scripts/vnext/table_payload.py": {
+      "sha256": "7571bbf5121989effc4a3eb0ba38a42ef1dfc5ea9a839b65220bbbafb7aa2bb8",
+      "size": 17699
+    },
+    "scripts/vnext/table_task_contracts.py": {
+      "sha256": "0d37253149a7ba269556dbffaf0e9b027b7d692efcb7f9b9c0cc4ae6350082bd",
+      "size": 33513
+    },
+    "scripts/vnext/scope_contract.py": {
+      "sha256": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1",
+      "size": 8887
+    },
+    "scripts/vnext/annual_input.py": {
+      "sha256": "dd3839e80613be191abbe20df38a24792448935f3e3110cb694b25f13ab5d8e8",
+      "size": 10044
+    },
+    "scripts/vnext/deterministic_router.py": {
+      "sha256": "4b2867c017f1f770e1a61b8c435114c69eb0c793298d17147a11615698d9aa7c",
+      "size": 73472
+    },
+    "scripts/sec_pipeline.py": {
+      "sha256": "f62bd3dba3a140002d0d4e74912876ff5972d785a4a029f80d5a75dfbb89b438",
+      "size": 722800
+    },
+    "config/source_strategy_registry.json": {
+      "sha256": "e21d20271121da00b231645ef19e5df724781c798561b2d1314b589ed4c1e7db",
+      "size": 12801
+    },
+    "catalog/table_task_contracts.json": {
+      "sha256": "ece72e72a93d52fc82370d5cc2c7c72a3fc3ba79ba20c91ccdf230718986a8f9",
+      "size": 10298
+    },
+    "catalog/deterministic_metrics.json": {
+      "sha256": "09e93627ce4125debfe00872f9e11dc351658b140bbaa13dfeef81b6ac3b2a3c",
+      "size": 16246
+    },
+    "catalog/event_routes.json": {
+      "sha256": "863746896a4a54da1cc84cc7385e90e58e01d8e5df076d8df14e90f1bf71672a",
+      "size": 2353
+    },
+    "catalog/zero_ai_public_projection.json": {
+      "sha256": "dffbbf944488d1865c7b858504c4bc519e3e4210e15a159afefaba68287c0db5",
+      "size": 22408
+    },
+    "catalog/metrics/B10_occupancy.md": {
+      "sha256": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1",
+      "size": 2593
+    },
+    "catalog/company_traits.yaml": {
+      "sha256": "1d91efe5b5b1d5886953b095f82f641f7cfe8fccc60af5d9b16c8541b22db31b",
+      "size": 649
+    },
+    "scripts/vnext/traits.py": {
+      "sha256": "44f6c1f6b032e956c85d54423e88a552ec742e2d6b13435cd91fd53512418303",
+      "size": 11059
+    },
+    "config/company_registry.csv": {
+      "sha256": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
+      "size": 1562
+    }
+  }
+}

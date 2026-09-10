@@ -1,0 +1,132 @@
+{
+  "decision": "AUTHORIZE_ANNUAL_RUNTIME_STAGE",
+  "approval_kind": "USER_DELEGATED_CONDITIONAL_STAGE_APPROVAL",
+  "delegation_source": "codex-task:01a081bb-9220-7de3-a311-b481906b3146",
+  "statement": "Recorded by Codex under the user stage delegation after independent code review; not a claim that the user personally reviewed this future head.",
+  "requirement_id": "issue_28_v5",
+  "requirement_closure_hash": "sha256:017160bf0afa5029c37ac42ab309a40affa9b2687dc9d6e9e05e67437f7562a4",
+  "reviewed_code": {
+    "exact_head": "0a764b9dfd9976ec28a4ba9782229c5dbcf93306",
+    "runtime_tree": "sha256:1d67af355a536faac4b33ca14abc80708adbfe4a6d25390ae01e806fc0f98150"
+  },
+  "independent_review": {
+    "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+    "reviewer_task": "/root/runtime_boundary_review",
+    "conclusion": "NO_BLOCKING_FINDINGS",
+    "reviewed_head": "0a764b9dfd9976ec28a4ba9782229c5dbcf93306",
+    "runtime_tree": "sha256:1d67af355a536faac4b33ca14abc80708adbfe4a6d25390ae01e806fc0f98150",
+    "scope": "Independent code review and bounded offline counterexamples; not human review, CI, live execution or publication approval.",
+    "initial_findings": [
+      "Successful reference could point to unrelated historical B10 without B01",
+      "Persisted owner comment provenance was not revalidated",
+      "Runtime wrapper could be mixed with a generic adapter",
+      "Old plan reconstruction could follow later submissions"
+    ],
+    "verified_repairs": [
+      "Current-stage derived success paths and both native metric replay",
+      "Saved owner identity URL issue body timestamp binding",
+      "Runtime request authorization must be identical to adapter authorization",
+      "Per-input ledger/manifest/body/header snapshot preserves old plan after simulated new list"
+    ],
+    "independent_negative_evidence": {
+      "generic_adapter_wrapper": "REJECTED_RUNTIME_REQUEST_ADAPTER_MISMATCH",
+      "forged_saved_owner": "REJECTED_RUNTIME_STAGE_OWNER_PROVENANCE_INVALID",
+      "later_list_old_plan": "SAME_PLAN_REBUILT",
+      "snapshot_source_tamper": "REJECTED_BY_NATIVE_BATCH_WORKFLOW_ERROR"
+    },
+    "test_harness_note": "Last expected source rejection was an uncaught BatchWorkflowError in the temporary reviewer script (exit 1); refusal was verified, not a passing full test run.",
+    "real_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ],
+    "prior_reviewed_head": "0a40736aa0d6b11cc6e6c49b6eb1e9f1c776e256",
+    "incremental_review": {
+      "scope": "Only missing-credential preflight and accompanying guards/evidence; prior full review retained.",
+      "conclusion": "NO_BLOCKING_FINDINGS",
+      "checks": [
+        "Empty or whitespace credential returns key-required before stage slot",
+        "Nonempty test value passes local presence check",
+        "Provider boundary and native semantics unchanged"
+      ],
+      "real_provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ]
+    }
+  },
+  "independent_review_sha256": "1b712f79bb40df1f5a9e624da2ed718b074cc3b93462105e6c1f4b3f595ef972",
+  "stage_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/stage",
+  "data_root": "/Users/lyuhongwang/Documents/Codex/2026-09-08/marriott-annual-runtime/data-reviewed",
+  "initial_candidate": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "primary_document": "mar-20241231.htm"
+    },
+    "primary_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+    "metric_id": "B10",
+    "result_id": "sha256:0ce634fe86af4451ec080b7a9c7b035cd9590790d6c5d31fa8b54f10fad65b7c",
+    "run_id": "run:qualification:table:6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d",
+    "run_status": "FROZEN",
+    "provenance": {
+      "kind": "RECORDED_CANDIDATE_RESULT_LINKS",
+      "run_directory": "/Users/lyuhongwang/Developer/SEC_metrics/artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d",
+      "qualification_credit": "NONE",
+      "publication_credit": "NONE"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "0e829488b6489703cd04505634bdecba6750fa7ab74a293a95a8858b6b53984a",
+    "records_sha256": "7ee75c3f86c6b45f99146d1d32e24a77f1cda8c52e2c913f28db83b27fbe4d99",
+    "reviews_sha256": "44aed986fe88c174a673447230243557d445249494c81b716d585f0bb0694616"
+  },
+  "baseline_mode": "ISOLATED_HISTORICAL_START_NOT_PRODUCTION",
+  "policy": {
+    "kind": "ANNUAL_CANDIDATE_RUNTIME_POLICY",
+    "company_id": "marriott_international",
+    "metric_id": "B10",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "source_policy": "ANNUAL_INPUT_CONTINUOUS_PRIMARY_CALENDAR_UNAMENDED_CURRENT_BLOCK",
+    "source_proof": "IMMUTABLE_SEC_REQUEST_ATTEMPT",
+    "request_scope": "COMPLETE_DOCUMENT_TABLES_IN_ORIGINAL_ORDER",
+    "automatic_retry_count": 0,
+    "actual_input_tokens_max": 200000,
+    "context_acceptance": "REVIEWED_CODE_POLICY_WITH_CURRENT_TERMINAL_USAGE",
+    "estimated_context_override": "NONE_MODEL_LIMIT_AND_PAYLOAD_LIMIT_RETAINED",
+    "missing_inconsistent_or_excess_usage": "FAIL_AND_STOP",
+    "unknown_or_failure": "NO_NEW_EXECUTION",
+    "successful_reentry": "READ_SAVED_RUN_ONLY",
+    "historical_response_reuse": false,
+    "measurement_calls": 0,
+    "qualification_credit": "NONE",
+    "publication_credit": "NONE",
+    "sec_calls": 0,
+    "reader_compatibility": "UNCHANGED_READER_FILES_ONLY_CONTROL_WIRING_DOES_NOT_RECERTIFY_HISTORY",
+    "metric_ids": [
+      "B01",
+      "B10"
+    ],
+    "maximum_new_executions_per_stage": 1,
+    "authorization": "DELEGATED_STAGE_APPROVAL_AFTER_INDEPENDENT_CODE_REVIEW",
+    "open_pr_required": false,
+    "input_git_commit_required": false,
+    "code_identity": "CLEAN_CHECKOUT_REVIEWED_RUNTIME_TREE",
+    "data_identity": "VERIFIED_AUTHORITY_COPY_AND_IMMUTABLE_SEC_ATTEMPTS",
+    "stage_counter": "PERMANENT_EXCLUSIVE_SLOT_AT_APPROVED_STAGE_ROOT",
+    "new_year_policy_revision_required": false
+  },
+  "maximum_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "automatic_retry_count": 0,
+  "publication_authorized": false,
+  "long_running_schedule_authorized": false,
+  "stage_id": "sha256:f509fae1fbbcedff1b2e406afe84d8e507a5a4477927d37467bd5d9c56670bf0"
+}

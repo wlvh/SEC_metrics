@@ -1,0 +1,31 @@
+{
+  "scope": "Pre-publication evidence harness only; no activate/deploy/publish called during these failures",
+  "attempts": [
+    {
+      "log": "preflight.log",
+      "exit_status": 1,
+      "reason": "OS write restriction initially omitted /dev/null needed by git; no business or production writes occurred"
+    },
+    {
+      "log": "preflight-02.log",
+      "exit_status": 1,
+      "reason": "Evidence enumeration called nonempty-tree helper on existing empty transaction namespace; native fixed-plan and package validation had returned without error"
+    },
+    {
+      "log": "preflight-03.log",
+      "exit_status": 1,
+      "reason": "Existing evidence JSON dictionary order differed; preserved file and corrected comparison to parsed object equality"
+    },
+    {
+      "log": "preflight-04.log",
+      "exit_status": 0,
+      "reason": "Successful complete preflight, fixed plan/templates/package/source/history/14 mirrors/full field diff verified"
+    }
+  ],
+  "production_source_policy_tests_changed": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "record_type": "R4_OFFLINE_FIXTURE_ACQUISITION_PLAN",
+  "requirement_id": "issue_28_v1",
+  "requirement_closure_hash": "sha256:08994b0aa3324511ce655958fbe3c48fdcd873fa2d63a9bfe4de573046d519ac",
+  "maximum_new_filings": 2,
+  "automatic_retry_count": 0,
+  "provider_calls_authorized": false,
+  "paid_model_calls_authorized": false,
+  "purpose": "DIFFERENT_ISSUER_R4_OFFLINE_FIXTURE_ONLY",
+  "locator_provenance": {
+    "commit": "62678e304778970c8d2bc69db45a6b9fc969d01f",
+    "path": "config/table_qualification_matrix.json",
+    "use": "FILING_LOCATOR_METADATA_ONLY",
+    "historical_response_reuse": "NOT_AUTHORIZED",
+    "qualification_credit": "NONE"
+  },
+  "sources": [
+    {
+      "source_id": "bank_of_america_fy2025_10k",
+      "company_id": "bank_of_america_corp",
+      "cik": "70858",
+      "accession": "0000070858-26-000157",
+      "document_name": "bac-20251231.htm",
+      "form": "10-K",
+      "fiscal_year": 2025
+    },
+    {
+      "source_id": "citigroup_fy2025_10k",
+      "company_id": "citigroup",
+      "cik": "831001",
+      "accession": "0000831001-26-000011",
+      "document_name": "c-20251231.htm",
+      "form": "10-K",
+      "fiscal_year": 2025
+    }
+  ]
+}

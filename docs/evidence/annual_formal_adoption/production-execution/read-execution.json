@@ -1,0 +1,46 @@
+{
+  "mode": "read",
+  "command": [
+    "python3",
+    "tools/vnext_annual_publication.py",
+    "read",
+    "--publication-root",
+    "/Users/lyuhongwang/Developer/SEC_metrics",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-09/annual-formal-adoption/production-execution/20260910T021408Z/read.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "implementation": {
+    "head": "5e9363171d803e2345e287bf825a8699b46d5e91",
+    "branch": "main",
+    "implementation_tree": "sha256:8ec3e518edf05934a3d9586906ca1709db3fec4e46a6e26d08e3350347d7d74f",
+    "test_tree": "sha256:0e0ec555f619549f3fdd1f1c3471fa02d7eec895c07cdabf1dd342463b19423b"
+  },
+  "started_at_utc": "2026-09-10T02:41:45.074382+00:00",
+  "finished_at_utc": "2026-09-10T02:42:37.991710+00:00",
+  "exit_status": 0,
+  "github_reads": [],
+  "python_business_sockets_forbidden": true,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "pr38_historical_calls": [
+    2,
+    2,
+    0
+  ],
+  "plan_file": {
+    "sha256": "f883be4a88e723bc2344195c60e42da8cc6625984f6ea8c2422833489001e9fb",
+    "size": 3740
+  },
+  "harness_file": {
+    "sha256": "14f4a543e233bbbdba6e6011fd43748fec02779e505ca7b49751b390e9b5099e",
+    "size": 3754
+  },
+  "output_file": {
+    "sha256": "5a897d3828fb6ba1c9cfc0e7374dae40841d479c19a7b73866f717d0a3fe307c",
+    "size": 6296
+  }
+}

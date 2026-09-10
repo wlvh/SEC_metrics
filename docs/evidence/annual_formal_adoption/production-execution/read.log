@@ -1,0 +1,140 @@
+{
+  "status": "READABLE_COMPLETE_VERSION",
+  "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "previous_publication_id": "publication_4f2542a2e74de50e2e005d787a7edd57cbf587697593e4f3b74a59a81a684cc8",
+  "public_row_count": 327,
+  "selected_rows": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B01",
+      "metric_name": "Revenue",
+      "value": "26186000000",
+      "unit": "USD",
+      "status": "OK",
+      "source_class": "STD_XBRL",
+      "formula": "direct",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "2025",
+      "fiscal_period": "FY",
+      "accession": "0001048286-26-000007",
+      "form": "10-K",
+      "filed_date": "2026-02-10",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "companyfacts:USD:CY2025",
+      "confidence": "0.95",
+      "notes": "Revenue candidate chain from metric definition."
+    },
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B10",
+      "metric_name": "Occupancy rate",
+      "value": "69.3",
+      "unit": "percent",
+      "status": "MDA_OK",
+      "source_class": "MDA",
+      "formula": "reviewed AI table observation projected from canonical ratio",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "fiscal_year": "",
+      "fiscal_period": "FY",
+      "accession": "0001048286-26-000007",
+      "form": "",
+      "filed_date": "",
+      "concept_or_section": "MD&A occupancy",
+      "context_or_dimension": "MD&A occupancy",
+      "confidence": "0.85",
+      "notes": "Reviewed current-period occupancy claim from immutable table-grid evidence."
+    }
+  ],
+  "verified_source_locations": [
+    {
+      "metric_id": "B01",
+      "source_reference": {
+        "accession": "0001048286-26-000007",
+        "company_id": "marriott_international",
+        "document_name": "CIK0001048286.json",
+        "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+        "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+        "source_role": "companyfacts",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json"
+      },
+      "original_storage_uri": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "size": 3269111,
+      "verified_via": "PublicationView.read_bytes"
+    },
+    {
+      "metric_id": "B10",
+      "source_reference": {
+        "accession": "0001048286-26-000007",
+        "company_id": "marriott_international",
+        "document_name": "mar-20251231.htm",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "record_type": "SOURCE_REFERENCE",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "source_role": "target_primary",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm"
+      },
+      "original_storage_uri": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "bundle_relative_path": "internal/annual_snapshot/data/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "size": 2048661,
+      "verified_via": "PublicationView.read_bytes"
+    }
+  ],
+  "selected_evidence": [
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B01",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+      "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "accession": "0001048286-26-000007",
+      "document_name": "CIK0001048286.json",
+      "concept_or_section": "Revenues",
+      "context_or_dimension": "companyfacts:USD:CY2025:2025-01-01:2025-12-31",
+      "unit": "USD",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "value_raw": "26186000000",
+      "value_normalized": "26186000000",
+      "evidence_quote": "Revenues=26186000000 unit=USD accn=0001048286-26-000007 filed=2026-02-10",
+      "extraction_method": "companyfacts_direct",
+      "parser_version": "vnext_projector_v1"
+    },
+    {
+      "company": "Marriott International",
+      "cik": "1048286",
+      "metric_id": "B10",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+      "repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231.htm",
+      "concept_or_section": "MD&A occupancy",
+      "context_or_dimension": "MD&A occupancy",
+      "unit": "percent",
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31",
+      "value_raw": "69.3",
+      "value_normalized": "69.3",
+      "evidence_quote": "MD&A occupancy=69.3 unit=percent accn=0001048286-26-000007 filed=",
+      "extraction_method": "reviewed_ai_table",
+      "parser_version": "vnext_projector_v1"
+    }
+  ],
+  "publication_credit": "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY",
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

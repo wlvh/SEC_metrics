@@ -1,0 +1,256 @@
+{
+  "record_type": "R4_OFFLINE_AUDIT_RECIPE",
+  "schema_version": 1,
+  "fixture_id": "r4_a12_alternate",
+  "metric_id": "A12",
+  "source_id": "bank_of_america_fy2025_10k",
+  "task_contract_id": "r4_value_at_risk_table_v2",
+  "fixture_class": "POSITIVE_ALTERNATE_LAYOUT",
+  "artifact_kind": "SCOPED_EXTRACTION",
+  "period": "FY2025",
+  "target": {
+    "table_order": 146,
+    "row_index": 23,
+    "column_index": 16
+  },
+  "reference": {
+    "status": "AUDITED_ALTERNATE_REFERENCE",
+    "value": "34000000",
+    "unit": "USD",
+    "scope": {
+      "confidence_level": "ninety_five_percent",
+      "holding_period": "one_day"
+    },
+    "evidence": "Independent same-source disclosed value and scope; the JPM legacy anchor is not claimed as the alternate issuer value."
+  },
+  "scope_labels": [
+    {
+      "coordinate": {
+        "table_order": 146,
+        "row_index": 7,
+        "column_index": 15
+      },
+      "claims": {
+        "confidence_level": "95 percent"
+      }
+    }
+  ],
+  "numeric_locator": {
+    "table_order": 146,
+    "row_index": 7,
+    "column_index": 0
+  },
+  "composite_scope_recipe": {
+    "section_heading": {
+      "start_byte": 4532957,
+      "end_byte": 4533121
+    },
+    "section_end_heading": {
+      "start_byte": 4681938,
+      "end_byte": 4682171
+    },
+    "association_heading": {
+      "start_byte": 4546528,
+      "end_byte": 4546734
+    },
+    "association_end_heading": {
+      "start_byte": 4671772,
+      "end_byte": 4671952
+    },
+    "target_measure_name": "VaR",
+    "table_association_span": {
+      "start_byte": 4632070,
+      "end_byte": 4632755
+    },
+    "selected_scope_spans": [
+      {
+        "dimension": "holding_period",
+        "raw_value": "one-day",
+        "start_byte": 4547982,
+        "end_byte": 4549037
+      }
+    ]
+  },
+  "disclosed_period_recipe": null,
+  "candidate_rows": [
+    {
+      "table_order": 146,
+      "row_index": 8,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 9,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 10,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 11,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 12,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 13,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 14,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 15,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 16,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 17,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 18,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 19,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 20,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 21,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 22,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 146,
+      "row_index": 23,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 8,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 9,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 10,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 11,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 12,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 13,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 14,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 15,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 16,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 17,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 18,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 19,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 20,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 21,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 22,
+      "disposition": "DIFFERENT_SCOPE"
+    },
+    {
+      "table_order": 144,
+      "row_index": 23,
+      "disposition": "DIFFERENT_SCOPE"
+    }
+  ],
+  "structured_route_input": null,
+  "windows": [
+    {
+      "start_order": 146,
+      "end_order": 146
+    }
+  ],
+  "navigation_paths": [
+    {
+      "path_id": "A",
+      "method": "NAMED_SECTION_AND_DOCUMENT_STRUCTURE",
+      "evidence": "Original Trading Risk Management, Table 43 / table_000147 r23c16=34 for Total market-based portfolio, original target-column 95 percent header, Dollars in millions."
+    },
+    {
+      "path_id": "B",
+      "method": "INDEPENDENT_REFERENCE_AND_WHOLE_DOCUMENT_RECONCILIATION",
+      "evidence": "Independent Table 43 header and row census separates comprehensive 34 million from trading-only 32 million and 99-percent values. Same-source holding-period paragraph 4547982..4549037 proves one day; regulatory 10-day contrast 4556542..4556905 is not imported into the target scope."
+    }
+  ]
+}

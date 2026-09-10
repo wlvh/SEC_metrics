@@ -1,0 +1,151 @@
+{
+  "metrics_matrix.csv": {
+    "row_count": 327,
+    "changed_rows": [
+      {
+        "csv_line": 11,
+        "company": "Marriott International",
+        "metric_id": "B10",
+        "fields": {
+          "filed_date": {
+            "old": "2026-02-10",
+            "new": ""
+          }
+        }
+      }
+    ]
+  },
+  "selected_rows": {
+    "before": [
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B01",
+        "metric_name": "Revenue",
+        "value": "26186000000",
+        "unit": "USD",
+        "status": "OK",
+        "source_class": "STD_XBRL",
+        "formula": "direct",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "2025",
+        "fiscal_period": "FY",
+        "accession": "0001048286-26-000007",
+        "form": "10-K",
+        "filed_date": "2026-02-10",
+        "concept_or_section": "Revenues",
+        "context_or_dimension": "companyfacts:USD:CY2025",
+        "confidence": "0.95",
+        "notes": "Revenue candidate chain from metric definition."
+      },
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B10",
+        "metric_name": "Occupancy rate",
+        "value": "69.3",
+        "unit": "percent",
+        "status": "MDA_OK",
+        "source_class": "MDA",
+        "formula": "reviewed AI table observation projected from canonical ratio",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "",
+        "fiscal_period": "FY",
+        "accession": "0001048286-26-000007",
+        "form": "",
+        "filed_date": "2026-02-10",
+        "concept_or_section": "MD&A occupancy",
+        "context_or_dimension": "MD&A occupancy",
+        "confidence": "0.85",
+        "notes": "Reviewed current-period occupancy claim from immutable table-grid evidence."
+      }
+    ],
+    "after": [
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B01",
+        "metric_name": "Revenue",
+        "value": "26186000000",
+        "unit": "USD",
+        "status": "OK",
+        "source_class": "STD_XBRL",
+        "formula": "direct",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "2025",
+        "fiscal_period": "FY",
+        "accession": "0001048286-26-000007",
+        "form": "10-K",
+        "filed_date": "2026-02-10",
+        "concept_or_section": "Revenues",
+        "context_or_dimension": "companyfacts:USD:CY2025",
+        "confidence": "0.95",
+        "notes": "Revenue candidate chain from metric definition."
+      },
+      {
+        "company": "Marriott International",
+        "cik": "1048286",
+        "metric_id": "B10",
+        "metric_name": "Occupancy rate",
+        "value": "69.3",
+        "unit": "percent",
+        "status": "MDA_OK",
+        "source_class": "MDA",
+        "formula": "reviewed AI table observation projected from canonical ratio",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "fiscal_year": "",
+        "fiscal_period": "FY",
+        "accession": "0001048286-26-000007",
+        "form": "",
+        "filed_date": "",
+        "concept_or_section": "MD&A occupancy",
+        "context_or_dimension": "MD&A occupancy",
+        "confidence": "0.85",
+        "notes": "Reviewed current-period occupancy claim from immutable table-grid evidence."
+      }
+    ]
+  },
+  "metric_evidence.csv": {
+    "row_count": 290,
+    "changed_rows": [
+      {
+        "csv_line": 2,
+        "company": "Marriott International",
+        "metric_id": "B01",
+        "fields": {
+          "repo_relative_path": {
+            "old": "evidence/companyfacts/CIK0001048286.json",
+            "new": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json"
+          },
+          "content_sha256": {
+            "old": "8767de512c8459483681137b5e9e5c97d3e16adea30d5345028e0ce75577599d",
+            "new": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a"
+          },
+          "evidence_quote": {
+            "old": "us-gaap:Revenues unit=USD accn=0001048286-26-000007 filed=2026-02-10",
+            "new": "Revenues=26186000000 unit=USD accn=0001048286-26-000007 filed=2026-02-10"
+          },
+          "parser_version": {
+            "old": "sec_pipeline_v1",
+            "new": "vnext_projector_v1"
+          }
+        }
+      },
+      {
+        "csv_line": 155,
+        "company": "Marriott International",
+        "metric_id": "B10",
+        "fields": {
+          "repo_relative_path": {
+            "old": "evidence/accession_materials/marriott_international_1048286_000104828626000007/mar-20251231.htm",
+            "new": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm"
+          }
+        }
+      }
+    ]
+  }
+}

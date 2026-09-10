@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "models": [
+    {
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
+      "api": "chat_completions",
+      "maximum_context_tokens": 1000000,
+      "context_authority_url": "https://api-docs.deepseek.com/news/news260424/",
+      "context_authority_checked_at_utc": "2026-08-20T00:00:00Z",
+      "estimator_id": "utf8_byte_upper_bound",
+      "estimator_version": "1",
+      "estimator_method": "UTF8_BYTE_UPPER_BOUND",
+      "billing_class": "PAID_MODEL_ENDPOINT",
+      "paid_call_observation_source": "PROVIDER_POLICY_BILLING_CLASS_X_EGRESS_MARKER"
+    }
+  ]
+}
