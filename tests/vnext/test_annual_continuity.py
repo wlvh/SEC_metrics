@@ -36,7 +36,9 @@ class AnnualContinuityBoundaryTest(unittest.TestCase):
     def test_only_unused_identical_registration_can_resume_proposal(self):
         with tempfile.TemporaryDirectory() as temporary:
             root=Path(temporary).resolve();stage=root/'stage';data=root/'data';budget=root/'budget'
-            data.mkdir();start=datetime.now(timezone.utc)
+            import sec_http
+            sec_http.SecHttpClient(workdir=data,config_path=ROOT/'config/sec_config.json',log_path=data/'evidence/requests_log.csv')
+            start=datetime.now(timezone.utc)
             first=continuity._register_unused_budget(stage,data,budget,start)
             original=(budget/'registration.json').read_bytes()
             self.assertEqual(first,continuity._register_unused_budget(stage,data,budget,start+timedelta(seconds=1)))
