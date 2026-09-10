@@ -2,6 +2,10 @@
 
 本入口限定 Marriott B01/B10、连续主体、完整自然年度普通10-K。B01 Revenue与B10全球、可比、全系统物业含义不变。实现复用原生候选执行、Evidence/SYSTEM Review/Calculator、完整Projector、PublicationView和原生切换日志。新规则是 `annual_candidate_adoption_v3`、`issue_28_v8`/V9；旧v1/v2文件与历史执行不改。本轮实际生产根只读，规则内容与真实阶段许可分开，代码存在不代表已完成两次真实执行或持续生产授权。
 
+## 本次交付状态（2026-09-10）
+
+[PR41集中记录](evidence/annual_update_continuity/README.md)：核心离线接续已通过，但真实两轮未完成。唯一新请求因供应商退役旧模型、实际返回另一模型而终态拒绝；原内容诊断也拒绝错业务分组。阶段已关闭，累计provider/paid/SEC为1/1/0、零重试，实际生产未变。输出仍有检查子步骤零计数混在顶层的歧义；应以原生累计`counts`和终态为准。该字段接线的未应用补丁与准确缺口已列入交付，不能把本PR视为已获持续生产资格。
+
 ## 三个进度位置
 
 `annual_update`分别输出发现的申报、已有候选、已发布版本。`candidate_work`回答是否还需计算，`publication_work`回答是否还有候选等待发布。清单检查失败仍保留此前已知待发布事实；未提供发布基线不是“没有待发布工作”。同年但原Run不同也不能只按显示数字宣称相同执行。

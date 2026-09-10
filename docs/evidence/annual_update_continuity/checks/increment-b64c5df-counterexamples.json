@@ -1,0 +1,25 @@
+{
+  "reviewer_task": "/root/runtime_boundary_review",
+  "head": "b64c5df6b01535a56c3706f4df133d120f47873e",
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "Focused post-auth path and generic-byte-gate counterexamples only. Synthetic local test objects do not constitute stage or publication authority.",
+  "trigger_root_alias": {
+    "status": "REJECTED",
+    "reason": "RUNTIME_PATH_ALIAS_FORBIDDEN",
+    "target_written": false
+  },
+  "pinned_manifest_does_not_skip_generic_bytes": {
+    "status": "REJECTED",
+    "reason": "Publication artifact digest differs",
+    "manifest_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "exact_file_set_created": 906
+  },
+  "non_capability_cannot_select_transport_root": {
+    "status": "PASS",
+    "note": "Plain dict, Path and string used existing default root. Real capability positive branch remains for full native stage integration."
+  }
+}

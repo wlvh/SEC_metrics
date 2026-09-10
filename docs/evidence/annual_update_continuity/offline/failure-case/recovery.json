@@ -1,0 +1,55 @@
+{
+  "status": "RECOVERED_PRIOR_TRANSACTION",
+  "recovery": {
+    "status": "AUTHORIZED_RECOVER_COMPLETED",
+    "publication_id": "publication_42f62a2030967968e8d70f1ad2f7e54d2d396dcb3a763ce72f186b3729448bd1",
+    "environment": "ISOLATED_TEST",
+    "action_id": "sha256:2b1589c9b901b9ecc8a96278d72e1a61325153caa2737f593e4f5478729a4360",
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "counts": {
+    "provider": 1,
+    "paid": 1,
+    "sec_reserved": 0,
+    "provider_reserved": 1,
+    "failed_plans": [],
+    "uncertain_plans": [],
+    "uncertain_sec": [],
+    "failed_sec": []
+  },
+  "current_published": {
+    "filing": {
+      "company_id": "marriott_international",
+      "cik": "1048286",
+      "accession": "0001628280-25-004818",
+      "form": "10-K",
+      "period_start": "2024-01-01",
+      "period_end": "2024-12-31",
+      "primary_document": "mar-20241231.htm"
+    },
+    "primary_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+    "metric_id": "B10",
+    "result_id": "sha256:0ce634fe86af4451ec080b7a9c7b035cd9590790d6c5d31fa8b54f10fad65b7c",
+    "run_id": "run:annual-runtime:78572e963182d5f1eadf3323fca508406d9817b23c4579412edacb635dddd31b",
+    "run_status": "OPEN",
+    "provenance": {
+      "kind": "PINNED_PUBLICATION",
+      "publication_id": "publication_42f62a2030967968e8d70f1ad2f7e54d2d396dcb3a763ce72f186b3729448bd1",
+      "owner_publication_id": "publication_42f62a2030967968e8d70f1ad2f7e54d2d396dcb3a763ce72f186b3729448bd1",
+      "inheritance_chain": [
+        "publication_42f62a2030967968e8d70f1ad2f7e54d2d396dcb3a763ce72f186b3729448bd1"
+      ],
+      "bundle_directory": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/offline-acceptance-04/failure-case/stage/publication/outputs/publications/publication_42f62a2030967968e8d70f1ad2f7e54d2d396dcb3a763ce72f186b3729448bd1",
+      "run_path": "internal/annual_snapshot/candidate/b10"
+    },
+    "verification_scope": "PERSISTED_RESULT_LINKS_NOT_CONTENT_RECERTIFICATION",
+    "manifest_sha256": "94182ea73fd2b8ba0ddc5d428d738dd034a5ff02e162f64e2c201d32e3d89d70",
+    "records_sha256": "2ac4b845c9880ecc54eac52b0a34eb09ce9e558fd51ac20022342ce2af7c4dfc",
+    "reviews_sha256": "c9e17c3f87283635ea4dd9df08d4b9f8005ed22da3ddde653007a249a1fd483e"
+  },
+  "discovery_status": "NOT_RECHECKED_RECOVERY_FIRST"
+}

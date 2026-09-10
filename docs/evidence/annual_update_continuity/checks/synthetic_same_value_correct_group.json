@@ -1,0 +1,246 @@
+{
+  "synthetic_html": "<table><tr><td></td><td colspan=\"2\">Occupancy</td></tr><tr><td></td><td colspan=\"2\">2025</td></tr><tr><td>Comparable Systemwide Properties</td><td></td><td></td></tr><tr><td>Worldwide (2)</td><td>69.3</td><td>%</td></tr><tr><td>Comparable Company-Operated Properties</td><td></td><td></td></tr><tr><td>Worldwide (2)</td><td>69.3</td><td>%</td></tr></table>",
+  "response": {
+    "disclosure_group": "lodging_kpi_table",
+    "table_locator": {
+      "derived_asset_id": "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d",
+      "table_id": "table_000001"
+    },
+    "candidates": [
+      {
+        "role": "occupancy",
+        "claimed_period": "FY2025",
+        "claimed_raw_value": "69.3",
+        "claimed_reported_unit": "percent",
+        "claimed_scope": [
+          {
+            "dimension": "property_population",
+            "raw_value": "Comparable Systemwide Properties",
+            "evidence_locator_ids": [
+              "scope_evidence_1"
+            ]
+          },
+          {
+            "dimension": "operating_scope",
+            "raw_value": "Comparable Systemwide Properties",
+            "evidence_locator_ids": [
+              "scope_evidence_1"
+            ]
+          },
+          {
+            "dimension": "geography",
+            "raw_value": "Worldwide",
+            "evidence_locator_ids": [
+              "scope_evidence_2"
+            ]
+          }
+        ],
+        "locator": {
+          "derived_asset_id": "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d",
+          "table_id": "table_000001",
+          "row_index": 3,
+          "column_index": 1,
+          "origin_row_index": 3,
+          "origin_column_index": 1,
+          "rowspan": 1,
+          "colspan": 1
+        },
+        "scope_evidence_locators": [
+          {
+            "id": "scope_evidence_1",
+            "supports_dimensions": [
+              "property_population",
+              "operating_scope"
+            ],
+            "location_type": "label",
+            "locator": {
+              "derived_asset_id": "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d",
+              "table_id": "table_000001",
+              "row_index": 2,
+              "column_index": 0,
+              "origin_row_index": 2,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "Comparable Systemwide Properties"
+          },
+          {
+            "id": "scope_evidence_2",
+            "supports_dimensions": [
+              "geography"
+            ],
+            "location_type": "label",
+            "locator": {
+              "derived_asset_id": "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d",
+              "table_id": "table_000001",
+              "row_index": 3,
+              "column_index": 0,
+              "origin_row_index": 3,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "Worldwide (2)"
+          }
+        ],
+        "competing_candidates": []
+      }
+    ],
+    "unresolved_competing_claims": []
+  },
+  "candidate": {
+    "record_type": "OBSERVATION_CANDIDATE",
+    "candidate_hash": "sha256:d25c35bd0481e65608bcbb0dd596376093c88498c7dd670757739fed17cdbf82",
+    "attempt_id": "attempt:3135a7e5537d4df3aa5aaddf97844811",
+    "assistant_output_sha256": "ba076ceca086ecb734da8fb75d01513f0e7207c04275ecc17ea07c0f3dea35d9",
+    "disclosure_group": "lodging_kpi_table",
+    "source_reference_ids": [
+      "sha256:52b4265fa4df505d4451ccdb3d3f16e92da7d29845f9f580c92ae8fe5768f49f"
+    ],
+    "derived_asset_ids": [
+      "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d"
+    ],
+    "selected": {
+      "occupancy": {
+        "role": "occupancy",
+        "claimed_period": "FY2025",
+        "claimed_raw_value": "69.3",
+        "claimed_reported_unit": "percent",
+        "claimed_scope": [
+          {
+            "dimension": "property_population",
+            "raw_value": "Comparable Systemwide Properties",
+            "evidence_locator_ids": [
+              "scope_evidence_1"
+            ]
+          },
+          {
+            "dimension": "operating_scope",
+            "raw_value": "Comparable Systemwide Properties",
+            "evidence_locator_ids": [
+              "scope_evidence_1"
+            ]
+          },
+          {
+            "dimension": "geography",
+            "raw_value": "Worldwide",
+            "evidence_locator_ids": [
+              "scope_evidence_2"
+            ]
+          }
+        ],
+        "locator": {
+          "derived_asset_id": "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d",
+          "table_id": "table_000001",
+          "row_index": 3,
+          "column_index": 1,
+          "origin_row_index": 3,
+          "origin_column_index": 1,
+          "rowspan": 1,
+          "colspan": 1
+        },
+        "scope_evidence_locators": [
+          {
+            "id": "scope_evidence_1",
+            "supports_dimensions": [
+              "property_population",
+              "operating_scope"
+            ],
+            "location_type": "label",
+            "locator": {
+              "derived_asset_id": "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d",
+              "table_id": "table_000001",
+              "row_index": 2,
+              "column_index": 0,
+              "origin_row_index": 2,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "Comparable Systemwide Properties"
+          },
+          {
+            "id": "scope_evidence_2",
+            "supports_dimensions": [
+              "geography"
+            ],
+            "location_type": "label",
+            "locator": {
+              "derived_asset_id": "sha256:f970f0570041fd5de2edaa31448e080fa4c1fb271d12182d14e8b07f921cf44d",
+              "table_id": "table_000001",
+              "row_index": 3,
+              "column_index": 0,
+              "origin_row_index": 3,
+              "origin_column_index": 0,
+              "rowspan": 1,
+              "colspan": 1
+            },
+            "raw_text": "Worldwide (2)"
+          }
+        ],
+        "competing_candidates": []
+      }
+    },
+    "competing_candidates": [
+      {
+        "role": "occupancy",
+        "claims": []
+      }
+    ],
+    "unresolved_competing_claims": [],
+    "status": "CANDIDATE"
+  },
+  "evidence": {
+    "record_type": "EVIDENCE_CHECK",
+    "evidence_check_id": "sha256:48e3f8dbdcb07f4af87499039ab6fd142d8e6140dbf078d4fedb2eac6a167ed2",
+    "candidate_hash": "sha256:d25c35bd0481e65608bcbb0dd596376093c88498c7dd670757739fed17cdbf82",
+    "status": "PASS",
+    "normalized_values": {
+      "occupancy": "0.693"
+    },
+    "checks": [
+      {
+        "check": "SOURCE_BINDINGS",
+        "status": "PASS"
+      },
+      {
+        "check": "READER_TABLE_EXACT_SET",
+        "status": "PASS"
+      },
+      {
+        "check": "SELECTED_LOCATOR:occupancy",
+        "status": "PASS"
+      },
+      {
+        "check": "SCOPE_EXACT_ENUM_NORMALIZATION",
+        "status": "PASS",
+        "normalized_scope": {
+          "property_population": "comparable",
+          "operating_scope": "systemwide",
+          "geography": "worldwide"
+        },
+        "unresolved_dimensions": []
+      },
+      {
+        "check": "EXACT_SOURCE_RAW_OR_TEXT_V2",
+        "status": "PASS"
+      },
+      {
+        "check": "ANNUAL_SOURCE_OWNERSHIP_V1",
+        "status": "PASS",
+        "requirement_id": "issue_28_v8",
+        "policy_hash": "sha256:bcbc183cd88b0dcef2f645be4edeca5aabcdfae930f691f1e0b3769c01e40d8f"
+      }
+    ],
+    "reason_codes": [],
+    "identity_constraints": [],
+    "normalized_scope": {
+      "property_population": "comparable",
+      "operating_scope": "systemwide",
+      "geography": "worldwide"
+    },
+    "unresolved_scope_dimensions": [],
+    "system_approval_eligible": true
+  }
+}

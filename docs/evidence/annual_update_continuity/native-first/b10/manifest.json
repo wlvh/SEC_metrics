@@ -1,0 +1,68 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "07f47f6e2a23ebbd0b4f142630fb6612d5575bacb325dad3943e31641352e736",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:annual-runtime:6867f54821e36e70159fe83e9ca8abb5d51828c9e151a5819fca048650cd53cc",
+  "company_id": "marriott_international",
+  "company_traits": [
+    "lodging",
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_end": "2024-12-31",
+    "period_start": "2024-01-01"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:55e9e079de35bef789ad24d17f01994aa62ef97832ecf581e6052ec6c1c9dc88",
+      "raw_asset_id": "sha256:32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+      "accession": "0001628280-25-004818",
+      "document_name": "mar-20241231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/metrics/B10_occupancy.md": "dcc28a5bab74da87a0c20f58a711be3d85d0a7d83fc2c08861ac2fa1fad306e1"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "627bdf23daa00d5889d5970dbdf14dfc7203f204b13357c761ea5ca79a485e82",
+    "contract_sha256": "bbd511c13103052550ef351de6063c3bb98c233d43a16ed6087ca220e4f3d786",
+    "decision_register_sha256": "753254b4a058ed2d9be5620486a3077f53838d5680192ff13bb2a229ade46ff7",
+    "invariant_profile_sha256": "6d38712454b344a41ff42d6b2c04ece9c0df15a9e64eebf2fd9f3bd12c182c4c",
+    "transfer_manifest_sha256": "1196ffd12e30885712ba71515ae39704bd03eb0c85ad572cb95b66fabd9373cc",
+    "parent_requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+    "validator_sha256": "8c75f68b699bf53d2c4fe6b5821d63908736845326a9103cb29a8c5f869acfea"
+  },
+  "requirement_closure_hash": "sha256:c3c8d40648c0bfefe8209458142754888dfd0bb87df2c3f43a3ed01a0e83ecb1",
+  "requirement_id": "issue_28_v8",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [
+    {
+      "metric_spec_paths": [
+        "catalog/metrics/B10_occupancy.md"
+      ],
+      "catalog_task_contract_hash": "sha256:c3fefe6aebf587f76a751aa0fdfd50e6f884777a49d26373ac6b13b6e21cfd5b",
+      "task_contract_id": "lodging_occupancy_table_v2",
+      "metric_spec_semantic_hashes": [
+        "sha256:6f3d3a6d7a90acca9f416a03c1591953e7cfaa213abf1c2be2cf42bb45e9ce65"
+      ],
+      "task_spec_semantic_hash": "sha256:0f79342921060cd1b2128d52b46a0a0befc4783aed73aa1a70077afa5cc375b1",
+      "metric_spec_closure_hashes": [
+        "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424"
+      ],
+      "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+      "system_prompt_hash": "sha256:82ed911f6e1274744d7151782da6e171d01120cc4dc1283758f1fed351573a45"
+    }
+  ],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

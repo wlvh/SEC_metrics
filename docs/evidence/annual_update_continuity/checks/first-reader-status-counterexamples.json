@@ -1,0 +1,44 @@
+{
+  "candidate_ahead": {
+    "status": "CANDIDATE_PENDING_PUBLICATION",
+    "candidate_work": "NONE",
+    "publication_work": "SUCCESSFUL_CANDIDATE_PENDING",
+    "filing_change": "UNCHANGED",
+    "error": null
+  },
+  "same_year_different_run": {
+    "status": "CANDIDATE_PENDING_PUBLICATION",
+    "candidate_work": "NONE",
+    "publication_work": "SUCCESSFUL_CANDIDATE_PENDING",
+    "filing_change": "UNCHANGED",
+    "error": null
+  },
+  "same_native_run": {
+    "status": "NO_NEW_ANNUAL_FILING",
+    "candidate_work": "NONE",
+    "publication_work": "NONE",
+    "filing_change": "UNCHANGED",
+    "error": null
+  },
+  "candidate_without_publication": {
+    "status": "NO_NEW_ANNUAL_FILING",
+    "candidate_work": "NONE",
+    "publication_work": "NONE",
+    "filing_change": "UNCHANGED",
+    "error": null
+  },
+  "candidate_ahead_source_missing": {
+    "status": "CHECK_FAILED",
+    "candidate_work": "UNKNOWN",
+    "publication_work": "UNKNOWN",
+    "filing_change": "UNKNOWN",
+    "error": "Request log manifest not found: /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/reader-source-unavailable-nl33qwrq/evidence/requests_log_manifest.json"
+  },
+  "cli_pending_status_exit_code": 2,
+  "evidence_scope": "Bounded status logic using actual native baseline records as explicit test inputs; not a report of actual formal rollback. CLI check function substituted only to test exit-code routing.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

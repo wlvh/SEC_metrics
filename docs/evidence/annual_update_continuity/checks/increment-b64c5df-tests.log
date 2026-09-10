@@ -1,0 +1,70 @@
+test_ast_gate_detects_an_added_provider_urlopen (tests.vnext.test_invocation_control.InvocationControlTest.test_ast_gate_detects_an_added_provider_urlopen)
+Make one additional urllib provider opener violate the exact set. ... ok
+test_concurrent_exact_request_has_one_mock_invocation (tests.vnext.test_invocation_control.InvocationControlTest.test_concurrent_exact_request_has_one_mock_invocation)
+Allow only the O_EXCL reservation owner to invoke transport. ... ok
+test_context_authority_uses_honest_utf8_byte_upper_bound (tests.vnext.test_invocation_control.InvocationControlTest.test_context_authority_uses_honest_utf8_byte_upper_bound)
+Bind the DeepSeek context limit and non-exact estimator method. ... ok
+test_controlled_execution_is_only_provider_opener_path (tests.vnext.test_invocation_control.InvocationControlTest.test_controlled_execution_is_only_provider_opener_path)
+Reach one opener only after plan, marker, and reservation. ... ok
+test_cost_observability_never_blocks_but_resources_do (tests.vnext.test_invocation_control.InvocationControlTest.test_cost_observability_never_blocks_but_resources_do)
+Allow arbitrary cost observations and fail hard payload/context. ... ok
+test_cutover_evidence_failure_has_no_success_or_reuse (tests.vnext.test_invocation_control.InvocationControlTest.test_cutover_evidence_failure_has_no_success_or_reuse)
+Stop Cutover after one schema-valid mechanically false response. ... ok
+test_cutover_runtime_uses_issue15_d35_retry_policy (tests.vnext.test_invocation_control.InvocationControlTest.test_cutover_runtime_uses_issue15_d35_retry_policy)
+Bind the inherited orchestrator loop to D-35 maximum one retry. ... ok
+test_cutover_success_reuses_exact_accepted_response (tests.vnext.test_invocation_control.InvocationControlTest.test_cutover_success_reuses_exact_accepted_response)
+Reuse only the exact response whose real Evidence closure passed. ... ok
+test_cutover_task_mismatch_is_terminal_before_success (tests.vnext.test_invocation_control.InvocationControlTest.test_cutover_task_mismatch_is_terminal_before_success)
+Reject a schema-valid disclosure mismatch without retry or reuse. ... ok
+test_egress_crash_is_unknown_and_never_retried (tests.vnext.test_invocation_control.InvocationControlTest.test_egress_crash_is_unknown_and_never_retried)
+Persist UNKNOWN_REMOTE_OUTCOME with no terminal attempt receipt. ... ok
+test_http_402_calls_once_and_stops_batch (tests.vnext.test_invocation_control.InvocationControlTest.test_http_402_calls_once_and_stops_batch)
+Stop retries and later stability ordinals after one mock 402. ... ok
+test_http_402_releases_reservation_for_new_authorization (tests.vnext.test_invocation_control.InvocationControlTest.test_http_402_releases_reservation_for_new_authorization)
+Permit a later authorized execution after one terminal 402. ... ok
+test_paid_call_counts_paid_endpoint_markers_not_claimed_bills (tests.vnext.test_invocation_control.InvocationControlTest.test_paid_call_counts_paid_endpoint_markers_not_claimed_bills)
+Derive paid calls from policy plus real egress marker. ... ok
+test_persisted_success_recovers_before_execution_seal (tests.vnext.test_invocation_control.InvocationControlTest.test_persisted_success_recovers_before_execution_seal)
+Seal a marker-owned success before either same or new-ID reuse. ... ok
+test_plan_has_three_identities_and_no_monetary_caps (tests.vnext.test_invocation_control.InvocationControlTest.test_plan_has_three_identities_and_no_monetary_caps)
+Keep monetary observations non-blocking and cap fields absent. ... ok
+test_process_death_after_egress_recovers_unknown_without_call (tests.vnext.test_invocation_control.InvocationControlTest.test_process_death_after_egress_recovers_unknown_without_call)
+Derive UNKNOWN_REMOTE_OUTCOME from a dead owner's disk state. ... ok
+test_production_adapter_routes_repository_transport_through_wb3 (tests.vnext.test_invocation_control.InvocationControlTest.test_production_adapter_routes_repository_transport_through_wb3)
+Put the socket-owning transport behind plan/reservation/reuse. ... ok
+test_qualification_terminal_survives_git_empty_directory_loss (tests.vnext.test_invocation_control.InvocationControlTest.test_qualification_terminal_survives_git_empty_directory_loss)
+Reconstruct a failed terminal when known empty namespaces vanish. ... ok
+test_remote_factories_and_capture_require_wb3 (tests.vnext.test_invocation_control.InvocationControlTest.test_remote_factories_and_capture_require_wb3)
+Keep every public no-context surface before the provider opener. ... ok
+test_retryable_failure_retries_at_most_once (tests.vnext.test_invocation_control.InvocationControlTest.test_retryable_failure_retries_at_most_once)
+Retain the first attempt and succeed on the only retry. ... ok
+test_reuse_revalidates_candidate_and_evidence_acceptance (tests.vnext.test_invocation_control.InvocationControlTest.test_reuse_revalidates_candidate_and_evidence_acceptance)
+Reject a rehashed receipt whose persisted Candidate was changed. ... ok
+test_structured_only_and_abandoned_before_egress_are_zero_call (tests.vnext.test_invocation_control.InvocationControlTest.test_structured_only_and_abandoned_before_egress_are_zero_call)
+Prove structured bypass and recover a pre-egress orphan. ... ok
+test_structured_only_proof_rejects_observed_invocation_state (tests.vnext.test_invocation_control.InvocationControlTest.test_structured_only_proof_rejects_observed_invocation_state)
+Never replace namespace-derived zero counts with a constant. ... ok
+test_successful_exact_response_resume_has_zero_mock_invocation (tests.vnext.test_invocation_control.InvocationControlTest.test_successful_exact_response_resume_has_zero_mock_invocation)
+Reuse the exact persisted response before reservation or transport. ... ok
+test_terminal_http_schema_and_evidence_never_retry (tests.vnext.test_invocation_control.InvocationControlTest.test_terminal_http_schema_and_evidence_never_retry)
+Stop 400/401/422/schema/evidence classes after one invocation. ... ok
+test_explicit_generation_and_policy_are_bound (tests.vnext.test_successor_invocation_control.SuccessorInvocationControlTest.test_explicit_generation_and_policy_are_bound) ... ok
+test_historical_factory_output_remains_legacy (tests.vnext.test_successor_invocation_control.SuccessorInvocationControlTest.test_historical_factory_output_remains_legacy) ... ok
+test_portable_native_terminal_replays_markers_usage_reservation_and_acceptance (tests.vnext.test_successor_invocation_control.SuccessorInvocationControlTest.test_portable_native_terminal_replays_markers_usage_reservation_and_acceptance) ... ok
+test_retryable_http_has_one_marker_and_terminal_without_retry (tests.vnext.test_successor_invocation_control.SuccessorInvocationControlTest.test_retryable_http_has_one_marker_and_terminal_without_retry) ... ok
+test_schema_and_evidence_failures_cannot_make_success (tests.vnext.test_successor_invocation_control.SuccessorInvocationControlTest.test_schema_and_evidence_failures_cannot_make_success) ... ok
+test_success_resume_is_idempotent_but_new_execution_cannot_reuse (tests.vnext.test_successor_invocation_control.SuccessorInvocationControlTest.test_success_resume_is_idempotent_but_new_execution_cannot_reuse) ... ok
+test_unknown_is_terminal_and_never_retried (tests.vnext.test_successor_invocation_control.SuccessorInvocationControlTest.test_unknown_is_terminal_and_never_retried) ... ok
+test_current_receipt_is_census_bound_and_resource_safe (tests.vnext.test_table_stage_c_financial_materialization.TableStageCFinancialMaterializationTest.test_current_receipt_is_census_bound_and_resource_safe)
+Bind historical JPM facts and exact, independently verified R3 drift. ... ok
+test_production_root_and_egress_remain_unchanged (tests.vnext.test_table_stage_c_financial_materialization.TableStageCFinancialMaterializationTest.test_production_root_and_egress_remain_unchanged)
+Prove benchmark-time stability and bind current roots to active R3. ... ok
+test_semantic_preimage_excludes_process_and_temporary_noise (tests.vnext.test_table_stage_c_financial_materialization.TableStageCFinancialMaterializationTest.test_semantic_preimage_excludes_process_and_temporary_noise)
+Keep semantic identity free of PID, temp locators, and stderr lines. ... ok
+test_r2_predecessor_bundle_fast_smoke (tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke)
+Bind the historical R3 receipt edge, then fully verify exact R2. ... ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 4.454s
+
+OK

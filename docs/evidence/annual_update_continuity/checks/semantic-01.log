@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/check_vnext_semantics.py", line 444, in <module>
+    sys.exit(main(argv=sys.argv[1:]))
+             ~~~~^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/check_vnext_semantics.py", line 428, in main
+    receipt = run_audit(
+        repo_root=repo_root,
+        secret_roots=secret_roots,
+        secret_token=secret_token,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/check_vnext_semantics.py", line 361, in run_audit
+    business_literal_pattern = compile_business_literal_pattern(
+        repo_root=repo_root
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/check_vnext_semantics.py", line 91, in compile_business_literal_pattern
+    registry = load_source_strategy_registry(repo_root=repo_root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/source_strategy.py", line 368, in load_source_strategy_registry
+    requirement = load_requirement_snapshot(snapshot_dir=requirement_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2024, in load_requirement_snapshot
+    return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+              ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 1950, in _load_issue_15_snapshot
+    _validate_foundation_receipt_bindings(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        foundation=foundation, repository_root=repository_root,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 1127, in _validate_foundation_receipt_bindings
+    raise RequirementError(
+        "Foundation receipt bytes differ: {}".format(relative)
+    )
+vnext.requirements.RequirementError: Foundation receipt bytes differ: outputs/scalability_audit.csv

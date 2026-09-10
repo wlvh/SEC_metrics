@@ -1,0 +1,25 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/readonly.sb",
+    "python3",
+    "tools/vnext_annual_continuity.py",
+    "initialize-data",
+    "--data-root",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/data",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-logs/initialize.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "ab4992486b8cb219fd11d4e2bbacc72db24fbc30",
+  "head_after": "ab4992486b8cb219fd11d4e2bbacc72db24fbc30",
+  "started_at_utc": "2026-09-10T08:18:24.640596+00:00",
+  "finished_at_utc": "2026-09-10T08:18:26.876309+00:00",
+  "elapsed_seconds": 2.235606124973856,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-logs/initialize-command.log",
+  "log_sha256": "79323aa6481b1b7582b71cae04c6e5d83cb9a421eb2c16c679000facabff0b2c",
+  "log_size": 5986
+}

@@ -1,0 +1,28 @@
+{
+  "status": "PASSED_NATIVE_FAILURE_AND_RECOVERY_OFFLINE_IO",
+  "code": {
+    "exact_head": "ab4992486b8cb219fd11d4e2bbacc72db24fbc30",
+    "runtime_tree": "sha256:2860391f1e6d68a971035e3385dcf5fad5e8ac2bc81328e795c464855c53f0b0",
+    "test_tree": "sha256:a4beed4482a5d311f3a3745615977bdfb0987499bf76cd179aed9fba33959784"
+  },
+  "stage_id": "sha256:0450710fa2f9527a5d456dd44c63e70dcc936a750d64879c64b38ea094417d9a",
+  "old_publication": "publication_bf8f885996a0ffe8be0c6873fe75436ccd41a03a044e0c653e4cd1cef80a872a",
+  "recovered_publication": "publication_42f62a2030967968e8d70f1ad2f7e54d2d396dcb3a763ce72f186b3729448bd1",
+  "actual_new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "simulated_native_counts": {
+    "provider": 2,
+    "paid": 2,
+    "sec_reserved": 0,
+    "provider_reserved": 2,
+    "failed_plans": [
+      "sha256:8ffd982a89ebc8b406267e800ff074fe9043d99bbffda166cba939aab57e27a4"
+    ],
+    "uncertain_plans": [],
+    "uncertain_sec": [],
+    "failed_sec": []
+  }
+}

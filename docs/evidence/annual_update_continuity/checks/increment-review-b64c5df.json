@@ -1,0 +1,210 @@
+{
+  "record_type": "INDEPENDENT_INCREMENT_CONTINUITY_REVIEW",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "parent_task": "/root",
+  "recorded_at_utc": "2026-09-10T06:58:59.373251+00:00",
+  "conclusion": "INCREMENT_REVIEW_COMPLETE_AWAITING_FULL_SEQUENCE",
+  "new_blocking_findings_in_reviewed_delta": [],
+  "human_review": false,
+  "permission_credit": "NONE",
+  "production_authorization": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "reviewed_code": {
+    "exact_head": "b64c5df6b01535a56c3706f4df133d120f47873e",
+    "runtime_tree": "sha256:8f308a695fb94a8d535c1e0788dfddb2ee792b5dff30752f7fe05049a12920b4",
+    "test_tree": "sha256:c6924d83db35b11b779a589c0ca8ec978d44f9f941a339632999eaac737065db"
+  },
+  "requirement": {
+    "requirement_id": "issue_28_v8",
+    "requirement_closure_hash": "sha256:8e837ffad5623133f7c62dc90cc9cc2c86b7741a6d97fd99744f36efe8bc454d",
+    "hashes": {
+      "baseline_sha256": "7f6124d288891baa4b0621f3e749857e41ac8700d8e9c9312d4b33aaf62f7446",
+      "contract_sha256": "bbd511c13103052550ef351de6063c3bb98c233d43a16ed6087ca220e4f3d786",
+      "decision_register_sha256": "753254b4a058ed2d9be5620486a3077f53838d5680192ff13bb2a229ade46ff7",
+      "invariant_profile_sha256": "6d38712454b344a41ff42d6b2c04ece9c0df15a9e64eebf2fd9f3bd12c182c4c",
+      "transfer_manifest_sha256": "1196ffd12e30885712ba71515ae39704bd03eb0c85ad572cb95b66fabd9373cc",
+      "parent_requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+      "validator_sha256": "8c75f68b699bf53d2c4fe6b5821d63908736845326a9103cb29a8c5f869acfea"
+    }
+  },
+  "diff_base": "c54845a6f7b8c36f5c02c803a73b07309771a22c",
+  "changed_file_proofs": [
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/requirements/issue_28_v8/baseline_manifest.json",
+      "sha256": "7f6124d288891baa4b0621f3e749857e41ac8700d8e9c9312d4b33aaf62f7446",
+      "size": 70741
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ai_adapter.py",
+      "sha256": "36dd0b32f63f6a5038f2b364d33814c09d4d0a7316b51db0c87d202adb889611",
+      "size": 187353
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py",
+      "sha256": "9aa49a2fa997129caab3dac8373bba8f826283d5adec1a3345f0fe51af04e377",
+      "size": 43093
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity_trigger.py",
+      "sha256": "5227b8fbe779300876e6933bbc993a9cca1e0d77c1d28111df7a1cb279467a36",
+      "size": 4812
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/historical_authority_support.py",
+      "sha256": "ec7233857b471e5162a806f3e01b5030220eb675c10d6326dec53852b0ddab7b",
+      "size": 2784
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/r4_b0_fixture_support.py",
+      "sha256": "b14b708f491bbe9a101eb42ad8ba617a514a87bc378c4a20ba0312114d676f54",
+      "size": 7048
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_ai_reader_contract.py",
+      "sha256": "a438d0f314c7807799d3ac28b55711262e9021963f9523de5a2ac0db5e6cb9ef",
+      "size": 71895
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_invocation_control.py",
+      "sha256": "5939bfa33fbf067f38d17d9ec9a59de70a06fa287b24b7e7c3428f3d90d38f2d",
+      "size": 72707
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_issue15_authority.py",
+      "sha256": "253fbe1305911d8f13c6379396f76724c8c0cb2b2101d95aa01064be10a8e0d6",
+      "size": 75824
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_issue28_requirement_transition.py",
+      "sha256": "6f08737453f849d5b29ac0246ffe2e90debba21bcf846e76cc2bca10b45b4755",
+      "size": 26053
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_live_scoped_reader.py",
+      "sha256": "8208c5b313cbce275a4f167d1e17ebc2fcbf7cfad46182eef8b5576388c6fff1",
+      "size": 17608
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_source_strategy_registry.py",
+      "sha256": "2d44edb44748176853a66c1c2a34bf212f4c598c49bb6939643bc0bc0487bab1",
+      "size": 22265
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_successor_invocation_control.py",
+      "sha256": "c6594abde3cbbad74b2ff5fadc956472bc03b2500d7de157d8e6ae176ea519b8",
+      "size": 9769
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_table_context_attestation.py",
+      "sha256": "75351921859efcfbb66aec4bd94db4a17cdc52e91a7f0424e8fa093667a35338",
+      "size": 12915
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_table_context_measurement.py",
+      "sha256": "0068b7c04c43e791302e8a271cdf7dcfda8b8f72fb0ebc7721d714d0af3348aa",
+      "size": 29461
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_table_context_qualification_guard.py",
+      "sha256": "ff25d35f024ff16a966ad9837d15627318d94f8ad6bc7d4466319c77a55b1009",
+      "size": 13301
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_table_stage_c_financial_materialization.py",
+      "sha256": "316beec3ce63c132704a34a5f6ef1d09b50eedfc02fd3ddf83f7a5f4c1c90c8e",
+      "size": 15465
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_zero_ai_release.py",
+      "sha256": "1631f1b3262b45ce2dd5861cf6453a5f578178a48d61e9839a1eb59acdcc09e4",
+      "size": 23196
+    }
+  ],
+  "code_review": [
+    {
+      "subject": "Transport policy authority",
+      "conclusion": "Only an exact RuntimeAuthorization type is passed to authorization_fields; only requirement issue_28_v8 may select the resulting strictly verified data_root. No root/dictionary parameter is accepted as authority. The same capability is propagated through adapter construction, pre-invocation and pre-socket checks; wrapper-adapter object identity gates remain. Default and measurement call retain existing fixed-root behavior. D-01 interpretation remains the original approved_transport_policy over exact Issue15 bytes.",
+      "limit": "Real opaque continuity-authorized positive path and complete HTTP-mocked controller run remain part of sequence-03, not independently completed here."
+    },
+    {
+      "subject": "Plan and credential preflight",
+      "conclusion": "Per-input task/request construction uses already byte-verified source_root authority. Credential check derives only the existing environment-variable name from the verified Issue15 policy and does not create an execution slot/capability to perform the check. No credential value was read or emitted by reviewer."
+    },
+    {
+      "subject": "Trigger shared root gate",
+      "conclusion": "_paths now applies _external to stage_root/trigger before lock, current, per-run or log writes. This closes DRAFT-09. Existing exact stage/UUID/PID/current checks remain.",
+      "evidence": "Independent post-authorization path-only unit injects the binding into _paths, supplies a trigger directory alias, observes RUNTIME_PATH_ALIAS_FORBIDDEN and no target writes. This unit is not authorization evidence."
+    },
+    {
+      "subject": "Historical fast material roots",
+      "conclusion": "New test-only helper copies exact saved authority and foundation receipt bytes, then runs native load_requirement_snapshot. Module-root patches affect only test data selection; current Python validators remain active. Legacy WB-3 assertions are retained, including all 25 invocation tests and seven successor controller tests. No validator result was mocked as part of this adaptation."
+    },
+    {
+      "subject": "Historical R3/current state separation",
+      "conclusion": "R2 smoke now obtains original R3 pointer through saved receipt index; original R3/R2 IDs and R2 full verification stay. StageC preserves historical benchmark before/after and R3 hash facts against R3 bundle, and separately checks actual current pointer/manifest/mirror binding. Current active is no longer required to be R3. This short test is not a complete current PublicationView replay."
+    },
+    {
+      "subject": "Reuse of already verified publication manifest",
+      "conclusion": "_publish_candidate takes manifest only from already verified opaque PublicationPermission, then uses existing scoped _Verified. Generic verify_publication_bundle still validates subtype, exact directories/files, SHA/size and content identity before optional annual semantic replay reuse; another manifest does not match this pin. No new permission factory or generic byte bypass is added.",
+      "evidence": "Independent malformed temporary package retained all 906 exact paths and same manifest but empty payload bytes; even with matching test pin, native generic verifier rejected Publication artifact digest differs."
+    }
+  ],
+  "personally_executed": {
+    "focused_tests": {
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/increment-b64c5df-tests.log",
+        "sha256": "56945236bd5abd207ef1c43be867ea5f732b3e9ce599697e571d581f0ba18827",
+        "size": 8525
+      },
+      "tests": 36,
+      "elapsed_seconds": 4.454,
+      "exit_code": 0,
+      "result": "OK",
+      "modules": [
+        "tests.vnext.test_invocation_control",
+        "tests.vnext.test_successor_invocation_control",
+        "tests.vnext.test_table_stage_c_financial_materialization",
+        "tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke"
+      ]
+    },
+    "counterexamples": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/increment-b64c5df-counterexamples.json",
+      "sha256": "86bb7f6b35f7a891e9ceadc1cd15b121f174e97443b913bd7017a88d5196409b",
+      "size": 951
+    },
+    "identity_and_requirement_load": "Current clean code_identity and native _requirement load executed read-only.",
+    "protection": "OS network denied; original repository and older historical evidence trees write denied; PYTHONDONTWRITEBYTECODE=1. All new writes limited to external audit files and temporary test data."
+  },
+  "logs_read_not_independently_reexecuted": {
+    "fast_log": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/fast-checkpoint-03.log",
+      "sha256": "393b2ba3053d2fcf22b9ef9b39faa98de0dca6cb1a8dde785508615789d17329",
+      "size": 11371
+    },
+    "status": "PASSED",
+    "entries": 38,
+    "duration_seconds": 12.398,
+    "note": "Inspected all 38 per-entry return codes and actual test footer outputs. This is log review; independent 36-test execution is separately listed."
+  },
+  "carried_forward_review": {
+    "record": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/draft-continuity-review.json",
+      "sha256": "7006d6e89231883aa4e32ab73ff29a9237549998ad9431ef16b19d1b117e7b47",
+      "size": 17555
+    },
+    "scope": "Initial complete draft code investigation and reproduced native counterexamples are inherited; this increment did not repeat the full draft review. DRAFT-09 is closed by current code plus independent local test."
+  },
+  "not_yet_verified": [
+    "Complete saved-material S0 to FY2024 to FY2025 update and publication sequence at this head.",
+    "Real stage-approved provider-bound execution. No real stage grant or new business call occurred in this review.",
+    "End-to-end own-in-flight marker/terminal reconciliation, loss of success reference, and candidate-to-publication interruption recovery at this exact head.",
+    "Final clean implementation/test identities and final full integration logs.",
+    "Conditional third-call repair remains unavailable unless a known failure, actual fix, new review and same-budget rebind are explicitly completed."
+  ],
+  "final_signoff": false
+}

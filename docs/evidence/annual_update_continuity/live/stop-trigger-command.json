@@ -1,0 +1,25 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-isolated.sb",
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_annual_continuity.py",
+    "stop-trigger",
+    "--approval-url",
+    "https://github.com/wlvh/SEC_metrics/pull/41#issuecomment-5616160149",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-logs/stop-trigger.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "fce015270de0cc4a265ce0fb0d2179ef11ef98a7",
+  "head_after": "fce015270de0cc4a265ce0fb0d2179ef11ef98a7",
+  "started_at_utc": "2026-09-10T09:30:16.627443+00:00",
+  "finished_at_utc": "2026-09-10T09:30:18.988091+00:00",
+  "elapsed_seconds": 2.360573165991809,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-logs/stop-trigger-command.log",
+  "log_sha256": "e603248d098338ecc0acab34d25515afd8b335eccd5114472ff76707c645dd31",
+  "log_size": 95
+}
