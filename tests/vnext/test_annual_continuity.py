@@ -43,8 +43,10 @@ class AnnualContinuityBoundaryTest(unittest.TestCase):
             original=(budget/'registration.json').read_bytes()
             self.assertEqual(first,continuity._register_unused_budget(stage,data,budget,start+timedelta(seconds=1)))
             self.assertEqual(original,(budget/'registration.json').read_bytes())
+            other=root/'other-data'
+            sec_http.SecHttpClient(workdir=other,config_path=ROOT/'config/sec_config.json',log_path=other/'evidence/requests_log.csv')
             with self.assertRaisesRegex(ValueError,'REGISTRATION_CHANGED'):
-                continuity._register_unused_budget(stage,root/'other-data',budget,start)
+                continuity._register_unused_budget(stage,other,budget,start)
             (budget/'provider-1.json').write_text('{}')
             with self.assertRaisesRegex(ValueError,'HAS_EXECUTION_STATE'):
                 continuity._register_unused_budget(stage,data,budget,start)
