@@ -3007,7 +3007,7 @@ def _semantic_gate_evidence(
     }
 
 
-def _execute_semantic_audit(*, repo_root: Path) -> Dict[str, object]:
+def _execute_semantic_audit(*, repo_root: Path, tool_root: Optional[Path] = None) -> Dict[str, object]:
     """Run the repository semantic gate and return its exact receipt.
 
     Args:
@@ -3020,7 +3020,7 @@ def _execute_semantic_audit(*, repo_root: Path) -> Dict[str, object]:
         PublicationError: When the gate is missing, times out, fails, or emits
             an unreadable receipt.
     """
-    tool_path = repo_root / "tools" / "check_vnext_semantics.py"
+    tool_path = (repo_root if tool_root is None else tool_root) / "tools" / "check_vnext_semantics.py"
     if tool_path.is_symlink() or not tool_path.is_file():
         raise PublicationError("Semantic audit executable is unsafe")
     try:

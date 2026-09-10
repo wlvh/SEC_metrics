@@ -86,6 +86,57 @@ class AnnualContinuityBoundaryTest(unittest.TestCase):
             (budget/'provider-1.json').rename(budget/'provider-2.json')
             with self.assertRaisesRegex(ValueError,'SLOT_CHANGED'):continuity.budget_counts(stage)
 
+    def test_frozen_receipt_read_does_not_rewrite_active_mirror(self):
+        from vnext.annual_continuity_sources import frozen_foundation_receipts
+        from vnext.canonical import sha256_bytes
+        before=(ROOT/'outputs/scalability_audit.csv').read_bytes()
+        expected=json.loads((ROOT/'requirements/issue_15_v1/foundation_verification_receipt.json').read_text())
+        found=frozen_foundation_receipts()
+        for entry in expected['receipt_bindings']:
+            self.assertEqual(entry['sha256'],sha256_bytes(content=found[entry['path']]['bytes']))
+        self.assertEqual(before,(ROOT/'outputs/scalability_audit.csv').read_bytes())
+
+    def test_trigger_path_and_record_parent_alias_are_rejected(self):
+        from vnext import annual_continuity_trigger as trigger
+        import os
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory).resolve();stage={'stage_id':'sha256:'+'a'*64}
+            state={'stage_id':stage['stage_id'],'trigger_id':'/outside','process_id':os.getpid(),'running':True}
+            current=root/'current.json';current.write_text(json.dumps(state))
+            with self.assertRaisesRegex(ValueError,'TRIGGER_STATE_CHANGED'):trigger._state(current,stage)
+            outside=root/'outside';outside.mkdir();(root/'alias').symlink_to(outside,target_is_directory=True)
+            with self.assertRaisesRegex(ValueError,'ALIAS'):continuity._write_once(root/'alias/record.json',{'a':1})
+            self.assertFalse((outside/'record.json').exists())
+
+    def test_sec_failed_status_cannot_be_changed_to_success(self):
+        import io
+        from urllib.error import HTTPError
+        import sec_http
+        from sec_urls import submissions_url
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve();data=root/'data';budget=root/'budget';budget.mkdir()
+            client=sec_http.SecHttpClient(workdir=data,config_path=ROOT/'config/sec_config.json',log_path=data/'evidence/requests_log.csv')
+            client.config={**client.config,'max_retries':0}
+            rows=update._rows(data)
+            registration=record({'budget_root':str(budget),'stage_root':str(root/'stage'),
+                'sec_ledger_origin':{'row_count':len(rows),'rows_id':content_hash(value=rows)}},'registration_id')
+            stage={'stage_id':'sha256:'+'a'*64,'stage_root':str(root/'stage'),'data_root':str(data),'budget_root':str(budget),'budget_registration':registration}
+            url=submissions_url(cik=int(update.supported_company(repo_root=ROOT)['primary_cik']))
+            slot=record({'registration_id':registration['registration_id'],'stage_id':stage['stage_id'],'ordinal':1,
+                'item':{'kind':'SUBMISSIONS','url':url},'reserved_at_utc':datetime.now(timezone.utc).isoformat(),
+                'ledger_before_count':len(rows),'ledger_before_rows_id':content_hash(value=rows)},'sec_slot_id')
+            continuity._write_once(budget/'sec-1.json',slot)
+            error=HTTPError(url,500,'SIMULATED_HTTP_FAILURE',{},io.BytesIO(b'SIMULATED_FAILURE_BODY'))
+            with patch.object(sec_http,'urlopen',side_effect=error) as opened:
+                result=client.fetch(url=url,purpose='annual_continuity_submissions',local_path=data/'evidence/test-response.json')
+                self.assertEqual(1,opened.call_count)
+            terminal=record({'slot':slot,'result':result.__dict__,'ledger_row':update._rows(data)[-1],'status':'FAILED'},'sec_terminal_id')
+            path=budget/'sec-terminals/sec-1.json';continuity._write_once(path,terminal)
+            self.assertEqual(['sec-1.json'],continuity.budget_counts(stage)['failed_sec'])
+            terminal['status']='SUCCEEDED';terminal.pop('sec_terminal_id');terminal=record(terminal,'sec_terminal_id')
+            path.write_text(json.dumps(terminal))
+            with self.assertRaisesRegex(ValueError,'SEC_TERMINAL_CHANGED'):continuity.budget_counts(stage)
+
     def test_actual_root_and_local_permission_dict_are_not_execution_authority(self):
         from vnext import annual_publication_authority as authority,annual_runtime as runtime
         with self.assertRaises(ValueError):continuity._external(ROOT)

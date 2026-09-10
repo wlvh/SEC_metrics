@@ -148,6 +148,10 @@ def verify_data_root(data_root, requirement=None):
         if p.is_file() or p.is_symlink()
     }
     require(actual == expected, "RUNTIME_AUTHORITY_FILE_SET_CHANGED")
+    historical = {}
+    if requirement['requirement_id'] == 'issue_28_v8':
+        from .annual_continuity_sources import frozen_foundation_receipts
+        historical = frozen_foundation_receipts()
     for relative in sorted(expected):
         copied = resolve_repository_file(
             repo_root=data_root, repo_relative_path=relative
@@ -156,7 +160,7 @@ def verify_data_root(data_root, requirement=None):
             repo_root=CODE_ROOT, repo_relative_path=relative
         )
         require(
-            copied.read_bytes() == original.read_bytes(),
+            copied.read_bytes() == (historical[relative]['bytes'] if relative in historical else original.read_bytes()),
             "RUNTIME_AUTHORITY_BYTES_CHANGED: " + relative,
         )
     update._rows(data_root)

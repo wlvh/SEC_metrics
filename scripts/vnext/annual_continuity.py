@@ -32,6 +32,7 @@ def now():
 
 
 def _write_once(path, value):
+    path = _external(Path(path))
     need(not path.is_symlink(), 'CONTINUITY_RECORD_ALIAS')
     path.parent.mkdir(parents=True, exist_ok=True)
     fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
@@ -88,11 +89,13 @@ def initialize_data(*, data_root):
     paths = set(runtime._authority_files(requirement)) | {'evidence/requests_log.csv', 'evidence/requests_log_manifest.json'}
     for proof in proofs:
         paths.update((proof['request_repo_relative_path'], proof['request_headers_repo_relative_path']))
+    from .annual_continuity_sources import frozen_foundation_receipts
+    receipts=frozen_foundation_receipts()
     for name in sorted(paths):
         source = resolve_repository_file(repo_root=ROOT, repo_relative_path=name)
         destination = root / name; destination.parent.mkdir(parents=True, exist_ok=True)
         with destination.open('xb') as output:
-            output.write(source.read_bytes())
+            output.write(receipts[name]['bytes'] if name in receipts else source.read_bytes())
     runtime.verify_data_root(root, requirement)
     need(code_identity() == identity, 'CONTINUITY_CODE_CHANGED_DURING_COPY')
     return {'status': 'SAVED_COMPLETE_INPUTS_COPIED', 'data_root': str(root), 'source_proofs': proofs,
@@ -123,6 +126,7 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01,
     registration = record({'kind': 'CONTINUITY_BUDGET_REGISTRATION', 'nonce': uuid4().hex,
         'budget_root': str(budget), 'stage_root': str(root), 'data_root': str(data),
         'policy_id': V3, 'created_at_utc': start.isoformat(),
+        'sec_ledger_origin': {'row_count':len(update._rows(data)), 'rows_id':content_hash(value=update._rows(data))},
         'limits': {'normal_provider': 2, 'conditional_provider': 1, 'provider': 3, 'paid': 3, 'sec': 6, 'retry': 0}}, 'registration_id')
     _write_once(registration_path, registration)
     from .publication import PublicationView
@@ -330,16 +334,43 @@ def budget_counts(stage, *, allow_pending_plan=None):
     candidates = {p.parent.name for p in (root / 'candidates').glob('*/plan.json')}
     need(candidates <= {p[7:] for p in ids}, 'CONTINUITY_UNACCOUNTED_CANDIDATE')
     sec = sorted(budget.glob('sec-*.json')); sec_unknown = []; sec_failed = []
+    if sec:
+        data=Path(stage['data_root']);rows=update._rows(data)
+        origin=stage['budget_registration']['sec_ledger_origin'];offset=origin['row_count']
+        need(content_hash(value=rows[:offset])==origin['rows_id'] and len(rows)<=offset+len(sec),
+             'CONTINUITY_SEC_LEDGER_PREFIX_CHANGED')
     for index, path in enumerate(sec, 1):
         record_value = _json(path); check_id(record_value, 'sec_slot_id')
         need(path.name == 'sec-' + str(index) + '.json' and index <= 6
-             and record_value['registration_id'] == stage['budget_registration']['registration_id'], 'CONTINUITY_SEC_SLOT_CHANGED')
+             and record_value['registration_id'] == stage['budget_registration']['registration_id']
+             and record_value['ordinal']==index and record_value['stage_id']==stage['stage_id']
+             and record_value['ledger_before_count']==offset+index-1
+             and record_value['ledger_before_rows_id']==content_hash(value=rows[:offset+index-1]), 'CONTINUITY_SEC_SLOT_CHANGED')
         terminal_path = budget / 'sec-terminals' / path.name
-        if not terminal_path.exists(): sec_unknown.append(path.name)
-        else:
-            terminal = _json(terminal_path)
-            need(terminal['slot'] == record_value, 'CONTINUITY_SEC_TERMINAL_CHANGED')
-            if terminal['status'] != 'SUCCEEDED': sec_failed.append(path.name)
+        if not terminal_path.exists() or len(rows)<offset+index:
+            sec_unknown.append(path.name);continue
+        terminal = _json(terminal_path);check_id(terminal,'sec_terminal_id')
+        row=rows[offset+index-1];result=terminal['result']
+        need(terminal['slot'] == record_value and terminal['ledger_row']==row
+             and row['source_url']==record_value['item']['url']==result['url']
+             and row['status_code']==str(result['status_code']) and row['error']==result['error']
+             and row['retry_attempt']=='0' and row['method']=='GET'
+             and row['content_sha256']==result['sha256'] and row['content_length']==str(result['content_length'])
+             and row['purpose']=='annual_continuity_'+record_value['item']['kind'].lower(), 'CONTINUITY_SEC_TERMINAL_CHANGED')
+        need(parse_utc_timestamp(value=row['timestamp_utc'])>=parse_utc_timestamp(value=record_value['reserved_at_utc']).replace(microsecond=0),
+             'CONTINUITY_SEC_ATTEMPT_PREDATES_SLOT')
+        if row['content_sha256']:
+            from sec_http import read_request_snapshot_bytes, request_headers_bytes_match_identity
+            from .sources import resolve_repository_file
+            body=read_request_snapshot_bytes(workdir=data,path=resolve_repository_file(repo_root=data,repo_relative_path=row['repo_relative_path']))
+            headers=read_request_snapshot_bytes(workdir=data,path=resolve_repository_file(repo_root=data,repo_relative_path=row['headers_repo_relative_path']))
+            from .canonical import sha256_bytes
+            need(sha256_bytes(content=body)==row['content_sha256'] and len(body)==int(row['content_length'])
+                 and request_headers_bytes_match_identity(content=headers,source_url=row['source_url'],status_code=row['status_code'],
+                    content_length=row['content_length'],content_sha256=row['content_sha256']), 'CONTINUITY_SEC_RESPONSE_CHANGED')
+        accepted=row['status_code']=='200' and not row['error']
+        need(terminal['status']==('SUCCEEDED' if accepted else 'FAILED'),'CONTINUITY_SEC_TERMINAL_CHANGED')
+        if not accepted: sec_failed.append(path.name)
     need(observed <= len(slots) <= 3 and len(sec) <= 6, 'CONTINUITY_BUDGET_EXCEEDED')
     return {'provider': observed, 'paid': observed, 'sec_reserved': len(sec), 'provider_reserved': len(slots),
             'failed_plans': failures, 'uncertain_plans': pending, 'uncertain_sec': sec_unknown, 'failed_sec': sec_failed}
@@ -486,8 +517,10 @@ def _fetch_missing(stage, item):
     data=Path(stage['data_root']);client=SecHttpClient(workdir=data,config_path=data/'config/sec_config.json',log_path=data/'evidence/requests_log.csv')
     client.config={**client.config,'max_retries':0}
     ordinal=counts['sec_reserved']+1;budget=Path(stage['budget_root'])
+    before=update._rows(data)
     slot=record({'stage_id':stage['stage_id'],'registration_id':stage['budget_registration']['registration_id'],
-        'ordinal':ordinal,'item':item,'reserved_at_utc':now().isoformat()},'sec_slot_id')
+        'ordinal':ordinal,'item':item,'reserved_at_utc':now().isoformat(),
+        'ledger_before_count':len(before),'ledger_before_rows_id':content_hash(value=before)},'sec_slot_id')
     validate_stage(stage,execution=True)
     _write_once(budget/('sec-'+str(ordinal)+'.json'),slot)
     before=update._rows(data)
@@ -496,7 +529,7 @@ def _fetch_missing(stage, item):
     after=update._rows(data)
     need(len(after)==len(before)+1 and after[:-1]==before,'CONTINUITY_SEC_COUNT_UNKNOWN')
     _write_once(budget/'sec-terminals'/('sec-'+str(ordinal)+'.json'),
-        {'slot':slot,'result':result.__dict__,'ledger_row':after[-1],'status':'SUCCEEDED' if result.status_code==200 and not result.error else 'FAILED'})
+        record({'slot':slot,'result':result.__dict__,'ledger_row':after[-1],'status':'SUCCEEDED' if result.status_code==200 and not result.error else 'FAILED'},'sec_terminal_id'))
     need(result.status_code==200 and not result.error,'CONTINUITY_SEC_FAILED')
 
 
@@ -537,6 +570,11 @@ def run_once(*, approval_url, refresh_submissions=False):
             url=submissions_url(cik=int(company['primary_cik']))
             _fetch_missing(stage,{'kind':'SUBMISSIONS','url':url,'document_name':url.rsplit('/',1)[-1]})
             _write_once(Path(stage['budget_root'])/'submissions-refreshed.json',{'stage_id':stage['stage_id'],'completed_at_utc':now().isoformat()})
+        if refresh_submissions:
+            refreshed=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,successful_candidate=None,published=published)
+            newest=refreshed.get('discovered_filing');scope=stage['historical_period_scope']
+            if newest and not(scope['start']<=newest['period_start']<=newest['period_end']<=scope['end']):
+                return {**refreshed,'status':'DISCOVERED_OUTSIDE_STAGE_SCOPE_NOT_EXECUTED','counts':budget_counts(stage)}
         visibility=_visibility(stage)
         report=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,
             successful_candidate=None if success is None else success['baseline'],published=published,visibility=visibility)

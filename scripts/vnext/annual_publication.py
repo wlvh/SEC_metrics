@@ -164,6 +164,10 @@ def _implementation_files(head, policy_id=V1):
             if member.isfile():
                 data = archive.extractfile(member).read()
                 files[member.name] = {'sha256': sha256_bytes(content=data), 'size': len(data)}
+    if policy_id == V3:
+        from .annual_continuity_sources import frozen_foundation_receipts
+        for path, receipt in frozen_foundation_receipts(head).items():
+            files[path] = {k: receipt[k] for k in ('sha256', 'size')}
     return files
 
 
@@ -325,11 +329,16 @@ def prepare(*, candidate_dir, publication_root, policy_id=V1):
     else:
         runtime.mkdir()
         source_paths = sorted(_implementation_files(implementation_head, policy_id))
+        receipts = {}
+        if policy_id == V3:
+            from .annual_continuity_sources import frozen_foundation_receipts
+            receipts = frozen_foundation_receipts(implementation_head)
         for relative in source_paths:
             source = ROOT / relative
             need(source.is_file() and not source.is_symlink(), 'ANNUAL_RUNTIME_SOURCE_UNSAFE')
-            target = runtime / relative; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(source.read_bytes())
-        scans = {'semantic': pub._execute_semantic_audit(repo_root=ROOT), 'scalability': pub._execute_scalability_audit(repo_root=ROOT)}
+            target = runtime / relative; target.parent.mkdir(parents=True, exist_ok=True); target.write_bytes(receipts[relative]['bytes'] if relative in receipts else source.read_bytes())
+        scans = {'semantic': pub._execute_semantic_audit(repo_root=runtime if policy_id == V3 else ROOT, tool_root=ROOT),
+                 'scalability': pub._execute_scalability_audit(repo_root=ROOT)}
         meta = {'schema_version': 1, 'implementation_head': implementation_head,
             'implementation_tree': implementation_tree,
             'prepared_at_utc': utc(), 'policy': chosen, 'scans': scans,
