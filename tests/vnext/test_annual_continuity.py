@@ -137,6 +137,31 @@ class AnnualContinuityBoundaryTest(unittest.TestCase):
             path.write_text(json.dumps(terminal))
             with self.assertRaisesRegex(ValueError,'SEC_TERMINAL_CHANGED'):continuity.budget_counts(stage)
 
+    def test_single_seed_is_refused_before_any_stage_write(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve()
+            with self.assertRaisesRegex(ValueError,'SEED_PARAMETERS_MUST_BE_PAIRED'):
+                continuity.stage_proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',
+                    review_file=root/'review.json',seed_b01=root/'one-seed',seed_b10=None,
+                    expires_at_utc='2026-09-11T00:00:00Z',historical_period_start='2023-01-01',historical_period_end='2025-12-31')
+            self.assertEqual([],list(root.iterdir()))
+
+    def test_null_stage_cannot_construct_a_historical_seed(self):
+        from vnext.annual_continuity_snapshot import create_seed_candidate
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve()
+            with self.assertRaisesRegex(ValueError,'EXPLICIT_SEED_REQUIRED'):
+                create_seed_candidate({'stage_root':str(root),'seed':None},{})
+            self.assertEqual([],list(root.iterdir()))
+
+    def test_root_separation_and_period_scope_are_checked(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root=Path(temporary).resolve()
+            with self.assertRaisesRegex(ValueError,'ROOTS_OVERLAP'):
+                continuity._root_separation(root/'stage',root/'data',root/'data/budget')
+            with self.assertRaises(ValueError):continuity._period_scope('not-a-date','2025-12-31')
+            with self.assertRaises(ValueError):continuity._period_scope('2025-01-01','2024-12-31')
+
     def test_actual_root_and_local_permission_dict_are_not_execution_authority(self):
         from vnext import annual_publication_authority as authority,annual_runtime as runtime
         with self.assertRaises(ValueError):continuity._external(ROOT)

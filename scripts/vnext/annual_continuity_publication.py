@@ -95,7 +95,7 @@ def validate_plan(value):
     if value['kind']=='NORMAL_EXECUTION':
         need(context['origin']['plan']['predecessor_pointer']==pointer, 'CONTINUITY_INPUT_PREDECESSOR_CHANGED')
     else:
-        need(value['kind']=='HISTORICAL_SEED' and pointer==stage['initial_publication_pointer'], 'CONTINUITY_SEED_PREDECESSOR_CHANGED')
+        need(value['kind']=='HISTORICAL_SEED' and type(stage['seed']) is dict and pointer==stage['initial_publication_pointer'], 'CONTINUITY_SEED_PREDECESSOR_CHANGED')
     return root,manifest,requirement
 
 

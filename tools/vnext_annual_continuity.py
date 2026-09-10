@@ -14,8 +14,10 @@ def main(argv=None):
     commands=parser.add_subparsers(dest='command',required=True)
     init=commands.add_parser('initialize-data');init.add_argument('--data-root',type=Path,required=True)
     stage=commands.add_parser('stage-proposal')
-    for name in ('stage-root','data-root','budget-root','review-file','seed-b01','seed-b10','visibility-file'):
+    for name in ('stage-root','data-root','budget-root','review-file'):
         stage.add_argument('--'+name,type=Path,required=True)
+    for name in ('seed-b01','seed-b10','visibility-file'):
+        stage.add_argument('--'+name,type=Path)
     for name in ('expires-at-utc','historical-period-start','historical-period-end'):
         stage.add_argument('--'+name,required=True)
     run=commands.add_parser('run-once');run.add_argument('--refresh-submissions',action='store_true')

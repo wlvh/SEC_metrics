@@ -102,9 +102,22 @@ def initialize_data(*, data_root):
             'code': identity, 'new_provider_paid_sec_calls': [0, 0, 0]}
 
 
-def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01, seed_b10,
-                   visibility_file, expires_at_utc, historical_period_start, historical_period_end):
+def _root_separation(root,data,budget):
+    values=(root,data,budget)
+    need(all(a!=b and a not in b.parents and b not in a.parents
+             for i,a in enumerate(values) for b in values[i+1:]), 'CONTINUITY_ROOTS_OVERLAP')
+
+
+def _period_scope(start,end):
+    from datetime import date
+    need(type(start) is str and type(end) is str and date.fromisoformat(start).isoformat()==start
+         and date.fromisoformat(end).isoformat()==end and start<=end, 'CONTINUITY_PERIOD_SCOPE_INVALID')
+
+
+def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=None, seed_b10=None,
+                   visibility_file=None, expires_at_utc, historical_period_start, historical_period_end):
     """Create one inert stage proposal. The review and original seed are explicit."""
+    need((seed_b01 is None)==(seed_b10 is None),'CONTINUITY_SEED_PARAMETERS_MUST_BE_PAIRED')
     identity = code_identity(); requirement = _requirement(); chosen = policy(policy_id=V3)
     review = _json(Path(review_file))
     need(review['reviewer_kind'] == 'INDEPENDENT_MODEL_SUBTASK'
@@ -112,15 +125,15 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01,
          and review['reviewed_head'] == identity['exact_head'] and review['runtime_tree'] == identity['runtime_tree'],
          'CONTINUITY_INDEPENDENT_REVIEW_REQUIRED')
     root, data, budget = _external(stage_root), _external(data_root), _external(budget_root)
-    need(root != data and root != budget and budget not in root.parents and root not in budget.parents
-         and data not in root.parents and root not in data.parents, 'CONTINUITY_ROOTS_OVERLAP')
+    _root_separation(root,data,budget)
+    _period_scope(historical_period_start,historical_period_end)
     runtime.verify_data_root(data, requirement)
     expiry = parse_utc_timestamp(value=expires_at_utc); start = now()
     need(start < expiry <= start + timedelta(days=chosen['maximum_stage_lifetime_days']), 'CONTINUITY_EXPIRY_INVALID')
     from .annual_continuity_snapshot import seed_descriptor
-    seed = seed_descriptor(b01=Path(seed_b01), b10=Path(seed_b10), data_root=data)
-    need(seed['period']['period_start'] >= historical_period_start
-         and seed['period']['period_end'] <= historical_period_end, 'CONTINUITY_SEED_OUT_OF_SCOPE')
+    seed = None if seed_b01 is None else seed_descriptor(b01=Path(seed_b01), b10=Path(seed_b10), data_root=data)
+    need(seed is None or (seed['period']['period_start'] >= historical_period_start
+         and seed['period']['period_end'] <= historical_period_end), 'CONTINUITY_SEED_OUT_OF_SCOPE')
     registration_path = budget / 'registration.json'
     need(not root.exists() and not budget.exists(), 'CONTINUITY_STAGE_OR_BUDGET_ALREADY_REGISTERED')
     registration = record({'kind': 'CONTINUITY_BUDGET_REGISTRATION', 'nonce': uuid4().hex,
@@ -142,7 +155,7 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01,
         'review_sha256': sha256_file(path=Path(review_file)), 'review_id': content_hash(value=review), 'stage_root': str(root), 'data_root': str(data),
         'budget_root': str(budget), 'budget_registration': registration,
         'publication_root': str(root / 'publication'), 'initial_publication_pointer': initial_pointer, 'seed': seed,
-        'visibility_file': str(_external(visibility_file)),
+        'visibility_file': None if visibility_file is None else str(_external(visibility_file)),
         'historical_period_scope': {'start': historical_period_start, 'end': historical_period_end},
         'created_at_utc': start.isoformat(), 'expires_at_utc': expiry.isoformat(),
         'maximum_provider_paid_sec_calls': [3, 3, 6], 'normal_provider_calls': 2,
@@ -176,6 +189,10 @@ def validate_stage(stage, *, execution=False):
          and stage['repository'] == requirement['baseline']['repository']['identity'], 'CONTINUITY_STAGE_REQUIREMENT_CHANGED')
     _code_matches(stage['reviewed_code'])
     root, budget, data = _external(stage['stage_root']), _external(stage['budget_root']), _external(stage['data_root'])
+    _root_separation(root,data,budget)
+    _period_scope(stage['historical_period_scope']['start'],stage['historical_period_scope']['end'])
+    need(stage['seed'] is None or type(stage['seed']) is dict,'CONTINUITY_SEED_DESCRIPTOR_INVALID')
+    if stage['visibility_file'] is not None:_external(Path(stage['visibility_file']))
     need(stage['publication_root'] == str(root / 'publication') and root != budget and root != data,
          'CONTINUITY_STAGE_ROOT_CHANGED')
     registration = _json(budget / 'registration.json'); check_id(registration, 'registration_id')
@@ -404,8 +421,8 @@ def require_live_boundary(binding):
 
 
 def _visibility(stage):
-    path = Path(stage['visibility_file'])
-    return _json(path) if path.exists() else None
+    value=stage['visibility_file']
+    return None if value is None else _json(_external(Path(value)))
 
 
 def _reserve_provider(stage, plan):
@@ -537,28 +554,44 @@ def _fetch_missing(stage, item):
     need(result.status_code==200 and not result.error,'CONTINUITY_SEC_FAILED')
 
 
+@contextmanager
+def _initial_version(stage):
+    from . import publication as pub, annual_publication as annual
+    view=pub.PublicationView.open(publication_root=ROOT)
+    need(read(ROOT,'outputs/active_publication.json')==stage['initial_publication_pointer'],
+         'CONTINUITY_FORMAL_BASELINE_CHANGED')
+    with annual._verified(annual._Verified(annual._FACTORY,view.manifest)):
+        yield
+
+
+def _current_published(stage):
+    company=update.supported_company(repo_root=ROOT)
+    return update.published_baseline(company=company,publication_root=Path(stage['publication_root']))
+
+
 def run_once(*, approval_url, refresh_submissions=False):
     """Continue an unfinished input before selecting another; never update the actual root."""
     from . import publication as pub,annual_continuity_publication as publishing
     from .annual_continuity_snapshot import create_seed_candidate
     from .canonical import atomic_write_json
     binding=verify_stage(approval_url=approval_url,execution=False);stage=binding['stage'];root=Path(stage['stage_root'])
-    with stage_lock(stage):
+    with stage_lock(stage), _initial_version(stage):
         recovery=_recover_pending(binding)
         if recovery is not None:
-            return {'status':'RECOVERED_PRIOR_TRANSACTION','recovery':recovery,'counts':budget_counts(stage)}
+            return {'status':'RECOVERED_PRIOR_TRANSACTION','recovery':recovery,'counts':budget_counts(stage),
+                'current_published':_current_published(stage),'discovery_status':'NOT_RECHECKED_RECOVERY_FIRST'}
         validate_stage(stage,execution=True)
         if not (root/'stage-binding.json').exists():
             need(not root.exists(),'CONTINUITY_UNBOUND_STAGE_RESIDUE')
             _write_once(root/'stage-binding.json',binding)
         need(_json(root/'stage-binding.json')==binding,'CONTINUITY_STAGE_APPROVAL_CHANGED')
         publishing.initialize(publication_root=Path(stage['publication_root']),approval_url=approval_url)
-        if not (root/'seed-publication-result.json').exists():
+        if stage['seed'] is not None and not (root/'seed-publication-result.json').exists():
             candidate=root/'seed-candidate'
             if not candidate.exists():candidate=create_seed_candidate(stage,binding['owner_comment'])
             seeded=_publish_candidate(binding,candidate,seed=True)
             # The actual original statuses and mixed-period inheritance stay in the seed package.
-            if not (root/'seed-publication-result.json').exists():_write_once(root/'seed-publication-result.json',seeded)
+            if stage['seed'] is not None and not (root/'seed-publication-result.json').exists():_write_once(root/'seed-publication-result.json',seeded)
         counts=budget_counts(stage)
         need(not counts['uncertain_plans'] and not counts['uncertain_sec'],'CONTINUITY_COUNT_UNKNOWN')
         company=update.supported_company(repo_root=ROOT)
@@ -566,7 +599,10 @@ def run_once(*, approval_url, refresh_submissions=False):
         success=_successful_candidate(stage)
         if success is not None and success['baseline']['run_id']!=published['run_id']:
             pending=_publish_candidate(binding,Path(success['reference']['candidate_directory']))
-            return {'status':'PENDING_CANDIDATE_PUBLISHED','publication':pending,'counts':budget_counts(stage)}
+            return {'status':'PENDING_CANDIDATE_PUBLISHED','publication':pending,'counts':budget_counts(stage),
+                'discovery_status':'NOT_RECHECKED_PENDING_CANDIDATE','discovered_filing':success['plan']['selection']['filing'],
+                'latest_successful_candidate':success['baseline'],'published_before':published,
+                'current_published':_current_published(stage),'candidate_work':'NONE','publication_work':'COMPLETE'}
         need(not counts['failed_plans'],'CONTINUITY_FAILED_INPUT_REQUIRES_REVIEWED_REPAIR')
         if refresh_submissions:
             from sec_urls import submissions_url
@@ -582,7 +618,8 @@ def run_once(*, approval_url, refresh_submissions=False):
         visibility=_visibility(stage)
         report=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,
             successful_candidate=None if success is None else success['baseline'],published=published,visibility=visibility)
-        report.update(stage_id=stage['stage_id'],publication_root=stage['publication_root'],recovery=None)
+        report.update(stage_id=stage['stage_id'],publication_root=stage['publication_root'],recovery=None,
+            start_mode='CURRENT_ACTIVE' if stage['seed'] is None else 'EXPLICIT_HISTORICAL_SEED')
         if report.get('discovered_filing'):
             filing=report['discovered_filing'];scope=stage['historical_period_scope']
             if not (scope['start']<=filing['period_start']<=filing['period_end']<=scope['end']):
@@ -628,4 +665,7 @@ def run_once(*, approval_url, refresh_submissions=False):
         atomic_write_json(path=root/'successful-candidate.json',value=ref)
         published_result=_publish_candidate(binding,candidate)
         return {**report,'status':'COMPLETE_UPDATE_COMMITTED','candidate':ref,'publication':published_result,
-            'counts':budget_counts(stage),'execution_code':code_identity()}
+            'counts':budget_counts(stage),'execution_code':code_identity(),
+            'published_before':published,'current_published':_current_published(stage),
+            'latest_successful_candidate':update.candidate_baseline(company=company,run_dir=b10),
+            'candidate_work':'COMPLETE','publication_work':'COMPLETE'}

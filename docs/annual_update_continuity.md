@@ -19,7 +19,7 @@ python3 tools/vnext_annual_continuity.py close-stage --approval-url <同一URL> 
 
 initialize-data只复制已有完整原文、真实request ledger/headers与必要规则，不联网。阶段提案固定受审实现和测试身份、独立审阅、外部来源/运行/预算/发布根、真实历史起点、期间范围与最长七天期限。提案自身不授权。实际账户在GitHub代登记时应另行说明用户委托与隔离用途；运行使用原 `_github` 边界回读作者、正文、时间、编辑状态与绑定。
 
-一次run-once先检查同笔未完成事务和已成功待发布候选，再判断新输入；只有确无工作才返回NO_CHANGE。每份输入的计划、请求、原生Run、使用量、完整包及精确前驱由程序生成。B01/B10不齐全不前移完整成功引用和active；原B03附带记录不删除、不误采纳。
+seed与visibility参数均可省略：正常阶段以当前active为起点，只有明确提供成对历史Run时才构造S0；只提供一个seed在任何阶段写入前拒绝。显式提供的visibility文件必须存在。一次run-once先检查同笔未完成事务和已成功待发布候选，再判断新输入；只有确无工作才返回NO_CHANGE。每份输入的计划、请求、原生Run、使用量、完整包及精确前驱由程序生成。B01/B10不齐全不前移完整成功引用和active；原B03附带记录不删除、不误采纳。
 
 阶段固定预算为正常不同年度模型请求最多2次、另一个有根因修复/离线回归/独立复核的条件名额，总provider/paid不超过3/3，SEC不超过6，零重试。永久预算注册、逐请求预留及WB-3实际终态分别记录；新进程或输入目录不能重置。UNKNOWN与失败不能写成零。缺凭据先报告，不消费模型预留。交付时关闭阶段，未用额度不转入后续任务。
 
@@ -29,7 +29,7 @@ initialize-data只复制已有完整原文、真实request ledger/headers与必�
 
 历史可见性是外部输入边界中的 `SIMULATED_HISTORICAL_SUBMISSIONS_VISIBILITY`，只含as_of_utc。程序从完整原始清单筛出当时可见的申报，仍走同一选择/DEI/context检查。原SEC字节、请求行、headers不改，另记derived visibility receipt；不能称为新的在线清单。运行参数不接受年度答案、accession、表格、单元格或数值。
 
-S1完整继承S0，S2完整继承S1。每份请求的来源/期间/Run/执行和对应前驱均精确绑定，不能在冲突时偷偷重设前驱。新包仍为2项采纳+238项继承/327公开行，模型不为未变指标重算。来源不足或未知范围需要停止相关结果，而不是生成器自报PASS。
+S1完整继承S0，S2完整继承S1。每份请求的来源/期间/Run/执行和对应前驱均精确绑定，不能在冲突时偷偷重设前驱。返回中的published_before保留执行前版本，current_published对应实际已提交的版本。新包仍为2项采纳+238项继承/327公开行，模型不为未变指标重算。来源不足或未知范围需要停止相关结果，而不是生成器自报PASS。
 
 ## 有限触发与停止
 
@@ -48,3 +48,5 @@ python3 tools/vnext_annual_continuity.py trigger-status --approval-url <同一UR
 当前实际生产包是PR40已发布的FY2025版本。本工作包不切实际active、不自动合并新PR。两轮连续更新、重入、失败、预算与有限触发验收后即收口审核，下一项进入R5有限迁移，并逐批证明不靠旧语义生产或补数，不无限打磨Marriott。
 
 <!-- capability-anchor: CAPABILITY.annual_update_continuity -->
+
+同次运行先完整验证真实初始包，再复用现有的临时验证作用域；每次仍核对全部包文件的集合、大小和字节哈希，新版本的原生图不因旧版本已通过而免验。历史测试使用显式冻结材料数据根，当前代码仍真实执行旧校验器；它们不把现在的active重新认作历史R3。

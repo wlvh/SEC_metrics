@@ -38,7 +38,7 @@ def create_seed_candidate(stage, owner):
     from .annual_continuity import _requirement, _write_once
     root = Path(stage['stage_root']); candidate = root / 'seed-candidate'; data = root / 'seed-input'
     need(not candidate.exists() and not data.exists(), 'CONTINUITY_SEED_ALREADY_CREATED')
-    descriptor = stage['seed']
+    descriptor = stage['seed'];need(type(descriptor) is dict,'CONTINUITY_EXPLICIT_SEED_REQUIRED')
     prepared = annual_input.prepare_annual_input(repo_root=Path(stage['data_root']),
         company_id=stage['policy']['company_id'], fiscal_year=descriptor['period']['fiscal_year'])
     need(prepared['table_input']['target_period'] == descriptor['period'], 'CONTINUITY_SEED_SOURCE_PERIOD_CHANGED')
@@ -70,6 +70,7 @@ def _source_proof(root, context):
          and stage['requirement_id'] == requirement['requirement_id'], 'CONTINUITY_SNAPSHOT_REQUIREMENT_CHANGED')
     need(read(root, 'controls/registration.json') == stage['budget_registration'], 'CONTINUITY_REGISTRATION_CHANGED')
     if context['kind'] == 'HISTORICAL_SEED':
+        need(type(stage['seed']) is dict,'CONTINUITY_EXPLICIT_SEED_REQUIRED')
         seed = read(candidate, 'continuity-seed.json')
         need(seed['stage'] == stage and seed['owner_comment'] == owner and seed['seed'] == stage['seed'],
              'CONTINUITY_SEED_DESCRIPTOR_CHANGED')
