@@ -16,7 +16,7 @@ from vnext.canonical import content_hash
 ROOT=Path(__file__).resolve().parents[2]
 
 
-class AnnualContinuityBoundaryTest(unittest.TestCase):
+class AnnualModelConfigurationTest(unittest.TestCase):
     def test_current_model_configuration_changes_only_request_model(self):
         from vnext import ai_adapter as ai, invocation_control as control, run_store
         from vnext.canonical import strict_json_file, strict_json_loads
@@ -67,6 +67,8 @@ class AnnualContinuityBoundaryTest(unittest.TestCase):
         self.assertEqual({'execution':'NOT_EXECUTED','provider_paid_sec_calls':[0,0,0]},report['inspection'])
         self.assertNotIn('provider_paid_sec_calls',report)
 
+
+class AnnualContinuityBoundaryTest(unittest.TestCase):
     def test_cli_result_preserves_decimal_identity_and_never_leaves_partial_json(self):
         from decimal import Decimal
         from contextlib import redirect_stdout
