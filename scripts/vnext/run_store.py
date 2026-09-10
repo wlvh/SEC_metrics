@@ -1057,6 +1057,15 @@ def _run_table_task_plans(
     )
     if not isinstance(bindings, list):
         raise RunStoreError("Run task contract bindings are invalid")
+    prompt_requirement = None
+    if bindings and manifest.get("requirement_id") == "issue_28_v8":
+        prompt_requirement = load_run_requirement_snapshot(
+            repo_root=repo_root,task_contract_bindings=bindings,
+            requirement_id=manifest.get("requirement_id"),
+            requirement_closure_hash=manifest.get("requirement_closure_hash"),
+            requirement_hashes=manifest["requirement_hashes"],
+            artifact_requirement_generation=manifest.get("artifact_requirement_generation"),
+            record_type=str(manifest["record_type"]))
     plans = {}
     previous_id = ""
     for binding in bindings:
@@ -1076,6 +1085,7 @@ def _run_table_task_plans(
             plan = table_task_execution_plan(
                 repo_root=repo_root,
                 task_contract_id=task_contract_id,
+                requirement=prompt_requirement,
             )
         except TableTaskContractError as error:
             raise RunStoreError("Run catalog task cannot be rebuilt") from error

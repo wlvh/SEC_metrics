@@ -62,3 +62,9 @@ python3 tools/vnext_annual_continuity.py trigger-status --approval-url <同一UR
 <!-- capability-anchor: CAPABILITY.annual_update_continuity -->
 
 同次运行先完整验证真实初始包，再复用现有的临时验证作用域；每次仍核对全部包文件的集合、大小和字节哈希，新版本的原生图不因旧版本已通过而免验。历史测试使用显式冻结材料数据根，当前代码仍真实执行旧校验器；它们不把现在的active重新认作历史R3。
+
+## 分组归属提示修订
+
+当前v8可显式绑定`config/annual_continuity_request.json`。任务工厂在原catalog之上附加行分组的选择顺序、前置标题管辖范围和反向核对说明；仅改变system_prompt及其派生任务身份。没有该执行文件绑定的封存v8继续读取旧提示，默认/其他任务也不启用。相同Requirement ID不能代替内容身份。
+
+本次新提案为schema3：引用已关闭schema2及其原schema1，重验旧累计2/2/0，新上限2/2/0、整条线4/4/0。无自动重试、SEC或修复名额；阶段期间限制用于核对已自动选出的输入，不提供数值或定位答案。既有schema1/2记录保持原解释。

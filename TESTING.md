@@ -538,3 +538,5 @@ legacy candidate publication开始时会使旧provenance失效；formal active�
 连续更新完整材料入口：`CONTINUITY_REHEARSAL_ROOT=<新的外部目录> CONTINUITY_MATERIAL_AUDIT=<独立原材料索引> CONTINUITY_PRIOR_STAGE_BINDING=<原关闭阶段stage-binding.json> python3 -m unittest tests.vnext.test_annual_continuity_rehearsal -v`。仅GitHub/HTTP I/O和既有文件替换/原生切换故障点注入测试行为，原生验证器不mock；回放与新provider执行分别记账。覆盖真实当前起点（无历史参数）、两轮接续、成功引用中断、指针提交后恢复、B01成功/B10失败和禁止重抽。历史fast数据根复用原冻结receipt，不覆盖真实发布镜像。
 
 PR41续验：当前许可为2/2/0，旧关闭阶段1/1/0经原内容身份重验，合计上限3/3/0。完整材料回放只在外部HTTP边界派生model/id外壳，原assistant内容保持；故意失败分支另外替换测试content，分别保存原始与派生SHA，不声称新provider执行。最新终态与独立审阅见`docs/evidence/annual_update_continuity/continuation/README.md`。
+
+分组提示增量：`python3 -m unittest tests.vnext.test_annual_group_prompt -v`进入fast。完整保存材料下可定向运行`AnnualContinuityRehearsalTest.test_prompt_native_candidate_and_saved_snapshot`，使用最新关闭阶段的`CONTINUITY_PRIOR_STAGE_BINDING`；只在HTTP外部边界回放原正确assistant内容，并在既有success-reference文件替换点停止后续发布，验证新任务身份的原生候选和封存snapshot重放。它不替代新provider执行；既有完整发布故障套件未变部分按原证据复用。

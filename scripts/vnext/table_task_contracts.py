@@ -473,6 +473,7 @@ def table_task_run_binding(
 def table_task_execution_plan(
     *, repo_root: Path, task_contract_id: str,
     family_id: Optional[str] = None,
+    requirement: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Rebuild one catalog task for Workflow, Run freeze, and replay.
 
@@ -492,6 +493,7 @@ def table_task_execution_plan(
         repo_root=repo_root,
         task_contract_id=task_contract_id,
         family_id=family_id,
+        requirement=requirement,
     )
     metric_paths = list(runtime["metric_spec_paths"])
     if len(metric_paths) != 1:
@@ -866,9 +868,42 @@ def _runtime_task_contract(
     return runtime
 
 
+def _continuity_prompt_contract(*, repo_root, contract, requirement):
+    """Select an execution-bound prompt without changing the frozen catalog."""
+    if requirement is None or requirement.get("requirement_id") != "issue_28_v8":
+        return contract
+    from .requirements import load_requirement_snapshot
+    recorded = load_requirement_snapshot(snapshot_dir=repo_root / "requirements" / "issue_28_v8")
+    if content_hash(value=recorded) != content_hash(value=requirement):
+        raise TableTaskContractError("Continuity prompt Requirement differs from saved authority")
+    relative = "config/annual_continuity_request.json"
+    proof = recorded["execution_authority"]["files"].get(relative)
+    # Historical v8 snapshots have no such binding. File presence in a newer
+    # checkout is not authority to reinterpret their old request.
+    if proof is None:
+        return contract
+    path = repo_root / relative
+    if path.is_symlink() or not path.is_file() or proof != {"sha256":sha256_file(path=path),"size":path.stat().st_size}:
+        raise TableTaskContractError("Continuity prompt rule bytes differ")
+    rule = strict_json_file(path=path)
+    if (set(rule) != {"schema_version","requirement_id","task_contract_id","base_catalog_task_contract_hash","instruction"}
+        or type(rule["schema_version"]) is not int or rule["schema_version"] != 1
+        or rule["requirement_id"] != recorded["requirement_id"]
+        or type(rule["instruction"]) is not str or not rule["instruction"].strip()
+        or rule["task_contract_id"] != recorded["continuity_policy"]["task_contract_id"]):
+        raise TableTaskContractError("Continuity prompt rule scope differs")
+    if contract["task_contract_id"] != rule["task_contract_id"]:
+        return contract
+    if rule["base_catalog_task_contract_hash"] != contract["task_contract_hash"]:
+        raise TableTaskContractError("Continuity prompt base catalog differs")
+    prompt = contract["system_prompt"] + "\n\n" + rule["instruction"]
+    return {**contract,"system_prompt":prompt,"system_prompt_hash":content_hash(value=prompt)}
+
+
 def resolve_table_task_contract(
     *, repo_root: Path, task_contract_id: str,
     family_id: Optional[str] = None,
+    requirement: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Build one runtime Reader task from a catalog single-table contract.
 
@@ -904,4 +939,5 @@ def resolve_table_task_contract(
     ]
     if len(matches) != 1:
         raise TableTaskContractError("Table task contract is absent")
-    return _runtime_task_contract(contract=matches[0])
+    return _runtime_task_contract(contract=_continuity_prompt_contract(
+        repo_root=repo_root,contract=matches[0],requirement=requirement))

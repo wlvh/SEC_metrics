@@ -58,7 +58,12 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
         # Preserve the historical assistant content. Only the external model
         # envelope follows the current request model; this is synthetic I/O,
         # never a fresh model result or a modified historical response file.
-        model=ai_adapter.configured_annual_transport_policy(requirement=flow._requirement(),repo_root=flow.ROOT).model
+        requirement=flow._requirement()
+        transport=ai_adapter.configured_annual_transport_policy(requirement=requirement,repo_root=flow.ROOT)
+        model=transport.model
+        from vnext.table_task_contracts import resolve_table_task_contract
+        task=resolve_table_task_contract(repo_root=flow.ROOT,
+            task_contract_id=requirement['continuity_policy']['task_contract_id'],requirement=requirement)
         envelopes={};proofs=[]
         for item in self.audit['existing_real_provider_B10_runs']:
             run=Path(item['run_directory'])
@@ -67,17 +72,73 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
             request_raw=(run/attempt['request_body_path']).read_bytes()
             response_raw=(run/attempt['raw_response_path']).read_bytes()
             request=json.loads(request_raw);response=json.loads(response_raw)
-            expected=canonical_json_bytes(value={**request,'model':model})
+            payload=json.loads(request['messages'][1]['content'])
+            original_task=payload['task_contract'];payload['task_contract']=task
+            expected,_=ai_adapter.build_provider_request_body(policy=transport,reader_request_bytes=canonical_json_bytes(value=payload))
             raw=canonical_json_bytes(value={**response,'model':model,'id':'SIMULATED_MODEL_ENVELOPE'})
             envelopes[sha256_bytes(content=expected)]=(expected,raw)
             proofs.append({'run_directory':str(run),'original_request_sha256':sha256_bytes(content=request_raw),
                 'original_response_sha256':sha256_bytes(content=response_raw),
                 'synthetic_request_sha256':sha256_bytes(content=expected),'synthetic_response_sha256':sha256_bytes(content=raw),
-                'request_changes':['model'],'response_envelope_changes':['model','id'],
+                'request_changes':['model','task prompt and derived identities'],'original_task':original_task,
+                'current_task':task,'untrusted_table_data_unchanged':True,'response_envelope_changes':['model','id'],
                 'assistant_content_unchanged':json.loads(raw)['choices']==response['choices']})
         saved(root/'synthetic-io-binding.json',{'kind':'SAVED_ASSISTANT_CONTENT_WITH_SYNTHETIC_MODEL_ENVELOPE',
             'new_business_calls':[0,0,0],'entries':proofs})
         return envelopes
+
+    def test_prompt_native_candidate_and_saved_snapshot(self):
+        from vnext import annual_continuity_snapshot as snapshot,run_store
+        root=self.root/'prompt-candidate'
+        flow.initialize_data(data_root=root/'data');code=flow.code_identity()
+        saved(root/'review.json',{'reviewer_kind':'INDEPENDENT_MODEL_SUBTASK','conclusion':'NO_BLOCKING_FINDINGS',
+            'reviewed_head':code['exact_head'],'runtime_tree':code['runtime_tree'],
+            'evidence_scope':'SIMULATED_TEST_BOUNDARY_NOT_REAL_REVIEW'})
+        visibility=root/'visibility.json'
+        saved(visibility,{'record_type':'SIMULATED_HISTORICAL_SUBMISSIONS_VISIBILITY','as_of_utc':'2025-12-31T23:59:59Z'})
+        stage=self.proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',
+            review_file=root/'review.json',seed_b01=self.audit['s0_feasibility']['B01']['run_directory'],
+            seed_b10=self.audit['s0_feasibility']['B10']['run_directory'],visibility_file=visibility,
+            expires_at_utc=(datetime.now(timezone.utc)+timedelta(days=1)).isoformat(),
+            historical_period_start='2023-01-01',historical_period_end='2025-12-31')
+        timestamp=datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace('+00:00','Z')
+        comment={'id':9999041,'html_url':URL,'issue_url':'https://api.github.com/repos/wlvh/SEC_metrics/issues/28',
+            'user':{'login':'wlvh'},'body':json.dumps(stage),'created_at':timestamp,'updated_at':timestamp}
+        saved(root/'simulated-comment.json',comment);envelopes=self.envelopes(root);requests=[]
+        def github(path):
+            self.assertEqual('repos/wlvh/SEC_metrics/issues/comments/9999041',path)
+            return copy.deepcopy(comment)
+        def http(*,fullurl,timeout):
+            identity=sha256_bytes(content=fullurl.data);self.assertIn(identity,envelopes)
+            expected,raw=envelopes[identity];self.assertEqual(expected,fullurl.data);requests.append(identity)
+            response=io.BytesIO(raw);response.headers={'x-request-id':'SIMULATED_PROMPT_REPLAY'};return response
+        original_replace=os.replace
+        def stop_after_native(src,dst,*args,**kwargs):
+            if Path(dst)==Path(stage['stage_root'])/'successful-candidate.json':
+                raise OSError('SIMULATED_STOP_AFTER_COMPLETE_NATIVE_CANDIDATE')
+            return original_replace(src,dst,*args,**kwargs)
+        with mock.patch.object(socket.socket,'connect',side_effect=AssertionError('REAL_NETWORK_FORBIDDEN')), \
+             mock.patch.object(annual_candidate,'_github',side_effect=github), \
+             mock.patch.dict(os.environ,{'DEEPSEEK_API_KEY':'test-only-not-a-secret'}), \
+             mock.patch.object(ai_adapter._DEEPSEEK_OPENER,'open',side_effect=http):
+            with mock.patch.object(os,'replace',side_effect=stop_after_native):
+                with self.assertRaisesRegex(OSError,'STOP_AFTER_COMPLETE_NATIVE'):flow.run_once(approval_url=URL)
+            self.assertEqual(1,len(requests))
+            candidate=next((root/'stage/candidates').iterdir());outcome=json.loads((candidate/'outcome.json').read_text())
+            self.assertEqual('CANDIDATE_UPDATE_SUCCEEDED',outcome['status'],outcome)
+            plan=json.loads((candidate/'plan.json').read_text());data=Path(plan['data_root'])
+            replay=run_store._mechanically_replay_open_run(run_dir=candidate/'b10',repo_root=data,require_complete_results=True)
+            adopted=snapshot.prepare_snapshot(candidate_dir=candidate,output_root=root/'saved-snapshot')
+            context=json.loads((root/'saved-snapshot/context.json').read_text())
+            repeated,_,_=snapshot.replay_snapshot(root/'saved-snapshot',context)
+            self.assertEqual(adopted,repeated)
+            self.assertEqual(1,flow.budget_counts(stage)['provider'])
+        saved(root/'binding.json',{'status':'PASS_PROMPT_NATIVE_AND_SAVED_SNAPSHOT_OFFLINE_IO','code':code,
+            'stage_id':stage['stage_id'],'request_sha256':requests[0],'candidate_directory':str(candidate),
+            'adoption_receipt_id':adopted['adoption_receipt_id'],'native_replay_run_id':replay[0]['run_id'],
+            'native_replay_complete':True,
+            'new_actual_provider_paid_sec_calls':[0,0,0],'simulated_native_counts':flow.budget_counts(stage)})
+        self.assertEqual(self.initial,(flow.ROOT/'outputs/active_publication.json').read_bytes())
 
     def test_two_complete_updates_and_reentry(self):
         root=self.root
@@ -105,7 +166,7 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
             return copy.deepcopy(comment)
         def http(*,fullurl,timeout):
             identity=sha256_bytes(content=fullurl.data)
-            self.assertIn(identity,envelopes,'Request differs from historical full input except the approved model field')
+            self.assertIn(identity,envelopes,'Request differs from the current task over the original complete input')
             expected,raw=envelopes[identity];self.assertEqual(expected,fullurl.data)
             requests.append(identity)
             response=io.BytesIO(raw);response.headers={'x-request-id':'SIMULATED_HTTP_REPLAY'}
@@ -172,7 +233,7 @@ class AnnualContinuityRehearsalTest(unittest.TestCase):
             return copy.deepcopy(comment)
         def http(*,fullurl,timeout):
             identity=sha256_bytes(content=fullurl.data)
-            self.assertIn(identity,envelopes,'Request differs from historical full input except the approved model field')
+            self.assertIn(identity,envelopes,'Request differs from the current task over the original complete input')
             expected,raw=envelopes[identity];self.assertEqual(expected,fullurl.data)
             requests.append(identity)
             if bad['enabled']:

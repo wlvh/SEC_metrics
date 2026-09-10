@@ -3212,7 +3212,7 @@ def _validate_live_prepared_request(
         reparses the filing, and reconstructs the complete outbound payload.
     """
     from .annual_runtime import unwrap_live_request
-    prepared_request, runtime_root = unwrap_live_request(request=prepared_request)
+    prepared_request, runtime_root, request_requirement = unwrap_live_request(request=prepared_request, include_requirement=True)
     try:
         fields = live_reader_authority_fields(
             prepared_request=prepared_request,
@@ -3332,6 +3332,7 @@ def _validate_live_prepared_request(
             compiled_spec=compiled_spec,
             repo_root=authority_root,
             task_contract_id=task_contract_id if task_contract_id else None,
+            requirement=request_requirement,
         )
     except (
         BatchWorkflowError,

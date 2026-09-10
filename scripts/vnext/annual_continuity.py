@@ -117,7 +117,7 @@ def _period_scope(start,end):
 def _stage_limits(stage):
     if stage.get('schema_version', 1) == 1:
         return {'normal_provider':2,'conditional_provider':1,'provider':3,'paid':3,'sec':6,'retry':0}
-    need(stage['schema_version'] == 2
+    need(stage['schema_version'] in (2,3)
          and stage['maximum_provider_paid_sec_calls'] == [2,2,0]
          and all(type(x) is int for x in stage['maximum_provider_paid_sec_calls'])
          and type(stage['normal_provider_calls']) is int and stage['normal_provider_calls']==2
@@ -131,7 +131,7 @@ def _previous_stage_proof(binding):
     from .annual_adoption import historical_code
     old=binding['stage'];owner=binding['owner_comment']
     check_id(old,'stage_id');validate_owner(old,owner)
-    need(old.get('schema_version')==1 and old['policy']==policy(policy_id=V3),
+    need(old.get('schema_version') in (1,2) and old['policy']==policy(policy_id=V3),
          'CONTINUITY_PREVIOUS_STAGE_KIND_CHANGED')
     root,budget,data=(_external(old[k]) for k in ('stage_root','budget_root','data_root'))
     need(_json(root/'stage-binding.json')==binding,'CONTINUITY_PREVIOUS_BINDING_CHANGED')
@@ -153,12 +153,23 @@ def _previous_stage_proof(binding):
          'CONTINUITY_PREVIOUS_CLOSED_COUNTS_CHANGED')
     need(_json(budget/'registration.json')==old['budget_registration'],
          'CONTINUITY_PREVIOUS_REGISTRATION_CHANGED')
-    return {'approval_url':owner['html_url'],'stage_id':old['stage_id'],
+    result = {'approval_url':owner['html_url'],'stage_id':old['stage_id'],
         'stage_root':str(root),'budget_root':str(budget),'data_root':str(data),
         'binding_sha256':sha256_file(path=root/'stage-binding.json'),
         'closed_sha256':sha256_file(path=budget/'closed.json'),
         'registration_sha256':sha256_file(path=budget/'registration.json'),
         'requirement_closure_hash':requirement['requirement_closure_hash'],'counts':counts}
+    if old['schema_version']==2:
+        _validate_continuation(old)
+        need(old['budget_registration']['previous_stage']==old['previous_stage'],
+             'CONTINUITY_PREVIOUS_REGISTRATION_CHANGED')
+        previous=old['previous_stage']
+        result.update(previous_stage=previous,stage_schema_version=2,
+            cumulative_counts={'provider':previous['counts']['provider']+counts['provider'],
+                               'paid':previous['counts']['paid']+counts['paid'],'sec_reserved':0})
+        need(result['cumulative_counts']=={'provider':2,'paid':2,'sec_reserved':0},
+             'CONTINUITY_PREVIOUS_CUMULATIVE_COUNTS_CHANGED')
+    return result
 
 
 def _read_previous_stage(approval_url):
@@ -176,12 +187,16 @@ def _read_previous_stage(approval_url):
 
 
 def _validate_continuation(stage):
-    if stage.get('schema_version',1)!=2:return
+    if stage.get('schema_version',1) not in (2,3):return
     _stage_limits(stage)
     prior=stage['previous_stage'];root=_external(prior['stage_root'])
-    need(_previous_stage_proof(_json(root/'stage-binding.json'))==prior,
+    previous_binding=_json(root/'stage-binding.json')
+    need(previous_binding['stage']['schema_version']==stage['schema_version']-1,
+         'CONTINUITY_PREVIOUS_STAGE_ORDER_CHANGED')
+    need(_previous_stage_proof(previous_binding)==prior,
          'CONTINUITY_PREVIOUS_STAGE_PROOF_CHANGED')
-    need(stage['cumulative_provider_paid_sec_limit']==[3,3,0]
+    cap=stage['schema_version']+1
+    need(stage['cumulative_provider_paid_sec_limit']==[cap,cap,0]
          and all(type(x) is int for x in stage['cumulative_provider_paid_sec_limit'])
          and type(stage['delegation_source']) is str and stage['delegation_source'].strip()
          and stage['delegation_source']!=_json(root/'stage-binding.json')['stage']['delegation_source'],
@@ -194,12 +209,14 @@ def _validate_continuation(stage):
         _period_scope(end,end)
         need(end.endswith('-12-31') and stage['historical_period_scope']['start']<=end<=stage['historical_period_scope']['end'],
              'CONTINUITY_UPDATE_SEQUENCE_OUTSIDE_SCOPE')
+    prior_stages=[prior]+([prior['previous_stage']] if stage['schema_version']==3 else [])
     for name in ('stage_root','data_root','budget_root'):
         current=_external(stage[name])
-        for old_name in ('stage_root','data_root','budget_root'):
-            old=_external(prior[old_name])
-            need(current!=old and current not in old.parents and old not in current.parents,
-                 'CONTINUITY_PREVIOUS_ROOT_OVERLAP')
+        for ancestor in prior_stages:
+            for old_name in ('stage_root','data_root','budget_root'):
+                old=_external(ancestor[old_name])
+                need(current!=old and current not in old.parents and old not in current.parents,
+                     'CONTINUITY_PREVIOUS_ROOT_OVERLAP')
 
 
 def _register_unused_budget(root, data, budget, start, *, limits=None, previous_stage=None):
@@ -249,8 +266,8 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=
          and seed['period']['period_end'] <= historical_period_end), 'CONTINUITY_SEED_OUT_OF_SCOPE')
     previous=_read_previous_stage(previous_approval_url)
     limits={'normal_provider':2,'conditional_provider':0,'provider':2,'paid':2,'sec':0,'retry':0}
-    scope={'schema_version':2,'maximum_provider_paid_sec_calls':[2,2,0],'normal_provider_calls':2,
-        'conditional_repair_calls':0,'previous_stage':previous,'cumulative_provider_paid_sec_limit':[3,3,0],
+    scope={'schema_version':3,'maximum_provider_paid_sec_calls':[2,2,0],'normal_provider_calls':2,
+        'conditional_repair_calls':0,'previous_stage':previous,'cumulative_provider_paid_sec_limit':[4,4,0],
         'delegation_source':delegation_source,'update_period_ends':list(update_period_ends),
         'historical_period_scope':{'start':historical_period_start,'end':historical_period_end},
         'stage_root':str(root),'data_root':str(data),'budget_root':str(budget)}
@@ -259,10 +276,10 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=
     from .publication import PublicationView
     PublicationView.open(publication_root=ROOT)
     initial_pointer = read(ROOT, 'outputs/active_publication.json')
-    body = {'schema_version': 2, 'decision': DECISION,
+    body = {'schema_version': 3, 'decision': DECISION,
         'approval_kind': 'USER_DELEGATED_ISOLATED_STAGE_AFTER_INDEPENDENT_REVIEW',
         'delegation_source': delegation_source,
-        'statement': 'User-delegated PR41 continuation: two ordered annual validations only; prior closed failure is retained, no repair slot, no SEC, no automatic retry or production publication. This is not a human code review.',
+        'statement': 'User-delegated PR41 group-ownership prompt validation: two ordered annual inputs, both prior closed failures retained, cumulative maximum 4/4/0; no repair slot, SEC, automatic retry or production publication. This is not a human code review.',
         'repository': requirement['baseline']['repository']['identity'],
         'requirement_id': REQUIREMENT_ID, 'requirement_closure_hash': requirement['requirement_closure_hash'],
         'policy': chosen, 'reviewed_code': identity, 'review': review,
@@ -274,7 +291,7 @@ def stage_proposal(*, stage_root, data_root, budget_root, review_file, seed_b01=
         'created_at_utc': start.isoformat(), 'expires_at_utc': expiry.isoformat(),
         'maximum_provider_paid_sec_calls': [2, 2, 0], 'normal_provider_calls': 2,
         'conditional_repair_calls': 0, 'automatic_retry_count': 0,
-        'previous_stage':previous,'cumulative_provider_paid_sec_limit':[3,3,0],
+        'previous_stage':previous,'cumulative_provider_paid_sec_limit':[4,4,0],
         'update_period_ends':list(update_period_ends),
         'production_publication_authorized': False, 'long_running_schedule_authorized': False}
     return record(body, 'stage_id')
@@ -317,7 +334,7 @@ def validate_stage(stage, *, execution=False):
          and registration['budget_root'] == str(budget) and registration['data_root'] == str(data),
          'CONTINUITY_BUDGET_REGISTRATION_CHANGED')
     need(registration['limits']==limits,'CONTINUITY_REGISTERED_LIMITS_CHANGED')
-    if stage['schema_version']==2:
+    if stage['schema_version'] in (2,3):
         need(registration['previous_stage']==stage['previous_stage'],'CONTINUITY_REGISTERED_PREDECESSOR_CHANGED')
         _validate_continuation(stage)
     validate_lifetime(stage, execution=execution)
@@ -364,7 +381,7 @@ def stage_lock(stage):
 
 def _plan(stage, prepared, selection, source_root, predecessor, ordinal, *, authority_root=ROOT):
     from .table_task_contracts import table_task_execution_plan
-    requirement = _requirement(authority_root); task = table_task_execution_plan(repo_root=source_root, task_contract_id=stage['policy']['task_contract_id'])
+    requirement = _requirement(authority_root); task = table_task_execution_plan(repo_root=source_root, task_contract_id=stage['policy']['task_contract_id'], requirement=requirement)
     body = {'record_type': 'CONTINUOUS_ANNUAL_EXECUTION_PLAN', 'schema_version': 1,
         'stage_id': stage['stage_id'], 'stage_root': stage['stage_root'],
         'requirement_id': REQUIREMENT_ID, 'requirement_closure_hash': requirement['requirement_closure_hash'],
@@ -563,7 +580,8 @@ def _validate_next_input(stage,plan,counts):
     need(counts['provider_reserved'] < stage['normal_provider_calls'],'CONTINUITY_NORMAL_BUDGET_EXHAUSTED')
     need(plan['selection']['filing']['period_end']==stage['update_period_ends'][counts['provider_reserved']],
          'CONTINUITY_UPDATE_SEQUENCE_CHANGED')
-    old=stage['previous_stage']['counts']
+    prior=stage['previous_stage']
+    old=prior['cumulative_counts'] if stage.get('schema_version')==3 else prior['counts']
     need(old['provider']+counts['provider']+1<=stage['cumulative_provider_paid_sec_limit'][0]
          and old['paid']+counts['paid']+1<=stage['cumulative_provider_paid_sec_limit'][1],
          'CONTINUITY_CUMULATIVE_BUDGET_EXCEEDED')
@@ -574,7 +592,7 @@ def _reserve_provider(stage, plan):
     need(not counts['uncertain_plans'] and not counts['uncertain_sec'], 'CONTINUITY_COUNT_UNKNOWN')
     need(not counts['failed_plans'] and not counts['failed_sec'], 'CONTINUITY_REPAIRED_REBIND_REQUIRED')
     need(counts['provider_reserved'] < stage['normal_provider_calls'], 'CONTINUITY_NORMAL_BUDGET_EXHAUSTED')
-    if stage.get('schema_version',1)==2:
+    if stage.get('schema_version',1) in (2,3):
         _validate_continuation(stage)
         _validate_next_input(stage,plan,counts)
     for p in Path(stage['budget_root']).glob('provider-*.json'):

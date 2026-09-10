@@ -263,6 +263,7 @@ def _request(prepared, data_root, task_id, *, code_root=None, requirement=None):
         task_contract_id=task_id,
         manifest=manifest,
         derived_asset=grid,
+        requirement=requirement,
     )
     if requirement is not None:
         from .ai_adapter import configured_annual_transport_policy
@@ -637,11 +638,13 @@ def wrap_live_request(*, authorization, request):
     )
 
 
-def unwrap_live_request(*, request):
+def unwrap_live_request(*, request, include_requirement=False):
     if type(request) is not _RuntimeLiveRequest:
-        return request, None
+        return (request, None, None) if include_requirement else (request, None)
     require(request._factory is _FACTORY, "RUNTIME_REQUEST_FACTORY_REQUIRED")
     fields = authorization_fields(request.authorization)
+    if include_requirement:
+        return request.request, fields["data_root"], fields["requirement"]
     return request.request, fields["data_root"]
 
 
