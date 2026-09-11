@@ -1,0 +1,1427 @@
+[
+  {
+    "company": "southwest_airlines",
+    "real_fact_result": {
+      "company_id": "southwest_airlines",
+      "metric_id": "B06",
+      "period_start": "2025-12-31",
+      "period_end": "2025-12-31",
+      "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+      "spec_closure_hash": "sha256:d32bf81997bf97ca797abdacd73d15ebb0cb14fe11771216725a766c9ee8232a",
+      "applicability": "APPLICABLE",
+      "quality": "EXACT",
+      "publication": "PUBLISHED",
+      "reason_code": "PASS",
+      "value": "0.6140834481894499436160882095",
+      "unit": "ratio",
+      "trace_id": "sha256:9db13ba4284f854fc307fce29ff907f591ca01ce67efe5a08356b734e039e963",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:aa55c74b791b163af335a7f912dbb9398f2a21fcb35799f524140498fa33fac4"
+    },
+    "measurement": {
+      "model_id": "SUBTOTAL_LESS_COSTS",
+      "basis": "PERIOD_END_CARRYING_AMOUNT",
+      "calculation_facts": [
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:8e2aa6e79bb36ab574cbc79ade1c840774776c790491ba492d2dee6589364396",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 656
+          },
+          "unit": "USD",
+          "value": "4919000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:4913c056af2235d5db900d31cdf182ccc5e54feea3b9ee41fc06ea63aa953c26",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 660
+          },
+          "unit": "USD",
+          "value": "18000000"
+        }
+      ],
+      "gross": {
+        "accession": "0000092380-26-000004",
+        "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "duration_days": 0,
+        "entity": "92380",
+        "fact_id": "fact:sha256:8e2aa6e79bb36ab574cbc79ade1c840774776c790491ba492d2dee6589364396",
+        "filed": "2026-02-05",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+          "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+          "source_role": "accession_xbrl",
+          "document_name": "luv-20251231_htm.xml",
+          "accession": "0000092380-26-000004",
+          "entity": "92380",
+          "xbrl_context_ref": "c-4",
+          "xbrl_fact_ordinal": 656
+        },
+        "unit": "USD",
+        "value": "4919000000"
+      },
+      "deductions": [
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:4913c056af2235d5db900d31cdf182ccc5e54feea3b9ee41fc06ea63aa953c26",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 660
+          },
+          "unit": "USD",
+          "value": "18000000"
+        }
+      ],
+      "current": {
+        "accession": "0000092380-26-000004",
+        "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "duration_days": 0,
+        "entity": "92380",
+        "fact_id": "fact:sha256:f8943e03f9ab6155d5c3fd773810fd4451bdcc54a1b26650adee1be941229385",
+        "filed": "2026-02-05",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+          "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+          "source_role": "accession_xbrl",
+          "document_name": "luv-20251231_htm.xml",
+          "accession": "0000092380-26-000004",
+          "entity": "92380",
+          "xbrl_context_ref": "c-4",
+          "xbrl_fact_ordinal": 123
+        },
+        "unit": "USD",
+        "value": "324000000"
+      },
+      "noncurrent": {
+        "accession": "0000092380-26-000004",
+        "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+        "duration_days": 0,
+        "entity": "92380",
+        "fact_id": "fact:sha256:8eef46ea6b953c4b0890d0d142ea069e1846acace0e6ae9e792059d49f541ba7",
+        "filed": "2026-02-05",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+          "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+          "source_role": "accession_xbrl",
+          "document_name": "luv-20251231_htm.xml",
+          "accession": "0000092380-26-000004",
+          "entity": "92380",
+          "xbrl_context_ref": "c-4",
+          "xbrl_fact_ordinal": 127
+        },
+        "unit": "USD",
+        "value": "4577000000"
+      },
+      "reported_carrying": null,
+      "carrying_amount": "4901000000",
+      "equation": "gross - deductions = current + noncurrent = carrying",
+      "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+      "reviewed_note": {
+        "concept": "us-gaap:ScheduleOfDebtInstrumentsTextBlock",
+        "sha256": "16e4819f2af28f491de6d40aee4b9992aa61aee67539e2c639658512251e2463",
+        "ordinal": 620
+      },
+      "relationship_review_id": "sha256:98d74fac2bf3b96b0320701d897d9b7f344dcd60d01d58888003b50fab245c57",
+      "reviewer": {
+        "kind": "independent Codex model subtask",
+        "task": "/root/debt_reconciliation_review",
+        "human_approval": false
+      },
+      "review_file_sha256": "eedf303c47ef694521d10c676ae842888bc7c0e13f7651d3e5ad5d275707c0cc"
+    },
+    "selection": {
+      "record_type": "STRUCTURED_PRIMARY_SELECTION",
+      "resolver": "debt_equity_carrying_v2",
+      "target": {
+        "company_id": "southwest_airlines",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "accession": "0000092380-26-000004",
+        "entity": "92380",
+        "scope": {
+          "entity_scope": "consolidated"
+        },
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b"
+      },
+      "branch": "RECONCILED_CARRYING_AMOUNT",
+      "debt_candidates": [
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:52e32984035e6aa2c1fa6d8563e53360b67f9e6554720b59d679ca04457524a4",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+            "accession": "0000092380-26-000004",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": "CY2025Q4I"
+          },
+          "unit": "USD",
+          "value": "25000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:b7ba5f7a01067102b934dea9dfa03c4a4bb16c598915c828947ed762096c8749",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+            "accession": "0000092380-26-000004",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": "CY2025Q4I"
+          },
+          "unit": "USD",
+          "value": "53000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:fbbbf283b9e0cedf847c1e7b4c4ed23849d42807f1b6a558651445aac0e5172c",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+            "accession": "0000092380-26-000004",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "4577000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:28395100123f026bd06da064c5e16b8737bdcc4d171e57d1b0244db68e903213",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+            "accession": "0000092380-26-000004",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "324000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:b70932c607865e278f25f45a32c14beb4e45e0bbd2e9381cfbde62c19c4b8e9b",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+            "accession": "0000092380-26-000004",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": "CY2025Q4I"
+          },
+          "unit": "USD",
+          "value": "4919000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:StockholdersEquity",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:6928a3d9835918a03e8c0a8d85d8c207667de2536c77c5771437e2339a17f6f3",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+            "source_reference_id": "sha256:b8c01734eb46fb27c559caa6de8c91a2eb3d1392d1d1be3e01fff8cafa837f45",
+            "accession": "0000092380-26-000004",
+            "document_name": "CIK0000092380.json",
+            "source_role": "companyfacts",
+            "entity": "92380",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "7981000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:8e2aa6e79bb36ab574cbc79ade1c840774776c790491ba492d2dee6589364396",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 656
+          },
+          "unit": "USD",
+          "value": "4919000000"
+        },
+        {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:4913c056af2235d5db900d31cdf182ccc5e54feea3b9ee41fc06ea63aa953c26",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 660
+          },
+          "unit": "USD",
+          "value": "18000000"
+        }
+      ],
+      "chosen_debt_fact_ids": [
+        "fact:sha256:8e2aa6e79bb36ab574cbc79ade1c840774776c790491ba492d2dee6589364396",
+        "fact:sha256:4913c056af2235d5db900d31cdf182ccc5e54feea3b9ee41fc06ea63aa953c26"
+      ],
+      "equity_fact_id": "fact:sha256:6928a3d9835918a03e8c0a8d85d8c207667de2536c77c5771437e2339a17f6f3",
+      "debt": "4901000000",
+      "equity": "7981000000",
+      "reasons": [],
+      "nonpositive_equity": false,
+      "excluded_candidates": [
+        {
+          "fact_id": "fact:sha256:52e32984035e6aa2c1fa6d8563e53360b67f9e6554720b59d679ca04457524a4",
+          "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        },
+        {
+          "fact_id": "fact:sha256:b7ba5f7a01067102b934dea9dfa03c4a4bb16c598915c828947ed762096c8749",
+          "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        },
+        {
+          "fact_id": "fact:sha256:fbbbf283b9e0cedf847c1e7b4c4ed23849d42807f1b6a558651445aac0e5172c",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        },
+        {
+          "fact_id": "fact:sha256:28395100123f026bd06da064c5e16b8737bdcc4d171e57d1b0244db68e903213",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        }
+      ],
+      "fallback_executed": false,
+      "provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "result_id": "sha256:aa55c74b791b163af335a7f912dbb9398f2a21fcb35799f524140498fa33fac4",
+      "historical_priority_candidate_fact_ids": [
+        "fact:sha256:b70932c607865e278f25f45a32c14beb4e45e0bbd2e9381cfbde62c19c4b8e9b"
+      ],
+      "measurement_basis": "PERIOD_END_CARRYING_AMOUNT_OF_DEFINED_DEBT_SET",
+      "measurement_reconciliation": {
+        "model_id": "SUBTOTAL_LESS_COSTS",
+        "basis": "PERIOD_END_CARRYING_AMOUNT",
+        "calculation_facts": [
+          {
+            "accession": "0000092380-26-000004",
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:8e2aa6e79bb36ab574cbc79ade1c840774776c790491ba492d2dee6589364396",
+            "filed": "2026-02-05",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+              "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+              "source_role": "accession_xbrl",
+              "document_name": "luv-20251231_htm.xml",
+              "accession": "0000092380-26-000004",
+              "entity": "92380",
+              "xbrl_context_ref": "c-4",
+              "xbrl_fact_ordinal": 656
+            },
+            "unit": "USD",
+            "value": "4919000000"
+          },
+          {
+            "accession": "0000092380-26-000004",
+            "concept": "us-gaap:DeferredFinanceCostsGross",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:4913c056af2235d5db900d31cdf182ccc5e54feea3b9ee41fc06ea63aa953c26",
+            "filed": "2026-02-05",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+              "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+              "source_role": "accession_xbrl",
+              "document_name": "luv-20251231_htm.xml",
+              "accession": "0000092380-26-000004",
+              "entity": "92380",
+              "xbrl_context_ref": "c-4",
+              "xbrl_fact_ordinal": 660
+            },
+            "unit": "USD",
+            "value": "18000000"
+          }
+        ],
+        "gross": {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:8e2aa6e79bb36ab574cbc79ade1c840774776c790491ba492d2dee6589364396",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 656
+          },
+          "unit": "USD",
+          "value": "4919000000"
+        },
+        "deductions": [
+          {
+            "accession": "0000092380-26-000004",
+            "concept": "us-gaap:DeferredFinanceCostsGross",
+            "duration_days": 0,
+            "entity": "92380",
+            "fact_id": "fact:sha256:4913c056af2235d5db900d31cdf182ccc5e54feea3b9ee41fc06ea63aa953c26",
+            "filed": "2026-02-05",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+              "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+              "source_role": "accession_xbrl",
+              "document_name": "luv-20251231_htm.xml",
+              "accession": "0000092380-26-000004",
+              "entity": "92380",
+              "xbrl_context_ref": "c-4",
+              "xbrl_fact_ordinal": 660
+            },
+            "unit": "USD",
+            "value": "18000000"
+          }
+        ],
+        "current": {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:f8943e03f9ab6155d5c3fd773810fd4451bdcc54a1b26650adee1be941229385",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 123
+          },
+          "unit": "USD",
+          "value": "324000000"
+        },
+        "noncurrent": {
+          "accession": "0000092380-26-000004",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "duration_days": 0,
+          "entity": "92380",
+          "fact_id": "fact:sha256:8eef46ea6b953c4b0890d0d142ea069e1846acace0e6ae9e792059d49f541ba7",
+          "filed": "2026-02-05",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 127
+          },
+          "unit": "USD",
+          "value": "4577000000"
+        },
+        "reported_carrying": null,
+        "carrying_amount": "4901000000",
+        "equation": "gross - deductions = current + noncurrent = carrying",
+        "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+        "reviewed_note": {
+          "concept": "us-gaap:ScheduleOfDebtInstrumentsTextBlock",
+          "sha256": "16e4819f2af28f491de6d40aee4b9992aa61aee67539e2c639658512251e2463",
+          "ordinal": 620
+        },
+        "relationship_review_id": "sha256:98d74fac2bf3b96b0320701d897d9b7f344dcd60d01d58888003b50fab245c57",
+        "reviewer": {
+          "kind": "independent Codex model subtask",
+          "task": "/root/debt_reconciliation_review",
+          "human_approval": false
+        },
+        "review_file_sha256": "eedf303c47ef694521d10c676ae842888bc7c0e13f7651d3e5ad5d275707c0cc"
+      },
+      "selection_id": "sha256:bd8532df1bfefcb5d2cd97008174200dd20707636591bde817a05496aa636f24"
+    }
+  },
+  {
+    "company": "lumen_technologies",
+    "real_fact_result": {
+      "company_id": "lumen_technologies",
+      "metric_id": "B06",
+      "period_start": "2025-12-31",
+      "period_end": "2025-12-31",
+      "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+      "spec_closure_hash": "sha256:d32bf81997bf97ca797abdacd73d15ebb0cb14fe11771216725a766c9ee8232a",
+      "applicability": "APPLICABLE",
+      "quality": "NOT_MEANINGFUL",
+      "publication": "PUBLISHED",
+      "reason_code": "DENOMINATOR_NONPOSITIVE",
+      "value": null,
+      "unit": null,
+      "trace_id": "sha256:5eec92960c1231e3174bb34750fd29f045cb7155544307a0ec7566a6b194eecf",
+      "record_type": "METRIC_RESULT",
+      "result_id": "sha256:9201ac82776f59c8f3a0266f8fd9535aa439a1edf49dc68d42cfc69e63bdd857"
+    },
+    "measurement": {
+      "model_id": "GROSS_LESS_DISCOUNT_AND_COSTS",
+      "basis": "PERIOD_END_CARRYING_AMOUNT",
+      "calculation_facts": [
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:28d57b829ff7bee6042a551fb26f610cb1d0812bb0b864b8bc2bca8964190350",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1221
+          },
+          "unit": "USD",
+          "value": "17815000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:d961ebc39b747f5d93bde1ea97df4d382567bd2e00a1fadb2bf08fe930d13058",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1188
+          },
+          "unit": "USD",
+          "value": "223000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DeferredFinanceCostsNet",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:80af1dfb1ce9aae892823bf148f2d0586e2c0f46ef40d70e3b73ed0a1cc01e28",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1190
+          },
+          "unit": "USD",
+          "value": "151000000"
+        }
+      ],
+      "gross": {
+        "accession": "0000018926-26-000014",
+        "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "duration_days": 0,
+        "entity": "18926",
+        "fact_id": "fact:sha256:28d57b829ff7bee6042a551fb26f610cb1d0812bb0b864b8bc2bca8964190350",
+        "filed": "2026-02-20",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+          "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+          "source_role": "accession_xbrl",
+          "document_name": "lumn-20251231_htm.xml",
+          "accession": "0000018926-26-000014",
+          "entity": "18926",
+          "xbrl_context_ref": "c-8",
+          "xbrl_fact_ordinal": 1221
+        },
+        "unit": "USD",
+        "value": "17815000000"
+      },
+      "deductions": [
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:d961ebc39b747f5d93bde1ea97df4d382567bd2e00a1fadb2bf08fe930d13058",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1188
+          },
+          "unit": "USD",
+          "value": "223000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DeferredFinanceCostsNet",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:80af1dfb1ce9aae892823bf148f2d0586e2c0f46ef40d70e3b73ed0a1cc01e28",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1190
+          },
+          "unit": "USD",
+          "value": "151000000"
+        }
+      ],
+      "current": {
+        "accession": "0000018926-26-000014",
+        "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "duration_days": 0,
+        "entity": "18926",
+        "fact_id": "fact:sha256:e3324354dec31b6926b5a02fe027c7ece0e547f5d26afeb21d874fa1f26b7ce6",
+        "filed": "2026-02-20",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+          "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+          "source_role": "accession_xbrl",
+          "document_name": "lumn-20251231_htm.xml",
+          "accession": "0000018926-26-000014",
+          "entity": "18926",
+          "xbrl_context_ref": "c-8",
+          "xbrl_fact_ordinal": 203
+        },
+        "unit": "USD",
+        "value": "88000000"
+      },
+      "noncurrent": {
+        "accession": "0000018926-26-000014",
+        "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+        "duration_days": 0,
+        "entity": "18926",
+        "fact_id": "fact:sha256:061d2ddb36897fba3972d9dddb80e1704287d5a9e541d3047536b645cc7983d0",
+        "filed": "2026-02-20",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+          "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+          "source_role": "accession_xbrl",
+          "document_name": "lumn-20251231_htm.xml",
+          "accession": "0000018926-26-000014",
+          "entity": "18926",
+          "xbrl_context_ref": "c-8",
+          "xbrl_fact_ordinal": 223
+        },
+        "unit": "USD",
+        "value": "17353000000"
+      },
+      "reported_carrying": {
+        "accession": "0000018926-26-000014",
+        "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+        "duration_days": 0,
+        "entity": "18926",
+        "fact_id": "fact:sha256:40a007919957daec1266eaba644048a8758934d23bd929d70c9f7f0d3320a783",
+        "filed": "2026-02-20",
+        "fiscal_period": "FY",
+        "form": "10-K",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "source_binding": {
+          "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+          "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+          "source_role": "accession_xbrl",
+          "document_name": "lumn-20251231_htm.xml",
+          "accession": "0000018926-26-000014",
+          "entity": "18926",
+          "xbrl_context_ref": "c-8",
+          "xbrl_fact_ordinal": 1192
+        },
+        "unit": "USD",
+        "value": "17441000000"
+      },
+      "carrying_amount": "17441000000",
+      "equation": "gross - deductions = current + noncurrent = carrying",
+      "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+      "reviewed_note": {
+        "concept": "us-gaap:ScheduleOfDebtInstrumentsTextBlock",
+        "sha256": "fc2534ec0ef3bffc93fcd550724dd6ae6675415cf9fc9929ac61319571e2c9ea",
+        "ordinal": 1131
+      },
+      "relationship_review_id": "sha256:e78bcc22d0714ff17366cd03695ce733d139e7e44e911003a7ad25ce5c4db290",
+      "reviewer": {
+        "kind": "independent Codex model subtask",
+        "task": "/root/debt_reconciliation_review",
+        "human_approval": false
+      },
+      "review_file_sha256": "eedf303c47ef694521d10c676ae842888bc7c0e13f7651d3e5ad5d275707c0cc"
+    },
+    "selection": {
+      "record_type": "STRUCTURED_PRIMARY_SELECTION",
+      "resolver": "debt_equity_carrying_v2",
+      "target": {
+        "company_id": "lumen_technologies",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "accession": "0000018926-26-000014",
+        "entity": "18926",
+        "scope": {
+          "entity_scope": "consolidated"
+        },
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b"
+      },
+      "branch": "RECONCILED_CARRYING_AMOUNT",
+      "debt_candidates": [
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:53f64149ca3df3503c3f69c4bd148f1059c17ebfe9240b10571d61f3eac9fb4a",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+            "source_reference_id": "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+            "accession": "0000018926-26-000014",
+            "document_name": "CIK0000018926.json",
+            "source_role": "companyfacts",
+            "entity": "18926",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "17441000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:61287d1c3c10277f4ea2455326e63bd419c3af4ce3fee3525c21a6236deb5856",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+            "source_reference_id": "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+            "accession": "0000018926-26-000014",
+            "document_name": "CIK0000018926.json",
+            "source_role": "companyfacts",
+            "entity": "18926",
+            "frame": "CY2025Q4I"
+          },
+          "unit": "USD",
+          "value": "19000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:3fedbbb50404b61bb33a45ba7f4279942774c3e26d6cdb35a5e2c638ebaea826",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+            "source_reference_id": "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+            "accession": "0000018926-26-000014",
+            "document_name": "CIK0000018926.json",
+            "source_role": "companyfacts",
+            "entity": "18926",
+            "frame": "CY2025Q4I"
+          },
+          "unit": "USD",
+          "value": "183000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:12667d5df887d068341924238d3ff7ee20da4be04fbdb0e4e911151f87583a20",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+            "source_reference_id": "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+            "accession": "0000018926-26-000014",
+            "document_name": "CIK0000018926.json",
+            "source_role": "companyfacts",
+            "entity": "18926",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "17353000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:18f571b36c3ea9a4897f56b9c38408954fcc727c8e8c08127fbeb70d040379b1",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+            "source_reference_id": "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+            "accession": "0000018926-26-000014",
+            "document_name": "CIK0000018926.json",
+            "source_role": "companyfacts",
+            "entity": "18926",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "88000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:f431424ad5fcfd11e4941f198266157b7f01bdfc1d48cdcde0e021dac3af56e4",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+            "source_reference_id": "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+            "accession": "0000018926-26-000014",
+            "document_name": "CIK0000018926.json",
+            "source_role": "companyfacts",
+            "entity": "18926",
+            "frame": "CY2025Q4I"
+          },
+          "unit": "USD",
+          "value": "17815000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:StockholdersEquity",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:9e0525c184cbef6b978a2b08cc3f6ec29c3e59f6bc49caa233e29edda591e0c9",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+            "source_reference_id": "sha256:071bdc91f92a80a2a0796b194d6773c40be4b7cb12ffb8136006191b7d37be21",
+            "accession": "0000018926-26-000014",
+            "document_name": "CIK0000018926.json",
+            "source_role": "companyfacts",
+            "entity": "18926",
+            "frame": ""
+          },
+          "unit": "USD",
+          "value": "-1117000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:28d57b829ff7bee6042a551fb26f610cb1d0812bb0b864b8bc2bca8964190350",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1221
+          },
+          "unit": "USD",
+          "value": "17815000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:d961ebc39b747f5d93bde1ea97df4d382567bd2e00a1fadb2bf08fe930d13058",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1188
+          },
+          "unit": "USD",
+          "value": "223000000"
+        },
+        {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DeferredFinanceCostsNet",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:80af1dfb1ce9aae892823bf148f2d0586e2c0f46ef40d70e3b73ed0a1cc01e28",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1190
+          },
+          "unit": "USD",
+          "value": "151000000"
+        }
+      ],
+      "chosen_debt_fact_ids": [
+        "fact:sha256:28d57b829ff7bee6042a551fb26f610cb1d0812bb0b864b8bc2bca8964190350",
+        "fact:sha256:d961ebc39b747f5d93bde1ea97df4d382567bd2e00a1fadb2bf08fe930d13058",
+        "fact:sha256:80af1dfb1ce9aae892823bf148f2d0586e2c0f46ef40d70e3b73ed0a1cc01e28"
+      ],
+      "equity_fact_id": "fact:sha256:9e0525c184cbef6b978a2b08cc3f6ec29c3e59f6bc49caa233e29edda591e0c9",
+      "debt": "17441000000",
+      "equity": "-1117000000",
+      "reasons": [],
+      "nonpositive_equity": true,
+      "excluded_candidates": [
+        {
+          "fact_id": "fact:sha256:61287d1c3c10277f4ea2455326e63bd419c3af4ce3fee3525c21a6236deb5856",
+          "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        },
+        {
+          "fact_id": "fact:sha256:3fedbbb50404b61bb33a45ba7f4279942774c3e26d6cdb35a5e2c638ebaea826",
+          "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        },
+        {
+          "fact_id": "fact:sha256:12667d5df887d068341924238d3ff7ee20da4be04fbdb0e4e911151f87583a20",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        },
+        {
+          "fact_id": "fact:sha256:18f571b36c3ea9a4897f56b9c38408954fcc727c8e8c08127fbeb70d040379b1",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        },
+        {
+          "fact_id": "fact:sha256:f431424ad5fcfd11e4941f198266157b7f01bdfc1d48cdcde0e021dac3af56e4",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "reason": "NOT_SELECTED_BY_DECLARED_DEBT_HIERARCHY_OR_EQUITY_ROLE"
+        }
+      ],
+      "fallback_executed": false,
+      "provider_paid_sec_calls": [
+        0,
+        0,
+        0
+      ],
+      "result_id": "sha256:9201ac82776f59c8f3a0266f8fd9535aa439a1edf49dc68d42cfc69e63bdd857",
+      "historical_priority_candidate_fact_ids": [
+        "fact:sha256:53f64149ca3df3503c3f69c4bd148f1059c17ebfe9240b10571d61f3eac9fb4a"
+      ],
+      "measurement_basis": "PERIOD_END_CARRYING_AMOUNT_OF_DEFINED_DEBT_SET",
+      "measurement_reconciliation": {
+        "model_id": "GROSS_LESS_DISCOUNT_AND_COSTS",
+        "basis": "PERIOD_END_CARRYING_AMOUNT",
+        "calculation_facts": [
+          {
+            "accession": "0000018926-26-000014",
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "duration_days": 0,
+            "entity": "18926",
+            "fact_id": "fact:sha256:28d57b829ff7bee6042a551fb26f610cb1d0812bb0b864b8bc2bca8964190350",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+              "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+              "source_role": "accession_xbrl",
+              "document_name": "lumn-20251231_htm.xml",
+              "accession": "0000018926-26-000014",
+              "entity": "18926",
+              "xbrl_context_ref": "c-8",
+              "xbrl_fact_ordinal": 1221
+            },
+            "unit": "USD",
+            "value": "17815000000"
+          },
+          {
+            "accession": "0000018926-26-000014",
+            "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+            "duration_days": 0,
+            "entity": "18926",
+            "fact_id": "fact:sha256:d961ebc39b747f5d93bde1ea97df4d382567bd2e00a1fadb2bf08fe930d13058",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+              "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+              "source_role": "accession_xbrl",
+              "document_name": "lumn-20251231_htm.xml",
+              "accession": "0000018926-26-000014",
+              "entity": "18926",
+              "xbrl_context_ref": "c-8",
+              "xbrl_fact_ordinal": 1188
+            },
+            "unit": "USD",
+            "value": "223000000"
+          },
+          {
+            "accession": "0000018926-26-000014",
+            "concept": "us-gaap:DeferredFinanceCostsNet",
+            "duration_days": 0,
+            "entity": "18926",
+            "fact_id": "fact:sha256:80af1dfb1ce9aae892823bf148f2d0586e2c0f46ef40d70e3b73ed0a1cc01e28",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+              "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+              "source_role": "accession_xbrl",
+              "document_name": "lumn-20251231_htm.xml",
+              "accession": "0000018926-26-000014",
+              "entity": "18926",
+              "xbrl_context_ref": "c-8",
+              "xbrl_fact_ordinal": 1190
+            },
+            "unit": "USD",
+            "value": "151000000"
+          }
+        ],
+        "gross": {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:28d57b829ff7bee6042a551fb26f610cb1d0812bb0b864b8bc2bca8964190350",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1221
+          },
+          "unit": "USD",
+          "value": "17815000000"
+        },
+        "deductions": [
+          {
+            "accession": "0000018926-26-000014",
+            "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+            "duration_days": 0,
+            "entity": "18926",
+            "fact_id": "fact:sha256:d961ebc39b747f5d93bde1ea97df4d382567bd2e00a1fadb2bf08fe930d13058",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+              "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+              "source_role": "accession_xbrl",
+              "document_name": "lumn-20251231_htm.xml",
+              "accession": "0000018926-26-000014",
+              "entity": "18926",
+              "xbrl_context_ref": "c-8",
+              "xbrl_fact_ordinal": 1188
+            },
+            "unit": "USD",
+            "value": "223000000"
+          },
+          {
+            "accession": "0000018926-26-000014",
+            "concept": "us-gaap:DeferredFinanceCostsNet",
+            "duration_days": 0,
+            "entity": "18926",
+            "fact_id": "fact:sha256:80af1dfb1ce9aae892823bf148f2d0586e2c0f46ef40d70e3b73ed0a1cc01e28",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K",
+            "period_start": "2025-12-31",
+            "period_end": "2025-12-31",
+            "source_binding": {
+              "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+              "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+              "source_role": "accession_xbrl",
+              "document_name": "lumn-20251231_htm.xml",
+              "accession": "0000018926-26-000014",
+              "entity": "18926",
+              "xbrl_context_ref": "c-8",
+              "xbrl_fact_ordinal": 1190
+            },
+            "unit": "USD",
+            "value": "151000000"
+          }
+        ],
+        "current": {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:e3324354dec31b6926b5a02fe027c7ece0e547f5d26afeb21d874fa1f26b7ce6",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 203
+          },
+          "unit": "USD",
+          "value": "88000000"
+        },
+        "noncurrent": {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:061d2ddb36897fba3972d9dddb80e1704287d5a9e541d3047536b645cc7983d0",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 223
+          },
+          "unit": "USD",
+          "value": "17353000000"
+        },
+        "reported_carrying": {
+          "accession": "0000018926-26-000014",
+          "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+          "duration_days": 0,
+          "entity": "18926",
+          "fact_id": "fact:sha256:40a007919957daec1266eaba644048a8758934d23bd929d70c9f7f0d3320a783",
+          "filed": "2026-02-20",
+          "fiscal_period": "FY",
+          "form": "10-K",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1192
+          },
+          "unit": "USD",
+          "value": "17441000000"
+        },
+        "carrying_amount": "17441000000",
+        "equation": "gross - deductions = current + noncurrent = carrying",
+        "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+        "reviewed_note": {
+          "concept": "us-gaap:ScheduleOfDebtInstrumentsTextBlock",
+          "sha256": "fc2534ec0ef3bffc93fcd550724dd6ae6675415cf9fc9929ac61319571e2c9ea",
+          "ordinal": 1131
+        },
+        "relationship_review_id": "sha256:e78bcc22d0714ff17366cd03695ce733d139e7e44e911003a7ad25ce5c4db290",
+        "reviewer": {
+          "kind": "independent Codex model subtask",
+          "task": "/root/debt_reconciliation_review",
+          "human_approval": false
+        },
+        "review_file_sha256": "eedf303c47ef694521d10c676ae842888bc7c0e13f7651d3e5ad5d275707c0cc"
+      },
+      "selection_id": "sha256:c31dbf018f56123e926f145b9b9450d40f247d871a51df59cdcb5bfe0f1241a9"
+    },
+    "function_level_conflicting_CF_carrying_case": {
+      "injection": "test-only altered parsed CompanyFacts carrying amount to 18bn; raw files unchanged; same exact real XML measurement; no native acceptance claimed",
+      "result": {
+        "company_id": "lumen_technologies",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:d32bf81997bf97ca797abdacd73d15ebb0cb14fe11771216725a766c9ee8232a",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "STRUCTURED_SOURCE_AMBIGUOUS",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:c835b304fb906cf1e61a9ec77e69e4a95850fc4e48dff3213d058f94cf3032dd",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:c67c365ea3abdd473a2c6a46a984556661f736542156ae16270ecb3716c37a4d"
+      },
+      "reasons": [
+        "MEASUREMENT_COMPANYFACTS_XBRL_DIFFER:us-gaap:DebtAndCapitalLeaseObligations"
+      ],
+      "debt": "17441000000"
+    }
+  }
+]

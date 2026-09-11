@@ -1,0 +1,113 @@
+{
+  "status": "NO_UNRESOLVED_BLOCKING_FINDINGS_IN_MEASUREMENT_INCREMENT",
+  "reviewer": {
+    "task": "/root/debt_reconciliation_review",
+    "kind": "independent Codex model",
+    "human_approval": false
+  },
+  "checked_at": "2026-09-11T05:07:40.122044+00:00",
+  "working_head": "38af841d730d631b211ae33a4718a9a43211ae9b",
+  "reviewed_working_files": [
+    {
+      "path": "scripts/vnext/r5_b06_measurement.py",
+      "sha256": "4761f65241ec1cb007893807ca748e978b2b8049bbd76f4f730ce4aa99a11368"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_structured.py",
+      "sha256": "d04573242aa0b3a7a0b24ec162bd277beaff5ddffb9e7b7599dd40a27a234a6d"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_publication.py",
+      "sha256": "0b4a5ee86a0f9c22f5b12c7c58acbab862747ca429d3b3d45db3f2b6b1adc05a"
+    },
+    {
+      "path": "scripts/vnext/run_store.py",
+      "sha256": "0ae019c33e5ceb9d04ab97eb47b03d87b4cf36b411aa9ebbeb1b1c8d3073ccf5"
+    },
+    {
+      "path": "catalog/r5/B06_structured.md",
+      "sha256": "047663913a7f445f665ceee3302566a02d225c62541172c4a63484329e449d0a"
+    },
+    {
+      "path": "config/r5_b06_structured_v1.json",
+      "sha256": "75a86e6ee21e059b17d64e93e8ece194927d537b7a8946249547251b76d2728a"
+    },
+    {
+      "path": "docs/evidence/r5_b06_followup/measurement_relationships.json",
+      "sha256": "eedf303c47ef694521d10c676ae842888bc7c0e13f7651d3e5ad5d275707c0cc"
+    }
+  ],
+  "findings": [
+    {
+      "id": "SW_NONCURRENT_CONCEPT",
+      "status": "RESOLVED",
+      "problem": "SW model requested nonexistent Noncurrent-suffix tag; actual source is LongTermDebtAndCapitalLeaseObligations.",
+      "verification": "Actual measurement_inputs now returns4901m and native trial03 replay EXACT."
+    },
+    {
+      "id": "SAME_BASIS_CF_CONFLICT",
+      "status": "RESOLVED",
+      "problem": "Reconciliation cleared DIRECT_TOTAL_CONFLICT while only gross CF/XML was compared; contrary CF carrying amount was swallowed.",
+      "verification": "Original functional injected18bn CF carrying returned accepted NOT_MEANINGFUL; fixed path now WITHHELD and exact CF/XML conflict reason. Actual original CF still succeeds."
+    },
+    {
+      "id": "ACTUAL_CHOSEN_INPUT_IDS",
+      "status": "RESOLVED",
+      "problem": "Audit retained historical CF priority selection IDs after native Calculator changed to XML gross/deductions.",
+      "verification": "Current chosen IDs list actual XML input facts; historical IDs separately retained; public blocked evidence selects source from fact raw_asset_id."
+    }
+  ],
+  "personally_executed": [
+    "Seven-source original fact/table review and Decimal reconciliation",
+    "Current actual measurement_inputs + resolve_primary for original Southwest and Lumen",
+    "Same-basis parsed CF carrying conflict functional negative before and after fix; no original source mutation",
+    "17 short tests from existing primary and followup modules",
+    "Three historical v1 frozen Run full native graph reads with old saved authority, bytes unchanged",
+    "Three new trial03 frozen Run full native graph reads (SW, Lumen, Enphase), bytes unchanged"
+  ],
+  "source_and_business_assessment": [
+    "New generic carrying equations match the independently checked exact source note relations and use parsed raw numbers, not review quantities",
+    "Same company/context/instant/USD and sign/reconciliation checked before deriving observations",
+    "Only historical measurement conflict removed; scope/short-debt/lease debt-set issues remain",
+    "Negative equity remains evaluated NOT_MEANINGFUL with actual gross/deductions/equity observations",
+    "Old Spec resolver routes old runs through v1 and does not apply current note reviews",
+    "Calculation observations and Run replay both reconstruct raw XML and applicable frozen rule"
+  ],
+  "not_verified": [
+    "Final implementation commit and CI still pending parent",
+    "Full new complete package, projection250/328, cold view and protected root final checks owned by parent",
+    "Amendment impact independent review owned by another reviewer",
+    "No assertion about future unreviewed XML or general automatic debt-scope completeness"
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "evidence": [
+    {
+      "path": "raw-fact-index.json",
+      "sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c"
+    },
+    {
+      "path": "measurement-code-check.json",
+      "sha256": "a1f70670b02adb21c1c46539131ecb14cd17eae36890a186b68dbbe275e621bd"
+    },
+    {
+      "path": "measurement-code-fixed-check.json",
+      "sha256": "7bf4e38bc4b6e3ff6e6bdc41e4b01daef8e45aea78098b5a94e571dad345a5b0"
+    },
+    {
+      "path": "historical-v1-native-replay.json",
+      "sha256": "fd9f4a2585ee09aaaf8035f3fe3c87d80da06c34134323c712e6cb0500e8e3e5"
+    },
+    {
+      "path": "increment-short-tests.log",
+      "sha256": "5a3b02a1c414e6302d157d77ebbe69ad6ebedf011829bfc715b8014d8601203b"
+    },
+    {
+      "path": "trial03-native-replay.json",
+      "sha256": "93c2c514e2a368b5bef52c3ed1e992387c01856c0ddfafba394a7bbf8f9c0be6"
+    }
+  ]
+}

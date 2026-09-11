@@ -1,0 +1,61 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "d485d1b0545a202115b040ac295bda671d56f204395d8718fa72d0b17984f473",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "ec211c6d6d26b0c068296ece3719e37d4f779e90e12bb967c2312f0edcb4ca18",
+  "content_manifest_hash": "sha256:5ac303b42913519108daa4d52450b2f381807eb001f4a121096b65659b4c190f",
+  "audit_manifest_hash": "sha256:f41bb6309b9fc609124a39c0890c482619aa5dbcabf0b97c8821a0ce5f6faec6",
+  "run_id": "run:r5-primary:d814e3e1aa115f1550e740d86e3791651d443f025915c0303752bd607c1bb18d",
+  "company_id": "ford_motor_company",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-12-31",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:5a7fd6bdf110f3429e0cee5ebf349b6e59d8e3789cbb05a52827afc195d02ec4",
+      "raw_asset_id": "sha256:db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+      "company_id": "ford_motor_company",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000037996.json",
+      "accession": "0000037996-26-000015",
+      "document_name": "CIK0000037996.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:0de3eb3f620e3d2070d87ed9055aa370e4913d58635ba7a1e5233f7c4121ba6b",
+      "raw_asset_id": "sha256:35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+      "company_id": "ford_motor_company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/37996/000003799626000015/f-20251231_htm.xml",
+      "accession": "0000037996-26-000015",
+      "document_name": "f-20251231_htm.xml",
+      "source_role": "accession_xbrl",
+      "request_attempt_id": "request:attempt:40440a3fb53049e04b00bc7cfdc5e134e1e8b79f2df479713afe840f958fb36b"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r5/B06_structured.md": "047663913a7f445f665ceee3302566a02d225c62541172c4a63484329e449d0a"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "992c54bbb8ecd051e9fa0115215ea2e19e93806bc0c77c7305735b7867ec9ebe",
+    "contract_sha256": "3947118b230381a2f99b4db22ea4b77825514f8d08f4707fc335a6fc46c24d41",
+    "decision_register_sha256": "17e6bb0f3a2edb79e28c80571025fa10eb2596da81e48ac74398c264677bb41e",
+    "invariant_profile_sha256": "22662ce8050c7fe8e569777bd06f77760124e365d15f1a297a4ec8adc2743f7a",
+    "transfer_manifest_sha256": "034f984d7570a069b637a305786e547267c8cdc694b8936c404033d911ab835d",
+    "parent_requirement_closure_hash": "sha256:c3aab58207c3a6cf7f9ac35aae0b842bc6ed8e870dce574438ae428192e1ce45",
+    "validator_sha256": "0d474e2d3b5b2f5d768e80f83163a5d63ff4cfc92d3b2ee9dd15e5c42fdb0d79"
+  },
+  "requirement_closure_hash": "sha256:ad43548bdc27791411e1889f93023f1c82c3fffe8d4b3f5cee68236b0682fbe8",
+  "requirement_id": "issue_28_v9",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "implementation_head": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "unchanged_root_and_ledger": {
+    "outputs/active_publication.json": {
+      "sha256": "25203f7dd72f02974323a87df26a37561d69e0017667f6e265275477bb98497d",
+      "size": 366
+    },
+    "evidence/requests_log.csv": {
+      "sha256": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+      "size": 534207
+    },
+    "evidence/requests_log_manifest.json": {
+      "sha256": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2",
+      "size": 134
+    }
+  },
+  "package_files_actual_verified": [
+    {
+      "kind": "new",
+      "root": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/complete/outputs/publications/publication_24f1483a44d22f27161d51b0f5d7a41b2039b882e965604a6b0ca320514c1638",
+      "publication_id": "publication_24f1483a44d22f27161d51b0f5d7a41b2039b882e965604a6b0ca320514c1638",
+      "manifest_sha256": "f101c90c274ffa1fe2c334bc2367fa94ceff303710b16ae5c4333f6a82c6bf54",
+      "files_verified": 1365
+    },
+    {
+      "kind": "old",
+      "root": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/complete-final/outputs/publications/publication_fa51db0b563c0ea97c545a3edced42cdfdd9a21a1a7d6f341f140bbe28653e71",
+      "publication_id": "publication_fa51db0b563c0ea97c545a3edced42cdfdd9a21a1a7d6f341f140bbe28653e71",
+      "manifest_sha256": "105eea0390a184278a9a3c70050885f6297abe2c68d3a31f749fda7397ab30f3",
+      "files_verified": 1352
+    },
+    {
+      "kind": "formal",
+      "root": "/Users/lyuhongwang/Developer/SEC_metrics/outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "manifest_sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+      "files_verified": 906
+    }
+  ],
+  "other_branch_refs_and_stash_and_worktrees_unchanged": true,
+  "new_business_calls": [
+    0,
+    0,
+    0
+  ],
+  "os_policy_sha256": "877d3a3835e89a53ed5ed0e0e3ae265f3a264e28f171eb461c4a4d7d933374c0",
+  "policy_scope": "All process-tree network denied; all filesystem writes denied except external followup root and /dev/null. GitHub/archival commands outside business runner separately authorized."
+}

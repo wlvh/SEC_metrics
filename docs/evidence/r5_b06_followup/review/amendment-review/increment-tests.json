@@ -1,0 +1,123 @@
+{
+  "reviewer": "independent /root/amendment_review",
+  "created_at": "2026-09-11T05:01:23.351394+00:00",
+  "head": "38af841d730d631b211ae33a4718a9a43211ae9b",
+  "code_sha256": {
+    "scripts/vnext/r5_b06_amendments.py": "3dd1b2a43c4348f1a008d7db9d841ff040afdb41bf0acf5e74604f92815578b2",
+    "scripts/vnext/r5_b06_structured.py": "d04573242aa0b3a7a0b24ec162bd277beaff5ddffb9e7b7599dd40a27a234a6d",
+    "scripts/vnext/r5_b06_publication.py": "bdf85d6c32dbebc293098d1613065126f2d852c76886b22a40cf76d7639d8c1a",
+    "tests/vnext/test_r5_b06_followup.py": "6d552a22210954765f32fc13c5f1b13e95b7a73eada8a4dae190963c444a3755"
+  },
+  "status": "PASS_AMENDMENT_INCREMENT_SCOPE",
+  "cases": [
+    {
+      "case": "southwest_airlines_full_original_amendment",
+      "status": "PASS",
+      "actual": "NO_B06_SOURCE_IMPACT"
+    },
+    {
+      "case": "southwest_airlines_changed_raw_same_accession",
+      "status": "PASS",
+      "actual": "AMENDMENT_REVIEWED_BYTES_CHANGED"
+    },
+    {
+      "case": "southwest_airlines_different_period",
+      "status": "PASS",
+      "actual": "AMENDMENT_ORIGINAL_RELATION_CHANGED"
+    },
+    {
+      "case": "southwest_airlines_wrong_entity",
+      "status": "PASS",
+      "actual": "AMENDMENT_ISSUER_OR_FORM_CHANGED"
+    },
+    {
+      "case": "southwest_airlines_synthetic_financial_fact_rehashed",
+      "status": "PASS",
+      "actual": "AMENDMENT_FINANCIAL_FACTS_PRESENT"
+    },
+    {
+      "case": "southwest_airlines_synthetic_financial_section_rehashed",
+      "status": "PASS",
+      "actual": "AMENDMENT_FINANCIAL_SECTION_PRESENT"
+    },
+    {
+      "case": "southwest_airlines_actual_assess_saved_boundary",
+      "status": "PASS",
+      "actual": "NO_B06_SOURCE_IMPACT"
+    },
+    {
+      "case": "southwest_airlines_missing_raw_source",
+      "status": "PASS",
+      "actual": [
+        "AMENDMENT_IMPACT_UNRESOLVED"
+      ]
+    },
+    {
+      "case": "southwest_airlines_changed_source_no_reviewer_credit",
+      "status": "PASS",
+      "actual": "AMENDMENT_COMPLETE_SOURCE_REVIEW_REQUIRED"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_full_original_amendment",
+      "status": "PASS",
+      "actual": "NO_B06_SOURCE_IMPACT"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_changed_raw_same_accession",
+      "status": "PASS",
+      "actual": "AMENDMENT_REVIEWED_BYTES_CHANGED"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_different_period",
+      "status": "PASS",
+      "actual": "AMENDMENT_ORIGINAL_RELATION_CHANGED"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_wrong_entity",
+      "status": "PASS",
+      "actual": "AMENDMENT_ISSUER_OR_FORM_CHANGED"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_synthetic_financial_fact_rehashed",
+      "status": "PASS",
+      "actual": "AMENDMENT_FINANCIAL_FACTS_PRESENT"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_synthetic_financial_section_rehashed",
+      "status": "PASS",
+      "actual": "AMENDMENT_FINANCIAL_SECTION_PRESENT"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_actual_assess_saved_boundary",
+      "status": "PASS",
+      "actual": "NO_B06_SOURCE_IMPACT"
+    },
+    {
+      "case": "paramount_skydance_paramount_global_missing_raw_source",
+      "status": "PASS",
+      "actual": [
+        "AMENDMENT_IMPACT_UNRESOLVED"
+      ]
+    },
+    {
+      "case": "paramount_skydance_paramount_global_changed_source_no_reviewer_credit",
+      "status": "PASS",
+      "actual": "AMENDMENT_COMPLETE_SOURCE_REVIEW_REQUIRED"
+    },
+    {
+      "case": "review_file_authority_hash_changed",
+      "status": "PASS",
+      "actual": "AMENDMENT_REVIEW_FILE_CHANGED"
+    }
+  ],
+  "limitations": [
+    "Synthetic modifications at explicit source I/O boundary or low-level deterministic validator arguments only; no genuine approval invented.",
+    "No full native package replay performed by this test.",
+    "Complete source impact judgment reused own read-only source review, not a newly claimed human review."
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

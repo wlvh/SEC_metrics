@@ -1,0 +1,26 @@
+R5_SAVED_INPUT_INVENTORY
+marriott_international None DENOMINATOR_NONPOSITIVE
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/try_native_02.py", line 10, in <module>
+    v=create_primary_run(data_root=D,run_dir=B/'trial-02/runs'/c['company_id'],company=c);print(c['company_id'],v['result']['value'],v['result']['reason_code'],flush=True);results.append(v)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 248, in create_primary_run
+    measurement=measurement_inputs(raw=(data_root/proof['request_repo_relative_path']).read_bytes(),source=ref,spec=spec,target=target,filed=selected['filing']['filingDate'],data_root=data_root) or measurement
+                ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_measurement.py", line 41, in measurement_inputs
+    gross=fact(model['gross']);deductions=[fact(c) for c in model['deductions']];current=fact(model['current']);noncurrent=fact(model['noncurrent'])
+                                                                                                                           ~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_measurement.py", line 37, in fact
+    need(bool(candidates) and len({v for _,v in candidates})==1,'MEASUREMENT_FACT_MISSING_OR_CONFLICT:'+concept)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: MEASUREMENT_FACT_MISSING_OR_CONFLICT:us-gaap:LongTermDebtAndCapitalLeaseObligationsNoncurrent
+southwest_airlines ERROR MEASUREMENT_FACT_MISSING_OR_CONFLICT:us-gaap:LongTermDebtAndCapitalLeaseObligationsNoncurrent
+ford_motor_company None STRUCTURED_SOURCE_AMBIGUOUS
+pfizer None STRUCTURED_SOURCE_AMBIGUOUS
+jpmorgan_chase None STRUCTURED_SOURCE_AMBIGUOUS
+salesforce None STRUCTURED_SOURCE_AMBIGUOUS
+lumen_technologies None DENOMINATOR_NONPOSITIVE
+macys None STRUCTURED_SOURCE_AMBIGUOUS
+paramount_skydance_paramount_global 1.168049260241169930727785855 PASS
+enphase_energy 1.107959077222837051285943352 PASS

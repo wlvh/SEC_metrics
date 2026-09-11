@@ -1,0 +1,22 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/readonly.sb",
+    "python3",
+    "tools/check_no_company_literals.py",
+    "--output",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/scalability.csv"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "head_after": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "started_at_utc": "2026-09-11T05:17:08.997856+00:00",
+  "finished_at_utc": "2026-09-11T05:17:14.707923+00:00",
+  "elapsed_seconds": 5.709995582990814,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/scalability-command.log",
+  "log_sha256": "aea0e91c3ba45dd88d06e41e3dae49c1f423320429c18e3b09b63ade4eba26f7",
+  "log_size": 43
+}

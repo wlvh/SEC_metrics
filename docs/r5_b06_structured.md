@@ -1,14 +1,14 @@
 # R5 首批：B06 结构化主路径
 
-最新实际结果与独立审阅见[主交付](evidence/r5_b06_structured/README.md)：三原生数值、一非正权益、六歧义；完整候选250坐标/328行，BLOCKED，正式根未变。
+最新实际结果与独立审阅见[本轮主交付](evidence/r5_b06_followup/README.md)：三数值、两非正权益、五项具体内容缺口；完整候选250坐标/328行，BLOCKED，正式根未变。[首次交付](evidence/r5_b06_structured/README.md)保留原计量与原阻断。
 
 本入口从既定十家公司已保存的 submissions 与 Company Facts 选择最新普通10-K及其确切申报时点，不读取旧B06值来选择输入。指标仍是结构化优先、歧义触发既定fallback；本轮没有执行fallback，也未把B06整体标为已迁移。
 
-`catalog/r5/B06_structured.md`仅定义结构化主路径，旧table Spec和历史ReleasePlan保持原字节。分子优先直接总额，不再加组成项；其次只使用完整同族current/noncurrent。lease-only、standalone noncurrent、冲突总额、另列短期债务或租赁涵盖性不清时，原生Result为WITHHELD/STRUCTURED_SOURCE_AMBIGUOUS，保存全部候选和原因。已保存instance中的实际金融业务member触发工业/集团范围复核，XML不用于补数或推定工业权益。
+`catalog/r5/B06_structured.md`仅定义结构化主路径，旧table Spec和历史ReleasePlan保持原字节。分子优先直接总额，不再加组成项；其次只使用完整同族current/noncurrent。lease-only、standalone noncurrent、冲突总额、另列短期债务或租赁涵盖性不清时，原生Result为WITHHELD/STRUCTURED_SOURCE_AMBIGUOUS，保存全部候选和原因。已保存instance中的实际金融业务member触发工业/集团范围复核，XML中的已核对账面调整事实可沿原生Observation参与计算，不从审阅报告补数，也不推定工业权益。
 
 权益只使用同主体、同申报、同单位、同实际时点的StockholdersEquity，不擅自换成含少数权益总额。分母<=0经通用`denominator_positive`约束输出NOT_MEANINGFUL并保留实际输入，不能取绝对值。原生Run重新解析原始Company Facts、重新执行选择和Calculator；输出文件中写PASS不能绕过这一重放。结构化事实沿原生确定性链，不伪造AI Evidence或人工Review；独立内容审阅另作验收。
 
-普通10-K后若有同期间10-K/A，原10-K当时申报的原生值可保存，但候选采纳仍标记AMENDED_ANNUAL_REQUIRES_REVIEW且公共值为空。不能称修订文件缺失，不能推断修订不影响财报。当前Southwest/Paramount原件已有独立阅读，修订相关性没有被开发者扩成自动裁定规则。
+普通10-K后若有同期间10-K/A，保留原10-K的as-filed Run及修订事实。新采纳层只有在确切原年报和修订全文绑定、独立完整范围判断及机械负例核对均成立时，解除对应修订阻断；未知或财务相关修订仍标记AMENDED_ANNUAL_REQUIRES_REVIEW。本轮Southwest/Paramount的确切非财务修订已完成此判断，不构成未来同类修订的自动豁免。
 
 ## 运行与读取
 

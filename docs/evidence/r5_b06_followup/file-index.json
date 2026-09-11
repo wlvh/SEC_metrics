@@ -1,0 +1,685 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "size": 7337,
+      "sha256": "4c7d7bcee8170475db2271abb6fe59e8994500d311822e2a32c9270b150e5653"
+    },
+    {
+      "path": "amendment_assessments.json",
+      "size": 42312,
+      "sha256": "235fa78368c6e888d63b811e7215c0948966fc5fd242c14c7a22ec8348d52cfe"
+    },
+    {
+      "path": "candidate/internal/annual_complete_version.json",
+      "size": 48744,
+      "sha256": "8e2ae80e27ca8f43c2134b9eb267069d94763139a5b23207fe764d56fd9e869a"
+    },
+    {
+      "path": "candidate/internal/r5_adoption.json",
+      "size": 152642,
+      "sha256": "5281f8b5f1d18a862366fb3712351d794378182a6be66c207d913e9f8b3b97d0"
+    },
+    {
+      "path": "candidate/internal/r5_locator_provenance.json",
+      "size": 24013,
+      "sha256": "23cabcf20d6c0a1a42c4dacd2fa9c7f71b60e360eb36c3469f00f8b7327a5918"
+    },
+    {
+      "path": "candidate/internal/r5_primary.json",
+      "size": 80655,
+      "sha256": "183a28c6cd133e201feb252af1357e810b847d328df0fff219e17a1f22d7cc89"
+    },
+    {
+      "path": "candidate/metric_evidence.csv",
+      "size": 259930,
+      "sha256": "625263003d11ac3b5dc9e980404763873f13cf32e31e5b1c7ecf84c5714d41fa"
+    },
+    {
+      "path": "candidate/metrics_matrix.csv",
+      "size": 107953,
+      "sha256": "9ee88044316051852c4c6167d105052811581ea0ad709d0c4807ca04fbc6d8d1"
+    },
+    {
+      "path": "candidate/projection_manifest.json",
+      "size": 1271,
+      "sha256": "a2bee97d5736d69dc4491b8e71e4c2e9d53641d315d938cd53bb24037a7aed6e"
+    },
+    {
+      "path": "candidate/publication_manifest.json",
+      "size": 435598,
+      "sha256": "f101c90c274ffa1fe2c334bc2367fa94ceff303710b16ae5c4333f6a82c6bf54"
+    },
+    {
+      "path": "candidate/publication_validation_receipt.json",
+      "size": 5621,
+      "sha256": "584b168525534bf85f119632374e85bad2328f083050329933c80f4fdb3555f3"
+    },
+    {
+      "path": "checks/alignment-command.json",
+      "size": 836,
+      "sha256": "4597b5f6d6bf0d0bcfee70ba40ff330dc3c146a1c6e6c655f7247806ed3b80d1"
+    },
+    {
+      "path": "checks/alignment-command.log",
+      "size": 108,
+      "sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb"
+    },
+    {
+      "path": "checks/ci-implementation-proof.json",
+      "size": 787,
+      "sha256": "fb9d29501a15210b2efcb1b6801897920a7e4b55104050e2069b127d42d75792"
+    },
+    {
+      "path": "checks/ci-implementation.log",
+      "size": 42663,
+      "sha256": "7c873c5dd2d4a6a06b5d295aa78c5f31038327cded43404687a26a427ffe681d"
+    },
+    {
+      "path": "checks/cold-command.json",
+      "size": 990,
+      "sha256": "a66b71c9c753ad250244c6497565b20b0748453fa41c63cec44b0489f7d5bd21"
+    },
+    {
+      "path": "checks/cold-command.log",
+      "size": 133,
+      "sha256": "4f3456327c1bee197bb3dcae9c8af7f6c65c871aaed351672583981b9d52da89"
+    },
+    {
+      "path": "checks/cold-read.json",
+      "size": 12831,
+      "sha256": "a6e4e0c6dd26d7604b263e8f21b45428236b84d6722b536a25e971e34431c31a"
+    },
+    {
+      "path": "checks/complete-command.json",
+      "size": 1003,
+      "sha256": "9fb7510674d1d77ccd3081985fa7d7d39d5b5bca26e7ec95bd7fb202f26e6b0b"
+    },
+    {
+      "path": "checks/complete-command.log",
+      "size": 137,
+      "sha256": "94a3c2d456adad115c79c0d5ae0e4aab4cf81c18a6e66c86d5798681d3e61991"
+    },
+    {
+      "path": "checks/discovery-after.log",
+      "size": 933,
+      "sha256": "c4ffa2c9bbe4af5c5c1f3499c4f091a15b64a95e8be28c2f513de917f848b3fd"
+    },
+    {
+      "path": "checks/discovery-before.log",
+      "size": 6627,
+      "sha256": "a6d3edf968b6324e67f38abb6269b86883c5b22ff912e3dc63fb04bc10b59dab"
+    },
+    {
+      "path": "checks/egress-command.json",
+      "size": 881,
+      "sha256": "1c8e254a9552c6dd61206748c29f3bb452142074727643538887707069b29d4b"
+    },
+    {
+      "path": "checks/egress-command.log",
+      "size": 1873,
+      "sha256": "741137fcceb35fb1c8efb411965914c7699a193300dff79e4ab4edf160bb10fb"
+    },
+    {
+      "path": "checks/egress.json",
+      "size": 1873,
+      "sha256": "741137fcceb35fb1c8efb411965914c7699a193300dff79e4ab4edf160bb10fb"
+    },
+    {
+      "path": "checks/fast-implementation-command.json",
+      "size": 694,
+      "sha256": "c90bc9c89f18371b3c9daace8632887b3ba6015c80ba4a278aa07cc8c7672651"
+    },
+    {
+      "path": "checks/fast-implementation-command.log",
+      "size": 13660,
+      "sha256": "b616a7c85682c2984cb4ec5f6cf1581c0b533c328faa998499dfc5e9475d0093"
+    },
+    {
+      "path": "checks/followup-tests-01.log",
+      "size": 1323,
+      "sha256": "cf5b86e178dba1d07badc2afdf84dd96d5cf35ddd520a2d512b1604df6a3984d"
+    },
+    {
+      "path": "checks/material-command.json",
+      "size": 969,
+      "sha256": "eaf7433390edef0bb1e2c4e13a3fd9d5aae3f3287eb12974f17c9b77d7e9de43"
+    },
+    {
+      "path": "checks/material-command.log",
+      "size": 2237,
+      "sha256": "a9ce9e883571510218082443ceebadf0bdcf16107a5763d197919a95eed113a3"
+    },
+    {
+      "path": "checks/material-repeat-command.json",
+      "size": 1047,
+      "sha256": "32cc9774a2e0b3dd48154878b92a79545431be654617982b6f912d0c53446451"
+    },
+    {
+      "path": "checks/material-repeat-command.log",
+      "size": 268,
+      "sha256": "a6d0f1874908329664d3492e78a3ec2af9e62317c37aacd77d686bebc78cd6c9"
+    },
+    {
+      "path": "checks/old-candidate-command.json",
+      "size": 1015,
+      "sha256": "83223ab9fbc1204e8a493ebde99fcc6c90dfa146ab1d6f76daef2ee6807548e2"
+    },
+    {
+      "path": "checks/old-candidate-command.log",
+      "size": 142,
+      "sha256": "d110bfb42199e29f7a87f797de5bff7dd71864cec402f43eb8d11f5b6c4e5ec9"
+    },
+    {
+      "path": "checks/old-candidate-read.json",
+      "size": 12469,
+      "sha256": "832a2e0e78b4d04ae45ed8b0791c9a848f03f846d688d59917de3402ad3e30f6"
+    },
+    {
+      "path": "checks/readonly.sb",
+      "size": 179,
+      "sha256": "877d3a3835e89a53ed5ed0e0e3ae265f3a264e28f171eb461c4a4d7d933374c0"
+    },
+    {
+      "path": "checks/scalability-command.json",
+      "size": 891,
+      "sha256": "8bee0fae459956a6dc3652ebdf4c16ee5fc56211f170726b0405d7bc20068584"
+    },
+    {
+      "path": "checks/scalability-command.log",
+      "size": 43,
+      "sha256": "aea0e91c3ba45dd88d06e41e3dae49c1f423320429c18e3b09b63ade4eba26f7"
+    },
+    {
+      "path": "checks/scalability.csv",
+      "size": 55,
+      "sha256": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+    },
+    {
+      "path": "checks/semantic-command.json",
+      "size": 884,
+      "sha256": "38a398e6e05c38abb7c41621e476f74c9a28d7367c99ac7fc87f4171cd6d55a0"
+    },
+    {
+      "path": "checks/semantic-command.log",
+      "size": 108,
+      "sha256": "8089ee08098079272d13128b914c9f0fe431b8df4f83c6d58dd555e6f1082bf5"
+    },
+    {
+      "path": "checks/semantic.json",
+      "size": 15089,
+      "sha256": "0a2a9046f1ea1420992e1807a4457d6f172a19399a98086b83ad1707076f34b2"
+    },
+    {
+      "path": "checks/trial-02-command.json",
+      "size": 833,
+      "sha256": "49351f59bde4650a25191eda075e3428c902d654389cdc789261a0d58f1cbce2"
+    },
+    {
+      "path": "checks/trial-02-command.log",
+      "size": 2430,
+      "sha256": "e825e7632adaf97632ed5a2cfd4e895cfffcaaea072d51bbf32312970d5848fe"
+    },
+    {
+      "path": "checks/trial-03-command.json",
+      "size": 832,
+      "sha256": "d1c622cc1d95c19a2fbc41da071c39d1d7cf822ad0f10344bb37aa9974caaa3b"
+    },
+    {
+      "path": "checks/trial-03-command.log",
+      "size": 524,
+      "sha256": "9dd418b6ce9d7fc70a41e7ce1a27c0524e2c063a9e4d2f0095af0fec6594bfc0"
+    },
+    {
+      "path": "checks/trial-command.json",
+      "size": 828,
+      "sha256": "eb7de020fac7b9e3e24a60a47cddcc8a5b51d9aa97f877c7b1515cb6721ec7cd"
+    },
+    {
+      "path": "checks/trial-command.log",
+      "size": 4103,
+      "sha256": "2df9b64bf8f7e020b5166050c1c8c29c3c61ff59fb1a22df4b6ad65e3a609659"
+    },
+    {
+      "path": "checks/unit-final-working.log",
+      "size": 3292,
+      "sha256": "cf61621a1c2eea17d88a8d2920e9fd8b853b62cdf420e513f7919d1bdb591111"
+    },
+    {
+      "path": "composition_assessments.json",
+      "size": 2846,
+      "sha256": "f16b85503db264d32872a47c5c40776dc4adb27bb76a7c1f7a2bf65deca4b0ba"
+    },
+    {
+      "path": "coverage.json",
+      "size": 184394,
+      "sha256": "3e88ed2dc72e55e1f0a3885075bde21c66eb31411da7ed107a9d7cce519e74d6"
+    },
+    {
+      "path": "coverage.md",
+      "size": 2603,
+      "sha256": "bb520a2c2ec99394e2f0072755ca88b4486c92cdb8a5f25bc7d7c4b5b8dfdfb4"
+    },
+    {
+      "path": "field-differences.json",
+      "size": 83181,
+      "sha256": "bc903f5231369b3014b2f2e4e448ff23c038f02605f24d82832823643fe19511"
+    },
+    {
+      "path": "measurement_relationships.json",
+      "size": 1416,
+      "sha256": "eedf303c47ef694521d10c676ae842888bc7c0e13f7651d3e5ad5d275707c0cc"
+    },
+    {
+      "path": "native/enphase_energy/manifest.json",
+      "size": 3357,
+      "sha256": "d3d73815ea2e9d4e51d921e55f3df3b26e1045b0195d8812924c527474b56328"
+    },
+    {
+      "path": "native/enphase_energy/records.jsonl",
+      "size": 8110,
+      "sha256": "7ea452ab3886985d92f9859912dcee4795f2b24c2b72db4956d00d95c093961d"
+    },
+    {
+      "path": "native/enphase_energy/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/enphase_energy/validation.json",
+      "size": 1079,
+      "sha256": "cee7fe43503bf9859ce80079b00df9af3f1b065c2e97a619aae60ac83d2eeabc"
+    },
+    {
+      "path": "native/enphase_energy-selection.json",
+      "size": 6993,
+      "sha256": "d8cdbb456942a21296d1a5c67b5b2c4110afca50329c136fc35a506ab6733bf8"
+    },
+    {
+      "path": "native/ford_motor_company/manifest.json",
+      "size": 3361,
+      "sha256": "6b798ae2237fef567f88a79b81e7a296cf7a02c002f144844e6b4ff2698f3cd6"
+    },
+    {
+      "path": "native/ford_motor_company/records.jsonl",
+      "size": 3292,
+      "sha256": "d485d1b0545a202115b040ac295bda671d56f204395d8718fa72d0b17984f473"
+    },
+    {
+      "path": "native/ford_motor_company/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/ford_motor_company/validation.json",
+      "size": 1079,
+      "sha256": "ec211c6d6d26b0c068296ece3719e37d4f779e90e12bb967c2312f0edcb4ca18"
+    },
+    {
+      "path": "native/ford_motor_company-selection.json",
+      "size": 7091,
+      "sha256": "74d9651e8e0be36ff3f05a3c1d9a031c0f7be984d7d90b814d4fdae13d677eab"
+    },
+    {
+      "path": "native/jpmorgan_chase/manifest.json",
+      "size": 3349,
+      "sha256": "b49d0ffba2e4971216d08a6f30cc636b624f3541c83982e74cdd2ada1e850fef"
+    },
+    {
+      "path": "native/jpmorgan_chase/records.jsonl",
+      "size": 3283,
+      "sha256": "4a7bd4eef6cfe8fcd1678f9f3dcf8fa8efe5c0790fbc6e470383a73f86a5e2ad"
+    },
+    {
+      "path": "native/jpmorgan_chase/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/jpmorgan_chase/validation.json",
+      "size": 1079,
+      "sha256": "53efc2422aaeb9ce5b42786e5e87fe77295018ada63bc3f9ed33b70f9dc77255"
+    },
+    {
+      "path": "native/jpmorgan_chase-selection.json",
+      "size": 7210,
+      "sha256": "6f205f2eb16f84d91f9c1b070f5a90b41121c2002b08ba247eabe758bbe24ca7"
+    },
+    {
+      "path": "native/lumen_technologies/manifest.json",
+      "size": 3367,
+      "sha256": "37fe005d401dbbde37cf751a9de403d6d1c32992f7ab74e6faf9c6db3cf338f7"
+    },
+    {
+      "path": "native/lumen_technologies/records.jsonl",
+      "size": 8656,
+      "sha256": "5f2af3a23558f7d98d84ca3d0892654f8523ccfcbf83338f271a2318854e5e41"
+    },
+    {
+      "path": "native/lumen_technologies/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/lumen_technologies/validation.json",
+      "size": 1079,
+      "sha256": "6824faeaf4cc1f58b2efdaa562139fbf7f3c625e9b6f4134e4c4ef0f3f978e68"
+    },
+    {
+      "path": "native/lumen_technologies-selection.json",
+      "size": 20898,
+      "sha256": "0a1475e544b8a01d4969566c87d5755107137340c03e25d97a53b2b82d6bafda"
+    },
+    {
+      "path": "native/macys/manifest.json",
+      "size": 3323,
+      "sha256": "7cec622acc9a402aab659221a4d5a73a0f7d3f93b902b2111ee4d1affb8cba80"
+    },
+    {
+      "path": "native/macys/records.jsonl",
+      "size": 3242,
+      "sha256": "1ccf9d7482377824a5158e06391c0a757b4e2f3f090ee4c880fc7f2c60bd8997"
+    },
+    {
+      "path": "native/macys/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/macys/validation.json",
+      "size": 1079,
+      "sha256": "4231e6fcdd8eac911a5d48271fa1f621591e70b23b6b4ef3411b4dd15a6ce832"
+    },
+    {
+      "path": "native/macys-selection.json",
+      "size": 7936,
+      "sha256": "28c8fe005ba01424d9dbe0f74acb4b4d886e2c7ac599a9eb5d32e1e76b747ba1"
+    },
+    {
+      "path": "native/marriott_international/manifest.json",
+      "size": 3394,
+      "sha256": "16076ccbb492c6b8dfbc9cbb1c92d1529e6704849876a09a5bc1a15dfb58b436"
+    },
+    {
+      "path": "native/marriott_international/records.jsonl",
+      "size": 6040,
+      "sha256": "71663de54bef728dda5ac43c93b249422db9ab7ee177bfcc1ba03d3f7af4e36e"
+    },
+    {
+      "path": "native/marriott_international/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/marriott_international/validation.json",
+      "size": 1079,
+      "sha256": "eb43d093c5694fbbfbc946a295db62c5d70c32921c92cd013e2e599739d68371"
+    },
+    {
+      "path": "native/marriott_international-selection.json",
+      "size": 9911,
+      "sha256": "b876abb73cb06aef8199375e7693512ef3905983513a78ef1b84743958654e8c"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/manifest.json",
+      "size": 3420,
+      "sha256": "c4eb4a26dcf86f176c1df9de50eadb9ef3fbaf5efc15821d7584af79d2e6dd7d"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/records.jsonl",
+      "size": 6357,
+      "sha256": "84ec9833152ceb741194d26fdd83a8738b484b33be4d2e1f0f371a744d4ca126"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/validation.json",
+      "size": 1079,
+      "sha256": "4f807920fa6074f403dd4f99ed131c234dca8a67be2e16ceb8b5c5a66828bb18"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global-selection.json",
+      "size": 11434,
+      "sha256": "52e1fa664d01af3b2fcd1732ce3b2e6ce5021d20abfad7dcca38ed445bdae94f"
+    },
+    {
+      "path": "native/pfizer/manifest.json",
+      "size": 3329,
+      "sha256": "5ff58301a3ade42adeae6c4d51550895bc5018bfe103ce0a95d0ec0694dff9a7"
+    },
+    {
+      "path": "native/pfizer/records.jsonl",
+      "size": 3250,
+      "sha256": "926cb0e9d4a3d3b9dc47ca70aea57f313c17dbf878906093799f287f831acf80"
+    },
+    {
+      "path": "native/pfizer/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/pfizer/validation.json",
+      "size": 1079,
+      "sha256": "98d9e0364892aa36eb2fd3c9ba9b501ee361edece1fb912833f9f45bfd76bab6"
+    },
+    {
+      "path": "native/pfizer-selection.json",
+      "size": 8747,
+      "sha256": "779f1fe0926a1c5779c5cf2d44ba348d338d08abecf90cb537ac9ae1815e7bfa"
+    },
+    {
+      "path": "native/salesforce/manifest.json",
+      "size": 3383,
+      "sha256": "7cb775cc4926a96670a37e5ba122897c7fc3da4df90a6bfff2f5a6f76c4f935b"
+    },
+    {
+      "path": "native/salesforce/records.jsonl",
+      "size": 3270,
+      "sha256": "6967681c8a04388f79ba6da067627b25ae9a16063ae1228c0b32a1cd3e1120f2"
+    },
+    {
+      "path": "native/salesforce/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/salesforce/validation.json",
+      "size": 1079,
+      "sha256": "09cab3b42531584584fba67424da5e7aeef24f2708e8866de60359369ff8ff92"
+    },
+    {
+      "path": "native/salesforce-selection.json",
+      "size": 8842,
+      "sha256": "4dd763b87baf04996e5d55d0b69b2f61e50861347e325b9d348756a31e8f18b8"
+    },
+    {
+      "path": "native/southwest_airlines/manifest.json",
+      "size": 3365,
+      "sha256": "9aea79abc3d175c41c97fabb64fd8b0a8e06cc3878b924795f95ee4cdc0bde4c"
+    },
+    {
+      "path": "native/southwest_airlines/records.jsonl",
+      "size": 7738,
+      "sha256": "6591fcc5e9baefa0420cf131dc0e10af05372480412f0eed5c5db9da1956545d"
+    },
+    {
+      "path": "native/southwest_airlines/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/southwest_airlines/validation.json",
+      "size": 1079,
+      "sha256": "e9299a8fa2b72f091f227da977e9d712254e4eeaf2b8f84e6487d5299d5207d6"
+    },
+    {
+      "path": "native/southwest_airlines-selection.json",
+      "size": 19324,
+      "sha256": "f1c457109fb1589f145e15681f7ac0512b33a05b4d731e1675b269a54c6fe1f3"
+    },
+    {
+      "path": "protection.json",
+      "size": 2343,
+      "sha256": "5c023e0c65a79dfdcb82516948d0e7796b93cf50a21933bfbc7f388e982ff4b4"
+    },
+    {
+      "path": "review/amendment-review/discovery-tests.log",
+      "size": 1323,
+      "sha256": "6752c90b80bd3b26faa83ba26bc66944ee5fa2701a05fd9e4e7afa72c18dd1f7"
+    },
+    {
+      "path": "review/amendment-review/increment-review.json",
+      "size": 2801,
+      "sha256": "e6e4e349f6b71c193b3ff9726098a22b46bc053d0b8aa98766a780651b8865ae"
+    },
+    {
+      "path": "review/amendment-review/increment-tests.json",
+      "size": 4075,
+      "sha256": "c7b0f176d1d07ebb783914cf0d6dc6e356daa00771145f1defe1da2c0dda7229"
+    },
+    {
+      "path": "review/amendment-review/paramount_skydance_paramount_global-amendment-normalized.txt",
+      "size": 160861,
+      "sha256": "0314ff5dfcd1ae0bb145723ddf61e8962ba9926258f4ad2031f3a37ef7ad89f6"
+    },
+    {
+      "path": "review/amendment-review/review_sources.py",
+      "size": 9292,
+      "sha256": "3df48a3eb9a5fed7d6f8901fec0bbed8e0209dd49f86c962545b8d2523c8c56f"
+    },
+    {
+      "path": "review/amendment-review/source-review.json",
+      "size": 42312,
+      "sha256": "235fa78368c6e888d63b811e7215c0948966fc5fd242c14c7a22ec8348d52cfe"
+    },
+    {
+      "path": "review/amendment-review/southwest_airlines-amendment-normalized.txt",
+      "size": 24093,
+      "sha256": "55e22e8d112ac5614a902aeb77d92a4476bbc7b6db6c882dad38a6b4146244b6"
+    },
+    {
+      "path": "review/amendment-review/test_increment.py",
+      "size": 5397,
+      "sha256": "535e468038c6bb47ae84b9ecc20968eef6df355c4f450eaa43af9eb785745600"
+    },
+    {
+      "path": "review/debt-review/README.md",
+      "size": 6555,
+      "sha256": "b06d43e5753bfc3ebfd0039f58c720167b475bdc519b52a8b53cb45166e0c3d8"
+    },
+    {
+      "path": "review/debt-review/build_review.py",
+      "size": 8412,
+      "sha256": "e7cd72aa25e62aab129fcf22d7fbf3a603af81652541e5f4c90dfdd85b180a1f"
+    },
+    {
+      "path": "review/debt-review/check_historical.py",
+      "size": 1239,
+      "sha256": "de6577c7ae755143a82a6a250324681c130b9d2a5e57b677b13bff98a1a8214d"
+    },
+    {
+      "path": "review/debt-review/check_measurement_code.py",
+      "size": 3451,
+      "sha256": "b128ac4b27a2469d6ad57a5b50bef685090c97cc952b1ada5404986040659079"
+    },
+    {
+      "path": "review/debt-review/check_measurement_code_fixed.py",
+      "size": 3457,
+      "sha256": "d4aa996bab0a14e775f2b4b15bdd7afa0b469ea0305a2e051be574ffba56c599"
+    },
+    {
+      "path": "review/debt-review/check_trial03.py",
+      "size": 1572,
+      "sha256": "d18d5c5487f2e7f20bde3f87b265042906a62dc87c4acfa05469d87e17787f7c"
+    },
+    {
+      "path": "review/debt-review/extract.py",
+      "size": 2588,
+      "sha256": "02c90e1b71334d56392abeb0051c83fe7ffa6499cbbc8284187048de50d7bec7"
+    },
+    {
+      "path": "review/debt-review/final-code-review.json",
+      "size": 3448,
+      "sha256": "555d87e167240e46b2d80ceacff970e09c139bccd653d27165e16de0a2dff4e3"
+    },
+    {
+      "path": "review/debt-review/final-followup-tests.log",
+      "size": 1870,
+      "sha256": "fc87f854ed2bb5fcf8e8b55835760593dcc24cb9a1eb931036f4c444979358c0"
+    },
+    {
+      "path": "review/debt-review/final-package-review.json",
+      "size": 16139,
+      "sha256": "d717605669d46839ec0da63778ec58fd11bdfa5e361efc8235bf481f2aa174f7"
+    },
+    {
+      "path": "review/debt-review/final_package_checks.py",
+      "size": 8380,
+      "sha256": "7b8508b62b4afa8c3396c6bee549e05651625f99b1205aa8e40a3e6011500348"
+    },
+    {
+      "path": "review/debt-review/historical-v1-native-replay.json",
+      "size": 3489,
+      "sha256": "fd9f4a2585ee09aaaf8035f3fe3c87d80da06c34134323c712e6cb0500e8e3e5"
+    },
+    {
+      "path": "review/debt-review/increment-short-tests.log",
+      "size": 2930,
+      "sha256": "5a3b02a1c414e6302d157d77ebbe69ad6ebedf011829bfc715b8014d8601203b"
+    },
+    {
+      "path": "review/debt-review/jpm-balance-sheet-excerpt.json",
+      "size": 1766,
+      "sha256": "b7cc5c9570bd060c6702dd1b21b2ca6f66654d34f38f86d54348466f3111e156"
+    },
+    {
+      "path": "review/debt-review/measurement-code-check.json",
+      "size": 56217,
+      "sha256": "a1f70670b02adb21c1c46539131ecb14cd17eae36890a186b68dbbe275e621bd"
+    },
+    {
+      "path": "review/debt-review/measurement-code-fixed-check.json",
+      "size": 62071,
+      "sha256": "7bf4e38bc4b6e3ff6e6bdc41e4b01daef8e45aea78098b5a94e571dad345a5b0"
+    },
+    {
+      "path": "review/debt-review/measurement-increment-review.json",
+      "size": 5076,
+      "sha256": "d479996fd259ad21cdabd5e27cd6771ffbd0de0543736d8c3d241fc4e14f89f2"
+    },
+    {
+      "path": "review/debt-review/raw-fact-index.json",
+      "size": 144473,
+      "sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c"
+    },
+    {
+      "path": "review/debt-review/review-index.json",
+      "size": 975,
+      "sha256": "8975922e9b9926a9034b77e31fde31d59b820b9fa53ac9c5edd95a4b2b608aac"
+    },
+    {
+      "path": "review/debt-review/source-index.json",
+      "size": 1835,
+      "sha256": "619b9805b0060142ca59736d40b10d4212ad63a9d2471a192d09a91051639f7d"
+    },
+    {
+      "path": "review/debt-review/trial03-native-replay.json",
+      "size": 5404,
+      "sha256": "93c2c514e2a368b5bef52c3ed1e992387c01856c0ddfafba394a7bbf8f9c0be6"
+    },
+    {
+      "path": "run-package-binding.json",
+      "size": 109806,
+      "sha256": "0c29eb7e11bb2387c774d4f2c1ce9be55b16564201e2bdfaa7460b389b92dd66"
+    },
+    {
+      "path": "version-comparison.json",
+      "size": 1960,
+      "sha256": "12fa09bad33f3efc928ba9cc56b704c2069b89c1775f555975cea2b0f0c22494"
+    }
+  ],
+  "hash_definition": "SHA-256 exact file bytes; index excludes itself; source raw bytes in essential ZIP via source-index"
+}

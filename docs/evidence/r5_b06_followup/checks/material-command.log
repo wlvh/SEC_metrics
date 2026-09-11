@@ -1,0 +1,23 @@
+test_complete_version_and_cold_sources (tests.vnext.test_r5_b06_material.B06MaterialTest.test_complete_version_and_cold_sources) ... ok
+test_old_debt_producer_unavailable_still_creates_native_result (tests.vnext.test_r5_b06_material.B06MaterialTest.test_old_debt_producer_unavailable_still_creates_native_result) ... ok
+test_production_switch_denied_and_repeat_prepare_reuses (tests.vnext.test_r5_b06_material.B06MaterialTest.test_production_switch_denied_and_repeat_prepare_reuses) ... ERROR
+test_removing_scope_source_and_rehashing_run_is_rejected (tests.vnext.test_r5_b06_material.B06MaterialTest.test_removing_scope_source_and_rehashing_run_is_rejected) ... ok
+test_saved_source_rewrite_cannot_self_sign_origin (tests.vnext.test_r5_b06_material.B06MaterialTest.test_saved_source_rewrite_cannot_self_sign_origin) ... ok
+
+======================================================================
+ERROR: test_production_switch_denied_and_repeat_prepare_reuses (tests.vnext.test_r5_b06_material.B06MaterialTest.test_production_switch_denied_and_repeat_prepare_reuses)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_material.py", line 53, in test_production_switch_denied_and_repeat_prepare_reuses
+    result=release.prepare(candidate_root=self.root);self.assertEqual('REUSED_COMPLETE_CANDIDATE',result['status']);self.assertEqual(self.saved['publication_id'],result['publication_id'])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_publication.py", line 159, in prepare
+    root=safe_root(candidate_root);need(not subprocess.check_output(['git','status','--porcelain','--untracked-files=all'],cwd=ROOT).strip(),'R5_CLEAN_CODE_REQUIRED')
+                                   ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: R5_CLEAN_CODE_REQUIRED
+
+----------------------------------------------------------------------
+Ran 5 tests in 99.705s
+
+FAILED (errors=1)

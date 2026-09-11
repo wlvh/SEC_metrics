@@ -1,0 +1,41 @@
+{
+  "reviewer": "independent Codex subtask /root/amendment_review",
+  "review_status": "NO_BLOCKING_FINDINGS_IN_AMENDMENT_AND_DISCOVERY_INCREMENT",
+  "created_at": "2026-09-11T05:01:55.977855+00:00",
+  "actual_checked_code_hashes": {
+    "scripts/vnext/r5_b06_amendments.py": "3dd1b2a43c4348f1a008d7db9d841ff040afdb41bf0acf5e74604f92815578b2",
+    "scripts/vnext/r5_b06_structured.py": "d04573242aa0b3a7a0b24ec162bd277beaff5ddffb9e7b7599dd40a27a234a6d",
+    "scripts/vnext/r5_b06_publication.py": "bdf85d6c32dbebc293098d1613065126f2d852c76886b22a40cf76d7639d8c1a",
+    "tests/vnext/test_r5_b06_followup.py": "6d552a22210954765f32fc13c5f1b13e95b7a73eada8a4dae190963c444a3755"
+  },
+  "performed": [
+    "Read actual amendment assessment implementation and publication adoption call site",
+    "Executed 19 positive/negative cases over complete actual saved original/amendment bytes and explicit synthetic I/O/low-level boundary inputs",
+    "Executed repository discovery regression module:5 tests",
+    "Verified amendment decision file SHA is pinned in policy and current Requirement file authority",
+    "Checked v1 dispatch remains for historical stored Spec, v2 validates annual metadata before selection and amendment filtering; noncalendar positive remains valid"
+  ],
+  "actual_tests": {
+    "amendment": "increment-tests.json",
+    "amendment_sha256": "c7b0f176d1d07ebb783914cf0d6dc6e356daa00771145f1defe1da2c0dda7229",
+    "discovery": "discovery-tests.log",
+    "discovery_log_sha256": "6752c90b80bd3b26faa83ba26bc66944ee5fa2701a05fd9e4e7afa72c18dd1f7"
+  },
+  "reasoning": [
+    "Assessment begins with immutable source byte pair lookup in a hash-pinned reviewed evidence file; matching accession/company without those source bytes grants nothing.",
+    "Identity and complete body semantic footprint checked after full-source match. Financial facts/sections add structural rejection rather than substituting for review.",
+    "Original native as-filed input blockers and Run remain unchanged; only new projection adoption records no-impact evidence.",
+    "Future changed sources or unknown/missing amendments remain unresolved. This is a specific source-impact determination, not universal PartIII or hyperlink exemption.",
+    "Date discovery prechecks all10-K/10-KA fields before sort/filter; unknown history coverage blocks explicitly, while noncalendar fiscal ends accepted."
+  ],
+  "scope_limits": [
+    "No independent complete publication/native Run replay in this increment",
+    "Review does not adjudicate current carrying-debt implementation or other five issuers",
+    "New amendment tests executed externally by reviewer; parent should retain short appropriate boundary coverage in CI without claiming external logs are CI"
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "run_id": 34565142432,
+  "head": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "log_sha256": "7c873c5dd2d4a6a06b5d295aa78c5f31038327cded43404687a26a427ffe681d",
+  "status": "PASSED",
+  "actual_entries": 46,
+  "b06_actual_tests": [
+    {
+      "duration_seconds": 1.625,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 9 tests in 0.093s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_r5_b06.B06PrimaryTest"
+    },
+    {
+      "duration_seconds": 8.857,
+      "return_code": 0,
+      "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 7.511s\n\nOK\n",
+      "stdout_tail": "",
+      "test": "tests.vnext.test_r5_b06_followup"
+    }
+  ]
+}
