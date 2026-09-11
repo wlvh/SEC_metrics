@@ -142,7 +142,7 @@ def _records(data_root,selected):
     for role,p in zip(['submissions','companyfacts','accession_xbrl','target_primary'],selected['proofs']):
         _verify_source(data_root,p)
         blob=raw_blob_record(repo_root=data_root,repo_relative_path=p['request_repo_relative_path'],media_type='application/json' if role in {'submissions','companyfacts'} else 'application/xml' if role=='accession_xbrl' else 'text/html')
-        ref=source_reference_record(raw_blob=blob,company_id=selected['company_id'],source_url=p['source_url'],accession=p['accession'],document_name=p['document_name'],source_role=role,request_attempt_id=p['request_attempt_id']);records.extend([blob,ref])
+        ref=source_reference_record(raw_blob=blob,company_id=selected['company_id'],source_url=p['source_url'],accession=selected['filing']['accessionNumber'],document_name=p['document_name'],source_role=role,request_attempt_id=p['request_attempt_id']);records.extend([blob,ref])
     return records
 
 
