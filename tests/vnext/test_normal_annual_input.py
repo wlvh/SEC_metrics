@@ -90,16 +90,57 @@ class NormalAnnualInputTest(unittest.TestCase):
                                     "ANNUAL_DURATION_NOT_IMPLEMENTED"):
             normal.annual_period(raw=changed, cik=company["primary_cik"], filing=filing)
 
-    def test_ten_company_inspection_keeps_unsupported_subject_and_continues(self):
+    def test_ten_company_inspection_preserves_successor_scope(self):
         with independent_inputs():
             result = normal.inspect_saved_annual_inputs(repo_root=ROOT)
         self.assertEqual(10, len(result["companies"]))
         by_id = {c["company_id"]: c for c in result["companies"]}
-        gap = by_id["paramount_skydance_paramount_global"]
-        self.assertEqual("IMPLEMENTATION_GAP", gap["category"])
-        self.assertEqual("ENTITY_CONTINUITY_NOT_IMPLEMENTED", gap["reason"])
+        transition = by_id["paramount_skydance_paramount_global"]["prepared_input"]
+        self.assertEqual("SUCCESSOR_REGISTRANT_ONLY", transition["subject_policy"]["mode"])
+        self.assertEqual("2041610", transition["entity"])
+        self.assertFalse(transition["subject_policy"]["cross_entity_combination_authorized"])
+        self.assertTrue(transition["amendments"])
         self.assertEqual("ORIGINAL_INPUT_READY", by_id["enphase_energy"]["status"])
         self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, result["calls"])
+
+    def _assert_registry_slice(self, start, stop):
+        companies = normal._registry_rows(repo_root=ROOT)[start:stop]
+        with independent_inputs(), patch.object(normal, "_registry_rows", return_value=companies):
+            result = normal.inspect_saved_annual_inputs(repo_root=ROOT)
+        self.assertEqual([c["company_id"] for c in companies],
+                         [c["company_id"] for c in result["companies"]])
+        for row in result["companies"]:
+            self.assertIn(row["status"], {"ORIGINAL_INPUT_READY",
+                                          "AMENDMENT_PROCESSING_REQUIRED",
+                                          "SUBJECT_TRANSITION_INPUT_READY"})
+            self.assertEqual("10-K", row["prepared_input"]["filing"]["form"])
+            self.assertFalse(row["prepared_input"]["current_latest_verified"])
+            if row["company_id"] == "paramount_skydance_paramount_global":
+                policy = row["prepared_input"]["subject_policy"]
+                self.assertEqual("SUCCESSOR_REGISTRANT_ONLY", policy["mode"])
+                self.assertTrue(policy["per_metric_statement_scope_required"])
+                self.assertFalse(policy["cross_entity_combination_authorized"])
+        self.assertEqual({"provider": 0, "paid": 0, "sec": 0}, result["calls"])
+
+    def test_first_five_company_inputs_with_same_source_checks(self):
+        self._assert_registry_slice(0, 5)
+
+    def test_remaining_company_inputs_preserve_transition_and_continue(self):
+        self._assert_registry_slice(5, 10)
+
+    def test_unknown_subject_policy_isolated_without_using_predecessor(self):
+        companies = normal._registry_rows(repo_root=ROOT)
+        changed = copy.deepcopy(companies[-2:])
+        changed[0]["entity_continuity_status"] = "unresolved_transition"
+        with independent_inputs(), patch.object(normal, "_registry_rows", return_value=changed):
+            result = normal.inspect_saved_annual_inputs(repo_root=ROOT)
+        self.assertEqual("IMPLEMENTATION_GAP", result["companies"][0]["category"])
+        self.assertEqual("ORIGINAL_INPUT_READY", result["companies"][1]["status"])
+        company, payload = metadata("paramount_skydance_paramount_global")
+        payload["cik"] = company["related_ciks"]
+        with self.assertRaisesRegex(normal.NormalAnnualInputError,
+                                    "SUBMISSIONS_ENTITY_CONFLICT"):
+            normal.select_filing(company=company, submissions=payload)
 
     def test_later_source_failure_is_not_relabelled_as_old_success(self):
         with patch.object(normal, "saved_source", side_effect=normal.AnnualUpdateError(
@@ -125,6 +166,11 @@ class NormalAnnualInputTest(unittest.TestCase):
                     normal.NormalAnnualInputError, "DEI_FISCAL_YEAR_CONFLICT") as caught:
                 normal.annual_period(raw=changed, cik=company["primary_cik"], filing=filing)
             self.assertEqual("SOURCE_INTEGRITY_ERROR", caught.exception.category)
+        spoofed = re.sub(rb'xmlns:dei="https?://xbrl\.sec\.gov/dei/[0-9]{4}"',
+                         b'xmlns:dei="https://example.test/dei-lookalike"', item["raw"])
+        self.assertNotEqual(item["raw"], spoofed)
+        with self.assertRaisesRegex(normal.NormalAnnualInputError, "DEI_MISSING_OR_AMBIGUOUS"):
+            normal.annual_period(raw=spoofed, cik=company["primary_cik"], filing=filing)
         payload["cik"] = "not-a-number"
         with self.assertRaisesRegex(normal.NormalAnnualInputError,
                                     "SOURCE_ENTITY_INVALID") as caught:

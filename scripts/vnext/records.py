@@ -20,6 +20,7 @@ from .requirement_profile_v1 import SUCCESSOR_RECORD_TYPES
 
 IDENTIFIER_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9:_./-]{2,255}$")
 SOURCE_BOUND_CANDIDATE_TYPE = "SOURCE_BOUND_OBSERVATION_CANDIDATE"
+DETERMINISTIC_TEXT_CANDIDATE_TYPE = "DETERMINISTIC_TEXT_CANDIDATE"
 SOURCE_BOUND_CANDIDATE_FIELDS = (
     "artifact_requirement_generation", "requirement_id", "requirement_closure_hash",
     "requirement_hashes", "native_candidate_hash", "source_bound_proof_id",
@@ -159,7 +160,8 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "spec_closure_hash",
             "execution_semantics_hash",
             "result_contract_hash",
-        )
+        ),
+        optional=("value_kind",),
     ),
     "METRIC_RESULT": RecordSchema(
         required=(
@@ -178,7 +180,8 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "value",
             "unit",
             "trace_id",
-        )
+        ),
+        optional=("value_kind", "text_payload"),
     ),
     "OBSERVATION_CANDIDATE": RecordSchema(
         required=(
@@ -348,7 +351,8 @@ SCHEMAS: Dict[str, RecordSchema] = {
             "quality",
             "source_binding",
             "approval_effect_hash",
-        )
+        ),
+        optional=("value_kind",),
     ),
 }
 
@@ -381,6 +385,13 @@ SCHEMAS[ANNUAL_PUBLICATION_MANIFEST_TYPE] = RecordSchema(
 SCHEMAS[SOURCE_BOUND_CANDIDATE_TYPE] = RecordSchema(
     required=SCHEMAS["OBSERVATION_CANDIDATE"].required + SOURCE_BOUND_CANDIDATE_FIELDS,
 )
+SCHEMAS[DETERMINISTIC_TEXT_CANDIDATE_TYPE] = RecordSchema(
+    required=tuple(field for field in SCHEMAS["OBSERVATION_CANDIDATE"].required
+                   if field not in {"attempt_id", "assistant_output_sha256"}) + (
+        "method", "spec_semantic_hash", "spec_closure_hash", "source_set_hash",
+        "document_bindings", "calculation_target",
+    ),
+)
 
 SCHEMAS[R4_SCOPED_RUN_TYPE] = RecordSchema(
     required=SCHEMAS["SUCCESSOR_RUN"].required + ("r4_execution_binding", "task_contract_bindings"),
@@ -408,6 +419,9 @@ SCHEMAS[R4_SCOPED_ATTEMPT_TYPE] = RecordSchema(
 
 
 TEXT_FIELDS = {
+    "value_kind",
+    "method",
+    "source_set_hash",
     "artifact_requirement_generation",
     "accession",
     "applicability",
@@ -554,6 +568,7 @@ LIST_FIELDS = {
     "unresolved_scope_dimensions",
 }
 MAPPING_FIELDS = {
+    "document_bindings",
     "r4_structured_binding",
     "r4_binding",
     "r4_execution_binding",
@@ -623,6 +638,10 @@ def metric_result_contract_hash(*, result: Mapping[str, object]) -> str:
     body = {
         field: result[field] for field in METRIC_RESULT_CONTRACT_FIELDS
     }
+    if "value_kind" in result or "text_payload" in result:
+        if result.get("value_kind") != "TEXT_V1" or "text_payload" not in result:
+            raise RecordError("Text result contract marker/payload is incomplete")
+        body.update(value_kind=result["value_kind"], text_payload=result["text_payload"])
     return content_hash(value=body)
 
 
@@ -666,6 +685,7 @@ def _validate_field_types(*, record: Mapping[str, object]) -> None:
             or (field in MAPPING_FIELDS and type(value) is dict)
             or (field in INTEGER_FIELDS and type(value) is int)
             or (field in BOOLEAN_FIELDS and type(value) is bool)
+            or (field == "text_payload" and (value is None or type(value) is dict))
         )
         if not valid:
             raise RecordError(
@@ -816,6 +836,9 @@ def _expected_identifier(
         ``(field, expected_id)`` for content-addressed records, otherwise
         ``None`` for externally/randomly identified audit objects.
     """
+    if record_type == DETERMINISTIC_TEXT_CANDIDATE_TYPE:
+        body = {key: value for key, value in record.items() if key not in {"candidate_hash", "status"}}
+        return "candidate_hash", content_hash(value=body)
     if record_type == "SOURCE_REFERENCE":
         body = {
             key: record[key]
@@ -939,6 +962,8 @@ def _expected_identifier(
                 "source_binding",
             )
         }
+        if "value_kind" in record:
+            body["value_kind"] = record["value_kind"]
         return "observation_id", content_hash(value=body)
     if record_type == "EXECUTION_TRACE":
         body = {
@@ -955,6 +980,8 @@ def _expected_identifier(
                 "result_contract_hash",
             )
         }
+        if "value_kind" in record:
+            body["value_kind"] = record["value_kind"]
         return "trace_id", content_hash(value=body)
     if record_type == "METRIC_RESULT":
         body = {
@@ -975,6 +1002,8 @@ def _expected_identifier(
                 "trace_id",
             )
         }
+        if "value_kind" in record or "text_payload" in record:
+            body.update(value_kind=record.get("value_kind"), text_payload=record.get("text_payload"))
         return "result_id", content_hash(value=body)
     if record_type == "VALIDATION_RECEIPT":
         body = {
@@ -1164,11 +1193,24 @@ def _validate_record_semantics(
         RecordError: When a caller-crafted record bypasses a constructor's
             temporal, sampling, or raw-byte invariants.
     """
+    if record_type == DETERMINISTIC_TEXT_CANDIDATE_TYPE:
+        from .text_results import validate_deterministic_candidate_shape
+        try:
+            validate_deterministic_candidate_shape(candidate=record)
+        except ValueError as error:
+            raise RecordError(str(error)) from error
+    text_value = "value_kind" in record or "text_payload" in record
+    if text_value:
+        from .text_results import validate_text_record
+        try:
+            validate_text_record(record=record)
+        except ValueError as error:
+            raise RecordError(str(error)) from error
     if record_type == "RUN":
         validate_run_coordinates(
             target_period=record["target_period"],
             company_traits=record["company_traits"],
-            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10"},
+            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10", "issue_28_v11"},
         )
     if record_type == "AI_EXTRACTION_ATTEMPT":
         observation = record["transport_observation"]
@@ -1566,14 +1608,15 @@ def _validate_record_semantics(
             for field in required_binding
         ):
             raise RecordError("Observation source binding is incomplete")
-        try:
-            normalized = decimal_text(
-                value=parse_decimal(value=str(record["value"]))
-            )
-        except CanonicalError as error:
-            raise RecordError("Observation value is invalid") from error
-        if normalized != record["value"] or not record["unit"]:
-            raise RecordError("Observation value/unit is not canonical")
+        if not text_value:
+            try:
+                normalized = decimal_text(
+                    value=parse_decimal(value=str(record["value"]))
+                )
+            except CanonicalError as error:
+                raise RecordError("Observation value is invalid") from error
+            if normalized != record["value"] or not record["unit"]:
+                raise RecordError("Observation value/unit is not canonical")
     if record_type == "DETERMINISTIC_VERIFIED_CLAIM":
         if (
             not record["claim_kind"]
@@ -1619,7 +1662,7 @@ def _validate_record_semantics(
             or all(type(value) is str and value for value in source_values)
         ):
             raise RecordError("Trace source target is incomplete")
-    if record_type in {"EXECUTION_TRACE", "METRIC_RESULT"}:
+    if record_type in {"EXECUTION_TRACE", "METRIC_RESULT"} and not text_value:
         value = record["result"] if record_type == "EXECUTION_TRACE" else (
             record["value"]
         )

@@ -48,6 +48,26 @@ def _cik(value):
     return int(value)
 
 
+def _subject_policy(company):
+    primary = str(_cik(company["primary_cik"]))
+    related = [str(_cik(c)) for c in company["related_ciks"].split(";") if c]
+    roles = company["roles"].split(";")
+    if (company["entity_continuity_status"] == "continuous" and not related
+            and roles == ["primary:" + primary]):
+        return {"mode": "CONTINUOUS_PRIMARY", "selected_cik": primary,
+                "cross_entity_combination_authorized": False}
+    _need(company["entity_continuity_status"] == "successor_predecessor"
+          and related and len(related) == len(set(related)) and primary not in related
+          and set(roles) == {"successor:" + primary,
+                             *("predecessor:" + c for c in related)}
+          and len(roles) == 1 + len(related),
+          "ENTITY_CONTINUITY_NOT_IMPLEMENTED", "IMPLEMENTATION_GAP")
+    return {"mode": "SUCCESSOR_REGISTRANT_ONLY", "selected_cik": primary,
+            "related_predecessor_ciks": related,
+            "cross_entity_combination_authorized": False,
+            "per_metric_statement_scope_required": True}
+
+
 def select_filing(*, company, submissions):
     """Select the latest ordinary period; amendments remain separate inputs.
 
@@ -55,9 +75,7 @@ def select_filing(*, company, submissions):
     a saved Result, a requested accession, or a per-company sample whitelist.
     Relevant missing history is a source-availability failure, not no change.
     """
-    _need(company["entity_continuity_status"] == "continuous"
-          and not company["related_ciks"], "ENTITY_CONTINUITY_NOT_IMPLEMENTED",
-          "IMPLEMENTATION_GAP")
+    _subject_policy(company)
     _need(_cik(submissions["cik"]) == _cik(company["primary_cik"]),
           "SUBMISSIONS_ENTITY_CONFLICT")
     recent = submissions["filings"]["recent"]
@@ -112,11 +130,18 @@ def select_filing(*, company, submissions):
 def annual_period(*, raw, cik, filing):
     """Read the actual annual interval and fiscal label from DEI contexts."""
     parsed = parse_accession_xbrl_source(raw_bytes=raw)
+    from .governance_signals import _FactAttributes
+    metadata = _FactAttributes()
+    metadata.feed(raw.decode("utf-8-sig"))
+    metadata.close()
+    _need(metadata.ordinal == len(parsed.facts), "DEI_ATTRIBUTE_STREAM_CONFLICT")
     contexts = []
 
     def dei(name):
-        facts = [f for f in parsed.facts if f["qualified_name"].casefold()
-                 == ("dei:" + name).casefold()]
+        facts = [f for f in parsed.facts
+                 if metadata.facts[f["ordinal"]]["concept"][1].casefold() == name.casefold()
+                 and re.fullmatch(r"https?://xbrl\.sec\.gov/dei/\d{4}",
+                                  metadata.facts[f["ordinal"]]["concept"][0])]
         pairs = {(f["text"].strip(), f["context_ref"]) for f in facts}
         _need(len(pairs) == 1, "DEI_MISSING_OR_AMBIGUOUS:" + name)
         value, ref = next(iter(pairs))
@@ -167,9 +192,7 @@ def prepare_saved_annual_input(*, repo_root: Path, company_id: str):
                  if c["company_id"] == company_id]
     _need(len(companies) == 1, "COMPANY_NOT_UNIQUE", "IMPLEMENTATION_GAP")
     company = companies[0]
-    _need(company["entity_continuity_status"] == "continuous"
-          and not company["related_ciks"], "ENTITY_CONTINUITY_NOT_IMPLEMENTED",
-          "IMPLEMENTATION_GAP")
+    subject_policy = _subject_policy(company)
     cik = int(company["primary_cik"])
 
     def read(url, accession=""):
@@ -200,6 +223,7 @@ def prepare_saved_annual_input(*, repo_root: Path, company_id: str):
                 "request_attempt_id": proof["request_attempt_id"]}
 
     body = {"company_id": company_id, "entity": str(cik), **selection,
+            "subject_policy": subject_policy,
             "companyfacts_input": arguments(facts),
             "table_input": {**arguments(primary), "source_media_type": "text/html",
                             "source_role": "target_primary"},
@@ -207,7 +231,10 @@ def prepare_saved_annual_input(*, repo_root: Path, company_id: str):
             "selection_rule": "LATEST_ORDINARY_PERIOD_IN_SAVED_SUBMISSIONS",
             "source_evidence": "LEDGER_BOUND_SAVED_BYTES",
             "update_status": ("AMENDMENT_PROCESSING_REQUIRED"
-                              if selection["amendments"] else "ORIGINAL_INPUT_READY"),
+                              if selection["amendments"] else
+                              "SUBJECT_TRANSITION_INPUT_READY"
+                              if subject_policy["mode"] == "SUCCESSOR_REGISTRANT_ONLY"
+                              else "ORIGINAL_INPUT_READY"),
             "current_latest_verified": False,
             "execution": "NOT_EXECUTED", "production_authorized": False}
     return {**body, "input_id": content_hash(value=body)}

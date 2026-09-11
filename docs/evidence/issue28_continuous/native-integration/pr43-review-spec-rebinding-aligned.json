@@ -1,0 +1,93 @@
+{
+  "kind": "INDEPENDENT_SPEC_REBINDING_TEST",
+  "real_calls": [
+    0,
+    0,
+    0
+  ],
+  "test_root": "/tmp/sec_metrics_issue28_continuous/pr43-review/native-review/data-current",
+  "status": "ACCEPTED_COMPLETE_NATIVE_REPLAY",
+  "metric_id": "B06",
+  "value_kind": "TEXT_V1",
+  "result_value_prefix": "Risks Relating to Our Industry\nOur industry is highly competitive, which may impact our ability to compete successfully for guests\nEconomic and other global, national, and regional conditions and events have in the past ",
+  "observation_count": 34,
+  "spec_path": "catalog/r6/B06_unapproved_text.md",
+  "scope": {
+    "entity_scope": "registrant"
+  },
+  "system_eligible": true,
+  "reviewer_type": "SYSTEM",
+  "manifest": {
+    "record_type": "SUCCESSOR_RUN",
+    "status": "OPEN",
+    "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validation_file_hash": "47ea8f11d8501e367cfa0d512809447eb577be4e9f651717e09485fbf29e1af3",
+    "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "run_id": "run:TEST_ONLY:unapproved-text-spec-B06",
+    "company_id": "marriott_international",
+    "company_traits": [
+      "lodging",
+      "non_financial"
+    ],
+    "target_period": {
+      "fiscal_year": 2025,
+      "period_start": "2025-01-01",
+      "period_end": "2025-12-31"
+    },
+    "source_references": [
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:740a7fa65e7bd3e2d402218aaadbbbf80b316e94df557db8b7114080e93abc7b",
+        "raw_asset_id": "sha256:e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+        "accession": "0001048286-26-000007",
+        "document_name": "CIK0001048286.json",
+        "source_role": "submissions",
+        "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:40127921b5837f721fb7ec41028d9eeeefb0855d09261b0fef4a1985f5298d4b",
+        "raw_asset_id": "sha256:c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "company_id": "marriott_international",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "source_role": "target_primary",
+        "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1"
+      },
+      {
+        "record_type": "SOURCE_REFERENCE",
+        "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+        "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "company_id": "marriott_international",
+        "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+        "accession": "0001048286-26-000007",
+        "document_name": "CIK0001048286.json",
+        "source_role": "companyfacts",
+        "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+      }
+    ],
+    "missing_required_source_roles": [],
+    "spec_file_hashes": {
+      "catalog/r6/B06_unapproved_text.md": "5387af49f6c6bddb73a2063a41237fb71fdb2a0da9747a1aeeb1c7f18687e0a1"
+    },
+    "requirement_hashes": {
+      "baseline_sha256": "ce42ab4cd6aa227257a07ab9293ee67781b190cffcf4ed4b991b7383352639fd",
+      "contract_sha256": "b5c987e31a3d2f87f2f9e8e224c24616599cc92ea7a68e9c35a6b752a742bda3",
+      "decision_register_sha256": "67c4a9f3474343c166a2c216a3dbd1a5727804c3a083447bbbef5516b7f3aa44",
+      "invariant_profile_sha256": "583fadab2d2a81468132e60883f14177cf04e3d4879cea8e5b5e5724ac846e2d",
+      "transfer_manifest_sha256": "286aa59a4022130164ae919bc5eef729f622037956a92398e344c310ddec81b9",
+      "parent_requirement_closure_hash": "sha256:81609980645b02c6e0565358eb41cb900eebb54964c545ce38c411d8abee4bcc",
+      "validator_sha256": "601cbab19bcf1a83b3fc20c8684452ce519a034abb20a4939eba1a5ed8c5ecc0"
+    },
+    "requirement_closure_hash": "sha256:e0dadd8ef78e06354f26675417db4eac9770992024e8424b5dec3e1ea0f6e1d5",
+    "requirement_id": "issue_28_v11",
+    "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+    "task_contract_bindings": [],
+    "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+  }
+}

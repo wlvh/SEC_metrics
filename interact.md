@@ -357,3 +357,8 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 
 `tools/vnext_normal_update.py`只读取保存材料并列出所有配置公司。`ORIGINAL_INPUT_READY`表示普通原件参数已准备，`AMENDMENT_PROCESSING_REQUIRED`表示同期间修订尚需处理，两者都不是本期指标完成；`current_latest_verified=false`明确没有进行新SEC检查。`INPUT_BLOCKED`分别保留来源不可得、请求失败、完整性问题、实现缺口或实现错误，不归为公司未披露。Paramount前后继主体接续仍是开发责任，其余公司继续检查。输出不改变正式版本，也不自动启动模型。
 <!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
+
+普通候选开发可在保存材料上检查薪酬、审计师变更与风险标题。薪酬保留披露实际覆盖期间，不把交易后数月金额冒充全年；缺少可比前期或来源获取失败，不显示“无变更”。风险标题输出是公司原文摘录，并附原始定位，不表示该风险已经发生。候选结果和完整正式发布保持分别可见，本轮尚未接入正式结果更新。
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->

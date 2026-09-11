@@ -14,10 +14,88 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.normal_saved_source_admission",
+        "type": "capability",
+        "status": "active",
+        "statement": "已保存来源导入必须逐字节匹配随实现固定的获取基线，再重验真实账本和body/header证明；调用者自行替换账本、注册表或基线不获准入。该入口不获取新SEC材料，不复活额度，只承认既存获取记录。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_source_authority.py::NormalSourceAuthorityTest.test_no_git_import_rechecks_bytes_and_rejects_caller_baseline",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.native_text_source_excerpts",
+        "type": "capability",
+        "status": "active",
+        "statement": "显式TEXT_V1在原有Observation、Trace、Result中保存有序原文摘录，D01确定性候选必须从完整Item1A重新导出全部标题并经过同一ReviewUnit。原生Run重读原始来源、Spec和审阅集合；Projector按原文输出文本和各自字节定位，禁止数值倍率和伪造摘要。不是风险发生判断，完整公开包与正式采纳仍未完成。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_text_results.py::TextResultTest.test_existing_projector_preserves_text_and_each_original_excerpt",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.normal_governance_input",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通治理输入从真实保存清单自动发现当前代理材料、同CIK先前年报、修订和8K/8K-A；保留最后请求失败及历史清单不一致，不能据此输出无变更。C03优先ECD PEO实际Total，表格后继保留明确Covered Period；C04需要可比审计师和完整事件集。当前组件及原生候选不证明实时更新或生产完成。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_governance_input.py::NormalGovernanceBoundaryTest.test_later_failed_get_never_falls_back_to_success",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.financial_source_measurement_period",
+        "type": "capability",
+        "status": "active",
+        "statement": "从同一原件的指标行、列头及其相邻引用脚注重建百分比金融指标实际期间；年报财年、单一日期及average字样不能证明全年。明确支持完整日历月期间，来源限定、缺失或冲突保留未解决；只提供可重算的期间组件证据，不自动选表、不改变指标语义、不授原生Run或发布信用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_financial_duration.py::FinancialDurationTest.test_original_quarter_is_positive_and_annual_claim_is_rejected",
+        "test_status": "automated_recorded",
+        "since": "2026-09-11"
+      },
+      {
+        "anchor_id": "CAPABILITY.source_text_coverage",
+        "type": "capability",
+        "status": "active",
+        "statement": "从同一保存SEC原件、RawBlob/SourceReference和DEI重建Item1A/3/8可见文本与UTF-8字节定位，排除目录并识别片段、未闭合范围及修订来源集缺口。命中与检查范围分别表示，未命中不自行等于未披露或无风险；当前组件不生成正式文本MetricResult。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_text_coverage.py::TextCoverageTest.test_found_and_complete_are_separate_with_exact_source_span",
+        "test_status": "automated_recorded",
+        "since": "2026-09-11"
+      },
+      {
+        "anchor_id": "CAPABILITY.b06_successor_content_checks",
+        "type": "capability",
+        "status": "active",
+        "statement": "B06显式v2内容校验在既有有限关系计算上核对primary/XML的当前分子分母、已知债务的其他计量及限定借款叙述。两旧原件与新信用协议组可自动重算，金额冲突、未知当期借款和集合遗漏被拒绝。旧v1/Run不改；组件尚不证明十公司B06全能力或原生采纳/生产完成。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_b06_disclosure_v2.py::B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes",
+        "test_status": "automated_recorded",
+        "since": "2026-09-11"
+      },
+      {
         "anchor_id": "CAPABILITY.normal_annual_input_selection",
         "type": "capability",
         "status": "active",
-        "statement": "从保存SEC清单及原件DEI/context自动选择连续主体的最新普通10-K及实际财年，支持自然年、非自然年和52/53周年，不使用固定样本、旧Result或人工答案。修订、来源失败和实现缺口分别保留并继续其他公司。输出只为现有Run准备参数，不发业务请求、不授来源准入、不执行指标或生产发布；主体接续仍未实现，current_latest_verified保持false。",
+        "statement": "从保存SEC清单及原件DEI/context自动选择配置主体的最新普通10-K及实际财年，支持自然年、非自然年和52/53周年，不使用固定样本、旧Result或人工答案。修订、来源失败和实现缺口分别保留并继续其他公司。输出只为现有Run准备参数，不发业务请求、不授来源准入、不执行指标或生产发布；接续主体只准备当前注册人原件，不拼接前身财务或自动证明可比性；current_latest_verified保持false。",
         "audience": [
           "developer",
           "operator",
@@ -158,7 +236,11 @@
         "type": "capability",
         "status": "active",
         "statement": "annual_input.prepare_annual_input从registry、保存的submissions、request ledger、原始10-K的DEI事实和Company Facts准备既有Run入口参数，不读取旧指标/证据表。当前仅支持continuous primary实体、日历财年、current submissions block内唯一未修订10-K；跨补充分片、歧义、缺失或期间冲突明确失败。Marriott FY2023/2024/2025结构化候选及FY2025 exact-request recorded B10只证明本地接线；不提供LIVE授权、在线发现、去重服务或正式发布。",
-        "audience": ["developer", "operator", "reviewer"],
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_annual_input.py::AnnualInputTest.test_raw_inputs_reach_b01_and_exact_recorded_b10",
         "test_status": "automated_recorded",
         "since": "2026-09-08"
@@ -168,7 +250,11 @@
         "type": "capability",
         "status": "active",
         "statement": "R4独立release context使用successor ReleasePlan与catalog/r4_v2，从完整LIVE aggregate/independent replay选择六个production结果，原生Calculator/Run再生成54个无source/AI的structural N/A，形成60个delta及300个cumulative keys。alternate/stability/fixture issuer不得进入公共值。真实stage要求v2 transition、merged implementation和exact owner live receipt；真实指针操作另需exact-head release-owner评论。recorded rehearsal仅在私有隔离root运行，始终NONE_RECORDED_REHEARSAL；旧Projector/commit/rollback接口不能替它授予LIVE credit。新typed PublicationManifest冻结完整来源、15-Run closure与独立R3 authority root；冷read-back、CAS/mirrors及rollback/restore复用原有底层primitive。该能力是PR-C的休眠实现，不表示本轮激活Requirement、调用provider/SEC、发布R4或完成最终Cutover。",
-        "audience": ["developer", "operator", "reviewer"],
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_r4_live_qualification.py::R4RecordedQualificationIntegrationTest.test_z_isolated_successor_release_readback_rollback_restore_no_credit",
         "test_status": "automated_recorded",
         "since": "2026-09-04"
@@ -178,7 +264,11 @@
         "type": "capability",
         "status": "active",
         "statement": "PR-B提供独立pending-live/request/authorization类型与冻结后可由PR-C调用的R4执行接缝。九个scoped base加三个risk stability形成12次新execution，三个structured positive生成原生零调用Run，四类排除样例不进入provider计划。socket前重建v2/source/task/Spec/scope/envelope并读取S-PROVIDER-TRANSPORT；真实owner-comment预检生成私有exact-head能力，caller自签receipt或recorded transport不能变成live。既有reservation、UNKNOWN停止、retry=0、200000 usage gate、原生check_evidence/Review/Calculator、raw-wire同execution恢复和portable replay继续执行；前序失败阻止后序直调。内部Result的PUBLISHED枚举和任何单Run均没有R4 publication/qualification credit。实现及recorded测试不激活Requirement、不授权provider/paid/SEC、不创建Stage-A或production freeze、不改变active R3。",
-        "audience": ["developer", "operator", "reviewer"],
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_r4_live_qualification.py::R4RecordedQualificationIntegrationTest.test_full_live_shaped_native_execution_has_zero_sockets_and_no_reuse",
         "test_status": "automated_recorded",
         "since": "2026-09-04"
@@ -188,7 +278,10 @@
         "type": "capability",
         "status": "active",
         "statement": "PR-B B0提供独立SourceScopeManifest、scoped Reader与process-local offline session接口。窗口保留完整DerivedAsset中的原始坐标，synthetic Candidate仍经过既有check_evidence；完整本地Evidence authority不冒充scoped outbound，audit reference/答案不进入request。B0仅是接口基线，不是生产semantic freeze、cycle、Stage-A或live资格，真实来源资格与10倍性能必须另有离线证据。",
-        "audience": ["developer", "reviewer"],
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_scoped_reader.py::ScopedReaderTest.test_scoped_request_keeps_full_authority_without_leaking_audit_answers",
         "test_status": "automated_recorded",
         "since": "2026-09-03"
@@ -198,7 +291,10 @@
         "type": "capability",
         "status": "active",
         "statement": "PR-B以独立六指标task/fixture authority生成十二个positive和四个zero-call离线case。A03只允许owner批准的firm/average同源span与Citi真实季度；A12数值/scale留在原表，95%/one-day可按完整同源关联/冲突证明补全。A09绑定原百分号、A11/A12绑定原表scale，使用既有check_evidence而不是第二verifier。A09/A13先运行native accession XBRL并保留完整claim dispositions；A13仅实现直接发行人披露international net revenue，regional-sum分支未实现且无该路径credit。当前九个scoped positive和三个structured positive不等于十二次provider调用；synthetic PASS只证明离线证据路径，不是模型准确率、live资格、v2 activation或R4发布。",
-        "audience": ["developer", "reviewer"],
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_r4_offline_qualification.py::R4CompleteOfflineArtifactTest.test_all_pairs_remain_offline_and_structured_success_does_not_get_ai_plan",
         "test_status": "automated_recorded",
         "since": "2026-09-03"
@@ -208,7 +304,11 @@
         "type": "capability",
         "status": "active",
         "statement": "对 company registry 中配置的逻辑公司定位最新年度 SEC filing，建立身份与 filing inventory，并生成按行业适用性约束的指标矩阵。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_metrics_matrix_applicability_matches_02_04_spec",
         "test_status": "validation_gate_partial",
         "since": "2026-07-21"
@@ -218,7 +318,11 @@
         "type": "capability",
         "status": "active",
         "statement": "从 DEF 14A、10-K 文本和财年窗口内 8-K 生成治理、风险、法律与事件信号，并保留来源证据或明确降级状态。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": null,
         "test_status": "not_automated",
         "untested_reason": "现有 repair gate 只覆盖部分组件与证据约束，没有一条独立测试证明全部 C、D、E 信号的端到端行为。",
@@ -230,7 +334,11 @@
         "type": "capability",
         "status": "active",
         "statement": "生成指标、证据、coverage、异常清单、Golden、repair validation、validation run manifest、分层审计、成功终态的 snapshot provenance 和中文报告，供人工复核当前批次。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_coverage_join",
         "test_status": "validation_gate_partial",
         "since": "2026-07-21"
@@ -240,7 +348,11 @@
         "type": "capability",
         "status": "active",
         "statement": "根据 Golden、P0 repair validation、NOT_EVALUATED 语义、run manifest 新鲜度与审计结果生成 GO、GO WITH CAVEATS 或 NO-GO 的流水线自判；成功终态还必须通过独立 source/artifact provenance 验证。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_sec_pipeline_validation.py::ReportVerdictTest.test_full_not_evaluated_blocks_go",
         "test_status": "automated_partial",
         "since": "2026-07-21"
@@ -250,7 +362,11 @@
         "type": "capability",
         "status": "active",
         "statement": "仓库继续以historical adapter显式加载requirements/issue_15_v1的exact Contract、Decision单链、parent transfer/baseline、legacy producer/matrix/foundation证据，并逐字节拒绝漂移。旧catalog Run仍由持久task_contract_bindings机械选择Issue #15，空binding的更早disclosure Run选择ai_first_v3_3_1；两类历史artifact不增加新identity字段且原bytes不改写。Issue #15只提供R1–R3兼容解释，不再承载successor policy。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_qualification_freeze.py::TableQualificationFreezeTest.test_full_freeze_receipt_rebuild_is_deterministic",
         "test_status": "automated_recorded",
         "since": "2026-08-19"
@@ -260,7 +376,11 @@
         "type": "capability",
         "status": "active",
         "statement": "五文件successor Requirement由版本注册表选择保留的V1/V2/V3 engine，支持同Issue revision与按invariant_id/ratchet区分的多实例。V1机械执行R4 exact set、24-call上限、12-18 target范围、零调用classes、200000 context、10x性能下限及provider/security/test政策；v1的477个parent叶级义务逐项分类。issue_28_v1已由PR-A治理receipt激活；新的issue_28_v2使用V3 engine、保留v1和全部历史bytes，以622个parent fragments（619 carry-forward、3 scoped superseded）绑定三条真实owner政策评论，包含公开SEC联系身份的仓库默认值/显式环境优先及非法不回退，状态仍NOT_ACTIVATED。parent解释不依赖current root authority；当前执行必须通过自身execution绑定。三个SUCCESSOR artifact subtype强制generation与id/closure/hashes完整身份，并进入builder/load/freeze/replay/read-back；legacy identity与选择的历史Requirement精确比较。policy-content、候选closure、exact-head activation和live授权分别验证，任何离线实现或测试都不签发provider/paid/live/publication权限。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_issue28_rework.py::Issue28ArtifactReworkTest.test_version_evolution_preserves_old_closure_and_resolves_pending_r5",
         "test_status": "validation_gate",
         "since": "2026-09-02"
@@ -270,7 +390,11 @@
         "type": "capability",
         "status": "active",
         "statement": "Issue #15 SourceStrategy registry精确覆盖39个metric ID，每个恰好一条；source_mode只允许structured_only、structured_first_ai_fallback、ai_table、ai_text，不存在ai_event_text。registry只拥有target route与family-level forbidden production literals，不保存当前迁移状态。content-addressed索引指向不可变R1→R2→R3 ReleasePlan；R3只新增B10/B11，累计24指标/240 result keys/77 retired producers。每档plan以parent content edge、added delta、cumulative IDs/keys、retired producers、reader family versions和全部authority hashes绑定创建时Requirement closure；已发布R1/R2与新R3 plan分别保留其historical closure，post-publication same-ID Decision不重签旧plan/active bundle。plan ID到historical closure的exact mapping拒绝完整重签后的任意closure伪造。loader机械要求parent cumulative metric IDs、vNext result keys与retired producer IDs分别为child子集，并推导removed/unretired exact set为空；完整重签plan/content/index后仍不能删除。semantic lint从family union派生并排除risk/value/event/income/current等通用词。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_source_strategy_registry.py::SourceStrategyRegistryTest.test_release_plan_chain_is_complete_and_monotonic",
         "test_status": "automated_recorded",
         "since": "2026-08-19"
@@ -280,7 +404,11 @@
         "type": "capability",
         "status": "active",
         "statement": "Issue #15 WB-2B已提供companyfacts、accession XBRL、ECD XBRL、auditor fact和8-K item index五个确定性adapter。Multi-source release input plan只使用sources[]并绑定SourceSetManifest与immutable ReleasePlan content ID。14个R2财务指标的catalog拥有concept priority、current/prior original 10-K accession/period、XBRL context维度、formula branch、applicability和entity continuity；生产producer仅接收SEC claims、catalog、traits与target period，不接收legacy row/evidence/expected value，legacy只在Result完成后作compatibility。8-K完整集合由pinned submissions shards与仓库immutable acquisition receipts的内容寻址补集联合证明，不从legacy events推导；C01/E03共用Item 5.02 claims，E02/E04零值绑定完整FY set，E01声明式aliases在Result生成后与legacy key set exact parity。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_deterministic_router.py::DeterministicRouterTest.test_five_adapters_emit_deterministic_verified_claims",
         "test_status": "automated_recorded_scenario",
         "since": "2026-08-19"
@@ -290,7 +418,11 @@
         "type": "capability",
         "status": "active",
         "statement": "Issue #15 WB-3已把Cutover/CLI生产Workflow接到统一controller：live SEC authority先构造exact provider envelope和AIInvocationPlan，随后只有O_CREAT|O_EXCL reservation owner能进入唯一provider opener。provider response必须先通过严格schema、task contract、Candidate构造和真实mechanical Evidence，形成绑定Spec/source/DerivedAsset/Candidate/Evidence的content-addressed acceptance receipt，才可写SUCCEEDED和exact reusable response；reuse重验完整closure，Workflow重算hash/ID必须exact一致。success response已持久化而execution尚未seal时，dead reservation由原marker/attempt/acceptance/response重建原SUCCEEDED terminal，禁止产生带marker的REUSED_SUCCESS；execution seal后archive中断只补原reservation archive。context-free factory与qualification capture在provider构造前fail closed；AST gate固定opener/caller/constructor exact set。provider/model context authority、UTF8_BYTE_UPPER_BOUND estimator version/method和authority hash进入plan；该估算是安全上界而非exact token count。paid_model_provider_call_count是billing class=PAID_MODEL_ENDPOINT的真实provider egress marker数，不代表账单确认，mock marker不计paid。release_input_plan_id、ai_invocation_plan_id、execution_id三层身份与immutable plan/request/egress/attempt/acceptance/response/execution、usage/token/cache/cost审计均持久化。terminal reservation归档释放；HTTP 402停批但新execution authorization可稍后重取reservation；真实子进程在egress后死亡时由dead owner PID+marker+缺terminal receipt从磁盘封存UNKNOWN且不调用transport。429/timeout/recoverable 5xx同execution最多一次重试，穷尽时必须为FAILED_RETRYABLE_FINAL并绑定两个marker、attempt sequence和最后provider request ID；金额cap/preflight不存在，payload/context仍fail closed。三类计数从marker/attempt exact set推导，structured-only零值来自route closure和专属空namespace。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_invocation_control.py::InvocationControlTest.test_controlled_execution_is_only_provider_opener_path",
         "test_status": "automated_recorded_scenario",
         "since": "2026-08-19"
@@ -300,7 +432,12 @@
         "type": "capability",
         "status": "active",
         "statement": "Issue #15 R1已从verified legacy A正式发布十公司B01/B03 successor B，并真实完成active B、rollback到A、restore到B。20个vNext Result坐标先经repository-bound projection catalog独立渲染完整public rows，再以冻结legacy作18 keys×20 fields的独立oracle比较；另有2个N_A_STRUCTURAL public keys，最终matrix为232行且approved delta exact set为空。bundle绑定不可变R1 ReleasePlan content、reachable source commit/tree、Result/Trace、projection independence、strict compatibility、retirement、switch与read-back。三类零调用计数由R1 structured-only route exact set和release专属空invocation namespace推导，不是常量注入。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_zero_ai_release.py::ZeroAiReleaseTest.test_r1_public_rows_render_without_legacy_rows",
         "test_status": "automated_formal_active",
         "since": "2026-08-19"
@@ -310,7 +447,12 @@
         "type": "capability",
         "status": "active",
         "statement": "Issue #15 R2在不可变R1 parent上累计正式发布全部16个DET_ONLY和C01/E01-E05。active bundle含22指标、220个Result坐标、79个新增N_A_STRUCTURAL keys与309行public matrix。所有220个migrated rows均由Result/Trace/Claims/catalog独立渲染；legacy migrated rows不可用时生产仍完成，随后141 keys×20 fields作独立strict oracle比较，unexpected/approved delta exact set均为空。14财务和事件producer不接收legacy语义输出；companyfacts/accession XBRL、submissions+immutable acquisition 8-K source sets、事后event parity、projection independence、retirement与read-back均有content-addressed receipts。bundle绑定R2 parent/delta/full key ReleasePlan和reachable source commit/tree；三类零调用计数从structured-only routes与空invocation namespace机械推导。该证据不包含WB-4以后、AI Reader或full acceptance。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_zero_ai_release.py::ZeroAiReleaseTest.test_r2_projection_and_producers_survive_legacy_canary",
         "test_status": "automated_formal_active",
         "since": "2026-08-19"
@@ -320,7 +462,12 @@
         "type": "capability",
         "status": "active",
         "statement": "Issue #15 R3已由module-owned路径正式发布：从R3 ReleasePlan派生B10/B11的20-coordinate delta BatchManifest，按Git committed exact bytes重验十个qualification terminal并重新执行DerivedAsset、Evidence、Review与Calculator；其余18个坐标由同一catalog task Workflow生成零AI N_A_STRUCTURAL FROZEN Runs。共享Projector以冻结legacy A作strict compatibility oracle、以R2作完整public assembly predecessor，形成24指标、240个累计vNext Result keys和327行public matrix；portable closure在CAS bundle内再次重放Batch/Run/SEC locator/Requirement authority。当前active为修正版R3，previous精确为R2；发布期间已执行R3→R2 rollback→修正版R3，正式bundle、switch receipts、root mirror read-back与qualification binding均可重验。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_ratchet_release.py::RatchetReleaseTest.test_prepare_is_offline_complete_and_non_mutating",
         "test_status": "automated_formal_active",
         "since": "2026-08-28"
@@ -330,7 +477,11 @@
         "type": "capability",
         "status": "active",
         "statement": "仓库已提供同一recorded/live vNext operator与formal publication primitives。module-owned ratchet已形成R1 A→B→A→B历史、R2 predecessor和R3 formal active successor；R3包含经真实qualification闭合的B10/B11及18个零AI structural坐标。root入口必须按R3 bundle声明的24指标、240个累计vNext Result keys和327行public matrix的partial范围解释，不能用它替代financial/text qualification、39指标最终迁移或full acceptance。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_full_uses_cutover_then_three_validated_pointer_views",
         "test_status": "automated_partial_scenario",
         "since": "2026-07-29"
@@ -340,7 +491,11 @@
         "type": "capability",
         "status": "active",
         "statement": "运行负责人可从公开fixture list/show发现仓库绑定的真实SEC recorded fixture，再用同一tools/vnext_cutover.py命令创建完整structured/OPEN Run图；既有HUMAN decision优先，缺失时D-06固定SYSTEM identity写入完整可审计approval，随后同一命令完成freeze/replay、complete Batch、Projector，并在验证recorded层允许的exact LEGACY_WORKING_LOCATOR或IMMUTABLE_ATTEMPT closure后，仅在<workspace>/recorded-publication执行CAS与PublicationView read-back。recorded Cutover只接受artifacts/vnext/recorded-*专用workspace；live固定使用repository-owned artifacts/vnext/cutover，任意caller workspace override在workflow前以LIVE_WORKSPACE_OVERRIDE_FORBIDDEN拒绝。portable closure必须绑定locator tier/class，formal/live仍只允许IMMUTABLE_ATTEMPT。该流程socket=0，acceptance以sandbox及前后exact tree/hash证明正式active/root、formal namespace与SEC ledger bytes不变；TEST_ONLY review与recorded sandbox publication均不是formal review、live Cutover或full证据，generic formal commit仍fail closed。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_recorded_fixture_operator.py::RecordedFixtureOperatorTest.test_public_recorded_cold_start_review_resume_and_readback",
         "test_status": "automated_recorded_scenario",
         "since": "2026-08-07"
@@ -365,7 +520,11 @@
         "type": "capability_boundary",
         "status": "active",
         "statement": "当前入口是配置驱动的固定阶段 CLI，不支持自然语言问答、交互式追问，或运行时任意选择公司、日期和指标的查询。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": null,
         "test_status": "not_automated",
         "untested_reason": "入口形态由 wrapper 与 run_stage 代码审查证明，尚无专门的负能力测试。",
@@ -377,7 +536,11 @@
         "type": "capability_boundary",
         "status": "active",
         "statement": "只消费 SEC 官方 filing 数据；结果是执行时可见的最近年度申报快照，不是实时行情、新闻或第三方数据。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_requests_log_sec_only",
         "test_status": "validation_gate_partial",
         "since": "2026-07-21"
@@ -387,7 +550,11 @@
         "type": "capability_boundary",
         "status": "active",
         "statement": "复杂表格、维度债务及部分治理和风险指标可能降级为 NOT_EXTRACTED、NEEDS_REVIEW 或其他明确状态，系统不保证每个格子都有数值。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_ford_b06_captive_finance_still_needs_review",
         "test_status": "validation_gate_partial",
         "since": "2026-07-21"
@@ -397,7 +564,11 @@
         "type": "capability_boundary",
         "status": "active",
         "statement": "当前项目不是前端、API、daily scheduler、报价模型或生产数据库服务；Issue #15 R3已有可采信的committed active publication，覆盖24指标/240个累计vNext Result keys/327行public matrix，但financial、text、39指标最终Cutover与full acceptance尚未完成。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": null,
         "test_status": "not_automated",
         "untested_reason": "这是仓库形态与部署负能力边界，没有当前自动化测试。",
@@ -409,7 +580,11 @@
         "type": "capability_boundary",
         "status": "active",
         "statement": "light review 只验证随包可复核范围，不得被描述为 full validation；被跳过或未评估的检查必须显式可见并成为 caveat，LIGHT_PACKAGE_NO_GIT provenance 也不能补足 Git history 或 raw evidence。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_sec_pipeline_validation.py::ReportVerdictTest.test_light_not_evaluated_is_an_explicit_caveat",
         "test_status": "automated_partial",
         "since": "2026-07-21"
@@ -419,7 +594,12 @@
         "type": "capability_boundary",
         "status": "active",
         "statement": "Issue #15 R3已形成24指标/240个累计vNext Result keys/327行public matrix的formal active，并保留R1历史、R2 predecessor以及R3→R2→修正版R3的rollback/restore证据；这不是Issue #15最终Done。financial与text family迁移、39指标最终Cutover和full acceptance仍未完成。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_authorized_full_with_missing_prerequisite_runs_nothing",
         "test_status": "automated_partial",
         "since": "2026-07-29"
@@ -431,7 +611,11 @@
         "type": "responsibility_boundary",
         "status": "active",
         "statement": "人类负责复核近似、定性、缺失、PARSE_FAILED 与 NEEDS_REVIEW 结果，并承担投资、信用、报价、监管或其他最终业务决定。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": null,
         "test_status": "not_automated",
         "untested_reason": "最终业务责任属于组织治理，不能由当前代码自动验证。",
@@ -443,7 +627,10 @@
         "type": "responsibility_boundary",
         "status": "active",
         "statement": "运行负责人维护 company registry，在 clean source-input closure 中运行正式流程；SEC organization 固定 axaxl，contact email 自动读取 config/sec_config.json.contact_email，显式 SEC_CONTACT_EMAIL 优先；DeepSeek key 只从 DEEPSEEK_API_KEY 读取。具名 HUMAN 可决定 ReviewUnit；缺失时只有D-06固定SYSTEM身份可写入审计 approval。",
-        "audience": ["operator", "reviewer"],
+        "audience": [
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": null,
         "test_status": "not_automated",
         "untested_reason": "联系人真实性与运行纪律是人工运维前提，当前代码只验证配置键与 source closure。",
@@ -455,7 +642,10 @@
         "type": "responsibility_boundary",
         "status": "active",
         "statement": "流水线的 GO 类自判与仓库内 snapshot provenance 不替代外部审计、方法负责人或项目负责人的正式接受结论。",
-        "audience": ["business_user", "reviewer"],
+        "audience": [
+          "business_user",
+          "reviewer"
+        ],
         "test_anchor": null,
         "test_status": "not_automated",
         "untested_reason": "外部接受结论不属于当前流水线自动化范围。",
@@ -469,7 +659,12 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "不能可靠发布数值时必须保留明确 status、notes 与限制，不得猜数填满矩阵。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_no_placeholder_notes_in_final_metrics",
         "test_status": "validation_gate_partial",
         "since": "2026-07-21"
@@ -479,7 +674,12 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "可采信的非空数值状态必须存在 matching metric evidence，并暴露期间、unit、accession、来源与口径信息。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_numeric_ok_requires_evidence",
         "test_status": "validation_gate",
         "since": "2026-07-21"
@@ -489,7 +689,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "full validation 必须从 manifest 验证、保留已审核有序前缀且只尾部追加的 request log，取得与最新成功 observation 完整身份匹配的 submissions 原始 bytes，推导财年 8-K filing 集合；filing-bound raw 文档的成功 bodies 必须一致，重放 request-bound item 后与 events 做完整集合校验。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_8k_event_chain_exact_set",
         "test_status": "validation_gate",
         "since": "2026-07-23"
@@ -499,7 +703,12 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "C04 必须先检查 filed target、再按需回退同 CIK 同期间原始 10-K，且期间不得跨 CIK；full validation 对当期候选与上期 10-K 的 request-bound accession index 和原始实例分别重放官方 DEI AuditorName，要求成功 bodies 一致并独立重建完整 metric/evidence 行；缺失或冲突时必须降级并绑定对应 raw scan。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_c04_auditorname_all_companies",
         "test_status": "validation_gate",
         "since": "2026-07-23"
@@ -509,7 +718,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "在已通过完整集合校验的财年 8-K 事件输入中，未命中某事件时输出零值、NOT_AVAILABLE_SEC 与扫描证据，而不是把零伪装成 OK 数值。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "scripts/sec_pipeline.py::check_8k_event_outputs_match_events",
         "test_status": "validation_gate",
         "since": "2026-07-21"
@@ -519,7 +732,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "非法配置、未知阶段、关键 SEC 请求失败、未声明的不完整 workspace、dirty source closure、失败 gate 或 provenance publication/self-check 失败必须明确失败并非零退出。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_sec_pipeline_validation.py::LightGoldenIntegrityTest.test_missing_evidence_without_marker_is_workspace_incomplete",
         "test_status": "automated_partial",
         "since": "2026-07-21"
@@ -529,7 +746,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "light 结果必须显示 SKIPPED_LIGHT_PACKAGE 项并在 run manifest 中形成 caveat，不能静默省略缺少 raw evidence 的检查；无 Git light 包也不能通过删除 source policy 或其声明的 acceptance source file 缩小 provenance closure。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_validation_provenance_light_package.py::LightPackageSourceClosureTest.test_missing_explicit_source_file_is_rejected",
         "test_status": "automated_partial",
         "since": "2026-07-21"
@@ -539,7 +760,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "legacy阶段只能通过sec_pipeline.py --workspace-dir <absolute-isolated-root> <stage>在显式隔离candidate数据根生成非迁移输入，不能直接成为root active；首次formal Cutover只读导入verified legacy A并提交绑定A的B，不运行旧parser。new、rollback A、restore B三个terminal cycle必须各自只启动一次tools/vnext_terminal_cycle.py，并把同一pinned publication transaction贯穿Stage10 Golden、Stage11 report、Stage12 active validation与snapshot publish/verify，最后由full acceptance返回0。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_full_uses_cutover_then_three_validated_pointer_views",
         "test_status": "automated_partial_scenario",
         "since": "2026-07-21"
@@ -549,7 +774,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Golden、P0 repair validation、stratified audit、workspace 完整性、full 关键检查 NOT_EVALUATED 或 snapshot provenance 失败必须阻止正常通过，并形成失败状态或 NO-GO。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_sec_pipeline_validation.py::ReportVerdictTest.test_full_not_evaluated_blocks_go",
         "test_status": "automated_partial",
         "since": "2026-07-21"
@@ -559,7 +788,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "每次 repair validation 写入最小 run manifest；报告和 reviewer 以 refreshed_artifacts 判断本次 tracked validation/audit 证据新鲜度，并以独立 provenance sidecar 绑定当前 source 与关键 artifact bytes，不以旧文件存在代替本次运行。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_sec_pipeline_validation.py::ValidationRunManifestTest.test_workspace_incomplete_manifest_lists_stale_audits",
         "test_status": "automated_partial",
         "since": "2026-07-22"
@@ -569,7 +802,12 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "成功 stage 12 必须先按机器可读 source policy 验证 SOP 权威引用角色，并对 clean runtime/acceptance source tree 和 manifest、报告、README、Golden、metrics/evidence/coverage/events、request ledger 及本轮 refreshed validation artifacts 的 SHA-256/size 建立 sidecar，在返回零前从磁盘重新验证；权威引用未分类、解释性文档被当作运行权威或任一 postflight 失败都必须使终态 fail closed。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_validation_provenance.py::ValidationProvenanceTest.test_clean_full_snapshot_round_trip",
         "test_status": "automated_partial",
         "since": "2026-07-23"
@@ -579,7 +817,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "新 artifact 使用 source_url、repo_relative_path、content_sha256、accession 与 document_name 定位；历史绝对路径只作 hint，跨 clone 读取优先当前仓库相对路径。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_sec_pipeline_validation.py::PortableArtifactPathTest.test_stage_11_runs_after_clone_root_change",
         "test_status": "automated_partial_scenario",
         "since": "2026-07-22"
@@ -589,7 +831,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext recorded review 把 selected、competing、unresolved、Evidence、Spec/source identity、canonical context 与 reviewer 实际看到的 rendered bytes 绑定为一个 ReviewUnit；任一实质或可见上下文改变都会使旧决定失效，且有效决定只能形成一条 supersedes 链。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_review_binding.py::ReviewBindingTest.test_context_change_invalidates_old_decision",
         "test_status": "automated_recorded",
         "since": "2026-07-29"
@@ -599,7 +845,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "ReviewDecision 的 REJECT 必须没有 approved_claims，APPROVE 必须与 ReviewUnit.required_claims 精确相等；低层 append、finalizer 与从磁盘执行的 freeze/load/replay 都重放这两条语义，而不只信任构造器或自哈希。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_review_decision_semantics_cross_every_trust_boundary",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-31"
@@ -609,7 +859,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "不可信 filing table-grid 由集中固定预算约束原始 bytes、表数、行列、span/entity 数字词法、解析期 source cell、span 展开 cell 与单表/全文件文字；超长数字在 Python 3.9 大整数转换前失败，其他超限在创建下一项 source cell 或矩形物化前稳定 fail closed，不裁剪输入。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_grid_locator.py::TableGridLocatorTest.test_table_grid_resource_budget_matrix",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-31"
@@ -619,7 +873,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "review renderer 对超长 cell 使用不改变可见文字的 HTML-comment 物理分行，并在集中总字节预算超限时 fail closed；不会通过静默截断满足预算。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_review_renderer.py::ReviewRendererTest.test_review_renderer_resource_budget_matrix",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-31"
@@ -629,7 +887,12 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext publisher 语义解析 bundle 内 ProjectionManifest；其中 BLOCKED 或缺少必需文件的 candidate 不能被游离 PUBLISHED Result 覆盖并进入 active。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_withheld_or_incomplete_bundle_cannot_prepare",
         "test_status": "automated_recorded",
         "since": "2026-07-29"
@@ -639,7 +902,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "OPEN Run 的 PASSED、FAILED 与 NOT_RUN validation receipt 均可进入 FROZEN，以保留不可变审计和无 AI replay；FROZEN 本身不表示 validation 通过。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_accepts_each_audit_validation_state",
         "test_status": "automated_recorded_scenario",
         "since": "2026-07-31"
@@ -649,7 +916,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext Run 明确声明 missing_required_source_roles 非空时不能携带 PUBLISHED Result；权威 required-source plan 尚属后续模型。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_missing_source_role_cannot_freeze_published_result",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-31"
@@ -659,7 +930,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "FAILED 与 NOT_RUN validation receipt 只能冻结审计，不能准备 publication；只有 PASSED 满足 validation 状态门，且仍须通过其他 publication gates。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_nonpassed_validation_receipt_cannot_prepare",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-31"
@@ -669,7 +944,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext production company traits只能由 canonical registry、profile 配置与 trait catalog 确定性投影；workflow 不接受调用方注入，freeze 必须从仓库重新投影并逐值比较。唯一例外是run:qualification:<fixture-id>：外部qualification issuer必须不在production registry，freeze只从其固定fixture_manifest重建company、traits、period、CIK、SourceReference和source bytes并逐值比较，不能由调用方注入。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_company_traits_detached_from_registry",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -679,7 +958,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext create_review_run 只接收 disclosure locator、外部 source facts 与 adapter；compiled Spec closure、Requirement hashes、derived URI、temperature 和 response validation 均由 repository、RawBlob identity 与固定 Reader contract 派生。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_recorded_shadow_builds_pending_review_without_publication",
         "test_status": "automated_recorded_scenario",
         "since": "2026-07-31"
@@ -689,7 +972,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext AI attempt 只接受仓库 builder 构造并带 module authority 的私有 exact recorded/approved adapter；在生成 attempt 或调用 complete 前校验类型与构造 authority，并固定分派仓库类实现，caller duck object、子类或实例级 complete 替换不得取得 filing bytes 后伪装 recorded no-egress。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_run_attempt_rejects_caller_adapter_before_complete",
         "test_status": "automated_recorded_negative",
         "since": "2026-08-01"
@@ -699,7 +986,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext remote adapter 只从模块固定 repository root 的 Issue #15 Requirement closure 读取唯一 effective APPROVED D-01；child closure 内继承 FSD/R2/R3，并绑定 post-freeze Decisions。调用方不能传入 policy、替代 authority root 或 transport；cross-root 在读取 filing bytes 前失败。fixed transport只允许 DeepSeek官方 OpenAI-compatible Chat Completions、deepseek-v4-flash、api.deepseek.com、temperature=0、thinking disabled、JSON output与本地严格Reader schema，且不保存可替换 transport对象。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_remote_workflow_rejects_payload_root_outside_authority",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -709,7 +1000,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "仓库 transport 必须在每次 outbound 前重载并匹配 Issue #15 effective D-01 policy/closure与8 MiB资源上限；provider/model/endpoint来自实际 TransportObservation，异常、model/host mismatch、timeout、非法 response或缺 observation均 fail closed。D-01 transport内部retry为0，WB-3只按effective D-35对429/timeout/recoverable 5xx建立最多一个新attempt；terminal或UNKNOWN立即停execution/batch，不fallback其他模型或旧resolver。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_ai_reader_contract.py::AiReaderContractTest.test_remote_transport_policy_enforcement_matrix",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-31"
@@ -719,7 +1014,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "freeze 与 load/replay 必须从磁盘重读每条 SUCCEEDED AI attempt，并重新验证 recorded no-egress 或当前 Requirement 中的 exact D-01 transport observation；直接 append 或 OPEN 期磁盘 mutation 不能绕过 transport authority。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_remote_success_bypassing_adapter",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-31"
@@ -729,7 +1028,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "FROZEN vNext Run 只允许 SUCCEEDED/FAILED AI attempt；STARTED 只能存在于 OPEN 工作过程。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_nonterminal_ai_attempt",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-31"
@@ -739,7 +1042,10 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "capability contract 每条 test_status 必须属于受控分类并与 test_anchor 有无一致；checker 仍只把它当证据分类，不把标签或 symbol 存在当成 statement 已通过。",
-        "audience": ["developer", "reviewer"],
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/test_sec_pipeline_validation.py::CapabilityContractAlignmentTest.test_test_status_is_required_controlled_and_consistent",
         "test_status": "mechanical_alignment",
         "since": "2026-07-31"
@@ -749,7 +1055,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Issue #15 historical D-26保留tools/run_fast_tests.py的二十个并发直接边界条目；Requirement smoke现在同时加载profile-driven issue_28_v1和exact issue_15_v1 parent，其余条目继续验证producer closure、registry、E01 parity、invocation故障矩阵及已提交publication。pull_request GitHub workflow执行同一fast set；FAST_LOCAL_ONLY与CI green都不能声称successor full acceptance。",
-        "audience": ["developer", "reviewer", "operator"],
+        "audience": [
+          "developer",
+          "reviewer",
+          "operator"
+        ],
         "test_anchor": "tools/run_fast_tests.py::run_fast_tests",
         "test_status": "validation_gate",
         "since": "2026-08-17"
@@ -759,7 +1069,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Issue #15 post-freeze effective D-36禁用仓库金额预算执法，外部API账户余额是唯一花费权威；不存在per-call、batch、owner或remaining monetary hard cap，estimated/actual cost、pricing、token、usage和cache只能作非阻断observability。effective D-35删除金额BUDGET_EXCEEDED，但HTTP 402仍零自动重试并终止execution/batch，payload/context/resource limit仍为独立fail-closed安全类。effective D-26不再要求金额budget preflight测试。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_invocation_control.py::InvocationControlTest.test_cost_observability_never_blocks_but_resources_do",
         "test_status": "automated_recorded_scenario",
         "since": "2026-08-19"
@@ -769,7 +1083,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext secret semantic gate 必须扫描普通 artifact bytes，并对声明 root 或递归 namespace 中的任意文件、目录、broken 或 looping symlink fail closed；receipt 不复制测试 token。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_semantic_audit.py::SemanticAuditTest.test_secret_scan_fails_closed_for_every_symlink_shape",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-30"
@@ -779,7 +1097,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext finalizer 不接受 caller-supplied compiled semantics；published MetricResult/ExecutionTrace 的 metric identity、Spec closure 与 unit 必须映射到 Run-bound 仓库 MetricSpec。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_result_metric_spec_identity_substitution",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -789,7 +1111,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext reviewed published Result/Trace 必须 exact-complete，并把 scope、quality、applicability、publication 与 reason 回绑 inputs、decision、Run target 和仓库 Spec；数值结果 quality 取 input Observation 与已接受 Spec branch quality 中更保守者，不能只按 Observation 反推。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_pfizer_approx_real_bytes_freezes_and_replays",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-07-30"
@@ -799,7 +1125,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext freeze 必须从 reviewed Observation 与仓库 MetricSpec 重新调用 Calculator，并逐值比较完整 Result/Trace；调用方不能用另一套自洽 formula/value 代替已审核结果。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_recalculates_reviewed_result_from_observation",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -809,7 +1139,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext freeze 必须从 SourceReference 绑定的 Company Facts raw bytes、registry CIK 与仓库 MetricSpec 重建 structured fact 选择；caller-supplied Observation value 不能替代原始字节。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_structured_value_absent_from_raw_bytes",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -819,7 +1153,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "B03 复用的 B01 structured Observation 即使没有独立 B01 Result/Trace，也必须先按 B01 Spec 与 raw Company Facts 重算；跨 MetricSpec 输入不能因被下游公式消费而自动获得可信身份。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_forged_structured_dependency",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -829,7 +1167,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext structured ExecutionTrace 必须保存 exact calculation target；有效的 1.01% cross-check WITHHELD 必须可从该 target、仓库 Spec 与 raw Company Facts 完整 freeze/replay，调用方也不能伪造失败原因。被拒分支只保留 cross-check/rejection 证据，不得把已丢弃 component ID 声明为 selected。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_b03_cross_check_boundaries_freeze_and_replay",
         "test_status": "automated_recorded_scenario",
         "since": "2026-07-30"
@@ -839,7 +1181,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext FROZEN Run 中所有非 disclosure-supporting VerifiedObservation 必须被 ExecutionTrace 精确消费；游离但 schema 合法的 Observation 不能进入 projection 内容。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_unconsumed_structured_observation",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -849,7 +1195,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext freeze从Run-bound仓库Spec和content-addressed task/request/schema bytes重建每个AI attempt；structured assistant output与完整provider envelope分别content-addressed。每条成功attempt从assistant output重放严格Reader schema，OBSERVATION_CANDIDATE必须绑定同attempt的assistant_output_sha256，raw_response_sha256独立审计provider envelope；Candidate reachability或协同改写两个digest都不能构成证明。Candidate binding使canonicalizer semantic version 2→3；source plan绑定latest verified request attempt及locator class且formal live拒绝LEGACY_WORKING_LOCATOR使其3→4；frozen legacy inventory Git-blob binding使projector semantic version 2→3；D-06 SYSTEM review渲染使review renderer semantic version 2→3。当前semantic runtime versions hash为sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9，任一变化都使旧closure/approval/Run/Batch/publication失效。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_replays_every_successful_ai_response",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -859,7 +1209,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext supporting VerifiedObservation 即使没有最终 MetricResult/Trace，也必须 exact-complete，并把 semantic role、metric identity、unit、value、scope、quality、source 与 approval 回绑 Candidate、ReviewUnit、decision 和 Run-bound disclosure Spec。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_supporting_role_identity_and_unit_substitution",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-30"
@@ -869,7 +1223,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext Run 只有在每个 ReviewUnit 都有唯一 effective HUMAN或D-06授权SYSTEM decision 时才能 FROZEN；SYSTEM identity、reason和完整approved claims必须精确绑定，不能伪装为HUMAN或把PENDING静默跳过。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_requires_effective_decision_for_each_review_unit",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -879,7 +1237,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "source_mode=ai_table 的 VerifiedObservation 必须绑定 effective HUMAN或D-06授权SYSTEM approval；调用方不能用空 approval effect 和无 derived_asset locator 把 AI-only metric 伪装成 structured input。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_freeze_rejects_ai_metric_disguised_as_structured_input",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -889,7 +1251,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext Run 冻结 fiscal year 与精确 period start/end；fiscal-year 标签必须落在最长 53 周的精确期间内，finalizer 不接收第二组日期，Candidate、Observation 与 MetricResult 必须与同一 Run target 一致。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_run_period_is_the_only_finalization_period",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -899,7 +1265,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext recorded publication receipt只能由生产gate runner重跑Projector、semantic/scalability audit并从同一candidate生成全部bundle artifact；runner/prepare从verified Batch实际消费路径派生SEC ledger最小合法prefix，不接受caller自签PASS或ledger。recorded writer最高生成PASSED_RECORDED_ONLY且不动正式active；public generic formal receipt/initial-chain/forward-commit入口固定fail closed。Cutover orchestrator要求固定的module-owned authority roots与clean committed source、qualification/live/effective review/staging、fresh invocation SEC acquisition及portable all-attempt audit closure；旧disk receipt只能重验历史pinned semantic plan，不能替代本次acquisition。orchestrator先只读导入verified legacy A、prepare绑定A的formal B并在固定隔离root执行14项fault matrix，再持久化并逐字节绑定本次SEC acquisition、staging parity、Cutover、audit与fault receipts，最后才允许private official CAS。acceptance持久receipt还必须以portable token替代repo/output/runtime绝对路径，并用runtime binary SHA-256绑定实际解释器；output directory不能与formal authority形成equal/ancestor/descendant overlap，R4不再启动caller Python 3.9全量测试或probe。任一Requirement、Run/Result、ledger、receipt或artifact path/hash/size/gate evidence漂移都会阻止prepare/commit；首次A→B在commit内建立predecessor。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_self_signed_pass_without_gate_execution_cannot_prepare",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-30"
@@ -909,7 +1279,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext Run validation receipt 必须以 immutable-view hash 绑定 company、精确期间、Spec、Requirement 与 source 身份，并按 path、SHA-256 与 size 绑定 records、decisions、review 和 AI attempt bytes；receipt 后任一身份或 artifact 漂移都会阻止 freeze。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_run_validation_receipt_binds_immutable_manifest_view",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-30"
@@ -919,7 +1293,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext BatchManifest 从 registry/display mapping、traits/applicability、release plan 与全部 PASSED FROZEN Runs 派生完整 company+metric exact set；Projector 只接受四个 locator，先按 frozen baseline 的 schema、row count、size、SHA-256 验证 legacy metrics/evidence/Golden，再生成并逐 byte 重验完整 metrics/evidence/compatibility 与固定 repair execution rows；Spec 常量覆盖其声明字段，review source 未拥有的 legacy metadata 保留 frozen baseline。调用方不能用单公司 Run、自报事实、任意 legacy/staging bytes或自写 repair PASS 缩小、替换 release 范围。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_complete_batch_projects_publishes_and_reads_active_view",
         "test_status": "automated_recorded_scenario",
         "since": "2026-07-31"
@@ -929,7 +1307,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext legacy invariant migration receipt 只接受与Requirement baseline repository_commit相同的inventory baseline_commit，并以隔离Git读取冻结sec_pipeline.py和metric applicability blob的精确SHA-256；伪commit、缺失/额外source_files或当前anchor不能替代历史旧路径证据。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_legacy_projector.py::LegacyProjectorTest.test_legacy_inventory_binds_frozen_commit_and_source_blobs",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-08-17"
@@ -939,7 +1321,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext第二布局和post-freeze holdout只有在有效HUMAN或D-06授权SYSTEM APPROVE、disclosure Spec exact Result set全为PUBLISHED且Run ValidationReceipt为PASSED时才能形成qualification receipt。默认second/holdout仍要求issuer identity独立；owner-approved lodging例外只允许matrix精确点名的Marriott FY2024/FY2023组合，其fiscal year、accession与source bytes必须全部不同，并机械证明至少两项layout差异。REJECT或WITHHELD Run只能保留审计，不能进入Cutover资格。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_cutover_qualification.py::CutoverQualificationTest.test_layout_terminal_requires_approval_publish_and_validation",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-08-17"
@@ -949,7 +1335,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext Projector 的 declarative value multiplier 与 Golden tolerance comparison 必须使用 canonical 28/ROUND_HALF_EVEN arithmetic context；调用进程修改全局 Decimal precision 不得改变 candidate bytes 或 gate verdict。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_legacy_projector.py::LegacyProjectorTest.test_projector_arithmetic_ignores_global_decimal_context",
         "test_status": "automated_recorded_negative",
         "since": "2026-08-01"
@@ -959,7 +1349,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext projection boundary 通过 registry 唯一映射 display name 与 company_id，并对内部 company_id+metric_id 及 legacy company+metric_id compatibility key 强制唯一；多个 scope grain 不能留给行层隐式选择或覆盖。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_replay.py::ReplayTest.test_projector_rejects_duplicate_legacy_compatibility_key",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-31"
@@ -969,7 +1363,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "SEC acceptance 与 SecHttpClient 共用 identity validator；missing、null、blank organization、畸形邮箱与 example 域在 live 网络前 fail fast。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_acceptance_runner.py::AcceptanceRunnerTest.test_sec_identity_gate_and_http_client_share_fail_fast_rules",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-31"
@@ -979,7 +1377,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext rollback只能激活当前active pointer证明的committed predecessor，不能把prepared但从未committed的sibling变成active；首次predecessor是按frozen baseline严格重验后只读导入的legacy A。rollback只切pointer、重建mirrors并验证import identity，绝不重新启用legacy parser或producer。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_rollback_rejects_prepared_never_committed_sibling",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -989,7 +1391,12 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext 把最近一次 latest Run/candidate/publication identity 与上一成功 active publication 分离；writer 只接受 persisted Run directory 或 publication ID locator，并自行派生 Run/candidate 状态与 active_is_latest_success，失败、withheld、自报枚举/boolean 或未 commit 尝试不得用旧 active 冒充最新成功。",
-        "audience": ["business_user", "operator", "developer", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_latest_success_binds_corresponding_publication",
         "test_status": "automated_recorded",
         "since": "2026-07-29"
@@ -999,7 +1406,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext latest status writer 必须在 pointer lock 内重新验证 latest candidate bundle；锁前验证通过后发生的 byte drift 必须阻止状态写入。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_latest_status_revalidates_candidate_inside_pointer_lock",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -1009,7 +1420,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext active pointer、lock与content-addressed publication switch intent目录由单一publication root固定派生并位于immutable publication storage之外；公共入口不接受调用方另传authority path。reader在shared lock遇pending/ambiguous/tampered intent只读fail closed；writer在exclusive lock按pointer等于proposed或previous完成/回滚本事务，其他状态失败。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_publication_layout_is_derived_from_one_root",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -1019,7 +1434,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext compatibility mirror 由单一 publication root 的 required file set 固定派生并逐byte等于active bundle；调用方不能重定义其路径。绕过PublicationView的任意root reader不获得跨文件组原子保证。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_publication_layout_is_derived_from_one_root",
         "test_status": "automated_recorded_negative_matrix",
         "since": "2026-07-30"
@@ -1029,7 +1448,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext latest status output path 由单一 publication root 固定派生，不能由调用方改写为 active pointer、lock、mirror 或 immutable storage。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_publication_layout_is_derived_from_one_root",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -1039,7 +1462,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "vNext commit、rollback、mirror recovery、PublicationView 与 latest status writer 只接受一个 publication root；storage、pointer、lock、status 与 mirrors 不再是可独立替换的公共参数。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_publication.py::PublicationTest.test_publication_layout_is_derived_from_one_root",
         "test_status": "automated_recorded_negative",
         "since": "2026-07-30"
@@ -1049,7 +1476,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "expanded table-grid继续是本地Evidence Authority，模型只接收versioned compact transport；D-07仍禁止selector/prefilter、保留全表原序与inclusive 200000普通门。single shared output schema v3继续规定caption只能使用table locator，cell/header/row/label必须使用八字段cell locator。首个schema-v3 Hilton Occupancy qualification虽通过provider schema，却因目标表caption_raw_text为空而response借用了另一表或邻近正文，机械Evidence以SCOPE_LABEL_TEXT_MISMATCH终态拒绝且零Candidate/Review/Result。owner随后只批准两个lodging task的最小scope-binding prompt：caption仅在selected target table自身caption raw text非空时可用并逐字复制，否则必须从同一目标表的一格复制完整八字段locator和exact raw text；跨表或邻近正文被禁止。新Occupancy/RevPAR actual prompt为161433/161422并形成5ee591dd/a5632e90 exact attestations，均无qualification/publication/reuse credit且measurement policy已consumed。Hilton目标表又被offline proof证明无法满足same-target-table frozen scope，owner只替换second-layout为一次SecHttpClient获取的Marriott FY2024 immutable source；`table_000011`唯一包含全部scope literals且29x39 geometry/grid hash不同于FY2025 27x39目标表，fixture不保存模型response。后续Hyatt FY2025 holdout真实调用虽通过context，却因目标表缺少冻结scope literals而SCHEMA_VIOLATION；owner只把holdout independence改为同issuer但fiscal year/accession/source bytes均不同，并批准一次SecHttpClient获取Marriott FY2023。FY2023唯一`table_000011`同表含RevPAR 124.70、Occupancy 69.2及两个冻结literals；document table count 66/67/68与FY2023/FY2024第11/13行span geometry机械证明至少两项layout差异。latest same-ID D-07不授权新measurement：每个rebuilt plan先绑定exact-head review并产生新execution，provider usage缺失或actual prompt>200000即terminal、零重试并停止后续lodging plans。current freeze/Stage-A与qualification exact-head gate通过前不得继续真实样本。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_qualification_samples.py::TableQualificationSamplesTest.test_replacement_holdout_proves_scope_values_and_layout_offline",
         "test_status": "automated_partial",
         "since": "2026-08-21"
@@ -1059,7 +1490,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "每个table qualification task plan在同一qualification cycle内使用由cycle ID与task-plan ID共同派生的独立WB-3 namespace。Fresh stability各ordinal可以保持完全相同的provider request bytes，同时仍产生新的reservation、egress marker、attempt、response、acceptance与execution；不得命中前一ordinal的content-addressed success response。cycle validator必须从全部plan-owned namespaces聚合WB-3 remote terminals，并继续与Run remote attempt、qualification ledger及Evidence做exact-set闭包；prior-terminal、UNKNOWN、retry exhaustion与未物化terminal仍跨namespace阻断后续plan。该隔离复用既有WB-3状态机，不改变provider request、prompt、schema、task、serializer或业务口径。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_qualification_authorization.py::TableQualificationAuthorizationTest.test_repeated_fresh_request_uses_plan_owned_wb3_namespaces",
         "test_status": "automated_recorded_negative",
         "since": "2026-08-27"
@@ -1069,7 +1504,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Marriott FY2024 Occupancy replacement execution为HTTP 200、provider usage 159376/550/159926且retry=0，context gate通过；模型选中正确table_000011、69.8及完整same-table八字段locator，但把本地cell exact raw_text的leading LF从\\nWorldwide (2) trim为Worldwide (2)，机械Evidence以SCOPE_LABEL_TEXT_MISMATCH终态拒绝且零Candidate/Review/Result/publication credit，RevPAR未执行。owner批准的最小shared prompt修订只要求scope-evidence raw_text逐字保留首尾whitespace并用合法JSON escapes输出，禁止trim/normalize/collapse；schema v3、MetricSpec、task/source/serializer/provider/model/API、全表原序与业务语义不变。additional measurement与历史response reuse继续禁止，161433/161422 attestations只作historical；SECOND_LAYOUT、POST_FREEZE_HOLDOUT与FRESH_STABILITY统一使用既有EXACT_REVIEWED_QUALIFICATION_REQUEST_WITH_TERMINAL_USAGE，每个concrete plan仍需新exact-head审核、新execution和usage terminal。plan-owned修复后的新Occupancy调用又以159479/560/160039、HTTP 200、retry=0通过context，但response复制serializer-v2 normalized x[6]而非exact raw x[5]，Evidence再次以SCOPE_LABEL_TEXT_MISMATCH终态拒绝且RevPAR未执行。latest D-07只在shared lodging prompt明示c=[caption,caption_raw_text]与x=[row_index,column_index,rowspan,colspan,header,raw_text,text]，scope raw text只许c[1]/x[5]、禁止c[0]/x[6]；其他冻结边界不变，仍不新增measurement或复用失败response。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_context_qualification_guard.py::TableContextQualificationGuardTest.test_exact_reviewed_terminal_usage_path_covers_revised_phases",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-26"
@@ -1079,7 +1518,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "raw-whitespace修订后的FY2024 Occupancy execution成功返回159479/562/160041，leading LF exact、mechanical Evidence PASS、SYSTEM Review APPROVE且Result已生成；本地finalization随后发现Marriott同时存在于production registry时，旧run_store先取registry traits而不是SECOND_LAYOUT authorization点名fixture traits，Run因此保持OPEN且无qualification credit，RevPAR未执行。修复后，SECOND_LAYOUT/POST_FREEZE_HOLDOUT authorization的traits/CIK必须由其exact fixture重建；FRESH_STABILITY与普通production Run仍registry-first，无authorization外部fixture仍只在registry miss时fallback。该历史OPEN success不进入新cycle、不作为response reuse。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_cutover_qualification.py::CutoverQualificationTest.test_registered_qualification_still_uses_fixture_traits",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-26"
@@ -1089,7 +1532,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Stage-B context minimization工具只从既有source bytes构造content-addressed decision-neutral receipts，逐字节分解current envelope并对五个research-only候选做机器round-trip；它不被Reader/Workflow导入，不改production serializer/task catalog，不调用SEC/provider。机器可逆不证明模型准确率或可读性，dictionary/indirection及其他候选仍需另行qualification；当前五候选maximum均高于200000。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_stage_b_context_minimization.py::TableStageBContextMinimizationTest.test_candidates_do_not_claim_model_accuracy",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-24"
@@ -1099,7 +1546,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Stage-B JPM grid工具复用production raw parser/text transform并以row-interval census完整计算全部table/expanded/blank/span/size，不构造完整expanded dict/list，不修改resource limits、筛表、分片、lazy实现或qualification source。它生成content-addressed receipt和A/B/C decision-neutral option matrix，benchmark可因资源安全诚实记录NOT_RUN；机器计数不构成owner产品选择。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_stage_b_financial_grid_census.py::TableStageBFinancialGridCensusTest.test_options_remain_unselected_and_benchmark_is_safely_not_run",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-24"
@@ -1109,7 +1560,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "schema-v4 table owner packet只在Requirement、schema-v4 freeze、Stage-A、Stage C-B measurement、exact context attestation、sibling-request analysis、financial evidence和R2 root全部重验后生成；OWNER_APPROVED与STILL_UNDECIDED严格分区，旧packet保留且pointer只指向新content ID。packet显示attested task/request context feasible、sibling request仍需exact evidence、family overall未ready、measurement response无qualification credit、authorization已消费、additional measurement/live qualification未授权、financial仍为F3_NEED_MORE_EVIDENCE且本PR egress为0/0/0；不声称任一family已qualification或Issue #15完成。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_stage_c_context_packet.py::StageCContextPacketTest.test_measurement_never_becomes_qualification",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-24"
@@ -1119,7 +1574,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "同一one-shot table token-measurement边界保留历史occupancy 160937与RevPAR 160928 usage/marker/evidence/attestation，旧authorization仍永久消费且response无qualification/publication/reuse credit。2026-08-26 owner仅为修改后prompt的两个新request覆盖no-remeasurement规则：planner按exact-enum task ID重建同一Marriott source、serializer v2、全表原序与DeepSeek envelope，为occupancy/RevPAR分别形成不同plan/cycle/marker；任何marker只消费所属task的新grant。具体real egress仍必须由独立PR评论绑定clean head/tree、plan和request SHA后每task最多一次、retry=0、usage-only。该政策不复用旧response、不授权qualification，也不新增measurement state machine。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_context_measurement.py::TableContextMeasurementTerminalTest.test_revpar_terminal_is_consumed_exact_and_non_credit",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
@@ -1129,7 +1588,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "历史Stage C-A提供exact JPM full-expanded-grid benchmark runner：唯一test-only override为child内max_total_cells=187142，该历史运行的production resource_limits.py为100000且逐byte before/after相等；runner要求512 MiB硬RSS/address-space边界、120秒wall watchdog和macOS process-tree deny-network sandbox，semantic receipt与run-observation receipt分离并绑定Stage-B 124761-cell census、parser/canonicalizer/tool hashes及active/root equality。该次Darwin Python因系统共享映射无法可靠设置512 MiB RLIMIT_AS/RSS；runner按owner规则在materialization child启动前停止，诚实记录NOT_RUN_RSS_GUARD_UNAVAILABLE，peak RSS、wall time、canonical bytes和DerivedAsset ID均为null，三种egress为0/0/0。该历史状态是BLOCKER，不是completed benchmark。当前PR-B经owner policy comment 5524085182和三份完整source测量，把生产max_total_cells单独提高到210000，worker不再覆盖生产限制；其他limits不变。该离线修订没有live资格或publication credit。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_stage_c_financial_materialization.py::TableStageCFinancialMaterializationTest.test_current_receipt_is_census_bound_and_resource_safe",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
@@ -1139,7 +1602,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Stage C-A content-addressed decision packet将OWNER_APPROVED、IMPLEMENTED_NOT_EXECUTED、MEASURED_OFFLINE、STILL_UNAUTHORIZED与BLOCKERS严格分区：token measurement只保存exact plan ID且authorization_id=NOT_ISSUED，JPM guard terminal保持NOT_RUN/null，active publication与309-row root逐byte不变，Stage-C real model/paid/SEC计数为0/0/0。packet绑定review 5014458726及其reviewed head，并把B1并发marker修复记录为O_EXCL fail-closed + file/directory fsync、two-process one-opener mock已通过但仍待独立复审；remaining blocker只保留JPM_RSS_GUARD_UNAVAILABLE。packet同时是新的current-source validation overlay：只有历史R2 snapshot除source drift外完全通过、当前clean source tree与packet候选tree exact相同、latest Requirement/D-07、measurement plan、benchmark chain和root state全部重建一致时，snapshot checker才返回0；PR #19 freeze/Stage-A snapshot/owner packet原字节保留。该packet明确保留真实measurement、qualification、R3/R4、resource policy、sharding/serializer/selector和publication未授权。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_stage_c_a_packet.py::TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
@@ -1149,7 +1616,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "Stage C-B只在独立review 5014622571绑定exact head 451dd693175bea6c1196a09989c60017e96d63e7、tree、plan/cycle/authorization与UTC时间后执行唯一一次真实DeepSeek request；永久marker先于socket创建且authorization随后不可复用。terminal为HTTP 200/SUCCEEDED，provider-reported usage为160937 prompt、576 completion、161513 total、0 cache hit和160937 cache miss，retry=false，历史real model/paid/SEC计数为1/1/0。历史packet只离线重算reviewed Git object ancestry、authorized protected bytes、plan/cycle/authorization、唯一marker/evidence/raw response及usage hash，不构造transport或再次egress；Stage C-A 0/0/0 packet原样保留。measurement继续qualification_credit=false、publication_eligible=false且不得作为qualification response。后续same-ID D-07只允许content-addressed exact request attestation把该同一provider request标为context feasible；普通200000 estimated bound不提高，sibling request仍blocked，lodging family overall仍false。active R2/309-row root不变，JPM仍为F3_NEED_MORE_EVIDENCE，additional measurement、live qualification、R3/R4、production resource change、selector和publication均未授权。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_stage_c_b_packet.py::TableStageCBPacketTest.test_packet_binds_review_authorization_and_terminal",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
@@ -1159,7 +1630,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "effective D-07在普通inclusive estimated_input_tokens<=200000路径之外，只允许content-addressed TABLE_CONTEXT_FEASIBILITY_ATTESTATION为一个exact provider request提供PROVIDER_REPORTED_EXACT_BINDING context PASS；近似比例、相似bytes或同family/source/serializer均无效。历史occupancy dc8cb1d1…/160937与RevPAR d3824ed2…/160928仍可审计，但system prompt改变后不再匹配current request。两个修订request必须各用一次新provider-reported usage形成新attestation，缺usage或actual prompt>200000立即OWNER_DECISION_REQUIRED；两份都被same-ID D-07 successor接受前live qualification=false。所有measurement response仍无qualification credit且不可复用。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_context_qualification_guard.py::TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
@@ -1169,7 +1644,11 @@
         "type": "agent_behavior",
         "status": "active",
         "statement": "sibling-request context analysis是pre-RevPAR-measurement的不可变历史对象：它离线重建两个完整provider request bodies并证明当时不能用shared table bytes、相似长度或ratio跨task外推。RevPAR后来通过独立authorized call取得自己的actual usage与attestation；历史analysis/Stage-C packet不重签为当前状态。validator仍要求两个request bodies和byte-level comparison与current rebuild相等，再按原content ID解释当时的EXACT_CONTEXT_EVIDENCE_REQUIRED结论。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "test_anchor": "tests/vnext/test_table_context_comparison.py::TableContextComparisonTest.test_no_sound_cross_task_token_bound_is_claimed",
         "test_status": "automated_recorded_real_bytes",
         "since": "2026-08-25"
@@ -1181,7 +1660,11 @@
         "type": "document",
         "status": "active",
         "statement": "requirements/issue_15_v1/CONTRACT.md保留Issue #15 frozen exact bytes，并与ai_first_v3_3_1共同作为R1–R3历史兼容authority；它不再是successor开发policy入口。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "document_path": "requirements/issue_15_v1/CONTRACT.md",
         "language": "zh-CN",
         "test_anchor": "tests/vnext/test_issue15_authority.py::Issue15AuthorityTest.test_issue15_snapshot_loads_and_preserves_parent_history",
@@ -1193,7 +1676,11 @@
         "type": "document",
         "status": "active",
         "statement": "requirements/issue_28_v1/CONTRACT.md定义successor outcome、边界和升级条件；policy content只在同snapshot的Decision Register，typed invariant profile不构成通用表达式语言。",
-        "audience": ["operator", "developer", "reviewer"],
+        "audience": [
+          "operator",
+          "developer",
+          "reviewer"
+        ],
         "document_path": "requirements/issue_28_v1/CONTRACT.md",
         "language": "en",
         "test_anchor": "tests/vnext/test_issue28_requirement_transition.py::Issue28RequirementTransitionTest.test_invariant_profile_contains_references_not_policy_values",
@@ -1205,7 +1692,11 @@
         "type": "document",
         "status": "active",
         "statement": "docs/business_user_guide.md 是从能力契约与用户可观察行为派生的业务教学文档，不独立声明新能力。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "document_path": "docs/business_user_guide.md",
         "language": "zh-CN",
         "test_anchor": "tools/check_capability_contract_alignment.py::check_alignment",
@@ -1217,7 +1708,11 @@
         "type": "document",
         "status": "active",
         "statement": "interact.md 是当前 CLI 与文件交付中用户可观察行为和验收不变量的真相源。",
-        "audience": ["business_user", "operator", "reviewer"],
+        "audience": [
+          "business_user",
+          "operator",
+          "reviewer"
+        ],
         "document_path": "interact.md",
         "language": "zh-CN",
         "test_anchor": "tools/check_capability_contract_alignment.py::check_alignment",

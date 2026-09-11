@@ -1,0 +1,17 @@
+.F
+======================================================================
+FAIL: test_ambiguous_current_compensation_cannot_fall_back_to_old_scalar (tests.vnext.test_normal_candidate_semantics.NormalCandidateSemanticsTest.test_ambiguous_current_compensation_cannot_fall_back_to_old_scalar)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_candidate_semantics.py", line 27, in test_ambiguous_current_compensation_cannot_fall_back_to_old_scalar
+    self.assertEqual('WITHHELD', resolution['result']['publication'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'WITHHELD' != 'PUBLISHED'
+- WITHHELD
++ PUBLISHED
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.010s
+
+FAILED (failures=1)

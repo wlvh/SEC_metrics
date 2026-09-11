@@ -1,0 +1,135 @@
+......................................EE.EEE..........................
+======================================================================
+ERROR: test_projector_rejects_duplicate_legacy_compatibility_key (tests.vnext.test_replay.ReplayTest.test_projector_rejects_duplicate_legacy_compatibility_key)
+Do not project two scope grains into one legacy metric cell.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_replay.py", line 1179, in test_projector_rejects_duplicate_legacy_compatibility_key
+    repo_root = scoped_repository(workspace=root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 348, in scoped_repository
+    _bind_issue15_scoped_registry(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 140, in _bind_issue15_scoped_registry
+    _rebind_release_plan_chain(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 81, in _rebind_release_plan_chain
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_15_v1"
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2024, in load_requirement_snapshot
+    return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+              ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 1774, in _load_issue_15_snapshot
+    raise RequirementError(
+        "Issue #15 runtime authority bytes differ: {}".format(relative)
+    )
+vnext.requirements.RequirementError: Issue #15 runtime authority bytes differ: config/provider_model_runtime.json
+
+======================================================================
+ERROR: test_projector_rejects_intermediate_run_locator_symlink (tests.vnext.test_replay.ReplayTest.test_projector_rejects_intermediate_run_locator_symlink)
+Keep a persisted batch Run below its original real namespace.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_replay.py", line 1283, in test_projector_rejects_intermediate_run_locator_symlink
+    repo_root = scoped_repository(workspace=root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 348, in scoped_repository
+    _bind_issue15_scoped_registry(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 140, in _bind_issue15_scoped_registry
+    _rebind_release_plan_chain(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 81, in _rebind_release_plan_chain
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_15_v1"
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2024, in load_requirement_snapshot
+    return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+              ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 1774, in _load_issue_15_snapshot
+    raise RequirementError(
+        "Issue #15 runtime authority bytes differ: {}".format(relative)
+    )
+vnext.requirements.RequirementError: Issue #15 runtime authority bytes differ: config/provider_model_runtime.json
+
+======================================================================
+ERROR: test_projector_reloads_the_persisted_frozen_run (tests.vnext.test_replay.ReplayTest.test_projector_reloads_the_persisted_frozen_run)
+Reject a self-consistent caller story when Run bytes disagree.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_replay.py", line 1132, in test_projector_reloads_the_persisted_frozen_run
+    repo_root = scoped_repository(workspace=root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 348, in scoped_repository
+    _bind_issue15_scoped_registry(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 140, in _bind_issue15_scoped_registry
+    _rebind_release_plan_chain(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 81, in _rebind_release_plan_chain
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_15_v1"
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2024, in load_requirement_snapshot
+    return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+              ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 1774, in _load_issue_15_snapshot
+    raise RequirementError(
+        "Issue #15 runtime authority bytes differ: {}".format(relative)
+    )
+vnext.requirements.RequirementError: Issue #15 runtime authority bytes differ: config/provider_model_runtime.json
+
+======================================================================
+ERROR: test_projector_requires_complete_release_result_set (tests.vnext.test_replay.ReplayTest.test_projector_requires_complete_release_result_set)
+Do not let a B03-only Run shrink the repository release plan.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_replay.py", line 1314, in test_projector_requires_complete_release_result_set
+    repo_root = scoped_repository(workspace=root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 348, in scoped_repository
+    _bind_issue15_scoped_registry(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 140, in _bind_issue15_scoped_registry
+    _rebind_release_plan_chain(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 81, in _rebind_release_plan_chain
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_15_v1"
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2024, in load_requirement_snapshot
+    return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+              ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 1774, in _load_issue_15_snapshot
+    raise RequirementError(
+        "Issue #15 runtime authority bytes differ: {}".format(relative)
+    )
+vnext.requirements.RequirementError: Issue #15 runtime authority bytes differ: config/provider_model_runtime.json
+
+======================================================================
+ERROR: test_projector_requires_persisted_projection_inputs (tests.vnext.test_replay.ReplayTest.test_projector_requires_persisted_projection_inputs)
+Reject missing Run bytes instead of trusting a batch manifest.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_replay.py", line 1255, in test_projector_requires_persisted_projection_inputs
+    repo_root = scoped_repository(workspace=root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 348, in scoped_repository
+    _bind_issue15_scoped_registry(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 140, in _bind_issue15_scoped_registry
+    _rebind_release_plan_chain(repo_root=repo_root)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/projection_fixture_support.py", line 81, in _rebind_release_plan_chain
+    requirement = load_requirement_snapshot(
+        snapshot_dir=repo_root / "requirements" / "issue_15_v1"
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 2024, in load_requirement_snapshot
+    return {**_load_issue_15_snapshot(snapshot_dir=snapshot_dir),
+              ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirements.py", line 1774, in _load_issue_15_snapshot
+    raise RequirementError(
+        "Issue #15 runtime authority bytes differ: {}".format(relative)
+    )
+vnext.requirements.RequirementError: Issue #15 runtime authority bytes differ: config/provider_model_runtime.json
+
+----------------------------------------------------------------------
+Ran 70 tests in 11.869s
+
+FAILED (errors=5)

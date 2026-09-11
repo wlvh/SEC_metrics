@@ -1,0 +1,60 @@
+{
+  "status": "USER_DELEGATED_DEVELOPMENT_ONLY",
+  "policy": {
+    "schema_version": 1,
+    "policy_id": "issue28_normal_candidates_v1",
+    "development_delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
+    "development_scope": "ISSUE_28_TEN_COMPANIES_39_METRICS",
+    "current_native_metric_ids": [
+      "B06",
+      "C03",
+      "C04",
+      "D01"
+    ],
+    "metric_ids": [
+      "B06",
+      "C03",
+      "C04",
+      "D01"
+    ],
+    "production_authorized": false,
+    "provider_enabled": false,
+    "sec_fetch_enabled": false,
+    "new_business_budget": "NOT_GRANTED_BY_THIS_POLICY",
+    "automatic_retries": 0,
+    "native_deterministic_text_methods": [
+      "RISK_FACTOR_HEADINGS_V1"
+    ],
+    "source_admission": "PREEXISTING_SAVED_BASELINE_ONLY",
+    "source_manifest": "config/normal_candidate_sources_v1.json",
+    "historical_scope_and_call_records": "RETAIN_WITH_ORIGINAL_SEMANTICS",
+    "b13_economic_meaning": "PENDING_EXTERNAL_APPROVAL",
+    "rule_paths": [
+      "config/issue28_normal_candidates_v1.json",
+      "config/normal_candidate_sources_v1.json",
+      "catalog/r5/B06_new_source_v2.md",
+      "catalog/r5/C03_peo_total_compensation.md",
+      "catalog/r5/C03_reported_compensation_v2.md",
+      "catalog/r5/C04_auditor_changes.md",
+      "catalog/r5/C04_auditor_changes_v2.md",
+      "catalog/r6/D01_risk_factor_headings.md",
+      "scripts/vnext/normal_source_authority.py",
+      "scripts/vnext/normal_annual_input.py",
+      "scripts/vnext/normal_governance_input.py",
+      "scripts/vnext/normal_candidates.py",
+      "scripts/vnext/text_coverage.py",
+      "scripts/vnext/risk_signals.py",
+      "scripts/vnext/text_results.py",
+      "scripts/vnext/text_review.py",
+      "scripts/vnext/text_run_validation.py",
+      "scripts/vnext/governance_signals.py",
+      "scripts/vnext/governance_compensation_table.py",
+      "scripts/vnext/b06_disclosure_v2.py",
+      "docs/evidence/issue28_continuous/frozen-parent-v10-index.json"
+    ],
+    "frozen_parent_index": "docs/evidence/issue28_continuous/frozen-parent-v10-index.json",
+    "frozen_parent_index_sha256": "7e662db91312b88ecf46a964e4aaf4138c17ad2bc72c042229f280bfa2982be2",
+    "frozen_parent_root": "docs/evidence/issue28_continuous/frozen-parent-v10",
+    "parent_requirement_closure_hash": "sha256:81609980645b02c6e0565358eb41cb900eebb54964c545ce38c411d8abee4bcc"
+  }
+}

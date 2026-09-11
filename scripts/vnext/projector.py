@@ -1849,6 +1849,14 @@ def _projection_value(
     """
     if result["value"] is None:
         return ""
+    if result.get("value_kind") == "TEXT_V1":
+        from .text_results import render_text_payload
+        if "value_multiplier" in projection or result["unit"] != "text":
+            raise ProjectionError("Text projection cannot apply numeric conversion")
+        value = render_text_payload(payload=result["text_payload"])
+        if result["value"] != value:
+            raise ProjectionError("Text projection payload differs from Result")
+        return value
     multiplier = (
         str(projection["value_multiplier"])
         if "value_multiplier" in projection
@@ -1971,6 +1979,13 @@ def _context_text(
     """
     if style == "constant":
         return constant
+    if style == "text_source_span":
+        if observation.get("value_kind") != "TEXT_V1":
+            raise ProjectionError("Text context requires a text Observation")
+        binding = observation["source_binding"]["text_binding"]
+        return "{}:bytes:{}-{}:sha256:{}".format(
+            binding["section_id"], binding["raw_start_byte"],
+            binding["raw_end_byte"], binding["raw_span_sha256"])
     if style == "structured_source_context":
         binding=observation["source_binding"]
         if "xbrl_context_ref" in binding:
@@ -2062,6 +2077,10 @@ def _evidence_row(
         source["accession"],
         filed,
     )
+    if observation.get("value_kind") == "TEXT_V1":
+        if evidence_style != "text_source_span" or unit_policy != "observation":
+            raise ProjectionError("Text evidence requires exact excerpt and source span")
+        quote = str(observation["value"])
     return {
         "company": company["display_name"],
         "cik": company["primary_cik"],

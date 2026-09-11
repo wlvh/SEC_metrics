@@ -335,6 +335,10 @@ def scoped_repository(
             REPO_ROOT / "tools" / filename,
             repo_root / "tools" / filename,
         )
+    # These R1/R2 compatibility tests execute today's validators against the
+    # frozen historical configuration and receipts, not today's model choice.
+    from tests.vnext.historical_authority_support import copy_foundation_receipts
+    copy_foundation_receipts(repo_root)
     registry_path = repo_root / "config" / "company_registry.csv"
     with registry_path.open(encoding="utf-8", newline="") as stream:
         reader = csv.DictReader(stream)

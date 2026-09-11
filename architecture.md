@@ -778,5 +778,28 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 
 ### 正常年度输入适配
 
-`normal_annual_input`复用`annual_update.saved_source`的最新请求失败保护和账本/原字节绑定，按保存submissions的实际reportDate选择最新普通10-K；财政年度及364/365/366/371天实际期间从原生DEI/context重建，不用日历年份推算或固定样本。普通原件与10-K/A分别表达，原件准备成功不等于修订后的本期结果成功。连续主体以外的接续仍为明确实现缺口，单公司失败不抹掉其他公司的检查结果。输入可交给现有companyfacts/table Run参数接口，但该组件尚未完成统一执行、采纳、触发或生产接线；不读取旧结果或发出网络请求。旧年度和B06两样本入口按原语义读取。
+`normal_annual_input`复用`annual_update.saved_source`的最新请求失败保护和账本/原字节绑定，按保存submissions的实际reportDate选择最新普通10-K；财政年度及364/365/366/371天实际期间从原生DEI/context重建，不用日历年份推算或固定样本。普通原件与10-K/A分别表达，原件准备成功不等于修订后的本期结果成功。配置为接续关系的公司只准备当前注册人原件，不把前身财务拼入本期；指标层仍须单独证明主体可比性。单公司失败不抹掉其他公司的检查结果。输入可交给现有companyfacts/table Run参数接口，但该组件尚未完成统一执行、采纳、触发或生产接线；不读取旧结果或发出网络请求。旧年度和B06两样本入口按原语义读取。
 <!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
+### 后继内容验证组件
+
+`financial_duration`接收候选单元格及来自任务合同的指标/主体词，重新解析原件、数值origin、列日期与相邻同标记脚注；全年列头与完整日历月脚注分别给出证据，未知关联保持未解决，年报DEI不提供测量期间默认值。组件仍需与自动候选及原生Evidence/Run整合。
+<!-- capability-anchor: CAPABILITY.financial_source_measurement_period -->
+
+`text_coverage`以RawBlob/SourceReference和原件DEI绑定公司、期间、申报，解析可见block并保存原UTF-8字节位置。章节起止从正文标题推导，目录/片段/修订不足不能授完整范围。范围扫描保留命中与未命中，但不产生“没有风险”等语义结论；原生消费者必须重建原字节而非信任可自行重哈希的文档对象。
+<!-- capability-anchor: CAPABILITY.source_text_coverage -->
+
+`b06_disclosure_v2`复用原公式和表内关系，并独立比较所消费分子/分母在XML与primary的单位、主体、时点、符号、scale和精度；其他已知债务事实须对回其具名本金列/到期表，不能当作已包含的账面值。有限当期借款叙述必须与具名表格成员或原文信用协议组对应。新Spec显式分派v2，v1字节及原Run不重解释；此提交层级仍是内容组件，原生冻结、正常输入准入及发布接线未由组件测试证明。
+<!-- capability-anchor: CAPABILITY.b06_successor_content_checks -->
+
+
+### 普通保存来源与原生文本候选
+
+`normal_source_authority`把外部输入与随实现固定的既存获取基线比较，再走原有请求账本核对。`normal_governance_input`重建代理材料、同主体前期与修订/事件全集；Salesforce的后续失败GET和JPM不一致的历史清单不会被早前成功记录掩盖。当前接续主体缺少可比前期时保留缺口。
+<!-- capability-anchor: CAPABILITY.normal_saved_source_admission -->
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+
+`normal_candidates`将B06/C03/C04及D01接入同一原生Run；`issue_28_v11`/V12为未激活开发草案。父v10按`frozen-parent-v10-index.json`固定的旧字节读取，旧Rule/Run不重签。D01以TEXT_V1在原有记录类型中保存文本，完整原文标题集合由Evidence重新导出，再经既有D-06 SYSTEM或真实HUMAN审阅链核对。普通SCT路线使用确定性表格规则，保存整份DerivedAsset，原生验证重新解析原件网格及金额/期间，不能凭Spec名跳过核对。旧数字记录没有附加默认字段或全局语义版本变动。
+
+目前真实材料已完成OPEN完整图检查，尚未宣称最终FROZEN/完整公开包/390坐标验收。文本Projector保留实际摘录及UTF-8字节范围，禁止倍率转换；完整包、生产入口和正常更新仍在集成。反例与实际层级见`docs/evidence/issue28_continuous/`。
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->

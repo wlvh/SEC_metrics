@@ -1,0 +1,26 @@
+paramount_skydance_paramount_global C03 create
+Traceback (most recent call last):
+  File "<stdin>", line 11, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_candidates.py", line 331, in create_structured_candidate_run
+    manifest, _, _ = _finish_run(data_root=data_root, run_dir=run_dir, freeze=freeze)
+                     ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/normal_candidates.py", line 83, in _finish_run
+    return _mechanically_replay_open_run(run_dir=run_dir, repo_root=data_root,
+                                        require_complete_results=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 3369, in _mechanically_replay_open_run
+    _validate_record_graph(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=repo_root,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        r4_replay_context=r4_replay_context,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py", line 2652, in _validate_record_graph
+    raise RunStoreError("Observation DerivedAsset is absent")
+vnext.run_store.RunStoreError: Observation DerivedAsset is absent
+paramount_skydance_paramount_global C04 create
+{"company": "paramount_skydance_paramount_global", "metric": "C04", "result": {"company_id": "paramount_skydance_paramount_global", "metric_id": "C04", "period_start": "2025-01-01", "period_end": "2025-12-31", "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6", "spec_closure_hash": "sha256:e85274fbab94d7e316ca58710a41a00e3197688cdaff68d6c064470c17bd8f1d", "applicability": "APPLICABLE", "quality": "NONE", "publication": "WITHHELD", "reason_code": "C04_COMPARABLE_AUDITOR_FACTS_MISSING", "value": null, "unit": null, "trace_id": "sha256:9cbaca6922887c018055e4762ec7323ce715efc0bc1deeffb8f4ebe738f727a8", "record_type": "METRIC_RESULT", "result_id": "sha256:f6616f6a8f7d985a8092c76a7895649c8b010d3e9b7758c3ceb0c224ebdf1ef5"}, "target": {"fiscal_year": 2025, "period_start": "2025-01-01", "period_end": "2025-12-31"}}
+southwest_airlines B06 create
+{"company": "southwest_airlines", "metric": "B06", "result": {"company_id": "southwest_airlines", "metric_id": "B06", "period_start": "2025-12-31", "period_end": "2025-12-31", "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b", "spec_closure_hash": "sha256:0361bf99806d1cbcc24464360acf16db20d98bafced81c5aa45fdfefe765dce1", "applicability": "APPLICABLE", "quality": "NONE", "publication": "WITHHELD", "reason_code": "B06_SOURCE_RELATIONSHIP_UNRESOLVED", "value": null, "unit": null, "trace_id": "sha256:fe68f3adb23b2fb15f5e75a4d63dad7ba6e4b489a486dfa67cff5ea4b6aefb6d", "record_type": "METRIC_RESULT", "result_id": "sha256:f6165df7e0bb01ab81ace88cd14395c97632c82d0489bad5a83adfc7dbafe78e"}, "target": {"fiscal_year": 2025, "period_start": "2025-12-31", "period_end": "2025-12-31"}}

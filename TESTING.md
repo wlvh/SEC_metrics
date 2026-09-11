@@ -5,6 +5,15 @@
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_annual_input -v`在保存真实材料上检查非自然财年、52周期间、修订与普通原件分离、十公司保留/故障隔离，以及季度冒充年度、错主体、缺历史分片和后来来源失败反例。测试禁止网络及旧结果读取，不模拟财务答案。组件通过只证明输入准备，未证明指标执行或新SEC发现。fast入口逐项登记以保持30秒单项上限。
 <!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
 
+## 后继来源内容组件
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_financial_duration tests.vnext.test_text_coverage -v`验证原件期间、同表脚注、月底起点、目录/片段/章节/来源篡改；synthetic反例不计真实获取。真实九公司普通年报由normal输入选择后与text组件联测，报告为component integration，不称文本指标已完成。
+<!-- capability-anchor: CAPABILITY.financial_source_measurement_period -->
+<!-- capability-anchor: CAPABILITY.source_text_coverage -->
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b06_disclosure_v2 -v`使用PR43两历史原件和保存的新信用协议组正例，验证分母冲突、已知计量改写、额外借款及未知叙述。新10项模块超过30秒；fast逐method登记，完整原生v2冻结/冷读另作接线验收，不能以组件通过代替。旧13项及旧原生材料维持原规则，首次漏洞/修后结果分别保存。
+<!-- capability-anchor: CAPABILITY.b06_successor_content_checks -->
+
 ## 确切年度候选正式采纳接线
 
 fast白名单共35入口，保留v1发布模块，并加入`tests.vnext.test_annual_publication_authority`。
@@ -571,3 +580,13 @@ PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followu
 真实新来源材料层：`B06_NEW_SOURCE_MATERIAL_ROOT=<本轮外部根> PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b06_new_source_material -v`，6项测试实际执行，缺材料报错。包括两个正常FROZEN Run、冷读来源准入、旧入口抛错、零调用重入和重绑定伪验证记录拒绝。便携包恢复后用新进程只读CLI，额外证明没有Git目录仍可重验checkpoint与原生结果。
 
 CI首次将13项新测试作为一个入口时触发既有30秒入口上限。已将同样13项分别登记为入口，不提高超时、不删测试或放宽断言。当前fast共60入口，实际测试数仍182；首次CI失败保留。
+
+
+## 普通治理与文本原生接线
+
+`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_replay tests.vnext.test_record_schemas tests.vnext.test_text_results`在本次接线后70项通过；随后增加文本Projector原文/字节定位及禁止倍率反例。历史Projector fixture通过既有`copy_foundation_receipts`取回原模型配置，执行当前验证器；不改历史authority。`tests.vnext.test_normal_source_authority`检验无Git导入、caller基线/账本/原件/headers/主体变造；`tests.vnext.test_normal_governance_input`及`test_governance_signals`/`test_governance_compensation_table`检验自动输入与薪酬/审计师语义。
+
+本次D01/C03/C04/B06真实OPEN整图检查及首次失败分别保存；不把OPEN重放、70项回归或fast当最终冻结、完整包或生产PASS。完整金融组件55项另行运行（约153秒），不能塞入30秒单case fast上限。
+<!-- capability-anchor: CAPABILITY.normal_saved_source_admission -->
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->

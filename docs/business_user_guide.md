@@ -275,3 +275,8 @@ B06新来源的两份历史验证只提供候选结果：可查看原始年报�
 
 开发入口`tools/vnext_normal_update.py`可以读取已保存年报清单，按原文财年准备自然年、非自然年及52/53周年输入。它会同时保留普通10-K和修订状态；“原件已准备”不能读作“本期财务指标已更新”。缺少来源、来源失败和程序尚不支持的情况分别报告，其他公司继续检查。正式结果仍从既有PublicationView读取；本入口不会发布结果。
 <!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
+
+普通候选开发可在保存材料上检查薪酬、审计师变更与风险标题。薪酬保留披露实际覆盖期间，不把交易后数月金额冒充全年；缺少可比前期或来源获取失败，不显示“无变更”。风险标题输出是公司原文摘录，并附原始定位，不表示该风险已经发生。候选结果和完整正式发布保持分别可见，本轮尚未接入正式结果更新。
+<!-- capability-anchor: CAPABILITY.normal_governance_input -->
+<!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->

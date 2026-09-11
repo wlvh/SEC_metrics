@@ -180,6 +180,11 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `scripts/vnext/normal_candidates.py`、`normal_source_authority.py`、`normal_governance_input.py`：从已保存实际来源重建B06/C03/C04/D01普通候选，外部根与既存获取基线分开验证；新V12草案未激活。
+- `scripts/vnext/text_results.py`、`text_review.py`、`text_run_validation.py`：原有记录中的显式TEXT_V1、完整原文候选/审阅/Run重读，旧数字记录不改。
+
+- `scripts/vnext/financial_duration.py`：从原表头/行脚注重建实际测量期间；季度不能借年报身份变成年均值。`text_coverage.py`重建原件章节/字节定位，查找命中与范围完整分开；二者目前是离线验证组件，后续原生接线仍需验收。
+- `scripts/vnext/b06_disclosure_v2.py` / `catalog/r5/B06_new_source_v2.md`：显式后继内容检查，补primary/XML金额一致性、其他债务计量对账及有限当期借款叙述。旧v1保持历史语义，新增组件不自行赋予来源或生产信用。
 - `scripts/vnext/normal_annual_input.py` / `tools/vnext_normal_update.py`：从保存清单选择最新普通年报，由原生DEI/context确认实际财年，支持自然年及52/53周年，不使用两样本白名单或旧Result。修订与普通原件分离，来源失败与主体接续实现缺口分别保留；当前只准备输入，不执行指标、不授来源准入或生产信用。旧calendar-only及PR43历史入口不改。
 
 - `scripts/vnext/b06_source_admission.py`：独立于普通输入的受信获取/导入执行记录、
