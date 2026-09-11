@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.normal_saved_candidate_batch",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通保存来源CLI在新的外部目录自动准备并冻结B06/C03/C04/D01候选，逐坐标保留失败和WITHHELD并继续其余坐标。D01通过既有Projector输出完整公共行及原文证据；其他指标公共行未准备时明确NOT_PREPARED。重复使用已有输出目录被拒绝，不覆盖历史批次；尚不是实时更新服务、完整发布或正式采纳。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_projection.py::NormalProjectionMaterialTest.test_exact_text_and_source_quotes_survive_existing_csv_roundtrip",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
         "anchor_id": "CAPABILITY.normal_saved_source_admission",
         "type": "capability",
         "status": "active",

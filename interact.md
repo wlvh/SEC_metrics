@@ -362,3 +362,11 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 普通候选开发可在保存材料上检查薪酬、审计师变更与风险标题。薪酬保留披露实际覆盖期间，不把交易后数月金额冒充全年；缺少可比前期或来源获取失败，不显示“无变更”。风险标题输出是公司原文摘录，并附原始定位，不表示该风险已经发生。候选结果和完整正式发布保持分别可见，本轮尚未接入正式结果更新。
 <!-- capability-anchor: CAPABILITY.normal_governance_input -->
 <!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
+
+
+## 普通保存来源候选批次
+
+入口和实际范围见`docs/normal_candidates.md`。`tools/vnext_normal_candidate.py`只写全新外部目录，逐坐标保存原生冻结/失败，并生成完整请求范围的summary；不以一个坐标受阻抹掉其他结果。`normal_projection.py`复用原有Projector，执行Spec与展示规则分开绑定；D01的20/18字段、原文换行、申报日期及期间经过真实冻结后的CSV重放。V12已产生FROZEN记录，规则/五文件不再同版本修改；新共享路径只作后继扩展，旧记录须继续读取。
+
+材料命令：`PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_native_material tests.vnext.test_normal_projection`；短目录边界为`tests.vnext.test_normal_candidate_cli`。这些完整材料检查不塞入30秒fast入口，也不替代完整390坐标/正式发布。真实执行和失败日志见`docs/evidence/issue28_continuous/frozen-candidates/`。
+<!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->

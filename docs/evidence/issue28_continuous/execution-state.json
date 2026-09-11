@@ -25,10 +25,11 @@
     "unknown": 0
   },
   "current_work": [
-    "Complete D01/C03/C04/B06 native integration and independent adversarial review",
-    "R4 normal A03/A09 and whole-registrant source relationships",
-    "R6 C02/D02-D04 source candidates and semantic conclusions",
-    "Full portable candidate publication and normal update/legacy retirement integration"
+    "Successor native C02/D02 source-excerpt integration with explicit filing-date meaning",
+    "Financial source scope repairs from independent review before new A03/A11/A12/A13 acceptance",
+    "Ordinary financial native Result and Run integration",
+    "Complete publication, normal updates and legacy retirement",
+    "Supplier financing classification required by B06"
   ],
   "open_decisions": [
     "B13 pending economic meaning",
@@ -66,6 +67,25 @@
       "evidence": "native-integration/summary.json",
       "tier": "OPEN_COMPLETE_GRAPH_AND_COMPONENT_REGRESSION",
       "full_acceptance": false
+    },
+    {
+      "component": "D01_ten_company_and_governance",
+      "evidence": "frozen-candidates/",
+      "d01_frozen_cold_results": 10,
+      "d01_headings": 410,
+      "governance_frozen_coordinates": 20,
+      "governance_value_results": 17,
+      "governance_withheld": 3,
+      "full_acceptance": false
     }
-  ]
+  ],
+  "latest_pushed_implementation": "5376a06596eb753a879929363b6130bee18a42da",
+  "github_ci": {
+    "run_id": 34642111183,
+    "head": "5376a06596eb753a879929363b6130bee18a42da",
+    "status": "PASS",
+    "entries": 96,
+    "tests": 307
+  },
+  "v12_rule_state": "FROZEN_BY_REAL_RUNS_NO_SAME_VERSION_REWRITE"
 }

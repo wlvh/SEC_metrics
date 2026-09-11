@@ -180,6 +180,8 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `tools/vnext_normal_candidate.py`、`scripts/vnext/normal_projection.py`：新的外部保存来源候选批次、原生冻结及公共行准备；说明见`docs/normal_candidates.md`。V12已出真实冻结记录，规则不再同版本改写。
+
 - `scripts/vnext/normal_candidates.py`、`normal_source_authority.py`、`normal_governance_input.py`：从已保存实际来源重建B06/C03/C04/D01普通候选，外部根与既存获取基线分开验证；新V12草案未激活。
 - `scripts/vnext/text_results.py`、`text_review.py`、`text_run_validation.py`：原有记录中的显式TEXT_V1、完整原文候选/审阅/Run重读，旧数字记录不改。
 
