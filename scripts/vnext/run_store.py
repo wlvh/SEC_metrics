@@ -352,6 +352,7 @@ def create_run(
         validate_run_coordinates(
             target_period=target_period,
             company_traits=normalized_traits,
+            point_in_time_fiscal_label=requirement_id == "issue_28_v9",
         )
     except RecordError as error:
         raise RunStoreError("Run business coordinates are invalid") from error
@@ -1868,6 +1869,7 @@ def _structured_source_ids(
 
 def _replay_structured_result(
     *,
+    repo_root: Path,
     manifest: Mapping[str, object],
     result: Mapping[str, object],
     trace: Mapping[str, object],
@@ -1899,6 +1901,19 @@ def _replay_structured_result(
         RunStoreError: On an unbound source fact, ambiguous target, or any
             Observation/Trace/Result difference from deterministic replay.
     """
+    from .r5_b06_structured import is_primary, replay_result, validate_input_binding
+    if is_primary(compiled_spec):
+        validate_input_binding(data_root=repo_root, manifest=manifest)
+        expected_result, expected_trace, expected_observations, _audit = replay_result(
+            manifest=manifest, spec=compiled_spec, trace=trace,
+            source_references=source_references, raw_bytes_by_id=raw_bytes_by_id,
+            company_ciks=company_ciks,
+        )
+        if result != expected_result or trace != expected_trace or any(
+            observations.get(o['observation_id']) != o for o in expected_observations
+        ):
+            raise RunStoreError("Structured primary source replay differs")
+        return
     target = dict(trace["calculation_target"])
     if not metric_is_applicable(
         applicability=compiled_spec["compiled"]["applicability"],
@@ -2846,6 +2861,7 @@ def _validate_record_graph(
         }:
             continue
         _replay_structured_result(
+            repo_root=repo_root,
             manifest=manifest,
             result=result,
             trace=traces[str(result["trace_id"])],

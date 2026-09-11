@@ -310,3 +310,5 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - PR 发布（仅用户明确要求时）
 
 - `scripts/vnext/annual_continuity.py`及snapshot/publication/trigger适配：同一受限阶段的年度检查、原生候选、完整前驱接续与有限触发，实际生产只读；新规则V3/issue_28_v8，不改历史v1/v2。入口`tools/vnext_annual_continuity.py`，操作/状态/验收见`docs/annual_update_continuity.md`。`PublicationView.native_result/authority_bytes`拥有有限内部路径解析；不要在调用者伪造旧batch目录。
+
+- `scripts/vnext/r5_b06_structured.py`、`r5_b06_publication.py`、`tools/vnext_r5_b06.py`：B06保存结构化来源→原生结果/阻断→完整只读候选；新Requirement草案无生产激活，来源策略fallback仍未执行。入口见`docs/r5_b06_structured.md`。

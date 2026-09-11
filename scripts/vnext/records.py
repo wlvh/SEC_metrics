@@ -696,7 +696,7 @@ def validate_identifier(*, value: object, field: str) -> str:
 
 
 def validate_run_coordinates(
-    *, target_period: object, company_traits: object
+    *, target_period: object, company_traits: object, point_in_time_fiscal_label: bool = False
 ) -> None:
     """Validate the exact business coordinates owned by a Run manifest.
 
@@ -735,7 +735,9 @@ def validate_run_coordinates(
         raise RecordError("Run period ends before it starts")
     # A named fiscal year may end in the following calendar year, but it must
     # occur inside the exact period and cannot describe more than 53 weeks.
-    if not period_start.year <= fiscal_year <= period_end.year:
+    prior_label = (point_in_time_fiscal_label and period_start == period_end
+                   and fiscal_year == period_end.year - 1)
+    if not prior_label and not period_start.year <= fiscal_year <= period_end.year:
         raise RecordError("Run fiscal_year falls outside its exact period")
     if (period_end - period_start).days + 1 > 371:
         raise RecordError("Run target period exceeds 53 weeks")
@@ -1133,6 +1135,8 @@ def _validate_enums(*, record_type: str, record: Mapping[str, object]) -> None:
     if (
         record_type == "PUBLICATION_MANIFEST"
         and record["candidate_status"] != "PUBLISHABLE"
+        and not (record.get("publication_credit") == "NONE_ISOLATED_STRUCTURED_MIGRATION"
+                 and record["candidate_status"] == "BLOCKED")
     ):
         raise RecordError("Committed publication must be PUBLISHABLE")
     if record_type == "SOURCE_REFERENCE":
@@ -1164,6 +1168,7 @@ def _validate_record_semantics(
         validate_run_coordinates(
             target_period=record["target_period"],
             company_traits=record["company_traits"],
+            point_in_time_fiscal_label=record.get("requirement_id") == "issue_28_v9",
         )
     if record_type == "AI_EXTRACTION_ATTEMPT":
         observation = record["transport_observation"]
@@ -1820,7 +1825,7 @@ def validate_record(*, record: Mapping[str, object]) -> Dict[str, object]:
     if record_type == R4_PUBLICATION_MANIFEST_TYPE:
         _validate_r4_publication_binding_shape(record=record)
     if record_type == ANNUAL_PUBLICATION_MANIFEST_TYPE:
-        if (record["publication_credit"] not in {"NONE_ISOLATED_ADOPTION_REHEARSAL", "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY", "NONE_ISOLATED_CONTINUOUS_UPDATE"}
+        if (record["publication_credit"] not in {"NONE_ISOLATED_ADOPTION_REHEARSAL", "CANDIDATE_SPECIFIC_PENDING_PRODUCTION_AUTHORITY", "NONE_ISOLATED_CONTINUOUS_UPDATE", "NONE_ISOLATED_STRUCTURED_MIGRATION"}
                 or re.fullmatch(r"sha256:[0-9a-f]{64}", record["annual_adoption_receipt_id"]) is None):
             raise RecordError("Annual adoption has no formal publication credit")
     _validate_record_status(record_type=semantic_type, record=record)

@@ -1028,28 +1028,31 @@ def calculate_metric(
                         trace,
                         [dict(item) for item in all_observations],
                     )
-            elif guard == "denominator_nonzero":
+            elif guard in {"denominator_nonzero", "denominator_positive"}:
                 continue
             else:
                 raise CalculationError("Unknown top-level guard")
         formula = semantic["formula"]
         # Guard the declared denominator before division so zero remains a
         # meaningful terminal business state instead of an arithmetic error.
-        if "denominator_nonzero" in semantic["top_level_guards"]:
+        if {"denominator_nonzero", "denominator_positive"} & set(
+            g for g in semantic["top_level_guards"] if isinstance(g, str)
+        ):
             formula_args = formula["args"] if isinstance(formula, dict) else []
             denominator_expression = formula_args[-1] if formula_args else None
             if denominator_expression is not None:
                 denominator = evaluate_expression(
                     expression=denominator_expression, values=resolved,
                 )
-                if denominator == 0:
+                nonpositive = "denominator_positive" in semantic["top_level_guards"]
+                if denominator == 0 or (nonpositive and denominator < 0):
                     result, trace = _result_and_trace(
                         compiled_spec=compiled_spec,
                         target=target,
                         applicability="APPLICABLE",
                         quality="NOT_MEANINGFUL",
                         publication="PUBLISHED",
-                        reason_code="DENOMINATOR_ZERO",
+                        reason_code="DENOMINATOR_NONPOSITIVE" if nonpositive else "DENOMINATOR_ZERO",
                         value=None,
                         result_unit=None,
                         trace_steps=trace_steps,

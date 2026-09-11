@@ -434,7 +434,7 @@ def _validate_top_level_guards(*, value: object) -> Sequence[object]:
     seen_strings = set()
     for guard in value:
         if isinstance(guard, str):
-            if guard not in EQUALITY_GUARDS | {"denominator_nonzero"}:
+            if guard not in EQUALITY_GUARDS | {"denominator_nonzero", "denominator_positive"}:
                 raise SpecError("Top-level guard is unknown")
             if guard in seen_strings:
                 raise SpecError("Top-level guard is duplicated")

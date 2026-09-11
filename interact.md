@@ -340,3 +340,6 @@ R3已形成committed partial active并保留R1历史、R2 predecessor以及R3→
 
 更新检查同时展示发现、候选与发布。CANDIDATE_PENDING_PUBLICATION是已有候选等待后续验证/发布的正常状态，不表示本次抽取失败或已经上线；发现失败保留已知待发布事实。连续入口的NO_CHANGE表示没有待计算或待发布工作。完整成功、部分候选、调用不明、前驱冲突分别报告，失败不覆盖旧完整版本。当前阶段只写显式隔离根，有限trigger结束即停。见docs/annual_update_continuity.md。
 <!-- capability-anchor: CAPABILITY.annual_update_continuity -->
+
+B06主路径入口为`tools/vnext_r5_b06.py prepare/read`。它输出完整待审核候选及十公司覆盖原因，明确区别原生值、非正权益、结构化歧义、工业范围和修订待核对。公共受阻行不填旧B06值，原生as-filed值与来源保留用于审查。所有输出在checkout外；正式active和24指标集合不变。
+<!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->

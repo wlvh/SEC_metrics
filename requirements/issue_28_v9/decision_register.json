@@ -1,0 +1,37 @@
+{
+  "requirement_id": "issue_28_v9",
+  "decision": "PROPOSE_R5_B06_STRUCTURED_PRIMARY",
+  "status": "PENDING_FINAL_REVIEW",
+  "policy": {
+    "schema_version": 1,
+    "policy_id": "r5_b06_structured_v1",
+    "requirement_id": "issue_28_v9",
+    "metric_ids": [
+      "B06"
+    ],
+    "source_strategy": "structured_first_ai_fallback",
+    "primary_spec": "catalog/r5/B06_structured.md",
+    "primary_only": true,
+    "production_authorized": false,
+    "business_calls": [
+      0,
+      0,
+      0
+    ],
+    "predecessor_kind": "current_verified_active",
+    "blocked_coordinates": "blank_new_result_with_explicit_reason_never_legacy_fill",
+    "formal_metric_count_unchanged": 24,
+    "candidate_metric_count_proposed": 25,
+    "pending_obligations": [
+      "ambiguous company source coverage and fallback",
+      "candidate acceptance and production permission",
+      "B06 legacy producer retirement at formal adoption",
+      "continuous production authority and true new inputs",
+      "B13 C03 C04 WB-7 R4 R6 Rf"
+    ],
+    "draft_release_plan": "config/release_plans/issue_28_b06_structured_draft.json",
+    "draft_release_plan_id": "sha256:cc866a8d98a97b00242ee79847e656bc1b4df5c63de7f071a8260cad28deb1f5",
+    "saved_source_origin": "EXACT_EXISTING_COMMITTED_SEC_ATTEMPTS_FOR_THIS_OFFLINE_WORK_PACKAGE"
+  },
+  "delegation": "User conversation: PR41 close then R5 B06 structured primary, 2026-09-11; not a GitHub APPROVE or production decision"
+}

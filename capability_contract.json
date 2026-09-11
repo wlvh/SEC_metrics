@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.r5_b06_structured_primary",
+        "type": "capability",
+        "status": "active",
+        "statement": "B06结构化主路径从保存SEC来源选择确切普通10-K时点，复用原生计算/Run重放和完整候选；不调用旧B06生产或AI fallback。冲突、涵盖性/工业范围及修订未决坐标明确阻断，非正权益不输出有效比值。250候选坐标/327公开行不改变正式24指标，完整候选BLOCKED且没有生产写权限。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_r5_b06.py::B06PrimaryTest.test_conflicting_totals_short_and_separate_lease_coverage",
+        "test_status": "automated_recorded",
+        "since": "2026-09-11"
+      },
+      {
         "anchor_id": "CAPABILITY.annual_update_continuity",
         "type": "capability",
         "status": "active",
