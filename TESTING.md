@@ -562,3 +562,5 @@ PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followu
 原本当前Southwest另有供应商融资性质缺口，不以测试修复抹去；派生零余额正例仅
 测试支持模式。固定历史两材料的正常Run、冷重放、重入和历史包兼容另作材料层
 验收，保存首次失败与修后结果；完整候选prepare与生产发布不属于本轮执行。
+
+真实新来源材料层：`B06_NEW_SOURCE_MATERIAL_ROOT=<本轮外部根> PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b06_new_source_material -v`，6项测试实际执行，缺材料报错。包括两个正常FROZEN Run、冷读来源准入、旧入口抛错、零调用重入和重绑定伪验证记录拒绝。便携包恢复后用新进程只读CLI，额外证明没有Git目录仍可重验checkpoint与原生结果。

@@ -268,3 +268,6 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 
 B06结构化主路径的待审候选由`tools/vnext_r5_b06.py read`读取。它未替换正式报告；遇范围/修订/债务涵盖未决时公共值为空且给出原因，原生当时申报结果仍可核对。完整说明见`docs/r5_b06_structured.md`。
 <!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->
+
+B06新来源的两份历史验证只提供候选结果：可查看原始年报、计算组成、完整性检查及修订状态，不能把它们当作正式active中的新指标。无法证明融资项目性质时显示具体缺口；新来源文件能被读取不等于已获可信来源身份。两份候选及其重放材料见`docs/evidence/b06_new_source/README.md`。
+<!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->

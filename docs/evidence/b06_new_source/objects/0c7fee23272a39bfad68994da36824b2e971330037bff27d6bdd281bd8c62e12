@@ -1,0 +1,83 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "OPEN",
+  "records_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "9770e08793d6c771a27d466357b79675d47a6ca3502f99d7c79ccaa0a50a5014",
+  "content_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "audit_manifest_hash": "sha256:37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "run_id": "run:b06-new-source:cdad8b76655c1d57aee6ef46c4a1ae151d35e998c8323ea00c0f856d98f3159d",
+  "company_id": "southwest_airlines",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2024,
+    "period_start": "2024-12-31",
+    "period_end": "2024-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:40a31df9365652ed9b561190f9920d7156ce6c28a6f9079f5706397281b3fa6c",
+      "raw_asset_id": "sha256:bfa6b3c7f37e36bab0fb0890d6ba7521bf30fd1a257eb4584418653a798d4600",
+      "company_id": "southwest_airlines",
+      "source_url": "https://data.sec.gov/submissions/CIK0000092380.json",
+      "accession": "0000092380-25-000024",
+      "document_name": "CIK0000092380.json",
+      "source_role": "submissions",
+      "request_attempt_id": "request:attempt:705c80a391f7b18422317a4d785c80c125369031f4690d63e5d687b02f3bfe31"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:bffd2b822bf4ff46dbd5af2b0def2c582e4c43be3bfab4f76fa5ebd22ffc7bc8",
+      "raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+      "company_id": "southwest_airlines",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000092380.json",
+      "accession": "0000092380-25-000024",
+      "document_name": "CIK0000092380.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:760874626c931c7f9353d4c5eac904d62f1ae1d9221efb3218095ba5c4a02c42",
+      "raw_asset_id": "sha256:7690b4071849f4b5aab3ef1e3d1229d15602f10dfbdee942533ec9ac3ee72509",
+      "company_id": "southwest_airlines",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231_htm.xml",
+      "accession": "0000092380-25-000024",
+      "document_name": "luv-20241231_htm.xml",
+      "source_role": "accession_xbrl",
+      "request_attempt_id": "request:attempt:19cddc7945e6aad0ec53642a4a3192760539b129581c8486d401231ba8aaac07"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:023c59ad9fa838cc7d0d649ae11c753af02e7b566c18440ff72e7948026c71a5",
+      "raw_asset_id": "sha256:30b0fff1b201973dc87958cb90f7c11d27bd1678f8cbaa9a9fec102101d6cb0b",
+      "company_id": "southwest_airlines",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238025000024/luv-20241231.htm",
+      "accession": "0000092380-25-000024",
+      "document_name": "luv-20241231.htm",
+      "source_role": "target_primary",
+      "request_attempt_id": "request:attempt:803dd1dd4b6a24c3ea4c2b61c5e93b3b0d760c13cc3b183337c07a2509d6c204"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r5/B06_new_source.md": "438f575268edf57b1769f20825b107c778c0867e04a5274a604b298133fcce88"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "d0e927ddf3ca465b91c7fa3d91b5733820007e2f083c5dcd62d5ebe32cb5d1a6",
+    "contract_sha256": "b459ed0b46d710cab2d506222f9b7fabb09143dd889329a3600d579236138651",
+    "decision_register_sha256": "c9480633a7c47d9b6cdd423b7781c3a172ca4661e5544b0c2b976040f692b422",
+    "invariant_profile_sha256": "f42485a4edb1b8abc3a9fbd8c4548427678c51fef1bf0877b10fc7a12e0e365a",
+    "transfer_manifest_sha256": "f31f97c7a1685af911dfe6b598ae5c2091c086f4aeea46e1618d8fe470b67fd5",
+    "parent_requirement_closure_hash": "sha256:80fe12c1e1a09c6c6d805bf15db7d072c1f9f71ba39f43cb93a9a7bfbef3d25f",
+    "validator_sha256": "f44b44439a7dafb9bd919ccdcf1ac589881304f1039860e5e20cb6d8ed517f2c"
+  },
+  "requirement_closure_hash": "sha256:e5bc06b556e2d177d9df063ebae40131e3aa5be86af52401dfa38be656dac41d",
+  "requirement_id": "issue_28_v10",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}
