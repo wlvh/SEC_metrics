@@ -1,0 +1,22 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+    "python3",
+    "tools/check_provider_egress.py",
+    "--output",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/egress-97e.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "97e5c1f0c3a966f6fdb7ab5f65544ef5c3304519",
+  "head_after": "97e5c1f0c3a966f6fdb7ab5f65544ef5c3304519",
+  "started_at_utc": "2026-09-11T03:22:05.044633+00:00",
+  "finished_at_utc": "2026-09-11T03:22:05.979283+00:00",
+  "elapsed_seconds": 0.9345591660239734,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/egress-97e-command.log",
+  "log_sha256": "16cb457f0425d42eb1b05d77a11f5da0824e2040968785cae4a295e47bfa43c0",
+  "log_size": 1873
+}

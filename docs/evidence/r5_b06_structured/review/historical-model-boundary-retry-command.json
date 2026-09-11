@@ -1,0 +1,24 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "tests.vnext.test_annual_continuity.AnnualModelConfigurationTest.test_current_model_configuration_changes_only_request_model",
+    "-v"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "13af5c9c48d8a7ee63e8fec5e666518654a6b496",
+  "head_after": "13af5c9c48d8a7ee63e8fec5e666518654a6b496",
+  "started_at_utc": "2026-09-11T03:19:39.524594+00:00",
+  "finished_at_utc": "2026-09-11T03:19:40.988759+00:00",
+  "elapsed_seconds": 1.4640200409921817,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/independent-discovery/historical-model-boundary-retry-command.log",
+  "log_sha256": "a21c39ca5c7259f5289e438005f9d7327056e00d1c1ed98b493ed1ae1c1b9119",
+  "log_size": 290
+}

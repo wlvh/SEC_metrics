@@ -1,0 +1,125 @@
+{
+  "status": "NO_UNRESOLVED_CODE_REVIEW_BLOCKERS_IN_BOUNDED_SCOPE",
+  "reviewer": "Codex independent subtask /root/b06_source_audit; not human or GitHub APPROVE",
+  "implementation_head": "97e5c1f0c3a966f6fdb7ab5f65544ef5c3304519",
+  "working_tree_clean": true,
+  "reviewed_files": {
+    "scripts/vnext/r5_b06_structured.py": "8035597b5a489fcd9d4d5274819e72131714e473bc83b7c8dc90ca34473f59d2",
+    "scripts/vnext/r5_b06_publication.py": "46138259389346e7d0c878c0452c7050bd2499aae4956ef0d8c379a9057230d3",
+    "scripts/vnext/requirement_profile_v10.py": "0d474e2d3b5b2f5d768e80f83163a5d63ff4cfc92d3b2ee9dd15e5c42fdb0d79",
+    "scripts/vnext/run_store.py": "288bfc9ae3f0262907fff0d3ffaab7b377fa7133c8722a1e9beae07c3987c8c5",
+    "scripts/vnext/publication.py": "2e0616dc66d8c9611de2065a21a8731f94871f9062b66fe31a4cec2452fddea7",
+    "scripts/vnext/publication_results.py": "d5c51df2f31a8b1793d3a2ca32605cc80c02a2eceebdba69155a7961f700ad0c",
+    "scripts/vnext/calculator.py": "0b5ceeedc6742f003f14058848512d387e036dc016d2f316bf18a7d36e7855f1",
+    "scripts/vnext/records.py": "e2f8812dc06f344be2674e2b5977519df29a4213ef716cc75e502c847f0fdec9",
+    "scripts/vnext/specs.py": "3cc51bb6b3933d9710acca1d614221dd3af11cf76b47704eebe955ad39b0f6bb",
+    "catalog/r5/B06_structured.md": "b3f167ed7e4cd2c3ad59db01db53866bfcf5e3d1c04de130d78c3a34145a8b8f",
+    "config/r5_b06_structured_v1.json": "b3dbfae12ab0d1655d6f08200ea0bfa01d4f501af690f4bc775dff7adaedecf1",
+    "tests/vnext/test_r5_b06.py": "b7325249bb98fb77a8b534e34d570a1a29c73e08470837529442faa61a5836fb",
+    "tests/vnext/test_r5_b06_material.py": "3b5d8d87286f83b952798e118d4e2f290c6db48c380fa8681789ebac4439b01b",
+    "tests/vnext/test_annual_continuity.py": "dcfd4ae5ae9272d6de1e3ba7bed1565a371469f4946162a618975dfa5e3e8f4f",
+    "tests/vnext/test_annual_group_prompt.py": "332b9fcd6e4b03696689a3795f0bb107ad9398c6368bd7ef5425fc2c73fa9f74",
+    "requirements/issue_28_v9/CONTRACT.md": "a0599fd4ddfecb98822a88fd4c72b72b7e3cab92fcb06dcd672d17a8984c1cad",
+    "requirements/issue_28_v9/transfer_manifest.json": "034f984d7570a069b637a305786e547267c8cdc694b8936c404033d911ab835d"
+  },
+  "resolved_findings": [
+    {
+      "id": "R5-SOURCE-ANCHOR",
+      "resolution": "_verify_saved_input_origin automatically discovers exact saved sources and checks 62 body/header/ledger paths against implementation Git object bytes; package verifier repeats it; predecessor is also anchored to same head active. Limited to zero-fetch saved-input work package, not a future per-source Git requirement."
+    },
+    {
+      "id": "R5-REQUIRED-SOURCE-SET",
+      "resolution": "Native run_store replay invokes validate_input_binding before result replay. Exact period/fiscal label and full discovered CompanyFacts+scopeXML SourceReference set must match. Ford source omission now rejected."
+    }
+  ],
+  "personally_executed": [
+    {
+      "check": "8 deterministic B06 short tests",
+      "status": "PASS"
+    },
+    {
+      "check": "62 saved input paths vs trusted implementation Git",
+      "status": "PASS"
+    },
+    {
+      "check": "Actual Ford complete source set",
+      "status": "PASS"
+    },
+    {
+      "check": "Ford scope omission",
+      "status": "REJECTED_R5_REQUIRED_SOURCE_SET_CHANGED"
+    },
+    {
+      "check": "Changed fiscal label",
+      "status": "REJECTED_R5_DISCOVERED_PERIOD_CHANGED"
+    },
+    {
+      "check": "Changed trusted Git source bytes at external I/O boundary",
+      "status": "REJECTED_R5_SAVED_SOURCE_ORIGIN_CHANGED"
+    },
+    {
+      "check": "Historical model reads frozen v8 and old execution authority denied on R5 code",
+      "status": "PASS",
+      "initial_harness_failure": "First invocation OS read-only profile denied default temporary directory; original failure retained. Retry only set TMPDIR to authorized external directory, no code/validator change."
+    }
+  ],
+  "code_conclusions": [
+    "No B06-specific branch was added to generic Calculator; new denominator_positive is generic declared guard.",
+    "All B06 accepted Results replay native raw source selection and Calculator; withheld reasons cannot be converted by editing selection JSON.",
+    "Same-file ordinary 10-K as-filed numeric Results are distinct from amendment-blocked candidate adoption.",
+    "Scope XML only gates economic scope, does not supplement debt or infer industrial equity.",
+    "Historical Requirement bytes remain unchanged, v9 draft carries parent obligations without activating production.",
+    "Complete candidate uses existing publication core and hooks that refuse production actions; public candidate/validation stays BLOCKED.",
+    "Policy, Spec, Rule snapshot, implementation, source origin, exact native Runs, predecessor and projected bytes are independently recomposed/compared in complete validator.",
+    "Old PR41 tests now read frozen rule identity while explicitly requiring old invocation authorization to fail on changed code, rather than rewriting historical v8 binding."
+  ],
+  "reused_read_evidence": [
+    "Independent original CompanyFacts/HTML/XML and amendment reports in this directory",
+    "Implementation source and material-test code; no full material-test execution claimed here"
+  ],
+  "not_personally_executed": [
+    "Final complete candidate long replay/cold read/material suite (parent executing)",
+    "CI on new PR",
+    "Any provider/paid/SEC or production writes"
+  ],
+  "remaining_product_conditions": [
+    "Ambiguous debt/lease/scope coordinates and amendments still block candidate; no formal25th metric claim.",
+    "Independent final actual results/complete version evidence must be recorded separately when parent material acceptance finishes.",
+    "Future production permission, fallback, unresolved B06 coverage and legacy producer formal exit remain pending."
+  ],
+  "logs": {
+    "final-short-tests.log": {
+      "sha256": "685284e65d27d178fa6ecf1d9ae498feb0c55e6502f8d46fe5c2c3bb497993f1",
+      "size": 1360
+    },
+    "final-binding-command.json": {
+      "sha256": "727f950243712751466a778ff75070085ae5bfa3760155b6728ade8b9dbbbe90",
+      "size": 895
+    },
+    "final-binding-command.log": {
+      "sha256": "e4158417734bbcb85cd5f48f72e799514e51cbdc73c8997c591a7ed1a8a64904",
+      "size": 612
+    },
+    "historical-model-boundary-command.json": {
+      "sha256": "953d5986453b0401c7663783b1e569a8db876cab4e8806208b51b9366cb04e4d",
+      "size": 959
+    },
+    "historical-model-boundary-command.log": {
+      "sha256": "ddeb42ed3dd24a2fe915afaf7413d1967af43f315d52b0e77f6ed0e6c403ad87",
+      "size": 2535
+    },
+    "historical-model-boundary-retry-command.json": {
+      "sha256": "f1d1a0eaa321791e8b36bf8b0b8d3632c6896a4602e5fd050131a8ded062d5d9",
+      "size": 964
+    },
+    "historical-model-boundary-retry-command.log": {
+      "sha256": "a21c39ca5c7259f5289e438005f9d7327056e00d1c1ed98b493ed1ae1c1b9119",
+      "size": 290
+    }
+  },
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

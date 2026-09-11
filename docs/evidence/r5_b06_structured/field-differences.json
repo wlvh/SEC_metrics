@@ -1,0 +1,434 @@
+[
+  {
+    "company": "Marriott International",
+    "differences": {
+      "source_class": {
+        "old": "NOT_AVAILABLE",
+        "new": "DERIVED"
+      },
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "period_start": {
+        "old": "",
+        "new": "2025-12-31"
+      },
+      "accession": {
+        "old": "0001048286-26-000007;0001048286-26-000007",
+        "new": "0001048286-26-000007"
+      },
+      "filed_date": {
+        "old": "2026-02-10;2026-02-10",
+        "new": "2026-02-10"
+      },
+      "concept_or_section": {
+        "old": "DebtAndCapitalLeaseObligations+StockholdersEquity",
+        "new": ""
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:;companyfacts:USD:",
+        "new": ""
+      },
+      "confidence": {
+        "old": "0.00",
+        "new": ""
+      },
+      "notes": {
+        "old": "Equity is negative; debt/equity ratio is not economically meaningful. Total debt candidate=16204000000. Tier 1 direct total debt selected; no adders applied.",
+        "new": "DENOMINATOR_NONPOSITIVE;; exact saved ordinary filing; STRUCTURED_PRIMARY_VERIFIED"
+      }
+    },
+    "interpretation": [
+      "新原生结果明确为申报资产负债表时点，不重标其他坐标期间",
+      "非正权益；保留分子分母，普通ratio为空"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Southwest Airlines",
+    "differences": {
+      "value": {
+        "old": "0.6163388046610700413482019797",
+        "new": ""
+      },
+      "status": {
+        "old": "OK",
+        "new": "NEEDS_REVIEW"
+      },
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:CY2025Q4I;companyfacts:USD:",
+        "new": "companyfacts:USD:CY2025;companyfacts:USD:CY2025"
+      },
+      "notes": {
+        "old": "Consolidated entity-level debt/equity; Tier 1 direct total debt selected; no adders applied. Captive-finance dimensions are reviewed after accession instance parsing.",
+        "new": "Point-in-time consolidated structured-primary candidate; full source strategy retains ambiguity fallback.; exact saved ordinary filing; AMENDED_ANNUAL_REQUIRES_REVIEW; native as-filed value=0.6163388046610700413482019797"
+      }
+    },
+    "interpretation": [
+      "新主路径明确保留来源涵盖、业务范围或修订采纳缺口；不将旧数值当新结果"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Ford Motor Company",
+    "differences": {
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "accession": {
+        "old": "0000037996-26-000015;0000037996-26-000015;0000037996-26-000015",
+        "new": "0000037996-26-000015"
+      },
+      "concept_or_section": {
+        "old": "FinanceLeaseLiabilityCurrent+FinanceLeaseLiabilityNoncurrent+StockholdersEquity",
+        "new": ""
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:CY2025Q4I;companyfacts:USD:CY2025Q4I;companyfacts:USD:",
+        "new": ""
+      },
+      "confidence": {
+        "old": "0.90",
+        "new": ""
+      },
+      "notes": {
+        "old": "Main debt/equity value is blank because captive finance segment/dimension was detected; consolidated candidate is retained only in evidence and sidecar with candidate_role.",
+        "new": "STRUCTURED_SOURCE_AMBIGUOUS;INDUSTRIAL_VS_FINANCE_SCOPE_REQUIRES_REVIEW;LEASE_ONLY_NOT_TOTAL_DEBT_SCOPE_REVIEW; exact saved ordinary filing; INDUSTRIAL_VS_FINANCE_SCOPE_REQUIRES_REVIEW;LEASE_ONLY_NOT_TOTAL_DEBT_SCOPE_REVIEW"
+      }
+    },
+    "interpretation": [
+      "新主路径明确保留来源涵盖、业务范围或修订采纳缺口；不将旧数值当新结果"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Pfizer",
+    "differences": {
+      "value": {
+        "old": "0.7474675054350339978722420093",
+        "new": ""
+      },
+      "status": {
+        "old": "OK",
+        "new": "NEEDS_REVIEW"
+      },
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "accession": {
+        "old": "0000078003-26-000026;0000078003-26-000026;0000078003-26-000026",
+        "new": "0000078003-26-000026"
+      },
+      "filed_date": {
+        "old": "2026-02-26;2026-02-26;2026-02-26",
+        "new": "2026-02-26"
+      },
+      "concept_or_section": {
+        "old": "LongTermDebtCurrent+LongTermDebtNoncurrent+StockholdersEquity",
+        "new": ""
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:;companyfacts:USD:;companyfacts:USD:",
+        "new": ""
+      },
+      "confidence": {
+        "old": "0.90",
+        "new": ""
+      },
+      "notes": {
+        "old": "Consolidated entity-level debt/equity; Tier 2 same-family current/noncurrent debt pair selected. Captive-finance dimensions are reviewed after accession instance parsing.",
+        "new": "STRUCTURED_SOURCE_AMBIGUOUS;SHORT_DEBT_COVERAGE_REQUIRES_REVIEW; exact saved ordinary filing; SHORT_DEBT_COVERAGE_REQUIRES_REVIEW"
+      }
+    },
+    "interpretation": [
+      "新主路径明确保留来源涵盖、业务范围或修订采纳缺口；不将旧数值当新结果"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "JPMorgan Chase",
+    "differences": {
+      "company": {
+        "old": null,
+        "new": "JPMorgan Chase"
+      },
+      "cik": {
+        "old": null,
+        "new": "19617"
+      },
+      "metric_id": {
+        "old": null,
+        "new": "B06"
+      },
+      "metric_name": {
+        "old": null,
+        "new": "Debt-to-equity"
+      },
+      "value": {
+        "old": null,
+        "new": ""
+      },
+      "unit": {
+        "old": null,
+        "new": "ratio"
+      },
+      "status": {
+        "old": null,
+        "new": "NEEDS_REVIEW"
+      },
+      "source_class": {
+        "old": null,
+        "new": "DERIVED"
+      },
+      "formula": {
+        "old": null,
+        "new": "total debt / shareholders equity"
+      },
+      "period_start": {
+        "old": null,
+        "new": "2025-12-31"
+      },
+      "period_end": {
+        "old": null,
+        "new": "2025-12-31"
+      },
+      "fiscal_year": {
+        "old": null,
+        "new": "2025"
+      },
+      "fiscal_period": {
+        "old": null,
+        "new": "FY"
+      },
+      "accession": {
+        "old": null,
+        "new": "0001628280-26-008131"
+      },
+      "form": {
+        "old": null,
+        "new": "10-K"
+      },
+      "filed_date": {
+        "old": null,
+        "new": "2026-02-13"
+      },
+      "concept_or_section": {
+        "old": null,
+        "new": ""
+      },
+      "context_or_dimension": {
+        "old": null,
+        "new": ""
+      },
+      "confidence": {
+        "old": null,
+        "new": ""
+      },
+      "notes": {
+        "old": null,
+        "new": "STRUCTURED_SOURCE_AMBIGUOUS;SHORT_DEBT_COVERAGE_REQUIRES_REVIEW; exact saved ordinary filing; SHORT_DEBT_COVERAGE_REQUIRES_REVIEW"
+      }
+    },
+    "interpretation": [
+      "前驱没有此B06公开行；新增明确阻断坐标，不补旧值"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Salesforce",
+    "differences": {
+      "value": {
+        "old": "0.2441412194379628690270873491",
+        "new": ""
+      },
+      "status": {
+        "old": "OK",
+        "new": "NEEDS_REVIEW"
+      },
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "accession": {
+        "old": "0001108524-26-000060;0001108524-26-000060;0001108524-26-000060",
+        "new": "0001108524-26-000060"
+      },
+      "filed_date": {
+        "old": "2026-03-02;2026-03-02;2026-03-02",
+        "new": "2026-03-02"
+      },
+      "concept_or_section": {
+        "old": "LongTermDebtCurrent+LongTermDebtNoncurrent+StockholdersEquity",
+        "new": ""
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:;companyfacts:USD:;companyfacts:USD:",
+        "new": ""
+      },
+      "confidence": {
+        "old": "0.90",
+        "new": ""
+      },
+      "notes": {
+        "old": "Consolidated entity-level debt/equity; Tier 2 same-family current/noncurrent debt pair selected. Captive-finance dimensions are reviewed after accession instance parsing.",
+        "new": "STRUCTURED_SOURCE_AMBIGUOUS;SEPARATE_LEASE_COVERAGE_REQUIRES_REVIEW; exact saved ordinary filing; SEPARATE_LEASE_COVERAGE_REQUIRES_REVIEW"
+      }
+    },
+    "interpretation": [
+      "新主路径明确保留来源涵盖、业务范围或修订采纳缺口；不将旧数值当新结果"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Lumen Technologies",
+    "differences": {
+      "status": {
+        "old": "NOT_MEANINGFUL",
+        "new": "NEEDS_REVIEW"
+      },
+      "source_class": {
+        "old": "NOT_AVAILABLE",
+        "new": "DERIVED"
+      },
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "period_start": {
+        "old": "",
+        "new": "2025-12-31"
+      },
+      "accession": {
+        "old": "0000018926-26-000014;0000018926-26-000014",
+        "new": "0000018926-26-000014"
+      },
+      "filed_date": {
+        "old": "2026-02-20;2026-02-20",
+        "new": "2026-02-20"
+      },
+      "concept_or_section": {
+        "old": "DebtAndCapitalLeaseObligations+StockholdersEquity",
+        "new": ""
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:;companyfacts:USD:",
+        "new": ""
+      },
+      "confidence": {
+        "old": "0.00",
+        "new": ""
+      },
+      "notes": {
+        "old": "Equity is negative; debt/equity ratio is not economically meaningful. Total debt candidate=17441000000. Tier 1 direct total debt selected; no adders applied.",
+        "new": "STRUCTURED_SOURCE_AMBIGUOUS;DIRECT_TOTAL_CONFLICT; exact saved ordinary filing; DIRECT_TOTAL_CONFLICT"
+      }
+    },
+    "interpretation": [
+      "新原生结果明确为申报资产负债表时点，不重标其他坐标期间",
+      "新主路径明确保留来源涵盖、业务范围或修订采纳缺口；不将旧数值当新结果"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Macy's",
+    "differences": {
+      "value": {
+        "old": "0.5004115226337448559670781893",
+        "new": ""
+      },
+      "status": {
+        "old": "OK",
+        "new": "NEEDS_REVIEW"
+      },
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "accession": {
+        "old": "0001628280-26-021721;0001628280-26-021721",
+        "new": "0001628280-26-021721"
+      },
+      "filed_date": {
+        "old": "2026-03-27;2026-03-27",
+        "new": "2026-03-27"
+      },
+      "concept_or_section": {
+        "old": "LongTermDebtAndCapitalLeaseObligations+StockholdersEquity",
+        "new": ""
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:;companyfacts:USD:",
+        "new": ""
+      },
+      "confidence": {
+        "old": "0.90",
+        "new": ""
+      },
+      "notes": {
+        "old": "Consolidated entity-level debt/equity; Standalone LongTermDebtAndCapitalLeaseObligations used only after Tier 1 and complete same-family pairs were unavailable. Captive-finance dimensions are reviewed after accession instance parsing.",
+        "new": "STRUCTURED_SOURCE_AMBIGUOUS;LEASE_ONLY_NOT_TOTAL_DEBT_SCOPE_REVIEW; exact saved ordinary filing; LEASE_ONLY_NOT_TOTAL_DEBT_SCOPE_REVIEW"
+      }
+    },
+    "interpretation": [
+      "新主路径明确保留来源涵盖、业务范围或修订采纳缺口；不将旧数值当新结果"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Paramount Skydance / Paramount Global",
+    "differences": {
+      "value": {
+        "old": "1.168049260241169930727785855",
+        "new": ""
+      },
+      "status": {
+        "old": "OK",
+        "new": "NEEDS_REVIEW"
+      },
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:;companyfacts:USD:",
+        "new": "companyfacts:USD:CY2025;companyfacts:USD:CY2025"
+      },
+      "notes": {
+        "old": "Consolidated entity-level debt/equity; Tier 1 direct total debt selected; no adders applied. Captive-finance dimensions are reviewed after accession instance parsing. successor balance sheet point-in-time, not annualized period metric.",
+        "new": "Point-in-time consolidated structured-primary candidate; full source strategy retains ambiguity fallback.; exact saved ordinary filing; AMENDED_ANNUAL_REQUIRES_REVIEW; native as-filed value=1.168049260241169930727785855"
+      }
+    },
+    "interpretation": [
+      "新主路径明确保留来源涵盖、业务范围或修订采纳缺口；不将旧数值当新结果"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  },
+  {
+    "company": "Enphase Energy",
+    "differences": {
+      "formula": {
+        "old": "total debt / shareholders' equity",
+        "new": "total debt / shareholders equity"
+      },
+      "context_or_dimension": {
+        "old": "companyfacts:USD:;companyfacts:USD:;companyfacts:USD:",
+        "new": "companyfacts:USD:CY2025;companyfacts:USD:CY2025;companyfacts:USD:CY2025"
+      },
+      "notes": {
+        "old": "Consolidated entity-level debt/equity; Tier 2 same-family current/noncurrent debt pair selected. Captive-finance dimensions are reviewed after accession instance parsing.",
+        "new": "Point-in-time consolidated structured-primary candidate; full source strategy retains ambiguity fallback.; exact saved ordinary filing; STRUCTURED_PRIMARY_VERIFIED"
+      }
+    },
+    "interpretation": [
+      "原始数值一致；来源/原生运行与说明接线更新"
+    ],
+    "not_a_claim_that_every_old_difference_is_wrong": true
+  }
+]

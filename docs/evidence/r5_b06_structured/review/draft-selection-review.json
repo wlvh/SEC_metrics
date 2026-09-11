@@ -1,0 +1,112 @@
+{
+  "status": "DRAFT_SELECTION_SEMANTICS_REVIEW_NOT_FINAL_NATIVE_ACCEPTANCE",
+  "reviewer": "independent Codex subtask /root/b06_source_audit",
+  "reviewed_working_files": {
+    "catalog/r5/B06_structured.md": "955c6ca3b74411b2ea267fbd58afbd5a7d54c0adef8c8ce284d897826e5d3458",
+    "scripts/vnext/r5_b06_structured.py": "9b28d40685af540a4e283ed5d38e46d4dd7162ebca075b00d774f8bfc4f1fdce"
+  },
+  "executed": [
+    "Read and parsed complete saved HTML for Southwest, Enphase, Paramount; checked actual debt and equity table content",
+    "Parsed draft Spec/resolver and reviewed selection/withholding semantics"
+  ],
+  "not_executed": [
+    "No complete native chain or publication validation",
+    "No calls to old producers",
+    "No provider/paid/SEC/GitHub operations"
+  ],
+  "sources": [
+    {
+      "path": "evidence/accession_materials/southwest_airlines_92380_000009238026000004/luv-20251231.htm",
+      "sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+      "excerpts": [
+        {
+          "needle": "4,919",
+          "text": ",727 1,727 4.375 % Notes 2028 750 \u2014 2.625 % Notes 2030 500 500 1.000 % Payroll Support Program Loan 2030 \u2014 976 1.000 % Payroll Support Program Loan 2031 \u2014 566 1.000 % Payroll Support Program Loan (a) 2031 426 526 5.25 % Notes 2035 734 \u2014 Finance leases 78 91 $ 4,919 $ 6,704 Less current maturities 324 1,630 Less debt discount and issuance costs 18 5 $ 4,577 $ 5,069 (a) The interest rate will change to Secured Overnight Financing Rate plus two percent on the fifth anniversary of the loan, which occurs in April 2026. Senior Unsecured Notes due through 2035 During November 2025"
+        },
+        {
+          "needle": "4,929",
+          "text": "As of December\u00a031, 2025, aggregate annual principal maturities of debt and finance leases (not including amounts associated with interest on finance leases) are as follows: (in millions) 2026 $ 321 2027 2,150 2028 766 2029 11 2030 504 Thereafter 1,177 Total $ 4,929 7. LEASES The Company enters into leases for aircraft, property, and other types of equipment in the normal course of business. As allowed under ASC 842, Leases, the Company has elected a practical expedient to exclude from recognition lease assets and lease liabilities associated with leases that have an initial"
+        },
+        {
+          "needle": "Total stockholders",
+          "text": "025 and 2024 888 888 Capital in excess of par value 4,322 4,199 Retained earnings 16,388 16,332 Accumulated other comprehensive loss ( 24 ) ( 25 ) Treasury stock, at cost: 372,530,238 and 294,797,959 shares in 2025 and 2024, respectively ( 13,593 ) ( 11,044 ) Total stockholders' equity 7,981 10,350 $ 29,061 $ 33,750 See accompanying notes. 84 Table of Contents Southwest Airlines Co. Consolidated Statement of Income (in millions, except per share amounts) Year ended December 31, 2025 2024 2023 OPERATING REVENUES: Passenger $ 25,535 $ 24,980 $ 23,637 Freight 171 175 175 Other"
+        }
+      ]
+    },
+    {
+      "path": "evidence/accession_materials/enphase_energy_1463101_000146310126000013/enph-20251231.htm",
+      "sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+      "excerpts": [
+        {
+          "needle": "Debt, current",
+          "text": "5,567 Total assets $ 3,509,792 $ 3,249,676 LIABILITIES AND STOCKHOLDERS\u2019 EQUITY Current liabilities: Accounts payable $ 203,039 $ 90,032 Accrued liabilities 217,366 196,887 Deferred revenues, current 180,524 237,225 Warranty obligations, current 29,038 34,656 Debt, current 632,183 101,291 Total current liabilities 1,262,150 660,091 Long-term liabilities: Deferred revenues, non-current 337,923 341,982 Warranty obligations, non-current 185,005 158,233 Other liabilities 65,497 55,265 Debt, non-current 572,194 1,201,089 Total liabilities 2,422,769 2,416,660 Commitments and cont"
+        },
+        {
+          "needle": "Debt, current",
+          "text": "n the second scheduled trading day immediately preceding the maturity date of March 1, 2026. Further, as the Notes due 2026 mature in less than a year, accordingly, the Company has classified the net carrying amount of the Notes due 2026 of $ 632.2 million as Debt, current on the consolidated balance sheet as of December\u00a031, 2025. As of December\u00a031, 2025, the unamortized deferred issuance cost for the Notes due 2026 was $ 0.3 million on the consolidated balance sheet. Notes due 2026 Hedge and Warrant Transactions In connection with the offering of the Notes due 2026 (includ"
+        },
+        {
+          "needle": "Debt, non-current",
+          "text": "bligations, current 29,038 34,656 Debt, current 632,183 101,291 Total current liabilities 1,262,150 660,091 Long-term liabilities: Deferred revenues, non-current 337,923 341,982 Warranty obligations, non-current 185,005 158,233 Other liabilities 65,497 55,265 Debt, non-current 572,194 1,201,089 Total liabilities 2,422,769 2,416,660 Commitments and contingencies (Note 13) Stockholders\u2019 equity: Common stock, $ 0.00001 par value, 300,000 shares authorized; and 131,080 shares and 132,448 shares issued and outstanding at December\u00a031, 2025 and December\u00a031, 2024 , respectively 1 1"
+        },
+        {
+          "needle": "Debt, non-current",
+          "text": "630,191 Notes due 2025 \u2014 102,168 Less: unamortized debt discount \u2014 ( 803 ) Less: unamortized debt issuance costs \u2014 ( 74 ) Carrying amount of Notes due 2025 \u2014 101,291 Total carrying amount of debt 1,204,377 1,302,380 Less: debt, current ( 632,183 ) ( 101,291 ) Debt, non-current $ 572,194 $ 1,201,089 The following tables present the total amount of interest cost recognized in the consolidated statements of operations relating to the Notes: Enphase Energy, Inc. | 2025  Form 10-K | 97 Table of Contents Years Ended December 31, 2025 2024 Notes due 2028 Notes due 2026 Notes due 2"
+        },
+        {
+          "needle": "Debt, non-current",
+          "text": "d of 30 consecutive trading days preceding the quarter-ended December\u00a031, 2025. As a result, the Notes due 2028 are not convertible at the holders\u2019 option. Accordingly, the Company classified the net carrying amount of the Notes due 2028 of $ 572.2 million as Debt, non-current on the consolidated balance sheet as of December\u00a031, 2025. As of December\u00a031, 2025, the unamortized deferred issuance cost for the Notes due 2028 was $ 2.8 million on the consolidated balance sheet. Notes due 2028 Hedge and Warrant Transactions In connection with the offering of the Notes due 2028, th"
+        },
+        {
+          "needle": "Total stockholders",
+          "text": "es and 132,448 shares issued and outstanding at December\u00a031, 2025 and December\u00a031, 2024 , respectively 1 1 Additional paid-in capital 1,289,164 1,084,573 Accumulated deficit ( 203,896 ) ( 245,206 ) Accumulated other comprehensive income (loss) 1,754 ( 6,352 ) Total stockholders\u2019 equity 1,087,023 833,016 Total liabilities and stockholders\u2019 equity $ 3,509,792 $ 3,249,676 See Notes to Consolidated Financial Statements. Enphase Energy, Inc. | 2025  Form 10-K | 68 Table of Contents ENPHASE ENERGY, INC. CONSOLIDATED STATEMENTS OF OPERATIONS (In thousands, except per share data) Y"
+        }
+      ]
+    },
+    {
+      "path": "evidence/accession_materials/paramount_skydance_paramount_global_2041610_000204161026000011/psky-20251231.htm",
+      "sha256": "4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+      "excerpts": [
+        {
+          "needle": "Total debt (b)",
+          "text": "at its fair value on the closing date of the Transactions and the NAI Transaction on August 7, 2025. Successor (a) Predecessor At At December 31, 2025 December 31, 2024 Senior debt $ 12,038 $ 12,868 Junior debt 1,617 1,633 Obligations under finance leases 3 \u2014 Total debt (b) 13,658 14,501 Less current portion 433 \u2014 Total long-term debt, net of current portion $ 13,225 $ 14,501 (a)  In connection with the pushdown of the Ultimate Parent\u2019s basis, our debt was recorded at fair value, which resulted in a decrease to our total debt balance of $898\u00a0million, reflecting the reversal"
+        },
+        {
+          "needle": "Total debt (b)",
+          "text": " 4.90 % Senior Notes due 2044 432 542 4.60 % Senior Notes due 2045 452 591 4.95 % Senior Notes due 2050 763 950 6.25 % Junior Subordinated Debentures due 2057 628 644 6.375 % Junior Subordinated Debentures due 2062 989 989 Obligations under finance leases 3 \u2014 Total debt (b) 13,658 14,501 Less current portion 433 \u2014 Total long-term debt, net of current portion $ 13,225 $ 14,501 (a)  In connection with the pushdown of the Ultimate Parent\u2019s basis, our debt was recorded at fair value, which resulted in a decrease to our total debt balance of $ 898 million, reflecting the reversa"
+        },
+        {
+          "needle": "Total Parent stockholders",
+          "text": "issued 1 1 Additional paid-in capital 13,386 33,394 Treasury stock, at cost; \u2014 (2025) and 503 (2024) shares of Class B Common Stock \u2014 ( 22,958 ) Retained earnings (accumulated deficit) ( 1,753 ) 7,487 Accumulated other comprehensive income (loss) 59 ( 1,604 ) Total Parent stockholders\u2019 equity 11,693 16,320 Noncontrolling interests 1,194 462 Total Equity 12,887 16,782 Total Liabilities and Equity $ 43,342 $ 46,172 See notes to consolidated financial statements. II-54 PARAMOUNT SKYDANCE CORPORATION AND SUBSIDIARIES CONSOLIDATED STATEMENTS OF CASH FLOWS (In millions) Successor"
+        }
+      ]
+    }
+  ],
+  "positive_case_conclusions": {
+    "southwest": "4.919bn total includes finance leases0.078bn in debt composition table. 4.929bn is aggregate future principal maturities table, not competing interchangeable direct concept. Stockholders equity7.981bn. Direct-tier choice supported under existing definition.",
+    "enphase": "Debt current632183k+noncurrent572194k, stockholders equity1087023k in same financial statement and actual2025-12-31 context. Same-family main-path supported.",
+    "paramount": "Total debt13.658bn, Total Parent stockholders equity11.693bn are exact same current successor context c-10. No crossover to predecessor or NCI-inclusive equity. Point-in-time ratio supported."
+  },
+  "open_review_notes": [
+    {
+      "severity": "verify before final",
+      "topic": "Captive finance scope",
+      "detail": "resolver accepts traits without checking it; current Ford refused lease-only, not explicit scope proof. If group total becomes available, native gate still must not treat it as industrial. Scope-responsibility/documented supported range must be explicit."
+    },
+    {
+      "severity": "verify before final",
+      "topic": "Resolver cannot be bypassed",
+      "detail": "Spec contains finance lease pair as compute branch. Since resolver withholds it, all run creation/replay must route resolver before generic Calculator; direct Spec-only calculate path must not grant primary acceptance."
+    },
+    {
+      "severity": "reporting",
+      "topic": "Multiple simultaneous blockers",
+      "detail": "Lumen both direct-total conflict and nonpositive equity. Current audit preserves both, qualityNONE is not debt determination; report both."
+    }
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

@@ -1,5 +1,7 @@
 # R5 首批：B06 结构化主路径
 
+最新实际结果与独立审阅见[主交付](evidence/r5_b06_structured/README.md)：三原生数值、一非正权益、六歧义；完整候选250坐标/328行，BLOCKED，正式根未变。
+
 本入口从既定十家公司已保存的 submissions 与 Company Facts 选择最新普通10-K及其确切申报时点，不读取旧B06值来选择输入。指标仍是结构化优先、歧义触发既定fallback；本轮没有执行fallback，也未把B06整体标为已迁移。
 
 `catalog/r5/B06_structured.md`仅定义结构化主路径，旧table Spec和历史ReleasePlan保持原字节。分子优先直接总额，不再加组成项；其次只使用完整同族current/noncurrent。lease-only、standalone noncurrent、冲突总额、另列短期债务或租赁涵盖性不清时，原生Result为WITHHELD/STRUCTURED_SOURCE_AMBIGUOUS，保存全部候选和原因。已保存instance中的实际金融业务member触发工业/集团范围复核，XML不用于补数或推定工业权益。

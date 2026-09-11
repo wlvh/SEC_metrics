@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_r5_b06.py", line 18, in <module>
+    if __name__=='__main__':raise SystemExit(main())
+                                             ~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_r5_b06.py", line 12, in main
+    if a.operation=='prepare':value=r5.prepare(candidate_root=a.candidate_root)
+                                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_publication.py", line 153, in prepare
+    public,requirement,batch,adoption,projection,validation,ledger,provenance=_compose(snapshot,predecessor,meta)
+                                                                              ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_publication.py", line 118, in _compose
+    metrics,evidence,batch,coverage,indexes=_projection(data,snapshot/'runs',predecessor)
+                                            ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_publication.py", line 63, in _projection
+    need(keys.issubset({key(r) for r in old_rows}),'R5_PREDECESSOR_COORDINATE_MISSING')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: R5_PREDECESSOR_COORDINATE_MISSING

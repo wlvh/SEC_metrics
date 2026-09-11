@@ -1,0 +1,22 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+    "python3",
+    "tools/run_fast_tests.py",
+    "--jobs",
+    "4"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+  "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+  "started_at_utc": "2026-09-11T03:30:27.311924+00:00",
+  "finished_at_utc": "2026-09-11T03:30:35.128783+00:00",
+  "elapsed_seconds": 7.816681540978607,
+  "exit_code": 1,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/fast-final-command.log",
+  "log_sha256": "4be9b53c839be5d31a8e864eb49ce446ff855e34f040796ff042b98f03938c5b",
+  "log_size": 56022
+}

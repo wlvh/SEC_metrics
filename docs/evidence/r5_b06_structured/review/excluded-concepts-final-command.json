@@ -1,0 +1,24 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "tests.vnext.test_r5_b06.B06PrimaryTest.test_lease_only_and_noncurrent_standalone_are_not_totals",
+    "-v"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "14d5d5efddc8d758312837551f82d9cf1668e5e6",
+  "head_after": "14d5d5efddc8d758312837551f82d9cf1668e5e6",
+  "started_at_utc": "2026-09-11T03:37:26.196650+00:00",
+  "finished_at_utc": "2026-09-11T03:37:26.331153+00:00",
+  "elapsed_seconds": 0.13441283302381635,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/independent-discovery/excluded-concepts-final-command.log",
+  "log_sha256": "fc5a6bcef78145f8e22bf1ef452e868f7032646b7d41255354b153d7a1e94aac",
+  "log_size": 259
+}

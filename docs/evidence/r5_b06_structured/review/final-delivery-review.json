@@ -1,0 +1,402 @@
+{
+  "status": "NO_UNRESOLVED_REVIEW_BLOCKERS_FOR_DRAFT_B06_STRUCTURED_DELIVERY",
+  "reviewer": "Codex independent subtask /root/b06_source_audit; model review, not human approval or GitHub APPROVE",
+  "reviewed_delivery_code_head": "14d5d5efddc8d758312837551f82d9cf1668e5e6",
+  "actual_complete_prepare_code_head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+  "runtime_tree_equal": true,
+  "runtime_tree_scope": [
+    "scripts",
+    "tools",
+    "config",
+    "catalog",
+    "requirements"
+  ],
+  "test_only_delta": {
+    "files": [
+      "tests/vnext/test_r5_b06.py",
+      "tests/vnext/test_r5_b06_material.py"
+    ],
+    "reason": "Catch actual PublicationError rejection type; strengthen excluded debt-assets/fair-value/cash-flow concept counterexample. No product or rule change."
+  },
+  "resolved_findings": [
+    "R5-SOURCE-ANCHOR: trusted original saved SEC bytes/headers/ledger verified against implementation Git",
+    "R5-REQUIRED-SOURCE-SET: exact raw-derived fiscal period and full CompanyFacts+scopeXML native Run set enforced",
+    "R5-OUTPUT-PATH: reject dot-dot/symlinks and verify resolved path outside checkout",
+    "Public coordinate completeness: actual prior has9 B06/327 rows; exact union produces10 B06/328 rows without changing other318 rows"
+  ],
+  "package": {
+    "status": "PASS_INDEPENDENT_PACKAGE_BYTES_AND_CONTENT_BINDINGS",
+    "reviewer": "independent Codex subtask /root/b06_source_audit",
+    "publication_id": "publication_fa51db0b563c0ea97c545a3edced42cdfdd9a21a1a7d6f341f140bbe28653e71",
+    "manifest_byte_sha256": "105eea0390a184278a9a3c70050885f6297abe2c68d3a31f749fda7397ab30f3",
+    "implementation": "f56d740b47ad433f0762862c73b6089c408d3f65",
+    "file_count": 1352,
+    "total_file_bytes": 209491413,
+    "file_set_and_all_bytes_sha256": "PASS",
+    "publication_and_batch_adoption_object_ids": "PASS",
+    "actual_predecessor": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "predecessor_manifest_byte_sha256": "ce8b2c3fe7ac9b94ed721287c23948503a87b59e3b471bd285cc569a2d2336ec",
+    "actual_formal_active_unchanged": true,
+    "native_coordinates": 250,
+    "inherited_coordinates": 240,
+    "new_coordinates": 10,
+    "public_rows": 328,
+    "unselected_public_rows_exactly_preserved": 318,
+    "all_unselected_evidence_preserved": true,
+    "candidate_status": "BLOCKED",
+    "production_authorized": false,
+    "no_candidate_active_pointer": true,
+    "native_links": [
+      {
+        "company_id": "marriott_international",
+        "run_id": "run:r5-primary:b237520c54f707703a6442a4c5183de98f80d7997cf44d2588003c83d021189a",
+        "result_id": "sha256:35f8a81a5e3ced649ed2d94dc9cd79f7af7284fe23b0a6a2f421569ef4a23c50",
+        "source_raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NOT_MEANINGFUL",
+        "adoption_status": "PRIMARY_VERIFIED_PENDING_APPROVAL"
+      },
+      {
+        "company_id": "southwest_airlines",
+        "run_id": "run:r5-primary:85846ff9b4dc7faeb793feb28d093dd24152413fe02c2906e74fd90c08b9b576",
+        "result_id": "sha256:8aedb7d2ad81587520caa29821464c9b2f1ecdf76fe1a94be6abc409d9d87a88",
+        "source_raw_asset_id": "sha256:7c2768fa2d6bfc2aee4a9f17ac6e0814434a45623283a8a8da8218ddc6cf678b",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "ford_motor_company",
+        "run_id": "run:r5-primary:6ed4340eff6552b949164fdcf0d721398be6110aa34ece6d5eba912fee340802",
+        "result_id": "sha256:b7fe0aeb94042209b4c1cbfc465b22afc4bbf6861cb2950341c84a5726f1b2b4",
+        "source_raw_asset_id": "sha256:db9621054cffb365bcb65cde1f53e4161fb26ac56ebf8a95b9066b3d2375203e",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "pfizer",
+        "run_id": "run:r5-primary:26841168f73d58e383fa2aeaae5defa3182fcce4df2268a84c9b73f120f48cff",
+        "result_id": "sha256:e743f089f966eabc2697a6cffb32fb746f182cef3f682d0df1a42b5c0edb7aac",
+        "source_raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "jpmorgan_chase",
+        "run_id": "run:r5-primary:6d9e4d9a66dc9fe7595c09333ddebbc0f4872a1da6342507a1e74a6bdeb76fe6",
+        "result_id": "sha256:751c1a6c85ea806e12a694cd98deee0f90d4795770829a2fd96dacab476e60c8",
+        "source_raw_asset_id": "sha256:e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "salesforce",
+        "run_id": "run:r5-primary:a2cbc1cdf3076e5e91f83fd4faff9ed3b05af368a787d9c3b7d5f51c2d9ad975",
+        "result_id": "sha256:c49c5542eb560539ed55d75fe4b161468c24e52ad65eef200fb20f32bfb18316",
+        "source_raw_asset_id": "sha256:07c432de58f0536b73226c24d4baed3edf4ad8718c3f736d3d8d1bd657c55d82",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "lumen_technologies",
+        "run_id": "run:r5-primary:1c333cf7bf1d7bd0ba4d3d32c3f44d53b8cf5e03d62ac065a76ae04475065aab",
+        "result_id": "sha256:06baf1ca59edcfcac4a576150cc698d929c89992e0e7b1122b8e26d9040c0597",
+        "source_raw_asset_id": "sha256:256ae4e2b32df840833d7cac21b3c9b12fe4fe850259b93f76970c2b9136a7ca",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "macys",
+        "run_id": "run:r5-primary:4e2b59f478da3d0d99467bd7a6f1a2262efb9c79b5121921d08d745626f3a23c",
+        "result_id": "sha256:b7afd8cfc14a0b716b4612397c9ca3c1ac9bff2aba600c766e76ef8f3e7ecc7c",
+        "source_raw_asset_id": "sha256:fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "paramount_skydance_paramount_global",
+        "run_id": "run:r5-primary:770f7cc8039cef95e07402473a6e4992b7c225e39574cf10fb321414e9b22e0e",
+        "result_id": "sha256:c0445787cc249447e3c6059e8ee64549718aad209eb7aa3fb6c73255c87aff51",
+        "source_raw_asset_id": "sha256:19dd254e15903395dc75f8ab9e58822d2737275f9fc93a869a68f5b5fcec52bf",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "",
+        "actual_public_status": "NEEDS_REVIEW",
+        "adoption_status": "BLOCKED"
+      },
+      {
+        "company_id": "enphase_energy",
+        "run_id": "run:r5-primary:a2717791baa531e15648961d3cb5462649d0f6a93c6947f3dd04204c4e115fd8",
+        "result_id": "sha256:7b46cec87a58ddb74bf89c927b5c14ea04fb6e1efdc1799417645fe88c88edfa",
+        "source_raw_asset_id": "sha256:ff43e841870f44069d6d009e39a56297c24e8ee277cd9c8a3789fcf9632fc6c3",
+        "native_result_equals_independently_verified_previous_run": true,
+        "actual_public_value": "1.107959077222837051285943352",
+        "actual_public_status": "OK",
+        "adoption_status": "PRIMARY_VERIFIED_PENDING_APPROVAL"
+      }
+    ],
+    "not_executed": [
+      "No full native validator replay or predecessor native reconstruction; these parent material execution checks reviewed separately"
+    ],
+    "business_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "personally_executed_checks": [
+    "Initial code/Spec/source strategy reading and independent original CompanyFacts/HTML/XML audits",
+    "8 B06 short tests plus later CLI path rejection and excluded-concept increment",
+    "62 saved-source origin file checks; exact Ford source/period checks; negative omitted XML, wrong fiscal label, and external Git byte mismatch",
+    "Historical model frozen-rule read and old execution authority rejection",
+    "Ten final source facts and three decimal ratios independently checked; semantic withholds/negative equity/amendments distinguished",
+    "All1352 final package entries including209491413 bytes independently hashed; exact file set verified",
+    "Publication, batch and adoption content IDs independently recomputed; actual predecessor compared",
+    "Final ten native Results exactly matched prior independently content-reviewed Results",
+    "Actual328 public rows,318 unchanged rows and all unselected evidence matched real predecessor; amended native values correctly blanked in public candidate",
+    "f56-to14d runtime tree byte identity and exact two-test-file delta verified"
+  ],
+  "read_parent_execution_evidence": {
+    "complete_prepare": "exit0, COMPLETE_CANDIDATE_BLOCKED; source/native/full core verification is parent execution, not reviewer rerun",
+    "material_suite": "Initial5 methods:4 PASS and1 test-harness exception-type error; originalfailure retained. Only affected finalmethod rerun after test-only fix and PASS; no claim initial5 allgreen.",
+    "cold_read": "Fresh CLI process exit0; same publication250 coordinates/328 rows; source_reads10 companies; verified log byte hash",
+    "protection": "Read parent PASS_PROTECTED_ORIGINALS plus personally compared actual active/predecessor",
+    "commands": {
+      "complete-final-command": {
+        "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+          "python3",
+          "tools/vnext_r5_b06.py",
+          "prepare",
+          "--candidate-root",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/complete-final",
+          "--output-json",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/complete-final-output.json"
+        ],
+        "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+        "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "started_at_utc": "2026-09-11T03:26:54.443709+00:00",
+        "finished_at_utc": "2026-09-11T03:32:03.770939+00:00",
+        "elapsed_seconds": 309.33299750002334,
+        "exit_code": 0,
+        "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/complete-final-command.log",
+        "log_sha256": "e2717e4fe452d2a75a81fd87ac081ee0bc4513ca5fd0b353d40ce863d3233a24",
+        "log_size": 145,
+        "log_hash_independently_recomputed": true
+      },
+      "material-final-command": {
+        "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+          "/usr/bin/env",
+          "R5_B06_CANDIDATE_ROOT=/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/complete-final",
+          "TMPDIR=/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/tmp",
+          "python3",
+          "-m",
+          "unittest",
+          "tests.vnext.test_r5_b06_material",
+          "-v"
+        ],
+        "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+        "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "started_at_utc": "2026-09-11T03:33:48.458455+00:00",
+        "finished_at_utc": "2026-09-11T03:35:25.841835+00:00",
+        "elapsed_seconds": 97.38251466600923,
+        "exit_code": 1,
+        "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/material-final-command.log",
+        "log_sha256": "8eab8552d53c139b16a3bfc6b6b44801da9dbf14630ce096ecf152ce4c7a32b5",
+        "log_size": 1975,
+        "log_hash_independently_recomputed": true
+      },
+      "material-repeat-fixed-command": {
+        "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+          "/usr/bin/env",
+          "R5_B06_CANDIDATE_ROOT=/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/complete-final",
+          "TMPDIR=/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/tmp",
+          "python3",
+          "-m",
+          "unittest",
+          "tests.vnext.test_r5_b06_material.B06MaterialTest.test_production_switch_denied_and_repeat_prepare_reuses",
+          "-v"
+        ],
+        "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+        "head": "14d5d5efddc8d758312837551f82d9cf1668e5e6",
+        "head_after": "14d5d5efddc8d758312837551f82d9cf1668e5e6",
+        "started_at_utc": "2026-09-11T03:36:40.658566+00:00",
+        "finished_at_utc": "2026-09-11T03:38:01.755835+00:00",
+        "elapsed_seconds": 81.09653074998641,
+        "exit_code": 0,
+        "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/material-repeat-fixed-command.log",
+        "log_sha256": "8a110c2f3a8682b79919a5f7d57766902d1e0edd85a566290c026da953850c0e",
+        "log_size": 268,
+        "log_hash_independently_recomputed": true
+      },
+      "cold-read-final-command": {
+        "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+          "python3",
+          "tools/vnext_r5_b06.py",
+          "read",
+          "--candidate-root",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/complete-final",
+          "--output-json",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/cold-read-final.json"
+        ],
+        "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+        "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "started_at_utc": "2026-09-11T03:33:48.472976+00:00",
+        "finished_at_utc": "2026-09-11T03:35:14.629007+00:00",
+        "elapsed_seconds": 86.1552366669639,
+        "exit_code": 0,
+        "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/cold-read-final-command.log",
+        "log_sha256": "139dd2b0d209dfb22dc68267002a99283551de2ca196cbe081997c0e58d436cc",
+        "log_size": 141,
+        "log_hash_independently_recomputed": true
+      },
+      "protection-final-command": {
+        "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+          "python3",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/verify_protection.py",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/protection-final.json"
+        ],
+        "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+        "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "started_at_utc": "2026-09-11T03:34:50.298609+00:00",
+        "finished_at_utc": "2026-09-11T03:35:01.452141+00:00",
+        "elapsed_seconds": 11.153328125015832,
+        "exit_code": 0,
+        "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/protection-final-command.log",
+        "log_sha256": "d118e5bac87d65484125e5c191255dc7be45d1e2f0d2124eb50f794208fa9c2e",
+        "log_size": 214,
+        "log_hash_independently_recomputed": true
+      },
+      "alignment-final-command": {
+        "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+          "python3",
+          "tools/check_capability_contract_alignment.py",
+          "--base-ref",
+          "origin/main"
+        ],
+        "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+        "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "started_at_utc": "2026-09-11T03:30:27.327354+00:00",
+        "finished_at_utc": "2026-09-11T03:30:35.061413+00:00",
+        "elapsed_seconds": 7.733887624985073,
+        "exit_code": 0,
+        "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/alignment-final-command.log",
+        "log_sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb",
+        "log_size": 108,
+        "log_hash_independently_recomputed": true
+      },
+      "fast-final-command": {
+        "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+        "command": [
+          "/usr/bin/sandbox-exec",
+          "-f",
+          "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+          "python3",
+          "tools/run_fast_tests.py",
+          "--jobs",
+          "4"
+        ],
+        "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+        "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+        "started_at_utc": "2026-09-11T03:30:27.311924+00:00",
+        "finished_at_utc": "2026-09-11T03:30:35.128783+00:00",
+        "elapsed_seconds": 7.816681540978607,
+        "exit_code": 1,
+        "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/fast-final-command.log",
+        "log_sha256": "4be9b53c839be5d31a8e864eb49ce446ff855e34f040796ff042b98f03938c5b",
+        "log_size": 56022,
+        "log_hash_independently_recomputed": true
+      }
+    }
+  },
+  "evidence_reused": [
+    "Earlier three-company full HTML debt/equity content audit",
+    "Original amendments Explanatory Note audit (metadata does not auto-authorize adoption)",
+    "Prior PR41 long continuous sequence/recovery proof only for unchanged functionality, not rerun here"
+  ],
+  "not_verified_or_not_authorized": [
+    "No reviewer full native graph/publisher replay beyond independent bounded checks",
+    "No CI/GitHub APPROVE issued by reviewer",
+    "No model fallback, no SEC/provider paid calls, no production activation/switch",
+    "No assertion B06 fully migrated or formal25 metrics; candidate remains BLOCKED pending actual coverage and production decisions"
+  ],
+  "business_calls_during_review": [
+    0,
+    0,
+    0
+  ],
+  "final_boundaries": [
+    "Only Enphase has unblocked numeric primary candidate; Southwest/Paramount native as-filed numbers remain amendment-blocked publicly",
+    "Marriott nonpositive equity is NOT_MEANINGFUL; six other coordinates retained as structured/source-scope ambiguity",
+    "Current actual formal publication unchanged, formal327 rows and24 migrated metrics retained",
+    "Future B06 source compatibility/fallback, industrial denominator and debt coverage decisions, formal adoption/legacy producer exit remain pending"
+  ],
+  "evidence_files": {
+    "final-code-review.json": {
+      "sha256": "7adad455580864f793cda1209150ea6e42e0709be96667cfe63fe1cedf08999b",
+      "size": 6929
+    },
+    "final-code-increment-f56d740.json": {
+      "sha256": "4617d51c8e1b6552f3217109bb856b53eaf5719516be7e9541704f032cfdc49e",
+      "size": 2387
+    },
+    "actual-ten-company-content-review.json": {
+      "sha256": "0447205950b5c362559832cbc91143bb843d75987ecf654cb46579b43e7797aa",
+      "size": 24588
+    },
+    "final-package-checks.json": {
+      "sha256": "db1438a53b98d9f1edd94c455e718313b1718670978b8ae284d6727a12dc33b7",
+      "size": 6773
+    },
+    "final-package-command.json": {
+      "sha256": "ffd4d228a6f70d1a9deca5102035ba561546454e69af6865ba0c385c8d433cac",
+      "size": 896
+    },
+    "excluded-concepts-final-command.json": {
+      "sha256": "c8d6616c4fc0d2b1915644aeecb866dc94f34556dc9ee1d9c0e51387477915ff",
+      "size": 929
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "tests.vnext.test_r5_b06.B06PrimaryTest.test_cli_output_path_cannot_traverse_back_into_checkout",
+    "-v"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "f56d740b47ad433f0762862c73b6089c408d3f65",
+  "head_after": "f56d740b47ad433f0762862c73b6089c408d3f65",
+  "started_at_utc": "2026-09-11T03:27:49.690762+00:00",
+  "finished_at_utc": "2026-09-11T03:27:49.833290+00:00",
+  "elapsed_seconds": 0.14242020796518773,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/independent-discovery/cli-path-fix-command.log",
+  "log_sha256": "0898d8392e66782f886a58df7432455b3639c844411cca22bcab846341ca1400",
+  "log_size": 257
+}
