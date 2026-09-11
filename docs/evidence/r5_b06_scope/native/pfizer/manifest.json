@@ -1,0 +1,61 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "936a24e41a74902fca6c56d26ddb92a2aa04ce660f3a244b6a1d7f83d5fa2f99",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "b01b2891996e0c4300f6886586487e4e3f8571d57b43aacdaca11a3d049808a3",
+  "content_manifest_hash": "sha256:7938022ac49b1833bfb459146e1e53a24232ae04d1772957693bb7609f397d73",
+  "audit_manifest_hash": "sha256:04325f1a516fdc59b05bce66a65279544fc6c7fba25c8f17e3969140985e9e9d",
+  "run_id": "run:r5-primary:8e2876cfe51bfc03cad4c0af3b70551ae29463c7bb4efc18bcc05ddd85dcf450",
+  "company_id": "pfizer",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-12-31",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:cea56b517272ef02581aadd04078062479e66c7bb7c273578cd08d75b3b4dfea",
+      "raw_asset_id": "sha256:bd072131f9dcf001f22e843fded5910c2c7fc178e2a739ce0c58b1934e84d566",
+      "company_id": "pfizer",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000078003.json",
+      "accession": "0000078003-26-000026",
+      "document_name": "CIK0000078003.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:6eae5ea77dcd7062e740d7db8fd2fae085c794719430c0918371140079e68547",
+      "raw_asset_id": "sha256:41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "company_id": "pfizer",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231_htm.xml",
+      "accession": "0000078003-26-000026",
+      "document_name": "pfe-20251231_htm.xml",
+      "source_role": "accession_xbrl",
+      "request_attempt_id": "request:attempt:a4278a6155d79ae3f8b99378f4b525be88acbf387adcaf0aa261e2ee4b52f01f"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r5/B06_structured.md": "3aabaac36204b03276a2f5c1c557ca4c7cd4bdb19a115a753f5abc0df6895421"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "03968e3496abf355eaf601f6270f4552f4f2b3b0cc0e8f2c71baea73603701c3",
+    "contract_sha256": "2d6a2dacd700acc9a7d383128a9f806eaa614dc7f99b4fae7b97704c8a53471b",
+    "decision_register_sha256": "4d0d825549d45733825add728f6374a3b1c8246fe00c4f6629c29b30f424afc8",
+    "invariant_profile_sha256": "22662ce8050c7fe8e569777bd06f77760124e365d15f1a297a4ec8adc2743f7a",
+    "transfer_manifest_sha256": "034f984d7570a069b637a305786e547267c8cdc694b8936c404033d911ab835d",
+    "parent_requirement_closure_hash": "sha256:c3aab58207c3a6cf7f9ac35aae0b842bc6ed8e870dce574438ae428192e1ce45",
+    "validator_sha256": "0d474e2d3b5b2f5d768e80f83163a5d63ff4cfc92d3b2ee9dd15e5c42fdb0d79"
+  },
+  "requirement_closure_hash": "sha256:80fe12c1e1a09c6c6d805bf15db7d072c1f9f71ba39f43cb93a9a7bfbef3d25f",
+  "requirement_id": "issue_28_v9",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

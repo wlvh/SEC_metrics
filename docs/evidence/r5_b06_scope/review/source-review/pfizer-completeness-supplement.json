@@ -1,0 +1,66 @@
+{
+  "status": "PFIZER_REPORTED_BORROWINGS_CONFIRMED_FINANCE_LEASE_COMPLETENESS_UNPROVEN",
+  "reviewer": {
+    "task": "/root/debt_reconciliation_review",
+    "identity": "independent Codex model",
+    "human_approval": false
+  },
+  "checked_at": "2026-09-11T05:56:07.930837+00:00",
+  "supplements_prior_report": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-scope-final/source-review/scope-relationships.json",
+    "sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+    "correction": "Prior global eight-coordinates-supported label overstates Pfizer full debt-set completeness. Preserve original report unchanged; arithmetic and inclusion findings remain supported. This record limits Pfizer to confirmed reported borrowing components, not proved complete borrowing+finance-lease set."
+  },
+  "source_sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+  "source_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/accession_materials/pfizer_78003_000007800326000026/pfe-20251231_htm.xml",
+  "directly_rechecked_notes": [
+    {
+      "concept": "{http://fasb.org/us-gaap/2025}ScheduleOfShortTermDebtTextBlock",
+      "xml_fact_id": "f-1669",
+      "full_note_text_sha256": "616f96bc66e8002447c87770c9cab2e6507622ef3cdd265cb537e2ef6104944d"
+    },
+    {
+      "concept": "{http://fasb.org/us-gaap/2025}ScheduleOfDebtInstrumentsTextBlock",
+      "xml_fact_id": "f-1685",
+      "full_note_text_sha256": "6ea2696ad6f11c31c82347ced244804cec8b5ec7f519d76e353a70823205c405"
+    },
+    {
+      "concept": "{http://fasb.org/us-gaap/2025}LesseeOperatingLeasesTextBlock",
+      "xml_fact_id": "f-2852",
+      "full_note_text_sha256": "8621067971e81901d169eb921d9969481d5ef1dd3247a64785f96323cb7ae7cb"
+    }
+  ],
+  "supported": {
+    "borrowing_carrying_usd": "64795000000",
+    "equity_usd": "86476000000",
+    "component_ratio": "0.7492830380683657893519589250",
+    "relationship": "DebtCurrent3154m includes currentLT2997m plus other157m; noncurrentLT61641m excludes current. User explicitly includes this157m borrowing. No double count; more precise native longterm fact61641m and rounded62bn are compatible."
+  },
+  "not_proven": [
+    "No explicit statement that all leases are operating or no finance leases exist",
+    "No disclosed finance-lease balance or native zero fact found in reviewed complete instance/lease note",
+    "Longterm table outlines senior unsecured notes, so cannot establish financing leases already included in these borrowing totals",
+    "Total lease cost table lists operating/variable/sublease income, but that is not a conclusive exact finance-lease balance proof"
+  ],
+  "evidence_basis": {
+    "lease_note": "Full us-gaap:LesseeOperatingLeasesTextBlock f-2852 describes classification process and supplies operating-only balances/maturity/cost table; it does not assert all arrangements operating.",
+    "lease_policy": "us-gaap:LesseeLeasesPolicyTextBlock f-2853 says perform lease classification test at commencement; no no-finance-lease assertion.",
+    "debt_note": "ScheduleOfDebtInstrumentsTextBlock f-1685 explicitly senior unsecured long-term debt.",
+    "literal_search": "No finance/capital lease phrases found across complete parsed instance text blocks; absence retained as search result, never zero proof."
+  },
+  "acceptance_implication": "Under requirement to prove complete borrowed-money/notes/finance-lease set, preserve candidate arithmetic and explicit FINANCE_LEASE_COMPLETENESS_REQUIRES_REVIEW (or equivalent). Do not convert absence to zero or automatically apply a looser standard than JPM. A separately approved reported-disclosure/materiality convention would be a policy decision, not a source fact, and is not inferred here.",
+  "executed": [
+    "Read original full lease/borrowing notes again",
+    "Searched complete original instance TextBlocks for finance/capital lease references"
+  ],
+  "not_executed": [
+    "No new file acquisition",
+    "No native new Run",
+    "No new model/provider call"
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

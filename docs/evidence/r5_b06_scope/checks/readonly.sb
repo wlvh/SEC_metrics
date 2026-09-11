@@ -1,0 +1,5 @@
+(version 1)
+(allow default)
+(deny network*)
+(deny file-write*)
+(allow file-write* (subpath "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-scope-final") (literal "/dev/null"))

@@ -1,0 +1,61 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "94f24180f640f180f6035cf197b4163318065200169d12d623700f575fa8e3ca",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "75b520812db6e4acb2c83ee2a08148896c56ca15b0cf479564faf258b3bb1d36",
+  "content_manifest_hash": "sha256:a125a4a615c96d2e353048a4c91523d4b42eb1a1d8a92b0936ec13e162b8eb27",
+  "audit_manifest_hash": "sha256:bb0bc8e260e81ead87c5bd2dfd7080c76a0e8e55b47a0d7910d9c900e0a46ab3",
+  "run_id": "run:r5-primary:69ddcbf139b1f522eaed8b79f5b7dfb3920cfae80682d47f9e9bb57c12e70256",
+  "company_id": "jpmorgan_chase",
+  "company_traits": [
+    "financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-12-31",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:c5ccf6cd0074d9e75c227a3c7b8a104aa996d54894d8926ca4eb1869a7c9c03d",
+      "raw_asset_id": "sha256:e5a944643b89e809740d810ff200af40e7479e481359cebc062e1869862c9568",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000019617.json",
+      "accession": "0001628280-26-008131",
+      "document_name": "CIK0000019617.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:adadf093594e5fea6c7320cb135411b8e24007f5adcc1d7360f87cf93909d003"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:3cb743d44ce6d735e1eda7a0a67c2082c44b10f20b15c3767441886c551c3a9a",
+      "raw_asset_id": "sha256:9fe211a6d6f7ec3af368f81c820868b54d7ea02ca2fe9776e72d7a41e2472126",
+      "company_id": "jpmorgan_chase",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000162828026008131/jpm-20251231_htm.xml",
+      "accession": "0001628280-26-008131",
+      "document_name": "jpm-20251231_htm.xml",
+      "source_role": "accession_xbrl",
+      "request_attempt_id": "request:attempt:8accac90715d58fd5d6639712c38d896f686dfb544c09e372045a95f0bf8c270"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r5/B06_structured.md": "3aabaac36204b03276a2f5c1c557ca4c7cd4bdb19a115a753f5abc0df6895421"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "03968e3496abf355eaf601f6270f4552f4f2b3b0cc0e8f2c71baea73603701c3",
+    "contract_sha256": "2d6a2dacd700acc9a7d383128a9f806eaa614dc7f99b4fae7b97704c8a53471b",
+    "decision_register_sha256": "4d0d825549d45733825add728f6374a3b1c8246fe00c4f6629c29b30f424afc8",
+    "invariant_profile_sha256": "22662ce8050c7fe8e569777bd06f77760124e365d15f1a297a4ec8adc2743f7a",
+    "transfer_manifest_sha256": "034f984d7570a069b637a305786e547267c8cdc694b8936c404033d911ab835d",
+    "parent_requirement_closure_hash": "sha256:c3aab58207c3a6cf7f9ac35aae0b842bc6ed8e870dce574438ae428192e1ce45",
+    "validator_sha256": "0d474e2d3b5b2f5d768e80f83163a5d63ff4cfc92d3b2ee9dd15e5c42fdb0d79"
+  },
+  "requirement_closure_hash": "sha256:80fe12c1e1a09c6c6d805bf15db7d072c1f9f71ba39f43cb93a9a7bfbef3d25f",
+  "requirement_id": "issue_28_v9",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

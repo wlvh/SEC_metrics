@@ -1,10 +1,10 @@
 # R5 首批：B06 结构化主路径
 
-最新实际结果与独立审阅见[本轮主交付](evidence/r5_b06_followup/README.md)：三数值、两非正权益、五项具体内容缺口；完整候选250坐标/328行，BLOCKED，正式根未变。[首次交付](evidence/r5_b06_structured/README.md)保留原计量与原阻断。
+最新实际结果与独立审阅见[统一债务集合交付](evidence/r5_b06_scope/README.md)：5个数值、2个非正权益、3个明确内容缺口；完整250坐标/328行。代码符合条件后合并不等于正式采纳，实际active不变。[前轮修复](evidence/r5_b06_followup/README.md)和[首次候选](evidence/r5_b06_structured/README.md)保持历史原义。
 
 本入口从既定十家公司已保存的 submissions 与 Company Facts 选择最新普通10-K及其确切申报时点，不读取旧B06值来选择输入。指标仍是结构化优先、歧义触发既定fallback；本轮没有执行fallback，也未把B06整体标为已迁移。
 
-`catalog/r5/B06_structured.md`仅定义结构化主路径，旧table Spec和历史ReleasePlan保持原字节。分子优先直接总额，不再加组成项；其次只使用完整同族current/noncurrent。lease-only、standalone noncurrent、冲突总额、另列短期债务或租赁涵盖性不清时，原生Result为WITHHELD/STRUCTURED_SOURCE_AMBIGUOUS，保存全部候选和原因。已保存instance中的实际金融业务member触发工业/集团范围复核，XML中的已核对账面调整事实可沿原生Observation参与计算，不从审阅报告补数，也不推定工业权益。
+`catalog/r5/B06_structured.md`仅定义结构化主路径，旧table Spec和历史ReleasePlan保持原字节。旧v1/v2的直接总额优先规则仅解释旧记录。当前v3按已证明的不重叠借款、债券、融资租赁集合计入，允许补齐另列类别。lease-only、standalone noncurrent、冲突总额、另列短期债务或租赁涵盖性不清时，原生Result为WITHHELD/STRUCTURED_SOURCE_AMBIGUOUS，保存全部候选和原因。已保存instance中的实际金融业务member触发工业/集团范围复核，XML中的已核对账面调整事实可沿原生Observation参与计算，不从审阅报告补数，也不推定工业权益。
 
 权益只使用同主体、同申报、同单位、同实际时点的StockholdersEquity，不擅自换成含少数权益总额。分母<=0经通用`denominator_positive`约束输出NOT_MEANINGFUL并保留实际输入，不能取绝对值。原生Run重新解析原始Company Facts、重新执行选择和Calculator；输出文件中写PASS不能绕过这一重放。结构化事实沿原生确定性链，不伪造AI Evidence或人工Review；独立内容审阅另作验收。
 

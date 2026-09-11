@@ -1,0 +1,32 @@
+marriott_international None NOT_MEANINGFUL 16204000000 []
+southwest_airlines 0.6140834481894499436160882095 EXACT 4901000000 []
+ford_motor_company None NONE None ['INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED', 'INDUSTRIAL_VS_FINANCE_SCOPE_REQUIRES_REVIEW']
+pfizer None NONE None ['FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED']
+jpmorgan_chase None NONE None ['BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED']
+salesforce 0.2531872442595786412363464205 EXACT 14974000000 []
+lumen_technologies None NOT_MEANINGFUL 17441000000 []
+macys 0.5030864197530864197530864198 EXACT 2445000000 []
+paramount_skydance_paramount_global 1.168049260241169930727785855 EXACT 13658000000 []
+enphase_energy 1.107959077222837051285943352 EXACT 1204377000 []
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-scope-final/inspect_current.py", line 23, in <module>
+    Path(__file__).with_suffix('.json').write_text(json.dumps(out,indent=2)+'\n')
+                                                   ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 182, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+                    f'is not JSON serializable')
+TypeError: Object of type mappingproxy is not JSON serializable
+when serializing dict item 'dimensions'
+when serializing dict item 'context'
+when serializing list item 0
+when serializing dict item 'notes'
+when serializing dict item 'measurement_reconciliation'
+when serializing dict item 'audit'
+when serializing list item 0
