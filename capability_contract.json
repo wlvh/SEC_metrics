@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.normal_annual_input_selection",
+        "type": "capability",
+        "status": "active",
+        "statement": "从保存SEC清单及原件DEI/context自动选择连续主体的最新普通10-K及实际财年，支持自然年、非自然年和52/53周年，不使用固定样本、旧Result或人工答案。修订、来源失败和实现缺口分别保留并继续其他公司。输出只为现有Run准备参数，不发业务请求、不授来源准入、不执行指标或生产发布；主体接续仍未实现，current_latest_verified保持false。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_annual_input.py::NormalAnnualInputTest.test_saved_noncalendar_inputs_use_dei_fiscal_label",
+        "test_status": "automated_recorded",
+        "since": "2026-09-11"
+      },
+      {
         "anchor_id": "CAPABILITY.b06_new_source_candidates",
         "type": "capability",
         "status": "active",

@@ -354,3 +354,6 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 拒绝完整比值；两个安全拒绝不能算正向能力完成。真实来源信用由准入层核对，
 语义测试不获得SEC信用。来源获取累计与零网络Run/冷读计数分别报告。
 <!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->
+
+`tools/vnext_normal_update.py`只读取保存材料并列出所有配置公司。`ORIGINAL_INPUT_READY`表示普通原件参数已准备，`AMENDMENT_PROCESSING_REQUIRED`表示同期间修订尚需处理，两者都不是本期指标完成；`current_latest_verified=false`明确没有进行新SEC检查。`INPUT_BLOCKED`分别保留来源不可得、请求失败、完整性问题、实现缺口或实现错误，不归为公司未披露。Paramount前后继主体接续仍是开发责任，其余公司继续检查。输出不改变正式版本，也不自动启动模型。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->

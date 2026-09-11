@@ -28,6 +28,14 @@ from typing import Dict, Sequence
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FAST_TESTS = (
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures",
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_saved_noncalendar_inputs_use_dei_fiscal_label",
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_amendment_keeps_original_and_does_not_claim_current_success",
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_latest_period_cannot_fall_back_when_only_amendment_is_present",
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_ambiguous_columns_dates_and_relevant_shards_are_not_no_change",
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_period_rechecks_entity_and_does_not_promote_quarter_to_year",
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_ten_company_inspection_keeps_unsupported_subject_and_continues",
+    "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_later_source_failure_is_not_relabelled_as_old_success",
     "tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations",
     "tests.vnext.test_b06_new_source.B06NewSourceTest.test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation",
     "tests.vnext.test_b06_new_source.B06NewSourceTest.test_selected_model_cannot_grant_inclusion_or_nonoverlap",

@@ -26,7 +26,7 @@
 
 ### 原则记录与执行授权分开
 
-一次明确授权可覆盖其范围内的分支、commit、push、PR和连续工程步骤，不逐项重复询问；开发授权不自动授予新费用、合并、生产采纳或active切换。本次仅将用户讨论形成的原则写入文档，不修改冻结Spec/Requirement、来源、运行记录或正式结果，不补造Issue级总额度，也不恢复已暂停R4。当前范围、额度和最终停点继续读取有效委托；总委托明确取代局部停点后，再按总目标连续交付。旧生产入口随相应正式采纳退出，不能提前破坏仍在使用的入口。
+一次明确授权可覆盖其范围内的分支、commit、push、PR和连续工程步骤，不逐项重复询问；开发授权不自动授予新费用、合并、生产采纳或active切换。用户现已正式采用[Issue #28连续开发与完整交付总委托](https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102)，替代PR43旧局部开发范围与机械停点，按十家公司×39指标三个最终目标连续实施。旧关闭额度及原失败不恢复；新增费用集中核实申请，未获批继续合法离线工作。旧生产入口随相应正式采纳退出，不能提前破坏仍在使用的入口。cbede80的原则记录及旧评论保留历史含义；当前可恢复执行状态见`docs/evidence/issue28_continuous/`。
 
 ## 0. 按任务选择阅读路径
 
@@ -179,6 +179,8 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `catalog/event_routes.json`：C01/E01–E05 的声明式零 AI item/keyword route authority；冻结 E01 aliases、text normalization、match mode、brief source priority 与 legacy projection。
 
 ### 核心模块
+
+- `scripts/vnext/normal_annual_input.py` / `tools/vnext_normal_update.py`：从保存清单选择最新普通年报，由原生DEI/context确认实际财年，支持自然年及52/53周年，不使用两样本白名单或旧Result。修订与普通原件分离，来源失败与主体接续实现缺口分别保留；当前只准备输入，不执行指标、不授来源准入或生产信用。旧calendar-only及PR43历史入口不改。
 
 - `scripts/vnext/b06_source_admission.py`：独立于普通输入的受信获取/导入执行记录、
   固定阶段预算及后置离线checkpoint；自洽ledger不授真实SEC信用。

@@ -1,5 +1,10 @@
 # SEC_metrics 测试与验证流程
 
+## 正常年度输入选择
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_annual_input -v`在保存真实材料上检查非自然财年、52周期间、修订与普通原件分离、十公司保留/故障隔离，以及季度冒充年度、错主体、缺历史分片和后来来源失败反例。测试禁止网络及旧结果读取，不模拟财务答案。组件通过只证明输入准备，未证明指标执行或新SEC发现。fast入口逐项登记以保持30秒单项上限。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
+
 ## 确切年度候选正式采纳接线
 
 fast白名单共35入口，保留v1发布模块，并加入`tests.vnext.test_annual_publication_authority`。

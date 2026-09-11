@@ -1,0 +1,65 @@
+{
+  "record_type": "ISSUE_28_CONTINUOUS_EXECUTION_STATE",
+  "status": "IN_PROGRESS",
+  "delegation_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5636808102",
+  "superseded_scope_url": "https://github.com/wlvh/SEC_metrics/issues/28#issuecomment-5635555555",
+  "branch": "task/b06-new-source",
+  "starting_head": "cbede80d6c75bae7a6022adce74416a4d281399a",
+  "scope": {
+    "companies": 10,
+    "metrics": 39,
+    "coordinates": 390
+  },
+  "authority": {
+    "development": "USER_DELEGATED",
+    "new_business_budget": "NOT_APPROVED",
+    "merge": false,
+    "formal_adoption": false,
+    "deployment": false,
+    "active_switch": false
+  },
+  "actual_new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0,
+    "unknown": 0
+  },
+  "current_work": [
+    "B06 independent counterexample repairs in successor validator",
+    "Source-derived financial measurement periods",
+    "Native text coverage and original-document boundaries",
+    "Normal annual input selection for noncalendar fiscal periods"
+  ],
+  "open_decisions": [
+    "B13 pending economic meaning",
+    "Consolidated provider/paid/SEC budget"
+  ],
+  "next": [
+    "Integrate reviewed successors with native Run and automatic selection",
+    "Implement C03/C04 using saved ecd/auditor sources",
+    "Complete R4 and R6 automatic candidate/verification routes",
+    "390-coordinate acceptance and isolated publication/retirement readiness"
+  ],
+  "production_pointer_at_start": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+  "evidence_limits": [
+    "Input inspection is not a completed metric",
+    "Successor validators initially component-only",
+    "New source acquisition and provider calls have not run",
+    "No production or full acceptance credit"
+  ],
+  "verified_increments": [
+    {
+      "component": "normal_annual_input",
+      "evidence": "normal-input/",
+      "first_tests": 7,
+      "independent_review_findings_fixed": [
+        "DEI fiscal label bounds",
+        "malformed source CIK category"
+      ],
+      "targeted_added_test": 1,
+      "prior_fast_entries": 67,
+      "prior_fast_actual_tests": 189,
+      "native_metric_execution": "NOT_RUN"
+    }
+  ]
+}

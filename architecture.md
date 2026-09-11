@@ -775,3 +775,8 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 分类、流动拆分、账面调整和租赁现值。公司名不选公式，未知融资项目保持未解决。
 旧v1/v2/v3语义、原Run与完整候选包不改；新路径不生成完整发布包，不改变active。
 <!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->
+
+### 正常年度输入适配
+
+`normal_annual_input`复用`annual_update.saved_source`的最新请求失败保护和账本/原字节绑定，按保存submissions的实际reportDate选择最新普通10-K；财政年度及364/365/366/371天实际期间从原生DEI/context重建，不用日历年份推算或固定样本。普通原件与10-K/A分别表达，原件准备成功不等于修订后的本期结果成功。连续主体以外的接续仍为明确实现缺口，单公司失败不抹掉其他公司的检查结果。输入可交给现有companyfacts/table Run参数接口，但该组件尚未完成统一执行、采纳、触发或生产接线；不读取旧结果或发出网络请求。旧年度和B06两样本入口按原语义读取。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->

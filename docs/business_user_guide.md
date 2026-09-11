@@ -271,3 +271,7 @@ B06结构化主路径的待审候选由`tools/vnext_r5_b06.py read`读取。它�
 
 B06新来源的两份历史验证只提供候选结果：可查看原始年报、计算组成、完整性检查及修订状态，不能把它们当作正式active中的新指标。无法证明融资项目性质时显示具体缺口；新来源文件能被读取不等于已获可信来源身份。两份候选及其重放材料见`docs/evidence/b06_new_source/README.md`。
 <!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->
+## 年度输入检查的当前范围
+
+开发入口`tools/vnext_normal_update.py`可以读取已保存年报清单，按原文财年准备自然年、非自然年及52/53周年输入。它会同时保留普通10-K和修订状态；“原件已准备”不能读作“本期财务指标已更新”。缺少来源、来源失败和程序尚不支持的情况分别报告，其他公司继续检查。正式结果仍从既有PublicationView读取；本入口不会发布结果。
+<!-- capability-anchor: CAPABILITY.normal_annual_input_selection -->
