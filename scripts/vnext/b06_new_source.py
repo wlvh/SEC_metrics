@@ -32,6 +32,10 @@ def install_rules(data_root):
     from .annual_continuity_sources import frozen_foundation_receipts
     root=admission.ROOT;requirement=load_requirement_snapshot(snapshot_dir=root/'requirements'/REQUIREMENT_ID)
     paths=set(_authority_files(requirement))|set(requirement['baseline']['new_rule_files'])
+    cursor=requirement
+    while cursor:
+        paths.update(cursor.get('execution_authority',{}).get('files',{}))
+        cursor=cursor.get('parent_snapshot')
     paths.update(str(p.relative_to(root)) for p in (root/'requirements').rglob('*') if p.is_file())
     paths.update([disclosure.SPEC_PATH,'config/r5_b06_debt_sets_v3.json',admission.POLICY])
     receipts=frozen_foundation_receipts()
