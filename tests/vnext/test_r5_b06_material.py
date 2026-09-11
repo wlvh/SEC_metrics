@@ -49,7 +49,7 @@ class B06MaterialTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'R5_SAVED_SOURCE_ORIGIN_CHANGED'):release._verify_saved_input_origin(self.data,self.saved['code']['implementation_head'])
     def test_production_switch_denied_and_repeat_prepare_reuses(self):
         for fn in (release.commit_authority,release.guard_switch,release.guard_recovery):
-            with self.assertRaisesRegex(ValueError,'NOT_AUTHORIZED'):fn()
+            with self.assertRaisesRegex(publication.PublicationError,'NOT_AUTHORIZED'):fn()
         result=release.prepare(candidate_root=self.root);self.assertEqual('REUSED_COMPLETE_CANDIDATE',result['status']);self.assertEqual(self.saved['publication_id'],result['publication_id'])
 
 if __name__=='__main__':unittest.main()

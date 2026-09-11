@@ -31,7 +31,8 @@ class B06PrimaryTest(unittest.TestCase):
         r,_,_,a=self.run_case({'LongTermDebtCurrent':20,'LongTermDebtNoncurrent':30});self.assertEqual('0.5',r['value'])
         r,_,_,a=self.run_case({'LongTermDebtCurrent':20,'LongTermDebtAndCapitalLeaseObligationsNoncurrent':30});self.assertEqual('WITHHELD',r['publication']);self.assertIn('NO_COMPLETE_DEBT_BRANCH',a['reasons'])
     def test_lease_only_and_noncurrent_standalone_are_not_totals(self):
-        for values in [{'FinanceLeaseLiabilityCurrent':3,'FinanceLeaseLiabilityNoncurrent':4},{'LongTermDebtAndCapitalLeaseObligations':70}]:
+        for values in [{'FinanceLeaseLiabilityCurrent':3,'FinanceLeaseLiabilityNoncurrent':4},{'LongTermDebtAndCapitalLeaseObligations':70},
+                       {'DebtSecurities':70,'DebtInstrumentFairValue':70,'RepaymentsOfLongTermDebt':70}]:
             r,_,_,a=self.run_case(values);self.assertIsNone(r['value']);self.assertEqual('STRUCTURED_SOURCE_AMBIGUOUS',r['reason_code']);self.assertFalse(a['fallback_executed'])
     def test_conflicting_totals_short_and_separate_lease_coverage(self):
         for values,reason in [({'DebtAndCapitalLeaseObligations':70,'LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities':75},'DIRECT_TOTAL_CONFLICT'),({'LongTermDebtCurrent':20,'LongTermDebtNoncurrent':30,'CommercialPaper':5},'SHORT_DEBT_COVERAGE_REQUIRES_REVIEW'),({'LongTermDebtCurrent':20,'LongTermDebtNoncurrent':30,'FinanceLeaseLiabilityCurrent':5},'SEPARATE_LEASE_COVERAGE_REQUIRES_REVIEW')]:
