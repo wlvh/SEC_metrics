@@ -26,7 +26,6 @@ from .requirement_profile_v1 import decision_record_hash
 from .requirement_profile_v1 import read_requirement_object
 from .requirement_profile_v1 import resolve_decision_chains
 from .requirement_profile_v1 import validate_artifact_requirement_identity
-from .requirement_profile_v1 import validate_execution_authority
 from .requirement_profile_v1 import validate_transition_activation_receipt
 
 
@@ -43,6 +42,22 @@ PROFILE_ENGINES = {
     v9.PROFILE_REQUIREMENT_GENERATION: v9,
 }
 _LOADING_PATHS = ContextVar("requirement_loading_paths", default=())
+
+
+def execution_file_bindings(*, repo_root, requirement):
+    """Use the explicit diagnostic implementation only within its private scope."""
+    from .r4_development import current_implementation
+    bound = current_implementation(repo_root, requirement)
+    return requirement["execution_authority"]["files"] if bound is None else bound.files
+
+
+def validate_execution_authority(*, repo_root, requirement):
+    from .r4_development import current_implementation
+    bound = current_implementation(repo_root, requirement)
+    # The loaded Requirement and its closure are never rewritten. The existing
+    # file/semantic-version checker validates a separate diagnostic descriptor.
+    descriptor = requirement if bound is None else {"execution_authority": bound.record}
+    v1.validate_execution_authority(repo_root=repo_root, requirement=descriptor)
 
 
 def load_profile_requirement_snapshot(
@@ -95,5 +110,5 @@ def requirement_authority_paths(
             paths.update(baseline["validator"]["dependencies"])
 
     collect(str(requirement["requirement_id"]))
-    paths.update(requirement["execution_authority"]["files"])
+    paths.update(execution_file_bindings(repo_root=repo_root, requirement=requirement))
     return sorted(paths)

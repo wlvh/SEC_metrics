@@ -75,7 +75,8 @@ class OfflineEvidenceContext:
         self._source_bytes = source_bytes
         self._factory = factory
         self._structure = None
-        self._file_bindings = dict(requirement["execution_authority"]["files"])
+        from .requirement_profile import execution_file_bindings
+        self._file_bindings = dict(execution_file_bindings(repo_root=repo_root, requirement=requirement))
         self._file_bindings[raw_blob["storage_uri"]] = {
             "sha256": raw_blob["raw_asset_id"][7:], "size": raw_blob["byte_length"]}
 
