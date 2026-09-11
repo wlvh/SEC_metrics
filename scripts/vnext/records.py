@@ -1168,7 +1168,7 @@ def _validate_record_semantics(
         validate_run_coordinates(
             target_period=record["target_period"],
             company_traits=record["company_traits"],
-            point_in_time_fiscal_label=record.get("requirement_id") == "issue_28_v9",
+            point_in_time_fiscal_label=record.get("requirement_id") in {"issue_28_v9", "issue_28_v10"},
         )
     if record_type == "AI_EXTRACTION_ATTEMPT":
         observation = record["transport_observation"]

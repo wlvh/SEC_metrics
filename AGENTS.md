@@ -152,6 +152,12 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 ### 核心模块
 
+- `scripts/vnext/b06_source_admission.py`：独立于普通输入的受信获取/导入执行记录、
+  固定阶段预算及后置离线checkpoint；自洽ledger不授真实SEC信用。
+- `scripts/vnext/b06_disclosure.py` / `b06_new_source.py`：两类有限债务披露关系、
+  独立遗漏清单、非自然年度身份及原生Run创建/冻结/冷读；新Spec和V11政策
+  显式分派，旧B06与年度入口语义不改，任何生产写权限仍不存在。
+
 - `scripts/vnext/annual_adoption_policy.py` / `annual_publication_authority.py`：显式冻结v1/v2
   政策解析、确切候选的待批计划、真实GitHub激活/发布核对及有限发布/回退/恢复；
   V8/issue_28_v7保持新采纳决定待外部批准。共享现有发布核心，schema2切换日志另绑

@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.b06_new_source_candidates",
+        "type": "capability",
+        "status": "active",
+        "statement": "B06在有限借款/融资租赁披露模式内自动提出公式候选，由当前原件关系、独立披露清单和受信来源准入决定是否进入原生Run。自造账本不授来源信用；支持范围外明确保留缺口。新路径仅候选和冷读，无生产、合并或active写权限。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_b06_new_source.py::B06NewSourceTest.test_custom_outside_calculation_allowlist_cannot_disappear",
+        "test_status": "automated_recorded",
+        "since": "2026-09-11"
+      },
+      {
         "anchor_id": "CAPABILITY.r5_b06_structured_primary",
         "type": "capability",
         "status": "active",

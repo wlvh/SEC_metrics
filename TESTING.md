@@ -552,3 +552,13 @@ PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followu
 ### B06统一债务集合
 
 `PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r5_b06_scope -v`：11项短测试接入fast，覆盖真实来源组成/原5坐标、Pfizer/JPM/Ford完整性拒绝、精度区间、重复/漏项、未知原件/资产冒充以及嵌套具名表达式。旧9项/10项模块显式读取保留的v1/v2 Spec，不修改旧期望。`R5_B06_CANDIDATE_ROOT=<外部目录> PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r5_b06_material -v`用于实际完整候选，需干净检出；运行中不要编辑文档，所有输出显式置于checkout外。
+
+### B06 新来源定向验证
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_b06_new_source -v`
+进入fast白名单。测试以PR42材料及明确TEST_ONLY语义变造为输入，真实来源哈希重新
+建立；验证原文否定/分列冲突、计算白名单外融资、BS新增行、资产/付款冒充、
+完整性伪造、真正自洽但不可信的模拟获取账本及成组金额动态重算。
+原本当前Southwest另有供应商融资性质缺口，不以测试修复抹去；派生零余额正例仅
+测试支持模式。固定历史两材料的正常Run、冷重放、重入和历史包兼容另作材料层
+验收，保存首次失败与修后结果；完整候选prepare与生产发布不属于本轮执行。

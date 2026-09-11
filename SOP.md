@@ -162,3 +162,7 @@ PublicationView回读，测试按 `TESTING.md` 对应章节；实际R3和正式r
 受限年度连续更新：按`docs/annual_update_continuity.md`的initialize-data、stage-proposal与run-once入口操作；原生候选、完整包与切换继续共用已有机制。阶段固定预算和到期，数据在checkout外；本轮仅隔离验证，真实生产保持只读，有限trigger交付前停止。
 
 R5 B06结构化主路径：读取`docs/r5_b06_structured.md`，在外部隔离目录执行`tools/vnext_r5_b06.py prepare/read`；业务调用0/0/0。完整候选BLOCKED不等于正式迁移，后续批准与旧生产退出另行验收。
+
+B06新来源有限工作包：`tools/vnext_b06_new_source.py install-rules/run/read`；先核对
+来源执行日志、材料与检查范围，再按`TESTING.md`完成语义反例及真实材料层。
+只交付原生候选Run，新Draft PR集中审核；无合并、发布或active切换权限。

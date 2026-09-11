@@ -352,7 +352,7 @@ def create_run(
         validate_run_coordinates(
             target_period=target_period,
             company_traits=normalized_traits,
-            point_in_time_fiscal_label=requirement_id == "issue_28_v9",
+            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10"},
         )
     except RecordError as error:
         raise RunStoreError("Run business coordinates are invalid") from error
@@ -1902,6 +1902,12 @@ def _replay_structured_result(
             Observation/Trace/Result difference from deterministic replay.
     """
     from .r5_b06_structured import is_primary, replay_result, validate_input_binding
+    if compiled_spec['compiled']['quality_rule'].get('resolver') == 'debt_equity_new_source_v1':
+        from .b06_new_source import replay
+        expected_result, expected_trace, expected_observations, _ = replay(data_root=repo_root, manifest=manifest, spec=compiled_spec)
+        if result != expected_result or trace != expected_trace or any(observations.get(o['observation_id']) != o for o in expected_observations):
+            raise RunStoreError("New-source native replay differs")
+        return
     if is_primary(compiled_spec):
         validate_input_binding(data_root=repo_root, manifest=manifest)
         expected_result, expected_trace, expected_observations, _audit = replay_result(

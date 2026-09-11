@@ -764,3 +764,14 @@ B06 carrying-v2补充了受控来源判断：discover先验证全部相关年度
 ### B06 financing set revision 3
 
 New financing-set source judgments prove disjoint reported borrowings, bonds and finance lease liabilities; source precision and component reconciliation are read from the native XBRL parser. `r5_b06_scope.py` composes existing Calculator expressions; a thin Spec compiler extension permits named nested add/sub expressions already supported by Calculator/Trace. No new calculator or publisher. Incomplete scope is an independent hard gate, even if a reason list is accidentally empty. Historical v1/v2 packages retain their frozen Spec behavior.
+
+### B06 新来源候选（有限披露模式）
+
+`b06_source_admission`在受信安装目录的独立执行日志登记固定基线导入或真实SEC获取；
+调用者输入目录不能自助登记来源。`b06_new_source`选择封存submissions中的前一份普通
+10-K，核对XML/primary DEI（包括非自然财年），创建原生Run。新Spec显式选择
+`debt_equity_new_source_v1`，`run_store`冻结与冷读调用同一来源/关系/Calculator重验。
+`b06_disclosure`先建立资产负债表与借款/租赁披露清单，再提出公式、验证表内组成、
+分类、流动拆分、账面调整和租赁现值。公司名不选公式，未知融资项目保持未解决。
+旧v1/v2/v3语义、原Run与完整候选包不改；新路径不生成完整发布包，不改变active。
+<!-- capability-anchor: CAPABILITY.b06_new_source_candidates -->

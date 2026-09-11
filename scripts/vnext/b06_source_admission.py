@@ -63,8 +63,8 @@ def _stage():
 
 def _trusted_entries():
     """Prefer installed journal; portable installs use an explicitly pinned export."""
-    root = _journal_root()
-    if (root/'stage.json').exists():
+    root = _journal_root() if (ROOT/'.git').is_dir() else None
+    if root is not None and (root/'stage.json').exists():
         stage=_stage()
         return stage,[strict_json_file(path=p) for p in sorted((root/'accepted').glob('*.json'))]
     checkpoint=ROOT/'config/b06_source_checkpoint.json'

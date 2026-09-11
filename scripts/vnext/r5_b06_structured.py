@@ -23,12 +23,12 @@ def need(ok, reason):
 
 
 def is_primary(spec):
-    return spec['compiled']['quality_rule'].get('resolver') in {RESOLVER, 'debt_equity_carrying_v2', 'debt_equity_financing_set_v3'}
+    return spec['compiled']['quality_rule'].get('resolver') in {RESOLVER, 'debt_equity_carrying_v2', 'debt_equity_financing_set_v3', 'debt_equity_new_source_v1'}
 
 
 def concepts(spec, data_root=None):
     rule = spec['compiled']['quality_rule']
-    if rule['resolver']=='debt_equity_financing_set_v3':
+    if rule['resolver'] in {'debt_equity_financing_set_v3','debt_equity_new_source_v1'}:
         root=Path(__file__).resolve().parents[2] if data_root is None else data_root
         path=root/rule['debt_set_registry'];need(sha256_file(path=path)==rule['debt_set_registry_sha256'],'DEBT_SET_REGISTRY_CHANGED')
         models=strict_json_loads(text=path.read_text())['debt_set_models']
