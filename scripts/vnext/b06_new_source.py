@@ -26,10 +26,17 @@ def _write(path,value):
         with path.open('xb') as f:f.write(data)
 
 
+def _external(path):
+    path=path.resolve();root=admission.ROOT.resolve()
+    need(path!=root and root not in path.parents and not (path/'outputs/active_publication.json').exists(),'B06_EXTERNAL_CANDIDATE_ROOT_REQUIRED')
+    return path
+
+
 def install_rules(data_root):
     """Copy code-owned data authority; never execute Python from the input root."""
     from .annual_runtime import _authority_files
     from .annual_continuity_sources import frozen_foundation_receipts
+    data_root=_external(data_root)
     root=admission.ROOT;requirement=load_requirement_snapshot(snapshot_dir=root/'requirements'/REQUIREMENT_ID)
     paths=set(_authority_files(requirement))|set(requirement['baseline']['new_rule_files'])
     cursor=requirement
@@ -166,6 +173,7 @@ def compute(*,data_root,selected,spec,proposal=None):
 
 
 def create_primary_run(*,data_root,run_dir,company_id):
+    data_root=_external(data_root);run_dir=_external(run_dir)
     selected=select_input(data_root=data_root,company_id=company_id);spec=compile_spec_file(path=data_root/disclosure.SPEC_PATH,dependency_specs={})
     need(spec['compiled']['quality_rule']['resolver']==disclosure.RESOLVER,'NEW_SOURCE_SPEC_REQUIRED')
     requirement=load_requirement_snapshot(snapshot_dir=data_root/'requirements'/REQUIREMENT_ID)

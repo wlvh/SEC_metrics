@@ -325,8 +325,8 @@ def verify(*, raw, primary, source, spec, target, filed, data_root, proposal):
         need(len(matches)==1 and compact(text(f['text']))==compact(scope['inline'].value(matches[0])),'PRIMARY_NOTE_SOURCE_CONFLICT_OR_MISSING')
     debt=evaluate_expression(expression=model['expression'],values=values)
     relations=[{'premise':'lease_balance_sheet_classification','status':'VERIFIED','evidence':re.search(pattern,policy_text,re.I).group()},
-               {'premise':'debt_composition_membership','status':'VERIFIED','members':[(l,str(v)) for l,v in components]},
-               {'premise':'current_and_adjustments_target','status':'VERIFIED','deductions':[(l,str(v)) for l,v in deductions]},
+               {'premise':'debt_composition_membership','status':'VERIFIED','members':[[l,str(v)] for l,v in components]},
+               {'premise':'current_and_adjustments_target','status':'VERIFIED','deductions':[[l,str(v)] for l,v in deductions]},
                {'premise':'finance_lease_current_noncurrent','status':'VERIFIED','current':lc['value'],'noncurrent':ln['value'],'total':lease['value']}]
     return {'model_id':proposal['model_id'],'model':model,'scope_class':'consolidated_nonbank','complete':True,'unresolved':[],
             'source_credit':'NOT_EVALUATED_AT_SEMANTIC_LAYER','coverage':REQUIRED,'scope_id':scope['scope_id'],'relations':relations,'disclosure_inventory':inventory,'proposal':proposal,

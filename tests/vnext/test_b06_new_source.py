@@ -52,7 +52,7 @@ class B06NewSourceTest(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,'UNRESOLVED_FINANCING_ITEM'):run(args)
                 args=zero_supplier_test_source(args)
             p=run(args);self.assertEqual(value,p['carrying_amount']);self.assertTrue(p['complete'])
-            self.assertEqual(d.REQUIRED,p['coverage']);self.assertTrue(p['disclosure_inventory']);self.assertEqual('NOT_EVALUATED_AT_SEMANTIC_LAYER',p['source_credit'])
+            self.assertEqual(p,__import__('json').loads(__import__('json').dumps(p)));self.assertEqual(d.REQUIRED,p['coverage']);self.assertTrue(p['disclosure_inventory']);self.assertEqual('NOT_EVALUATED_AT_SEMANTIC_LAYER',p['source_credit'])
     def test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation(self):
         a=derived(development('southwest_airlines'),[(b'Finance leases are included in',b'Finance leases are not included in')])
         # Every amount and equation remains unchanged. New test source/proposal
