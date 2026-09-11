@@ -760,3 +760,7 @@ R3已在clean committed implementation上形成active successor，previous为R2�
 <!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->
 
 B06 carrying-v2补充了受控来源判断：discover先验证全部相关年度元数据；采纳层独立核对已审完整修订的原件/范围，原as-filed Run不改。measurement适配使用已保存XML的原生解析、同上下文单位及账面对账，将实际gross/扣减项送入既有Calculator。Spec resolver区分旧v1历史语义和新v2，旧包继续按原件重放；review记录只提供源文关系和范围判断，金额从原件读取。生产权限仍不存在，来源完整与发布许可分别表达。
+
+### B06 financing set revision 3
+
+New financing-set source judgments prove disjoint reported borrowings, bonds and finance lease liabilities; source precision and component reconciliation are read from the native XBRL parser. `r5_b06_scope.py` composes existing Calculator expressions; a thin Spec compiler extension permits named nested add/sub expressions already supported by Calculator/Trace. No new calculator or publisher. Incomplete scope is an independent hard gate, even if a reason list is accidentally empty. Historical v1/v2 packages retain their frozen Spec behavior.

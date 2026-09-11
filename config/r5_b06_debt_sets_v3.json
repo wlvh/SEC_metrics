@@ -1,0 +1,500 @@
+{
+  "debt_scope_definition": {
+    "included": [
+      "recognized_borrowings",
+      "notes_and_bonds",
+      "finance_lease_liabilities_including_combined_nonlease_components"
+    ],
+    "excluded": [
+      "operating_lease_liabilities",
+      "ordinary_trade_tax_provisions",
+      "customer_deposits",
+      "nonfinancing_trading_derivatives"
+    ],
+    "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+    "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+    "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+    "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+  },
+  "required_liability_classes": {
+    "consolidated_nonbank": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases"
+    ],
+    "bank_funding": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases",
+      "federal_funds_repurchase",
+      "consolidated_VIE_debt"
+    ],
+    "industrial": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases"
+    ]
+  },
+  "debt_set_models": {
+    "INCLUSIVE_REPORTED_TOTAL": {
+      "inputs": {
+        "total": "us-gaap:DebtAndCapitalLeaseObligations"
+      },
+      "groups": [
+        {
+          "roles": [
+            "total"
+          ],
+          "coverage": [
+            "current_borrowings",
+            "noncurrent_borrowings",
+            "finance_leases"
+          ],
+          "expression": "total"
+        }
+      ],
+      "expression": "total",
+      "checks": [
+        {
+          "inputs": {
+            "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+          },
+          "left": "total",
+          "right": {
+            "op": "add",
+            "args": [
+              "current",
+              "noncurrent"
+            ]
+          }
+        }
+      ]
+    },
+    "INCLUSIVE_RECONCILED_COSTS": {
+      "inputs": {
+        "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "cost": "us-gaap:DeferredFinanceCostsGross"
+      },
+      "groups": [
+        {
+          "roles": [
+            "gross",
+            "cost"
+          ],
+          "coverage": [
+            "current_borrowings",
+            "noncurrent_borrowings",
+            "finance_leases"
+          ],
+          "expression": {
+            "op": "subtract",
+            "args": [
+              "gross",
+              "cost"
+            ]
+          }
+        }
+      ],
+      "expression": {
+        "op": "subtract",
+        "args": [
+          "gross",
+          "cost"
+        ]
+      },
+      "checks": [
+        {
+          "inputs": {
+            "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+          },
+          "left": {
+            "op": "subtract",
+            "args": [
+              "gross",
+              "cost"
+            ]
+          },
+          "right": {
+            "op": "add",
+            "args": [
+              "current",
+              "noncurrent"
+            ]
+          }
+        }
+      ]
+    },
+    "INCLUSIVE_RECONCILED_DISCOUNT_COSTS": {
+      "inputs": {
+        "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "discount": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+        "cost": "us-gaap:DeferredFinanceCostsNet"
+      },
+      "groups": [
+        {
+          "roles": [
+            "gross",
+            "discount",
+            "cost"
+          ],
+          "coverage": [
+            "current_borrowings",
+            "noncurrent_borrowings",
+            "finance_leases"
+          ],
+          "expression": {
+            "op": "subtract",
+            "args": [
+              "gross",
+              "discount",
+              "cost"
+            ]
+          }
+        }
+      ],
+      "expression": {
+        "op": "subtract",
+        "args": [
+          "gross",
+          "discount",
+          "cost"
+        ]
+      },
+      "checks": [
+        {
+          "inputs": {
+            "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+            "reported": "us-gaap:DebtAndCapitalLeaseObligations"
+          },
+          "left": {
+            "op": "subtract",
+            "args": [
+              "gross",
+              "discount",
+              "cost"
+            ]
+          },
+          "right": "reported"
+        },
+        {
+          "inputs": {
+            "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+            "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+            "reported": "us-gaap:DebtAndCapitalLeaseObligations"
+          },
+          "left": "reported",
+          "right": {
+            "op": "add",
+            "args": [
+              "current",
+              "noncurrent"
+            ]
+          }
+        }
+      ]
+    },
+    "BORROWING_CURRENT_NONCURRENT_NO_FINANCE_LEASE": {
+      "inputs": {
+        "current": "us-gaap:LongTermDebtCurrent",
+        "noncurrent": "us-gaap:LongTermDebtNoncurrent"
+      },
+      "groups": [
+        {
+          "roles": [
+            "current",
+            "noncurrent"
+          ],
+          "coverage": [
+            "current_borrowings",
+            "noncurrent_borrowings"
+          ],
+          "expression": {
+            "op": "add",
+            "args": [
+              "current",
+              "noncurrent"
+            ]
+          }
+        }
+      ],
+      "expression": {
+        "op": "add",
+        "args": [
+          "current",
+          "noncurrent"
+        ]
+      },
+      "checks": []
+    },
+    "SHORT_INCLUDES_CURRENT_PLUS_NONCURRENT": {
+      "inputs": {
+        "short": "us-gaap:DebtCurrent",
+        "noncurrent": "us-gaap:LongTermDebtNoncurrent"
+      },
+      "groups": [
+        {
+          "roles": [
+            "short"
+          ],
+          "coverage": [
+            "current_borrowings"
+          ],
+          "expression": "short"
+        },
+        {
+          "roles": [
+            "noncurrent"
+          ],
+          "coverage": [
+            "noncurrent_borrowings"
+          ],
+          "expression": "noncurrent"
+        }
+      ],
+      "expression": {
+        "op": "add",
+        "args": [
+          "short",
+          "noncurrent"
+        ]
+      },
+      "checks": [
+        {
+          "inputs": {
+            "current_long": "us-gaap:LongTermDebtCurrent",
+            "other_short": "us-gaap:OtherShortTermBorrowings"
+          },
+          "left": "short",
+          "right": {
+            "op": "add",
+            "args": [
+              "current_long",
+              "other_short"
+            ]
+          }
+        }
+      ]
+    },
+    "BORROWING_PLUS_SEPARATE_FINANCE_LEASE": {
+      "inputs": {
+        "borrowing": "us-gaap:LongTermDebt",
+        "finance_lease": "us-gaap:FinanceLeaseLiability"
+      },
+      "groups": [
+        {
+          "roles": [
+            "borrowing"
+          ],
+          "coverage": [
+            "current_borrowings",
+            "noncurrent_borrowings"
+          ],
+          "expression": "borrowing"
+        },
+        {
+          "roles": [
+            "finance_lease"
+          ],
+          "coverage": [
+            "finance_leases"
+          ],
+          "expression": "finance_lease"
+        }
+      ],
+      "expression": {
+        "op": "add",
+        "args": [
+          "borrowing",
+          "finance_lease"
+        ]
+      },
+      "checks": [
+        {
+          "inputs": {
+            "current": "us-gaap:LongTermDebtCurrent",
+            "noncurrent": "us-gaap:LongTermDebtNoncurrent"
+          },
+          "left": "borrowing",
+          "right": {
+            "op": "add",
+            "args": [
+              "current",
+              "noncurrent"
+            ]
+          }
+        },
+        {
+          "inputs": {
+            "lease_current": "us-gaap:FinanceLeaseLiabilityCurrent",
+            "lease_noncurrent": "us-gaap:FinanceLeaseLiabilityNoncurrent"
+          },
+          "left": "finance_lease",
+          "right": {
+            "op": "add",
+            "args": [
+              "lease_current",
+              "lease_noncurrent"
+            ]
+          }
+        }
+      ]
+    },
+    "BOND_RECONCILIATION_PLUS_SEPARATE_FINANCE_LEASE": {
+      "inputs": {
+        "principal": "m:LongTermDebtGrossIncludingCurrentMaturities",
+        "premium": "us-gaap:DebtInstrumentUnamortizedPremiumNoncurrent",
+        "cost": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet",
+        "finance_lease": "us-gaap:FinanceLeaseLiability"
+      },
+      "groups": [
+        {
+          "roles": [
+            "principal",
+            "premium",
+            "cost"
+          ],
+          "coverage": [
+            "current_borrowings",
+            "noncurrent_borrowings"
+          ],
+          "expression": {
+            "op": "subtract",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  "principal",
+                  "premium"
+                ]
+              },
+              "cost"
+            ]
+          }
+        },
+        {
+          "roles": [
+            "finance_lease"
+          ],
+          "coverage": [
+            "finance_leases"
+          ],
+          "expression": "finance_lease"
+        }
+      ],
+      "expression": {
+        "op": "add",
+        "args": [
+          {
+            "op": "subtract",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  "principal",
+                  "premium"
+                ]
+              },
+              "cost"
+            ]
+          },
+          "finance_lease"
+        ]
+      },
+      "checks": [
+        {
+          "inputs": {
+            "carrying": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+          },
+          "left": {
+            "op": "subtract",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  "principal",
+                  "premium"
+                ]
+              },
+              "cost"
+            ]
+          },
+          "right": "carrying"
+        },
+        {
+          "inputs": {
+            "lease_current": "us-gaap:FinanceLeaseLiabilityCurrent",
+            "lease_noncurrent": "us-gaap:FinanceLeaseLiabilityNoncurrent"
+          },
+          "left": "finance_lease",
+          "right": {
+            "op": "add",
+            "args": [
+              "lease_current",
+              "lease_noncurrent"
+            ]
+          }
+        }
+      ]
+    },
+    "BANK_REPORTED_FUNDING_SUBTOTAL_ONLY": {
+      "inputs": {
+        "long": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "short": "us-gaap:ShortTermBorrowings",
+        "repos": "us-gaap:FederalFundsPurchasedAndSecuritiesSoldUnderAgreementsToRepurchase",
+        "vie": "us-gaap:BeneficialInterest"
+      },
+      "groups": [
+        {
+          "roles": [
+            "long"
+          ],
+          "coverage": [
+            "noncurrent_borrowings"
+          ],
+          "expression": "long"
+        },
+        {
+          "roles": [
+            "short"
+          ],
+          "coverage": [
+            "current_borrowings"
+          ],
+          "expression": "short"
+        },
+        {
+          "roles": [
+            "repos"
+          ],
+          "coverage": [
+            "federal_funds_repurchase"
+          ],
+          "expression": "repos"
+        },
+        {
+          "roles": [
+            "vie"
+          ],
+          "coverage": [
+            "consolidated_VIE_debt"
+          ],
+          "expression": "vie"
+        }
+      ],
+      "expression": {
+        "op": "add",
+        "args": [
+          "long",
+          "short",
+          "repos",
+          "vie"
+        ]
+      },
+      "checks": [],
+      "diagnostic_only": true
+    }
+  }
+}

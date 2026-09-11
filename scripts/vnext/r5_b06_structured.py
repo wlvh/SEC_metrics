@@ -23,14 +23,27 @@ def need(ok, reason):
 
 
 def is_primary(spec):
-    return spec['compiled']['quality_rule'].get('resolver') in {RESOLVER, 'debt_equity_carrying_v2'}
+    return spec['compiled']['quality_rule'].get('resolver') in {RESOLVER, 'debt_equity_carrying_v2', 'debt_equity_financing_set_v3'}
 
 
-def concepts(spec):
+def concepts(spec, data_root=None):
     rule = spec['compiled']['quality_rule']
+    if rule['resolver']=='debt_equity_financing_set_v3':
+        root=Path(__file__).resolve().parents[2] if data_root is None else data_root
+        path=root/rule['debt_set_registry'];need(sha256_file(path=path)==rule['debt_set_registry_sha256'],'DEBT_SET_REGISTRY_CHANGED')
+        models=strict_json_loads(text=path.read_text())['debt_set_models']
+        names=[rule['equity_concept']]
+        for model in models.values():
+            names.extend(model['inputs'].values())
+            for check in model.get('checks',[]):names.extend(check['inputs'].values())
+        return sorted(set(names))
     names = rule['direct_totals'] + rule['equity_concepts'] + rule['review_only_standalone'] + rule['excluded_short_debt']
     names += [n for pair in rule['same_family_pairs'] for n in pair]
-    return sorted({'us-gaap:' + n for n in names})
+    additional=[]
+    for model in rule.get('debt_set_models',{}).values():
+        additional.extend(model['inputs'].values())
+        for check in model.get('checks',[]):additional.extend(check['inputs'].values())
+    return sorted({'us-gaap:' + n for n in names}|set(additional))
 
 
 def _resolve_primary_v1(*, spec, target, traits, facts, scope_reasons=()):
@@ -116,11 +129,13 @@ def replay_result(*, manifest, spec, trace, source_references, raw_bytes_by_id, 
                  and f.get('form') == '10-K' and f.get('fp') == 'FY' and type(f.get('fy')) is int}
         need(years == {manifest['target_period']['fiscal_year']}, 'STRUCTURED_SOURCE_FISCAL_LABEL_CHANGED')
         facts.extend(companyfacts_structured_facts(raw_bytes=raw_bytes_by_id[source['raw_asset_id']],source_reference=source,
-                     approved_concepts=concepts(spec),allowed_ciks=company_ciks,include_instant=True))
+                     approved_concepts=concepts(spec,data_root=data_root),allowed_ciks=company_ciks,include_instant=True))
     need(any(s['source_role']=='companyfacts' for s in source_references.values()), 'STRUCTURED_PRIMARY_SOURCE_MISSING')
     measurement=None
-    if spec['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2':
+    if spec['compiled']['quality_rule']['resolver'] in {'debt_equity_carrying_v2','debt_equity_financing_set_v3'}:
         from .r5_b06_measurement import measurement_inputs
+        if spec['compiled']['quality_rule']['resolver']=='debt_equity_financing_set_v3':
+            from .r5_b06_scope import scope_inputs as measurement_inputs
         dates={f['filed'] for f in facts if f['accession']==target['accession'] and f['period_end']==target['period_end']}
         need(len(dates)==1,'MEASUREMENT_FILING_DATE_UNKNOWN')
         for source in source_references.values():
@@ -229,14 +244,14 @@ def create_primary_run(*, data_root, run_dir, company):
     from .requirements import load_requirement_snapshot
     from .run_store import create_run, append_run_record, validate_and_freeze_run
     spec=compile_spec_file(path=data_root/SPEC_PATH,dependency_specs={})
-    need(spec['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2','HISTORICAL_PRIMARY_RULE_READ_ONLY')
+    need(spec['compiled']['quality_rule']['resolver']=='debt_equity_financing_set_v3','HISTORICAL_PRIMARY_RULE_READ_ONLY')
     requirement=load_requirement_snapshot(snapshot_dir=data_root/'requirements'/REQUIREMENT_ID)
     selected=discover(data_root=data_root,company=company);sourceproof=next(p for p in selected['sources'] if '/companyfacts/' in p['source_url'])
     raw=raw_blob_record(repo_root=data_root,repo_relative_path=sourceproof['request_repo_relative_path'],media_type='application/json')
     source=source_reference_record(raw_blob=raw,company_id=company['company_id'],source_url=sourceproof['source_url'],accession=sourceproof['accession'],document_name=sourceproof['document_name'],source_role='companyfacts',request_attempt_id=sourceproof['request_attempt_id'])
     scope={'entity_scope':'consolidated'};period=selected['target_period'];target={'company_id':company['company_id'],'period_start':period['period_start'],'period_end':period['period_end'],'accession':source['accession'],'entity':selected['entity'],'scope':scope,'scope_key':scope_key(scope=scope)}
     traits=repository_company_traits(repo_root=data_root,company_id=company['company_id'])
-    facts=companyfacts_structured_facts(raw_bytes=(data_root/sourceproof['request_repo_relative_path']).read_bytes(),source_reference=source,approved_concepts=concepts(spec),allowed_ciks=repository_company_ciks(repo_root=data_root,company_id=company['company_id']),include_instant=True)
+    facts=companyfacts_structured_facts(raw_bytes=(data_root/sourceproof['request_repo_relative_path']).read_bytes(),source_reference=source,approved_concepts=concepts(spec,data_root=data_root),allowed_ciks=repository_company_ciks(repo_root=data_root,company_id=company['company_id']),include_instant=True)
     extra=[];scope_reasons=[];measurement=None
     for proof in selected['sources']:
         if not proof['document_name'].endswith('_htm.xml'):
@@ -244,8 +259,8 @@ def create_primary_run(*, data_root, run_dir, company):
         blob=raw_blob_record(repo_root=data_root,repo_relative_path=proof['request_repo_relative_path'],media_type='application/xml')
         ref=source_reference_record(raw_blob=blob,company_id=company['company_id'],source_url=proof['source_url'],accession=proof['accession'],document_name=proof['document_name'],source_role='accession_xbrl',request_attempt_id=proof['request_attempt_id'])
         scope_reasons.extend(scope_warnings((data_root/proof['request_repo_relative_path']).read_bytes(),spec,target));extra.extend([blob,ref])
-        if spec['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2':
-            from .r5_b06_measurement import measurement_inputs
+        if spec['compiled']['quality_rule']['resolver']=='debt_equity_financing_set_v3':
+            from .r5_b06_scope import scope_inputs as measurement_inputs
             measurement=measurement_inputs(raw=(data_root/proof['request_repo_relative_path']).read_bytes(),source=ref,spec=spec,target=target,filed=selected['filing']['filingDate'],data_root=data_root) or measurement
     result,trace,observations,audit=resolve_primary(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons,measurement=measurement)
     run_id='run:r5-primary:'+content_hash(value={'input':selected,'spec':spec['spec_closure_hash'],'requirement':requirement['requirement_closure_hash']})[7:]
@@ -259,7 +274,7 @@ def create_primary_run(*, data_root, run_dir, company):
 def current_rule(data_root):
     from .specs import compile_spec_file
     path=data_root/SPEC_PATH
-    return not path.exists() or compile_spec_file(path=path,dependency_specs={})['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2'
+    return not path.exists() or compile_spec_file(path=path,dependency_specs={})['compiled']['quality_rule']['resolver'] in {'debt_equity_carrying_v2','debt_equity_financing_set_v3'}
 
 
 def discover(*,data_root,company):
@@ -312,5 +327,8 @@ def discover(*,data_root,company):
 def resolve_primary(*,spec,target,traits,facts,scope_reasons=(),measurement=None):
     if spec['compiled']['quality_rule']['resolver']==RESOLVER:
         return _resolve_primary_v1(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons)
+    if spec['compiled']['quality_rule']['resolver']=='debt_equity_financing_set_v3':
+        from .r5_b06_scope import resolve_financing
+        return resolve_financing(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons,measurement=measurement)
     from .r5_b06_measurement import resolve_carrying
     return resolve_carrying(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons,measurement=measurement)

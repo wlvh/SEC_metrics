@@ -13,7 +13,7 @@ ROOT=Path(__file__).resolve().parents[2]
 
 class B06PrimaryTest(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):cls.spec=compile_spec_file(path=ROOT/route.SPEC_PATH,dependency_specs={})
+    def setUpClass(cls):cls.spec=compile_spec_file(path=ROOT/"catalog/r5/history/B06_structured_v1.md",dependency_specs={})
     def build(self, values, equity=100, *, unit='USD', accession='0000000001-25-000001'):
         vals={**values,'StockholdersEquity':equity};payload={'cik':1,'facts':{'us-gaap':{name:{'units':{unit:[{'val':value,'end':'2024-12-31','accn':accession,'form':'10-K','fp':'FY','fy':2024,'filed':'2025-02-01'}]}} for name,value in vals.items()}}}
         raw=json.dumps(payload).encode();blob={'record_type':'RAW_BLOB','raw_asset_id':'sha256:'+sha256_bytes(content=raw),'byte_length':len(raw),'media_type':'application/json','storage_uri':'evidence/source.json'}

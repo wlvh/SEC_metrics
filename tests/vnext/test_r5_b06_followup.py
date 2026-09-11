@@ -72,7 +72,7 @@ class B06CarryingMeasurementTest(unittest.TestCase):
         from vnext.specs import compile_spec_file
         from vnext.observations import scope_key
         from vnext.r5_b06_measurement import measurement_inputs
-        root=Path(__file__).resolve().parents[2];company=next(c for c in _registry_rows(repo_root=root) if c['company_id']==cid);sel=primary.discover(data_root=root,company=company);spec=compile_spec_file(path=root/primary.SPEC_PATH,dependency_specs={});scope={'entity_scope':'consolidated'};target={'company_id':cid,'period_start':sel['target_period']['period_start'],'period_end':sel['target_period']['period_end'],'accession':sel['filing']['accessionNumber'],'entity':sel['entity'],'scope':scope,'scope_key':scope_key(scope=scope)};facts=[];measurement=None
+        root=Path(__file__).resolve().parents[2];company=next(c for c in _registry_rows(repo_root=root) if c['company_id']==cid);sel=primary.discover(data_root=root,company=company);spec=compile_spec_file(path=root/"catalog/r5/history/B06_carrying_v2.md",dependency_specs={});scope={'entity_scope':'consolidated'};target={'company_id':cid,'period_start':sel['target_period']['period_start'],'period_end':sel['target_period']['period_end'],'accession':sel['filing']['accessionNumber'],'entity':sel['entity'],'scope':scope,'scope_key':scope_key(scope=scope)};facts=[];measurement=None
         for proof in sel['sources']:
             cf='/companyfacts/' in proof['source_url'];xml=proof['document_name'].endswith('_htm.xml')
             if not (cf or xml):continue

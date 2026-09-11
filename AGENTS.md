@@ -313,3 +313,5 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 
 - `scripts/vnext/r5_b06_structured.py`、`r5_b06_publication.py`、`tools/vnext_r5_b06.py`：B06保存结构化来源→原生结果/阻断→完整只读候选；新Requirement草案无生产激活，来源策略fallback仍未执行。入口见`docs/r5_b06_structured.md`。
 - `scripts/vnext/r5_b06_amendments.py` / `r5_b06_measurement.py`：B06完整修订原件影响判断、原生XML账面计量对账及旧v1兼容；新语义见`docs/r5_b06_structured.md`，均无生产权限和业务网络调用。
+
+- `scripts/vnext/r5_b06_scope.py` / `config/r5_b06_debt_sets_v3.json`：B06具名负债组成、原XBRL精度/对账、独立完整性门；现有Calculator/Projector共用。`catalog/r5/history/`保留v1/v2原字节。当前主路径合并不等于B06全部迁移/生产授权。

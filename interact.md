@@ -345,3 +345,5 @@ B06主路径入口为`tools/vnext_r5_b06.py prepare/read`。它输出完整待�
 <!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->
 
 B06新来源判断会在筛选前拒绝未知年报/修订日期及申报身份。已审完整修订的影响在新采纳记录中单列；旧as-filed结果不被改写。新账面原则会改变扣减成本前金额的选择（如Southwest），对账充分后Lumen仍以非正权益状态保留。输出分别说明内容完整、具体内容缺口及不存在的生产权限，不能用BLOCKED一个词掩盖三者。
+
+B06候选revision3将报表已确认借款、债券和融资租赁按不重叠集合计入，保留经营租赁排除及银行/工业范围限制。完整性未证明时即使借款子集合可以计算也不公开完整比值，`proven_debt_subtotal`和完整`debt`分别展示。生产权限仍不存在。

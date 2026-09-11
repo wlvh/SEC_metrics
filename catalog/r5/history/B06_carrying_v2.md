@@ -17,21 +17,8 @@
     "debt": {
       "choose_first": [
         {
-          "extraction_role": {
-            "approved_concepts": [
-              "us-gaap:DebtAndCapitalLeaseObligations"
-            ],
-            "cardinality": "exactly_one",
-            "quality": "EXACT"
-          }
-        },
-        {
           "derived_role": {
             "op": "subtract",
-            "args": [
-              "gross",
-              "cost"
-            ],
             "inputs": {
               "gross": {
                 "approved_concepts": [
@@ -39,13 +26,24 @@
                 ],
                 "cardinality": "exactly_one"
               },
-              "cost": {
+              "deduction_0": {
                 "approved_concepts": [
-                  "us-gaap:DeferredFinanceCostsGross"
+                  "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet"
+                ],
+                "cardinality": "exactly_one"
+              },
+              "deduction_1": {
+                "approved_concepts": [
+                  "us-gaap:DeferredFinanceCostsNet"
                 ],
                 "cardinality": "exactly_one"
               }
             },
+            "args": [
+              "gross",
+              "deduction_0",
+              "deduction_1"
+            ],
             "quality": "EXACT",
             "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
             "guards": [
@@ -59,11 +57,6 @@
         {
           "derived_role": {
             "op": "subtract",
-            "args": [
-              "gross",
-              "discount",
-              "cost"
-            ],
             "inputs": {
               "gross": {
                 "approved_concepts": [
@@ -71,19 +64,58 @@
                 ],
                 "cardinality": "exactly_one"
               },
-              "discount": {
+              "deduction_0": {
                 "approved_concepts": [
-                  "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet"
-                ],
-                "cardinality": "exactly_one"
-              },
-              "cost": {
-                "approved_concepts": [
-                  "us-gaap:DeferredFinanceCostsNet"
+                  "us-gaap:DeferredFinanceCostsGross"
                 ],
                 "cardinality": "exactly_one"
               }
             },
+            "args": [
+              "gross",
+              "deduction_0"
+            ],
+            "quality": "EXACT",
+            "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
+            "guards": [
+              "same_accession",
+              "same_period",
+              "same_entity",
+              "compatible_units"
+            ]
+          }
+        },
+        {
+          "extraction_role": {
+            "approved_concepts": [
+              "us-gaap:DebtAndCapitalLeaseObligations",
+              "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities"
+            ],
+            "cardinality": "exactly_one",
+            "quality": "EXACT"
+          }
+        },
+        {
+          "derived_role": {
+            "op": "add",
+            "inputs": {
+              "current": {
+                "approved_concepts": [
+                  "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent"
+                ],
+                "cardinality": "exactly_one"
+              },
+              "noncurrent": {
+                "approved_concepts": [
+                  "us-gaap:LongTermDebtAndCapitalLeaseObligationsNoncurrent"
+                ],
+                "cardinality": "exactly_one"
+              }
+            },
+            "args": [
+              "current",
+              "noncurrent"
+            ],
             "quality": "EXACT",
             "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
             "guards": [
@@ -97,10 +129,6 @@
         {
           "derived_role": {
             "op": "add",
-            "args": [
-              "current",
-              "noncurrent"
-            ],
             "inputs": {
               "current": {
                 "approved_concepts": [
@@ -115,6 +143,10 @@
                 "cardinality": "exactly_one"
               }
             },
+            "args": [
+              "current",
+              "noncurrent"
+            ],
             "quality": "EXACT",
             "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
             "guards": [
@@ -128,110 +160,24 @@
         {
           "derived_role": {
             "op": "add",
-            "args": [
-              "short",
-              "noncurrent"
-            ],
             "inputs": {
-              "short": {
+              "current": {
                 "approved_concepts": [
-                  "us-gaap:DebtCurrent"
+                  "us-gaap:FinanceLeaseLiabilityCurrent"
                 ],
                 "cardinality": "exactly_one"
               },
               "noncurrent": {
                 "approved_concepts": [
-                  "us-gaap:LongTermDebtNoncurrent"
+                  "us-gaap:FinanceLeaseLiabilityNoncurrent"
                 ],
                 "cardinality": "exactly_one"
               }
             },
-            "quality": "EXACT",
-            "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
-            "guards": [
-              "same_accession",
-              "same_period",
-              "same_entity",
-              "compatible_units"
-            ]
-          }
-        },
-        {
-          "derived_role": {
-            "op": "add",
             "args": [
-              "borrowing",
-              "finance_lease"
+              "current",
+              "noncurrent"
             ],
-            "inputs": {
-              "borrowing": {
-                "approved_concepts": [
-                  "us-gaap:LongTermDebt"
-                ],
-                "cardinality": "exactly_one"
-              },
-              "finance_lease": {
-                "approved_concepts": [
-                  "us-gaap:FinanceLeaseLiability"
-                ],
-                "cardinality": "exactly_one"
-              }
-            },
-            "quality": "EXACT",
-            "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
-            "guards": [
-              "same_accession",
-              "same_period",
-              "same_entity",
-              "compatible_units"
-            ]
-          }
-        },
-        {
-          "derived_role": {
-            "op": "add",
-            "args": [
-              {
-                "op": "subtract",
-                "args": [
-                  {
-                    "op": "add",
-                    "args": [
-                      "principal",
-                      "premium"
-                    ]
-                  },
-                  "cost"
-                ]
-              },
-              "finance_lease"
-            ],
-            "inputs": {
-              "principal": {
-                "approved_concepts": [
-                  "m:LongTermDebtGrossIncludingCurrentMaturities"
-                ],
-                "cardinality": "exactly_one"
-              },
-              "premium": {
-                "approved_concepts": [
-                  "us-gaap:DebtInstrumentUnamortizedPremiumNoncurrent"
-                ],
-                "cardinality": "exactly_one"
-              },
-              "cost": {
-                "approved_concepts": [
-                  "us-gaap:DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet"
-                ],
-                "cardinality": "exactly_one"
-              },
-              "finance_lease": {
-                "approved_concepts": [
-                  "us-gaap:FinanceLeaseLiability"
-                ],
-                "cardinality": "exactly_one"
-              }
-            },
             "quality": "EXACT",
             "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
             "guards": [
@@ -273,17 +219,73 @@
     "denominator_positive"
   ],
   "quality_rule": {
-    "resolver": "debt_equity_financing_set_v3",
+    "resolver": "debt_equity_carrying_v2",
+    "point_in_time": true,
+    "direct_totals": [
+      "DebtAndCapitalLeaseObligations",
+      "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities"
+    ],
+    "same_family_pairs": [
+      [
+        "LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "LongTermDebtAndCapitalLeaseObligationsNoncurrent"
+      ],
+      [
+        "LongTermDebtCurrent",
+        "LongTermDebtNoncurrent"
+      ],
+      [
+        "FinanceLeaseLiabilityCurrent",
+        "FinanceLeaseLiabilityNoncurrent"
+      ]
+    ],
+    "equity_concepts": [
+      "StockholdersEquity"
+    ],
     "scope": "consolidated",
+    "review_only_standalone": [
+      "LongTermDebtAndCapitalLeaseObligations"
+    ],
+    "excluded_short_debt": [
+      "ShortTermBorrowings",
+      "OtherShortTermBorrowings",
+      "CommercialPaper"
+    ],
+    "lease_only_is_total": false,
+    "nonpositive_equity": "NOT_MEANINGFUL",
+    "standalone_noncurrent_requires_review": true,
+    "fallback_trigger": "STRUCTURED_SOURCE_AMBIGUOUS",
+    "new_business_calls": [
+      0,
+      0,
+      0
+    ],
     "scope_review_dimension_members": [
       "FordCreditMember",
       "CaptiveFinanceMember",
       "FinancialServicesMember"
     ],
     "measurement_basis": "PERIOD_END_CARRYING_AMOUNT_OF_DEFINED_DEBT_SET",
-    "equity_concept": "us-gaap:StockholdersEquity",
-    "debt_set_registry": "config/r5_b06_debt_sets_v3.json",
-    "debt_set_registry_sha256": "0ef10b3f5fb97678efe96c7915a3c10992779f1804107a906d3d0a1eea48e203"
+    "carrying_models": {
+      "GROSS_LESS_DISCOUNT_AND_COSTS": {
+        "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "deductions": [
+          "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+          "us-gaap:DeferredFinanceCostsNet"
+        ],
+        "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+        "carrying_total": "us-gaap:DebtAndCapitalLeaseObligations"
+      },
+      "SUBTOTAL_LESS_COSTS": {
+        "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "deductions": [
+          "us-gaap:DeferredFinanceCostsGross"
+        ],
+        "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+      }
+    }
   },
   "legacy_projection": {
     "status_exact": "OK",
@@ -301,12 +303,12 @@
       "debt",
       "equity"
     ],
-    "notes": "Recognized borrowing, bond and finance lease carrying amounts; disjoint classes counted once. Source-bound completeness judgment; bank and industrial scopes separately limited."
+    "notes": "Point-in-time consolidated structured-primary candidate; full source strategy retains ambiguity fallback."
   },
   "dependencies": []
 }
 ---
 
-# B06 financing debt set
+# B06 structured primary
 
-Source-bound nonoverlap and complete recognized liability set; historical v1/v2 unchanged.
+Primary-route Spec only. The unchanged source strategy remains structured_first_ai_fallback. Ambiguous coverage is withheld; this draft neither qualifies the AI fallback nor changes the historical table Spec. The debt hierarchy prevents adders; unresolved economic coverage is retained for review.

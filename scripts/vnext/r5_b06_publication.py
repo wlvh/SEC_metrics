@@ -107,6 +107,8 @@ def _projection(data, run_root, predecessor):
             composition=strict_json_file(path=review_path)
             source_hashes={p['content_sha256'] for p in selected['input']['sources']}
             assessments=[r for r in composition['assessments'] if r['source_sha256'] in source_hashes]
+            if policy_here.get('semantic_revision',1)>=3:
+                coverage[-1].update(proven_debt_subtotal=audit.get('proven_debt_subtotal'),debt_scope_definition=audit.get('debt_scope_definition'))
             coverage[-1]['source_composition_evidence']={'reviewer':composition['reviewer'],'assessments':assessments,'review_file_sha256':policy_here['composition_review_sha256']}
         bindings.append({'company_id':cid,'metric_id':'B06','origin':'ADOPTED_NATIVE_CANDIDATE','run_id':manifest['run_id'],'run_status':manifest['status'],'result_id':result['result_id'],'snapshot_run_path':'runs/'+cid,'adoption_status':'BLOCKED' if blockers else 'PRIMARY_VERIFIED_PENDING_APPROVAL','row_hash':content_hash(value=row),'evidence_hash':content_hash(value=ev)})
         runs[cid]=(manifest,records)
