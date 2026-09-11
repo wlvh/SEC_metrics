@@ -1,0 +1,31 @@
+{
+  "status": "PASSED_OFFLINE_HTTP_REPLAY_NOT_FRESH_PROVIDER",
+  "code": {
+    "exact_head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+    "runtime_tree": "sha256:e408d9cd4e802ac371babed23faed99adf189b1ed83b207f79eeee5160af8018",
+    "test_tree": "sha256:d50939591ed33789a3a10e293ea2f5c577e0e756f0ceb47912100608f0c710eb"
+  },
+  "stage_id": "sha256:8c5c5c4af9eb664482db41fb73606b4d594ba9348f0b69e343a2a63fad8beeaa",
+  "s0": "publication_dc4dbe0791bebf4b548e311ef02bca2e3202a9430e97b08e3a7a80e4e3a06438",
+  "s1": "publication_266cf47743a0a6a64444fb8e2850c015644f29a9ec49b534c9014ed12cbcd82d",
+  "s2": "publication_65f4fab86fd28be23d5fc3172c75387c3ed4f07b9d3d2363781148fe8b22bb65",
+  "request_hashes": [
+    "f24bb7157758fcb91f25a0e0e2b3a6643a060b5003202f4feb3f5be5f26b6964",
+    "fc3e0df1e5847b1783491c26ccb0554da66a03905e13711bc27a3c76e79468f6"
+  ],
+  "actual_new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "simulated_native_controller_calls": {
+    "provider": 2,
+    "paid": 2,
+    "sec_reserved": 0,
+    "provider_reserved": 2,
+    "failed_plans": [],
+    "uncertain_plans": [],
+    "uncertain_sec": [],
+    "failed_sec": []
+  }
+}

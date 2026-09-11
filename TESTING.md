@@ -530,3 +530,13 @@ legacy candidate publication开始时会使旧provenance失效；formal active�
 - vNext release input plan会从通过manifest验证的ledger选择latest verified request attempt并绑定locator class；recorded可保留唯一且exact验证path/hash/headers/size的legacy working locator，portable closure必须保存其tier/class和bytes，formal live只允许immutable attempt并拒绝legacy class。SourceReference 会重新校验 exact SEC origin、portable locator 与 raw/header hash，freeze 也会从 RawBlob bytes 重建 table-grid；recorded publication 从 verified Batch 的实际消费路径派生 SourceReference/attempt exact set，先验证 request-ledger 整表 manifest，再绑定截至最后一个已用 row 的最小有序前缀。该适配器尚未经过真实十公司 full staging，scoped recorded fixture 不能替代 full 闭包证明。
 - vNext freeze 负例必须覆盖 Candidate 缺成功 attempt/response binding、自报 PASS Evidence 与 cell/constraint 重放不一致、ReviewUnit required claims 脱离仓库 compiled Spec、Observation provenance 字段脱离 SourceReference，以及 MetricResult status/reason/value 脱离 Trace `result_contract_hash`；只验证各对象能自哈希不算通过。
 - vNext Run mutation primitive 当前按单 Run 单写者使用；publication commit 已有 POSIX lock/CAS 并发回归，但不能把它外推为 Run append/review/freeze 的跨进程编排证明。
+
+## 年度连续更新
+
+短测试：`python3 -m unittest -v tests.vnext.test_annual_continuity`；新增两项年度进度回归与该模块列入tools/run_fast_tests.py。完整真实材料/新进程流程另在checkout外运行，必须保护实际active、14兼容副本、原候选、旧包和原请求账；所有工具显式指定输出，禁用默认根审计副本写入。保存响应回放与模拟GitHub/provider边界不得算作新provider成功。独立review、固定实现、真实阶段许可通过前禁止业务请求。
+
+连续更新完整材料入口：`CONTINUITY_REHEARSAL_ROOT=<新的外部目录> CONTINUITY_MATERIAL_AUDIT=<独立原材料索引> CONTINUITY_PRIOR_STAGE_BINDING=<原关闭阶段stage-binding.json> python3 -m unittest tests.vnext.test_annual_continuity_rehearsal -v`。仅GitHub/HTTP I/O和既有文件替换/原生切换故障点注入测试行为，原生验证器不mock；回放与新provider执行分别记账。覆盖真实当前起点（无历史参数）、两轮接续、成功引用中断、指针提交后恢复、B01成功/B10失败和禁止重抽。历史fast数据根复用原冻结receipt，不覆盖真实发布镜像。
+
+PR41续验：当前许可为2/2/0，旧关闭阶段1/1/0经原内容身份重验，合计上限3/3/0。完整材料回放只在外部HTTP边界派生model/id外壳，原assistant内容保持；故意失败分支另外替换测试content，分别保存原始与派生SHA，不声称新provider执行。最新终态与独立审阅见`docs/evidence/annual_update_continuity/continuation/README.md`。
+
+分组提示增量：`python3 -m unittest tests.vnext.test_annual_group_prompt -v`进入fast。完整保存材料下可定向运行`AnnualContinuityRehearsalTest.test_prompt_native_candidate_and_saved_snapshot`，使用最新关闭阶段的`CONTINUITY_PRIOR_STAGE_BINDING`；只在HTTP外部边界回放原正确assistant内容，并在既有success-reference文件替换点停止后续发布，验证新任务身份的原生候选和封存snapshot重放。它不替代新provider执行；既有完整发布故障套件未变部分按原证据复用。

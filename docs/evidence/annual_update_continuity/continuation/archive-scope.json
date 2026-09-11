@@ -1,0 +1,21 @@
+{
+  "record_type": "DELIVERY_ARCHIVE_SCOPE",
+  "implementation_head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+  "runtime_and_test_paths_unchanged": true,
+  "command": [
+    "git",
+    "diff",
+    "--exit-code",
+    "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+    "--",
+    "scripts",
+    "tools",
+    "config",
+    "catalog",
+    "requirements",
+    "tests"
+  ],
+  "secret_pattern_matches": [],
+  "archive_file_count": 149,
+  "scope": "Only new evidence plus current guide and TESTING command documentation; no runtime, rule, model, prompt/schema or test changes after reviewed execution."
+}

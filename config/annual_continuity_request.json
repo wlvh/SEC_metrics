@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "requirement_id": "issue_28_v8",
+  "task_contract_id": "lodging_occupancy_table_v2",
+  "base_catalog_task_contract_hash": "sha256:c3fefe6aebf587f76a751aa0fdfd50e6f884777a49d26373ac6b13b6e21cfd5b",
+  "instruction": "For the row-grouped tables supported by this task, resolve business-group ownership before choosing a numeric value.\n\nIdentify section-heading rows in the row-label column from their row structure and label text. A section heading may have header=false in the serialized data. It governs the following data rows up to, but not including, the next section-heading row in that same label column.\n\nFirst identify the block whose heading satisfies the required property population and operating scope. Within that block, locate the required geography row, then the requested metric and year column using the supplied column spans and headers.\n\nAfter selecting a numeric cell, independently trace upward from that cell to its nearest preceding section heading in the same row-label column. It must be the same heading used to establish the claimed operating scope. A heading below the numeric cell cannot establish that cell's scope.\n\nRows with the same geography under other operating groups are competing candidates, even when their numeric values are equal. Do not combine a value from one block with a scope label from another block.\n\nUse the existing output fields and exact source locators. If ownership cannot be established unambiguously, report the unresolved relationship rather than borrowing labels across blocks."
+}

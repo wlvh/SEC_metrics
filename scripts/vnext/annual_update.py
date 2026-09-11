@@ -213,26 +213,13 @@ def candidate_baseline(*, company, run_dir):
 
 def published_baseline(*, company, publication_root):
     view = PublicationView.open(publication_root=publication_root)
-    batch = strict_json_loads(text=view.read_bytes(relative_path="internal/batch/batch_manifest.json").decode())
-    found = []
-    for run in batch["runs"]:
-        if run["company_id"] != company["company_id"]:
-            continue
-        prefix = "internal/batch/" + run["run_path"]
-        raw = view.read_bytes(relative_path=prefix + "/records.jsonl")
-        records = [strict_json_loads(text=line) for line in raw.decode().splitlines() if line.strip()]
-        if not any(r["record_type"] == "METRIC_RESULT" and r["metric_id"] == "B10" for r in records):
-            continue
-        baseline = _recorded_baseline(company=company, records_raw=raw,
-            manifest_raw=view.read_bytes(relative_path=prefix + "/manifest.json"),
-            reviews_raw=view.read_bytes(relative_path=prefix + "/review_decisions.jsonl"),
-            provenance={"kind": "PINNED_PUBLICATION", "publication_id": view.publication_id,
-                        "bundle_directory": str(view.bundle_dir), "run_path": prefix})
-        _require(baseline["result_id"] in run["result_ids"] and baseline["run_id"] == run["run_id"],
-                 "PUBLISHED_BASELINE_BATCH_CONFLICT")
-        found.append(baseline)
-    _require(len(found) == 1, "PUBLISHED_BASELINE_NOT_UNIQUE")
-    return found[0]
+    native = view.native_result(company_id=company["company_id"], metric_id="B10")
+    return _recorded_baseline(company=company, records_raw=native["records_raw"],
+        manifest_raw=native["manifest_raw"], reviews_raw=native["reviews_raw"],
+        provenance={"kind": "PINNED_PUBLICATION", "publication_id": view.publication_id,
+                    "owner_publication_id": native["owner_publication_id"],
+                    "inheritance_chain": native["inheritance_chain"],
+                    "bundle_directory": str(view.bundle_dir), "run_path": native["run_path"]})
 
 
 def _compare(filing, baseline):
@@ -266,13 +253,14 @@ def _facts_cover(*, raw, cik, filing):
     return covered
 
 
-def inspect_annual_update(*, repo_root, company, successful_candidate=None, published=None):
+def inspect_annual_update(*, repo_root, company, successful_candidate=None, published=None, visibility=None):
     """Read saved sources and explicit result baselines; no writes or sockets."""
     report = {"status": "CHECK_FAILED", "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "check_scope": "ANNUAL_FILING_IDENTITY_ONLY", "submissions": None, "discovered_filing": None,
         "latest_successful_candidate": successful_candidate, "current_published": published,
         "candidate_baseline_status": "SUPPLIED" if successful_candidate else "NOT_SUPPLIED",
         "comparison_baseline": None, "filing_change": "UNKNOWN", "missing_sources": [],
+        "candidate_work": "UNKNOWN", "publication_work": "UNKNOWN",
         "source_availability": "NOT_CHECKED", "candidate_plan": {"status": "NOT_REQUESTED"},
         "prepared_input": None, "execution": "NOT_EXECUTED", "qualification_credit": "NONE",
         "publication_credit": "NONE", "provider_paid_sec_calls": [0, 0, 0]}
@@ -284,11 +272,22 @@ def inspect_annual_update(*, repo_root, company, successful_candidate=None, publ
             _require(baselines[0]["filing"] == baselines[1]["filing"]
                      and baselines[0]["primary_sha256"] == baselines[1]["primary_sha256"], "BASELINE_SOURCE_CONFLICT")
         report["comparison_baseline"] = baseline
+        pending = successful_candidate is not None and published is not None and (
+            successful_candidate["filing"]["period_end"] > published["filing"]["period_end"]
+            or (successful_candidate["filing"] == published["filing"]
+                and successful_candidate["run_id"] != published["run_id"]))
+        report["publication_work"] = ("NOT_SUPPLIED" if published is None
+            else "CANDIDATE_NOT_SUPPLIED" if successful_candidate is None
+            else "SUCCESSFUL_CANDIDATE_PENDING" if pending else "NONE")
         cik = int(company["primary_cik"])
         inventory = saved_source(repo_root=repo_root, url=submissions_url(cik=cik))
         _require(inventory is not None, "SUBMISSIONS_SOURCE_MISSING")
         report["submissions"] = {"source_proof": inventory["proof"], "saved_at_utc": inventory["saved_at_utc"]}
-        selected, amendments = _select_filing(company=company, payload=annual_input._json(raw=inventory["raw"]))
+        from .annual_continuity_sources import visible_submissions
+        payload, visibility_receipt = visible_submissions(
+            annual_input._json(raw=inventory["raw"]), visibility, inventory["proof"])
+        report["submissions"]["visibility"] = visibility_receipt
+        selected, amendments = _select_filing(company=company, payload=payload)
         filing = _identity(company=company, filing=selected)
         report["discovered_filing"] = {**filing, "filing_date": selected["filingDate"], "period_basis": "SUBMISSIONS_REPORT_DATE"}
         oldest_baseline_period = min(b["filing"]["period_end"] for b in baselines)
@@ -302,8 +301,10 @@ def inspect_annual_update(*, repo_root, company, successful_candidate=None, publ
         _require(len(hashes) <= 1, "PRIMARY_SOURCE_CONTENT_CONFLICT")
         if primary and filing["accession"] == baseline["filing"]["accession"]:
             _require(primary["proof"]["content_sha256"] == baseline["primary_sha256"], "PRIMARY_SOURCE_CONTENT_CONFLICT")
+        report["candidate_work"] = "NONE" if change == "UNCHANGED" else "NEW_INPUT_REQUIRED"
         if change == "UNCHANGED":
-            report.update(status="NO_NEW_ANNUAL_FILING", input_status="NOT_PREPARED_NO_NEW_FILING",
+            report.update(status="CANDIDATE_PENDING_PUBLICATION" if pending else "NO_NEW_ANNUAL_FILING",
+                input_status="NOT_PREPARED_NO_NEW_FILING",
                 source_availability={"primary_document_saved": primary is not None,
                                      "companyfacts": "NOT_CHECKED_NO_NEW_FILING"})
             return report

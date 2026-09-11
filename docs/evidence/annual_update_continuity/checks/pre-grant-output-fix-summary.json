@@ -1,0 +1,19 @@
+{
+  "record_type": "PRE_GRANT_ENGINEERING_FIX",
+  "original_head": "ab4992486b8cb219fd11d4e2bbacc72db24fbc30",
+  "fixed_head": "fce015270de0cc4a265ce0fb0d2179ef11ef98a7",
+  "cause": "Strict review loading preserves fractional values as Decimal. The ordinary json.dump CLI failed after budget registration while writing the review duration. No approval or external request had occurred.",
+  "fix": "Existing canonical identity serialization before exclusive output creation; reuse the same byte-identical registration only when no stage or other budget state exists and roots, ledger, limits, nonce and time are valid.",
+  "tests": "Two new boundary cases plus existing fast suite. First test setups with absent native ledgers were corrected to reach intended registration mismatch; their failed output remains preserved.",
+  "reuse_boundary": "Native extraction, source semantics, projector and switch implementation unchanged from ab49924. Its actual full offline suite and independent native/content evidence remain historical evidence, with new final stage-bound execution still required.",
+  "budget_registration_sha256": "cff007d50204a65f460d0ac441993427c46ebf6ceb52fd05d8a4154eac7ec0c8",
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "partial_proposal": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-logs/stage-proposal.json",
+  "partial_proposal_sha256": "a26824a513aa5721205ee108aac78fff3e9bb9093e4b62d74dfba21fa7b2575f",
+  "partial_log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-logs/stage-proposal-command.log",
+  "real_stage_approval": "NOT_ISSUED"
+}

@@ -1,0 +1,175 @@
+{
+  "record_type": "INDEPENDENT_INCREMENT_CONTINUITY_REVIEW",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "parent_task": "/root",
+  "recorded_at_utc": "2026-09-10T07:50:49.090707+00:00",
+  "conclusion": "INCREMENT_REVIEW_COMPLETE_AWAITING_FULL_SEQUENCE",
+  "new_blocking_findings_in_reviewed_delta": [],
+  "final_signoff": false,
+  "permission_credit": "NONE",
+  "human_review": false,
+  "production_authorization": false,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "reviewed_code": {
+    "exact_head": "ab4992486b8cb219fd11d4e2bbacc72db24fbc30",
+    "runtime_tree": "sha256:2860391f1e6d68a971035e3385dcf5fad5e8ac2bc81328e795c464855c53f0b0",
+    "test_tree": "sha256:a4beed4482a5d311f3a3745615977bdfb0987499bf76cd179aed9fba33959784"
+  },
+  "requirement": {
+    "requirement_id": "issue_28_v8",
+    "requirement_closure_hash": "sha256:c7defbe87d7dc33eafc2304a695e682f2da884d1f0fe910ce5deed8bd8a8f55b",
+    "hashes": {
+      "baseline_sha256": "96ebad03eeff6d446d157a5475d00c9e88627a152eaf48e15e76658449177241",
+      "contract_sha256": "bbd511c13103052550ef351de6063c3bb98c233d43a16ed6087ca220e4f3d786",
+      "decision_register_sha256": "753254b4a058ed2d9be5620486a3077f53838d5680192ff13bb2a229ade46ff7",
+      "invariant_profile_sha256": "6d38712454b344a41ff42d6b2c04ece9c0df15a9e64eebf2fd9f3bd12c182c4c",
+      "transfer_manifest_sha256": "1196ffd12e30885712ba71515ae39704bd03eb0c85ad572cb95b66fabd9373cc",
+      "parent_requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+      "validator_sha256": "8c75f68b699bf53d2c4fe6b5821d63908736845326a9103cb29a8c5f869acfea"
+    }
+  },
+  "diff_base": "b64c5df6b01535a56c3706f4df133d120f47873e",
+  "changed_file_proofs": [
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/TESTING.md",
+      "sha256": "a194b149fc21b0e7fdf52c0b80f7288ed7f12181ee2c531a6a28e9b581d2e9e3",
+      "size": 114640
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/annual_update_continuity.md",
+      "sha256": "0a7ee7b8f84a421fed0ff54dd6f754999914568efff055d263473ca2eb1a841d",
+      "size": 6120
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/requirements/issue_28_v8/baseline_manifest.json",
+      "sha256": "96ebad03eeff6d446d157a5475d00c9e88627a152eaf48e15e76658449177241",
+      "size": 70741
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py",
+      "sha256": "9ff5ccf48780674ce598e661ca4cfac1bfce2fbf0855e035cf4ce7e92f9e584d",
+      "size": 45508
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity_publication.py",
+      "sha256": "7bc2519a4c85eb41abc5a70b51d7497fbbb76fa1b9751064f8f8f66b8d207889",
+      "size": 9071
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity_snapshot.py",
+      "sha256": "323fe27c88954cb555a1c2238b5e4ec90a8efd49d607034c05ce32880f43ec8a",
+      "size": 14892
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity.py",
+      "sha256": "aae743bb3bdc234011e6c394b21d88741670cc1f2657d1b62129491443e2a445",
+      "size": 12177
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity_rehearsal.py",
+      "sha256": "1440f6c3ee025695de1681b813b909460dc7ea00cfca1faa0a73cb6d4c43a7d3",
+      "size": 16612
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_annual_continuity.py",
+      "sha256": "d737498d2937e0c99e4cad4d08776ebf7824c3062ac40237086e8d2568ea0d83",
+      "size": 3554
+    }
+  ],
+  "unchanged_policy_contract_engine_proofs": [
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/config/annual_candidate_adoption_v3.json",
+      "sha256": "df84d19d751e8d78d6d883781fc1f7866276b5f3a534350df0cc395c9d0a1735",
+      "size": 3094
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/requirements/issue_28_v8/CONTRACT.md",
+      "sha256": "bbd511c13103052550ef351de6063c3bb98c233d43a16ed6087ca220e4f3d786",
+      "size": 2966
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/requirements/issue_28_v8/decision_register.json",
+      "sha256": "753254b4a058ed2d9be5620486a3077f53838d5680192ff13bb2a229ade46ff7",
+      "size": 105109
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/requirement_profile_v9.py",
+      "sha256": "8c75f68b699bf53d2c4fe6b5821d63908736845326a9103cb29a8c5f869acfea",
+      "size": 9375
+    }
+  ],
+  "actual_code_checks": [
+    {
+      "subject": "Initial version pin lifetime",
+      "result": "_initial_version first calls native PublicationView.open on actual ROOT, then checks the stage initial pointer before establishing existing _Verified scope. run_once holds this scope only inside its stage lock; context reset occurs on normal return, exceptions and recovery. Nested _publish_candidate scope restores the outer initial pin. No persistent cache, root switch privilege, new manifest factory, or generic byte-verification exception added.",
+      "limit": "Single-value pin can still be shadowed during inner publication work. Reduction in total repeated native work remains an integration/performance observation, not proved by this review."
+    },
+    {
+      "subject": "Optional historical seed and visibility",
+      "result": "Both seed arguments are optional, but asymmetric provision is rejected as the first statement before code reads or stage registration writes. seed=null skips seed construction/publication and creates no artificial seed success receipt. visibility=null means raw saved submissions; explicitly supplied visibility path must be a regular external source at use. Stage body/ID binds either choice."
+    },
+    {
+      "subject": "Historical seed remains constrained",
+      "result": "create_seed_candidate, snapshot source proof and publication plan historical branch explicitly require a non-null dict descriptor. The original complete B01 replay, committed original B10 graph, exact saved source/period, stage descriptor and initial predecessor checks remain. NORMAL_EXECUTION remains subject to unchanged annual_projection period non-regression; seed=null creates no historical exception."
+    },
+    {
+      "subject": "Root separation and period bounds",
+      "result": "Pairwise root overlap now includes data versus budget. Period scope requires canonical ISO dates and ordered start/end in stage construction and revalidation. No broader company, model, source, call or production scope introduced."
+    },
+    {
+      "subject": "Published state in results",
+      "result": "Successful normal and pending-candidate returns read actual committed isolated publication again through published_baseline; prior state is retained as published_before. Recovery returns actual current publication and explicitly says discovery was not rerun. Failure remains bound to prior successful publication; historical input discovery is not reported as newly performed recovery discovery."
+    },
+    {
+      "subject": "Added complete I/O tests",
+      "result": "Read all added tests. No-seed current start requires NO_CHANGE, initial current publication, zero provider slots and no seed artifacts. Failure scenario injects only actual os.replace/native switch fault plus GH/provider I/O, asserts one original candidate call across missing-reference recovery, preserves full old pointer/reference after B10 schema failure, and tests outcome status spoofing against native budget. These tests retain synthetic approval/response-replay labels and zero actual business-call scope.",
+      "limit": "These complete tests were still running when reviewed. Reading their assertions is not a test PASS."
+    }
+  ],
+  "personally_executed": {
+    "short_tests": {
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/increment-ab49924-tests.log",
+        "sha256": "d5b24908906ee74cf611ee14fd946b685a132dd2f2b6340d7dbc0712dcbbc4f0",
+        "size": 2531
+      },
+      "test_count": 12,
+      "duration_seconds": 1.537,
+      "exit_code": 0,
+      "status": "OK",
+      "command": "python3 -m unittest -v tests.vnext.test_annual_continuity"
+    },
+    "identity_load": "Current clean code_identity and native Requirement load completed read-only.",
+    "protection": "OS network denied and original repository/2026-09-08/09 evidence trees write denied; PYTHONDONTWRITEBYTECODE=1. Only external audit log/record and temporary short-test data written."
+  },
+  "parent_long_run_observed": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/offline-acceptance-04-command.log",
+    "observed_status": "RUNNING_WITHOUT_FINAL_SUITE_RESULT",
+    "observed_line": "test_current_active_start_without_historical_parameters ...",
+    "credit": "NONE_UNTIL_FINAL_LOGS_AND_BINDING"
+  },
+  "carried_forward": [
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/increment-review-b64c5df.json",
+      "sha256": "71e5f6ac576ce98ba86d75ebd93f9b42e8a8e1fcc23276cfb0ee12246dfb1144",
+      "size": 12048
+    },
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/draft-continuity-review.json",
+      "sha256": "7006d6e89231883aa4e32ab73ff29a9237549998ad9431ef16b19d1b117e7b47",
+      "size": 17555
+    }
+  ],
+  "still_required": [
+    "Complete exact-head saved-source S0/S1/S2 and no-seed normal-entry integration results, with all test methods individually successful and no skips.",
+    "Full native lost-reference, same-transaction switch recovery, partial B01-success/B10-failure and no-new-call repeat evidence.",
+    "Final expiry/closed/budget/UNKNOWN/finite-trigger acceptance and original-root/source protection evidence as required by the stage.",
+    "Final clean reviewed code/test identities and actual stage approval before any real model or SEC call."
+  ],
+  "claim_boundary": "This is an independent model subtask incremental implementation review and short-test execution. It is not human review, a real approval comment, full sequence acceptance, a provider execution grant, or production authorization."
+}

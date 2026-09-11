@@ -158,3 +158,5 @@ PublicationView回读，测试按 `TESTING.md` 对应章节；实际R3和正式r
 | 2 | 完成文档影响、测试证据、已知限制和 Review 记录 | `PR_Checklist.md`；`.github/pull_request_template.md` | PR body 与真实 diff、测试结果和未解决决策一致 |
 | 3 | 按授权执行 commit、push 和 PR 创建 | `PR_Checklist.md` 的分支、提交与创建规则 | 命令成功并返回真实远端分支与 PR URL |
 | 4 | 向用户交付发布结果 | `PR_Checklist.md` 的最终核对 | draft/ready 状态、URL、测试与限制均已明确报告 |
+
+受限年度连续更新：按`docs/annual_update_continuity.md`的initialize-data、stage-proposal与run-once入口操作；原生候选、完整包与切换继续共用已有机制。阶段固定预算和到期，数据在checkout外；本轮仅隔离验证，真实生产保持只读，有限trigger交付前停止。

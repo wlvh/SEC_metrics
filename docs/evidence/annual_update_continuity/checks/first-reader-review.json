@@ -1,0 +1,156 @@
+{
+  "record_type": "INDEPENDENT_CONTINUITY_FIRST_READER_REVIEW",
+  "schema_version": 1,
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_identity": "/root/runtime_boundary_review",
+  "human_review": false,
+  "reviewed_at_utc": "2026-09-10T04:26:27.083073+00:00",
+  "base_head": "48b233f875d07145464e078afe686249e38e963b",
+  "work_state": "UNCOMMITTED_FIRST_READER_SEGMENT",
+  "scope": "PublicationView native result/authority reading, annual-update baseline and three-position reporting, and the two CLI import-path fixes only; no review of the future continuity stage.",
+  "source_file_snapshot": {
+    "scripts/vnext/publication_results.py": {
+      "sha256": "7b35687226fd970680bfddda9fe92a7d32c291e163e58f8273c5b06f63ad5e9d",
+      "size": 5746
+    },
+    "scripts/vnext/publication.py": {
+      "sha256": "1052d65d3544419cd1127060363c1159feb7784890a820224cb6e59608cd4b1a",
+      "size": 274335
+    },
+    "scripts/vnext/annual_update.py": {
+      "sha256": "9159500f65c8b6bdb20ea9681a27f3bfd800eeb8ddeda731e267c09185770214",
+      "size": 25622
+    },
+    "tools/vnext_annual_update.py": {
+      "sha256": "b192a10dc4d578568687c0114db7f7e02d908feee97fb1a992a16a9f807dd54a",
+      "size": 4153
+    },
+    "tools/vnext_annual_runtime.py": {
+      "sha256": "38788de593c91c23e578499bc15d3f5c6c48121f68c9ff1f1388f8e520ec507c",
+      "size": 3119
+    }
+  },
+  "conclusion": "CHANGES_REQUIRED_IN_STATUS_INTEGRATION",
+  "findings": [
+    {
+      "id": "READER-01",
+      "priority": 2,
+      "file": "tools/vnext_annual_update.py",
+      "line": 64,
+      "title": "Valid pending-publication outcome exits as failure",
+      "reproduction": "inspect_annual_update with an existing FY2025 candidate ahead of an FY2024 published test baseline returns CANDIDATE_PENDING_PUBLICATION. The CLI status-routing unit returns exit 2 because its success set still contains only NO_NEW_ANNUAL_FILING and INPUT_READY.",
+      "observed_exit_status": 2,
+      "impact": "A routine successful check with retained publication work is reported as a command failure, preventing reliable normal-flow handling.",
+      "minimal_fix": "Include the new normal pending-publication outcome in the CLI success routing; keep actual CHECK_FAILED outcomes nonzero.",
+      "old_success_set_still_present_at_record_time": false
+    },
+    {
+      "id": "READER-02",
+      "priority": 2,
+      "file": "scripts/vnext/annual_update.py",
+      "line": 293,
+      "title": "Known publication work depends on successful input inspection",
+      "reproduction": "With a real FY2025 successful candidate and FY2024 published test baseline, an unavailable ledger yields CHECK_FAILED and publication_work=UNKNOWN, although the candidate/publication relationship is already known. With no published baseline supplied, publication_work becomes NONE rather than unknown/not supplied.",
+      "impact": "The new three-position report loses known pending publication work when source inspection fails and asserts no work when publication state was not supplied.",
+      "minimal_fix": "Compute and retain publication relationship after baseline validation and before source reads. Distinguish missing publication state from a verified synchronized state. Preserve it when a later input check fails."
+    }
+  ],
+  "bounded_followup_integration_notes": [
+    {
+      "file": "scripts/vnext/annual_runtime.py",
+      "line": 967,
+      "detail": "The existing runtime calls inspect_annual_update without published, then sets current_published afterward. If this existing entry reports the new work fields, it must supply that known baseline or leave publication state explicitly unknown; simply adding the display field afterward cannot compute pending status. This is an existing-callsite note, not review of the unimplemented new stage."
+    },
+    {
+      "file": "scripts/vnext/publication_results.py",
+      "detail": "The inherited result run_path is relative to owner_publication_id, while published_baseline records the outer view.bundle_dir. For a true inherited coordinate, callers need an explicit owner bundle path or an unambiguous bundle-relative inherited path; do not imply the outer bundle plus the leaf-local run_path is directly resolvable."
+    }
+  ],
+  "actual_reader_checks": {
+    "current_publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "current_v2_B01_B10": "PASS: both remain owned by publication_24bf... and read internal/annual_snapshot/candidate/b01|b10. B10 uses native run annual-runtime:509b..., not the R3 qualification run.",
+    "R3_B10": "PASS through explicit R3 view, resolving its original qualification run.",
+    "v1_B10": "New reader routing from exact prior audited v1 manifest bytes returns the original adopted run; no new complete v1 graph replay was claimed.",
+    "authority_bytes": "Current v2/v1 retained coverage authority hash matches; traversal, absolute path and unlisted active pointer requests reject.",
+    "limitations": "Current inherited B03 and explicit R3 B01 fail closed with PUBLISHED_NATIVE_COORDINATE_NOT_UNIQUE because the R3 batch owns only its delta. No native source was invented or loaded from an external older root; this API cannot yet be advertised as resolving all inherited native coordinates."
+  },
+  "read_status_cases": {
+    "candidate_ahead": {
+      "status": "CANDIDATE_PENDING_PUBLICATION",
+      "candidate_work": "NONE",
+      "publication_work": "SUCCESSFUL_CANDIDATE_PENDING",
+      "filing_change": "UNCHANGED",
+      "error": null
+    },
+    "same_year_different_run": {
+      "status": "CANDIDATE_PENDING_PUBLICATION",
+      "candidate_work": "NONE",
+      "publication_work": "SUCCESSFUL_CANDIDATE_PENDING",
+      "filing_change": "UNCHANGED",
+      "error": null
+    },
+    "same_native_run": {
+      "status": "NO_NEW_ANNUAL_FILING",
+      "candidate_work": "NONE",
+      "publication_work": "NONE",
+      "filing_change": "UNCHANGED",
+      "error": null
+    },
+    "candidate_without_publication": {
+      "status": "NO_NEW_ANNUAL_FILING",
+      "candidate_work": "NONE",
+      "publication_work": "NONE",
+      "filing_change": "UNCHANGED",
+      "error": null
+    },
+    "candidate_ahead_source_missing": {
+      "status": "CHECK_FAILED",
+      "candidate_work": "UNKNOWN",
+      "publication_work": "UNKNOWN",
+      "filing_change": "UNKNOWN",
+      "error": "Request log manifest not found: /var/folders/md/_hc45tnd7_l8yzvhmkhm29j40000gn/T/reader-source-unavailable-nl33qwrq/evidence/requests_log_manifest.json"
+    },
+    "cli_pending_status_exit_code": 2,
+    "evidence_scope": "Bounded status logic using actual native baseline records as explicit test inputs; not a report of actual formal rollback. CLI check function substituted only to test exit-code routing.",
+    "new_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "recommended_fast_regressions": [
+    "Current adopted B10 has the same Result content id as R3 but a different Run/execution: resolve the adopted owner and never fall back.",
+    "Missing/invalid adopted record with an older valid predecessor present must reject; no fallback to the older answer.",
+    "Explicit inherited binding follows only the declared predecessor, preserves requested/owner IDs and gives a resolvable owner path; wrong predecessor, duplicate binding, unknown origin and cycle reject.",
+    "R3 delta B10 and v1 adopted B10 remain readable; an unavailable inherited native coordinate has an explicit unavailable result/error, not guessed parent provenance.",
+    "Candidate ahead of published, same fiscal filing with a different Run, and exact same native Run yield distinct publication-work states with zero model work when input is unchanged.",
+    "Input-source failure preserves known pending publication state; omitted published baseline does not report NONE.",
+    "CLI returns zero for the valid pending-publication check and nonzero for genuine check failure.",
+    "Authority-byte reads remain manifest-bound and reject traversal, absolute paths and unlisted current state."
+  ],
+  "evidence_files": [
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/first-reader-real-read.json",
+      "sha256": "994c4dfd9783a85a2c64b68f9dc6638d4bed428836274dfe6abe871980fe7f52",
+      "size": 3427
+    },
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/first-reader-status-counterexamples.json",
+      "sha256": "2b84fd27ba99ddfda2b083f67335ae75ffe965ff6e917703d1fa89d897973ac5",
+      "size": 1439
+    },
+    {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/first-reader-authority-checks.json",
+      "sha256": "90757c0121d5cc97027f37e9edb453dc1596d22325fd3c4a619a48154a2972da",
+      "size": 1941
+    }
+  ],
+  "execution_scope": "Original repo, prior history and 2026-09-09 artifacts were OS write-denied and network-denied for the exercised reader/status checks. One actual current PublicationView cold read was performed (54.875s); no complete stage execution or provider/SEC request occurred. CLI check was substituted only for the isolated exit-code-routing unit, not to fabricate native content validation.",
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorization": false,
+  "full_continuity_stage_reviewed": false
+}

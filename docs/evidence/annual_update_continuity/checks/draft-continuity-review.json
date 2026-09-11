@@ -1,0 +1,288 @@
+{
+  "record_type": "INDEPENDENT_DRAFT_CONTINUITY_REVIEW",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "parent_task": "/root",
+  "recorded_at_utc": "2026-09-10T06:43:01.297425+00:00",
+  "conclusion": "DRAFT_CHANGES_AND_TARGETED_FIXES_REVIEWED_NOT_FINAL_SIGNOFF",
+  "permission_credit": "NONE",
+  "production_authorization": false,
+  "human_review": false,
+  "scope": "Bounded continuity stage/runtime/source/publication wiring and focused fixes. This record does not approve a final execution head, authorize provider/SEC calls, or assert the full S0-S1-S2 chain passed.",
+  "source_identity": {
+    "increment_checkpoint_head": "c54845a6f7b8c36f5c02c803a73b07309771a22c",
+    "working_tree_status_at_record_time": "",
+    "initial_draft_was_uncommitted": true,
+    "note": "Initial reproduced findings precede this checkpoint. File hashes below identify current follow-up code only, not the earlier vulnerable copies.",
+    "files": [
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py",
+        "sha256": "2864dd95b7659838c62b3dfece996b0cf192ad8245a413d5a3b13ea5d89ed574",
+        "size": 42364
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity_sources.py",
+        "sha256": "cf44385cbe5183e9a12ef52de2447a389c133391c3f692bceb2605e4bc100bb0",
+        "size": 4916
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity_snapshot.py",
+        "sha256": "bb800f8777f60f2563592f3a80c59c52ab71b9f2b3a36280131f9a9d7105792b",
+        "size": 14747
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity_publication.py",
+        "sha256": "4adf1de1ac3f70b7c08fa1bd339ea9160d22d2f70318fd7b7acb240e52b533e8",
+        "size": 9039
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity_trigger.py",
+        "sha256": "fbe4e1b66732bd0167c6237ed9c162cee957d53092345211cedbd71adf6f63e5",
+        "size": 4790
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_runtime.py",
+        "sha256": "1011f47b6b25303f059547383b5394631a36b3515848aeeaebefe0bbe4c037cd",
+        "size": 42630
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_adoption.py",
+        "sha256": "a3bc484ad895dd3742487c6aafc4dee5594ebbbbc6b1a574e8ca6a69f371637a",
+        "size": 21274
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py",
+        "sha256": "8fd00a33b5eb4a6df92ee86bb95d85487a4dcd17c770275106946d7fe2274d56",
+        "size": 37859
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication_authority.py",
+        "sha256": "1a8585763c89350f2fd78c9edf4917891ca44cec34cf78b007551a424649d2f0",
+        "size": 28010
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py",
+        "sha256": "aa192f4b228154e728f9d050518b03e8af38bd881868ff92de9dadf304c227e2",
+        "size": 274407
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication_results.py",
+        "sha256": "7b35687226fd970680bfddda9fe92a7d32c291e163e58f8273c5b06f63ad5e9d",
+        "size": 5746
+      }
+    ]
+  },
+  "findings": [
+    {
+      "id": "DRAFT-01",
+      "priority": "P1",
+      "subject": "Current owned WB-3 marker was classified UNKNOWN before its socket",
+      "evidence": "Independent temporary fixture reproduced uncertainty even when allow_pending_plan matched. Original code counted current marker without terminal as UNKNOWN during native boundary revalidation.",
+      "fix_observed": "_provider_terminal now requires private running ContextVar plus exact native plan, PID, execution identity, owner token and active reservation before treating the current request as IN_FLIGHT.",
+      "verification": "CODE_REVIEW_ONLY_OF_FIX; full native HTTP-mocked success/failure path still required"
+    },
+    {
+      "id": "DRAFT-02",
+      "priority": "P1",
+      "subject": "Shared executor accepted a caller dictionary and wrote structured results before validating stage",
+      "evidence": "Independent zero-model native negative produced FY2024 B01=25100000000 and attached B03, then KeyError(stage), in a temporary directory. No actual approval or business call.",
+      "fix_observed": "execute_native_candidate accepts opaque RuntimeAuthorization and calls authorization_fields before structured execution. Factory remains within existing verified runtime/continuity paths.",
+      "verification": "Independent short negative confirms dictionary rejected before execution; full pipeline pending"
+    },
+    {
+      "id": "DRAFT-03",
+      "priority": "P1",
+      "subject": "Budget accepted tampered failed execution as success and reserved another slot",
+      "evidence": "Independent temporary copy changed terminal status and outcome only; old budget accepted it while native _load_execution_receipt rejected the same bytes with Execution receipt identity differs.",
+      "fix_observed": "Budget reads native invocation, derived execution identity, markers, attempt copies, terminal receipt, raw response, acceptance and usage. outcome.status no longer decides whether another socket is possible.",
+      "verification": "CODE_REVIEW_ONLY_OF_NATIVE_FIX; complete native tamper regression still required"
+    },
+    {
+      "id": "DRAFT-04",
+      "priority": "P1",
+      "subject": "Crash after successful native output but before mutable successful-candidate reference lost pending publication",
+      "evidence": "Code path identified permanent input slot preventing reexecution while missing reference hid the successful candidate.",
+      "fix_observed": "_successful_candidate scans bound slots, checks native success, fully replays B01/B10 and rebuilds missing reference.",
+      "verification": "CODE_REVIEW_ONLY; fault at reference-write window still required"
+    },
+    {
+      "id": "DRAFT-05",
+      "priority": "P1",
+      "subject": "Expiry or closed stage checked after publication permission/action writes",
+      "evidence": "Code path identified cached permission deployment and execute action writes before live_guard.",
+      "fix_observed": "deploy and nonrecover execute now invoke live_guard before first permission/action write; same in-window reserved transaction may still recover after expiry.",
+      "verification": "CODE_REVIEW_ONLY; cached permission expiry/closed first-write negative still required"
+    },
+    {
+      "id": "DRAFT-06",
+      "priority": "P1",
+      "subject": "SEC terminal status could hide recorded HTTP failure",
+      "evidence": "Original status-only terminal check lacked native ledger/response binding.",
+      "fix_observed": "Slots bind exact previous ledger prefix/count and append ordinal; terminal self-ID, full row/result URL/status/error/retry/body/header and accepted-state equivalence are checked.",
+      "verification": "INDEPENDENT_SHORT_TEST_PASS: HTTP500 I/O-injected real SecHttpClient record stays failed; rehashed terminal status SUCCEEDED rejected"
+    },
+    {
+      "id": "DRAFT-07",
+      "priority": "P1",
+      "subject": "Mutable trigger_id accepted absolute or parent-traversing paths",
+      "evidence": "Code path stop() formed root / caller-controlled trigger_id / stop.json after reading mutable current.json.",
+      "fix_observed": "_state now requires same stage, exact 32 lowercase hex UUID, boolean running and positive integer PID, plus derived path alias check.",
+      "verification": "INDEPENDENT_SHORT_TEST_PASS for invalid ID"
+    },
+    {
+      "id": "DRAFT-08",
+      "priority": "P1",
+      "subject": "Continuity immutable record write followed ancestor directory symlinks",
+      "evidence": "Original _write_once checked final path only.",
+      "fix_observed": "_write_once now calls runtime._external over the destination and every ancestor before mkdir/open.",
+      "verification": "INDEPENDENT_SHORT_TEST_PASS: parent alias rejected and target record absent"
+    },
+    {
+      "id": "DRAFT-09",
+      "priority": "P1",
+      "subject": "Trigger root alias remains before raw lock/current/log writes",
+      "evidence": "At checkpoint c54845a, _paths constructs stage_root/trigger without _external; first run has no current.json and can write trigger.lock, per-run dir/current/log through an existing trigger directory symlink before _state/_write_once.",
+      "required_fix": "Validate trigger root and current path at the shared _paths entry before any read or raw write; preserve current per-ID validation.",
+      "verification": "OPEN_CODE_PATH_FINDING_AT_RECORD_TIME; parent notified and fixing"
+    }
+  ],
+  "frozen_receipt_fix": {
+    "status": "NO_NEW_CONTENT_AUTHORITY_FINDING_IN_BOUNDED_REVIEW",
+    "observed": "Only V3 selects old foundation receipt bytes by existing Requirement SHA and size from reviewed Git HEAD or its committed complete package. Trusted current Python still runs; embedded old Python is not imported. Original root mirrors and frozen Requirement rules are not rewritten. The six short tests include actual hash and root-mirror no-change checks.",
+    "limit": "The current continuous sequence still needs its complete real saved-material offline prepare/read/switch validation; the earlier 121-second prepare failure is not a passed chain."
+  },
+  "personally_executed": {
+    "original_counterexamples": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/draft-continuity-counterexamples.json",
+      "sha256": "b84957f4388cd65e199b14a24a26d838f57aca09d74be657465aac8c21457c1b",
+      "size": 1390
+    },
+    "short_regressions": {
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/draft-review-short-tests-2.log",
+        "sha256": "4870e1047aeb6e820d58800d2b34603a1f694761bb04d5ae1544ae1e1fdfb6c3",
+        "size": 1394
+      },
+      "test_count": 6,
+      "elapsed_seconds": 0.145,
+      "exit_code": 0,
+      "result": "OK"
+    },
+    "test_tool_error_retained": {
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/draft-review-short-tests.log",
+        "sha256": "b912c0a10283052300bcb32c57e4a1294e141024a659367f5cbeddd7ca25ad3d",
+        "size": 2819
+      },
+      "cause": "Reviewer first supplied nonexistent test class AnnualContinuityTest. Six loader errors, zero actual test methods executed. Correct class AnnualContinuityBoundaryTest used in separate retained rerun."
+    },
+    "sandbox": "OS network deny; original repository and 2026-09-08/09 historical evidence trees file-write denied; PYTHONDONTWRITEBYTECODE=1. Only new external audit/temporary test data written.",
+    "new_provider_paid_sec_calls": [
+      0,
+      0,
+      0
+    ]
+  },
+  "fast_failure_material_review": {
+    "evidence": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/fast-checkpoint-02.log",
+      "sha256": "c17be256fefee43ad7026168e9d285c8513c5eb26bb9379d829156e77a3a7b12",
+      "size": 34198
+    },
+    "log_read_only_not_independently_rerun": true,
+    "failed_groups": [
+      {
+        "test": "tests.vnext.test_invocation_control",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_live_scoped_reader.LiveScopedEnvelopeTest",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_scoped_reader.ScopedReaderTest.test_all_four_zero_call_classes_cannot_prepare_requests",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_source_scope.SourceScopeTest.test_complete_native_candidate_and_evidence_are_bound",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_successor_invocation_control",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_occupancy_request_has_no_current_credit",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_revpar_request_has_no_current_credit",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_table_context_measurement.TableContextMeasurementTerminalTest.test_revpar_terminal_is_consumed_exact_and_non_credit",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two",
+        "return_code": 1,
+        "failure_kind": "FROZEN_RECEIPT_READ_FROM_CURRENT_MIRROR"
+      },
+      {
+        "test": "tests.vnext.test_table_stage_c_financial_materialization",
+        "return_code": 1,
+        "failure_kind": "CURRENT_ACTIVE_ASSUMED_R3"
+      },
+      {
+        "test": "tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke",
+        "return_code": 1,
+        "failure_kind": "CURRENT_ACTIVE_ASSUMED_R3"
+      }
+    ],
+    "recommendations": [
+      "Keep a real current-active=24bf continuity integration; use explicit V3 frozen receipt input view as part of product wiring. Do not make old default validators silently choose new authority or restore historical actual mirrors.",
+      "Historical controller/Requirement tests should use a test-only temporary authority data root populated with exact original Requirement files and bound receipt bytes. Existing copy_test_repository incorrectly copies mutable current foundation mirror bytes; fix that data selection rather than mocking the validator.",
+      "Reuse only current tested Python. Explicit repo_root parameters and test-scoped _REPOSITORY_ROOT binding may target historical data. Keep all legacy WB-3 retry, UNKNOWN, marker, receipt, and acceptance assertions.",
+      "Zero-AI historical fast check should pin original R3 receipt/index and its exact R3-to-R2 edge, then verify R2; it should not require today's active pointer to equal R3.",
+      "Stage-C historical benchmark should prove its original before/after equality and original R3 receipt/mirrors against the R3 package. Current mirrors belong to current PublicationView. Do not merely replace the R3 constant with24bf or delete historical checks."
+    ]
+  },
+  "conditional_repair_boundary": {
+    "current_status": "NOT_CONNECTED_NO_AUTOMATIC_RETRY_AUTHORIZED",
+    "required_if_used": [
+      "Append-only rebind inside the same approved budget registration; prior native failure must be known and its source/response/Run preserved. UNKNOWN or uncertain counts block.",
+      "Bind the actual local fix, new reviewed code/test identity and exact new request before using the one repair slot; never reset ledger by changing head, directory, plan or process.",
+      "Count NORMAL <=2, REPAIR <=1 and total provider/paid <=3. A repair of the first annual could be the second overall call; ordinal three alone must not define repair eligibility.",
+      "Reuse the same native executor and model/schema/prompt/Spec business scope; preserve old inputs under their original identities. No automatic retry or generic repair platform required."
+    ]
+  },
+  "still_required_for_final_review": [
+    "Fix and test shared trigger-root alias gate.",
+    "Complete S0-FY2024-FY2025 with saved real inputs and only external GH/provider HTTP I/O injected; exact source/native/controller/usage identities and publication predecessor chain must pass.",
+    "Exercise native own-in-flight path, failed terminal tamper/UNKNOWN stop, missing-success-ref restoration and same-input no-call behavior.",
+    "Exercise candidate success with publication interruption, same-transaction recovery, expired/closed no-new-write and no actual-root publication.",
+    "Resolve historic fast test roots while retaining native protections; bind final clean head, test/runtime tree and actual final logs."
+  ],
+  "history_carried_forward": [
+    "historical-material-audit.json: real FY2023 OPEN B01 and committed FROZEN B10 support explicitly isolated S0; does not establish a historical full FY2023 production release.",
+    "first-reader-review.json: current v2 native selected Results must not fall back to historical R3 even when content IDs match."
+  ]
+}

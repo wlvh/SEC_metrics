@@ -1,0 +1,71 @@
+--- a/scripts/vnext/annual_continuity.py
++++ b/scripts/vnext/annual_continuity.py
+@@ -583,6 +583,17 @@
+     return update.published_baseline(company=company,publication_root=Path(stage['publication_root']))
+ 
+ 
++def _inspect_input_for_run(**kwargs):
++    """Scope inspector-only counters; execution describes this invocation's candidate step."""
++    report = update.inspect_annual_update(**kwargs)
++    report["inspection"] = {
++        "execution": report.pop("execution"),
++        "provider_paid_sec_calls": report.pop("provider_paid_sec_calls"),
++    }
++    report["execution"] = "NOT_EXECUTED"
++    return report
++
++
+ def run_once(*, approval_url, refresh_submissions=False):
+     """Continue an unfinished input before selecting another; never update the actual root."""
+     from . import publication as pub,annual_continuity_publication as publishing
+@@ -592,7 +603,7 @@
+     with stage_lock(stage), _initial_version(stage):
+         recovery=_recover_pending(binding)
+         if recovery is not None:
+-            return {'status':'RECOVERED_PRIOR_TRANSACTION','recovery':recovery,'counts':budget_counts(stage),
++            return {'status':'RECOVERED_PRIOR_TRANSACTION','execution':'NOT_EXECUTED','recovery':recovery,'counts':budget_counts(stage),
+                 'current_published':_current_published(stage),'discovery_status':'NOT_RECHECKED_RECOVERY_FIRST'}
+         validate_stage(stage,execution=True)
+         if not (root/'stage-binding.json').exists():
+@@ -613,7 +624,7 @@
+         success=_successful_candidate(stage)
+         if success is not None and success['baseline']['run_id']!=published['run_id']:
+             pending=_publish_candidate(binding,Path(success['reference']['candidate_directory']))
+-            return {'status':'PENDING_CANDIDATE_PUBLISHED','publication':pending,'counts':budget_counts(stage),
++            return {'status':'PENDING_CANDIDATE_PUBLISHED','execution':'NOT_EXECUTED','publication':pending,'counts':budget_counts(stage),
+                 'discovery_status':'NOT_RECHECKED_PENDING_CANDIDATE','discovered_filing':success['plan']['selection']['filing'],
+                 'latest_successful_candidate':success['baseline'],'published_before':published,
+                 'current_published':_current_published(stage),'candidate_work':'NONE','publication_work':'COMPLETE'}
+@@ -625,12 +636,12 @@
+             _fetch_missing(stage,{'kind':'SUBMISSIONS','url':url,'document_name':url.rsplit('/',1)[-1]})
+             _write_once(Path(stage['budget_root'])/'submissions-refreshed.json',{'stage_id':stage['stage_id'],'completed_at_utc':now().isoformat()})
+         if refresh_submissions:
+-            refreshed=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,successful_candidate=None,published=published)
++            refreshed=_inspect_input_for_run(repo_root=Path(stage['data_root']),company=company,successful_candidate=None,published=published)
+             newest=refreshed.get('discovered_filing');scope=stage['historical_period_scope']
+             if newest and not(scope['start']<=newest['period_start']<=newest['period_end']<=scope['end']):
+                 return {**refreshed,'status':'DISCOVERED_OUTSIDE_STAGE_SCOPE_NOT_EXECUTED','counts':budget_counts(stage)}
+         visibility=_visibility(stage)
+-        report=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,
++        report=_inspect_input_for_run(repo_root=Path(stage['data_root']),company=company,
+             successful_candidate=None if success is None else success['baseline'],published=published,visibility=visibility)
+         report.update(stage_id=stage['stage_id'],publication_root=stage['publication_root'],recovery=None,
+             start_mode='CURRENT_ACTIVE' if stage['seed'] is None else 'EXPLICIT_HISTORICAL_SEED')
+@@ -642,7 +653,7 @@
+         while report['status']=='INPUTS_MISSING':
+             item=report['missing_sources'][0];need(item['url'] not in attempted,'CONTINUITY_NO_AUTOMATIC_RETRY');attempted.add(item['url'])
+             _fetch_missing(stage,item)
+-            report=update.inspect_annual_update(repo_root=Path(stage['data_root']),company=company,
++            report=_inspect_input_for_run(repo_root=Path(stage['data_root']),company=company,
+                 successful_candidate=None if success is None else success['baseline'],published=published,visibility=visibility)
+         if report['status']=='NO_NEW_ANNUAL_FILING':
+             return {**report,'status':'NO_CHANGE','counts':budget_counts(stage)}
+@@ -678,7 +689,7 @@
+         ref={'stage_id':stage['stage_id'],'plan_id':planned['plan_id'],'candidate_directory':str(candidate),'run_id':run_id}
+         atomic_write_json(path=root/'successful-candidate.json',value=ref)
+         published_result=_publish_candidate(binding,candidate)
+-        return {**report,'status':'COMPLETE_UPDATE_COMMITTED','candidate':ref,'publication':published_result,
++        return {**report,'status':'COMPLETE_UPDATE_COMMITTED','execution':'EXECUTED','candidate':ref,'publication':published_result,
+             'counts':budget_counts(stage),'execution_code':code_identity(),
+             'published_before':published,'current_published':_current_published(stage),
+             'latest_successful_candidate':update.candidate_baseline(company=company,run_dir=b10),

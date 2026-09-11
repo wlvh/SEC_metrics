@@ -1,0 +1,705 @@
+{
+  "record_type": "INDEPENDENT_CONTINUITY_CONTENT_REGRESSION",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "recorded_at_utc": "2026-09-10T15:28:35.110941+00:00",
+  "status": "PASS",
+  "head": "7f1d72751926b1d328ee579e197397b8501d93f1",
+  "runtime_tree": "sha256:a3ddcbd87bc0f928137b68d36bf1dca184e3788d8691cacf6d75f7ce38db0b9e",
+  "test_tree": "sha256:f022f1ce4fc401e49fbc8c9c34cd2ff264dd52e96c55c760a59c59db9cf63106",
+  "requirement": {
+    "requirement_id": "issue_28_v8",
+    "requirement_generation": "PROFILE_DRIVEN_V9",
+    "requirement_closure_hash": "sha256:3c7354e6d72d462069fb964e90bcff1dc8730432c7a4c91a898ecb3f818fd8ba",
+    "hashes": {
+      "baseline_sha256": "5c6512840a36623e157be5d7ebdb367c784cfa72a0be952d231c4363036c8983",
+      "contract_sha256": "c0a8a52ff6ebbe0c46fabd16d8a51d722932aa8590ea2bc2c3048db84a74d0c3",
+      "decision_register_sha256": "753254b4a058ed2d9be5620486a3077f53838d5680192ff13bb2a229ade46ff7",
+      "invariant_profile_sha256": "6d38712454b344a41ff42d6b2c04ece9c0df15a9e64eebf2fd9f3bd12c182c4c",
+      "transfer_manifest_sha256": "1196ffd12e30885712ba71515ae39704bd03eb0c85ad572cb95b66fabd9373cc",
+      "parent_requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+      "validator_sha256": "8c75f68b699bf53d2c4fe6b5821d63908736845326a9103cb29a8c5f869acfea"
+    }
+  },
+  "policy_choice_hash": "sha256:bcbc183cd88b0dcef2f645be4edeca5aabcdfae930f691f1e0b3769c01e40d8f",
+  "policy_file": {
+    "path": "/Users/lyuhongwang/Developer/SEC_metrics/config/annual_candidate_adoption_v3.json",
+    "sha256": "df84d19d751e8d78d6d883781fc1f7866276b5f3a534350df0cc395c9d0a1735",
+    "size": 3094
+  },
+  "validators": [
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_evidence.py",
+      "sha256": "5c6bd99ccb2bba583aecf6e1a7a54aff48d54ca3d505b61cbf06216080cfce28",
+      "size": 10643
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/evidence.py",
+      "sha256": "3cd27fcf90e0b432ca48cf7464c276734aef0e6af9ad8fd731bc0cd3ad197b09",
+      "size": 42264
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/reader.py",
+      "sha256": "20720efd18067ff6ec614a4c25ec84bf6094f544e268fe28cb09f520d3ae8c2b",
+      "size": 21776
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/table_grid.py",
+      "sha256": "8ab43146f0c8d711067c609f38a4ae9368266f6192f7be21e8aa743bb0f1d617",
+      "size": 22873
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/scope_contract.py",
+      "sha256": "d10be102520b03654d97f9b40d6b3553e28cdec0ba9b903ef6b648b09a0849d1",
+      "size": 8887
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_regression.py",
+      "sha256": "14b3231f53da6a791d5723b159fc6b0be532784d4dfa50546ad149b49917df32",
+      "size": 11765
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_regression_synthetic.py",
+      "sha256": "0db29d185dcfb15ce025e2aa82e7da9f19348e8e8e2d75e15d79127a52a0a95e",
+      "size": 5048
+    }
+  ],
+  "original_files_before_after_equal": true,
+  "original_files": [
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/annual_runtime/live/native-candidate/b10/records.jsonl",
+      "sha256": "b27785715111a96b4ff76f781cee70eb0a6997782d4d6e35cde5e6fd133ccf03",
+      "size": 3973629
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/annual_runtime/live/native-candidate/b10/manifest.json",
+      "sha256": "fb54f4fb2c919e08bdbe2e161761a215f62f06c40e4841ff302a772b7e67eab4",
+      "size": 3605
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/annual_runtime/live/native-candidate/b10/attempt_payloads/assistant_output_aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb.json",
+      "sha256": "aa88a8806b7552dcb31b1cc5e2ac679ad36c60037afeba33458eced7b6f057eb",
+      "size": 1723
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/evidence/annual_runtime/live/native-candidate/b10/attempt_payloads/reader_payload_117c2935cb68ed77f64eb597da1e5beed7f096cb40a82cdcb7cfa7e89eaf950f.json",
+      "sha256": "117c2935cb68ed77f64eb597da1e5beed7f096cb40a82cdcb7cfa7e89eaf950f",
+      "size": 350252
+    },
+    {
+      "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+      "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+      "size": 2048661
+    }
+  ],
+  "foreign_source_records": {
+    "path": "/Users/lyuhongwang/Developer/SEC_metrics/artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d/records.jsonl",
+    "sha256": "7ee75c3f86c6b45f99146d1d32e24a77f1cda8c52e2c913f28db83b27fbe4d99",
+    "size": 3982589
+  },
+  "original_full_source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+  "original_grid_rebuilt_byte_structure_equal": true,
+  "derived_asset_id": "sha256:5bcb302aca7ee0e2b6dbd8458dc5a74e579ab9586e4e9974e2bbb21f21a9ea7f",
+  "reader_input_manifest_id": "sha256:a850c91569998465b7e45d26a7919bb92ec1e2d8695dc39f3333fb31e718efe4",
+  "original_target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-01-01",
+    "period_end": "2025-12-31"
+  },
+  "cases": [
+    {
+      "case": "original_response_retained_V6_raw_rule",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_LABEL_TEXT_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": true,
+      "evidence_check_id": "sha256:a171bbd61d18c66184be5f3dfe3abb30024ed96ec34b207afd6db997e13a10dc",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "original_response_current_V9",
+      "expected": "PASS",
+      "observed": "PASS",
+      "reason_codes": [],
+      "rejected_at": null,
+      "response_was_original_bytes": true,
+      "evidence_check_id": "sha256:6707cc88de67de277de5a87716dd1bb7f712e483752e9462fdc612c2411e8419",
+      "system_approval_eligible": true
+    },
+    {
+      "case": "wrong_numeric_value",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "AI_CLAIMED_VALUE_CELL_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:891a876f6d5616999a8a32427c78c15543f7d17923e383659f009f2f3280cceb",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_unit",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_UNIT_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:828e5d59ad6a717554b506e3f986958b6067cafe044e4a559d7700a850fd2666",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_claim_period",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_CLAIM_PERIOD_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:0e0765eeb75185b503ba504158524c071b727cd77bddad790a92f0dd0d3bddb0",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_period_column",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "Cell is not a supported numeric claim"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:b28a00353d5a493cd9b9408a3762e610ec2ba17e09b7eb9d95a473ac24ce2b15",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_table",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "Reader claim locator leaves the target table"
+      ],
+      "rejected_at": "READER",
+      "response_was_original_bytes": false,
+      "evidence_check_id": null,
+      "system_approval_eligible": null
+    },
+    {
+      "case": "wrong_origin_geometry",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "LOCATOR_REJECTED:Cell locator span/origin differs"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:b7ac27819ba3bcec5293c3267ec99ce938fe0c0cb6f483aae755ffac9f277bbb",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_scope_footnote_2_to_3",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_LABEL_TEXT_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:3a035f58bbc2e66feedb3ea42b8dc809f4b16429e346550ca788161cebd3c00b",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "unknown_scope_alias",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_UNRESOLVED_OR_UNSUPPORTED"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:59756b583519823d546de901fbe476cb900aa349505609e191b991017a2f5012",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_operating_scope",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_RAW_VALUE_LOCATOR_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:50d8ca59021b5d4ee38895c83afc1e0579b0005c84769eeebc130a73606f9158",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "different_row_same_label",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_ROW_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:ca655b2fc335f7ac755d2a95e1281a4efb0898687118c0ff3c61c749fe75a67b",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_region_value",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_ROW_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:8534ceff081e68b4b4671a2ec80d00c5a3f967b0e8a57cfd7c74e0f31f74e304",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_group_original_69_5_vs_69_3",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_GROUP_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:2ef5ff8abb46139fa86229d13aa80f75c2e0b420b7e77623b021dbfcaf861082",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "caller_added_whitespace",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "SCOPE_LABEL_TEXT_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:39b6fddb067ded7453b00433af67b841bfea66b4a7d25bbc390e92cc724bdda3",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "conflicting_claims",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_UNRESOLVED_OR_UNSUPPORTED"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": false,
+      "evidence_check_id": "sha256:9be207f6983d39cec0ac13fdd1d68716823b089d504a8a9c0569036308436280",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "source_reference_missing",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "Candidate SourceReference exact set/order differs"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": true,
+      "evidence_check_id": "sha256:c80d94cd7f922100186bd5fe8a5e8cf7c2c1e452e7a1393c3628d4138914640f",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "foreign_real_FY2024_source_reference",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "Candidate SourceReference exact set/order differs"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": true,
+      "evidence_check_id": "sha256:c80d94cd7f922100186bd5fe8a5e8cf7c2c1e452e7a1393c3628d4138914640f",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "wrong_native_target_period",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_CLAIM_PERIOD_MISMATCH"
+      ],
+      "rejected_at": "EVIDENCE",
+      "response_was_original_bytes": true,
+      "evidence_check_id": "sha256:901c2d49eb8ad2a876bc1c8b5c9a4f3ff5e4f859ddf0a76a22ddf286b1107214",
+      "system_approval_eligible": false
+    },
+    {
+      "case": "synthetic_supported_header",
+      "expected": "PASS",
+      "observed": "PASS",
+      "reason_codes": [],
+      "evidence_scope": "SYNTHETIC_GRAPH_ONLY_NO_SOURCE_RUN_OR_REQUEST_CREDIT"
+    },
+    {
+      "case": "conflicting_year_header",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_ONLY_NO_SOURCE_RUN_OR_REQUEST_CREDIT"
+    },
+    {
+      "case": "conflicting_role_header",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_ONLY_NO_SOURCE_RUN_OR_REQUEST_CREDIT"
+    },
+    {
+      "case": "same_value_prior_year",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_PERIOD_MISMATCH"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_ONLY_NO_SOURCE_RUN_OR_REQUEST_CREDIT"
+    },
+    {
+      "case": "conflicting_year_with_row_stub",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_VALUE_HEADER_AMBIGUOUS"
+      ],
+      "evidence_scope": "SYNTHETIC_GRAPH_ONLY_NO_SOURCE_RUN_OR_REQUEST_CREDIT"
+    },
+    {
+      "case": "synthetic_same_value_correct_group",
+      "expected": "PASS",
+      "observed": "PASS",
+      "reason_codes": [],
+      "same_numeric_value": "69.3",
+      "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_SOURCE_RUN_OR_REQUEST_CREDIT"
+    },
+    {
+      "case": "synthetic_same_value_wrong_group",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_GROUP_MISMATCH"
+      ],
+      "same_numeric_value": "69.3",
+      "evidence_scope": "SYNTHETIC_GRAPH_NO_SEC_SOURCE_RUN_OR_REQUEST_CREDIT"
+    },
+    {
+      "case": "old_model_identity_failure_untouched_response_current_prompt",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_GROUP_MISMATCH"
+      ],
+      "reader": "PASS",
+      "original_response_bytes_unchanged": true,
+      "prefix_codepoint": 10,
+      "source_grid_rebuilt_equal": true
+    },
+    {
+      "case": "continuation_evidence_failure_untouched_response_current_prompt",
+      "expected": "REJECTED",
+      "observed": "REJECTED",
+      "reason_codes": [
+        "ANNUAL_SCOPE_VALUE_GROUP_MISMATCH"
+      ],
+      "reader": "PASS",
+      "original_response_bytes_unchanged": true,
+      "prefix_codepoint": 10,
+      "source_grid_rebuilt_equal": true
+    }
+  ],
+  "case_count": 28,
+  "failed_real_response_checks": [
+    {
+      "case": "old_model_identity_failure",
+      "original_files": [
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/stage/candidates/6867f54821e36e70159fe83e9ca8abb5d51828c9e151a5819fca048650cd53cc/b10/records.jsonl",
+          "sha256": "46bb9cb8a14015d0eddc4acfc04db548e2b32f4c3911c67564c3eddc7e93657e",
+          "size": 3959053
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/stage/candidates/6867f54821e36e70159fe83e9ca8abb5d51828c9e151a5819fca048650cd53cc/b10/manifest.json",
+          "sha256": "9c8c89213f9d60fcc416af4a9c313d6d175a61e29675cbb33a8843e539587448",
+          "size": 3605
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/stage/candidates/6867f54821e36e70159fe83e9ca8abb5d51828c9e151a5819fca048650cd53cc/b10/attempt_payloads/assistant_output_e74a430574d46ac9e90b18a6b6545ad6d3cbdb2a664f88b3d403a02eec2d6b9c.json",
+          "sha256": "e74a430574d46ac9e90b18a6b6545ad6d3cbdb2a664f88b3d403a02eec2d6b9c",
+          "size": 2446
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/stage/candidates/6867f54821e36e70159fe83e9ca8abb5d51828c9e151a5819fca048650cd53cc/b10/attempt_payloads/response_a1a896ffb1b63ff3b4141baaba1ce7b73ccc87b58be51dcc80cebd734e141f78.bin",
+          "sha256": "a1a896ffb1b63ff3b4141baaba1ce7b73ccc87b58be51dcc80cebd734e141f78",
+          "size": 3165
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/stage/inputs/b6eaffece6494de8188eee6b23d2bf2ec34a4ed898e22997a90498c4ccf2c650/8eb6a4f61df410fc47dbeeb6ee50494191fd96537292c88a952e7601fcd67664/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+          "sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "size": 2047740
+        }
+      ],
+      "current_task_system_prompt_hash": "sha256:7e418f05e253430d91ffd1c4fe8f3168e88f0ccc1b4eaf243f504c5d072c37b5",
+      "evidence_check_id": "sha256:6660addd79a938d43693723f580ae00721946347b8edeebe8517bdce645b8f04",
+      "original_native_attempt_status": "FAILED",
+      "original_native_error_class": "DEEPSEEK_MODEL_IDENTITY_MISMATCH",
+      "credit": "DIAGNOSTIC_ONLY_ORIGINAL_NATIVE_FAILURE_UNCHANGED"
+    },
+    {
+      "case": "continuation_evidence_failure",
+      "original_files": [
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live/stage/candidates/31e2acf0bede067f8e9b21f1d266d326a9097e5b24b377b441672cbdcda700fe/b10/records.jsonl",
+          "sha256": "2c7eaa40879087841c89ab9f1f48e6cf9827979cc035b13fc9c0a385af6a669b",
+          "size": 3959031
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live/stage/candidates/31e2acf0bede067f8e9b21f1d266d326a9097e5b24b377b441672cbdcda700fe/b10/manifest.json",
+          "sha256": "fb0a1d801b7ac76b23e6725bb01161f8256b208ff5482ac6aac16e68efa4cb22",
+          "size": 3605
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live/stage/candidates/31e2acf0bede067f8e9b21f1d266d326a9097e5b24b377b441672cbdcda700fe/b10/attempt_payloads/assistant_output_0314bedbdcfe8e80020093ff23fd8903b301a0740d07d41ce1966091c9b2772e.json",
+          "sha256": "0314bedbdcfe8e80020093ff23fd8903b301a0740d07d41ce1966091c9b2772e",
+          "size": 2482
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live/stage/candidates/31e2acf0bede067f8e9b21f1d266d326a9097e5b24b377b441672cbdcda700fe/b10/attempt_payloads/response_c14db83fa4259075870fd5dd9e0160650f8627aa81b505c41bc9d827d0d5139c.bin",
+          "sha256": "c14db83fa4259075870fd5dd9e0160650f8627aa81b505c41bc9d827d0d5139c",
+          "size": 3208
+        },
+        {
+          "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live/stage/inputs/e408d9cd4e802ac371babed23faed99adf189b1ed83b207f79eeee5160af8018/8eb6a4f61df410fc47dbeeb6ee50494191fd96537292c88a952e7601fcd67664/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+          "sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "size": 2047740
+        }
+      ],
+      "current_task_system_prompt_hash": "sha256:7e418f05e253430d91ffd1c4fe8f3168e88f0ccc1b4eaf243f504c5d072c37b5",
+      "evidence_check_id": "sha256:c2197169bb6f1cf0c4b92fab735fb019da69aa0719504e23c8dc15035486c871",
+      "original_native_attempt_status": "FAILED",
+      "original_native_error_class": "EVIDENCE_FAILURE",
+      "credit": "DIAGNOSTIC_ONLY_ORIGINAL_NATIVE_FAILURE_UNCHANGED"
+    }
+  ],
+  "current_request_rule": {
+    "path": "/Users/lyuhongwang/Developer/SEC_metrics/config/annual_continuity_request.json",
+    "sha256": "01992003889ab7355e29cf38b429d9d180240b0a8950b7ce0445f660e831bbb9",
+    "size": 1576
+  },
+  "current_task": {
+    "catalog_task_contract_hash": "sha256:c3fefe6aebf587f76a751aa0fdfd50e6f884777a49d26373ac6b13b6e21cfd5b",
+    "disclosure_group": "lodging_kpi_table",
+    "forbidden_confusions": [
+      "prior_year",
+      "percentage_change",
+      "company_operated",
+      "regional_only"
+    ],
+    "identity_constraints": [],
+    "metric_ids": [
+      "B10"
+    ],
+    "metric_spec_closure_hashes": [
+      "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424"
+    ],
+    "metric_spec_paths": [
+      "catalog/metrics/B10_occupancy.md"
+    ],
+    "metric_spec_semantic_hashes": [
+      "sha256:6f3d3a6d7a90acca9f416a03c1591953e7cfaa213abf1c2be2cf42bb45e9ce65"
+    ],
+    "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+    "output_schema_version": "3",
+    "reader_contract_id": "lodging_kpi_table_v1",
+    "reader_family_id": "lodging_kpi_table",
+    "representation": "table",
+    "required_claims": {
+      "geography": "worldwide",
+      "operating_scope": "systemwide",
+      "period_role": "current_fiscal_year",
+      "property_population": "comparable"
+    },
+    "required_roles": [
+      "occupancy"
+    ],
+    "scope_contract": {
+      "allowed_dimensions": [
+        "property_population",
+        "operating_scope",
+        "geography"
+      ],
+      "cross_dimension_constraints": [],
+      "exact_enum_aliases": {
+        "geography": {
+          "worldwide": [
+            "Worldwide"
+          ]
+        },
+        "operating_scope": {
+          "systemwide": [
+            "Comparable Systemwide Properties"
+          ]
+        },
+        "property_population": {
+          "comparable": [
+            "Comparable Systemwide Properties"
+          ]
+        }
+      },
+      "required_dimensions": [
+        "property_population",
+        "operating_scope",
+        "geography"
+      ],
+      "scope_contract_version": "2",
+      "selection_preference": {
+        "dimension_order": [
+          "property_population",
+          "operating_scope",
+          "geography"
+        ],
+        "prefer_complete_required_dimensions": true
+      }
+    },
+    "scope_contract_hash": "sha256:60e1a93cbb49f5280ef4e457a85791fd6c222edd47435c508fb1e73ef81002a8",
+    "system_prompt": "Return raw claims and exact locators from one selected table only. For every primary candidate, emit exactly these schema keys: role, claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, locator, scope_evidence_locators, and competing_candidates. Define every claimed_scope.evidence_locator_ids value in scope_evidence_locators with exact table geometry and raw_text copied from the supplied table. Always emit competing_candidates, using [] when none. Never emit rejection_reason_claim on a primary candidate; emit it only on each competing candidate, which must include every competing-candidate schema key. For scope_evidence_locators, use location_type caption only when the selected target table supplies a non-empty caption_raw_text, and copy that exact caption_raw_text into raw_text. Otherwise use location_type cell, header, row, or label with all eight locator fields copied from one supplied cell in the same selected target table, and copy that cell exact raw_text. Never use text from another table or nearby prose. For every scope_evidence_locators raw_text, preserve all leading and trailing whitespace characters exactly as supplied, represent them with valid JSON escape sequences such as \\n, \\r, and \\t, and never trim, normalize, or collapse whitespace. In the supplied serializer v2 transport, c=[caption,caption_raw_text] and each x cell tuple is [row_index,column_index,rowspan,colspan,header,raw_text,text]. For scope_evidence_locators raw_text, copy c[1] for caption or x[5] for cell, header, row, or label; never copy c[0] or x[6].\n\nFor the row-grouped tables supported by this task, resolve business-group ownership before choosing a numeric value.\n\nIdentify section-heading rows in the row-label column from their row structure and label text. A section heading may have header=false in the serialized data. It governs the following data rows up to, but not including, the next section-heading row in that same label column.\n\nFirst identify the block whose heading satisfies the required property population and operating scope. Within that block, locate the required geography row, then the requested metric and year column using the supplied column spans and headers.\n\nAfter selecting a numeric cell, independently trace upward from that cell to its nearest preceding section heading in the same row-label column. It must be the same heading used to establish the claimed operating scope. A heading below the numeric cell cannot establish that cell's scope.\n\nRows with the same geography under other operating groups are competing candidates, even when their numeric values are equal. Do not combine a value from one block with a scope label from another block.\n\nUse the existing output fields and exact source locators. If ownership cannot be established unambiguously, report the unresolved relationship rather than borrowing labels across blocks.",
+    "system_prompt_hash": "sha256:7e418f05e253430d91ffd1c4fe8f3168e88f0ccc1b4eaf243f504c5d072c37b5",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "task_spec_semantic_hash": "sha256:33aa25d2e8714347e3b8354802b0a7f52c1f39e6f5b0564afbafab6f10e9c76a"
+  },
+  "historical_task": {
+    "catalog_task_contract_hash": "sha256:c3fefe6aebf587f76a751aa0fdfd50e6f884777a49d26373ac6b13b6e21cfd5b",
+    "disclosure_group": "lodging_kpi_table",
+    "forbidden_confusions": [
+      "prior_year",
+      "percentage_change",
+      "company_operated",
+      "regional_only"
+    ],
+    "identity_constraints": [],
+    "metric_ids": [
+      "B10"
+    ],
+    "metric_spec_closure_hashes": [
+      "sha256:a0d30eaf5211f624b5de770c7a39cab97f6f1d68c9277d6f2c64d1d66ac01424"
+    ],
+    "metric_spec_paths": [
+      "catalog/metrics/B10_occupancy.md"
+    ],
+    "metric_spec_semantic_hashes": [
+      "sha256:6f3d3a6d7a90acca9f416a03c1591953e7cfaa213abf1c2be2cf42bb45e9ce65"
+    ],
+    "output_schema_hash": "sha256:839228425c34c5ce72f2dd1bb7d5812cb5ac9a1192f7c96afd2bdbfd56157864",
+    "output_schema_version": "3",
+    "reader_contract_id": "lodging_kpi_table_v1",
+    "reader_family_id": "lodging_kpi_table",
+    "representation": "table",
+    "required_claims": {
+      "geography": "worldwide",
+      "operating_scope": "systemwide",
+      "period_role": "current_fiscal_year",
+      "property_population": "comparable"
+    },
+    "required_roles": [
+      "occupancy"
+    ],
+    "scope_contract": {
+      "allowed_dimensions": [
+        "property_population",
+        "operating_scope",
+        "geography"
+      ],
+      "cross_dimension_constraints": [],
+      "exact_enum_aliases": {
+        "geography": {
+          "worldwide": [
+            "Worldwide"
+          ]
+        },
+        "operating_scope": {
+          "systemwide": [
+            "Comparable Systemwide Properties"
+          ]
+        },
+        "property_population": {
+          "comparable": [
+            "Comparable Systemwide Properties"
+          ]
+        }
+      },
+      "required_dimensions": [
+        "property_population",
+        "operating_scope",
+        "geography"
+      ],
+      "scope_contract_version": "2",
+      "selection_preference": {
+        "dimension_order": [
+          "property_population",
+          "operating_scope",
+          "geography"
+        ],
+        "prefer_complete_required_dimensions": true
+      }
+    },
+    "scope_contract_hash": "sha256:60e1a93cbb49f5280ef4e457a85791fd6c222edd47435c508fb1e73ef81002a8",
+    "system_prompt": "Return raw claims and exact locators from one selected table only. For every primary candidate, emit exactly these schema keys: role, claimed_period, claimed_raw_value, claimed_reported_unit, claimed_scope, locator, scope_evidence_locators, and competing_candidates. Define every claimed_scope.evidence_locator_ids value in scope_evidence_locators with exact table geometry and raw_text copied from the supplied table. Always emit competing_candidates, using [] when none. Never emit rejection_reason_claim on a primary candidate; emit it only on each competing candidate, which must include every competing-candidate schema key. For scope_evidence_locators, use location_type caption only when the selected target table supplies a non-empty caption_raw_text, and copy that exact caption_raw_text into raw_text. Otherwise use location_type cell, header, row, or label with all eight locator fields copied from one supplied cell in the same selected target table, and copy that cell exact raw_text. Never use text from another table or nearby prose. For every scope_evidence_locators raw_text, preserve all leading and trailing whitespace characters exactly as supplied, represent them with valid JSON escape sequences such as \\n, \\r, and \\t, and never trim, normalize, or collapse whitespace. In the supplied serializer v2 transport, c=[caption,caption_raw_text] and each x cell tuple is [row_index,column_index,rowspan,colspan,header,raw_text,text]. For scope_evidence_locators raw_text, copy c[1] for caption or x[5] for cell, header, row, or label; never copy c[0] or x[6].",
+    "system_prompt_hash": "sha256:82ed911f6e1274744d7151782da6e171d01120cc4dc1283758f1fed351573a45",
+    "task_contract_id": "lodging_occupancy_table_v2",
+    "task_spec_semantic_hash": "sha256:0f79342921060cd1b2128d52b46a0a0befc4783aed73aa1a70077afa5cc375b1"
+  },
+  "same_value_wrong_group_verified_equal": true,
+  "legacy_case_name_limit": {
+    "case": "same_numeric_value_wrong_group",
+    "actual_original_target": "69.3",
+    "actual_foreign_group_value": "69.5",
+    "scope": "Old name did not prove equal-number wrong-group. Historical files untouched; this run records its precise scope and adds a true equal-number synthetic case."
+  },
+  "attempt_1": {
+    "script": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression-attempt-1.py",
+      "sha256": "8c1809234b8170e77075e8a8713263a01157d5dea5a5ccdf6791310a808e0a16",
+      "size": 11442
+    },
+    "log": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression.log",
+      "sha256": "bde7b269106eb42d97ee4bb4c39524ab59c4071fcf70d066211f1815c04a6877",
+      "size": 501
+    },
+    "status": "FAILED_REVIEWER_ASSERTION_EXPOSED_OLD_CASE_NAME_LIMIT"
+  },
+  "synthetic_request_authority_data_root": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "source_request_or_history_modified": false,
+  "no_validator_mocks": true,
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "actual_execution_scope": "OS readonly.sb with deny network; current true reader/Evidence validators and original complete source parser. Only external audit artifacts and in-memory negative copies.",
+  "credit": {
+    "qualification": "NONE",
+    "native_Run": "NONE_CREATED",
+    "provider_response": "NO_NEW_RESPONSE",
+    "publication": "NONE",
+    "production_permission": "NONE"
+  },
+  "evidence_limit": "This proves current V9 with the execution-bound group prompt accepts the preserved known FY2025 response and rejects these explicit counterexamples, including both untouched FY2024 failed real responses. All checks use actual Reader/Evidence, current task contract and original or explicitly synthetic grids. It does not prove unseen-material generalization, a new provider outcome, whole continuity acceptance, or production publication.",
+  "script": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/independent-content-regression.py",
+    "sha256": "f3915d183a9d4fbe606776417f25f9e53ab1260650028bfc3c070e333ba0a352",
+    "size": 20612
+  },
+  "regression_id": "sha256:37ea1ee2a07e29f8c142fd05760159907c242a8285a16cf499278e313d8ffd67"
+}

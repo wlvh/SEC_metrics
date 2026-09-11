@@ -1,0 +1,129 @@
+test_two_complete_updates_and_reentry (tests.vnext.test_annual_continuity_rehearsal.AnnualContinuityRehearsalTest.test_two_complete_updates_and_reentry) ... Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+    ~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity_rehearsal.py", line 84, in test_two_complete_updates_and_reentry
+    first=flow.run_once(approval_url=URL);saved(root/'first.json',first)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py", line 555, in run_once
+    seeded=_publish_candidate(binding,candidate,seed=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py", line 486, in _publish_candidate
+    result=authority.execute(permission=permission,operation='publish')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication_authority.py", line 392, in execute
+    need(pub.verify_publication_bundle(bundle_dir=directory) == manifest, 'ANNUAL_DEPLOYED_PACKAGE_REQUIRED')
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4780, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 398, in verify_annual_bundle
+    values = _compose(snapshot, context, predecessor, meta, bundle_dir / 'internal/annual_runtime')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 273, in _compose
+    predecessor_manifest = pub.verify_publication_bundle(bundle_dir=predecessor_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4780, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 398, in verify_annual_bundle
+    values = _compose(snapshot, context, predecessor, meta, bundle_dir / 'internal/annual_runtime')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 273, in _compose
+    predecessor_manifest = pub.verify_publication_bundle(bundle_dir=predecessor_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4856, in verify_publication_bundle
+    _verify_portable_closure(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bundle_dir=bundle_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^
+        manifest=manifest,
+        ^^^^^^^^^^^^^^^^^^
+        projection=projection,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 1991, in _verify_portable_closure
+    validate_portable_qualification_binding(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=authority_root,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        binding=qualification_binding,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ratchet_release.py", line 453, in validate_portable_qualification_binding
+    manifest, records, _decisions = load_portable_qualification_run(
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        run_dir, repo_root,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ratchet_release.py", line 378, in load_portable_qualification_run
+    return _validate_committed_qualification_run(
+        repo_root=repo_root, run_dir=run_dir, origin=None,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ratchet_release.py", line 264, in _validate_committed_qualification_run
+    replayed = build_table_grid(
+        html_bytes=raw_bytes,
+        parent_raw_asset_ids=list(derived["parent_raw_asset_ids"]),
+        storage_uri=str(derived["storage_uri"]),
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/table_grid.py", line 545, in build_table_grid
+    return validate_record(record=record)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/records.py", line 1838, in validate_record
+    expected = _expected_identifier(record_type=semantic_type, record=record)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/records.py", line 858, in _expected_identifier
+    return "derived_asset_id", content_hash(value=body)
+                               ~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 466, in content_hash
+    content=canonical_json_bytes(value=value, set_paths=set_paths)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 416, in canonical_json_bytes
+    text = json.dumps(
+        normalized, ensure_ascii=False, separators=(",", ":"), sort_keys=True,
+    )
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/__init__.py", line 242, in dumps
+    **kw).encode(obj)
+          ~~~~~~^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 202, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/json/encoder.py", line 263, in iterencode
+    return _iterencode(o, 0)
+KeyboardInterrupt
+when serializing dict item 'colspan'
+when serializing list item 28
+when serializing dict item 'cells'
+when serializing list item 3
+when serializing dict item 'rows'
+when serializing list item 15
+when serializing dict item 'tables'

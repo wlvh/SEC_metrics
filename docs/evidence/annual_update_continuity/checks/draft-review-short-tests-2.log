@@ -1,0 +1,12 @@
+test_frozen_receipt_read_does_not_rewrite_active_mirror (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_frozen_receipt_read_does_not_rewrite_active_mirror) ... ok
+test_trigger_path_and_record_parent_alias_are_rejected (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_trigger_path_and_record_parent_alias_are_rejected) ... ok
+test_sec_failed_status_cannot_be_changed_to_success (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_sec_failed_status_cannot_be_changed_to_success) ... ok
+test_actual_root_and_local_permission_dict_are_not_execution_authority (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_actual_root_and_local_permission_dict_are_not_execution_authority) ... ok
+test_expiration_is_enforced_for_execution_but_history_can_be_read (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_expiration_is_enforced_for_execution_but_history_can_be_read) ... ok
+test_reservation_without_terminal_is_unknown_and_cannot_reset (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_reservation_without_terminal_is_unknown_and_cannot_reset) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.145s
+
+OK
+SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286.json; status=500; error=HTTP Error 500: SIMULATED_HTTP_FAILURE

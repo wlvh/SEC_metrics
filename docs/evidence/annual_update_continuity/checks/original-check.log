@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_annual_update.py", line 74, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_annual_update.py", line 48, in main
+    report = check_annual_update(repo_root=REPO_ROOT, candidate_run=args.candidate_run,
+        refresh=args.refresh, sec_request_limit=args.sec_request_limit)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_update.py", line 342, in check_annual_update
+    published = published_baseline(company=company, publication_root=repo_root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_update.py", line 215, in published_baseline
+    view = PublicationView.open(publication_root=publication_root)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 6627, in open
+    return cls._open_paths(
+           ~~~~~~~~~~~~~~~^
+        publications_dir=layout["publications_dir"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pointer_path=pointer_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 6654, in _open_paths
+    manifest = verify_publication_bundle(bundle_dir=bundle_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4780, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 353, in verify_annual_bundle
+    values = _compose(snapshot, context, predecessor, meta, bundle_dir / 'internal/annual_runtime')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 268, in _compose
+    public, projection_manifest, validation = _public_files(projection, adoption, requirement, ledger, meta, runtime_root, predecessor)
+                                              ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 183, in _public_files
+    from tools.check_vnext_semantics import run_audit
+ModuleNotFoundError: No module named 'tools'

@@ -1,0 +1,23 @@
+test_two_complete_updates_and_reentry (tests.vnext.test_annual_continuity_rehearsal.AnnualContinuityRehearsalTest.test_two_complete_updates_and_reentry) ... ERROR
+
+======================================================================
+ERROR: test_two_complete_updates_and_reentry (tests.vnext.test_annual_continuity_rehearsal.AnnualContinuityRehearsalTest.test_two_complete_updates_and_reentry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity_rehearsal.py", line 84, in test_two_complete_updates_and_reentry
+    first=flow.run_once(approval_url=URL);saved(root/'first.json',first)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py", line 522, in run_once
+    seeded=_publish_candidate(binding,candidate,seed=True)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py", line 446, in _publish_candidate
+    prepared=annual.prepare(candidate_dir=candidate,publication_root=root,policy_id=V3)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 332, in prepare
+    scans = {'semantic': pub._execute_semantic_audit(repo_root=ROOT), 'scalability': pub._execute_scalability_audit(repo_root=ROOT)}
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 3046, in _execute_semantic_audit
+    raise PublicationError("Semantic audit execution failed")
+vnext.publication.PublicationError: Semantic audit execution failed
+
+----------------------------------------------------------------------
+Ran 1 test in 121.167s
+
+FAILED (errors=1)

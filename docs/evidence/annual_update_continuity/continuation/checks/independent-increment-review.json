@@ -1,0 +1,342 @@
+{
+  "record_type": "INDEPENDENT_MODEL_CONTINUATION_INCREMENT_REVIEW",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "parent_task": "/root",
+  "conclusion": "NO_BLOCKING_FINDINGS",
+  "conclusion_scope": "CODE_AND_BOUNDED_OFFLINE_CHECKS_ONLY; complete offline-02 must finish successfully before new permission is issued",
+  "reviewed_head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+  "runtime_tree": "sha256:e408d9cd4e802ac371babed23faed99adf189b1ed83b207f79eeee5160af8018",
+  "test_tree": "sha256:d50939591ed33789a3a10e293ea2f5c577e0e756f0ceb47912100608f0c710eb",
+  "recorded_at_utc": "2026-09-10T11:43:07.918323+00:00",
+  "review_source": {
+    "kind": "ACTUAL_INDEPENDENT_MODEL_SUBTASK_REVIEW",
+    "human_review": false,
+    "github_approval_issued": false,
+    "user_future_head_review_claimed": false
+  },
+  "requirement": {
+    "requirement_id": "issue_28_v8",
+    "requirement_generation": "PROFILE_DRIVEN_V9",
+    "requirement_closure_hash": "sha256:ab6791ad38820c7899285943e538bf2700a16024712ab0a449ebe1d59740c00e",
+    "hashes": {
+      "baseline_sha256": "cf8268cef3e9cf4231f03d161cc60c8c9bbdcd4b8b1cdb1a20e0a7de54521fb9",
+      "contract_sha256": "ff118d083247456e2c031abcd6a472dc06fc8be4c8b2ead74f243c6927a68b3f",
+      "decision_register_sha256": "753254b4a058ed2d9be5620486a3077f53838d5680192ff13bb2a229ade46ff7",
+      "invariant_profile_sha256": "6d38712454b344a41ff42d6b2c04ece9c0df15a9e64eebf2fd9f3bd12c182c4c",
+      "transfer_manifest_sha256": "1196ffd12e30885712ba71515ae39704bd03eb0c85ad572cb95b66fabd9373cc",
+      "parent_requirement_closure_hash": "sha256:83bd7bb783da24b500e31aa27f1e2ceac2767d2af5bd76dca347733b96b75671",
+      "validator_sha256": "8c75f68b699bf53d2c4fe6b5821d63908736845326a9103cb29a8c5f869acfea"
+    }
+  },
+  "user_instruction_scope": "Latest user authorizes direct overwrite of existing model configuration/Requirement and a separately bounded continuation. The previously proposed additional version/approval design is superseded; this review does not reimpose it. Actual old responses, failed execution and closed1/1/0 remain unchanged.",
+  "diff_basis": {
+    "configuration_delta": "bd18fe0efb3c21b1b8aaa369c10eeb24ce34839f to61e6135770f2a3c1b6cd36c5c746986628885638",
+    "continuation_delta": "61e6135 to1ea60fd, including terminal consistency repair",
+    "files": [
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/config/provider_model_runtime.json",
+        "sha256": "76aafa865826ecd42e0b9f8cfb7f6c3ac30f898aa5819c2522be7bb916b79e8b",
+        "size": 619
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/docs/annual_update_continuity.md",
+        "sha256": "5652c8ae2f3317bb12a46c836d0b319b9a897d948d924fd1921df7cdb10f1706",
+        "size": 7730
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/requirements/issue_28_v8/CONTRACT.md",
+        "sha256": "ff118d083247456e2c031abcd6a472dc06fc8be4c8b2ead74f243c6927a68b3f",
+        "size": 4151
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/requirements/issue_28_v8/baseline_manifest.json",
+        "sha256": "cf8268cef3e9cf4231f03d161cc60c8c9bbdcd4b8b1cdb1a20e0a7de54521fb9",
+        "size": 70741
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ai_adapter.py",
+        "sha256": "6da343e85be145de15497d7e6843045ee39cac9f9d95ead23dab8416fa6b9198",
+        "size": 189037
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py",
+        "sha256": "f94437b4a4890dd16dc5084726fd8a9e1fdbd648fde13965e9b72ae96c6a1368",
+        "size": 55021
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_runtime.py",
+        "sha256": "743ba79046835895e6cc1e61016f34432d98948c30c0a80b6073aac643a9cc83",
+        "size": 42874
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/invocation_control.py",
+        "sha256": "e6a745d8332677e4584bb7a014fbbf020c953d7b2cbd9f6762ca8a7b241484f0",
+        "size": 136839
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/run_store.py",
+        "sha256": "a7156820913a08d73e2ad3a39f0fddeba166c4ffa9b961ca7048e27ab2900341",
+        "size": 143724
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/source_strategy.py",
+        "sha256": "85faca3e9af67212cb71ca6a8343ed23b14dbe3e5ae17da0f52ea02d949d8622",
+        "size": 42243
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/historical_authority_support.py",
+        "sha256": "993519759742a253cfd48780636d372d35795c5da88d6ae8121b433fa7e244a7",
+        "size": 3756
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity.py",
+        "sha256": "5850bccfcac273b63f8ba813a6f94c0f6dad8b921d2a7ba7b6d5be34530677ab",
+        "size": 22700
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity_rehearsal.py",
+        "sha256": "f4497ab9d4f6a405dc3fa188b73ad0b5bdbe97ef9e6c47cdd83aead507f9badf",
+        "size": 18675
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_source_strategy_registry.py",
+        "sha256": "8a28f6bdf83f50fe002050807d4d5337ecfde0e4047d50170232efda497ba5e5",
+        "size": 22302
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/tools/run_fast_tests.py",
+        "sha256": "0ae6275435e5adb28eeb9eb6affd4bfe7093ea4eca1152a1c017bf9c16c0b5ea",
+        "size": 9586
+      },
+      {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_annual_continuity.py",
+        "sha256": "bd7677346f91097655f1e0a11dec64556a0fa53900f1765875df373f51ee3fe6",
+        "size": 4008
+      }
+    ]
+  },
+  "code_findings_and_resolution": [
+    {
+      "subject": "New model consistent across layers",
+      "status": "NO_BLOCKING_FINDING",
+      "detail": "Current execution-bound provider_model_runtime.json selects deepseek-flash for ordinary issue28v8. configured_annual_transport_policy checks exact config SHA/size, selects one provider/API tuple and preserves carried provider/API/resource/retry fields. Request preparation, credential preflight, opaque adapter policy, WB-3 authority and Run transport replay consume that same selected model. The request body comparison showed onlymodel changes;1M capacity and200k actual-input limit remain."
+    },
+    {
+      "subject": "Strict response identity",
+      "status": "NO_BLOCKING_FINDING",
+      "detail": "Builder recognizes only the two exact supported model names; original transport returned-model equality remains strict. No alias mapping or automatic fallback was introduced. Sealed olddata still selects deepseek-v4-flash, and its returneddeepseek-flash record retains statusFAILED and errorDEEPSEEK_MODEL_IDENTITY_MISMATCH."
+    },
+    {
+      "subject": "Historical reading under direct config overwrite",
+      "status": "NO_BLOCKING_FINDING",
+      "detail": "Source/release registry uses validated recorded Issue28v1 parent for historical identity; other source hashes/metric exact set remain checked. Current model configuration is separately execution-bound. Reviewer completed native V1/V2/S0 cold-read steps and verified old sealed model/failed records without rewriting them."
+    },
+    {
+      "subject": "Inspection fields",
+      "status": "NO_BLOCKING_FINDING_IN_CODE_DELTA",
+      "detail": "Inspector-only execution/zero counters are now nested ininspection; no misleading top-level zero provider_paid_sec_calls remains. Overall candidate execution is explicitlyEXECUTED on normal success; pending-publication/recovery-only paths remainNOT_EXECUTED for new candidate work. Existingcounts remains cumulative native stage accounting. New complete-run output behavior still awaits full offline-02."
+    },
+    {
+      "subject": "Continuation authority and resource boundary",
+      "status": "NO_BLOCKING_FINDING",
+      "detail": "Schema2 fixes new2/2/0, two normal provider inputs, zero conditional repair, zero retries and cumulative3/3/0 including exactly one closed prior failure. Prior approval is fetched by the original GitHub reader for proposal; stored owner/body/code/test/Requirement/registration/closed state and native count proof are rechecked. Root overlap, uncertain counts and changed prior proof reject. New registration records the same prior proof; old closed stage is not reopened."
+    },
+    {
+      "subject": "Order and first-failure stop",
+      "status": "NO_BLOCKING_FINDING",
+      "detail": "The signed update_period_ends must be two sorted distinct full-year ends inside scope. _reserve_provider checks the exact next period and cumulative bound. Existing unknown/failure gate and pending-success-publication priority prevent a second input after a failed or uncommitted first update. The final grant must explicitly bindFY2024 thenFY2025 as requested."
+    },
+    {
+      "subject": "Incomplete previous-terminal validation",
+      "status": "FOUND_AND_FIXED",
+      "detail": "Independent temporary copies of the actual old controller showed rehashed INVALID_TERMINAL, top/attempt disagreement and a failed record claiming success could previously classify asFAILED. _validate_failed_terminal now requires known failure status, exactly one matching attempt, nonempty error and no success receipt. Real original still verifies; all three native copied-record attacks now reject. No original Run was edited."
+    }
+  ],
+  "personally_executed": [
+    {
+      "scope": "Current configuration/inspection plus source/release rehash attacks",
+      "head": "61e6135770f2a3c1b6cd36c5c746986628885638",
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/reviewer-model-targeted-61e6135.log",
+        "sha256": "df976125fad8ae547a8621b46864ec4a72d0af074499dc8d58a27ea1524618ab",
+        "size": 1435
+      },
+      "tests": 6,
+      "duration_seconds": 5.241,
+      "status": "OK"
+    },
+    {
+      "scope": "Current continuation permission and model configuration classes",
+      "head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/reviewer-permission-model-1ea60fd.log",
+        "sha256": "befdad988724164b117a315a8881eeb68cc3222da50db3b01bae5c444ca5f7e3",
+        "size": 1463
+      },
+      "tests": 7,
+      "duration_seconds": 4.683,
+      "status": "OK"
+    },
+    {
+      "scope": "Current true Reader/Evidence known-source and synthetic counterexamples",
+      "head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+      "record": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/independent-content-regression.json",
+        "sha256": "d4e90cb453f96474dd85d2b1a0022ae65fe2c8467e178ff07866b1448de2cce9",
+        "size": 17344
+      },
+      "script": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/independent-content-regression.py",
+        "sha256": "b56711cfef9c070d9a8c2fbec31e84ec46db601e40dc0aa4d85b158aa8767ced",
+        "size": 16007
+      },
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/independent-content-regression.log",
+        "sha256": "dc13e39359b5be853a569fc3a23a7ad17e6051d2630a9f1fa4757964c5237295",
+        "size": 7933
+      },
+      "tests": 26,
+      "status": "PASS",
+      "specific_cases": "Original correct Systemwide responsePASS; true69.3 equal-number wrong-groupREJECTED; wrong source/year/footnote/unknown alias rejected. Earlier misleading69.5/69.3 case name is preserved with corrected scope."
+    },
+    {
+      "scope": "Real prior failure/native count proof and rehashed attack copies",
+      "record": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/reviewer-terminal-fixed.json",
+        "sha256": "1892f9a916c468456e7542a1e95e62735b690595d0f45d582682bd7e46724657",
+        "size": 2034
+      },
+      "original_negative_record": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/reviewer-terminal-counterexamples.json",
+        "sha256": "821b3c9c8fe9b47349710712c7c9b3db4a925b2305e352fea2e8463b69acfa27",
+        "size": 1239
+      },
+      "status": "PASS_AFTER_FIX",
+      "old_stage": {
+        "approval_url": "https://github.com/wlvh/SEC_metrics/pull/41#issuecomment-5616160149",
+        "stage_id": "sha256:7db4fef84baa329b7c17effa9808ae55244d08ec27e9cc318302044622231688",
+        "stage_root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/stage",
+        "budget_root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/budget",
+        "data_root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live/data",
+        "binding_sha256": "b7048b21703110c5feaff1753d7385b37d9df6b2779512c19e5a51d85e1b7bd6",
+        "closed_sha256": "678a1a8fc82c48ac9b2654cb7490feb4bb718d2a321f061d875b92ae6baba184",
+        "registration_sha256": "cff007d50204a65f460d0ac441993427c46ebf6ceb52fd05d8a4154eac7ec0c8",
+        "requirement_closure_hash": "sha256:c3c8d40648c0bfefe8209458142754888dfd0bb87df2c3f43a3ed01a0e83ecb1",
+        "counts": {
+          "provider": 1,
+          "paid": 1,
+          "sec_reserved": 0,
+          "provider_reserved": 1,
+          "failed_plans": [
+            "sha256:6867f54821e36e70159fe83e9ca8abb5d51828c9e151a5819fca048650cd53cc"
+          ],
+          "uncertain_plans": [],
+          "uncertain_sec": [],
+          "failed_sec": []
+        }
+      }
+    },
+    {
+      "scope": "Native old V1/V2/S0 cold-read steps",
+      "script": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/reviewer-cold-model-61e6135.py",
+        "sha256": "76edd672b340252e110fac4b7777b5bdacc0d45ddfba057767127569e4e99f8f",
+        "size": 4161
+      },
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/reviewer-cold-model-61e6135.log",
+        "sha256": "db4c916f3308a3e533b195125267fbb0d95c57480769ef49fe469256056c45da",
+        "size": 1264
+      },
+      "completed_steps": [
+        "V1 publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+        "V2 publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+        "S0 publication_b1f491c0005ce616d1f9c9ea8438e6c60fb5628a60863a64d8982058c27a4335"
+      ],
+      "whole_script_exit_code": 1,
+      "whole_script_status": "NOT_PASS",
+      "exact_reason": "All three native read steps printedPASS. The later current-ROOT Requirement comparison collided with parallel annual_continuity.py edits and correctly failed the execution-authority hash guard. This is not an old-package read failure. Old-data policy/failed Run checks were subsequently independently completed inreviewer-terminal-fixed.json."
+    }
+  ],
+  "logs_read_not_reexecuted": {
+    "current_fast": {
+      "command": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/fast-03-command.json",
+        "sha256": "877656c05242ef47c05b07ba3595aaf46efe76291b1005a7f3aa0eb277cdbf23",
+        "size": 845
+      },
+      "log": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/fast-03-command.log",
+        "sha256": "7ba6b2eaa5c9077ba52c963202a0e32724658ec9bfb91b5c98c88172498ca609",
+        "size": 11932
+      },
+      "entries": 40,
+      "status": "PASSED",
+      "annual_short_tests": "14+3+4=21"
+    },
+    "interrupted_offline_01": {
+      "command": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-01-command.json",
+        "sha256": "0fd9c22e714742d24a13e4e23f745b5daacf9aacc4863268bfb623ba1cb9ce7c",
+        "size": 861
+      },
+      "scope": "Earlier head full offline was deliberately interrupted after terminal finding, not countedPASS."
+    }
+  },
+  "full_offline_gate": {
+    "name": "offline-02",
+    "status": "PENDING_RUNNING",
+    "result_claimed_pass": false,
+    "current_log_path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02-command.log",
+    "required_before_new_stage_permission": true,
+    "evidence_to_append_after_completion": "Actual terminal command head/log/hash; all test methods; new model I/O fixture scope; S0/S1/S2/first-failure/reentry/source/closed-old-stage byte preservation bindings."
+  },
+  "inherited_evidence": {
+    "prior_independent_code": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/final-code-review-fce0152.json",
+      "sha256": "f1da7ada228289eaf6159485296e012fb5a31a165517feae8cc9e2233d9a2784",
+      "size": 10883
+    },
+    "prior_original_real_failure": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-live-failure-closeout.json",
+      "sha256": "53eb159f5a16c2e00d85e898caf744417c2f7befad645b2a028a1e4c2134953e",
+      "size": 7070
+    },
+    "note": "Reused prior unchanged native behavior and historical original/source evidence by explicit scope. The original real1/1/0 failure is never relabelled as new-model success."
+  },
+  "not_granted_or_verified": [
+    "No new continuation owner approval issued by this reviewer.",
+    "No new real provider/paid/SEC request.",
+    "No complete offline-02 success claim yet.",
+    "No realFY2024/FY2025 continuation success yet.",
+    "No production publication, long-term scheduler, old failure success, old budget restoration, or extra repair slot."
+  ],
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "old_actual_provider_paid_sec_calls": [
+    1,
+    1,
+    0
+  ],
+  "permitted_future_new_limit": [
+    2,
+    2,
+    0
+  ],
+  "future_cumulative_limit": [
+    3,
+    3,
+    0
+  ],
+  "permission_credit": "NONE_FROM_REVIEW_RECORD",
+  "production_authorization": false,
+  "sandbox": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-readonly.sb",
+    "sha256": "bf41aebd072add30f0f642803cb8d5118c4aaa9ca548cae2640823f689a696ca",
+    "size": 206
+  }
+}

@@ -280,12 +280,8 @@ def copy_test_repository(*, temp_dir: str) -> Path:
         src=REPO_ROOT / "config" / "company_registry.csv",
         dst=company_registry,
     )
-    foundation = read_json(path=ISSUE_15_DIR / "foundation_verification_receipt.json")
-    for binding in foundation["receipt_bindings"]:
-        relative = Path(binding["path"])
-        destination = repository_root / relative
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(src=REPO_ROOT / relative, dst=destination)
+    from tests.vnext.historical_authority_support import copy_foundation_receipts
+    copy_foundation_receipts(repository_root)
     return issue_copy
 
 

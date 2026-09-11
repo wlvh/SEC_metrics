@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(REPO_ROOT / "scripts"))
+sys.path[:0] = [str(REPO_ROOT), str(REPO_ROOT / "scripts")]
 
 from sec_http import write_immutable_bytes
 from vnext.annual_candidate import _output_root, prepare_candidate_plan
@@ -61,7 +61,7 @@ def main(argv=None):
         if args.output:
             write_immutable_bytes(path=args.output, content=raw)
         print(raw.decode(), end="")
-        return 0 if report["status"] in {"NO_NEW_ANNUAL_FILING", "INPUT_READY"} else 2
+        return 0 if report["status"] in {"NO_NEW_ANNUAL_FILING", "INPUT_READY", "CANDIDATE_PENDING_PUBLICATION"} else 2
     except (ValueError, KeyError, TypeError, OSError, RuntimeError) as error:
         failure = {"status": "CHECK_FAILED", "error": str(error), "execution": "NOT_EXECUTED"}
         if report is not None:

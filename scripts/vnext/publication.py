@@ -3007,7 +3007,7 @@ def _semantic_gate_evidence(
     }
 
 
-def _execute_semantic_audit(*, repo_root: Path) -> Dict[str, object]:
+def _execute_semantic_audit(*, repo_root: Path, tool_root: Optional[Path] = None) -> Dict[str, object]:
     """Run the repository semantic gate and return its exact receipt.
 
     Args:
@@ -3020,7 +3020,7 @@ def _execute_semantic_audit(*, repo_root: Path) -> Dict[str, object]:
         PublicationError: When the gate is missing, times out, fails, or emits
             an unreadable receipt.
     """
-    tool_path = repo_root / "tools" / "check_vnext_semantics.py"
+    tool_path = (repo_root if tool_root is None else tool_root) / "tools" / "check_vnext_semantics.py"
     if tool_path.is_symlink() or not tool_path.is_file():
         raise PublicationError("Semantic audit executable is unsafe")
     try:
@@ -6662,6 +6662,16 @@ class PublicationView:
             bundle_dir=bundle_dir,
             manifest=manifest,
         )
+
+    def native_result(self, *, company_id: str, metric_id: str):
+        """Resolve this version's native coordinate, following explicit inheritance."""
+        from .publication_results import native_result
+        return native_result(self, company_id, metric_id)
+
+    def authority_bytes(self, *, relative_path: str) -> bytes:
+        """Read retained coverage authority independently of result ownership."""
+        from .publication_results import authority_bytes
+        return authority_bytes(self, relative_path)
 
     def read_bytes(self, *, relative_path: str) -> bytes:
         """Read one file only from the pinned bundle.

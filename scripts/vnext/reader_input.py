@@ -258,6 +258,7 @@ def build_reader_task_contract(
     *, compiled_spec: Optional[Mapping[str, object]] = None,
     repo_root: Optional[Path] = None,
     task_contract_id: Optional[str] = None,
+    requirement: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
     """Build one legacy or catalog-owned Reader task contract.
 
@@ -282,6 +283,7 @@ def build_reader_task_contract(
             return resolve_table_task_contract(
                 repo_root=repo_root,
                 task_contract_id=task_contract_id,
+                requirement=requirement,
             )
         except TableTaskContractError as error:
             raise ReaderInputError("Catalog Reader task is invalid") from error
@@ -445,6 +447,7 @@ def prepare_reader_request(
     compiled_spec: Optional[Mapping[str, object]] = None,
     repo_root: Optional[Path] = None,
     task_contract_id: Optional[str] = None,
+    requirement: Optional[Mapping[str, object]] = None,
 ) -> PreparedReaderRequest:
     """Build the only complete input accepted by the AI attempt boundary.
 
@@ -464,6 +467,7 @@ def prepare_reader_request(
         compiled_spec=compiled_spec,
         repo_root=repo_root,
         task_contract_id=task_contract_id,
+        requirement=requirement,
     )
     payload = build_reader_payload(
         manifest=manifest,

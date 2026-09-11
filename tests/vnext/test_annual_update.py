@@ -114,6 +114,34 @@ class AnnualUpdateTest(unittest.TestCase):
             self.assertIsNone(report["prepared_input"])
             self.assertEqual([0, 0, 0], report["provider_paid_sec_calls"])
 
+    def test_candidate_leading_publication_survives_discovery_failure(self):
+        self.seed()
+        report = update.inspect_annual_update(repo_root=self.root, company=self.company,
+            successful_candidate=self.new, published=self.old)
+        self.assertEqual("CANDIDATE_PENDING_PUBLICATION", report["status"])
+        self.assertEqual("UNCHANGED", report["filing_change"])
+        self.assertEqual("NONE", report["candidate_work"])
+        self.assertEqual("SUCCESSFUL_CANDIDATE_PENDING", report["publication_work"])
+        (self.root / "evidence/requests_log.csv").unlink()
+        failed = update.inspect_annual_update(repo_root=self.root, company=self.company,
+            successful_candidate=self.new, published=self.old)
+        self.assertEqual("CHECK_FAILED", failed["status"])
+        self.assertEqual("SUCCESSFUL_CANDIDATE_PENDING", failed["publication_work"])
+        self.assertEqual("UNKNOWN", failed["filing_change"])
+
+    def test_publication_progress_is_explicit_and_run_specific(self):
+        self.seed()
+        missing = self.inspect(self.new)
+        self.assertEqual("NOT_SUPPLIED", missing["publication_work"])
+        current = update.inspect_annual_update(repo_root=self.root, company=self.company,
+            successful_candidate=self.new, published=self.new)
+        self.assertEqual("NONE", current["publication_work"])
+        replacement = {**self.new, "run_id": self.new["run_id"] + ":different-execution"}
+        pending = update.inspect_annual_update(repo_root=self.root, company=self.company,
+            successful_candidate=replacement, published=self.new)
+        self.assertEqual("SUCCESSFUL_CANDIDATE_PENDING", pending["publication_work"])
+        self.assertEqual("CANDIDATE_PENDING_PUBLICATION", pending["status"])
+
     def test_missing_sources_and_stale_facts_are_not_ready(self):
         self.seed(primary=False, facts=False)
         missing = self.inspect()

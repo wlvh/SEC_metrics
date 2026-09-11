@@ -351,6 +351,13 @@ def _validate_metric(
     )
 
 
+def _recorded_source_requirement(repo_root):
+    successor = repo_root / "requirements" / "issue_28_v1"
+    if successor.is_dir():
+        return load_requirement_snapshot(snapshot_dir=successor)["parent_snapshot"]
+    return load_requirement_snapshot(snapshot_dir=repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID)
+
+
 def load_source_strategy_registry(*, repo_root: Path) -> Dict[str, object]:
     """Load and verify the 39-metric Issue #15 SourceStrategy registry.
 
@@ -365,7 +372,9 @@ def load_source_strategy_registry(*, repo_root: Path) -> Dict[str, object]:
             family-literal, migration-state, or byte-binding drift.
     """
     requirement_dir = repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
-    requirement = load_requirement_snapshot(snapshot_dir=requirement_dir)
+    # Source policy and old published plans retain their verified parent;
+    # current model configuration is separately execution-bound.
+    requirement = _recorded_source_requirement(repo_root)
     registry_path = repo_root / "config" / "source_strategy_registry.json"
     registry = _json_object(path=registry_path, label="SourceStrategy registry")
     _exact_fields(
@@ -446,6 +455,7 @@ def load_source_strategy_registry(*, repo_root: Path) -> Dict[str, object]:
         "registry": registry,
         "registry_sha256": registry_sha256,
         "requirement_closure_hash": requirement["requirement_closure_hash"],
+        "recorded_model_runtime_sha256": requirement["hashes"]["provider_model_runtime_sha256"],
     }
 
 
@@ -573,9 +583,7 @@ def _release_authority(
             path=(repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
                   / "legacy_semantic_producer_inventory.json")
         ),
-        "provider_model_runtime_sha256": sha256_file(
-            path=repo_root / "config" / "provider_model_runtime.json"
-        ),
+        "provider_model_runtime_sha256": registry["recorded_model_runtime_sha256"],
         "public_projection_catalog_sha256": sha256_file(
             path=repo_root / "catalog" / "zero_ai_public_projection.json"
         ),
@@ -672,9 +680,7 @@ def _validate_release_plan(
 def load_issue15_release_plans(*, repo_root: Path) -> Dict[str, object]:
     """Load and validate the complete immutable Issue #15 ratchet chain."""
     registry = load_source_strategy_registry(repo_root=repo_root)
-    requirement = load_requirement_snapshot(
-        snapshot_dir=repo_root / "requirements" / ISSUE_15_REQUIREMENT_ID
-    )
+    requirement = _recorded_source_requirement(repo_root)
     index_path = repo_root / "config" / "issue_15_release_plan.json"
     index = _json_object(path=index_path, label="ReleasePlan index")
     _exact_fields(

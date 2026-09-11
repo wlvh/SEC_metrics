@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression.py", line 109, in <module>
+    assert original['candidates'][0]['claimed_raw_value'].strip() == cell(17,15)['text'].strip(), 'Same-value wrong-group fixture is not actually same value'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Same-value wrong-group fixture is not actually same value

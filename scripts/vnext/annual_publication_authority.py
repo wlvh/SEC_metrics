@@ -98,6 +98,9 @@ def plan_publication(*, bundle_dir, target_root, pull_number):
 
 
 def validate_plan(plan):
+    if type(plan) is dict and plan.get('record_type') == 'CONTINUITY_PUBLICATION_PLAN':
+        from .annual_continuity_publication import validate_plan as validate_continuity
+        return validate_continuity(plan)
     from . import annual_publication as annual
     need(type(plan) is dict and set(plan) == {'schema_version', 'record_type', 'repository', 'pull_number',
         'target_root', 'environment', 'bundle_directory', 'code', 'binding', 'predecessor', 'predecessor_pointer',
@@ -230,6 +233,9 @@ class PublicationPermission:
 
 def verify_authorization(*, plan, activation_url, owner_url):
     """The only permission factory: local JSON, templates and old grants cannot enter."""
+    if type(plan) is dict and plan.get('record_type') == 'CONTINUITY_PUBLICATION_PLAN':
+        from .annual_continuity_publication import verify_authorization as verify_continuity
+        return verify_continuity(plan=plan, activation_url=activation_url, owner_url=owner_url)
     root, manifest, _ = validate_plan(plan)
     need(activation_url != owner_url, 'ANNUAL_DISTINCT_PUBLICATION_DECISION_REQUIRED')
     activation = activate_requirement(plan=plan, activation_url=activation_url)
@@ -253,6 +259,8 @@ def _current():
     need(type(value) is tuple and len(value) == 3, 'ANNUAL_PRODUCTION_SWITCH_PERMISSION_REQUIRED')
     permission, operation, action = value
     binding = _permission(permission)
+    from .annual_continuity_publication import live_guard
+    live_guard(binding, operation, action)
     return binding, operation, action
 
 
@@ -358,6 +366,8 @@ def deploy(*, permission):
     root, manifest, _ = validate_plan(plan)
     need(manifest == binding['manifest'], 'ANNUAL_AUTHORIZED_PACKAGE_CHANGED')
     need(read(root, 'outputs/active_publication.json') == plan['predecessor_pointer'], 'ANNUAL_DEPLOY_PREDECESSOR_CHANGED')
+    from .annual_continuity_publication import live_guard
+    live_guard(binding, 'deploy', None)
     _save_permission(root, binding)
     target = root / 'outputs/publications' / manifest['publication_id']
     if target.exists():
@@ -374,6 +384,8 @@ def execute(*, permission, operation):
     """One publish, one rollback, one restore; recover belongs to its existing action."""
     from . import annual_publication as annual
     binding = _permission(permission); plan = binding['plan']
+    if plan.get('record_type') == 'CONTINUITY_PUBLICATION_PLAN':
+        need(operation in {'publish', 'recover'}, 'CONTINUITY_OPERATION_NOT_AUTHORIZED')
     root, manifest, _ = validate_plan(plan)
     need(manifest == binding['manifest'] and operation in {'publish', 'rollback', 'restore', 'recover'}, 'ANNUAL_OPERATION_NOT_AUTHORIZED')
     directory = root / 'outputs/publications' / manifest['publication_id']
@@ -419,6 +431,8 @@ def execute(*, permission, operation):
             'previous_pointer': previous, 'target_publication_id': target,
             'switch_mode': 'ROLLBACK' if operation == 'rollback' else 'COMMIT',
             'committed_at_utc': annual.utc()}, 'action_id')
+        from .annual_continuity_publication import live_guard
+        live_guard(binding, operation, action)
         _save_permission(root, binding)
         _write_once(path, action)
     token = _context.set((permission, operation, action))

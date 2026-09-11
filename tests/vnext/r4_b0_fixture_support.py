@@ -15,7 +15,8 @@ from vnext.table_grid import build_table_grid
 from vnext.table_task_contracts import resolve_table_task_contract
 
 
-REPO_ROOT = Path(__file__).resolve().parents[2]
+from tests.vnext.historical_authority_support import historical_test_root
+REPO_ROOT = historical_test_root()
 SOURCE_PATH = "tests/fixtures/vnext/r4_offline/b0_source.html"
 
 

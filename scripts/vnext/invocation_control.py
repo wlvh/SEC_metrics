@@ -309,6 +309,8 @@ def _annual_candidate_policy_view(*, requirement, repo_root):
         from .requirement_profile_v6 import REQUIREMENT_ID, DECISION_ID, candidate_choice
     if requirement["requirement_id"] == "issue_28_v6":
         from .requirement_profile_v7 import REQUIREMENT_ID, DECISION_ID, candidate_choice
+    if requirement["requirement_id"] == "issue_28_v8":
+        from .requirement_profile_v9 import REQUIREMENT_ID, DECISION_ID, candidate_choice
     from .requirement_profile import validate_execution_authority, requirement_authority_paths
     from .sources import resolve_repository_file
     if requirement["requirement_id"] != REQUIREMENT_ID:
@@ -330,6 +332,10 @@ def _annual_candidate_policy_view(*, requirement, repo_root):
         files[relative] = {"sha256": sha256_bytes(content=data), "size": len(data)}
     from .provider_runtime import load_provider_runtime_authority
     transport = dict(decisions["S-PROVIDER-TRANSPORT"]["choice"])
+    if requirement["requirement_id"] == "issue_28_v8":
+        from .ai_adapter import configured_annual_transport_policy
+        transport["model"] = configured_annual_transport_policy(
+            requirement=requirement, repo_root=repo_root).model
     runtime = load_provider_runtime_authority(repo_root=repo_root,
         **{key:transport[key] for key in ("provider", "model", "api")})
     # This ordinary policy keeps the model's pre-egress hard limit. The new

@@ -1,0 +1,52 @@
+{
+  "record_type": "EVIDENCE_CHECK",
+  "evidence_check_id": "sha256:6707cc88de67de277de5a87716dd1bb7f712e483752e9462fdc612c2411e8419",
+  "candidate_hash": "sha256:e2bb71da2d7531142640167d436e1a323911661dee32580a95da9d27400f207d",
+  "status": "PASS",
+  "normalized_values": {
+    "occupancy": "0.693"
+  },
+  "checks": [
+    {
+      "check": "SOURCE_BINDINGS",
+      "status": "PASS"
+    },
+    {
+      "check": "READER_TABLE_EXACT_SET",
+      "status": "PASS"
+    },
+    {
+      "check": "SELECTED_LOCATOR:occupancy",
+      "status": "PASS"
+    },
+    {
+      "check": "SCOPE_EXACT_ENUM_NORMALIZATION",
+      "status": "PASS",
+      "normalized_scope": {
+        "property_population": "comparable",
+        "operating_scope": "systemwide",
+        "geography": "worldwide"
+      },
+      "unresolved_dimensions": []
+    },
+    {
+      "check": "EXACT_SOURCE_RAW_OR_TEXT_V2",
+      "status": "PASS"
+    },
+    {
+      "check": "ANNUAL_SOURCE_OWNERSHIP_V1",
+      "status": "PASS",
+      "requirement_id": "issue_28_v8",
+      "policy_hash": "sha256:bcbc183cd88b0dcef2f645be4edeca5aabcdfae930f691f1e0b3769c01e40d8f"
+    }
+  ],
+  "reason_codes": [],
+  "identity_constraints": [],
+  "normalized_scope": {
+    "property_population": "comparable",
+    "operating_scope": "systemwide",
+    "geography": "worldwide"
+  },
+  "unresolved_scope_dimensions": [],
+  "system_approval_eligible": true
+}

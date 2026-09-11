@@ -1,0 +1,8 @@
+(version 1)
+(allow default)
+(deny file-write*
+  (require-not
+    (require-any
+      (subpath "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live")
+      (subpath "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live-logs")
+      (literal "/dev/null"))))

@@ -261,3 +261,7 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 ## 11. 最短建议
 
 先看 manifest，再跑 snapshot checker，然后看 status 与 evidence，最后看 gate。看到空值不要猜，看到零值先确认语义，看到 GO WITH CAVEATS 要继续读 caveat。
+
+### 年度更新进度
+
+发现了一份年报、计算成功、正式发布是三个位置。已有候选领先发布时应显示待发布，不能只显示“无新年报”；来源检查失败也不等于无变化。当前连续更新验证限定Marriott B01/B10和隔离目录，旧完整版本及其余指标期间保留；它不代表生产定时更新已长期启用。

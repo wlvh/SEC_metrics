@@ -1,0 +1,20 @@
+test_actual_root_and_local_permission_dict_are_not_execution_authority (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_actual_root_and_local_permission_dict_are_not_execution_authority) ... ok
+test_cli_result_preserves_decimal_identity_and_never_leaves_partial_json (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_cli_result_preserves_decimal_identity_and_never_leaves_partial_json) ... ok
+test_current_native_results_belong_to_current_annual_snapshot (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_current_native_results_belong_to_current_annual_snapshot) ... ok
+test_expiration_is_enforced_for_execution_but_history_can_be_read (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_expiration_is_enforced_for_execution_but_history_can_be_read) ... ok
+test_frozen_receipt_read_does_not_rewrite_active_mirror (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_frozen_receipt_read_does_not_rewrite_active_mirror) ... ok
+test_new_rule_does_not_embed_input_answers_or_fixed_predecessor (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_new_rule_does_not_embed_input_answers_or_fixed_predecessor) ... ok
+test_null_stage_cannot_construct_a_historical_seed (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_null_stage_cannot_construct_a_historical_seed) ... ok
+test_only_unused_identical_registration_can_resume_proposal (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_only_unused_identical_registration_can_resume_proposal) ... ok
+test_reservation_without_terminal_is_unknown_and_cannot_reset (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_reservation_without_terminal_is_unknown_and_cannot_reset) ... ok
+test_root_separation_and_period_scope_are_checked (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_root_separation_and_period_scope_are_checked) ... ok
+test_sec_failed_status_cannot_be_changed_to_success (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_sec_failed_status_cannot_be_changed_to_success) ... ok
+test_single_seed_is_refused_before_any_stage_write (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_single_seed_is_refused_before_any_stage_write) ... ok
+test_trigger_path_and_record_parent_alias_are_rejected (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_trigger_path_and_record_parent_alias_are_rejected) ... ok
+test_visibility_is_derived_from_unchanged_list_not_an_answer_parameter (tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest.test_visibility_is_derived_from_unchanged_list_not_an_answer_parameter) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 1.470s
+
+OK
+SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286.json; status=500; error=HTTP Error 500: SIMULATED_HTTP_FAILURE

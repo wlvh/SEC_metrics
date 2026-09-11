@@ -1,0 +1,173 @@
+test_current_active_start_without_historical_parameters (tests.vnext.test_annual_continuity_rehearsal.AnnualContinuityRehearsalTest.test_current_active_start_without_historical_parameters) ... Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/__main__.py", line 18, in <module>
+    main(module=None)
+    ~~~~^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 104, in __init__
+    self.runTests()
+    ~~~~~~~~~~~~~^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/main.py", line 270, in runTests
+    self.result = testRunner.run(self.test)
+                  ~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/runner.py", line 257, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/suite.py", line 122, in run
+    test(result)
+    ~~~~^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 725, in __call__
+    return self.run(*args, **kwds)
+           ~~~~~~~~^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 669, in run
+    self._callTestMethod(testMethod)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.7/Frameworks/Python.framework/Versions/3.14/lib/python3.14/unittest/case.py", line 615, in _callTestMethod
+    result = method()
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity_rehearsal.py", line 240, in test_current_active_start_without_historical_parameters
+    stage=self.proposal(stage_root=root/'stage',data_root=root/'data',budget_root=root/'budget',review_file=root/'review.json',
+        expires_at_utc=(datetime.now(timezone.utc)+timedelta(days=1)).isoformat(),
+        historical_period_start='2023-01-01',historical_period_end='2025-12-31')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_annual_continuity_rehearsal.py", line 53, in proposal
+    return flow.stage_proposal(**kwargs,previous_approval_url=comment['html_url'],
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        delegation_source='SIMULATED_TEST_DELEGATION_PR41_CONTINUATION_NOT_OWNER_AUTHORITY',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        update_period_ends=['2024-12-31','2025-12-31'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_continuity.py", line 260, in stage_proposal
+    PublicationView.open(publication_root=ROOT)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 6627, in open
+    return cls._open_paths(
+           ~~~~~~~~~~~~~~~^
+        publications_dir=layout["publications_dir"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        pointer_path=pointer_path,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 6654, in _open_paths
+    manifest = verify_publication_bundle(bundle_dir=bundle_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4780, in verify_publication_bundle
+    _extended_publication_hooks(manifest).verify_annual_bundle(bundle_dir=bundle_dir, manifest=manifest)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 398, in verify_annual_bundle
+    values = _compose(snapshot, context, predecessor, meta, bundle_dir / 'internal/annual_runtime')
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/annual_publication.py", line 273, in _compose
+    predecessor_manifest = pub.verify_publication_bundle(bundle_dir=predecessor_dir)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 4856, in verify_publication_bundle
+    _verify_portable_closure(
+    ~~~~~~~~~~~~~~~~~~~~~~~~^
+        bundle_dir=bundle_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^
+        manifest=manifest,
+        ^^^^^^^^^^^^^^^^^^
+        projection=projection,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/publication.py", line 1991, in _verify_portable_closure
+    validate_portable_qualification_binding(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        repo_root=authority_root,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+        binding=qualification_binding,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ratchet_release.py", line 453, in validate_portable_qualification_binding
+    manifest, records, _decisions = load_portable_qualification_run(
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        run_dir, repo_root,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ratchet_release.py", line 378, in load_portable_qualification_run
+    return _validate_committed_qualification_run(
+        repo_root=repo_root, run_dir=run_dir, origin=None,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/ratchet_release.py", line 295, in _validate_committed_qualification_run
+    replayed_evidence = check_evidence(
+        candidate=candidate,
+    ...<5 lines>...
+        scope_contract=unit["compiled_spec"]["scope_contract"],
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/evidence.py", line 753, in check_evidence
+    role_scope, role_unresolved = _normalize_scope(
+                                  ~~~~~~~~~~~~~~~~^
+        claim=claim,
+        ^^^^^^^^^^^^
+    ...<3 lines>...
+        label_policy=_label_policy,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/evidence.py", line 592, in _normalize_scope
+    raw_text_by_id = _verify_local_labels(
+        claim=claim, derived_asset=derived_asset, offline_context=offline_context,
+        label_policy=label_policy,
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/evidence.py", line 449, in _verify_local_labels
+    cell = resolver(
+        derived_asset=derived_asset, locator=label["locator"],
+    )
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/table_grid.py", line 565, in resolve_cell
+    validate_record(record=derived_asset)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/records.py", line 1798, in validate_record
+    canonical_json_bytes(value=dict(record))
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 415, in canonical_json_bytes
+    normalized = _canonicalize(value=value, path=(), set_paths=set_paths)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 371, in _canonicalize
+    _canonicalize(value=item, path=path + ("*",), set_paths=set_paths,)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 371, in _canonicalize
+    _canonicalize(value=item, path=path + ("*",), set_paths=set_paths,)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 365, in _canonicalize
+    output[key] = _canonicalize(
+                  ~~~~~~~~~~~~~^
+        value=item, path=path + (key,), set_paths=set_paths,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 371, in _canonicalize
+    _canonicalize(value=item, path=path + ("*",), set_paths=set_paths,)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 358, in _canonicalize
+    key = _validate_unicode(value=raw_key)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/canonical.py", line 130, in _validate_unicode
+    return unicodedata.normalize("NFC", value)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyboardInterrupt

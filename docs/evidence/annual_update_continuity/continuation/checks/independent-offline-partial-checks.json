@@ -1,0 +1,172 @@
+{
+  "record_type": "INDEPENDENT_COMPLETED_OFFLINE_METHODS_CHECK",
+  "reviewer_kind": "INDEPENDENT_MODEL_SUBTASK",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "code": {
+    "exact_head": "1ea60fd44a0e401963515102ed2eadfc28f7e851",
+    "runtime_tree": "sha256:e408d9cd4e802ac371babed23faed99adf189b1ed83b207f79eeee5160af8018",
+    "test_tree": "sha256:d50939591ed33789a3a10e293ea2f5c577e0e756f0ceb47912100608f0c710eb"
+  },
+  "status": "TWO_METHODS_VERIFIED_FULL_SUITE_PENDING",
+  "execution_ready": false,
+  "checks": {
+    "current-start": {
+      "stage_id": "sha256:aa39d96dbf11a954dd8e485b1bef90a918fead775460be15df47cc22c1e2e4f4",
+      "stage_binding": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/current-start/stage/stage-binding.json",
+        "sha256": "5991bf578da528439793d40bd4c1ba5bad1b98f308d046a943b66559654b5a0c",
+        "size": 18333
+      },
+      "grant_kind": "SIMULATED_TEST_ONLY_NOT_REAL_APPROVAL",
+      "new_maximum": [
+        2,
+        2,
+        0
+      ],
+      "prior_real_counts": [
+        1,
+        1,
+        0
+      ],
+      "aggregate_ceiling": [
+        3,
+        3,
+        0
+      ],
+      "result": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/current-start/result.json",
+        "sha256": "e4474ff59e2b9dff4f21fb982e8cb66ca0d923cab4acff783572fe490edd96a8",
+        "size": 6248
+      },
+      "new_simulated_controller_counts": [
+        0,
+        0,
+        0
+      ],
+      "prior_plus_test_counts": [
+        1,
+        1,
+        0
+      ]
+    },
+    "failure-case": {
+      "stage_id": "sha256:1749a2b9b26e2a7b22aadfc68a4304e05716916a8e5aa485c0abee6302234881",
+      "stage_binding": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/failure-case/stage/stage-binding.json",
+        "sha256": "e1c44a87400f5fe3caf62251dfc5ba3f0eafd656f3730635f4d24a1119b75807",
+        "size": 25597
+      },
+      "grant_kind": "SIMULATED_TEST_ONLY_NOT_REAL_APPROVAL",
+      "new_maximum": [
+        2,
+        2,
+        0
+      ],
+      "prior_real_counts": [
+        1,
+        1,
+        0
+      ],
+      "aggregate_ceiling": [
+        3,
+        3,
+        0
+      ],
+      "negative_binding": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/failure-case/negative-binding.json",
+        "sha256": "c9b2640077608779559e09e652404e5416db1b463bda1f9d3dc7d094bf328155",
+        "size": 996
+      },
+      "recovery": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/failure-case/recovery.json",
+        "sha256": "3f5d3deb1e2ddf3b59cbaab66af0b77fef554e99ee791000758063ba4cc18085",
+        "size": 2398
+      },
+      "failure": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/failure-case/failure.json",
+        "sha256": "56e7ddc333e6045a4f7d3b2b8c98ec4eba5819c43bf7e4e4490a3e00f4794a3c",
+        "size": 20241
+      },
+      "synthetic_io": {
+        "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/offline-02/failure-case/synthetic-io-binding.json",
+        "sha256": "7a729b31c25edf96186462be1f61181129b9111ac2413beb8ac09d53c4a43f01",
+        "size": 2630
+      },
+      "candidates": [
+        {
+          "plan_id": "sha256:46b2841484d527437c5f448564a15dcce8760e6649b3c96c81dd332f1996ec0d",
+          "period": {
+            "fiscal_year": 2024,
+            "period_end": "2024-12-31",
+            "period_start": "2024-01-01"
+          },
+          "native_terminal": "SUCCEEDED",
+          "raw_response_sha256": "daba0eb288d81cd3fcf424add85729d6c9397791c83b40445ef3a6c2944ccad6",
+          "original_and_derived_io": {
+            "run_directory": "/Users/lyuhongwang/Developer/SEC_metrics/artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/6f40df80eb602219bc9137a946c4da81ae215f413bc157d712a0289a4871161d",
+            "original_request_sha256": "d7dac7be1c07612d3cd39cef148d8db12bb95be185245a61d00ed10c828a58ff",
+            "original_response_sha256": "191e9f0722a1c6accb84921e3505702c9d0fe3cc54aaab120eb3fc8a2aaab8bf",
+            "synthetic_request_sha256": "f24bb7157758fcb91f25a0e0e2b3a6643a060b5003202f4feb3f5be5f26b6964",
+            "synthetic_response_sha256": "daba0eb288d81cd3fcf424add85729d6c9397791c83b40445ef3a6c2944ccad6",
+            "request_changes": [
+              "model"
+            ],
+            "response_envelope_changes": [
+              "model",
+              "id"
+            ],
+            "assistant_content_unchanged": true
+          },
+          "response_scope": "BASE_SYNTHETIC_ENVELOPE_WITH_ORIGINAL_ASSISTANT_CONTENT"
+        },
+        {
+          "plan_id": "sha256:8f90b9697ea59d06de66aadd96ad0daf1fa522afd5ca4e6aed982ac99660b1a9",
+          "period": {
+            "fiscal_year": 2025,
+            "period_end": "2025-12-31",
+            "period_start": "2025-01-01"
+          },
+          "native_terminal": "FAILED_TERMINAL",
+          "raw_response_sha256": "d173a579d2ffcf4bd3a7d3261fa7ec52f3563c912ab8ed7de2b9b83b948179cc",
+          "original_and_derived_io": {
+            "run_directory": "/Users/lyuhongwang/Developer/SEC_metrics/artifacts/vnext/qualification/cycles/0c4569437b1bac3ad353394c8d8b1f59b1a1ee7c229c8fa5ee51a22269b6a448/runs/0799ec7f91b6bc0472fd80c6c655beb90ddd7db583dcd13cae0bfab506e6412c",
+            "original_request_sha256": "93678dcb57574234ba51fc5af975a2f315724284dbefacd82f1e8eef83f36c14",
+            "original_response_sha256": "14d06d817027145ac10bb4da0ffdacd74b863eb82c0dfbce640c4564fede2004",
+            "synthetic_request_sha256": "fc3e0df1e5847b1783491c26ccb0554da66a03905e13711bc27a3c76e79468f6",
+            "synthetic_response_sha256": "9f155d9afd3c8a2cb14bd7946b7f0a1504743fffb79322e6590d6e4d245d4662",
+            "request_changes": [
+              "model"
+            ],
+            "response_envelope_changes": [
+              "model",
+              "id"
+            ],
+            "assistant_content_unchanged": true
+          },
+          "response_scope": "EXPLICIT_NEGATIVE_SYNTHETIC_ASSISTANT_CONTENT_REPLACED_WITH_EMPTY_OBJECT"
+        }
+      ],
+      "new_simulated_controller_counts": [
+        2,
+        2,
+        0
+      ],
+      "prior_plus_test_counts": [
+        3,
+        3,
+        0
+      ],
+      "scope_note": "Only original prior1/1/0 is real. These new2/2 native markers describe injected HTTP in isolated offline tests, not paid/API traffic."
+    }
+  },
+  "new_actual_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "recorded_at_utc": "2026-09-10T13:25:13.799821+00:00",
+  "log_snapshot_sha256": "39f34b3b7f995008b03fd049881756d4d78202751fb5dfa0930662caf6210804",
+  "third_method": "STILL_RUNNING_NOT_CREDITED",
+  "full_command_binding": "NOT_YET_WRITTEN",
+  "old_real_closed_stage_unchanged": true
+}

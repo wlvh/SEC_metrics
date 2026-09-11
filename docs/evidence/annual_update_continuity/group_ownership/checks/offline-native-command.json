@@ -1,0 +1,23 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/offline-readonly.sb",
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_annual_continuity_rehearsal.AnnualContinuityRehearsalTest.test_prompt_native_candidate_and_saved_snapshot",
+    "-v"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "7f1d72751926b1d328ee579e197397b8501d93f1",
+  "head_after": "7f1d72751926b1d328ee579e197397b8501d93f1",
+  "started_at_utc": "2026-09-10T15:25:56.629590+00:00",
+  "finished_at_utc": "2026-09-10T15:39:42.346893+00:00",
+  "elapsed_seconds": 825.7036674999981,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/offline-native-command.log",
+  "log_sha256": "dd0a306a869724159b1ae566b89fc08f152ec3b5e555d59baa1d865aa9957816",
+  "log_size": 279
+}

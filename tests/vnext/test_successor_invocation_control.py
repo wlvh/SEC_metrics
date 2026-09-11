@@ -18,6 +18,10 @@ class SuccessorInvocationControlTest(unittest.TestCase):
     """No socket: test the same durable controller with an explicit subtype."""
 
     def setUp(self):
+        from unittest import mock
+        from tests.vnext.historical_authority_support import historical_test_root
+        selected=mock.patch.object(control,'_REPOSITORY_ROOT',historical_test_root())
+        selected.start();self.addCleanup(selected.stop)
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name).resolve()
         self.authority = control.SuccessorInvocationAuthority(

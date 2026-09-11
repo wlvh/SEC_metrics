@@ -16,14 +16,21 @@ from .requirement_profile_v7 import REQUIREMENT_ID, DECISION_ID, candidate_choic
 
 def policy_choice(requirement):
     """Old Runs always retain raw-only semantics, regardless of inherited R4 tips."""
-    if requirement is None or requirement.get("requirement_id") != REQUIREMENT_ID:
+    if requirement is None:
         return None
-    if requirement.get("requirement_generation") != "PROFILE_DRIVEN_V7":
+    current_id, decision_id, generation, validator = REQUIREMENT_ID, DECISION_ID, "PROFILE_DRIVEN_V7", candidate_choice
+    if requirement.get("requirement_id") == "issue_28_v8":
+        from . import requirement_profile_v9 as continuity
+        current_id, decision_id = continuity.REQUIREMENT_ID, continuity.DECISION_ID
+        generation, validator = continuity.PROFILE_REQUIREMENT_GENERATION, continuity.candidate_choice
+    if requirement.get("requirement_id") != current_id:
+        return None
+    if requirement.get("requirement_generation") != generation:
         raise ValueError("ANNUAL_LABEL_REQUIREMENT_GENERATION_INVALID")
-    decision = requirement["effective_decisions"][DECISION_ID]
+    decision = requirement["effective_decisions"][decision_id]
     if decision["status"] != "APPROVED":
         raise ValueError("ANNUAL_LABEL_POLICY_NOT_APPROVED")
-    choice = candidate_choice(choice=decision["choice"])
+    choice = validator(choice=decision["choice"])
     if choice["label_comparison"] != {
         "policy": SOURCE_LABEL_POLICY,
         "accepted_cell_fields": ["raw_text", "text"],

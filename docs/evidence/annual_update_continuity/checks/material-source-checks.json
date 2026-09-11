@@ -1,0 +1,457 @@
+{
+  "years": [
+    {
+      "fiscal_year": 2023,
+      "filing_identity": {
+        "accession": "0001628280-24-004372",
+        "document_name": "mar-20231231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm",
+        "target_period": {
+          "fiscal_year": 2023,
+          "period_start": "2023-01-01",
+          "period_end": "2023-12-31"
+        }
+      },
+      "html": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+        "sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+        "size": 1949041
+      },
+      "document_dei": {
+        "dei:DocumentFiscalYearFocus": "2023",
+        "dei:DocumentPeriodEndDate": "December 31, 2023",
+        "dei:EntityCentralIndexKey": "0001048286",
+        "dei:EntityRegistrantName": "MARRIOTT INTERNATIONAL INC /MD/",
+        "dei:DocumentType": "10-K",
+        "dei:AmendmentFlag": "false"
+      },
+      "native_context_c1": {
+        "xbrli:identifier": "0001048286",
+        "xbrli:startdate": "2023-01-01",
+        "xbrli:enddate": "2023-12-31"
+      },
+      "full_document_table_count": 66,
+      "document_end_html_present": true,
+      "independent_occupancy_source": {
+        "table_id": "table_000011",
+        "group": {
+          "text": "Comparable Systemwide Properties",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 19,
+          "column": 0
+        },
+        "geography": {
+          "text": "Worldwide (2)",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 28,
+          "column": 0
+        },
+        "role_header": {
+          "text": "Occupancy",
+          "colspan": 12,
+          "rowspan": 1,
+          "row": 2,
+          "column": 15
+        },
+        "year_header": {
+          "text": "2023",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 3,
+          "column": 15
+        },
+        "numeric": {
+          "text": "69.2",
+          "colspan": 2,
+          "rowspan": 1,
+          "row": 28,
+          "column": 15
+        },
+        "unit": {
+          "text": "%",
+          "colspan": 1,
+          "rowspan": 1,
+          "row": 28,
+          "column": 17
+        }
+      },
+      "companyfacts": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "size": 3269111
+      },
+      "revenue_concept": "us-gaap:Revenues",
+      "revenue_unit": "USD",
+      "revenue_fact": {
+        "start": "2023-01-01",
+        "end": "2023-12-31",
+        "val": 23713000000,
+        "accn": "0001628280-24-004372",
+        "fy": 2023,
+        "fp": "FY",
+        "form": "10-K",
+        "filed": "2024-02-13"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+          "accession": "",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_size": 147714,
+          "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+          "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+          "ledger_data_row_index": 983,
+          "ledger_line_number": 985
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828024004372/mar-20231231.htm",
+          "accession": "0001628280-24-004372",
+          "document_name": "mar-20231231.htm",
+          "content_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+          "request_body_sha256": "3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17",
+          "request_body_size": 1949041,
+          "request_headers_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm.d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee.headers.json",
+          "request_headers_sha256": "d6210fc22623f5c2fbacadea8e284764df4a6064ad645bdb5b4f395483f545ee",
+          "request_headers_size": 1087,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/3e/3e59d9a02dea905a6abcd375b111d2d3113c784561aefcec3a2d36bf16e1ae17/mar-20231231.htm",
+          "request_attempt_id": "request:attempt:921b491d86173c117fd783a7ed6ba311ef7f1640bec796ee26fdeb212cd13a79",
+          "ledger_data_row_index": 980,
+          "ledger_line_number": 982
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "accession": "0001628280-24-004372",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "request_body_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "request_body_size": 3269111,
+          "request_headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json",
+          "request_headers_sha256": "387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+          "ledger_data_row_index": 905,
+          "ledger_line_number": 907
+        }
+      ]
+    },
+    {
+      "fiscal_year": 2024,
+      "filing_identity": {
+        "accession": "0001628280-25-004818",
+        "document_name": "mar-20241231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+        "target_period": {
+          "fiscal_year": 2024,
+          "period_start": "2024-01-01",
+          "period_end": "2024-12-31"
+        }
+      },
+      "html": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+        "sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+        "size": 2047740
+      },
+      "document_dei": {
+        "dei:DocumentFiscalYearFocus": "2024",
+        "dei:DocumentPeriodEndDate": "December 31, 2024",
+        "dei:EntityCentralIndexKey": "0001048286",
+        "dei:EntityRegistrantName": "MARRIOTT INTERNATIONAL INC /MD/",
+        "dei:DocumentType": "10-K",
+        "dei:AmendmentFlag": "false"
+      },
+      "native_context_c1": {
+        "xbrli:identifier": "0001048286",
+        "xbrli:startdate": "2024-01-01",
+        "xbrli:enddate": "2024-12-31"
+      },
+      "full_document_table_count": 67,
+      "document_end_html_present": true,
+      "independent_occupancy_source": {
+        "table_id": "table_000011",
+        "group": {
+          "text": "Comparable Systemwide Properties",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 19,
+          "column": 0
+        },
+        "geography": {
+          "text": "Worldwide (2)",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 28,
+          "column": 0
+        },
+        "role_header": {
+          "text": "Occupancy",
+          "colspan": 12,
+          "rowspan": 1,
+          "row": 2,
+          "column": 15
+        },
+        "year_header": {
+          "text": "2024",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 3,
+          "column": 15
+        },
+        "numeric": {
+          "text": "69.8",
+          "colspan": 2,
+          "rowspan": 1,
+          "row": 28,
+          "column": 15
+        },
+        "unit": {
+          "text": "%",
+          "colspan": 1,
+          "rowspan": 1,
+          "row": 28,
+          "column": 17
+        }
+      },
+      "companyfacts": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "size": 3269111
+      },
+      "revenue_concept": "us-gaap:Revenues",
+      "revenue_unit": "USD",
+      "revenue_fact": {
+        "start": "2024-01-01",
+        "end": "2024-12-31",
+        "val": 25100000000,
+        "accn": "0001628280-25-004818",
+        "fy": 2024,
+        "fp": "FY",
+        "form": "10-K",
+        "filed": "2025-02-11"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+          "accession": "",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_size": 147714,
+          "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+          "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+          "ledger_data_row_index": 983,
+          "ledger_line_number": 985
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000162828025004818/mar-20241231.htm",
+          "accession": "0001628280-25-004818",
+          "document_name": "mar-20241231.htm",
+          "content_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "request_body_sha256": "32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131",
+          "request_body_size": 2047740,
+          "request_headers_repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm.91eb1545994f9c11e96630e16fbddb3e21bbdcb9dd0233c2e269195e40bddd6d.headers.json",
+          "request_headers_sha256": "91eb1545994f9c11e96630e16fbddb3e21bbdcb9dd0233c2e269195e40bddd6d",
+          "request_headers_size": 1087,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/32/32a365d594e905c7b4fa8dac8efa501c9ca4ffeabe2579baf8e96bd52e08b131/mar-20241231.htm",
+          "request_attempt_id": "request:attempt:ed3a63ab4db07ee96e963ddc3da2fc0d063a7b136b23e6b1428d417c8baa3d92",
+          "ledger_data_row_index": 979,
+          "ledger_line_number": 981
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "accession": "0001628280-25-004818",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "request_body_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "request_body_size": 3269111,
+          "request_headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json",
+          "request_headers_sha256": "387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+          "ledger_data_row_index": 905,
+          "ledger_line_number": 907
+        }
+      ]
+    },
+    {
+      "fiscal_year": 2025,
+      "filing_identity": {
+        "accession": "0001048286-26-000007",
+        "document_name": "mar-20251231.htm",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+        "target_period": {
+          "fiscal_year": 2025,
+          "period_start": "2025-01-01",
+          "period_end": "2025-12-31"
+        }
+      },
+      "html": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+        "sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+        "size": 2048661
+      },
+      "document_dei": {
+        "dei:DocumentFiscalYearFocus": "2025",
+        "dei:DocumentPeriodEndDate": "December 31, 2025",
+        "dei:EntityCentralIndexKey": "0001048286",
+        "dei:EntityRegistrantName": "MARRIOTT INTERNATIONAL INC /MD/",
+        "dei:DocumentType": "10-K",
+        "dei:AmendmentFlag": "false"
+      },
+      "native_context_c1": {
+        "xbrli:identifier": "0001048286",
+        "xbrli:startdate": "2025-01-01",
+        "xbrli:enddate": "2025-12-31"
+      },
+      "full_document_table_count": 68,
+      "document_end_html_present": true,
+      "independent_occupancy_source": {
+        "table_id": "table_000011",
+        "group": {
+          "text": "Comparable Systemwide Properties",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 18,
+          "column": 0
+        },
+        "geography": {
+          "text": "Worldwide (2)",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 26,
+          "column": 0
+        },
+        "role_header": {
+          "text": "Occupancy",
+          "colspan": 12,
+          "rowspan": 1,
+          "row": 3,
+          "column": 15
+        },
+        "year_header": {
+          "text": "2025",
+          "colspan": 3,
+          "rowspan": 1,
+          "row": 4,
+          "column": 15
+        },
+        "numeric": {
+          "text": "69.3",
+          "colspan": 2,
+          "rowspan": 1,
+          "row": 26,
+          "column": 15
+        },
+        "unit": {
+          "text": "%",
+          "colspan": 1,
+          "rowspan": 1,
+          "row": 26,
+          "column": 17
+        }
+      },
+      "companyfacts": {
+        "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+        "sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+        "size": 3269111
+      },
+      "revenue_concept": "us-gaap:Revenues",
+      "revenue_unit": "USD",
+      "revenue_fact": {
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "val": 26186000000,
+        "accn": "0001048286-26-000007",
+        "fy": 2025,
+        "fp": "FY",
+        "form": "10-K",
+        "filed": "2026-02-10",
+        "frame": "CY2025"
+      },
+      "source_proofs": [
+        {
+          "source_url": "https://data.sec.gov/submissions/CIK0001048286.json",
+          "accession": "",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_sha256": "e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8",
+          "request_body_size": 147714,
+          "request_headers_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json.b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990.headers.json",
+          "request_headers_sha256": "b50009f0c70c4dbfdf412f796e522f71cf78a507f877d740ff53f67f75d84990",
+          "request_headers_size": 736,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/e3/e3eeefe33c9c7351788d22a96ca36d061230cd2dacadbf44ed6ef79035742bd8/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+          "ledger_data_row_index": 983,
+          "ledger_line_number": 985
+        },
+        {
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231.htm",
+          "accession": "0001048286-26-000007",
+          "document_name": "mar-20251231.htm",
+          "content_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "request_body_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+          "request_body_size": 2048661,
+          "request_headers_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm.d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283.headers.json",
+          "request_headers_sha256": "d15d657c5ab422a8c36307357c31e35dadc0245045189d0fee7db3c60852f283",
+          "request_headers_size": 1087,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+          "request_attempt_id": "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+          "ledger_data_row_index": 912,
+          "ledger_line_number": 914
+        },
+        {
+          "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+          "accession": "0001048286-26-000007",
+          "document_name": "CIK0001048286.json",
+          "content_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "request_body_sha256": "af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+          "request_body_size": 3269111,
+          "request_headers_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json.387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d.headers.json",
+          "request_headers_sha256": "387396b9417c8638660d18d3516bd13ac9bf02267fd0198d53b694627a33419d",
+          "request_headers_size": 707,
+          "request_locator_kind": "IMMUTABLE_ATTEMPT",
+          "request_repo_relative_path": "evidence/request_attempts/af/af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a/CIK0001048286.json",
+          "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321",
+          "ledger_data_row_index": 905,
+          "ledger_line_number": 907
+        }
+      ]
+    }
+  ],
+  "ledger": {
+    "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/requests_log.csv",
+    "sha256": "709b97c9af73ced88571d2b69b226e2a197fa2ec9223c16a11f2420b3605bec2",
+    "size": 534207
+  },
+  "ledger_manifest": {
+    "path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/requests_log_manifest.json",
+    "sha256": "2d3acd9d213c0423c3e8766c35192847f2896142395126b2c511fe87dd584ba2",
+    "size": 134
+  },
+  "ledger_data_rows": 984,
+  "parser": "Independent stdlib HTMLParser; native annual_input used only for saved source/year selection and source proofs.",
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

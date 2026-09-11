@@ -898,7 +898,7 @@ def build_deepseek_chat_completions_body(
     """
     if (
         policy.provider != "deepseek"
-        or policy.model != "deepseek-v4-flash"
+        or policy.model not in {"deepseek-v4-flash", "deepseek-flash"}
         or policy.api != "chat_completions"
         or policy.endpoint_host != _DEEPSEEK_ENDPOINT_HOST
     ):
@@ -1843,6 +1843,34 @@ def approved_scoped_transport_policy(*, requirement: Mapping[str, object]) -> Tr
     return policy
 
 
+def configured_annual_transport_policy(*, requirement, repo_root):
+    """Use the existing runtime configuration for the ordinary continuity model.
+
+    Provider, API, resources and retries stay under the carried Decision. The
+    exact config file is part of this Requirement's execution identity.
+    """
+    policy = approved_scoped_transport_policy(requirement=requirement)
+    if requirement.get("requirement_id") != "issue_28_v8":
+        return policy
+    from dataclasses import replace
+    from .sources import resolve_repository_file
+    relative = "config/provider_model_runtime.json"
+    path = resolve_repository_file(repo_root=repo_root, repo_relative_path=relative)
+    bound = requirement["execution_authority"]["files"][relative]
+    raw = path.read_bytes()
+    if bound != {"sha256": sha256_bytes(content=raw), "size": len(raw)}:
+        raise AIAdapterError("Annual configured model bytes differ from Requirement")
+    config = strict_json_loads(text=raw.decode("utf-8"))
+    matches = [entry for entry in config["models"]
+               if entry["provider"] == policy.provider and entry["api"] == policy.api]
+    if len(matches) != 1:
+        raise AIAdapterError("Annual configured model is absent or ambiguous")
+    selected = replace(policy, model=matches[0]["model"])
+    load_provider_runtime_authority(repo_root=repo_root, provider=selected.provider,
+        model=selected.model, api=selected.api)
+    return selected
+
+
 def api_key_environment_name(*, policy: TransportPolicy) -> str:
     """Return the only environment variable allowed for one D-01 provider.
 
@@ -1871,8 +1899,8 @@ def api_key_required_error_code(*, policy: TransportPolicy) -> str:
     raise AIAdapterError("D-01 provider has no API key error code")
 
 
-def _load_transport_policy() -> Tuple[TransportPolicy, str]:
-    """Load effective D-01 only from the module-fixed repository authority.
+def _load_transport_policy(*, annual_authorization=None) -> Tuple[TransportPolicy, str]:
+    """Load D-01 from trusted code or its opaque continuity-bound authority.
 
     Returns:
         Immutable policy and Requirement closure hash.
@@ -1882,7 +1910,20 @@ def _load_transport_policy() -> Tuple[TransportPolicy, str]:
     """
     # Authority must follow this module's repository, because a caller-
     # selected root could replace the pending Decision Register wholesale.
+    # The continuity exception obtains its root only from an already verified
+    # opaque capability, with every authority byte checked against trusted code.
     repo_root = _REPOSITORY_ROOT
+    if annual_authorization is not None:
+        from .annual_runtime import RuntimeAuthorization, authorization_fields
+        if type(annual_authorization) is RuntimeAuthorization:
+            fields = authorization_fields(annual_authorization)
+            if fields['requirement']['requirement_id'] == 'issue_28_v8':
+                # Only this opaque stage capability selects a separately verified
+                # data authority. A caller cannot supply a directory or dictionary.
+                repo_root = fields['data_root']
+                return (configured_annual_transport_policy(
+                    requirement=fields['requirement'], repo_root=repo_root),
+                    str(fields['requirement']['requirement_closure_hash']))
     if not isinstance(repo_root, Path) or repo_root.is_symlink():
         raise AIAdapterError("D-01 repository root is unsafe")
     snapshot_dir = repo_root / "requirements" / "issue_15_v1"
@@ -2033,7 +2074,7 @@ class _ApprovedTransportAdapter(AIAdapter):
                 committed factory.
         """
         super().__init__(authority=authority)
-        policy, requirement_closure_hash = _load_transport_policy()
+        policy, requirement_closure_hash = _load_transport_policy(annual_authorization=None if invocation_context is None else invocation_context.annual_candidate_authorization)
         if policy.provider not in _TRANSPORT_FACTORIES:
             raise AIAdapterError(
                 "D-01 provider has no repository transport factory"
@@ -2120,7 +2161,7 @@ class _ApprovedTransportAdapter(AIAdapter):
             prepared_request=prepared_request,
         )
         request_bytes = rebuilt_request.request_bytes
-        current_policy, current_closure_hash = _load_transport_policy()
+        current_policy, current_closure_hash = _load_transport_policy(annual_authorization=self.invocation_context.annual_candidate_authorization if self.invocation_context is not None else None)
         if (
             current_policy != self.policy
             or current_closure_hash != self.requirement_closure_hash
@@ -2721,7 +2762,7 @@ def _execute_controlled_transport(
         prepared_request=prepared_request,
     )
     prepared = _validate_prepared_request(prepared_request=rebuilt_request)
-    current_policy, current_closure_hash = _load_transport_policy()
+    current_policy, current_closure_hash = _load_transport_policy(annual_authorization=context.annual_candidate_authorization)
     if (
         current_policy != adapter.policy
         or current_closure_hash != adapter.requirement_closure_hash
@@ -3171,7 +3212,7 @@ def _validate_live_prepared_request(
         reparses the filing, and reconstructs the complete outbound payload.
     """
     from .annual_runtime import unwrap_live_request
-    prepared_request, runtime_root = unwrap_live_request(request=prepared_request)
+    prepared_request, runtime_root, request_requirement = unwrap_live_request(request=prepared_request, include_requirement=True)
     try:
         fields = live_reader_authority_fields(
             prepared_request=prepared_request,
@@ -3291,6 +3332,7 @@ def _validate_live_prepared_request(
             compiled_spec=compiled_spec,
             repo_root=authority_root,
             task_contract_id=task_contract_id if task_contract_id else None,
+            requirement=request_requirement,
         )
     except (
         BatchWorkflowError,

@@ -18,9 +18,11 @@ def build_projection(*, snapshot_root, context, adoption, runs, predecessor):
     plan_row = next(r for r in index['release_plan_paths'] if r['release_plan_content_id'] == index['active_release_plan_content_id'])
     plan = read(data, plan_row['path'])
     need(plan['release_stage'] == 'R3', 'ANNUAL_PREDECESSOR_SCOPE_UNSUPPORTED')
-    historical_index_path = 'internal/authority/config/issue_15_release_plan.json'
-    need(predecessor.read_bytes(relative_path=historical_index_path) == (data / 'config/issue_15_release_plan.json').read_bytes(),
-         'ANNUAL_CUMULATIVE_PLAN_CHANGED')
+    from .annual_adoption_policy import V3
+    prior_authority = (predecessor.authority_bytes(relative_path='config/issue_15_release_plan.json')
+        if context['policy']['policy_id'] == V3 else
+        predecessor.read_bytes(relative_path='internal/authority/config/issue_15_release_plan.json'))
+    need(prior_authority == (data / 'config/issue_15_release_plan.json').read_bytes(), 'ANNUAL_CUMULATIVE_PLAN_CHANGED')
     old_metrics = rows(predecessor.read_bytes(relative_path='metrics_matrix.csv'), pub.METRIC_FIELDS, 'Predecessor metrics')
     old_evidence = rows(predecessor.read_bytes(relative_path='metric_evidence.csv'), pub.EVIDENCE_FIELDS, 'Predecessor evidence')
     key = lambda row: (row['company'], row['metric_id'])
@@ -42,7 +44,8 @@ def build_projection(*, snapshot_root, context, adoption, runs, predecessor):
             fiscal_year=str(native['manifest']['target_period']['fiscal_year']), metric_fields=pub.METRIC_FIELDS)
         need((row['period_start'], row['period_end']) == (result['period_start'], result['period_end']), 'ANNUAL_PROJECTED_PERIOD_CHANGED')
         old = old_by_key[key(row)]
-        need(row['period_end'] >= old['period_end'], 'ANNUAL_PERIOD_REGRESSION_FORBIDDEN')
+        historical_seed = context['policy']['policy_id'] == V3 and context.get('kind') == 'HISTORICAL_SEED'
+        need(historical_seed or row['period_end'] >= old['period_end'], 'ANNUAL_PERIOD_REGRESSION_FORBIDDEN')
         replacements[key(row)], evidence_replacements[key(row)] = row, evidence
         bindings.append({'company_id': result['company_id'], 'metric_id': metric_id,
             'origin': 'ADOPTED_NATIVE_CANDIDATE', 'run_id': native['manifest']['run_id'],

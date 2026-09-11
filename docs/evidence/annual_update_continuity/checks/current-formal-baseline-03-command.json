@@ -1,0 +1,26 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/readonly.sb",
+    "python3",
+    "tools/vnext_annual_update.py",
+    "--refresh",
+    "none",
+    "--sec-request-limit",
+    "0",
+    "--output",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/current-formal-baseline-03.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "b64c5df6b01535a56c3706f4df133d120f47873e",
+  "head_after": "b64c5df6b01535a56c3706f4df133d120f47873e",
+  "started_at_utc": "2026-09-10T06:56:18.316930+00:00",
+  "finished_at_utc": "2026-09-10T06:57:13.941746+00:00",
+  "elapsed_seconds": 55.62386891600909,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/current-formal-baseline-03-command.log",
+  "log_sha256": "e1197d1b749ac2e5cbaf69892d978cd8042e4f78ac9a6ecc739ebb3cff901d9a",
+  "log_size": 5664
+}

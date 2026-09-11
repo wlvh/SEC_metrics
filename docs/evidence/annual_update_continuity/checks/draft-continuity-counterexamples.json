@@ -1,0 +1,52 @@
+{
+  "own_pending_marker_before_terminal": {
+    "provider": 1,
+    "paid": 1,
+    "sec_reserved": 0,
+    "provider_reserved": 1,
+    "failed_plans": [],
+    "uncertain_plans": [
+      "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ],
+    "uncertain_sec": [],
+    "failed_sec": []
+  },
+  "tampered_failure_accepted_by_budget": {
+    "provider": 1,
+    "paid": 1,
+    "sec_reserved": 0,
+    "provider_reserved": 1,
+    "failed_plans": [],
+    "uncertain_plans": [],
+    "uncertain_sec": [],
+    "failed_sec": []
+  },
+  "native_receipt_checker_rejects_same_bytes": {
+    "type": "InvocationControlError",
+    "error": "Execution receipt identity differs"
+  },
+  "next_normal_slot_reserved_after_fake_success": true,
+  "executor_without_stage_error": {
+    "type": "KeyError",
+    "error": "'stage'"
+  },
+  "executor_without_stage_wrote_b01": true,
+  "unauthorized_binding_native_results": [
+    {
+      "metric_id": "B01",
+      "value": "25100000000",
+      "publication": "PUBLISHED"
+    },
+    {
+      "metric_id": "B03",
+      "value": "0.1653386454183266932270916335",
+      "publication": "PUBLISHED"
+    }
+  ],
+  "scope": "Temporary synthetic budget metadata and one zero-model native structured negative only; no real permission constructed, no provider/SEC call, no original file modified.",
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ]
+}

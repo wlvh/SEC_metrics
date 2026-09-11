@@ -1,0 +1,8 @@
+PASS stage, exact code, previous closed stage, input and source preparation
+PASS B01 native replay and original CompanyFacts CIK, concept, annual period, USD, accession and calculation
+PASS fresh raw response identity, HTTP200, native failed terminal, actual usage and 1/1/0 counters
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/independent-continuation-first-audit.py", line 113, in <module>
+    assert claim[field]==old_claim[field],field
+           ~~~~~^^^^^^^
+KeyError: 'claimed_value'

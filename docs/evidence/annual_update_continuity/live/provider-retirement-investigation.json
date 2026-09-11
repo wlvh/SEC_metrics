@@ -1,0 +1,35 @@
+{
+  "record_type": "PUBLIC_PROVIDER_DOCUMENTATION_INVESTIGATION",
+  "checked_at_utc": "2026-09-10T09:26:55.732002+00:00",
+  "method": "web search then direct open of primary official pages; no model or SEC API request",
+  "sources": [
+    {
+      "url": "https://api-docs.deepseek.com/",
+      "observed": "Current quick-start says legacy deepseek-v4-flash and vision-exp models are retired; their requests are served by V4.1 Flash with response/current model name deepseek-flash."
+    },
+    {
+      "url": "https://api-docs.deepseek.com/updates/",
+      "event_date": "2026-09-10",
+      "section": "DeepSeek-V4.1-Flash Release / API changes",
+      "observed": "Official release retires previous V4 Flash/vision models and temporarily routes their legacy API names to V4.1 Flash."
+    }
+  ],
+  "cache_caution": "Search snippets initially returned last-week V4 model names. Directly opened pages were current and included the September10 retirement. Conclusions use the directly opened current primary pages.",
+  "local_observation": {
+    "requested_model": "deepseek-v4-flash",
+    "returned_model": "deepseek-flash",
+    "native_error": "DEEPSEEK_MODEL_IDENTITY_MISMATCH",
+    "new_provider_paid_sec_calls": [
+      1,
+      1,
+      0
+    ]
+  },
+  "decision": "Do not accept as alias or spend another model call under unchanged-model authorization. A model/contract decision is required; original failed Run stays failed.",
+  "not_claimed": [
+    "No guarantee old model can be obtained by an alternate route",
+    "No provider retry or list-models probe",
+    "No independent human approval",
+    "No replacement-model qualification"
+  ]
+}

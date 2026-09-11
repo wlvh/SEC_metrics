@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "view": "current_v2",
+      "publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "owner_publication_id": "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+      "run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "authority_sha256": "b2feda3fc40f0cfdc05a1b9006aaf8ba3b055e778cfb4e4921eae9ab0e288fc7",
+      "invalid_authority_paths_rejected": [
+        {
+          "path": "../outputs/active_publication.json",
+          "error_type": "PublicationError"
+        },
+        {
+          "path": "/etc/passwd",
+          "error_type": "PublicationError"
+        },
+        {
+          "path": "outputs/active_publication.json",
+          "error_type": "PublicationError"
+        }
+      ]
+    },
+    {
+      "view": "pinned_v1",
+      "publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+      "owner_publication_id": "publication_a88ea14b596f2831e0b872daf6a4a6e84f8f8313b3aa161257ba88168a2ff528",
+      "run_id": "run:annual-runtime:509b4b6248e0d468177905ffeb3a23995372161c5e4c3c8269cb646a21988030",
+      "authority_sha256": "b2feda3fc40f0cfdc05a1b9006aaf8ba3b055e778cfb4e4921eae9ab0e288fc7",
+      "invalid_authority_paths_rejected": [
+        {
+          "path": "../outputs/active_publication.json",
+          "error_type": "PublicationError"
+        },
+        {
+          "path": "/etc/passwd",
+          "error_type": "PublicationError"
+        },
+        {
+          "path": "outputs/active_publication.json",
+          "error_type": "PublicationError"
+        }
+      ]
+    }
+  ],
+  "verification_scope": "Current v2 was fully opened in preceding real-read check; v1 uses exact previously audited manifest bytes. This is bounded new-reader routing, not another full v1 native replay.",
+  "new_calls": [
+    0,
+    0,
+    0
+  ]
+}

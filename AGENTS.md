@@ -308,3 +308,5 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - vNext operator 与正式 Cutover
 - 分层验收与失败定位
 - PR 发布（仅用户明确要求时）
+
+- `scripts/vnext/annual_continuity.py`及snapshot/publication/trigger适配：同一受限阶段的年度检查、原生候选、完整前驱接续与有限触发，实际生产只读；新规则V3/issue_28_v8，不改历史v1/v2。入口`tools/vnext_annual_continuity.py`，操作/状态/验收见`docs/annual_update_continuity.md`。`PublicationView.native_result/authority_bytes`拥有有限内部路径解析；不要在调用者伪造旧batch目录。

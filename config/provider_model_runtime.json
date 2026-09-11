@@ -3,11 +3,11 @@
   "models": [
     {
       "provider": "deepseek",
-      "model": "deepseek-v4-flash",
+      "model": "deepseek-flash",
       "api": "chat_completions",
       "maximum_context_tokens": 1000000,
-      "context_authority_url": "https://api-docs.deepseek.com/news/news260424/",
-      "context_authority_checked_at_utc": "2026-08-20T00:00:00Z",
+      "context_authority_url": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "context_authority_checked_at_utc": "2026-09-10T10:10:09.408087+00:00",
       "estimator_id": "utf8_byte_upper_bound",
       "estimator_version": "1",
       "estimator_method": "UTF8_BYTE_UPPER_BOUND",

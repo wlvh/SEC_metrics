@@ -1,0 +1,25 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/live-isolated.sb",
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "/Users/lyuhongwang/Developer/SEC_metrics/tools/vnext_annual_continuity.py",
+    "run-once",
+    "--approval-url",
+    "https://github.com/wlvh/SEC_metrics/pull/41#issuecomment-5621515016",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/live-logs/second-run.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "d00b2e261fd3e48ae4efaf76fbae33090359c219",
+  "head_after": "d00b2e261fd3e48ae4efaf76fbae33090359c219",
+  "started_at_utc": "2026-09-10T16:13:24.485271+00:00",
+  "finished_at_utc": "2026-09-10T16:33:26.057220+00:00",
+  "elapsed_seconds": 1201.5694536669762,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/live-logs/second-run-command.log",
+  "log_sha256": "fe191bcfcaaa7255e29d9f1c7178bc9dae5eaed6463111939005373754ee86b2",
+  "log_size": 14625
+}

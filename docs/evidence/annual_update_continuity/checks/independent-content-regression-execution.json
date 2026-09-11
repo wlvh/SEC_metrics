@@ -1,0 +1,57 @@
+{
+  "record_type": "INDEPENDENT_OFFLINE_CONTENT_EXECUTION",
+  "reviewer_task": "/root/runtime_boundary_review",
+  "completed_at_utc": "2026-09-10T07:59:10.877644+00:00",
+  "exit_code": 0,
+  "status": "PASS",
+  "regression_id": "sha256:658e6478149f0dafe89a1b8e270ec2eb5c7f54118587a2acc828d1fef5a21f49",
+  "head": "ab4992486b8cb219fd11d4e2bbacc72db24fbc30",
+  "case_count": 26,
+  "positive_cases": [
+    "original_response_current_V9",
+    "synthetic_supported_header",
+    "synthetic_same_value_correct_group"
+  ],
+  "negative_cases_rejected": 23,
+  "command": "PYTHONDONTWRITEBYTECODE=1 GIT_OPTIONAL_LOCKS=0 /usr/bin/sandbox-exec -f readonly.sb python3 independent-content-regression.py",
+  "sandbox_profile": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/readonly.sb",
+    "sha256": "1441808183d2f0c99d65979da6573dba5c064b61c849998937c9b660814ac104",
+    "size": 193
+  },
+  "script": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression.py",
+    "sha256": "4a31292f51553ba35944ba93a00b76a4cbfaf9bdec45ec62a57cc7c91c77680f",
+    "size": 16060
+  },
+  "receipt": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression.json",
+    "sha256": "cdce7444320bc5fcfa25fa426500373ceadbc2b73c26dab6390819e200e198d2",
+    "size": 17402
+  },
+  "log": {
+    "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression-2.log",
+    "sha256": "b0fabf43192b0192111111ed06dbc9c4bd9f02d7622988309074f55878dc7022",
+    "size": 7933
+  },
+  "initial_assertion_failure_preserved": {
+    "script": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression-attempt-1.py",
+      "sha256": "8c1809234b8170e77075e8a8713263a01157d5dea5a5ccdf6791310a808e0a16",
+      "size": 11442
+    },
+    "log": {
+      "path": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/independent-content-regression.log",
+      "sha256": "bde7b269106eb42d97ee4bb4c39524ab59c4071fcf70d066211f1815c04a6877",
+      "size": 501
+    },
+    "meaning": "Reviewer assertion exposed inaccurate old same-value wrong-group case label; no validator was changed and no business request occurred."
+  },
+  "new_provider_paid_sec_calls": [
+    0,
+    0,
+    0
+  ],
+  "full_stage_signoff": false,
+  "production_authorization": false
+}

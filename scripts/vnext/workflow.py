@@ -994,6 +994,7 @@ def _create_review_run_with_traits(
             task_plan = table_task_execution_plan(
                 repo_root=repo_root,
                 task_contract_id=task_contract_id,
+                requirement=candidate_fields["requirement"] if candidate_fields else None,
             )
         except TableTaskContractError as error:
             raise WorkflowError("Catalog task execution plan is invalid") from error
@@ -1233,6 +1234,7 @@ def _create_review_run_with_traits(
         compiled_spec=compiled_spec if task_contract_id is None else None,
         repo_root=repo_root if task_contract_id is not None else None,
         task_contract_id=task_contract_id,
+        requirement=candidate_fields["requirement"] if candidate_fields else None,
     )
     attempt_request = (
         prepare_live_reader_request(

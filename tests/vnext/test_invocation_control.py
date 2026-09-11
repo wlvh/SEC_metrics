@@ -14,6 +14,7 @@ from typing import List, Mapping, Optional
 from unittest import mock
 
 from tests.vnext.common import REPO_ROOT, SAMPLE_HTML, compiled_specs
+from tests.vnext.historical_authority_support import historical_test_root
 from tests.vnext.common import reader_response
 from tests.vnext.common import reviewed_fixture, sample_asset
 from tests.vnext.common import sample_source_reference
@@ -490,6 +491,7 @@ def crash_after_egress(
     execution_id: str,
 ) -> None:
     """Run one child execution that dies inside provider send."""
+    invocation_control._REPOSITORY_ROOT = historical_test_root()
     execute_invocation(
         workspace_dir=workspace_dir,
         plan=invocation_plan,
@@ -506,6 +508,14 @@ def crash_after_egress(
 
 class InvocationControlTest(unittest.TestCase):
     """Prove identity, single-flight, retry, stop, and audit invariants."""
+
+    def setUp(self):
+        from tests.vnext.historical_authority_support import historical_test_root
+        from vnext import cutover
+        for module in (invocation_control, ai_adapter, cutover):
+            selected=mock.patch.object(module,'_REPOSITORY_ROOT',historical_test_root())
+            selected.start();self.addCleanup(selected.stop)
+
 
     def test_plan_has_three_identities_and_no_monetary_caps(self) -> None:
         """Keep monetary observations non-blocking and cap fields absent."""
@@ -538,7 +548,7 @@ class InvocationControlTest(unittest.TestCase):
     def test_context_authority_uses_honest_utf8_byte_upper_bound(self) -> None:
         """Bind the DeepSeek context limit and non-exact estimator method."""
         authority = load_provider_runtime_authority(
-            repo_root=REPO_ROOT,
+            repo_root=historical_test_root(),
             provider="deepseek",
             model="deepseek-v4-flash",
             api="chat_completions",
@@ -1666,7 +1676,7 @@ class InvocationControlTest(unittest.TestCase):
         """Prove structured bypass and recover a pre-egress orphan."""
         with tempfile.TemporaryDirectory() as observation_directory:
             structured = structured_only_result(
-                repo_root=REPO_ROOT,
+                repo_root=historical_test_root(),
                 workspace_dir=Path(observation_directory),
                 release_input_plan_id=identity(label="release"),
                 cumulative_metric_ids=("B01", "B03"),
@@ -1737,7 +1747,7 @@ class InvocationControlTest(unittest.TestCase):
                 InvocationControlError, "emitted invocation state",
             ):
                 structured_only_result(
-                    repo_root=REPO_ROOT,
+                    repo_root=historical_test_root(),
                     workspace_dir=workspace,
                     release_input_plan_id=identity(label="release"),
                     cumulative_metric_ids=("B01", "B03"),
