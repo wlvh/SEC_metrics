@@ -54,5 +54,10 @@ class B06PrimaryTest(unittest.TestCase):
     def test_draft_cannot_issue_any_production_write_permission(self):
         for fn in [release.commit_authority,release.guard_switch,release.guard_recovery,release.guard_mirror_repair]:
             with self.assertRaisesRegex(publication.PublicationError,'NOT_AUTHORIZED'):fn()
+    def test_cli_output_path_cannot_traverse_back_into_checkout(self):
+        from tools.vnext_r5_b06 import checked_output
+        disguised=ROOT.parent/'..'/ROOT.parent.name/ROOT.name/'outputs'/'new-r5-test.json'
+        with self.assertRaisesRegex(ValueError,'canonical'):checked_output(disguised)
+        with self.assertRaisesRegex(ValueError,'outside'):checked_output(ROOT/'outputs'/'new-r5-test.json')
 
 if __name__=='__main__':unittest.main()
