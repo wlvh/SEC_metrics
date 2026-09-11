@@ -15,7 +15,7 @@ class B06MaterialTest(unittest.TestCase):
         cls.root=Path(value);cls.saved=strict_json_file(path=cls.root/'prepared.json');cls.bundle=cls.root/'outputs/publications'/cls.saved['publication_id'];cls.data=cls.bundle/'internal/annual_snapshot/data';cls.runs=cls.bundle/'internal/annual_snapshot/runs'
     def test_complete_version_and_cold_sources(self):
         m=publication.verify_publication_bundle(bundle_dir=self.bundle);self.assertEqual('BLOCKED',m['candidate_status']);v=publication.PublicationView(publication_id=m['publication_id'],bundle_dir=self.bundle,manifest=m)
-        batch=json.loads(v.read_bytes(relative_path=release.BATCH));self.assertEqual(250,len(batch['cumulative_result_bindings']));self.assertEqual(240,batch['inherited_result_count']);self.assertEqual(327,len(release._rows(v.read_bytes(relative_path='metrics_matrix.csv'))))
+        batch=json.loads(v.read_bytes(relative_path=release.BATCH));self.assertEqual(250,len(batch['cumulative_result_bindings']));self.assertEqual(240,batch['inherited_result_count']);self.assertEqual(batch['predecessor_public_row_count']+len(batch['new_public_keys']),len(release._rows(v.read_bytes(relative_path='metrics_matrix.csv'))));self.assertEqual(318,batch['unchanged_public_row_count'])
         for company in _registry_rows(repo_root=self.data):
             native=v.native_result(company_id=company['company_id'],metric_id='B06');self.assertEqual(company['company_id'],native['result']['company_id']);self.assertTrue(native['sources'])
     def test_old_debt_producer_unavailable_still_creates_native_result(self):

@@ -60,7 +60,8 @@ def _projection(data, run_root, predecessor):
     companies=_registry_rows(repo_root=data);need(len(companies)==10,'R5_COMPANY_SET_CHANGED')
     old_rows=_rows(predecessor.read_bytes(relative_path='metrics_matrix.csv'));old_ev=_rows(predecessor.read_bytes(relative_path='metric_evidence.csv'))
     key=lambda r:(r['company'],r['metric_id']);keys={(c['display_name'],'B06') for c in companies}
-    need(keys.issubset({key(r) for r in old_rows}),'R5_PREDECESSOR_COORDINATE_MISSING')
+    old_keys={key(r) for r in old_rows}
+    need(len(old_keys)==len(old_rows),'R5_PREDECESSOR_DUPLICATE_COORDINATE')
     runs={};selections={};replacements={};ev_replacements={};bindings=[];coverage=[]
     spec=compile_spec_file(path=data/primary.SPEC_PATH,dependency_specs={})
     for company in companies:
@@ -105,7 +106,8 @@ def _projection(data, run_root, predecessor):
     need({(r['company_id'],r['metric_id']) for r in prior['cumulative_result_bindings']}=={(r['company_id'],r['metric_id']) for r in plan['parent_scope_keys']} and {(c['company_id'],'B06') for c in companies}=={(r['company_id'],r['metric_id']) for r in plan['proposed_new_keys']},'R5_DRAFT_COMPLETE_SCOPE_CHANGED')
     retained=[{'company_id':r['company_id'],'metric_id':r['metric_id'],'origin':'PINNED_PREDECESSOR','publication_id':predecessor.publication_id} for r in prior['cumulative_result_bindings']]
     need(not any(r['metric_id']=='B06' for r in retained),'R5_ALREADY_IN_PREDECESSOR')
-    batch=record({'record_type':'R5_COMPLETE_CANDIDATE_BINDINGS','schema_version':1,'previous_publication_id':predecessor.publication_id,'cumulative_result_bindings':retained+bindings,'selected_result_count':10,'inherited_result_count':240,'public_row_count':len(metrics),'formal_metric_count_unchanged':24,'candidate_scope_only':True},'batch_manifest_id')
+    need({key(r) for r in metrics}==old_keys|keys and len(metrics)==len(old_keys|keys),'R5_PUBLIC_KEY_UNION_CHANGED')
+    batch=record({'record_type':'R5_COMPLETE_CANDIDATE_BINDINGS','schema_version':1,'previous_publication_id':predecessor.publication_id,'cumulative_result_bindings':retained+bindings,'selected_result_count':10,'inherited_result_count':240,'public_row_count':len(metrics),'predecessor_public_row_count':len(old_rows),'new_public_keys':sorted(keys-old_keys),'unchanged_public_row_count':len(old_keys-keys),'formal_metric_count_unchanged':24,'candidate_scope_only':True},'batch_manifest_id')
     indexes=projector._record_indexes(runs=list(runs.values()))
     # Include rejected source references in ledger closure, too.
     indexes['used_source_reference_ids']=set(indexes['sources'])
@@ -125,7 +127,7 @@ def _compose(snapshot, predecessor, meta):
     files={'metrics_matrix.csv':pub._csv_bytes(rows=metrics,fieldnames=pub.METRIC_FIELDS),'metric_evidence.csv':pub._csv_bytes(rows=evidence,fieldnames=pub.EVIDENCE_FIELDS),'coverage_matrix.csv':pub._csv_bytes(rows=pub._expected_coverage_rows(metrics=metrics,evidence=evidence),fieldnames=pub.COVERAGE_FIELDS),'stratified_audit.csv':pub._csv_bytes(rows=pub._expected_stratified_rows(metrics=metrics,evidence=evidence,migrated_ids={r['metric_id'] for r in batch['cumulative_result_bindings']}),fieldnames=pub.STRATIFIED_FIELDS),'projection_manifest.json':_json(projection)}
     for n in ['semantic_audit_receipt.json','scalability_audit.csv','legacy_invariant_migration_receipt.json']:
         files[n]=predecessor.read_bytes(relative_path=n)
-    checks={'NATIVE_RUNS_REPLAYED':True,'TEN_NEW_COORDINATES':len(coverage)==10,'UNSELECTED_PUBLIC_ROWS_PRESERVED':len(metrics)==327,'NO_OLD_B06_FILL':True,'PRODUCTION_NOT_AUTHORIZED':True}
+    checks={'NATIVE_RUNS_REPLAYED':True,'TEN_NEW_COORDINATES':len(coverage)==10,'COMPLETE_PUBLIC_KEY_UNION':len(metrics)==batch['predecessor_public_row_count']+len(batch['new_public_keys']),'NO_OLD_B06_FILL':True,'PRODUCTION_NOT_AUTHORIZED':True}
     files['golden_results.csv']=pub._csv_bytes(rows=[{'assertion_id':k,'description':k,'expected':'True','actual':str(v),'status':'PASS','evidence_path':BATCH,'notes':'Candidate content check only; source blockers remain.'} for k,v in checks.items()],fieldnames=pub.GOLDEN_FIELDS)
     files['repair_validation_results.csv']=pub._csv_bytes(rows=[{'check_id':k,'severity':'ERROR','status':'PASS','details':'Candidate content; not production acceptance'} for k in checks],fieldnames=pub.REPAIR_FIELDS)
     files['validation_run_manifest.json']=_json({'run_id':'r5:'+adoption['adoption_receipt_id'],'mode':pub.RECORDED_VALIDATION_MODE,'result':'BLOCKED','source_commit':meta['implementation_head'],'blocked_coordinates':blocked,'production_authorized':False,'inherited_audits_not_reexecuted':['semantic_audit_receipt.json','scalability_audit.csv','legacy_invariant_migration_receipt.json']})

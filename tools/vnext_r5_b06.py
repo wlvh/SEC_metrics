@@ -8,6 +8,7 @@ from vnext.canonical import canonical_json_bytes
 def main():
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('operation',choices=['prepare','read']);p.add_argument('--candidate-root',type=Path,required=True);p.add_argument('--output-json',type=Path,required=True);a=p.parse_args()
     if a.output_json.exists() or not a.output_json.is_absolute():p.error('output-json must be a new absolute external path')
+    if any(part.is_symlink() for part in (a.output_json,*a.output_json.parents)):p.error('output cannot follow symbolic links')
     if ROOT==a.output_json.parent or ROOT in a.output_json.parents:p.error('output must be outside checkout')
     if a.operation=='prepare':value=r5.prepare(candidate_root=a.candidate_root)
     else:
