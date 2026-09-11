@@ -28,7 +28,19 @@ from typing import Dict, Sequence
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 FAST_TESTS = (
-    "tests.vnext.test_b06_new_source",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_selected_model_cannot_grant_inclusion_or_nonoverlap",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_outside_calculation_allowlist_cannot_disappear",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_approval_fields_and_duplicate_formula_not_part_of_proposal",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_asset_payment_wrong_year_and_entity_do_not_become_liability",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_missing_primary_or_note_is_not_zero",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_forged_matching_ledger_has_no_admission",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_reverse_subject_exclusion_and_inclusion_are_conflicts",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_tax_loan_and_credit_facility_remain_unresolved",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_added_balance_sheet_financing_row_cannot_inherit_coverage",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_primary_only_sign_conflict_is_not_whitespace",
+    "tests.vnext.test_b06_new_source.B06NewSourceTest.test_dynamic_amounts_are_reread_with_new_test_identity",
     "tests.vnext.test_r5_b06.B06PrimaryTest",
     "tests.vnext.test_r5_b06_followup",
     "tests.vnext.test_r5_b06_scope",

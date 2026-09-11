@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "archive_crc_and_all_object_hashes_verified": true,
+  "no_git_directory": true,
+  "network_denied_by_os": true,
+  "material_and_code_writes_denied_by_os": true,
+  "runs": {
+    "southwest": {
+      "run_id": "run:b06-new-source:5144a060bf00aee260f0a9c2efd704e5b5be29d8c6b33c1acebc279b7665c446",
+      "status": "FROZEN",
+      "validation_status": null,
+      "business_calls": {
+        "paid": 0,
+        "provider": 0,
+        "sec": 0
+      }
+    },
+    "salesforce": {
+      "run_id": "run:b06-new-source:5d32e46f2bc250c508f5648a80a03fb5f2f2bd71896b9b860c97bb6edc8bf194",
+      "status": "FROZEN",
+      "validation_status": null,
+      "business_calls": {
+        "paid": 0,
+        "provider": 0,
+        "sec": 0
+      }
+    }
+  },
+  "first_package_failure": "Missing retained engine code-root policy capture; repaired packaging only",
+  "semantic_implementation_unchanged": "3e4ceff32fc09a245a078e867ac9a129a89f4d2f"
+}

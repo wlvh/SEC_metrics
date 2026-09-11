@@ -55,3 +55,7 @@ Southwest：借款表组成含91融资租赁，6704减5发行成本=6699；流�
 读取：`tools/vnext_b06_new_source.py read --data-root <外部data> --run-dir <Run> --output-json <新JSON>`。
 `replay-index.json`映射完整冷读材料；只有新增字节存于objects，原仓库字节复用原路径。
 精简包以内容哈希去重，materialize.py恢复code/cases后可在无Git、禁网条件下读取。
+
+交付补充：真实正式版本及旧B06 v1/v2/v3完整候选通过只读PublicationView/原生读取。
+便携包首次遗漏旧engine从code-root读取的政策捕获，补齐归档后两Run无Git/禁网冷读通过；
+没有改变业务实现。首次CI新13项合并入口超过30秒，现拆成13个入口保持同一上限与全部断言。
