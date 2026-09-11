@@ -1,0 +1,760 @@
+{
+  "files": [
+    {
+      "path": "README.md",
+      "size": 7918,
+      "sha256": "40e366c2a18ba6c239f0e9e8daf2aeea9ea2931cdb5376ce55d89becefe3e6fe"
+    },
+    {
+      "path": "candidate/internal/annual_complete_version.json",
+      "size": 48796,
+      "sha256": "f1a84f2f1c4e40dadbcd22d91a5b666dae6e40925766418b50e3b2e7868920e2"
+    },
+    {
+      "path": "candidate/internal/r5_adoption.json",
+      "size": 282354,
+      "sha256": "ed193dd8fdce7b52d470d32c2e19d998c6a1072ea4489ef7365d7fdde11010b1"
+    },
+    {
+      "path": "candidate/internal/r5_locator_provenance.json",
+      "size": 24013,
+      "sha256": "23cabcf20d6c0a1a42c4dacd2fa9c7f71b60e360eb36c3469f00f8b7327a5918"
+    },
+    {
+      "path": "candidate/internal/r5_primary.json",
+      "size": 82167,
+      "sha256": "edf8e21d9f08d1100f7a5c83097b20076a642db30357e9e20ddb17dea6233ab6"
+    },
+    {
+      "path": "candidate/metric_evidence.csv",
+      "size": 267655,
+      "sha256": "f7f45078a93e5f315973bc82319afbed9469d76de5a985165d237367c6371a0f"
+    },
+    {
+      "path": "candidate/metrics_matrix.csv",
+      "size": 109207,
+      "sha256": "94d265d2d2b919eaf6a71fa752c0ac33d6076e93f5b375eed0e3b8227c9b80f7"
+    },
+    {
+      "path": "candidate/projection_manifest.json",
+      "size": 1250,
+      "sha256": "7e676e4e5c163c4e98a90b1fd93d3cc2a4ae4478be2991cc3dadc301cd802896"
+    },
+    {
+      "path": "candidate/publication_manifest.json",
+      "size": 436619,
+      "sha256": "59e4232c646a949609f54f02686002e00cfab0f952f449c1c44f9444eaae28f6"
+    },
+    {
+      "path": "candidate/publication_validation_receipt.json",
+      "size": 5600,
+      "sha256": "6472d3edad95814f501beb6ce3bfaf8578f82c22a15924012b0ef91a13c55bc9"
+    },
+    {
+      "path": "checks/alignment-command.json",
+      "size": 842,
+      "sha256": "b6f4c8bfc7155220ab3f297f45ffa217cce537e90beb408c3a85c83e6680ea05"
+    },
+    {
+      "path": "checks/alignment-command.log",
+      "size": 108,
+      "sha256": "27bef0812539b30e00a83c1773b045c97d65a8e7b8623802f6ba88ceb042aedb"
+    },
+    {
+      "path": "checks/ci-implementation-proof.json",
+      "size": 1043,
+      "sha256": "2d430f742ed6d5438e49ebf627ecff89011235e4dccc28f36c6549973b08fc16"
+    },
+    {
+      "path": "checks/ci-implementation.log",
+      "size": 42790,
+      "sha256": "6c219aa493ac16c8d90e945001194c9ac65b1d386e14753add92c49b45bed922"
+    },
+    {
+      "path": "checks/cold-command.json",
+      "size": 1002,
+      "sha256": "52fbe5e58ed897fe19c6fce79c0d46a9bdba61e4ae25c6f02a7077d127fa76cc"
+    },
+    {
+      "path": "checks/cold-command.log",
+      "size": 136,
+      "sha256": "7b61e6d0089fda068f1a64ac8b75c41340306a8b6dfb1eecfa32ed6334a07018"
+    },
+    {
+      "path": "checks/cold-read.json",
+      "size": 11624,
+      "sha256": "a181a6a6cca0c101a5e0b883f7b897d18f974ba206599875d3c0de01c3698fdd"
+    },
+    {
+      "path": "checks/complete-command.json",
+      "size": 1016,
+      "sha256": "7b7ea56f0ca6d3be47bdcb54a55d44babda4a1eead79788af078ac397072118c"
+    },
+    {
+      "path": "checks/complete-command.log",
+      "size": 140,
+      "sha256": "a3b2bcbfb371ef83d1b0593a67e7998ef1d1b476b7101f8567b5d38e7cc6aed4"
+    },
+    {
+      "path": "checks/egress-command.json",
+      "size": 890,
+      "sha256": "1934ca78cec41ae785f8f4069c6b4b13c0dd499b8c9d2a50b6262e4c5e809525"
+    },
+    {
+      "path": "checks/egress-command.log",
+      "size": 1873,
+      "sha256": "726581d9f55a961fe6dd24e66d93a33c5ed916e4275c7ffcdda1ff60641289db"
+    },
+    {
+      "path": "checks/egress.json",
+      "size": 1873,
+      "sha256": "726581d9f55a961fe6dd24e66d93a33c5ed916e4275c7ffcdda1ff60641289db"
+    },
+    {
+      "path": "checks/inspect-current-01.log",
+      "size": 1193,
+      "sha256": "d519908db709106e492e07559094f817dcdc9784b1a7a56d42e2c751d720f6e7"
+    },
+    {
+      "path": "checks/inspect-current-02.log",
+      "size": 2179,
+      "sha256": "4f050463bbafc60b5fba0894c5f6a588eb414fc5659aa1d63509df16ac36fb85"
+    },
+    {
+      "path": "checks/inspect-current-03.log",
+      "size": 737,
+      "sha256": "f35c6e13f77712d03a4ca33cedc5719b2bdc63c438cd693e3f1fef4ed1931c75"
+    },
+    {
+      "path": "checks/material-command.json",
+      "size": 977,
+      "sha256": "c424dd3b309d93d13db102446ee4a202a99966514500ae34cd85568e97934e44"
+    },
+    {
+      "path": "checks/material-command.log",
+      "size": 920,
+      "sha256": "0d9273eb226ae92e11a0c40911c8d2338ef36753aa0a6e6f5129d663d8d1d9ad"
+    },
+    {
+      "path": "checks/native-command.json",
+      "size": 836,
+      "sha256": "d940991087b6152d610562550afafad7b0b2ab8430e8ede249644aea3e11315c"
+    },
+    {
+      "path": "checks/native-command.log",
+      "size": 530,
+      "sha256": "7d893aa2313096c614285678a7fcb99704ea96abb65ca5aa18616fdf34263e4d"
+    },
+    {
+      "path": "checks/old-candidate-command.json",
+      "size": 1016,
+      "sha256": "2c7c8381c9b2624f94d0813223a045583c7aca6a0709bbdbedd653494ae2761b"
+    },
+    {
+      "path": "checks/old-candidate-command.log",
+      "size": 145,
+      "sha256": "44ed93de38d1c04867004cab669c3a35a2a401a9ba17421a13edfcdec683cc24"
+    },
+    {
+      "path": "checks/old-candidate-read.json",
+      "size": 12831,
+      "sha256": "a6e4e0c6dd26d7604b263e8f21b45428236b84d6722b536a25e971e34431c31a"
+    },
+    {
+      "path": "checks/readonly.sb",
+      "size": 182,
+      "sha256": "8e09bb0b83c05a18e1d48f191cbde43e61037c60e0deaff21157a9f16d65bdbc"
+    },
+    {
+      "path": "checks/scalability-command.json",
+      "size": 900,
+      "sha256": "886b65d3cbc8a32166eca2318f77855df6d189f549fb7f580b024e00196b23ff"
+    },
+    {
+      "path": "checks/scalability-command.log",
+      "size": 43,
+      "sha256": "aea0e91c3ba45dd88d06e41e3dae49c1f423320429c18e3b09b63ade4eba26f7"
+    },
+    {
+      "path": "checks/scalability.csv",
+      "size": 55,
+      "sha256": "13e48e081e8b3a56ae81effefca09369eee8ee9bda5d4f937d7ca28f42161e1f"
+    },
+    {
+      "path": "checks/scope-tests-01.log",
+      "size": 2027,
+      "sha256": "85114d1c4c9acdcedc4d20c822669c374a75da6583204485be0a297a1020901c"
+    },
+    {
+      "path": "checks/semantic-command.json",
+      "size": 893,
+      "sha256": "00c6744fbd978d378633ba8e93b01ea5221031d3b0f967e5bcb1f66a8ab20878"
+    },
+    {
+      "path": "checks/semantic-command.log",
+      "size": 111,
+      "sha256": "e905bf02b7bef571bf7b69b935374d051890b19ce21ad496e097521c70bb680e"
+    },
+    {
+      "path": "checks/semantic.json",
+      "size": 15194,
+      "sha256": "14a56afef95a1c0a45108a49fe5d5ea1cf9319d0936c24e0d4baa048d8b90af5"
+    },
+    {
+      "path": "checks/short-tests-02.log",
+      "size": 5220,
+      "sha256": "d3f9cfdd51ee3e8f376963ffc69f40000243dcfdee95a9ac01fe1dcf9ee0e902"
+    },
+    {
+      "path": "composition_assessments.json",
+      "size": 10210,
+      "sha256": "74713a8fc903c62d9ac9e852377207b3f9ccbaa9687cb61ce03b24f813bce70a"
+    },
+    {
+      "path": "coverage.json",
+      "size": 377745,
+      "sha256": "249171c2011c19ed0ca0428787b801824b3298a09dee36e2642dfc94e0600244"
+    },
+    {
+      "path": "coverage.md",
+      "size": 2988,
+      "sha256": "68835865419581326f7c45d9511bd6b2378e8b75ca343648f6a12f2ceb52dcac"
+    },
+    {
+      "path": "debt_scope_relationships.json",
+      "size": 26586,
+      "sha256": "8e4ce2452c3cd1a0cf9195e2382bd4c8f7beee883105e2d84238c75812ef0cec"
+    },
+    {
+      "path": "field-differences.json",
+      "size": 98522,
+      "sha256": "3ce6d13b1819b1f5e9f49a7aea8ba3082f8b2d48711c2667cdb71a023217fdf6"
+    },
+    {
+      "path": "native/enphase_energy/manifest.json",
+      "size": 3357,
+      "sha256": "001ad3a57523a38c268a64c6fcda9ef38bb72e9370455d2502477a05f8299bc6"
+    },
+    {
+      "path": "native/enphase_energy/records.jsonl",
+      "size": 8150,
+      "sha256": "0f56bc119b5443fe191ae0d3f3b2280d1049d1cbd15c94618c72535935ef66bd"
+    },
+    {
+      "path": "native/enphase_energy/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/enphase_energy/validation.json",
+      "size": 1079,
+      "sha256": "a7e245e82de9261106973a8165ff697313d56c7c12784e742bcbb40437c07b61"
+    },
+    {
+      "path": "native/enphase_energy-selection.json",
+      "size": 18493,
+      "sha256": "6daf9f516cf1a3cbf135fc1409f2d70dabdb1cd71a9e10ab9d42bab21c509e98"
+    },
+    {
+      "path": "native/ford_motor_company/manifest.json",
+      "size": 3361,
+      "sha256": "5848b70b9f0502b09b5e368052aacde8f6393e9b5414565cba8441bd932996ad"
+    },
+    {
+      "path": "native/ford_motor_company/records.jsonl",
+      "size": 3292,
+      "sha256": "621974b4020a4df6eb274545898c9d9220552f3ab49f9d3db954b00bf5eb08fb"
+    },
+    {
+      "path": "native/ford_motor_company/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/ford_motor_company/validation.json",
+      "size": 1079,
+      "sha256": "f039664ecf486a065b338e2bfd1e2f5a54b68d741958f0bb29e8a76460a353d9"
+    },
+    {
+      "path": "native/ford_motor_company-selection.json",
+      "size": 19006,
+      "sha256": "87c5769b40ca4db946c6bc4ed779855e3eb8589be4d1a01543e2c14ede789e3d"
+    },
+    {
+      "path": "native/jpmorgan_chase/manifest.json",
+      "size": 3349,
+      "sha256": "32ce37865fcaca8343783603e014138522c2aea332e64915c0cf18c59fcadea2"
+    },
+    {
+      "path": "native/jpmorgan_chase/records.jsonl",
+      "size": 3283,
+      "sha256": "94f24180f640f180f6035cf197b4163318065200169d12d623700f575fa8e3ca"
+    },
+    {
+      "path": "native/jpmorgan_chase/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/jpmorgan_chase/validation.json",
+      "size": 1079,
+      "sha256": "75b520812db6e4acb2c83ee2a08148896c56ca15b0cf479564faf258b3bb1d36"
+    },
+    {
+      "path": "native/jpmorgan_chase-selection.json",
+      "size": 37486,
+      "sha256": "be4425f82ac60ffdd77f7650e43e0ba0aab560fa0d183dff5a334b8e8ba44c29"
+    },
+    {
+      "path": "native/lumen_technologies/manifest.json",
+      "size": 3367,
+      "sha256": "69170d8c715eb63e3d1d842223dbfc848f62c31c60098ba37229a76168adae54"
+    },
+    {
+      "path": "native/lumen_technologies/records.jsonl",
+      "size": 9131,
+      "sha256": "3d9f9ccefe15ad3b0471e4b05deb5ecf50dd533b7dc0d6bce1b7dc4b6d3530d4"
+    },
+    {
+      "path": "native/lumen_technologies/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/lumen_technologies/validation.json",
+      "size": 1079,
+      "sha256": "dbb008cd3eb6c61468d292bbaa4bdd2d1f095b28906d5392e1c037d9cc3f384c"
+    },
+    {
+      "path": "native/lumen_technologies-selection.json",
+      "size": 32914,
+      "sha256": "9ddf45f1b6f5564a5618951008cf93d11537a19f5bfd880a49a15ab41fb512fa"
+    },
+    {
+      "path": "native/macys/manifest.json",
+      "size": 3323,
+      "sha256": "25d9b721fce5cfa920bd3b7fa3c7a189d598a0712d6cf1e9d87a01e3ac98e4e3"
+    },
+    {
+      "path": "native/macys/records.jsonl",
+      "size": 11329,
+      "sha256": "d62e6b7ed66ad536ae0464a0811c15d0c36c88f881a1db08ceaa43c83764f23a"
+    },
+    {
+      "path": "native/macys/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/macys/validation.json",
+      "size": 1080,
+      "sha256": "76e332ddc48b6fdb4d923af413bcbe909f5805ecfad0ceeb96f7aee0cd3b04b7"
+    },
+    {
+      "path": "native/macys-selection.json",
+      "size": 31106,
+      "sha256": "060fd87e42c831fc94507170fbb26fc5b3ece55d4036ec97bd05c629611f03a3"
+    },
+    {
+      "path": "native/marriott_international/manifest.json",
+      "size": 3394,
+      "sha256": "0cdb7a1a17e32747cf4b420a0dd038733346cea2e1c70ef2137bd5f18c97bc09"
+    },
+    {
+      "path": "native/marriott_international/records.jsonl",
+      "size": 5832,
+      "sha256": "2bb8a091c986a6753df3862d176c7299e9d9a98a4399b112ef04b41520f8b585"
+    },
+    {
+      "path": "native/marriott_international/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/marriott_international/validation.json",
+      "size": 1079,
+      "sha256": "6d7fc9f8ca36883e167079d48aa03e2b261aa56f2e31eb9749420b1c867d3d54"
+    },
+    {
+      "path": "native/marriott_international-selection.json",
+      "size": 21534,
+      "sha256": "e5c91396b57e21088609b8d0203b1965d746bd8810f6ac96ecf521f4b0701660"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/manifest.json",
+      "size": 3420,
+      "sha256": "a7737f8c1d62f202ead07d97a71a92062d78cda9d3419ffa040cd2343f69608d"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/records.jsonl",
+      "size": 6152,
+      "sha256": "50d01d391970aac214099acbd7e0bd948c0adb0f37e27f173d019beb6dbe6052"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global/validation.json",
+      "size": 1079,
+      "sha256": "e688dd5d4ff26336a6c2a5861c31eacfb6225af31b0bcd3017cca2e2077e6f69"
+    },
+    {
+      "path": "native/paramount_skydance_paramount_global-selection.json",
+      "size": 22489,
+      "sha256": "10c4ae55f0e36ddebfd40e5065505d3adb966396afe53e02d26182472ea88910"
+    },
+    {
+      "path": "native/pfizer/manifest.json",
+      "size": 3329,
+      "sha256": "de1e181b82b14d0e22bee215f4225cf037fa36bc6e113b86f7bcd0bdfc358733"
+    },
+    {
+      "path": "native/pfizer/records.jsonl",
+      "size": 3250,
+      "sha256": "936a24e41a74902fca6c56d26ddb92a2aa04ce660f3a244b6a1d7f83d5fa2f99"
+    },
+    {
+      "path": "native/pfizer/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/pfizer/validation.json",
+      "size": 1079,
+      "sha256": "b01b2891996e0c4300f6886586487e4e3f8571d57b43aacdaca11a3d049808a3"
+    },
+    {
+      "path": "native/pfizer-selection.json",
+      "size": 22665,
+      "sha256": "7a7336ea96bf54d8247cb8f6aba1cbdb3de5f84cb7ea97a5f5af71717a2d770b"
+    },
+    {
+      "path": "native/salesforce/manifest.json",
+      "size": 3383,
+      "sha256": "0797efdcd11ec2ad166b8828bd9c8888fe0ffe2dd80ca10f20be893b569843ea"
+    },
+    {
+      "path": "native/salesforce/records.jsonl",
+      "size": 8487,
+      "sha256": "843e4ea42e5f33197bae8edaad7edce6c1b12ef84568621ea526d2cce9734f08"
+    },
+    {
+      "path": "native/salesforce/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/salesforce/validation.json",
+      "size": 1079,
+      "sha256": "510c59d63144f93a707a1d5e15439d9b83c2dcb8ca632067ec4cc9daaa75644e"
+    },
+    {
+      "path": "native/salesforce-selection.json",
+      "size": 25817,
+      "sha256": "6d88f48449b6afd1c1cfcc054461f88de0d31d59c46158effb99a926e883b6b0"
+    },
+    {
+      "path": "native/southwest_airlines/manifest.json",
+      "size": 3365,
+      "sha256": "ab8423ff0e2941e51414c516c5dee4e59069b4163416ccb3e0f361cfb2ea3113"
+    },
+    {
+      "path": "native/southwest_airlines/records.jsonl",
+      "size": 7842,
+      "sha256": "67fe7b43d275ee2e2db5ab4974462b9944b57cd178e52af78ea49c03fedb69ad"
+    },
+    {
+      "path": "native/southwest_airlines/review_decisions.jsonl",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/southwest_airlines/validation.json",
+      "size": 1079,
+      "sha256": "ea7b46d3573bc2d4fb37a08c92b243b9c69a203bf7d7e88e28960d0cfbe5de6b"
+    },
+    {
+      "path": "native/southwest_airlines-selection.json",
+      "size": 27368,
+      "sha256": "5d4cdab564f618dd1dc1489afe835612f20fcfa99ea1e1bb9cf180d9aa85afcb"
+    },
+    {
+      "path": "protection.json",
+      "size": 2338,
+      "sha256": "c4c213959d94645a8adbca8cd9088101719a1e8ea0e3320866145fdfec0e36d0"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-DebtDisclosureTextBlock.txt",
+      "size": 16615,
+      "sha256": "ce75bc3c8670418e11f79c949643b084ae2c924b5d799dd0bb0fbfb0ff857214"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-LesseeFinanceLeasesTextBlock.txt",
+      "size": 4948,
+      "sha256": "1b2d2bffeb54fa70ac0301f3383dcbac46badbc15ff839ebe531983cf257e6e3"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-LesseeLeasesPolicyTextBlock.txt",
+      "size": 1658,
+      "sha256": "a3c95bbb9ff206882628d55b18051573f85fbd4ca9391746da25a9fb7ff273ed"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-LesseeOperatingLeasesTextBlock.txt",
+      "size": 4948,
+      "sha256": "1b2d2bffeb54fa70ac0301f3383dcbac46badbc15ff839ebe531983cf257e6e3"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-LesseeWeightedAverageTermAndDiscountRateTableTextBlock.txt",
+      "size": 323,
+      "sha256": "e6f8957d21bf234a098d4ffb557a3656bdc98aee59d9ce1dcb275629788f28a6"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-OrganizationConsolidationAndPresentationOfFinancialStatementsDisclosureTextBlock.txt",
+      "size": 1635,
+      "sha256": "332d8148222ad03b501add7f0434ac5b9a7c17b810fa20da06e59cc97577c95b"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-ScheduleOfCarryingValuesAndEstimatedFairValuesOfDebtInstrumentsTableTextBlock.txt",
+      "size": 2741,
+      "sha256": "4cce93f80c97a5f804b8360c725844e114be322880aac53d2dcc3814afd45cff"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-ScheduleOfMaturitiesOfLongTermDebtTableTextBlock.txt",
+      "size": 1195,
+      "sha256": "4fd510fe5ab79ff81de6b40dd404bedb6a2baf0d0d70b13cbdaee8df1925a00e"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-ScheduleOfRelatedPartyTransactionImpactingBalanceSheetTableTextBlock.txt",
+      "size": 734,
+      "sha256": "cdfa75eb848500a14cf883e0161cb9b4aaeb6e2c609b65542a11a6087f6f283b"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-ScheduleOfSegmentReportingInformationBySegmentTextBlock.txt",
+      "size": 6906,
+      "sha256": "742890b4b0430d089f48b5c8511c74c0b413f1d082778be3087d1969267fa111"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-SegmentReportingDisclosureTextBlock.txt",
+      "size": 17779,
+      "sha256": "10bf7b70dccd0f0ffd22bac04a4dfdc2973cee55e96881e8366bb8496865db31"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-SegmentReportingPolicyPolicyTextBlock.txt",
+      "size": 11280,
+      "sha256": "f7b0a2bb5d2cf07e1fcc28f36a37c45c0d1c58bd093ab2b4e26c350226342e68"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-VariableInterestEntityDisclosureTextBlock.txt",
+      "size": 6443,
+      "sha256": "a9f85683debce7dc50cbff04ca7a2f020438f8b2dc0af49bbb9840f18cde52bf"
+    },
+    {
+      "path": "review/bank-industrial-review/Ford-equity-scope-table-census.json",
+      "size": 13582,
+      "sha256": "ecbcbbdf12cc9fbaee848c6d8932d454f9f3f9119c60e91966e3ee57d7c1f29c"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-CondensedFinancialInformationOfParentCompanyOnlyDisclosureTextBlock.txt",
+      "size": 4619,
+      "sha256": "082aa5107594d65e714c0bfabf1978bc0c860bc7b00a52c0ae1ab5afdb8c8cb2"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-ConsolidationPolicyTextBlock.txt",
+      "size": 6819,
+      "sha256": "6366aa412a2c1000ff48b62a034ee52f50b7ce8cefc53a46019c4203e684dd98"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-DerivativesAndSecuritiesPurchasedAndSoldUnderResaleAndRepurchaseAgreementsOffsettingPolicyPolicyTextBlock.txt",
+      "size": 4451,
+      "sha256": "5ad1434180bf79fe5d9adf4ca96a1685b8977a769604af01ef1d7919e39d386b"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-InformationOnAssetsAndLiabilitiesRelatedToVIEsThatAreConsolidatedByFirmTableTextBlock.txt",
+      "size": 2343,
+      "sha256": "2b28fcd2421f247e4504ee4580d7a85fde79e07fd957dfa4955514a0d7a3361e"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-LesseeLeasesPolicyTextBlock.txt",
+      "size": 1933,
+      "sha256": "e3180b3d4edb1be09ffe0baae7cee6db537df7f1523171863e8c41031fcc96e2"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-LesseeOperatingLeaseLiabilityMaturityTableTextBlock.txt",
+      "size": 292,
+      "sha256": "02855d13878209cbae08cd5016ceef5e166d31d817b96ae3e3a3d8f46b74e891"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-LesseeOperatingLeasesTextBlock.txt",
+      "size": 5548,
+      "sha256": "8d2d9140115fae05177dd813dba8a2c250e861f7209c4b3a7308596a81916598"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-LongTermDebtTextBlock.txt",
+      "size": 5965,
+      "sha256": "58e89c245c867a65dbd888d1eef0152454ec841583f872a66160f15aa5a3f3f0"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-OrganizationConsolidationAndPresentationOfFinancialStatementsDisclosureTextBlock.txt",
+      "size": 16481,
+      "sha256": "739d0236212238835019ea78aab3b41c39a1aa3e463b5d6dbbe88edb45c205bb"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-RepurchaseAgreementsResaleAgreementsSecuritiesBorrowedAndSecuritiesLoanedDisclosureTextBlock.txt",
+      "size": 9850,
+      "sha256": "7a49b902f035866a6a287a26a9dc0dde8cfcb264a8a35634d249f73b08bbd65f"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-ScheduleOfCondensedFinancialStatementsTableTextBlock.txt",
+      "size": 4604,
+      "sha256": "13e5232b19d9bcac56ed982cccf06b2b33ff0a5879c84528aeeba513a5724ef4"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-ScheduleOfMaturitiesOfLongTermDebtTableTextBlock.txt",
+      "size": 4030,
+      "sha256": "6c269347882401c64cb3bf2312b08df51f744ed09ff7f080195af5def3df8b74"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-ScheduleOfSecuritiesRepurchasedAndOptionToRepurchaseDelinquentSecuritiesTableTextBlock.txt",
+      "size": 766,
+      "sha256": "65a4aef8638334a280817fe8a7f696cf25a9fef9270a2d91bbf47a795fe8ae60"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-ScheduleOfSegmentReportingInformationBySegmentTextBlock.txt",
+      "size": 5882,
+      "sha256": "71e07f8caf2492c78c4de217a7e493f1300199ec89e396ee49f0e8f883bc5215"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-ScheduleOfSignificantTypesOfVariableInterestEntitiesByBusinessSegmentTableTextBlock.txt",
+      "size": 1191,
+      "sha256": "cf08347666b2f99576606716782243316123f4106aa2edc265b07ed3202a9171"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-ScheduleOfVariableInterestEntitiesTextBlock.txt",
+      "size": 499,
+      "sha256": "ae507c5a9bb6b39ef516903911f8cd8677b49c2aef1f5ecac8587e48845bbb33"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-SegmentReportingDisclosureTextBlock.txt",
+      "size": 15273,
+      "sha256": "813398391516a23637a9d1e05501257377799a1883a5c4a060b08e886c727b27"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-StockholdersEquityNoteDisclosureTextBlock.txt",
+      "size": 3111,
+      "sha256": "62f5bff52057bcdb37fe80a2c7dc814038f93877c718b1f62554a3d46b1666b0"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-TransferOfCertainFinancialAssetsAccountedForAsSecuredBorrowingsTableTextBlock.txt",
+      "size": 1615,
+      "sha256": "90ad0f27a6070256e69821de87c717ac612db30bdd83afa71c39ad427bd77e81"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-VariableInterestEntitiesAndTransfersOfFinancialAssetsTextBlock.txt",
+      "size": 38139,
+      "sha256": "57dc1673f7417cd1e00acdad6ef92a0608a88981d135ed758ae1f75acba3ca95"
+    },
+    {
+      "path": "review/bank-industrial-review/JPM-finance-lease-search.json",
+      "size": 366,
+      "sha256": "040f274d50b987a9441e1bfa7d42bdbc1e042b4505463de1644a2a260694676a"
+    },
+    {
+      "path": "review/bank-industrial-review/conclude.py",
+      "size": 9537,
+      "sha256": "75f9882ee2ebf280254dd58359ca8ff595d83528d3dbbc1cfbd6050c33a972ea"
+    },
+    {
+      "path": "review/bank-industrial-review/extract.py",
+      "size": 2122,
+      "sha256": "26efd7072f7162da05369523f628ab85e7cb21925d86ae09cc23bf587b6f201b"
+    },
+    {
+      "path": "review/bank-industrial-review/source-conclusions.json",
+      "size": 69702,
+      "sha256": "de0e02583a8e491e885e7b42b1539cd7f38dd8cf947daf0e91b91afac1dd1fe8"
+    },
+    {
+      "path": "review/source-review/README.md",
+      "size": 3974,
+      "sha256": "6bedb059bcaa1a55abac2d552254b0ee9ad4494dc6029ceb396302d3525e6f5b"
+    },
+    {
+      "path": "review/source-review/build_scope_review.py",
+      "size": 12858,
+      "sha256": "5ada72a19e13fed48bcb71e1a5b61bcc2cf755c12a60f585cc624ded4b0b01c0"
+    },
+    {
+      "path": "review/source-review/code-checks.json",
+      "size": 68665,
+      "sha256": "904074d9985730877630114d4f6d6d4a46ea5e0c8c48eee6699afb28587b2f1a"
+    },
+    {
+      "path": "review/source-review/code-review.json",
+      "size": 5420,
+      "sha256": "121b9950feae99d33f3c3ffd314da7e32eb1a5ba2a5123fc3afdcb7a54651093"
+    },
+    {
+      "path": "review/source-review/computation-summary.json",
+      "size": 2425,
+      "sha256": "b8b34ef90f797a3e5f504c00ba3f64e3801a6c446d3db046dca1336fa9bba335"
+    },
+    {
+      "path": "review/source-review/extract.py",
+      "size": 2903,
+      "sha256": "f801e9b3a9b57c382b4b60d4eecb3ec3f3f1d773bc536acba278237f5324d6a5"
+    },
+    {
+      "path": "review/source-review/final-package-review.json",
+      "size": 17616,
+      "sha256": "da9677d87d54da7743a44eaf320ab114ad513468c8b7df860d0337433327e678"
+    },
+    {
+      "path": "review/source-review/final_package_checks.py",
+      "size": 9573,
+      "sha256": "578bfda761d0df3b38c354289835742be6f0db9b3dca7a97420a3357c4ccec74"
+    },
+    {
+      "path": "review/source-review/pfizer-completeness-supplement.json",
+      "size": 4089,
+      "sha256": "ece898bc0e89d4ca8332e5d869e1a57bc971808efc01313edaa6b75c4d91291a"
+    },
+    {
+      "path": "review/source-review/review-index.json",
+      "size": 932,
+      "sha256": "dae96e02882cc990c0557bfcc62929e99b1c42b8cb999fc47b0cc3b5b26b3957"
+    },
+    {
+      "path": "review/source-review/review_scope_code.py",
+      "size": 6825,
+      "sha256": "af02e60dd0dd41f779e4752195c5166f8d081de48054d78642511a136d07fb08"
+    },
+    {
+      "path": "review/source-review/scope-module-tests.log",
+      "size": 2027,
+      "sha256": "54a1657afb2e6844ce856959953da20bccc2f892ab42240b967ed269121bb3e6"
+    },
+    {
+      "path": "review/source-review/scope-relationships.json",
+      "size": 245562,
+      "sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd"
+    },
+    {
+      "path": "review/source-review/source-index.json",
+      "size": 2667,
+      "sha256": "d160b99cb086b860d309d1a99c7f606f3fa2ed849fb48fa261409421ee7fe09a"
+    },
+    {
+      "path": "run-package-binding.json",
+      "size": 111695,
+      "sha256": "3f4be7f96fa1d8ee1c7fd57c9168dc0dafcfc27fbb6593f87a9c7de20121dacf"
+    },
+    {
+      "path": "version-comparison.json",
+      "size": 1955,
+      "sha256": "e0b9ce8d62e3e5e4742892000ea79dcbde9947f7ccf01c0e4bcee137b1554179"
+    }
+  ],
+  "hash_definition": "Exact file bytes; self excluded. Complete raw sources indexed separately in essential ZIP."
+}

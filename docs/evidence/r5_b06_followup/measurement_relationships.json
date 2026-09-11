@@ -1,0 +1,26 @@
+{
+  "reviewer": {
+    "kind": "independent Codex model subtask",
+    "task": "/root/debt_reconciliation_review",
+    "human_approval": false
+  },
+  "source_review_sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c",
+  "relationships": [
+    {
+      "source_sha256": "98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+      "model_id": "GROSS_LESS_DISCOUNT_AND_COSTS",
+      "note_concept": "us-gaap:ScheduleOfDebtInstrumentsTextBlock",
+      "note_text_sha256": "fc2534ec0ef3bffc93fcd550724dd6ae6675415cf9fc9929ac61319571e2c9ea",
+      "judgment": "Same financing table, subtraction of positive reported adjustments, current/noncurrent carrying closure; no expansion of debt set",
+      "scope": "consolidated instant; actual issuer, context, unit and amounts must be rebuilt from raw source"
+    },
+    {
+      "source_sha256": "b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+      "model_id": "SUBTOTAL_LESS_COSTS",
+      "note_concept": "us-gaap:ScheduleOfDebtInstrumentsTextBlock",
+      "note_text_sha256": "16e4819f2af28f491de6d40aee4b9992aa61aee67539e2c639658512251e2463",
+      "judgment": "Same financing table, subtraction of positive reported adjustments, current/noncurrent carrying closure; no expansion of debt set",
+      "scope": "consolidated instant; actual issuer, context, unit and amounts must be rebuilt from raw source"
+    }
+  ]
+}

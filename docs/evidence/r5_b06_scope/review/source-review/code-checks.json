@@ -1,0 +1,1881 @@
+{
+  "status": "PASS_BOUNDED_SCOPE_INCREMENT_CHECKS",
+  "reviewer": "independent Codex subtask /root/debt_reconciliation_review",
+  "time": "2026-09-11T06:04:13.950589+00:00",
+  "parent_head": "e120b5afab6e1673fea6574628339bfe7ed30c8c",
+  "files": [
+    {
+      "path": "scripts/vnext/r5_b06_scope.py",
+      "sha256": "f5d66c4d13771bd917b9a602d23d425a19e34b30c128e03e40355b099171992d"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_structured.py",
+      "sha256": "aa46b4a751365386c43366e7e182a6d5025b4d0c7ed1e1491670651c268c0076"
+    },
+    {
+      "path": "scripts/vnext/specs.py",
+      "sha256": "fea6713bc2e1526ffbf0b4e4ce652b0a4aadc64fe950480173abf75af368a58f"
+    },
+    {
+      "path": "scripts/vnext/calculator.py",
+      "sha256": "0b5ceeedc6742f003f14058848512d387e036dc016d2f316bf18a7d36e7855f1"
+    },
+    {
+      "path": "catalog/r5/B06_structured.md",
+      "sha256": "a160f5799b156b535d1777dd4a297fc66111f7ccfc6cba446f0157ec801bdd66"
+    },
+    {
+      "path": "config/r5_b06_debt_sets_v3.json",
+      "sha256": "0a30564b4c404390e70263d10326ed4f02adca16d650c9d34d84a10f16f08b5e"
+    },
+    {
+      "path": "docs/evidence/r5_b06_scope/debt_scope_relationships.json",
+      "sha256": "f6f0ff7536c27df34e2ef8e0979ca3e2af6c0bbd92b8386a2d378f16a93320bc"
+    }
+  ],
+  "results": [
+    {
+      "company": "marriott_international",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "NOT_MEANINGFUL",
+        "publication": "PUBLISHED",
+        "reason_code": "DENOMINATOR_NONPOSITIVE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:689f8e34a9ba9c2bd22b6585030b61c9823bd47be096506452e0427a8601a81e",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8e080d8b54830c925edb3ba4fe575e4d01ad83c6cb00462eb4f89733fd6a52e2"
+      },
+      "debt": "16204000000",
+      "proven_subtotal": "16204000000",
+      "reasons": [],
+      "source_sha256": "39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+      "selected_observations": [
+        {
+          "semantic_role": "debt",
+          "metric_id": "B06",
+          "company_id": "marriott_international",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "16204000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+            "source_reference_id": "sha256:87d063ca08d11fb9061462aefae41b638db07c1ec09e06e96cb0391ac3759d64",
+            "source_role": "accession_xbrl",
+            "document_name": "mar-20251231_htm.xml",
+            "accession": "0001048286-26-000007",
+            "entity": "1048286",
+            "xbrl_context_ref": "c-24",
+            "xbrl_fact_ordinal": 868,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:732195c91fe19e02dc43caea9618c36b10804d2de30a3e794150a252f2586762",
+            "filed": "2026-02-10",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:8a7e002ec6a4e01c25410dd6b11c094addd635e62063f89f9f70bd59147bb8ae",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "equity",
+          "metric_id": "B06",
+          "company_id": "marriott_international",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "-3771000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+            "source_reference_id": "sha256:87d063ca08d11fb9061462aefae41b638db07c1ec09e06e96cb0391ac3759d64",
+            "source_role": "accession_xbrl",
+            "document_name": "mar-20251231_htm.xml",
+            "accession": "0001048286-26-000007",
+            "entity": "1048286",
+            "xbrl_context_ref": "c-24",
+            "xbrl_fact_ordinal": 219,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:2671cb3ced0fdd70b5707952814e444fdddd97d62791ffb6ccec331ef2eb4cc9",
+            "filed": "2026-02-10",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:b8892e267491e49016e2c21b1051b0ec59b126346f31cd334cc01d2779d59827",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        }
+      ],
+      "precision": [
+        {
+          "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 868,
+          "all_reports": [
+            {
+              "value": "16204000000",
+              "decimals": "-6",
+              "ordinal": 868,
+              "context_ref": "c-24"
+            },
+            {
+              "value": "16204000000",
+              "decimals": "-6",
+              "ordinal": 898,
+              "context_ref": "c-24"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "chosen_ordinal": 185,
+          "all_reports": [
+            {
+              "value": "1209000000",
+              "decimals": "-6",
+              "ordinal": 185,
+              "context_ref": "c-24"
+            },
+            {
+              "value": "1209000000",
+              "decimals": "-6",
+              "ordinal": 870,
+              "context_ref": "c-24"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 197,
+          "all_reports": [
+            {
+              "value": "14995000000",
+              "decimals": "-6",
+              "ordinal": 197,
+              "context_ref": "c-24"
+            },
+            {
+              "value": "14995000000",
+              "decimals": "-6",
+              "ordinal": 872,
+              "context_ref": "c-24"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 219,
+          "all_reports": [
+            {
+              "value": "-3771000000",
+              "decimals": "-6",
+              "ordinal": 219,
+              "context_ref": "c-24"
+            },
+            {
+              "value": "-3771000000",
+              "decimals": "-6",
+              "ordinal": 377,
+              "context_ref": "c-24"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "southwest_airlines",
+      "result": {
+        "company_id": "southwest_airlines",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.6140834481894499436160882095",
+        "unit": "ratio",
+        "trace_id": "sha256:92119fe15d57c1959c90e7d663924a8ee8875200258d6a3935b17b90bcf24deb",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:4205d1fea4caa2f49fd49ce0d7b03b0f4659877a4e183cf0e57a2dae75bea5ba"
+      },
+      "debt": "4901000000",
+      "proven_subtotal": "4901000000",
+      "reasons": [],
+      "source_sha256": "b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+      "selected_observations": [
+        {
+          "semantic_role": "gross",
+          "metric_id": "B06",
+          "company_id": "southwest_airlines",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "4919000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 656,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:f61b83a57bc83bc4e29b70e25548bd9d8325bafeaae6818777df0ae92c7bcc0d",
+            "filed": "2026-02-05",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:20ebde3eb6b81024b867f4af4d29e58c83ba04fb0e1402f70973e94d8b9c2779",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "cost",
+          "metric_id": "B06",
+          "company_id": "southwest_airlines",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "18000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 660,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:DeferredFinanceCostsGross",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:6ca4a78d530ce3d4690872ad0949e18e11006a338a0325246c44c049f60c65c8",
+            "filed": "2026-02-05",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:c23959546372bc98cd7b0ad3484b85a7d873526d60fb174628bd1b0ca742ba0f",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "equity",
+          "metric_id": "B06",
+          "company_id": "southwest_airlines",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "7981000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+            "source_reference_id": "sha256:b4568684f59b790bd8b8f6663aa44a71ddb08d87bd12c540eafa4e2021a7d4bc",
+            "source_role": "accession_xbrl",
+            "document_name": "luv-20251231_htm.xml",
+            "accession": "0000092380-26-000004",
+            "entity": "92380",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 155,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:5e73bbba8d48f1e1c80dfd0ad378c274a5e20ddec6d89b2d14297d5134e4c7b3",
+            "filed": "2026-02-05",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:2954c50808335a42f4135043b31d4a4cfde600b9745c490ff175530485084fbe",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        }
+      ],
+      "precision": [
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "chosen_ordinal": 656,
+          "all_reports": [
+            {
+              "value": "4919000000",
+              "decimals": "-6",
+              "ordinal": 656,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DeferredFinanceCostsGross",
+          "chosen_ordinal": 660,
+          "all_reports": [
+            {
+              "value": "18000000",
+              "decimals": "-6",
+              "ordinal": 660,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "chosen_ordinal": 123,
+          "all_reports": [
+            {
+              "value": "324000000",
+              "decimals": "-6",
+              "ordinal": 123,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "324000000",
+              "decimals": "-6",
+              "ordinal": 658,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 127,
+          "all_reports": [
+            {
+              "value": "4577000000",
+              "decimals": "-6",
+              "ordinal": 127,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "4577000000",
+              "decimals": "-6",
+              "ordinal": 662,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 155,
+          "all_reports": [
+            {
+              "value": "7981000000",
+              "decimals": "-6",
+              "ordinal": 155,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "7981000000",
+              "decimals": "-6",
+              "ordinal": 314,
+              "context_ref": "c-4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "ford_motor_company",
+      "result": {
+        "company_id": "ford_motor_company",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "STRUCTURED_SOURCE_AMBIGUOUS",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:d91ee749800b3c65be04a1802c7a71a9163959f58bd57e66093f670c7c83aec3",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:b3b05419c54187a5e0b8b723332d3545d681f499d6b13ee458fd91f2ce572186"
+      },
+      "debt": null,
+      "proven_subtotal": null,
+      "reasons": [
+        "DEBT_SET_COMPLETENESS_UNPROVEN",
+        "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED",
+        "INDUSTRIAL_VS_FINANCE_SCOPE_REQUIRES_REVIEW"
+      ],
+      "source_sha256": "35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+      "selected_observations": [],
+      "precision": null
+    },
+    {
+      "company": "pfizer",
+      "result": {
+        "company_id": "pfizer",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "STRUCTURED_SOURCE_AMBIGUOUS",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:78749ec086ded047b647236c84b0926b3c318a4f3734aa2adfdc00409935d999",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:86774de33c8a58d5bdacb87ef4bc5ec1ab4a098cb069c04f1a120cd9ab3ba486"
+      },
+      "debt": null,
+      "proven_subtotal": "64795000000",
+      "reasons": [
+        "DEBT_SET_COMPLETENESS_UNPROVEN",
+        "FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED"
+      ],
+      "source_sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "selected_observations": [],
+      "precision": [
+        {
+          "concept": "us-gaap:DebtCurrent",
+          "chosen_ordinal": 297,
+          "all_reports": [
+            {
+              "value": "3154000000",
+              "decimals": "-6",
+              "ordinal": 297,
+              "context_ref": "c-18"
+            },
+            {
+              "value": "3154000000",
+              "decimals": "-6",
+              "ordinal": 1735,
+              "context_ref": "c-18"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtNoncurrent",
+          "chosen_ordinal": 313,
+          "all_reports": [
+            {
+              "value": "61641000000",
+              "decimals": "-6",
+              "ordinal": 313,
+              "context_ref": "c-18"
+            },
+            {
+              "value": "62000000000",
+              "decimals": "-9",
+              "ordinal": 1618,
+              "context_ref": "c-18"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtCurrent",
+          "chosen_ordinal": 295,
+          "all_reports": [
+            {
+              "value": "2997000000",
+              "decimals": "-6",
+              "ordinal": 295,
+              "context_ref": "c-18"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:OtherShortTermBorrowings",
+          "chosen_ordinal": 1729,
+          "all_reports": [
+            {
+              "value": "157000000",
+              "decimals": "-6",
+              "ordinal": 1729,
+              "context_ref": "c-18"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 345,
+          "all_reports": [
+            {
+              "value": "86476000000",
+              "decimals": "-6",
+              "ordinal": 345,
+              "context_ref": "c-18"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "jpmorgan_chase",
+      "result": {
+        "company_id": "jpmorgan_chase",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "STRUCTURED_SOURCE_AMBIGUOUS",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:3e20cee0eb6cb5f1a3db30e944fd70fb4fe3efafaabf1b241a93c6d13309abe2",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5cbe9ea12364d0c3e60f0f1fea2d0bd76d4ba28d4020a0020c9fdf2ad3ff55ed"
+      },
+      "debt": null,
+      "proven_subtotal": null,
+      "reasons": [
+        "BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED",
+        "DEBT_SET_COMPLETENESS_UNPROVEN"
+      ],
+      "source_sha256": "9fe211a6d6f7ec3af368f81c820868b54d7ea02ca2fe9776e72d7a41e2472126",
+      "selected_observations": [],
+      "precision": null
+    },
+    {
+      "company": "salesforce",
+      "result": {
+        "company_id": "salesforce",
+        "metric_id": "B06",
+        "period_start": "2026-01-31",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.2531872442595786412363464205",
+        "unit": "ratio",
+        "trace_id": "sha256:823b7c22358f6265bf128d410188438e8330c28f4357f37385dda565eebd97f8",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:81ceeb49a274e10374d2aad0877271d98322e690ca9bc797def9a43052ba4f69"
+      },
+      "debt": "14974000000",
+      "proven_subtotal": "14974000000",
+      "reasons": [],
+      "source_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+      "selected_observations": [
+        {
+          "semantic_role": "borrowing",
+          "metric_id": "B06",
+          "company_id": "salesforce",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "14439000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+            "source_reference_id": "sha256:f0bae31626e5de130dcb3cf8fd80535d2eaec96aad8071df5b522a11655094ea",
+            "source_role": "accession_xbrl",
+            "document_name": "crm-20260131_htm.xml",
+            "accession": "0001108524-26-000060",
+            "entity": "1108524",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 1076,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:LongTermDebt",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:69e2444feba13b9ff99858e965a887f3206a79d28841beb9589f1951e2bcfac8",
+            "filed": "2026-03-02",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:d8e0fef57726e68dd78543646d4a411dd21fdfe2aa62ae842456265c23c137a1",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "finance_lease",
+          "metric_id": "B06",
+          "company_id": "salesforce",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "535000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+            "source_reference_id": "sha256:f0bae31626e5de130dcb3cf8fd80535d2eaec96aad8071df5b522a11655094ea",
+            "source_role": "accession_xbrl",
+            "document_name": "crm-20260131_htm.xml",
+            "accession": "0001108524-26-000060",
+            "entity": "1108524",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 863,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:FinanceLeaseLiability",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:ed31ef243883e01f56d0b2f23fd377e1041789ba760fde23a350eb2f717cef9d",
+            "filed": "2026-03-02",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:b5ae8f71003dd743674dc9a9d4c37e21cbaa0b9a25cd05526f734d50752f130c",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "equity",
+          "metric_id": "B06",
+          "company_id": "salesforce",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "59142000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+            "source_reference_id": "sha256:f0bae31626e5de130dcb3cf8fd80535d2eaec96aad8071df5b522a11655094ea",
+            "source_role": "accession_xbrl",
+            "document_name": "crm-20260131_htm.xml",
+            "accession": "0001108524-26-000060",
+            "entity": "1108524",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 148,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:09a110a9c0910270cfd7e0de7cfe8e949952e169f0f9852787cea19facce9ed9",
+            "filed": "2026-03-02",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:cb9a41474006453914808ce0cea89e9adcb0955c33798e0771088165be8d70fc",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        }
+      ],
+      "precision": [
+        {
+          "concept": "us-gaap:LongTermDebt",
+          "chosen_ordinal": 1076,
+          "all_reports": [
+            {
+              "value": "14439000000",
+              "decimals": "-6",
+              "ordinal": 1076,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:FinanceLeaseLiability",
+          "chosen_ordinal": 863,
+          "all_reports": [
+            {
+              "value": "535000000",
+              "decimals": "-6",
+              "ordinal": 863,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "535000000",
+              "decimals": "-6",
+              "ordinal": 892,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtCurrent",
+          "chosen_ordinal": 1078,
+          "all_reports": [
+            {
+              "value": "4000000000",
+              "decimals": "-6",
+              "ordinal": 1078,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtNoncurrent",
+          "chosen_ordinal": 110,
+          "all_reports": [
+            {
+              "value": "10439000000",
+              "decimals": "-6",
+              "ordinal": 110,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "10439000000",
+              "decimals": "-6",
+              "ordinal": 1080,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+          "chosen_ordinal": 859,
+          "all_reports": [
+            {
+              "value": "275000000",
+              "decimals": "-6",
+              "ordinal": 859,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "chosen_ordinal": 861,
+          "all_reports": [
+            {
+              "value": "260000000",
+              "decimals": "-6",
+              "ordinal": 861,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 148,
+          "all_reports": [
+            {
+              "value": "59142000000",
+              "decimals": "-6",
+              "ordinal": 148,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "59142000000",
+              "decimals": "-6",
+              "ordinal": 333,
+              "context_ref": "c-4"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "lumen_technologies",
+      "result": {
+        "company_id": "lumen_technologies",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "NOT_MEANINGFUL",
+        "publication": "PUBLISHED",
+        "reason_code": "DENOMINATOR_NONPOSITIVE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:1b72236efe3cb78b4d01ef4c5a61807fe518fb4b766c2cc72b085b082aa20a0f",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:9c978b8487982730c48a9857ab2116e0c0cc8487618370b4058f0debcee9c06e"
+      },
+      "debt": "17441000000",
+      "proven_subtotal": "17441000000",
+      "reasons": [],
+      "source_sha256": "98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+      "selected_observations": [
+        {
+          "semantic_role": "gross",
+          "metric_id": "B06",
+          "company_id": "lumen_technologies",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "17815000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1221,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:2efc7efc129d23f6617f19af6f98717f185c8661782c76ee619e5288e7afe360",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:ae89b8c7b7d195a00ac7e2af79cd3e37a1e590644fd91ed98202e03c49cf14bb",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "discount",
+          "metric_id": "B06",
+          "company_id": "lumen_technologies",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "223000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1188,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:518cb33c9f6aaed1bc8fa48d63fe1b87d1016c876cac12cb6f1547f3fba9dcdf",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:2f8a5397c74ed4eec7b163a6ce0a3684cbccd2de861b7272112303b8f781e25b",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "cost",
+          "metric_id": "B06",
+          "company_id": "lumen_technologies",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "151000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 1190,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:DeferredFinanceCostsNet",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:d96f1647fc181d336cdc384ce955bde1c076a3a512ef53a44608246ee0721360",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:4e8634edc9604131cc0037b8ed0b2d309045638bf3039fa72c291e47534e2c89",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "equity",
+          "metric_id": "B06",
+          "company_id": "lumen_technologies",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "-1117000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+            "source_reference_id": "sha256:4f0aa3f165a2d8432c96e46ccd944cf481cc72a45c5d02213fc39c8a76efc071",
+            "source_role": "accession_xbrl",
+            "document_name": "lumn-20251231_htm.xml",
+            "accession": "0000018926-26-000014",
+            "entity": "18926",
+            "xbrl_context_ref": "c-8",
+            "xbrl_fact_ordinal": 261,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:8efdf61d50cdba1fbc77279464d52a8789f041b3ec11c6d721b18ac02d314631",
+            "filed": "2026-02-20",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:e37ab45a960525db9f357b747ab9f2f4fae57d21650b5ddaea0a960869d3f136",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        }
+      ],
+      "precision": [
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+          "chosen_ordinal": 1221,
+          "all_reports": [
+            {
+              "value": "17815000000",
+              "decimals": "-6",
+              "ordinal": 1221,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+          "chosen_ordinal": 1188,
+          "all_reports": [
+            {
+              "value": "223000000",
+              "decimals": "-6",
+              "ordinal": 1188,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DeferredFinanceCostsNet",
+          "chosen_ordinal": 1190,
+          "all_reports": [
+            {
+              "value": "151000000",
+              "decimals": "-6",
+              "ordinal": 1190,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "chosen_ordinal": 203,
+          "all_reports": [
+            {
+              "value": "88000000",
+              "decimals": "-6",
+              "ordinal": 203,
+              "context_ref": "c-8"
+            },
+            {
+              "value": "88000000",
+              "decimals": "-6",
+              "ordinal": 1194,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 223,
+          "all_reports": [
+            {
+              "value": "17353000000",
+              "decimals": "-6",
+              "ordinal": 223,
+              "context_ref": "c-8"
+            },
+            {
+              "value": "17353000000",
+              "decimals": "-6",
+              "ordinal": 1196,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 1192,
+          "all_reports": [
+            {
+              "value": "17441000000",
+              "decimals": "-6",
+              "ordinal": 1192,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "chosen_ordinal": 203,
+          "all_reports": [
+            {
+              "value": "88000000",
+              "decimals": "-6",
+              "ordinal": 203,
+              "context_ref": "c-8"
+            },
+            {
+              "value": "88000000",
+              "decimals": "-6",
+              "ordinal": 1194,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 223,
+          "all_reports": [
+            {
+              "value": "17353000000",
+              "decimals": "-6",
+              "ordinal": 223,
+              "context_ref": "c-8"
+            },
+            {
+              "value": "17353000000",
+              "decimals": "-6",
+              "ordinal": 1196,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 1192,
+          "all_reports": [
+            {
+              "value": "17441000000",
+              "decimals": "-6",
+              "ordinal": 1192,
+              "context_ref": "c-8"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 261,
+          "all_reports": [
+            {
+              "value": "-1117000000",
+              "decimals": "-6",
+              "ordinal": 261,
+              "context_ref": "c-8"
+            },
+            {
+              "value": "-1117000000",
+              "decimals": "-6",
+              "ordinal": 466,
+              "context_ref": "c-8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "macys",
+      "result": {
+        "company_id": "macys",
+        "metric_id": "B06",
+        "period_start": "2026-01-31",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.5030864197530864197530864198",
+        "unit": "ratio",
+        "trace_id": "sha256:d783f4cf2fb62eeadfbf65cbecdac16b98745fe91eefdaa66cd2956411db1e5e",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a52baa77266c4d27201d78f9c9f295a4a01321ccd285d0b0ec0d681694349fb1"
+      },
+      "debt": "2445000000",
+      "proven_subtotal": "2445000000",
+      "reasons": [],
+      "source_sha256": "86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+      "selected_observations": [
+        {
+          "semantic_role": "principal",
+          "metric_id": "B06",
+          "company_id": "macys",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "2441000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+            "source_reference_id": "sha256:2457566e83c6574f961835d49143652e1c7da771a2149a3856a90678c09f9c8c",
+            "source_role": "accession_xbrl",
+            "document_name": "m-20260131_htm.xml",
+            "accession": "0001628280-26-021721",
+            "entity": "794367",
+            "xbrl_context_ref": "c-7",
+            "xbrl_fact_ordinal": 1547,
+            "reported_decimals": "-6",
+            "concept": "m:LongTermDebtGrossIncludingCurrentMaturities",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:a1d6120b58bb68449f8a8c71bd2d84a974532585fe745b14a857716ba337c7f4",
+            "filed": "2026-03-27",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:859e3b9f4c6f5e7c24ff7cefbd3a3fb23a5edcb4b275fc73d14679bd215b17f1",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "premium",
+          "metric_id": "B06",
+          "company_id": "macys",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "10000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+            "source_reference_id": "sha256:2457566e83c6574f961835d49143652e1c7da771a2149a3856a90678c09f9c8c",
+            "source_role": "accession_xbrl",
+            "document_name": "m-20260131_htm.xml",
+            "accession": "0001628280-26-021721",
+            "entity": "794367",
+            "xbrl_context_ref": "c-7",
+            "xbrl_fact_ordinal": 784,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:DebtInstrumentUnamortizedPremiumNoncurrent",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:ee7e69615f9873988486bf8b1c16fa8b92324dbb568d893fee02f7f5c288f80a",
+            "filed": "2026-03-27",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:0ea6c0a067c026fa827eff4e619897faaf94a9da6b4ce85d232e1023a43f5496",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "cost",
+          "metric_id": "B06",
+          "company_id": "macys",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "19000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+            "source_reference_id": "sha256:2457566e83c6574f961835d49143652e1c7da771a2149a3856a90678c09f9c8c",
+            "source_role": "accession_xbrl",
+            "document_name": "m-20260131_htm.xml",
+            "accession": "0001628280-26-021721",
+            "entity": "794367",
+            "xbrl_context_ref": "c-7",
+            "xbrl_fact_ordinal": 778,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:f67eaafa6a439b463b93230dfc57c11e6e3d644eb1847b70b9a28a0934d00a3b",
+            "filed": "2026-03-27",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:6f114c4a1a853b89b543e811fbd34c3d7ae632906daa28f6c3747aa759870531",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "finance_lease",
+          "metric_id": "B06",
+          "company_id": "macys",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "13000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+            "source_reference_id": "sha256:2457566e83c6574f961835d49143652e1c7da771a2149a3856a90678c09f9c8c",
+            "source_role": "accession_xbrl",
+            "document_name": "m-20260131_htm.xml",
+            "accession": "0001628280-26-021721",
+            "entity": "794367",
+            "xbrl_context_ref": "c-7",
+            "xbrl_fact_ordinal": 617,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:FinanceLeaseLiability",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:6e7867686f026a1f6084da02bbde9d571e712510bdb34b39da9fcdadd0ac94a5",
+            "filed": "2026-03-27",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:a99a6721cd6ec31c20b85e8ce090d7b637e31ce74ad2234f4b588a5846583b21",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "equity",
+          "metric_id": "B06",
+          "company_id": "macys",
+          "period_start": "2026-01-31",
+          "period_end": "2026-01-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "4860000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+            "source_reference_id": "sha256:2457566e83c6574f961835d49143652e1c7da771a2149a3856a90678c09f9c8c",
+            "source_role": "accession_xbrl",
+            "document_name": "m-20260131_htm.xml",
+            "accession": "0001628280-26-021721",
+            "entity": "794367",
+            "xbrl_context_ref": "c-7",
+            "xbrl_fact_ordinal": 201,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:d23c68049c19ee7dc30bb2a21a84eb61b0f6819d0416614be2f4807ec0e2f0e2",
+            "filed": "2026-03-27",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:e812f4c9fca3c769e24297c8c0e62b40018aec148b863c974f08b07d9350cd06",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        }
+      ],
+      "precision": [
+        {
+          "concept": "m:LongTermDebtGrossIncludingCurrentMaturities",
+          "chosen_ordinal": 1547,
+          "all_reports": [
+            {
+              "value": "2441000000",
+              "decimals": "-6",
+              "ordinal": 1547,
+              "context_ref": "c-7"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DebtInstrumentUnamortizedPremiumNoncurrent",
+          "chosen_ordinal": 784,
+          "all_reports": [
+            {
+              "value": "10000000",
+              "decimals": "-6",
+              "ordinal": 784,
+              "context_ref": "c-7"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet",
+          "chosen_ordinal": 778,
+          "all_reports": [
+            {
+              "value": "19000000",
+              "decimals": "-6",
+              "ordinal": 778,
+              "context_ref": "c-7"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:FinanceLeaseLiability",
+          "chosen_ordinal": 617,
+          "all_reports": [
+            {
+              "value": "13000000",
+              "decimals": "-6",
+              "ordinal": 617,
+              "context_ref": "c-7"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 181,
+          "all_reports": [
+            {
+              "value": "2432000000",
+              "decimals": "-6",
+              "ordinal": 181,
+              "context_ref": "c-7"
+            },
+            {
+              "value": "2432000000",
+              "decimals": "-6",
+              "ordinal": 786,
+              "context_ref": "c-7"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:FinanceLeaseLiabilityCurrent",
+          "chosen_ordinal": 547,
+          "all_reports": [
+            {
+              "value": "2000000",
+              "decimals": "-6",
+              "ordinal": 547,
+              "context_ref": "c-7"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:FinanceLeaseLiabilityNoncurrent",
+          "chosen_ordinal": 551,
+          "all_reports": [
+            {
+              "value": "11000000",
+              "decimals": "-6",
+              "ordinal": 551,
+              "context_ref": "c-7"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 201,
+          "all_reports": [
+            {
+              "value": "4860000000",
+              "decimals": "-6",
+              "ordinal": 201,
+              "context_ref": "c-7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "paramount_skydance_paramount_global",
+      "result": {
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "1.168049260241169930727785855",
+        "unit": "ratio",
+        "trace_id": "sha256:ba6f145687119c4e56c07d7d768eb961bb60bad837db8233592b2854baa031c6",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:c85ddce0368e07809ac387254f1316372efeb80c7e48760744194b2cbb1f555c"
+      },
+      "debt": "13658000000",
+      "proven_subtotal": "13658000000",
+      "reasons": [],
+      "source_sha256": "e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83",
+      "selected_observations": [
+        {
+          "semantic_role": "debt",
+          "metric_id": "B06",
+          "company_id": "paramount_skydance_paramount_global",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "13658000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83",
+            "source_reference_id": "sha256:b087f7cc7fa1496df4bab74157761d0061ebef52cb70b18632275050df98f16c",
+            "source_role": "accession_xbrl",
+            "document_name": "psky-20251231_htm.xml",
+            "accession": "0002041610-26-000011",
+            "entity": "2041610",
+            "xbrl_context_ref": "c-10",
+            "xbrl_fact_ordinal": 1355,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:6e0f2aaf0cc3e9b4cffa1c2531922356f57db4b1111dfb22d21daea97ade6feb",
+            "filed": "2026-02-25",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:9b41b3ac7fe2ced0a533f00fd2f05a1462a7d13ef7e21a8b98d8b9a8bc0a4fbf",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "equity",
+          "metric_id": "B06",
+          "company_id": "paramount_skydance_paramount_global",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "11693000000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83",
+            "source_reference_id": "sha256:b087f7cc7fa1496df4bab74157761d0061ebef52cb70b18632275050df98f16c",
+            "source_role": "accession_xbrl",
+            "document_name": "psky-20251231_htm.xml",
+            "accession": "0002041610-26-000011",
+            "entity": "2041610",
+            "xbrl_context_ref": "c-10",
+            "xbrl_fact_ordinal": 352,
+            "reported_decimals": "-6",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:6d265689c26b7a4485df04eacc2836346bdfbc273d288a53d920e88701b026c9",
+            "filed": "2026-02-25",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:97cee4dc775d5ffa8aab1c4264018bbc8207da7340ae4498971b2bbe0cc62230",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        }
+      ],
+      "precision": [
+        {
+          "concept": "us-gaap:DebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 1355,
+          "all_reports": [
+            {
+              "value": "13658000000",
+              "decimals": "-6",
+              "ordinal": 1355,
+              "context_ref": "c-10"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "chosen_ordinal": 304,
+          "all_reports": [
+            {
+              "value": "433000000",
+              "decimals": "-6",
+              "ordinal": 304,
+              "context_ref": "c-10"
+            },
+            {
+              "value": "433000000",
+              "decimals": "-6",
+              "ordinal": 1357,
+              "context_ref": "c-10"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+          "chosen_ordinal": 310,
+          "all_reports": [
+            {
+              "value": "13225000000",
+              "decimals": "-6",
+              "ordinal": 310,
+              "context_ref": "c-10"
+            },
+            {
+              "value": "13225000000",
+              "decimals": "-6",
+              "ordinal": 1359,
+              "context_ref": "c-10"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 352,
+          "all_reports": [
+            {
+              "value": "11693000000",
+              "decimals": "-6",
+              "ordinal": 352,
+              "context_ref": "c-10"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "company": "enphase_energy",
+      "result": {
+        "company_id": "enphase_energy",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "1.107959077222837051285943352",
+        "unit": "ratio",
+        "trace_id": "sha256:a1ec7af7b38112302c5b8131b0989740631421ebf19c7bb7c4591508f2fa5660",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:7e12946012c27a804189128bb05951f8c8e86be0dff379618e5c7c8028cdd204"
+      },
+      "debt": "1204377000",
+      "proven_subtotal": "1204377000",
+      "reasons": [],
+      "source_sha256": "b6552e74632dcc3af10a1d5baa266a4a17a39fb307c3b898ca6e279c738cf0dd",
+      "selected_observations": [
+        {
+          "semantic_role": "current",
+          "metric_id": "B06",
+          "company_id": "enphase_energy",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "632183000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:b6552e74632dcc3af10a1d5baa266a4a17a39fb307c3b898ca6e279c738cf0dd",
+            "source_reference_id": "sha256:636df67871e417b9d5bbbeec3849e9ccdef376b2f5d56ee6eda19fa2b8f9c438",
+            "source_role": "accession_xbrl",
+            "document_name": "enph-20251231_htm.xml",
+            "accession": "0001463101-26-000013",
+            "entity": "1463101",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 117,
+            "reported_decimals": "-3",
+            "concept": "us-gaap:LongTermDebtCurrent",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:4848240d628f1af4c7036f533f19c086d42fb6cab08011fb4380fad582d14b33",
+            "filed": "2026-02-17",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:8790e426aeda5825443e4115e233e1a50a91b9fcbec73fd00add51b7cf78df47",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "noncurrent",
+          "metric_id": "B06",
+          "company_id": "enphase_energy",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "572194000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:b6552e74632dcc3af10a1d5baa266a4a17a39fb307c3b898ca6e279c738cf0dd",
+            "source_reference_id": "sha256:636df67871e417b9d5bbbeec3849e9ccdef376b2f5d56ee6eda19fa2b8f9c438",
+            "source_role": "accession_xbrl",
+            "document_name": "enph-20251231_htm.xml",
+            "accession": "0001463101-26-000013",
+            "entity": "1463101",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 127,
+            "reported_decimals": "-3",
+            "concept": "us-gaap:LongTermDebtNoncurrent",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:4ce7852a3cfcdd320c97a92d51bbfe5de112f2767fefbe45cefba7bee6b7caad",
+            "filed": "2026-02-17",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:8807124b07dea65d91458416bda251c74a6f4d02954aff80fac2cc4b1a1f890d",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        },
+        {
+          "semantic_role": "equity",
+          "metric_id": "B06",
+          "company_id": "enphase_energy",
+          "period_start": "2025-12-31",
+          "period_end": "2025-12-31",
+          "scope": {
+            "entity_scope": "consolidated"
+          },
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "value": "1087023000",
+          "unit": "USD",
+          "source_binding": {
+            "raw_asset_id": "sha256:b6552e74632dcc3af10a1d5baa266a4a17a39fb307c3b898ca6e279c738cf0dd",
+            "source_reference_id": "sha256:636df67871e417b9d5bbbeec3849e9ccdef376b2f5d56ee6eda19fa2b8f9c438",
+            "source_role": "accession_xbrl",
+            "document_name": "enph-20251231_htm.xml",
+            "accession": "0001463101-26-000013",
+            "entity": "1463101",
+            "xbrl_context_ref": "c-4",
+            "xbrl_fact_ordinal": 149,
+            "reported_decimals": "-3",
+            "concept": "us-gaap:StockholdersEquity",
+            "duration_days": 0,
+            "fact_id": "fact:sha256:47a9971d01a55cb12c3e5f6eb4e624e9bd3c0994ca6a9e8ab36109cecd9844c2",
+            "filed": "2026-02-17",
+            "fiscal_period": "FY",
+            "form": "10-K"
+          },
+          "record_type": "VERIFIED_OBSERVATION",
+          "observation_id": "sha256:a1c91df937813ca03bf6a0c977a36baa18e8dff7c3cfb3995479553da7d853cf",
+          "quality": "EXACT",
+          "approval_effect_hash": ""
+        }
+      ],
+      "precision": [
+        {
+          "concept": "us-gaap:LongTermDebtCurrent",
+          "chosen_ordinal": 117,
+          "all_reports": [
+            {
+              "value": "632183000",
+              "decimals": "-3",
+              "ordinal": 117,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "632183000",
+              "decimals": "-3",
+              "ordinal": 1193,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:LongTermDebtNoncurrent",
+          "chosen_ordinal": 127,
+          "all_reports": [
+            {
+              "value": "572194000",
+              "decimals": "-3",
+              "ordinal": 127,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "572194000",
+              "decimals": "-3",
+              "ordinal": 1195,
+              "context_ref": "c-4"
+            }
+          ]
+        },
+        {
+          "concept": "us-gaap:StockholdersEquity",
+          "chosen_ordinal": 149,
+          "all_reports": [
+            {
+              "value": "1087023000",
+              "decimals": "-3",
+              "ordinal": 149,
+              "context_ref": "c-4"
+            },
+            {
+              "value": "1087023000",
+              "decimals": "-3",
+              "ordinal": 309,
+              "context_ref": "c-4"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "case": "complete_false_empty_unresolved",
+      "result": {
+        "company_id": "pfizer",
+        "metric_id": "B06",
+        "period_start": "2025-12-31",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:6491895beeeaccdc60de571902cd111930a10cecc7612d194ffeb8dac5b4667d",
+        "applicability": "APPLICABLE",
+        "quality": "NONE",
+        "publication": "WITHHELD",
+        "reason_code": "STRUCTURED_SOURCE_AMBIGUOUS",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:78749ec086ded047b647236c84b0926b3c318a4f3734aa2adfdc00409935d999",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:86774de33c8a58d5bdacb87ef4bc5ec1ab4a098cb069c04f1a120cd9ab3ba486"
+      },
+      "reasons": [
+        "DEBT_SET_COMPLETENESS_UNPROVEN"
+      ],
+      "type": "derived proof boundary injection; original source and core validator untouched"
+    },
+    {
+      "case": "Pfizer_precise61641_and_coarse62000_compatible",
+      "status": "PASS",
+      "actual_precision": {
+        "concept": "us-gaap:LongTermDebtNoncurrent",
+        "chosen_ordinal": 313,
+        "all_reports": [
+          {
+            "value": "61641000000",
+            "decimals": "-6",
+            "ordinal": 313,
+            "context_ref": "c-18"
+          },
+          {
+            "value": "62000000000",
+            "decimals": "-9",
+            "ordinal": 1618,
+            "context_ref": "c-18"
+          }
+        ]
+      }
+    },
+    {
+      "case": "distinct_roles_same_actual_concept",
+      "rejected": "DEBT_FACT_REUSED_AS_DIFFERENT_ROLES"
+    },
+    {
+      "case": "changed_source_cannot_borrow_registered_relationship",
+      "reasons": [
+        "DEBT_SET_RELATIONSHIP_NOT_ESTABLISHED"
+      ]
+    },
+    {
+      "case": "precision_conflict",
+      "rejected": "DEBT_REPORTING_PRECISION_CONFLICT"
+    },
+    {
+      "case": "precision_conflict",
+      "rejected": "DEBT_SAME_PRECISION_CONFLICT"
+    }
+  ],
+  "historical_native_reads": [
+    {
+      "version": "v1",
+      "run_id": "run:r5-primary:15b3a1146c188a8ac9d506404b6c4e0ce19570e22de61a13c338c544ba9c3777",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "southwest_airlines",
+        "metric_id": "B06",
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8aedb7d2ad81587520caa29821464c9b2f1ecdf76fe1a94be6abc409d9d87a88",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:afe964afae02a8ca60f437e0e5fbf20a64d74eead2daa4ebc4c72eba79d8a47a",
+        "trace_id": "sha256:0fcc01a2229bdd9b750353fb9de18f0b40633a720174a3b376e48d881ab401d4",
+        "unit": "ratio",
+        "value": "0.6163388046610700413482019797"
+      },
+      "native_graph_replay": "PASS",
+      "bytes_unchanged": true
+    },
+    {
+      "version": "v2",
+      "run_id": "run:r5-primary:de754b0e23a769443d0d796b50519ac0b3016ade6c0ec393421b4e8b5dc96133",
+      "result": {
+        "applicability": "APPLICABLE",
+        "company_id": "southwest_airlines",
+        "metric_id": "B06",
+        "period_end": "2025-12-31",
+        "period_start": "2025-12-31",
+        "publication": "PUBLISHED",
+        "quality": "EXACT",
+        "reason_code": "PASS",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:aa55c74b791b163af335a7f912dbb9398f2a21fcb35799f524140498fa33fac4",
+        "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+        "spec_closure_hash": "sha256:d32bf81997bf97ca797abdacd73d15ebb0cb14fe11771216725a766c9ee8232a",
+        "trace_id": "sha256:9db13ba4284f854fc307fce29ff907f591ca01ce67efe5a08356b734e039e963",
+        "unit": "ratio",
+        "value": "0.6140834481894499436160882095"
+      },
+      "native_graph_replay": "PASS",
+      "bytes_unchanged": true
+    }
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "Current10 real-source function calls plus finite boundary injections and2historical native graph reads; no new complete candidate acceptance"
+}

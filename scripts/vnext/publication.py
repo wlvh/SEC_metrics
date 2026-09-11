@@ -2710,6 +2710,7 @@ def _expected_documents(
     }:
         raise PublicationError("Publication documentation mode is invalid")
     formal = validation_mode == FORMAL_VALIDATION_MODE
+    blocked = projection.get("publication_candidate_status") == "BLOCKED"
     report_title = (
         "# vNext formal publication report"
         if formal
@@ -2739,9 +2740,9 @@ def _expected_documents(
             projection["projection_manifest_id"]
         ),
         "- result: `{}`".format(
-            FORMAL_VALIDATION_RESULT
-            if formal
-            else RECORDED_VALIDATION_RESULT
+            "BLOCKED" if blocked else (
+                FORMAL_VALIDATION_RESULT if formal else RECORDED_VALIDATION_RESULT
+            )
         ),
         "",
         "| Company | Metric | Value | Unit | Status |",
@@ -5687,6 +5688,9 @@ def _r4_publication_hooks():
 def _extended_publication_hooks(manifest):
     """Only registered typed releases can extend validation and switch guards."""
     if manifest["record_type"] == ANNUAL_PUBLICATION_MANIFEST_TYPE:
+        if manifest.get("publication_credit") == "NONE_ISOLATED_STRUCTURED_MIGRATION":
+            from . import r5_b06_publication
+            return r5_b06_publication
         from . import annual_publication
         return annual_publication
     if manifest["record_type"] == R4_PUBLICATION_MANIFEST_TYPE:

@@ -86,6 +86,10 @@ def native_result(view, company_id, metric_id, *, _visited=()):
         observations = [r for r in records if r['record_type'] == 'VERIFIED_OBSERVATION'
                         and r['observation_id'] in trace[0]['input_observation_ids']]
         source_ids = {r['source_binding']['source_reference_id'] for r in observations}
+        if view.manifest.get('publication_credit') == 'NONE_ISOLATED_STRUCTURED_MIGRATION' and not source_ids:
+            # A blocked candidate has no accepted Observation; return its
+            # actual bound sources for review without inventing acceptance.
+            source_ids = {r['source_reference_id'] for r in manifest['source_references']}
         sources = [r for r in records if r['record_type'] == 'SOURCE_REFERENCE'
                    and r['source_reference_id'] in source_ids]
         _need(sources and len(sources) == len(source_ids), 'PUBLISHED_NATIVE_SOURCE_MISSING')

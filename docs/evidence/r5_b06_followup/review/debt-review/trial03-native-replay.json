@@ -1,0 +1,140 @@
+{
+  "status": "PASS_NEW_CARRYING_TRIAL_NATIVE_REPLAY",
+  "scope": "SW and Lumen reconciliations plus Enphase nonregression; no full candidate validation",
+  "root": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/trial-03",
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "results": [
+    {
+      "company": "southwest_airlines",
+      "run_id": "run:r5-primary:28f060819e0ce57811af467680aeeccde783fd844e87d148435884958bd137fc",
+      "result": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "southwest_airlines",
+          "metric_id": "B06",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:aa55c74b791b163af335a7f912dbb9398f2a21fcb35799f524140498fa33fac4",
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "spec_closure_hash": "sha256:d32bf81997bf97ca797abdacd73d15ebb0cb14fe11771216725a766c9ee8232a",
+          "trace_id": "sha256:9db13ba4284f854fc307fce29ff907f591ca01ce67efe5a08356b734e039e963",
+          "unit": "ratio",
+          "value": "0.6140834481894499436160882095"
+        }
+      ],
+      "records_types": [
+        "RAW_BLOB",
+        "SOURCE_REFERENCE",
+        "RAW_BLOB",
+        "SOURCE_REFERENCE",
+        "VERIFIED_OBSERVATION",
+        "VERIFIED_OBSERVATION",
+        "VERIFIED_OBSERVATION",
+        "EXECUTION_TRACE",
+        "METRIC_RESULT"
+      ],
+      "selection_branch": "RECONCILED_CARRYING_AMOUNT",
+      "debt": "4901000000",
+      "chosen_debt_fact_ids": [
+        "fact:sha256:8e2aa6e79bb36ab574cbc79ade1c840774776c790491ba492d2dee6589364396",
+        "fact:sha256:4913c056af2235d5db900d31cdf182ccc5e54feea3b9ee41fc06ea63aa953c26"
+      ],
+      "native_graph_replayed": true,
+      "run_bytes_unchanged": true
+    },
+    {
+      "company": "lumen_technologies",
+      "run_id": "run:r5-primary:e6d3598305e8b5ddfc37cabf215d47da44bbaef6293d2fca5b9f4d15dd0c0f0c",
+      "result": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "lumen_technologies",
+          "metric_id": "B06",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "publication": "PUBLISHED",
+          "quality": "NOT_MEANINGFUL",
+          "reason_code": "DENOMINATOR_NONPOSITIVE",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:9201ac82776f59c8f3a0266f8fd9535aa439a1edf49dc68d42cfc69e63bdd857",
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "spec_closure_hash": "sha256:d32bf81997bf97ca797abdacd73d15ebb0cb14fe11771216725a766c9ee8232a",
+          "trace_id": "sha256:5eec92960c1231e3174bb34750fd29f045cb7155544307a0ec7566a6b194eecf",
+          "unit": null,
+          "value": null
+        }
+      ],
+      "records_types": [
+        "RAW_BLOB",
+        "SOURCE_REFERENCE",
+        "RAW_BLOB",
+        "SOURCE_REFERENCE",
+        "VERIFIED_OBSERVATION",
+        "VERIFIED_OBSERVATION",
+        "VERIFIED_OBSERVATION",
+        "VERIFIED_OBSERVATION",
+        "EXECUTION_TRACE",
+        "METRIC_RESULT"
+      ],
+      "selection_branch": "RECONCILED_CARRYING_AMOUNT",
+      "debt": "17441000000",
+      "chosen_debt_fact_ids": [
+        "fact:sha256:28d57b829ff7bee6042a551fb26f610cb1d0812bb0b864b8bc2bca8964190350",
+        "fact:sha256:d961ebc39b747f5d93bde1ea97df4d382567bd2e00a1fadb2bf08fe930d13058",
+        "fact:sha256:80af1dfb1ce9aae892823bf148f2d0586e2c0f46ef40d70e3b73ed0a1cc01e28"
+      ],
+      "native_graph_replayed": true,
+      "run_bytes_unchanged": true
+    },
+    {
+      "company": "enphase_energy",
+      "run_id": "run:r5-primary:8fd8cf56556abe54265fb6519db332c05a6a066ecad70017f648f97bd3c6c9fb",
+      "result": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "enphase_energy",
+          "metric_id": "B06",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:c702c736c669abd301a44a5bb1fbba17fcdce274afef1f930e99e762523b28f2",
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "spec_closure_hash": "sha256:d32bf81997bf97ca797abdacd73d15ebb0cb14fe11771216725a766c9ee8232a",
+          "trace_id": "sha256:85a8be3f9c4cd589dd310b33263fd8048f31a9e9f43bb61d191b6f1f2b5d042f",
+          "unit": "ratio",
+          "value": "1.107959077222837051285943352"
+        }
+      ],
+      "records_types": [
+        "RAW_BLOB",
+        "SOURCE_REFERENCE",
+        "RAW_BLOB",
+        "SOURCE_REFERENCE",
+        "VERIFIED_OBSERVATION",
+        "VERIFIED_OBSERVATION",
+        "VERIFIED_OBSERVATION",
+        "EXECUTION_TRACE",
+        "METRIC_RESULT"
+      ],
+      "selection_branch": "SAME_FAMILY_CURRENT_NONCURRENT",
+      "debt": "1204377000",
+      "chosen_debt_fact_ids": [
+        "fact:sha256:decec521631a65bf3485ee8ea2d051c0a7d1acddaaf3ac02c173d2d5644db7c4",
+        "fact:sha256:524ac9054ebee1ea0ec799d2077a88d9232c76d8682d2a811a8966b8228e79b0"
+      ],
+      "native_graph_replayed": true,
+      "run_bytes_unchanged": true
+    }
+  ]
+}

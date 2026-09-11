@@ -1,0 +1,62 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "71663de54bef728dda5ac43c93b249422db9ab7ee177bfcc1ba03d3f7af4e36e",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "eb43d093c5694fbbfbc946a295db62c5d70c32921c92cd013e2e599739d68371",
+  "content_manifest_hash": "sha256:6500868bad0890bbcde3c89cb761df4ecd6fb17597f5c2b72ac4236c15a5fb63",
+  "audit_manifest_hash": "sha256:1f37d9ecbde1e23d0d68f3e6be4238f949bad329c902bfd85358fdc73d002d3a",
+  "run_id": "run:r5-primary:f9e401d78f93c33a463b9d1db4f8566aed8bf93b682c3498a7ec74a86813878d",
+  "company_id": "marriott_international",
+  "company_traits": [
+    "lodging",
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2025-12-31",
+    "period_end": "2025-12-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:3109bea68ae11f5e3c6ebd77114cda1d6f17d60e772b2630baffdb2639c483e9",
+      "raw_asset_id": "sha256:af2fea717f696acfa6f5f2436aa6e4175c3c56ab1628a2e3198964300f32422a",
+      "company_id": "marriott_international",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001048286.json",
+      "accession": "0001048286-26-000007",
+      "document_name": "CIK0001048286.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:87d063ca08d11fb9061462aefae41b638db07c1ec09e06e96cb0391ac3759d64",
+      "raw_asset_id": "sha256:39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+      "company_id": "marriott_international",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048286/000104828626000007/mar-20251231_htm.xml",
+      "accession": "0001048286-26-000007",
+      "document_name": "mar-20251231_htm.xml",
+      "source_role": "accession_xbrl",
+      "request_attempt_id": "request:attempt:5176c0832cd4a1a68fb8d7860959306d772750de3a1317dffe59319fa1a20f5e"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r5/B06_structured.md": "047663913a7f445f665ceee3302566a02d225c62541172c4a63484329e449d0a"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "992c54bbb8ecd051e9fa0115215ea2e19e93806bc0c77c7305735b7867ec9ebe",
+    "contract_sha256": "3947118b230381a2f99b4db22ea4b77825514f8d08f4707fc335a6fc46c24d41",
+    "decision_register_sha256": "17e6bb0f3a2edb79e28c80571025fa10eb2596da81e48ac74398c264677bb41e",
+    "invariant_profile_sha256": "22662ce8050c7fe8e569777bd06f77760124e365d15f1a297a4ec8adc2743f7a",
+    "transfer_manifest_sha256": "034f984d7570a069b637a305786e547267c8cdc694b8936c404033d911ab835d",
+    "parent_requirement_closure_hash": "sha256:c3aab58207c3a6cf7f9ac35aae0b842bc6ed8e870dce574438ae428192e1ce45",
+    "validator_sha256": "0d474e2d3b5b2f5d768e80f83163a5d63ff4cfc92d3b2ee9dd15e5c42fdb0d79"
+  },
+  "requirement_closure_hash": "sha256:ad43548bdc27791411e1889f93023f1c82c3fffe8d4b3f5cee68236b0682fbe8",
+  "requirement_id": "issue_28_v9",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

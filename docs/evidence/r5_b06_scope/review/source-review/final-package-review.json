@@ -1,0 +1,424 @@
+{
+  "status": "PASS_BOUNDED_FINAL_SCOPE_PACKAGE_INCREMENT",
+  "reviewer": "independent Codex subtask /root/debt_reconciliation_review; not human approval",
+  "time": "2026-09-11T06:17:23.468777+00:00",
+  "implementation_head": "688fe860fee0ec50403e1cf055617abaae6b6188",
+  "implementation_tree": "sha256:e533999f39d3932ffb0e6794d8925c671af0fa07f2eba72b70f1865e7e2c5cb7",
+  "publication_id": "publication_bcd173120b6360b2314a659cc47fcb9a44fcb2c63a8d9db84529dd44ada1c222",
+  "manifest_file_sha256": "59e4232c646a949609f54f02686002e00cfab0f952f449c1c44f9444eaae28f6",
+  "adoption_object_id": "sha256:a9da2c39ecbe80d5c90f9a14690749e2f20509db3e4324c1e93aa18db162eb34",
+  "batch_object_id": "sha256:8fe97db8886890d19a595d551203625e886433b95ce5b0c54e18d1dd048b76be",
+  "personally_executed": [
+    "Key25file hash/size checks; recomputed manifest/adoption/batch content IDs",
+    "Actual prepare command/log and package code identity verified against Git object; prior reviewed code hashes unchanged",
+    "All10 stored native Result records aligned with coverage/public rows; actual accepted Observations align with originalXML calculation facts",
+    "5correct numeric results,2nonpositive-equity results,3incomplete-set withholds; Pfizer64795 and bank970329 remain diagnostic only",
+    "All318 unselected rows and their evidence equal actual embedded predecessor, no added duplicate keys",
+    "Current actual active pointer and request ledger/manifest hashes matched saved stage baseline"
+  ],
+  "read_execution_records": [
+    {
+      "path": "complete-command.json",
+      "exit_code": 0,
+      "head": "688fe860fee0ec50403e1cf055617abaae6b6188",
+      "log_sha256": "a3b2bcbfb371ef83d1b0593a67e7998ef1d1b476b7101f8567b5d38e7cc6aed4"
+    },
+    {
+      "path": "cold-command.json",
+      "exit_code": 0,
+      "head": "688fe860fee0ec50403e1cf055617abaae6b6188",
+      "log_sha256": "7b61e6d0089fda068f1a64ac8b75c41340306a8b6dfb1eecfa32ed6334a07018",
+      "performed_by": "parent; read and hash-checked by this reviewer"
+    },
+    {
+      "path": "old-candidate-command.json",
+      "exit_code": 0,
+      "head": "688fe860fee0ec50403e1cf055617abaae6b6188",
+      "log_sha256": "44ed93de38d1c04867004cab669c3a35a2a401a9ba17421a13edfcdec683cc24",
+      "performed_by": "parent; read and hash-checked by this reviewer"
+    },
+    {
+      "path": "material-command.json",
+      "exit_code": 0,
+      "head": "688fe860fee0ec50403e1cf055617abaae6b6188",
+      "log_sha256": "0d9273eb226ae92e11a0c40911c8d2338ef36753aa0a6e6f5129d663d8d1d9ad",
+      "elapsed_seconds": 193.2992406670237,
+      "result": "5 tests PASS",
+      "performed_by": "parent; record and complete log read/hash-checked by independent reviewer, not rerun"
+    }
+  ],
+  "read_ci_evidence": {
+    "run_id": 34568685152,
+    "head": "688fe860fee0ec50403e1cf055617abaae6b6188",
+    "entries": 47,
+    "status": "PASS",
+    "b06_modules": [
+      {
+        "duration_seconds": 1.518,
+        "return_code": 0,
+        "stderr_tail": "----------------------------------------------------------------------\nRan 9 tests in 0.039s\n\nOK\n",
+        "stdout_tail": "",
+        "test": "tests.vnext.test_r5_b06.B06PrimaryTest"
+      },
+      {
+        "duration_seconds": 9.617,
+        "return_code": 0,
+        "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 8.381s\n\nOK\n",
+        "stdout_tail": "",
+        "test": "tests.vnext.test_r5_b06_followup"
+      },
+      {
+        "duration_seconds": 26.637,
+        "return_code": 0,
+        "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 25.262s\n\nOK\n",
+        "stdout_tail": "",
+        "test": "tests.vnext.test_r5_b06_scope"
+      }
+    ],
+    "log_sha256": "6c219aa493ac16c8d90e945001194c9ac65b1d386e14753add92c49b45bed922"
+  },
+  "reused": [
+    "Prior independent8source audit with explicit Pfizer-completeness supplementary correction",
+    "Independent source/scope code review and11scope tests,6negative checks",
+    "Small oldv1/v2 native graph reads from code-review; not repeated here",
+    "Bank/industrial special originalsource review by other independent agent"
+  ],
+  "not_executed": [
+    "No repeat full publication validator or all native Run graphs; actual record/identity comparison only",
+    "No repeat material/fault/cold execution; read parent execution outputs",
+    "No production operation or provider/SEC call"
+  ],
+  "remaining_code_or_wrong_acceptance_blockers": [],
+  "conditions_for_merge": "No remaining code or erroneous-result acceptance blocker found in this independent increment. Final implementation CI, complete candidate preparation, 5 material tests, new cold read and old candidate cold read all have matching successful parent execution records; no full-flow re-execution by reviewer. Parent still must apply user final head/diff/protection and Git merge conditions. Three source-completeness gaps stay withheld and do not become accepted results.",
+  "pending_execution_records": [],
+  "coverage_status_counts": {
+    "OK": 5,
+    "NOT_MEANINGFUL": 2,
+    "NEEDS_REVIEW": 3
+  },
+  "coverage": [
+    {
+      "company_id": "marriott_international",
+      "public_status": "NOT_MEANINGFUL",
+      "debt": "16204000000",
+      "proven_debt_subtotal": "16204000000",
+      "equity": "-3771000000",
+      "value": null,
+      "blockers": [],
+      "run_id": "run:r5-primary:f71e43c65fa605e684442f91294937dbfa07eaee7b8f3a0c39dceb88462d8eca",
+      "result_id": "sha256:be610ef61fc6c7dbb2a6e0c7d3ada3d78fe834c53ac501b8973dca5b6bd535da",
+      "native_observation_count": 2
+    },
+    {
+      "company_id": "southwest_airlines",
+      "public_status": "OK",
+      "debt": "4901000000",
+      "proven_debt_subtotal": "4901000000",
+      "equity": "7981000000",
+      "value": "0.6140834481894499436160882095",
+      "blockers": [],
+      "run_id": "run:r5-primary:f57e21e3f6add941b68ca9753877b7b47f0415b1be73694beec2b44db43a7ea6",
+      "result_id": "sha256:0079a940dd13cd326d1c234adb59287c2985024210deb44b94caf8e37e7bdea9",
+      "native_observation_count": 3
+    },
+    {
+      "company_id": "ford_motor_company",
+      "public_status": "NEEDS_REVIEW",
+      "debt": null,
+      "proven_debt_subtotal": null,
+      "equity": null,
+      "value": null,
+      "blockers": [
+        "DEBT_SET_COMPLETENESS_UNPROVEN",
+        "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED",
+        "INDUSTRIAL_VS_FINANCE_SCOPE_REQUIRES_REVIEW"
+      ],
+      "run_id": "run:r5-primary:c0d2a30925546b3c288d2e05a670d895d45c021a4c7a7ae7eb71aea157874995",
+      "result_id": "sha256:440609ba373bba0b694f6c4d86a9201a644203ccc8394e57ec0b3a966fe8f306",
+      "native_observation_count": 0
+    },
+    {
+      "company_id": "pfizer",
+      "public_status": "NEEDS_REVIEW",
+      "debt": null,
+      "proven_debt_subtotal": "64795000000",
+      "equity": "86476000000",
+      "value": null,
+      "blockers": [
+        "DEBT_SET_COMPLETENESS_UNPROVEN",
+        "FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED"
+      ],
+      "run_id": "run:r5-primary:8e2876cfe51bfc03cad4c0af3b70551ae29463c7bb4efc18bcc05ddd85dcf450",
+      "result_id": "sha256:b578e18a92794e8ae6ac3651cd6f47410e16ad96da8d3d4303fe33d75078e5a0",
+      "native_observation_count": 0
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "public_status": "NEEDS_REVIEW",
+      "debt": null,
+      "proven_debt_subtotal": "970329000000",
+      "equity": "362438000000",
+      "value": null,
+      "blockers": [
+        "BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED",
+        "DEBT_SET_COMPLETENESS_UNPROVEN"
+      ],
+      "run_id": "run:r5-primary:69ddcbf139b1f522eaed8b79f5b7dfb3920cfae80682d47f9e9bb57c12e70256",
+      "result_id": "sha256:5511faa61d874203cc43bb2f5094487d051a39de4b469d83371bb72461d9e581",
+      "native_observation_count": 0
+    },
+    {
+      "company_id": "salesforce",
+      "public_status": "OK",
+      "debt": "14974000000",
+      "proven_debt_subtotal": "14974000000",
+      "equity": "59142000000",
+      "value": "0.2531872442595786412363464205",
+      "blockers": [],
+      "run_id": "run:r5-primary:4521e05b8e80372b521031d9115e79b6b18a3e248236b14e596ace2694cf0659",
+      "result_id": "sha256:34eef3d417ec42f694442ba586ec5e07c406fdbee6439af129ef63f087229157",
+      "native_observation_count": 3
+    },
+    {
+      "company_id": "lumen_technologies",
+      "public_status": "NOT_MEANINGFUL",
+      "debt": "17441000000",
+      "proven_debt_subtotal": "17441000000",
+      "equity": "-1117000000",
+      "value": null,
+      "blockers": [],
+      "run_id": "run:r5-primary:86fae7e20e843fde2d72e137251d323d127e9a79609f5fe98626a3a172a17113",
+      "result_id": "sha256:7bd0e7804e44c3e1095bf004ae7f698cee6ad98b56d4f0958c59bd1107dd9126",
+      "native_observation_count": 4
+    },
+    {
+      "company_id": "macys",
+      "public_status": "OK",
+      "debt": "2445000000",
+      "proven_debt_subtotal": "2445000000",
+      "equity": "4860000000",
+      "value": "0.5030864197530864197530864198",
+      "blockers": [],
+      "run_id": "run:r5-primary:05a2d23e2ab183c15f186fb4aba8bf96629c195a3d5a35da548e670663d18c1d",
+      "result_id": "sha256:b8d6408be7d64117a89e91f2e0eb45d519986ca4a38a902db5721dd48762b2da",
+      "native_observation_count": 5
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "public_status": "OK",
+      "debt": "13658000000",
+      "proven_debt_subtotal": "13658000000",
+      "equity": "11693000000",
+      "value": "1.168049260241169930727785855",
+      "blockers": [],
+      "run_id": "run:r5-primary:1c27735f28563e90a00384b869e3d759e2b9e9794ac20e26f0db0bfb4b765bb8",
+      "result_id": "sha256:4996ec2ba3192f1d64249a6de422014923ebb6fc7b4608a7a9fcf4bce696be06",
+      "native_observation_count": 2
+    },
+    {
+      "company_id": "enphase_energy",
+      "public_status": "OK",
+      "debt": "1204377000",
+      "proven_debt_subtotal": "1204377000",
+      "equity": "1087023000",
+      "value": "1.107959077222837051285943352",
+      "blockers": [],
+      "run_id": "run:r5-primary:8b3c45871eb50d31fc53a32b28348873d88360798a3b319dc2af27982f7cda1d",
+      "result_id": "sha256:e095d61fd53f561f2e06b76ad901d573c7a6c15350e4ca548e4cadc90cb42b69",
+      "native_observation_count": 3
+    }
+  ],
+  "coordinate_count": 250,
+  "public_rows": 328,
+  "unchanged_public_rows": 318,
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "production_authorized": false,
+  "reviewed_code_binding": [
+    {
+      "path": "scripts/vnext/r5_b06_scope.py",
+      "sha256": "95cd92eb6cca46efaeb70b3961e70759f193a3e1f4012fc502fe2dfdff32675a"
+    },
+    {
+      "path": "scripts/vnext/r5_b06_structured.py",
+      "sha256": "aa46b4a751365386c43366e7e182a6d5025b4d0c7ed1e1491670651c268c0076"
+    },
+    {
+      "path": "scripts/vnext/specs.py",
+      "sha256": "fea6713bc2e1526ffbf0b4e4ce652b0a4aadc64fe950480173abf75af368a58f"
+    },
+    {
+      "path": "scripts/vnext/calculator.py",
+      "sha256": "0b5ceeedc6742f003f14058848512d387e036dc016d2f316bf18a7d36e7855f1"
+    },
+    {
+      "path": "catalog/r5/B06_structured.md",
+      "sha256": "3aabaac36204b03276a2f5c1c557ca4c7cd4bdb19a115a753f5abc0df6895421"
+    },
+    {
+      "path": "config/r5_b06_debt_sets_v3.json",
+      "sha256": "0ef10b3f5fb97678efe96c7915a3c10992779f1804107a906d3d0a1eea48e203"
+    },
+    {
+      "path": "docs/evidence/r5_b06_scope/debt_scope_relationships.json",
+      "sha256": "8e4ce2452c3cd1a0cf9195e2382bd4c8f7beee883105e2d84238c75812ef0cec"
+    },
+    {
+      "path": "tests/vnext/test_r5_b06_scope.py",
+      "sha256": "2f209e4dcfcacc63dde5de300a223ef579f8461864a1ef257ee41005e057ff4b"
+    },
+    {
+      "path": "catalog/r5/history/B06_structured_v1.md",
+      "sha256": "b3f167ed7e4cd2c3ad59db01db53866bfcf5e3d1c04de130d78c3a34145a8b8f"
+    },
+    {
+      "path": "catalog/r5/history/B06_carrying_v2.md",
+      "sha256": "047663913a7f445f665ceee3302566a02d225c62541172c4a63484329e449d0a"
+    }
+  ],
+  "checked_files": [
+    {
+      "path": "internal/r5_primary.json",
+      "size": 82167,
+      "sha256": "edf8e21d9f08d1100f7a5c83097b20076a642db30357e9e20ddb17dea6233ab6"
+    },
+    {
+      "path": "internal/r5_adoption.json",
+      "size": 282354,
+      "sha256": "ed193dd8fdce7b52d470d32c2e19d998c6a1072ea4489ef7365d7fdde11010b1"
+    },
+    {
+      "path": "internal/annual_complete_version.json",
+      "size": 48796,
+      "sha256": "f1a84f2f1c4e40dadbcd22d91a5b666dae6e40925766418b50e3b2e7868920e2"
+    },
+    {
+      "path": "metrics_matrix.csv",
+      "size": 109207,
+      "sha256": "94d265d2d2b919eaf6a71fa752c0ac33d6076e93f5b375eed0e3b8227c9b80f7"
+    },
+    {
+      "path": "metric_evidence.csv",
+      "size": 267655,
+      "sha256": "f7f45078a93e5f315973bc82319afbed9469d76de5a985165d237367c6371a0f"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/marriott_international/manifest.json",
+      "size": 3394,
+      "sha256": "0cdb7a1a17e32747cf4b420a0dd038733346cea2e1c70ef2137bd5f18c97bc09"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/marriott_international/records.jsonl",
+      "size": 5832,
+      "sha256": "2bb8a091c986a6753df3862d176c7299e9d9a98a4399b112ef04b41520f8b585"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/southwest_airlines/manifest.json",
+      "size": 3365,
+      "sha256": "ab8423ff0e2941e51414c516c5dee4e59069b4163416ccb3e0f361cfb2ea3113"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/southwest_airlines/records.jsonl",
+      "size": 7842,
+      "sha256": "67fe7b43d275ee2e2db5ab4974462b9944b57cd178e52af78ea49c03fedb69ad"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/ford_motor_company/manifest.json",
+      "size": 3361,
+      "sha256": "5848b70b9f0502b09b5e368052aacde8f6393e9b5414565cba8441bd932996ad"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/ford_motor_company/records.jsonl",
+      "size": 3292,
+      "sha256": "621974b4020a4df6eb274545898c9d9220552f3ab49f9d3db954b00bf5eb08fb"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/pfizer/manifest.json",
+      "size": 3329,
+      "sha256": "de1e181b82b14d0e22bee215f4225cf037fa36bc6e113b86f7bcd0bdfc358733"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/pfizer/records.jsonl",
+      "size": 3250,
+      "sha256": "936a24e41a74902fca6c56d26ddb92a2aa04ce660f3a244b6a1d7f83d5fa2f99"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/jpmorgan_chase/manifest.json",
+      "size": 3349,
+      "sha256": "32ce37865fcaca8343783603e014138522c2aea332e64915c0cf18c59fcadea2"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/jpmorgan_chase/records.jsonl",
+      "size": 3283,
+      "sha256": "94f24180f640f180f6035cf197b4163318065200169d12d623700f575fa8e3ca"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/salesforce/manifest.json",
+      "size": 3383,
+      "sha256": "0797efdcd11ec2ad166b8828bd9c8888fe0ffe2dd80ca10f20be893b569843ea"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/salesforce/records.jsonl",
+      "size": 8487,
+      "sha256": "843e4ea42e5f33197bae8edaad7edce6c1b12ef84568621ea526d2cce9734f08"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/lumen_technologies/manifest.json",
+      "size": 3367,
+      "sha256": "69170d8c715eb63e3d1d842223dbfc848f62c31c60098ba37229a76168adae54"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/lumen_technologies/records.jsonl",
+      "size": 9131,
+      "sha256": "3d9f9ccefe15ad3b0471e4b05deb5ecf50dd533b7dc0d6bce1b7dc4b6d3530d4"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/macys/manifest.json",
+      "size": 3323,
+      "sha256": "25d9b721fce5cfa920bd3b7fa3c7a189d598a0712d6cf1e9d87a01e3ac98e4e3"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/macys/records.jsonl",
+      "size": 11329,
+      "sha256": "d62e6b7ed66ad536ae0464a0811c15d0c36c88f881a1db08ceaa43c83764f23a"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/paramount_skydance_paramount_global/manifest.json",
+      "size": 3420,
+      "sha256": "a7737f8c1d62f202ead07d97a71a92062d78cda9d3419ffa040cd2343f69608d"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/paramount_skydance_paramount_global/records.jsonl",
+      "size": 6152,
+      "sha256": "50d01d391970aac214099acbd7e0bd948c0adb0f37e27f173d019beb6dbe6052"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/enphase_energy/manifest.json",
+      "size": 3357,
+      "sha256": "001ad3a57523a38c268a64c6fcda9ef38bb72e9370455d2502477a05f8299bc6"
+    },
+    {
+      "path": "internal/annual_snapshot/runs/enphase_energy/records.jsonl",
+      "size": 8150,
+      "sha256": "0f56bc119b5443fe191ae0d3f3b2280d1049d1cbd15c94618c72535935ef66bd"
+    }
+  ],
+  "reporting_caveat": "Bank diagnostic coverage current/noncurrent labels are abstract placeholders: long-term statement debt includes current maturities. Amount sums four disjoint reported rows once. diagnostic_only and completeFalse prohibit Result; a future accepted bank model needs precise reported-group categories rather than literal maturity partition labels.",
+  "read_cold_outputs": [
+    {
+      "path": "cold-read.json",
+      "sha256": "a181a6a6cca0c101a5e0b883f7b897d18f974ba206599875d3c0de01c3698fdd",
+      "publication_id": "publication_bcd173120b6360b2314a659cc47fcb9a44fcb2c63a8d9db84529dd44ada1c222",
+      "status": "READ_ONLY_COMPLETE_CANDIDATE"
+    },
+    {
+      "path": "old-candidate-read.json",
+      "sha256": "a6e4e0c6dd26d7604b263e8f21b45428236b84d6722b536a25e971e34431c31a",
+      "publication_id": "publication_24f1483a44d22f27161d51b0f5d7a41b2039b882e965604a6b0ca320514c1638",
+      "status": "READ_ONLY_COMPLETE_CANDIDATE"
+    }
+  ]
+}

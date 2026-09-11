@@ -1,0 +1,517 @@
+{
+  "reviewer": {
+    "source": {
+      "task": "/root/debt_reconciliation_review",
+      "identity": "independent Codex model source review",
+      "human_approval": false
+    },
+    "bank_industrial": "independent Codex subtask /root/amendment_review"
+  },
+  "relationships": [
+    {
+      "source_sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "model_id": "SHORT_INCLUDES_CURRENT_PLUS_NONCURRENT",
+      "scope_class": "consolidated_nonbank",
+      "complete": false,
+      "unresolved": [
+        "FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED"
+      ],
+      "notes": [
+        {
+          "concept": "us-gaap:scheduleofshorttermdebttextblock",
+          "text_sha256": "2fe432c206943b5d8c1dd653df2b2de146dd36571163e3d862443fcece6e54df"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "text_sha256": "551c21880254c62c7e25a6090426e802ce7e9cfdda727f6cb905528db83db7a5"
+        },
+        {
+          "concept": "us-gaap:lesseeoperatingleasestextblock",
+          "text_sha256": "4e230d2cbc111c2c681783fed915a157e3b965fb580ecbeb6c47cdfa80b31234"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition.",
+        "source_completeness_correction": "Known borrowing subtotal supported; no reliable finance-lease absence/inclusion statement. Apply same standard as bank funding.",
+        "supplement_sha256": "ece898bc0e89d4ca8332e5d869e1a57bc971808efc01313edaa6b75c4d91291a"
+      }
+    },
+    {
+      "source_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+      "model_id": "BORROWING_PLUS_SEPARATE_FINANCE_LEASE",
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "notes": [
+        {
+          "concept": "us-gaap:lesseeleasespolicytextblock",
+          "text_sha256": "2e68c92bb411bba5122f0611cf2686f97df1a80a12dab7686586b64bf08ef3b5"
+        },
+        {
+          "concept": "us-gaap:financeleaseliabilitymaturitytabletextblock",
+          "text_sha256": "7d45f688e0ec9cb1d03de5ea352d55e9cc7e014d5ba0cf32422395f8c57bfc05"
+        },
+        {
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "text_sha256": "d9ceaedd6b0519facaa2e73f00019eaf2f90245abab9bf5e1ccdbc10f09bd10c"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "text_sha256": "aeb1143390c8da97745b6aadbed13c0cbb8867172715c645e16186cb975b84b4"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition."
+      }
+    },
+    {
+      "source_sha256": "86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+      "model_id": "BOND_RECONCILIATION_PLUS_SEPARATE_FINANCE_LEASE",
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "notes": [
+        {
+          "concept": "m:propertyplantandequipmentandleasesoflesseedisclosuretextblock",
+          "text_sha256": "0eb9be0ea617a8daf5b7576001f170cd616a283e83c6dc8d7bd674d7226c59b3"
+        },
+        {
+          "concept": "m:lesseeleasetabletextblock",
+          "text_sha256": "a1ab87f265b05af1f6ac809fe5aabe70dcebb5f953ff1fabf117bd397682f0ce"
+        },
+        {
+          "concept": "us-gaap:financeleaseliabilitymaturitytabletextblock",
+          "text_sha256": "f892bf893739b2227f54505a35eb784a4dbd81f575022c925196e6e28b1ea92e"
+        },
+        {
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "text_sha256": "b2e13aceea5111299fa4c1419266e0f153675506ec27a9794a296ead61e12b97"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition."
+      }
+    },
+    {
+      "source_sha256": "b6552e74632dcc3af10a1d5baa266a4a17a39fb307c3b898ca6e279c738cf0dd",
+      "model_id": "BORROWING_CURRENT_NONCURRENT_NO_FINANCE_LEASE",
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "notes": [
+        {
+          "concept": "us-gaap:lesseeleasespolicytextblock",
+          "text_sha256": "37686c2ee6c282b3eb3a2dc7fd656243b83d81fadb87d3ba5770fe865840580d"
+        },
+        {
+          "concept": "us-gaap:longtermdebttextblock",
+          "text_sha256": "5b5a03003363085790c8f1939f1ad27849d4d2e13eb6efd8e867cd72b8a80eef"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition."
+      },
+      "established_absent_classes": [
+        "finance_leases"
+      ]
+    },
+    {
+      "source_sha256": "b2acb453a4938a6dff6cdfd4a24a8ba6e365953bb0bd09211254d5ed656d631c",
+      "model_id": "INCLUSIVE_RECONCILED_COSTS",
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "notes": [
+        {
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "text_sha256": "2f77700dd4669a2eefd97edc67f65c95376ac9c0ab5325c6e87f599b4ec33889"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "text_sha256": "16e4819f2af28f491de6d40aee4b9992aa61aee67539e2c639658512251e2463"
+        },
+        {
+          "concept": "us-gaap:lesseeoperatingleasestextblock",
+          "text_sha256": "0a37b4a7de4555a59653b780baee94964c07cbeb922031efd1dec17cf490ece9"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition."
+      }
+    },
+    {
+      "source_sha256": "98fef958757fafcee29b9e0a5346af5b1f3554de9a5be2991bedda4489decf94",
+      "model_id": "INCLUSIVE_RECONCILED_DISCOUNT_COSTS",
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "notes": [
+        {
+          "concept": "us-gaap:lesseefinanceleasestextblock",
+          "text_sha256": "94a4f5e01d8e8b99d367afe73e5c7e56868259a974a147de65967fac93e9b22a"
+        },
+        {
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "text_sha256": "5fe381933a49f7c6e37694dced8b4fdb34597745e1f6e0db5f72e3664a7130e3"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "text_sha256": "fc2534ec0ef3bffc93fcd550724dd6ae6675415cf9fc9929ac61319571e2c9ea"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition."
+      }
+    },
+    {
+      "source_sha256": "39cdb4be609ec4e5e081e68f9be2d83cb8cc29c4ba915afa59a4847a24356150",
+      "model_id": "INCLUSIVE_REPORTED_TOTAL",
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "notes": [
+        {
+          "concept": "us-gaap:financeleaseliabilitymaturitytabletextblock",
+          "text_sha256": "5e0d769ade7c3bc38e1111b08070d49a36691bf729e3fca08d59407791d0faa7"
+        },
+        {
+          "concept": "us-gaap:longtermdebttextblock",
+          "text_sha256": "51e74ee0d445f50ea8c5545df3854dbb335e043a5f6e5925e2b95ce5a840b548"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "text_sha256": "36e563edb9fccef54982725d4f404f6d34872600e631077335be4743a1bd48a8"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition."
+      }
+    },
+    {
+      "source_sha256": "e250cec2bd7974042b5fdc8fc424014f72a0aa9fd3c840ca95fabfe85045af83",
+      "model_id": "INCLUSIVE_REPORTED_TOTAL",
+      "scope_class": "consolidated_nonbank",
+      "complete": true,
+      "unresolved": [],
+      "notes": [
+        {
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "text_sha256": "231582b76e1bbf7d2964b467d41d2c04f0f53ed2159d835f330700258b3dd872"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebttabletextblock",
+          "text_sha256": "78fa239f6ab22703844791ff869c6b19c0f48340060bbcbdb118f9dc2ff49fac"
+        },
+        {
+          "concept": "us-gaap:lesseeoperatingleasestextblock",
+          "text_sha256": "c6a3ed68cf5927b4120fe1efcb7263aee2f4833ccc2f9aec186f46a5bed91ca6"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "f5022796e3dc9aa489ba2855cc81739eab71f5b1ddff2b1a82117b833bdfeddd",
+        "source_membership_review": "Full borrowing/lease notes and statement classification independently reviewed; reported disjoint categories apply under user-approved financing definition."
+      }
+    },
+    {
+      "source_sha256": "9fe211a6d6f7ec3af368f81c820868b54d7ea02ca2fe9776e72d7a41e2472126",
+      "scope_class": "bank_funding",
+      "complete": false,
+      "unresolved": [
+        "BANK_FINANCE_LEASE_COMPLETENESS_NOT_ESTABLISHED"
+      ],
+      "notes": [
+        {
+          "concept": "jpm:derivativesandsecuritiespurchasedandsoldunderresaleandrepurchaseagreementsoffsettingpolicypolicytextblock",
+          "text_sha256": "af830b2d99315f58b66d70ec37f97f56be5acda7a087e85eb67ae74568f71eba"
+        },
+        {
+          "concept": "jpm:creditriskadjustmentsonderivativeassetsandliabilitiesanddebtinstrumentsgainslossestextblocktabletextblock",
+          "text_sha256": "495519c1678ba4e9ca21dcec8c92b20f3b527ab42470b9afdce081062ebcf5e8"
+        },
+        {
+          "concept": "us-gaap:fairvaluebybalancesheetgroupingtextblock",
+          "text_sha256": "7bfee2029b94b288f7335dcaff610c73841c4e0b0359b029c3615813116caa7e"
+        },
+        {
+          "concept": "jpm:fairvalueoptionstructurednotesbybalancesheetclassificationandprimaryembeddedderivativerisktabletextblock",
+          "text_sha256": "e88874471307cef28d1791fd47526d119eac550f67c4f8ebd68c52643dd9e101"
+        },
+        {
+          "concept": "us-gaap:investmentsindebtandmarketableequitysecuritiesandcertaintradingassetsdisclosuretextblock",
+          "text_sha256": "c49a496ace6e2a97e56708dafa2000f01906738d2692cbde9a323aeff406ba9c"
+        },
+        {
+          "concept": "us-gaap:debtsecuritiesavailableforsaletabletextblock",
+          "text_sha256": "4da681f52bfbe714591db00b32692a8d06c2ea44bc873d9ead8f587a668c4dc9"
+        },
+        {
+          "concept": "us-gaap:debtsecuritiesavailableforsaleunrealizedlosspositionfairvaluetabletextblock",
+          "text_sha256": "f971aac1dc0db02c5d321f95c528bf09412e889dccc195e771a4e6a64dcb8859"
+        },
+        {
+          "concept": "us-gaap:repurchaseagreementsresaleagreementssecuritiesborrowedandsecuritiesloaneddisclosuretextblock",
+          "text_sha256": "6aeb48cd422c63f61c3ae92f65f27226ee88f2e54aba50d472bd9a821ba05e82"
+        },
+        {
+          "concept": "us-gaap:scheduleofsecuritiesfinancingtransactionstextblock",
+          "text_sha256": "04133dcbbce92f543862948c73aef87bb0dc05f2f76cd2c19296f1353fb1a77f"
+        },
+        {
+          "concept": "us-gaap:transferofcertainfinancialassetsaccountedforassecuredborrowingstabletextblock",
+          "text_sha256": "3da5be3cf4bfea570fbc16d76d69b7cb464ccca53207397b63da08b21af8f48a"
+        },
+        {
+          "concept": "us-gaap:troubleddebtrestructuringsonfinancingreceivablestabletextblock",
+          "text_sha256": "50a2c792b33afba8675df74c238244d2e29d90044e1e69caa530b0c919d33070"
+        },
+        {
+          "concept": "jpm:variableinterestentitiesandtransfersoffinancialassetstextblock",
+          "text_sha256": "856071baf5c0ae989b3de50ca10d9b6307ef1eb149bc37a18c474cb233ac6f67"
+        },
+        {
+          "concept": "jpm:scheduleofsignificanttypesofvariableinterestentitiesbybusinesssegmenttabletextblock",
+          "text_sha256": "a2b9a87fa4a5b03c4c9d88326a799b7c8341bff17a1df4d5cbb0460adc4d1669"
+        },
+        {
+          "concept": "us-gaap:scheduleofvariableinterestentitiestextblock",
+          "text_sha256": "952e5038a35b0bc289102307dbcdeae4c16fbe62c34f6094fcadb0ccbf925481"
+        },
+        {
+          "concept": "jpm:scheduleofsecuritiesrepurchasedandoptiontorepurchasedelinquentsecuritiestabletextblock",
+          "text_sha256": "7b8ca2fe2c5dbe00767f233a23c3bc5067e1d44d149d05e14ae3995d8b3f46e4"
+        },
+        {
+          "concept": "jpm:informationaboutdelinquenciesnetchargeoffsandcomponentsofoffbalancesheetsecuritizedfinancialassetstabletextblock",
+          "text_sha256": "5d2f6cad4fcc123faca3ddf1c1e1da8bd5e1e676b925de46855df056d3bf0392"
+        },
+        {
+          "concept": "us-gaap:lesseeoperatingleasestextblock",
+          "text_sha256": "521fedc93398194b269c086f6ac3d6f77a9e1c871c183d8295525dca766c6f99"
+        },
+        {
+          "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+          "text_sha256": "521fedc93398194b269c086f6ac3d6f77a9e1c871c183d8295525dca766c6f99"
+        },
+        {
+          "concept": "us-gaap:lesseeleasespolicytextblock",
+          "text_sha256": "a767bf6880e7fe7627497d030ca9182b1acc91a80817fc2d429e8ce734b11e0b"
+        },
+        {
+          "concept": "us-gaap:leasecosttabletextblock",
+          "text_sha256": "bf854968c1e0a95cdf4f7f93d81731cad2ff9c0aecc7ce31af7b5e4a3b288ca7"
+        },
+        {
+          "concept": "us-gaap:lesseeoperatingleaseliabilitymaturitytabletextblock",
+          "text_sha256": "3cb9cbd5604988cc9ca98d42593c1d8f582f1406e283778557320e27fdae4ef0"
+        },
+        {
+          "concept": "us-gaap:lessorleasespolicytextblock",
+          "text_sha256": "4629e2e920d712ca62cd1f3a31a2852c83570089f3d28ae635b45dae9c6e2939"
+        },
+        {
+          "concept": "us-gaap:scheduleofpropertysubjecttooravailableforoperatingleasetextblock",
+          "text_sha256": "3c76a16877033f2dcc00bf51553a9650fe7ac26750b800f3edbf288696b275a8"
+        },
+        {
+          "concept": "us-gaap:operatingleaseleaseincometabletextblock",
+          "text_sha256": "004ddc15cf8a2b7ac3e6552006afc30738d5981110e357d300cf15f619226c9a"
+        },
+        {
+          "concept": "us-gaap:lessoroperatingleasepaymentstobereceivedmaturitytabletextblock",
+          "text_sha256": "4381c628c46431d3db7b31b015a6383b4af5198ee01e9c92c32b89dbf2b8859c"
+        },
+        {
+          "concept": "us-gaap:longtermdebttextblock",
+          "text_sha256": "0e2394aa47bceacbec7b237163786bcec67116d715f2303b76cd09846de6419d"
+        },
+        {
+          "concept": "us-gaap:debtpolicytextblock",
+          "text_sha256": "413fbecd64bf10423c5c66c39ee9b7ad9d61a0db28be7e44d749b49c6f4aa744"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebtinstrumentstextblock",
+          "text_sha256": "a43743c587aa6196dde9b0450dd6f10d92dfa2e976d67936d7b98b218a05733a"
+        },
+        {
+          "concept": "us-gaap:scheduleofmaturitiesoflongtermdebttabletextblock",
+          "text_sha256": "a43743c587aa6196dde9b0450dd6f10d92dfa2e976d67936d7b98b218a05733a"
+        },
+        {
+          "concept": "jpm:offbalancesheetlendingrelatedfinancialinstrumentsguaranteesandothercommitmentstextblock",
+          "text_sha256": "a14e6cb41c2a954c0d870142592ff1f252edbbc7e9d8dfe8e0ee0e9ea76df5cf"
+        },
+        {
+          "concept": "jpm:offbalancesheetlendingrelatedfinancialinstrumentsguaranteesandothercommitmentstabletextblock",
+          "text_sha256": "7b99c571c47a9eb0e7cc7be6b1d80d3414eed6658af57b120f30806675d078f0"
+        },
+        {
+          "concept": "us-gaap:offbalancesheetcreditexposurepolicypolicytextblock",
+          "text_sha256": "2902137f28498cd9153985f1c2caafe7e40d4010163e2910912a1fd680d9b004"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "de0e02583a8e491e885e7b42b1539cd7f38dd8cf947daf0e91b91afac1dd1fe8",
+        "minimum_question": "Does the complete reported borrowing collection include all finance-lease liabilities? Lessee note states predominantly operating leases and discloses operating liabilities only; full saved XML/HTML has no finance-lease liability facts or explicit finance-lease-zero statement. Do not turn absence of a tag into zero. Need a supported no-additional-finance-lease/contained-in-funding conclusion or retain this specific completeness gap.",
+        "search_limit": "Read whole lessee note and searched all complete raw XML textblocks and original HTML for finance/capital lease expressions; no such liability evidence found. This is bounded absence evidence, not SEC-nondisclosure certification.",
+        "source_relationships": [
+          {
+            "component": "Long-term debt435206m",
+            "included": "Current maturities42589m; parent/subsidiary borrowings; reported fair-value-option liabilities134559m; discounts/costs/hedge adjustments already included",
+            "exclude_adders": "Do not add current42589 or fair-value134559 again; do not substitute future zero-coupon principal."
+          },
+          {
+            "component": "Short-term borrowings64776m",
+            "included": "Separate consolidated balance sheet class. Securities-transfer financings failing sale accounting already recorded primarily within short/long term borrowings.",
+            "exclude_adders": "Do not separately add transferred assets787m."
+          },
+          {
+            "component": "Federal funds purchased and securities loaned or sold under repurchase agreements442396m",
+            "included": "Whole reported financing-liability class; Note11 calls securities-financing agreements collateralized financing and explains GAAP net presentation.",
+            "exclude_adders": "Do not add gross repos715251 or net repos433161 again; do not use collateral-adjusted exposure35611. Securities-for-securities return obligation6.6bn is reported in accounts payable, outside this funding line."
+          },
+          {
+            "component": "Beneficial interests issued by consolidated VIEs27951m",
+            "included": "Interest-bearing third-party beneficial-interest liabilities; excludes intercompany eliminations. Note20 long-term6017m is subset of this total; shorter21934m remainder not an add-on.",
+            "exclude_adders": "Do not separately add6017m; do not add totalVIE liabilities28642m, which includes691m other accounts-payable liabilities."
+          },
+          {
+            "component": "Operating leases9337m",
+            "included": "Explicit operating lease class in accounts payable; excluded by current B06 financing-debt collection.",
+            "exclude_adders": "Not financing leases; leases-as-lessor assets are not borrower liabilities."
+          }
+        ]
+      },
+      "model_id": "BANK_REPORTED_FUNDING_SUBTOTAL_ONLY"
+    },
+    {
+      "source_sha256": "35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+      "scope_class": "industrial",
+      "complete": false,
+      "unresolved": [
+        "INDUSTRIAL_ATTRIBUTABLE_EQUITY_NOT_ESTABLISHED"
+      ],
+      "notes": [
+        {
+          "concept": "f:scheduleofrelatedpartytransactionimpactingbalancesheettabletextblock",
+          "text_sha256": "2e15e243191aabd12f5eca8dc1a246b60c0e27e2aad866aa0990fcb256c57352"
+        },
+        {
+          "concept": "f:financeandleaseincentivespolicytextblock",
+          "text_sha256": "3d0464b8bb5fd357b3dcd2eff95e2e71292836971eccf88fdf480f3823846355"
+        },
+        {
+          "concept": "us-gaap:debtsecuritiesavailableforsaletabletextblock",
+          "text_sha256": "24dd9406c818a0ef31f720e9c893b6ab8e9b86903780d67493db3a13d407b30e"
+        },
+        {
+          "concept": "us-gaap:salestypeanddirectfinancingleasesleasereceivablematuritytabletextblock",
+          "text_sha256": "9a5554df9f928894b4d07d35151e1cd8a4e3bfef41ebbe649b5007022d0e3409"
+        },
+        {
+          "concept": "f:salestypeanddirectfinancingleasestabletextblock",
+          "text_sha256": "5f176488e89a179ea2ebca55b6152151e3d71924fc4e2fe049d62e7ebc819362"
+        },
+        {
+          "concept": "us-gaap:operatingleasesoflessordisclosuretextblock",
+          "text_sha256": "266b0b2e57cd246126139421b26db916a213f5b5a0aff79fbf725a4dd680295c"
+        },
+        {
+          "concept": "us-gaap:lessorleasespolicytextblock",
+          "text_sha256": "d6744328f5e86d555ea12b5552974b834cefdfc43fbfabf2e8b149cab6ad1b44"
+        },
+        {
+          "concept": "us-gaap:scheduleofpropertysubjecttooravailableforoperatingleasetextblock",
+          "text_sha256": "3f7d784349f754fa84275daaf9ac35fed196e15952b83d527e766cfa97ef2078"
+        },
+        {
+          "concept": "f:scheduleofoperatingleaseexpensetabletextblock",
+          "text_sha256": "c9c9e87c7e8fb9cef727939e0e8bce1765ddf58284242de6c4b3041de44296d4"
+        },
+        {
+          "concept": "us-gaap:lessoroperatingleasepaymentstobereceivedmaturitytabletextblock",
+          "text_sha256": "c0f67b0c274a41893399f8b082f83c590447a6bc58e0c2ae7fc6c92f54febc75"
+        },
+        {
+          "concept": "us-gaap:lesseefinanceleasestextblock",
+          "text_sha256": "11cfcff9bab94b2f25fa8464b137942b30a11056b5766b6fca4bac92eb6ebbc5"
+        },
+        {
+          "concept": "us-gaap:lesseeoperatingleasestextblock",
+          "text_sha256": "11cfcff9bab94b2f25fa8464b137942b30a11056b5766b6fca4bac92eb6ebbc5"
+        },
+        {
+          "concept": "us-gaap:lesseeleasespolicytextblock",
+          "text_sha256": "146d50a32c967b4dccaf1c6271ed965bab6f12ff3fbd880247d3975c2ffbe4be"
+        },
+        {
+          "concept": "us-gaap:separationofleaseandnonleasecomponentspolicytextblock",
+          "text_sha256": "c4985fc89dfe3342ad1bfd9acc4fcac5c2fd313f9a3cd25910037a637ec534e0"
+        },
+        {
+          "concept": "f:leaserightofuseassetsandliabilitiestabletextblock",
+          "text_sha256": "e46dc7b41c55e871d87d7c9e354a460e77c567c68e80638fdadf4ed220d06f51"
+        },
+        {
+          "concept": "us-gaap:financeleaseliabilitymaturitytabletextblock",
+          "text_sha256": "7c6152c52abb71572de535f6aeba2b20b5af376a720c5779aaea6642fd666027"
+        },
+        {
+          "concept": "us-gaap:leasecosttabletextblock",
+          "text_sha256": "49e5b8a1a1f07c96958d5d87d9f79772afe8554c8648a4c11cf4a481b8b5517c"
+        },
+        {
+          "concept": "us-gaap:debtdisclosuretextblock",
+          "text_sha256": "607c390996f4aa6d10a9e4ce8d0fa9e0f6609e27819f050c511bd1af75584a1b"
+        },
+        {
+          "concept": "us-gaap:debtpolicytextblock",
+          "text_sha256": "fe0948d7d1a7403d0373481d847ac2519c98509acc23e86d629cb15afc3e224c"
+        },
+        {
+          "concept": "us-gaap:scheduleofcarryingvaluesandestimatedfairvaluesofdebtinstrumentstabletextblock",
+          "text_sha256": "e771deeaa43f92e4a23153ae5130b8a89d184fcc6c2eea8c4272e13c26bb2414"
+        },
+        {
+          "concept": "us-gaap:scheduleofmaturitiesoflongtermdebttabletextblock",
+          "text_sha256": "fa241e84bf29a93a8a94d7dc51d519c149f049f42730dc2406a0982381a59c6a"
+        },
+        {
+          "concept": "us-gaap:scheduleofdebttabletextblock",
+          "text_sha256": "c62b30caf7f135aecfceca3492e9cec4e3519998858161b74d3db04b68f4a6ea"
+        },
+        {
+          "concept": "f:assetsandliabilitiesrelatedtosecureddebtarrangementsdisclosuretextblocktabletextblock",
+          "text_sha256": "258a11a3b2cb3101d69efc6616831b7cca7281ccba8e2357fd620c664e938fab"
+        },
+        {
+          "concept": "us-gaap:variableinterestentitydisclosuretextblock",
+          "text_sha256": "2295976b60462ad1b333a7887d3496a4650c3e2b2c620009c9aae38e61e7dc71"
+        }
+      ],
+      "findings": {
+        "independent_review_sha256": "de0e02583a8e491e885e7b42b1539cd7f38dd8cf947daf0e91b91afac1dd1fe8",
+        "minimum_question": "May B06 use Company excluding Ford Credit net assets including any noncontrolling interests as the industrial denominator, or does it require equity attributable to owners? Under the existing StockholdersEquity attributable basis, a sourced industrial NCI allocation/industrial attributable-equity balance is still missing; do not substitute35952 or infer NCI28 allocation from income allocation.",
+        "search_limit": "Entire 2025 XML instant fact contexts scanned for equity/assets/liabilities in CompanyExcludingFordCredit scope; originalHTML supplemental balance sheet and segment disclosures read. Explicit industrial equity fact not found; same-column assets/liabilities residual found and retained as evidence rather than discarded.",
+        "source_relationships": [
+          {
+            "component": "Company excluding Ford Credit debt21919m",
+            "included": "5550 current +16369 noncurrent. Includes independent short-term1355m, loans/bonds, finance leases136+754=890m and amortized discount/premium/issuance costs already reflected.",
+            "exclude_adders": "Do not add890 finance leases or1355 short-term again; do not use fair-value21640m or FordCredit141417m."
+          },
+          {
+            "component": "Same-scope supplemental assets130934m and liabilities109758m",
+            "included": "Both in Company excluding Ford Credit column for December31,2025. Residual21176m is demonstrable same-scope net assets, not consolidated equity-minus-unproven-finance-equity.",
+            "limitation": "Not explicitly labelled equity attributable to Ford Motor Company. Consolidated total-equity35980m versus attributable equity35952m differs by28m NCI; no scoped NCI allocation found."
+          }
+        ]
+      }
+    }
+  ]
+}

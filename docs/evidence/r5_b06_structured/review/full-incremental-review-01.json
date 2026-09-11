@@ -1,0 +1,58 @@
+{
+  "status": "INCREMENTAL_REVIEW_WITH_OPEN_BINDING_FINDINGS",
+  "reviewer": "independent Codex subtask /root/b06_source_audit",
+  "baseline_main": "000718745891198d8b05699689447c54dd0977aa",
+  "files_read": {
+    "scripts/vnext/r5_b06_structured.py": "7bf876786b9f2da565a4d91942ff314ec5b6747ea45cc23ff96367725b8aa240",
+    "scripts/vnext/r5_b06_publication.py": "834855b46c95b7e9fa1d2f2e14deef8c9eedf8fcc7a48a20c7c004f01c3939e8",
+    "scripts/vnext/requirement_profile_v10.py": "0d474e2d3b5b2f5d768e80f83163a5d63ff4cfc92d3b2ee9dd15e5c42fdb0d79",
+    "scripts/vnext/run_store.py": "148c97604785ed9020931ed58ae42fabd2b816b26d9fe64637b32423958085e5",
+    "scripts/vnext/records.py": "e2f8812dc06f344be2674e2b5977519df29a4213ef716cc75e502c847f0fdec9",
+    "scripts/vnext/publication.py": "2e0616dc66d8c9611de2065a21a8731f94871f9062b66fe31a4cec2452fddea7",
+    "scripts/vnext/publication_results.py": "d5c51df2f31a8b1793d3a2ca32605cc80c02a2eceebdba69155a7961f700ad0c",
+    "scripts/vnext/calculator.py": "0b5ceeedc6742f003f14058848512d387e036dc016d2f316bf18a7d36e7855f1",
+    "scripts/vnext/specs.py": "3cc51bb6b3933d9710acca1d614221dd3af11cf76b47704eebe955ad39b0f6bb",
+    "catalog/r5/B06_structured.md": "b3f167ed7e4cd2c3ad59db01db53866bfcf5e3d1c04de130d78c3a34145a8b8f",
+    "tests/vnext/test_r5_b06.py": "b7325249bb98fb77a8b534e34d570a1a29c73e08470837529442faa61a5836fb"
+  },
+  "personally_executed": [
+    {
+      "command": "PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r5_b06 -v",
+      "exit_code": 0,
+      "test_count": 8,
+      "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/independent-discovery/draft-review-tests.log",
+      "log_sha256": "685284e65d27d178fa6ecf1d9ae498feb0c55e6502f8d46fe5c2c3bb497993f1"
+    }
+  ],
+  "reused_evidence": [
+    "Independent local raw CompanyFacts/HTML/XML audits recorded in same directory"
+  ],
+  "not_run": [
+    "Complete candidate or long native integration",
+    "PR41 full chain",
+    "Provider/SEC network"
+  ],
+  "findings": [
+    {
+      "id": "R5-SOURCE-ANCHOR",
+      "priority": 1,
+      "detail": "Bundle verification trusts snapshot input bytes through self-contained hashes and ledger. Trusted implementation head is checked only against rules; bind actual saved SEC input bytes/ledger to independently trusted source identity so changing input plus all dependent hashes cannot manufacture authentic-source acceptance. All current source files already exist in reviewed Git history, offering a minimal anchor."
+    },
+    {
+      "id": "R5-REQUIRED-SOURCE-SET",
+      "priority": 1,
+      "detail": "replay_result iterates supplied SourceReference set. Require exactly discovered source set including saved scope XML, so omitting scope evidence cannot bypass warnings while rehashing Run and outer records."
+    }
+  ],
+  "other_notes": [
+    "Numeric positive cases independently agree with original financial statement content under declared hierarchy.",
+    "Amendments must block adoption while retaining ordinary filing as-filed native value.",
+    "Nonpositive equity and independent debt ambiguity both remain visible.",
+    "Frozen Requirement source interpretation and pending no-production policy remain distinct."
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

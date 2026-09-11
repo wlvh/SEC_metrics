@@ -1,0 +1,61 @@
+{
+  "record_type": "SUCCESSOR_RUN",
+  "status": "FROZEN",
+  "records_file_hash": "ef669e634e8125c6ea26bd7358f57400eca5d9bcf7d386cf52e70604bd2c0bdd",
+  "review_decisions_file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "validation_file_hash": "95defd320321adde966355e80e6c2e7e29701aaac5a72a99551a7bdcf6a73924",
+  "content_manifest_hash": "sha256:579066871a0e557cff40b3d350db48aaa42dc29999357c0c428d9642701aa08f",
+  "audit_manifest_hash": "sha256:3eb04fdaa601fe74e9ceaeb3e459263822f4f16705e67ec2c4657fec7d1c8b41",
+  "run_id": "run:r5-primary:4e2b59f478da3d0d99467bd7a6f1a2262efb9c79b5121921d08d745626f3a23c",
+  "company_id": "macys",
+  "company_traits": [
+    "non_financial"
+  ],
+  "target_period": {
+    "fiscal_year": 2025,
+    "period_start": "2026-01-31",
+    "period_end": "2026-01-31"
+  },
+  "source_references": [
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:333eadc460b0b7482c8deaa78eaae60779b8c8af193d0d9ebf3445c34b88b11c",
+      "raw_asset_id": "sha256:fccd76252c4f3b7c9e7328082138d0a3d8d49c94cc2d2de2167e881aabae1f55",
+      "company_id": "macys",
+      "source_url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0000794367.json",
+      "accession": "0001628280-26-021721",
+      "document_name": "CIK0000794367.json",
+      "source_role": "companyfacts",
+      "request_attempt_id": "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+    },
+    {
+      "record_type": "SOURCE_REFERENCE",
+      "source_reference_id": "sha256:2457566e83c6574f961835d49143652e1c7da771a2149a3856a90678c09f9c8c",
+      "raw_asset_id": "sha256:86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+      "company_id": "macys",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/794367/000162828026021721/m-20260131_htm.xml",
+      "accession": "0001628280-26-021721",
+      "document_name": "m-20260131_htm.xml",
+      "source_role": "accession_xbrl",
+      "request_attempt_id": "request:attempt:60713c8c3dd60d9cf9e10670179eb7091f5f88a411ab1646fa6fa3653f46bd30"
+    }
+  ],
+  "missing_required_source_roles": [],
+  "spec_file_hashes": {
+    "catalog/r5/B06_structured.md": "b3f167ed7e4cd2c3ad59db01db53866bfcf5e3d1c04de130d78c3a34145a8b8f"
+  },
+  "requirement_hashes": {
+    "baseline_sha256": "ff792a74083687585af078fab8f26998046446686898c3ebcf4f35aca86c02bb",
+    "contract_sha256": "a0599fd4ddfecb98822a88fd4c72b72b7e3cab92fcb06dcd672d17a8984c1cad",
+    "decision_register_sha256": "ca39e02154b5267847839048a3d65a90465747949caaf5e6b1e8e234e4c32c26",
+    "invariant_profile_sha256": "22662ce8050c7fe8e569777bd06f77760124e365d15f1a297a4ec8adc2743f7a",
+    "transfer_manifest_sha256": "034f984d7570a069b637a305786e547267c8cdc694b8936c404033d911ab835d",
+    "parent_requirement_closure_hash": "sha256:c3aab58207c3a6cf7f9ac35aae0b842bc6ed8e870dce574438ae428192e1ce45",
+    "validator_sha256": "0d474e2d3b5b2f5d768e80f83163a5d63ff4cfc92d3b2ee9dd15e5c42fdb0d79"
+  },
+  "requirement_closure_hash": "sha256:16ae75eedd039adebbedaea00a4975db573f3e696c6cf004f084a025dbce6fa3",
+  "requirement_id": "issue_28_v9",
+  "artifact_requirement_generation": "EXPLICIT_REQUIREMENT_V1",
+  "task_contract_bindings": [],
+  "execution_semantics_hash": "sha256:f724d52688b92935d5de6e2e8000fb3c65a3ee66b316dc8c646c8bef11b551a9"
+}

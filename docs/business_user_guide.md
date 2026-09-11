@@ -265,3 +265,6 @@ publication switch在改root mirrors前先于独占锁内写`outputs/publication
 ### 年度更新进度
 
 发现了一份年报、计算成功、正式发布是三个位置。已有候选领先发布时应显示待发布，不能只显示“无新年报”；来源检查失败也不等于无变化。当前连续更新验证限定Marriott B01/B10和隔离目录，旧完整版本及其余指标期间保留；它不代表生产定时更新已长期启用。
+
+B06结构化主路径的待审候选由`tools/vnext_r5_b06.py read`读取。它未替换正式报告；遇范围/修订/债务涵盖未决时公共值为空且给出原因，原生当时申报结果仍可核对。完整说明见`docs/r5_b06_structured.md`。
+<!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->

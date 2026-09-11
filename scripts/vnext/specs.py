@@ -355,8 +355,17 @@ def _validate_derived_role(*, value: object) -> Dict[str, object]:
         )
     if not isinstance(value["args"], list) or len(value["args"]) < 2:
         raise SpecError("Derived role args must be ordered")
-    if any(argument not in value["inputs"] for argument in value["args"]):
+    def component_refs(argument):
+        # Existing evaluator and Trace already support op/args expressions.
+        # A derived branch may combine named source components, never literals.
+        if isinstance(argument, str) and argument in value["inputs"]:
+            return {argument}
+        if isinstance(argument, dict) and set(argument) == {"op", "args"}:
+            if argument["op"] in SUPPORTED_OPERATIONS and isinstance(argument["args"], list) and len(argument["args"]) >= 2:
+                return set().union(*(component_refs(a) for a in argument["args"]))
         raise SpecError("Derived role arg names an undeclared input")
+    for argument in value["args"]:
+        component_refs(argument)
     guards = value["guards"]
     if not isinstance(guards, list) or any(
         guard not in EQUALITY_GUARDS for guard in guards
@@ -434,7 +443,7 @@ def _validate_top_level_guards(*, value: object) -> Sequence[object]:
     seen_strings = set()
     for guard in value:
         if isinstance(guard, str):
-            if guard not in EQUALITY_GUARDS | {"denominator_nonzero"}:
+            if guard not in EQUALITY_GUARDS | {"denominator_nonzero", "denominator_positive"}:
                 raise SpecError("Top-level guard is unknown")
             if guard in seen_strings:
                 raise SpecError("Top-level guard is duplicated")

@@ -20,7 +20,8 @@ class AnnualModelConfigurationTest(unittest.TestCase):
     def test_current_model_configuration_changes_only_request_model(self):
         from vnext import ai_adapter as ai, invocation_control as control, run_store
         from vnext.canonical import strict_json_file, strict_json_loads
-        requirement=continuity._requirement()
+        from vnext.requirements import load_requirement_snapshot
+        requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v8')
         policy=ai.configured_annual_transport_policy(requirement=requirement,repo_root=ROOT)
         self.assertEqual('deepseek-flash',policy.model)
         root=ROOT/'docs/evidence/annual_update_continuity/native-first/b10'
@@ -28,8 +29,10 @@ class AnnualModelConfigurationTest(unittest.TestCase):
         payload=original['messages'][1]['content'].encode()
         body,_=ai.build_provider_request_body(policy=policy,reader_request_bytes=payload)
         self.assertEqual({**original,'model':'deepseek-flash'},strict_json_loads(text=body.decode()))
-        authority=control.prepare_annual_candidate_invocation_authority(requirement=requirement,repo_root=ROOT)
-        self.assertEqual(policy.model,authority._check()[2]['model'])
+        # The model/prompt remain readable, but the PR41 exact implementation
+        # grant cannot authorize this changed R5 checkout.
+        with self.assertRaisesRegex(ValueError, 'execution authority bytes differ'):
+            control.prepare_annual_candidate_invocation_authority(requirement=requirement,repo_root=ROOT)
         self.assertEqual(policy,run_store._run_transport_policy(requirement=requirement,repo_root=ROOT))
         with tempfile.TemporaryDirectory() as directory:
             other=Path(directory).resolve();(other/'config').mkdir()
@@ -49,7 +52,8 @@ class AnnualModelConfigurationTest(unittest.TestCase):
         candidate=validate_reader_output(response_text=(root/attempt['assistant_output_path']).read_text(),
             attempt_id=attempt['attempt_id'],required_roles=task['required_roles'],scope_contract=task['scope_contract'],
             source_reference_ids=manifest['source_reference_ids'],derived_asset_ids=[grid['derived_asset_id']])
-        evidence=check_annual_evidence(requirement=continuity._requirement(),
+        from vnext.requirements import load_requirement_snapshot
+        evidence=check_annual_evidence(requirement=load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v8'),
             target_period=strict_json_file(path=root/'manifest.json')['target_period'],candidate=candidate,
             derived_asset=grid,reader_manifest=manifest,reader_payload_body=payload,
             source_references=[x for x in records if x['record_type']=='SOURCE_REFERENCE'],

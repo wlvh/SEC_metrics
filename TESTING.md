@@ -540,3 +540,15 @@ legacy candidate publication开始时会使旧provenance失效；formal active�
 PR41续验：当前许可为2/2/0，旧关闭阶段1/1/0经原内容身份重验，合计上限3/3/0。完整材料回放只在外部HTTP边界派生model/id外壳，原assistant内容保持；故意失败分支另外替换测试content，分别保存原始与派生SHA，不声称新provider执行。最新终态与独立审阅见`docs/evidence/annual_update_continuity/continuation/README.md`。
 
 分组提示增量：`python3 -m unittest tests.vnext.test_annual_group_prompt -v`进入fast。完整保存材料下可定向运行`AnnualContinuityRehearsalTest.test_prompt_native_candidate_and_saved_snapshot`，使用最新关闭阶段的`CONTINUITY_PRIOR_STAGE_BINDING`；只在HTTP外部边界回放原正确assistant内容，并在既有success-reference文件替换点停止后续发布，验证新任务身份的原生候选和封存snapshot重放。它不替代新provider执行；既有完整发布故障套件未变部分按原证据复用。
+
+## R5 B06结构化主路径
+
+短测试：`python3 -m unittest tests.vnext.test_r5_b06 -v`，已列fast白名单。覆盖总额不加adder、同族/跨族、lease-only与noncurrent、冲突和独立债务、零/负权益、单位/时点/主体/来源、工业范围及生产权限拒绝。完整材料：`python3 tools/vnext_r5_b06.py prepare --candidate-root <新外部目录> --output-json <新外部JSON>`，随后同CLI read与重复prepare；OS级禁网和正式根只读，独立记录执行、包与代码身份。原PR41短测试读取冻结提示/模型，同时明确旧执行权限对R5改动失效，不修改历史v8绑定来制造可执行性。
+
+完整候选正反例：`R5_B06_CANDIDATE_ROOT=<已生成完整候选目录> python3 -m unittest tests.vnext.test_r5_b06_material -v`。缺环境直接报错，不以SKIP满足验收。覆盖完整读、旧B06生产函数抛错时新原生结果仍可生成、删除范围来源后重算Run仍拒绝、包内来源自洽但独立Git原件身份不同时拒绝、生产写权限拒绝及重复prepare。临时反例仅写外部测试目录；不注入core validator成功。
+
+PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followup -v`，进入同一fast白名单。覆盖两项缺日期漏判、无效身份/日期、非自然年度、相关历史分片、两份完整原文修订判断及重hash后财务事实/Item8反例、两种真实账面对账、同基础CF/XML冲突与原冲突在无证明时仍拒绝。旧v1的读取由其Spec语义选择，不能重开旧v1执行。完整包仍用既有R5 material测试与CLI冷读；未变的PR41模型及长演练不重跑。
+
+### B06统一债务集合
+
+`PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r5_b06_scope -v`：11项短测试接入fast，覆盖真实来源组成/原5坐标、Pfizer/JPM/Ford完整性拒绝、精度区间、重复/漏项、未知原件/资产冒充以及嵌套具名表达式。旧9项/10项模块显式读取保留的v1/v2 Spec，不修改旧期望。`R5_B06_CANDIDATE_ROOT=<外部目录> PYTHONPATH=scripts python3 -m unittest tests.vnext.test_r5_b06_material -v`用于实际完整候选，需干净检出；运行中不要编辑文档，所有输出显式置于checkout外。

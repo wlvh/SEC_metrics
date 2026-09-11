@@ -1,0 +1,25 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/readonly.sb",
+    "python3",
+    "tools/vnext_r5_b06.py",
+    "prepare",
+    "--candidate-root",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/complete",
+    "--output-json",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/complete-output.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "head_after": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "started_at_utc": "2026-09-11T05:12:41.383174+00:00",
+  "finished_at_utc": "2026-09-11T05:17:51.525475+00:00",
+  "elapsed_seconds": 310.1419713749783,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/complete-command.log",
+  "log_sha256": "94a3c2d456adad115c79c0d5ae0e4aab4cf81c18a6e66c86d5798681d3e61991",
+  "log_size": 137
+}

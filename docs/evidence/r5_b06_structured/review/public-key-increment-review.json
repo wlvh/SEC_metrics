@@ -1,0 +1,40 @@
+{
+  "status": "PUBLIC_KEY_UNION_CORRECT_CLI_PATH_NORMALIZATION_FINDING",
+  "reviewer": "independent Codex subtask /root/b06_source_audit",
+  "head": "97e5c1f0c3a966f6fdb7ab5f65544ef5c3304519",
+  "original_matrix": {
+    "path": "/Users/lyuhongwang/Developer/SEC_metrics/outputs/publications/publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59/metrics_matrix.csv",
+    "sha256": "c0aa1c7dcf1e7fc3f9b14703af915a07b9a1d940b0d8b9130b2ee2cef37efa62",
+    "row_count": 327,
+    "unique_keys": 327,
+    "existing_selected": 9,
+    "unchanged": 318,
+    "new_public_keys": [
+      [
+        "JPMorgan Chase",
+        "B06"
+      ]
+    ],
+    "expected_candidate_public_rows": 328
+  },
+  "code_assessment": "Replace fixed prior-subset/327 assumptions with exact old|new key union; all unselected row and evidence equality checks remain. Candidate250 coordinate bindings distinct from328 public rows; actualformal327/24 unchanged.",
+  "cli_path_probe": {
+    "input_path": "/Users/lyuhongwang/Developer/../Developer/SEC_metrics/outputs/independent_probe_NOT_CREATED.json",
+    "is_absolute": true,
+    "lexical_root_guard_detects": false,
+    "canonical_path": "/Users/lyuhongwang/Developer/SEC_metrics/outputs/independent_probe_NOT_CREATED.json",
+    "canonical_root_guard_detects": true,
+    "file_created": false,
+    "recommendation": "Reject dot-dot components or canonicalize after symlink refusal before testing outside-checkout boundary."
+  },
+  "not_executed": [
+    "No full native rerun",
+    "No production writes",
+    "No CLI invocation using probe path"
+  ],
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

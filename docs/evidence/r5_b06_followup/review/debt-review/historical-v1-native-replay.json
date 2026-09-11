@@ -1,0 +1,86 @@
+{
+  "status": "PASS_HISTORICAL_V1_NATIVE_GRAPH_READ_ONLY",
+  "time_utc": "2026-09-11T05:04:57.893062+00:00",
+  "seconds": 4.719379901885986,
+  "network": "OS deny network; writes only followup",
+  "results": [
+    {
+      "company": "southwest_airlines",
+      "run_id": "run:r5-primary:15b3a1146c188a8ac9d506404b6c4e0ce19570e22de61a13c338c544ba9c3777",
+      "status": "FROZEN",
+      "records": 8,
+      "result": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "southwest_airlines",
+          "metric_id": "B06",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:8aedb7d2ad81587520caa29821464c9b2f1ecdf76fe1a94be6abc409d9d87a88",
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "spec_closure_hash": "sha256:afe964afae02a8ca60f437e0e5fbf20a64d74eead2daa4ebc4c72eba79d8a47a",
+          "trace_id": "sha256:0fcc01a2229bdd9b750353fb9de18f0b40633a720174a3b376e48d881ab401d4",
+          "unit": "ratio",
+          "value": "0.6163388046610700413482019797"
+        }
+      ],
+      "old_run_bytes_unchanged": true
+    },
+    {
+      "company": "lumen_technologies",
+      "run_id": "run:r5-primary:4081a89420d71b6fc9f2d0aae3e877504b991d5c51c6e3410d2e5bb375420935",
+      "status": "FROZEN",
+      "records": 6,
+      "result": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "lumen_technologies",
+          "metric_id": "B06",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "publication": "WITHHELD",
+          "quality": "NONE",
+          "reason_code": "STRUCTURED_SOURCE_AMBIGUOUS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:06baf1ca59edcfcac4a576150cc698d929c89992e0e7b1122b8e26d9040c0597",
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "spec_closure_hash": "sha256:afe964afae02a8ca60f437e0e5fbf20a64d74eead2daa4ebc4c72eba79d8a47a",
+          "trace_id": "sha256:59ef06e3f6c2cbf63c73213152b54998a51179af476d086ccdf649e4c59f8db1",
+          "unit": null,
+          "value": null
+        }
+      ],
+      "old_run_bytes_unchanged": true
+    },
+    {
+      "company": "enphase_energy",
+      "run_id": "run:r5-primary:a6332475883763bef357d0022187cc322b4984d2c02018d584ed24d7a8336f1f",
+      "status": "FROZEN",
+      "records": 9,
+      "result": [
+        {
+          "applicability": "APPLICABLE",
+          "company_id": "enphase_energy",
+          "metric_id": "B06",
+          "period_end": "2025-12-31",
+          "period_start": "2025-12-31",
+          "publication": "PUBLISHED",
+          "quality": "EXACT",
+          "reason_code": "PASS",
+          "record_type": "METRIC_RESULT",
+          "result_id": "sha256:7b46cec87a58ddb74bf89c927b5c14ea04fb6e1efdc1799417645fe88c88edfa",
+          "scope_key": "sha256:d732d6cd826cf789f4c3df6ffd41b73c7ba682ef5545a4bae1b2f33b50f9477b",
+          "spec_closure_hash": "sha256:afe964afae02a8ca60f437e0e5fbf20a64d74eead2daa4ebc4c72eba79d8a47a",
+          "trace_id": "sha256:bb76a5cb876420034b36f7a541c9abd5b6b449cff8a80828213cd56a6ad2e5ec",
+          "unit": "ratio",
+          "value": "1.107959077222837051285943352"
+        }
+      ],
+      "old_run_bytes_unchanged": true
+    }
+  ]
+}

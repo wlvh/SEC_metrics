@@ -1,0 +1,107 @@
+{
+  "status": "PASS_MERGE_COMPATIBILITY_READ_ONLY",
+  "head": {
+    "exact_head": "000718745891198d8b05699689447c54dd0977aa",
+    "runtime_tree": "sha256:b91cb13afc0fc6cdb5abecf562e4f0ca78550effc47b60a9865a41f45a7a8ef1",
+    "test_tree": "sha256:f022f1ce4fc401e49fbc8c9c34cd2ff264dd52e96c55c760a59c59db9cf63106"
+  },
+  "parents": [
+    "48b233f875d07145464e078afe686249e38e963b",
+    "437d438dbfbca65ff34be2dab453ac77c425a97f"
+  ],
+  "fresh_native_views_read": [
+    "publication_24bf8f1654f3b80ecd2e996eb7393c0bcff706de65890e94c19878065f407a59",
+    "publication_029248ff2572cf913627ed1462fa772e29ca97edebc1f42e8413609986f921f1",
+    "publication_8f8584e265cf88ed256c6efbcf3bdd77c131b75dcb816686a9838502d363d4b9"
+  ],
+  "first_command": {
+    "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+    "command": [
+      "/usr/bin/sandbox-exec",
+      "-f",
+      "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+      "python3",
+      "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/a-close/post_merge_read.py"
+    ],
+    "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+    "head": "000718745891198d8b05699689447c54dd0977aa",
+    "head_after": "000718745891198d8b05699689447c54dd0977aa",
+    "started_at_utc": "2026-09-11T02:42:03.983866+00:00",
+    "finished_at_utc": "2026-09-11T02:46:38.871429+00:00",
+    "elapsed_seconds": 274.89153558399994,
+    "exit_code": 1,
+    "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/a-close/post-merge-command.log",
+    "log_sha256": "953f073161bbf6abeb9ed8bf7ca53a9915d6fe5403c45bfb08071a2146292b68",
+    "log_size": 1772
+  },
+  "first_command_limit": "All three verified views/native sources read before overly narrow test assertion on historical stage rejection. Old frozen Requirement differs from current, so correct current execution rejection is REQUIREMENT_CHANGED; no product failure or retry.",
+  "closed_stages_verified": [
+    {
+      "root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/live",
+      "rejection": "CONTINUITY_STAGE_REQUIREMENT_CHANGED",
+      "closed": {
+        "closed_at_utc": "2026-09-10T09:30:57.670670+00:00",
+        "counts": {
+          "failed_plans": [
+            "sha256:6867f54821e36e70159fe83e9ca8abb5d51828c9e151a5819fca048650cd53cc"
+          ],
+          "failed_sec": [],
+          "paid": 1,
+          "provider": 1,
+          "provider_reserved": 1,
+          "sec_reserved": 0,
+          "uncertain_plans": [],
+          "uncertain_sec": []
+        },
+        "reason": "WORK_PACKAGE_DELIVERY_NO_MORE_BUSINESS_CALLS",
+        "stage_id": "sha256:7db4fef84baa329b7c17effa9808ae55244d08ec27e9cc318302044622231688"
+      }
+    },
+    {
+      "root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/continuation/live",
+      "rejection": "CONTINUITY_STAGE_REQUIREMENT_CHANGED",
+      "closed": {
+        "closed_at_utc": "2026-09-10T14:17:47.403749+00:00",
+        "counts": {
+          "failed_plans": [
+            "sha256:31e2acf0bede067f8e9b21f1d266d326a9097e5b24b377b441672cbdcda700fe"
+          ],
+          "failed_sec": [],
+          "paid": 1,
+          "provider": 1,
+          "provider_reserved": 1,
+          "sec_reserved": 0,
+          "uncertain_plans": [],
+          "uncertain_sec": []
+        },
+        "reason": "WORK_PACKAGE_DELIVERY_NO_MORE_BUSINESS_CALLS",
+        "stage_id": "sha256:046b38a3d3f8a06187e1ab0fcd3ad89607b1ea7ec98a8b9926f4b23744678059"
+      }
+    },
+    {
+      "root": "/Users/lyuhongwang/Documents/Codex/2026-09-10/annual-update-continuity/group-ownership/live",
+      "rejection": "CONTINUITY_STAGE_CLOSED",
+      "closed": {
+        "closed_at_utc": "2026-09-10T16:39:21.860172+00:00",
+        "counts": {
+          "failed_plans": [],
+          "failed_sec": [],
+          "paid": 2,
+          "provider": 2,
+          "provider_reserved": 2,
+          "sec_reserved": 0,
+          "uncertain_plans": [],
+          "uncertain_sec": []
+        },
+        "reason": "WORK_PACKAGE_DELIVERY_NO_MORE_BUSINESS_CALLS",
+        "stage_id": "sha256:cd9ac81283f0d5934ef54c2d7ac11d696f606174cf0f8bf5d80d4edc79e20dce"
+      }
+    }
+  ],
+  "actual_active_unchanged": true,
+  "business_calls": [
+    0,
+    0,
+    0
+  ]
+}

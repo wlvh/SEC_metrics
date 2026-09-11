@@ -1,0 +1,26 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/readonly.sb",
+    "/usr/bin/env",
+    "R5_B06_CANDIDATE_ROOT=/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/complete",
+    "PYTHONPATH=scripts",
+    "python3",
+    "-m",
+    "unittest",
+    "tests.vnext.test_r5_b06_material.B06MaterialTest.test_production_switch_denied_and_repeat_prepare_reuses",
+    "-v"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "head_after": "ce478c3c51feca89160e1996653c7d11a5463348",
+  "started_at_utc": "2026-09-11T05:25:24.920513+00:00",
+  "finished_at_utc": "2026-09-11T05:26:48.963699+00:00",
+  "elapsed_seconds": 84.04301716701593,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-followup/material-repeat-command.log",
+  "log_sha256": "a6d0f1874908329664d3492e78a3ec2af9e62317c37aacd77d686bebc78cd6c9",
+  "log_size": 268
+}

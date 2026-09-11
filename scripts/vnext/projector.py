@@ -1971,6 +1971,11 @@ def _context_text(
     """
     if style == "constant":
         return constant
+    if style == "structured_source_context":
+        binding=observation["source_binding"]
+        if "xbrl_context_ref" in binding:
+            return "accession_xbrl:{}:fact:{}".format(binding["xbrl_context_ref"], binding["xbrl_fact_ordinal"])
+        return "companyfacts:{}:FY{}:{}".format(observation["unit"], fiscal_year, observation["period_end"])
     if style == "companyfacts_fiscal":
         return "companyfacts:{}:CY{}".format(
             observation["unit"], fiscal_year,

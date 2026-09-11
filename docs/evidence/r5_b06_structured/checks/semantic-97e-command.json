@@ -1,0 +1,22 @@
+{
+  "record_type": "ACTUAL_COMMAND_EXECUTION_BINDING",
+  "command": [
+    "/usr/bin/sandbox-exec",
+    "-f",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/readonly.sb",
+    "python3",
+    "tools/check_vnext_semantics.py",
+    "--output",
+    "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/semantic-97e.json"
+  ],
+  "cwd": "/Users/lyuhongwang/Developer/SEC_metrics",
+  "head": "97e5c1f0c3a966f6fdb7ab5f65544ef5c3304519",
+  "head_after": "97e5c1f0c3a966f6fdb7ab5f65544ef5c3304519",
+  "started_at_utc": "2026-09-11T03:24:32.074676+00:00",
+  "finished_at_utc": "2026-09-11T03:24:32.824326+00:00",
+  "elapsed_seconds": 0.7494415830005892,
+  "exit_code": 0,
+  "log": "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-structured/semantic-97e-command.log",
+  "log_sha256": "9481d42aeda76b6abd8c865a319597d5891d671f5f9370c5a48d9dda74bc5f96",
+  "log_size": 114
+}

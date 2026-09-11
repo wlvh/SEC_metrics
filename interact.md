@@ -340,3 +340,10 @@ R3已形成committed partial active并保留R1历史、R2 predecessor以及R3→
 
 更新检查同时展示发现、候选与发布。CANDIDATE_PENDING_PUBLICATION是已有候选等待后续验证/发布的正常状态，不表示本次抽取失败或已经上线；发现失败保留已知待发布事实。连续入口的NO_CHANGE表示没有待计算或待发布工作。完整成功、部分候选、调用不明、前驱冲突分别报告，失败不覆盖旧完整版本。当前阶段只写显式隔离根，有限trigger结束即停。见docs/annual_update_continuity.md。
 <!-- capability-anchor: CAPABILITY.annual_update_continuity -->
+
+B06主路径入口为`tools/vnext_r5_b06.py prepare/read`。它输出完整待审核候选及十公司覆盖原因，明确区别原生值、非正权益、结构化歧义、工业范围和修订待核对。公共受阻行不填旧B06值，原生as-filed值与来源保留用于审查。所有输出在checkout外；正式active和24指标集合不变。
+<!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->
+
+B06新来源判断会在筛选前拒绝未知年报/修订日期及申报身份。已审完整修订的影响在新采纳记录中单列；旧as-filed结果不被改写。新账面原则会改变扣减成本前金额的选择（如Southwest），对账充分后Lumen仍以非正权益状态保留。输出分别说明内容完整、具体内容缺口及不存在的生产权限，不能用BLOCKED一个词掩盖三者。
+
+B06候选revision3将报表已确认借款、债券和融资租赁按不重叠集合计入，保留经营租赁排除及银行/工业范围限制。完整性未证明时即使借款子集合可以计算也不公开完整比值，`proven_debt_subtotal`和完整`debt`分别展示。生产权限仍不存在。

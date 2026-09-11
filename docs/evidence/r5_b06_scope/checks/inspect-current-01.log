@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Documents/Codex/2026-09-11/r5-b06-scope-final/inspect_current.py", line 10, in <module>
+    spec=compile_spec_file(path=R/p.SPEC_PATH,dependency_specs={});out=[]
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 842, in compile_spec_file
+    return compile_spec(text=text, dependency_specs=dependency_specs)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 781, in compile_spec
+    _count_ast(node=compiled)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 189, in _count_ast
+    total += _count_ast(node=node[key], depth=depth + 1)
+             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 189, in _count_ast
+    total += _count_ast(node=node[key], depth=depth + 1)
+             ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/specs.py", line 191, in _count_ast
+    raise SpecError("MetricSpec AST exceeds 256 nodes")
+vnext.specs.SpecError: MetricSpec AST exceeds 256 nodes

@@ -9,11 +9,16 @@ from vnext import annual_continuity as flow
 from vnext import reader_input
 from vnext.canonical import content_hash
 from vnext.table_task_contracts import table_task_execution_plan,resolve_table_task_contract,TableTaskContractError
+from vnext.requirements import load_requirement_snapshot
 ROOT=Path(__file__).resolve().parents[2]
+
+def saved_requirement():
+    # Read the frozen prompt rule; R5 code does not reopen its old execution grant.
+    return load_requirement_snapshot(snapshot_dir=ROOT/'requirements/issue_28_v8')
 
 class AnnualGroupPromptTest(unittest.TestCase):
     def test_prompt_changes_only_instruction_and_its_task_identities(self):
-        req=flow._requirement();task_id=req['continuity_policy']['task_contract_id']
+        req=saved_requirement();task_id=req['continuity_policy']['task_contract_id']
         old=table_task_execution_plan(repo_root=ROOT,task_contract_id=task_id)
         new=table_task_execution_plan(repo_root=ROOT,task_contract_id=task_id,requirement=req)
         a,b=old['runtime_task_contract'],new['runtime_task_contract']
@@ -31,7 +36,7 @@ class AnnualGroupPromptTest(unittest.TestCase):
             self.assertIn(needed,rule['instruction'])
 
     def test_no_requirement_and_other_task_retain_original_prompt(self):
-        req=flow._requirement()
+        req=saved_requirement()
         before=resolve_table_task_contract(repo_root=ROOT,task_contract_id='lodging_revpar_table_v2')
         after=resolve_table_task_contract(repo_root=ROOT,task_contract_id='lodging_revpar_table_v2',requirement=req)
         self.assertEqual(before,after)
@@ -40,7 +45,7 @@ class AnnualGroupPromptTest(unittest.TestCase):
             resolve_table_task_contract(repo_root=ROOT,task_contract_id=req['continuity_policy']['task_contract_id'],requirement=bad)
 
     def test_prompt_file_tamper_is_rejected_without_rewriting_repository(self):
-        req=flow._requirement();real=ROOT/'config/annual_continuity_request.json';original=Path.read_bytes
+        req=saved_requirement();real=ROOT/'config/annual_continuity_request.json';original=Path.read_bytes
         # Only filesystem input is injected. The actual resolver and rule SHA
         # checks still execute; no validator result is replaced.
         def changed(path):return original(path)+b' ' if path==real else original(path)

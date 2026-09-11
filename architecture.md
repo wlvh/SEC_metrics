@@ -753,3 +753,14 @@ R3已在clean committed implementation上形成active successor，previous为R2�
 ### 受限年度连续更新
 
 更新器通过PublicationView.native_result与authority_bytes取得结果所有者和覆盖权威，不在调用点猜内部目录；原R3未嵌入的原生内容明确拒绝。annual_continuity把三处进度、固定预算根与每输入计划接到annual_runtime共享执行器；annual_continuity_snapshot只增加新来源/旧起点的重放适配，annual_continuity_publication经既有PublicationPermission和intent/receipt提交明确前驱的隔离版本。旧v1/v2解释不变，不向实际根授连续写入。有限trigger直接调用同一run-once，未安装常驻调度。详见docs/annual_update_continuity.md。
+
+## R5 B06结构化主路径候选
+
+`r5_b06_structured`在声明式primary Spec限定下复用保存来源、原生Observation/Calculator和Run freeze/replay；相同原始输入再次选择并核对结果，拒绝跨概念、范围和时点替换。通用正分母约束保持其他指标旧行为。`r5_b06_publication`是既有Projector/publication持久化和PublicationView的候选适配，完整继承240坐标并加入10个B06结果/阻断，前驱327行保留未选部分，并补齐缺少的JPM B06阻断行，候选328行。新的typed credit仅允许BLOCKED只读包，所有生产动作拒绝；不是第二套发布器。`issue_28_v9`/V10草案保留全部父级义务，旧执行许可不因新代码而恢复。详见docs/r5_b06_structured.md。
+<!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->
+
+B06 carrying-v2补充了受控来源判断：discover先验证全部相关年度元数据；采纳层独立核对已审完整修订的原件/范围，原as-filed Run不改。measurement适配使用已保存XML的原生解析、同上下文单位及账面对账，将实际gross/扣减项送入既有Calculator。Spec resolver区分旧v1历史语义和新v2，旧包继续按原件重放；review记录只提供源文关系和范围判断，金额从原件读取。生产权限仍不存在，来源完整与发布许可分别表达。
+
+### B06 financing set revision 3
+
+New financing-set source judgments prove disjoint reported borrowings, bonds and finance lease liabilities; source precision and component reconciliation are read from the native XBRL parser. `r5_b06_scope.py` composes existing Calculator expressions; a thin Spec compiler extension permits named nested add/sub expressions already supported by Calculator/Trace. No new calculator or publisher. Incomplete scope is an independent hard gate, even if a reason list is accidentally empty. Historical v1/v2 packages retain their frozen Spec behavior.

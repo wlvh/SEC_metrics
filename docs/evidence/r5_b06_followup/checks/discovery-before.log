@@ -1,0 +1,77 @@
+test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) ... 
+  test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='accessionNumber') ... FAIL
+  test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='reportDate') ... FAIL
+  test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='filingDate') ... FAIL
+  test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='primaryDocument') ... FAIL
+test_newer_unknown_report_date_10k_cannot_disappear (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_newer_unknown_report_date_10k_cannot_disappear) ... FAIL
+test_noncalendar_period_remains_supported (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_noncalendar_period_remains_supported) ... ok
+test_relevant_history_shard_requires_complete_saved_list (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_relevant_history_shard_requires_complete_saved_list) ... FAIL
+test_unknown_amendment_period_cannot_disappear (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_unknown_amendment_period_cannot_disappear) ... FAIL
+
+======================================================================
+FAIL: test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='accessionNumber')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_followup.py", line 29, in test_invalid_annual_identity_and_dates_are_rejected
+    with self.subTest(field=key),self.assertRaises(ValueError):self.call(row)
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='reportDate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_followup.py", line 29, in test_invalid_annual_identity_and_dates_are_rejected
+    with self.subTest(field=key),self.assertRaises(ValueError):self.call(row)
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='filingDate')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_followup.py", line 29, in test_invalid_annual_identity_and_dates_are_rejected
+    with self.subTest(field=key),self.assertRaises(ValueError):self.call(row)
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_invalid_annual_identity_and_dates_are_rejected (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_invalid_annual_identity_and_dates_are_rejected) (field='primaryDocument')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_followup.py", line 29, in test_invalid_annual_identity_and_dates_are_rejected
+    with self.subTest(field=key),self.assertRaises(ValueError):self.call(row)
+                                 ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_newer_unknown_report_date_10k_cannot_disappear (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_newer_unknown_report_date_10k_cannot_disappear)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_followup.py", line 21, in test_newer_unknown_report_date_10k_cannot_disappear
+    with self.assertRaisesRegex(ValueError,'DATE'):self.call(self.extra())
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_relevant_history_shard_requires_complete_saved_list (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_relevant_history_shard_requires_complete_saved_list)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_followup.py", line 31, in test_relevant_history_shard_requires_complete_saved_list
+    with self.assertRaisesRegex(ValueError,'HISTORY'):self.call(shards=[{'name':'history.json','filingFrom':'2026-01-01','filingTo':'2026-03-01'}])
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_unknown_amendment_period_cannot_disappear (tests.vnext.test_r5_b06_followup.B06DiscoveryFollowupTest.test_unknown_amendment_period_cannot_disappear)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_r5_b06_followup.py", line 23, in test_unknown_amendment_period_cannot_disappear
+    with self.assertRaisesRegex(ValueError,'DATE'):self.call(self.extra('10-K/A'))
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.032s
+
+FAILED (failures=7)
