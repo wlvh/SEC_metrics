@@ -49,6 +49,7 @@ def _evidence_for_blocked(company, selected):
     source=next(p for p in selected['input']['sources'] if '/companyfacts/' in p['source_url'])
     audit=selected['selection'];period=selected['input']['target_period'];rows=[]
     for fact in audit['debt_candidates']:
+        source=next(p for p in selected['input']['sources'] if p['content_sha256']==fact['source_binding']['raw_asset_id'][7:])
         row={k:'' for k in pub.EVIDENCE_FIELDS}
         row.update(company=company['display_name'],cik=company['primary_cik'],metric_id='B06',source_url=source['source_url'],repo_relative_path=source['request_repo_relative_path'],content_sha256=source['content_sha256'],accession=source['accession'],document_name=source['document_name'],concept_or_section=fact['concept'],context_or_dimension='CANDIDATE_ONLY:'+fact['fact_id'],unit=fact['unit'],period_start=period['period_start'],period_end=period['period_end'],value_raw=str(fact['value']),value_normalized='',evidence_quote='Unaccepted component; '+ ';'.join(audit['reasons']),extraction_method='structured_primary_candidate_not_accepted',parser_version='r5_primary_v1')
         rows.append(row)
@@ -72,7 +73,7 @@ def _projection(data, run_root, predecessor):
         selected=strict_json_file(path=run_root/(cid+'-selection.json'));fresh_input=primary.discover(data_root=data,company=company);need(selected['input']==fresh_input,'R5_INPUT_SELECTION_CHANGED')
         trace=next(r for r in records if r['record_type']=='EXECUTION_TRACE');sources={r['source_reference_id']:r for r in records if r['record_type']=='SOURCE_REFERENCE'}
         raw={r['raw_asset_id']:(data/r['storage_uri']).read_bytes() for r in records if r['record_type']=='RAW_BLOB'}
-        rebuilt=primary.replay_result(manifest=manifest,spec=spec,trace=trace,source_references=sources,raw_bytes_by_id=raw,company_ciks=[company['primary_cik']])
+        rebuilt=primary.replay_result(manifest=manifest,spec=spec,trace=trace,source_references=sources,raw_bytes_by_id=raw,company_ciks=[company['primary_cik']],data_root=data)
         need(rebuilt[3]==selected['selection'],'R5_SELECTION_AUDIT_CHANGED');audit=selected['selection'];selections[cid]=selected
         indexes=projector._record_indexes(runs=[(manifest,records)])
         baseline={field:'' for field in pub.METRIC_FIELDS}
@@ -86,14 +87,27 @@ def _projection(data, run_root, predecessor):
                 ordered,_=projector._ordered_observations(trace=trace,observations=indexes['observations'],projection=spec['compiled']['legacy_projection'])
                 ev=[projector._evidence_row(observation=o,result=result,company=company,projection=spec['compiled']['legacy_projection'],source_index=indexes['sources'],raw_index=indexes['raw'],fiscal_year=str(manifest['target_period']['fiscal_year'])) for o in ordered]
             else:row,ev=baseline,_evidence_for_blocked(company,selected)
-        blockers=list(audit['reasons'])+selected['input']['adoption_blockers']
+        amendment_evidence=None;adoption_blockers=selected['input']['adoption_blockers']
+        policy_here=strict_json_file(path=data/primary.POLICY_PATH)
+        if policy_here.get('semantic_revision',1)>=2:
+            from .r5_b06_amendments import assess
+            amendment_evidence,adoption_blockers=assess(data=data,selected=selected['input'],policy=policy_here)
+        blockers=list(audit['reasons'])+adoption_blockers
         row['notes']+='; exact saved ordinary filing; '+(';'.join(blockers) if blockers else 'STRUCTURED_PRIMARY_VERIFIED')
-        if selected['input']['adoption_blockers']:
+        if adoption_blockers:
             # Keep native as-filed Result and evidence, but never expose it as
             # an accepted replacement while amendment relevance is unresolved.
             row['notes']+='; native as-filed value='+str(result['value']);row['value']='';row['status']='NEEDS_REVIEW'
         replacements[key(row)]=row;ev_replacements[key(row)]=ev
         coverage.append({'company_id':cid,'company':company['display_name'],'applicability':result['applicability'],'result':result,'public_status':row['status'],'as_filed_value':result['value'],'actual_period':manifest['target_period'],'source':selected['input']['sources'],'debt_branch':audit['branch'],'debt':audit['debt'],'equity':audit['equity'],'nonpositive_equity':audit['nonpositive_equity'],'blockers':blockers,'amendments':selected['input']['later_amendments']})
+        if amendment_evidence is not None:
+            coverage[-1].update(amendment_impact=amendment_evidence,measurement_reconciliation=audit.get('measurement_reconciliation'),content_status='CONTENT_COMPLETE' if not blockers else 'CONTENT_GAPS_REMAIN',production_permission=False)
+            review_path=data/policy_here['composition_review_file']
+            need(sha256_file(path=review_path)==policy_here['composition_review_sha256'],'COMPOSITION_REVIEW_CHANGED')
+            composition=strict_json_file(path=review_path)
+            source_hashes={p['content_sha256'] for p in selected['input']['sources']}
+            assessments=[r for r in composition['assessments'] if r['source_sha256'] in source_hashes]
+            coverage[-1]['source_composition_evidence']={'reviewer':composition['reviewer'],'assessments':assessments,'review_file_sha256':policy_here['composition_review_sha256']}
         bindings.append({'company_id':cid,'metric_id':'B06','origin':'ADOPTED_NATIVE_CANDIDATE','run_id':manifest['run_id'],'run_status':manifest['status'],'result_id':result['result_id'],'snapshot_run_path':'runs/'+cid,'adoption_status':'BLOCKED' if blockers else 'PRIMARY_VERIFIED_PENDING_APPROVAL','row_hash':content_hash(value=row),'evidence_hash':content_hash(value=ev)})
         runs[cid]=(manifest,records)
     metrics=projector.project_metric_rows(legacy_rows=old_rows,migrated_keys=keys,replacement_rows=replacements,fieldnames=pub.METRIC_FIELDS)

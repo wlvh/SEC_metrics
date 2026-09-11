@@ -1905,6 +1905,7 @@ def _replay_structured_result(
     if is_primary(compiled_spec):
         validate_input_binding(data_root=repo_root, manifest=manifest)
         expected_result, expected_trace, expected_observations, _audit = replay_result(
+            data_root=repo_root,
             manifest=manifest, spec=compiled_spec, trace=trace,
             source_references=source_references, raw_bytes_by_id=raw_bytes_by_id,
             company_ciks=company_ciks,

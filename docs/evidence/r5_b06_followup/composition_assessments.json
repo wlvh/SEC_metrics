@@ -1,0 +1,41 @@
+{
+  "reviewer": "Independent Codex subtask /root/debt_reconciliation_review; underlying raw-fact-index and full notes verified",
+  "scope": "Source inclusion/measurement findings; not a decision to expand the debt set",
+  "assessments": [
+    {
+      "source_sha256": "35cb6e0ef1f84d5790c0fdf38abb363b92b65cd7f14ab8e0342968780e9efcfe",
+      "established_relationships": "工业债务已包含短债和融资租赁；Ford Credit单独列示。",
+      "remaining_business_decision": "是否存在与工业债务同一范围的权益分母？不能使用集团权益替代。",
+      "raw_fact_index_sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c",
+      "not_a_calculation_input": true
+    },
+    {
+      "source_sha256": "41ba9d37d3e1480d05749af9c58b414926a2413264e831a877704b1324cc4d09",
+      "established_relationships": "原长期债务组合不含另列其他短期借款；该项主要为现金抵押，短借款表本金与调整后账面额可对账。",
+      "remaining_business_decision": "现金抵押性质的其他短期借款是否纳入B06目标融资债务集合？",
+      "raw_fact_index_sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c",
+      "not_a_calculation_input": true
+    },
+    {
+      "source_sha256": "9fe211a6d6f7ec3af368f81c820868b54d7ea02ca2fe9776e72d7a41e2472126",
+      "established_relationships": "长期债务已经包括当期到期；短期借款在资产负债表另列，不与current重复相加。",
+      "remaining_business_decision": "目标银行融资债务集合是否包括短期借款，并如何界定存款、回购及VIE融资边界？",
+      "raw_fact_index_sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c",
+      "not_a_calculation_input": true
+    },
+    {
+      "source_sha256": "ad3ca1752bb082f9d6f8f4bad260a0c377b66bf1c13edafc08070933524e3d24",
+      "established_relationships": "债券/信贷协议账面债务与融资租赁分属不同负债行，融资租赁不在已选债务内。",
+      "remaining_business_decision": "B06目标债务集合是否包括已明确另列的融资租赁？",
+      "raw_fact_index_sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c",
+      "not_a_calculation_input": true
+    },
+    {
+      "source_sha256": "86213bfa6b271e86b3bfef3f9fff5e3925534f60855c4567cb398009a162a23e",
+      "established_relationships": "债券本金减发行成本加溢价形成账面余额；短债及ABL均为零。融资租赁另列且含非租赁组分。",
+      "remaining_business_decision": "融资租赁和其中非租赁组分是否纳入目标债务集合？不能把租赁子集作为全部债务。",
+      "raw_fact_index_sha256": "735206b6ba6ee18000ea9c05e5b3936f5711a2d654a360f4bceffae09496ab0c",
+      "not_a_calculation_input": true
+    }
+  ]
+}

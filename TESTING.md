@@ -546,3 +546,5 @@ PR41续验：当前许可为2/2/0，旧关闭阶段1/1/0经原内容身份重验
 短测试：`python3 -m unittest tests.vnext.test_r5_b06 -v`，已列fast白名单。覆盖总额不加adder、同族/跨族、lease-only与noncurrent、冲突和独立债务、零/负权益、单位/时点/主体/来源、工业范围及生产权限拒绝。完整材料：`python3 tools/vnext_r5_b06.py prepare --candidate-root <新外部目录> --output-json <新外部JSON>`，随后同CLI read与重复prepare；OS级禁网和正式根只读，独立记录执行、包与代码身份。原PR41短测试读取冻结提示/模型，同时明确旧执行权限对R5改动失效，不修改历史v8绑定来制造可执行性。
 
 完整候选正反例：`R5_B06_CANDIDATE_ROOT=<已生成完整候选目录> python3 -m unittest tests.vnext.test_r5_b06_material -v`。缺环境直接报错，不以SKIP满足验收。覆盖完整读、旧B06生产函数抛错时新原生结果仍可生成、删除范围来源后重算Run仍拒绝、包内来源自洽但独立Git原件身份不同时拒绝、生产写权限拒绝及重复prepare。临时反例仅写外部测试目录；不注入core validator成功。
+
+PR42来源修订短回归：`python3 -m unittest tests.vnext.test_r5_b06_followup -v`，进入同一fast白名单。覆盖两项缺日期漏判、无效身份/日期、非自然年度、相关历史分片、两份完整原文修订判断及重hash后财务事实/Item8反例、两种真实账面对账、同基础CF/XML冲突与原冲突在无证明时仍拒绝。旧v1的读取由其Spec语义选择，不能重开旧v1执行。完整包仍用既有R5 material测试与CLI冷读；未变的PR41模型及长演练不重跑。

@@ -1,0 +1,929 @@
+{
+  "reviewer": "independent Codex subtask /root/amendment_review; model review, not human approval",
+  "created_at": "2026-09-11T04:15:49.544844+00:00",
+  "business_calls": [
+    0,
+    0,
+    0
+  ],
+  "scope": "Complete saved original and amendment XHTML parsed; all amendment sections and inline facts inventoried, explanatory scope and actual body checked. No native full Run/publication replay performed by this review.",
+  "decisions": [
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B06",
+      "decision": "NO_CHANGE_TO_ORIGINAL_DEBT_EQUITY_DISCLOSURE",
+      "target_period_end": "2025-12-31",
+      "original": {
+        "form": "10-K",
+        "filing": {
+          "accessionNumber": "0000092380-26-000004",
+          "filingDate": "2026-02-05",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-02-05T21:07:52.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-07259",
+          "filmNumber": "26602935",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 22169385,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "luv-20251231.htm",
+          "primaryDocDescription": "FORM 10-K"
+        },
+        "source_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+        "sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+        "size_bytes": 2847406,
+        "request_ledger_row": {
+          "timestamp_utc": "2026-08-17T10:53:43.832682+00:00",
+          "method": "GET",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000004/luv-20251231.htm",
+          "status_code": "200",
+          "purpose": "primary_document_0000092380-26-000004",
+          "repo_relative_path": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+          "headers_repo_relative_path": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm.7082b4b1d25426f203fae411c8591e300eea33f015f02ec4330d669bbbe75ed2.headers.json",
+          "content_length": "2847406",
+          "content_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+          "accession": "0000092380-26-000004",
+          "document_name": "luv-20251231.htm",
+          "user_agent": "axaxl lyuhong@axaxl.com",
+          "retry_attempt": "0",
+          "error": ""
+        },
+        "headers_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm.7082b4b1d25426f203fae411c8591e300eea33f015f02ec4330d669bbbe75ed2.headers.json",
+        "headers_sha256": "7082b4b1d25426f203fae411c8591e300eea33f015f02ec4330d669bbbe75ed2",
+        "identity": [
+          {
+            "element_index": 8,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:EntityCentralIndexKey",
+              "id": "f-32"
+            },
+            "text": "0000092380"
+          },
+          {
+            "element_index": 11,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:AmendmentFlag",
+              "format": "ixt:fixed-false",
+              "id": "f-35"
+            },
+            "text": "false"
+          },
+          {
+            "element_index": 3010,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:DocumentType",
+              "id": "f-1"
+            },
+            "text": "10-K"
+          },
+          {
+            "element_index": 3033,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:DocumentPeriodEndDate",
+              "format": "ixt:date-monthname-day-year-en",
+              "id": "f-3"
+            },
+            "text": "December 31 , 2025"
+          }
+        ],
+        "element_count": 29938,
+        "inline_fact_count": 1597,
+        "non_dei_inline_fact_count": 1559,
+        "non_dei_inline_facts": [],
+        "body_headings": [
+          {
+            "element_index": 3699,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Signatures"
+          },
+          {
+            "element_index": 3719,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 1. Business"
+          },
+          {
+            "element_index": 6804,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 2. Properties"
+          },
+          {
+            "element_index": 7369,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 3. Legal Proceedings"
+          },
+          {
+            "element_index": 7542,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 4. Mine Safety Disclosures"
+          },
+          {
+            "element_index": 7695,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 5. Market for Registrant’s Common Equity, Related Stockholder Matters, and Issuer Purchases of Equity Securities"
+          },
+          {
+            "element_index": 8151,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 6. [RESERVED]"
+          },
+          {
+            "element_index": 12655,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 8. Financial Statements and Supplementary Data"
+          },
+          {
+            "element_index": 28067,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 9. Changes in and Disagreements With Accountants on Accounting and Financial Disclosure"
+          },
+          {
+            "element_index": 28158,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART III"
+          },
+          {
+            "element_index": 28164,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 10. Directors, Executive Officers, and Corporate Governance"
+          },
+          {
+            "element_index": 28206,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 11. Executive Compensation"
+          },
+          {
+            "element_index": 28227,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 12. Security Ownership of Certain Beneficial Owners and Management and Related Stockholder Matters"
+          },
+          {
+            "element_index": 28405,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 13. Certain Relationships and Related Transactions, and Director Independence"
+          },
+          {
+            "element_index": 28435,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 14. Principal Accounting Fees and Services"
+          },
+          {
+            "element_index": 28464,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART IV"
+          },
+          {
+            "element_index": 28472,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 15. Exhibits and Financial Statement Schedules"
+          },
+          {
+            "element_index": 29488,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 16. 10-K Summary"
+          },
+          {
+            "element_index": 29512,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "SIGNATURES"
+          }
+        ]
+      },
+      "amendment": {
+        "form": "10-K/A",
+        "filing": {
+          "accessionNumber": "0000092380-26-000006",
+          "filingDate": "2026-02-06",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-02-06T21:01:14.000Z",
+          "act": "34",
+          "form": "10-K/A",
+          "fileNumber": "001-07259",
+          "filmNumber": "26607489",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 681363,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "luv-20251231.htm",
+          "primaryDocDescription": "FORM 10-K/A"
+        },
+        "source_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm",
+        "sha256": "17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279",
+        "size_bytes": 131726,
+        "request_ledger_row": {
+          "timestamp_utc": "2026-08-17T10:53:39.498210+00:00",
+          "method": "GET",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/92380/000009238026000006/luv-20251231.htm",
+          "status_code": "200",
+          "purpose": "primary_document_0000092380-26-000006",
+          "repo_relative_path": "evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm",
+          "headers_repo_relative_path": "evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm.e422b72b44340606e67f5fc5a7acecd19522db669edf8fca9f0982e55d0647e4.headers.json",
+          "content_length": "131726",
+          "content_sha256": "17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279",
+          "accession": "0000092380-26-000006",
+          "document_name": "luv-20251231.htm",
+          "user_agent": "axaxl lyuhong@axaxl.com",
+          "retry_attempt": "0",
+          "error": ""
+        },
+        "headers_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/17/17bc6e90390a57cc5b2c27b4566565e18018138781c9ad11318f30f00cf5f279/luv-20251231.htm.e422b72b44340606e67f5fc5a7acecd19522db669edf8fca9f0982e55d0647e4.headers.json",
+        "headers_sha256": "e422b72b44340606e67f5fc5a7acecd19522db669edf8fca9f0982e55d0647e4",
+        "identity": [
+          {
+            "element_index": 8,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:EntityCentralIndexKey",
+              "id": "f-32"
+            },
+            "text": "0000092380"
+          },
+          {
+            "element_index": 11,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:AmendmentFlag",
+              "format": "ixt:fixed-false",
+              "id": "f-35"
+            },
+            "text": "false"
+          },
+          {
+            "element_index": 54,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:DocumentType",
+              "id": "f-1"
+            },
+            "text": "10-K/A"
+          },
+          {
+            "element_index": 79,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:DocumentPeriodEndDate",
+              "format": "ixt:date-monthname-day-year-en",
+              "id": "f-3"
+            },
+            "text": "December 31 , 2025"
+          }
+        ],
+        "element_count": 1631,
+        "inline_fact_count": 35,
+        "non_dei_inline_fact_count": 0,
+        "non_dei_inline_facts": [],
+        "body_headings": [
+          {
+            "element_index": 503,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART IV"
+          },
+          {
+            "element_index": 511,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 15. Exhibits and Financial Statement Schedules"
+          },
+          {
+            "element_index": 1541,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "SIGNATURES"
+          }
+        ],
+        "explanatory_note": "Explanatory Note Southwest Airlines Co. (the “Company”) is filing this Amendment No. 1 on Form 10-K/A (this “Amendment”) to its Annual Report on Form 10-K for the fiscal year ended December 31, 2025 (the “Original Form 10-K”) to correct the hyperlink for Exhibit 3.2, the Fifth Amended and Restated Bylaws of the Company, effective May 16, 2025. Unless expressly stated, this Amendment does not reflect events occurring after the filing of the Original Form 10-K and does not modify or update in any way the disclosures contained in the Original Form 10-K, which speak as of the date of the Original Form 10-K. Accordingly, this Amendment should be read in conjunction with the Original Form 10-K and the Company’s other filings with the Securities and Exchange Commission subsequent to the filing of the Original Form 10-K. Pursuant to Rule 12b-15 under the Securities Exchange Act of 1934, as amended, this Amendment contains new certifications pursuant to Section 302 of the Sarbanes-Oxley Act of 2002, which are attached hereto.",
+        "complete_normalized_text_sha256": "55e22e8d112ac5614a902aeb77d92a4476bbc7b6db6c882dad38a6b4146244b6",
+        "normalization": "Derived complete DOM itertext, whitespace collapsed; original raw path and SHA remain authoritative."
+      },
+      "original_debt_tables": [
+        {
+          "selected_fact_id": "f-627",
+          "element_index": 18405,
+          "text": "(in millions) Maturity Dates December 31, 2025 December 31, 2024 Unsecured 1.25 % Convertible Notes 2025 — 1,611 3.00 % Notes 2026 300 300 7.375 % Debentures 2027 104 107 3.45 % Notes 2027 300 300 5.125 % Notes 2027 1,727 1,727 4.375 % Notes 2028 750 — 2.625 % Notes 2030 500 500 1.000 % Payroll Support Program Loan 2030 — 976 1.000 % Payroll Support Program Loan 2031 — 566 1.000 % Payroll Support Program Loan (a) 2031 426 526 5.25 % Notes 2035 734 — Finance leases 78 91 $ 4,919 $ 6,704 Less current maturities 324 1,630 Less debt discount and issuance costs 18 5 $ 4,577 $ 5,069",
+          "serialized_element_sha256": "e93d8224aef70fdedf6857b9a2654a5ab6bcfae4d44afb94616d75a68da3fe5d"
+        }
+      ],
+      "binding_check": "Same original/amendment CIK and report period, original ordinary 10-K identity and immutable request bytes; amendment later filed; original B06 sources remain as-filed.",
+      "source_metadata_inconsistency": "Both original amendments report dei:AmendmentFlag=false; preserve discrepancy. Explicit SEC submissions form, DocumentType=10-K/A and body Amendment No.1 establish amendment existence. False flag cannot delete amendment.",
+      "financial_scope_observed": "No us-gaap debt/equity inline facts in amendment; no PartII Item7/7A/8/9A replacement sections. Mere absence alone is not a no-impact proof.",
+      "reference_evidence": "Explanatory Note names original annual fiscal end December31,2025; same issuer and sole ordinary 10-K for that period in saved submissions. It does not explicitly state original accession or filing date; do not invent an exact textual citation.",
+      "changed_scope": "Exhibit3.2 hyperlink to corporate bylaws, PartIV Item15 exhibit index and fresh Section302 certifications. All actual body sections were inventoried; debt-related words in repeated exhibit descriptions do not mean debt values were restated.",
+      "additional_business_finding": "Original debt subtotal4919m precedes18m debt discount/issuance cost; book numerator4901m=current324m+noncurrent4577m. Old4919/7981 ratio is correctly calculated under old selected amount but not the new carrying-value rule; amendment no-impact does not settle measurement selection."
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B06",
+      "decision": "NO_CHANGE_TO_ORIGINAL_DEBT_EQUITY_DISCLOSURE",
+      "target_period_end": "2025-12-31",
+      "original": {
+        "form": "10-K",
+        "filing": {
+          "accessionNumber": "0002041610-26-000011",
+          "filingDate": "2026-02-25",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-02-25T22:19:07.000Z",
+          "act": "34",
+          "form": "10-K",
+          "fileNumber": "001-42791",
+          "filmNumber": "26680216",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 34702318,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": null,
+          "primaryDocument": "psky-20251231.htm",
+          "primaryDocDescription": "10-K"
+        },
+        "source_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+        "sha256": "4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+        "size_bytes": 4570770,
+        "request_ledger_row": {
+          "timestamp_utc": "2026-08-17T10:54:27.151964+00:00",
+          "method": "GET",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm",
+          "status_code": "200",
+          "purpose": "primary_document_0002041610-26-000011",
+          "repo_relative_path": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+          "headers_repo_relative_path": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm.0015f0344c98afec10685ed77f874cdb0afd4d05cb3eaae164cbf9f1c7dcb32e.headers.json",
+          "content_length": "4570770",
+          "content_sha256": "4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+          "accession": "0002041610-26-000011",
+          "document_name": "psky-20251231.htm",
+          "user_agent": "axaxl lyuhong@axaxl.com",
+          "retry_attempt": "0",
+          "error": ""
+        },
+        "headers_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm.0015f0344c98afec10685ed77f874cdb0afd4d05cb3eaae164cbf9f1c7dcb32e.headers.json",
+        "headers_sha256": "0015f0344c98afec10685ed77f874cdb0afd4d05cb3eaae164cbf9f1c7dcb32e",
+        "identity": [
+          {
+            "element_index": 8,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:EntityCentralIndexKey",
+              "id": "f-34"
+            },
+            "text": "0002041610"
+          },
+          {
+            "element_index": 9,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:AmendmentFlag",
+              "format": "ixt:fixed-false",
+              "id": "f-35"
+            },
+            "text": "false"
+          },
+          {
+            "element_index": 6522,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:DocumentType",
+              "id": "f-1"
+            },
+            "text": "10-K"
+          },
+          {
+            "element_index": 6540,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "contextRef": "c-1",
+              "name": "dei:DocumentPeriodEndDate",
+              "format": "ixt:date-monthname-day-year-en",
+              "id": "f-4"
+            },
+            "text": "December 31 , 2025"
+          }
+        ],
+        "element_count": 55401,
+        "inline_fact_count": 2969,
+        "non_dei_inline_fact_count": 2926,
+        "non_dei_inline_facts": [],
+        "body_headings": [
+          {
+            "element_index": 7382,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Signatures."
+          },
+          {
+            "element_index": 7416,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 1. Business."
+          },
+          {
+            "element_index": 7427,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 1."
+          },
+          {
+            "element_index": 8303,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 2. Properties."
+          },
+          {
+            "element_index": 8314,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 2."
+          },
+          {
+            "element_index": 8374,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 3. Legal Proceedings."
+          },
+          {
+            "element_index": 8385,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 3."
+          },
+          {
+            "element_index": 8393,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 4. Mine Safety Disclosures."
+          },
+          {
+            "element_index": 8404,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 4."
+          },
+          {
+            "element_index": 8423,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 5. Market for Paramount Skydance Corporation’s Common Equity, Related Stockholder Matters and Issuer Purchases of Equity Securities."
+          },
+          {
+            "element_index": 8434,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 5."
+          },
+          {
+            "element_index": 8600,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 7. Management’s Discussion and Analysis of Results of Operations and Financial Condition. (Tabular dollars in millions, except per share amounts)"
+          },
+          {
+            "element_index": 21318,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 8. Financial Statements and Supplementary Data."
+          },
+          {
+            "element_index": 21329,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 8."
+          },
+          {
+            "element_index": 53060,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 9. Changes in and Disagreements With Accountants on Accounting and Financial Disclosure."
+          },
+          {
+            "element_index": 53071,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 9."
+          },
+          {
+            "element_index": 53151,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART III"
+          },
+          {
+            "element_index": 53156,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 10. Directors, Executive Officers and Corporate Governance."
+          },
+          {
+            "element_index": 53167,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 10."
+          },
+          {
+            "element_index": 53176,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 11. Executive Compensation."
+          },
+          {
+            "element_index": 53187,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 11."
+          },
+          {
+            "element_index": 53194,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 12. Security Ownership of Certain Beneficial Owners and Management and Related Stockholder Matters."
+          },
+          {
+            "element_index": 53205,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 12."
+          },
+          {
+            "element_index": 53212,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 13. Certain Relationships and Related Transactions, and Director Independence."
+          },
+          {
+            "element_index": 53223,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 13."
+          },
+          {
+            "element_index": 53230,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 14. Principal Accounting Fees and Services."
+          },
+          {
+            "element_index": 53241,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 14."
+          },
+          {
+            "element_index": 53261,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART IV"
+          },
+          {
+            "element_index": 53266,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 15. Exhibits, Financial Statement Schedules."
+          },
+          {
+            "element_index": 53277,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 15."
+          },
+          {
+            "element_index": 53302,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 16. Form 10-K Summary."
+          },
+          {
+            "element_index": 53313,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 16."
+          },
+          {
+            "element_index": 54919,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "SIGNATURES"
+          }
+        ]
+      },
+      "amendment": {
+        "form": "10-K/A",
+        "filing": {
+          "accessionNumber": "0001140361-26-016758",
+          "filingDate": "2026-04-24",
+          "reportDate": "2025-12-31",
+          "acceptanceDateTime": "2026-04-24T21:02:08.000Z",
+          "act": "34",
+          "form": "10-K/A",
+          "fileNumber": "001-42791",
+          "filmNumber": "26895519",
+          "items": "",
+          "core_type": "XBRL",
+          "size": 1446592,
+          "isXBRL": 1,
+          "isInlineXBRL": 1,
+          "isXBRLNumeric": 0,
+          "primaryDocument": "ef20071103_10ka.htm",
+          "primaryDocDescription": "10-K/A"
+        },
+        "source_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm",
+        "sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+        "size_bytes": 776505,
+        "request_ledger_row": {
+          "timestamp_utc": "2026-08-17T10:54:22.924843+00:00",
+          "method": "GET",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000114036126016758/ef20071103_10ka.htm",
+          "status_code": "200",
+          "purpose": "primary_document_0001140361-26-016758",
+          "repo_relative_path": "evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm",
+          "headers_repo_relative_path": "evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm.4b87c7ec11d2889a0a16d0bc8036ee7eeb2d2444ed1f3c30c1b2cb5451c812ce.headers.json",
+          "content_length": "776505",
+          "content_sha256": "10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0",
+          "accession": "0001140361-26-016758",
+          "document_name": "ef20071103_10ka.htm",
+          "user_agent": "axaxl lyuhong@axaxl.com",
+          "retry_attempt": "0",
+          "error": ""
+        },
+        "headers_path": "/Users/lyuhongwang/Developer/SEC_metrics/evidence/request_attempts/10/10fcfbc33813d251dcaf024cf7ac96adc2a4971d7cc1424eed25affb470ff7d0/ef20071103_10ka.htm.4b87c7ec11d2889a0a16d0bc8036ee7eeb2d2444ed1f3c30c1b2cb5451c812ce.headers.json",
+        "headers_sha256": "4b87c7ec11d2889a0a16d0bc8036ee7eeb2d2444ed1f3c30c1b2cb5451c812ce",
+        "identity": [
+          {
+            "element_index": 8,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "dei:AmendmentFlag",
+              "id": "Fact_46ac51b649404c58a14f520b7b0671f1",
+              "contextRef": "c20250101to20251231",
+              "format": "ixt:fixed-false"
+            },
+            "text": "false"
+          },
+          {
+            "element_index": 12,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "dei:EntityCentralIndexKey",
+              "id": "Fact_663ae093410a4bfba307db9204bc8204",
+              "contextRef": "c20250101to20251231"
+            },
+            "text": "0002041610"
+          },
+          {
+            "element_index": 63,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "dei:DocumentType",
+              "id": "Fact_157544423e50489cabef1b5aa0ceb3d1",
+              "contextRef": "c20250101to20251231"
+            },
+            "text": "10-K/A"
+          },
+          {
+            "element_index": 78,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "dei:DocumentPeriodEndDate",
+              "id": "Fact_03296a56fcb74c4c8dffc59cc9bd249d",
+              "contextRef": "c20250101to20251231",
+              "format": "ixt:date-monthname-day-year-en"
+            },
+            "text": "December 31, 2025"
+          }
+        ],
+        "element_count": 7244,
+        "inline_fact_count": 43,
+        "non_dei_inline_fact_count": 7,
+        "non_dei_inline_facts": [
+          {
+            "element_index": 1381,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "ecd:InsiderTrdPoliciesProcAdoptedFlag",
+              "id": "Fact_f676aa87a4314e099c6cf5bf2c3b7870",
+              "contextRef": "c20250101to20251231",
+              "format": "ixt:fixed-true"
+            },
+            "text": "adopted"
+          },
+          {
+            "element_index": 2926,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "ecd:AwardTmgMnpiDiscTextBlock",
+              "id": "Text_20da4f4fb82c426ebb599f22ce7bf048",
+              "contextRef": "c20250101to20251231",
+              "escape": "true",
+              "continuedAt": "Text_f3570abfa640456e9320a18743f292911"
+            },
+            "text": ""
+          },
+          {
+            "element_index": 2936,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "ecd:AwardTmgMethodTextBlock",
+              "id": "Text_f91f1a9a25b844fc9810bb68ed87bfa9",
+              "contextRef": "c20250101to20251231",
+              "escape": "true",
+              "continuedAt": "Text_366fbca80cf64307a2a8873c21c7a5951"
+            },
+            "text": ""
+          },
+          {
+            "element_index": 2943,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "ecd:AwardTmgPredtrmndFlag",
+              "id": "Fact_8ad79d7b05b24a998a8ce3bbb2dfab1c",
+              "contextRef": "c20250101to20251231",
+              "format": "ixt:fixed-false"
+            },
+            "text": "The grant date for equity awards is the date on which the Board or Committee approves awards under the 2025 Plan or, if so determined by the Board or Committee, a future grant date."
+          },
+          {
+            "element_index": 2949,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "ecd:AwardTmgHowMnpiCnsdrdTextBlock",
+              "id": "Text_20e74e1dd7b847b3a9facbe4508a1921",
+              "contextRef": "c20250101to20251231",
+              "escape": "true",
+              "continuedAt": "Text_e8347e678c3545b0996fb48755c8e0b81"
+            },
+            "text": ""
+          },
+          {
+            "element_index": 2957,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "ecd:AwardTmgMnpiCnsdrdFlag",
+              "id": "Fact_821c8965bec54e149e6fef794f76daa3",
+              "contextRef": "c20250101to20251231",
+              "format": "ixt:fixed-true"
+            },
+            "text": "We do not grant equity awards, including those made to newly hired or newly promoted executive officers, in anticipation of the release of material, non-public information or take into account material non-public information when determining the terms of equity awards."
+          },
+          {
+            "element_index": 2958,
+            "tag": "{http://www.xbrl.org/2013/inlineXBRL}nonNumeric",
+            "attributes": {
+              "name": "ecd:MnpiDiscTimedForCompValFlag",
+              "id": "Fact_2e44024deeba4fe5b2465ba9d468b8d5",
+              "contextRef": "c20250101to20251231",
+              "format": "ixt:fixed-false"
+            },
+            "text": "we do not time the release of material, non-public information based on equity grant dates for the purpose of affecting the value of executive compensation"
+          }
+        ],
+        "body_headings": [
+          {
+            "element_index": 283,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART III"
+          },
+          {
+            "element_index": 333,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART IV"
+          },
+          {
+            "element_index": 348,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Signatures."
+          },
+          {
+            "element_index": 417,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART III"
+          },
+          {
+            "element_index": 423,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 10. Directors, Executive Officers and Corporate Governance"
+          },
+          {
+            "element_index": 1387,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 11. Executive Compensation"
+          },
+          {
+            "element_index": 5821,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 12. Security Ownership of Certain Beneficial Owners and Management and Related Stockholder Matters."
+          },
+          {
+            "element_index": 6437,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 13. Certain Relationships and Related Transactions, and Director Independence."
+          },
+          {
+            "element_index": 6883,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 14. Principal Accountant Fees and Services."
+          },
+          {
+            "element_index": 7067,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "PART IV"
+          },
+          {
+            "element_index": 7073,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "Item 15. Exhibits and Financial Statement Schedules."
+          },
+          {
+            "element_index": 7188,
+            "id": null,
+            "tag": "{http://www.w3.org/1999/xhtml}div",
+            "text": "SIGNATURES"
+          }
+        ],
+        "explanatory_note": "EXPLANATORY NOTE Paramount Skydance Corporation (the “Company”), a Delaware corporation, is filing this Amendment No. 1 on Form 10‑K/A (this “Amendment”) to its Annual Report on Form 10-K for the year ended December 31, 2025, originally filed with the Securities and Exchange Commission (the “SEC”) on February 25, 2026 (the “Initial Form 10-K”), to amend Part III, Items 10, 11, 12, 13 and 14 of the Initial Form 10-K to include the information required by such Items. Except as explicitly set forth herein, this Amendment does not otherwise change, modify or update the disclosures in, or exhibits to, the Initial Form 10-K. References to “Paramount,” the “Company,” “we,” “us” and “our” refer to Paramount Skydance Corporation and its consolidated subsidiaries, unless the context otherwise requires.",
+        "complete_normalized_text_sha256": "0314ff5dfcd1ae0bb145723ddf61e8962ba9926258f4ad2031f3a37ef7ad89f6",
+        "normalization": "Derived complete DOM itertext, whitespace collapsed; original raw path and SHA remain authoritative."
+      },
+      "original_debt_tables": [],
+      "binding_check": "Same original/amendment CIK and report period, original ordinary 10-K identity and immutable request bytes; amendment later filed; original B06 sources remain as-filed.",
+      "source_metadata_inconsistency": "Both original amendments report dei:AmendmentFlag=false; preserve discrepancy. Explicit SEC submissions form, DocumentType=10-K/A and body Amendment No.1 establish amendment existence. False flag cannot delete amendment.",
+      "financial_scope_observed": "No us-gaap debt/equity inline facts in amendment; no PartII Item7/7A/8/9A replacement sections. Mere absence alone is not a no-impact proof.",
+      "reference_evidence": "Explanatory Note explicitly links original10-K filed February25,2026, matching sole ordinary filing0002041610-26-000011 and same report end; same issuer CIK2041610.",
+      "changed_scope": "PartIII Items10,11,12,13,14 governance/compensation/ownership/related-party/audit-fee disclosures; PartIV Item15 certification exhibits and signatures. No standalone restated financial statements.",
+      "explicit_financial_exclusion": "No financial statements or supplemental data are filed with this Amendment. See Index to Financial Statements and Supplemental Data of the Initial Form 10-K. 2. Exhibits. The documents "
+    }
+  ],
+  "implementation_recommendation": {
+    "preferred_minimal_shape": "A source-bound amendment impact evidence object evaluated during new adoption, separate from unchanged original as-filed Run. Bind original filing+period+CIK+full raw SHA, amendment filing+full raw SHA, all amendments discovered, metric/scope, complete body section evidence, independent-review object and rule version. Unknown changed bytes require new determination. Do not accept by company/accession alone.",
+    "supported_nonfinancial_explanation_types": [
+      "Exhibit-link correction with explicit unchanged-disclosure statement and complete body limited to exhibit index/certifications/signatures",
+      "PartIII10–14 completion with explicit unchanged-other-disclosure statement, financial-statements-not-filed statement and body limited to those items+Item15 certifications/signatures"
+    ],
+    "necessary_checks": [
+      "Validate submitted forms/accession/date/period before filtering",
+      "Read both originals via immutable request-ledger binding; issuer/end/reference relationship verified",
+      "Read complete amendment, not only note or keyword",
+      "Require complete disclosure-scope evidence plus no conflicting financial update; record inherited financial amounts remain original-as-filed",
+      "Require every discovered potentially relevant amendment resolved; missing/unknown stays blocked",
+      "Financial restatement, explicit debt/equity change, unclear financial scope, unknown original relationship, or changed bytes rejected",
+      "No production permission or original Run rewrite follows from no-impact evidence"
+    ],
+    "negative_tests": [
+      "missing amendment original bytes",
+      "same accession with changed amendment bytes",
+      "issuer/end/reference mismatch",
+      "financial amendment replaces debt/equity facts or PartII Item8",
+      "note contains no-update wording but also explicit exception updating financial balances",
+      "future other PartIII amendment with unresolved scope",
+      "unknown amendment reportDate cannot be filtered away",
+      "nonfinancial evidence resolves one amendment but second relevant amendment unresolved"
+    ],
+    "warning": "A heuristic searching only PartIII or hyperlink or no-update words is insufficient. If using executable classification rather than scoped reviewed-data determination, conservative structural validation and explicit conflicting evidence rejection required; broad natural-language generalization not established here."
+  }
+}

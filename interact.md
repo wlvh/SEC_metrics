@@ -343,3 +343,5 @@ R3已形成committed partial active并保留R1历史、R2 predecessor以及R3→
 
 B06主路径入口为`tools/vnext_r5_b06.py prepare/read`。它输出完整待审核候选及十公司覆盖原因，明确区别原生值、非正权益、结构化歧义、工业范围和修订待核对。公共受阻行不填旧B06值，原生as-filed值与来源保留用于审查。所有输出在checkout外；正式active和24指标集合不变。
 <!-- capability-anchor: CAPABILITY.r5_b06_structured_primary -->
+
+B06新来源判断会在筛选前拒绝未知年报/修订日期及申报身份。已审完整修订的影响在新采纳记录中单列；旧as-filed结果不被改写。新账面原则会改变扣减成本前金额的选择（如Southwest），对账充分后Lumen仍以非正权益状态保留。输出分别说明内容完整、具体内容缺口及不存在的生产权限，不能用BLOCKED一个词掩盖三者。

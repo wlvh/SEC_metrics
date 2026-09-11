@@ -17,6 +17,75 @@
     "debt": {
       "choose_first": [
         {
+          "derived_role": {
+            "op": "subtract",
+            "inputs": {
+              "gross": {
+                "approved_concepts": [
+                  "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities"
+                ],
+                "cardinality": "exactly_one"
+              },
+              "deduction_0": {
+                "approved_concepts": [
+                  "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet"
+                ],
+                "cardinality": "exactly_one"
+              },
+              "deduction_1": {
+                "approved_concepts": [
+                  "us-gaap:DeferredFinanceCostsNet"
+                ],
+                "cardinality": "exactly_one"
+              }
+            },
+            "args": [
+              "gross",
+              "deduction_0",
+              "deduction_1"
+            ],
+            "quality": "EXACT",
+            "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
+            "guards": [
+              "same_accession",
+              "same_period",
+              "same_entity",
+              "compatible_units"
+            ]
+          }
+        },
+        {
+          "derived_role": {
+            "op": "subtract",
+            "inputs": {
+              "gross": {
+                "approved_concepts": [
+                  "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities"
+                ],
+                "cardinality": "exactly_one"
+              },
+              "deduction_0": {
+                "approved_concepts": [
+                  "us-gaap:DeferredFinanceCostsGross"
+                ],
+                "cardinality": "exactly_one"
+              }
+            },
+            "args": [
+              "gross",
+              "deduction_0"
+            ],
+            "quality": "EXACT",
+            "quality_reason": "COMPOSED_FROM_EXACT_COMPONENTS",
+            "guards": [
+              "same_accession",
+              "same_period",
+              "same_entity",
+              "compatible_units"
+            ]
+          }
+        },
+        {
           "extraction_role": {
             "approved_concepts": [
               "us-gaap:DebtAndCapitalLeaseObligations",
@@ -150,7 +219,7 @@
     "denominator_positive"
   ],
   "quality_rule": {
-    "resolver": "debt_equity_structured_v1",
+    "resolver": "debt_equity_carrying_v2",
     "point_in_time": true,
     "direct_totals": [
       "DebtAndCapitalLeaseObligations",
@@ -195,7 +264,28 @@
       "FordCreditMember",
       "CaptiveFinanceMember",
       "FinancialServicesMember"
-    ]
+    ],
+    "measurement_basis": "PERIOD_END_CARRYING_AMOUNT_OF_DEFINED_DEBT_SET",
+    "carrying_models": {
+      "GROSS_LESS_DISCOUNT_AND_COSTS": {
+        "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "deductions": [
+          "us-gaap:DebtInstrumentUnamortizedDiscountPremiumNet",
+          "us-gaap:DeferredFinanceCostsNet"
+        ],
+        "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+        "carrying_total": "us-gaap:DebtAndCapitalLeaseObligations"
+      },
+      "SUBTOTAL_LESS_COSTS": {
+        "gross": "us-gaap:LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities",
+        "deductions": [
+          "us-gaap:DeferredFinanceCostsGross"
+        ],
+        "current": "us-gaap:LongTermDebtAndCapitalLeaseObligationsCurrent",
+        "noncurrent": "us-gaap:LongTermDebtAndCapitalLeaseObligations"
+      }
+    }
   },
   "legacy_projection": {
     "status_exact": "OK",
@@ -204,10 +294,10 @@
     "formula": "total debt / shareholders equity",
     "confidence": "0.90",
     "component_evidence_grain": "one_source_binding_per_row",
-    "metric_context_style": "companyfacts_fiscal",
-    "evidence_context_style": "companyfacts_fiscal",
+    "metric_context_style": "structured_source_context",
+    "evidence_context_style": "structured_source_context",
     "evidence_unit_policy": "observation",
-    "evidence_extraction_method": "companyfacts_component",
+    "evidence_extraction_method": "structured_source_component",
     "parser_version": "vnext_projector_v1",
     "evidence_role_order": [
       "debt",

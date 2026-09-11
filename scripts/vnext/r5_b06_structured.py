@@ -23,7 +23,7 @@ def need(ok, reason):
 
 
 def is_primary(spec):
-    return spec['compiled']['quality_rule'].get('resolver') == RESOLVER
+    return spec['compiled']['quality_rule'].get('resolver') in {RESOLVER, 'debt_equity_carrying_v2'}
 
 
 def concepts(spec):
@@ -33,7 +33,7 @@ def concepts(spec):
     return sorted({'us-gaap:' + n for n in names})
 
 
-def resolve_primary(*, spec, target, traits, facts, scope_reasons=()):
+def _resolve_primary_v1(*, spec, target, traits, facts, scope_reasons=()):
     """Select an exact instant and retain coverage conflicts before Calculator."""
     need(is_primary(spec), 'STRUCTURED_ROUTE_SPEC_REQUIRED')
     rule = spec['compiled']['quality_rule']
@@ -100,7 +100,7 @@ def resolve_primary(*, spec, target, traits, facts, scope_reasons=()):
     return result,trace,observations,audit
 
 
-def replay_result(*, manifest, spec, trace, source_references, raw_bytes_by_id, company_ciks):
+def replay_result(*, manifest, spec, trace, source_references, raw_bytes_by_id, company_ciks, data_root=None):
     """Rebuild all candidates from bound raw bytes, never from saved selection."""
     target = trace['calculation_target'];facts=[];scope_reasons=[]
     for source in source_references.values():
@@ -118,7 +118,15 @@ def replay_result(*, manifest, spec, trace, source_references, raw_bytes_by_id, 
         facts.extend(companyfacts_structured_facts(raw_bytes=raw_bytes_by_id[source['raw_asset_id']],source_reference=source,
                      approved_concepts=concepts(spec),allowed_ciks=company_ciks,include_instant=True))
     need(any(s['source_role']=='companyfacts' for s in source_references.values()), 'STRUCTURED_PRIMARY_SOURCE_MISSING')
-    return resolve_primary(spec=spec,target={k:v for k,v in target.items() if k!='metric_id'},traits=manifest['company_traits'],facts=facts,scope_reasons=scope_reasons)
+    measurement=None
+    if spec['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2':
+        from .r5_b06_measurement import measurement_inputs
+        dates={f['filed'] for f in facts if f['accession']==target['accession'] and f['period_end']==target['period_end']}
+        need(len(dates)==1,'MEASUREMENT_FILING_DATE_UNKNOWN')
+        for source in source_references.values():
+            if source['source_role']=='accession_xbrl':
+                measurement=measurement_inputs(raw=raw_bytes_by_id[source['raw_asset_id']],source=source,spec=spec,target=target,filed=next(iter(dates)),data_root=data_root) or measurement
+    return resolve_primary(spec=spec,target={k:v for k,v in target.items() if k!='metric_id'},traits=manifest['company_traits'],facts=facts,scope_reasons=scope_reasons,measurement=measurement)
 
 
 def scope_warnings(raw, spec, target):
@@ -152,7 +160,7 @@ def validate_input_binding(*, data_root, manifest):
     need(sorted(expected,key=lambda s:s['source_reference_id'])==sorted(manifest['source_references'],key=lambda s:s['source_reference_id']), 'R5_REQUIRED_SOURCE_SET_CHANGED')
 
 
-def discover(*, data_root, company):
+def _discover_v1(*, data_root, company):
     """Pick the latest saved ordinary annual filing before any result exists."""
     from .annual_input import _saved_source, _json
     from .annual_update import _rows
@@ -221,6 +229,7 @@ def create_primary_run(*, data_root, run_dir, company):
     from .requirements import load_requirement_snapshot
     from .run_store import create_run, append_run_record, validate_and_freeze_run
     spec=compile_spec_file(path=data_root/SPEC_PATH,dependency_specs={})
+    need(spec['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2','HISTORICAL_PRIMARY_RULE_READ_ONLY')
     requirement=load_requirement_snapshot(snapshot_dir=data_root/'requirements'/REQUIREMENT_ID)
     selected=discover(data_root=data_root,company=company);sourceproof=next(p for p in selected['sources'] if '/companyfacts/' in p['source_url'])
     raw=raw_blob_record(repo_root=data_root,repo_relative_path=sourceproof['request_repo_relative_path'],media_type='application/json')
@@ -228,17 +237,80 @@ def create_primary_run(*, data_root, run_dir, company):
     scope={'entity_scope':'consolidated'};period=selected['target_period'];target={'company_id':company['company_id'],'period_start':period['period_start'],'period_end':period['period_end'],'accession':source['accession'],'entity':selected['entity'],'scope':scope,'scope_key':scope_key(scope=scope)}
     traits=repository_company_traits(repo_root=data_root,company_id=company['company_id'])
     facts=companyfacts_structured_facts(raw_bytes=(data_root/sourceproof['request_repo_relative_path']).read_bytes(),source_reference=source,approved_concepts=concepts(spec),allowed_ciks=repository_company_ciks(repo_root=data_root,company_id=company['company_id']),include_instant=True)
-    extra=[];scope_reasons=[]
+    extra=[];scope_reasons=[];measurement=None
     for proof in selected['sources']:
         if not proof['document_name'].endswith('_htm.xml'):
             continue
         blob=raw_blob_record(repo_root=data_root,repo_relative_path=proof['request_repo_relative_path'],media_type='application/xml')
         ref=source_reference_record(raw_blob=blob,company_id=company['company_id'],source_url=proof['source_url'],accession=proof['accession'],document_name=proof['document_name'],source_role='accession_xbrl',request_attempt_id=proof['request_attempt_id'])
         scope_reasons.extend(scope_warnings((data_root/proof['request_repo_relative_path']).read_bytes(),spec,target));extra.extend([blob,ref])
-    result,trace,observations,audit=resolve_primary(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons)
+        if spec['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2':
+            from .r5_b06_measurement import measurement_inputs
+            measurement=measurement_inputs(raw=(data_root/proof['request_repo_relative_path']).read_bytes(),source=ref,spec=spec,target=target,filed=selected['filing']['filingDate'],data_root=data_root) or measurement
+    result,trace,observations,audit=resolve_primary(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons,measurement=measurement)
     run_id='run:r5-primary:'+content_hash(value={'input':selected,'spec':spec['spec_closure_hash'],'requirement':requirement['requirement_closure_hash']})[7:]
     create_run(run_dir=run_dir,run_id=run_id,company_id=company['company_id'],company_traits=traits,target_period=period,source_references=[source]+[r for r in extra if r['record_type']=='SOURCE_REFERENCE'],missing_required_source_roles=[],spec_file_hashes={SPEC_PATH:sha256_file(path=data_root/SPEC_PATH)},requirement_hashes=requirement['hashes'],requirement_id=REQUIREMENT_ID,requirement_closure_hash=requirement['requirement_closure_hash'],artifact_requirement_generation='EXPLICIT_REQUIREMENT_V1')
     for r in [raw,source,*extra,*observations,trace,result]:append_run_record(run_dir=run_dir,record=r)
     (run_dir.parent/(run_dir.name+'-selection.json')).write_bytes(canonical_json_bytes(value={'input':selected,'selection':audit}))
     manifest=validate_and_freeze_run(run_dir=run_dir,repo_root=data_root)
     return {'company_id':company['company_id'],'run_id':run_id,'manifest':manifest,'result':result,'selection':audit,'input':selected,'calls':[0,0,0]}
+
+
+def current_rule(data_root):
+    from .specs import compile_spec_file
+    path=data_root/SPEC_PATH
+    return not path.exists() or compile_spec_file(path=path,dependency_specs={})['compiled']['quality_rule']['resolver']=='debt_equity_carrying_v2'
+
+
+def discover(*,data_root,company):
+    if not current_rule(data_root):
+        return _discover_v1(data_root=data_root,company=company)
+    from .annual_input import _saved_source,_json
+    from .annual_update import _rows,_date
+    from sec_urls import submissions_url
+    import re
+    rows=_rows(data_root);proof,raw=_saved_source(repo_root=data_root,rows=rows,url=submissions_url(cik=int(company['primary_cik'])))
+    payload=_json(raw=raw);need(int(payload['cik'])==int(company['primary_cik']),'SUBMISSIONS_ENTITY_CHANGED')
+    recent=payload['filings']['recent'];need(type(recent) is dict and recent and len({len(v) for v in recent.values() if type(v) is list})==1 and all(type(v) is list for v in recent.values()),'SUBMISSIONS_COLUMNS_DIFFER')
+    required={'form','accessionNumber','reportDate','filingDate','primaryDocument'}
+    need(required.issubset(recent),'ANNUAL_IDENTITY_FIELDS_MISSING')
+    annual=[]
+    for i,form in enumerate(recent['form']):
+        need(type(form) is str and form and form==form.strip(),'FILING_FORM_UNKNOWN')
+        if form not in {'10-K','10-K/A'}:continue
+        f={k:v[i] for k,v in recent.items()}
+        for field in ['reportDate','filingDate']:_date(f[field],'ANNUAL_'+field.upper()+'_DATE_INVALID')
+        need(f['filingDate']>=f['reportDate'],'ANNUAL_FILING_DATE_CONFLICT')
+        need(type(f['accessionNumber']) is str and re.fullmatch(r'\d{10}-\d{2}-\d{6}',f['accessionNumber']),'ACCESSION_INVALID')
+        need(type(f['primaryDocument']) is str and re.fullmatch(r'[A-Za-z0-9_.-]+',f['primaryDocument']) and f['primaryDocument'] not in {'.','..'},'PRIMARY_DOCUMENT_INVALID')
+        annual.append(f)
+    ordinary=[f for f in annual if f['form']=='10-K'];need(ordinary,'SAVED_ANNUAL_MISSING')
+    latest=max(ordinary,key=lambda f:(f['reportDate'],f['filingDate']))
+    need(not any(f['reportDate']>latest['reportDate'] for f in annual),'ANNUAL_ORIGINAL_FOR_AMENDMENT_MISSING')
+    shards=payload['filings'].get('files');need(type(shards) is list,'SUPPLEMENTAL_HISTORY_INVALID')
+    for shard in shards:
+        need(type(shard) is dict,'SUPPLEMENTAL_HISTORY_INVALID')
+        start=_date(shard.get('filingFrom'),'SUPPLEMENTAL_HISTORY_DATE_UNKNOWN');end=_date(shard.get('filingTo'),'SUPPLEMENTAL_HISTORY_DATE_UNKNOWN')
+        need(start<=end,'SUPPLEMENTAL_HISTORY_DATE_CONFLICT')
+        # Any shard that could contain a later/relevant filing must be read by
+        # a future complete-list path; this bounded current-block path stops.
+        need(end<latest['reportDate'],'SUPPLEMENTAL_HISTORY_REQUIRED')
+    selected=_discover_v1(data_root=data_root,company=company)
+    selected['discovery_rule']='VALIDATE_ALL_ANNUAL_METADATA_V2'
+    selected['history_coverage']='RECENT_BLOCK;OLDER_SHARDS_EXCLUDE_SELECTED_OR_LATER_PERIOD'
+    if selected['later_amendments']:
+        from sec_urls import accession_document_url
+        for f in [selected['filing'],*selected['later_amendments']]:
+            try:
+                source,_=_saved_source(repo_root=data_root,rows=rows,url=accession_document_url(cik=int(company['primary_cik']),accession=f['accessionNumber'],document_name=f['primaryDocument']),accession=f['accessionNumber'])
+                selected['sources'].append(source)
+            except (ValueError,FileNotFoundError):
+                selected['adoption_blockers']=sorted(set(selected['adoption_blockers']+['AMENDMENT_SOURCE_MISSING']))
+    return selected
+
+
+def resolve_primary(*,spec,target,traits,facts,scope_reasons=(),measurement=None):
+    if spec['compiled']['quality_rule']['resolver']==RESOLVER:
+        return _resolve_primary_v1(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons)
+    from .r5_b06_measurement import resolve_carrying
+    return resolve_carrying(spec=spec,target=target,traits=traits,facts=facts,scope_reasons=scope_reasons,measurement=measurement)
