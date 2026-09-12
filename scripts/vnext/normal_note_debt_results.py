@@ -96,7 +96,8 @@ def prepare_note_debt_case(*, repo_root, company_id):
         result,trace,observations,audit = resolve_financing(spec=spec,target=target,traits=traits,facts=facts,measurement=measurement)
         selection = {'classification':'SOURCE_RECONCILED_NOTE_CARRYING','audit':audit}
     except NoteCarryingError as error:
-        result,trace = withheld_metric_result(compiled_spec=spec,target=target,reason_code='B06_SOURCE_RELATIONSHIP_UNRESOLVED')
+        simple_target = {k:target[k] for k in ['company_id','period_start','period_end','scope','scope_key']}
+        result,trace = withheld_metric_result(compiled_spec=spec,target=simple_target,reason_code='B06_SOURCE_RELATIONSHIP_UNRESOLVED')
         observations = []
         selection = {'classification':'SOURCE_OR_RELATIONSHIP_UNRESOLVED','reason':str(error)}
     records = preparation['records']

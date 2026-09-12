@@ -53,7 +53,12 @@ def prepare_case(*, data_root, company_id, metric_id):
     policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
     note_debt = None
+    debt_input = None
     if metric_id == "B06":
+        from .b06_current_input import prepare_current_debt_input,withheld_current_debt_case
+        debt_input = prepare_current_debt_input(repo_root=data_root,company_id=company_id)
+        if debt_input["decision"] != "INPUT_PROPERTY_PROVEN":
+            return withheld_current_debt_case(repo_root=data_root,company_id=company_id,packet=debt_input)
         from .b06_guarded_result_v3 import prepare_guarded_b06_result
         # The established denominator guard precedes every debt grammar. A
         # source-layout extension must not require debt evidence to establish
@@ -108,6 +113,9 @@ def prepare_case(*, data_root, company_id, metric_id):
                 expected_records=[*old["records"],*old.get("derived_assets",[]),*old["observations"],old["trace"],old["result"]])
         else:
             case.update(text_arguments=old["text_arguments"],expected_records=old["records"])
+    if debt_input is not None:
+        from .b06_current_input import bind_current_debt_input
+        case = bind_current_debt_input(case=case,packet=debt_input,repo_root=data_root)
     _need(set(case["compiled_specs"]) == {metric_id,*case["compiled_specs"][metric_id]["compiled"]["dependencies"]},
           "ORDINARY_INTEGRATED_DEPENDENCY_SET_CHANGED")
     for metric,path in case["spec_paths"].items():

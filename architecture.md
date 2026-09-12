@@ -863,3 +863,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 <!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
 
 `lodging_table_source`重建全部源表格，以表前明确年度说明、指标/本年/变化列、同表经营范围和地域脚注构造B10/B11来源证明；跨页说明只拼接原有块，不改原字符。`normal_lodging_results`核对新结构化规格与旧规格的经济字段，调用同一观察/Calculator，非lodging主体复用原适用性。V14共享Run先重新计算完整来源图，再接受此显式路由的无AI批准表格观察。普通展示只为规格明确声明的ratio→percent/100转换增加支持；原历史AI路由不变。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
+
+`b06_current_input`复用完整修订核对机制，独立限定B06当前债务/权益输入。V14先核对输入，再进入原非正权益保护和各债务结构；全部修订原件、判断、来源证明加入同一记录图并在重放中重建。拒绝输入与债务关系时，传入既有Calculator规定的精确WITHHELD目标字段，保留合法非数值结果而非转成执行故障。

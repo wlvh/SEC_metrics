@@ -743,6 +743,20 @@
         "test_anchor": "tests/vnext/test_r4_bound_label_execution.py::R4BoundLabelExecutionTest.test_normal_acceptance_freeze_and_independent_replay",
         "test_status": "automated_recorded",
         "since": "2026-09-06"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_b06_current_input",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B06在任何债务解析或非正权益保护前核对全部当期修订件对原债务/权益输入的影响，保留全部修订来源及判断。未证明输入形成合法WITHHELD；原B08/B09政策不扩大，当前主体/时点及债务完整性另验。不得通过删除修订或重签判断绕过原生重放。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_b06_current_input.py::CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
       }
     ],
     "capability_boundaries": [

@@ -48,3 +48,16 @@ python3 -m unittest -v tests.vnext.test_b06_bond_leases
 ```
 
 源测试还读取同一真实申报中的上一期借款事实：当前6百万＋非当前2,773百万＝总账面2,779百万。这个对照验证新规则不依赖“当前债务恰好为零”，不表示已经获取或完整重建上一年的原始主文档。新的Run和公共行仍是OPEN预览，未正式采纳、发布或切换active。
+
+## 当前输入与修订文件先于 B06 计算
+
+普通入口可能返回`AMENDMENT_PROCESSING_REQUIRED`或`SUCCESSOR_REGISTRANT_ONLY`；原始年报可以读取，不代表其结果已经满足当前更新要求。`b06_current_input.py`在任何债务解析或非正权益保护之前，核对全部当期修订件对债务/权益输入的影响，并把原件、修订件及判断一同留在原生Run。输入未证明时返回有原因的WITHHELD，不计算权益保护或债务。
+
+新B06政策独立复用完整修订说明、原报告身份、未勾选的错误修正标志、无新财务报表声明等检查，再增加债务、借款和权益的更正或新余额检查。B08/B09原政策和旧判断不扩大；B06的债务组成、当前主体和当前时点仍须分别证明。当前主体检查只接受选定申报人的本期末数据，不合并前身数据或授予全年连续性结论。
+
+Paramount保存的修订件可证明这个有限输入属性，但其债务表解析仍保留开发缺口，不能把输入通过当成完整B06。删除修订原件或自行删除输入判断后重签JSON，会被原生重放拒绝。
+
+```bash
+python3 -m unittest -v tests.vnext.test_b06_current_input
+B06_CURRENT_INPUT_MATERIAL_ROOT=/absolute/new/b06-input-material PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_b06_current_input_material
+```

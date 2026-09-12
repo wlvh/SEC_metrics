@@ -671,3 +671,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_lodging_table_source`使用三年原件核对同范围/同年列、跨页说明和地域脚注，拒绝错误范围、表外标签、竞争表、重复全球行、季度/货币限定和引用说明。它在source-material层登记，保留原料和首次失败，不调用模型、不改旧AI规格。
 
 实际原生验收先运行 `python3 tools/vnext_normal_candidate.py --company marriott_international --company southwest_airlines --metric B10 --metric B11 --output-root /absolute/new/lodging-runs`，再设置 `LODGING_NATIVE_BATCH` 为该目录、`LODGING_ATTACK_ROOT` 为另一全新外部目录，运行 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_lodging_run_material`。检查无AI响应/假review的原生记录，拒绝重签错误值、删除网格及旧AI Spec替换。GitHub native-runs job包含这两个实际步骤；本地另有十公司20坐标完整范围检查，不能把它扩称390全验收。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
+
+`test_b06_current_input`核对真实修订、原政策范围不变、债务/权益更正、额外原生事实、输入门先于权益保护及合法WITHHELD路径；`test_b06_current_input_material`以显式新目录创建真实Paramount B06 Run，保留原有债务解析WITHHELD，并拒绝删掉修订原件或重签删除检查的输入。后者在普通native CI job执行，仍无SEC/provider调用、冻结或生产写入。

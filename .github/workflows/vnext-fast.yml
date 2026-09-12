@@ -77,6 +77,12 @@ jobs:
           LODGING_NATIVE_BATCH: ${{ runner.temp }}/ordinary-lodging-${{ github.run_id }}-${{ github.run_attempt }}
           LODGING_ATTACK_ROOT: ${{ runner.temp }}/ordinary-lodging-attacks-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_lodging_run_material
+      - name: Retain B06 current amendments and reject removal or self-approval
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          B06_CURRENT_INPUT_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-b06-input-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_b06_current_input_material
   instant-native-runs:
     name: vNext current-instant native Runs
     runs-on: ubuntu-latest

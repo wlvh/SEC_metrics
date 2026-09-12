@@ -98,7 +98,8 @@ def prepare_bond_debt_case(*, repo_root, company_id):
         result,trace,observations,audit = resolve_financing(spec=spec,target=target,traits=traits,facts=facts,measurement=measurement)
         selection = {'classification':'SOURCE_RECONCILED_BONDS_AND_SEPARATE_FINANCE_LEASES','audit':audit}
     except BondLeaseError as error:
-        result,trace = withheld_metric_result(compiled_spec=spec,target=target,reason_code='B06_SOURCE_RELATIONSHIP_UNRESOLVED')
+        simple_target = {k:target[k] for k in ['company_id','period_start','period_end','scope','scope_key']}
+        result,trace = withheld_metric_result(compiled_spec=spec,target=simple_target,reason_code='B06_SOURCE_RELATIONSHIP_UNRESOLVED')
         observations = []; selection = {'classification':'SOURCE_OR_RELATIONSHIP_UNRESOLVED','reason':str(error)}
     records = preparation['records']
     binding = exact_json_value({'record_type':'ORDINARY_BOND_DEBT_INPUT','original_source_input':preparation['input_binding'],
