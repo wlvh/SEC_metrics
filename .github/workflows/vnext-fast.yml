@@ -66,3 +66,14 @@ jobs:
           PYTHONPATH: scripts
           NORMAL_V14_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-v14-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_normal_run_v3_material
+      - name: Build source-rebuilt lodging Runs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/vnext_normal_candidate.py --company marriott_international --company southwest_airlines --metric B10 --metric B11 --output-root "${{ runner.temp }}/ordinary-lodging-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Reject altered lodging values, omitted grids and old AI Specs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          LODGING_NATIVE_BATCH: ${{ runner.temp }}/ordinary-lodging-${{ github.run_id }}-${{ github.run_attempt }}
+          LODGING_ATTACK_ROOT: ${{ runner.temp }}/ordinary-lodging-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_lodging_run_material

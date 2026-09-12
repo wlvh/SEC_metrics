@@ -31,6 +31,8 @@
     "B07",
     "B08",
     "B09",
+    "B10",
+    "B11",
     "B12",
     "C01",
     "C02",
@@ -148,6 +150,12 @@
     ],
     "E05": [
       "catalog/ordinary_zero_ai/E05.md"
+    ],
+    "B10": [
+      "catalog/ordinary_lodging/B10.md"
+    ],
+    "B11": [
+      "catalog/ordinary_lodging/B11.md"
     ]
   },
   "temporarily_blocked_metrics": [],
@@ -163,6 +171,8 @@
   "rule_paths": [
     "catalog/metrics/B01_revenue.md",
     "catalog/metrics/B03_ebitda_margin.md",
+    "catalog/ordinary_lodging/B10.md",
+    "catalog/ordinary_lodging/B11.md",
     "catalog/ordinary_zero_ai/A01.md",
     "catalog/ordinary_zero_ai/A02.md",
     "catalog/ordinary_zero_ai/A05.md",
@@ -187,11 +197,14 @@
     "config/issue28_normal_results_v2.json",
     "config/normal_accession_metrics_v1.json",
     "config/normal_fiscal_year_labels_v1.json",
+    "config/ordinary_lodging_table_v1.json",
     "scripts/vnext/annual_amendment_scope.py",
     "scripts/vnext/fiscal_year_labels.py",
+    "scripts/vnext/lodging_table_source.py",
     "scripts/vnext/normal_accession_results.py",
     "scripts/vnext/normal_annual_input_v2.py",
     "scripts/vnext/normal_companyfacts_results.py",
+    "scripts/vnext/normal_lodging_results.py",
     "scripts/vnext/normal_run_inputs.py",
     "scripts/vnext/normal_run_specs.py",
     "scripts/vnext/normal_run_v3.py",
@@ -200,8 +213,6 @@
   "freeze_enabled": false,
   "declared_issue_metric_count": 39,
   "pending_metric_ids": [
-    "B10",
-    "B11",
     "B13",
     "D03",
     "D04"

@@ -1,0 +1,32 @@
+{
+  "record_type": "ORDINARY_LODGING_TABLE_POLICY",
+  "schema_version": 1,
+  "metric_specs": {
+    "B10": "catalog/metrics/B10_occupancy.md",
+    "B11": "catalog/metrics/B11_revpar.md"
+  },
+  "metric_headers": {
+    "B10": "Occupancy",
+    "B11": "RevPAR"
+  },
+  "other_measure_header": "Average Daily Rate",
+  "section_heading": "Lodging Statistics",
+  "performance_heading": "Performance Measures",
+  "comparison_header_pattern": "vs\\. ([0-9]{4})",
+  "scope_footnote_suffix_pattern": "(?:\\s*\\([1-9][0-9]?\\))?",
+  "period_qualifier_pattern": "\\b(?:quarters?|months?|weeks?|days?|year[ -]to[ -]date|YTD|Q[1-4])\\b",
+  "currency_declaration": "Comparisons to prior periods are on a constant U.S. dollar basis",
+  "number_pattern": "(?:[0-9]+|[0-9]{1,3}(?:,[0-9]{3})+)(?:\\.[0-9]+)?",
+  "period_basis": "EXPLICIT_TABLE_INTRODUCTION_YEAR_AND_COLUMN_WITH_LOCAL_QUALIFIER_CHECK",
+  "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+  "creates_run": false,
+  "qualification_credit": false,
+  "production_authorized": false,
+  "table_introduction_pattern": "The following table presents RevPAR, occupancy, and ADR statistics for comparable properties for (?P<year>[0-9]{4}), and (?P=year) compared to (?P<prior>[0-9]{4})\\. Systemwide statistics include data from our franchised properties, in addition to our company-operated properties\\.",
+  "international_total_label": "International - All",
+  "domestic_region_label": "U.S. & Canada",
+  "metric_roles": {
+    "B10": "occupancy",
+    "B11": "revpar"
+  }
+}

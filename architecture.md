@@ -839,3 +839,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 <!-- capability-anchor: CAPABILITY.b06_financing_disclosure_inventory -->
 
 两份B06独立来源组件尚未进入Run：`b06_combined_borrowings`对账组合附注的本金、实际账面调整与当前部分，使用原文舍入声明和显示精度解释合法差额；`b06_financing_inventory`列出融资租赁和供应商原生事实及实际表行。它们复用原输入/解析/来源准入，不填缺失零值、不批准债务集合，不创建第二套结果或发布系统。
+
+<!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
+
+`lodging_table_source`重建全部源表格，以表前明确年度说明、指标/本年/变化列、同表经营范围和地域脚注构造B10/B11来源证明；跨页说明只拼接原有块，不改原字符。`normal_lodging_results`核对新结构化规格与旧规格的经济字段，调用同一观察/Calculator，非lodging主体复用原适用性。V14共享Run先重新计算完整来源图，再接受此显式路由的无AI批准表格观察。普通展示只为规格明确声明的ratio→percent/100转换增加支持；原历史AI路由不变。

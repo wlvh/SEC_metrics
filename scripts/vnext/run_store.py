@@ -2552,11 +2552,15 @@ def _validate_record_graph(
                 "Observation approval effect is not effective"
             )
         if not approval_effect and "derived_asset_id" in binding:
-            # This one delegated deterministic table resolver recreates the
-            # entire grid, table selection and period from admitted raw bytes.
-            # It has no model selection or review identity to substitute.
+            # Explicit deterministic table routes recreate their source grid,
+            # selection and period. They do not substitute a review identity.
+            deterministic_resolver = (observation_spec["compiled"]["quality_rule"].get("resolver")
+                                      if observation_spec is not None else None)
+            ordinary_lodging = (manifest.get("requirement_id") == "issue_28_v13"
+                and ordinary_case is not None and observation["metric_id"] in {"B10", "B11"}
+                and deterministic_resolver == "ordinary_lodging_table_v1")
             if (observation_spec is None or observation_spec["compiled"]["source_mode"] != "structured"
-                    or observation_spec["compiled"]["quality_rule"].get("resolver") != "reported_compensation_table_v2"):
+                    or (deterministic_resolver != "reported_compensation_table_v2" and not ordinary_lodging)):
                 raise RunStoreError("Reviewed observation lacks an approval effect")
             if normal_table_observations is None:
                 if manifest.get("requirement_id") == "issue_28_v13":

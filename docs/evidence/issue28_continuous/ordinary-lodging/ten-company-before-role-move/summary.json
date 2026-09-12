@@ -1,0 +1,801 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "OPEN_CANDIDATES_READY",
+  "started_at_utc": "2026-09-12T13:12:46.037387+00:00",
+  "completed_at_utc": "2026-09-12T13:18:39.860042+00:00",
+  "requested_coordinate_count": 20,
+  "coordinates": [
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B10",
+      "run_path": "runs/marriott_international/B10",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:b4a201c7cb509c3103ee2061ebc44258eac7ba4de29f70f8fe753a091a7f575d",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "0.693",
+        "unit": "ratio",
+        "trace_id": "sha256:c8ac0beec83e0a5b0422f91bc972063ca2148e934020cf6d373cfdc07e3d7046",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:cef37c2c76c06d38b6050f8e95675003cd32c82464d8814f8c548990198bc0e9"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/marriott_international-B10.json",
+      "selection_hash": "sha256:4b1b3f3c4cf0fa552b7ca62f65c28216b2c0f520a79c9fe8957f008a5aa6618d",
+      "selection_summary": {
+        "reason_code": "PASS",
+        "classification": "DETERMINISTIC_REPORTED_TABLE"
+      }
+    },
+    {
+      "company_id": "marriott_international",
+      "metric_id": "B11",
+      "run_path": "runs/marriott_international/B11",
+      "data_path": "data/marriott_international",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:383a5f6ad2c1f1b0b4f353d840ad621d30d8d38aeff7160e95a70f497f0d2f16",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "marriott_international",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "128.8",
+        "unit": "USD",
+        "trace_id": "sha256:8814f566d0e606e935a567ff0ea36dedb6a464698952d2689468763e78af30f9",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:3f74299a2fd1aa56b1e5de9b1d49a7349855c8eaf05bfa760ebe6cd724a8f479"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/marriott_international-B11.json",
+      "selection_hash": "sha256:260675e47babf8ddf6ec3b54396dac5c6dccdbeda99351833da4357af1efc899",
+      "selection_summary": {
+        "reason_code": "PASS",
+        "classification": "DETERMINISTIC_REPORTED_TABLE"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B10",
+      "run_path": "runs/southwest_airlines/B10",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:7c74a0bcc45b756f3240cc176ad4e6edb6283f3332c10da1f96443c41774516d",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:904d102417729bed55b3397a768a5364f8ca8b7bab4ce96015a8c9d72030935c",
+        "company_id": "southwest_airlines",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:342ad5d0ea4ff274f845e4ef7e02ff32fabc9df48dfa1b1277801c70b081ae56"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "southwest_airlines",
+      "metric_id": "B11",
+      "run_path": "runs/southwest_airlines/B11",
+      "data_path": "data/southwest_airlines",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:b109620bb4db9f0fd8d621bfa922ab0f3730f7d1c6edefe7f02001f87debda8a",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:6363e125c613076200a5a96bdc8ec03350abbf95f8ad60d9ec339ed941935f7b",
+        "company_id": "southwest_airlines",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:4be868278a2e66be88b0568f09b1eacc920c1f37a5fe3c42d7358aebf93cdccf"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/southwest_airlines-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B10",
+      "run_path": "runs/ford_motor_company/B10",
+      "data_path": "data/ford_motor_company",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:09a5a060c94f6cd6475d7ed4df80ddff10825d9d3e1894d950255789f37bcddd",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:26f08af6494c2c9da1892c8e19fdb94feb52529cc76e98f8c3cc9963ff28298c",
+        "company_id": "ford_motor_company",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:4a671b0df99cb09dcb887efda1a59a824a175c35cc8ace25523932bbedd41800"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/ford_motor_company-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "ford_motor_company",
+      "metric_id": "B11",
+      "run_path": "runs/ford_motor_company/B11",
+      "data_path": "data/ford_motor_company",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:b1942d836a1019da49b6d5283c10a5846a8e58278153d705b4ef73ccc7232d08",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a6246f8f064a5bbd4021dd34b8af9a63d340422e2f571194431d80abc8ed6e18",
+        "company_id": "ford_motor_company",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:294ebb8e063f6b7faab50a08a609db14a21896db15037982a4b2e3821e04fc6f"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/ford_motor_company-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B10",
+      "run_path": "runs/pfizer/B10",
+      "data_path": "data/pfizer",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:86d1fa5bfeea9ef4e796f5cf7911aae8ac0cdb64d25aa809beb33273bb4880d8",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:2ae1c63b8a3dd2063bcd3ce047fb578aa3414ad8a1b81ebe9e0cb71b9978b318",
+        "company_id": "pfizer",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:9c308961b7a6e940795480931ac0ed0d657c6886b38d0db11f4b7310ccebaa10"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/pfizer-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "pfizer",
+      "metric_id": "B11",
+      "run_path": "runs/pfizer/B11",
+      "data_path": "data/pfizer",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:75909ef47e87d97b3c0a71a8bd902b3a5c631c9931ad6b128138bf9ea37f801c",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:25efe5b47debd93f92f36927f493b7b514e09bdf89607cfdb7e3b590a629606c",
+        "company_id": "pfizer",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:53bab32898dde71acbd83c6427f6128b024ea49e86e9e2186a111e2364be494b"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/pfizer-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B10",
+      "run_path": "runs/jpmorgan_chase/B10",
+      "data_path": "data/jpmorgan_chase",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:4004c91d997cd927e2bc6ee2c1b341f0fb317b2e54bba17b8b7111ba4ad69018",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:599f7a74f0927d19c25033b08694e2ed8673fe4f7b2c57db71b3edc4197130b5",
+        "company_id": "jpmorgan_chase",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:ae6ba9e67cb71a7dc56132dbfcfe4db5197c6b768f9937799fb3b47c50a30827"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/jpmorgan_chase-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "jpmorgan_chase",
+      "metric_id": "B11",
+      "run_path": "runs/jpmorgan_chase/B11",
+      "data_path": "data/jpmorgan_chase",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:edd51680521324a83881dd6917a5c7f94bac209d3e8e14ee92fc6b6d5eb5cf93",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:a29fe58f3297a5c150e4601495036ea762480a5b46dcda34da9a237d9f496aec",
+        "company_id": "jpmorgan_chase",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:db1f49d9fe0ae8c071f69c2dfec427a31021936d93d60ad4eda6a081866f592e"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/jpmorgan_chase-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B10",
+      "run_path": "runs/salesforce/B10",
+      "data_path": "data/salesforce",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:25d7a303020ffd2d0feda284c4da4596a08e13a2be3a0095254357c50430d7ba",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:dcf9d0ebfb10069cbd04c75bd94d155c94483d3475e5e804991ab5bdacdcae9f",
+        "company_id": "salesforce",
+        "metric_id": "B10",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:261734a20b046406b3237217019352972cecd6be55065fd2e225657707511391"
+      },
+      "target_period": {
+        "fiscal_year": 2026,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/salesforce-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "B11",
+      "run_path": "runs/salesforce/B11",
+      "data_path": "data/salesforce",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:567c8a1f2cff9abac6896ce7ff346e37adfcc46df82dd46cf4ef9f9d1997c331",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:e00381ce8c1e973e2a12b2ec093d7e37e64fd4aece8b4f20b4c8e47c9d50423e",
+        "company_id": "salesforce",
+        "metric_id": "B11",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:d2e029e115ee3c6f231fa32cc794d774eb46a6358b3daff961e5dc580a951e3e"
+      },
+      "target_period": {
+        "fiscal_year": 2026,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/salesforce-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B10",
+      "run_path": "runs/lumen_technologies/B10",
+      "data_path": "data/lumen_technologies",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:a5b21498a3bb975d08b6a8ddd8e2628b46b383035513c7879004ff8cecddf297",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:0b6ae7ff5adc6c410dc5a10a952a25d6e2e3e796e1b28ede04e394b758aa16fc",
+        "company_id": "lumen_technologies",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:cb49b35a1446ab1ebc44684fbbd0b7e5770df35755a6def9cb53b6fb54401abf"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/lumen_technologies-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "lumen_technologies",
+      "metric_id": "B11",
+      "run_path": "runs/lumen_technologies/B11",
+      "data_path": "data/lumen_technologies",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:a223e2aabfb694e2471bf90c49030a5d9b1047fc532de8c63fa8d9e466858287",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:11f1308b696f1c7e757a8bcd5df764ca8f6283489c1fd47194fbfaebf4af6e99",
+        "company_id": "lumen_technologies",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:330190e65e2fe75952b871597151e909e54692475cef6a6332076bc42f699219"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/lumen_technologies-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B10",
+      "run_path": "runs/macys/B10",
+      "data_path": "data/macys",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:5efc4c4b01b7668d0d97260785a2efeba838a10a8d5cec6c8e38f661d831bec9",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8145c7b3ecebb7d9812adc4c54c5c5b3d824ed91b864dc15e166c06074346894",
+        "company_id": "macys",
+        "metric_id": "B10",
+        "period_start": "2025-02-02",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:f96dec97a6b223092d88292af7f8f91f582d711e06a33c9da449c01693240276"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-02-02",
+        "period_end": "2026-01-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/macys-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "macys",
+      "metric_id": "B11",
+      "run_path": "runs/macys/B11",
+      "data_path": "data/macys",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:89b96280fa51656b21339bbcc925ee30ca00042a76f3b552bb7b9dcf5956be33",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:79cd9acd8aa8fad5f53b5ddfe198709d97f95d0c22bf0f1f1734120f271912c9",
+        "company_id": "macys",
+        "metric_id": "B11",
+        "period_start": "2025-02-02",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:8d6533cc311fd390c7020bb4a09e7383f264a32c3e1eeb4b609d9cef23ed0ad1"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-02-02",
+        "period_end": "2026-01-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/macys-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B10",
+      "run_path": "runs/paramount_skydance_paramount_global/B10",
+      "data_path": "data/paramount_skydance_paramount_global",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:b88f114c718a6d057efdeae60e6872705902334d410824bc5cee153f402818b9",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:ac284217c3d59bb239a30788f968387ee02d9cb80ee89b98de3da460af21e1ec",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:449c2166963d8be56781e053be57e7b3552bb467ba01b1cadfab67022ae22959"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/paramount_skydance_paramount_global-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "paramount_skydance_paramount_global",
+      "metric_id": "B11",
+      "run_path": "runs/paramount_skydance_paramount_global/B11",
+      "data_path": "data/paramount_skydance_paramount_global",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:9d83ecc451e68ed1efd5639cb96c58a8418ced5f16eb8d462118ea0ff4d63299",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:64fe246fef615e79369e15b5124f7fbc323a4fb9e7e61222378628654d348ee7",
+        "company_id": "paramount_skydance_paramount_global",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:6f0ba0e26ca12f4fd91bd51a32b7c65ffcee8999847e9d394683dd321d8b506a"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/paramount_skydance_paramount_global-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B10",
+      "run_path": "runs/enphase_energy/B10",
+      "data_path": "data/enphase_energy",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:db328392cae50378dd05dcc8a301cfe4f56cf18e2375cbe1595feb293b4cb27f",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:5ae9356c3851f2e0573ba8235c18cbba09e1fbafcbadc2e221712ea7414ed9c8",
+        "company_id": "enphase_energy",
+        "metric_id": "B10",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:5bb9522e676f369b08e13280ce67c59fe86104836295afa91bf9b882f80ed74a",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:cb2abd0ea47a6eac76e911e1c1a7b95b5b87a6b8a86a0cd5a02ff743822a916b"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/enphase_energy-B10.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    },
+    {
+      "company_id": "enphase_energy",
+      "metric_id": "B11",
+      "run_path": "runs/enphase_energy/B11",
+      "data_path": "data/enphase_energy",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:462ad4b3716a508d92b5c737a6d96b914e91a862ec4863db38d9503d4f7cbb94",
+      "run_status": "OPEN",
+      "result": {
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:8f7ed279e500922beb182b15d30042656347dbc63e8bb0a4d9c1a6db9e911fce",
+        "company_id": "enphase_energy",
+        "metric_id": "B11",
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31",
+        "scope_key": "sha256:0730cf296a248a67f1d4bb30d76b710772ad128cbe4c0ea1de19351d7cfd87b5",
+        "spec_closure_hash": "sha256:80ff12eb5ddb0f431450465c42ece9d7488ea8455af5021c933583c3833d1dd0",
+        "applicability": "N_A_STRUCTURAL",
+        "quality": "NONE",
+        "publication": "PUBLISHED",
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "value": null,
+        "unit": null,
+        "trace_id": "sha256:ff08b90b96dfc2b2d0f86cf023c6af1b91f544799b7e3709e78a201eac09576e"
+      },
+      "target_period": {
+        "fiscal_year": 2025,
+        "period_start": "2025-01-01",
+        "period_end": "2025-12-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/enphase_energy-B11.json",
+      "selection_hash": "sha256:a1d1af42cea894a485356b9be9b08abbad1e30fc4106fc3a87d189ddb6f3120f",
+      "selection_summary": {
+        "reason_code": "TRAIT_NOT_APPLICABLE",
+        "classification": "STRUCTURAL"
+      }
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

@@ -24,6 +24,8 @@
     "B07",
     "B08",
     "B09",
+    "B10",
+    "B11",
     "B12",
     "C01",
     "C02",
@@ -750,6 +752,48 @@
         "evidence_extraction_method": "verbatim_source_excerpt",
         "parser_version": "TEXT_V1",
         "notes": "Verbatim legal disclosures retain their source periods. No current aggregate litigation liability or case count is inferred."
+      },
+      "spec_overrides": {}
+    },
+    "B10": {
+      "name": "Occupancy rate",
+      "projection": {
+        "unit": "percent",
+        "value_multiplier": "100",
+        "status_exact": "MDA_OK",
+        "status_approx": "OK_APPROX",
+        "source_class": "MDA",
+        "formula": "source-reported lodging table observation",
+        "confidence": "",
+        "concept_or_section": "Occupancy rate",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "projected_result",
+        "evidence_extraction_method": "deterministic_table_source",
+        "parser_version": "ordinary_projection_v1",
+        "notes": "Comparable systemwide worldwide statistic from the explicitly stated source year."
+      },
+      "spec_overrides": {}
+    },
+    "B11": {
+      "name": "RevPAR",
+      "projection": {
+        "unit": "USD",
+        "value_multiplier": "1",
+        "status_exact": "MDA_OK",
+        "status_approx": "OK_APPROX",
+        "source_class": "MDA",
+        "formula": "source-reported lodging table observation",
+        "confidence": "",
+        "concept_or_section": "RevPAR",
+        "metric_context_style": "constant",
+        "evidence_context_style": "constant",
+        "context_or_dimension": "",
+        "evidence_unit_policy": "projected_result",
+        "evidence_extraction_method": "deterministic_table_source",
+        "parser_version": "ordinary_projection_v1",
+        "notes": "Comparable systemwide worldwide statistic from the explicitly stated source year."
       },
       "spec_overrides": {}
     }

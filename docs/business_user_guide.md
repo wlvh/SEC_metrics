@@ -300,3 +300,6 @@ A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主
 <!-- capability-anchor: CAPABILITY.ordinary_amendment_input_scope -->
 <!-- capability-anchor: CAPABILITY.b06_combined_borrowing_reconciliation -->
 <!-- capability-anchor: CAPABILITY.b06_financing_disclosure_inventory -->
+
+普通开发候选现覆盖36项。入住率与RevPAR可以从原表及其明确年度说明自动生成，分别显示百分比和美元，并保留实际表格证据；这不意味着重新调用或认证了旧AI资格。其他公司仍按原适用性显示不适用，正式版本保持不变。
+<!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->

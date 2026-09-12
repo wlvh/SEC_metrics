@@ -52,7 +52,10 @@ def _policy(root):
 def prepare_case(*, data_root, company_id, metric_id):
     policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
-    if metric_id in installed_ordinary_spec_documents():
+    if metric_id in {"B10","B11"}:
+        from .normal_lodging_results import prepare_ordinary_lodging_case
+        case = prepare_ordinary_lodging_case(repo_root=data_root,company_id=company_id,metric_id=metric_id)
+    elif metric_id in installed_ordinary_spec_documents():
         original = prepare_ordinary_zero_ai_run_input(repo_root=data_root,company_id=company_id,metric_id=metric_id)
         detail = original["component"]
         if "metrics" in detail:

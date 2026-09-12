@@ -195,3 +195,33 @@ exec session59607已真实结束，exit2，对应正常诊断终态COMPLETED_WIT
 当前已启动95fast最终检查，日志 `/tmp/sec_metrics_issue28_continuous/v14-integrated-repairs-fast-suite.log`，查看实际session再继续。所有源码、测试、文档和归档仍未提交，HEAD/远端仍1c9f562。下一步：完成fast与归档核验，按已授权SOP/PR_Checklist新增清楚提交(不amend旧已推送历史、不force)，committed alignment，更新同一Draft PR43准确完整文件树/证据，再push并观察实际CI。保留全目标与其余39/390、主体/债务/来源/剩余指标/发布/退出责任，不转Ready/merge/正式采纳。
 
 最终95fast已PASS68.317s，session68253已完成。当前没有仍在运行的测试/批次句柄；后续不要轮询旧句柄。四个新证据目录(43/30/24/86文件)已逐SHA核验。继续commit/committed alignment/同一Draft PR维护，不重跑已完成完整340批次。
+
+## 最新已推送状态：35a65b5，实际新CI仍在运行
+
+已新增并推送同一Draft PR43的提交 `35a65b599439aafe02ed4253488dc98a85be6003`（Handle ordinary annual amendments and repair candidate evidence display）。227文件增量，提交前所有改动均在本委托内；捕获日志/patch的7处空白通过精确.gitattributes路径保留原字节。committed alignment已PASS，日志 `/tmp/sec_metrics_issue28_continuous/v14-repairs-committed-alignment.log`。远端head确认为35a65b5、OPEN/Draft。当前PR正文 `/tmp/sec_metrics_issue28_continuous/pr43-repairs-body.md`，1049个实际diff路径用压缩目录树列示，独立展开与diff完全相同，正文约48KB；生成脚本 `build-pr43-repairs-body.py` 与文件清单JSON同目录。
+
+**唯一正在等待的外部工作：实际GitHub run34693540371**，head35a65b5，最后三个job均in_progress：fast103552974217、saved-source103552974286、nativeRuns103552974305。状态JSON `/tmp/sec_metrics_issue28_continuous/pr43-repairs-ci-live.json`。尚无本新head CI PASS；不要拿1c9旧三项PASS替代。此前全部本地测试/CLI/推送/更新命令句柄均已结束，没有仍在运行的本地340批次或修复批次，不要再轮询旧sessions。
+
+Issue正文/当前评论已在12:26:37UTC更新至35a65b5、完成340诊断及14+4实际修复；总委托全文后缀逐字保留。补丁/之前正文文件为 `{comment,issue}-35a-progress-patch.json` 和`*-before-35a-progress.json`。PATCH成功，PR正文已同步CI运行中。旧评论未改，新增费用与B13仍未获答复，新业务调用0/0/0，正式active未改。
+
+继续：观察该真实CI首次终态，有失败则保留原日志并修复；完成后仍继续剩余目标。B10/B11/D03/D04/B13是尚未接入的五项，不能仅因此前称“模型路线”就忽略获准的确定性实现；可结合现有原件判断是否有可靠自动方法，保留同样口径与来源/期间要求。B06其他结构/银行工业范围、Paramount主体与修订、JPM/Salesforce来源刷新、正常自动更新、完整390与统一发布/退出仍未完成。当前V14仍2c7f64.../320/UNFROZEN，无新增正式/合并/active权限。原冻结V12/V13、已关闭调用和历史证据不能重签或恢复。
+
+## 后续实际工作：B10/B11确定性来源和原生20坐标已通过，当前尚未提交
+
+35a65b5的实际GitHub34693540371已经SUCCESS，三项均PASS。已保存完整日志 `/tmp/sec_metrics_issue28_continuous/pr43-35a65b5-ci-complete.log`，完成状态 `pr43-repairs-ci-after-lodging.json`；PR正文、Issue正文/当前评论均已更新PASS。不要再轮询该run为运行中，也不把它当作下面未提交新代码的CI证据。
+
+新增 `lodging_table_source.py`、`normal_lodging_results.py`、`config/ordinary_lodging_table_v1.json` 与 `catalog/ordinary_lodging/B10.md`、`B11.md`。旧AI Specs、SourceStrategyRegistry与历史qualification不改；新规格逐字段校验继承相同经济范围，只改变来源方法和实际展示方法。全表网格从原件重建，按指标/本年列、同表Comparable Systemwide与Worldwide组、相邻单位及表前明确年度说明定位，不从申报年份单独推实际期间。直接的following-table说明必须紧接Lodging Statistics；2024跨页只移除真实页码+linked TOC对，2023地域脚注按原表成员集合校验而不写死排序。完整局部脚注、错误期间/货币限定、额外范围及未解同目标竞争表拒绝；无AI响应或资格信用。
+
+真实三年原件用同一规则得到：2023 B10=.692/B11=124.7，2024 .698/128.23，2025 .693/128.8；表总数66/67/68。最初结构索引漏掉含table的父块中的表前说明，改用完整可见块；跨页和地域顺序两次失败均保留。首个structured Spec草稿错误复制compiled-only numeric_policy，已改从原front matter建立新规格。来源10tests PASS15.802s，Python3.9 PASS26.995s。相关临时记录为 `lodging-three-originals-third/`、`lodging-source-tests-second.log`、`lodging-source-python39.log`。
+
+已实际接V14，当前支持36项，pending仅B13/D03/D04。首次两Run被旧共享校验以“Reviewed observation lacks an approval effect”拒绝，原失败留 `v14-lodging-native-first/`；run_store现在只对V14+新lodging resolver+已完整源重建的B10/B11放行无AI审批观察，既有SCT路径和AI规则保持不变，逐观察与重新构造集合完全比较。
+
+当前V14/issue_28_v13仍UNFROZEN，最新closure `sha256:8f38c1458f3af391a63d89c82c2662bac5e5d6e99cdf7307f60bd242bdf66de3`，325执行文件。`v14-lodging-native-second/`真实两项OPEN及公共行成功；`v14-lodging-ten-company/`真实20坐标OPEN_CANDIDATES_READY：2 EXACT、18 N_A_STRUCTURAL，全部公共行成功，入住率69.3 percent、RevPAR128.8 USD。无新调用、无假review、无freeze。旧V13 MarriottD01/ParamountC03仍cold FROZEN45/36，日志 `v13-after-lodging-cold.log`。
+
+永久测试 `test_lodging_run_material.py`已经在真实两Run验证基线，并拒绝real Calculator重新签名的99.5%假入住率、删除网格、替换旧AI Spec；5场景PASS30.111s，目录 `v14-lodging-attacks-first/`，原ResourceWarning仅为测试未关闭CSV流，测试已修正。source程序还需后续独立审阅，不能把根自查称为另一代理批准。
+
+**当前有一个已定位待修的语义扫描失败**：`lodging-semantic.json`只报告normal_lodging_results.py内硬编码的角色literal“occupancy”和“revpar”。应把这两个角色移到来源政策/目录中，再由代码读取；不要隐藏或豁免扫描。这会改变policy SHA，需同步两个新Spec的source_policy_sha256并只重建未冻结V14。先等下面正在运行的来源测试结束，不在运行中改325文件。另两项已经结束：fast95 PASS(见lodging-fast-suite.log)、共享原生15场景PASS112.902s(见v14-lodging-shared-regression.log)。
+
+当前唯一确认仍活跃本地句柄：**session62436**运行38入口source suite，日志 `/tmp/sec_metrics_issue28_continuous/lodging-source-suite.log`；还没有完整JSON输出，不能当停机。20坐标session41711、攻击4630、旧V13冷读84338、Python3.9 38538、共享native37785、fast74993都已成功结束，不再轮询。CI workflow已追加真实lodging CLI与攻击步骤，runner source层已38；这些CI文件不在325执行绑定中。源码/政策/Specs/测试尚未提交，HEAD仍35a65b5。
+
+最新：source38已PASS262.414s，session62436已完成。角色literal已移入ordinary_lodging_table_v1.json，两个新Spec的政策SHA同步；当前V14 closure=f7352d6cffff8d28f18315c2acf2ff16205567b32d41cd526e2afb1327c95284/325，仍未冻结。final semantic PASS；最终来源10tests PASS16.562s；最终4坐标OPEN及公共行全通过(v14-lodging-native-final)；最终原生2基线+3攻击PASS29.997s(v14-lodging-attacks-final)，已关闭CSV读取句柄。现无正在运行的本地测试或批次。docs/evidence/issue28_continuous/ordinary-lodging共111文件已逐SHA核验，明确区分8f38下20坐标与f735下4坐标/攻击，未重签历史。待提交同一Draft PR增量并观察新CI；35a65b5的CI已SUCCESS，不是本新增代码的CI。

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/tmp/sec_metrics_issue28_continuous/lodging-three-originals-second.py", line 20, in <module>
+    result=inspect_lodging_table_source(raw=source['raw'],blob=blob,reference=ref,filing=filing,company_id=p['company_id'],cik=p['entity'],period=period)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/lodging_table_source.py", line 205, in inspect_lodging_table_source
+    _need(len(candidates)==1,'LODGING_MATCHING_TABLE_NOT_UNIQUE:'+str(unresolved))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/lodging_table_source.py", line 36, in _need
+    if not condition:raise LodgingSourceError(reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.lodging_table_source.LodgingSourceError: LODGING_MATCHING_TABLE_NOT_UNIQUE:[{'table_id': 'table_000011', 'reason': 'LODGING_UNSUPPORTED_LOCAL_TABLE_NOTE', 'plausible_same_target': True}]

@@ -69,7 +69,11 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
     item = policy["metrics"][metric]
     projection = {**item["projection"],**item["spec_overrides"].get(case["spec_paths"][metric],{})}
     is_text = result.get("value_kind") == "TEXT_V1"
-    _need(projection["unit"] == spec["compiled"]["canonical_unit"] and (is_text or projection["value_multiplier"] == "1"),
+    same_unit = projection["unit"] == spec["compiled"]["canonical_unit"] and (is_text or projection["value_multiplier"] == "1")
+    percent_unit = (spec["compiled"]["canonical_unit"] == "ratio" and projection["unit"] == "percent"
+        and projection["value_multiplier"] == "100" and spec["compiled"]["legacy_projection"].get("unit") == "percent"
+        and spec["compiled"]["legacy_projection"].get("value_multiplier") == "100")
+    _need(same_unit or percent_unit,
           "ORDINARY_PROJECTION_UNIT_CHANGED")
     company = next(c for c in projector._load_registry(repo_root=data_root) if c["company_id"] == manifest["company_id"])
     annual = prepare_saved_annual_input(repo_root=data_root,company_id=manifest["company_id"])
@@ -109,6 +113,10 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
                 entry.update(value_raw=_raw_value(observation,financial_locators,case.get("selection")),
                     context_or_dimension=json.dumps({"source_binding":binding,"source_cells":financial_locators},ensure_ascii=False,sort_keys=True),
                     evidence_quote="Normalized source-derived observation: "+entry["evidence_quote"])
+                if "table_locator" in binding:
+                    entry.update(value_raw=binding["reported_raw_text"],
+                        context_or_dimension=json.dumps({"source_binding":binding,"source_cells":binding["source_witnesses"]},ensure_ascii=False,sort_keys=True),
+                        evidence_quote="Source table cell: "+binding["reported_raw_text"])
                 evidence.append(entry)
         label,note=_period_label(result,period);row["fiscal_period"]=label
         row["notes"]=" ".join([row.get("notes",""),note,"Native state: "+result["publication"]+"; reason: "+result["reason_code"]+"."])

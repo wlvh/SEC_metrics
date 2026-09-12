@@ -6,7 +6,7 @@
 python3 tools/vnext_normal_candidate.py --output-root /absolute/new/external/directory
 ```
 
-默认范围为34项已支持路线：六金融指标、B06、C02/C03/C04、D01/D02和旧22项零AI指标。可重复`--company <配置ID>`、`--metric <ID>`限定开发检查范围。输出目录必须全新、在源码外且不属于正式发布目录。剩余B10/B11/B13/D03/D04及完整更新、发布、回退恢复和旧入口退出仍属总委托，不因当前34项停止。
+默认范围为36项已支持路线：六金融指标、B06、C02/C03/C04、D01/D02、旧22项零AI指标及确定性B10/B11。可重复`--company <配置ID>`、`--metric <ID>`限定开发检查范围。输出目录必须全新、在源码外且不属于正式发布目录。剩余B13/D03/D04及完整更新、发布、回退恢复和旧入口退出仍属总委托，不因当前36项停止。
 
 每个坐标保存原生Run、实际期间、状态、来源选择和错误；`summary.json`保留完整请求集合。主指标有通过源重建的结果时为`OPEN_CANDIDATE`，无可用值但有受控解释时为`WITHHELD_CANDIDATE`，输入或执行故障单独记录。无缺口时为`OPEN_CANDIDATES_READY`，有缺口时为`COMPLETED_WITH_GAPS`。退出0不代表冻结、正式采纳或Issue全量验收。`--freeze`仅在安装规则明确开启后可用；当前草案拒绝该操作。
 

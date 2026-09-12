@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.ordinary_deterministic_lodging",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B10/B11按原表完整网格、表前明确年度说明、同表可比全系统/全球范围、当前年列及单位重建数值；跨页仅跳过真实页码与目录对，地域脚注按原表成员核对。新结构化规格保留原经济定义，以无AI批准的确定性观察接入V14原生Run；原文重建拒绝重签假数、缺失网格和旧AI规格替换。其他配置公司沿原适用性形成结构不适用状态；不复用历史AI资格、不授新获取或正式发布权限。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_lodging_run_material.py::LodgingNativeMaterialTest.test_source_derived_records_and_resigned_wrong_value_are_checked",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_amendment_input_scope",
         "type": "capability",
         "status": "active",
@@ -73,7 +87,7 @@
         "anchor_id": "CAPABILITY.normal_saved_candidate_batch",
         "type": "capability",
         "status": "active",
-        "statement": "普通保存来源CLI在全新外部目录接入34项已支持路线，V14开发草案默认生成经过完整源重建验证的OPEN候选及20/18字段公共行；freeze须由安装规则显式开启。失败和WITHHELD逐坐标保留，继续其余坐标。B03的B01依赖保持完整，复合指标证据逐项显示来源事实；原件财年标签和实际季度/时点/全年期间分别保存。V12/V13历史冻结记录继续读取，当前V14尚未冻结。不是实时更新服务、完整390坐标发布或正式采纳。",
+        "statement": "普通保存来源CLI在全新外部目录接入36项已支持路线，V14开发草案默认生成经过完整源重建验证的OPEN候选及20/18字段公共行；freeze须由安装规则显式开启。失败和WITHHELD逐坐标保留，继续其余坐标。B03的B01依赖保持完整，复合指标证据逐项显示来源事实；原件财年标签和实际季度/时点/全年期间分别保存。V12/V13历史冻结记录继续读取，当前V14尚未冻结。不是实时更新服务、完整390坐标发布或正式采纳。",
         "audience": [
           "developer",
           "operator",

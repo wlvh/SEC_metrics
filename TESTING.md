@@ -594,7 +594,7 @@ CI首次将13项新测试作为一个入口时触发既有30秒入口上限。�
 
 ## 普通保存来源候选批次
 
-当前GitHub CI包含两层测试和独立原生Run检查：`python3 tools/run_fast_tests_v2.py --suite fast --jobs 2`检查95个短测试入口，每项30秒；`--suite source-material --jobs 2`检查37个完整来源材料入口，每项240秒，整个job上限20分钟。先前124个入口的并集全部保留，并新增八个普通来源/输入材料套件；没有删除断言。旧`tools/run_fast_tests.py`保持原字节，历史acceptance入口不改。单次全文LCR已在托管机超过30秒，故不再把全文材料误列为短测试；原失败日志保留，材料通过不能改称原30秒测试已通过。两层本地分别通过，不替代实际GitHub或完整390验收。
+当前GitHub CI包含两层测试和独立原生Run检查：`python3 tools/run_fast_tests_v2.py --suite fast --jobs 2`检查95个短测试入口，每项30秒；`--suite source-material --jobs 2`检查38个完整来源材料入口，每项240秒，整个job上限20分钟。先前124个入口的并集全部保留，并新增九个普通来源/输入材料套件；没有删除断言。旧`tools/run_fast_tests.py`保持原字节，历史acceptance入口不改。单次全文LCR已在托管机超过30秒，故不再把全文材料误列为短测试；原失败日志保留，材料通过不能改称原30秒测试已通过。两层本地分别通过，不替代实际GitHub或完整390验收。
 
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
@@ -645,3 +645,9 @@ ORDINARY_PROJECTION_MATERIAL_ROOT=/absolute/completed/cli-batch PYTHONDONTWRITEB
 普通来源解释的原始引语/字符反例、财年v2与22路线测试仍分开执行；生成的20项普通Spec文件必须重编译出完全相同的既有目录语义。V14尚未冻结，不应运行旧的V13新建材料命令来复制不匹配的当前共享执行字节；旧冻结读取仍按其原数据根进行。
 
 GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运行上述V14真实OPEN材料及文件负例，20分钟上限。它不冻结或修改正式输出，也不替代最终390验收。
+
+### 普通B10/B11的确定性来源与原生记录
+
+`PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_lodging_table_source`使用三年原件核对同范围/同年列、跨页说明和地域脚注，拒绝错误范围、表外标签、竞争表、重复全球行、季度/货币限定和引用说明。它在source-material层登记，保留原料和首次失败，不调用模型、不改旧AI规格。
+
+实际原生验收先运行 `python3 tools/vnext_normal_candidate.py --company marriott_international --company southwest_airlines --metric B10 --metric B11 --output-root /absolute/new/lodging-runs`，再设置 `LODGING_NATIVE_BATCH` 为该目录、`LODGING_ATTACK_ROOT` 为另一全新外部目录，运行 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_lodging_run_material`。检查无AI响应/假review的原生记录，拒绝重签错误值、删除网格及旧AI Spec替换。GitHub native-runs job包含这两个实际步骤；本地另有十公司20坐标完整范围检查，不能把它扩称390全验收。
