@@ -856,6 +856,10 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 
 `b06_note_carrying`另行支持逐笔债券面值/费用/账面额和明确无融资租赁的原件结构。合并与细分原生事实、完整附注、表行、报表分类和Company Facts共同重建；`normal_note_debt_results`核对新规格经济字段及独立来源准入，再调用既有债务集合/Calculator。V14 Run用期末时点并在接收前完整重算；匹配该结构但证明失败时保持WITHHELD，不回退到旧验证器。旧非正权益保护和其他原有路线保留。
 
+<!-- capability-anchor: CAPABILITY.ordinary_bond_separate_leases -->
+
+`b06_bond_leases`将债券组成、三类计量列、单独租赁分类、供应商完整条款、其他融资项目和含细分维度的独立原生清单合并验证。普通贸易应付款的排除要求公司付款义务不变及明确报表分类，不能由供应商名称或金额决定。`normal_bond_debt_results`沿同一普通来源准入/Calculator/Run接线，新规格只改变受支持的来源结构；新集合检查包括当前与非当前借款。无报价利率或未来支付额代替当前账面债务。
+
 <!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
 
 `lodging_table_source`重建全部源表格，以表前明确年度说明、指标/本年/变化列、同表经营范围和地域脚注构造B10/B11来源证明；跨页说明只拼接原有块，不改原字符。`normal_lodging_results`核对新结构化规格与旧规格的经济字段，调用同一观察/Calculator，非lodging主体复用原适用性。V14共享Run先重新计算完整来源图，再接受此显式路由的无AI批准表格观察。普通展示只为规格明确声明的ratio→percent/100转换增加支持；原历史AI路由不变。

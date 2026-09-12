@@ -1,0 +1,38 @@
+test_actual_comparative_current_debt_is_included_in_the_new_reconciliation (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_actual_comparative_current_debt_is_included_in_the_new_reconciliation) ... ERROR
+test_current_revolver_statement_must_prove_no_borrowings (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_current_revolver_statement_must_prove_no_borrowings) ... ok
+test_dimensioned_additional_borrowing_cannot_escape_inventory (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_dimensioned_additional_borrowing_cannot_escape_inventory) ... ok
+test_full_reported_composition_preserves_supplier_and_nonlease_subsets (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_full_reported_composition_preserves_supplier_and_nonlease_subsets) ... ok
+test_future_purchase_commitment_cannot_be_relabelled_as_financed_debt (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_future_purchase_commitment_cannot_be_relabelled_as_financed_debt) ... ok
+test_unknown_native_nonlease_change_is_not_hidden_by_unchanged_total (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_unknown_native_nonlease_change_is_not_hidden_by_unchanged_total) ... ok
+test_unquantified_additional_borrowing_is_not_an_absent_amount (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_unquantified_additional_borrowing_is_not_an_absent_amount) ... ok
+test_actual_current_noncurrent_and_payment_reconciliation (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_actual_current_noncurrent_and_payment_reconciliation) ... ok
+test_classification_cannot_move_the_finance_lease_into_the_debt_line (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_classification_cannot_move_the_finance_lease_into_the_debt_line) ... ok
+test_finance_column_cannot_be_replaced_by_operating_column (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_finance_column_cannot_be_replaced_by_operating_column) ... ok
+test_native_amount_disagreement_is_retained (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_native_amount_disagreement_is_retained) ... ok
+test_visible_maturity_date_and_scale_are_required (tests.vnext.test_b06_bond_leases.SeparateLeaseSourceTest.test_visible_maturity_date_and_scale_are_required) ... ok
+test_actual_program_is_classified_by_unchanged_company_terms_and_reported_trade_payable (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_actual_program_is_classified_by_unchanged_company_terms_and_reported_trade_payable) ... ok
+test_changed_native_closing_amount_cannot_use_old_table (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_changed_native_closing_amount_cannot_use_old_table) ... ok
+test_changed_payment_terms_or_company_participation_cannot_retain_trade_exclusion (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_changed_payment_terms_or_company_participation_cannot_retain_trade_exclusion) ... ok
+test_extra_program_obligation_clause_is_not_dropped (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_extra_program_obligation_clause_is_not_dropped) ... ok
+test_terms_quote_is_not_an_issuer_assertion (tests.vnext.test_b06_bond_leases.SupplierPaymentTermsTest.test_terms_quote_is_not_an_issuer_assertion) ... ok
+
+======================================================================
+ERROR: test_actual_comparative_current_debt_is_included_in_the_new_reconciliation (tests.vnext.test_b06_bond_leases.BondDebtScopeTest.test_actual_comparative_current_debt_is_included_in_the_new_reconciliation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_b06_bond_leases.py", line 202, in test_actual_comparative_current_debt_is_included_in_the_new_reconciliation
+    facts = {role:get(concept)[0] for role,concept in model['inputs'].items()}
+                  ~~~^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_disclosure.py", line 160, in get
+    s=precision_choice(candidates)
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_scope.py", line 19, in precision_choice
+    need(bool(candidates),'DEBT_FACT_MISSING')
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/r5_b06_structured.py", line 22, in need
+    raise ValueError(reason)
+ValueError: DEBT_FACT_MISSING
+
+----------------------------------------------------------------------
+Ran 17 tests in 45.122s
+
+FAILED (errors=1)

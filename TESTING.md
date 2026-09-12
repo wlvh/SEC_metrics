@@ -640,6 +640,8 @@ ORDINARY_PROJECTION_MATERIAL_ROOT=/absolute/completed/cli-batch PYTHONDONTWRITEB
 
 逐笔债券与明确无融资租赁的新路线由`test_b06_note_carrying`核对完整原件及细分维度漏检反例；`test_note_debt_run_material`读取显式新建的Enphase/Marriott B06普通批次，复核原生Run及公共行，并拒绝重新计算并重签的虚假债务图和旧规格替换。后者通过`NOTE_DEBT_NATIVE_BATCH`和`NOTE_DEBT_ATTACK_ROOT`指定隔离目录，在current-instant CI job执行；命令见`docs/note_debt_source.md`。无新SEC/provider调用和正式发布。
 
+上述原生批次现在加入Macy’s，共三个实际Run与四个伪造重算/旧规格替换反例；Marriott检查还禁止进入新债务解析器，验证原非正权益保护的先后顺序。`test_b06_bond_leases`在来源层核对债券/租赁/供应商及独立清单，涵盖细分额外借款、无金额的其他借款、跨文件金额、条款/引用变更、未来购买承诺及真实比较期的非零当前借款。比较期检查不声称已取得过去主文档。
+
 已完成修复批次的公共行可用 `ORDINARY_REPAIR_MANIFEST=/absolute/repair-batches.json PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_ordinary_repairs_material` 重建。清单包含 `amendment`、`denominator`、`selection` 三个实际CLI批次绝对路径；检查14个修订修复坐标、四个NOT_MEANINGFUL空值及证据、JPM具体来源失败/正向选择，逐字节比较实际CSV。该命令不新建Run、不冻结、不写正式结果；失败原批次及修后批次分别保存。
 
 材料包含真实B03依赖图、Salesforce时点/Macy’s跨年时点、文本审阅、事件Claim及文件负例。重签假收入图使用真实Calculator重新生成完整记录，再从原始来源拒绝；删依赖/事件事实、改规格/来源/财年、删审阅和改输入主指标分别验证。第一次删B01依赖结果被误接受、文本审阅顺序失败、事件Claim/来源角色失败和测试异常分类错误均保留，不能拿后续PASS改写首次结果。旧V13 D01/C03冻结数据根用新共享代码冷读仍通过。

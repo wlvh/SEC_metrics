@@ -104,7 +104,7 @@ jobs:
       - name: Build reconciled note debt and nonpositive-equity guard Runs
         env:
           PYTHONDONTWRITEBYTECODE: "1"
-        run: python3 tools/vnext_normal_candidate.py --company enphase_energy --company marriott_international --metric B06 --output-root "${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}"
+        run: python3 tools/vnext_normal_candidate.py --company enphase_energy --company marriott_international --company macys --metric B06 --output-root "${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}"
       - name: Reject recalculated false debt and historical Spec substitution
         env:
           PYTHONDONTWRITEBYTECODE: "1"

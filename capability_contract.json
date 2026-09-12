@@ -138,6 +138,20 @@
         "since": "2026-09-13"
       },
       {
+        "anchor_id": "CAPABILITY.ordinary_bond_separate_leases",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B06可核对债券账面组成与单独列报融资租赁，按完整原文证明公司付款条件未变且列为普通贸易应付款的供应商项目，并检查含细分维度的潜在融资事实。新债务集合核对当前加非当前借款，规格经济定义及旧冻结规则不变；沿同一Run输出OPEN候选，不授予生产或其他供应商自动排除资格。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_b06_bond_leases.py::BondDebtScopeTest.test_full_reported_composition_preserves_supplier_and_nonlease_subsets",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_candidate_diagnostics",
         "type": "capability",
         "status": "active",

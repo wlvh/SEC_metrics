@@ -1,4 +1,4 @@
-# 逐笔债券账面额与明确无融资租赁的 B06 来源路线
+# 普通 B06 债券与融资租赁来源路线
 
 `b06_note_carrying.py`支持一种新的原件结构：`LongTermDebtTextBlock`包含完整的`ScheduleOfDebtTableTextBlock`，每笔债券分别列出面值、尚未摊销的折价或发行费用以及扣减后的账面额；当期租赁政策明确说明没有融资租赁。它通过`normal_note_debt_results.py`进入既有普通Run、Calculator及公共行预览，B06的经济定义不变。
 
@@ -18,8 +18,33 @@
 
 ```bash
 python3 -m unittest -v tests.vnext.test_b06_note_carrying
-python3 tools/vnext_normal_candidate.py --company enphase_energy --company marriott_international --metric B06 --output-root /absolute/new/note-debt-batch
+python3 tools/vnext_normal_candidate.py --company enphase_energy --company marriott_international --company macys --metric B06 --output-root /absolute/new/note-debt-batch
 NOTE_DEBT_NATIVE_BATCH=/absolute/new/note-debt-batch NOTE_DEBT_ATTACK_ROOT=/absolute/new/note-debt-attacks PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_note_debt_run_material
 ```
 
 当前仍为未冻结V14开发候选，默认OPEN。Marriott非正权益保留原来的无经济意义结果；银行、工业金融混合范围、供应商融资及其他未覆盖结构仍需各自证明。新分支不会把这些缺口变成零或给予通过。新来源获取、模型预算、独立审阅、390坐标整体验收及最后生产确认仍按总委托继续处理。
+
+## 单独列报融资租赁与普通供应商付款项目
+
+`b06_bond_leases.py`与`normal_bond_debt_results.py`增加另一种有限原件结构。它把债券表、借款的不同计量列、租赁分类表和到期支付表、供应商项目及其他融资项目放在同一份来源检查中，再生成既有原生记录。新B06v5规格保留旧经济字段；独立的新债务集合规则明确核对当前加非当前借款，旧规则与旧结果不改。
+
+Macy’s截至2026-01-31的原件提供以下关系：
+
+| 项目 | 已报告金额及处理 |
+|---|---|
+| 债券 | 本金2,441百万＋溢价10百万－费用及折价19百万＝账面2,432百万；21个当期债券维度逐一绑定实际表行 |
+| 融资租赁 | 当前2百万＋非当前11百万＝13百万，也等于未来支付19百万－利息6百万。原表把它们列在应计款项和长期租赁负债中，分别与债券债务行区别 |
+| 非租赁组成 | 非当前融资租赁已包含的1百万不再另加；经营租赁不进入已批准债务集合 |
+| 供应商项目 | 116百万期初＋641百万确认－678百万支付＝79百万期末。完整原文说明供应商自行安排提前收款，公司金额和付款期不变，并明确列为商品应付账款及经营现金流；按原定义排除普通贸易应付款 |
+| 备用信用证及购买承诺 | 信用证143百万＋未用额度1,957百万＝额度2,100百万，原文明确无尚未偿还的循环借款。3,600百万购买承诺对应商品/服务，原文说明收到商品或服务时才确认为负债，不能当成已借款金额 |
+| B06 | 已证明债务2,445百万／权益4,860百万＝`0.5030864197530864197530864198`，测量时点保持2026-01-31 |
+
+完整原生潜在融资事实检查包括细分维度，跨HTML/XML的相同概念、维度和单位必须保持金额及精度一致。未知借款、未量化的“其他借款”、付款条款变更、被引用的供应商声明和重新计算的伪造结果都不得继承已有结论。此结构不授予Southwest或其他供应商项目自动排除资格。
+
+核对同时发现原件2033年债券票息在表格/数值标签与正文间有差异，原值和21个债券的实际维度/表行保留。票息不作为B06计算输入，不改写来源，也不因此开展信用评级或合同尽调。未来本金到期信息与当前账面分类分别记录，不能把名称带“未来十二个月”的标签直接加为新的期末债务。
+
+```bash
+python3 -m unittest -v tests.vnext.test_b06_bond_leases
+```
+
+源测试还读取同一真实申报中的上一期借款事实：当前6百万＋非当前2,773百万＝总账面2,779百万。这个对照验证新规则不依赖“当前债务恰好为零”，不表示已经获取或完整重建上一年的原始主文档。新的Run和公共行仍是OPEN预览，未正式采纳、发布或切换active。

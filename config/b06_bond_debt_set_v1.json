@@ -1,0 +1,144 @@
+{
+  "debt_scope_definition": {
+    "included": [
+      "recognized_borrowings",
+      "notes_and_bonds",
+      "finance_lease_liabilities_including_combined_nonlease_components"
+    ],
+    "excluded": [
+      "operating_lease_liabilities",
+      "ordinary_trade_tax_provisions",
+      "customer_deposits",
+      "nonfinancing_trading_derivatives"
+    ],
+    "basis": "recognized_statement_carrying_amount_including_discount_premium_cost_hedge_and_fair_value_measurement",
+    "nonoverlap": "Each demonstrated liability set once; disjoint reported categories may be added",
+    "equity": "same_scope_StockholdersEquity_not_noncontrolling_inclusive",
+    "bank_scope": "Separate bank funding scope and comparability limitation; no netting assets"
+  },
+  "required_liability_classes": {
+    "consolidated_nonbank": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases"
+    ],
+    "bank_funding": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases",
+      "federal_funds_repurchase",
+      "consolidated_VIE_debt"
+    ],
+    "industrial": [
+      "current_borrowings",
+      "noncurrent_borrowings",
+      "finance_leases"
+    ]
+  },
+  "debt_set_models": {
+    "BOND_CURRENT_NONCURRENT_PLUS_SEPARATE_FINANCE_LEASE": {
+      "inputs": {
+        "principal": "m:LongTermDebtGrossIncludingCurrentMaturities",
+        "premium": "us-gaap:DebtInstrumentUnamortizedPremiumNoncurrent",
+        "cost": "us-gaap:DebtInstrumentUnamortizedDiscountPremiumAndDebtIssuanceCostsNet",
+        "finance_lease": "us-gaap:FinanceLeaseLiability"
+      },
+      "groups": [
+        {
+          "roles": [
+            "principal",
+            "premium",
+            "cost"
+          ],
+          "coverage": [
+            "current_borrowings",
+            "noncurrent_borrowings"
+          ],
+          "expression": {
+            "op": "subtract",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  "principal",
+                  "premium"
+                ]
+              },
+              "cost"
+            ]
+          }
+        },
+        {
+          "roles": [
+            "finance_lease"
+          ],
+          "coverage": [
+            "finance_leases"
+          ],
+          "expression": "finance_lease"
+        }
+      ],
+      "expression": {
+        "op": "add",
+        "args": [
+          {
+            "op": "subtract",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  "principal",
+                  "premium"
+                ]
+              },
+              "cost"
+            ]
+          },
+          "finance_lease"
+        ]
+      },
+      "checks": [
+        {
+          "inputs": {
+            "carrying": "us-gaap:LongTermDebtAndCapitalLeaseObligations",
+            "current": "us-gaap:DebtCurrent"
+          },
+          "left": {
+            "op": "subtract",
+            "args": [
+              {
+                "op": "add",
+                "args": [
+                  "principal",
+                  "premium"
+                ]
+              },
+              "cost"
+            ]
+          },
+          "right": {
+            "op": "add",
+            "args": [
+              "current",
+              "carrying"
+            ]
+          }
+        },
+        {
+          "inputs": {
+            "lease_current": "us-gaap:FinanceLeaseLiabilityCurrent",
+            "lease_noncurrent": "us-gaap:FinanceLeaseLiabilityNoncurrent"
+          },
+          "left": "finance_lease",
+          "right": {
+            "op": "add",
+            "args": [
+              "lease_current",
+              "lease_noncurrent"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

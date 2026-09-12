@@ -23,7 +23,7 @@ class NoteDebtNativeMaterialTest(unittest.TestCase):
         summary = json.loads((root/'summary.json').read_text())
         self.assertEqual('OPEN_CANDIDATES_READY',summary['status'])
         rows = {r['company_id']:r for r in summary['coordinates']}
-        self.assertEqual({'enphase_energy','marriott_international'},set(rows))
+        self.assertEqual({'enphase_energy','marriott_international','macys'},set(rows))
         for company,row in rows.items():
             data,run = root/row['data_path'],root/row['run_path']
             no_debt_needed = (patch('vnext.normal_note_debt_results.prepare_note_debt_case',
@@ -36,35 +36,43 @@ class NoteDebtNativeMaterialTest(unittest.TestCase):
             if company == 'marriott_international':
                 self.assertEqual(('NOT_MEANINGFUL','DENOMINATOR_NONPOSITIVE'),(result['quality'],result['reason_code']))
                 continue
-            self.assertEqual(('EXACT','1.107959077222837051285943352'),(result['quality'],result['value']))
+            expected_value = ('0.5030864197530864197530864198' if company == 'macys'
+                              else '1.107959077222837051285943352')
+            self.assertEqual(('EXACT',expected_value),(result['quality'],result['value']))
             with (root/'rows'/company/'B06/metrics_matrix.csv').open() as stream:
                 public = next(csv.DictReader(stream))
             self.assertEqual((result['value'],'ratio'),(public['value'],public['unit']))
             case = replay_case(data_root=data,manifest=manifest)
             proof = case['input_binding']['source_proof']
-            self.assertEqual('1204377000',proof['composition']['balances']['total'])
-            self.assertTrue(proof['dimension_reconciliations'])
+            if company == 'macys':
+                self.assertEqual('2445000000',proof['proven_composition_amount'])
+                self.assertEqual('79000000',proof['supplier']['reported_outstanding'])
+                self.assertEqual(21,len(proof['native_bond_members']))
+            else:
+                self.assertEqual('1204377000',proof['composition']['balances']['total'])
+                self.assertTrue(proof['dimension_reconciliations'])
             facts = copy.deepcopy(case['selection']['audit']['measurement_reconciliation']['calculation_facts'])
-            chosen = next(f for f in facts if f['concept']=='us-gaap:LongTermDebtCurrent')
+            concept = 'm:LongTermDebtGrossIncludingCurrentMaturities' if company == 'macys' else 'us-gaap:LongTermDebtCurrent'
+            chosen = next(f for f in facts if f['concept']==concept)
             chosen['value'] = '9000000000'
             chosen['fact_id'] = 'fact:'+content_hash(value={k:v for k,v in chosen.items() if k!='fact_id'})
             target = {k:v for k,v in case['traces']['B06']['calculation_target'].items() if k!='metric_id'}
             false_result,false_trace,observations = calculate_metric(compiled_spec=case['compiled_specs']['B06'],
                 target=target,company_traits=manifest['company_traits'],structured_facts=facts,verified_observations=[])
             self.assertNotEqual(result['value'],false_result['value']); self.assertEqual('EXACT',false_result['quality'])
-            attack = out/'resigned-false-current-debt'; shutil.copytree(run,attack)
+            attack = out/(company+'-resigned-false-debt'); shutil.copytree(run,attack)
             changed = [*case['source_records'],*observations,false_trace,false_result]
             (attack/'records.jsonl').write_text(''.join(json.dumps(r,ensure_ascii=False,sort_keys=True)+'\n' for r in changed))
             with self.assertRaisesRegex(ValueError,'COMPLETE_COMPUTATION_GRAPH_CHANGED'):
                 run_store._mechanically_replay_open_run(run_dir=attack,repo_root=data,require_complete_results=True)
-            attack = out/'historical-spec-substitution'; shutil.copytree(run,attack)
+            attack = out/(company+'-historical-spec-substitution'); shutil.copytree(run,attack)
             changed_manifest = copy.deepcopy(manifest); old_path = 'catalog/r5/B06_new_source_v2.md'
             changed_manifest['spec_file_hashes'] = {old_path:sha256_file(path=data/old_path)}
             (attack/'manifest.json').write_text(json.dumps(changed_manifest,ensure_ascii=False,indent=2)+'\n')
             with self.assertRaisesRegex(ValueError,'SOURCE_SPEC_OR_PERIOD_CHANGED'):
                 run_store._mechanically_replay_open_run(run_dir=attack,repo_root=data,require_complete_results=True)
-        (out/'summary.json').write_text(json.dumps({'status':'PASS','actual_baselines':2,'attacks':2,
-            'cases':['resigned-false-current-debt','historical-spec-substitution'],
+        (out/'summary.json').write_text(json.dumps({'status':'PASS','actual_baselines':3,'attacks':4,
+            'cases':['resigned-false-current-debt','resigned-false-gross-bond-debt','two-historical-spec-substitutions'],
             'calls':{'provider':0,'paid':0,'sec':0},'production_authorized':False},indent=2)+'\n')
 
 

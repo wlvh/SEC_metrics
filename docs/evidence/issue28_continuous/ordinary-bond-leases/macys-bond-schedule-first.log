@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_bond_leases.py", line 263, in _balance_reports
+    amount = parse_numeric_claim(raw_value=cell['text'],reported_unit='USD')*Decimal(10)**int(f['scale'] or '0')
+             ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/constraints.py", line 42, in parse_numeric_claim
+    raise ConstraintError("Cell is not a supported numeric claim")
+vnext.constraints.ConstraintError: Cell is not a supported numeric claim
