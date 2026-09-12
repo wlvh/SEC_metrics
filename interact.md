@@ -378,3 +378,7 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 调用者更换旧规格、删掉来源或改期间不能使V13候选通过；统一入口会先重建其原始来源决定。候选输出仍不改变正式版本，不证明实时SEC最新或390坐标迁移已完成。
 <!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
+
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，尚未扩展12指标CLI或修改正式报告；详见`docs/normal_source_components.md`。

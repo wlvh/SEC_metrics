@@ -594,7 +594,7 @@ CI首次将13项新测试作为一个入口时触发既有30秒入口上限。�
 
 ## 普通保存来源候选批次
 
-当前GitHub CI使用`python3 tools/run_fast_tests_v2.py --jobs 2`。它保留V13冻结的`tools/run_fast_tests.py`原字节，继承其30秒/独立子进程边界，只把原VaR聚合用例的三个反例改为各自调度，并纳入D03/D04/财年组件短测试。原聚合方法及全部断言保留，历史acceptance runner仍按自身冻结入口解释。124个当前入口本地通过不能代替实际GitHub或完整验收。
+当前GitHub CI分两项：`python3 tools/run_fast_tests_v2.py --suite fast --jobs 2`检查95个短测试入口，每项30秒；`--suite source-material --jobs 2`检查32个完整来源材料入口，每项240秒，整个job上限20分钟。先前124个入口的并集全部保留，并新增三个普通零AI材料套件；没有删除断言。旧`tools/run_fast_tests.py`保持原字节，历史acceptance入口不改。单次全文LCR已在托管机超过30秒，故不再把全文材料误列为短测试；原失败日志保留，材料通过不能改称原30秒测试已通过。两层本地分别通过，不替代实际GitHub或完整390验收。
 
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
@@ -622,3 +622,7 @@ PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_numeric_projec
 
 第一条只验证两个真实OPEN基线及规格/来源/期间文件负例，禁止冻结。第二、三条覆盖真实Run/冻结/新进程冷读和文本CSV；第四条目前验证实际数值记录的展示，不授FROZEN信用。它们不塞进30秒fast入口，不替代390坐标或正式发布。V12旧材料见`frozen-candidates/`；本轮V13最终冻结材料仍在执行准备中，不能把测试文件存在写成已通过。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
+
+`PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_accession_results`及同命令改用`/usr/bin/python3`分别6项通过（27.533s、44.509s）。覆盖30原生坐标、实际3数值与27结构性状态、单位ID改名/错误单位、主体/维度差别、实体标识方案、错误数字分组和JSON/异目录变更拒绝。十公司材料及JPM/Salesforce两个新进程无Git数据根冷读见`docs/evidence/issue28_continuous/ordinary-accession-components/`。仍无Run、freeze或生产写入。

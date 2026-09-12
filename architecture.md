@@ -821,3 +821,7 @@ V12真实材料已完成D01十公司和C03/C04二十坐标冻结；后继V13仍�
 
 D03额外保存HTML引语范围、邻段限定和机关直接行为关系，未证明者保留语义待审。D04提供完整可见块及原生事实线索，名字匹配通过同原件封面和当前DEI关系；不把审计开头或关键词缺失等同无持续经营疑虑。财年对照保留原始标签和实际日期，当前不改写冻结输入。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
+
+<!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
+
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，尚未扩展12指标CLI或修改正式报告；详见`docs/normal_source_components.md`。

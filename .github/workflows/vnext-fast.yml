@@ -28,3 +28,21 @@ jobs:
         # Large original-document checks compete for CPU on hosted runners.
         # Keep each selected case's existing 30-second limit, with two workers.
         run: python3 tools/run_fast_tests_v2.py --jobs 2
+
+  source-material:
+    name: vNext saved-source material
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Run complete saved-source material tests
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2

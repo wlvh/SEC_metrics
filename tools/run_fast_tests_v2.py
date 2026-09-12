@@ -9,6 +9,8 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import json
+import os
+import subprocess
 import sys
 import time
 
@@ -25,19 +27,62 @@ FAST_TESTS = tuple(selector for original in inherited.FAST_TESTS
     "tests.vnext.test_going_concern_source",
     "tests.vnext.test_fiscal_year_labels",
 )
+ALL_PREVIOUS_SELECTORS = FAST_TESTS
+# These selectors parse complete saved filings, often with several independent
+# source variants. They are source-material checks, not 30-second unit checks.
+SOURCE_PREFIXES = (
+    "tests.vnext.test_financial_candidates.LcrEntityFastTest.",
+    "tests.vnext.test_financial_balance_scope.AumClientFastTest.",
+    "tests.vnext.test_financial_balance_scope.VarReportingFastTest.",
+    "tests.vnext.test_financial_structured.FinancialStructuredTest.",
+    "tests.vnext.test_financial_duration",
+    "tests.vnext.test_b06_disclosure_v2.",
+    "tests.vnext.test_risk_signals",
+    "tests.vnext.test_text_results",
+    "tests.vnext.test_going_concern_source",
+    "tests.vnext.test_fiscal_year_labels",
+)
+SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for p in SOURCE_PREFIXES)) + (
+    "tests.vnext.test_normal_companyfacts_results",
+    "tests.vnext.test_normal_zero_ai_results",
+    "tests.vnext.test_normal_accession_results",
+)
+FAST_TESTS = tuple(s for s in FAST_TESTS if s not in SOURCE_TESTS)
+SOURCE_TIMEOUT_SECONDS = 240
 
 
-def run_fast_tests(*, jobs):
-    if jobs < 1 or jobs > len(FAST_TESTS):
+def _run_source_case(name):
+    start = time.monotonic()
+    environment = {**os.environ,"PYTHONDONTWRITEBYTECODE":"1"}
+    try:
+        done = subprocess.run([sys.executable,"-m","unittest","-q",name],cwd=str(inherited.REPO_ROOT),
+            env=environment,capture_output=True,encoding="utf-8",timeout=SOURCE_TIMEOUT_SECONDS)
+        code,stdout,stderr = done.returncode,done.stdout,done.stderr
+    except subprocess.TimeoutExpired as error:
+        code,stdout,stderr = 124,error.stdout or "",error.stderr or ""
+        stdout = stdout.decode("utf-8",errors="replace") if isinstance(stdout,bytes) else stdout
+        stderr = stderr.decode("utf-8",errors="replace") if isinstance(stderr,bytes) else stderr
+        stderr += "\nSOURCE_MATERIAL_TIMEOUT_SECONDS="+str(SOURCE_TIMEOUT_SECONDS)
+    return {"test":name,"return_code":code,"duration_seconds":round(time.monotonic()-start,3),
+            "stdout_tail":stdout[-2000:],"stderr_tail":stderr[-2000:]}
+
+
+def run_fast_tests(*, jobs, suite="fast"):
+    selectors = FAST_TESTS if suite == "fast" else SOURCE_TESTS
+    all_selectors = (*FAST_TESTS,*SOURCE_TESTS)
+    if jobs < 1 or jobs > len(selectors):
         raise inherited.FastTestError("FAST_TEST_JOBS_INVALID")
-    if inherited.FAST_TESTS.count(REPLACED) != 1 or len(set(FAST_TESTS)) != len(FAST_TESTS):
+    if (inherited.FAST_TESTS.count(REPLACED) != 1 or len(set(all_selectors)) != len(all_selectors)
+            or not set(ALL_PREVIOUS_SELECTORS) <= set(all_selectors)):
         raise inherited.FastTestError("FAST_TEST_SUCCESSOR_SELECTOR_CONFLICT")
     start = time.monotonic()
     with ThreadPoolExecutor(max_workers=jobs) as executor:
-        futures = [executor.submit(inherited._run_case, test_name=name) for name in FAST_TESTS]
+        futures = [executor.submit(inherited._run_case, test_name=name) if suite == "fast"
+                   else executor.submit(_run_source_case,name) for name in selectors]
         rows = sorted((f.result() for f in futures), key=lambda r:r["test"])
-    return {"evidence_tier":"FAST_LOCAL_ONLY", "selector_generation":2, "jobs":jobs,
-        "per_case_timeout_seconds":inherited.FAST_TEST_TIMEOUT_SECONDS,
+    return {"evidence_tier":"FAST_LOCAL_ONLY" if suite == "fast" else "SOURCE_MATERIAL_LOCAL_ONLY",
+        "selector_generation":2, "suite":suite, "jobs":jobs,
+        "per_case_timeout_seconds":inherited.FAST_TEST_TIMEOUT_SECONDS if suite == "fast" else SOURCE_TIMEOUT_SECONDS,
         "duration_seconds":round(time.monotonic()-start, 3), "tests":rows,
         "status":"PASSED" if all(r["return_code"] == 0 for r in rows) else "FAILED"}
 
@@ -46,12 +91,13 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("--jobs", type=int, default=2)
     parser.add_argument("--list", action="store_true")
+    parser.add_argument("--suite",choices=("fast","source-material"),default="fast")
     args = parser.parse_args(argv)
     if args.list:
-        print(json.dumps({"tests":FAST_TESTS}, sort_keys=True))
+        print(json.dumps({"suite":args.suite,"tests":FAST_TESTS if args.suite == "fast" else SOURCE_TESTS}, sort_keys=True))
         return 0
     try:
-        result = run_fast_tests(jobs=args.jobs)
+        result = run_fast_tests(jobs=args.jobs,suite=args.suite)
     except inherited.FastTestError as error:
         print(str(error), file=sys.stderr)
         return 2

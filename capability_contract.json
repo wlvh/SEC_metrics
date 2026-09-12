@@ -41,6 +41,19 @@
         "since": "2026-09-12"
       },
       {
+        "anchor_id": "CAPABILITY.ordinary_accession_native_components",
+        "type": "capability",
+        "status": "active",
+        "statement": "A01/A02/B12普通原生XBRL组件按当前原件的实际时点、主体、目录要求的维度和已声明单位定义生成原生记录。新政策把单位表示转为ratio/USD，旧目录和历史结果不改。母公司标准法不能取银行子公司或高级法数值，RPO替代指标不能取收购对象单独金额或称为ARR/churn。真实JSON/异目录及新进程重建已执行；尚未创建普通Run、完整发布或授予新调用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_accession_results.py::OrdinaryAccessionTest.test_real_no_git_json_rebuild_rejects_changed_answer_and_period",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_companyfacts_native_components",
         "type": "capability",
         "status": "active",
