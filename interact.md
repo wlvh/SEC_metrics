@@ -369,7 +369,7 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
 
-19项普通零AI组件目前供开发接线使用，返回原生记录及来源限制，尚未扩展下面CLI的12指标范围。事件数沿用已批准的申报条目规则；上一期材料缺口与当前指标成功分别显示。它们不替换正式报告，详见`docs/normal_source_components.md`。
+19项普通零AI组件目前供开发接线使用，返回原生记录及来源限制，现已扩展为下面CLI的34项V14草案范围。事件数沿用已批准的申报条目规则；上一期材料缺口与当前指标成功分别显示。它们不替换正式报告，详见`docs/normal_source_components.md`。
 
 `tools/vnext_normal_candidate.py`只使用全新外部目录，逐坐标保存结果、选择原因或失败，完成后输出完整请求范围的summary。已有批次不会覆盖。CLI已接入六金融指标、B06、C02/C03/C04、D01/D02；本轮V13冻结与完整CLI材料验收仍在进行，当前OPEN结果不冒称正式采纳。
 
@@ -381,4 +381,8 @@ B06新来源候选使用`tools/vnext_b06_new_source.py install-rules/run/read`�
 
 <!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
 
-A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，尚未扩展12指标CLI或修改正式报告；详见`docs/normal_source_components.md`。
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，已接入34项V14草案CLI，正式报告不变；详见`docs/normal_source_components.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_integrated_run_graph -->
+
+当前普通CLI使用未冻结V14草案，范围扩至34项已支持路线，默认`OPEN_CANDIDATE`及`VERIFIED_OPEN_PREVIEW`公共行；不是FROZEN或正式发布。B03依赖结果完整但公共行只显示主指标，复合指标证据逐项显示来源事实。无缺口的批次为`OPEN_CANDIDATES_READY`；真实失败/WITHHELD继续逐坐标保留。当前`--freeze`被规则拒绝。详见`docs/normal_candidates.md`。

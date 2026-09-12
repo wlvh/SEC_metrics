@@ -142,6 +142,36 @@ class FiscalYearLabelsTest(unittest.TestCase):
                 expected_primary_sha256=hashlib.sha256(case['primary']).hexdigest(),expected_companyfacts_sha256=hashlib.sha256(case['facts']).hexdigest(),
                 expected_cik=case['cik'],filing=case['filing'])
 
+    def test_quoted_source_definitions_do_not_propose_a_current_issuer_label(self):
+        case=self.cases['salesforce'];raw=case['primary']
+        for definition in reversed(case['report']['inspection']['source_definitions']):
+            start,end=definition['raw_start_byte'],definition['raw_end_byte']
+            raw=raw[:start]+b'<q>'+raw[start:end]+b'</q>'+raw[end:]
+        x=self.inspect(raw)
+        self.assertEqual([],x['source_definitions'])
+        self.assertIsNone(x['new_rule_label_proposal'])
+        self.assertEqual({'DEFINITION_IN_QUOTED_CONTEXT'},{r['reason'] for r in x['unsupported_definition_leads']})
+
+    def test_original_definition_characters_survive_json_without_unicode_normalization(self):
+        case=self.cases['salesforce'];raw=case['primary']
+        for definition in reversed(case['report']['inspection']['source_definitions']):
+            end=definition['raw_end_byte'];raw=raw[:end]+';'.encode()+raw[end:]
+        x=self.inspect(raw)
+        self.assertEqual([2026],x['current_definition_labels'])
+        self.assertTrue(all(';' in d['text'] for d in x['source_definitions']))
+        self.assertEqual(x,json.loads(json.dumps(x,ensure_ascii=False)))
+
+    def test_other_company_reference_definition_is_not_a_registrant_definition(self):
+        case=self.cases['macys'];raw=case['primary']
+        definition=next(d for d in case['report']['inspection']['source_definitions'] if d['kind']=='EXPLICIT_REFERENCE_YEARS')
+        start,end=definition['raw_start_byte'],definition['raw_end_byte']
+        original=raw[start:end];changed=original.replace(b"Macy's, Inc.",b'Another Corporation')
+        self.assertNotEqual(original,changed)
+        x=self.inspect(raw[:start]+changed+raw[end:],company='macys')
+        self.assertEqual(1,len(x['source_definitions']))
+        self.assertEqual('EXPLICIT_ORDERED_YEARS',x['source_definitions'][0]['kind'])
+        self.assertIn('DEFINITION_ISSUER_ALIAS_NOT_PROVEN',[r['reason'] for r in x['unsupported_definition_leads']])
+
 
 if __name__=='__main__':
     unittest.main()

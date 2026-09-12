@@ -1,0 +1,92 @@
+{
+  "record_type": "NORMAL_SAVED_CANDIDATE_BATCH",
+  "status": "OPEN_CANDIDATES_READY",
+  "started_at_utc": "2026-09-12T08:26:53.966942+00:00",
+  "completed_at_utc": "2026-09-12T08:27:37.196736+00:00",
+  "requested_coordinate_count": 2,
+  "coordinates": [
+    {
+      "company_id": "salesforce",
+      "metric_id": "B12",
+      "run_path": "runs/salesforce/B12",
+      "data_path": "data/salesforce",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:ea957d0173d4753c5e2778f2449bfe71d23871efc8ea3d481523f331c667ef67",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "salesforce",
+        "metric_id": "B12",
+        "period_start": "2026-01-31",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:e7b39850392dd409a89568f7dd6dce40c37fe1de0e6e3faab45e77651898ba15",
+        "spec_closure_hash": "sha256:267b9c81c20295935d3e400903dc41bf2e3e52f87de37cd8ec9d193245320267",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "72400000000",
+        "unit": "USD",
+        "trace_id": "sha256:b62f4c2af29d173d70dca4994b8c33f03feca6b58cfc39091b654b0b7168579c",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:4b0d136ff319d3a1b2b9d6bcfc322542af8fe843174bffd843ea77f7c892e364"
+      },
+      "target_period": {
+        "fiscal_year": 2026,
+        "period_start": "2026-01-31",
+        "period_end": "2026-01-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false
+    },
+    {
+      "company_id": "salesforce",
+      "metric_id": "C03",
+      "run_path": "runs/salesforce/C03",
+      "data_path": "data/salesforce",
+      "status": "OPEN_CANDIDATE",
+      "run_id": "run:ordinary-integrated:eb7872d56b582bb997764a1ecfba2077463430ef377f40c4461b7e725e670c90",
+      "run_status": "OPEN",
+      "result": {
+        "company_id": "salesforce",
+        "metric_id": "C03",
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31",
+        "scope_key": "sha256:f3c8407f8a8d60bfc7a88166339aa7506ff9e37a0df59342f9a62d99ef98c0a6",
+        "spec_closure_hash": "sha256:47d1a8148805ad612674bd1b6b6ce11e1845791336b63f79f35d96598de9b772",
+        "applicability": "APPLICABLE",
+        "quality": "EXACT",
+        "publication": "PUBLISHED",
+        "reason_code": "PASS",
+        "value": "49379252",
+        "unit": "USD",
+        "trace_id": "sha256:649028851fd3568e637dddb9077c1201dffb17d159855bcf0a28843532729aaa",
+        "record_type": "METRIC_RESULT",
+        "result_id": "sha256:965d6f4719b70e609e4c507bb25eab026e6c4c1e5ab9d56e0e0884025f9cbad9"
+      },
+      "target_period": {
+        "fiscal_year": 2026,
+        "period_start": "2025-02-01",
+        "period_end": "2026-01-31"
+      },
+      "public_row_status": "CANDIDATE_ROW_PREPARED",
+      "production_authorized": false,
+      "selection_path": "selections/salesforce-C03.json",
+      "selection_hash": "sha256:6883bfcd70d9b5756ae87bd766b2a2c7944b4ba4eee73107ad06606d6c7dfd82",
+      "selection_summary": {
+        "reason_code": "PASS"
+      }
+    }
+  ],
+  "full_issue_acceptance": false,
+  "production_authorized": false,
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "limits": [
+    "Saved sources do not prove current SEC freshness",
+    "Rows are not a complete publication",
+    "Unimplemented and withheld coordinates remain explicit"
+  ]
+}

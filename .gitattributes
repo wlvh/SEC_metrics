@@ -1,3 +1,5 @@
 *.csv whitespace=cr-at-eol
 # Source quote cells retain the filing's original whitespace.
 docs/evidence/issue28_continuous/v13-frozen-candidates/**/metric_evidence.csv -whitespace
+# Retain GitHub's original checkout log bytes, including blank-line spacing.
+docs/evidence/issue28_continuous/integrated-v14-open/checks/pr43-ffeaed3-ci-complete.log -whitespace

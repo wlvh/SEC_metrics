@@ -817,11 +817,15 @@ V12真实材料已完成D01十公司和C03/C04二十坐标冻结；后继V13仍�
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
 
-后继普通零AI组件分为B01/B03及六事件、11项Company Facts目录公式两个入口。它们只复用原生计算和来源集合辅助函数，不调用旧发布准备器或读取旧矩阵。B03的B01依赖从当前原件生成；当前/上一期Company Facts分别绑定申报身份，期间由对应HTML或已存原生XBRL的DEI重建；上一期缺口不会阻断仅需本期的指标。调用者不能提供答案、期间或申报选择。组件记录尚未进入后继Run，细节见`docs/normal_source_components.md`。
+后继普通零AI组件分为B01/B03及六事件、11项Company Facts目录公式两个入口。它们只复用原生计算和来源集合辅助函数，不调用旧发布准备器或读取旧矩阵。B03的B01依赖从当前原件生成；当前/上一期Company Facts分别绑定申报身份，期间由对应HTML或已存原生XBRL的DEI重建；上一期缺口不会阻断仅需本期的指标。调用者不能提供答案、期间或申报选择。组件记录已进入未冻结V14 Run草案，细节见`docs/normal_source_components.md`。
 
 D03额外保存HTML引语范围、邻段限定和机关直接行为关系，未证明者保留语义待审。D04提供完整可见块及原生事实线索，名字匹配通过同原件封面和当前DEI关系；不把审计开头或关键词缺失等同无持续经营疑虑。财年对照保留原始标签和实际日期，当前不改写冻结输入。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
 
 <!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
 
-A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，尚未扩展12指标CLI或修改正式报告；详见`docs/normal_source_components.md`。
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，已接入34项V14草案CLI，正式报告不变；详见`docs/normal_source_components.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_integrated_run_graph -->
+
+V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分派。`normal_run_inputs`和源拥有的规格文件先重建主指标及完整依赖图；`normal_run_v3`核对整个数值计算记录集合，防止只保留主结果而删除B01依赖。事件Claim与其来源关系同样进入图。文本流程按Source/Candidate/Evidence/ReviewUnit→ReviewDecision→Observation/Trace/Result顺序写入。当前规则未冻结，CLI默认生成OPEN；普通公共行由`ordinary_projection`单独绑定展示规则，并只输出所请求主指标。实际财年来源与原始机器标签由`normal_annual_input_v2`分别保留。

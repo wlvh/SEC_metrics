@@ -10,16 +10,16 @@ from pathlib import Path
 from sec_urls import accession_document_url, companyfacts_url, hdr_sgml_url, submissions_url, submissions_file_url
 from .annual_update import AnnualUpdateError
 from .batch_workflow import BatchWorkflowError, _structured_concepts
-from .calculator import calculate_metric, withheld_metric_result
+from .calculator import calculate_metric, withheld_metric_result, calculate_observation_metric
 from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
 from .deterministic_router import (
     adapt_companyfacts, adapt_8k_item_index, project_event_result,
     load_event_route_catalog, _compiled_event_spec, source_set_manifest, acquisition_event_source_set_receipt,
 )
-from .normal_annual_input import prepare_saved_annual_input
+from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
 from .normal_governance_input import _Sources, _filings, _history_index, history_body_alignment, NormalGovernanceInputError
 from .normal_source_authority import ROOT, verify_saved_source_proofs
-from .observations import scope_key
+from .observations import scope_key, structured_observation
 from .sources import companyfacts_structured_facts, resolve_repository_file, SourceError
 from .specs import compile_spec_file
 from .traits import repository_company_traits
@@ -30,7 +30,7 @@ B01_SPEC_PATH = "catalog/metrics/B01_revenue.md"
 B03_SPEC_PATH = "catalog/metrics/B03_ebitda_margin.md"
 EVENT_METRICS = ("C01", "E01", "E02", "E03", "E04", "E05")
 SUPPORTED_METRICS = ("B01", "B03", *EVENT_METRICS)
-_AUTHORITY_FILES = (B01_SPEC_PATH, B03_SPEC_PATH, "catalog/event_routes.json", "catalog/zero_ai_public_projection.json",
+_AUTHORITY_FILES = (B01_SPEC_PATH, B03_SPEC_PATH, FISCAL_LABEL_POLICY_PATH, "catalog/event_routes.json", "catalog/zero_ai_public_projection.json",
                     "config/company_registry.csv", "catalog/company_traits.yaml", "config/metric_applicability.yaml")
 
 
@@ -190,7 +190,17 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
             filing_rows.extend(events)
             graph = project_event_result(metric_id=metric_id, claims=claims, source_set_manifest=source_sets[-1],
                 inventory_source_reference=inventory["source_reference"], target_period=period, catalog=catalog)
-            result, trace, observations = graph["result"], graph["trace"], [graph["observation"]]
+            original = graph["observation"]
+            # The inventory reference and the event collection have distinct
+            # roles. Preserve both rather than binding the collection role to
+            # a different SourceReference in a complete native Run.
+            binding = {**original["source_binding"],"source_role":inventory["source_reference"]["source_role"],
+                       "source_set_role":source_sets[-1]["source_role"]}
+            observation = structured_observation(metric_id=metric_id,semantic_role=original["semantic_role"],company_id=company_id,
+                period_start=period["period_start"],period_end=period["period_end"],scope=original["scope"],
+                value=original["value"],unit=original["unit"],quality=original["quality"],source_binding=binding)
+            result,trace = calculate_observation_metric(compiled_spec=spec,target=target,company_traits=traits,observation=observation)
+            observations = [observation]
             selection = {"reason_code":result["reason_code"], "matched_verified_claim_ids":graph["matched_verified_claim_ids"],
                          "source_event_accessions":sorted({f["accessionNumber"] for f in events})}
     except (NormalZeroAiError, NormalGovernanceInputError, AnnualUpdateError, BatchWorkflowError, SourceError) as error:
@@ -220,7 +230,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
         "failed_source_attempts":list(reader.failed_attempts.values()),
         "native_run_status":"NOT_CREATED","current_latest_verified":False,"calls":{"provider":0,"paid":0,"sec":0},
         "production_authorized":False}
-    body = strict_json_loads(text=canonical_json_bytes(value=body).decode("utf-8"))
+    body = exact_json_value(body)
     return {**body,"input_binding_id":content_hash(value=body["input_binding"]),"component_id":content_hash(value=body)}
 
 

@@ -46,3 +46,23 @@ jobs:
         env:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2
+
+  native-runs:
+    name: vNext ordinary native Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Validate actual OPEN Runs and source-bound file negatives
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          NORMAL_V14_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-v14-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_normal_run_v3_material

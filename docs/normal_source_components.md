@@ -1,6 +1,6 @@
 # 普通来源后继组件
 
-本轮把旧22项全部接到普通已保存来源（包含明确WITHHELD，不表示全部已有数值），输出现有Observation、Trace和Result记录，尚未创建后继Run或扩展12指标CLI。实际原件、来源失败和开发缺口逐项保留；当前材料不证明实时SEC最新或正式采纳。
+本轮把旧22项全部接到普通已保存来源（包含明确WITHHELD，不表示全部已有数值），输出现有Observation、Trace和Result记录，现已接入未冻结V14的34路线CLI与原生Run草案。实际原件、来源失败和开发缺口逐项保留；当前材料不证明实时SEC最新或正式采纳。
 
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
@@ -25,4 +25,4 @@
 
 D03/D04和财年对照作为另外三个来源准备组件同时交付。D03独立审阅发现的引语归属、相邻结案、机关否认/转述和私人主体反例已修复，12份原始HTML反例复验通过，真实十公司原有9条有限支持陈述未丢失；它们不是9起当前调查。D04把12份原年报/修订年报的全部可见块分为97组，保存原字符及字节身份，十公司新进程重建通过；全文语义检查尚未执行，关键词缺失、普通无保留意见和名字匹配都不证明不存在持续经营疑虑。财年组件对比来源定义、DEI与同申报CF，提供冲突证据，不自动重写已有输入。
 
-作者报告、独立发现、修复后原反例、真实材料、测试和首次失败分别保留在`docs/evidence/issue28_continuous/successor-source-components/`。A01/A02/B12已覆盖30坐标，其中3项原件数值、27项结构性不适用；新政策使用ratio/USD和时点，保留旧目录/结果原字节，单位ID改名不改变单位意义。两公司完整图另经新进程/无Git数据根重建通过，6项默认及Python3.9测试通过。材料见`ordinary-accession-components/`。这些组件尚需进一步独立审阅、统一Run、来源更新及完整390坐标验收；费用与最终生产权限仍按总委托分别核实。
+作者报告、独立发现、修复后原反例、真实材料、测试和首次失败分别保留在`docs/evidence/issue28_continuous/successor-source-components/`。A01/A02/B12已覆盖30坐标，其中3项原件数值、27项结构性不适用；新政策使用ratio/USD和时点，保留旧目录/结果原字节，单位ID改名不改变单位意义。两公司完整图另经新进程/无Git数据根重建通过，6项默认及Python3.9测试通过。材料见`ordinary-accession-components/`。这些组件已进入V14统一Run草案，仍需进一步独立审阅、来源更新及完整390坐标验收；费用与最终生产权限仍按总委托分别核实。

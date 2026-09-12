@@ -286,9 +286,11 @@ B06新来源的两份历史验证只提供候选结果：可查看原始年报�
 <!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
 <!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
 
-开发中的19项普通零AI来源组件还没有加入该CLI或正式报告。事件条目数不代表已核实的人事变更人数；上一期材料缺失不会被当作同比零变化。D03/D04目前完成的来源准备也不等于已确认有无调查或持续经营疑虑。
+开发中的19项普通零AI来源组件现已进入该CLI的V14草案，尚未进入正式报告。事件条目数不代表已核实的人事变更人数；上一期材料缺失不会被当作同比零变化。D03/D04目前完成的来源准备也不等于已确认有无调查或持续经营疑虑。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->
 
 <!-- capability-anchor: CAPABILITY.ordinary_accession_native_components -->
 
-A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，尚未扩展12指标CLI或修改正式报告；详见`docs/normal_source_components.md`。
+A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主体维度，并生成原生记录；单位ID只是引用名字，不能代替单位核验。A01/A02区分母公司标准法与子公司/高级法，B12明确为RPO替代口径。它与另外19项合为旧22项普通来源组件，已接入34项V14草案CLI，正式报告不变；详见`docs/normal_source_components.md`。
+
+当前开发入口已将34项支持路线接到同一原生验证链，但V14仍是OPEN草案。公共行明确区分主结果与计算所用事实；财年名称按受支持的原文定义显示，原始标签冲突仍可追溯。正式报告和active不因此改变，完整390坐标与上线条件仍未完成。

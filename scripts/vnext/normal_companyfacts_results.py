@@ -14,7 +14,8 @@ from .batch_workflow import BatchWorkflowError
 from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
 from .deterministic_router import adapt_companyfacts
-from .normal_annual_input import annual_period, prepare_saved_annual_input, _registry_rows, NormalAnnualInputError
+from .normal_annual_input import annual_period, _registry_rows, NormalAnnualInputError
+from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
 from .normal_governance_input import _Sources, _filings, _history_index, history_body_alignment, NormalGovernanceInputError
 from .normal_source_authority import ROOT, verify_saved_source_proofs
 from .observations import scope_key
@@ -26,7 +27,7 @@ from .zero_ai_release import ZeroAiReleaseError
 
 
 CATALOG_PATH = "catalog/deterministic_metrics.json"
-_AUTHORITY_PATHS = (CATALOG_PATH, "config/company_registry.csv", "catalog/company_traits.yaml",
+_AUTHORITY_PATHS = (CATALOG_PATH, FISCAL_LABEL_POLICY_PATH, "config/company_registry.csv", "catalog/company_traits.yaml",
                     "config/metric_applicability.yaml")
 _SOURCE_ERRORS = (AnnualUpdateError, BatchWorkflowError, NormalAnnualInputError,
                   NormalGovernanceInputError, SourceError, ZeroAiReleaseError)
@@ -178,7 +179,7 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
         "failed_source_attempts":list(reader.failed_attempts.values()),"metrics":results,
         "resolver_sha256":sha256_file(path=Path(__file__)),"calls":{"provider":0,"paid":0,"sec":0},
         "native_run_status":"NOT_CREATED","current_latest_verified":False,"production_authorized":False}
-    body = strict_json_loads(text=canonical_json_bytes(value=body).decode("utf-8"))
+    body = exact_json_value(body)
     return {**body,"component_id":content_hash(value=body)}
 
 

@@ -352,7 +352,7 @@ def create_run(
         validate_run_coordinates(
             target_period=target_period,
             company_traits=normalized_traits,
-            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12"},
+            point_in_time_fiscal_label=requirement_id in {"issue_28_v9", "issue_28_v10", "issue_28_v11", "issue_28_v12", "issue_28_v13"},
         )
     except RecordError as error:
         raise RunStoreError("Run business coordinates are invalid") from error
@@ -1879,6 +1879,7 @@ def _replay_structured_result(
     source_references: Mapping[str, Mapping[str, object]],
     raw_bytes_by_id: Mapping[str, bytes],
     company_ciks: Sequence[str],
+    ordinary_case: object = None,
 ) -> None:
     """Re-execute one structured result from repository Spec and raw bytes.
 
@@ -1902,6 +1903,15 @@ def _replay_structured_result(
             Observation/Trace/Result difference from deterministic replay.
     """
     from .r5_b06_structured import is_primary, replay_result, validate_input_binding
+    if manifest.get("requirement_id") == "issue_28_v13":
+        from .normal_run_v3 import replay_case
+        expected = ordinary_case if ordinary_case is not None else replay_case(data_root=repo_root,manifest=manifest,spec=compiled_spec)
+        metric_id = compiled_spec["compiled"]["metric_id"]
+        if (expected["kind"] != "STRUCTURED" or expected["compiled_specs"].get(metric_id) != compiled_spec
+                or result != expected["results"].get(metric_id) or trace != expected["traces"].get(metric_id)
+                or any(observations.get(o["observation_id"]) != o for o in expected["observations"])):
+            raise RunStoreError("Integrated ordinary result differs from full source replay")
+        return
     if manifest.get("requirement_id") == "issue_28_v12":
         from .normal_run_v2 import replay_case
         expected = replay_case(data_root=repo_root, manifest=manifest, spec=compiled_spec)
@@ -2119,7 +2129,12 @@ def _validate_record_graph(
         RunStoreError: On duplicate primary IDs, detached trace/evidence,
         missing source/asset binding, or Candidate/ReviewUnit drift.
     """
-    if manifest.get("requirement_id") == "issue_28_v12":
+    ordinary_case = None
+    if manifest.get("requirement_id") == "issue_28_v13":
+        from .normal_run_v3 import validate_normal_run_authority
+        ordinary_case = validate_normal_run_authority(repo_root=repo_root,manifest=manifest,
+            records=records,compiled_specs=compiled_specs)
+    elif manifest.get("requirement_id") == "issue_28_v12":
         from .normal_run_v2 import validate_normal_run_authority
         validate_normal_run_authority(repo_root=repo_root, manifest=manifest,
             records=records, compiled_specs=compiled_specs)
@@ -2296,7 +2311,9 @@ def _validate_record_graph(
         str(wrapper["spec_semantic_hash"]): wrapper
         for wrapper in compiled_specs.values()
     }
-    if manifest.get("requirement_id") == "issue_28_v12":
+    if manifest.get("requirement_id") == "issue_28_v13":
+        from .normal_run_v3 import prepare_text_contexts as prepare_text_run_contexts
+    elif manifest.get("requirement_id") == "issue_28_v12":
         from .normal_run_v2 import prepare_text_contexts as prepare_text_run_contexts
     else:
         from .text_run_validation import prepare_text_run_contexts
@@ -2312,6 +2329,9 @@ def _validate_record_graph(
 
     def text_handlers(candidate):
         arguments = text_contexts[candidate["candidate_hash"]]
+        if manifest.get("requirement_id") == "issue_28_v13":
+            from .normal_run_v3 import text_api
+            return text_api(arguments["compiled_spec"]["compiled"]["metric_id"])
         if manifest.get("requirement_id") == "issue_28_v12":
             from .normal_run_v2 import text_api
             return text_api(arguments["compiled_spec"]["compiled"]["metric_id"])
@@ -2539,7 +2559,9 @@ def _validate_record_graph(
                     or observation_spec["compiled"]["quality_rule"].get("resolver") != "reported_compensation_table_v2"):
                 raise RunStoreError("Reviewed observation lacks an approval effect")
             if normal_table_observations is None:
-                if manifest.get("requirement_id") == "issue_28_v12":
+                if manifest.get("requirement_id") == "issue_28_v13":
+                    rebuilt = ordinary_case["observations"]
+                elif manifest.get("requirement_id") == "issue_28_v12":
                     from .normal_run_v2 import replay_case
                     rebuilt = replay_case(data_root=repo_root, manifest=manifest, spec=observation_spec)["observations"]
                 else:
@@ -3007,6 +3029,7 @@ def _validate_record_graph(
             source_references=source_references,
             raw_bytes_by_id=raw_bytes_by_id,
             company_ciks=company_ciks,
+            ordinary_case=ordinary_case,
         )
     referenced_observation_ids = {
         str(observation_id)

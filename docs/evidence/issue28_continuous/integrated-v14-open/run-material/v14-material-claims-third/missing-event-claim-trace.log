@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 82, in check
+    row['details']=action();row['passed']=not reject;row['outcome']='ACCEPTED'
+                   ~~~~~~^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 67, in <lambda>
+    self.check(name,lambda m=metric,n=name,f=mutate:self.attack(m,n,f),reject=True)
+                                                    ~~~~~~~~~~~^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/tests/vnext/test_normal_run_v3_material.py", line 124, in attack
+    data,base=self.bases[metric];run=self.output/'attacks'/name/'run'
+              ~~~~~~~~~~^^^^^^^^
+KeyError: 'E03'

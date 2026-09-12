@@ -13,7 +13,7 @@ from .calculator import metric_is_applicable, withheld_metric_result, calculate_
 from .canonical import canonical_json_bytes, content_hash, sha256_file, sha256_bytes, strict_json_file, strict_json_loads
 from .deterministic_router import parse_accession_xbrl_source, verified_claim
 from .governance_signals import _source_value, _qname
-from .normal_annual_input import prepare_saved_annual_input, _registry_rows
+from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
 from .normal_governance_input import _Sources
 from .normal_source_authority import ROOT, verify_saved_source_proofs
 from .observations import scope_key, structured_observation
@@ -25,7 +25,7 @@ from .zero_ai_r2 import (_load_deterministic_catalog, _compiled_deterministic_sp
 
 
 POLICY_PATH = "config/normal_accession_metrics_v1.json"
-_AUTHORITY = (POLICY_PATH,"catalog/deterministic_metrics.json","config/company_registry.csv",
+_AUTHORITY = (POLICY_PATH,FISCAL_LABEL_POLICY_PATH,"catalog/deterministic_metrics.json","config/company_registry.csv",
               "catalog/company_traits.yaml","config/metric_applicability.yaml")
 
 
@@ -167,7 +167,6 @@ def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str):
     manifest = _exact_filing_source_set(company_id=company_id,source_role="target_accession_instance",
         reference=source["source_reference"],inventory_reference=inventory["source_reference"],inventory_bytes=inventory["raw_bytes"])
     traits = repository_company_traits(repo_root=repo_root,company_id=company_id)
-    registry = next(c for c in _registry_rows(repo_root=repo_root) if c["company_id"] == company_id)
     rows = {}
     for metric_id,item in policy["metrics"].items():
         route = current["metrics"][metric_id]
@@ -213,7 +212,7 @@ def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str):
         "source_set":manifest,"source_proofs":proofs,"source_admission":verify_saved_source_proofs(data_root=repo_root,proofs=proofs),
         "metrics":rows,"resolver_sha256":sha256_file(path=Path(__file__)),"calls":{"provider":0,"paid":0,"sec":0},
         "native_run_status":"NOT_CREATED","current_latest_verified":False,"production_authorized":False}
-    body = strict_json_loads(text=canonical_json_bytes(value=body).decode("utf-8"))
+    body = exact_json_value(body)
     return {**body,"component_id":content_hash(value=body)}
 
 

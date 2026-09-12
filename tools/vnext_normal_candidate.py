@@ -13,12 +13,11 @@ sys.path[:0] = [str(ROOT), str(ROOT / "scripts")]
 from sec_http import write_immutable_bytes
 from vnext.canonical import content_hash
 from vnext.normal_annual_input import _registry_rows
-from vnext.normal_run_v2 import install_normal_inputs, create_normal_run
-from vnext.normal_text_projection_v2 import render_normal_text_run
-from vnext.normal_numeric_projection import render_normal_numeric_run
+from vnext.normal_run_v3 import install_normal_inputs, create_normal_run, POLICY_PATH
+from vnext.ordinary_projection import render_ordinary_run
 
 
-METRICS = ("A03", "A04", "A09", "A11", "A12", "A13", "B06", "C02", "C03", "C04", "D01", "D02")
+METRICS = tuple(json.loads((ROOT / POLICY_PATH).read_text())["metric_ids"])
 
 
 def _write(path, value):
@@ -45,6 +44,8 @@ def main(argv=None):
                         help="Configured company ID; repeat to select several; default all ten")
     parser.add_argument("--metric", action="append", choices=METRICS,
                         help="Repeat to select several; default all installed normal candidate metrics")
+    parser.add_argument("--freeze", action="store_true",
+                        help="Freeze only when the installed successor policy explicitly enables it; draft runs remain OPEN")
     args = parser.parse_args(argv)
     companies = [row["company_id"] for row in _registry_rows(repo_root=ROOT)]
     selected = args.company or companies
@@ -72,9 +73,10 @@ def main(argv=None):
             try:
                 install_normal_inputs(data_root=data, company_id=company, metric_id=metric)
                 result = create_normal_run(data_root=data, run_dir=run,
-                    company_id=company, metric_id=metric, freeze=True)
+                    company_id=company, metric_id=metric, freeze=args.freeze)
                 native = result["result"]
-                row.update(status="FROZEN_CANDIDATE" if native["publication"] == "PUBLISHED" else "WITHHELD_CANDIDATE",
+                accepted_status = "FROZEN_CANDIDATE" if result["manifest"]["status"] == "FROZEN" else "OPEN_CANDIDATE"
+                row.update(status=accepted_status if native["publication"] == "PUBLISHED" else "WITHHELD_CANDIDATE",
                     run_id=result["manifest"]["run_id"], run_status=result["manifest"]["status"],
                     result=native, target_period=result["manifest"]["target_period"],
                     public_row_status="NOT_PREPARED", production_authorized=False)
@@ -88,8 +90,7 @@ def main(argv=None):
                             if k in selection})
                 if native["publication"] == "PUBLISHED" or metric not in {"D01", "C02", "D02"}:
                     try:
-                        renderer = render_normal_text_run if metric in {"D01", "C02", "D02"} else render_normal_numeric_run
-                        rendered = renderer(data_root=data, run_dir=run)
+                        rendered = render_ordinary_run(data_root=data, run_dir=run, frozen=args.freeze)
                         target = output / "rows" / company / metric
                         target.mkdir(parents=True)
                         for name, raw in rendered["files"].items():
@@ -109,9 +110,10 @@ def main(argv=None):
             coordinates.append(row)
             _write(output / "coordinates" / (company + "-" + metric + ".json"), row)
             print(json.dumps({k: row[k] for k in ("company_id", "metric_id", "status")}), flush=True)
-    gaps = [row for row in coordinates if row["status"] != "FROZEN_CANDIDATE"
+    gaps = [row for row in coordinates if row["status"] not in {"FROZEN_CANDIDATE", "OPEN_CANDIDATE"}
             or row.get("public_row_status") == "PROJECTION_FAILED"]
-    report = {"record_type": "NORMAL_SAVED_CANDIDATE_BATCH", "status": "COMPLETED_WITH_GAPS" if gaps else "CANDIDATES_READY",
+    complete_status = "CANDIDATES_READY" if args.freeze else "OPEN_CANDIDATES_READY"
+    report = {"record_type": "NORMAL_SAVED_CANDIDATE_BATCH", "status": "COMPLETED_WITH_GAPS" if gaps else complete_status,
         "started_at_utc": started, "completed_at_utc": datetime.now(timezone.utc).isoformat(),
         "requested_coordinate_count": len(selected) * len(metrics), "coordinates": coordinates,
         "full_issue_acceptance": False, "production_authorized": False,

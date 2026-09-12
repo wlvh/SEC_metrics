@@ -46,6 +46,8 @@ SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for 
     "tests.vnext.test_normal_companyfacts_results",
     "tests.vnext.test_normal_zero_ai_results",
     "tests.vnext.test_normal_accession_results",
+    "tests.vnext.test_normal_annual_input_v2",
+    "tests.vnext.test_normal_run_inputs",
 )
 FAST_TESTS = tuple(s for s in FAST_TESTS if s not in SOURCE_TESTS)
 SOURCE_TIMEOUT_SECONDS = 240
