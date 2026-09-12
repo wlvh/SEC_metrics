@@ -51,6 +51,7 @@ SOURCE_TESTS = tuple(s for s in FAST_TESTS if any(s == p or s.startswith(p) for 
     "tests.vnext.test_annual_amendment_scope",
     "tests.vnext.test_b06_combined_borrowings",
     "tests.vnext.test_b06_financing_inventory",
+    "tests.vnext.test_b06_note_carrying",
     "tests.vnext.test_lodging_table_source",
     "tests.vnext.test_normal_source_requirements",
     "tests.vnext.test_instant_balance_amendment",

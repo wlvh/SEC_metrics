@@ -52,7 +52,19 @@ def _policy(root):
 def prepare_case(*, data_root, company_id, metric_id):
     policy = _policy(data_root)
     _need(metric_id in policy["metric_ids"],"ORDINARY_INTEGRATED_METRIC_NOT_ENABLED")
-    if metric_id in {"B10","B11"}:
+    note_debt = None
+    if metric_id == "B06":
+        from .b06_guarded_result_v3 import prepare_guarded_b06_result
+        # The established denominator guard precedes every debt grammar. A
+        # source-layout extension must not require debt evidence to establish
+        # a ratio already known to be meaningless from nonpositive equity.
+        guarded = prepare_guarded_b06_result(repo_root=data_root,company_id=company_id)
+        if guarded["status"] != "NOT_MEANINGFUL":
+            from .normal_note_debt_results import prepare_note_debt_case
+            note_debt = prepare_note_debt_case(repo_root=data_root,company_id=company_id)
+    if note_debt is not None:
+        case = note_debt
+    elif metric_id in {"B10","B11"}:
         from .normal_lodging_results import prepare_ordinary_lodging_case
         case = prepare_ordinary_lodging_case(repo_root=data_root,company_id=company_id,metric_id=metric_id)
     elif metric_id in installed_ordinary_spec_documents():

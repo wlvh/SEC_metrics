@@ -67,7 +67,8 @@
     ],
     "B06": [
       "catalog/r5/B06_new_source_v2.md",
-      "catalog/r5/B06_guarded_v3.md"
+      "catalog/r5/B06_guarded_v3.md",
+      "catalog/r5/B06_note_carrying_v4.md"
     ],
     "C02": [
       "catalog/r6/C02_board_disclosures_v1.md"
@@ -193,24 +194,28 @@
     "catalog/ordinary_zero_ai/E03.md",
     "catalog/ordinary_zero_ai/E04.md",
     "catalog/ordinary_zero_ai/E05.md",
+    "catalog/r5/B06_note_carrying_v4.md",
     "config/annual_amendment_scope_v1.json",
+    "config/b06_note_carrying_v1.json",
+    "config/instant_balance_amendment_v1.json",
     "config/issue28_normal_results_v2.json",
     "config/normal_accession_metrics_v1.json",
     "config/normal_fiscal_year_labels_v1.json",
     "config/ordinary_lodging_table_v1.json",
     "scripts/vnext/annual_amendment_scope.py",
+    "scripts/vnext/b06_note_carrying.py",
     "scripts/vnext/fiscal_year_labels.py",
+    "scripts/vnext/instant_balance_amendment.py",
     "scripts/vnext/lodging_table_source.py",
     "scripts/vnext/normal_accession_results.py",
     "scripts/vnext/normal_annual_input_v2.py",
     "scripts/vnext/normal_companyfacts_results.py",
     "scripts/vnext/normal_lodging_results.py",
+    "scripts/vnext/normal_note_debt_results.py",
     "scripts/vnext/normal_run_inputs.py",
     "scripts/vnext/normal_run_specs.py",
     "scripts/vnext/normal_run_v3.py",
-    "scripts/vnext/normal_zero_ai_results.py",
-    "scripts/vnext/instant_balance_amendment.py",
-    "config/instant_balance_amendment_v1.json"
+    "scripts/vnext/normal_zero_ai_results.py"
   ],
   "freeze_enabled": false,
   "declared_issue_metric_count": 39,

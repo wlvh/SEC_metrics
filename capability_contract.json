@@ -124,6 +124,20 @@
         "since": "2026-09-12"
       },
       {
+        "anchor_id": "CAPABILITY.ordinary_note_debt_carrying",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B06增加逐笔债券面值、费用和账面额及明确无融资租赁的有限来源结构。原HTML/XML/Company Facts、细分债券事实、完整相关附注、表行和期末分类共同核对，未知借款或被引用的无租赁声明不能通过。新规格经济定义不变，沿V14同一原生Run输出OPEN候选；旧规则、独立审阅和生产权限不变。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_note_debt_run_material.py::NoteDebtNativeMaterialTest.test_actual_debt_guard_and_counterfeit_graphs",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.ordinary_candidate_diagnostics",
         "type": "capability",
         "status": "active",

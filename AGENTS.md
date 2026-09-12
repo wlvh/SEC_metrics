@@ -186,6 +186,7 @@ Issue #28 / `issue_28_v1` 已经由PR #29合并及独立治理receipt激活；�
 - `lodging_table_source.py` / `normal_lodging_results.py` / `catalog/ordinary_lodging/`：B10/B11新确定性来源路线，从表前说明、整表及地域脚注重建当前年可比全系统全球统计，沿V14原生Run输出；旧AI规格/资格不改，不授新调用或正式信用。见`docs/ordinary_lodging.md`。
 - `annual_amendment_scope.py`：逐份核对普通修订的原件、期间、完整说明及适用输入属性；有限链接更正可接入B01/B03/六事件/Company Facts，Part III不自动批准财务或主体合并范围。
 - `b06_combined_borrowings.py` / `b06_financing_inventory.py`：组合附注借款账面数对账与融资披露来源清单。保留原表实际标签、计量调整与舍入说明；小计不是完整B06，缺少单独融资租赁披露不推零，尚未接入Run。说明与实测见`docs/evidence/issue28_continuous/ordinary-borrowing-composition/`及`ordinary-financing-inventory/`。
+- `b06_note_carrying.py` / `normal_note_debt_results.py`：新增逐笔债券及明确无融资租赁的有限B06原件路线，核对整表、细分原生事实及独立融资清单，沿V14同一Run输出。旧债务验证器和冻结规则不改，未覆盖关系保留未决；见`docs/note_debt_source.md`。
 - `regulatory_investigation_candidates.py` / `going_concern_source.py` / `fiscal_year_labels.py`：D03事实候选及上下文、D04完整年报/修订原文分组、财年原文/机器标签对照；来源准备不能当成最终调查/持续经营结论或新规则激活。
 - `tools/run_fast_tests_v2.py`：当前CI分95个30秒短测试入口和34个240秒完整来源材料入口；先前124项均保留，并新增五个普通来源/输入材料套件。旧`tools/run_fast_tests.py`是V13冻结规则的一部分，保留原字节和历史入口。
 

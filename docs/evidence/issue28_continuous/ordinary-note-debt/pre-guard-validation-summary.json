@@ -1,0 +1,48 @@
+{
+  "record_type": "ISSUE28_NOTE_DEBT_DEVELOPMENT_EVIDENCE",
+  "status": "LOCAL_VERIFICATION_PASSED_INDEPENDENT_REVIEW_PENDING",
+  "requirement_id": "issue_28_v13",
+  "requirement_closure_hash": "sha256:28314833775959bf15a4d53cf44f9b03dd178f6c177e3a85f0f505faae4abb9d",
+  "execution_file_count": 331,
+  "source_tests": {
+    "selectors": 42,
+    "seconds": 344.273,
+    "status": "PASSED"
+  },
+  "fast_tests": {
+    "selectors": 96,
+    "seconds": 69.716,
+    "status": "PASSED",
+    "version_note": "Fast run preceded the B06 Run-period correction; actual native/cold replay and complete source suite followed it."
+  },
+  "source_module_methods": 8,
+  "source_module_python39_seconds": 23.254,
+  "native_batch_status": "OPEN_CANDIDATES_READY",
+  "native_coordinate_count": 2,
+  "native_seconds": 58.17283,
+  "native_attacks": 2,
+  "native_attack_seconds": 30.287,
+  "cold_runtime_replay": {
+    "status": "PASS",
+    "records": 15,
+    "decisions": 0,
+    "git_directory_present": false
+  },
+  "first_failures": [
+    "Dimensioned short-term borrowing was initially omitted; original counterexample now rejected",
+    "Native fixed-zero word no was outside the reused compensation numeric helper; bounded debt handling added",
+    "First native Run used annual period for instant observations; new Run fixes the period without modifying the old Run"
+  ],
+  "limitations": [
+    "Finite debt-note grammar; other companies and debt structures remain required",
+    "Unfrozen OPEN developer candidates only",
+    "Independent review remains unavailable because original agents reported account usage limits",
+    "No live source freshness, full390 acceptance or production approval"
+  ],
+  "new_calls": {
+    "provider": 0,
+    "paid": 0,
+    "sec": 0
+  },
+  "production_authorized": false
+}

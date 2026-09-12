@@ -101,3 +101,14 @@ jobs:
           INSTANT_BALANCE_NATIVE_BATCH: ${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}
           INSTANT_BALANCE_ATTACK_ROOT: ${{ runner.temp }}/ordinary-instant-attacks-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_instant_balance_run_material
+      - name: Build reconciled note debt and nonpositive-equity guard Runs
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/vnext_normal_candidate.py --company enphase_energy --company marriott_international --metric B06 --output-root "${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Reject recalculated false debt and historical Spec substitution
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          NOTE_DEBT_NATIVE_BATCH: ${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}
+          NOTE_DEBT_ATTACK_ROOT: ${{ runner.temp }}/ordinary-note-debt-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_note_debt_run_material

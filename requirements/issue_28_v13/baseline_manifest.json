@@ -137,13 +137,25 @@
       "sha256": "614b078680ef007ab5e5095c999249f8cdca9820cb19f3545a36f9965d83fbb1",
       "size": 1083
     },
+    "catalog/r5/B06_note_carrying_v4.md": {
+      "sha256": "661d7c8658a64d1c31fc9075c572ec50f2dbfdc33b9363c6ad7e8dd5285d399b",
+      "size": 9368
+    },
     "config/annual_amendment_scope_v1.json": {
       "sha256": "ed7c8d776c47b08a5238d41d250fa7d4712994f2df34148383040e2435a93202",
       "size": 3228
     },
+    "config/b06_note_carrying_v1.json": {
+      "sha256": "1aa994ab0ed0527618de93fbc3ee5073ffe87c4be0ea34819a2e94b7e459c78e",
+      "size": 2470
+    },
+    "config/instant_balance_amendment_v1.json": {
+      "sha256": "50790b4f32651a2d93044d32b58aeace432d6dcde7fa9b42f599dbb05acb0892",
+      "size": 4861
+    },
     "config/issue28_normal_results_v2.json": {
-      "sha256": "4d3c7ca0bd7070f5a38da393c41a3442d8ad4894febb391fec358837faf31628",
-      "size": 5864
+      "sha256": "785960f91bcfed7c9e10368b55c81189c84df25afe6b310a1c25306f6d8c2d41",
+      "size": 6081
     },
     "config/normal_accession_metrics_v1.json": {
       "sha256": "f0ebf62e04675b33cc9dba0a9d58e35e46fca1581ad50cbecce672e8b7e1deaa",
@@ -161,9 +173,17 @@
       "sha256": "24d19e178a5cd5442da9577bc4ebb30c2bb4598e01c8f7094ce8ea5a63c585a8",
       "size": 19478
     },
+    "scripts/vnext/b06_note_carrying.py": {
+      "sha256": "a3786d8838442e944a7a75c2e5e19cf7c8fc50eceb155eec3f68b81630695738",
+      "size": 26783
+    },
     "scripts/vnext/fiscal_year_labels.py": {
       "sha256": "a0f4c18f9142d12e6ba278843df6b49b2310ce2db39d10c613f1afa81d7bc7ea",
       "size": 15872
+    },
+    "scripts/vnext/instant_balance_amendment.py": {
+      "sha256": "dfc5b37f2bcf5c9ea22b130df96656542707b2f1195fcda5f9be2d92633abff5",
+      "size": 10279
     },
     "scripts/vnext/lodging_table_source.py": {
       "sha256": "c46857231032f0b42f581338e1fa12959a677c64c56b7468accc293c1987c7b1",
@@ -185,6 +205,10 @@
       "sha256": "dde72267403c4952bab05c56f4d3f68e307dee57ed993c0d339f45797d250818",
       "size": 7579
     },
+    "scripts/vnext/normal_note_debt_results.py": {
+      "sha256": "c84ce92695558c82fb5879c54bebcd0eec8a394e1dbe9b28277a8fed8de9f448",
+      "size": 8123
+    },
     "scripts/vnext/normal_run_inputs.py": {
       "sha256": "34e08297b4ce4564cf734ecbe6010039d1c1f3200ba1da5f6dd6376a41c2868e",
       "size": 5364
@@ -194,20 +218,12 @@
       "size": 3779
     },
     "scripts/vnext/normal_run_v3.py": {
-      "sha256": "1229a6788bb1bb34d7f0dab3553fe0682e78a2372705c521252e5f759053b809",
-      "size": 15736
+      "sha256": "0e8564d3f4655d26d0047fe017035249dbe840a14623c882ce7b1fe9895633b4",
+      "size": 16440
     },
     "scripts/vnext/normal_zero_ai_results.py": {
       "sha256": "cb9a746f648c3862fa8c2f2aa49c9fe563d96ec7ef12e7b64778280d8bcc4f77",
       "size": 18725
-    },
-    "scripts/vnext/instant_balance_amendment.py": {
-      "sha256": "dfc5b37f2bcf5c9ea22b130df96656542707b2f1195fcda5f9be2d92633abff5",
-      "size": 10279
-    },
-    "config/instant_balance_amendment_v1.json": {
-      "sha256": "50790b4f32651a2d93044d32b58aeace432d6dcde7fa9b42f599dbb05acb0892",
-      "size": 4861
     }
   },
   "execution_authority": {
@@ -424,6 +440,10 @@
         "sha256": "e34a540f246302cd67abfa4c98a6da62bcced32f14b28be30a64049e80bfd944",
         "size": 9106
       },
+      "catalog/r5/B06_note_carrying_v4.md": {
+        "sha256": "661d7c8658a64d1c31fc9075c572ec50f2dbfdc33b9363c6ad7e8dd5285d399b",
+        "size": 9368
+      },
       "catalog/r5/B06_structured.md": {
         "sha256": "3aabaac36204b03276a2f5c1c557ca4c7cd4bdb19a115a753f5abc0df6895421",
         "size": 8857
@@ -504,6 +524,10 @@
         "sha256": "8bb92c1e2b0169d388cf6906ccfbd3d9a1a64b8d2cc66aae0baa33b131f7aa0c",
         "size": 1215
       },
+      "config/b06_note_carrying_v1.json": {
+        "sha256": "1aa994ab0ed0527618de93fbc3ee5073ffe87c4be0ea34819a2e94b7e459c78e",
+        "size": 2470
+      },
       "config/company_registry.csv": {
         "sha256": "b4f903adb25fa90455a7cc97aa1089125e77947e08c7391dababd713eef95f4a",
         "size": 1562
@@ -521,8 +545,8 @@
         "size": 3093
       },
       "config/issue28_normal_results_v2.json": {
-        "sha256": "4d3c7ca0bd7070f5a38da393c41a3442d8ad4894febb391fec358837faf31628",
-        "size": 5864
+        "sha256": "785960f91bcfed7c9e10368b55c81189c84df25afe6b310a1c25306f6d8c2d41",
+        "size": 6081
       },
       "config/issue_15_release_plan.json": {
         "sha256": "b2feda3fc40f0cfdc05a1b9006aaf8ba3b055e778cfb4e4921eae9ab0e288fc7",
@@ -840,6 +864,10 @@
         "sha256": "a3105fad175c766053ce4be66fe0a228ecc41d9723c20d50e1797f252f157cb1",
         "size": 17095
       },
+      "scripts/vnext/b06_note_carrying.py": {
+        "sha256": "a3786d8838442e944a7a75c2e5e19cf7c8fc50eceb155eec3f68b81630695738",
+        "size": 26783
+      },
       "scripts/vnext/b06_source_admission.py": {
         "sha256": "b988e64647383c56f0bea158f100be11ebcfe194090d50afd89ad0b59d541570",
         "size": 8329
@@ -964,6 +992,10 @@
         "sha256": "dde72267403c4952bab05c56f4d3f68e307dee57ed993c0d339f45797d250818",
         "size": 7579
       },
+      "scripts/vnext/normal_note_debt_results.py": {
+        "sha256": "c84ce92695558c82fb5879c54bebcd0eec8a394e1dbe9b28277a8fed8de9f448",
+        "size": 8123
+      },
       "scripts/vnext/normal_run_inputs.py": {
         "sha256": "34e08297b4ce4564cf734ecbe6010039d1c1f3200ba1da5f6dd6376a41c2868e",
         "size": 5364
@@ -977,8 +1009,8 @@
         "size": 17882
       },
       "scripts/vnext/normal_run_v3.py": {
-        "sha256": "1229a6788bb1bb34d7f0dab3553fe0682e78a2372705c521252e5f759053b809",
-        "size": 15736
+        "sha256": "0e8564d3f4655d26d0047fe017035249dbe840a14623c882ce7b1fe9895633b4",
+        "size": 16440
       },
       "scripts/vnext/normal_source_authority.py": {
         "sha256": "657eaec526d1b28edcd28a1e1d7fc9433fad5a96a677da77c2561d0d0383be3e",

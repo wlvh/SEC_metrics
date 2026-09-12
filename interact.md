@@ -397,6 +397,10 @@ A01/A02/B12普通来源组件现已保留实际时点、完整单位定义与主
 
 B06来源分析可显示组合附注中核对过的借款小计、实际表行及尚未证明的范围。小计不作为完整B06数值；没有单独融资租赁披露也不写零。来源分析组件尚未进入正式报告。
 
+<!-- capability-anchor: CAPABILITY.ordinary_note_debt_carrying -->
+
+当完整债券表、当期明确无融资租赁声明及独立融资检查共同通过时，普通B06候选可显示重新计算的期末债务权益比，并保留每笔账面额和来源。声明缺失或被引用、额外借款和不一致金额会保持未决；这项有限结构支持仍是OPEN开发预览，不改变正式报告。见`docs/note_debt_source.md`。
+
 <!-- capability-anchor: CAPABILITY.ordinary_deterministic_lodging -->
 
 当前普通CLI扩为36项。B10/B11显示原表当前年的可比全系统全球统计，入住率为百分比、RevPAR为美元，并保留原表定位；不显示为一次新的AI抽取或旧资格重用。其他配置公司按原适用性显示结构不适用。全部仍是OPEN开发候选，剩余B13/D03/D04和完整交付继续推进；说明见`docs/ordinary_lodging.md`。

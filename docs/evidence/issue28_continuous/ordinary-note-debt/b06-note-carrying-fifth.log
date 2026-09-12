@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 273, in inspect_note_carrying
+    narrative = _narrative([xnotes['debt'],xnotes['leases']],composition,prepared['filing']['reportDate'])
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 212, in _narrative
+    _need(_date_text(end) in sentence, 'NARRATIVE_PERIOD_UNPROVEN:'+sentence)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_note_carrying.py", line 36, in _need
+    raise NoteCarryingError('NOTE_CARRYING_'+reason)
+vnext.b06_note_carrying.NoteCarryingError: NOTE_CARRYING_NARRATIVE_PERIOD_UNPROVEN:DEBT The following table provides information regarding the Company’s debt: The following tables present the total amount of interest cost recognized in the consolidated statements of operations relating to the Notes: Convertible Senior Notes due 2028 On March 1, 2021, the Company issued $575.0 million aggregate principal amount of its 0.0% convertible senior notes due 2028 (the “Notes due 2028”).
