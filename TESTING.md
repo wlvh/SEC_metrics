@@ -650,6 +650,12 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_source_requirements` 已加入source-material层。实际Marriott/Salesforce/JPM材料覆盖可用来源、最终失败GET和历史清单冲突；外部副本删除新主文件仍能发现其地址，删除/篡改目录不会宣布子文件齐备；后续年报元数据的纯解析不授予新来源信用。十公司实际CLI命令为 `python3 tools/vnext_normal_update.py --discover-sources --output /absolute/new-external-directory/source-requirements.json`；有缺口返回2并保留所有公司，不执行指标或请求。说明见`docs/normal_source_discovery.md`。
 
+### 普通主体接续与期末余额
+
+来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。
+
+实际Run先由 `tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root /absolute/new/instant-runs` 创建，再设置 `INSTANT_BALANCE_NATIVE_BATCH`、`INSTANT_BALANCE_ATTACK_ROOT` 两个外部目录执行 `tests.vnext.test_instant_balance_run_material`。核对原生时点/主体及公共行，并以真实Calculator构造90亿美元假现金图、删除修订原件，检查重放拒绝。CI native-runs包含真实创建和攻击两个步骤；不把组件或测试准备说成Run执行通过。
+
 ### 普通B10/B11的确定性来源与原生记录
 
 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest tests.vnext.test_lodging_table_source`使用三年原件核对同范围/同年列、跨页说明和地域脚注，拒绝错误范围、表外标签、竞争表、重复全球行、季度/货币限定和引用说明。它在source-material层登记，保留原料和首次失败，不调用模型、不改旧AI规格。

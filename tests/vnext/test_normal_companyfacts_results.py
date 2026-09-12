@@ -131,6 +131,32 @@ class OrdinaryCompanyfactsTest(unittest.TestCase):
             with original_sources_only(),self.assertRaisesRegex(BatchWorkflowError,'Request-ledger locator evidence is invalid'):
                 resolve_ordinary_companyfacts_metrics(repo_root=data,company_id='marriott_international')
 
+    def test_successor_current_balances_do_not_inherit_an_annual_comparability_claim(self):
+        case=self.cases['paramount_skydance_paramount_global']
+        self.assertEqual('WITHHELD',case['amendment_input']['decision'])
+        self.assertEqual('INPUT_PROPERTY_PROVEN',case['instant_amendment_input']['decision'])
+        for metric,expected in [('B08',Decimal(13320000000)/Decimal(10599000000)),('B09',Decimal(3274000000))]:
+            row=case['metrics'][metric];result=row['result']
+            self.assertEqual('PUBLISHED',result['publication'])
+            self.assertEqual('EXACT',result['quality']);self.assertEqual(expected,Decimal(result['value']))
+            self.assertEqual(('2025-12-31','2025-12-31'),(result['period_start'],result['period_end']))
+            self.assertFalse(row['selection']['annual_continuity_proven'])
+            for claim in row['claims']:
+                self.assertEqual('2041610',claim['attributes']['entity'])
+                self.assertEqual(case['filings']['current']['accessionNumber'],claim['attributes']['accession'])
+        for metric in ('B02','B04','B05','B07'):
+            self.assertEqual('WITHHELD',case['metrics'][metric]['result']['publication'])
+        with tempfile.TemporaryDirectory(prefix='instant-amendment-import-') as tmp:
+            root=Path(tmp);copy_sources(case,root)
+            with original_sources_only():
+                self.assertEqual(case,verify_ordinary_companyfacts_metrics(candidate=case,repo_root=root,
+                    company_id=case['company_id']))
+            amendment=case['prepared_input']['amendments'][0]['accessionNumber']
+            proof=next(p for p in case['source_proofs'] if p['accession']==amendment)
+            (root/proof['request_repo_relative_path']).unlink()
+            with original_sources_only(),self.assertRaises(BatchWorkflowError):
+                verify_ordinary_companyfacts_metrics(candidate=case,repo_root=root,company_id=case['company_id'])
+
     def test_caller_cannot_supply_prior_period_filing_claim_or_answer(self):
         for key in ('prior_period','filing','claims','answer','source_proofs'):
             with self.subTest(key=key),self.assertRaises(TypeError):

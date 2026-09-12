@@ -14,6 +14,20 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.ordinary_successor_instant_balances",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B08/B09沿原目录允许主体接续后的当前主CIK/当前申报时点余额。有限Part III修订须核对完整用途及身份、原生更正标志和可见封面、未附新财务报表声明及全文更正/余额语句；有条件的薪酬追回仅按完整结构识别。旧普遍财务输入仍可WITHHELD，有限时点证明单独进入原生重放；不证明全年可比、债务完整、治理/法律结论或正式发布。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_companyfacts_results.py::OrdinaryCompanyfactsTest.test_successor_current_balances_do_not_inherit_an_annual_comparability_claim",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
         "anchor_id": "CAPABILITY.normal_source_dependency_discovery",
         "type": "capability",
         "status": "active",

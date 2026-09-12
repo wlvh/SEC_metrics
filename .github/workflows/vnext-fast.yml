@@ -77,3 +77,14 @@ jobs:
           LODGING_NATIVE_BATCH: ${{ runner.temp }}/ordinary-lodging-${{ github.run_id }}-${{ github.run_attempt }}
           LODGING_ATTACK_ROOT: ${{ runner.temp }}/ordinary-lodging-attacks-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_lodging_run_material
+      - name: Build successor current-balance Runs with amendment evidence
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python3 tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root "${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Reject false cash and missing amendment sources
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          INSTANT_BALANCE_NATIVE_BATCH: ${{ runner.temp }}/ordinary-instant-${{ github.run_id }}-${{ github.run_attempt }}
+          INSTANT_BALANCE_ATTACK_ROOT: ${{ runner.temp }}/ordinary-instant-attacks-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_instant_balance_run_material

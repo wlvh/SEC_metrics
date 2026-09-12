@@ -404,3 +404,7 @@ B06来源分析可显示组合附注中核对过的借款小计、实际表行�
 <!-- capability-anchor: CAPABILITY.normal_source_dependency_discovery -->
 
 普通更新入口可加`--discover-sources`，按公司列出已知来源、待刷新数据集及缺失/失败文件，不要求用户提供文件地址或答案。新年报正文未保存时仍能发现其地址；目录未读取时明确子文件集合未知。保存来源齐备返回0，发现缺口返回2并保留其他公司输出；均不表示来源最新或新财报已计算成功。命令和字段见`docs/normal_source_discovery.md`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_successor_instant_balances -->
+
+B08/B09在原目录允许且当前主体/申报/时点得到证明时，可显示期末流动比率及现金。有限Part III修订的余额输入证明和“不证明全年可比”的范围保留在候选上下文中；原件与修订均可追溯。其他全年或跨期指标的限制继续显示，不因两项期末值成功而删除。说明见`docs/ordinary_instant_balances.md`。

@@ -15,7 +15,8 @@ from .calculator import metric_is_applicable, withheld_metric_result
 from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_loads
 from .deterministic_router import adapt_companyfacts
 from .normal_annual_input import annual_period, _registry_rows, NormalAnnualInputError
-from .annual_amendment_scope import prepare_saved_amendment_input
+from .annual_amendment_scope import prepare_saved_amendment_input, POLICY_PATH as AMENDMENT_POLICY_PATH
+from .instant_balance_amendment import prepare_instant_balance_amendment_input, POLICY_PATH as INSTANT_POLICY_PATH
 from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
 from .normal_governance_input import _Sources, _filings, _history_index, history_body_alignment, NormalGovernanceInputError
 from .normal_source_authority import ROOT, verify_saved_source_proofs
@@ -28,7 +29,7 @@ from .zero_ai_release import ZeroAiReleaseError
 
 
 CATALOG_PATH = "catalog/deterministic_metrics.json"
-_AUTHORITY_PATHS = (CATALOG_PATH, FISCAL_LABEL_POLICY_PATH, "config/company_registry.csv", "catalog/company_traits.yaml",
+_AUTHORITY_PATHS = (CATALOG_PATH, FISCAL_LABEL_POLICY_PATH, AMENDMENT_POLICY_PATH, INSTANT_POLICY_PATH, "config/company_registry.csv", "catalog/company_traits.yaml",
                     "config/metric_applicability.yaml")
 _SOURCE_ERRORS = (AnnualUpdateError, BatchWorkflowError, NormalAnnualInputError,
                   NormalGovernanceInputError, SourceError, ZeroAiReleaseError)
@@ -113,16 +114,19 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
     sources.append({**source, "accession_role":"current"})
     periods, filings = {"current":period, "prior":None}, {"current":prepared["filing"], "prior":None}
     prior_error = None
-    amendment_input = None
-    common_error = "NORMAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED" if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None
-    if prepared["amendments"] and common_error is None:
+    amendment_input = None;instant_amendment_input = None;common_error = None
+    subject_error = "NORMAL_COMPANYFACTS_SUCCESSOR_SCOPE_NOT_IMPLEMENTED" if prepared["subject_policy"]["mode"] != "CONTINUOUS_PRIMARY" else None
+    if prepared["amendments"]:
         amendment_input = prepare_saved_amendment_input(repo_root=repo_root,company_id=company_id,input_class="ORIGINAL_STATEMENT_VALUES")
         _need(amendment_input["prepared_input"] == prepared.get("original_input",prepared), "NORMAL_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
         if amendment_input["decision"] != "INPUT_PROPERTY_PROVEN":
             common_error = "NORMAL_COMPANYFACTS_AMENDMENT_INPUT_SCOPE_UNRESOLVED"
+            instant_amendment_input = prepare_instant_balance_amendment_input(repo_root=repo_root,company_id=company_id)
+            _need(instant_amendment_input["prepared_input"] == prepared.get("original_input",prepared),
+                  "NORMAL_INSTANT_AMENDMENT_ORIGINAL_INPUT_DIFFERS")
     needs_prior = any(metric_is_applicable(applicability=route["applicability"], traits=traits)
         and any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"]) for route in routes.values())
-    if needs_prior and not common_error:
+    if needs_prior and not common_error and not subject_error:
         try:
             filing, prior_inventory = _prior_filing(reader, inventory, prepared)
             primary = reader.primary(filing, required=False)
@@ -163,11 +167,26 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
                 steps=[{"event":"N_A_STRUCTURAL"}],accession=None,entity=None,unit=None)
         else:
             try:
-                _need(not common_error, common_error)
+                # The installed catalog already permits these current-instant
+                # metrics across a registrant transition. Their facts still
+                # come exclusively from this primary CIK/current accession;
+                # this does not establish comparable annual performance.
+                instant_scope=(route["continuity_policy"] == "ALLOW" and instant
+                    and all(c["accession_role"] == "current" and c["period_role"] == "current_instant"
+                            for branch in route["branches"] for c in branch["components"]))
+                _need(not subject_error or instant_scope, subject_error)
+                limited_amendment=(instant_scope and instant_amendment_input is not None
+                    and metric_id in instant_amendment_input["metric_ids"]
+                    and instant_amendment_input["decision"] == "INPUT_PROPERTY_PROVEN")
+                _need(not common_error or limited_amendment, common_error)
                 requires_prior = any(c["accession_role"] == "prior" for b in route["branches"] for c in b["components"])
                 _need(not requires_prior or prior_error is None, (prior_error or {}).get("reason"))
                 graph = _deterministic_metric_graph(context=context, company_id=company_id, metric_id=metric_id)
                 result, trace = graph["result"], graph["trace"]
+                if subject_error or limited_amendment:
+                    detail={"subject_scope":"CURRENT_PRIMARY_CIK_AND_CURRENT_INSTANT_ONLY",
+                            "annual_continuity_proven":False,
+                            "instant_amendment_input_id":instant_amendment_input["instant_input_id"] if limited_amendment else None}
             except (*_SOURCE_ERRORS, NormalCompanyfactsError, DecimalException) as error:
                 detail = {"reason":str(error),"error_type":type(error).__name__,
                           "category":"SOURCE_OR_IMPLEMENTATION_UNRESOLVED"}
@@ -185,7 +204,8 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
         source_records = list({content_hash(value=r):r for r in [*source_records,*amendment_input["source_records"]]}.values())
     body = {"record_type":"NORMAL_COMPANYFACTS_NATIVE_RESULTS","company_id":company_id,
         "prepared_input":prepared,"filings":filings,"periods":periods,"prior_error":prior_error,
-        "authority_file_hashes":authority,"source_records":source_records,"amendment_input":amendment_input,"source_proofs":proofs,
+        "authority_file_hashes":authority,"source_records":source_records,"amendment_input":amendment_input,
+        "instant_amendment_input":instant_amendment_input,"source_proofs":proofs,
         "source_admission":admission,"source_sets":[s["manifest"] for s in sources],"claims_by_accession_role":claims_by_role,
         "failed_source_attempts":list(reader.failed_attempts.values()),"metrics":results,
         "resolver_sha256":sha256_file(path=Path(__file__)),"calls":{"provider":0,"paid":0,"sec":0},

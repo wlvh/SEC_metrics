@@ -784,6 +784,9 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 `normal_source_requirements`在正常年度输入前先从已核对的元数据命名主文件，缺少正文时也保留该获取依赖。原件确认期间后，复用治理清单选择器列出当期/上期年报、修订、代理材料和财年8-K，并扩展年报目录的原生XML；URL去重而用途保留。缺少目录时子文件集合仍未知，清单冲突时不声称选源完整，最新失败GET不能退回旧成功。CLI只读地保存依赖与缺口，当前来源真实性仍限于安装代码绑定的既有获取基线；刷新、新来源计算及生产触发尚未接通。
 <!-- capability-anchor: CAPABILITY.normal_source_dependency_discovery -->
 
+`normal_companyfacts_results`按既有目录区分主体接续和实际测量粒度：允许接续且只依赖当前申报时点的路线可以继续；全年/跨期路线仍需要自己的主体证明。`instant_balance_amendment`为B08/B09重建有限修订输入，旧Part III范围证明保持原样；完整原说明、原生更正标志/封面、未附新财务报表声明和全文余额/更正语句共同限制分支。条件性薪酬条款仅按完整结构识别。原件、修订和两种不同输入结论均进入普通组件与同一原生Run重放，不能把局部时点资格提升为全年或债务资格。
+<!-- capability-anchor: CAPABILITY.ordinary_successor_instant_balances -->
+
 ### 后继内容验证组件
 
 `financial_duration`接收候选单元格及来自任务合同的指标/主体词，重新解析原件、数值origin、列日期与相邻同标记脚注；全年列头与完整日历月脚注分别给出证据，未知关联保持未解决，年报DEI不提供测量期间默认值。组件仍需与自动候选及原生Evidence/Run整合。
