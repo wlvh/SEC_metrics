@@ -787,6 +787,10 @@ New financing-set source judgments prove disjoint reported borrowings, bonds and
 `ordinary_source_session`验证新增来源记录进入基础年度读取器的测试路径。它复用SEC客户端的持久化/日志方法而不调用HTTP，固定旧日志前缀，每次追加绑定会话意图及终态，并重验请求证明。来源正文和申报身份的比较独立于请求身份/目录变化。该会话不能变成真实SEC准入，尚未接入持久可信恢复、正式预算或普通Run；旧固定基线保持不变。
 <!-- capability-anchor: CAPABILITY.recorded_source_update_session -->
 
+<!-- capability-anchor: CAPABILITY.recorded_source_run_admission -->
+
+`ordinary_source_authority`在固定安装目录保存实际测试会话创建者登记的来源记录，核对原日志字节前缀、原始来源及每项新意图/终态。当前适配器通过新入口选择历史基线或已登记测试来源，原冻结验证器不改。`normal_run_v3.install_normal_inputs`分开固定代码和外部来源文件，安装完整来源记录及依赖；创建和重放Run均要求安装记录存在。复制运行包的冷读使用安装记录，测试类型保留到原生绑定、CLI和预览。这仍是原文未变的RECORDED_TEST_ONLY，不提供真实SEC获取、全部路线更新或正式发布能力。
+
 `r6_semantic_source`为D04离线解释提供全部可见块和原生事实，并保留所引用的上下文、单位、命名空间、续接、脚注和关系对象；嵌套XML通过原位置恢复而避免重复传入。`r6_semantic_review`绑定请求/单元、按唯一引文计算位置、核对必需候选和分类一致性，并保留全局冲突。返回的只是未获语义资格的保存响应提议，不能进入普通结果或正式发布；真实provider调用、模型可靠性和原生D04接线尚未完成。
 <!-- capability-anchor: CAPABILITY.r6_recorded_interpretation_protocol -->
 

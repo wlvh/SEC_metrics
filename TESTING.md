@@ -681,3 +681,10 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 `test_b06_inclusive_table`使用完整原件检查已含租赁、当前主体/权益、收购日估值、不同计量精度和全部147项潜在融资事实；反例包含错误继任表头、缺租赁、金额冲突、额外票据/借款/附注、错误权益范围、收购值冲突及收入履约维度冒充借款。`test_b06_current_input_material`另用实际Calculator重建重复计租赁及前任金额的错误图，并验证重放拒绝这两图、旧Spec、删修订及自签输入，共五类原生反例。
 
 59fd27b的current-instant CI因合并作业超过20分钟而取消，前三项作业通过，不记为全绿。债务Run与反例现拆为独立`vNext debt native Runs`作业，仍20分钟；来源和ordinary-native总作业上限改为30分钟，单个来源案例的240秒上限不变。所有原测试保留，新范围不代替390最终验收。
+
+
+<!-- capability-anchor: CAPABILITY.recorded_source_run_admission -->
+
+新增`test_ordinary_source_authority`在fast层核对安装目录登记、冷读、伪造信用/记录、未登记追加及失败/未知终态。`ORDINARY_SOURCE_MATERIAL_ROOT=/absolute/new/material PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_source_run_material`创建五个实际Run（B03含B01依赖，另有B08/B09/B10/B11），比较原文计算值/期间，并验证来源记录缺漏、重签信用、未登记追加、假收入图及缺依赖五类拒绝。网络/HTTP/DNS在材料中禁用，来源新增三份测试请求但财务原文未变，仍无实际SEC信用。
+
+该材料通过独立`vNext recorded source update Runs` CI作业执行，30分钟上限；不替代真正新财报获取/更新、全部路线和390验收。首次B01材料的/tmp别名及首次跨路线酒店内层仍调用旧验证器的失败保留；修后新目录另验，不重签旧失败。复制运行包的无Git冷读单独记录。

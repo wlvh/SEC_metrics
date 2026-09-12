@@ -7,7 +7,8 @@ from pathlib import Path
 from .canonical import canonical_json_bytes, content_hash, sha256_file, strict_json_file, strict_json_loads
 from . import fiscal_year_labels
 from .normal_annual_input import NormalAnnualInputError, prepare_saved_annual_input as prepare_original_input
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import resolve_repository_file
 
 
@@ -51,7 +52,7 @@ def prepare_saved_annual_input(*, repo_root: Path, company_id: str):
     # body/header bytes before reusing an interpretation. Cached JSON is only
     # process-local parsing of those exact inputs, never source or call credit.
     original = prepare_original_input(repo_root=repo_root,company_id=company_id)
-    admission = verify_saved_source_proofs(data_root=repo_root,proofs=original["source_proofs"])
+    admission = verify_ordinary_source_proofs(data_root=repo_root,proofs=original["source_proofs"])
     if sha256_file(path=Path(fiscal_year_labels.__file__)) != _INSPECTOR_SHA:
         raise NormalAnnualInputError("FISCAL_INSPECTOR_CHANGED_DURING_SESSION","RUNTIME_CHANGED")
     key = (original["input_id"],admission["source_manifest_sha256"],_INSPECTOR_SHA)

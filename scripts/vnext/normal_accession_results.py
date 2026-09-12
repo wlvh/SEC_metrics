@@ -15,7 +15,8 @@ from .deterministic_router import parse_accession_xbrl_source, verified_claim
 from .governance_signals import _source_value, _qname
 from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
 from .normal_governance_input import _Sources
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .observations import scope_key, structured_observation
 from .sources import resolve_repository_file
 from .text_results_v2 import _ReportedFactMetadata, _verified_context
@@ -158,7 +159,7 @@ def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str):
         for branch in route["branches"]:
             for component in branch["components"]:component["unit"] = item["canonical_unit"]
     prepared = prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
-    verify_saved_source_proofs(data_root=repo_root,proofs=prepared["source_proofs"])
+    verify_ordinary_source_proofs(data_root=repo_root,proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     reader = _Sources(repo_root,company_id,prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])),role="sec_submissions_inventory",media_type="application/json")
@@ -209,7 +210,7 @@ def resolve_ordinary_accession_metrics(*, repo_root: Path, company_id: str):
     proofs = list({content_hash(value=p):p for p in [*prepared["source_proofs"],*[s["proof"] for s in reader.proofs.values()]]}.values())
     body = {"record_type":"NORMAL_ACCESSION_NATIVE_RESULTS","company_id":company_id,"prepared_input":prepared,
         "authority_file_hashes":authority,"policy_hash":content_hash(value=policy),"source_records":list(reader.records.values()),
-        "source_set":manifest,"source_proofs":proofs,"source_admission":verify_saved_source_proofs(data_root=repo_root,proofs=proofs),
+        "source_set":manifest,"source_proofs":proofs,"source_admission":verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs),
         "metrics":rows,"resolver_sha256":sha256_file(path=Path(__file__)),"calls":{"provider":0,"paid":0,"sec":0},
         "native_run_status":"NOT_CREATED","current_latest_verified":False,"production_authorized":False}
     body = exact_json_value(body)

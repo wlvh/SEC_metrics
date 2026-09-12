@@ -771,6 +771,20 @@
         "test_anchor": "tests/vnext/test_b06_current_input_material.py::CurrentDebtInputMaterialTest.test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved",
         "test_status": "automated_recorded",
         "since": "2026-09-13"
+      },
+      {
+        "anchor_id": "CAPABILITY.recorded_source_run_admission",
+        "type": "capability",
+        "status": "active",
+        "statement": "实际测试会话创建者可在安装目录固定日志登记新请求；当前普通来源适配器据此读取外部source_root，并安装全部来源记录/依赖后创建及重放OPEN Run。旧基线语义不变，自签来源信用、未登记追加、缺安装记录、改完整计算图或删依赖均拒绝。测试类型保留到预览，真实SEC信用和生产权限为false；不证明新财报获取、全部39项更新或持续运行已完成。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_source_run_material.py::OrdinarySourceRunMaterialTest.test_owned_updates_reach_three_adapters_and_reject_untrusted_changes",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
       }
     ],
     "capability_boundaries": [

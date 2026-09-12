@@ -134,6 +134,9 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
     if metric=="C02":row["source_class"]="PROXY" if known and all(f["form"]=="DEF 14A" for f in known) else "TEXT"
     if annual["fiscal_year_label_resolution"]["metadata_conflict_retained"]:
         row["notes"]+=" Fiscal label follows the explicit issuer definition; original DEI/Company Facts labels remain in the source binding."
+    recorded = case["admission"]["source_credit"] == "RECORDED_TEST_ONLY"
+    if recorded:
+        row["notes"] += " Recorded source refresh test using preexisting SEC content; no new SEC acquisition."
     _need(set(row)==set(publication.METRIC_FIELDS) and all(set(e)==set(publication.EVIDENCE_FIELDS) for e in evidence),
           "ORDINARY_PUBLIC_ROW_SCHEMA_CHANGED")
     receipt={"record_type":"ORDINARY_INTEGRATED_ROW_RECEIPT","status":"FROZEN_CANDIDATE" if frozen else "VERIFIED_OPEN_PREVIEW",
@@ -142,6 +145,9 @@ def render_ordinary_run(*, data_root: Path, run_dir: Path, frozen=False):
         "presentation_policy_sha256":sha256_file(path=ROOT/POLICY_PATH),"renderer_sha256":sha256_file(path=Path(__file__)),
         "row_hash":content_hash(value=row),"evidence_hash":content_hash(value=evidence),"evidence_count":len(evidence),
         "source_validation":"FULL_NATIVE_RUN_REPLAY","production_authorized":False}
+    if recorded:
+        receipt.update(source_credit="RECORDED_TEST_ONLY",source_checkpoint_id=case["admission"]["checkpoint_id"],
+                       real_sec_credit=False)
     return {"row":row,"evidence":evidence,"receipt":{**receipt,"receipt_id":content_hash(value=receipt)},
         "files":{"metrics_matrix.csv":publication._csv_bytes(rows=[row],fieldnames=publication.METRIC_FIELDS),
                  "metric_evidence.csv":publication._csv_bytes(rows=evidence,fieldnames=publication.EVIDENCE_FIELDS)}}

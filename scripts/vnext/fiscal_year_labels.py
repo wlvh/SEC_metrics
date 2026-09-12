@@ -13,7 +13,7 @@ from .canonical import canonical_json_bytes, content_hash, sha256_bytes, strict_
 from .deterministic_router import parse_accession_xbrl_source
 from .governance_signals import _qname
 from .normal_annual_input import annual_period, prepare_saved_annual_input
-from .normal_source_authority import verify_saved_source_proofs
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import resolve_repository_file
 from .text_coverage import _Blocks, _byte_offsets
 from .text_results_v2 import _ReportedFactMetadata, _verified_context
@@ -244,7 +244,7 @@ def inspect_fiscal_year_labels(*, primary_bytes: bytes, companyfacts_bytes: byte
 
 
 def _inspect_prepared_input(*, repo_root: Path, prepared: dict):
-    admission=verify_saved_source_proofs(data_root=repo_root,proofs=prepared["source_proofs"])
+    admission=verify_ordinary_source_proofs(data_root=repo_root,proofs=prepared["source_proofs"])
     def raw_input(item):
         return resolve_repository_file(repo_root=repo_root,repo_relative_path=item["source_repo_relative_path"]).read_bytes()
     primary, facts=raw_input(prepared["table_input"]),raw_input(prepared["companyfacts_input"])

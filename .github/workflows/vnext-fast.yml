@@ -131,3 +131,22 @@ jobs:
           NOTE_DEBT_NATIVE_BATCH: ${{ runner.temp }}/ordinary-note-debt-${{ github.run_id }}-${{ github.run_attempt }}
           NOTE_DEBT_ATTACK_ROOT: ${{ runner.temp }}/ordinary-note-debt-attacks-${{ github.run_id }}-${{ github.run_attempt }}
         run: python3 -m unittest -v tests.vnext.test_note_debt_run_material
+  source-update-native-runs:
+    name: vNext recorded source update Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        with:
+          persist-credentials: false
+      - name: Set up Python 3.14
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        with:
+          python-version: "3.14"
+      - name: Run owned recorded sources through native adapters and reject changed graphs or histories
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          PYTHONPATH: scripts
+          ORDINARY_SOURCE_MATERIAL_ROOT: ${{ runner.temp }}/ordinary-updated-source-${{ github.run_id }}-${{ github.run_attempt }}
+        run: python3 -m unittest -v tests.vnext.test_ordinary_source_run_material

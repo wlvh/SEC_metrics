@@ -19,7 +19,8 @@ from .deterministic_router import (
 )
 from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
 from .normal_governance_input import _Sources, _filings, _history_index, history_body_alignment, NormalGovernanceInputError
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .observations import scope_key, structured_observation
 from .sources import companyfacts_structured_facts, resolve_repository_file, SourceError
 from .specs import compile_spec_file
@@ -137,7 +138,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     _need(metric_id in SUPPORTED_METRICS, "NORMAL_ZERO_AI_METRIC_NOT_IN_PROTOTYPE")
     authority = _authority(repo_root)
     prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
-    admission = verify_saved_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
+    admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     reader = _Sources(repo_root, company_id, prepared["entity"])
     inventory = reader.read(submissions_url(cik=int(prepared["entity"])), role="sec_submissions_inventory", media_type="application/json")
@@ -220,7 +221,7 @@ def resolve_ordinary_zero_ai_metric(*, repo_root: Path, company_id: str, metric_
     proofs = prepared["source_proofs"] + [entry["proof"] for entry in reader.proofs.values()]
     if amendment_input is not None: proofs.extend(amendment_input["source_proofs"])
     proofs = list({content_hash(value=p):p for p in proofs}.values())
-    admission = verify_saved_source_proofs(data_root=repo_root, proofs=proofs)
+    admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
     source_records = list(reader.records.values())
     if amendment_input is not None:
         source_records = list({content_hash(value=r):r for r in [*source_records,*amendment_input["source_records"]]}.values())

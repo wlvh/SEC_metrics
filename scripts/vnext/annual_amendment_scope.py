@@ -17,7 +17,8 @@ from .canonical import content_hash, sha256_bytes, sha256_file, strict_json_file
 from .deterministic_router import parse_accession_xbrl_source
 from .normal_annual_input import prepare_saved_annual_input
 from .normal_annual_input_v2 import exact_json_value
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .sources import raw_blob_record, source_reference_record, resolve_repository_file
 from .text_coverage import build_text_document
 from .text_results_v2 import _ReportedFactMetadata, _verified_context
@@ -269,7 +270,7 @@ def prepare_saved_amendment_scopes(*, repo_root: Path, company_id: str):
         records.extend([blob, reference])
         sources.append({'raw':saved['raw'],'blob':blob,'reference':reference,'filing':filing})
     proofs=list({content_hash(value=p):p for p in proofs}.values())
-    admission=verify_saved_source_proofs(data_root=repo_root,proofs=proofs)
+    admission=verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs)
     scopes=[inspect_annual_amendment_scope(original=sources[0],amendment=s,company_id=company_id,cik=prepared['entity']) for s in sources[1:]]
     return {'prepared_input':prepared,'source_proofs':proofs,'source_admission':admission,'scopes':scopes,
             'source_records':records,'policy_sha256':sha256_file(path=policy_path),

@@ -425,6 +425,10 @@ D04离线解释协议只提供开发用输入与保存响应检查。`all_source
 
 来源更新测试会话的输出始终标记 `RECORDED_TEST_ONLY`，实际SEC信用和生产权限为false。同一来源内容得到新的请求身份时可输出 `NO_SOURCE_CONTENT_CHANGE`；这不是实时“无新财报”证明，也不会更新正式结果。说明见`docs/recorded_source_session.md`。
 
+<!-- capability-anchor: CAPABILITY.recorded_source_run_admission -->
+
+普通候选CLI可用`--source-root`读取已由安装目录登记的外部来源。测试来源在批次坐标、预览回执和公共行备注中标明“测试重放、没有新SEC获取”；未登记日志、篡改记录和缺少安装记录会失败。原文未变化时仍显示NO_SOURCE_CONTENT_CHANGE，不能将相同数值重算当成自动发现新财报的结果。
+
 <!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
 
 存在当期修订年报时，B06先核对其对原债务/权益的影响。输入未证明即保留WITHHELD及原因，不提前输出权益保护结论；原件与修订件均可追溯。输入核对通过不会隐藏债务解析缺口，主体接续只允许当前选定申报人期末结果，不等同于全年连续性。

@@ -15,7 +15,8 @@ from .composite_scope import index_source_structure
 from .fiscal_year_labels import _DefinitionBlocks
 from .normal_annual_input import annual_period
 from .normal_annual_input_v2 import prepare_saved_annual_input,exact_json_value
-from .normal_source_authority import ROOT,verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .scope_contract import exact_enum_alias,scope_satisfies_contract
 from .sources import raw_blob_record,source_reference_record,resolve_repository_file
 from .specs import compile_spec_file
@@ -247,7 +248,7 @@ def prepare_saved_lodging_source(*,repo_root:Path,company_id:str):
     _need(path.read_bytes()==(ROOT/POLICY_PATH).read_bytes() and strict_json_file(path=path)==POLICY,'LODGING_INSTALLED_POLICY_CHANGED')
     prepared=prepare_saved_annual_input(repo_root=repo_root,company_id=company_id)
     _need(prepared['subject_policy']['mode']=='CONTINUOUS_PRIMARY' and not prepared['amendments'],'LODGING_SOURCE_SUBJECT_OR_AMENDMENT_UNRESOLVED')
-    admission=verify_saved_source_proofs(data_root=repo_root,proofs=prepared['source_proofs'])
+    admission=verify_ordinary_source_proofs(data_root=repo_root,proofs=prepared['source_proofs'])
     inp=prepared['table_input'];saved=saved_source(repo_root=repo_root,url=inp['source_url'],accession=inp['accession'])
     proof=saved['proof'];blob=raw_blob_record(repo_root=repo_root,repo_relative_path=proof['request_repo_relative_path'],media_type='text/html')
     reference=source_reference_record(raw_blob=blob,company_id=company_id,source_url=inp['source_url'],accession=inp['accession'],

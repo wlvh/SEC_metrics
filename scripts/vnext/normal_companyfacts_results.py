@@ -19,7 +19,8 @@ from .annual_amendment_scope import prepare_saved_amendment_input, POLICY_PATH a
 from .instant_balance_amendment import prepare_instant_balance_amendment_input, POLICY_PATH as INSTANT_POLICY_PATH
 from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value, POLICY_PATH as FISCAL_LABEL_POLICY_PATH
 from .normal_governance_input import _Sources, _filings, _history_index, history_body_alignment, NormalGovernanceInputError
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .observations import scope_key
 from .sources import resolve_repository_file, SourceError
 from .traits import repository_company_traits
@@ -100,7 +101,7 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
     catalog = _load_deterministic_catalog(repo_root=repo_root)
     routes = {key:value for key,value in catalog["metrics"].items() if value["adapter_id"] == "companyfacts"}
     prepared = prepare_saved_annual_input(repo_root=repo_root, company_id=company_id)
-    verify_saved_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
+    verify_ordinary_source_proofs(data_root=repo_root, proofs=prepared["source_proofs"])
     period = prepared["table_input"]["target_period"]
     registry = next(r for r in _registry_rows(repo_root=repo_root) if r["company_id"] == company_id)
     traits = repository_company_traits(repo_root=repo_root, company_id=company_id)
@@ -198,7 +199,7 @@ def resolve_ordinary_companyfacts_metrics(*, repo_root: Path, company_id: str):
     proofs = list({content_hash(value=p):p for p in [*prepared["source_proofs"],*[s["proof"] for s in reader.proofs.values()]]}.values())
     if amendment_input is not None:
         proofs = list({content_hash(value=p):p for p in [*proofs,*amendment_input["source_proofs"]]}.values())
-    admission = verify_saved_source_proofs(data_root=repo_root, proofs=proofs)
+    admission = verify_ordinary_source_proofs(data_root=repo_root, proofs=proofs)
     source_records = list(reader.records.values())
     if amendment_input is not None:
         source_records = list({content_hash(value=r):r for r in [*source_records,*amendment_input["source_records"]]}.values())

@@ -10,7 +10,8 @@ from pathlib import Path
 
 from .canonical import content_hash, sha256_file, strict_json_file
 from .normal_annual_input_v2 import prepare_saved_annual_input, exact_json_value
-from .normal_source_authority import ROOT, verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .normal_run_inputs import prepare_ordinary_zero_ai_run_input
 from .normal_run_specs import installed_ordinary_spec_documents
 from .requirements import load_requirement_snapshot
@@ -135,11 +136,16 @@ def _binding(case, requirement):
         "production_authorized":False})
 
 
-def install_normal_inputs(*, data_root, company_id, metric_id):
+def install_normal_inputs(*, data_root, company_id, metric_id, source_root=None):
     data_root = _external(data_root)
-    case = prepare_case(data_root=ROOT,company_id=company_id,metric_id=metric_id)
+    source_root = ROOT if source_root is None else _external(source_root)
+    _need(source_root != data_root and source_root not in data_root.parents and data_root not in source_root.parents,
+          "ORDINARY_INTEGRATED_SOURCE_AND_OUTPUT_OVERLAP")
+    case = prepare_case(data_root=source_root,company_id=company_id,metric_id=metric_id)
     requirement = load_requirement_snapshot(snapshot_dir=ROOT/"requirements"/REQUIREMENT_ID)
-    verify_saved_source_proofs(data_root=ROOT,proofs=case["source_proofs"])
+    verify_ordinary_source_proofs(data_root=source_root,proofs=case["source_proofs"])
+    from .ordinary_source_authority import checkpoint_installation,EXPORT_PATH
+    checkpoint,extra_source_paths = checkpoint_installation(source_root=source_root)
     from .annual_runtime import _authority_files
     from .annual_continuity_sources import frozen_foundation_receipts
     paths = set(_authority_files(requirement))
@@ -151,22 +157,25 @@ def install_normal_inputs(*, data_root, company_id, metric_id):
     paths.update(str(p.relative_to(ROOT)) for p in (ROOT/"requirements").rglob("*") if p.is_file())
     parent_index = strict_json_file(path=ROOT/"docs/evidence/issue28_continuous/frozen-parent-v10-index.json")
     paths.update("docs/evidence/issue28_continuous/frozen-parent-v10/"+p for p in parent_index["files"])
-    paths.update(["config/company_registry.csv","evidence/requests_log.csv","evidence/requests_log_manifest.json"])
+    source_paths = {"config/company_registry.csv","evidence/requests_log.csv","evidence/requests_log_manifest.json",*extra_source_paths}
     for proof in case["source_proofs"]:
-        paths.update([proof["request_repo_relative_path"],proof["request_headers_repo_relative_path"]])
+        source_paths.update([proof["request_repo_relative_path"],proof["request_headers_repo_relative_path"]])
     # Event completeness also compares the authenticated acquisition census.
     # Header bytes used by that census are bound original inputs, not answers.
     if case["primary_metric_id"] in {"C01","E01","E02","E03","E04","E05"}:
         from .normal_annual_input import _registry_rows
-        cik = next(c["primary_cik"] for c in _registry_rows(repo_root=ROOT) if c["company_id"] == company_id)
-        for directory in (ROOT/"evidence/accession_materials").iterdir():
+        cik = next(c["primary_cik"] for c in _registry_rows(repo_root=source_root) if c["company_id"] == company_id)
+        for directory in (source_root/"evidence/accession_materials").iterdir():
             fields = directory.name.rsplit("_",2)
             if directory.is_dir() and len(fields)==3 and fields[1].isdigit() and int(fields[1])==int(cik):
-                paths.update(str(p.relative_to(ROOT)) for p in directory.glob("*.hdr.sgml"))
+                source_paths.update(str(p.relative_to(source_root)) for p in directory.glob("*.hdr.sgml"))
+    _need(not source_paths.intersection(_policy(ROOT)["rule_paths"]+_policy(ROOT)["presentation_paths"]),
+          "ORDINARY_INTEGRATED_SOURCE_WOULD_REPLACE_RUNTIME")
     receipts = frozen_foundation_receipts()
-    for relative in sorted(paths):
-        source = resolve_repository_file(repo_root=ROOT,repo_relative_path=relative)
+    for relative in sorted(paths|source_paths):
+        source = resolve_repository_file(repo_root=source_root if relative in source_paths else ROOT,repo_relative_path=relative)
         _write(data_root/relative,receipts[relative]["bytes"] if relative in receipts else source.read_bytes())
+    if checkpoint is not None:_write(data_root/EXPORT_PATH,_bytes(checkpoint))
     rebuilt = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
     _need(_binding(rebuilt,requirement) == _binding(case,requirement),"ORDINARY_INTEGRATED_IMPORTED_INPUT_CHANGED")
     return rebuilt
@@ -184,6 +193,8 @@ def create_normal_run(*, data_root, run_dir, company_id, metric_id, freeze=False
     _need(not run_dir.exists(),"ORDINARY_INTEGRATED_RUN_PATH_EXISTS")
     _need(not freeze or _policy(data_root)["freeze_enabled"],"ORDINARY_INTEGRATED_DRAFT_FREEZE_DISABLED")
     case = prepare_case(data_root=data_root,company_id=company_id,metric_id=metric_id)
+    from .ordinary_source_authority import require_installed_checkpoint
+    require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
     binding = _binding(case,requirement);key = content_hash(value=binding)[7:]
     _write(data_root/BINDING_DIRECTORY/(key+".json"),_bytes(binding))
@@ -240,6 +251,8 @@ def replay_case(*, data_root, manifest, spec=None):
     saved = strict_json_file(path=resolve_repository_file(repo_root=data_root,repo_relative_path=BINDING_DIRECTORY+"/"+key+".json"))
     metric_id = saved["primary_metric_id"]
     case = prepare_case(data_root=data_root,company_id=manifest["company_id"],metric_id=metric_id)
+    from .ordinary_source_authority import require_installed_checkpoint
+    require_installed_checkpoint(data_root=data_root,admission=case["admission"])
     requirement = load_requirement_snapshot(snapshot_dir=data_root/"requirements"/REQUIREMENT_ID)
     expected = _binding(case,requirement)
     _need(saved == expected and content_hash(value=expected)[7:] == key,"ORDINARY_INTEGRATED_INPUT_BINDING_CHANGED")

@@ -7,7 +7,8 @@ from .canonical import content_hash,sha256_file
 from .lodging_table_source import prepare_saved_lodging_source,LodgingSourceError,POLICY_PATH
 from .normal_annual_input_v2 import prepare_saved_annual_input,exact_json_value
 from .normal_governance_input import _Sources
-from .normal_source_authority import ROOT,verify_saved_source_proofs
+from .normal_source_authority import ROOT
+from .ordinary_source_authority import verify_ordinary_source_proofs
 from .observations import structured_observation,scope_key
 from .sources import resolve_repository_file
 from .specs import compile_spec_file
@@ -85,7 +86,7 @@ def prepare_ordinary_lodging_case(*,repo_root:Path,company_id:str,metric_id:str)
             result,trace=withheld_metric_result(compiled_spec=spec,target=target,reason_code='ORDINARY_LODGING_SOURCE_UNRESOLVED')
             selection={'classification':'SOURCE_OR_IMPLEMENTATION_UNRESOLVED','reason':str(error),'reason_code':result['reason_code']}
     proofs=list({content_hash(value=p):p for p in [*prepared['source_proofs'],*[x['proof'] for x in reader.proofs.values()]]}.values())
-    admission=verify_saved_source_proofs(data_root=repo_root,proofs=proofs);records=list(reader.records.values())
+    admission=verify_ordinary_source_proofs(data_root=repo_root,proofs=proofs);records=list(reader.records.values())
     binding=exact_json_value({'record_type':'ORDINARY_LODGING_INPUT','prepared_input':prepared,'source_component':source_component,
         'source_proofs':proofs,'source_admission':admission,'selection':selection,'module_sha256':sha256_file(path=Path(__file__))})
     return {'kind':'STRUCTURED','primary_metric_id':metric_id,'input_binding':binding,

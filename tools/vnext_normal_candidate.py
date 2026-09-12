@@ -40,6 +40,8 @@ def _new_external_root(path):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-root", required=True, type=Path)
+    parser.add_argument("--source-root", type=Path,
+                        help="Existing external saved-source workspace; appended requests require installed execution admission")
     parser.add_argument("--company", action="append",
                         help="Configured company ID; repeat to select several; default all ten")
     parser.add_argument("--metric", action="append", choices=METRICS,
@@ -60,7 +62,8 @@ def main(argv=None):
     output.mkdir(parents=True)
     started = datetime.now(timezone.utc).isoformat()
     _write(output / "request.json", {"companies": selected, "metrics": metrics,
-        "started_at_utc": started, "source": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "started_at_utc": started, "source": "EXPLICIT_SAVED_SOURCE_WORKSPACE" if args.source_root else "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+        "source_root":str(args.source_root) if args.source_root else None,
         "production_authorized": False, "new_calls": {"provider": 0, "paid": 0, "sec": 0}})
     coordinates = []
     for company in selected:
@@ -71,13 +74,14 @@ def main(argv=None):
                    "run_path": run.relative_to(output).as_posix(),
                    "data_path": data.relative_to(output).as_posix()}
             try:
-                install_normal_inputs(data_root=data, company_id=company, metric_id=metric)
+                install_normal_inputs(data_root=data, company_id=company, metric_id=metric,source_root=args.source_root)
                 result = create_normal_run(data_root=data, run_dir=run,
                     company_id=company, metric_id=metric, freeze=args.freeze)
                 native = result["result"]
                 accepted_status = "FROZEN_CANDIDATE" if result["manifest"]["status"] == "FROZEN" else "OPEN_CANDIDATE"
                 row.update(status=accepted_status if native["publication"] == "PUBLISHED" else "WITHHELD_CANDIDATE",
                     run_id=result["manifest"]["run_id"], run_status=result["manifest"]["status"],
+                    source_credit=result["input_binding"]["source_admission"]["source_credit"],
                     result=native, target_period=result["manifest"]["target_period"],
                     public_row_status="NOT_PREPARED", production_authorized=False)
                 if result.get("selection") is not None:
