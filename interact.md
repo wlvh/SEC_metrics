@@ -412,3 +412,7 @@ B08/B09在原目录允许且当前主体/申报/时点得到证明时，可显�
 <!-- capability-anchor: CAPABILITY.r6_recorded_interpretation_protocol -->
 
 D04离线解释协议只提供开发用输入与保存响应检查。`all_source_units_responded=true` 不代表判断正确；输出仍明确标注语义资格、provider执行和原生结果均未证明。当前普通候选CLI没有因此新增D04结果，原正式报告也不改变。说明见`docs/r6_interpretation_protocol.md`。
+
+<!-- capability-anchor: CAPABILITY.recorded_source_update_session -->
+
+来源更新测试会话的输出始终标记 `RECORDED_TEST_ONLY`，实际SEC信用和生产权限为false。同一来源内容得到新的请求身份时可输出 `NO_SOURCE_CONTENT_CHANGE`；这不是实时“无新财报”证明，也不会更新正式结果。说明见`docs/recorded_source_session.md`。

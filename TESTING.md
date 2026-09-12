@@ -652,6 +652,8 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 ### 普通更新的来源发现
 
+来源更新测试会话用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_ordinary_source_session` 检查，纳入fast层。网络和HTTP入口均被测试禁用；正例通过现有SEC持久化/追加及基础年度读取，负例覆盖伪造追加/终态、前缀/原件变化、未知结果、失败后停止、测试额度及路径别名。输入比较区分内容变化与仅请求身份变化。独立材料使用同一原文的新测试记录调用原生计算器；不创建Run、不授真实来源信用。
+
 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_normal_source_requirements` 已加入source-material层。实际Marriott/Salesforce/JPM材料覆盖可用来源、最终失败GET和历史清单冲突；外部副本删除新主文件仍能发现其地址，删除/篡改目录不会宣布子文件齐备；后续年报元数据的纯解析不授予新来源信用。十公司实际CLI命令为 `python3 tools/vnext_normal_update.py --discover-sources --output /absolute/new-external-directory/source-requirements.json`；有缺口返回2并保留所有公司，不执行指标或请求。说明见`docs/normal_source_discovery.md`。
 
 ### 普通主体接续与期末余额

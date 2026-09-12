@@ -14,6 +14,19 @@
   "contracts": {
     "capabilities": [
       {
+        "anchor_id": "CAPABILITY.recorded_source_update_session",
+        "type": "capability",
+        "status": "active",
+        "statement": "来源更新测试会话保留旧日志字节前缀，以会话意图/终态约束每个追加记录，再复用基础年度输入读取器和原生请求证明。自洽但未登记的追加、改动原件或前缀、伪造终态、未知状态及路径别名拒绝；后续失败不回退早前成功。仅为RECORDED_TEST_ONLY，不调用HTTP、不授真实SEC或生产信用；纯请求身份变化不等于输入内容变化。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_ordinary_source_session.py::OrdinarySourceSessionTest.test_three_recorded_responses_reach_the_unchanged_annual_input_reader",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
+      },
+      {
         "anchor_id": "CAPABILITY.r6_recorded_interpretation_protocol",
         "type": "capability",
         "status": "active",
