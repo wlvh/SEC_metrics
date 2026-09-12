@@ -18,8 +18,19 @@ class FinancialBalanceScopeTest(unittest.TestCase):
     def setUpClass(cls):
         cls.source = JPM.read_bytes()
         cls.structure = index_source_structure(source_bytes=cls.source)
-        cls.aum = cls.evaluate(inspect_aum_balance, cls.source)
-        cls.var = cls.evaluate(inspect_total_var, cls.source)
+        cls._source_facts = {}
+
+    @property
+    def aum(self):
+        if "aum" not in type(self)._source_facts:
+            type(self)._source_facts["aum"] = self.evaluate(inspect_aum_balance, self.source)
+        return type(self)._source_facts["aum"]
+
+    @property
+    def var(self):
+        if "var" not in type(self)._source_facts:
+            type(self)._source_facts["var"] = self.evaluate(inspect_total_var, self.source)
+        return type(self)._source_facts["var"]
 
     @staticmethod
     def evaluate(function, source):
