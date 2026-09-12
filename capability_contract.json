@@ -17,7 +17,7 @@
         "anchor_id": "CAPABILITY.normal_saved_candidate_batch",
         "type": "capability",
         "status": "active",
-        "statement": "普通保存来源CLI在全新外部目录接入六金融指标、B06、C02/C03/C04、D01/D02，调用原生Run冻结及独立公共行适配；失败和WITHHELD逐坐标保留，继续其余坐标。执行Spec与展示政策分别绑定，实际季度/时点/全年、来源申报日期和文本原文不能被统一重标。本轮V13目前完成部分实际OPEN及公共行预览，后继冻结/冷读与完整CLI材料验收仍在进行；已冻结V12可继续读取。不是实时更新服务、完整390坐标发布或正式采纳。",
+        "statement": "普通保存来源CLI在全新外部目录接入六金融指标、B06、C02/C03/C04、D01/D02，调用原生Run冻结及独立公共行适配；失败和WITHHELD逐坐标保留，继续其余坐标。执行Spec与展示政策分别绑定，实际季度/时点/全年、来源申报日期和文本原文不能被统一重标。V13现已完成Marriott六项和JPM六金融指标两次实际CLI批次、冻结和公共行；D01/C03另经复制运行代码冷读。已冻结V12/V13保持原规则可读，部分材料通过不等于整个批次已验收。不是实时更新服务、完整390坐标发布或正式采纳。",
         "audience": [
           "developer",
           "operator",
@@ -37,6 +37,32 @@
           "reviewer"
         ],
         "test_anchor": "tests/vnext/test_normal_run_authority.py::NormalRunAuthorityTest.test_old_table_spec_cannot_select_a_path_without_ordinary_source_replay",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_companyfacts_native_components",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通Company Facts组件从已保存当前/上一期原件、目录身份和实际DEI期间重建11项既有目录指标，无旧矩阵答案输入。缺失HTML时可用同申报已认证原生XBRL证明上一期；最后GET失败不会被回退成旧成功。上一期缺口按需要该期间的指标保留，当前指标及结构性不适用分别计算。组件JSON异目录重建和篡改拒绝已实现；原生Run、完整发布和实时最新状态未完成。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_companyfacts_results.py::OrdinaryCompanyfactsTest.test_real_json_no_git_rebuild_rejects_resigned_answer_period_and_source_changes",
+        "test_status": "automated_recorded",
+        "since": "2026-09-12"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_zero_ai_native_components",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通保存来源组件复用原规格与Calculator生成B01、B03和六事件指标的原生记录；B03依赖当前原件重新生成的B01观察，事件按已批准条目规则共享完整来源集合，不推断人事变化人数。修订/主体接续尚未实现时及真实来源失败时保留WITHHELD。它尚未接入普通Run，不改变正式结果或授予新调用。",
+        "audience": [
+          "developer",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_normal_zero_ai_results.py::OrdinaryZeroAiAdditionalRoutesTest.test_additional_routes_rebuild_json_and_cannot_omit_the_dependency_or_coverage",
         "test_status": "automated_recorded",
         "since": "2026-09-12"
       },

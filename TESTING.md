@@ -594,6 +594,20 @@ CI首次将13项新测试作为一个入口时触发既有30秒入口上限。�
 
 ## 普通保存来源候选批次
 
+当前GitHub CI使用`python3 tools/run_fast_tests_v2.py --jobs 2`。它保留V13冻结的`tools/run_fast_tests.py`原字节，继承其30秒/独立子进程边界，只把原VaR聚合用例的三个反例改为各自调度，并纳入D03/D04/财年组件短测试。原聚合方法及全部断言保留，历史acceptance runner仍按自身冻结入口解释。124个当前入口本地通过不能代替实际GitHub或完整验收。
+
+<!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
+<!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
+
+普通零AI来源组件的材料测试：
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest tests.vnext.test_normal_companyfacts_results tests.vnext.test_normal_zero_ai_results
+PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts /usr/bin/python3 -m unittest tests.vnext.test_fiscal_year_labels tests.vnext.test_going_concern_source tests.vnext.test_regulatory_investigation_candidates
+```
+
+前一命令17项通过，覆盖十公司原件/110目录坐标、B01/C01原20坐标、新增B03/五事件、独立源金额核算、JSON和无Git数据根重建、篡改拒绝。后一命令Python3.9的48项通过。测试拒绝网络和旧矩阵答案，不创建Run或freeze，不写正式结果；完整材料另存源码外。后继运行命令和原失败证据见`docs/evidence/issue28_continuous/successor-source-components/`，业务范围见`docs/normal_source_components.md`。
+
 短边界覆盖`test_normal_run_authority`、`test_normal_candidate_cli`及最小文本输入。V13公共入口的独立实际验收包含两份合法OPEN图和14个规格/来源/期间负例，详见`docs/evidence/issue28_continuous/successor-open-fb76/`；其信用只属于受审草案，不覆盖后续CI清单或D02改动。
 <!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
 

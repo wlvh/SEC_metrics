@@ -11,7 +11,7 @@ PR32 的 R4 标签修复使用 `issue_28_v3` 和独立的 `docs/r4_v3/qualified_
 
 ## Issue #15 D-26 测试执行边界
 
-`requirements/issue_15_v1/decision_register.json` 的 historical D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级；该集合现在以successor smoke同时加载`issue_28_v1`和exact `issue_15_v1` parent。它继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件，并保留single-flight、HTTP 402停批、UNKNOWN no-retry、零网络replay/rollback/restore等短小确定性测试。`.github/workflows/vnext-fast.yml` 在 PR 上运行同一命令；本地receipt与CI fast check都不是live、full acceptance或active Cutover。
+`requirements/issue_15_v1/decision_register.json` 的 historical D-26 保留 `python3 tools/run_fast_tests.py --jobs 4` 与 fast/local 证据层级；该集合现在以successor smoke同时加载`issue_28_v1`和exact `issue_15_v1` parent。它继续排除全仓/双解释器、隔离 repository/worktree 和长串行套件，并保留single-flight、HTTP 402停批、UNKNOWN no-retry、零网络replay/rollback/restore等短小确定性测试。当前PR CI使用`tools/run_fast_tests_v2.py`后继清单，旧入口保留为V13冻结规则；完整选择与测试分层见`TESTING.md`。本地receipt与CI fast check都不是live、full acceptance或active Cutover。
 
 ## Issue #28 successor Requirement transition
 

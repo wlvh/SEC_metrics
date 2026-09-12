@@ -1,0 +1,189 @@
+{
+  "record_type": "REGULATORY_INVESTIGATION_CANDIDATE_BUNDLE",
+  "metric_id": "D03",
+  "company_id": "sample_entity",
+  "source_reference_id": "sha256:a1d8554478286765ffe07ea712438f79b66e339b61da02726a339058971818f8",
+  "raw_asset_id": "sha256:83706c8dd9097df101a910c731092d065d83b61f149fb86150f2d4474a2d6e8a",
+  "source_filing": {
+    "form": "10-K",
+    "accessionNumber": "0000012345-26-000001",
+    "primaryDocument": "source.htm",
+    "filingDate": "2026-03-27",
+    "reportDate": "2025-12-31"
+  },
+  "document_id": "sha256:93864b114696674e55769ca9fe1afa2ba5e977afd1ec59d329f9267b92742e55",
+  "navigation_proposal_id": "sha256:acc8af0840f948f2f8500d18d507eddb06e153826fee1e42feb5bd0caeae16cb",
+  "checked_ranges": [
+    {
+      "section_id": "ITEM_1A",
+      "start_block": 1,
+      "end_block_exclusive": 2,
+      "heading": {
+        "item": "1A",
+        "block_index": 0,
+        "heading_end_index": 0
+      },
+      "closing_heading": {
+        "item": "1B",
+        "block_index": 2,
+        "heading_end_index": 2
+      }
+    },
+    {
+      "section_id": "ITEM_3",
+      "start_block": 5,
+      "end_block_exclusive": 6,
+      "heading": {
+        "item": "3",
+        "block_index": 4,
+        "heading_end_index": 4
+      },
+      "closing_heading": {
+        "item": "4",
+        "block_index": 6,
+        "heading_end_index": 6
+      }
+    },
+    {
+      "section_id": "ITEM_8",
+      "start_block": 9,
+      "end_block_exclusive": 10,
+      "heading": {
+        "item": "8",
+        "block_index": 8,
+        "heading_end_index": 8
+      },
+      "closing_heading": {
+        "item": "9",
+        "block_index": 10,
+        "heading_end_index": 10
+      }
+    },
+    {
+      "section_id": "NOTE_2",
+      "start_block": 19,
+      "end_block_exclusive": 23,
+      "requested_reference": "2",
+      "scope_relation": "EXACT_NOTE"
+    }
+  ],
+  "note_references": [
+    {
+      "reference": "Note 2",
+      "source_occurrences": [
+        {
+          "source_reference_id": "sha256:a1d8554478286765ffe07ea712438f79b66e339b61da02726a339058971818f8",
+          "raw_asset_id": "sha256:83706c8dd9097df101a910c731092d065d83b61f149fb86150f2d4474a2d6e8a",
+          "document_id": "sha256:93864b114696674e55769ca9fe1afa2ba5e977afd1ec59d329f9267b92742e55",
+          "section_id": "ITEM_3",
+          "labels": [
+            "NOTE_REFERENCE"
+          ],
+          "block_index": 5,
+          "text": "Refer to Note 2 for our legal proceedings and pending litigation.",
+          "raw_start_byte": 1080,
+          "raw_end_byte": 1145,
+          "raw_span_sha256": "d3ffd53a0bc0cf074938acc58ccbb0f8d890b10ef2380f4636addbc8f6f95186"
+        }
+      ],
+      "heading_candidates": [
+        {
+          "source_reference_id": "sha256:a1d8554478286765ffe07ea712438f79b66e339b61da02726a339058971818f8",
+          "raw_asset_id": "sha256:83706c8dd9097df101a910c731092d065d83b61f149fb86150f2d4474a2d6e8a",
+          "document_id": "sha256:93864b114696674e55769ca9fe1afa2ba5e977afd1ec59d329f9267b92742e55",
+          "section_id": "FULL_DOCUMENT_NOTES",
+          "labels": [
+            "NOTE_HEADING"
+          ],
+          "block_index": 19,
+          "text": "Note 2. Contingencies",
+          "raw_start_byte": 1811,
+          "raw_end_byte": 1832,
+          "raw_span_sha256": "4550b62043163b08f3c38d5056fd09321794ed0802bb22b379c60c1c38d6075a"
+        }
+      ],
+      "range_candidates": [
+        {
+          "section_id": "NOTE_2",
+          "start_block": 19,
+          "end_block_exclusive": 23,
+          "requested_reference": "2",
+          "scope_relation": "EXACT_NOTE"
+        }
+      ],
+      "status": "LOCATED_NOTE_RANGE"
+    }
+  ],
+  "source_aliases": [
+    {
+      "text": "we",
+      "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+      "support": null
+    },
+    {
+      "text": "Example Incorporated",
+      "basis": "NAMESPACE_CHECKED_DEI_REGISTRANT_NAME",
+      "support": null
+    }
+  ],
+  "coverage_status": "LOCAL_REQUESTED_RANGES_SCANNED",
+  "coverage_reasons": [],
+  "candidates": [
+    {
+      "excerpt": {
+        "source_reference_id": "sha256:a1d8554478286765ffe07ea712438f79b66e339b61da02726a339058971818f8",
+        "raw_asset_id": "sha256:83706c8dd9097df101a910c731092d065d83b61f149fb86150f2d4474a2d6e8a",
+        "document_id": "sha256:93864b114696674e55769ca9fe1afa2ba5e977afd1ec59d329f9267b92742e55",
+        "section_id": "ITEM_1A",
+        "labels": [
+          "REGULATORY_LANGUAGE_CANDIDATE"
+        ],
+        "block_index": 1,
+        "text": "We are cooperating with the DOJ inquiry.",
+        "raw_start_byte": 942,
+        "raw_end_byte": 982,
+        "raw_span_sha256": "68057174b0a4078918f1fef9308eb21d0fdf1f2c1d9f3be3216efe41d5a69dd1"
+      },
+      "context_excerpts": [],
+      "language_signals": [],
+      "facts": [
+        {
+          "rule_id": "CURRENT_COOPERATION",
+          "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+          "statement_text": "We are cooperating with the DOJ inquiry.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 40
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_relation_syntax_matched": true,
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": true,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:c5b09d432507fa7ad78fe74e660b884ffb73fc0babec5392c7bd33b880b3daf2"
+        }
+      ],
+      "requires_semantic_review": true,
+      "unmatched_language_semantically_resolved": false,
+      "candidate_id": "sha256:e19da3302272a5ee0368908c1a6d6ab20346a3040ef9ad33a400b77d6f89a88f"
+    }
+  ],
+  "outside_requested_range_action_candidates": [],
+  "supported_fact_count": 1,
+  "semantic_scope_completeness_asserted": false,
+  "not_disclosed_confirmed": false,
+  "native_result_created": false,
+  "publication_credit": false,
+  "policy_hash": "sha256:6c14bce5ff7918fdfd16fc13a5de42fda004c35c17eda896bd099139776f65c4",
+  "candidate_bundle_id": "sha256:031b406ca753b3b32859236960ecd6c2e5c4bb69da88a44e7a1321e581ee2989"
+}

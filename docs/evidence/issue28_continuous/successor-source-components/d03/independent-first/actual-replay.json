@@ -1,0 +1,982 @@
+[
+  {
+    "company_id": "marriott_international",
+    "status": "PASS",
+    "source_sha256": "c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547",
+    "source_storage_uri": "evidence/request_attempts/c3/c372495ac4ad3e62399040675f490315db137e17cd9a9a4a8c10cb1d09312547/mar-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:1c8bfa7163617de5a5d5665ced529ff5f2d6c623b630acdc0d74e10bf2eae085",
+        "request:attempt:2d3b0843e4cabff7e0ac9849b5fa8daa76be74f67c6f21fd3a7bf063a0ec9ac1",
+        "request:attempt:2995d87cc97b067b4dc02cbd3de41d855d2593bf97e8cb7a4ce71f8e05c9a321"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 0.693
+  },
+  {
+    "company_id": "southwest_airlines",
+    "status": "PASS",
+    "source_sha256": "4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+    "source_storage_uri": "evidence/request_attempts/4f/4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e/luv-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:705c80a391f7b18422317a4d785c80c125369031f4690d63e5d687b02f3bfe31",
+        "request:attempt:d9d2e6d68aa68e8685206ed468dd9bb74fbc9e8c8e78a8e811bd3627316f0092",
+        "request:attempt:92a12e6bec8c92d1adb5f23a3addc2c50f3fd446de9e25d7bd1686971e04037e"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [
+      {
+        "fact": {
+          "rule_id": "CURRENT_COOPERATION",
+          "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+          "statement_text": "The Company is cooperating fully with the DOJ CID and the state inquiry.",
+          "visible_block_character_span": {
+            "start": 437,
+            "end": 509
+          },
+          "subject_binding": {
+            "text": "the Company",
+            "basis": "EXPLICIT_SAME_NAME_PARENTHETICAL",
+            "support": {
+              "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+              "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+              "document_id": "sha256:31ee41e840d55a0ffdecbde087faf97c45e52aa4482e82ffb4c838d712246170",
+              "section_id": "FULL_DOCUMENT_ALIAS_DEFINITION",
+              "labels": [
+                "SOURCE_ENTITY_ALIAS"
+              ],
+              "block_index": 138,
+              "text": "Southwest Airlines Co. (the “Company” or “Southwest”) operates Southwest Airlines, a major passenger airline that provides scheduled air transportation in the United States and near-international markets. Southwest commenced service on June 18, 1971, with three Boeing 737 aircraft serving three Texas cities: Dallas, Houston, and San Antonio. Southwest’s unique route network, competitive fares, and famous Hospitality continue to make the Company an attractive choice for Customers in cities across the United States and near-international destinations. As of December 31, 2025, Southwest had a total of 803 Boeing 737 aircraft in its fleet and served 117 destinations in 42 states, the District of Columbia, the Commonwealth of Puerto Rico, and ten near-international countries: Mexico, Jamaica, The Bahamas, Aruba, Dominican Republic, Costa Rica, Belize, Cuba, the Cayman Islands, and Turks and Caicos.",
+              "raw_start_byte": 243734,
+              "raw_end_byte": 244670,
+              "raw_span_sha256": "694becd8302616b9705bb5057f417ef683ab04fb5e3199a39b37644b35ab89df"
+            }
+          },
+          "source_date_literals": [],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": true,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:a61bf772e066cc0b25146ff4f8dd2f0062adfda936f73074c12ae5502845b3a3"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:5ebe30fc59e58bd25d28a13980bba3cc4a855dcf0318f64bfd4963e866ee2e07",
+          "raw_asset_id": "sha256:4f68704859e453f23880f5c8866342df7efde9d4670e91633712feeef8f7155e",
+          "document_id": "sha256:31ee41e840d55a0ffdecbde087faf97c45e52aa4482e82ffb4c838d712246170",
+          "section_id": "ITEM_3",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 732,
+          "text": "On June 30, 2015, the U.S. Department of Justice (“DOJ”) issued a Civil Investigative Demand (“CID”) to the Company. The CID sought information and documents about the Company’s capacity from January 2010 to the date of the CID, including public statements and communications with third parties about capacity. In June 2015, the Company also received a letter from the Connecticut Attorney General requesting information about capacity. The Company is cooperating fully with the DOJ CID and the state inquiry.",
+          "raw_start_byte": 716377,
+          "raw_end_byte": 716916,
+          "raw_span_sha256": "750156820d30fb9b857ae0768e92e54e6f7d249951e033eae2e343538c573da2"
+        },
+        "context_excerpts": [],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 0.969
+  },
+  {
+    "company_id": "ford_motor_company",
+    "status": "PASS",
+    "source_sha256": "3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9",
+    "source_storage_uri": "evidence/request_attempts/3b/3bbda349b5831cfb9a2686dbdb7d87614bcdbe2d195aa8ecd9b39215945361f9/f-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:aba148c9f3725e411dc9b3a3d98e62c8ab6ab758fecd5616c4106e35cc91bef8",
+        "request:attempt:f48f8c4bd2da27d84a15410bacc45567b52c7d580d8658b036550fa4a6c414af",
+        "request:attempt:c160b39060f39a60f351ad4460665e4036d557e7748c0db18914f5f04fc2568d"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 1.688
+  },
+  {
+    "company_id": "pfizer",
+    "status": "PASS",
+    "source_sha256": "175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+    "source_storage_uri": "evidence/request_attempts/17/175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab/pfe-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:87479e2b81668856179f2daca30e8af491662248937271857494243f337cc21b",
+        "request:attempt:aa31c66145ae5f227fc7f661dcbfa73377c3349b6744dc0d718541b3594b6dd4",
+        "request:attempt:661edcbd02beeac336f0b1a24e43d1b35fb186ef81d6025c114144e39a5b48db"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [
+      {
+        "fact": {
+          "rule_id": "CURRENT_INVOLVEMENT",
+          "fact_kind": "EXPLICIT_CURRENT_INVESTIGATION_INVOLVEMENT",
+          "statement_text": "We are also involved in government investigations that arise in the ordinary course of our business.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 100
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": true,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:9b25465ef1bf05fa213e470878230345072de4287ffcff1ba608658879249a35"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+          "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 854,
+          "text": "We are also involved in government investigations that arise in the ordinary course of our business. There continues to be a significant volume of government investigations and litigation against companies operating in our industry, both in the U.S. and around the world. Government investigations and actions have and could result in substantial criminal and civil fines and/or criminal charges, limitations on our ability to conduct business in applicable jurisdictions, corporate integrity or deferred prosecution agreements and other disciplinary actions, as well as reputational harm, including as a result of increased public interest in the matter. In addition, in a qui tam lawsuit in which the government declines to intervene, the relator may still pursue a suit for the recovery of civil damages and penalties on behalf of the government.",
+          "raw_start_byte": 1162380,
+          "raw_end_byte": 1163474,
+          "raw_span_sha256": "b5da99e7a80931491b695d3e6d585e6f14dde69c4b19908d9450323b15da3045"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 855,
+            "text": "Our sales and marketing activities, the pricing of our products and other aspects of our business are subject to extensive regulation under the FFDCA, the MDRP, the FCPA and other federal and state statutes, including those discussed elsewhere in this Form 10-K, as well as the AKS, anti-bribery laws, the False Claims Act, consumer protection statutes and similar laws in international jurisdictions. In addition to the potential for changes to relevant laws, the compliance and enforcement landscape is informed by government litigation, settlement precedent, advisory opinions, and special fraud alerts. Our approach to certain practices may evolve over time in light of these types of developments.",
+            "raw_start_byte": 1163621,
+            "raw_end_byte": 1164323,
+            "raw_span_sha256": "6dbca0cc7f85c7fcd2768044601f3ff4f67ab4fa17812165d29ced988e6beefd"
+          },
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 856,
+            "text": "Requirements or industry standards in the U.S. and certain jurisdictions abroad require pharmaceutical manufacturers to track and disclose financial interactions with healthcare professionals and healthcare providers and can increase government and public scrutiny of such financial interactions. If an interaction is found to be improper, government enforcement actions and penalties could result. Like many companies in our industry, we have from time to time received, and may receive in the future, inquiries and subpoenas and other types of information demands from government authorities. In addition, we have been and may in the future be subject to claims and other actions related to our business activities, brought by governmental authorities, as well as consumers and private payors. In some instances, we have incurred significant expense, civil payments, fines and other adverse consequences as a result of these claims, actions and inquiries. Such claims, actions and inquiries may relate to alleged non-compliance with laws and regulations associated with the dissemination of product (approved and unapproved) information, potentially resulting in government enforcement action and reputational damage. These risks may be heightened by the use of AI in our operations as well as in our digital marketing, including social media, mobile applications and blogger outreach, as well as direct-to-consumer marketing and digital platform offerings.",
+            "raw_start_byte": 1164470,
+            "raw_end_byte": 1165929,
+            "raw_span_sha256": "8484504458cba3d4a9ef7b653b034e1706ef8e6789f7991d44c096297d13dabd"
+          }
+        ],
+        "requires_semantic_review": true
+      },
+      {
+        "fact": {
+          "rule_id": "RECEIVED_PROCESS",
+          "fact_kind": "REPORTED_RECEIPT_OF_REGULATORY_PROCESS",
+          "statement_text": "In February 2019, we received a Civil Investigative Demand (CID) from the U.S. Attorney’s Office for the SDNY.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 110
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [
+            "February 2019"
+          ],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": false,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:5fa222d6c166aa5ce4a40d182f2f6faf9e6c453b3ca652ac53314071e88ba32c"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+          "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+          "section_id": "ITEM_8",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 3930,
+          "text": "In February 2019, we received a Civil Investigative Demand (CID) from the U.S. Attorney’s Office for the SDNY. The CID seeks records and information related to alleged quality issues involving the manufacture of auto-injectors at Pfizer’s former Meridian site. In August 2019, we received a HIPAA subpoena issued by the U.S. Attorney’s Office for the Eastern District of Missouri, in coordination with the Department of Justice’s Consumer Protection Branch, seeking similar records and information. We have produced records in response to these and subsequent requests.",
+          "raw_start_byte": 4735120,
+          "raw_end_byte": 4735713,
+          "raw_span_sha256": "291635581208330c6b2891c1b91e81d0a50e5bef41d696993c42a9be6984a910"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3929,
+            "text": "Government Inquiries relating to Meridian Medical Technologies",
+            "raw_start_byte": 4734908,
+            "raw_end_byte": 4734970,
+            "raw_span_sha256": "582144b79c9cc0b229a3c698ee68492379d785413d6f3fa1b0c52bf288366827"
+          },
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3931,
+            "text": "U.S. Department of Justice Inquiries relating to India Operations",
+            "raw_start_byte": 4735860,
+            "raw_end_byte": 4735925,
+            "raw_span_sha256": "66c81698e5d1f1ddbf0e8dd556016f1aed5d22bb7b3e558ce675682f048aa100"
+          },
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3932,
+            "text": "In March 2020, we received an informal request from the U.S. Department of Justice’s Consumer Protection Branch seeking documents relating to our manufacturing operations in India, including at our former facility located at Irrungattukottai in India. In April 2020, we received a similar request from the U.S. Attorney’s Office for the SDNY regarding a civil investigation concerning operations at our facilities in India. We have produced records pursuant to these requests.",
+            "raw_start_byte": 4736075,
+            "raw_end_byte": 4736563,
+            "raw_span_sha256": "7625a9b9b8ea6354e71910546d81a3b676391cd81d7bc1dbc25006822d5bdde3"
+          }
+        ],
+        "requires_semantic_review": true
+      },
+      {
+        "fact": {
+          "rule_id": "RECEIVED_PROCESS",
+          "fact_kind": "REPORTED_RECEIPT_OF_REGULATORY_PROCESS",
+          "statement_text": "In August 2019, we received a HIPAA subpoena issued by the U.S. Attorney’s Office for the Eastern District of Missouri, in coordination with the Department of Justice’s Consumer Protection Branch, seeking similar records and information.",
+          "visible_block_character_span": {
+            "start": 261,
+            "end": 498
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [
+            "August 2019"
+          ],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": false,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:1d4607f5bb308275aa0289db2d670c7c2e05416cf4ff91e7da564a03840ac1c9"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+          "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+          "section_id": "ITEM_8",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 3930,
+          "text": "In February 2019, we received a Civil Investigative Demand (CID) from the U.S. Attorney’s Office for the SDNY. The CID seeks records and information related to alleged quality issues involving the manufacture of auto-injectors at Pfizer’s former Meridian site. In August 2019, we received a HIPAA subpoena issued by the U.S. Attorney’s Office for the Eastern District of Missouri, in coordination with the Department of Justice’s Consumer Protection Branch, seeking similar records and information. We have produced records in response to these and subsequent requests.",
+          "raw_start_byte": 4735120,
+          "raw_end_byte": 4735713,
+          "raw_span_sha256": "291635581208330c6b2891c1b91e81d0a50e5bef41d696993c42a9be6984a910"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3929,
+            "text": "Government Inquiries relating to Meridian Medical Technologies",
+            "raw_start_byte": 4734908,
+            "raw_end_byte": 4734970,
+            "raw_span_sha256": "582144b79c9cc0b229a3c698ee68492379d785413d6f3fa1b0c52bf288366827"
+          },
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3931,
+            "text": "U.S. Department of Justice Inquiries relating to India Operations",
+            "raw_start_byte": 4735860,
+            "raw_end_byte": 4735925,
+            "raw_span_sha256": "66c81698e5d1f1ddbf0e8dd556016f1aed5d22bb7b3e558ce675682f048aa100"
+          },
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3932,
+            "text": "In March 2020, we received an informal request from the U.S. Department of Justice’s Consumer Protection Branch seeking documents relating to our manufacturing operations in India, including at our former facility located at Irrungattukottai in India. In April 2020, we received a similar request from the U.S. Attorney’s Office for the SDNY regarding a civil investigation concerning operations at our facilities in India. We have produced records pursuant to these requests.",
+            "raw_start_byte": 4736075,
+            "raw_end_byte": 4736563,
+            "raw_span_sha256": "7625a9b9b8ea6354e71910546d81a3b676391cd81d7bc1dbc25006822d5bdde3"
+          }
+        ],
+        "requires_semantic_review": true
+      },
+      {
+        "fact": {
+          "rule_id": "RECEIVED_PROCESS",
+          "fact_kind": "REPORTED_RECEIPT_OF_REGULATORY_PROCESS",
+          "statement_text": "In April 2023, we received a HIPAA subpoena issued by the U.S. Attorney’s Office for the Western District of Virginia, in coordination with the Department of Justice’s Commercial Litigation Branch, seeking records and information related to programs Pfizer sponsored in retail pharmacies relating to Xeljanz.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 308
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [
+            "April 2023"
+          ],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": false,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:a754fd2c3aa9c58085252147bec521336c55d83b7e425f88eae6cd8dbeafc0c5"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+          "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+          "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+          "section_id": "ITEM_8",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 3936,
+          "text": "In April 2023, we received a HIPAA subpoena issued by the U.S. Attorney’s Office for the Western District of Virginia, in coordination with the Department of Justice’s Commercial Litigation Branch, seeking records and information related to programs Pfizer sponsored in retail pharmacies relating to Xeljanz. We have produced records pursuant to this request.",
+          "raw_start_byte": 4738114,
+          "raw_end_byte": 4738485,
+          "raw_span_sha256": "25f6b3673bc13503954e582b97cdb9012338ad9b99093a5b428f84a7b9744a4e"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3935,
+            "text": "Government Inquiries relating to Xeljanz",
+            "raw_start_byte": 4737924,
+            "raw_end_byte": 4737964,
+            "raw_span_sha256": "0006b70ab2d6d4b6bfff45eb7978e2ff0f0f9dce25a7d2752d953c52b594de8f"
+          },
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3937,
+            "text": "B. Guarantees and Indemnifications",
+            "raw_start_byte": 4738679,
+            "raw_end_byte": 4738713,
+            "raw_span_sha256": "b10c3418dc3ae05d414ba16dad94d2339c0189835b9d24c84ab4fec98c276928"
+          },
+          {
+            "source_reference_id": "sha256:dacd34c8a85341b800fbb619cd624b27201f5741eaed0b99b8795cd79471c90d",
+            "raw_asset_id": "sha256:175e07c21ee258eddd9952e443d34df2a297d0c38e2d1312dff0a64a31c401ab",
+            "document_id": "sha256:4696c109fce4eb65d711d7cb205d380ea878666930c9123d664cfc9fc9f29767",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3938,
+            "text": "In the ordinary course of business and in connection with the sale of assets and businesses and other transactions, we often indemnify our counterparties against certain liabilities that may arise in connection with the transaction or that are related to events and activities prior to or following a transaction. If the indemnified party were to make a successful claim pursuant to the terms of the indemnification, we may be required to reimburse the loss. These indemnifications are generally subject to various restrictions and limitations. Historically, we have not paid significant amounts under these provisions and, as of December 31, 2025, the estimated fair value of these indemnification obligations is not material to Pfizer.",
+            "raw_start_byte": 4738863,
+            "raw_end_byte": 4739601,
+            "raw_span_sha256": "aaf53dd72a726a44565e14ce2822fd2cc105145ca41550a75d28b042faf38d21"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 1.748
+  },
+  {
+    "company_id": "jpmorgan_chase",
+    "status": "PASS",
+    "source_sha256": "4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+    "source_storage_uri": "evidence/request_attempts/4d/4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23/jpm-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:64a91151c5d535eaf20bfd1f6c182a65fb8851d5f77691cf9204f13d9c54dfb0",
+        "request:attempt:69549e5a72a429ea2bcd83fbbc2e6ddffa9a15863d68f654c0ac510341bf9f0a",
+        "request:attempt:adadf093594e5fea6c7320cb135411b8e24007f5adcc1d7360f87cf93909d003"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [
+      {
+        "fact": {
+          "rule_id": "CURRENT_PROCEEDINGS",
+          "fact_kind": "EXPLICIT_CURRENT_REGULATORY_PROCEEDING",
+          "statement_text": "As of December 31, 2025, the Firm and its subsidiaries and affiliates are defendants or respondents in numerous evolving legal proceedings, including private proceedings, public proceedings, government investigations, regulatory enforcement matters, and the matters described below.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 282
+          },
+          "subject_binding": {
+            "text": "the Firm",
+            "basis": "EXPLICIT_SAME_NAME_PARENTHETICAL",
+            "support": {
+              "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+              "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+              "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+              "section_id": "FULL_DOCUMENT_ALIAS_DEFINITION",
+              "labels": [
+                "SOURCE_ENTITY_ALIAS"
+              ],
+              "block_index": 140,
+              "text": "JPMorgan Chase & Co. (“JPMorganChase” or the “Firm”, NYSE: JPM), a financial holding company incorporated under Delaware law in 1968, is a leading financial services firm based in the United States of America (“U.S.”), with operations worldwide. JPMorganChase had $4.4 trillion in assets and $362.4 billion in stockholders’ equity as of December 31, 2025. The Firm is a leader in investment banking, financial services for consumers and small businesses, commercial banking, financial transaction processing and asset management. Under the J.P. Morgan and Chase brands, the Firm serves millions of customers, predominantly in the U.S., and many of the world’s most prominent corporate, institutional and government clients globally.",
+              "raw_start_byte": 1282800,
+              "raw_end_byte": 1283589,
+              "raw_span_sha256": "34a66111476bf80709b2aea8879fe0453b2b9fc41c09f7729aa3bf56cd055ab5"
+            }
+          },
+          "source_date_literals": [
+            "December 31, 2025"
+          ],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": true,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:6d30f71b10147f515ed41c0d04bf09275f68062c4b92174daacc2ea8ebf06409"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+          "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+          "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+          "section_id": "NOTE_30",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 10161,
+          "text": "As of December 31, 2025, the Firm and its subsidiaries and affiliates are defendants or respondents in numerous evolving legal proceedings, including private proceedings, public proceedings, government investigations, regulatory enforcement matters, and the matters described below. These range from individual actions involving a single plaintiff to class action lawsuits with potentially millions of class members. Investigations and regulatory enforcement matters involve both formal and informal proceedings, by both governmental agencies and self-regulatory organizations. These legal proceedings are at varying stages of adjudication, arbitration or investigation, and involve each of the Firm’s lines of business in several geographies and varied claims (including common law tort and contract claims and statutory antitrust, securities and consumer protection claims), some of which present novel legal theories.",
+          "raw_start_byte": 11950435,
+          "raw_end_byte": 11951361,
+          "raw_span_sha256": "3cf0a4cbcac7b67797ae88c47f13ab2f7e632cbd606d8771593b0eb2163b4c23"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+            "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+            "section_id": "NOTE_30",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 10160,
+            "text": "Contingencies",
+            "raw_start_byte": 11950176,
+            "raw_end_byte": 11950190,
+            "raw_span_sha256": "718cb40521b32d3b7b6151e1d571ab3487b75ef475d807fa18ea82ecd133e741"
+          },
+          {
+            "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+            "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+            "section_id": "NOTE_30",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 10162,
+            "text": "The Firm estimates the aggregate range of reasonably possible losses, in excess of reserves established, for its legal proceedings is from $0 to approximately $1.2 billion at December 31, 2025. This estimated aggregate range of reasonably possible losses was based upon information available as of that date for those proceedings in which the Firm believes that an estimate of reasonably possible loss can be made. For certain matters, the Firm does not believe that such an estimate can be made, as of that date. The Firm’s estimate of the aggregate range of reasonably possible losses involves significant judgment, given:",
+            "raw_start_byte": 11951511,
+            "raw_end_byte": 11952516,
+            "raw_span_sha256": "f519b235186c8906e23e84129d090efc8971892ca0e7abb62c71a4a26b10994d"
+          },
+          {
+            "source_reference_id": "sha256:7179ce77593c01b74f13278d25e9dab8627a864c58d35de769dc14bfdcb819ff",
+            "raw_asset_id": "sha256:4d9febdbc2038dcdca8726053286df4cbbfd48885051cbd781efcc3becb66a23",
+            "document_id": "sha256:4a4dce956e908317fc4c082f81521acb1a4b4d508a3d673dcfd812b9de167302",
+            "section_id": "NOTE_30",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 10163,
+            "text": "•the number, variety and varying stages of the proceedings, including the fact that many are in preliminary stages,",
+            "raw_start_byte": 11952700,
+            "raw_end_byte": 11952955,
+            "raw_span_sha256": "8cb6d4eef19d3f6efbb0541a0055802d2329ef78e90ac851b296dd229d8d226a"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 4.179
+  },
+  {
+    "company_id": "salesforce",
+    "status": "PASS",
+    "source_sha256": "d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+    "source_storage_uri": "evidence/request_attempts/d6/d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25/crm-20260131.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:707d67a40b04183d948b0c9918eedef55fccd995a3e9bbfe46bcb588d6bdb745",
+        "request:attempt:b0255d5ecf208ecd707f350c1988006ed7db95c2651078e2de8f8a7d8693fee7",
+        "request:attempt:d491f102d961ff431f729ed22a6061e77031764d68ecb123860e506160642026"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [
+      {
+        "fact": {
+          "rule_id": "CURRENT_LEGAL_INVENTORY",
+          "fact_kind": "EXPLICIT_CURRENT_INVESTIGATION_INVOLVEMENT",
+          "statement_text": "We are involved in various legal matters arising from the normal course of business activities. These include claims, suits, government investigations and other proceedings involving alleged infringement of third-party patents and other intellectual property rights, as well as commercial, corporate and securities, labor and employment, class actions, wage and hour, antitrust, data privacy, cybersecurity and other matters.",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 425
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": true,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:37a7045fdc4fb5a133696b6b31566afaee1d9607f24d78a278f577d2d609bab4"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+          "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+          "document_id": "sha256:7c53180412648eb1d62d27f92275d784dbd1cb206439a4878e435d268be677d4",
+          "section_id": "ITEM_1A",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 463,
+          "text": "We are involved in various legal matters arising from the normal course of business activities. These include claims, suits, government investigations and other proceedings involving alleged infringement of third-party patents and other intellectual property rights, as well as commercial, corporate and securities, labor and employment, class actions, wage and hour, antitrust, data privacy, cybersecurity and other matters.",
+          "raw_start_byte": 457009,
+          "raw_end_byte": 457434,
+          "raw_span_sha256": "a925b8cb2c6d5f20a006c0988b658a26904a56efe7f728045b1c3b5aaa2dd4c5"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+            "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+            "document_id": "sha256:7c53180412648eb1d62d27f92275d784dbd1cb206439a4878e435d268be677d4",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 462,
+            "text": "We have been and may in the future be sued by third parties for various claims, including alleged infringement of proprietary rights.",
+            "raw_start_byte": 456704,
+            "raw_end_byte": 456837,
+            "raw_span_sha256": "c9680d2a7fcd3beba9c18b14e85efa2c8a03382e1486a1c77b076c10265309ab"
+          },
+          {
+            "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+            "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+            "document_id": "sha256:7c53180412648eb1d62d27f92275d784dbd1cb206439a4878e435d268be677d4",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 464,
+            "text": "The software and Internet industries are characterized by the existence of many patents, trademarks, trade secrets and copyrights and by frequent litigation based on allegations of infringement or other violations of intellectual property rights. We have received in the past and may receive in the future communications from third parties, including practicing entities and non-practicing entities, claiming that we have infringed their intellectual property rights. We have also been, and may in the future be, sued by third parties for alleged infringement of their claimed proprietary rights. Our technologies may be subject to injunction if they are found to infringe the rights of a third party or we may be required to pay damages, or both. Further, many of our subscription agreements require us to indemnify our customers for third-party intellectual property infringement claims, which would increase the cost to us of an adverse ruling on such a claim.",
+            "raw_start_byte": 457606,
+            "raw_end_byte": 458569,
+            "raw_span_sha256": "3f6cc2894c194fe0804aa90d5ca63ad9b666742cf46174b9c72a948b39efdc77"
+          },
+          {
+            "source_reference_id": "sha256:92c50df49d0a3e20b61a31bddbf5d82ce8d61ed2e2f2752cb78fc6afffb4506c",
+            "raw_asset_id": "sha256:d606b8cc64176cbfa8c75355a9c935ec83f6b8374a87f94f3747941633fa8d25",
+            "document_id": "sha256:7c53180412648eb1d62d27f92275d784dbd1cb206439a4878e435d268be677d4",
+            "section_id": "ITEM_1A",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 465,
+            "text": "In addition, we have in the past been, and may in the future be, sued by third parties who seek to target us for actions taken by our customers, including through the use or misuse of our products. For example, we have been subject to allegations in legal proceedings that we should be liable for the use of certain of our products by third parties. Although we believe we have a strong defense for these claims, such claims could cause reputational harm to our brand or result in liability. Regardless of outcome, these types of claims could cause reputational harm to our brand or result in liability.",
+            "raw_start_byte": 458741,
+            "raw_end_byte": 459345,
+            "raw_span_sha256": "31d361a761c23438203ea19d55349d1578727b9a2ffa77031835b3da30e928e9"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 0.869
+  },
+  {
+    "company_id": "lumen_technologies",
+    "status": "PASS",
+    "source_sha256": "87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+    "source_storage_uri": "evidence/request_attempts/87/87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429/lumn-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:d57b50c6024d6fbe290daded3ec75b2369480525f55e46c05d94bb28dc9f4ecb",
+        "request:attempt:f0226bcec5dfff818b5a2b35e88fb0c84529e04c6b3b42b220e7ff712bcabe9b",
+        "request:attempt:175e53e7f02e1e467346622c08e88b79d39d2f81f6e05ec50dc1b7fe24c0e48b"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [
+      {
+        "fact": {
+          "rule_id": "ISSUED_PROCESS_TO_NAMED_ENTITY",
+          "fact_kind": "REPORTED_REGULATORY_PROCESS_ADDRESSED_TO_ENTITY",
+          "statement_text": "The FCC’s Enforcement Bureau issued a Letter of Inquiry to Lumen Technologies, Inc. regarding its written certifications to the FCC that Lumen has complied with FCC rules governing the use of resources derived from the High Cost Program, Lifeline Program, Rural Health Care Program, E-Rate Program, Emergency Broadband Benefit Program, and the Affordable Connectivity Program.",
+          "visible_block_character_span": {
+            "start": 6,
+            "end": 382
+          },
+          "subject_binding": {
+            "text": "Lumen Technologies, Inc.",
+            "basis": "NAMESPACE_CHECKED_DEI_REGISTRANT_NAME",
+            "support": null
+          },
+          "source_date_literals": [],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": false,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:10d0c36acd598f9ad93ecafbb1179f16cd9f13d1b931d7ee42b7253594acd94a"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+          "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+          "document_id": "sha256:f2e8c57d82dd108847b08514b4230ca63835a8289bc892f5b172b016e84e0988",
+          "section_id": "ITEM_8",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 3417,
+          "text": "•FCC. The FCC’s Enforcement Bureau issued a Letter of Inquiry to Lumen Technologies, Inc. regarding its written certifications to the FCC that Lumen has complied with FCC rules governing the use of resources derived from the High Cost Program, Lifeline Program, Rural Health Care Program, E-Rate Program, Emergency Broadband Benefit Program, and the Affordable Connectivity Program. Under these programs, federal funds may not be used to facilitate the deployment or maintenance of equipment or services provided by Huawei, a company the FCC has determined poses a national security threat to the integrity of U.S. communications networks or the communications supply chain.",
+          "raw_start_byte": 3199899,
+          "raw_end_byte": 3200719,
+          "raw_span_sha256": "acab098ff65c205ffa6765de40d3a20bc9dfc9b42bed1b719316f1a0a5b116de"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+            "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+            "document_id": "sha256:f2e8c57d82dd108847b08514b4230ca63835a8289bc892f5b172b016e84e0988",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3416,
+            "text": "•DOJ. Lumen has received a civil investigative demand from the U.S. Department of Justice in the course of a False Claims Act investigation alleging that Lumen Technologies, Inc. and Lumen Technologies Government Solutions, Inc. failed to comply with certain specified requirements in federal contracts concerning their use of Huawei equipment.",
+            "raw_start_byte": 3199154,
+            "raw_end_byte": 3199638,
+            "raw_span_sha256": "013ee9739ba803490714689ee83400c078abd1e0e8f3f3007a6a40b4d1d0cc1d"
+          },
+          {
+            "source_reference_id": "sha256:671a0aa3b034186748b33f6df246360d4a92b37912e089cdac7222f84f2ef892",
+            "raw_asset_id": "sha256:87569ab70042748bf3d397ae929479b3cf39fce13c7d47fd49e573bfbaba7429",
+            "document_id": "sha256:f2e8c57d82dd108847b08514b4230ca63835a8289bc892f5b172b016e84e0988",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3418,
+            "text": "•Team Telecom. The Committee for the Assessment of Foreign Participation in the United States Telecommunications Service Sector (comprised of the U.S. Attorney General, and the Secretaries of the Department of Homeland Security, and the Department of Defense), commonly referred to as Team Telecom, issued questions and requests for information relating to Lumen’s FCC licenses and its use of Huawei equipment.",
+            "raw_start_byte": 3200961,
+            "raw_end_byte": 3201517,
+            "raw_span_sha256": "b35a75dcee3800f10cba49429d53e3f8009bf4e14e510b6f3c0eaec6d2a0a26f"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 1.285
+  },
+  {
+    "company_id": "macys",
+    "status": "PASS",
+    "source_sha256": "47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7",
+    "source_storage_uri": "evidence/request_attempts/47/47e1df1c9e94a3e0de3def3d714f16496c25f6461504899e4476b203bb91f4c7/m-20260131.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:d3b5914e9e0a6f3568a2da42a67774d198faa3a0a04e220054489d3c045c9529",
+        "request:attempt:c3aabed7f8ec00b9058aa7f0c8d05d1e269490a28babe6d7a5c63f392fd47cdf",
+        "request:attempt:8f211e467c06d9bd4a50e816a4dd01646c30b1dcf8809bdd43d9f2f3d3d1f51a"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 0.748
+  },
+  {
+    "company_id": "paramount_skydance_paramount_global",
+    "status": "PASS",
+    "source_sha256": "4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+    "source_storage_uri": "evidence/request_attempts/4c/4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d/psky-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:98d4ba07a2daed1c2e2730244ad274f701e586a0f8dd2b3fd68429250b3b75fb",
+        "request:attempt:99822f51d1d96ec0fe592a78064a03098f2a1d3cb31d5f5be0d783abeb5f50bd",
+        "request:attempt:e6e256328eb75c4b1db4eafde1643cfd8f432ced9c0d0338747d01c9eb54bd9e"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [
+      {
+        "fact": {
+          "rule_id": "CURRENT_RESPONSE",
+          "fact_kind": "EXPLICIT_CURRENT_RESPONSE_TO_AUTHORITY",
+          "statement_text": "On an ongoing basis, we vigorously defend ourselves in numerous lawsuits and proceedings and respond to various investigations and inquiries from federal, state, local and international authorities (collectively, “Litigation”).",
+          "visible_block_character_span": {
+            "start": 0,
+            "end": 227
+          },
+          "subject_binding": {
+            "text": "we",
+            "basis": "SOURCE_AUTHOR_FIRST_PERSON",
+            "support": null
+          },
+          "source_date_literals": [],
+          "status": "SOURCE_REPORTED_FACT",
+          "authority_to_action_relation_proven": true,
+          "reason_codes": [],
+          "current_status_asserted": true,
+          "action_start_or_end_date_inferred": false,
+          "same_as_annual_measurement_period_asserted": false,
+          "investigated_subject_identity_inferred_from_participation": false,
+          "investigation_case_identity_or_count_inferred": false,
+          "fact_id": "sha256:d34d376eacd26d585f471f250b1e7a8fd944420910ce3e32f3755afb30bb0b67"
+        },
+        "excerpt": {
+          "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+          "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+          "document_id": "sha256:e7d86644dcd26bbc859e0d081f6b860a30cc707c9214d386d6548db1e7dadc06",
+          "section_id": "ITEM_8",
+          "labels": [
+            "REGULATORY_LANGUAGE_CANDIDATE"
+          ],
+          "block_index": 3228,
+          "text": "On an ongoing basis, we vigorously defend ourselves in numerous lawsuits and proceedings and respond to various investigations and inquiries from federal, state, local and international authorities (collectively, “Litigation”). Litigation may be brought against us without merit, is inherently uncertain and always difficult to predict. However, based on our understanding and evaluation of the relevant facts and circumstances, we believe that the following matters are not likely, in the aggregate, to result in a material adverse effect on our business, financial condition and results of operations.",
+          "raw_start_byte": 4267700,
+          "raw_end_byte": 4268316,
+          "raw_span_sha256": "a0b5f3f607bd360186e321d2ae6abb9201f967924e4f52b082cbd498226089ce"
+        },
+        "context_excerpts": [
+          {
+            "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+            "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+            "document_id": "sha256:e7d86644dcd26bbc859e0d081f6b860a30cc707c9214d386d6548db1e7dadc06",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3229,
+            "text": "Litigation Relating to the Transactions",
+            "raw_start_byte": 4268565,
+            "raw_end_byte": 4268604,
+            "raw_span_sha256": "50c2673b6b56fc7d12a74039e8eca6cc0a8a5f573fe4c4ead73f2670206a9517"
+          },
+          {
+            "source_reference_id": "sha256:ca0329884451e51380468f4ffee24a484a67e6571f3a5691acb4794319770a99",
+            "raw_asset_id": "sha256:4cf3d42c0ba1129dadd58d9c1ffdc4f35e2a81cec7bab3763e2a3bbecfea135d",
+            "document_id": "sha256:e7d86644dcd26bbc859e0d081f6b860a30cc707c9214d386d6548db1e7dadc06",
+            "section_id": "ITEM_8",
+            "labels": [
+              "ADJACENT_CONTEXT_ONLY"
+            ],
+            "block_index": 3230,
+            "text": "In connection with the Transactions, in July 2024, Scott Baker, a purported holder of Paramount Global Class B Common Stock, filed a putative class action lawsuit in the Court of Chancery of the State of Delaware against NAI, Shari E. Redstone, Barbara M. Byrne, Linda M. Griego, Judith A. McHale, Charles E. Phillips, Jr., Susan Schuman, Skydance and David Ellison (the “Baker Action”). The complaint alleges breaches of fiduciary duties to Paramount Global Class B stockholders in connection with the negotiation and approval of the Transaction Agreement, among other claims, and seeks unspecified damages, costs and expenses, as well as other relief. In November 2024, the Court granted the parties’ stipulation in the Baker Action to (i) postpone briefing on the motions to dismiss until the filing or designation of an operative complaint following resolution of the plaintiff’s motion to appoint him and the Baerlocher Family Trust, a purported holder of Paramount Global Class B Common Stock, as co-lead plaintiffs and Berger Montague PC as interim class counsel (the “Baker Leadership Motion”), and (ii) stay discovery until resolution of any motion to dismiss an operative complaint following resolution of the Baker Leadership Motion. In October 2024, various purported stockholders filed motions to intervene to oppose the Baker Leadership Motion. In December 2024, the plaintiff, along with Mark Baerlocher, as trustee for the Baerlocher Family Trust, filed an amended complaint alleging the same breaches of fiduciary duties against the same defendants as in the original complaint. In June 2025, counsel for Mr. Baker informed the Court that the Baker Leadership Motion would be withdrawn without prejudice and that the group of purported stockholders seeking lead plaintiff status would meet and confer to propose a schedule for resolving lead plaintiff applications.",
+            "raw_start_byte": 4268761,
+            "raw_end_byte": 4270679,
+            "raw_span_sha256": "e2d8e8eb6d23ea0dc4613178e32ba993883344995f0778fee348edd2c0c8c4b1"
+          }
+        ],
+        "requires_semantic_review": true
+      }
+    ],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 1.625
+  },
+  {
+    "company_id": "enphase_energy",
+    "status": "PASS",
+    "source_sha256": "7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112",
+    "source_storage_uri": "evidence/request_attempts/7b/7b6a735451e98e6b91d14e37eff330ad255ba6a237a579c29331eeb35c26d112/enph-20251231.htm",
+    "admission": {
+      "record_type": "VERIFIED_NORMAL_SAVED_INPUTS",
+      "trusted_baseline_commit": "10854a976a021005bdbb54a32afb9900bdb53270",
+      "source_manifest_sha256": "6bdb48352319d4906626f125ce42a208e269a579b7f89d9f90974939b21e4716",
+      "request_attempt_ids": [
+        "request:attempt:a6a94b904d18b0f9c0e96f0cd5e667bb1b340536b8f1450f612d74583af72d97",
+        "request:attempt:b9ebac29d66992383ca6314bc260daa68608e2f34424768305f50622c0871ffd",
+        "request:attempt:3926d2911ed3b04f6558948f7a3e3708f0a5374845657b96ba4997e76e9409cd"
+      ],
+      "source_credit": "PREEXISTING_SAVED_ACQUISITIONS_ONLY",
+      "new_business_calls": {
+        "provider": 0,
+        "paid": 0,
+        "sec": 0
+      }
+    },
+    "supported_facts": [],
+    "native_result_created": false,
+    "semantic_scope_completeness_asserted": false,
+    "elapsed_seconds": 1.013
+  }
+]

@@ -282,4 +282,9 @@ B06新来源的两份历史验证只提供候选结果：可查看原始年报�
 <!-- capability-anchor: CAPABILITY.native_text_source_excerpts -->
 
 多指标开发候选的入口和状态见`docs/normal_candidates.md`。金融数值保留实际季度、时点或全年期间，董事会披露显示真实申报日期，不推定为年末董事会状态；暂不出值时保留具体原因。当前已出现原生冻结和公共行材料，但完整390坐标、正常新来源更新与正式采纳仍未完成，正式报告不因此自动改变。
+
+<!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
+<!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
+
+开发中的19项普通零AI来源组件还没有加入该CLI或正式报告。事件条目数不代表已核实的人事变更人数；上一期材料缺失不会被当作同比零变化。D03/D04目前完成的来源准备也不等于已确认有无调查或持续经营疑虑。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->

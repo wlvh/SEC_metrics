@@ -27,4 +27,4 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
         # Large original-document checks compete for CPU on hosted runners.
         # Keep each selected case's existing 30-second limit, with two workers.
-        run: python3 tools/run_fast_tests.py --jobs 2
+        run: python3 tools/run_fast_tests_v2.py --jobs 2

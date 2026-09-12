@@ -1,0 +1,11 @@
+{
+  "record_type": "GOING_CONCERN_SOURCE_LANGUAGE_RULES",
+  "schema_version": 1,
+  "language_pattern": "\\b(?:going[\\s-]+concern|substantial doubt|ability to continue)\\b",
+  "concept_pattern": "going.?concern|substantial.*doubt",
+  "financial_opening_pattern": "^We have audited the (?:accompanying )?consolidated balance sheets? of (?P<subject>.+?) as of (?P<date>{date})",
+  "context_qualifier_pattern": "\\b(?:if|hypothetical|illustrative|example|quoted|quotation|previously|historically|formerly|prior year|last year|may|might|could|would|acquired|acquisition|subsidiary)\\b",
+  "valuation_pattern": "going[\\s-]+concern element of",
+  "direct_declaration_pattern": "As of ({date}), (.+?) has (no |)substantial doubt about its ability to continue as a going[ -]concern\\.",
+  "semantic_verdict_authorized": false
+}

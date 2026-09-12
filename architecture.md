@@ -813,4 +813,11 @@ V12真实材料已完成D01十公司和C03/C04二十坐标冻结；后继V13仍�
 <!-- capability-anchor: CAPABILITY.normal_current_run_admission -->
 
 `tools/vnext_normal_candidate.py`逐坐标保存原生结果或具体失败；`normal_text_projection_v2`与`normal_numeric_projection`复用既有Projector生成20/18列公共行。展示政策独立绑定，执行Spec不改；文本申报日期不替代董事会测量日期，数值期间保留季度/时点/全年。完整来源更新、390坐标发布及旧入口退出仍未完成。入口和实际验证层级见`docs/normal_candidates.md`及`docs/evidence/issue28_continuous/`。
+
+<!-- capability-anchor: CAPABILITY.ordinary_zero_ai_native_components -->
+<!-- capability-anchor: CAPABILITY.ordinary_companyfacts_native_components -->
+
+后继普通零AI组件分为B01/B03及六事件、11项Company Facts目录公式两个入口。它们只复用原生计算和来源集合辅助函数，不调用旧发布准备器或读取旧矩阵。B03的B01依赖从当前原件生成；当前/上一期Company Facts分别绑定申报身份，期间由对应HTML或已存原生XBRL的DEI重建；上一期缺口不会阻断仅需本期的指标。调用者不能提供答案、期间或申报选择。组件记录尚未进入后继Run，细节见`docs/normal_source_components.md`。
+
+D03额外保存HTML引语范围、邻段限定和机关直接行为关系，未证明者保留语义待审。D04提供完整可见块及原生事实线索，名字匹配通过同原件封面和当前DEI关系；不把审计开头或关键词缺失等同无持续经营疑虑。财年对照保留原始标签和实际日期，当前不改写冻结输入。
 <!-- capability-anchor: CAPABILITY.normal_saved_candidate_batch -->

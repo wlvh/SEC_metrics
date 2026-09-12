@@ -147,20 +147,27 @@ class FinancialBalanceScopeTest(unittest.TestCase):
         for index in [*range(len(self._client_phrases)), None]:
             self._assert_client_phrase(index)
 
-    def test_var_reported_estimate_is_distinct_from_an_illustrative_table(self):
+    def _assert_var_reporting_variant(self, index):
         intro = self.var["totals"][0]["risk_horizon"]["table_association"]
         before = self.source[intro["start_byte"]:intro["end_byte"]]
-        for replacement in (b"shows hypothetical estimates for illustration, not the reported values of",
-                            b"presents illustrative figures for"):
+        replacements = (b"shows hypothetical estimates for illustration, not the reported values of",
+                        b"presents illustrative figures for")
+        if index is not None:
+            replacement = replacements[index]
             changed = before.replace(b"shows the results of", replacement)
             self.assertTrue(changed != before)
             source = self.source[:intro["start_byte"]] + changed + self.source[intro["end_byte"]:]
             result = self.evaluate(inspect_total_var, source)
             self.assertEqual("UNRESOLVED", result["status"])
             self.assertTrue(any(x["reason"] == "SOURCE_REPORTING_DECLARATION_CONFLICT" for x in result["unresolved"]))
-        unrelated = b"<div>The preceding example contains hypothetical amounts, not reported revenue. The model uses hypothetical market shocks.</div>"
-        source = self.source[:intro["start_byte"]] + unrelated + self.source[intro["start_byte"]:]
-        self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", self.evaluate(inspect_total_var, source)["semantic_status"])
+        else:
+            unrelated = b"<div>The preceding example contains hypothetical amounts, not reported revenue. The model uses hypothetical market shocks.</div>"
+            source = self.source[:intro["start_byte"]] + unrelated + self.source[intro["start_byte"]:]
+            self.assertEqual("SINGLE_SOURCE_SEMANTIC_FACT", self.evaluate(inspect_total_var, source)["semantic_status"])
+
+    def test_var_reported_estimate_is_distinct_from_an_illustrative_table(self):
+        for index in (0, 1, None):
+            self._assert_var_reporting_variant(index)
 
     def test_var_total_arithmetic_does_not_prove_all_portfolios_at_firm_level(self):
         aggregation = self.var["totals"][0]["risk_horizon"]["firmwide_aggregation_evidence"]
@@ -250,6 +257,26 @@ class AumClientFastTest(unittest.TestCase):
 
     def test_unrelated_exclusion_does_not_change_aum_scope(self):
         self._assert_client_phrase(None)
+
+
+class VarReportingFastTest(unittest.TestCase):
+    """Schedule each original reporting-scope assertion with a fresh source."""
+    @classmethod
+    def setUpClass(cls):
+        cls.source = JPM.read_bytes()
+        cls.var = cls.evaluate(inspect_total_var, cls.source)
+
+    evaluate = staticmethod(FinancialBalanceScopeTest.evaluate)
+    _assert_var_reporting_variant = FinancialBalanceScopeTest._assert_var_reporting_variant
+
+    def test_hypothetical_table_is_rejected(self):
+        self._assert_var_reporting_variant(0)
+
+    def test_illustrative_table_is_rejected(self):
+        self._assert_var_reporting_variant(1)
+
+    def test_unrelated_hypothetical_example_preserves_reported_var(self):
+        self._assert_var_reporting_variant(None)
 
 
 if __name__ == "__main__":
