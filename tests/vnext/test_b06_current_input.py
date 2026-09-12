@@ -68,8 +68,17 @@ class CurrentDebtInputTest(unittest.TestCase):
         self.assertEqual(self.packet,packet)
         accession = self.packet['prepared_input']['amendments'][0]['accessionNumber']
         self.assertTrue(any(r['accession']==accession for r in case['references']))
-        self.assertEqual('WITHHELD',case['results']['B06']['publication'])
-        self.assertIn('DISCLOSURE_NOTE_MISSING',case['selection']['reason'])
+        self.assertFalse(packet['debt_completeness_proven'])
+        self.assertTrue(case['input_binding']['source_proof']['complete_b06_proven'])
+        self.assertEqual(('PUBLISHED','1.168049260241169930727785855'),
+                         (case['results']['B06']['publication'],case['results']['B06']['value']))
+        from vnext.b06_inclusive_table import InclusiveDebtError
+        with original_sources_only(), patch('vnext.normal_inclusive_debt_results.inspect_inclusive_debt_scope',
+                side_effect=InclusiveDebtError('INCLUSIVE_DEBT_SOURCE_RELATIONSHIP_UNPROVEN')):
+            unresolved=prepare_case(data_root=ROOT,company_id=self.company,metric_id='B06')
+        self.assertEqual(packet,unresolved['input_binding']['current_debt_input'])
+        self.assertEqual('WITHHELD',unresolved['results']['B06']['publication'])
+        self.assertIn('SOURCE_RELATIONSHIP_UNPROVEN',unresolved['selection']['reason'])
 
     def test_unproven_amendment_does_not_enter_even_the_equity_guard(self):
         negative = self.changed(lambda raw:raw.replace(b'</body>',b'<p>We corrected our total debt balance.</p></body>',1))

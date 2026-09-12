@@ -428,3 +428,7 @@ D04离线解释协议只提供开发用输入与保存响应检查。`all_source
 <!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
 
 存在当期修订年报时，B06先核对其对原债务/权益的影响。输入未证明即保留WITHHELD及原因，不提前输出权益保护结论；原件与修订件均可追溯。输入核对通过不会隐藏债务解析缺口，主体接续只允许当前选定申报人期末结果，不等同于全年连续性。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_inclusive_table -->
+
+普通B06候选在原债务表逐项证明总额已含融资租赁时，只计入一次租赁，并显示同一当前主体期末的债务权益比。Paramount候选保留当前主体及修订来源；旧WITHHELD记录保留，当前结果不证明前后主体全年可比，也不修改正式报告或active。

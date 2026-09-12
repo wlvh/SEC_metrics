@@ -273,7 +273,7 @@
     "denominator_positive"
   ],
   "quality_rule": {
-    "resolver": "debt_equity_note_carrying_v4",
+    "resolver": "debt_equity_inclusive_table_v6",
     "scope": "consolidated",
     "scope_review_dimension_members": [
       "FordCreditMember",
@@ -284,8 +284,8 @@
     "equity_concept": "us-gaap:StockholdersEquity",
     "debt_set_registry": "config/r5_b06_debt_sets_v3.json",
     "debt_set_registry_sha256": "0ef10b3f5fb97678efe96c7915a3c10992779f1804107a906d3d0a1eea48e203",
-    "source_policy": "config/b06_note_carrying_v1.json",
-    "source_policy_sha256": "4b9d012fe19ae99e341f894cf7273596d762e01bbdf1673941db467fe152c5a1",
+    "source_policy": "config/b06_inclusive_table_v1.json",
+    "source_policy_sha256": "b16f9eb19a64847b70af94834f73d436f890f4f094a9fdb5aba1e1fec899a6f5",
     "original_metric_spec": "catalog/r5/B06_new_source_v2.md",
     "original_metric_spec_sha256": "e34a540f246302cd67abfa4c98a6da62bcced32f14b28be30a64049e80bfd944"
   },
@@ -311,4 +311,4 @@
 }
 ---
 
-保留 B06 的期末账面债务、融资租赁和同范围权益定义。新增逐笔可转债面值及费用对账，并要求当期原件明确说明没有融资租赁。完整原表、附注、期末余额和潜在融资项目共同验证；未知关系保持未决，来源和发布权限独立核对。
+保留期末账面债务和同范围权益定义。完整债务表逐项相加并证明总额已包含融资租赁，当前与非当前报表余额独立对账。收购日估值、未来票面偿还及市场公允价值保留原报告精度，不作为本期账面债务的额外组成。继任主体仅采用当前主体及当前列，不合并前任主体。

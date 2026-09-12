@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 91, in inspect_inclusive_composition
+    ip,inotes,ireports,imembers=_native(primary,prepared,'primary')
+                                ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 70, in _native
+    _need(r['ordinal'] in cells,'VISIBLE_NATIVE_CELL_REQUIRED')
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/lyuhongwang/Developer/SEC_metrics/scripts/vnext/b06_inclusive_table.py", line 31, in _need
+    if not condition:raise InclusiveDebtError('INCLUSIVE_DEBT_'+reason)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+vnext.b06_inclusive_table.InclusiveDebtError: INCLUSIVE_DEBT_VISIBLE_NATIVE_CELL_REQUIRED

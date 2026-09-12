@@ -69,7 +69,8 @@
       "catalog/r5/B06_new_source_v2.md",
       "catalog/r5/B06_guarded_v3.md",
       "catalog/r5/B06_note_carrying_v4.md",
-      "catalog/r5/B06_bond_leases_v5.md"
+      "catalog/r5/B06_bond_leases_v5.md",
+      "catalog/r5/B06_inclusive_table_v6.md"
     ],
     "C02": [
       "catalog/r6/C02_board_disclosures_v1.md"
@@ -196,12 +197,14 @@
     "catalog/ordinary_zero_ai/E04.md",
     "catalog/ordinary_zero_ai/E05.md",
     "catalog/r5/B06_bond_leases_v5.md",
+    "catalog/r5/B06_inclusive_table_v6.md",
     "catalog/r5/B06_note_carrying_v4.md",
     "config/annual_amendment_scope_v1.json",
     "config/b06_bond_debt_set_v1.json",
     "config/b06_bond_leases_v1.json",
     "config/b06_current_input_v1.json",
     "config/b06_financing_inventory_v1.json",
+    "config/b06_inclusive_table_v1.json",
     "config/b06_note_carrying_v1.json",
     "config/instant_balance_amendment_v1.json",
     "config/issue28_normal_results_v2.json",
@@ -212,6 +215,7 @@
     "scripts/vnext/b06_bond_leases.py",
     "scripts/vnext/b06_current_input.py",
     "scripts/vnext/b06_financing_inventory.py",
+    "scripts/vnext/b06_inclusive_table.py",
     "scripts/vnext/b06_note_carrying.py",
     "scripts/vnext/fiscal_year_labels.py",
     "scripts/vnext/instant_balance_amendment.py",
@@ -220,6 +224,7 @@
     "scripts/vnext/normal_annual_input_v2.py",
     "scripts/vnext/normal_bond_debt_results.py",
     "scripts/vnext/normal_companyfacts_results.py",
+    "scripts/vnext/normal_inclusive_debt_results.py",
     "scripts/vnext/normal_lodging_results.py",
     "scripts/vnext/normal_note_debt_results.py",
     "scripts/vnext/normal_run_inputs.py",

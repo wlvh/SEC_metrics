@@ -757,6 +757,20 @@
         "test_anchor": "tests/vnext/test_b06_current_input.py::CurrentDebtInputTest.test_unproven_amendment_does_not_enter_even_the_equity_guard",
         "test_status": "automated_recorded",
         "since": "2026-09-13"
+      },
+      {
+        "anchor_id": "CAPABILITY.ordinary_b06_inclusive_table",
+        "type": "capability",
+        "status": "active",
+        "statement": "普通B06从完整当前债务表逐项证明总额已含融资租赁，核对同主体权益、完整续接附注和独立原生融资清单；收购日估值及粗粒度票面额/市场价值保留原计量，不再加到当前账面债务。既有Calculator和原生重放拒绝重新生成的错误金额图、旧Spec或删除当前修订来源。仅未冻结开发候选，不证明全年跨主体连续性或生产采纳。",
+        "audience": [
+          "developer",
+          "operator",
+          "reviewer"
+        ],
+        "test_anchor": "tests/vnext/test_b06_current_input_material.py::CurrentDebtInputMaterialTest.test_actual_amendment_is_preserved_and_cannot_be_removed_or_self_approved",
+        "test_status": "automated_recorded",
+        "since": "2026-09-13"
       }
     ],
     "capability_boundaries": [

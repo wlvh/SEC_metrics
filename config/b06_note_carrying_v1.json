@@ -25,7 +25,7 @@
   "group_label": "Convertible notes",
   "balance_labels": {"Debt, current": "current", "Debt, non-current": "noncurrent"},
   "ordinary_balance_labels": ["Accounts payable", "Accrued liabilities", "Deferred revenues, current", "Warranty obligations, current", "Total current liabilities", "Deferred revenues, non-current", "Warranty obligations, non-current", "Other liabilities", "Total liabilities"],
-  "potential_financing_concept_pattern": "debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory",
+  "potential_financing_concept_pattern": "debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory|seniornotes|subordinatednotes|debentures",
   "different_nature_standard_pattern": "asset|tax|receivable|availableforsale|operatinglease|lessor|rightofuse|weightedaverage|revenueremainingperformanceobligation|warranty|^purchaseobligation$",
   "different_nature_custom_pattern": "^(?:DeferredTaxAssets|DeferredTaxLiabilities|AdvancedManufacturingProductionTaxCredit|LesseeOperatingLeaseLiability|RevenueRemainingPerformanceObligation|Warranty|DebtSecuritiesAvailableForSale|FinancingReceivableIncludingInterest)",
   "model_id": "BORROWING_CURRENT_NONCURRENT_NO_FINANCE_LEASE",

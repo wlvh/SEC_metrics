@@ -83,7 +83,7 @@ class NoteCarryingTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'UNRESOLVED_NARRATIVE_BALANCE|UNRESOLVED_ADDITIONAL_BORROWING'): self.inspect(args)
 
     def test_independent_native_inventory_catches_other_debt_and_finance_leases(self):
-        for concept,reason in [('FinanceLeaseLiability','FINANCE_LEASE_FACT_CONFLICT'),('ShortTermBorrowings','UNRESOLVED_FINANCING_FACT')]:
+        for concept,reason in [('FinanceLeaseLiability','FINANCE_LEASE_FACT_CONFLICT'),('ShortTermBorrowings','UNRESOLVED_FINANCING_FACT'),('SeniorNotes','UNRESOLVED_FINANCING_FACT')]:
             args = self.arguments(); parsed = parse_accession_xbrl_source(raw_bytes=args['xml']['raw_bytes'])
             fact = next(f for f in parsed.facts if f['qualified_name'].casefold() == 'us-gaap:longtermdebt'
                         and parsed.contexts[f['context_ref']]['period_end'] == '2025-12-31')

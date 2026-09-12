@@ -70,6 +70,9 @@ def prepare_case(*, data_root, company_id, metric_id):
             if note_debt is None:
                 from .normal_bond_debt_results import prepare_bond_debt_case
                 note_debt = prepare_bond_debt_case(repo_root=data_root,company_id=company_id)
+            if note_debt is None:
+                from .normal_inclusive_debt_results import prepare_inclusive_debt_case
+                note_debt = prepare_inclusive_debt_case(repo_root=data_root,company_id=company_id)
     if note_debt is not None:
         case = note_debt
     elif metric_id in {"B10","B11"}:

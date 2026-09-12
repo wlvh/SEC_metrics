@@ -867,3 +867,7 @@ V14/issue_28_v13在共享Run入口增加显式普通接线，保留旧版本分�
 <!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
 
 `b06_current_input`复用完整修订核对机制，独立限定B06当前债务/权益输入。V14先核对输入，再进入原非正权益保护和各债务结构；全部修订原件、判断、来源证明加入同一记录图并在重放中重建。拒绝输入与债务关系时，传入既有Calculator规定的精确WITHHELD目标字段，保留合法非数值结果而非转成执行故障。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_inclusive_table -->
+
+`b06_inclusive_table`从原HTML/XML完整续接附注、每笔当前债券、已含融资租赁和同范围母公司权益重建来源关系，并核对独立潜在融资清单。收购日分配、未来票面偿还和市场公允价值按原说明与显示精度保留，不作为额外账面债务。`normal_inclusive_debt_results`使用既有INCLUSIVE_REPORTED_TOTAL模型及Calculator，B06v6只扩展来源结构。V14重放从原件重建相同记录图；删除修订、重签错误总额或替换旧Spec拒绝。历史解析器和已冻结规则不改。

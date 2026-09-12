@@ -568,7 +568,7 @@ def _financing_inventory(primary, xml, prepared, composition, members, other):
             c = parsed.contexts[f['context_ref']]; m = meta.facts[f['ordinal']]; uri,local = m['concept']; name = local.casefold()
             if c['period_start'] != c['period_end'] or c['period_end'] != prepared['filing']['reportDate'] or not f['unit_ref']:
                 continue
-            if not re.search(r'debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory',name): continue
+            if not re.search(r'debt|borrow|loan|lease|credit|facility|financing|funding|obligation|promissory|seniornotes|subordinatednotes|debentures',name): continue
             _need(str(int(c['entity_identifier'])) == prepared['entity'],'INVENTORY_ENTITY_CONFLICT')
             context = {**c,'dimensions':dict(c['dimensions'])}; _verified_context(native=context,metadata=meta)
             unit = meta.units.get(f['unit_ref']); usd = unit == {'measures':[('http://www.xbrl.org/2003/iso4217','USD')],'divided':False}

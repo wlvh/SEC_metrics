@@ -155,9 +155,11 @@ class BondDebtScopeTest(unittest.TestCase):
         args = copy.deepcopy(self.args); parsed = parse_accession_xbrl_source(raw_bytes=args['xml']['raw_bytes'])
         fact = next(f for f in parsed.facts if f['qualified_name'].casefold()=='us-gaap:debtinstrumentcarryingamount'
                     and parsed.contexts[f['context_ref']]['period_end']=='2026-01-31')
-        added = ('<us-gaap:ShortTermBorrowings contextRef="'+fact['context_ref']+'" unitRef="'+fact['unit_ref']+'" decimals="-6">17000000</us-gaap:ShortTermBorrowings>').encode()
-        args = self.changed('xml',lambda raw:raw.replace(b'</xbrl>',added+b'</xbrl>'),args)
-        with self.assertRaisesRegex(ValueError,'UNRESOLVED_FINANCING_FACT'): self.inspect(args)
+        for concept in ['ShortTermBorrowings','SeniorNotes']:
+            with self.subTest(concept=concept):
+                added = ('<us-gaap:'+concept+' contextRef="'+fact['context_ref']+'" unitRef="'+fact['unit_ref']+'" decimals="-6">17000000</us-gaap:'+concept+'>').encode()
+                changed = self.changed('xml',lambda raw:raw.replace(b'</xbrl>',added+b'</xbrl>'),copy.deepcopy(args))
+                with self.assertRaisesRegex(ValueError,'UNRESOLVED_FINANCING_FACT'): self.inspect(changed)
 
     def test_unquantified_additional_borrowing_is_not_an_absent_amount(self):
         args = copy.deepcopy(self.args)

@@ -648,7 +648,7 @@ ORDINARY_PROJECTION_MATERIAL_ROOT=/absolute/completed/cli-batch PYTHONDONTWRITEB
 
 普通来源解释的原始引语/字符反例、财年v2与22路线测试仍分开执行；生成的20项普通Spec文件必须重编译出完全相同的既有目录语义。V14尚未冻结，不应运行旧的V13新建材料命令来复制不匹配的当前共享执行字节；旧冻结读取仍按其原数据根进行。
 
-GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运行上述V14真实OPEN材料及文件负例，20分钟上限。它不冻结或修改正式输出，也不替代最终390验收。
+GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运行上述V14真实OPEN材料及文件负例，30分钟上限。它不冻结或修改正式输出，也不替代最终390验收。
 
 ### D04离线解释输入与响应协议
 
@@ -674,4 +674,10 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 <!-- capability-anchor: CAPABILITY.ordinary_b06_current_input -->
 
-`test_b06_current_input`核对真实修订、原政策范围不变、债务/权益更正、额外原生事实、输入门先于权益保护及合法WITHHELD路径；`test_b06_current_input_material`以显式新目录创建真实Paramount B06 Run，保留原有债务解析WITHHELD，并拒绝删掉修订原件或重签删除检查的输入。后者在普通native CI job执行，仍无SEC/provider调用、冻结或生产写入。
+`test_b06_current_input`核对真实修订、原政策范围不变、债务/权益更正、额外原生事实、输入门先于权益保护及合法WITHHELD路径；`test_b06_current_input_material`以显式新目录创建真实Paramount B06 Run及公共行，并拒绝删掉修订原件或重签删除检查的输入。历史解析WITHHELD证据不改写。后者在普通native CI job执行，仍无SEC/provider调用、冻结或生产写入。
+
+<!-- capability-anchor: CAPABILITY.ordinary_b06_inclusive_table -->
+
+`test_b06_inclusive_table`使用完整原件检查已含租赁、当前主体/权益、收购日估值、不同计量精度和全部147项潜在融资事实；反例包含错误继任表头、缺租赁、金额冲突、额外票据/借款/附注、错误权益范围、收购值冲突及收入履约维度冒充借款。`test_b06_current_input_material`另用实际Calculator重建重复计租赁及前任金额的错误图，并验证重放拒绝这两图、旧Spec、删修订及自签输入，共五类原生反例。
+
+59fd27b的current-instant CI因合并作业超过20分钟而取消，前三项作业通过，不记为全绿。债务Run与反例现拆为独立`vNext debt native Runs`作业，仍20分钟；来源和ordinary-native总作业上限改为30分钟，单个来源案例的240秒上限不变。所有原测试保留，新范围不代替390最终验收。
