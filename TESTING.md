@@ -654,7 +654,7 @@ GitHub另有独立的`vNext ordinary native Runs` job，在Runner临时目录运
 
 来源规则与十公司原生组件用 `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 -m unittest -v tests.vnext.test_instant_balance_amendment tests.vnext.test_normal_companyfacts_results` 验证；两模块均在source-material层。实际Part III修订和链接更正保留不同证明，覆盖额外用途、错原报告日、正文更正/余额、已发生重述、封面标志、引语和新增原生财务事实。缺少修订原件必须拒绝源重放。
 
-实际Run先由 `tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root /absolute/new/instant-runs` 创建，再设置 `INSTANT_BALANCE_NATIVE_BATCH`、`INSTANT_BALANCE_ATTACK_ROOT` 两个外部目录执行 `tests.vnext.test_instant_balance_run_material`。核对原生时点/主体及公共行，并以真实Calculator构造90亿美元假现金图、删除修订原件，检查重放拒绝。CI native-runs包含真实创建和攻击两个步骤；不把组件或测试准备说成Run执行通过。
+实际Run先由 `tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root /absolute/new/instant-runs` 创建，再设置 `INSTANT_BALANCE_NATIVE_BATCH`、`INSTANT_BALANCE_ATTACK_ROOT` 两个外部目录执行 `tests.vnext.test_instant_balance_run_material`。核对原生时点/主体及公共行，并以真实Calculator构造90亿美元假现金图、删除修订原件，检查重放拒绝。CI独立的current-instant native任务包含这两个步骤，各原生命令和20分钟任务上限不变。4e02565首次把全部原生检查串在一个任务内，在最后一步达到20分钟上限而被取消，原始记录见`docs/evidence/issue28_continuous/instant-ci-timeout/`；这不是反例通过。拆分仅调整独立检查的调度，不把组件或测试准备说成Run执行通过。
 
 ### 普通B10/B11的确定性来源与原生记录
 

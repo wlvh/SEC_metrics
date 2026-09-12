@@ -1,0 +1,785 @@
+vNext ordinary native Runs	Set up job	﻿2026-09-12T15:15:43.1702949Z Current runner version: '2.337.0'
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1728422Z ##[group]Runner Image Provisioner
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1729631Z Hosted Compute Agent
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1730247Z Version: 20260828.587
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1730883Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1731711Z Build Date: 2026-08-28T16:44:25Z
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1732451Z Worker ID: {0ddd4bd5-6a71-4ff6-ba80-97f016113fc7}
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1733231Z Azure Region: westcentralus
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1733861Z ##[endgroup]
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1735364Z ##[group]Operating System
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1736104Z Ubuntu
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1736634Z 24.04.5
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1737135Z LTS
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1738011Z ##[endgroup]
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1738627Z ##[group]Runner Image
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1739421Z Image: ubuntu-24.04
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1739995Z Version: 20260907.300.1
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1741057Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1742872Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1743945Z ##[endgroup]
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1745039Z ##[group]GITHUB_TOKEN Permissions
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1746962Z Contents: read
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1747598Z Metadata: read
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1748410Z ##[endgroup]
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1750581Z Secret source: Actions
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1751531Z Cache mode: write
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.1752326Z Prepare workflow directory
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.2109060Z Prepare all required actions
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.2178913Z Getting action download info
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.5500707Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.6754290Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+vNext ordinary native Runs	Set up job	2026-09-12T15:15:43.9824160Z Complete job name: vNext ordinary native Runs
+vNext ordinary native Runs	Check out repository	﻿2026-09-12T15:15:44.0629871Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0631498Z with:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0632079Z   persist-credentials: false
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0632792Z   repository: wlvh/SEC_metrics
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0636588Z   token: ***
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0637107Z   ssh-strict: true
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0637904Z   ssh-user: git
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0638447Z   clean: true
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0639080Z   sparse-checkout-cone-mode: true
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0639732Z   fetch-depth: 1
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0640259Z   fetch-tags: false
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0640846Z   show-progress: true
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0641405Z   lfs: false
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0641931Z   submodules: false
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0642590Z   set-safe-directory: true
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.0643509Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1723901Z Syncing repository: wlvh/SEC_metrics
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1726823Z ##[group]Getting Git version info
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1728605Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1730297Z [command]/usr/bin/git version
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1801098Z git version 2.55.0
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1827589Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1859781Z Temporarily overriding HOME='/home/runner/work/_temp/4890ddc6-355f-4e25-81a9-6e4906c2e460' before making global git config changes
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1862700Z Adding repository directory to the temporary git global config as a safe directory
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1864164Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1913080Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1919274Z ##[group]Initializing the repository
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.1924405Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2032989Z hint: Using 'master' as the name for the initial branch. This default branch name
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2034751Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2036605Z hint: to use in all of your new repositories, which will suppress this warning,
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2037893Z hint: call:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2038821Z hint:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2039709Z hint: 	git config --global init.defaultBranch <name>
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2040737Z hint:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2041583Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2042943Z hint: 'development'. The just-created branch can be renamed via this command:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2043962Z hint:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2044656Z hint: 	git branch -m <name>
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2045506Z hint:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2046293Z hint: Disable this message with "git config set advice.defaultBranchName false"
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2053887Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2066121Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2117627Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2119579Z ##[group]Disabling automatic garbage collection
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2123793Z [command]/usr/bin/git config --local gc.auto 0
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2169390Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2170207Z ##[group]Setting up auth
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2171214Z Removing SSH command configuration
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2181015Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2228996Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2610716Z Removing HTTP extra header
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2619732Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2661937Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2927392Z Removing includeIf entries pointing to credentials config files
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2929797Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.2957576Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3205083Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3255857Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3288587Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3323752Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3358197Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3388670Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3390571Z ##[group]Fetching the repository
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:44.3399475Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1a83180a36f56171c3f1ce6742d4f578aee7c8c7:refs/remotes/pull/43/merge
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5571347Z From https://github.com/wlvh/SEC_metrics
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5574167Z  * [new ref]         1a83180a36f56171c3f1ce6742d4f578aee7c8c7 -> pull/43/merge
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5581136Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5584009Z ##[group]Determining the checkout info
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5587192Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5589391Z [command]/usr/bin/git sparse-checkout disable
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5649257Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5686680Z ##[group]Checking out the ref
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:53.5690794Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/43/merge
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:54.6174416Z Updating files:  60% (4675/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:54.6706963Z Updating files:  61% (4709/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:54.7103575Z Updating files:  62% (4786/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:54.7823569Z Updating files:  63% (4863/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:54.8244943Z Updating files:  64% (4941/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:54.8486292Z Updating files:  65% (5018/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:54.8694374Z Updating files:  66% (5095/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.0943493Z Updating files:  67% (5172/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.0991684Z Updating files:  68% (5249/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.1145624Z Updating files:  69% (5327/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.1248452Z Updating files:  70% (5404/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.1374008Z Updating files:  71% (5481/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.1532084Z Updating files:  72% (5558/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.1633464Z Updating files:  73% (5635/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.1769719Z Updating files:  74% (5713/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.2001411Z Updating files:  75% (5790/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.2109046Z Updating files:  76% (5867/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.2196080Z Updating files:  77% (5944/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.2552404Z Updating files:  78% (6021/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.2881897Z Updating files:  79% (6099/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.3031837Z Updating files:  80% (6176/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.3162838Z Updating files:  81% (6253/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.3514521Z Updating files:  82% (6330/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.3813688Z Updating files:  83% (6407/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.3950696Z Updating files:  84% (6484/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.4025918Z Updating files:  85% (6562/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.4071878Z Updating files:  86% (6639/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.4125907Z Updating files:  87% (6716/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.4264015Z Updating files:  88% (6793/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.4600897Z Updating files:  89% (6870/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.4864864Z Updating files:  90% (6948/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5008423Z Updating files:  91% (7025/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5212932Z Updating files:  92% (7102/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5279788Z Updating files:  93% (7179/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5392105Z Updating files:  94% (7256/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5523061Z Updating files:  95% (7334/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5621480Z Updating files:  96% (7411/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5708715Z Updating files:  97% (7488/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5780903Z Updating files:  98% (7565/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5839477Z Updating files:  99% (7642/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5853286Z Updating files:  99% (7699/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5853857Z Updating files: 100% (7719/7719)
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5854433Z Updating files: 100% (7719/7719), done.
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5971168Z Note: switching to 'refs/remotes/pull/43/merge'.
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5971490Z 
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5971927Z You are in 'detached HEAD' state. You can look around, make experimental
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5972519Z changes and commit them, and you can discard any commits you make in this
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5973346Z state without impacting any branches by switching back to a branch.
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5974380Z 
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5975212Z If you want to create a new branch to retain commits you create, you may
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5976122Z do so (now or later) by using -c with the switch command. Example:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5976577Z 
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5976756Z   git switch -c <new-branch-name>
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5977066Z 
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5977298Z Or undo this operation with:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5977611Z 
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5978001Z   git switch -
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5978239Z 
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5978677Z Turn off this advice by setting config variable advice.detachedHead to false
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5979629Z 
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.5980266Z HEAD is now at 1a83180 Merge 4e025650ff61de6e2b8a549f7a11e6780447f929 into 92fdd0e30c5f05db9d3d0136424934037dcff66e
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6042070Z ##[endgroup]
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6096871Z [command]/usr/bin/git log -1 --format=%H
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6128905Z 1a83180a36f56171c3f1ce6742d4f578aee7c8c7
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6144132Z ##[group]Removing auth
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6145095Z Removing SSH command configuration
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6151145Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6194413Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6445428Z Removing HTTP extra header
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6451522Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6493316Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6744484Z Removing includeIf entries pointing to credentials config files
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6750886Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6783880Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6785338Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6786255Z includeif.gitdir:/github/workspace/.git.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6787373Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6796992Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6824963Z /home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6836244Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6875564Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6909477Z /home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6918729Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.6987948Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7013660Z /github/runner_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7025716Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7062492Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7088111Z /github/runner_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7096563Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7131907Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7370144Z Removing credentials config '/home/runner/work/_temp/git-credentials-faaf8c4d-853d-4501-ac32-461da24c5e0c.config'
+vNext ordinary native Runs	Check out repository	2026-09-12T15:15:55.7377602Z ##[endgroup]
+vNext ordinary native Runs	Set up Python 3.14	﻿2026-09-12T15:15:55.7689733Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7690374Z with:
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7690585Z   python-version: 3.14
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7690815Z   check-latest: false
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7693146Z   token: ***
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7693377Z   update-environment: true
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7693624Z   allow-prereleases: false
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7693853Z   freethreaded: false
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.7694065Z ##[endgroup]
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.9057518Z ##[group]Installed versions
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.9158621Z Successfully set up CPython (3.14.7)
+vNext ordinary native Runs	Set up Python 3.14	2026-09-12T15:15:55.9159606Z ##[endgroup]
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	﻿2026-09-12T15:15:55.9356541Z ##[group]Run python3 -m unittest -v tests.vnext.test_normal_run_v3_material
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9357208Z [36;1mpython3 -m unittest -v tests.vnext.test_normal_run_v3_material[0m
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9412677Z shell: /usr/bin/bash -e {0}
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9413031Z env:
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9413515Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9414324Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9414960Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9415345Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9415895Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9416515Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9417037Z   PYTHONDONTWRITEBYTECODE: 1
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9417434Z   PYTHONPATH: scripts
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9418060Z   NORMAL_V14_MATERIAL_ROOT: /home/runner/work/_temp/ordinary-v14-34701689688-1
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:15:55.9418575Z ##[endgroup]
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:20:35.0363170Z test_real_open_graphs_and_disk_rejections (tests.vnext.test_normal_run_v3_material.OrdinaryIntegratedMaterialTest.test_real_open_graphs_and_disk_rejections) ... ok
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:20:35.0364767Z 
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:20:35.0365098Z ----------------------------------------------------------------------
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:20:35.0365929Z Ran 1 test in 277.722s
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:20:35.0366235Z 
+vNext ordinary native Runs	Validate actual OPEN Runs and source-bound file negatives	2026-09-12T15:20:35.0366374Z OK
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	﻿2026-09-12T15:20:35.0869989Z ##[group]Run python3 tools/vnext_normal_candidate.py --company marriott_international --company southwest_airlines --metric B10 --metric B11 --output-root "/home/runner/work/_temp/ordinary-lodging-34701689688-1"
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0871526Z [36;1mpython3 tools/vnext_normal_candidate.py --company marriott_international --company southwest_airlines --metric B10 --metric B11 --output-root "/home/runner/work/_temp/ordinary-lodging-34701689688-1"[0m
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0910399Z shell: /usr/bin/bash -e {0}
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0910670Z env:
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0910937Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0911369Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0911788Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0912161Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0912554Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0912943Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0913312Z   PYTHONDONTWRITEBYTECODE: 1
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:20:35.0913551Z ##[endgroup]
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:21:57.7595417Z {"company_id": "marriott_international", "metric_id": "B10", "status": "OPEN_CANDIDATE"}
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:23:16.8673614Z {"company_id": "marriott_international", "metric_id": "B11", "status": "OPEN_CANDIDATE"}
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:23:54.9987586Z {"company_id": "southwest_airlines", "metric_id": "B10", "status": "OPEN_CANDIDATE"}
+vNext ordinary native Runs	Build source-rebuilt lodging Runs	2026-09-12T15:24:30.1033706Z {"company_id": "southwest_airlines", "metric_id": "B11", "status": "OPEN_CANDIDATE"}
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	﻿2026-09-12T15:24:30.1451054Z ##[group]Run python3 -m unittest -v tests.vnext.test_lodging_run_material
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1451647Z [36;1mpython3 -m unittest -v tests.vnext.test_lodging_run_material[0m
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1488740Z shell: /usr/bin/bash -e {0}
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1489179Z env:
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1489452Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1489895Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1490342Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1490725Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1491097Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1491469Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1491806Z   PYTHONDONTWRITEBYTECODE: 1
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1492054Z   PYTHONPATH: scripts
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1492394Z   LODGING_NATIVE_BATCH: /home/runner/work/_temp/ordinary-lodging-34701689688-1
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1492963Z   LODGING_ATTACK_ROOT: /home/runner/work/_temp/ordinary-lodging-attacks-34701689688-1
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:24:30.1493372Z ##[endgroup]
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:25:52.5319446Z test_source_derived_records_and_resigned_wrong_value_are_checked (tests.vnext.test_lodging_run_material.LodgingNativeMaterialTest.test_source_derived_records_and_resigned_wrong_value_are_checked) ... ok
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:25:52.5320675Z 
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:25:52.5320896Z ----------------------------------------------------------------------
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:25:52.5321374Z Ran 1 test in 81.900s
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:25:52.5321570Z 
+vNext ordinary native Runs	Reject altered lodging values, omitted grids and old AI Specs	2026-09-12T15:25:52.5321686Z OK
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	﻿2026-09-12T15:25:52.5740776Z ##[group]Run python3 tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root "/home/runner/work/_temp/ordinary-instant-34701689688-1"
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5742205Z [36;1mpython3 tools/vnext_normal_candidate.py --company paramount_skydance_paramount_global --metric B08 --metric B09 --output-root "/home/runner/work/_temp/ordinary-instant-34701689688-1"[0m
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5782666Z shell: /usr/bin/bash -e {0}
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5782929Z env:
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5783205Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5783668Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5784091Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5784462Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5784831Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5785206Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5785571Z   PYTHONDONTWRITEBYTECODE: 1
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:25:52.5785811Z ##[endgroup]
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:29:28.9767068Z {"company_id": "paramount_skydance_paramount_global", "metric_id": "B08", "status": "OPEN_CANDIDATE"}
+vNext ordinary native Runs	Build successor current-balance Runs with amendment evidence	2026-09-12T15:32:59.7397468Z {"company_id": "paramount_skydance_paramount_global", "metric_id": "B09", "status": "OPEN_CANDIDATE"}
+vNext ordinary native Runs	Reject false cash and missing amendment sources	﻿2026-09-12T15:32:59.7853098Z ##[group]Run python3 -m unittest -v tests.vnext.test_instant_balance_run_material
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7853710Z [36;1mpython3 -m unittest -v tests.vnext.test_instant_balance_run_material[0m
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7889971Z shell: /usr/bin/bash -e {0}
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7890231Z env:
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7890499Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7890925Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7891337Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7891706Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7892074Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7892445Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7892786Z   PYTHONDONTWRITEBYTECODE: 1
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7893028Z   PYTHONPATH: scripts
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7893386Z   INSTANT_BALANCE_NATIVE_BATCH: /home/runner/work/_temp/ordinary-instant-34701689688-1
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7894002Z   INSTANT_BALANCE_ATTACK_ROOT: /home/runner/work/_temp/ordinary-instant-attacks-34701689688-1
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:32:59.7894435Z ##[endgroup]
+vNext ordinary native Runs	Reject false cash and missing amendment sources	2026-09-12T15:35:54.8038430Z ##[error]The operation was canceled.
+vNext ordinary native Runs	Post Check out repository	﻿2026-09-12T15:35:54.8190937Z Post job cleanup.
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9110227Z [command]/usr/bin/git version
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9152878Z git version 2.55.0
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9200916Z Temporarily overriding HOME='/home/runner/work/_temp/6a7f0aa2-1914-4114-9c94-f5300dd68dcf' before making global git config changes
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9202414Z Adding repository directory to the temporary git global config as a safe directory
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9228743Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9240784Z Removing SSH command configuration
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9246476Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9289155Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9611493Z Removing HTTP extra header
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9618152Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:54.9700770Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:55.0059494Z Removing includeIf entries pointing to credentials config files
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:55.0078531Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext ordinary native Runs	Post Check out repository	2026-09-12T15:35:55.0115783Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext ordinary native Runs	Complete job	﻿2026-09-12T15:35:55.0608487Z Cleaning up orphan processes
+vNext ordinary native Runs	Complete job	2026-09-12T15:35:55.0849700Z Terminate orphan process: pid (2833) (python3)
+vNext fast suite	Set up job	﻿2026-09-12T15:15:43.0295286Z Current runner version: '2.337.0'
+vNext fast suite	Set up job	2026-09-12T15:15:43.0314811Z ##[group]Runner Image Provisioner
+vNext fast suite	Set up job	2026-09-12T15:15:43.0315455Z Hosted Compute Agent
+vNext fast suite	Set up job	2026-09-12T15:15:43.0315852Z Version: 20260828.587
+vNext fast suite	Set up job	2026-09-12T15:15:43.0316238Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+vNext fast suite	Set up job	2026-09-12T15:15:43.0316668Z Build Date: 2026-08-28T16:44:25Z
+vNext fast suite	Set up job	2026-09-12T15:15:43.0317106Z Worker ID: {6e72e887-317a-4dbe-9aa9-4334044a5a03}
+vNext fast suite	Set up job	2026-09-12T15:15:43.0317548Z Azure Region: westus3
+vNext fast suite	Set up job	2026-09-12T15:15:43.0317879Z ##[endgroup]
+vNext fast suite	Set up job	2026-09-12T15:15:43.0319035Z ##[group]Operating System
+vNext fast suite	Set up job	2026-09-12T15:15:43.0319424Z Ubuntu
+vNext fast suite	Set up job	2026-09-12T15:15:43.0319771Z 24.04.5
+vNext fast suite	Set up job	2026-09-12T15:15:43.0320123Z LTS
+vNext fast suite	Set up job	2026-09-12T15:15:43.0320414Z ##[endgroup]
+vNext fast suite	Set up job	2026-09-12T15:15:43.0320783Z ##[group]Runner Image
+vNext fast suite	Set up job	2026-09-12T15:15:43.0321149Z Image: ubuntu-24.04
+vNext fast suite	Set up job	2026-09-12T15:15:43.0321504Z Version: 20260907.300.1
+vNext fast suite	Set up job	2026-09-12T15:15:43.0322145Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+vNext fast suite	Set up job	2026-09-12T15:15:43.0323174Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+vNext fast suite	Set up job	2026-09-12T15:15:43.0323725Z ##[endgroup]
+vNext fast suite	Set up job	2026-09-12T15:15:43.0324445Z ##[group]GITHUB_TOKEN Permissions
+vNext fast suite	Set up job	2026-09-12T15:15:43.0325625Z Contents: read
+vNext fast suite	Set up job	2026-09-12T15:15:43.0326001Z Metadata: read
+vNext fast suite	Set up job	2026-09-12T15:15:43.0326339Z ##[endgroup]
+vNext fast suite	Set up job	2026-09-12T15:15:43.0327806Z Secret source: Actions
+vNext fast suite	Set up job	2026-09-12T15:15:43.0328668Z Cache mode: write
+vNext fast suite	Set up job	2026-09-12T15:15:43.0329094Z Prepare workflow directory
+vNext fast suite	Set up job	2026-09-12T15:15:43.0533169Z Prepare all required actions
+vNext fast suite	Set up job	2026-09-12T15:15:43.0564667Z Getting action download info
+vNext fast suite	Set up job	2026-09-12T15:15:43.3515618Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+vNext fast suite	Set up job	2026-09-12T15:15:43.5517316Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+vNext fast suite	Set up job	2026-09-12T15:15:43.8390887Z Complete job name: vNext fast suite
+vNext fast suite	Check out repository	﻿2026-09-12T15:15:43.8843566Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8844100Z with:
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8844343Z   persist-credentials: false
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8844623Z   repository: wlvh/SEC_metrics
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8846814Z   token: ***
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8847046Z   ssh-strict: true
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8847283Z   ssh-user: git
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8847506Z   clean: true
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8847747Z   sparse-checkout-cone-mode: true
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8848030Z   fetch-depth: 1
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8848463Z   fetch-tags: false
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8848807Z   show-progress: true
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8849048Z   lfs: false
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8849268Z   submodules: false
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8849509Z   set-safe-directory: true
+vNext fast suite	Check out repository	2026-09-12T15:15:43.8849863Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:43.9486274Z Syncing repository: wlvh/SEC_metrics
+vNext fast suite	Check out repository	2026-09-12T15:15:43.9487811Z ##[group]Getting Git version info
+vNext fast suite	Check out repository	2026-09-12T15:15:43.9488568Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext fast suite	Check out repository	2026-09-12T15:15:43.9489557Z [command]/usr/bin/git version
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0064928Z git version 2.55.0
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0083303Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0100275Z Temporarily overriding HOME='/home/runner/work/_temp/8d8d76b0-89e2-4d48-9962-8b41609d9214' before making global git config changes
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0101784Z Adding repository directory to the temporary git global config as a safe directory
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0104503Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0158151Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0160814Z ##[group]Initializing the repository
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0164374Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0291692Z hint: Using 'master' as the name for the initial branch. This default branch name
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0292339Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0293079Z hint: to use in all of your new repositories, which will suppress this warning,
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0293483Z hint: call:
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0293992Z hint:
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0294284Z hint: 	git config --global init.defaultBranch <name>
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0294613Z hint:
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0294921Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0295405Z hint: 'development'. The just-created branch can be renamed via this command:
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0295788Z hint:
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0296009Z hint: 	git branch -m <name>
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0296258Z hint:
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0296588Z hint: Disable this message with "git config set advice.defaultBranchName false"
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0299794Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0307639Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0354068Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0354775Z ##[group]Disabling automatic garbage collection
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0357671Z [command]/usr/bin/git config --local gc.auto 0
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0415627Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0416057Z ##[group]Setting up auth
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0416796Z Removing SSH command configuration
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0421986Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0451504Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0833192Z Removing HTTP extra header
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0838828Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext fast suite	Check out repository	2026-09-12T15:15:44.0870907Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1068908Z Removing includeIf entries pointing to credentials config files
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1074069Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1107921Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1305275Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1374619Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1402235Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1925088Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1957594Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1983558Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1984216Z ##[group]Fetching the repository
+vNext fast suite	Check out repository	2026-09-12T15:15:44.1989772Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1a83180a36f56171c3f1ce6742d4f578aee7c8c7:refs/remotes/pull/43/merge
+vNext fast suite	Check out repository	2026-09-12T15:15:53.3874603Z From https://github.com/wlvh/SEC_metrics
+vNext fast suite	Check out repository	2026-09-12T15:15:53.3876094Z  * [new ref]         1a83180a36f56171c3f1ce6742d4f578aee7c8c7 -> pull/43/merge
+vNext fast suite	Check out repository	2026-09-12T15:15:53.3880265Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:53.3881158Z ##[group]Determining the checkout info
+vNext fast suite	Check out repository	2026-09-12T15:15:53.3885595Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:53.3886327Z [command]/usr/bin/git sparse-checkout disable
+vNext fast suite	Check out repository	2026-09-12T15:15:53.5428578Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+vNext fast suite	Check out repository	2026-09-12T15:15:53.5460500Z ##[group]Checking out the ref
+vNext fast suite	Check out repository	2026-09-12T15:15:53.5461502Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/43/merge
+vNext fast suite	Check out repository	2026-09-12T15:15:54.6851515Z Updating files:  67% (5217/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.6871984Z Updating files:  68% (5249/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.6979668Z Updating files:  69% (5327/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7050567Z Updating files:  70% (5404/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7139077Z Updating files:  71% (5481/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7228819Z Updating files:  72% (5558/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7300657Z Updating files:  73% (5635/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7392894Z Updating files:  74% (5713/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7533159Z Updating files:  75% (5790/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7605040Z Updating files:  76% (5867/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7669321Z Updating files:  77% (5944/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.7924375Z Updating files:  78% (6021/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8103815Z Updating files:  79% (6099/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8187321Z Updating files:  80% (6176/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8245151Z Updating files:  81% (6253/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8409458Z Updating files:  82% (6330/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8570018Z Updating files:  83% (6407/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8642155Z Updating files:  84% (6484/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8681729Z Updating files:  85% (6562/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8710884Z Updating files:  86% (6639/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8744499Z Updating files:  87% (6716/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8818738Z Updating files:  88% (6793/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.8982707Z Updating files:  89% (6870/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9134439Z Updating files:  90% (6948/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9200616Z Updating files:  91% (7025/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9295060Z Updating files:  92% (7102/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9338468Z Updating files:  93% (7179/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9406487Z Updating files:  94% (7256/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9469464Z Updating files:  95% (7334/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9533863Z Updating files:  96% (7411/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9586486Z Updating files:  97% (7488/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9635774Z Updating files:  98% (7565/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9686178Z Updating files:  99% (7642/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9686540Z Updating files: 100% (7719/7719)
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9686757Z Updating files: 100% (7719/7719), done.
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9762206Z Note: switching to 'refs/remotes/pull/43/merge'.
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9762478Z 
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9762728Z You are in 'detached HEAD' state. You can look around, make experimental
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9763138Z changes and commit them, and you can discard any commits you make in this
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9763684Z state without impacting any branches by switching back to a branch.
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9763902Z 
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9764051Z If you want to create a new branch to retain commits you create, you may
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9764529Z do so (now or later) by using -c with the switch command. Example:
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9764733Z 
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9764818Z   git switch -c <new-branch-name>
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9764965Z 
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9765056Z Or undo this operation with:
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9765190Z 
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9765264Z   git switch -
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9765366Z 
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9765531Z Turn off this advice by setting config variable advice.detachedHead to false
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9765791Z 
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9766058Z HEAD is now at 1a83180 Merge 4e025650ff61de6e2b8a549f7a11e6780447f929 into 92fdd0e30c5f05db9d3d0136424934037dcff66e
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9825687Z ##[endgroup]
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9868682Z [command]/usr/bin/git log -1 --format=%H
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9892847Z 1a83180a36f56171c3f1ce6742d4f578aee7c8c7
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9909740Z ##[group]Removing auth
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9910084Z Removing SSH command configuration
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9914957Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext fast suite	Check out repository	2026-09-12T15:15:54.9939645Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0143158Z Removing HTTP extra header
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0147117Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0179738Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0375179Z Removing includeIf entries pointing to credentials config files
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0378211Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0435011Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0435649Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0436038Z includeif.gitdir:/github/workspace/.git.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0436389Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0444080Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0466371Z /home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0474603Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0511510Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0532934Z /home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0539888Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0568566Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0591756Z /github/runner_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0599240Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0632750Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0655824Z /github/runner_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0661296Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0690543Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0883334Z Removing credentials config '/home/runner/work/_temp/git-credentials-70892ec3-16d5-427c-b257-d39f67c1e8cb.config'
+vNext fast suite	Check out repository	2026-09-12T15:15:55.0891107Z ##[endgroup]
+vNext fast suite	Set up Python 3.14	﻿2026-09-12T15:15:55.1082832Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1083076Z with:
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1083202Z   python-version: 3.14
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1083336Z   check-latest: false
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1084844Z   token: ***
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1084976Z   update-environment: true
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1085118Z   allow-prereleases: false
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1085253Z   freethreaded: false
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.1085382Z ##[endgroup]
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.2016250Z ##[group]Installed versions
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.2082858Z Successfully set up CPython (3.14.7)
+vNext fast suite	Set up Python 3.14	2026-09-12T15:15:55.2083306Z ##[endgroup]
+vNext fast suite	Run fast suite	﻿2026-09-12T15:15:55.2223394Z ##[group]Run python3 tools/run_fast_tests_v2.py --jobs 2
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2223721Z [36;1mpython3 tools/run_fast_tests_v2.py --jobs 2[0m
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2284688Z shell: /usr/bin/bash -e {0}
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2284943Z env:
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2285149Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2285419Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2285880Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2286156Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2286390Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2286665Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2286923Z   PYTHONDONTWRITEBYTECODE: 1
+vNext fast suite	Run fast suite	2026-09-12T15:15:55.2287167Z ##[endgroup]
+vNext fast suite	Run fast suite	2026-09-12T15:17:57.0113977Z {"duration_seconds": 121.594, "evidence_tier": "FAST_LOCAL_ONLY", "jobs": 2, "per_case_timeout_seconds": 30, "selector_generation": 2, "status": "PASSED", "suite": "fast", "tests": [{"duration_seconds": 0.848, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_acceptance_runner.AcceptanceRunnerTest.test_r4_plan_uses_fast_runner_without_full_discovery"}, {"duration_seconds": 0.648, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.007s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_ai_reader_contract.AiReaderContractTest.test_deepseek_chat_envelope_is_json_and_tool_free"}, {"duration_seconds": 0.781, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_continuity.AnnualContinuationPermissionTest"}, {"duration_seconds": 3.252, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 14 tests in 2.405s\n\nOK\n", "stdout_tail": "SEC retry exhausted for https://data.sec.gov/submissions/CIK0001048286.json; status=500; error=HTTP Error 500: SIMULATED_HTTP_FAILURE\n", "test": "tests.vnext.test_annual_continuity.AnnualContinuityBoundaryTest"}, {"duration_seconds": 7.259, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 6.411s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_continuity.AnnualModelConfigurationTest"}, {"duration_seconds": 6.975, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 6.110s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_no_requirement_and_other_task_retain_original_prompt"}, {"duration_seconds": 6.888, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 6.099s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_changes_only_instruction_and_its_task_identities"}, {"duration_seconds": 4.713, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 3.889s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_prompt_file_tamper_is_rejected_without_rewriting_repository"}, {"duration_seconds": 0.85, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_group_prompt.AnnualGroupPromptTest.test_stage_three_counts_two_closed_attempts_before_new_slots"}, {"duration_seconds": 2.075, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 1.380s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_publication"}, {"duration_seconds": 3.497, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 2.718s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_publication_authority"}, {"duration_seconds": 3.073, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.283s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_repair.AnnualLabelRegressionTest.test_policy_selects_new_requirement_only"}, {"duration_seconds": 2.498, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.729s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_candidate_leading_publication_survives_discovery_failure"}, {"duration_seconds": 2.519, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.712s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_update.AnnualUpdateTest.test_publication_progress_is_explicit_and_run_specific"}, {"duration_seconds": 0.975, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 0.042s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_guarded_result_v3.B06GuardSourceTest"}, {"duration_seconds": 3.143, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.374s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_added_balance_sheet_financing_row_cannot_inherit_coverage"}, {"duration_seconds": 2.096, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.364s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_approval_fields_and_duplicate_formula_not_part_of_proposal"}, {"duration_seconds": 4.894, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.150s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_asset_payment_wrong_year_and_entity_do_not_become_liability"}, {"duration_seconds": 3.062, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.312s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_outside_calculation_allowlist_cannot_disappear"}, {"duration_seconds": 4.829, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.061s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_custom_tax_loan_and_credit_facility_remain_unresolved"}, {"duration_seconds": 7.672, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 6.915s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_development_modes_rebuild_real_source_relations"}, {"duration_seconds": 5.343, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.593s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_dynamic_amounts_are_reread_with_new_test_identity"}, {"duration_seconds": 1.389, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.638s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_forged_matching_ledger_has_no_admission"}, {"duration_seconds": 3.007, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.252s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_missing_primary_or_note_is_not_zero"}, {"duration_seconds": 3.129, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.358s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_primary_only_sign_conflict_is_not_whitespace"}, {"duration_seconds": 5.579, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.821s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_reverse_subject_exclusion_and_inclusion_are_conflicts"}, {"duration_seconds": 3.305, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.564s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_same_arithmetic_but_explicit_lease_exclusion_rejects_at_relation"}, {"duration_seconds": 4.779, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 4.029s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_new_source.B06NewSourceTest.test_selected_model_cannot_grant_inclusion_or_nonoverlap"}, {"duration_seconds": 0.861, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_cutover_qualification.CutoverQualificationTest.test_layout_terminal_requires_approval_publish_and_validation"}, {"duration_seconds": 0.475, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.005s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_deterministic_router.DeterministicRouterTest.test_e01_matched_event_key_set_has_exact_legacy_parity"}, {"duration_seconds": 0.363, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 14 tests in 0.115s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_governance_compensation_table"}, {"duration_seconds": 0.403, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 22 tests in 0.156s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_governance_signals"}, {"duration_seconds": 9.711, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 25 tests in 8.921s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_invocation_control"}, {"duration_seconds": 1.04, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.470s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_issue15_authority.Issue15AuthorityTest.test_reusable_producer_scopes_match_exact_base_call_graph"}, {"duration_seconds": 1.043, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.365s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_issue28_requirement_transition.Issue28RequirementTransitionFastTest.test_profile_snapshot_loads_with_historical_parent_fast_smoke"}, {"duration_seconds": 0.757, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.301s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_issue28_v2.Issue28V2FastTest.test_real_five_file_revision_has_exact_parent_and_no_activation"}, {"duration_seconds": 0.45, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_legacy_projector.LegacyProjectorTest.test_legacy_inventory_binds_frozen_commit_and_source_blobs"}, {"duration_seconds": 1.427, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 0.797s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_live_scoped_reader.LiveScopedEnvelopeTest"}, {"duration_seconds": 0.684, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.004s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_ambiguous_columns_dates_and_relevant_shards_are_not_no_change"}, {"duration_seconds": 2.771, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.057s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_amendment_keeps_original_and_does_not_claim_current_success"}, {"duration_seconds": 10.003, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 9.294s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_invalid_source_fiscal_label_and_cik_are_integrity_failures"}, {"duration_seconds": 0.736, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.002s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_later_source_failure_is_not_relabelled_as_old_success"}, {"duration_seconds": 0.685, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_latest_period_cannot_fall_back_when_only_amendment_is_present"}, {"duration_seconds": 1.453, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.725s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_period_rechecks_entity_and_does_not_promote_quarter_to_year"}, {"duration_seconds": 2.26, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.555s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_00"}, {"duration_seconds": 2.737, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.028s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_01"}, {"duration_seconds": 3.91, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 3.206s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_02"}, {"duration_seconds": 4.116, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 3.402s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_03"}, {"duration_seconds": 9.027, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 8.330s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_04"}, {"duration_seconds": 2.711, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.015s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_05"}, {"duration_seconds": 3.326, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.574s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_06"}, {"duration_seconds": 2.522, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.786s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_07"}, {"duration_seconds": 3.426, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.689s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_08"}, {"duration_seconds": 2.756, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.025s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_registry_company_09"}, {"duration_seconds": 4.42, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 3.717s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_saved_noncalendar_inputs_use_dei_fiscal_label"}, {"duration_seconds": 2.819, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.057s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input.NormalAnnualInputTest.test_unknown_subject_policy_isolated_without_using_predecessor"}, {"duration_seconds": 1.972, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 1.763s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_candidate_authority"}, {"duration_seconds": 0.627, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 0.019s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_candidate_semantics"}, {"duration_seconds": 0.71, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 2 tests in 0.010s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.AuditorV2InputTest"}, {"duration_seconds": 0.82, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.105s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_actual_legacy_attempt_is_pinned_without_inventing_id"}, {"duration_seconds": 0.698, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_imported_registry_cannot_relabel_a_different_subject"}, {"duration_seconds": 0.708, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.012s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_later_failed_get_never_falls_back_to_success"}, {"duration_seconds": 2.218, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 1.519s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceBoundaryTest.test_preparation_reads_original_proofs_without_derived_inventories"}, {"duration_seconds": 0.696, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_governance_input.NormalGovernanceMetadataTest"}, {"duration_seconds": 0.425, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 0.004s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_run_authority"}, {"duration_seconds": 1.393, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.810s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_source_authority"}, {"duration_seconds": 5.247, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 4.526s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_text_input_v2"}, {"duration_seconds": 1.084, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.125s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_offline_execution_session.OfflineExecutionSessionTest.test_unknown_is_terminal_and_cannot_be_retried"}, {"duration_seconds": 1.019, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 0.490s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_live_authority.R4ExecutionPrefixTest"}, {"duration_seconds": 0.788, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 0.259s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_live_authority.R4LiveAuthorityShapeTest"}, {"duration_seconds": 0.598, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 0.090s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_live_plan.R4DraftPlanRiskTest"}, {"duration_seconds": 0.514, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.015s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_projection.R4ProjectionBoundaryTest.test_complete_grid_rejects_missing_duplicate_extra_and_false_applicability"}, {"duration_seconds": 2.338, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 1.739s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_publication_boundaries"}, {"duration_seconds": 0.628, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 0.009s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r4_release_gate.R4ReleaseAggregateGateTest"}, {"duration_seconds": 0.526, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 9 tests in 0.011s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r5_b06.B06PrimaryTest"}, {"duration_seconds": 3.005, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 2.716s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r5_b06_followup"}, {"duration_seconds": 8.644, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 8.220s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_r5_b06_scope"}, {"duration_seconds": 0.48, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 23 tests in 0.185s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_regulatory_investigation_candidates"}, {"duration_seconds": 1.471, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.912s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_replay.ReplayTest.test_validate_and_freeze_replays_run_before_pass"}, {"duration_seconds": 0.252, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.022s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_review_binding.ReviewBindingTest.test_optional_system_decision_is_auditable"}, {"duration_seconds": 1.127, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.259s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_scoped_reader.ScopedReaderTest.test_all_four_zero_call_classes_cannot_prepare_requests"}, {"duration_seconds": 1.121, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.254s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_source_scope.SourceScopeTest.test_complete_native_candidate_and_evidence_are_bound"}, {"duration_seconds": 1.197, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.509s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_source_strategy_registry.SourceStrategyRegistryTest.test_registry_covers_exact_39_without_migration_state"}, {"duration_seconds": 0.416, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_no_credit_and_zero_current_egress"}, {"duration_seconds": 0.428, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_current_packet_persists_sibling_and_financial_blockers"}, {"duration_seconds": 0.416, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_stage_c_context_packet.StageCContextPacketFastTest.test_historical_stage_c_b_packet_remains_content_addressed"}, {"duration_seconds": 1.852, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 1.015s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_successor_invocation_control"}, {"duration_seconds": 3.364, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 2.794s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_occupancy_request_has_no_current_credit"}, {"duration_seconds": 5.795, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 5.208s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_attestation.TableContextAttestationTest.test_historical_revpar_request_has_no_current_credit"}, {"duration_seconds": 0.925, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.319s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_measurement.TableContextMeasurementTerminalTest.test_revpar_terminal_is_consumed_exact_and_non_credit"}, {"duration_seconds": 11.81, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 10.960s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_context_qualification_guard.TableContextQualificationGuardTest.test_missing_or_excess_usage_is_terminal_and_skips_ordinal_two"}, {"duration_seconds": 0.536, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_stage_c_a_packet.TableStageCAPacketTest.test_packet_sections_preserve_stage_c_a_claim_boundaries"}, {"duration_seconds": 0.282, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 3 tests in 0.037s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_table_stage_c_financial_materialization"}, {"duration_seconds": 0.275, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 13 tests in 0.031s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_text_coverage"}, {"duration_seconds": 0.702, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 0.020s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_zero_ai_release.ZeroAiReleaseFastTest.test_r2_predecessor_bundle_fast_smoke"}]}
+vNext fast suite	Post Set up Python 3.14	﻿2026-09-12T15:17:57.0302299Z Post job cleanup.
+vNext fast suite	Post Check out repository	﻿2026-09-12T15:17:57.1300157Z Post job cleanup.
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.1889070Z [command]/usr/bin/git version
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.1939283Z git version 2.55.0
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.1946204Z Temporarily overriding HOME='/home/runner/work/_temp/7c7589da-96b4-4a21-ac5b-df99d07a74b3' before making global git config changes
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.1948164Z Adding repository directory to the temporary git global config as a safe directory
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.1950804Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.1982710Z Removing SSH command configuration
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.1988996Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.2048959Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.2270841Z Removing HTTP extra header
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.2276072Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.2313432Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.2528552Z Removing includeIf entries pointing to credentials config files
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.2536062Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext fast suite	Post Check out repository	2026-09-12T15:17:57.2571660Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext fast suite	Complete job	﻿2026-09-12T15:17:57.2894334Z Cleaning up orphan processes
+vNext saved-source material	Set up job	﻿2026-09-12T15:16:18.6384356Z Current runner version: '2.337.0'
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6410361Z ##[group]Runner Image Provisioner
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6411310Z Hosted Compute Agent
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6412037Z Version: 20260828.587
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6412690Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6413435Z Build Date: 2026-08-28T16:44:25Z
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6414165Z Worker ID: {47419214-c7c7-4830-89e8-60a70972f595}
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6414889Z Azure Region: northcentralus
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6415851Z ##[endgroup]
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6417475Z ##[group]Operating System
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6418132Z Ubuntu
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6418723Z 24.04.5
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6419247Z LTS
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6419810Z ##[endgroup]
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6420428Z ##[group]Runner Image
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6421036Z Image: ubuntu-24.04
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6421631Z Version: 20260907.300.1
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6422729Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260907.300/images/ubuntu/Ubuntu2404-Readme.md
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6424641Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260907.300
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6425937Z ##[endgroup]
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6427094Z ##[group]GITHUB_TOKEN Permissions
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6429062Z Contents: read
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6429755Z Metadata: read
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6430328Z ##[endgroup]
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6432405Z Secret source: Actions
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6433465Z Cache mode: write
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6434229Z Prepare workflow directory
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6894921Z Prepare all required actions
+vNext saved-source material	Set up job	2026-09-12T15:16:18.6966075Z Getting action download info
+vNext saved-source material	Set up job	2026-09-12T15:16:18.9260640Z Download action repository 'actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd' (SHA:de0fac2e4500dabe0009e67214ff5f5447ce83dd)
+vNext saved-source material	Set up job	2026-09-12T15:16:19.0654529Z Download action repository 'actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405' (SHA:a309ff8b426b58ec0e2a45f0f869d46889d02405)
+vNext saved-source material	Set up job	2026-09-12T15:16:19.2893081Z Complete job name: vNext saved-source material
+vNext saved-source material	Check out repository	﻿2026-09-12T15:16:19.3657243Z ##[group]Run actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3658347Z with:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3658802Z   persist-credentials: false
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3659346Z   repository: wlvh/SEC_metrics
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3663390Z   token: ***
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3663826Z   ssh-strict: true
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3664270Z   ssh-user: git
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3664694Z   clean: true
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3665131Z   sparse-checkout-cone-mode: true
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3665858Z   fetch-depth: 1
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3666298Z   fetch-tags: false
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3666747Z   show-progress: true
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3667266Z   lfs: false
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3667749Z   submodules: false
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3668269Z   set-safe-directory: true
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.3669068Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4694371Z Syncing repository: wlvh/SEC_metrics
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4697214Z ##[group]Getting Git version info
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4698462Z Working directory is '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4700274Z [command]/usr/bin/git version
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4747810Z git version 2.55.0
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4771798Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4786878Z Temporarily overriding HOME='/home/runner/work/_temp/916607c9-0162-48c7-9e14-4cb8285d9b5f' before making global git config changes
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4789364Z Adding repository directory to the temporary git global config as a safe directory
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4792735Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4849414Z Deleting the contents of '/home/runner/work/SEC_metrics/SEC_metrics'
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4853104Z ##[group]Initializing the repository
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4859359Z [command]/usr/bin/git init /home/runner/work/SEC_metrics/SEC_metrics
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4952324Z hint: Using 'master' as the name for the initial branch. This default branch name
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4954053Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4956237Z hint: to use in all of your new repositories, which will suppress this warning,
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4957493Z hint: call:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4958126Z hint:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4959153Z hint: 	git config --global init.defaultBranch <name>
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4960153Z hint:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4961176Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4962706Z hint: 'development'. The just-created branch can be renamed via this command:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4963913Z hint:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4964560Z hint: 	git branch -m <name>
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4965386Z hint:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4966828Z hint: Disable this message with "git config set advice.defaultBranchName false"
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4972051Z Initialized empty Git repository in /home/runner/work/SEC_metrics/SEC_metrics/.git/
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.4991893Z [command]/usr/bin/git remote add origin https://github.com/wlvh/SEC_metrics
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5030883Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5032148Z ##[group]Disabling automatic garbage collection
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5036346Z [command]/usr/bin/git config --local gc.auto 0
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5068970Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5070180Z ##[group]Setting up auth
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5071001Z Removing SSH command configuration
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5077865Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5112500Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5476238Z Removing HTTP extra header
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5484942Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5527488Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5763075Z Removing includeIf entries pointing to credentials config files
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5770386Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.5808801Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6059462Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6100649Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6136676Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6171702Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6204370Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6235107Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6236585Z ##[group]Fetching the repository
+vNext saved-source material	Check out repository	2026-09-12T15:16:19.6242985Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +1a83180a36f56171c3f1ce6742d4f578aee7c8c7:refs/remotes/pull/43/merge
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9487375Z From https://github.com/wlvh/SEC_metrics
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9488676Z  * [new ref]         1a83180a36f56171c3f1ce6742d4f578aee7c8c7 -> pull/43/merge
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9497128Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9498861Z ##[group]Determining the checkout info
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9500332Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9501714Z [command]/usr/bin/git sparse-checkout disable
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9566743Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9600847Z ##[group]Checking out the ref
+vNext saved-source material	Check out repository	2026-09-12T15:16:28.9604574Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/43/merge
+vNext saved-source material	Check out repository	2026-09-12T15:16:29.9887349Z Updating files:  60% (4681/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.0411336Z Updating files:  61% (4709/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.0809349Z Updating files:  62% (4786/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.1523847Z Updating files:  63% (4863/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.1942087Z Updating files:  64% (4941/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.2202647Z Updating files:  65% (5018/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.2386190Z Updating files:  66% (5095/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.4568489Z Updating files:  67% (5172/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.4608910Z Updating files:  68% (5249/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.4756953Z Updating files:  69% (5327/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.4856194Z Updating files:  70% (5404/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.4978465Z Updating files:  71% (5481/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.5102505Z Updating files:  72% (5558/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.5200968Z Updating files:  73% (5635/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.5330006Z Updating files:  74% (5713/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.5513415Z Updating files:  75% (5790/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.5614103Z Updating files:  76% (5867/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.5701043Z Updating files:  77% (5944/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.6038926Z Updating files:  78% (6021/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.6281948Z Updating files:  79% (6099/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.6388915Z Updating files:  80% (6176/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.6492863Z Updating files:  81% (6253/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.6713069Z Updating files:  82% (6330/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.6929587Z Updating files:  83% (6407/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7025913Z Updating files:  84% (6484/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7096119Z Updating files:  85% (6562/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7141739Z Updating files:  86% (6639/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7190914Z Updating files:  87% (6716/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7290687Z Updating files:  88% (6793/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7507571Z Updating files:  89% (6870/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7707394Z Updating files:  90% (6948/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7795175Z Updating files:  91% (7025/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7924933Z Updating files:  92% (7102/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.7987531Z Updating files:  93% (7179/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8079775Z Updating files:  94% (7256/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8166983Z Updating files:  95% (7334/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8255658Z Updating files:  96% (7411/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8328683Z Updating files:  97% (7488/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8397458Z Updating files:  98% (7565/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8466648Z Updating files:  99% (7642/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8467263Z Updating files: 100% (7719/7719)
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8467876Z Updating files: 100% (7719/7719), done.
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8585122Z Note: switching to 'refs/remotes/pull/43/merge'.
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8586511Z 
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8587124Z You are in 'detached HEAD' state. You can look around, make experimental
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8588137Z changes and commit them, and you can discard any commits you make in this
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8589054Z state without impacting any branches by switching back to a branch.
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8589557Z 
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8589904Z If you want to create a new branch to retain commits you create, you may
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8590729Z do so (now or later) by using -c with the switch command. Example:
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8591228Z 
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8591444Z   git switch -c <new-branch-name>
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8591786Z 
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8591972Z Or undo this operation with:
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8592345Z 
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8592505Z   git switch -
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8592765Z 
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8593137Z Turn off this advice by setting config variable advice.detachedHead to false
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8594059Z 
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8594662Z HEAD is now at 1a83180 Merge 4e025650ff61de6e2b8a549f7a11e6780447f929 into 92fdd0e30c5f05db9d3d0136424934037dcff66e
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8653131Z ##[endgroup]
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8707314Z [command]/usr/bin/git log -1 --format=%H
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8736043Z 1a83180a36f56171c3f1ce6742d4f578aee7c8c7
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8748295Z ##[group]Removing auth
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8748981Z Removing SSH command configuration
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8753135Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.8791857Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9056584Z Removing HTTP extra header
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9064540Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9108516Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9360182Z Removing includeIf entries pointing to credentials config files
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9364864Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9396334Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9397379Z includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9398176Z includeif.gitdir:/github/workspace/.git.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9398920Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9407410Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9434287Z /home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9444927Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git.path /home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9483606Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9509220Z /home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9527395Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/SEC_metrics/SEC_metrics/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9567216Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9593898Z /github/runner_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9601780Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9641749Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9667514Z /github/runner_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9675876Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9709480Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9945083Z Removing credentials config '/home/runner/work/_temp/git-credentials-3b922c71-ea61-4c31-9c83-8882864f743a.config'
+vNext saved-source material	Check out repository	2026-09-12T15:16:30.9953347Z ##[endgroup]
+vNext saved-source material	Set up Python 3.14	﻿2026-09-12T15:16:31.0251884Z ##[group]Run actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0252501Z with:
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0252709Z   python-version: 3.14
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0252935Z   check-latest: false
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0255723Z   token: ***
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0255957Z   update-environment: true
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0256203Z   allow-prereleases: false
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0256426Z   freethreaded: false
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.0256633Z ##[endgroup]
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.1547849Z ##[group]Installed versions
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.1635535Z Successfully set up CPython (3.14.7)
+vNext saved-source material	Set up Python 3.14	2026-09-12T15:16:31.1636407Z ##[endgroup]
+vNext saved-source material	Run complete saved-source material tests	﻿2026-09-12T15:16:31.1825925Z ##[group]Run python3 tools/run_fast_tests_v2.py --suite source-material --jobs 2
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1826911Z [36;1mpython3 tools/run_fast_tests_v2.py --suite source-material --jobs 2[0m
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1887564Z shell: /usr/bin/bash -e {0}
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1887963Z env:
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1888367Z   pythonLocation: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1889056Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib/pkgconfig
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1889766Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1890390Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1890999Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.14.7/x64
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1891611Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.14.7/x64/lib
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1892153Z   PYTHONDONTWRITEBYTECODE: 1
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:16:31.1892603Z ##[endgroup]
+vNext saved-source material	Run complete saved-source material tests	2026-09-12T15:31:23.3561122Z {"duration_seconds": 891.876, "evidence_tier": "SOURCE_MATERIAL_LOCAL_ONLY", "jobs": 2, "per_case_timeout_seconds": 240, "selector_generation": 2, "status": "PASSED", "suite": "source-material", "tests": [{"duration_seconds": 87.994, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 12 tests in 86.733s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_annual_amendment_scope"}, {"duration_seconds": 72.698, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 11 tests in 71.360s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_combined_borrowings"}, {"duration_seconds": 16.354, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 15.897s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_borrowing_keyword_and_explicit_past_issuance_do_not_block"}, {"duration_seconds": 5.881, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 5.425s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_balance_cannot_inherit_an_unspecified_date"}, {"duration_seconds": 19.391, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 18.932s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_current_named_carrying_total_is_reconciled_but_unknown_balance_is_not"}, {"duration_seconds": 18.958, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 18.501s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_explicit_additional_current_borrowing_blocks_both_modes"}, {"duration_seconds": 13.601, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 13.134s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_newer_disclosed_credit_group_is_derived_from_table_members"}, {"duration_seconds": 19.345, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 18.880s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_original_two_modes_keep_amounts_and_explain_different_measurements"}, {"duration_seconds": 17.773, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 17.317s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_primary_equity_amount_sign_scale_and_unit_conflicts_reject"}, {"duration_seconds": 19.753, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 19.284s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_same_xml_and_primary_alternate_total_still_needs_its_own_arithmetic"}, {"duration_seconds": 9.506, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 9.040s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_unconsumed_known_concept_must_agree_with_primary"}, {"duration_seconds": 16.505, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 16.039s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_disclosure_v2.B06DisclosureV2Test.test_zero_clause_cannot_hide_a_positive_balance_or_unsupported_amount"}, {"duration_seconds": 58.688, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 57.367s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_b06_financing_inventory"}, {"duration_seconds": 28.264, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.150s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_but_not_clients"}, {"duration_seconds": 28.386, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.273s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_excluding_clients"}, {"duration_seconds": 28.389, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.278s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_institutional_and_retail_clients"}, {"duration_seconds": 28.279, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.167s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_only_private_clients"}, {"duration_seconds": 28.044, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 26.919s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_selected_clients"}, {"duration_seconds": 28.446, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.322s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.AumClientFastTest.test_unrelated_exclusion_does_not_change_aum_scope"}, {"duration_seconds": 27.827, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 26.723s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_hypothetical_table_is_rejected"}, {"duration_seconds": 28.533, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 27.405s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_illustrative_table_is_rejected"}, {"duration_seconds": 28.207, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 26.977s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_balance_scope.VarReportingFastTest.test_unrelated_hypothetical_example_preserves_reported_var"}, {"duration_seconds": 40.749, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 40.262s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_explicit_subsidiaries_keep_their_original_definition"}, {"duration_seconds": 45.165, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 44.139s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_consolidated_group_is_rejected"}, {"duration_seconds": 45.329, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 44.830s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_candidates.LcrEntityFastTest.test_unidentified_named_holding_is_rejected"}, {"duration_seconds": 22.207, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 17 tests in 21.925s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_duration"}, {"duration_seconds": 46.057, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 1 test in 44.935s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_financial_structured.FinancialStructuredTest.test_native_tags_do_not_override_an_explicit_non_reported_table_declaration"}, {"duration_seconds": 33.965, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 32.731s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_fiscal_year_labels"}, {"duration_seconds": 27.988, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 18 tests in 27.036s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_going_concern_source"}, {"duration_seconds": 114.791, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 7 tests in 113.544s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_instant_balance_amendment"}, {"duration_seconds": 51.095, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 49.823s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_lodging_table_source"}, {"duration_seconds": 132.555, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 131.272s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_accession_results"}, {"duration_seconds": 45.7, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 6 tests in 44.471s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_annual_input_v2"}, {"duration_seconds": 162.032, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 160.741s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_companyfacts_results"}, {"duration_seconds": 27.954, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 4 tests in 26.704s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_run_inputs"}, {"duration_seconds": 41.982, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 8 tests in 40.742s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_source_requirements"}, {"duration_seconds": 190.748, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 10 tests in 189.350s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_normal_zero_ai_results"}, {"duration_seconds": 20.62, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 5 tests in 19.541s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_risk_signals"}, {"duration_seconds": 23.365, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 15 tests in 22.840s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_text_results"}, {"duration_seconds": 1.603, "return_code": 0, "stderr_tail": "----------------------------------------------------------------------\nRan 20 tests in 0.849s\n\nOK\n", "stdout_tail": "", "test": "tests.vnext.test_text_results_v2"}]}
+vNext saved-source material	Post Set up Python 3.14	﻿2026-09-12T15:31:23.3767737Z Post job cleanup.
+vNext saved-source material	Post Check out repository	﻿2026-09-12T15:31:23.5131801Z Post job cleanup.
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6041722Z [command]/usr/bin/git version
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6089723Z git version 2.55.0
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6142472Z Temporarily overriding HOME='/home/runner/work/_temp/faf97baa-c782-4ae5-a231-3d878ec820ea' before making global git config changes
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6143936Z Adding repository directory to the temporary git global config as a safe directory
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6152657Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/SEC_metrics/SEC_metrics
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6191475Z Removing SSH command configuration
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6200849Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6248146Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6596572Z Removing HTTP extra header
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6597521Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6637318Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6987690Z Removing includeIf entries pointing to credentials config files
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.6990391Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+vNext saved-source material	Post Check out repository	2026-09-12T15:31:23.7017612Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+vNext saved-source material	Complete job	﻿2026-09-12T15:31:23.7475834Z Cleaning up orphan processes
